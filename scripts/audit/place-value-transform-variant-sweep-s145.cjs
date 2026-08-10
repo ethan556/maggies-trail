@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs=require('node:fs'),path=require('node:path'),child=require('node:child_process'),os=require('node:os'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..');
-function loadTs(){const c=['/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/nvm/versions/node/v22.22.2/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}
+function loadTs(){const c=[path.join(root,'node_modules/typescript/lib/typescript.js'),'/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/nvm/versions/node/v22.22.2/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}
 const ts=loadTs(),srcRoot=path.join(root,'src/lib'),out=fs.mkdtempSync(path.join(os.tmpdir(),'s145-place-value-'));
 const clean=n=>{const x=Math.round(n*1e12)/1e12;return Object.is(x,-0)?0:x},near=(a,b)=>Math.abs(a-b)<1e-9,uniq=xs=>new Set(xs).size===xs.length;
 const pow=e=>10**e;

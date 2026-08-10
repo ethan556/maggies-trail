@@ -7,4 +7,4 @@ One finite qualitative segment language now drives graph geometry, grading, misc
 - Read/build generated split: **4,608 / 4,608**
 - Registered widgets: **127** (121 manipulatives)
 - Live reviewed K–8 queue: **0**
-- Tiers: **A 1186 · B 457 · C 57 · D 1**
+- Tiers: **A 1187 · B 458 · C 56 · D 0**

@@ -8,6 +8,7 @@ import { gridScales, integers, linScale, samplePolyline } from "@/components/plo
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
+import { MathProse } from "@/components/math/MathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
 import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
@@ -306,7 +307,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
   const retry = tone === "error";
   return (
     <div role="radiogroup" aria-label={spec.prompt} className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {ordered.map((o) => {
         const selected = value === o.id;
         const ghost = reveal && o.correct;
@@ -338,7 +339,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
             >
               {selected && <span className="h-2 w-2 rounded-pill bg-white" />}
             </span>
-            <span className="min-w-0 flex-1">{o.label}</span>
+            <span className="min-w-0 flex-1"><MathProse text={o.label} /></span>
             {ghost && (
               <span
                 data-testid="mcq-ghost"
@@ -382,7 +383,7 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
         : "border-ink/20";
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex items-center gap-2">
         <input
           value={raw}
@@ -515,7 +516,7 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
   ) : null;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex items-center justify-center gap-3">
         {spec.allowNegative && (
           <button
@@ -629,7 +630,7 @@ function PointEntryW({ spec, value, onChange, disabled, onEvent, tone }: WProps<
     spec.slotLabels?.[i] ?? `${["first", "second", "third", "fourth"][i] ?? `coordinate ${i + 1}`} value`;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex items-center justify-center gap-1 text-2xl font-bold">
         <span aria-hidden="true">{lb}</span>
         {spec.answer.map((_, i) => (
@@ -794,7 +795,7 @@ function PlaceCompareW({ spec, value, onChange, disabled, tone }: WProps<TPlaceC
   };
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.view !== "chart" && (
         <div className="grid grid-cols-2 items-end gap-6">
           {[spec.left, spec.right].map((side, i) => (
@@ -942,7 +943,7 @@ function RationalCompareW({ spec, value, onChange, disabled, tone }: WProps<TRat
   ];
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         {card(spec.left, spec.leftLabel)}
         <span
@@ -1086,7 +1087,7 @@ function FractionBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         viewBox={`0 0 ${W} ${svgH}`}
         className="mx-auto w-full max-w-sm"
@@ -1225,7 +1226,7 @@ function ElapsedTimeW({ spec, value, onChange, disabled, tone }: WProps<TElapsed
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 300 130" className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Start ${hhmm(spec.startHour, spec.startMinute)}, finish ${hhmm(endHour, endMin)}; ${dur} between.`}>
         {clockFace(62, 62, 48, spec.startHour, spec.startMinute, PALETTE.ink, "start")}
@@ -1278,7 +1279,7 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Moving point at ${x}, ${y}; legs ${dx} and ${dy}; separation ${fmt(dist)}.`}>
         {integers(G0, G1).map((g) => (
@@ -1339,7 +1340,7 @@ function TreeDiagramW({ spec, value, onChange, disabled, tone }: WProps<TTreeDia
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Branching diagram: ${a} then ${b}, giving ${leaves} endings.`}>
         <circle cx={rootX} cy={H / 2} r={5} fill={PALETTE.ink} />
@@ -1399,7 +1400,7 @@ function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WP
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="grid gap-3 rounded-2xl border border-ink/10 bg-white p-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:p-4">
         {spec.drawingRadius !== undefined && spec.scale !== undefined ? <>
           <section className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center">
@@ -1467,7 +1468,7 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
   };
   const optionClass = (active:boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="rounded-2xl border border-ink/10 bg-white p-3">
       <svg viewBox="0 0 290 165" className="mx-auto w-full max-w-md" role="img" aria-label={`Beams ${a}, ${b}, and ${c}. Frame currently opened to ${angle} degrees. Endpoint span ${span.toFixed(1)}.`}>
         <line x1={ax} y1={ay} x2={cx} y2={cy} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
@@ -1515,7 +1516,7 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
   const probabilityText = `${favFactors.join(" × ")} / ${factors.join(" × ")} = ${favourable}/${total}`;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="grid gap-3 rounded-2xl border border-ink/10 bg-white p-3 sm:p-4">
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4" aria-label="Stages in the compound event">
           {spec.stages.map((stage, stageIndex) => (
@@ -1589,7 +1590,7 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
   };
   const trap = spec.scene === "trapezoid-diagonal" && spec.pieces.length === 2 ? spec.pieces : null;
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     {spec.scene === "parallelogram-rearrange" && <div className="rounded-2xl border border-ink/10 bg-white p-3">
       <svg viewBox="0 0 360 190" className="w-full" role="img" aria-label="A parallelogram cut at one side and its triangular piece moved to make a rectangle with the same base and height.">
         <path d="M 75 35 L 265 35 L 225 150 L 35 150 Z" fill={PALETTE.sky} fillOpacity=".18" stroke={PALETTE.sky} strokeWidth="4"/>
@@ -1646,7 +1647,7 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
     : null;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="rounded-2xl border border-ink/10 bg-white p-3 sm:p-4">
         {spec.mode === "experimental" ? (
           <div className="grid gap-2">
@@ -1738,7 +1739,7 @@ function SpinnerSimW({ spec, value, onChange, disabled, tone }: WProps<TSpinnerS
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 200 210" className="mx-auto w-full max-w-[15rem]" role="img"
         aria-label={`Wheel of ${spec.sectors} equal parts with ${fav} shaded.`}>
         <style>{`.sp-w{transition:none}@media (prefers-reduced-motion: no-preference){.sp-w{transition:fill .12s ease-out}}`}</style>
@@ -1839,7 +1840,7 @@ function SampleSimW({ spec, onChange, disabled, value, tone }: WProps<TSampleSim
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`Pile of dots, one per simulated poll of ${size} people. The true value is marked with a line. So far ${ps.length} polls, ${near} of them within five points of the truth.`}>
         <style>{DOT_MOTION}</style>
@@ -1935,7 +1936,7 @@ function CiCaptureW({ spec, onChange, disabled, value, tone }: WProps<TCiCapture
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`Stack of horizontal bars, one per simulated poll. The dashed line is the true value. ${hits} of ${ivs.length} bars reach across it.`}>
         <style>{DOT_MOTION}</style>
@@ -2027,7 +2028,7 @@ function ShuffleTestW({ spec, onChange, disabled, value, tone }: WProps<TShuffle
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <p className="text-center text-sm font-bold text-ink/70">
         observed gap: {spec.groupALabel} − {spec.groupBLabel} = {observed.toFixed(2)}
       </p>
@@ -2120,7 +2121,7 @@ function CircleAngleExploreW({ spec, value, onChange, disabled, tone }: WProps<T
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 220 200" className="mx-auto w-full max-w-[26rem]" role="img"
         aria-label={`A circle whose highlighted arc measures ${central} degrees. The ${label} reads ${shown} degrees.`}>
         <style>{`.ca-live{transition:none}@media (prefers-reduced-motion: no-preference){.ca-live{transition:all .12s linear}}`}</style>
@@ -2262,7 +2263,7 @@ function GraphZoomW({ spec, value, onChange, disabled, tone }: WProps<TGraphZoom
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The curve near x equals ${spec.a}, magnified ${Math.pow(2, zoom)} times. Coming from below, y reads ${fmt(yl)}; from above, ${fmt(yr)}.`}>
         <style>{`.gz{transition:none}@media (prefers-reduced-motion: no-preference){.gz{transition:d .15s ease-out}}`}</style>
@@ -2362,7 +2363,7 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`Curves for base ${base}. The readout is ${fmt(shown)} and the goal ring sits at ${fmt(goal)}.`}>
         <line x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
@@ -2478,7 +2479,7 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`A curve with a fixed point at x = ${a} and a second point a gap of ${h} away. The line through them has slope ${slope === null ? "nothing — the quotient is zero over zero" : fmt(slope)}.`}>
         <style>{`.ss{transition:none}@media (prefers-reduced-motion: no-preference){.ss{transition:all .1s linear}}`}</style>
@@ -2589,7 +2590,7 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${W}`} className="mx-auto w-full max-w-[24rem]" role="img"
         aria-label={`Argand plane. The arrow points to ${num(re, im)}${spec.mode === "multiply" ? `, and the product arrow points to ${num(pRe, pIm)}` : ""}.`}>
         <style>{`.ag{transition:none}@media (prefers-reduced-motion: no-preference){.ag{transition:all .12s ease-out}}`}</style>
@@ -2725,7 +2726,7 @@ function VectorExploreW({ spec, value, onChange, disabled, tone }: WProps<TVecto
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${W}`} className="mx-auto w-full max-w-[24rem]" role="img"
         aria-label={`Grid with a fixed arrow u and a movable arrow v at ${vx} across and ${vy} up.${spec.mode === "add" ? ` Their sum lands at ${sx}, ${sy}.` : ` Their dot product is ${d}${angle === null ? "" : ` and the angle between them is ${Math.round(angle)} degrees`}.`}`}>
         <style>{`.vx{transition:none}@media (prefers-reduced-motion: no-preference){.vx{transition:all .12s ease-out}}`}</style>
@@ -2848,7 +2849,7 @@ function CircleRadiusScaleW({ spec, value, onChange, disabled, tone }: WProps<TC
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 220 210" className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white"
         role="img"
         aria-label={`A circle of radius ${r}. Diameter ${t.diameter}, circumference ${t.circumferenceCoef} pi, area ${t.areaCoef} pi.`}>
@@ -2926,7 +2927,7 @@ function CircleChordTangentArcW({ spec, value, onChange, disabled, tone }: WProp
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${W}`} className="mx-auto w-full max-w-[24rem]" role="img"
         aria-label={`A circle of radius ${R}. The ${label} reads ${spec.mode === "arcSector" ? `${v} degrees` : fmt(got)}.`}>
         <style>{`.cm{transition:none}@media (prefers-reduced-motion: no-preference){.cm{transition:all .12s ease-out}}`}</style>
@@ -3096,7 +3097,7 @@ function PolarTraceW({ spec, value, onChange, disabled, tone }: WProps<TPolarTra
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${W}`} className="mx-auto w-full max-w-[23rem]" role="img"
         aria-label={spec.mode === "rose" ? `A rose curve with n set to ${v}, showing ${petals} petals.` : `A limaçon with a set to ${v}: ${shape}.`}>
         <circle cx={C} cy={C} r={MAXR * U} fill="none" stroke={PALETTE.ink} strokeWidth={0.8} strokeOpacity={0.2} />
@@ -3200,7 +3201,7 @@ function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`A number line cut by ${cuts.length} ${(spec.poles ?? []).length > 0 ? "roots and poles" : "roots"}${(spec.holes ?? []).length > 0 ? `, with ${(spec.holes ?? []).length} removable hole${(spec.holes ?? []).length > 1 ? "s" : ""}` : ""}. The chosen signs, left to right, are ${signs.join(", ")}.`}>
         <style>{`.sc{transition:none}@media (prefers-reduced-motion: no-preference){.sc{transition:d .15s ease-out}}`}</style>
@@ -3334,7 +3335,7 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={
           arith
@@ -3426,7 +3427,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
   const requiredReady = (spec.requiredStageKeys ?? []).every((key) => exploredSet.has(key)) && explored.length >= spec.requiredExplorations;
   const termColor = (spec.task ?? "").startsWith("geometric") ? "border-tangerine/50 bg-tangerine/10 text-tangerine-ink" : "border-sky/45 bg-sky/10 text-sky-ink";
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label={`Sequence workbench for ${spec.task}. ${truth.terms.length} visible terms. ${explored.length} exact states inspected.`}>
       {truth.terms.length > 0 && <div className="grid gap-2">
         <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">term structure</p>
@@ -3503,7 +3504,7 @@ function SasSssTriangleW({ spec, value, onChange, disabled, tone }: WProps<TTria
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-[24rem]" role="img"
         aria-label={`A triangle with sides ${spec.a} and ${spec.b} meeting at ${Math.round(angle)} degrees; the opposite side measures ${fmt(third)}.`}>
         <style>{`.ts{transition:none}@media (prefers-reduced-motion: no-preference){.ts{transition:all .12s ease-out}}`}</style>
@@ -3607,7 +3608,7 @@ function TriangleRatiosW({ spec, value, onChange, disabled, tone }: WProps<TTria
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={narration}>
         <style>{`.tr{transition:none}@media (prefers-reduced-motion: no-preference){.tr{transition:all .12s ease-out}}`}</style>
         <polygon className="tr" points={`${ox},${oy} ${Bx.toFixed(1)},${By} ${Bx.toFixed(1)},${Cy.toFixed(1)}`}
@@ -3714,7 +3715,7 @@ function CompassConstructW({ spec, value, onChange, disabled, tone }: WProps<TCo
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={perp
           ? `A segment with two arcs of radius ${r} swung from its ends. They ${meets ? "cross" : "do not reach each other"}.`
@@ -3812,7 +3813,7 @@ function SideSplitterW({ spec, value, onChange, disabled, tone }: WProps<TDilati
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-card border border-ink/10 bg-white"
         role="img" aria-label={narration}>
         <style>{`.spl{transition:none}@media (prefers-reduced-motion: no-preference){.spl{transition:all .14s ease-out}}`}</style>
@@ -3934,7 +3935,7 @@ function ClassicalConstructW({
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`Two arcs of radius ${r} swung from centers ${spec.span} apart. They ${reach ? "cross above and below the line" : "do not reach each other"}.`}>
         <style>{`.cc2{transition:none}@media (prefers-reduced-motion: no-preference){.cc2{transition:all .12s ease-out}}`}</style>
@@ -4047,7 +4048,7 @@ function QuadDragW({ spec, value, onChange, disabled, tone , onEvent }: WProps<T
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${W}`} className="mx-auto w-full max-w-[24rem]" role="img"
         aria-label={`A quadrilateral with the fourth corner at ${x}, ${y}. It is currently ${name}.`}>
         <style>{`.qd{transition:none}@media (prefers-reduced-motion: no-preference){.qd{transition:all .1s ease-out}}`}</style>
@@ -4202,7 +4203,7 @@ function RadicalCheckW({ spec, value, onChange, disabled, tone }: WProps<TRadica
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto grid w-full max-w-sm gap-2" role="img"
         aria-label={`Candidate ${x}. The squared equation is ${sqOk ? "satisfied" : "not satisfied"}; the original equation is ${origOk ? "satisfied" : "not satisfied"}.`}>
         <div className={`rounded-xl border-2 p-3 ${sqOk ? "border-leaf bg-leaf/10" : "border-ink/15"}`}>
@@ -4301,7 +4302,7 @@ function DerivativeTraceW({ spec, value, onChange, disabled, tone }: WProps<TDer
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${HT + HB + 8 + (spec.showSecond ? H2 + 8 : 0)}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The curve on top with a tangent at x = ${fmt(x)}, and its derivative drawing itself underneath. f prime of ${fmt(x)} is ${d === null ? "undefined — the curve has a corner there" : fmt(d)}.${spec.showSecond ? ` A third pane traces f double prime, which is ${d2 === null ? "undefined here" : `${fmt(d2)} — the curve is ${d2 > 0 ? "bending upward" : d2 < 0 ? "bending downward" : "not bending"}`}.` : ""}`}>
         <style>{`.dt{transition:none}@media (prefers-reduced-motion: no-preference){.dt{transition:all .1s linear}}`}</style>
@@ -4437,7 +4438,7 @@ function RiemannSumW({ spec, value, onChange, disabled, tone }: WProps<TRiemannS
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`${n} strips under the curve using the ${rule} rule. The estimate is ${fmt(est)} and the true area is ${fmt(truth)}.`}>
         <style>{`.rs{transition:none}@media (prefers-reduced-motion: no-preference){.rs{transition:all .12s ease-out}}`}</style>
@@ -4531,7 +4532,7 @@ function AccumulateAreaW({ spec, value, onChange, disabled, tone }: WProps<TAccu
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${HT + HB}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The area under f up to x equals ${fmt(x)} is ${fmt(A)}, and the height of f there is ${fmt(fx)}. Underneath, the accumulation curve has slope ${fmt(fx)} at that point.`}>
         <style>{`.aa{transition:none}@media (prefers-reduced-motion: no-preference){.aa{transition:all .1s linear}}`}</style>
@@ -4647,7 +4648,7 @@ function SliceSumW({ spec, value, onChange, disabled, tone }: WProps<TSliceSum>)
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.mode === "sector" ? (
         <svg viewBox="0 0 260 180" className="mx-auto w-full max-w-[24rem]" role="img"
           aria-label={`A polar region cut into ${n} wedges. Wedge ${kk} has area ${fmt(sliceMeasure(spec.mode, xk))} times d-theta, and the running total is ${fmt(est)} against an exact ${fmt(truth)}.`}>
@@ -4823,7 +4824,7 @@ function SlopeFieldW({ spec, value, onChange, disabled, tone }: WProps<TSlopeFie
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`A field of slope segments. The solution starting at y equals ${y0} ${flat ? "never moves — it is an equilibrium" : "threads through the field"}.`}>
         <style>{`.sf{transition:none}@media (prefers-reduced-motion: no-preference){.sf{transition:d .15s ease-out}}`}</style>
@@ -4915,7 +4916,7 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The function against its ${n}-term polynomial. At x = ${fmt(x)} the true value is ${fmt(fx)} and the polynomial gives ${fmt(px)}, an error of ${fmt(err)}.`}>
         <style>{`.ta{transition:none}@media (prefers-reduced-motion: no-preference){.ta{transition:d .15s ease-out}}`}</style>
@@ -5146,7 +5147,7 @@ function AlgebraTilesW({ spec, value, onChange, disabled, tone }: WProps<TAlgebr
 
   return (
     <div className="grid gap-4" ref={atRoot}>
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={
           views.mat.framed && views.mat.edges
@@ -5396,7 +5397,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`Bar filled to ${pct} percent, which is ${fmt(amount)}${spec.unit ? " " + spec.unit : ""}.`}>
         <style>{`.pb-fill{transition:none}@media (prefers-reduced-motion: no-preference){.pb-fill{transition:width .14s ease-out}}`}</style>
@@ -5462,7 +5463,7 @@ function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: W
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="grid gap-3 rounded-2xl border border-ink/10 bg-white p-3 sm:p-4">
         <div className="grid gap-2 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <section className="rounded-xl border border-ink/15 bg-paper p-3 text-center">
@@ -5537,7 +5538,7 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
     const clear=()=>{if(!disabled&&stageIds.length)onChange({...state,stageIds:[]})};
     const side=(coeff:number,constant:number,kind:"left"|"right")=><div className={`rounded-xl border-2 p-3 text-center text-xl font-black tabular-nums ${kind==="left"?"border-sky/45 bg-sky/10":"border-tangerine/45 bg-tangerine/10"}`}><span className="text-sky-ink">{equationSideText(coeff,0,spec.variable)}</span>{Math.abs(constant)>1e-9&&<span className="text-tangerine-ink"> {constant>0&&Math.abs(coeff)>1e-9?"+ ":constant<0&&Math.abs(coeff)>1e-9?"− ":constant<0?"− ":""}{Math.abs(constant)}</span>}{Math.abs(coeff)<1e-9&&Math.abs(constant)<1e-9&&"0"}</div>;
     return <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" role="img" aria-label={`Current relation ${equationSideText(current.leftCoeff,current.leftConstant,spec.variable)} ${equationRelationSymbol(current.relation)} ${equationSideText(current.rightCoeff,current.rightConstant,spec.variable)}. Variable terms are blue and constants are orange.`}>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">{side(current.leftCoeff,current.leftConstant,"left")}<span className={`rounded-full border-2 px-3 py-1 text-xl font-black ${current.relation===spec.relation?"border-ink/20":"border-berry bg-berry/10 text-berry-ink"}`}>{equationRelationSymbol(current.relation)}</span>{side(current.rightCoeff,current.rightConstant,"right")}</div>
         <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-extrabold"><span className="rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-sky-ink">variable terms</span><span className="rounded-full border border-tangerine/30 bg-tangerine/10 px-3 py-1 text-tangerine-ink">constants</span><span className="rounded-full border border-leaf/30 bg-leaf/10 px-3 py-1 text-leaf-ink">same operation, both sides</span>{current.relation!==spec.relation&&<span className="rounded-full border border-berry/30 bg-berry/10 px-3 py-1 text-berry-ink">negative scale flipped the sign</span>}</div>
@@ -5559,7 +5560,7 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
   const truthText = truth === "none" ? "false residue → no solution" : truth === "infinite" ? "true residue → infinitely many" : "variable remains → one solution";
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" role="img" aria-label={`Equation ${spec.leftDisplay} equals ${spec.rightDisplay}. After collecting terms, ${residueLabel}. ${truthText}.`}>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-center text-xl font-black tabular-nums">
           <div className="rounded-xl border-2 border-sky/40 bg-sky/10 p-3">{spec.leftDisplay}</div><span aria-hidden="true">=</span><div className="rounded-xl border-2 border-tangerine/45 bg-tangerine/10 p-3">{spec.rightDisplay}</div>
@@ -5598,7 +5599,7 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="grid gap-3 rounded-2xl border border-ink/10 bg-white p-3 sm:p-4">
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
           {operand(spec.left, "first fraction")}
@@ -5683,7 +5684,7 @@ function IntegerChipsW({ spec, value, onChange, disabled, onEvent, tone }: WProp
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Chip board: ${pos} plus, ${neg} minus; ${pairs} zero pairs cancel, leaving ${sum}.`}>
         {Array.from({ length: pos }, (_, i) => chip(i, 22, PALETTE.leaf, "+", i < pairs))}
@@ -5771,7 +5772,7 @@ function RoundSolidBuilderW({ spec, value, onChange, disabled, tone, onEvent }: 
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 220 172" className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white"
         role="img" aria-label={`A ${spec.solid} with radius ${r}${isSphere ? "" : ` and height ${h}`}. Volume ${coefText}.`}>
         {isSphere ? (
@@ -5845,7 +5846,7 @@ function FractionalPrismW({
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${RW} 64`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Length ${hopLabel(l, denom)} units, built from ${l} ${denom}ths.`}>
         {Array.from({ length: totalTicks }, (_, i) => (
@@ -5953,7 +5954,7 @@ function PrismVolumeBuilderW({ spec, value, onChange, disabled, onEvent, tone }:
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xs" role="img"
         aria-label={`Stack ${l} by ${w} by ${h}; ${volume} cubes.`}>
         {cubes}
@@ -6128,7 +6129,7 @@ function MixedRegroupW({ spec, value, onChange, disabled, tone }: WProps<TMixedR
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <style>{`.mr-tok{transition:none}@media (prefers-reduced-motion: no-preference){.mr-tok{transition:background-color .16s ease-out,border-color .16s ease-out}}`}</style>
 
       {twoOperand && (
@@ -6392,7 +6393,7 @@ function ColumnCalcW({ spec, value, onChange, disabled, tone }: WProps<TColumnCa
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <style>{`.cc-tok{transition:none}@keyframes cc-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 @media (prefers-reduced-motion: no-preference){.cc-tok{transition:background-color .16s ease-out,border-color .16s ease-out,transform .16s ease-out}.cc-shake{animation:cc-shake .3s ease-in-out 0s 1}}`}</style>
       <div className="mx-auto rounded-2xl border-2 border-ink/10 px-3 py-3" role="group" aria-label={`Column work for ${spec.a} ${spec.op === "add" ? "plus" : spec.op === "subtract" ? "minus" : "times"} ${spec.b}`}>
@@ -6696,7 +6697,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
 
   return (
     <div className="grid gap-3" ref={rootRef}>
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img"
         aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}, and its line ${hits ? "passes through" : "misses"} B.`}>
         {ticks.map((g) => (
@@ -6809,7 +6810,7 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
   const showPipeline = ["predictOutput", "predictInput", "scaleRatio", "percentOf", "discount", "cheaperThenPredict"].includes(spec.task);
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
         {truth.series.map((series) => (
           <section key={series.id} className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label={series.label}>
@@ -6906,7 +6907,7 @@ function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WPr
   const answerText=spec.answerMode==="numeric"?`${fmt(truth.answerNumber??Number.NaN)}${spec.answerUnit?` ${spec.answerUnit}`:""}`:correctChoice?.label??"the derived place-value claim";
   const sourceLabel=spec.task==="exponentChain"?spec.values.map((n,i)=>`${i===0?"":spec.exponentOps[i-1]==="subtract"?" − ":" + "}${n}`).join(""):spec.values.map(fmt).join(spec.task.includes("Division")||spec.task==="divisionFirstMove"?" ÷ ":" and ");
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label="Base-ten source model">
       <div className="flex flex-wrap items-center justify-between gap-2"><h4 className="font-extrabold">Source: {sourceLabel}</h4><span className="rounded-pill border border-ink/15 px-3 py-1 text-xs font-bold">task: {spec.task}</span></div>
       {spec.task!=="exponentChain"&&spec.task!=="placeExponent"&&(
@@ -6935,7 +6936,7 @@ function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WPr
 /** pointSetReasoningLab — coordinate stories and 1D spread from one finite observation set. */
 type PointSetReasoningState={revealed?:string[];numeric?:number|"";choiceId?:string};
 function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.sets.find(set=>set.id===(spec.targetSetId??spec.sets[0]?.id))??spec.sets[0]!;const twoD=target.points.some(point=>point.y!==undefined);if(twoD){const xs=target.points.map(point=>point.x),ys=target.points.map(point=>point.y??0),minX=Math.min(0,...xs),maxX=Math.max(1,...xs),minY=Math.min(0,...ys),maxY=Math.max(1,...ys),sx=(x:number)=>45+(x-minX)/(maxX-minX||1)*350,sy=(y:number)=>215-(y-minY)/(maxY-minY||1)*170;return <svg viewBox="0 0 440 250" className="h-auto w-full" role="img" aria-label={`Coordinate point set. Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}. ${target.points.map(point=>`${point.label} at ${point.x}, ${point.y}`).join(". ")}.`}><rect x="1" y="1" width="438" height="248" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1={sy(0)} x2="410" y2={sy(0)} stroke="currentColor" strokeWidth="3"/><line x1={sx(0)} y1="25" x2={sx(0)} y2="220" stroke="currentColor" strokeWidth="3"/>{target.points.map(point=><g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y??0)} r="8" fill="currentColor"/><text x={sx(point.x)+10} y={sy(point.y??0)-10} fontSize="13" fontWeight="900">({point.x}, {point.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text><text x="16" y="125" textAnchor="middle" fontSize="13" fontWeight="900" transform="rotate(-90 16 125)">{spec.yLabel??"y"}</text></svg>}const all=spec.sets.flatMap(set=>set.points.map(point=>point.x)),min=Math.min(...all),max=Math.max(...all),sx=(x:number)=>40+(x-min)/(max-min||1)*360;return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><g key={`${set.id}-${point.id}`}><circle cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/><text x={sx(point.x)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{point.x}</text></g>))}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
-function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this point-set state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{revealed.length} valid state{revealed.length===1?"":"s"} inspected; {spec.requiredExplorations} required before grading.</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>{choice.label}</button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
+function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this point-set state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{revealed.length} valid state{revealed.length===1?"":"s"} inspected; {spec.requiredExplorations} required before grading.</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>{choice.label}</button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
 type GeometricConstraintState={revealed?:string[];numeric?:number|"";choiceId?:string};
@@ -6951,7 +6952,7 @@ function GeometricConstraintDiagram({spec}: {spec:TGeometricConstraintLab}){
 }
 function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TGeometricConstraintLab>){
   const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;const allowed=new Set(geometricConstraintExplorationKeys(spec));const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];const truth=geometricConstraintTruth(spec);const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"toward",state:{key}});onChange({...v,revealed:[...revealed,key]})};const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this geometric constraint."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{revealed.length} valid geometric state{revealed.length===1?"":"s"} inspected; {spec.requiredExplorations} required before grading.</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>{choice.label}</button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this geometric constraint."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{revealed.length} valid geometric state{revealed.length===1?"":"s"} inspected; {spec.requiredExplorations} required before grading.</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>{choice.label}</button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
 }
 
 /** exactNumberLab — one exact ordered-number workbench. Every task keeps its own learner action,
@@ -6967,7 +6968,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
   const correctChoice=spec.choices.find(choice=>exactNumberChoiceCorrect(spec,choice));
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="relation"?(truth.answerRelation==="lt"?"<":truth.answerRelation==="gt"?">":"="):correctChoice?.label??truth.answerClaim??"the exact-number conclusion";
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p><p className="mt-2 text-sm font-semibold text-ink/65">Task: {spec.task.replaceAll(/([A-Z])/g," $1").toLowerCase()}.</p></section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this exact state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{revealed.length} valid exact state{revealed.length===1?"":"s"} inspected; {spec.requiredExplorations} required before grading.</p>
@@ -7077,7 +7078,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
   const correctChoice=spec.choices.find(choice=>affineRelationshipChoiceCorrect(spec,choice));
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the derived affine conclusion":spec.answerMode==="point"&&truth.answerPoint?`(${truth.answerPoint[0]}, ${truth.answerPoint[1]})`:"the completed affine exploration";
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">
       <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label} · {line.sourceKind}</p><p className="mt-1 font-extrabold">{line.sourceText}</p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate plot of ${spec.lines.map(line=>line.label).join(", ")}; each line also has a distinct dash pattern and text label.`}>
@@ -7139,7 +7140,7 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
       : spec.answerMode === "fraction" && truth.answerFraction ? quotientRationalKey(truth.answerFraction)
         : "the completed quotient-state chain";
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact quotient source">
       <p className="text-xs font-black uppercase tracking-wide text-ink/55">Source state</p>
       <p className="mt-1 break-words text-2xl font-black tabular-nums">{source}</p>
@@ -7258,7 +7259,7 @@ function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraph
   const correctRead = spec.mode === "read" ? spec.choices.find((choice) => graphStoryChoiceCorrect(spec, choice)) : undefined;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white p-3 shadow-sm">
         <GraphStoryPlot spec={spec}
           kinds={spec.mode === "read" ? spec.segments.map((segment) => segment.kind) : active.map((segment) => segment.kind)}
@@ -7321,7 +7322,7 @@ function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead
   const set = (n: number) => { if (!disabled) onChange({ picked: n }); };
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white p-3">
         <p className="mb-2 text-sm font-extrabold text-ink/70">{spec.categoryLabel}</p>
         {spec.mode === "tally" ? (
@@ -7443,7 +7444,7 @@ function UnitChainW({ spec, value, onChange, disabled, tone }: WProps<TUnitChain
   const labelAt = (t: number) => fmtUC((v.value * t) / 0.66 === Infinity ? 0 : v.value * (t / 0.66));
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {/* Unit path: chips sized by position in the chain’s size order (bigger unit, bigger chip). */}
       <div className="flex flex-wrap items-center justify-center gap-1.5" aria-label={`Unit path from ${spec.startUnit} to ${spec.targetUnit}`}>
         {units.map((u, i) => {
@@ -7569,7 +7570,7 @@ function EvalOrderW({ spec, value, onChange, disabled, tone }: WProps<TEvalOrder
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <style>{`.eo-chip{transition:none}@media (prefers-reduced-motion: no-preference){.eo-chip{transition:background-color .16s ease-out,border-color .16s ease-out}}`}</style>
       <div
         className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-ink/10 px-3 py-4"
@@ -7665,7 +7666,7 @@ function NetFoldW({ spec, value, onChange, disabled, tone }: WProps<TNetFold>) {
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${Math.max(W, 200)} ${Math.max(H, 140)}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Unfolded prism; six faces totalling ${sa} square units.`}>
         {face(h, 0, l, h, PALETTE.leaf, String(l * h), "back")}
@@ -7738,7 +7739,7 @@ function RatioTableW({ spec, value, onChange, disabled, onEvent, tone }: WProps<
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <table className="mx-auto border-collapse text-center text-base font-bold">
         <caption className="sr-only">Equivalent ratio table</caption>
         <thead>
@@ -7820,7 +7821,7 @@ function DoubleNumberLineW({ spec, value, onChange, disabled, tone, onEvent }: W
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`Paired lines; your entry at the marked tick is ${fmt(top)}.`}>
         <line x1={pad - 8} y1={topY} x2={W - pad + 8} y2={topY} stroke={PALETTE.sky} strokeWidth={2} />
@@ -7925,7 +7926,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Scatter with a trend line, y equals ${fmt(m)} x plus ${fmt(b)}.`}>
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
@@ -8005,7 +8006,7 @@ function FractionOfSetW({ spec, value, onChange, disabled, tone }: WProps<TFract
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xs" role="img"
         aria-label={`Set of ${spec.setSize}; ${n} chosen.`}>
         <style>{`.fs-item{transition:none}@media (prefers-reduced-motion: no-preference){.fs-item{transition:fill .12s ease-out}}`}</style>
@@ -8076,7 +8077,7 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
   };
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white px-3 pb-2 pt-3"
         role="group"
@@ -8150,7 +8151,7 @@ function DotPlotBuildW({ spec, value, onChange, disabled, tone }: WProps<TDotPlo
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Dot plot: ${spec.values.map((v, i) => `${v} has ${cs[i]}`).join(", ")}.`}>
         <style>{`.dp-dot{transition:none}@media (prefers-reduced-motion: no-preference){.dp-dot{transition:opacity .12s ease-out}}`}</style>
         <line x1={pad - 6} y1={baseY} x2={W - pad + 6} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
@@ -8221,7 +8222,7 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot: low ${cur.min}, lower-mid ${cur.q1}, mid ${cur.med}, upper-mid ${cur.q3}, high ${cur.max}.`}>
         <line x1={pad - 6} y1={H - 18} x2={W - pad + 6} y2={H - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
         {[spec.axisMin, Math.round((spec.axisMin + spec.axisMax) / 2), spec.axisMax].map((t) => (
@@ -8296,7 +8297,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border px-3 py-2 text-left text-sm font-bold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="rounded-2xl border border-ink/10 bg-white p-2 sm:p-3">
         <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-2xl" role="img" aria-label={spec.mode === "measure"
           ? `${spec.groupALabel} mean ${spec.meanA}, ${spec.groupBLabel} mean ${spec.meanB}, variability width ${spec.variability}; the mean gap is ${fmt(gap)} variability-units.`
@@ -8428,7 +8429,7 @@ function CountGridW({ spec, value, onChange, disabled, onEvent, tone }: WProps<T
   }
   return (
     <div className="grid gap-4" data-testid="area-count-grid">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto rounded-card border-2 border-ink/10 bg-paper/70 p-2 dark:bg-ink/20">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-sm" role="img"
           aria-label={`${rows} rows and ${cols} columns of unit squares. ${count} counted so far.`}>
@@ -8503,7 +8504,7 @@ function AreaBuildW({ spec, value, onChange, disabled, onEvent, tone }: WProps<T
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xs" role="img" aria-label={`Rectangle ${w} wide by ${h} tall, area ${area}.`}>
         {cells}
       </svg>
@@ -8588,7 +8589,7 @@ function PlaceValueW({ spec, value, onChange, disabled, tone }: WProps<TPlaceVal
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Base-ten blocks showing ${total}.`}>
         {flats}
         {rods}
@@ -8646,7 +8647,7 @@ function ClockSetW({ spec, value, onChange, disabled, tone }: WProps<TClockSet>)
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${W}`} className="mx-auto w-56" role="img" aria-label={`Clock showing ${hour}:${mm}.`}>
         <style>{`.ck-h,.ck-m{transition:none}@media (prefers-reduced-motion: no-preference){.ck-h,.ck-m{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         <circle cx={cx} cy={cy} r={R} fill="#fff" stroke={PALETTE.ink} strokeWidth={2.5} />
@@ -8728,7 +8729,7 @@ function InversePipelineW({ spec, value, onChange, disabled, tone }: WProps<TInv
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
 
       {/* THE FORWARD CHAIN — fixed structure, so ink, and explicitly not interactive. */}
       <div>
@@ -9256,7 +9257,7 @@ function SolveBalanceW({ spec, value, onChange, disabled, tone }: WProps<TSolveB
 
   return (
     <div className="grid gap-4" ref={rootRef}>
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
 
       {/* Equation readout — the tile model and the notation are the same object, and this line is
           where the learner watches one become the other. Each term is a spotlight button: touch
@@ -9572,7 +9573,7 @@ function BalanceScaleW({ spec, value, onChange, disabled, onEvent, tone }: WProp
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Left side ${left}, right side ${spec.c}; ${level ? "balanced" : "not balanced"}.`}>
         <style>{`.bs-beam{transition:none;transform-origin:${cx}px ${beamY}px}@media (prefers-reduced-motion: no-preference){.bs-beam{transition:transform .2s ease-out}}`}</style>
         <polygon points={`${cx},${fulcrumTop} ${cx - 16},${fulcrumBot} ${cx + 16},${fulcrumBot}`} fill={PALETTE.ink} fillOpacity={0.85} />
@@ -9651,7 +9652,7 @@ function AngleMeasureW({ spec, value, onChange, disabled, tone, onEvent }: WProp
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.linearPair && <div className="rounded-xl border border-ink/10 bg-paper p-3 text-center" role="img" aria-label={`A straight line is split into x and ${spec.linearPair.multiplier}x degrees, totaling ${spec.linearPair.total} degrees.`}>
         <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">relationship on the straight line</p>
         <div className="mt-2 grid grid-cols-[1fr_auto_2fr] items-stretch overflow-hidden rounded-lg border-2 border-ink/20 font-black">
@@ -9794,7 +9795,7 @@ function ShapePartsW({ spec, value, onChange, disabled, tone }: WProps<TShapePar
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {/* The figure is drawn in SVG; every tap target is a REAL <button> positioned over it.
           A role-shimmed <g tabIndex> would have looked identical and been a downgrade: native
           buttons carry focus, activation and pressed-state semantics that a shim only imitates. */}
@@ -9888,7 +9889,7 @@ function BinomialAreaLabW({ spec, value, onChange, onEvent, disabled, tone }: WP
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white"
@@ -10101,7 +10102,7 @@ function ExtraneousRootLabW({ spec, value, onChange, onEvent, disabled, tone }: 
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`Two curves. ${st.squared ? "Both sides have been squared." : "Both sides un-squared."} They meet at ${cands.length} point${cands.length === 1 ? "" : "s"}.`}>
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={1.2} strokeOpacity={0.55} />
@@ -10216,7 +10217,7 @@ function RotationLabW({ spec, value, onChange, disabled, tone }: WProps<TRotatio
 
   return (
     <div className="space-y-3">
-      <p className="text-sm">{spec.prompt}</p>
+      <p className="text-sm"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 300 300" role="img" className="mx-auto w-full max-w-sm">
         <title>{exact}</title>
         <line x1={px(-g)} y1={py(0)} x2={px(g)} y2={py(0)} stroke="#22314F" strokeWidth={1} opacity={0.4} />
@@ -10324,7 +10325,7 @@ function AltitudeMeanW({ spec, value, onChange, disabled, tone }: WProps<TDilati
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-card border border-ink/10 bg-white"
         role="img" aria-label={narration}>
         <style>{`.alt{transition:none}@media (prefers-reduced-motion: no-preference){.alt{transition:all .14s ease-out}}`}</style>
@@ -10446,7 +10447,7 @@ function DilationScaleW({ spec, value, onChange, disabled, tone }: WProps<TDilat
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white" role="img" aria-label={`Image dilated by ${fmtK}.`}>
         <style>{`.dl-img{transition:none}@media (prefers-reduced-motion: no-preference){.dl-img{transition:all .18s ease-out}}`}</style>
         {integers(G0, G1).map((g) => (
@@ -10584,7 +10585,7 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     const done = (i: number) => hs[i] === spec.target[i];
     return (
       <div className="grid gap-4">
-        <p className="text-lg font-bold">{spec.prompt}</p>
+        <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
         <div className="grid gap-2" role="img"
           aria-label={`${spec.display === "tally" ? "Tally chart" : "Picture graph"}: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
           {spec.categories.map((c, i) => (
@@ -10618,7 +10619,7 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Bar chart: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
         <style>{`.bb-bar{transition:none}@media (prefers-reduced-motion: no-preference){.bb-bar{transition:y .16s ease-out,height .16s ease-out}}`}</style>
         {gridVals.map((g) => (
@@ -10688,7 +10689,7 @@ function ProbabilityAreaW({ spec, value, onChange, disabled, tone }: WProps<TPro
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Grid: ${n} of ${total} shaded.`}>
         <style>{`.pa-cell rect{transition:none}@media (prefers-reduced-motion: no-preference){.pa-cell rect{transition:fill .12s ease-out}}`}</style>
         <g className="pa-cell">{cells}</g>
@@ -10766,7 +10767,7 @@ function HundredthsGridW({ spec, value, onChange, disabled, tone }: WProps<THund
   const dec = (n / total).toFixed(spec.mode === "tenths" ? 1 : 2);
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm touch-manipulation" role="img"
         aria-label={`Decimal grid: ${n} of ${total} shaded${spec.showDecimal ? `, ${dec}` : ""}.`}>
         <style>{`.hg-cell rect{transition:none}@media (prefers-reduced-motion: no-preference){.hg-cell rect{transition:fill .12s ease-out}}`}</style>
@@ -10897,7 +10898,7 @@ function TransformExploreW({ spec, value, onChange, disabled, onEvent, tone }: W
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Reflect ${reflect === "none" ? "off" : "over the " + reflect + "-axis"}, shifted (${dx}, ${dy}).`}>
         {gridLines.map((gg) => (
@@ -11027,7 +11028,7 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${W} 72`}
@@ -11161,7 +11162,7 @@ function FunctionMachineW({ spec, value, onChange, disabled, onEvent, tone }: WP
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex flex-wrap items-center justify-center gap-2" aria-live="polite">
         {box("input", input, PALETTE.sky)}
         <span className="text-2xl text-ink/70" aria-hidden>→</span>
@@ -11326,7 +11327,7 @@ function UnitCircleExploreW({ spec, value, onChange, disabled, tone }: WProps<TU
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className={`mx-auto w-full ${isWave ? "max-w-2xl" : "max-w-sm"}`} role="img" aria-label={stateSentence}>
         <style>{`.uc-pt,.uc-tri,.uc-gh{transition:none}@media (prefers-reduced-motion: no-preference){.uc-pt,.uc-tri,.uc-gh{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         {/* branch shading: the excluded arc is greyed and walled */}
@@ -11928,7 +11929,7 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
 
   return (
     <div className="grid gap-4" ref={rootRef}>
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Line 1 is ${pairViews.a.equation.display}; line 2 is ${pairViews.b.equation.display}. Point (${x}, ${y}); ${on1 ? "on" : "not on"} line 1, ${on2 ? "on" : "not on"} line 2.`}>
         <style>{`.se-pt{transition:none}@media (prefers-reduced-motion: no-preference){.se-pt{transition:all .16s ease-out}}`}</style>
@@ -12114,7 +12115,7 @@ function QuadraticRootsW({ spec, value, onChange, disabled, tone, onEvent }: WPr
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white"
         role="img"
         aria-label={`A parabola crossing the x-axis at ${r1} and ${r2}. Expanded it is ${co.a}x squared ${co.b < 0 ? "minus" : "plus"} ${Math.abs(co.b)}x ${co.c < 0 ? "minus" : "plus"} ${Math.abs(co.c)}.`}>
@@ -12228,7 +12229,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Parabola y = ${a}(x ${hSign})² ${kSign}, vertex at (${h}, ${k}).`}>
         <style>{`.qe-curve,.qe-vtx{transition:none}@media (prefers-reduced-motion: no-preference){.qe-curve,.qe-vtx{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
@@ -12534,7 +12535,7 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
 
   return (
     <div className="grid gap-4" ref={rootRef}>
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
@@ -12687,7 +12688,7 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
   const total = (spec.groupSize ?? 1) * v;
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <input
         type="range"
         min={spec.min}
@@ -12867,7 +12868,7 @@ function TapW({ spec, value, onChange, disabled, tone }: WProps<TTapDiagram>) {
   };
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         className="relative w-full rounded-card border-2 border-ink/10 bg-white"
         style={{ aspectRatio: `${spec.canvas.w} / ${spec.canvas.h}` }}
@@ -12919,7 +12920,7 @@ function DragOrderW({ spec, value, onChange, disabled, tone }: WProps<TDragOrder
   };
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {/* Live consequence (s48): for value orderings the claim is PLOTTED —
           each slot's value drawn rank-by-size, so a correct size order reads as
           a clean staircase and a misplaced value as a visible zigzag. For
@@ -13019,10 +13020,10 @@ function DragBucketW({ spec, value, onChange, disabled, tone }: WProps<TDragBuck
   const bucketLabel = (id: string) => spec.buckets.find((b) => b.id === id)?.label ?? id;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.items.map((it) => (
         <div key={it.id} className="rounded-card border-2 border-ink/15 bg-white p-3">
-          <p className="mb-2 font-semibold">{it.label}</p>
+          <p className="mb-2 font-semibold"><MathProse text={it.label} /></p>
           <div role="radiogroup" aria-label={`Where does ${it.label} go?`} className="flex flex-wrap gap-2">
             {spec.buckets.map((b) => {
               const selected = placed[it.id] === b.id;
@@ -13039,7 +13040,7 @@ function DragBucketW({ spec, value, onChange, disabled, tone }: WProps<TDragBuck
                   } disabled:opacity-70`}
                 >
                   {b.icon ? `${b.icon} ` : ""}
-                  {b.label}
+                  <MathProse text={b.label} />
                 </button>
               );
             })}
@@ -13095,7 +13096,7 @@ function MatchPairsW({ spec, value, onChange, disabled, tone }: WProps<TMatchPai
   const leftLabel = (id: string) => spec.left.find((x) => x.id === id)?.label ?? id;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <p className="text-sm text-ink/70">Tap one on the left, then its match on the right. Tap a numbered one to unlink.</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="grid content-start gap-2">
@@ -13298,7 +13299,7 @@ function BuildExpressionW({ spec, value, onChange, disabled, tone }: WProps<TBui
         : "border-dashed border-ink/25 bg-white";
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         aria-label="Your expression"
         className={`flex min-h-14 flex-wrap items-center gap-2 rounded-card border-2 p-2 ${frame}`}
@@ -13382,7 +13383,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
     pts.length === spec.targets.length;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex justify-center gap-1">
         {spec.yLabels && (
           <div className="grid gap-1" aria-hidden="true">
@@ -13474,7 +13475,7 @@ function ToggleExploreW({ spec, value, onChange, disabled }: WProps<TToggleExplo
   const lit = evalRule(spec.rule, states);
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         className={`flex items-center gap-3 rounded-card border-2 px-4 py-3 transition-colors motion-reduce:transition-none ${
           lit ? "border-tangerine bg-tangerine/10" : "border-ink/15 bg-white"
@@ -13525,7 +13526,7 @@ function SteppedRevealW({ spec, value, onChange, disabled }: WProps<TSteppedReve
   const done = seen >= total;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {/* progress rail: one pip per panel, filled as steps are revealed */}
       <div className="flex items-center gap-1.5" aria-hidden="true">
         {spec.panels.map((_, i) => (
@@ -13600,7 +13601,7 @@ function DiscreteEstimateCompareW({ spec, value, onChange, disabled, onEvent, to
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         data-testid="estimate-choice-stage"
         role="img"
@@ -13757,7 +13758,7 @@ function LogEstimateSliderW({ spec, value, onChange, disabled, onEvent, tone }: 
   }, []);
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <input
         type="range"
         min={0}
@@ -13845,7 +13846,7 @@ function TenFrameW({ spec, value, onChange, disabled, tone }: WProps<TTenFrame>)
   const setTotal = (t: number) => onChange(Math.max(spec.preFilled, Math.min(10, t)));
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         className="mx-auto grid w-full max-w-xs grid-cols-5 gap-1.5 rounded-card border-2 border-ink/15 bg-white p-2"
         role="group"
@@ -13930,7 +13931,7 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
 
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 320 104" className="w-full" role="img"
         aria-label={`A stride of ${h} from ${spec.start}. ${targets.map((t) => `${t} is ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`}>
         <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
@@ -14020,7 +14021,7 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 320 96" className="w-full" role="group" aria-label="Number line">
         <style>{css}</style>
         <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
@@ -14182,7 +14183,7 @@ function BaseTenComposeW({ spec, value, onChange, disabled, onEvent, tone }: WPr
   const total = b.hundreds * 100 + b.tens * 10 + b.ones;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="flex min-h-[96px] flex-wrap items-end justify-center gap-3 rounded-card border-2 border-ink/10 bg-white p-3" aria-hidden="true">
         {Array.from({ length: b.hundreds }).map((_, i) => (
           <svg key={`h${i}`} viewBox="0 0 84 84" width={64} height={64}>
@@ -14326,7 +14327,7 @@ function LengthDifferenceW({ spec, value, onChange, disabled, tone }: WProps<TLe
   const gapX = x0 + shorter.length * u;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
         aria-label={`${longer.label} is ${longer.length} ${spec.unitLabel} and ${shorter.label} is ${shorter.length}. The shaded overhang is ${gap} ${spec.unitLabel} long. Your count is ${count}.`}>
         {/* shared baseline: both bars start here, so the overhang is the only difference */}
@@ -14412,7 +14413,7 @@ function LengthPickAlignW({ spec, value, onChange, disabled, tone }: WProps<TLen
     const rowY = (i: number) => topPad + i * rowH + 8;
     return (
       <div className="grid gap-3">
-        <p className="text-lg font-bold">{spec.prompt}</p>
+        <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
         <svg
           ref={svgRef}
           viewBox={`0 0 ${AW} ${AH}`}
@@ -14603,7 +14604,7 @@ function LengthPickAlignW({ spec, value, onChange, disabled, tone }: WProps<TLen
       : undefined;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div
         role="radiogroup"
         aria-label="Compare the lengths and choose"
@@ -14709,7 +14710,7 @@ function AbsValueLineW({ spec, value, onChange, disabled, tone }: WProps<TAbsVal
   const answerItem = spec.answerId === "equal" ? null : spec.items.find((i) => i.id === spec.answerId);
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         viewBox={`0 0 ${W} ${axisY + 22}`}
         className="mx-auto w-full max-w-md"
@@ -14865,7 +14866,7 @@ function SubitizeFlashW({ spec, value, onChange, disabled, tone }: WProps<TSubit
   const visible = showing || hold || reveal;
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto w-full max-w-xs rounded-card border-2 border-ink/15 bg-white">
         <svg viewBox="0 0 120 72" className="w-full" role="img" aria-label={visible ? `${spec.count} dots` : "dots hidden"}>
           <title>{visible ? `A pattern of ${spec.count} dots` : "Dots are hidden — flash to see them"}</title>
@@ -15005,7 +15006,7 @@ function MatrixTransformW({ spec, value, onChange, disabled, onEvent, tone }: WP
 
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         viewBox={`0 0 ${W} ${W}`}
         className="mx-auto w-full max-w-[18rem]"
@@ -15116,7 +15117,7 @@ function MoneyBoardW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
     }, 0);
     return (
       <div className="grid gap-4">
-        <p className="text-lg font-bold">{spec.prompt}</p>
+        <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
         <div className="mx-auto flex max-w-sm flex-wrap justify-center gap-2" role="group" aria-label="The coin collection">
           {tokens.map((t) => {
             const used = countedOf(t.cents);
@@ -15201,7 +15202,7 @@ function MoneyBoardW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const coinSize = (cents: number) => (cents >= 100 ? 46 : cents >= 25 ? 40 : cents >= 10 ? 30 : cents >= 5 ? 36 : 28);
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.mode === "change" && (
         <div
           data-testid="mb-receipt"
@@ -15329,7 +15330,7 @@ function FractionGridW({ spec, value, onChange, disabled, tone, onEvent }: WProp
   );
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
         viewBox={`0 0 ${W} ${W}`}
         className="mx-auto w-56"
@@ -15452,7 +15453,7 @@ function FractionCompareW({ spec, value, onChange, disabled, tone, onEvent }: WP
   };
   return (
     <div className="grid gap-3">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div role="group" aria-label="Two same-width bars to compare" className="mx-auto grid w-full max-w-sm gap-2">
         {barButton("left", spec.left)}
         {barButton("right", spec.right)}
@@ -15527,7 +15528,7 @@ function OddEvenPairsW({ spec, value, onChange, disabled, tone, onEvent }: WProp
   };
   return (
     <div className="grid gap-4">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {tens > 0 && (
         <p className="text-center text-sm font-bold text-ink/70">
           {tens} ten{tens > 1 ? "s" : ""} = {tens * 5} full pairs — tens ALWAYS pair. Only the ones matter:
@@ -15617,7 +15618,7 @@ function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
   const line=(a:number,o:number,color:string,width=4,dash?:string)=>{const r=rad(a),dx=Math.cos(r)*190,dy=Math.sin(r)*190,nx=-Math.sin(r)*o*18,ny=Math.cos(r)*o*18;return <line x1={cx-dx+nx} y1={cy+dy+ny} x2={cx+dx+nx} y2={cy-dy+ny} stroke={color} strokeWidth={width} strokeLinecap="round" strokeDasharray={dash}/>};
   const good=relation===spec.targetRelation && moves>=spec.requiredMoves && !(spec.targetRelation==='parallel'&&offset===0);
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Two lines are ${relation}; the angle between them is ${diff} degrees.`}>
       <defs><pattern id="lr-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke={PALETTE.ink} strokeOpacity=".06"/></pattern></defs><rect width={W} height={H} fill="url(#lr-grid)"/>
       {line(spec.baseAngle,0,PALETTE.ink,5)}{line(angle,offset,PALETTE.sky,5)}
@@ -15672,7 +15673,7 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent}:WProps<TT
   const secondX=ambiguous?B2x:B1x;
   const targetReady=criterion===spec.targetCriterion&&Math.abs(angle-spec.targetAngle)<1e-8&&moves>=spec.requiredMoves;
   const criteria=(['SSS','SAS','ASA','AAS','HL','SSA'] as Criterion[]);
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg viewBox="0 0 380 230" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${criterion} givens leave ${candidateCount===0?'no triangle':candidateCount===1?'one unique triangle':'two noncongruent triangles'} at angle ${angle} degrees.`}>
       <path d={`M ${Ax} ${Ay} L ${B1x} ${Ay} L ${Cx} ${Cy} Z`} fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="5" strokeLinejoin="round"/>
       <path d={`M ${Ax} ${Ay} L ${secondX} ${Ay} L ${Cx} ${Cy} Z`} fill="none" stroke={ambiguous?PALETTE.tangerine:PALETTE.leaf} strokeWidth="4" strokeDasharray={ambiguous?'9 6':'none'} strokeLinejoin="round" opacity={flipped||!ambiguous?1:.38}/>
@@ -15701,7 +15702,7 @@ function CoordinateProofLabW({spec,value,onChange,disabled,onEvent}:WProps<TCoor
   const toggle=(k:string)=>{const next=evidence.includes(k)?evidence.filter(e=>e!==k):[...evidence,k];onEvent?.({control:`evidence-${k}`,dir:spec.requiredEvidence.includes(k as 'slopes'|'midpoints'|'distances')?'toward':'neutral'});onChange({x,y,moves:moves+1,evidence:next})};
   const W=380,H=300,P=30,G=spec.gridMax-spec.gridMin,X=(n:number)=>P+(n-spec.gridMin)*(W-2*P)/G,Y=(n:number)=>H-P-(n-spec.gridMin)*(H-2*P)/G,atTarget=x===spec.target[0]&&y===spec.target[1],allEvidence=spec.requiredEvidence.every(e=>evidence.includes(e));
   const mAB=coordSlope(A,B),mCD=coordSlope(C,D),mBC=coordSlope(B,C),mAD=coordSlope(A,D),midAC=coordMid(A,C),midBD=coordMid(B,D),dAB=coordDist(A,B),dCD=coordDist(C,D),dBC=coordDist(B,C),dAD=coordDist(A,D);
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Quadrilateral A B C D with D at ${x}, ${y}; ${evidence.join(', ')||'no'} evidence selected.`}>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Quadrilateral A B C D with D at ${x}, ${y}; ${evidence.join(', ')||'no'} evidence selected.`}>
     {Array.from({length:G+1},(_,i)=>spec.gridMin+i).map(g=><g key={g}><line x1={X(g)} y1={Y(spec.gridMin)} x2={X(g)} y2={Y(spec.gridMax)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={X(spec.gridMin)} y1={Y(g)} x2={X(spec.gridMax)} y2={Y(g)} stroke={PALETTE.ink} strokeOpacity=".07"/><text x={X(g)} y={H-8} textAnchor="middle" fontSize="9">{g}</text><text x="12" y={Y(g)+3} textAnchor="middle" fontSize="9">{g}</text></g>)}
     <polygon points={[A,B,C,D].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".12" stroke={atTarget?PALETTE.leaf:PALETTE.sky} strokeWidth="4"/>
     {evidence.includes('midpoints')&&<><line x1={X(A[0])} y1={Y(A[1])} x2={X(C[0])} y2={Y(C[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><line x1={X(B[0])} y1={Y(B[1])} x2={X(D[0])} y2={Y(D[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><circle cx={X(midAC[0])} cy={Y(midAC[1])} r="6" fill={PALETTE.tangerine}/><circle cx={X(midBD[0])} cy={Y(midBD[1])} r="6" fill={PALETTE.berry}/></>}
@@ -15721,7 +15722,7 @@ function SolidSliceLabW({spec,value,onChange,disabled,onEvent}:WProps<TSolidSlic
   const v=value&&typeof value==='object'?value as {fraction:number;moves:number;compare:boolean}:null,fraction=v?.fraction??spec.startFraction,moves=v?.moves??0,compare=v?.compare??false;useEffect(()=>{if(!v)onChange({fraction,moves:0,compare:false});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const setFraction=(nf:number)=>{const d=moveRelation(fraction,nf,spec.targetFraction);if(d)onEvent?.({control:'section-height',dir:d});onChange({fraction:nf,moves:moves+1,compare})};const setCompare=()=>{onEvent?.({control:'comparison-solid',dir:'toward'});onChange({fraction,moves:moves+1,compare:!compare})};
   const area=solidSectionArea(spec,fraction),base=spec.baseArea??Math.PI*spec.radius*spec.radius,ratio=base?area/base:0,y=205-fraction*150,rx=78*(spec.solid==='cone'?(1-fraction):spec.solid==='sphere'?Math.sqrt(Math.max(0,1-Math.pow(2*fraction-1,2))):1),atTarget=Math.abs(fraction-spec.targetFraction)<=spec.tolerance,done=atTarget&&moves>=spec.requiredMoves&&(!spec.comparisonRequired||compare);
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><div className={`grid gap-3 ${compare?'sm:grid-cols-2':''}`}><svg viewBox="0 0 300 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${spec.solid} sliced at ${(fraction*100).toFixed(0)} percent of its height; section area ${area.toFixed(2)}.`}>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className={`grid gap-3 ${compare?'sm:grid-cols-2':''}`}><svg viewBox="0 0 300 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${spec.solid} sliced at ${(fraction*100).toFixed(0)} percent of its height; section area ${area.toFixed(2)}.`}>
     {spec.solid==='cone'?<path d="M 150 28 L 55 218 L 245 218 Z" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/>:spec.solid==='sphere'?<circle cx="150" cy="125" r="96" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/>:<><ellipse cx="150" cy="45" rx="82" ry="24" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/><path d="M 68 45 L 68 210 M 232 45 L 232 210" stroke={PALETTE.sky} strokeWidth="4"/><ellipse cx="150" cy="210" rx="82" ry="24" fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/></>}
     <ellipse cx="150" cy={y} rx={Math.max(2,rx)} ry={Math.max(2,rx*.28)} fill={PALETTE.tangerine} fillOpacity=".32" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="150" y="238" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>section = {(ratio*100).toFixed(0)}% of base area</text>
   </svg>{compare&&<div className="rounded-2xl border border-leaf/25 bg-leaf/5 p-4"><div className="flex h-full min-h-48 flex-col items-center justify-center gap-3"><div className="h-24 w-36 border-4 border-leaf bg-leaf/10"><div className="relative top-1/2 border-t-4 border-dashed border-tangerine"/></div><p className="text-center font-extrabold">Equal-area comparison prism</p><p className="text-center text-sm font-bold text-ink/70">At the same height its section is {base.toFixed(2)} square units.</p></div></div>}</div>
@@ -15741,7 +15742,7 @@ function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTria
   const set=(nx:number,ny:number)=>{const safeY=Math.max(2,ny);const before=triAngles(spec.fixedA,spec.fixedB,[x,y])[0],after=triAngles(spec.fixedA,spec.fixedB,[nx,safeY])[0];const dir=moveRelation(before,after,spec.targetAngleA);if(dir)onEvent?.({control:'vertex',dir,kind:'efficient'});onChange({x:nx,y:safeY,moves:moves+1})};
   const W=340,H=260,P=24,G=spec.gridMax,X=(n:number)=>P+n*(W-2*P)/G,Y=(n:number)=>H-P-n*(H-2*P)/G;const C:[number,number]=[x,y],angs=triAngles(spec.fixedA,spec.fixedB,C),sum=angs.reduce((a,b)=>a+b,0);
   const svgRef=useRef<SVGSVGElement>(null);const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx,vy)=>set(snapToStep((vx-P)*G/(W-2*P),0,G,0.25),snapToStep((H-P-vy)*G/(H-2*P),2,G,0.25))});
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Triangle angles ${angs.map(a=>a.toFixed(1)).join(', ')} degrees; sum ${sum.toFixed(1)} degrees.`}>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Triangle angles ${angs.map(a=>a.toFixed(1)).join(', ')} degrees; sum ${sum.toFixed(1)} degrees.`}>
     <polygon points={[spec.fixedA,spec.fixedB,C].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".14" stroke={PALETTE.sky} strokeWidth="4"/>
     {[spec.fixedA,spec.fixedB,C].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===2?9:6} fill={i===2?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+(i===2?10:-20)} y={Y(p[1])-10} fontSize="12" fontWeight="900" fill={i===2?PALETTE.tangerine:PALETTE.ink}>{angs[i].toFixed(0)}°</text></g>)}
     {!disabled&&<circle className="mt-drag-hit" cx={X(x)} cy={Y(y)} r="24" {...drag.handleProps}/>}<text x="170" y="22" textAnchor="middle" fontWeight="900" fill={PALETTE.leaf}>A + B + C = {sum.toFixed(0)}°</text>
@@ -15749,7 +15750,7 @@ function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTria
 }
 
 function scannerCount(kind: TVerticalLineScanner['relation'], x:number){if(kind==='circle')return Math.abs(x)<4?2:Math.abs(x)===4?1:0;if(kind==='sideways')return x>=0&&x<=4?2:0;if(kind==='discreteNonFunction')return Math.abs(x-1)<.26?2:Math.abs(x-3)<.26?1:0;if(kind==='discreteFunction')return [ -3,-1,1,3].some(v=>Math.abs(x-v)<.26)?1:0;return 1;}
-function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVerticalLineScanner>){const v=value&&typeof value==='object'?value as {x:number;maxIntersections:number;sweeps:number;verdict:'function'|'not-function'|null}:null;const x=v?.x??spec.scanStart,max=v?.maxIntersections??0,sweeps=v?.sweeps??0,verdict=v?.verdict??null;useEffect(()=>{if(!v)onChange({x,maxIntersections:scannerCount(spec.relation,x),sweeps:0,verdict:null});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const setX=(nx:number)=>{const c=scannerCount(spec.relation,nx);onEvent?.({control:'scanner',dir:c>1?'toward':'neutral',state:{intersections:c}});onChange({x:nx,maxIntersections:Math.max(max,c),sweeps:sweeps+1,verdict})};const W=360,H=260,G=5,{sx,sy}=gridScales({xMin:-G,xMax:G,yMin:-G,yMax:G,W,H,pad:22});const pts=samplePolyline((q)=>spec.relation==='quadratic'?q*q/3-2:spec.relation==='linear'?0.7*q+1:0,-G,G,sx,sy,{steps:100,yClip:[-G,G]});const c=scannerCount(spec.relation,x);return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Vertical scanner at x ${x} intersects ${c} times.`}>{integers(-G,G).map(g=><g key={g}><line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={sx(-G)} y1={sy(g)} x2={sx(G)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity=".07"/></g>)}
+function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVerticalLineScanner>){const v=value&&typeof value==='object'?value as {x:number;maxIntersections:number;sweeps:number;verdict:'function'|'not-function'|null}:null;const x=v?.x??spec.scanStart,max=v?.maxIntersections??0,sweeps=v?.sweeps??0,verdict=v?.verdict??null;useEffect(()=>{if(!v)onChange({x,maxIntersections:scannerCount(spec.relation,x),sweeps:0,verdict:null});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const setX=(nx:number)=>{const c=scannerCount(spec.relation,nx);onEvent?.({control:'scanner',dir:c>1?'toward':'neutral',state:{intersections:c}});onChange({x:nx,maxIntersections:Math.max(max,c),sweeps:sweeps+1,verdict})};const W=360,H=260,G=5,{sx,sy}=gridScales({xMin:-G,xMax:G,yMin:-G,yMax:G,W,H,pad:22});const pts=samplePolyline((q)=>spec.relation==='quadratic'?q*q/3-2:spec.relation==='linear'?0.7*q+1:0,-G,G,sx,sy,{steps:100,yClip:[-G,G]});const c=scannerCount(spec.relation,x);return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Vertical scanner at x ${x} intersects ${c} times.`}>{integers(-G,G).map(g=><g key={g}><line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={sx(-G)} y1={sy(g)} x2={sx(G)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity=".07"/></g>)}
     {(spec.relation==='linear'||spec.relation==='quadratic')&&<polyline points={pts} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {spec.relation==='circle'&&<circle cx={sx(0)} cy={sy(0)} r={Math.abs(sx(4)-sx(0))} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {spec.relation==='sideways'&&<path d={`M ${sx(4)} ${sy(4)} Q ${sx(-1)} ${sy(0)} ${sx(4)} ${sy(-4)}`} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
@@ -15758,7 +15759,7 @@ function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVer
   </svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
 
 function CovariationScrubberW({spec,value,onChange,disabled,onEvent}:WProps<TCovariationScrubber>){const x=typeof value==='number'?value:spec.inputStart;useEffect(()=>{if(typeof value!=='number')onChange(x);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const y=spec.a*x+spec.b,set=(nx:number)=>{const d=moveRelation(x,nx,spec.targetInput);if(d)onEvent?.({control:'input',dir:d,kind:'efficient'});onChange(nx)};// S119: the window must be five DISTINCT inputs. Clamping each cell independently collapsed the window near a bound (x=0 with inputMin=0 gave [0,0,0,1,2]) — duplicate React keys, and three identical rows in a table whose whole job is showing neighbouring values. Slide the window instead of squashing it.
-  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/></svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
+  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/></svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
 
 function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplingBiasLab>){
   const v=value&&typeof value==='object'?value as {method:'convenience'|'random'|'stratified';size:number;draws:number}:null;
@@ -15772,7 +15773,7 @@ function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplin
   const setMethod=(m:typeof method)=>{onEvent?.({control:'method',dir:m===spec.targetMethod?'toward':'away',state:{method:m}});onChange({method:m,size,draws:0})};
   const setSize=(n:number)=>{onEvent?.({control:'sample-size',dir:n>=spec.targetSize?'toward':'away',state:{size:n}});onChange({method,size:n,draws:0})};
   const draw=()=>{onEvent?.({control:'draw',dir:'neutral',kind:draws+1>=spec.requiredDraws?'efficient':undefined,state:{draws:draws+1}});onChange({method,size,draws:draws+1})};
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid grid-cols-3 gap-2">{(['convenience','random','stratified'] as const).map(m=><button type="button" key={m} disabled={disabled} onClick={()=>setMethod(m)} aria-pressed={method===m} className={`min-h-14 rounded-xl border-2 px-2 text-sm font-extrabold ${method===m?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{m}</button>)}</div>
     <label className="grid gap-1 text-sm font-bold"><span>Sample size: {size}</span><input aria-label="sample size" type="range" min={spec.sizeMin} max={spec.sizeMax} step={spec.sizeStep} value={size} disabled={disabled} onChange={e=>setSize(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
     <div className="grid grid-cols-2 gap-3"><div className="rounded-2xl border border-ink/10 p-3"><div className="mb-2 text-xs font-extrabold uppercase tracking-wide">systematic bias</div><div className="h-5 rounded-full bg-ink/10"><div className="h-5 rounded-full bg-berry transition-all" style={{width:`${Math.min(100,Math.abs(bias)*4)}%`}}/></div><p className="mt-2 text-sm font-bold">{Math.abs(bias)<=2?'selection centers near the population':'selection keeps pulling estimates away from the population'}</p></div><div className="rounded-2xl border border-ink/10 p-3"><div className="mb-2 text-xs font-extrabold uppercase tracking-wide">random variability</div><div className="h-5 rounded-full bg-ink/10"><div className="h-5 rounded-full bg-tangerine transition-all" style={{width:`${Math.min(100,variability*4)}%`}}/></div><p className="mt-2 text-sm font-bold">larger samples tighten the spread, but do not repair biased selection</p></div></div>
@@ -15805,18 +15806,18 @@ function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<T
     const L={x:55,y:205},R={x:55+base*scale,y:205},T={x:55+foot*scale,y:205-height*scale};
     const centerShift=(360-(R.x-L.x))/2-L.x;
     L.x+=centerShift;R.x+=centerShift;T.x+=centerShift;
-    return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><div className="grid gap-4 rounded-2xl border border-ink/10 bg-white p-4 md:grid-cols-[1.15fr_.85fr]"><svg viewBox="0 0 360 250" className="w-full" role="img" aria-label={`Triangle givens. Sides ${sides?.join(", ")??"not supplied"}. Angles ${angles?.join(", ")??"not supplied"}.`}><polygon points={`${L.x},${L.y} ${T.x},${T.y} ${R.x},${R.y}`} fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.ink} strokeWidth="5" strokeLinejoin="round"/>{sides&&<><text x={(L.x+T.x)/2-10} y={(L.y+T.y)/2} fontWeight="900" fill={PALETTE.ink}>{sides[0]}</text><text x={(R.x+T.x)/2+10} y={(R.y+T.y)/2} fontWeight="900" fill={PALETTE.ink}>{sides[1]}</text><text x={(L.x+R.x)/2} y="230" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{sides[2]}</text></>}{angles&&<><text x={L.x+18} y={L.y-12} fontWeight="900" fill={PALETTE.tangerine}>{angles[0]}°</text><text x={T.x} y={T.y+28} textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>{angles[1]}°</text><text x={R.x-18} y={R.y-12} textAnchor="end" fontWeight="900" fill={PALETTE.tangerine}>{angles[2]}°</text></>}<path d="M 38 218 H 322" stroke={PALETTE.ink} strokeWidth="2" strokeDasharray="5 5"/><text x="180" y="247" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.ink}>fixed givens — classify, do not reshape</text></svg><div className="grid content-center gap-3"><div className="rounded-xl border border-ink/10 p-3"><div className="text-xs font-extrabold uppercase tracking-wide">side family</div><div className="mt-2 flex flex-wrap gap-2">{["equilateral","isosceles","scalene"].map(label=><span key={label} className={`rounded-full border-2 px-3 py-1 text-sm font-extrabold ${claimLabels.includes(label)?"border-sky bg-sky/10":"border-ink/10 text-ink/45"}`}>{label}</span>)}</div></div><div className="rounded-xl border border-ink/10 p-3"><div className="text-xs font-extrabold uppercase tracking-wide">angle family</div><div className="mt-2 flex flex-wrap gap-2">{["acute","right","obtuse"].map(label=><span key={label} className={`rounded-full border-2 px-3 py-1 text-sm font-extrabold ${claimLabels.includes(label)?"border-tangerine bg-tangerine/10":"border-ink/10 text-ink/45"}`}>{label}</span>)}</div></div><div className="rounded-xl bg-ink/[.035] p-3 text-sm font-bold">The engine independently derives: {expected.join(" + ")}.</div></div></div>{choiceButtons}{evidence}{reveal}</div>;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="grid gap-4 rounded-2xl border border-ink/10 bg-white p-4 md:grid-cols-[1.15fr_.85fr]"><svg viewBox="0 0 360 250" className="w-full" role="img" aria-label={`Triangle givens. Sides ${sides?.join(", ")??"not supplied"}. Angles ${angles?.join(", ")??"not supplied"}.`}><polygon points={`${L.x},${L.y} ${T.x},${T.y} ${R.x},${R.y}`} fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.ink} strokeWidth="5" strokeLinejoin="round"/>{sides&&<><text x={(L.x+T.x)/2-10} y={(L.y+T.y)/2} fontWeight="900" fill={PALETTE.ink}>{sides[0]}</text><text x={(R.x+T.x)/2+10} y={(R.y+T.y)/2} fontWeight="900" fill={PALETTE.ink}>{sides[1]}</text><text x={(L.x+R.x)/2} y="230" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{sides[2]}</text></>}{angles&&<><text x={L.x+18} y={L.y-12} fontWeight="900" fill={PALETTE.tangerine}>{angles[0]}°</text><text x={T.x} y={T.y+28} textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>{angles[1]}°</text><text x={R.x-18} y={R.y-12} textAnchor="end" fontWeight="900" fill={PALETTE.tangerine}>{angles[2]}°</text></>}<path d="M 38 218 H 322" stroke={PALETTE.ink} strokeWidth="2" strokeDasharray="5 5"/><text x="180" y="247" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.ink}>fixed givens — classify, do not reshape</text></svg><div className="grid content-center gap-3"><div className="rounded-xl border border-ink/10 p-3"><div className="text-xs font-extrabold uppercase tracking-wide">side family</div><div className="mt-2 flex flex-wrap gap-2">{["equilateral","isosceles","scalene"].map(label=><span key={label} className={`rounded-full border-2 px-3 py-1 text-sm font-extrabold ${claimLabels.includes(label)?"border-sky bg-sky/10":"border-ink/10 text-ink/45"}`}>{label}</span>)}</div></div><div className="rounded-xl border border-ink/10 p-3"><div className="text-xs font-extrabold uppercase tracking-wide">angle family</div><div className="mt-2 flex flex-wrap gap-2">{["acute","right","obtuse"].map(label=><span key={label} className={`rounded-full border-2 px-3 py-1 text-sm font-extrabold ${claimLabels.includes(label)?"border-tangerine bg-tangerine/10":"border-ink/10 text-ink/45"}`}>{label}</span>)}</div></div><div className="rounded-xl bg-ink/[.035] p-3 text-sm font-bold">The engine independently derives: {expected.join(" + ")}.</div></div></div>{choiceButtons}{evidence}{reveal}</div>;
   }
   if(spec.mode==="verdict"){
     const claim=selected?.claim??null;
     const verdict=claim?.startsWith("always")?"always":claim?.startsWith("sometimes")?"sometimes":claim?.startsWith("never")?"never":claim;
     const relationDiagram=verdict?<svg viewBox="0 0 420 210" className="w-full" role="img" aria-label={`Selected verdict ${claim} for ${spec.subjectLabel} compared with ${spec.predicateLabel}.`}>{verdict==="always"?<><circle cx="215" cy="105" r="86" fill={PALETTE.tangerine} fillOpacity=".08" stroke={PALETTE.tangerine} strokeWidth="4"/><circle cx="215" cy="105" r="45" fill={PALETTE.sky} fillOpacity=".18" stroke={PALETTE.sky} strokeWidth="4"/><text x="215" y="101" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.subjectLabel}</text><text x="215" y="183" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.predicateLabel}</text></>:verdict==="sometimes"?<><circle cx="170" cy="105" r="72" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="250" cy="105" r="72" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="125" y="108" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="108" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="210" y="198" textAnchor="middle" fontSize="12" fontWeight="900">overlap needs an example AND a counterexample</text></>:<><circle cx="125" cy="105" r="62" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="295" cy="105" r="62" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><line x1="205" y1="35" x2="205" y2="175" stroke={PALETTE.berry} strokeWidth="5" strokeDasharray="10 7"/><text x="125" y="109" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="109" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="205" y="198" textAnchor="middle" fontSize="12" fontWeight="900">a blocker keeps the families apart</text></>}</svg>:<div className="grid min-h-52 place-items-center rounded-2xl border border-dashed border-ink/25 bg-white p-6 text-center font-bold text-ink/60">Choose always, sometimes, or never to build the corresponding relationship model.</div>;
-    return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3"><LabReadout label="example" value={spec.witness??"not required"}/><LabReadout label="counterexample" value={spec.counterexample??"not required"}/><LabReadout label="blocker" value={spec.blocker??"not required"}/></div>{evidence}{reveal}</div>;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3"><LabReadout label="example" value={spec.witness??"not required"}/><LabReadout label="counterexample" value={spec.counterexample??"not required"}/><LabReadout label="blocker" value={spec.blocker??"not required"}/></div>{evidence}{reveal}</div>;
   }
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><div className="grid gap-2 rounded-2xl border border-ink/10 bg-white p-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">{spec.nodes.map((node,index)=><Fragment key={node.id}><div className={`rounded-xl border-2 p-3 text-center ${highlighted.has(node.id)?"border-sky bg-sky/10":"border-ink/15"}`}><div className="font-black">{node.label}</div><div className="mt-1 text-xs font-bold text-ink/65">{node.attributes.join(" · ")||"family node"}</div></div>{index<spec.nodes.length-1&&<div className="grid place-items-center text-2xl font-black text-tangerine" aria-hidden="true">↓</div>}</Fragment>)}</div>{spec.propertyLabel&&<div className="rounded-xl border-2 border-dashed border-tangerine/60 bg-tangerine/5 p-3 text-center font-extrabold">property riding the path: {spec.propertyLabel}</div>}{choiceButtons}{evidence}{reveal}</div>;
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="grid gap-2 rounded-2xl border border-ink/10 bg-white p-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">{spec.nodes.map((node,index)=><Fragment key={node.id}><div className={`rounded-xl border-2 p-3 text-center ${highlighted.has(node.id)?"border-sky bg-sky/10":"border-ink/15"}`}><div className="font-black">{node.label}</div><div className="mt-1 text-xs font-bold text-ink/65">{node.attributes.join(" · ")||"family node"}</div></div>{index<spec.nodes.length-1&&<div className="grid place-items-center text-2xl font-black text-tangerine" aria-hidden="true">↓</div>}</Fragment>)}</div>{spec.propertyLabel&&<div className="rounded-xl border-2 border-dashed border-tangerine/60 bg-tangerine/5 p-3 text-center font-extrabold">property riding the path: {spec.propertyLabel}</div>}{choiceButtons}{evidence}{reveal}</div>;
 }
 
-function ShapeFamilyBuilderW({spec,value,onChange,disabled,onEvent}:WProps<TShapeFamilyBuilder>){const v=value&&typeof value==='object'?value as {sides:number;rightAngles:number;equalSides:number;parallelPairs:number}:null;const st=v??{sides:spec.startSides,rightAngles:0,equalSides:0,parallelPairs:0};useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const set=(k:keyof typeof st,n:number)=>{const nv={...st,[k]:n};const target={sides:spec.targetSides,rightAngles:spec.targetRightAngles,equalSides:spec.targetEqualSides,parallelPairs:spec.targetParallelPairs}[k];const d=moveRelation(st[k],n,target);if(d)onEvent?.({control:k,dir:d});onChange(nv)};const pts=shapePoints(st.sides,st.rightAngles,st.equalSides,st.parallelPairs);const done=st.sides===spec.targetSides&&st.rightAngles===spec.targetRightAngles&&st.equalSides===spec.targetEqualSides&&st.parallelPairs===spec.targetParallelPairs;const ctrl=(label:string,k:keyof typeof st,max:number)=><div className="rounded-xl border border-ink/10 p-3"><div className="flex items-center justify-between gap-2"><span className="text-sm font-extrabold">{label}</span><span className="font-black tabular-nums">{st[k]}</span></div><input aria-label={`Set ${label}`} type="range" min="0" max={max} step="1" value={st[k]} disabled={disabled} onChange={e=>set(k,Number(e.target.value))} className="h-10 w-full accent-sky"/></div>;return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><svg viewBox="0 0 320 240" className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`A ${st.sides}-sided shape with ${st.rightAngles} right angles, ${st.equalSides} equal sides, and ${st.parallelPairs} parallel pairs.`}><polygon points={pts.map(p=>p.join(',')).join(' ')} fill={PALETTE.sky} fillOpacity=".14" stroke={done?PALETTE.leaf:PALETTE.sky} strokeWidth="5" strokeLinejoin="round"/><text x="160" y="228" textAnchor="middle" fontWeight="900" fill={done?PALETTE.leaf:PALETTE.ink}>{done?spec.targetName:'build from attributes'}</text></svg><div className="grid gap-2 sm:grid-cols-2">{ctrl('sides','sides',6)}{ctrl('right angles','rightAngles',4)}{ctrl('equal sides','equalSides',4)}{ctrl('parallel pairs','parallelPairs',2)}</div><div className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">A family name comes from the rules the shape satisfies—not from its size, tilt, or color.</div></div>}
+function ShapeFamilyBuilderW({spec,value,onChange,disabled,onEvent}:WProps<TShapeFamilyBuilder>){const v=value&&typeof value==='object'?value as {sides:number;rightAngles:number;equalSides:number;parallelPairs:number}:null;const st=v??{sides:spec.startSides,rightAngles:0,equalSides:0,parallelPairs:0};useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const set=(k:keyof typeof st,n:number)=>{const nv={...st,[k]:n};const target={sides:spec.targetSides,rightAngles:spec.targetRightAngles,equalSides:spec.targetEqualSides,parallelPairs:spec.targetParallelPairs}[k];const d=moveRelation(st[k],n,target);if(d)onEvent?.({control:k,dir:d});onChange(nv)};const pts=shapePoints(st.sides,st.rightAngles,st.equalSides,st.parallelPairs);const done=st.sides===spec.targetSides&&st.rightAngles===spec.targetRightAngles&&st.equalSides===spec.targetEqualSides&&st.parallelPairs===spec.targetParallelPairs;const ctrl=(label:string,k:keyof typeof st,max:number)=><div className="rounded-xl border border-ink/10 p-3"><div className="flex items-center justify-between gap-2"><span className="text-sm font-extrabold">{label}</span><span className="font-black tabular-nums">{st[k]}</span></div><input aria-label={`Set ${label}`} type="range" min="0" max={max} step="1" value={st[k]} disabled={disabled} onChange={e=>set(k,Number(e.target.value))} className="h-10 w-full accent-sky"/></div>;return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox="0 0 320 240" className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`A ${st.sides}-sided shape with ${st.rightAngles} right angles, ${st.equalSides} equal sides, and ${st.parallelPairs} parallel pairs.`}><polygon points={pts.map(p=>p.join(',')).join(' ')} fill={PALETTE.sky} fillOpacity=".14" stroke={done?PALETTE.leaf:PALETTE.sky} strokeWidth="5" strokeLinejoin="round"/><text x="160" y="228" textAnchor="middle" fontWeight="900" fill={done?PALETTE.leaf:PALETTE.ink}>{done?spec.targetName:'build from attributes'}</text></svg><div className="grid gap-2 sm:grid-cols-2">{ctrl('sides','sides',6)}{ctrl('right angles','rightAngles',4)}{ctrl('equal sides','equalSides',4)}{ctrl('parallel pairs','parallelPairs',2)}</div><div className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">A family name comes from the rules the shape satisfies—not from its size, tilt, or color.</div></div>}
 
 function UnitRulerW({spec,value,onChange,disabled,onEvent}:WProps<TUnitRuler>){
   const v=value&&typeof value==='object'?value as {zeroAligned:boolean;unitSize:number;placements:number;spacing:'exact'|'gap'|'overlap'}:null;
@@ -15830,7 +15831,7 @@ function UnitRulerW({spec,value,onChange,disabled,onEvent}:WProps<TUnitRuler>){
   const remove=()=>{const next=Math.max(0,st.placements-1);onEvent?.({control:'iterate-unit',dir:st.placements>spec.requiredPlacements?'toward':'away',state:{placements:next}});set({placements:next})};
   const chooseUnit=(u:number)=>{onEvent?.({control:'unit-size',dir:u===spec.targetUnitSize?'toward':'away',state:{unitSize:u}});set({unitSize:u,placements:0})};
   const chooseSpacing=(k:typeof st.spacing)=>{onEvent?.({control:'spacing',dir:k==='exact'?'toward':'away',state:{spacing:k}});set({spacing:k})};
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(spec.objectStart)} y1="52" x2={x(spec.objectEnd)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(spec.objectStart)+x(spec.objectEnd))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=(st.zeroAligned?spec.objectStart:0)+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(spec.objectStart)} y1="52" x2={x(spec.objectEnd)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(spec.objectStart)+x(spec.objectEnd))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=(st.zeroAligned?spec.objectStart:0)+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
     <div className="grid grid-cols-3 gap-2"><button type="button" disabled={disabled} onClick={()=>{onEvent?.({control:'zero',dir:'toward',kind:'efficient'});set({zeroAligned:true,placements:0})}} className={`min-h-12 rounded-xl border-2 font-extrabold ${st.zeroAligned?'border-leaf bg-leaf/10':'border-ink/15 bg-white'}`}>Align zero</button><button type="button" disabled={disabled||st.placements===0} onClick={remove} className="min-h-12 rounded-xl border-2 border-ink/15 bg-white font-extrabold disabled:text-ink/30">Remove unit</button><button type="button" disabled={disabled||st.placements>=maxPlacements} onClick={place} className="min-h-12 rounded-xl bg-cta font-extrabold text-white disabled:opacity-50">Place unit</button></div>
     <div className="grid grid-cols-3 gap-2">{spec.allowedUnitSizes.map(u=><button type="button" key={u} disabled={disabled} onClick={()=>chooseUnit(u)} aria-pressed={st.unitSize===u} className={`min-h-11 rounded-xl border-2 font-bold ${st.unitSize===u?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>unit {u}</button>)}</div>
     <div className="grid grid-cols-3 gap-2">{(['exact','gap','overlap'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>chooseSpacing(k)} aria-pressed={st.spacing===k} className={`min-h-11 rounded-xl border-2 text-sm font-bold ${st.spacing===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k}</button>)}</div>
@@ -15869,7 +15870,7 @@ function ConditionalTableConditionW({ spec, value, onChange, disabled, onEvent, 
   const reverseCondition: Condition|null = st.cell ? (st.condition.startsWith("row") ? `col${st.cell[3]}` : `row${st.cell[1]}`) as Condition : null;
   const reverseDen = reverseCondition ? cells.filter(c=>inCondition(c,reverseCondition)).reduce((n,c)=>n+count(c),0) : 0;
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-label="Choose the condition">
       {(["row0","row1","col0","col1"] as Condition[]).map(c=><button key={c} type="button" disabled={disabled} aria-pressed={st.condition===c} onClick={()=>setCondition(c)} className={`min-h-12 rounded-xl border-2 px-2 text-sm font-extrabold ${st.condition===c?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>Given {conditionLabel(c)}</button>)}
     </div>
@@ -15923,7 +15924,7 @@ function ConditionalTableReadW({ spec, value, onChange, disabled, onEvent, tone 
   };
   const metricLabel = metric === "cell" ? "cell count" : metric === "rowTotal" ? "row total" : metric === "colTotal" ? "column total" : metric === "grandTotal" ? "grand total" : metric === "relativeWhole" ? "percent of everyone" : metric === "relativeRow" ? `percent of ${spec.rowLabels[row]}` : `percent of ${spec.colLabels[col]}`;
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="overflow-x-auto rounded-2xl border border-ink/15 bg-white p-3">
       <table className="w-full border-separate border-spacing-2 text-center text-sm">
         <thead><tr><th></th>{spec.colLabels.map((label,c)=><th key={label} className={`rounded-lg px-2 py-2 ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>)}<th>Total</th></tr></thead>
@@ -15961,7 +15962,7 @@ function ConicLocusLabW({ spec, value, onChange, disabled, onEvent, tone }: WPro
   const focusX = family === "hyperbola" ? 232 : family === "parabola" ? 190 : 190 + Math.min(62, e*58);
   const directrixX = family === "parabola" ? 125 : 70;
   return <div className="grid gap-4">
-    <p className="text-lg font-bold">{spec.prompt}</p>
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg viewBox="0 0 380 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Eccentricity ${e.toFixed(1)} produces a ${family}.`}>
       <defs><pattern id="conic-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M 25 0 L 0 0 0 25" fill="none" stroke={PALETTE.ink} strokeOpacity=".05"/></pattern></defs>
       <rect width="380" height="250" fill="url(#conic-grid)"/>
@@ -16008,7 +16009,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
   if(spec.mode==='product'){
     const f=3,g=2,fp=1,gp=1,h=st.h,df=fp*h,dg=gp*h;
     const quotient=fp*g+f*gp+fp*gp*h;
-    return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p>
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox="0 0 420 255" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Product rectangle change with h ${h.toFixed(2)}; second order corner area ${Math.pow(h,2).toFixed(3)}.`}>
         <rect x="55" y="45" width={f*65} height={g*65} fill={PALETTE.sky} fillOpacity=".18" stroke={PALETTE.sky} strokeWidth="4"/>
         <rect x={55+f*65} y="45" width={df*65} height={g*65} fill={PALETTE.leaf} fillOpacity=".35" stroke={PALETTE.leaf} strokeWidth="2"/>
@@ -16028,8 +16029,24 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
         </p>
       )}</div>;
   }
+  if(spec.mode==='quotient'){
+    const u=spec.quotientU,v=spec.quotientV,up=st.innerRate,vp=st.outerRate;
+    const first=up*v,second=u*vp,numerator=first-second,denominator=v*v,result=numerator/denominator;
+    const solved=up===spec.targetInnerRate&&vp===spec.targetOuterRate;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <div className="rounded-2xl border border-ink/10 bg-white p-4" role="img" aria-label={`Quotient derivative model. u is ${u}, v is ${v}, u prime is ${up}, and v prime is ${vp}. The first numerator product is ${first}; the second is ${second}; their ordered difference is ${numerator}; the denominator is v squared, ${denominator}; the derivative is ${result}.`}>
+        <div className="grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr]"><div className="rounded-xl border-2 border-sky/35 bg-sky/10 p-3 text-center"><div className="text-xs font-extrabold uppercase">first: u'v</div><div className="mt-1 text-2xl font-black tabular-nums">{up} × {v} = {first}</div></div><div className="grid place-items-center text-3xl font-black text-berry" aria-label="minus">−</div><div className="rounded-xl border-2 border-tangerine/35 bg-tangerine/10 p-3 text-center"><div className="text-xs font-extrabold uppercase">second: uv'</div><div className="mt-1 text-2xl font-black tabular-nums">{u} × {vp} = {second}</div></div></div>
+        <div className="mx-auto mt-3 max-w-sm text-center"><div className="border-b-2 border-ink px-4 pb-2 text-2xl font-black tabular-nums">{first} − {second} = {numerator}</div><div className="px-4 pt-2 text-2xl font-black tabular-nums">v² = {v}² = {denominator}</div></div>
+      </div>
+      <div className="grid grid-cols-3 gap-2"><LabReadout label="ordered numerator" value={String(numerator)} tone={numerator<0?'warn':'neutral'}/><LabReadout label="v²" value={String(denominator)}/><LabReadout label="quotient rate" value={Number(result.toFixed(4)).toString()} tone={solved?'good':'neutral'}/></div>
+      <label className="grid gap-1 text-sm font-bold"><span>Change the top rate u'</span><input aria-label="quotient numerator derivative rate" type="range" min="1" max="6" step="1" value={up} disabled={disabled} onChange={e=>set({innerRate:Number(e.target.value)},'inner-rate',spec.targetInnerRate)} className="h-11 w-full accent-sky"/></label>
+      <label className="grid gap-1 text-sm font-bold"><span>Change the bottom rate v'</span><input aria-label="quotient denominator derivative rate" type="range" min="1" max="6" step="1" value={vp} disabled={disabled} onChange={e=>set({outerRate:Number(e.target.value)},'outer-rate',spec.targetOuterRate)} className="h-11 w-full accent-tangerine"/></label>
+      <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The order is structural: top-rate × bottom minus top × bottom-rate, all over the unchanged bottom squared.</p>
+      {tone==='info'&&!solved&&<p data-testid="dr-ghost" aria-hidden="true" className="mx-auto rounded-xl border-2 border-dashed border-tangerine/70 bg-tangerine/5 px-4 py-2 text-center text-sm font-extrabold tabular-nums text-tangerine-ink">asked: u' = {spec.targetInnerRate}, v' = {spec.targetOuterRate}</p>}
+    </div>;
+  }
   const product=st.innerRate*st.outerRate;
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 rounded-2xl border border-ink/10 bg-white p-4 text-center"><div className="rounded-xl bg-ink/5 p-4 font-black">x</div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-sky/10 p-4"><div className="text-xs font-extrabold uppercase">inner u(x)</div><div className="text-2xl font-black">du/dx = {st.innerRate}</div></div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-tangerine/10 p-4"><div className="text-xs font-extrabold uppercase">outer f(u)</div><div className="text-2xl font-black">df/du = {st.outerRate}</div></div></div>
     <div className="grid grid-cols-3 gap-2"><LabReadout label="inner rate" value={String(st.innerRate)} tone={st.innerRate===spec.targetInnerRate?'good':'neutral'}/><LabReadout label="outer rate" value={String(st.outerRate)} tone={st.outerRate===spec.targetOuterRate?'good':'neutral'}/><LabReadout label="total rate" value={String(product)} tone={st.innerRate===spec.targetInnerRate&&st.outerRate===spec.targetOuterRate?'good':'neutral'}/></div>
     <label className="grid gap-1 text-sm font-bold"><span>Change du/dx</span><input aria-label="inner derivative rate" type="range" min="1" max="6" step="1" value={st.innerRate} disabled={disabled} onChange={e=>set({innerRate:Number(e.target.value)},'inner-rate',spec.targetInnerRate)} className="h-11 w-full accent-sky"/></label>
@@ -16051,7 +16068,7 @@ function RelatedRatesLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
   const L=spec.ladderLength,x=Math.min(L-.05,st.x),y=Math.sqrt(Math.max(0,L*L-x*x)),verticalRate=-(x/y)*spec.horizontalRate;
   const setX=(next:number)=>{const d=moveRelation(st.x,next,spec.targetX);if(d)onEvent?.({control:'ladder-foot',dir:d,kind:'efficient'});onChange({x:next,moves:st.moves+1})};
   const sx=(n:number)=>70+n*(250/L), sy=(n:number)=>220-n*(180/L);
-  return <div className="grid gap-4"><p className="text-lg font-bold">{spec.prompt}</p>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={spec.framing==="slope"?`A point on the circle x² + y² = ${L}² sits at x ${x.toFixed(1)}, y ${y.toFixed(2)}; the slope dy/dx there is ${verticalRate.toFixed(2)}.`:`A ${L}-unit ladder has foot x ${x.toFixed(1)}, height y ${y.toFixed(2)}, and vertical rate ${verticalRate.toFixed(2)}.`}><line x1="70" y1="20" x2="70" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1="70" y1="220" x2="355" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1={sx(0)} y1={sy(y)} x2={sx(x)} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="10" strokeLinecap="round"/><circle cx={sx(x)} cy={sy(0)} r="9" fill={PALETTE.tangerine}/><circle cx={sx(0)} cy={sy(y)} r="9" fill={PALETTE.leaf}/><path d="M 70 202 h 18 v 18" fill="none" stroke={PALETTE.berry} strokeWidth="3"/><text x="205" y="242" textAnchor="middle" fontSize="12" fontWeight="900">x² + y² = {L}²</text>
     {/* Reveal ghost: the ladder AT the target foot position, dashed — mirrors
         evaluate (x === targetX). Same invariant length; only the configuration

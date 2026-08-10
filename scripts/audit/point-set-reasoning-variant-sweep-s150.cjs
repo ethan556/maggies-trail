@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),crypto=require('node:crypto'),child=require('node:child_process');
 const root=path.resolve(__dirname,'../..'),srcRoot=path.join(root,'src/lib'),out=fs.mkdtempSync(path.join(os.tmpdir(),'s150-pointset-'));
-function loadTs(){const c=['/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/node22/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}const ts=loadTs();
+function loadTs(){const c=[path.join(root,'node_modules/typescript/lib/typescript.js'),'/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/node22/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}const ts=loadTs();
 const clean=n=>{const r=Math.round(n*1e12)/1e12;return Object.is(r,-0)?0:r};const fmt=n=>Number.isInteger(n)?String(n):String(+n.toFixed(6));
 function truth(spec){const target=spec.sets.find(s=>s.id===spec.targetSetId)||spec.sets[0],point=id=>target.points.find(p=>p.id===id)||target.points[0],values=target.points.map(p=>p.x),stages=[];let answerNumber,answerClaim;
  switch(spec.task){

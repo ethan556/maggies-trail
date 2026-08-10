@@ -4,7 +4,7 @@ import { localDateStr } from "@/lib/engine";
 import { loadManifest, PILOT_REGION_ID, regionWorld } from "@/world/worldServer";
 import { WorldShell } from "@/world/WorldShell";
 import { Trailhead } from "@/world/Trailhead";
-import { WorldPreferences } from "@/world/WorldPreferences";
+import { WorldPreferences } from "@/world/WorldModePreferences";
 
 export const metadata: Metadata = { title: "Trailhead — Maggie's Trail" };
 

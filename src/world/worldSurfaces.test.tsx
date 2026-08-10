@@ -24,7 +24,7 @@ import { Atlas } from "./Atlas";
 import { regionRoots, worldSlice } from "./worldSlice";
 import type { AtlasSearchIndex } from "./atlasSearch";
 import { Basecamp } from "./Basecamp";
-import { WorldPreferences } from "./WorldPreferences";
+import { WorldPreferences } from "./WorldModePreferences";
 import { emptyProfile, progressStore, type Profile } from "@/lib/progress";
 import { Instruments } from "./Instruments";
 import { ReturnPaths } from "./ReturnPaths";

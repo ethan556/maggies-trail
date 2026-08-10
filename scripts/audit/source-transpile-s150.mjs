@@ -7,8 +7,12 @@ import { createRequire } from "node:module";
 const root=resolve(import.meta.dirname,"../..");
 const require=createRequire(import.meta.url);
 let ts;
-for (const candidate of ["typescript", join(execFileSync("npm",["root","-g"],{encoding:"utf8"}).trim(),"typescript")]) {
-  try { ts=require(candidate); break; } catch {}
+try { ts=require("typescript"); } catch {}
+if (!ts) {
+  try {
+    const npmCommand=process.platform==="win32"?"npm.cmd":"npm";
+    ts=require(join(execFileSync(npmCommand,["root","-g"],{encoding:"utf8"}).trim(),"typescript"));
+  } catch {}
 }
 if(!ts) throw new Error("TypeScript compiler unavailable for dependency-free source transpilation");
 const files=[

@@ -4,8 +4,8 @@ Regenerate with `node scripts/gen-product-state.mjs`. Every count below is deriv
 from disk (the curriculum manifest, the schema registry, and a content walk) so the
 rest of the docs can cite this file instead of re-counting. Commit `not-recorded-in-source-archive`.
 
-Authored corpus SHA-256: `b6461fe5b12d211f98ac3f65fe9aa14fa2e36288aa93a4bbfda7b3476525cf19`  
-State generated: `2026-08-09T23:55:26.202Z`
+Authored corpus SHA-256: `edfcdba833db1261de22fcf596e47873428623c524d4bacfe836adff6e707ceb`
+State generated: `2026-08-10T18:10:23.883Z`
 
 ## Catalogue
 
@@ -24,10 +24,10 @@ State generated: `2026-08-09T23:55:26.202Z`
 
 | tier | lessons |
 | --- | --: |
-| A — complete laboratory | 1186 |
-| B — rich, one phase missing | 457 |
-| C — conventional-plus | 57 |
-| D — misclassified / weak | 1 |
+| A — complete laboratory | 1187 |
+| B — rich, one phase missing | 458 |
+| C — conventional-plus | 56 |
+| D — misclassified / weak | 0 |
 
 K–8: Tier A 821, Tier B 253.
 
@@ -65,9 +65,9 @@ K–8: Tier A 821, Tier B 253.
 | --- | --- |
 | Unit/integration tests | 12925 across 322 files |
 | — count source | last certified exact-lock run (Session 218; carried forward, not rerun in this checkout) |
-| Browser test declarations in current tree | 30 |
+| Browser test declarations in current tree | 32 |
 | Last certified Playwright executions | 115 (Session 218; not rerun on current tree) |
-| Bundle size | not measured |
+| Bundle size | 6.88 MB static JS |
 | Build time | not measured on current verified tree |
 | Accessibility | current-tree browser execution not available in this checkout; last certified Playwright baseline is Session 218, while source-level harness contracts cover the current tree |
 | Deployment | Next.js app; learner core is local-first; accounts and sync require a writable single-node SQLite volume; no hosted deployment configured |

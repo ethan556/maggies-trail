@@ -232,7 +232,7 @@ export default function SiteNav() {
       {/* Top bar — brand + primary links (desktop) / brand + sync (mobile) */}
       <header className="sticky top-0 z-30 border-b border-ink/8 bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70 dark:border-paper/8">
         <nav aria-label="Main" className="mx-auto flex max-w-5xl items-center gap-2 px-4 py-2.5">
-          <Link href="/" className="mr-auto flex min-h-11 items-center gap-2 font-extrabold tracking-tight md:mr-3">
+          <Link href="/" className="mr-auto flex min-h-11 min-w-11 items-center justify-center gap-2 font-extrabold tracking-tight sm:justify-start md:mr-3">
             <Mark />
             <span className="hidden sm:inline">{brand}</span>
           </Link>

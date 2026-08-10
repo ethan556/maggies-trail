@@ -169,14 +169,14 @@ export function Basecamp({
                     <span className="sr-only">Landmark {landmarkIndex + 1}: </span>
                     <span className="truncate">{landmark.name}</span>
                     {!premium && landmarkIndex > 0 && (
-                      <Link href="/premium" className="ml-1 inline-flex min-h-6 items-center rounded-pill bg-tangerine/10 px-2 text-[11px] font-extrabold uppercase tracking-wide text-tangerine-ink hover:underline">Premium</Link>
+                      <Link href="/premium" className="ml-1 inline-flex min-h-11 items-center rounded-pill bg-tangerine/10 px-3 text-[11px] font-extrabold uppercase tracking-wide text-tangerine-ink hover:underline">Premium</Link>
                     )}
                   </h3>
                   <span className="flex items-center gap-2">
                     <span className="text-xs font-bold tabular-nums text-content-2">{state ? `${state.completed}/${state.total}` : `0/${landmark.waypointIds.length}`}</span>
-                    <Link href={`/practice/${landmark.chapterId}`} className="rounded-pill border border-ink/15 px-3 py-1.5 text-xs font-extrabold hover:border-sky hover:text-sky-ink dark:border-paper/15">Practice</Link>
+                    <Link href={`/practice/${landmark.chapterId}`} className="inline-flex min-h-11 items-center rounded-pill border border-ink/15 px-3 text-xs font-extrabold hover:border-sky hover:text-sky-ink dark:border-paper/15">Practice</Link>
                     {!complete && (
-                      <Link href={`/practice/${landmark.chapterId}?testout=1`} className="rounded-pill border border-tangerine/50 px-3 py-1.5 text-xs font-extrabold text-tangerine-ink hover:border-tangerine">Test out</Link>
+                      <Link href={`/practice/${landmark.chapterId}?testout=1`} className="inline-flex min-h-11 items-center rounded-pill border border-tangerine/50 px-3 text-xs font-extrabold text-tangerine-ink hover:border-tangerine">Test out</Link>
                     )}
                   </span>
                 </div>
@@ -222,7 +222,7 @@ export function Basecamp({
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {masteryConcepts.map(([tag, label]) => (
-              <Link key={tag} href={`/mastery/${encodeURIComponent(tag)}`} className="rounded-full border-2 border-sky/30 bg-surface px-3 py-2 text-sm font-extrabold capitalize hover:border-sky dark:bg-ink/40">
+              <Link key={tag} href={`/mastery/${encodeURIComponent(tag)}`} className="inline-flex min-h-11 items-center rounded-full border-2 border-sky/30 bg-surface px-3 text-sm font-extrabold capitalize hover:border-sky dark:bg-ink/40">
                 {label}
               </Link>
             ))}

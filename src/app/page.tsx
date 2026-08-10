@@ -105,7 +105,7 @@ export default async function Home() {
           <h2 className="text-2xl font-extrabold tracking-tight">
             {courseCount} courses, Kindergarten through calculus
           </h2>
-          <Link href="/courses" className="hidden shrink-0 items-center gap-1 text-sm font-bold text-sky-ink hover:underline sm:flex">
+          <Link href="/courses" className="hidden min-h-11 shrink-0 items-center gap-1 px-2 text-sm font-bold text-sky-ink hover:underline sm:flex">
             See all <AppIcon name="chevronRight" size={16} />
           </Link>
         </div>

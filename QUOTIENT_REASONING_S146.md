@@ -13,7 +13,7 @@
 ## Preservation
 
 - Variant declarations preserved: **True**
-- Changed lesson files: **860**
+- Changed lesson files: **862**
 - All prompts, answers, misconception feedback, order, IDs, and non-widget authored content are checked against sealed baselines.
 
 ## Errors

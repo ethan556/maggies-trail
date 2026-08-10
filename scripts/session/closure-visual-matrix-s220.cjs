@@ -122,7 +122,7 @@ async function pageMetrics(page) {
           label: el.getAttribute("aria-label") || el.textContent?.trim().replace(/\s+/g, " ").slice(0, 60) || ""
         };
       });
-    const smallTargets = controls.filter((c) => c.width < 24 || c.height < 24).slice(0, 20);
+    const smallTargets = controls.filter((c) => c.width < 44 || c.height < 44).slice(0, 20);
     return {
       width: innerWidth,
       height: innerHeight,
@@ -132,6 +132,7 @@ async function pageMetrics(page) {
       h1: document.querySelector("h1")?.textContent?.trim().replace(/\s+/g, " ").slice(0, 140) || null,
       visibleControlCount: controls.length,
       smallTargetCount24: controls.filter((c) => c.width < 24 || c.height < 24).length,
+      smallTargetCount44: controls.filter((c) => c.width < 44 || c.height < 44).length,
       smallTargetExamples: smallTargets
     };
   });
@@ -177,6 +178,8 @@ async function capture(browser, viewport, theme, surface) {
 
     if (metrics.hOverflow > OVERFLOW_TOLERANCE_PX) {
       failure = `horizontal overflow ${metrics.hOverflow}px`;
+    } else if (viewport.hasTouch && metrics.smallTargetCount44 > 0) {
+      failure = `${metrics.smallTargetCount44} touch targets smaller than 44px`;
     } else if (keyboard && !keyboard.reachable) {
       failure = "keyboard probe did not reach a visible focus target after 3 Tabs";
     }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs=require('node:fs'),path=require('node:path'),child=require('node:child_process'),os=require('node:os'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..');
-function loadTs(){const c=['/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/node22/lib/node_modules/typescript/lib/typescript.js','/usr/local/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}
+function loadTs(){const c=[path.join(root,'node_modules/typescript/lib/typescript.js'),'/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib/typescript.js','/opt/node22/lib/node_modules/typescript/lib/typescript.js','/usr/local/lib/node_modules/typescript/lib/typescript.js'];try{c.unshift(path.join(child.execFileSync('npm',['root','-g'],{encoding:'utf8'}).trim(),'typescript/lib/typescript.js'))}catch{}const f=c.find(fs.existsSync);if(!f)throw Error('TypeScript unavailable');return require(f)}
 const ts=loadTs(),srcRoot=path.join(root,'src/lib'),out=fs.mkdtempSync(path.join(os.tmpdir(),'s149-geometry-'));
 const clean=n=>{const r=Math.round(n*1e12)/1e12;return Object.is(r,-0)?0:r},near=(a,b,t=1e-9)=>Math.abs(a-b)<=t;
 function independent(w){const stages=[];let n,claim,pieceAreas;switch(w.task){
