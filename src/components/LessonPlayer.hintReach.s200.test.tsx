@@ -266,20 +266,18 @@ describe("figure reachability on interactive steps", () => {
     expect(figureNode()).not.toBeNull();
   });
 
-  it("does not show the decorative clearing label twice when a widget follows the figure", () => {
+  it("does not place decorative stage-kind labels ahead of the widget", () => {
     render(<LessonPlayer lesson={figureLesson} />);
     advance(); // -> interactive, which has BOTH a figure and a widget
 
-    // The widget block owns the label on this step; the figure block must stay quiet.
-    expect(clearingLabels().length).toBe(1);
+    expect(clearingLabels().length).toBe(0);
   });
 
-  it("keeps the concept-step figure and its label exactly as before", () => {
+  it("keeps the concept-step figure without adding shell copy above it", () => {
     render(<LessonPlayer lesson={figureLesson} />);
     expect(usePlayer.getState().queue[usePlayer.getState().i].kind).toBe("concept");
     expect(figureNode()).not.toBeNull();
-    // No widget on a concept step, so the figure block still carries the label.
-    expect(clearingLabels().length).toBe(1);
+    expect(clearingLabels().length).toBe(0);
   });
 
   it("renders no figure block on a step that authors none", () => {

@@ -61,24 +61,27 @@
    "kind": "interactive",
    "body": "The chain rule, forwards, so you can see what you are undoing.",
    "widget": {
-    "type": "steppedReveal",
-    "prompt": "Where did 2x(x² + 1)³ come from?",
-    "panels": [
-     {
-      "title": "Differentiate the answer",
-      "body": "Take F(x) = (x² + 1)⁴/4 and differentiate it. The chain rule gives (4(x² + 1)³/4) · 2x = 2x(x² + 1)³ — precisely the integrand."
-     },
-     {
-      "title": "So the integrand is a fingerprint",
-      "body": "That stray 2x is the inner derivative the chain rule charged you. It is not part of the 'real' function at all — it is the receipt."
-     },
-     {
-      "title": "Substitution just reads the receipt",
-      "body": "Set u = x² + 1. Then du = 2x dx, and 2x(x² + 1)³ dx becomes u³ du, whose integral is u⁴/4 — that is, (x² + 1)⁴/4. You have run the chain rule backwards."
-     }
+    "type": "derivativeRuleLab",
+    "prompt": "Synchronize the x-world and u-world for ∫ 2x(x² + 1)³ dx.",
+    "mode": "substitution",
+    "targetInnerRate": 2,
+    "targetOuterRate": 3,
+    "startInnerRate": 1,
+    "startOuterRate": 1,
+    "requiredMoves": 4,
+    "successFeedback": "The 2x dx has become du, the outside cube has become u³, and no x is stranded. The integral is now ∫u³ du.",
+    "explorationFeedback": "Change both controls and compare the x-world with the u-world before checking.",
+    "mechanismFeedback": "Match the factor 2 beside x dx and the outside power 3. A valid u-world leaves no x behind."
+   },
+   "predict": {
+    "prompt": "When 2x dx is consumed by du, what should remain from 2x(x² + 1)³ dx in the u-world?",
+    "options": [
+     { "id": "clean", "label": "u³ du" },
+     { "id": "double", "label": "2u³ du" },
+     { "id": "stranded", "label": "xu³ du" }
     ],
-    "continueFeedback": "Keep going — the 2x is a receipt, not a factor.",
-    "successFeedback": "The inner derivative is the chain rule's receipt. Substitution reads it and undoes the transaction."
+    "outcomeId": "clean",
+    "reveal": "du is the entire 2x dx factor, while (x² + 1)³ becomes u³. The clean u-world is u³ du; no x survives."
    }
   },
   {

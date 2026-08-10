@@ -2754,9 +2754,12 @@ export const SecantSlopeSpec = z.object({
   type: z.literal("secantSlope"),
   prompt: z.string().min(1),
   curve: z.enum(["square", "cubic"]),
-  mode: z.enum(["average", "limit"]),
+  mode: z.enum(["average", "limit", "rolle"]),
   /** The fixed point A sits at x = a. */
   a: z.number(),
+  /** Optional translations keep authored functions exact without multiplying curve families. */
+  shiftX: z.number().default(0),
+  shiftY: z.number().default(0),
   /** `average`: the exact gap to build (0.05 grid). `limit`: the gap must be squeezed to within this. */
   targetH: z.number(),
   startH: z.number().default(1.5),
@@ -6001,7 +6004,7 @@ export const ConicLocusLabSpec = z.object({
 export const DerivativeRuleLabSpec = z.object({
   type: z.literal("derivativeRuleLab"),
   prompt: z.string().min(1),
-  mode: z.enum(["product", "quotient", "chain"]),
+  mode: z.enum(["product", "quotient", "chain", "substitution"]),
   targetH: z.number().positive().max(0.5).default(0.1),
   startH: z.number().positive().max(2).default(1),
   targetInnerRate: z.number().int().min(1).max(6).default(3),

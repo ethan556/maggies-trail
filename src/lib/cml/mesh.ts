@@ -909,6 +909,8 @@ export function buildCMLMesh(spec: TWidget, value: unknown): CMLMeshSnapshot {
     }
     case "derivativeRuleLab": {
       const h=field(v,"h",spec.startH),inner=field(v,"innerRate",spec.startInnerRate),outer=field(v,"outerRate",spec.startOuterRate);
+      if(spec.mode==="quotient") return { narration:`Rates u prime ${fmt(inner)} and v prime ${fmt(outer)} produce the ordered quotient numerator u prime v minus u v prime over v squared.`, cards:[{kind:"diagram",label:"Competing changes",value:"u′v minus uv′"},{kind:"table",label:"Current rates",value:`u′ ${fmt(inner)} | v′ ${fmt(outer)}`},{kind:"symbolic",label:"Quotient structure",value:"(u′v − uv′) / v²"}] };
+      if(spec.mode==="substitution") return { narration:`The x-world factor ${fmt(inner)}x becomes ${fmt(inner/2)} du while the outside power ${fmt(outer)} becomes u to that same power; no x remains.`, cards:[{kind:"diagram",label:"Two synchronized worlds",value:"x-world ↔ u-world"},{kind:"table",label:"Receipt conversion",value:`${fmt(inner)}x dx → ${fmt(inner/2)} du | power ${fmt(outer)}`},{kind:"symbolic",label:"Reverse chain rule",value:`u = x² + 1 | du = 2x dx | ∫ ${fmt(inner/2)}u^${fmt(outer)} du`}] };
       if(spec.mode==="product") return { narration:`At h = ${fmt(h)}, the divided second-order corner still contributes ${fmt(h)} and shrinks toward zero.`, cards:[{kind:"diagram",label:"Changing product",value:"base rectangle + two strips + one corner"},{kind:"table",label:"Orders of change",value:`first-order strips ∝ h | corner ∝ h²`},{kind:"symbolic",label:"Limit mechanism",value:`Δ(fg)/h = f′g + fg′ + f′g′h`}] };
       return { narration:`The nested rates ${fmt(inner)} and ${fmt(outer)} transmit a total rate of ${fmt(inner*outer)}.`, cards:[{kind:"diagram",label:"Function pipeline",value:"x → inner u → outer f(u)"},{kind:"table",label:"Local scales",value:`du/dx ${fmt(inner)} | df/du ${fmt(outer)}`},{kind:"symbolic",label:"Composed rate",value:`df/dx = ${fmt(outer)} × ${fmt(inner)} = ${fmt(inner*outer)}`}] };
     }
@@ -918,9 +920,11 @@ export function buildCMLMesh(spec: TWidget, value: unknown): CMLMeshSnapshot {
     }
     case "secantSlope": {
       const h=typeof value==="number"?value:spec.startH;
-      const f=(x:number)=>spec.curve==="square"?x*x:x*x*x;
+      const f=(x:number)=>{const z=x-spec.shiftX;return (spec.curve==="square"?z*z:z*z*z)+spec.shiftY;};
       const slope=h===0?NaN:(f(spec.a+h)-f(spec.a))/h;
-      const tangent=spec.curve==="square"?2*spec.a:3*spec.a*spec.a;
+      const tangentX=spec.mode==="rolle"?spec.shiftX:spec.a;
+      const tangent=spec.curve==="square"?2*(tangentX-spec.shiftX):3*(tangentX-spec.shiftX)*(tangentX-spec.shiftX);
+      if(spec.mode==="rolle") return { narration:`Endpoint heights ${fmt(f(spec.a))} and ${fmt(f(spec.a+h))} give secant slope ${Number.isFinite(slope)?fmt(slope):"undefined"}; the interior tangent at c = ${fmt(tangentX)} has slope ${fmt(tangent)}.`, cards:[{kind:"graph",label:"Movable Rolle interval",value:`[${fmt(spec.a)}, ${fmt(spec.a+h)}]`},{kind:"table",label:"Endpoint heights",value:`f(A) ${fmt(f(spec.a))} | f(B) ${fmt(f(spec.a+h))}`},{kind:"symbolic",label:"Guaranteed flat spot",value:`f′(${fmt(tangentX)}) = ${fmt(tangent)}`}] };
       return { narration:`A secant over h = ${fmt(h)} has slope ${Number.isFinite(slope)?fmt(slope):"undefined"}; the limiting tangent slope is ${fmt(tangent)}.`, cards:[{kind:"graph",label:"Two-point line",value:`x = ${fmt(spec.a)} and ${fmt(spec.a+h)}`},{kind:"table",label:"Slope comparison",value:`secant ${Number.isFinite(slope)?fmt(slope):"undefined"} | tangent ${fmt(tangent)}`},{kind:"symbolic",label:"Difference quotient",value:"[f(a+h) − f(a)] / h"}] };
     }
     case "vectorExplore": {

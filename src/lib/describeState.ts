@@ -280,9 +280,14 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     case "secantSlope": {
       const h = typeof value === "number" ? value : spec.startH;
       const name = spec.curve === "square" ? "x²" : "x³";
-      const f = (x: number) => (spec.curve === "square" ? x * x : x * x * x);
+      const f = (x: number) => {
+        const z=x-spec.shiftX;
+        return (spec.curve === "square" ? z*z : z*z*z)+spec.shiftY;
+      };
       const slope = h === 0 ? null : (f(spec.a + h) - f(spec.a)) / h;
-      const tangent = spec.curve === "square" ? 2 * spec.a : 3 * spec.a * spec.a;
+      const tangentX=spec.mode==="rolle"?spec.shiftX:spec.a;
+      const tangent = spec.curve === "square" ? 2*(tangentX-spec.shiftX) : 3*(tangentX-spec.shiftX)*(tangentX-spec.shiftX);
+      if(spec.mode==="rolle") return `On the translated ${name} curve, Rolle's interval runs from A at x = ${fmt(spec.a)} to B at x = ${fmt(spec.a+h)}. Their heights are ${fmt(f(spec.a))} and ${fmt(f(spec.a+h))}; the secant slope is ${slope===null?"undefined":fmt(slope)}. The interior candidate c = ${fmt(tangentX)} has tangent slope ${fmt(tangent)}.`;
       return (
         `On y = ${name}, point A is fixed at x = ${fmt(spec.a)} and point B sits at x = ${fmt(spec.a + h)} (gap h = ${fmt(h)}). ` +
         (slope === null
@@ -439,6 +444,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     case "derivativeRuleLab": {
       const v=(value as {h:number;innerRate:number;outerRate:number;moves:number}|null) ?? {h:spec.startH,innerRate:spec.startInnerRate,outerRate:spec.startOuterRate,moves:0};
       if(spec.mode==="product") return `The product rectangle uses h = ${fmt(v.h)}. The divided second-order corner contributes ${fmt(v.h)}, so it approaches zero as h approaches zero. ${fmt(v.moves)} moves are recorded.`;
+      if(spec.mode==="substitution") return `The x-world shows ${fmt(v.innerRate)}x times x squared plus 1 to power ${fmt(v.outerRate)}. With u = x squared plus 1 and du = 2x dx, the u-world coefficient is ${fmt(v.innerRate/2)} and the power is ${fmt(v.outerRate)}; no x remains. ${fmt(v.moves)} moves are recorded.`;
       return `The inner rate is ${fmt(v.innerRate)} and the outer rate is ${fmt(v.outerRate)}; the nested total rate is their product, ${fmt(v.innerRate*v.outerRate)}. ${fmt(v.moves)} moves are recorded.`;
     }
     case "relatedRatesLab": {
@@ -946,7 +952,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   graphStoryLab: "Read mode shows one labelled graph and exact claim buttons. Build mode uses Tab plus Enter or Space to add labelled segment cards in story order; Back removes the last card, Clear restarts, and reveal draws a separate dashed target without overwriting learner work.",
   conditionalTableLab: "Conditional mode uses row or column condition buttons and table-cell buttons. Read mode keeps the table fixed and uses exact claim buttons; highlighted cells and margins show the count or denominator used.",
   conicLocusLab: "One labelled slider changes eccentricity; arrow keys move among circle, ellipse, parabola, and hyperbola cases while the focus-directrix ratio and locus update.",
-  derivativeRuleLab: "In product mode, one labelled slider shrinks h. In chain mode, two labelled sliders set the inner and outer local rates; all live terms update.",
+  derivativeRuleLab: "Product mode uses one labelled slider. Chain, quotient, and substitution modes use two labelled sliders; all live terms and linked representations update.",
   relatedRatesLab: "One labelled slider moves the ladder foot; arrow keys change x while the height and vertical rate update under the fixed-length invariant."
 };
 

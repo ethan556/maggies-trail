@@ -8,7 +8,7 @@ import { gridScales, integers, linScale, samplePolyline } from "@/components/plo
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
-import { MathProse } from "@/components/math/MathText";
+import { MathDisplay, MathProse } from "@/components/math/MathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
 import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
@@ -2433,15 +2433,17 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
   // and (as fna-01-02 proved) a target beyond it makes the lesson unsolvable.
   const GAP = Math.max(2, Math.abs(spec.targetH) + 1);
   const a = spec.a;
-  const fa = curveAt(spec.curve, a);
-  const fb = curveAt(spec.curve, a + h);
-  const slope = secantSlopeOver(spec.curve, a, h);
-  const tangent = curveSlopeAt(spec.curve, a);
+  const fa = curveAt(spec.curve, a, spec.shiftX, spec.shiftY);
+  const fb = curveAt(spec.curve, a + h, spec.shiftX, spec.shiftY);
+  const slope = secantSlopeOver(spec.curve, a, h, spec.shiftX, spec.shiftY);
+  const tangentAt = spec.mode === "rolle" ? spec.shiftX : a;
+  const tangentY = curveAt(spec.curve, tangentAt, spec.shiftX, spec.shiftY);
+  const tangent = curveSlopeAt(spec.curve, tangentAt, spec.shiftX);
 
-  const xs = [a - 2.4, a + 2.4];
+  const xs = [Math.min(a - 2.4, a + spec.targetH - 1.2), Math.max(a + 2.4, a + spec.targetH + 1.2)];
   const ys = [
-    Math.min(curveAt(spec.curve, xs[0]), curveAt(spec.curve, xs[1]), fa, fb) - 1,
-    Math.max(curveAt(spec.curve, xs[0]), curveAt(spec.curve, xs[1]), fa, fb) + 1,
+    Math.min(curveAt(spec.curve, xs[0], spec.shiftX, spec.shiftY), curveAt(spec.curve, xs[1], spec.shiftX, spec.shiftY), fa, fb, tangentY) - 1,
+    Math.max(curveAt(spec.curve, xs[0], spec.shiftX, spec.shiftY), curveAt(spec.curve, xs[1], spec.shiftX, spec.shiftY), fa, fb, tangentY) + 1,
   ];
   const W = 300, H = 200, PAD = 26;
   const X = (x: number) => PAD + ((x - xs[0]) / (xs[1] - xs[0])) * (W - 2 * PAD);
@@ -2450,13 +2452,16 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
   const pts: string[] = [];
   for (let i = 0; i <= 80; i++) {
     const x = xs[0] + ((xs[1] - xs[0]) * i) / 80;
-    pts.push(`${X(x).toFixed(1)} ${Y(curveAt(spec.curve, x)).toFixed(1)}`);
+    pts.push(`${X(x).toFixed(1)} ${Y(curveAt(spec.curve, x, spec.shiftX, spec.shiftY)).toFixed(1)}`);
   }
   const line = (m: number) => {
     const x1 = xs[0], x2 = xs[1];
     return { x1: X(x1), y1: Y(fa + m * (x1 - a)), x2: X(x2), y2: Y(fa + m * (x2 - a)) };
   };
-  const tan = line(tangent);
+  const tan = (() => {
+    const x1 = xs[0], x2 = xs[1];
+    return { x1: X(x1), y1: Y(tangentY + tangent * (x1 - tangentAt)), x2: X(x2), y2: Y(tangentY + tangent * (x2 - tangentAt)) };
+  })();
   const sec = slope === null ? null : line(slope);
   const fmt = (v: number) => Number(v.toFixed(2)).toString();
 
@@ -2475,13 +2480,23 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
     }
   });
   const bx = X(a + h);
-  const by = Y(curveAt(spec.curve, a + h));
+  const by = Y(curveAt(spec.curve, a + h, spec.shiftX, spec.shiftY));
+  const graphLabel = spec.mode === "rolle"
+    ? `Rolle interval from x ${a} to x ${fmt(a + h)}. Endpoint heights are ${fmt(fa)} and ${fmt(fb)}, so the secant slope is ${slope === null ? "undefined" : fmt(slope)}. The candidate interior tangent at x ${fmt(tangentAt)} has slope ${fmt(tangent)}.`
+    : `A curve with a fixed point at x ${a} and a second point a gap of ${h} away. The line through them has slope ${slope === null ? "undefined" : fmt(slope)}.`;
+  const handleGapKey = (key: string) => {
+    if (key === "Home") return -GAP;
+    if (key === "End") return GAP;
+    if (key === "ArrowLeft" || key === "ArrowDown") return snapToStep(h - 0.05, -GAP, GAP, 0.05);
+    if (key === "ArrowRight" || key === "ArrowUp") return snapToStep(h + 0.05, -GAP, GAP, 0.05);
+    return null;
+  };
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
-        aria-label={`A curve with a fixed point at x = ${a} and a second point a gap of ${h} away. The line through them has slope ${slope === null ? "nothing — the quotient is zero over zero" : fmt(slope)}.`}>
+        aria-label={graphLabel}>
         <style>{`.ss{transition:none}@media (prefers-reduced-motion: no-preference){.ss{transition:all .1s linear}}`}</style>
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={0.8} strokeOpacity={0.3} />
         <line x1={tan.x1} y1={tan.y1} x2={tan.x2} y2={tan.y2} stroke={PALETTE.leaf} strokeWidth={2} strokeDasharray="5 4" strokeOpacity={0.9} />
@@ -2495,13 +2510,19 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
         {slope !== null && (
           <text x={X(a + h)} y={Y(fb) - 9} textAnchor="middle" fontSize={10} fontWeight={700} fill={PALETTE.sky}>B</text>
         )}
+        {spec.mode === "rolle" && (
+          <g>
+            <circle cx={X(tangentAt)} cy={Y(tangentY)} r={5} fill={PALETTE.leaf} />
+            <text x={X(tangentAt)} y={Y(tangentY) - 9} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.leaf}>c</text>
+          </g>
+        )}
         {/* Reveal ghost (uc-ghost grammar): show the TARGET state against the
             learner's frozen one. Average mode: the exact B the task asked for.
             Limit mode: the ε-corridor |h| ≤ targetH around A — the shrinking
             window IS the limit image. aria-hidden: the banner carries the words. */}
-        {tone === "info" && spec.mode === "average" && Math.abs(h - spec.targetH) > 1e-9 && (() => {
+        {tone === "info" && (spec.mode === "average" || spec.mode === "rolle") && Math.abs(h - spec.targetH) > 1e-9 && (() => {
           const gx = X(a + spec.targetH);
-          const gy = Y(curveAt(spec.curve, a + spec.targetH));
+          const gy = Y(curveAt(spec.curve, a + spec.targetH, spec.shiftX, spec.shiftY));
           return (
             <g data-testid="ss-ghost" aria-hidden="true">
               <line x1={X(a)} y1={Y(fa)} x2={gx} y2={gy} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="5 4" />
@@ -2533,7 +2554,9 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
         </text>
       </svg>
       <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
-        {slope === null ? (
+        {spec.mode === "rolle" ? (
+          <>f(A) = {fmt(fa)} · f(B) = {fmt(fb)} · secant slope {slope === null ? "undefined" : fmt(slope)}</>
+        ) : slope === null ? (
           <span className="text-berry-ink">gap 0 → 0 / 0, which is nothing at all</span>
         ) : (
           <>
@@ -2542,10 +2565,16 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
         )}
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
-        <span>the gap from A to B</span>
+        <span>{spec.mode === "rolle" ? "Move endpoint B until both endpoint heights match" : "the gap from A to B"}</span>
         <input type="range" min={-GAP} max={GAP} step={0.05} value={h} disabled={disabled}
-          aria-label="size of the gap" aria-valuetext={`gap ${h}`}
-          onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
+          aria-label={spec.mode === "rolle" ? "Rolle interval right endpoint" : "size of the gap"} aria-valuetext={spec.mode === "rolle" ? `right endpoint ${fmt(a + h)}, height ${fmt(fb)}` : `gap ${h}`}
+          onChange={(e) => onChange(Number(e.currentTarget.value))}
+          onKeyDown={(e) => {
+            const next = handleGapKey(e.key);
+            if (next === null) return;
+            e.preventDefault();
+            onChange(next);
+          }} className="h-11 w-full accent-sky" />
       </label>
     </div>
   );
@@ -16045,6 +16074,40 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
       {tone==='info'&&!solved&&<p data-testid="dr-ghost" aria-hidden="true" className="mx-auto rounded-xl border-2 border-dashed border-tangerine/70 bg-tangerine/5 px-4 py-2 text-center text-sm font-extrabold tabular-nums text-tangerine-ink">asked: u' = {spec.targetInnerRate}, v' = {spec.targetOuterRate}</p>}
     </div>;
   }
+  if(spec.mode==='substitution'){
+    const coefficient=st.innerRate,power=st.outerRate;
+    const uNumerator=coefficient,uDenominator=2;
+    const antiDenominator=2*(power+1),common=gcd(Math.abs(coefficient),antiDenominator);
+    const antiNumerator=coefficient/common,antiReducedDenominator=antiDenominator/common;
+    const uCoefficientTex=coefficient===2?"":coefficient%2===0?`${coefficient/2}`:`\\frac{${uNumerator}}{${uDenominator}}`;
+    const antiCoefficientTex=antiReducedDenominator===1?`${antiNumerator}`:antiNumerator===1?`\\frac{1}{${antiReducedDenominator}}`:`\\frac{${antiNumerator}}{${antiReducedDenominator}}`;
+    const solved=coefficient===spec.targetInnerRate&&power===spec.targetOuterRate;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <div className="grid gap-3 lg:grid-cols-2" role="img" aria-label={`Substitution model. In the x world the integrand is ${coefficient} x times x squared plus 1 to power ${power}. With u equal to x squared plus 1 and du equal to 2x dx, the u world has coefficient ${coefficient/2} and power ${power}; no x remains.`}>
+        <section className="rounded-2xl border-2 border-sky/30 bg-sky/5 p-4">
+          <p className="text-xs font-extrabold uppercase tracking-wide text-sky-ink">x-world · spot the fingerprint</p>
+          <MathDisplay tex={`\\int ${coefficient}x(x^2+1)^{${power}}\\,dx`} />
+          <MathDisplay tex={"u=x^2+1,\\qquad du=2x\\,dx"} />
+        </section>
+        <section className="rounded-2xl border-2 border-tangerine/30 bg-tangerine/5 p-4">
+          <p className="text-xs font-extrabold uppercase tracking-wide text-tangerine-ink">u-world · consume the receipt</p>
+          <MathDisplay tex={`\\int ${uCoefficientTex}u^{${power}}\\,du`} />
+          <MathDisplay tex={`=${antiCoefficientTex}u^{${power+1}}+C`} />
+        </section>
+      </div>
+      <div className="grid grid-cols-3 gap-2"><LabReadout label="factor by x" value={String(coefficient)} tone={coefficient===spec.targetInnerRate?'good':'neutral'}/><LabReadout label="power" value={String(power)} tone={power===spec.targetOuterRate?'good':'neutral'}/><LabReadout label="x left over" value="none" tone="good"/></div>
+      <label className="grid gap-1 text-sm font-bold"><span>Change the factor beside x dx</span><input aria-label="substitution derivative factor" type="range" min="1" max="6" step="1" value={coefficient} disabled={disabled}
+        onInput={e=>set({innerRate:Number(e.currentTarget.value)},'inner-rate',spec.targetInnerRate)}
+        onKeyDown={e=>{if(!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"].includes(e.key))return;e.preventDefault();const next=e.key==="Home"?1:e.key==="End"?6:Math.max(1,Math.min(6,coefficient+(["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));set({innerRate:next},'inner-rate',spec.targetInnerRate);}}
+        className="h-11 w-full accent-sky"/></label>
+      <label className="grid gap-1 text-sm font-bold"><span>Change the power on the outside function</span><input aria-label="substitution outside power" type="range" min="1" max="6" step="1" value={power} disabled={disabled}
+        onInput={e=>set({outerRate:Number(e.currentTarget.value)},'outer-rate',spec.targetOuterRate)}
+        onKeyDown={e=>{if(!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"].includes(e.key))return;e.preventDefault();const next=e.key==="Home"?1:e.key==="End"?6:Math.max(1,Math.min(6,power+(["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));set({outerRate:next},'outer-rate',spec.targetOuterRate);}}
+        className="h-11 w-full accent-tangerine"/></label>
+      <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The 2x dx becomes du. A constant may remain out front; an x may not. Substitution is valid only when the u-world contains u and constants — no x.</p>
+      {tone==='info'&&!solved&&<GhostChip testid="dr-ghost">asked: factor {spec.targetInnerRate}, power {spec.targetOuterRate} → ∫u^{spec.targetOuterRate} du</GhostChip>}
+    </div>;
+  }
   const product=st.innerRate*st.outerRate;
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 rounded-2xl border border-ink/10 bg-white p-4 text-center"><div className="rounded-xl bg-ink/5 p-4 font-black">x</div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-sky/10 p-4"><div className="text-xs font-extrabold uppercase">inner u(x)</div><div className="text-2xl font-black">du/dx = {st.innerRate}</div></div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-tangerine/10 p-4"><div className="text-xs font-extrabold uppercase">outer f(u)</div><div className="text-2xl font-black">df/du = {st.outerRate}</div></div></div>
@@ -16112,7 +16175,7 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
       <WidgetBody {...rest} tone={tone} />
       {described !== null && (
         <details className="mt-3 rounded-card border border-ink/15 bg-ink/[0.03] px-3 py-2" data-testid="a11y-panel">
-          <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-wide text-ink/70">What's on screen right now</summary>
+          <summary className="flex min-h-11 cursor-pointer items-center text-xs font-extrabold uppercase tracking-wide text-ink/70">What's on screen right now</summary>
           <p className="mt-1 text-sm leading-relaxed text-ink/80">{described}</p>
           <p className="mt-2 text-xs font-bold uppercase tracking-wide text-ink/70">How to work it</p>
           <p className="text-sm leading-relaxed text-ink/80">{actionsFor(rest.spec.type)}</p>
