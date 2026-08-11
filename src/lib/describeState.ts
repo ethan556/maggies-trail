@@ -18,6 +18,7 @@ import {
   lawOfCosinesSide,
   lawOfCosinesAngle,
   circleMeasureReadout,
+  signChartCuts,
   signChartSigns,
   sliceInterval,
   sliceExact,
@@ -760,12 +761,26 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     }
     case "signChart": {
       const v = (value as Array<"+" | "-"> | null) ?? null;
-      const xs = spec.roots.map((r) => r.x);
-      const truth = signChartSigns(spec.roots, spec.leadingPositive);
-      const intervals = [`left of ${fmt(xs[0])}`, ...xs.map((x, i) => (i === xs.length - 1 ? `right of ${fmt(x)}` : `between ${fmt(x)} and ${fmt(xs[i + 1])}`))];
-      const rootsTxt = spec.roots.map((r) => `${fmt(r.x)} (multiplicity ${r.mult}${r.mult % 2 === 0 ? ", bounce" : ", cross"})`).join(", ");
+      // S237: the widget cuts the line with signChartCuts(roots, poles); a pole of odd order flips
+      // the sign exactly as an odd root does. Describing roots alone narrated a different picture
+      // than the one drawn, and threw on a spec with poles but no roots (authored: rf-01-03).
+      const cuts = signChartCuts(spec.roots, spec.poles);
+      const xs = cuts.map((c) => c.x);
+      const truth = signChartSigns(spec.roots, spec.leadingPositive, spec.poles);
+      const intervals = xs.length === 0
+        ? ["the whole line"]
+        : [`left of ${fmt(xs[0])}`, ...xs.map((x, i) => (i === xs.length - 1 ? `right of ${fmt(x)}` : `between ${fmt(x)} and ${fmt(xs[i + 1])}`))];
+      const cutsTxt = cuts.map((c) => (c.kind === "pole"
+        ? `${fmt(c.x)} (pole, multiplicity ${c.mult}${c.mult % 2 === 0 ? ", sign holds" : ", sign changes"})`
+        : `${fmt(c.x)} (multiplicity ${c.mult}${c.mult % 2 === 0 ? ", bounce" : ", cross"})`)).join(", ");
+      const hasPole = cuts.some((c) => c.kind === "pole");
+      const hasRoot = cuts.some((c) => c.kind === "root");
+      const lead = hasPole && hasRoot ? "Roots and poles at" : hasPole ? "Poles at" : "Roots at";
+      const where = cuts.length === 0
+        ? "No roots or poles, so the sign never changes."
+        : `${lead} ${cutsTxt}, cutting the line into ${intervals.length} ${intervals.length === 1 ? "interval" : "intervals"}.`;
       const set = v ? `Signs set so far: ${intervals.map((iv, i) => `${iv}: ${v[i] ?? "unset"}`).join("; ")}.` : "No signs set yet.";
-      return `Roots at ${rootsTxt}, cutting the line into ${intervals.length} intervals. ${set} The rightmost interval is ${truth[truth.length - 1]} because the leading term is ${spec.leadingPositive ? "positive" : "negative"}.`;
+      return `${where} ${set} The rightmost interval is ${truth[truth.length - 1]} because the leading term is ${spec.leadingPositive ? "positive" : "negative"}.`;
     }
     case "circleMeasureExplore": {
       const v = typeof value === "number" ? value : spec.start;
