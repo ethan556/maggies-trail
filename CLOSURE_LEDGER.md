@@ -111,3 +111,9 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 |---|---:|---|---|---|---|
 | CL-P1-048 | P1 | MCQ blind-guess leakage | Six repeated foundational prompts across Grades 2, 4, and 5 accounted for 24 additional keyed-option length or punctuation clues. | **IN PROGRESS — 46/697 REMEDIATED** | All 24 batch-2 rows now pass and all distractors, correct markers, and feedback remain intact; regenerated queue has 651 rows. Continue Wave C with repeated high-harm families before Wave D. |
 
+## Session 230 Premium Rebuild Wave-C batch-3 update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-048 | P1 | MCQ blind-guess leakage | Six repeated Grade 5 concept families accounted for 18 additional keyed-option length clues across order of operations, remainder interpretation, partial quotients, fraction reasonableness, unit-cube volume, and the `V = B × h` generalization. | **IN PROGRESS — 64/697 REMEDIATED** | Exactly 18 keyed labels changed; all prompts, 54 wrong labels, 72 feedback strings, correct markers, widgets, and IDs remain intact. The regenerated queue has 633 rows. Continue Wave C with human-reviewed families; do not mechanically rewrite delicate or ambiguous prompts. |
+

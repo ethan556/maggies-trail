@@ -6,12 +6,12 @@ Generated from the current S225 working tree before Wave A product-source edits.
 
 - Lessons: **1,701**
 - Authored and remedial MCQ moments: **3,293**
-- MCQs failing the blind-guess heuristic: **651**
-- MCQs requiring distractor remediation or human review: **651**
+- MCQs failing the blind-guess heuristic: **633**
+- MCQs requiring distractor remediation or human review: **633**
 - Authored prediction gates: **1,362** (keep 1162, reframe 0, remove 200)
 - Source range inputs: **121**
 - Authored figure IDs: **1,819**
-- Math-bearing authored strings: **42,813**; ASCII-notation risks: **9,576**
+- Math-bearing authored strings: **42,813**; ASCII-notation risks: **9,579**
 - Registered or authored engine types: **127**
 
 ## Current-flow evidence
