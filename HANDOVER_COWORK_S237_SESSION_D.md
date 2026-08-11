@@ -81,7 +81,7 @@ First browser pass since the engine work. Verified both contrast failures closed
 93/93) and mmt-05-01/ch1's tap scale usable at phone widths. Found and fixed a third defect: the
 picture-graph row wrapped onto two lines at 390px. Detail in §3.1.
 
-### `<this commit>` — the manipulative ledger closed
+### `426fa87` — the manipulative ledger closed
 
 All 32 rows resolved; see §3.3.
 
