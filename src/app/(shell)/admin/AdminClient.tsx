@@ -152,7 +152,7 @@ export default function AdminClient() {
             onClick={() => setTab(t)}
             className={`pressable min-h-11 rounded-pill px-4 text-sm font-bold transition ${
               tab === t
-                ? "bg-sky text-white shadow-e1"
+                ? "bg-cta text-white shadow-e1"
                 : "bg-ink/6 text-content hover:bg-ink/10 dark:bg-paper/8 dark:hover:bg-paper/12"
             }`}
           >

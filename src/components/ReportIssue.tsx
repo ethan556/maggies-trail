@@ -123,7 +123,7 @@ export default function ReportIssue() {
               type="button"
               onClick={send}
               disabled={!description.trim() || status === "sending"}
-              className="pressable min-h-11 rounded-pill bg-sky px-4 text-sm font-bold text-white disabled:opacity-45"
+              className="pressable min-h-11 rounded-pill bg-cta px-4 text-sm font-bold text-white disabled:opacity-45"
             >
               {status === "sending" ? "Sending…" : "Send"}
             </button>

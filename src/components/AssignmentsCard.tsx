@@ -97,7 +97,7 @@ export default function AssignmentsCard() {
               {nextLesson ? (
                 <Link
                   href={`/learn/${nextLesson.id}`}
-                  className="pressable shrink-0 rounded-full bg-sky px-5 py-3 font-extrabold text-white shadow-e1 hover:shadow-e2"
+                  className="pressable shrink-0 rounded-full bg-cta px-5 py-3 font-extrabold text-white shadow-e1 hover:shadow-e2"
                 >
                   {doneCount > 0 ? "Continue" : "Start"}
                 </Link>

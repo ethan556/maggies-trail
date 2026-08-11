@@ -125,7 +125,7 @@ export default function HeroWidget() {
               type="button"
               onClick={() => changeGroups(groups + 1)}
               disabled={groups >= HERO_SPEC.max}
-              className="pressable min-h-11 rounded-xl bg-sky px-4 text-sm font-extrabold text-white shadow-e1 disabled:opacity-40"
+              className="pressable min-h-11 rounded-xl bg-cta px-4 text-sm font-extrabold text-white shadow-e1 disabled:opacity-40"
             >
               Add a group of 4
             </button>

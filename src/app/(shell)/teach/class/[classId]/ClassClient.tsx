@@ -281,7 +281,7 @@ function AssignmentsSection({
               aria-checked={kind === k}
               onClick={() => setKind(k)}
               className={`pressable min-h-9 rounded-pill px-4 text-xs font-bold ${
-                kind === k ? "bg-sky text-white shadow-e1" : "bg-ink/6 text-content hover:bg-ink/10 dark:bg-paper/8"
+                kind === k ? "bg-cta text-white shadow-e1" : "bg-ink/6 text-content hover:bg-ink/10 dark:bg-paper/8"
               }`}
             >
               {k === "lesson" ? "One lesson" : "Whole course"}
@@ -362,7 +362,7 @@ function AssignmentsSection({
                     {!a.published && (
                       <button type="button"
                         onClick={() => act("publish", a.id)}
-                        className="pressable min-h-9 rounded-pill bg-sky px-3 text-xs font-bold text-white"
+                        className="pressable min-h-9 rounded-pill bg-cta px-3 text-xs font-bold text-white"
                       >
                         Publish
                       </button>
@@ -665,7 +665,7 @@ function InterventionSection({
                       onClick={() => setStatus(c.id, s)}
                       disabled={c.status === s}
                       className={`pressable min-h-8 rounded-pill px-3 text-xs font-bold ${
-                        c.status === s ? "bg-sky text-white" : "bg-ink/6 text-content hover:bg-ink/10 dark:bg-paper/8"
+                        c.status === s ? "bg-cta text-white" : "bg-ink/6 text-content hover:bg-ink/10 dark:bg-paper/8"
                       }`}
                     >
                       {s}

@@ -7064,7 +7064,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
             aria-valuetext={`candidate ${cand}${near?`, nearest derived landmark ${near.n}`:""}`}
             onChange={e=>{const next=Number(e.target.value);const target=truth.answerNumber;if(typeof target==="number"){const prev=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"rail",dir:prev===null||Math.abs(next-target)<Math.abs(prev-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}}
             className="absolute inset-x-0 top-0 h-16 w-full cursor-ew-resize appearance-none bg-transparent accent-sky"/>
-          <div className="pointer-events-none absolute top-1 -translate-x-1/2" style={{left:`${Math.max(0,Math.min(100,pct(cand))).toFixed(2)}%`}}><div className="rounded-md bg-sky px-1.5 py-0.5 text-[11px] font-black text-white tabular-nums">{cand}</div><div className="mx-auto h-8 w-0.5 bg-sky"/></div>
+          <div className="pointer-events-none absolute top-1 -translate-x-1/2" style={{left:`${Math.max(0,Math.min(100,pct(cand))).toFixed(2)}%`}}><div className="rounded-md bg-cta px-1.5 py-0.5 text-[11px] font-black text-white tabular-nums">{cand}</div><div className="mx-auto h-8 w-0.5 bg-sky"/></div>
         </div>
       </div>;
     })()}
