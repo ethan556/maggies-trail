@@ -68,22 +68,33 @@
         "Count the dots directly above the value asked for."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "On this plot, how many students scored an 8?",
-        "answer": 3,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
-          {
-            "value": 9,
-            "feedback": "9 is the total of the three tallest stacks combined (2+3+3+1... not quite — read only the ONE stack above 8, not several)."
-          },
-          {
-            "value": 1,
-            "feedback": "1 is the height of the stack above 6, not 8."
-          }
+        "type": "dotPlot",
+        "prompt": "How many students scored an 8? Tap each X you count — the readout keeps score.",
+        "values": [
+          2,
+          6,
+          7,
+          8,
+          9
         ],
-        "fallbackFeedback": "The stack above 8 has 3 dots."
+        "given": [
+          1,
+          1,
+          2,
+          3,
+          3
+        ],
+        "target": [
+          1,
+          1,
+          2,
+          3,
+          3
+        ],
+        "askIndex": 3,
+        "maxPerValue": 6,
+        "successFeedback": "3 — you counted every X above 8 and nothing outside the stack. The stack IS the count.",
+        "partialFeedback": "Count only the stack above 8: every X in it, and no X from another stack."
       }
     },
     {

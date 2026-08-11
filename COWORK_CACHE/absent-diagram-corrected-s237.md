@@ -88,3 +88,46 @@ screen supplies it.
    lessons, reusing engines already present in the same course.
 3. The 4 safe wording edits (`dd-02-03`, `mult-01-04`) as a reviewed batch.
 4. Nothing at all for the 44.
+
+---
+
+# Progress — first batch
+
+**Done:**
+
+- **`dm-01-01/k1`, the one genuinely unanswerable item.** It asked "On this plot, how many
+  students scored an 8?" through a bare `numeric` widget, with the plot living on the previous
+  step. The answer existed only in `explanationVariants`. `dotPlot` already has a READ mode
+  (`given` + `askIndex`) built for exactly this — 8 authored instances use it, `vm-02-01` twice in
+  the same shape — so the step now renders the dataset it asks about and the learner counts the
+  stack. Verified by rendering: the plot draws X's above 2/6/7/8/9 and the description reads *"A
+  line plot with 1 X above 2 … 3 X above 8 … The question asks about the stack above 8; no X is
+  counted yet."* A semantic diff proves nothing but that one widget changed.
+
+- **The 4 safe wording edits** (`dd-02-03` ×2, `mult-01-04`, `sg-03-02`), plus 3 residual
+  references the edits exposed in adjacent feedback — "count the jumps in the picture again" and
+  two copies of "the figure's cone-in-cylinder" — found by re-scanning the same lessons rather
+  than assuming the prompt was the only place the phrasing lived.
+
+**`pr-03-03` is NOT done, and the reason is a finding.** The lesson's five numeric steps say
+"The graphed point (4, 20) represents a car trip. What is the rate?" — coordinates in the prompt,
+no graph. Attaching a graph while keeping the numeric grading is clearly the right fix, and it
+cannot be done with what exists:
+
+- `figure` takes a static registry name, so it cannot show *(4, 20)* on one step and *(2, 18)* on
+  the next.
+- `plotPoint` — already used at `i2`/`k3` in this same lesson — draws the plane but grades
+  *plotting*, not a typed rate. Swapping it in changes what the item measures.
+- `pointSetReasoningLab` draws a point set and accepts a numeric answer, but its task enum has no
+  unit-rate derivation: `axisMeaning`, `axisDistance`, `pointRead`, `sequenceExtend`, `pathLength`,
+  `pointMeaning`, `rangeEndpoints`, `rangeValue`, `rangeBlindness`, `rangeUpdate`.
+
+**No engine draws a point on a plane and grades a typed rate.** So this needs one of:
+
+1. a `unitRate` task on `pointSetReasoningLab` (smallest change; the diagram, the numeric answer
+   mode and the stage machinery all already exist), or
+2. a per-step parameterised figure, which the `figure` field does not currently support.
+
+Option 1 is the recommendation, and it would serve most of the other 44 rows too — they are almost
+all "read a value or a rate off a plotted relationship". That makes it one engine extension rather
+than 45 bespoke fixes, which is the same family-level leverage the rest of this queue has.

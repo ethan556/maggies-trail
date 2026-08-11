@@ -31,7 +31,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 | K–2 | 998/2523 (39.6%) | 727/883 (82.3%) | 389/410 (94.9%) |
 | G3–5 | 659/2539 (26.0%) | 565/846 (66.8%) | 330/419 (78.8%) |
 | G6–8 | 444/1548 (28.7%) | 268/563 (47.6%) | 186/245 (75.9%) |
-| HS | 557/3626 (15.4%) | 515/1183 (43.5%) | 495/627 (78.9%) |
+| HS | 558/3626 (15.4%) | 515/1183 (43.5%) | 495/627 (78.9%) |
 
 ## Honest prediction ceilings
 
@@ -58,7 +58,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 ## Representation-presence audit
 
-The strict whole-corpus text scan found **64** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the 64 reviewed rows above are authoritative for this phase.
+The strict whole-corpus text scan found **62** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the 64 reviewed rows above are authoritative for this phase.
 
 - cx-01-01/k1 [numeric] — Read it off the figure. Compute the distance from A(1, 2) to B(7, 10).
 - cx-01-03/k2 [numeric] — Perimeter on the grid. Find the perimeter of the triangle with vertices (0, 0), (3, 4), (6, 0).
@@ -108,7 +108,6 @@ The strict whole-corpus text scan found **64** candidates where a graded answer 
 - md-03-02/k2 [numeric] — Read between the lines. A bar graph's scale climbs by 2s (0, 2, 4, 6). The soccer bar stops exactly halfway between the 4-line and the 6-line. How many votes?
 - md-03-03/k1 [numeric] — How many more? A bar graph shows: dogs 8, cats 6, fish 3, birds 5. How many MORE dogs than fish?
 - md-03-03/k2 [numeric] — Bars or heights? A graph shows books read each day: Mon 4, Tue 7, Wed 7, Thu 2. How many books in ALL?
-- mult-01-04/k1 [mcq] — Read a jump picture: how many hops, and how long is each? A number line shows a rabbit making 4 hops of 5, starting at 0. Which multiplication matches the picture?
 - mult-05-01/k3 [numeric] — Ride the diagonal further than the table shows. The doubles diagonal reads 2, 4, 6, 8, … What is its 7th number?
 - pq-05-03/k3 [mcq] — Geography of the ticks. A figure shows tick marks: the two TOP sides match each other, the two BOTTOM sides match each other (top ≠ bottom). No other marks. Most specific name?
 - pf-05-01/k1 [buildExpression] — Read behavior at each zero. For f(x) = (x + 2)(x − 1)², what does the graph do at its zeros?
@@ -123,7 +122,6 @@ The strict whole-corpus text scan found **64** candidates where a graded answer 
 - rr-02b-01/k1 [numeric] — Read a point back as a table row. On a cups-versus-scoops graph, a point sits at (3, 6). How many scoops does that row describe?
 - rr-02b-01/k2 [mcq] — Plot the whole table and look at the shape. The pairs (1, 2), (2, 4) and (3, 6) are all plotted. What do the points form?
 - rr-02b-01/k3 [numeric] — Read a rate from a plotted point. A proportional graph passes through (1, 5). What is the unit rate?
-- sg-03-02/i2 [mcq] — The ⅔ leftover. The figure shows the cone inside its matching cylinder. The space BETWEEN them (cylinder minus cone) holds:
 
 ## Conversion acceptance rule
 
