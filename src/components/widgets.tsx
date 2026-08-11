@@ -15,7 +15,8 @@ import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, 
   rotationLabImage,
   rotationLabMapsOntoSelf,
   numericPreviewParts,
-  partitionBarDrawable
+  partitionBarDrawable,
+  plotDataParts
 } from "@/lib/schema";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import {
@@ -370,6 +371,70 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
 
 /* ---------------- Numeric ---------------- */
 
+/** The line plot a prompt DESCRIBES, drawn — read-only, display-only, and shared by `numeric` and
+ * `fractionEntry` through their optional `plotData` block (see `PlotDataSpec`, schema.ts).
+ *
+ * WHAT IT MIRRORS. This is `DotPlotReadW`'s picture with the interaction removed: the same ✗
+ * glyph stacked in a `flex-col-reverse` column, the same one-column-per-value grid, the same
+ * `border-t-2` axis with the value labels beneath it, and — the part that must not be duplicated —
+ * the same `dotPlotLabel` formatter, so a plot drawn here and the same data drawn by `dotPlot`
+ * carry byte-identical axis labels. The X's are static `<span>`s rather than `<button>`s because
+ * nothing here is countable-by-tapping: this plot is a GIVEN, and a button would promise an
+ * interaction that does not exist. That is also why the glyphs are smaller than dotPlot's — 44px
+ * is a tap-target floor, and there is nothing to tap.
+ *
+ * A grid with a fixed column count, never a wrapping flex row: S237 shipped a picture-graph row
+ * that broke onto two lines at 390px and destroyed the lesson's own concept.
+ *
+ * `aria-hidden` like every live preview in this file — the dataset is spoken by
+ * `describeWidgetState` instead, resolved from the SAME `plotDataParts` call, so the picture and
+ * the sentence cannot disagree. It draws `values` and `counts` only; no answer is reachable
+ * from here. */
+function LinePlotFigure({ parts }: { parts: NonNullable<ReturnType<typeof plotDataParts>> }): ReactElement {
+  const { values, counts, labels } = parts;
+  const tallest = Math.max(...counts);
+  const cols = { gridTemplateColumns: `repeat(${values.length}, 1fr)` };
+  return (
+    <div
+      data-testid="plot-figure"
+      aria-hidden="true"
+      className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white px-3 pb-2 pt-3"
+    >
+      <div className="grid" style={cols}>
+        {values.map((v, i) => (
+          <div
+            key={v}
+            data-testid="plot-column"
+            className="flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg pb-1"
+            style={{ minHeight: `${tallest * 1.85 + 0.25}rem` }}
+          >
+            {Array.from({ length: counts[i] }, (_, k) => (
+              <span
+                key={k}
+                data-testid="plot-x"
+                className="flex h-7 w-7 items-center justify-center text-lg font-black text-ink/75"
+              >
+                ✗
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="grid border-t-2 border-ink" style={cols}>
+        {values.map((v, i) => (
+          <span
+            key={v}
+            data-testid="plot-axis-label"
+            className="pt-1 text-center text-sm font-extrabold tabular-nums text-ink/80"
+          >
+            {labels[i]}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /** ONE den-partition bar with `shaded` cells filled — the shared drawing behind every live
  * "what you just typed" preview (fractionEntry's fraction part, numeric's fixed-denominator
  * bar). ROLE.active sky for filled cells, #fff for the remainder, ink hairlines between.
@@ -421,9 +486,14 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
   // about whether there is a bar or what is on it. It reads `value` (not the raw string)
   // for that reason: `value` is what the panel is handed. Nothing here reaches grading.
   const preview = numericPreviewParts(spec, value);
+  // The plot the prompt DESCRIBES (display-only; see PlotDataSpec). It is a GIVEN, so it sits
+  // directly under the prompt that names it and above the box — prompt, then plot, then answer.
+  // A spec without `plotData` resolves to null here and renders exactly as it always has.
+  const plot = plotDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {plot && <LinePlotFigure parts={plot} />}
       <div className="flex items-center gap-2">
         <input
           value={raw}
@@ -553,9 +623,13 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
       {pvD !== null && pvN !== null && pvN + pvD > 0 && <PartitionBar shaded={pvN} total={pvD} />}
     </div>
   ) : null;
+  // The plot the prompt DESCRIBES (display-only; see PlotDataSpec) — the same block `numeric`
+  // draws, resolved through the same function, placed the same way: prompt, plot, then the entry.
+  const plot = plotDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {plot && <LinePlotFigure parts={plot} />}
       <div className="flex items-center justify-center gap-3">
         {spec.allowNegative && (
           <button

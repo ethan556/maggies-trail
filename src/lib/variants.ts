@@ -17468,6 +17468,10 @@ const GENERATORS: VariantGen[] = [
           answer: answerOf(diff),
           widget: {
             type: "fractionEntry",
+            // DISPLAY ONLY (PlotDataSpec): the plot this prompt describes, drawn. Built from the
+            // SAME `marks`/`counts` the ASCII above is written from — never re-parsed out of the
+            // string — so the picture and the sentence cannot drift on a re-ask.
+            plotData: { values: [...marks], counts: [...counts], denominator: 4 },
             prompt: `In the plot (${plot}), how much longer is the longest ribbon than the shortest?`,
             answerWhole: answerOf(diff).whole,
             answerNum: answerOf(diff).num,
@@ -17525,6 +17529,8 @@ const GENERATORS: VariantGen[] = [
         answer: answerOf(total),
         widget: {
           type: "fractionEntry",
+          // DISPLAY ONLY (PlotDataSpec) — same `marks`/`counts` the ASCII plot is written from.
+          plotData: { values: [...marks], counts: [...counts], denominator: 4 },
           prompt: `Total length of all ribbons in the plot (${plot})?`,
           answerWhole: answerOf(total).whole,
           answerNum: answerOf(total).num,
@@ -32155,7 +32161,7 @@ const GENERATORS: VariantGen[] = [
           }
         );
         const answer = counts[0] + 2 * counts[1] + 3 * counts[2];
-        return num(
+        const built = num(
           "line-plot",
           `A line plot has ${counts[0]} mark${counts[0] === 1 ? "" : "s"} at 1/4 ft, ${counts[1]} at 1/2 ft, and ${counts[2]} at 3/4 ft. Write the total as ?/4 ft. What is the numerator?`,
           answer,
@@ -32166,6 +32172,23 @@ const GENERATORS: VariantGen[] = [
           ],
           `In fourths: ${counts[0]}×1 + ${counts[1]}×2 + ${counts[2]}×3 = ${answer}, so the total is ${answer}/4 ft.`
         );
+        // DISPLAY ONLY (PlotDataSpec): the plot the prompt names, drawn. The values are the
+        // quarters the prompt's own three marks stand on (1/4, 1/2, 3/4 = 1, 2, 3 quarters) and
+        // the counts are the SAME `counts` array the sentence is written from — no re-parsing.
+        //
+        // `previewDenominator` rides along for the same reason: the authored vm-02-02/k3 carries
+        // it (S237), and a generator that dropped it would take the live "?/4" bar away the
+        // moment the learner re-asked the item — the authored-fixed / generator-forgotten split
+        // this workstream keeps re-learning. The prompt fixes the denominator at 4 either way, so
+        // this is the same given, not a new one.
+        return {
+          ...built,
+          widget: {
+            ...(built.widget as Extract<TWidget, { type: "numeric" }>),
+            previewDenominator: 4,
+            plotData: { values: [1, 2, 3], counts: [...counts], denominator: 4 },
+          },
+        };
       }
 
       if (form === "rangeSpan") {

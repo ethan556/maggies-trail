@@ -28,7 +28,7 @@ import {
 import { sequenceReasoningTruth } from "./schema";
 /** numeric's live preview: the SAME resolver the renderer draws from, so the spoken sentence
  * and the drawn partition bar can never disagree (see the rotationLab note below). */
-import { numericPreviewParts } from "./schema";
+import { numericPreviewParts, plotDataParts } from "./schema";
 /** rotationLab's image and self-mapping test — the SAME functions the renderer and the grader
  * call, so the spoken description and the picture can never disagree. */
 import { rotationLabImage, rotationLabMapsOntoSelf } from "./schema";
@@ -76,6 +76,20 @@ const PART_VERB = { one: "is", many: "are" } as const;
 const partNoun = (n: number): string => (n === 1 ? PART_NOUN.one : PART_NOUN.many);
 const partVerb = (n: number): string => (n === 1 ? PART_VERB.one : PART_VERB.many);
 
+/** S237. The stack list a line plot's spoken description is built from — "2 X's above 1/4, 3 X's
+ * above 1/2, 1 X above 3/4" — written ONCE and used by every branch that speaks a plot, so a
+ * learner hears the same sentence whether the plot is the interactive `dotPlot` or the
+ * display-only `plotData` block that `numeric` and `fractionEntry` now carry.
+ *
+ * All three count forms are STORED and selected, never derived: "no X" for an empty mark (a
+ * prompt writes that stack as "3/4 → —", and "0 X's" is not how anyone reads it), "1 X", and
+ * "N X's" — the same plural the authored prompts and the generators already write. */
+const MARK_PHRASE = { zero: "no X", one: "1 X", many: "X's" } as const;
+const markPhrase = (n: number): string =>
+  n === 0 ? MARK_PHRASE.zero : n === 1 ? MARK_PHRASE.one : `${n} ${MARK_PHRASE.many}`;
+const plotStacksPhrase = (labels: readonly string[], counts: readonly number[]): string =>
+  labels.map((l, i) => `${markPhrase(counts[i])} above ${l}`).join(", ");
+
 /** S237. conditionalTableLab's readMetric is an internal discriminant; learners heard
  * "The target rowTotal uses 20." These are ordinary statistics names, so they get spoken as such. */
 const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
@@ -100,8 +114,15 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // Resolved through `numericPreviewParts`, the SAME function the renderer draws from, so
       // the sentence cannot claim a bar the screen does not show. The answer is never stated:
       // only the learner's own entry and the denominator the prompt already gave them.
+      // S237, the vm-02-02 absent-diagram rows: when the step carries the plot its prompt
+      // DESCRIBES, that dataset is drawn aria-hidden, so it is spoken here — from the SAME
+      // `plotDataParts` call the renderer draws from. It leads the sentence because it is the
+      // given the question is about; the entry preview below follows if there is one. A step
+      // with no `plotData` reaches an unchanged branch.
+      const plot = plotDataParts(spec);
+      const plotSaid = plot ? `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}. ` : "";
       const preview = numericPreviewParts(spec, value);
-      if (!preview) return null;
+      if (!preview) return plotSaid === "" ? null : plotSaid.trimEnd();
       const { wholes, shaded, total } = preview;
       const barNoun = wholes === 1 ? "bar" : "bars";
       // An improper entry is DRAWN as whole bars plus a remainder, so it is SPOKEN that way
@@ -113,13 +134,27 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
           shaded === 0
             ? `That fills ${wholes} whole ${barNoun} exactly.`
             : `That is ${wholes} whole ${barNoun} and ${shaded} of ${total} ${partNoun(total)} of another.`;
-        return head + body;
+        return plotSaid + head + body;
       }
       return (
+        plotSaid +
         `You entered ${shaded} of ${total}. ` +
         `The bar is cut into ${total} equal ${partNoun(total)}, ` +
         `and ${shaded} ${partNoun(shaded)} ${partVerb(shaded)} shaded.`
       );
+    }
+    case "fractionEntry": {
+      // S237. fractionEntry narrates itself — three labelled fields — so this stays null for
+      // every step that declares no `plotData`, and those steps get no panel, exactly as before.
+      // When the plot IS declared it is drawn aria-hidden, and a learner who cannot see it would
+      // otherwise have no route to the dataset the question is about. Same `plotDataParts` call
+      // the renderer draws from, so the sentence cannot claim a plot the screen does not show.
+      //
+      // The learner's own entry bar still has no spoken twin here — that is the standing
+      // fractionEntry/pointEntry gap, unchanged and deliberately not widened by this branch.
+      const plot = plotDataParts(spec);
+      if (!plot) return null;
+      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
     }
     case "scaledCircleLab": {
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
@@ -228,12 +263,18 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       if (!spec.given || spec.askIndex === undefined) return null; // build mode narrates via its sliders
       const v = (value as number[] | null) ?? null;
       const lbl = (i: number) => dotPlotLabel(spec.values[i], spec.denominator);
-      const stacks = spec.values.map((_, i) => `${(spec.given as number[])[i]} X above ${lbl(i)}`).join(", ");
+      // S237: the stack list now comes from the shared `plotStacksPhrase`, so this branch and the
+      // display-only `plotData` branches speak one dialect. It also fixes the plural this branch
+      // used to derive away entirely ("2 X above 1/4"); the forms are stored, per CLAUDE.md.
+      const stacks = plotStacksPhrase(spec.values.map((_, i) => lbl(i)), spec.given as number[]);
       const askL = lbl(spec.askIndex);
       if (!v || v.every((c) => c === 0))
         return `A line plot with ${stacks}. The question asks about the stack above ${askL}; no X is counted yet.`;
       const counted = v.reduce((a, c) => a + c, 0);
-      return `A line plot with ${stacks}. ${counted} X ${counted === 1 ? "is" : "are"} counted so far${v[spec.askIndex] > 0 ? `, ${v[spec.askIndex]} of them above ${askL}` : ""}.`;
+      // The count clause takes the same stored plural as the stack list above it — before S237
+      // this half said "2 X are counted" while the half in front of it said "2 X's above 1/4",
+      // two dialects inside one sentence. The verb was already stored; the noun now is too.
+      return `A line plot with ${stacks}. ${markPhrase(counted)} ${counted === 1 ? "is" : "are"} counted so far${v[spec.askIndex] > 0 ? `, ${v[spec.askIndex]} of them above ${askL}` : ""}.`;
     }
     case "areaModel": {
       if (!spec.countGrid) return null;

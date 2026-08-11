@@ -19,12 +19,81 @@ export const McqSpec = z.object({
     .min(2)
 });
 
+/** DISPLAY ONLY — the line plot a prompt already DESCRIBES, drawn instead of spelled in ASCII.
+ *
+ * THE DEFECT THIS CLOSES. `vm-02-02` ("Using Line Plot Data") asks four graded questions about a
+ * line plot that is never drawn: the prompt spells the dataset out as text — "Total length of all
+ * ribbons in the plot (1/4 → XX, 1/2 → XXX, 3/4 → X)?" — and the learner sees an entry box and
+ * nothing else. The lesson's stated skill is USING LINE-PLOT DATA, so the plot is the instrument,
+ * not decoration. Four rows of the S237 absent-diagram list are exactly this.
+ *
+ * WHY IT IS A DISPLAY BLOCK AND NOT A WIDGET SWAP. `dotPlot` READ mode grades "how many X's in
+ * the stack above askIndex". These steps grade a TOTAL (Σ value × count) and a DIFFERENCE
+ * (longest − shortest); moving them onto `dotPlot` would change what is graded, which is a
+ * curriculum change. A static `figure` cannot work either: these steps declare variants that
+ * REGENERATE the plot per re-ask, so a fixed picture would contradict the prompt the moment the
+ * item refreshes. So the dataset travels WITH the spec, exactly as `previewDenominator` does.
+ *
+ * THE CONTRACT, copied from `previewDenominator` (schema.ts, S237):
+ *   - never read by `evaluate`, `canCheck`, `correctAnswerText` or any grading path;
+ *   - absent by default, so every other numeric and fractionEntry step is byte-identical;
+ *   - what it draws is a GIVEN the prompt already states, so showing it leaks no answer.
+ *
+ * `values` are NUMERATORS over `denominator` — the same exact-integer convention `dotPlot` uses
+ * (S122), so no float enters a label — and `dotPlotLabel` renders them, the ONE shared
+ * fraction-axis formatter. `counts` is the stack height above each value; 0 is legal and means a
+ * mark the prompt lists with no X's above it ("3/4 → —"). */
+export const PlotDataSpec = z.object({
+  /** Axis positions as numerators over `denominator`, strictly increasing (integrity enforces). */
+  values: z.array(z.number().int().nonnegative()).min(2),
+  /** X's stacked above each value, one entry per value. */
+  counts: z.array(z.number().int().nonnegative()).min(2),
+  /** Absent = a whole-number axis, exactly as in `dotPlot`. */
+  denominator: z.number().int().min(2).optional()
+});
+export type TPlotData = z.infer<typeof PlotDataSpec>;
+
+/** The most columns a plot may draw, and the tallest stack it may show. Past these the picture
+ * stops being readable at a phone width and starts being a smear — the same judgement
+ * `partitionBarDrawable` makes for the partition previews, stated once for the plot. */
+export const MAX_PLOT_COLUMNS = 8;
+export const MAX_PLOT_STACK = 10;
+
+/** The plot resolved from the spec — the SINGLE source the renderer draws from and the
+ * accessibility panel speaks, so the picture on screen and the sentence a screen reader hears can
+ * never disagree (the `numericPreviewParts` contract, applied to the plot).
+ *
+ * Returns null — draw nothing, say nothing — when the step declares no `plotData`, or when the
+ * declared data is not something a plot can honestly show: a count per value missing, an axis
+ * that does not increase, no X anywhere, too many columns, or a stack past the cap. Pure, total,
+ * never throws. DISPLAY ONLY: no caller grades with it. */
+export function plotDataParts(
+  spec: { plotData?: TPlotData }
+): { values: number[]; counts: number[]; labels: string[]; denominator?: number } | null {
+  const d = spec.plotData;
+  if (!d) return null;
+  const { values, counts, denominator } = d;
+  if (values.length !== counts.length) return null;
+  if (values.length < 2 || values.length > MAX_PLOT_COLUMNS) return null;
+  for (let i = 1; i < values.length; i++) if (values[i] <= values[i - 1]) return null;
+  if (!counts.some((c) => c > 0)) return null;
+  if (counts.some((c) => c > MAX_PLOT_STACK)) return null;
+  return {
+    values: [...values],
+    counts: [...counts],
+    labels: values.map((v) => dotPlotLabel(v, denominator)),
+    denominator
+  };
+}
+
 export const NumericSpec = z.object({
   type: z.literal("numeric"),
   prompt: z.string().min(1),
   answer: z.number(),
   tolerance: z.number().min(0).default(0),
   unit: z.string().optional(),
+  /** DISPLAY ONLY — see `PlotDataSpec`. The line plot the prompt describes, drawn. */
+  plotData: PlotDataSpec.optional(),
   /** DISPLAY ONLY — never read by `evaluate`, `canCheck`, `correctAnswerText` or any
    * integrity rule. Set it when the step asks for a NUMERATOR over a denominator the
    * PROMPT has already fixed ("How many fourths are shaded?"): the widget then draws the
@@ -130,6 +199,8 @@ export const FractionEntrySpec = z.object({
   /** Render a ± sign toggle (signed-rational tasks). Off by default — every
    * pre-extension fractionEntry stays a non-negative entry, byte-identical grading. */
   allowNegative: z.boolean().default(false),
+  /** DISPLAY ONLY — see `PlotDataSpec`. The line plot the prompt describes, drawn. */
+  plotData: PlotDataSpec.optional(),
   /** Sign of the answer value (the boxes stay non-negative magnitudes). */
   answerSign: z.union([z.literal(1), z.literal(-1)]).default(1),
   /** any = value equivalence · lowestTerms = value + lowest-terms fraction ·
@@ -6534,8 +6605,37 @@ export const WidgetSpec = z.discriminatedUnion("type", [
 ]);
 
 /** Structural integrity checks that discriminated unions can't express inline. */
+/** The authoring rules for the display-only `plotData` block, in one place because `numeric` and
+ * `fractionEntry` share the field and must never diverge on what a drawable plot is. Every rule
+ * here is a reason `plotDataParts` would refuse to draw, stated as a message an author can act on
+ * — so a step whose data the renderer would silently skip fails `lint:pedagogy` instead. */
+function plotDataIntegrityErrors(where: string, d: TPlotData): string[] {
+  const errs: string[] = [];
+  if (d.counts.length !== d.values.length)
+    errs.push(`${where}: plotData needs one count per value (${d.values.length} values, ${d.counts.length} counts)`);
+  if (d.values.length > MAX_PLOT_COLUMNS)
+    errs.push(`${where}: plotData has ${d.values.length} marks; the plot draws at most ${MAX_PLOT_COLUMNS}`);
+  for (let i = 1; i < d.values.length; i++)
+    if (d.values[i] <= d.values[i - 1])
+      errs.push(`${where}: plotData values must increase along the axis (${d.values[i - 1]} then ${d.values[i]})`);
+  if (!d.counts.some((c) => c > 0))
+    errs.push(`${where}: plotData has no X anywhere — an empty plot illustrates nothing`);
+  for (const c of d.counts)
+    if (c > MAX_PLOT_STACK)
+      errs.push(`${where}: plotData stack of ${c} exceeds the ${MAX_PLOT_STACK}-X ceiling a column can show`);
+  // Last line of defence: whatever the rules above missed, the renderer's own resolver decides.
+  // A spec that passes authoring but draws nothing is the failure mode this exists to prevent.
+  if (errs.length === 0 && plotDataParts({ plotData: d }) === null)
+    errs.push(`${where}: plotData cannot be drawn — the renderer would show nothing`);
+  return errs;
+}
+
 export function widgetIntegrityErrors(spec: TWidget): string[] {
   const errs: string[] = [];
+  // Display-only, shared by two surfaces, and therefore checked before the per-type switch:
+  // neither branch owns it and neither may drift from the other on what it means.
+  if ((spec.type === "numeric" || spec.type === "fractionEntry") && spec.plotData)
+    errs.push(...plotDataIntegrityErrors(spec.type, spec.plotData));
   switch (spec.type) {
     case "numberLineRay": {
       const w = spec.window;
