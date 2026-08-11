@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { masteryMissionExists } from "@/lib/masteryMission.server";
 import { notFound } from "next/navigation";
 import { getCatalog } from "@/lib/content.server";
 import { localDateStr } from "@/lib/engine";
@@ -38,10 +39,14 @@ export default async function BasecampPage({
     .filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate))
     .map((candidate) => ({ courseId: candidate.courseId, trailName: candidate.trailName }));
 
+  // S237. Same defect as the lesson-complete screen: a concept tag is not a mission. 572 of the
+  // 1,737 tags reachable as Basecamp chips have no mastery mission, so a third of these chips led
+  // to "404 · TRAIL MARKER MISSING". Offer only the ones that resolve.
   const masteryMap = new Map<string, string>();
   for (const lesson of entry.lessons) {
     for (const tag of lesson.conceptTags) {
       if (!tag || masteryMap.has(tag)) continue;
+      if (!(await masteryMissionExists(tag))) continue;
       masteryMap.set(tag, tag.replaceAll("-", " "));
     }
   }
