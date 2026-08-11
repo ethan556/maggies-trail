@@ -40025,6 +40025,21 @@ const psPoints=(text:string):Array<[number,number]>=>[...text.matchAll(/\((-?\d+
 const psSet=(id:string,label:string,values:number[])=>({id,label,points:values.map((x,index)=>({id:`${id}-${index}`,label:`value ${index+1}`,x}))});
 const psCoordSet=(points:Array<[number,number]>)=>({id:"story",label:"story observations",points:points.map(([x,y],index)=>({id:`p${index+1}`,label:`point ${index+1}`,x,y}))});
 function pointSetUpgradeConfig(tag:string,form:VariantForm,legacy:Variant):PointSetUpgradeConfig|null{const prompt="prompt" in legacy.widget?legacySource(legacy.widget).prompt:"";
+ // S237. pr-graph-rate-g7 reads a rate off a GRAPHED POINT, which is the defect this whole batch
+ // is about: the authored steps are now pointSetReasoningLab/unitRate, and if the refreshed variant
+ // stayed a bare numeric box the graph would vanish the moment a learner re-asked the item. Axis
+ // names and the unit phrase are PARSED FROM THE PROMPT the generator already wrote — never
+ // composed from `${y} per ${x}`, which is how "5 miles per hours" got written the first time.
+ if(tag==="pr-graph-rate-g7"&&(form==="graphStoryRead"||form==="graphRateRead")){
+  const pts=psPoints(prompt);if(pts.length!==1)throw new Error(`pointSetReasoningLab unit-rate parse failed: ${prompt}`);
+  const story=prompt.match(/represents .*?\d+(?:\.\d+)? ([a-z]+) in \d+(?:\.\d+)? ([a-z]+)\./i);
+  const unit=prompt.match(/rate in ([^?]+)\?/i);
+  const cfg={task:"unitRate" as const,xLabel:story?story[2]:"x",yLabel:story?story[1]:"y",sets:[psCoordSet(pts)],targetSetId:"story",targetPointId:"p1"};
+  // One required open, and it is the point read — not "any stage", which a learner satisfies by
+  // opening the axis name and learning nothing, and not all five, which is heavier than the
+  // authored step it refreshes.
+  return{...cfg,requiredExplorations:1,requiredStageKeys:["point:p1"],...(unit?{answerUnit:unit[1].trim()}:{})};
+ }
  if(tag==="coordinate-plot"){
   if(form==="cgAxisDistance"){const pts=psPoints(prompt);if(pts.length!==2)throw new Error(`pointSetReasoningLab axis-distance parse failed: ${prompt}`);const sets=[psCoordSet(pts)],cfg={task:"axisDistance" as const,xLabel:"horizontal position",yLabel:"vertical position",sets,targetSetId:"story",pathPointIds:["p1","p2"]};const truth=pointSetReasoningTruth(cfg);return{...cfg,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(stage=>stage.key),answerUnit:"units"}}
   if(form==="cgContextRead"){const pts=psPoints(prompt);if(pts.length!==1)throw new Error(`pointSetReasoningLab context-read parse failed: ${prompt}`);let xLabel="input",yLabel="output";if(/week/i.test(prompt)){xLabel="week";yLabel="dollars saved"}else if(/garden|day/i.test(prompt)){xLabel="day";yLabel="tomatoes picked"}else if(/reading|hour/i.test(prompt)){xLabel="hour";yLabel="pages completed"}const sets=[psCoordSet(pts)],cfg={task:"pointMeaning" as const,xLabel,yLabel,sets,targetSetId:"story",targetPointId:"p1"};const truth=pointSetReasoningTruth(cfg);return{...cfg,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(stage=>stage.key)}}
@@ -40037,7 +40052,7 @@ function pointSetUpgradeConfig(tag:string,form:VariantForm,legacy:Variant):Point
  }
  return null}
 function upgradePointSetVariant(tag:string,form:VariantForm,legacy:Variant):Variant{const cfg=pointSetUpgradeConfig(tag,form,legacy);if(!cfg)return legacy;const numeric=legacy.widget.type==="numeric",choice=legacy.widget.type==="mcq";if(!numeric&&!choice)throw new Error(`pointSetReasoningLab cannot wrap ${legacy.widget.type} for ${tag}@${form}`);const prompt="prompt" in legacy.widget?legacySource(legacy.widget).prompt:"",common={type:"pointSetReasoningLab" as const,prompt,...cfg,tolerance:numeric?legacySource(legacy.widget).tolerance:0,choices:[],numericErrors:[],authoredStages:[],explorationFeedback:"Inspect the required point-set states before checking.",fallbackFeedback:numeric?legacySource(legacy.widget).fallbackFeedback:"Choose the conclusion supported by the point-set state."};if(numeric){const widget:TPointSetReasoningLab={...common,answerMode:"numeric",numericErrors:legacySource(legacy.widget).commonErrors,successFeedback:legacySource(legacy.widget).fallbackFeedback};return{tag,answer:legacy.answer,widget}}const correct=legacySource(legacy.widget).options.find(option=>option.correct);if(!correct)throw new Error(`pointSetReasoningLab ${tag}@${form} has no correct option`);const truth=pointSetReasoningTruth(common);const choices=legacySource(legacy.widget).options.map(option=>({id:option.id,label:option.label,feedback:option.feedback,claim:option.correct?truth.answerClaim??`correct:${option.id}`:`misconception:${option.id}`}));const widget:TPointSetReasoningLab={...common,answerMode:"choice",choices,successFeedback:correct.feedback};return{tag,answer:correct.id,widget}}
-const POINT_SET_VARIANT_FORMS:Record<string,ReadonlySet<string>>={"coordinate-plot":new Set(["cgAxisDistance","cgContextRead","cgPathLength"]),"g6-center-spread":new Set(["ddRangeBasic","ddRangeEndpointsOnly","ddRangeNewOutlier"])};
+const POINT_SET_VARIANT_FORMS:Record<string,ReadonlySet<string>>={"coordinate-plot":new Set(["cgAxisDistance","cgContextRead","cgPathLength"]),"g6-center-spread":new Set(["ddRangeBasic","ddRangeEndpointsOnly","ddRangeNewOutlier"]),"pr-graph-rate-g7":new Set(["graphStoryRead","graphRateRead"])};
 for(const generator of GENERATORS){const forms=POINT_SET_VARIANT_FORMS[generator.tag];if(!forms)continue;const raw=generator.gen;generator.gen=(rand,band="core",form="default")=>{const legacy=raw(rand,band,form);return forms.has(form)?upgradePointSetVariant(generator.tag,form,legacy):legacy}}
 
 type GeometricUpgradeConfig = Pick<TGeometricConstraintLab,"task"|"perimeter"|"coordinate"|"scale"|"angle"|"aa"|"pythagorean"|"coordinateProof"|"requiredExplorations"|"requiredStageKeys"|"answerUnit">;

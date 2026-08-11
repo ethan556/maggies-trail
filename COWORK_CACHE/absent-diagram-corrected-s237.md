@@ -131,3 +131,67 @@ cannot be done with what exists:
 Option 1 is the recommendation, and it would serve most of the other 44 rows too — they are almost
 all "read a value or a rate off a plotted relationship". That makes it one engine extension rather
 than 45 bespoke fixes, which is the same family-level leverage the rest of this queue has.
+
+---
+
+# Progress — second batch: the engine exists, and the first two lessons use it
+
+**`unitRate` is now a task on `pointSetReasoningLab`** (commit *Add a unitRate task to
+pointSetReasoningLab*). It reads the target point, states that it and the origin lie on one line,
+and divides output by input. Integrity checking requires every point in the target set to sit on
+that line — unitRate is the only task in this engine whose answer is a relationship BETWEEN the
+plotted points, and a graph the derived rate is false about would be worse than the no-graph state
+it exists to end.
+
+Two defects were caught only by printing the SVG and reading it, both invisible to a green gate:
+the stage text composed `${yLabel} per ${xLabel}` and printed **"5 miles per hours"**; and with one
+plotted point the dot landed in the top-right corner with its label past the viewBox and the ray
+stopping dead at the dot. Both are now pinned by gates that were checked to go red when each fix is
+reverted.
+
+**Nine steps converted, across the two lessons the inventory named first:**
+
+| Lesson | Steps | Was |
+|---|---|---|
+| `pr-03-03` *Reading a Story from a Graph* | i1, k1, i3, k2, ch1 | bare `numeric`, no graph |
+| `pr-03-02` *The Point That Shows the Unit Rate* | i2, i3, k3, ch1 | bare `numeric`, no graph |
+
+`pr-03-02` was on the 11-wording-defect list, not the 45. It converted here because the two lessons
+share a variant generator, and that is the more important half of this batch:
+
+**The variant path was the real trap.** `pr-03-02`/`pr-03-03` declare `pr-graph-rate-g7`, whose
+`graphStoryRead` and `graphRateRead` forms generate a bare `numeric` widget. Fixing only the
+authored steps would have meant the graph **vanishes the moment a learner re-asks the item** — the
+defect restored by the refresh system that exists to make items re-askable. Both forms now upgrade
+to `unitRate`, which is what the resolver's surface-parity gate immediately caught when only one
+lesson had been converted.
+
+Axis names and the unit phrase for generated items are **parsed from the prompt the generator
+already wrote** ("…producing 20 pages in 5 minutes… the rate in pages per minute"), never composed
+from the labels — that composition is exactly what printed "per hours".
+
+## Three decisions in this batch, stated rather than buried
+
+1. **The axes are labelled `x` and `y`, and no units were invented.** The authored prompts give a
+   context ("a car trip") but never a unit. Inferring one produces nonsense: (4, 20) as a car trip
+   at "5 miles per hour" is not a car trip. The lesson's own recap is *"Any point (x, y) on a
+   proportional line gives rate = y ÷ x"*, so x/y is the faithful labelling and the axis-naming
+   stages restate the recap rather than inventing quantities. Generated variants DO carry units,
+   because their prompts state them.
+2. **Answering now requires opening one stage — the point read.** `requiredExplorations` has a
+   floor of 1 in this engine, so adopting it necessarily adds a click that the bare `numeric`
+   widget did not have. It is set to the minimum, and pinned to `point:p1` rather than "any stage",
+   so the one required open is the one the lesson is about. The graph itself renders with no clicks
+   at all. **This is an interaction change on graded steps and it is deliberate; it is named here
+   rather than left to be discovered.**
+3. **Each step needed a `successFeedback`, which `numeric` did not require.** Written from the
+   item's own numbers ("Yes — (4, 20) sits on the line through the origin, so the rate is
+   20 ÷ 4 = 5."). Every authored trap and fallback is carried over verbatim.
+
+`EXCELLENCE_BACKLOG_S126` moved G6–8 manipulative coverage 444 → 453, exactly the nine steps. The
+suite regenerates that file, so the change is a measurement of the corpus, not an edit to it.
+
+**Remaining: 40 of the 45**, in `mmt-05-01` (4), `vm-02-02` (4), `g2g-02-01` (3), `exp-04-01` (3),
+`ee-05-02` (3), `cx-03-03` (2) and the tail. Not all of them are unit-rate items — the picture-graph
+and line-plot lessons need `dotPlot`/`boxPlot` shapes already present in their own courses, which is
+the next lease.
