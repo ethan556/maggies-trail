@@ -14389,7 +14389,12 @@ function LengthDifferenceW({ spec, value, onChange, disabled, tone }: WProps<TLe
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
-        aria-label={`${longer.label} is ${longer.length} ${spec.unitLabel} and ${shorter.label} is ${shorter.length}. The shaded overhang is ${gap} ${spec.unitLabel} long. Your count is ${count}.`}>
+        // S237. Both lengths stay: a sighted learner sees both bars, so naming them is parity, not
+        // a gift. The OVERHANG is different. In difference mode the step is exactly "count the
+        // paperclips the pencil sticks out past the eraser" (smg1-03-02, mmt-02-02, mmt-05-03), so
+        // stating the overhang announced the answer to screen-reader users while sighted learners
+        // had to count the shaded blocks. They now get the same two lengths and do the same work.
+        aria-label={`${longer.label} is ${longer.length} ${spec.unitLabel} and ${shorter.label} is ${shorter.length}.${spec.mode === "difference" ? "" : ` The shaded overhang is ${gap} ${spec.unitLabel} long.`} Your count is ${count}.`}>
         {/* shared baseline: both bars start here, so the overhang is the only difference */}
         <line x1={x0} y1={top - 8} x2={x0} y2={H - 26} stroke={PALETTE.ink} strokeWidth={2} strokeDasharray="4 3" />
         {spec.items.map((it, i) => bar(it, i))}
@@ -15320,7 +15325,17 @@ function MoneyBoardW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
       <p role="status" aria-live="polite" className="text-center text-2xl font-extrabold tabular-nums">
         {total}¢{spec.showDollars && <span className="ml-2 text-ink/70">(${dollars})</span>}
         <span className="sr-only">
-          {" "}from {pieces} {pieces === 1 ? "coin" : "coins"}; target {target} cents
+          {" "}from {pieces} {pieces === 1 ? "coin" : "coins"}
+          {/* S237. Only compose and change reach here (count returns early above).
+              In COMPOSE the target is a GIVEN the prompt already states ("How many nickels make 25
+              cents?"), so naming it is parity. In CHANGE it is the ANSWER — paidCents minus
+              priceCents — and the visible receipt deliberately prints "Change ?" to withhold it.
+              Announcing it here handed screen-reader users the exact subtraction the step asks for,
+              while sighted learners had to compute it. They now hear the same two givens the
+              receipt shows. */}
+          {spec.mode === "change"
+            ? `; paid ${spec.paidCents ?? 0} cents, cost ${spec.priceCents ?? 0} cents`
+            : `; target ${target} cents`}
         </span>
       </p>
       {/* Reveal ghost: how far the built amount sits from the target, as a bar. */}

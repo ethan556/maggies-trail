@@ -888,7 +888,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
           : "";
       return `${framing}A coin tray offering ${tray.map((d) => d.label).join(", ")}. ${
         placed.length ? `Placed: ${placed.join(", ")} — ${total} cents so far.` : "Nothing placed yet."
-      } Target: ${target} cents.`;
+      }${spec.mode === "change" ? "" : ` Target: ${target} cents.`}`;
     }
     case "fractionGrid": {
       const v =
