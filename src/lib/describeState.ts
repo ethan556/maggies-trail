@@ -349,7 +349,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const v=(value as {angle:number;offset:number;moves:number}|null) ?? {angle:spec.angleStart,offset:spec.offsetStart,moves:0};
       const raw=Math.abs(((v.angle-spec.baseAngle)%180+180)%180), diff=Math.min(raw,180-raw);
       const relation=diff===0?"parallel":diff===90?"perpendicular":"intersecting";
-      return `The active line is at ${fmt(v.angle)}° with offset ${fmt(v.offset)}. The two lines are ${relation}; their smallest angle is ${fmt(diff)}°. ${v.moves} meaningful moves recorded.`;
+      return `The active line is at ${fmt(v.angle)}° with offset ${fmt(v.offset)}. The two lines are ${relation}; their smallest angle is ${fmt(diff)}°. ${v.moves} of ${spec.requiredMoves} moves made.`;
     }
     case "triangleConstraintLab": {
       const v=(value as {criterion:string;angle:number;flipped:boolean;moves:number}|null) ?? {criterion:spec.startCriterion,angle:spec.angleStart,flipped:false,moves:0};
@@ -368,7 +368,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     }
     case "triangleAngleLab": {
       const v=(value as {x:number;y:number;moves:number}|null) ?? {x:spec.startC[0],y:spec.startC[1],moves:0};
-      return `Two triangle vertices are fixed and the draggable vertex is at (${fmt(v.x)}, ${fmt(v.y)}). The goal is angle A near ${fmt(spec.targetAngleA)}° while the three-angle sum remains 180°. ${v.moves} deformations recorded.`;
+      return `Two triangle vertices are fixed and the draggable vertex is at (${fmt(v.x)}, ${fmt(v.y)}). The goal is angle A near ${fmt(spec.targetAngleA)}° while the three-angle sum remains 180°. ${v.moves} of ${spec.requiredMoves} reshapes made.`;
     }
     case "verticalLineScanner": {
       const v=(value as {x:number;maxIntersections:number;sweeps:number;verdict:string|null}|null) ?? {x:spec.scanStart,maxIntersections:0,sweeps:0,verdict:null};
@@ -998,7 +998,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   matrixTransform: "Four minus/plus button pairs step the matrix entries a, b, c, d; press one and the picture and determinant readout update.",
   fractionBar: "Sliders set how many equal parts and how many are shaded; the bar and its fraction readout follow.",
   slider: "One labelled slider; arrow keys move it one step and the readout speaks the value.",
-  lineRelationLab: "Two labelled sliders rotate and translate the active line; live readouts name the relation, angle, and move count.",
+  lineRelationLab: "Two labelled sliders rotate and translate the active line; live readouts name the relation and the angle.",
   triangleConstraintLab: "Criterion buttons change the locked givens, a slider changes the angle, and a button tests whether a second triangle can exist.",
   coordinateProofLab: "Two sliders position vertex D; evidence buttons reveal slopes, diagonal midpoints, and side lengths.",
   solidSliceLab: "A slider moves the section plane through the solid, and a button adds an equal-base-area comparison solid.",
@@ -1007,7 +1007,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   covariationScrubber: "One labelled slider changes the shared input while the context, table, graph, and equation update together.",
   samplingBiasLab: "Choose a sampling method with buttons, set sample size with a slider, and press Draw sample repeatedly.",
   shapeFamilyBuilder: "Four labelled sliders set sides, right angles, equal sides, and parallel pairs; the preview updates live.",
-  shapeHierarchyLab: "Inspect the fixed family map or triangle givens, then Tab to an exact claim and press Enter or Space. Selecting a claim opens its path, witness, counterexample, blocker, or classification evidence; the chosen claim remains visible on reveal.",
+  shapeHierarchyLab: "Inspect the fixed family map or triangle givens, then Tab to an exact claim and press Enter or Space. Selecting a claim opens the evidence it would need — a chain of properties, an example, a counterexample, a blocking property, or a classification; the chosen claim remains visible on reveal.",
   unitRuler: "Buttons align zero, place the next unit, select unit size, and test exact, gap, or overlap spacing.",
   estimateSlider: "Continuous mode uses one labelled slider. Exact-comparison mode uses candidate buttons; selecting one draws its distance from the stated actual value.",
   scaledCircleLab: "Inspect the fixed drawing-to-real scale chain and circle formula card, then Tab to one exact claim button and press Enter or Space. Your chosen claim remains visible on reveal.",

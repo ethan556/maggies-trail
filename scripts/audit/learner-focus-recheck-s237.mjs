@@ -12,8 +12,10 @@
  * So this file does not judge anything. Each probe restates ONE falsifiable claim the original
  * audit made — a specific string, at a specific site, reaching a specific channel — and asks
  * whether that exact construct still exists in current source. A probe can only answer PRESENT or
- * GONE. Whether PRESENT is acceptable is a human call, and where the original audit itself
- * refused to rule (areaModel), this file refuses too.
+ * GONE. Whether PRESENT is acceptable is a human call. areaModel was carried as "OPEN" —
+ * probed but never scored — for exactly as long as it was unruled; the S237 house ruling
+ * ("invariant" is banned as a word on an active screen, not merely as a panel) settled it, so
+ * its probe now scores like the rest. "OPEN" stays in the vocabulary for the next open question.
  *
  * A probe that greps a bare phrase would also match the explanatory comments the fixes left
  * behind — which is precisely how a fix can look undone, or an unfixed leak can look repaired.
@@ -56,7 +58,7 @@ const PROBES = [
   { engine: "affineRelationshipLab", claim: 'description opens with the engine name "Affine relationship lab."', file: DESCRIBE, re: /`Affine relationship lab\./, expect: "GONE" },
 
   // ---- areaModel (UNCERTAIN — the original audit declined to rule; so does this) ----
-  { engine: "areaModel", claim: '"stays invariant" caption on the active screen', file: WIDGETS, re: /stays invariant/, expect: "OPEN" },
+  { engine: "areaModel", claim: '"stays invariant" caption on the active screen', file: WIDGETS, re: /stays invariant/, expect: "GONE" },
 
   // ---- conditionalTableLab (RAW_STATE_TOKEN) ----
   { engine: "conditionalTableLab", claim: "condition/cell raw enums spoken in the description", file: DESCRIBE, re: /The selected condition is \$\{condition\};/, expect: "GONE" },

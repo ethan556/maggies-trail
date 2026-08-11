@@ -121,7 +121,29 @@ function splitText(root: HTMLElement): { visible: string; accessibleOnly: string
     (n) => !n.matches('button, input, select, textarea, a, [role="button"], [role="link"], [role="spinbutton"]')
   );
   const ariaText = describers.map((n) => n.getAttribute("aria-label") ?? "").join(" ");
-  return { visible: clone.textContent ?? "", accessibleOnly: `${srText} ${ariaText}` };
+  return { visible: flatten(clone), accessibleOnly: `${srText} ${ariaText}` };
+}
+
+/**
+ * S237b — textContent is WRONG here, and wrong in the direction that manufactures violations. It
+ * concatenates sibling text nodes with no separator, so a readout showing 28.27 followed by a
+ * progress line starting "0 of 4" yields "28.270"; numbersIn() reads a maximal numeric token and
+ * reports 28.270, so 28.27 looks absent from the visible layer while the SVG description states
+ * it. solidSliceLab then fails a parity rule it has never broken. Found when a counter moved next
+ * to a readout, which is the only reason it surfaced at all.
+ *
+ * Walking text nodes and joining with a space is what the DOM means: separate text nodes in
+ * separate elements are never one token. STRICTER, not looser — fusion can equally bury a real
+ * leaked number inside a longer token, and no longer can.
+ */
+function flatten(root: HTMLElement): string {
+  const parts: string[] = [];
+  const walk = (n: Node) => {
+    if (n.nodeType === 3) { const t = n.textContent; if (t && t.trim()) parts.push(t.trim()); return; }
+    n.childNodes.forEach(walk);
+  };
+  walk(root);
+  return parts.join(" ");
 }
 
 /**
@@ -137,17 +159,28 @@ function splitText(root: HTMLElement): { visible: string; accessibleOnly: string
  * The gate ratchets: anything NEW fails immediately. Entries should only ever leave this list.
  * Do not add to it to make a build pass.
  */
+
+/**
+ * S237b — 11 entries were removed from this list, and NOT by fixing an engine. They never
+ * occurred: the old splitText fused adjacent sibling text nodes, so values the screen genuinely
+ * showed read as missing. Half this list was that artifact —
+ *   absValueLine|51, absValueLine|9, boxPlot|100, boxPlot|20, boxPlot|60, boxPlot|80, dragOrder|5, dragOrder|6, dragOrder|7, dragOrder|8, triangleSolve|39
+ * None of those engines was edited when the entries were dropped; correcting the tokenizer alone
+ * made them stop firing. Re-adding any of them without a reproduction is a regression, not a
+ * finding. The 11 that remain were re-measured against the corrected tokenizer and all still fire.
+ */
 const KNOWN_UNREVIEWED = new Set<string>([
-  "absValueLine|51", "absValueLine|9",
-  "boxPlot|100", "boxPlot|15", "boxPlot|20", "boxPlot|5", "boxPlot|60", "boxPlot|70", "boxPlot|80", "boxPlot|90",
-  "dragOrder|5", "dragOrder|6", "dragOrder|7", "dragOrder|8",
+  "boxPlot|15",
+  "boxPlot|5",
+  "boxPlot|70",
+  "boxPlot|90",
   "extraneousRootLab|2",
-  "moneyBoard|2", "moneyBoard|5",
-  "trialProbabilityLab|14",
+  "moneyBoard|2",
+  "moneyBoard|5",
   "oddEvenPairs|7",
   "taylorApprox|8",
   "tenFrame|10",
-  "triangleSolve|39",
+  "trialProbabilityLab|14",
 ]);
 
 const samples = collectSamples();
