@@ -871,8 +871,17 @@ describe("algebra reveal ghosts (session 29)", () => {
     show(dbSpec, { s1: "add" }, "info"); // s1 wrong, s2 unplaced
     const chips = screen.getAllByTestId("db-ghost");
     expect(chips).toHaveLength(2);
-    expect(chips[0].textContent).toContain("Multiply");
-    expect(chips[1].textContent).toContain("Add");
+    // S237: dragBucket now seeded-shuffles its DISPLAY order (41 of 187 authored specs listed
+    // their items pre-grouped by destination, so they could be sorted in runs without being
+    // read). Indexing chips[0]/chips[1] pinned the authored order, which is no longer the render
+    // order. The intent of this test — "the correct destination is chipped on the wrong item AND
+    // on the unplaced one, and on nothing else" — is about WHICH destinations appear, not their
+    // sequence. Asserted as an exact multiset: same two strings, still exactly two chips, and a
+    // third or a wrong one still fails. Not relaxed; the ordering was never the assertion.
+    const chipText = chips.map((c) => c.textContent ?? "").sort();
+    expect(chipText).toHaveLength(2);
+    expect(chipText.filter((t) => t.includes("Multiply"))).toHaveLength(1);
+    expect(chipText.filter((t) => t.includes("Add"))).toHaveLength(1);
     cleanup();
     show(dbSpec, { s1: "mul", s2: "add" }, "info");
     expect(screen.queryByTestId("db-ghost")).toBeNull();
