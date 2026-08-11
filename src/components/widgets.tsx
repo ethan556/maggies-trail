@@ -11352,7 +11352,7 @@ function UnitCircleExploreW({ spec, value, onChange, disabled, tone }: WProps<TU
   });
 
   const stateSentence = isWave && spec.trace
-    ? `θ = ${angle}°; ${spec.trace}-wave value ${fmt(waveVal)}${spec.targetFeature ? `; hunting the ${spec.targetFeature.kind} near x = ${spec.targetFeature.x}°` : ""}.`
+    ? `θ = ${angle}°; ${spec.trace}-wave value ${fmt(waveVal)}${spec.targetFeature ? `; hunting the ${UNIT_CIRCLE_FEATURE[spec.targetFeature.kind] ?? spec.targetFeature.kind} near x = ${spec.targetFeature.x}°` : ""}.`
     : isGhost
       ? `θ = ${angle}°; direct point and formula point ${detached ? `apart by ${fmt(ghostGap)}${offCircle ? ", formula point off the circle" : ""}` : "coincide"}.`
       : `Unit circle at ${angle}°; cosine ${fmt(cos)}, sine ${fmt(sin)}.`;
@@ -11422,7 +11422,7 @@ function UnitCircleExploreW({ spec, value, onChange, disabled, tone }: WProps<TU
             {spec.targetFeature && (
               <g data-testid="uc-feature">
                 <line x1={xToPx(spec.targetFeature.x)} y1={14} x2={xToPx(spec.targetFeature.x)} y2={H - 14} stroke={PALETTE.tangerine} strokeWidth={1.5} strokeDasharray="5 4" />
-                <text x={xToPx(spec.targetFeature.x)} y={12} fontSize={9} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>{spec.targetFeature.kind}</text>
+                <text x={xToPx(spec.targetFeature.x)} y={12} fontSize={9} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>{UNIT_CIRCLE_FEATURE[spec.targetFeature.kind] ?? spec.targetFeature.kind}</text>
               </g>
             )}
             {/* RELEASE BLOCKER FIX (S119) — a construction specific to the function being traced.
@@ -15671,6 +15671,26 @@ function OddEvenPairsW({ spec, value, onChange, disabled, tone, onEvent }: WProp
  * (canCheck false) while others accept the check and return authored explorationFeedback, so any
  * wording naming a specific consequence would be false for half of them.
  */
+/** S237. Learner-facing names for two internal discriminants that were painted straight to screen:
+ * shapeHierarchyLab printed BLOCKER / CLASSIFICATION / PATH chips, and unitCircleExplore drew
+ * "midlineCross" on the wave graph. Sibling engines that map their tokens were already clean. */
+const EVIDENCE_KIND: Record<string, string> = {
+  path: "chain of properties",
+  reverse: "converse",
+  example: "example",
+  counterexample: "counterexample",
+  blocker: "blocking property",
+  classification: "classification",
+  calculation: "calculation",
+};
+
+const UNIT_CIRCLE_FEATURE: Record<string, string> = {
+  peak: "peak",
+  zero: "zero",
+  period: "period",
+  midlineCross: "midline crossing",
+};
+
 function explorationProgress(done: number, needed: number, noun: string, verbPast: string): string {
   const plural = needed === 1 ? "" : "s";
   const left = Math.max(0, needed - done);
@@ -15869,8 +15889,8 @@ function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<T
   const correct=spec.choices.find((choice)=>shapeHierarchyChoiceCorrect(spec,choice))!;
   const choose=(id:string)=>{const choice=spec.choices.find((candidate)=>candidate.id===id);if(!choice)return;onEvent?.({control:"shape-claim",dir:shapeHierarchyChoiceCorrect(spec,choice)?"toward":"away",kind:"efficient",state:{claim:choice.claim}});onChange(id)};
   const highlighted=new Set(selected?.highlightNodeIds??[]);
-  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block">{choice.label}</span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{choice.evidenceKind}</span></button>)}</div>;
-  const evidence=selected?<div data-testid="sh-evidence" className={`rounded-2xl border-2 p-4 ${shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{selected.evidenceKind} evidence</div><p className="font-bold">{selected.evidenceText}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to open the evidence it would need.</div>;
+  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block">{choice.label}</span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{EVIDENCE_KIND[choice.evidenceKind] ?? choice.evidenceKind}</span></button>)}</div>;
+  const evidence=selected?<div data-testid="sh-evidence" className={`rounded-2xl border-2 p-4 ${shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{EVIDENCE_KIND[selected.evidenceKind] ?? selected.evidenceKind} evidence</div><p className="font-bold">{selected.evidenceText}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to open the evidence it would need.</div>;
   const reveal=tone==="info"&&selectedId!==correct.id?<GhostChip testid="shlab-ghost">Evidence-backed answer: {correct.label}</GhostChip>:null;
   if(spec.mode==="triangle"){
     const sides=spec.triangleSides,angles=spec.triangleAngles;

@@ -52,6 +52,19 @@ const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : String(+n.
  * from these descriptions left the stage list as the opening words, which begins lowercase. */
 const sentence = (text: string): string => (text ? text[0].toUpperCase() + text.slice(1) : text);
 
+/** S237. describeState branched only on perpBisector, so the other six classical constructions were
+ * all narrated as "a regular hexagon stepped around the circle". Seven of the eight authored
+ * compassConstruct lessons use a non-perpBisector mode, so seven were described wrongly. */
+const COMPASS_GOAL: Record<string, string> = {
+  perpBisector: "the perpendicular bisector of the segment",
+  hexagon: "a regular hexagon stepped around the circle",
+  angleBisector: "the bisector of the angle",
+  perpAtPoint: "the perpendicular to the line at the marked point",
+  perpFromPoint: "the perpendicular from the point to the line",
+  parallelThroughPoint: "the parallel to the line through the marked point",
+  copyAngle: "a copy of the given angle at the new ray",
+};
+
 /** S237. conditionalTableLab's readMetric is an internal discriminant; learners heard
  * "The target rowTotal uses 20." These are ordinary statistics names, so they get spoken as such. */
 const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
@@ -839,7 +852,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     }
     case "compassConstruct": {
       const v = typeof value === "number" ? value : spec.start;
-      const goal = spec.mode === "perpBisector" ? "the perpendicular bisector of the segment" : "a regular hexagon stepped around the circle";
+      const goal = COMPASS_GOAL[spec.mode] ?? "the construction";
       return `Building ${goal} with a compass span of ${fmt(spec.span)}: the construction dial is at ${fmt(v)} of ${fmt(spec.target)} steps.`;
     }
     case "moneyBoard": {
@@ -957,7 +970,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   fractionCompare: "The two bars are buttons naming their shaded fractions; a third button says they're equal. Press the bar showing more.",
   oddEvenPairs: "Press \"Pair two\" until no pair remains, then press odd or even.",
   lineExplore: "Two sliders — slope and intercept — with live value readouts. Arrow keys move them one step.",
-  matrixTransform: "Four sliders set the matrix entries a, b, c, d; the picture and determinant readout update as you move them.",
+  matrixTransform: "Four steppers set the matrix entries a, b, c, d; the picture and determinant readout update as you change them.",
   fractionBar: "Sliders set how many equal parts and how many are shaded; the bar and its fraction readout follow.",
   slider: "One labelled slider; arrow keys move it one step and the readout speaks the value.",
   lineRelationLab: "Two labelled sliders rotate and translate the active line; live readouts name the relation, angle, and move count.",
