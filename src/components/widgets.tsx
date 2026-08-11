@@ -13087,7 +13087,14 @@ function DragOrderW({ spec, value, onChange, disabled, tone }: WProps<TDragOrder
 
 /* ---------------- Drag bucket (per-item bucket picker, partial credit) ---------------- */
 
-function DragBucketW({ spec, value, onChange, disabled, tone }: WProps<TDragBucket>) {
+function DragBucketW({ spec, value, onChange, disabled, seed, tone }: WProps<TDragBucket>) {
+  /* S237. Same defect class, weaker form: 41 of 187 authored dragBucket specs list their items
+   * already GROUPED by destination bucket, so the items can be sorted in runs without reading
+   * them. Display order only; evaluate.ts scores `placed[i.id] === i.bucketId`, by id. */
+  const orderedItems = useMemo(
+    () => seededShuffle(spec.items, `${seed ?? spec.items.map((i) => i.id).join("|")}:buckets`),
+    [spec.items, seed]
+  );
   const placed = (value ?? {}) as Record<string, string>;
   const place = (itemId: string, bucketId: string) =>
     onChange({ ...placed, [itemId]: bucketId });
@@ -13095,7 +13102,7 @@ function DragBucketW({ spec, value, onChange, disabled, tone }: WProps<TDragBuck
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      {spec.items.map((it) => (
+      {orderedItems.map((it) => (
         <div key={it.id} className="rounded-card border-2 border-ink/15 bg-white p-3">
           <p className="mb-2 font-semibold"><MathProse text={it.label} /></p>
           <div role="radiogroup" aria-label={`Where does ${it.label} go?`} className="flex flex-wrap gap-2">
@@ -13161,7 +13168,20 @@ function DragBucketW({ spec, value, onChange, disabled, tone }: WProps<TDragBuck
 
 /* ---------------- Match pairs (select left, tap right to link) ---------------- */
 
-function MatchPairsW({ spec, value, onChange, disabled, tone }: WProps<TMatchPairs>) {
+function MatchPairsW({ spec, value, onChange, disabled, seed, tone }: WProps<TMatchPairs>) {
+  /* S237. Same mastery-integrity bug McqW documents above, in a second engine. Authoring writes
+   * the two columns in matched order — measured across the corpus, 143 of 175 authored matchPairs
+   * have right[i] as the partner of left[i] — so the rendered rows line up and a learner can pair
+   * by POSITION without doing the mathematics. (Reported from the app: "Match each double to what
+   * it makes" showed 6+6/12, 7+7/14, 8+8/16, 9+9/18 as four parallel rows.)
+   * Only the RIGHT column is shuffled: the left order is often authored deliberately (ascending
+   * doubles here) and carries no answer on its own. Grading is untouched and cannot be touched —
+   * evaluate.ts checks `links[l.id] === spec.pairs[l.id]`, by id, never by index. Seeded, never
+   * Math.random (DETERMINISM.md §5), so the same question renders the same order every time. */
+  const orderedRight = useMemo(
+    () => seededShuffle(spec.right, `${seed ?? spec.right.map((r) => r.id).join("|")}:pairs`),
+    [spec.right, seed]
+  );
   const links = (value ?? {}) as Record<string, string>;
   const [active, setActive] = useState<string | null>(null);
   const linkNumber = (leftId: string) => Object.keys(links).sort().indexOf(leftId) + 1;
@@ -13222,7 +13242,7 @@ function MatchPairsW({ spec, value, onChange, disabled, tone }: WProps<TMatchPai
           })}
         </div>
         <div className="grid content-start gap-2">
-          {spec.right.map((r) => {
+          {orderedRight.map((r) => {
             const owner = Object.entries(links).find(([, rid]) => rid === r.id)?.[0];
             return (
               <button
