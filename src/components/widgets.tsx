@@ -1543,6 +1543,13 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
             ))}
           </div>
         </div>
+        {/* S237 NOTE — NOT CHANGED, needs a curriculum ruling. This panel prints the graded
+            answer during active work: count mode shows "6 x 5 = 30" beside a prompt asking "How
+            many total outfits?" with 30 among the choices (sp-04-03). Gating it behind
+            tone === "info" was tried and REVERTED, because two existing gates
+            (widgets.compoundEvent.s133.test.tsx) deliberately pin this readout as visible, and
+            weakening them to fit is exactly what the closure rules forbid. Tracked in
+            ANSWER_ON_SCREEN_AUDIT_S237.md. */}
         <div className="grid gap-1 rounded-xl border-2 border-ink/10 bg-white p-3 text-center">
           <p className="text-sm font-bold text-ink/60">Sample-space size</p>
           <p className="text-xl font-black tabular-nums text-ink">{factors.join(" × ")} = {total}</p>
@@ -5591,13 +5598,20 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" role="img" aria-label={`Equation ${spec.leftDisplay} equals ${spec.rightDisplay}. After collecting terms, ${residueLabel}. ${truthText}.`}>
+      <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" role="img" aria-label={`Equation ${spec.leftDisplay} equals ${spec.rightDisplay}. After collecting terms, ${residueLabel}.${spec.choices?.length ? "" : ` ${truthText}`}.`}>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-center text-xl font-black tabular-nums">
           <div className="rounded-xl border-2 border-sky/40 bg-sky/10 p-3">{spec.leftDisplay}</div><span aria-hidden="true">=</span><div className="rounded-xl border-2 border-tangerine/45 bg-tangerine/10 p-3">{spec.rightDisplay}</div>
         </div>
         <div className="flex items-center justify-center gap-2 text-sm font-extrabold text-ink/65"><span className="rounded-full border border-ink/20 px-3 py-1">collect like terms</span><span aria-hidden="true">→</span></div>
+        {/* S237. `truth`/`truthText` state the outcome the step asks the learner to classify:
+            les-02-01 asks "How many solutions does 4x + 1 = 4x + 9 have?" and this printed
+            "false residue -> no solution" with "No solution" among the choices. Held until a
+            verdict when the step is a classification (choices present); transform-mode steps have
+            no choices and keep the running readout they depend on. */}
         <div className={`rounded-xl border-2 border-dashed p-3 text-center text-2xl font-black tabular-nums ${truth === "none" ? "border-berry bg-berry/10 text-berry-ink" : truth === "infinite" ? "border-leaf bg-leaf/10 text-leaf-ink" : "border-sky bg-sky/10 text-sky-ink"}`}>{residueLabel}</div>
-        <p className="text-center text-sm font-bold">{truthText}</p>
+        {/* Only the OUTCOME is withheld. The residue above is the learner's own working step —
+            collecting like terms — and an existing gate rightly pins it as exposed. */}
+        {(!spec.choices?.length || tone === "info") && <p className="text-center text-sm font-bold">{truthText}</p>}
         {selected && <p className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center font-extrabold" aria-live="polite">Your claim: {selected.label}</p>}
       </section>
       <div className="grid gap-2 sm:grid-cols-2">{spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "equation-outcome-claim", dir: equationOutcomeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, outcome: choice.outcome, truth } }); onChange(choice.id); }}>{choice.label}</button>)}</div>

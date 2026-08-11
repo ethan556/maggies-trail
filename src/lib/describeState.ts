@@ -97,7 +97,11 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     case "equationOutcomeLab": {
       if((spec.mode ?? "classify")==="classify"){
         const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
-        return `Equation ${spec.leftDisplay} equals ${spec.rightDisplay}. Normalized outcome ${equationOutcomeTruth(spec)}. ${selected ? `Selected ${selected.label}.` : "No claim selected."}`;
+        // S237. `equationOutcomeTruth` IS the graded answer — les-02-01 asks how many solutions
+        // the equation has and this stated "outcome none". The equation itself is the given and
+        // stays; the outcome is now withheld on classification steps exactly as the visible truth
+        // panel is (widgets.tsx), so both channels ask the same work of the learner.
+        return `Equation ${spec.leftDisplay} equals ${spec.rightDisplay}.${spec.choices?.length ? "" : ` Normalized outcome ${equationOutcomeTruth(spec)}.`} ${selected ? `Selected ${selected.label}.` : "No claim selected."}`;
       }
       const state=value&&typeof value==="object"&&!Array.isArray(value)?value as {stageIds?:string[];numeric?:number|""}:{};
       const ids=Array.isArray(state.stageIds)?state.stageIds:[],byId=new Map((spec.operations ?? []).map(operation=>[operation.id,operation]));
