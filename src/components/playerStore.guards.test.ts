@@ -73,6 +73,31 @@ describe("phase guards", () => {
     expect(p().phase).toBe("correct");
   });
 
+  it("keeps the graded checkpoint while post-verdict exploration checks remain ungraded", () => {
+    const p = usePlayer.getState;
+    p().next();
+    p().next();
+    p().setValue({ m: 2, b: 3 });
+    p().check();
+    const historyLen = p().history.length;
+    const xp = p().sessionXp;
+
+    p().setValue({ m: 2, b: 0 });
+    expect(p().phase).toBe("correct");
+    expect(p().explorationActive).toBe(true);
+    p().check();
+    expect(p().explorationCorrect).toBe(false);
+    expect(p().explorationFeedback).toContain("Intercept is off");
+    expect(p().history).toHaveLength(historyLen);
+    expect(p().sessionXp).toBe(xp);
+
+    p().setValue({ m: 2, b: 3 });
+    p().check();
+    expect(p().explorationCorrect).toBe(true);
+    expect(p().history).toHaveLength(historyLen);
+    expect(p().sessionXp).toBe(xp);
+  });
+
   it("tryAgain and reveal are no-ops outside retry", () => {
     const p = usePlayer.getState;
     p().tryAgain();

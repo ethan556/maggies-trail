@@ -119,6 +119,22 @@ describe("process-aware noticing in the player", () => {
     expect(cue()).toBeNull();
   });
 
+  it("treats a correct result as a saved checkpoint and keeps the model explorable", () => {
+    render(<LessonPlayer lesson={lesson} />);
+    start();
+    setMarker(-4);
+    fireEvent.click(screen.getByRole("button", { name: /^Check$/ }));
+
+    expect((slider() as HTMLInputElement).disabled).toBe(false);
+    expect(screen.getByText(/Checkpoint saved. Keep exploring the model/)).toBeTruthy();
+
+    setMarker(-3);
+    fireEvent.click(screen.getByRole("button", { name: "Check this state" }));
+    expect(screen.getByText(/This state does not meet the target/)).toBeTruthy();
+    expect(screen.getByText(/Not far enough left/)).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^Continue$/ })).toBeTruthy();
+  });
+
   it("resets on step advance: the next step starts with a clean slate", () => {
     render(<LessonPlayer lesson={lesson} />);
     start();

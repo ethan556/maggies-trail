@@ -73,7 +73,7 @@ describe("the on-screen panel", () => {
     const { rerender } = render(
       <WidgetRenderer spec={matrix} value={{ a: 2, b: 0, c: 0, d: 1 }} onChange={() => {}} disabled={false} />
     );
-    const summary = screen.getByText("What's on screen right now");
+    const summary = screen.getByText("Describe this model");
     expect(summary).toBeTruthy();
     fireEvent.click(summary);
     expect(screen.getByText(/signed area 2/)).toBeTruthy();
@@ -84,7 +84,7 @@ describe("the on-screen panel", () => {
   it("does not render for self-narrating widgets", () => {
     const numeric = { type: "numeric", prompt: "p", answer: 3, tolerance: 0, commonErrors: [], fallbackFeedback: "f" } as TWidget;
     render(<WidgetRenderer spec={numeric} value={null} onChange={() => {}} disabled={false} />);
-    expect(screen.queryByText("What's on screen right now")).toBeNull();
+    expect(screen.queryByText("Describe this model")).toBeNull();
   });
 });
 

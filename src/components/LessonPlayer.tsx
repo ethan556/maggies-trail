@@ -19,12 +19,13 @@ import WidgetView from "@/components/WidgetView";
 import type { StageTone } from "./widgets";
 import { CausalMasteryPanel } from "@/components/CausalMasteryPanel";
 import { resolveCMLMeta } from "@/lib/cml/catalog";
-import { classifyProcess, MULTI_CONTROL, processCue as processCue2, type ProcessEvent, type ProcessSignal } from "@/lib/processEvents";
+import { classifyProcess, MULTI_CONTROL, processCue as processCue2, type ProcessEvent } from "@/lib/processEvents";
 import { responseCopy } from "@/lib/adaptivePolicy";
 import { classifyBaseTen, classifyFraction, classifyGraph, classifyNumberLine, classifyRatio, strategyCue, type Strategy } from "@/lib/strategyClassifiers";
 import { sameCMLValue, usePlayer } from "./playerStore";
 import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailDots } from "./playerChrome";
 import { MathProse } from "@/components/math/MathText";
+import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 
 
 export interface NextLesson {
@@ -122,7 +123,6 @@ export default function LessonPlayer({
   const stepIndex = st.i;
   const [cmlHistory, setCmlHistory] = useState<unknown[]>([]);
   const [cmlFirstValue, setCmlFirstValue] = useState<unknown>(null);
-  const [cmlLatestEvent, setCmlLatestEvent] = useState<ProcessEvent | null>(null);
   const [cmlMoveCount, setCmlMoveCount] = useState(0);
   const cmlStep = st.queue?.[st.i];
   const cmlEnabled = resolveCMLMeta(cmlStep) !== null;
@@ -130,7 +130,6 @@ export default function LessonPlayer({
   useEffect(() => {
     setCmlHistory([]);
     setCmlFirstValue(null);
-    setCmlLatestEvent(null);
     setCmlMoveCount(0);
   }, [stepIndex]);
 
@@ -298,7 +297,6 @@ export default function LessonPlayer({
       // latch guard so release works even after the cue has latched.
       const live = usePlayer.getState();
       if (resolveCMLMeta(live.queue?.[live.i])) {
-        setCmlLatestEvent(e);
         setCmlMoveCount((count) => count + 1);
       }
       if (live.lockedControl !== null && e.control !== live.lockedControl) live.clearLock();
@@ -488,7 +486,13 @@ export default function LessonPlayer({
   // Feedback ↔ object linkage: the stage frame carries the phase's tone so the
   // footer diagnosis visibly points at the manipulative it is talking about.
   const stageTone: StageTone =
-    st.phase === "retry"
+    st.explorationActive && st.explorationCorrect === false
+      ? "error"
+      : st.explorationActive && st.explorationCorrect === true
+        ? "success"
+        : st.explorationActive
+          ? "neutral"
+          : st.phase === "retry"
       ? "error"
       : st.phase === "correct"
         ? "success"
@@ -576,9 +580,9 @@ export default function LessonPlayer({
               interactive steps author `figure` anywhere in the corpus, so availability
               plus the FIGURE_IDS membership test is the whole guard.
               Wave A gives the figure the visual lead with no repeated stage-kind label. */}
-          {s.figure && FIGURE_IDS.has(s.figure) && (
+          {s.figure && FIGURE_IDS.has(s.figure) && isFigureTextAligned(s.figure, s.body ?? "") && (
             <div className="math-stage-shell figure-reveal mb-4">
-              <div key={s.id} className="stage trail-concept-stage rounded-card p-3 shadow-e2 ring-1 ring-ink/8"><FigureView id={s.figure} /></div>
+              <div key={s.id} className="stage trail-concept-stage rounded-card p-3 shadow-e2 ring-1 ring-ink/8"><FigureView id={s.figure} context={s.body ?? ""} /></div>
             </div>
           )}
           {early && <Narration step={s} stepKey={`${s.id}:${st.i}`} />}
@@ -634,7 +638,7 @@ export default function LessonPlayer({
               spec={s.widget}
               value={st.value}
               onChange={setCMLValue}
-              disabled={finalized}
+              disabled={false}
               seed={`${st.lesson.id}:${s.id}`}
               tone={stageTone}
               onEvent={onProcessEvent}
@@ -652,18 +656,39 @@ export default function LessonPlayer({
                 <span>{processCue}</span>
               </p>
             )}
-            {cmlEnabled && (
+            {cmlEnabled && !finalized && cmlMoveCount > 0 && (
+              <div
+                className="mx-auto mt-3 flex w-full max-w-xl justify-end gap-2"
+                role="group"
+                aria-label="Model controls"
+              >
+                <button
+                  type="button"
+                  disabled={cmlHistory.length === 0}
+                  onClick={undoCML}
+                  className="pressable min-h-11 rounded-card border border-ink/15 bg-surface px-3 text-sm font-bold text-content-2 disabled:opacity-35 dark:border-paper/15"
+                >
+                  Undo
+                </button>
+                <button
+                  type="button"
+                  disabled={
+                    cmlFirstValue === null ||
+                    cmlFirstValue === undefined ||
+                    sameCMLValue(st.value, cmlFirstValue)
+                  }
+                  onClick={restoreFirstCML}
+                  className="pressable min-h-11 rounded-card border border-ink/15 bg-surface px-3 text-sm font-bold text-content-2 disabled:opacity-35 dark:border-paper/15"
+                >
+                  Reset model
+                </button>
+              </div>
+            )}
+            {cmlEnabled && finalized && (
               <CausalMasteryPanel
                 key={`cml:${s.id}:${st.i}`}
                 step={s}
                 value={st.value}
-                firstValue={cmlFirstValue}
-                previousValue={cmlHistory[cmlHistory.length - 1] ?? null}
-                latestEvent={cmlLatestEvent}
-                moveCount={cmlMoveCount}
-                finalized={finalized}
-                onUndo={undoCML}
-                onRestoreFirst={restoreFirstCML}
               />
             )}
           </div>
@@ -741,6 +766,9 @@ export default function LessonPlayer({
                 }
               >
                 {st.feedback && <p><MathProse text={st.feedback} includeArithmetic /></p>}
+                <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
+                  Checkpoint saved. Keep exploring the model, or continue when you are ready.
+                </p>
               </StatusBanner>
               </div>
             )}
@@ -759,6 +787,25 @@ export default function LessonPlayer({
                     <span className="font-bold"><MathProse text={revealAnswer} /></span>
                   </p>
                 </div>
+              </StatusBanner>
+            )}
+            {finalized && st.explorationActive && (
+              <StatusBanner
+                tone={st.explorationCorrect === null ? "info" : st.explorationCorrect ? "success" : "error"}
+                icon={st.explorationCorrect === null ? "compass" : st.explorationCorrect ? "check" : "target"}
+                title={
+                  st.explorationCorrect === null
+                    ? "Exploration state ready"
+                    : st.explorationCorrect
+                      ? "This state also meets the target"
+                      : "This state does not meet the target"
+                }
+              >
+                <p>
+                  {st.explorationFeedback
+                    ? <MathProse text={st.explorationFeedback} includeArithmetic />
+                    : "You can test this state without changing your saved score or mastery evidence."}
+                </p>
               </StatusBanner>
             )}
             {finalized && s.predict && st.prediction !== null && (() => {
@@ -871,6 +918,17 @@ export default function LessonPlayer({
 
             {finalized && (
               <>
+                {st.explorationActive && s.widget && (
+                  <button
+                    type="button"
+                    onClick={st.check}
+                    disabled={!canCheck(s.widget, st.value)}
+                    className="pressable min-h-11 rounded-card border-2 border-sky px-4 py-2 font-bold text-sky-ink disabled:opacity-40"
+                  >
+                    <AppIcon name="target" size={17} />
+                    Check this state
+                  </button>
+                )}
                 {st.skipOffer && st.phase === "correct" && (
                   <button
                     type="button"

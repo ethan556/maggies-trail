@@ -280,13 +280,15 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     case "secantSlope": {
       const h = typeof value === "number" ? value : spec.startH;
       const name = spec.curve === "square" ? "x²" : "x³";
+      const shiftX = spec.shiftX ?? 0;
+      const shiftY = spec.shiftY ?? 0;
       const f = (x: number) => {
-        const z=x-spec.shiftX;
-        return (spec.curve === "square" ? z*z : z*z*z)+spec.shiftY;
+        const z=x-shiftX;
+        return (spec.curve === "square" ? z*z : z*z*z)+shiftY;
       };
       const slope = h === 0 ? null : (f(spec.a + h) - f(spec.a)) / h;
-      const tangentX=spec.mode==="rolle"?spec.shiftX:spec.a;
-      const tangent = spec.curve === "square" ? 2*(tangentX-spec.shiftX) : 3*(tangentX-spec.shiftX)*(tangentX-spec.shiftX);
+      const tangentX=spec.mode==="rolle"?shiftX:spec.a;
+      const tangent = spec.curve === "square" ? 2*(tangentX-shiftX) : 3*(tangentX-shiftX)*(tangentX-shiftX);
       if(spec.mode==="rolle") return `On the translated ${name} curve, Rolle's interval runs from A at x = ${fmt(spec.a)} to B at x = ${fmt(spec.a+h)}. Their heights are ${fmt(f(spec.a))} and ${fmt(f(spec.a+h))}; the secant slope is ${slope===null?"undefined":fmt(slope)}. The interior candidate c = ${fmt(tangentX)} has tangent slope ${fmt(tangent)}.`;
       return (
         `On y = ${name}, point A is fixed at x = ${fmt(spec.a)} and point B sits at x = ${fmt(spec.a + h)} (gap h = ${fmt(h)}). ` +

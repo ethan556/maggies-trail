@@ -81,12 +81,12 @@ describe("the on-screen panel", () => {
     const spec = specs.find((s) => s.type === "fractionGrid")!;
     const { container } = render(<Host spec={spec} />);
     let panel = screen.getByTestId("a11y-panel");
-    expect(panel.textContent).toContain("What's on screen right now");
-    expect(panel.textContent).toContain("How to work it");
+    expect(panel.textContent).toContain("Describe this model");
+    expect(panel.textContent).toContain("How to change it");
     expect(panel.textContent).toContain("row count"); // the verified specific, not the default
     // fractionGrid initializes itself on mount (a real change) — the panel
     // honestly records the pristine description as "before".
-    expect(panel.textContent).toContain("Before your last change");
+    expect(panel.textContent).toContain("Previous model");
     expect(panel.textContent).toContain("unit square to partition");
     expect(panel.querySelector("[aria-live]")).toBeNull(); // the no-chatter contract
 

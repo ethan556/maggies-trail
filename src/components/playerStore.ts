@@ -38,6 +38,11 @@ interface PlayerState {
   prediction: string | null;
   hintsShown: number;
   feedback: string;
+  /** Post-verdict sandbox state. The graded checkpoint is already durable; these fields
+   * let learners keep manipulating and check new states without duplicating XP/evidence. */
+  explorationActive: boolean;
+  explorationFeedback: string;
+  explorationCorrect: boolean | null;
   variant: 0 | 1;
   lastXp: number;
   sessionXp: number;
@@ -98,6 +103,9 @@ function freshStepState() {
     prediction: null as string | null,
     hintsShown: 0,
     feedback: "",
+    explorationActive: false,
+    explorationFeedback: "",
+    explorationCorrect: null as boolean | null,
     variant: 0 as const,
     skipOffer: false,
     stepSignal: null as ProcessSignal | null,
@@ -195,6 +203,9 @@ export const usePlayer = create<PlayerState>((set, get) => {
     set({
       phase: revealed ? "revealed" : "correct",
       feedback: fb,
+      explorationActive: false,
+      explorationFeedback: "",
+      explorationCorrect: null,
       lastXp: xp,
       sessionXp: st.sessionXp + xp,
       history,
@@ -321,10 +332,26 @@ export const usePlayer = create<PlayerState>((set, get) => {
       });
     },
 
-    setValue: (v) => set({ value: v }),
+    setValue: (v) => {
+      const phase = get().phase;
+      if (phase === "correct" || phase === "revealed") {
+        set({ value: v, explorationActive: true, explorationFeedback: "", explorationCorrect: null });
+        return;
+      }
+      set({ value: v });
+    },
 
     check: () => {
       const st = get();
+      // A verdict is a saved checkpoint, not a padlock. Post-verdict checks are
+      // deliberately ungraded: no attempts, history, mastery, review item, or XP changes.
+      if ((st.phase === "correct" || st.phase === "revealed") && st.explorationActive) {
+        const step = st.queue[st.i];
+        if (!step.widget) return;
+        const result = evaluate(step.widget, st.value);
+        set({ explorationFeedback: result.feedback, explorationCorrect: result.correct });
+        return;
+      }
       // Rapid-input guard: grading is only legal while working. A double-click
       // or Enter-spam that lands after the verdict must be a no-op — otherwise
       // the second call re-runs finalize and duplicates history/XP/mastery.

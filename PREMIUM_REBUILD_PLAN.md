@@ -23,7 +23,7 @@ Use `MATH_TYPESETTING_AUDIT.csv` to convert the highest-risk B/C rows first. Pro
 
 Exit evidence: the canonical boundary recognizes 9,327/9,576 B/C risk signatures across 879 lessons; core learner surfaces share one KaTeX + MathML route; 249 complex/false-positive rows remain explicitly reviewed rather than blindly converted; the 3×2 exponent matrix is free of raw caret notation, overflow, sub-44 px targets, and dark-stage contrast failure. Physical screen-reader/zoom/device gates remain CL-P1-035.
 
-## Wave C — MCQ distractor remediation (batches 1–3 implemented through S230)
+## Wave C — MCQ distractor remediation (batches 1–4 implemented through S231)
 
 Use `MCQ_DISTRACTOR_AUDIT.csv`. Fix FAIL rows by removing length/punctuation/notation leakage and grounding every distractor in a misconception, `commonError`, or documented rationale. Do not convert judgment tasks merely to reduce an MCQ count.
 
@@ -32,6 +32,10 @@ S228 sealed the first evidence-backed batch: four repeated Grade 5 decimal misco
 S229 sealed batch 2: six repeated foundational prompt families across 24 Grade 2/4/5 checks now use concise keyed labels while preserving every distractor, correct marker, and feedback rationale. All 24 target rows pass; the queue is 651 and cumulative remediation is 46/697. Continue Wave C with the next repeated high-harm families.
 
 S230 sealed batch 3: six repeated Grade 5 concept families across 18 authored/remedial checks now use concise, parallel keyed labels while preserving every prompt, distractor, correct marker, and feedback string. All 18 target rows pass; the queue is 633 and cumulative remediation is 64/697. Wave C remains active because the remaining queue is dominated by singletons and lower-frequency families that require human curriculum review.
+
+S231 sealed an expanded batch 4: 27 clear answer families across 61 authored/remedial checks in Kindergarten through Grade 9 now use concise keyed labels. Exactly 61 target decisions moved from REMEDIATE to KEEP, the queue is 572, and cumulative remediation is 125/697. Ambiguous strategy, geometry-language, and division-by-zero families were excluded rather than optimized mechanically.
+
+S236 consolidated every deterministic open child inventory and the latest open closure-ledger/program-wave rows into `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`. The queue now holds 11,487 rows across illustration replacement, notation, MCQ, prediction, interaction, engine play/disposition, ledger, and program-wave workstreams. This is workload truth, not a claim that the queued work is fixed.
 
 ## Wave D — prediction rationalization
 

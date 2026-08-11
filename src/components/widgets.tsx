@@ -3,6 +3,7 @@
 import { Fragment, type PointerEvent as ReactPointerEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import FigureView from "@/components/FigureView";
 import { FIGURE_IDS } from "@/components/figureIds";
+import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { PALETTE } from "@/lib/palette";
 import { gridScales, integers, linScale, samplePolyline } from "@/components/plotUtils";
 import { glideStyle } from "@/lib/motion";
@@ -12717,23 +12718,47 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const total = (spec.groupSize ?? 1) * v;
+  const move = (direction: -1 | 1) => {
+    const next = Math.max(spec.min, Math.min(spec.max, v + direction * spec.step));
+    if (next !== v) onChange(next);
+  };
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <input
-        type="range"
-        min={spec.min}
-        max={spec.max}
-        step={spec.step}
-        value={v}
-        disabled={disabled}
-        aria-label={spec.prompt}
-        aria-valuetext={
-          spec.groupSize ? `${v} groups, ${total} in all` : String(v)
-        }
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="h-11 w-full accent-sky"
-      />
+      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2">
+        <button
+          type="button"
+          onClick={() => move(-1)}
+          disabled={disabled || v <= spec.min}
+          aria-label={spec.groupSize ? "Remove one group" : `Decrease by ${spec.step}`}
+          className="pressable min-h-11 min-w-11 rounded-xl border-2 border-ink/15 bg-white px-3 font-extrabold text-ink shadow-sm disabled:opacity-35 dark:bg-ink dark:text-paper"
+        >
+          −
+        </button>
+        <input
+          type="range"
+          min={spec.min}
+          max={spec.max}
+          step={spec.step}
+          value={v}
+          disabled={disabled}
+          aria-label={spec.prompt}
+          aria-valuetext={
+            spec.groupSize ? `${v} groups, ${total} in all` : String(v)
+          }
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="h-11 w-full accent-sky"
+        />
+        <button
+          type="button"
+          onClick={() => move(1)}
+          disabled={disabled || v >= spec.max}
+          aria-label={spec.groupSize ? "Add one group" : `Increase by ${spec.step}`}
+          className="pressable min-h-11 min-w-11 rounded-xl border-2 border-ink/15 bg-white px-3 font-extrabold text-ink shadow-sm disabled:opacity-35 dark:bg-ink dark:text-paper"
+        >
+          +
+        </button>
+      </div>
       <p className="text-center text-3xl font-extrabold tabular-nums" aria-live="polite">
         {spec.groupSize ? `${v} × ${spec.groupSize} = ${total}` : v}
         {spec.unitLabel && <span className="ml-2 text-base font-semibold text-ink/70">{spec.unitLabel}</span>}
@@ -12749,18 +12774,22 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
       )}
       {spec.visual === "groups" && (
         <div
-          className={`flex justify-center gap-2 ${spec.groupLayout === "row" ? "flex-col items-center" : "flex-wrap"}`}
-          aria-hidden="true"
+          className={`flex justify-center gap-2 ${spec.groupLayout === "row" ? "flex-col items-stretch" : "flex-wrap"}`}
+          role="list"
+          aria-label={`${v} equal groups of ${spec.groupSize ?? 1}`}
         >
           {Array.from({ length: v }).map((_, b) => (
             <div
               key={b}
+              role="listitem"
+              aria-label={`Group ${b + 1}: ${spec.groupSize ?? 1} items`}
               className={`${
-                spec.groupLayout === "row" ? "flex gap-1" : "grid grid-cols-2 gap-1"
-              } rounded-card border-2 border-ink/15 bg-white p-2 text-xl`}
+                spec.groupLayout === "row" ? "flex items-center gap-1" : "grid grid-cols-2 gap-1"
+              } rounded-card border-2 border-sky/25 bg-sky/5 p-2 text-xl shadow-sm`}
             >
+              {spec.groupLayout === "row" && <span className="mr-2 text-xs font-extrabold text-ink/55">Group {b + 1}</span>}
               {Array.from({ length: spec.groupSize ?? 1 }).map((_, i) => (
-                <span key={i}>{spec.itemEmoji}</span>
+                <span key={i} aria-hidden="true">{spec.itemEmoji}</span>
               ))}
             </div>
           ))}
@@ -13586,9 +13615,9 @@ function SteppedRevealW({ spec, value, onChange, disabled }: WProps<TSteppedReve
             </span>
             <p className="text-sm font-bold uppercase tracking-wide text-sky-ink">{p.title}</p>
           </div>
-          {p.figure && FIGURE_IDS.has(p.figure) && (
+          {p.figure && FIGURE_IDS.has(p.figure) && isFigureTextAligned(p.figure, p.body ?? "") && (
             <div className="my-2 overflow-hidden rounded-lg border border-ink/10 bg-white">
-              <FigureView id={p.figure} />
+              <FigureView id={p.figure} context={p.body ?? ""} />
             </div>
           )}
           <p className="pl-8">{p.body}</p>
@@ -16177,13 +16206,13 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
       <WidgetBody {...rest} tone={tone} />
       {described !== null && (
         <details className="mt-3 rounded-card border border-ink/15 bg-ink/[0.03] px-3 py-2" data-testid="a11y-panel">
-          <summary className="flex min-h-11 cursor-pointer items-center text-xs font-extrabold uppercase tracking-wide text-ink/70">What's on screen right now</summary>
+          <summary className="flex min-h-11 cursor-pointer items-center text-sm font-bold text-ink/70">Describe this model</summary>
           <p className="mt-1 text-sm leading-relaxed text-ink/80">{described}</p>
-          <p className="mt-2 text-xs font-bold uppercase tracking-wide text-ink/70">How to work it</p>
+          <p className="mt-2 text-sm font-bold text-ink/70">How to change it</p>
           <p className="text-sm leading-relaxed text-ink/80">{actionsFor(rest.spec.type)}</p>
           {lastDescribed !== null && (
             <>
-              <p className="mt-2 text-xs font-bold uppercase tracking-wide text-ink/70">Before your last change</p>
+              <p className="mt-2 text-sm font-bold text-ink/70">Previous model</p>
               <p className="text-sm leading-relaxed text-ink/70">{lastDescribed}</p>
             </>
           )}

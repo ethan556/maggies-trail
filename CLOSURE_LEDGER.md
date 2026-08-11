@@ -50,7 +50,7 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 | CL-P1-006 | P1 | Toolchain | Runtime below Chromium floor. | **CLOSED** | Node 24.15.0 satisfies declared runtime floor; Playwright Chromium executed all captures. |
 | CL-P1-028 | P1 | Premium shell visual execution | Required 90-capture matrix had not executed. | **CLOSED — AUTOMATED SCOPE** | Live baseline 90/90 HTTP 200; repaired current source 90/90 PASS across both themes and all viewports. |
 | CL-P1-032 | P1 | Touch accessibility | Repeated 16–40px interactive targets across shell and Basecamp. | **CLOSED** | All touch captures now fail on any sub-44px control; sealed matrix has zero failures. |
-| CL-P1-033 | P1 | Current full Vitest | Windows current-main suite is not green: 17 failures / 12,787 tests. | **OPEN** | Fix path-separator and temp cleanup portability plus authored-set/evaluation expectation failures; rerun full suite on Linux CI and Windows. |
+| CL-P1-033 | P1 | Current full Vitest | Windows current branch is not green: 15 failures / 12,813 tests across 6 files; 321 files and 12,798 tests pass. | **OPEN** | Fix path-separator and temp cleanup portability plus authored-set/evaluation expectation failures; rerun full suite on Linux CI and Windows. The S236 focused learner-flow set remains green. |
 | CL-P1-034 | P1 | Dependency security | Installed Next 15.5.23 tree included Sharp <0.35 advisory chain. | **CLOSED** | S224 pinned sharp 0.35.3 without the breaking Next 16 migration; fresh build PASS and production audit reports 0 vulnerabilities. Reopen on incompatibility or advisory drift. |
 | CL-P1-035 | P1 | Manual accessibility/device gates | Real-device touch, NVDA/VoiceOver math parity, physical 200% zoom, and normal-motion meaning review were not available. | **OPEN — HUMAN/HARDWARE** | Execute the four retained manual gates before whole-program closure. |
 
@@ -116,4 +116,44 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 | ID | Priority | Area | Finding | Status | Evidence / next action |
 |---|---:|---|---|---|---|
 | CL-P1-048 | P1 | MCQ blind-guess leakage | Six repeated Grade 5 concept families accounted for 18 additional keyed-option length clues across order of operations, remainder interpretation, partial quotients, fraction reasonableness, unit-cube volume, and the `V = B × h` generalization. | **IN PROGRESS — 64/697 REMEDIATED** | Exactly 18 keyed labels changed; all prompts, 54 wrong labels, 72 feedback strings, correct markers, widgets, and IDs remain intact. The regenerated queue has 633 rows. Continue Wave C with human-reviewed families; do not mechanically rewrite delicate or ambiguous prompts. |
+
+## Session 231 Premium Rebuild Wave-C batch-4 update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-048 | P1 | MCQ blind-guess leakage | Twenty-seven clear answer families accounted for 61 additional length or punctuation clues across 31 lesson files, spanning number sense, measurement, data, operations, fractions, volume, and systems. | **IN PROGRESS — 125/697 REMEDIATED** | Exactly 61 keyed labels changed and 61 target decisions moved to KEEP; zero row identities, non-target decisions, prompts, distractors, feedback strings, correct markers, widgets, or IDs changed. The regenerated queue has 572 rows. Continue with reviewed singleton and residual repeated families; keep curriculum-truth issues separate. |
+
+## Session 232 Figure/text alignment update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P0-054 | P0 | Illustration/text truth | Three fixed-number illustrations were reused as generic placeholders, including a `4 + 3 = 7` number line beside equal/unequal-fraction prose. Across 3,816 figure placements, these three families account for 951 uses but only 9 truthful text matches. | **CLOSED — DETECTED FIXED EXEMPLARS** | The reported lesson now uses the exact equal/unequal partition figure; 942 unrelated placements fail closed before rendering; generator, runtime, full-corpus audit, 21 focused tests, typecheck, integration, registration, build, local browser DOM, accessible description, and same-viewport before/after comparison pass. Reopen if a fixed exemplar renders beside prose that does not describe its numbers or relationship. |
+
+## Session 233 adversarial figure/text update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P0-054 | P0 | Illustration/text truth | The first S232 replacement still showed four parts while its prose said three/thirds. A broader description-to-copy audit also found 136 additional suspicious exact bindings involving partition counts, operations, or disjoint worked-example numbers. | **SAFE RUNTIME / REPLACEMENT BACKLOG OPEN** | The reported screen now agrees on four/fourths in source, narration, generator, accessible description, DOM, and screenshot. Across 3,816 placements, 1,078 are withheld and 2,738 render; zero adversarially flagged pairings render. Correct replacements have not yet been created for the withheld queue. Close the visual backlog only after each restored pairing passes human visual and accessible-description parity review. |
+
+## Session 234 premium engine/lab and landing update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P0-055 | P0 | Landing mathematical model | The landing prompt asked for five groups of four but omitted `groupSize`; the generic renderer therefore showed four one-item containers and the only manipulation was a range slider. | **CLOSED — LANDING + SHARED SLIDER** | Landing now exposes five colored rows, a real berry asset, direct Add/Remove controls, and a synchronized groups × group-size = total equation. The shared slider engine gains 44 px step controls and accessible group lists. Tests, typecheck, build, production-browser state transition, and success feedback pass. |
+| CL-P0-056 | P0 | Illustration replacement coverage | Runtime containment withheld 1,078 misleading placements but no durable per-placement replacement queue existed. | **OPEN — 1,078 REPLACEMENTS REQUIRED** | `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` contains 1,078 open rows (962 P0, 116 P1), each with source, lesson, step, current figure, priority factors, mismatch evidence, and restoration condition. Hidden remains explicitly unequal to fixed. |
+| CL-P1-057 | P1 | Engine/lab premium quality | The 127-engine audit retains 15 redesign, 3 polish, and 2 deprecation-candidate families; slider-only control was a high-leverage shared weakness. | **IN PROGRESS — 1 SHARED ENGINE UPGRADED** | `PREMIUM_ENGINE_PRIORITY.csv` remains the ranked authority. Continue with the 15 REDESIGN families in learner-harm × frequency × visibility × strategic order; verify lesson meaning before changing engine behavior. |
+
+## Session 235 post-verdict exploration update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P0-058 | P0 | Correct-state interaction | Landing, lesson, review, and practice surfaces treated a correct verdict as a hard interaction lock, preventing overshoot, reversal, and comparison with wrong states. | **CLOSED — SHARED CHECKPOINT CONTRACT** | Correct/revealed results are now saved checkpoints. All 127 engines inherit unlocked post-verdict controls and ungraded `Check this state`; exploration cannot duplicate attempts, XP, mastery, review evidence, or result callbacks. Landing supports 0–8 groups around target 5. Focused state, UI, keyboard, and idempotence tests pass. |
+| CL-P1-059 | P1 | Engine-specific play depth | Removing the shared lock does not make one-way or answer-only engines reversibly playful. | **OPEN — 17 ENGINE FAMILIES** | `PREMIUM_ENGINE_EXPLORATION_AUDIT_S235.csv` identifies 17 engine families for reversible/direct-manipulation remediation, 107 KEEP-with-regression rows, and 3 existing-disposition reviews. Repair by learner harm × frequency × visibility × strategic importance. |
+
+## Session 236 learner-focus and workload-truth update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-060 | P1 | Learner-screen focus | The expanded CML surface placed authoring labels, lifecycle metadata, invariants, transfer tags, move telemetry, reflection prompts, and multiple bordered cards between the mathematical model and retry feedback. | **CLOSED — ACTIVE TASK SIMPLIFIED** | Active and retry states now show only the model, specific state cue, and plain Undo/Reset controls. The optional post-checkpoint panel contains only equivalent mathematical forms. The accessible model description remains available under the learner-facing label `Describe this model`. Reopen if internal curriculum/process metadata returns to an active learner screen. |
+| CL-P1-061 | P1 | Pending-workload truth | The durable pending queue contained only illustration replacements, leaving notation, MCQ, prediction, interaction, engine, ledger, and program-wave work fragmented across separate audits and handovers. | **CLOSED — CONSOLIDATED QUEUE** | `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` now contains 11,487 current open rows across nine workstreams, with deterministic regeneration via `npm run audit:pending-workload`. Queue presence is not completion; each child item retains its own closure condition. |
 

@@ -47,6 +47,9 @@ export default function QuizShell({
   const [phase, setPhase] = useState<"work" | "retry" | "done">("work");
   const [revealed, setRevealed] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [explorationActive, setExplorationActive] = useState(false);
+  const [explorationFeedback, setExplorationFeedback] = useState("");
+  const [explorationCorrect, setExplorationCorrect] = useState<boolean | null>(null);
   const [variantIdx, setVariantIdx] = useState(0);
   const [firstTryCount, setFirstTryCount] = useState(0);
   const [hintsShown, setHintsShown] = useState(0);
@@ -68,6 +71,11 @@ export default function QuizShell({
 
   function check() {
     const res = evaluate(item.widget, value);
+    if (phase === "done" && explorationActive) {
+      setExplorationFeedback(res.feedback || "");
+      setExplorationCorrect(res.correct);
+      return;
+    }
     if (res.correct) {
       const first = attempts === 0;
       if (first) setFirstTryCount((c) => c + 1);
@@ -97,6 +105,9 @@ export default function QuizShell({
     setPhase("work");
     setRevealed(false);
     setFeedback("");
+    setExplorationActive(false);
+    setExplorationFeedback("");
+    setExplorationCorrect(null);
     setVariantIdx(0);
     setHintsShown(0);
   }
@@ -104,6 +115,14 @@ export default function QuizShell({
   const variants = item.explanationVariants ?? [];
   const showExplanation = phase === "done" && variants.length > 0;
   const finalized = phase === "done";
+
+  function changeValue(next: unknown) {
+    setValue(next);
+    if (!finalized) return;
+    setExplorationActive(true);
+    setExplorationFeedback("");
+    setExplorationCorrect(null);
+  }
 
   return (
     <div className="step-in" key={item.key}>
@@ -123,10 +142,20 @@ export default function QuizShell({
         <WidgetView
           spec={item.widget}
           value={value}
-          onChange={setValue}
-          disabled={finalized}
+          onChange={changeValue}
+          disabled={false}
           seed={item.key}
-          tone={phase === "retry" ? "error" : phase === "done" ? (revealed ? "info" : "success") : "neutral"}
+          tone={
+            explorationActive && explorationCorrect === false
+              ? "error"
+              : explorationActive && explorationCorrect === true
+                ? "success"
+                : phase === "retry"
+                  ? "error"
+                  : phase === "done"
+                    ? (revealed ? "info" : "success")
+                    : "neutral"
+          }
         />
       </div>
 
@@ -188,6 +217,9 @@ export default function QuizShell({
               </p>
             )}
             {!revealed && feedback && <p className="mt-1 text-sm"><MathProse text={feedback} includeArithmetic /></p>}
+            <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
+              Checkpoint saved. Keep exploring this model, or continue when you are ready.
+            </p>
             {showExplanation && (
               <div className="mt-2 border-t-2 border-ink/10 pt-2 dark:border-paper/10">
                 <p className="text-sm"><MathProse text={variants[variantIdx % variants.length]} includeArithmetic /></p>
@@ -206,7 +238,29 @@ export default function QuizShell({
         </div>
       )}
 
-      <div className="mt-5">
+      {finalized && explorationActive && (
+        <div className="banner-in mt-3">
+          <StatusBanner
+            tone={explorationCorrect === null ? "info" : explorationCorrect ? "success" : "error"}
+            icon={explorationCorrect === null ? "compass" : explorationCorrect ? "check" : "target"}
+            title={
+              explorationCorrect === null
+                ? "Exploration state ready"
+                : explorationCorrect
+                  ? "This state also meets the target"
+                  : "This state does not meet the target"
+            }
+          >
+            <p className="text-sm">
+              {explorationFeedback
+                ? <MathProse text={explorationFeedback} includeArithmetic />
+                : "Test this state without changing the result already recorded for this item."}
+            </p>
+          </StatusBanner>
+        </div>
+      )}
+
+      <div className="mt-5 flex flex-wrap gap-3">
         {phase !== "done" ? (
           <button
             type="button"
@@ -217,13 +271,25 @@ export default function QuizShell({
             {phase === "retry" ? COPY.tryAgain : COPY.check}
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={next}
-            className="pressable min-h-11 rounded-pill bg-ink px-6 py-3 font-extrabold text-paper shadow-e1 transition-[filter] hover:brightness-125 dark:bg-paper dark:text-ink"
-          >
-            {i + 1 >= total ? "Finish" : COPY.continue}
-          </button>
+          <>
+            {explorationActive && (
+              <button
+                type="button"
+                onClick={check}
+                disabled={!canCheck(item.widget, value)}
+                className="pressable min-h-11 rounded-pill border-2 border-sky px-5 py-3 font-extrabold text-sky-ink disabled:opacity-40"
+              >
+                Check this state
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={next}
+              className="pressable min-h-11 rounded-pill bg-ink px-6 py-3 font-extrabold text-paper shadow-e1 transition-[filter] hover:brightness-125 dark:bg-paper dark:text-ink"
+            >
+              {i + 1 >= total ? "Finish" : COPY.continue}
+            </button>
+          </>
         )}
       </div>
     </div>

@@ -14,6 +14,7 @@
  * figures.split.test.ts.
  */
 import dynamic from "next/dynamic";
+import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 
 const FigureById = dynamic(
   async () => {
@@ -27,6 +28,7 @@ const FigureById = dynamic(
   { ssr: true, loading: () => <div className="min-h-24" aria-hidden="true" /> }
 );
 
-export default function FigureView({ id }: { id: string }) {
+export default function FigureView({ id, context = "" }: { id: string; context?: string }) {
+  if (!isFigureTextAligned(id, context)) return null;
   return <FigureById id={id} />;
 }

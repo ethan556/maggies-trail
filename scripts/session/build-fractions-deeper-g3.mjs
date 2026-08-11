@@ -431,7 +431,7 @@ const L = [];
 const def = (n, c1, c2, i1, checks, recap, teaser) => L.push({ n, c1, c2, i1, checks, recap, teaser });
 
 def(1,
-  "A fraction only has a name when the pieces are EQUAL. Three unequal scraps are not thirds — they are just three pieces.",
+  "A fraction only has a name when the pieces are EQUAL. Four unequal pieces are not fourths — they are simply four pieces.",
   "Equal shares are the whole promise of fraction language. Break that promise and the name means nothing.",
   { rep: "concrete", widget: () => fracBar("Build a bar cut into 4 equal pieces with 1 shaded: make 1/4.", 1, 4,
       "1/4 — four equal pieces, one of them shaded. Equal pieces are what earn the name.",
@@ -723,10 +723,10 @@ for (const [idx, d] of L.entries()) {
     id, slug, title: row.title, courseId: "fractions-deeper-g3",
     chapterId: chapters[ch - 1].id, minutes: 7, readingProfile: "standard",
     steps: [
-      { id: "c1", kind: "concept", figure: "count-on-hops", body: d.c1, narration: d.c1 },
+      { id: "c1", kind: "concept", ...(d.n === 1 ? { figure: "frac-equal-vs-unequal" } : {}), body: d.c1, narration: d.c1 },
       { id: "i1", kind: "interactive", body: "Try it.", conceptTag: tag, widget: d.i1.widget(), predict: d.i1.predict, cml: cml(tag, d.i1.rep) },
       stepFromCheck("k1", d.checks[0]),
-      { id: "c2", kind: "concept", figure: "count-on-hops", body: d.c2, narration: d.c2 },
+      { id: "c2", kind: "concept", ...(d.n === 1 ? { figure: "frac-equal-vs-unequal" } : {}), body: d.c2, narration: d.c2 },
       { id: "i2", kind: "interactive", body: "Try it again.", conceptTag: tag, widget: d.i1.widget(), cml: cml(tag, "concrete") },
       stepFromCheck("k2", d.checks[1]),
       stepFromCheck("k3", d.checks[2]),
