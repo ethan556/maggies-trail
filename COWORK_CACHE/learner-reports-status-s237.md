@@ -13,8 +13,8 @@ doing those quickly would be worse than not doing them.
 | 4 | Renderer typesets false equations | **FIXED + gated** | 178 → 0; 117 shipping |
 | 5 | Graph/diagram axes unlabelled | measured | 28 of 32 coordinate-plane engines |
 | 6 | Questions cite an absent diagram | measured | 105 steps; hypothesis rejected |
-| 7 | Static items that need a manipulative | measured | 32 steps |
-| 8 | Text-only explanations need illustrations | **not started** | — |
+| 7 | Static items that need a manipulative | **CLOSED** | 32 rows, all resolved |
+| 8 | Text-only explanations need illustrations | **first slice shipped** | 111 numeric steps |
 | 9 | Wording too hard for the grade | measured | 60 surfaces |
 
 ---
@@ -59,12 +59,33 @@ trip"* — is DATA_INLINE, and it is still wrong: the lesson is **Reading a Stor
 a step whose entire skill is reading a graph should not be answerable without one. Answerable is
 not the same as correct. The genuinely broken one is `dm-01-01/k1`.
 
-## 7 — Items that need a manipulative (`COWORK_CACHE/needs-manipulative-s237.csv`)
+## 7 — Items that need a manipulative (`COWORK_CACHE/needs-manipulative-s237.csv`) — CLOSED
 
 32 steps whose prompt describes a manipulation and then asks the learner to imagine its result —
 the reported `fr-01-04/k2` ("turn the bottom dial up: 1/3 becomes 1/9") among them, with
-`fractionBar` already live **in the same lesson file**. 27 have an existing engine that fits; 5
-have none.
+`fractionBar` already live **in the same lesson file**.
+
+**Resolved in session D under the user's "add alongside" ruling, implemented as SEQUENCING** — a
+new `kind:"interactive"` step carrying the manipulative immediately before the graded check, which
+keeps sole ownership of mastery evidence (`playerStore.ts:148-153`). A companion-widget schema
+field was rejected: `variantForStep` is single-surface by construction, so companions would be
+permanently frozen. Every row now carries a `resolution` column:
+
+| Outcome | Rows | Meaning |
+|---|---:|---|
+| **DONE** | 14 | A new interactive step landed. Gate: `src/lib/manipulativeAlongside.s237.test.ts` |
+| **CLOSED served-by-i1/i2** | 2 | `g5u-01-05/k2`, `g5u-02-01/k3` — the lesson already carries TWO `fractionBar` interactives immediately before the check, and inserting a third would break session197's A-tier shape across all 14 lessons in that course. User ruling, session D |
+| **ALREADY SERVED** | 3 | The lesson's existing interactive already IS the requested manipulative |
+| **NOT POSSIBLE** | 8 | The proposed engine provably cannot draw what the check grades — each row names the exact schema constraint |
+| **NO ENGINE** | 5 | The CSV's own `proposed_engine` is NONE |
+
+So **19 of 32 rows have a manipulative adjacent to the check**, and the 13 that do not each carry a
+verified reason rather than a silence. Nothing here is waiting on a decision.
+
+The eight NOT POSSIBLE rows are the honest backlog: they are requests for engines that do not
+exist (a general related-rates model rather than the ladder; a parametric-direction tracer; a
+systems grapher that accepts vertical constraints; a `quadraticExplore` whose `a` is not an
+integer). Building any of them is an engine project, not a content batch.
 
 **Four must not be converted without a ruling**, because conversion changes what is graded:
 `pv-03-03/k1` and `pv2-04-03/k3` grade *naming* what happens in a borrow, `columnCalc` would grade
@@ -109,7 +130,7 @@ changes no grading, only the words a child reads.
 1. **#9 vocabulary (60 surfaces)** — highest harm per unit of effort, no grading impact, an exact
    list. Needs only a house glossary: what a K–4 learner is told instead of "verdict".
 2. **#5 axis names (28 engines)** — mechanical for 24, a ruling for 4.
-3. **#7 manipulatives (28 safe of 32)** — one engine per batch, the 4 grading-changers held back.
+3. ~~**#7 manipulatives**~~ — CLOSED in session D: 14 landed, 5 already served, 13 impossible with reasons.
 4. **#6 wording of the 100 DATA_INLINE steps** — do NOT reword to hide the missing picture; decide
    per lesson whether the skill requires the graph, and if it does, the figure is the fix.
-5. **#8 illustration programme** — its own work package, with the 1,078-row backlog folded in.
+5. **#8 illustration programme** — first slice shipped in session D (`numeric` live fraction preview, 111 steps, improper entries drawn as whole bars plus a remainder). The 1,078-row ILLUSTRATION_REPLACEMENT backlog is a SEPARATE and different problem: those figures are suppressed-at-render bulk misapplications on exposition steps with no learner input, so they cannot serve the visual-first goal.

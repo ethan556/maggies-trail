@@ -16,8 +16,8 @@ git merge-base --is-ancestor 4b66fe1 HEAD; echo "ancestry:$?"    # MUST be 0
 npm ci
 ```
 
-**HEAD at end of session D: `628f871`.** The remote was still at `dd00768` at that moment, so the
-bundle carries **five** commits (session C's three plus session D's two).
+**The remote was still at `dd00768` when session D ended**, so the bundle carries session C's three
+commits plus session D's four.
 
 **Check the real remote SHA before claiming a count** — `mcp__Github__list_branches`, then
 `git update-ref refs/remotes/origin/cowork/s237 <sha>`. The local tracking ref goes stale the
@@ -25,7 +25,7 @@ instant the human pushes.
 
 ---
 
-## 1. What session D landed (2 commits)
+## 1. What session D landed (4 commits)
 
 ### `841315b` — the `.bg-sky` WCAG failure, closed WITHOUT moving an instructional colour
 
@@ -75,9 +75,19 @@ rounded string, so a caller cannot print an approximation as an equal.
 sessions never ledgered. All certified under `retro-ledger-s237` keys naming the commit that made
 each change. **866/866, exit 0.**
 
+### `50d38fc` — browser verification, and the picture row was wrapping
+
+First browser pass since the engine work. Verified both contrast failures closed (axe 50/50, suite
+93/93) and mmt-05-01/ch1's tap scale usable at phone widths. Found and fixed a third defect: the
+picture-graph row wrapped onto two lines at 390px. Detail in §3.1.
+
+### `<this commit>` — the manipulative ledger closed
+
+All 32 rows resolved; see §3.3.
+
 ---
 
-## 2. Gate results at `628f871`
+## 2. Gate results at HEAD
 
 ```
 typecheck                clean
@@ -87,6 +97,7 @@ lint:pedagogy            1711 / 1711
 validate:native          archive-only findings only
 check-registration       consistent
 build                    EXIT:0
+playwright               93 / 93              axe 50/50, both themes
 content-change-proof     866 / 866  ← now passing; was RED before this session
 ```
 
@@ -101,16 +112,27 @@ absent-diagram candidate scan fell 62 → 53, exactly the 9 converted. A measure
 
 ## 3. What is left, in priority order
 
-### 3.1 Browser verification — the highest-value unknown, and now cheap
+### 3.1 Browser verification — DONE, and it found something
 
-Nothing in this repo has been browser-verified since the single page-level axe sweep. **Two things
-this session did are unverified in a real browser and should be first:**
+Ran at the end of session D. **axe 50/50 across 26 routes × both themes; full suite 93/93** (it was
+85 passed / 2 failed when the `.bg-sky` defect was found). Both contrast failures are closed.
 
-1. **Did the `bg-cta` swap actually close the two axe failures?** Re-run axe in both themes.
-2. **Is mmt-05-01/ch1's 25-button tap scale usable at 390px?** It runs 0..24 because its authored
-   doubling trap is 24. I judged that carrying the trap beats deleting authored feedback, but I
-   have not seen it on a phone. If it reads badly, that is a curriculum ruling to bring the user,
-   not a silent edit.
+mmt-05-01/ch1's 25-button tap scale was measured at 360/390/768 in both themes: no horizontal
+overflow, every target ≥ 44px, wraps into 5 rows on a phone taking ~34% of the viewport. The
+judgement to carry the authored doubling trap holds.
+
+**It found a third defect**: the picture-graph row was `flex-wrap`, so twelve apples broke onto two
+lines at phone widths — which destroys "a longer row means a bigger total", the lesson's own
+concept step. The row is now a viewBox-scaled SVG that always fits one line. `e2e/s237-picture-graph-scale.spec.ts`
+pins it geometrically (every icon shares one top edge).
+
+**Still not done: the per-engine matrix** for the other changed engine families at 390/768/1440,
+active and retry. That remains WP1's stated exit condition.
+
+**Environment trap worth knowing**: `next start` keeps serving a deleted `.next` after a rebuild,
+and every `/learn` route renders EMPTY while `/` still works from static cache. It looks exactly
+like a product defect. Kill the server by pid first — and note `pkill -f "next start"` matches the
+agent's own shell and kills the session.
 
 ```bash
 npm run build
@@ -130,12 +152,18 @@ Run against `next start`, never `next dev`.
 **Check the shared variant generator before scoping any of them** — that is what set this session's
 scope, and it is lesson 5 in its most expensive form.
 
-### 3.3 The 18 manipulative rows that did not land
+### 3.3 The manipulative rows — CLOSED, nothing is waiting on a decision
 
-2 are blocked by `session197.unlikeFractionsG5.test.ts:122`, which pins the exact step-kind
-sequence. Weakening it is not an option; it needs the user's ruling on whether that course's shape
-may change. 11 need an engine that does not exist yet — each is named with what it would have to
-draw. 5 should stay as they are.
+All 32 rows now carry a `resolution` column in `COWORK_CACHE/needs-manipulative-s237.csv`:
+14 DONE, 5 already served by an existing interactive, 8 NOT POSSIBLE with the exact schema
+constraint named, 5 with no engine at all (the CSV's own verdict). The 2 that were blocked by
+session197's A-tier shape were closed on the user's ruling as **already served** — both lessons
+carry two `fractionBar` interactives immediately before the flagged check.
+
+The real remaining backlog here is an ENGINE project, not a content batch: a general related-rates
+model (the existing one is hard-coded to the ladder `x² + y² = L²`), a parametric-direction tracer,
+a systems grapher that accepts vertical constraints, and a `quadraticExplore` whose `a` is not
+`z.number().int()` (so `0 < a < 1` — a wider parabola — is currently undrawable).
 
 ### 3.4 Fraction/decimal consistency — the tail
 
