@@ -14100,6 +14100,29 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const chosen = typeof value === "number" ? value : null;
   const span = spec.max - spec.min || 1;
   const xOf = (n: number) => 16 + (288 * (n - spec.min)) / span;
+  /** S237. Unit ruler under the choice ticks — see the comment at the render site. Whole units
+   *  only; on a fractional lattice the whole numbers are the landmarks the question is posed in.
+   *  Thinned to <= 12 labels so they stay readable in a 288px viewBox. */
+  const choiceSet = useMemo(() => new Set(ticks), [ticks]);
+  const scaleTicks = useMemo(() => {
+    const first = Math.ceil(spec.min);
+    const last = Math.floor(spec.max);
+    const count = Math.max(1, last - first + 1);
+    // S237. Strides snap to a 1-2-5-10 ladder, not to count/N. Dividing gave a 0-100 line ticks
+    // every 3 and labels at 9, 18, 27 … — arithmetically even, and meaningless to read a position
+    // off. A ruler is only useful if its landmarks are the ones a learner already counts in.
+    const LADDER = [1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000];
+    const pick = (limit: number) => LADDER.find((k) => count / k <= limit) ?? LADDER[LADDER.length - 1];
+    const stride = pick(40);
+    const labelStride = Math.max(stride, pick(12));
+    const raw: number[] = [];
+    // Anchor on a multiple of the stride so labels land on round numbers, not on wherever min fell.
+    for (let n = Math.ceil(first / stride) * stride; n <= last; n += stride) raw.push(n);
+    return raw.map((n) => ({
+      n,
+      labelled: n % labelStride === 0 || n === first || n === last || n === spec.start,
+    }));
+  }, [spec.min, spec.max, spec.start]);
   // S119: ONE ARC PER HOP, not per unit. The previous version drew
   // `|chosen - start|` arcs each spanning a single unit, so a count-by-tens
   // lesson with three hops of ten drew THIRTY arcs — and the hop count is the
@@ -14119,6 +14142,25 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
       <svg viewBox="0 0 320 96" className="w-full" role="group" aria-label="Number line">
         <style>{css}</style>
         <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
+        {/* S237. The line used to tick ONLY the tappable choices, so everything between them was
+            blank: "9 + 9: start at 9, make one hop of 9" drew a mark at 9 and marks at 17/18/19
+            with nothing in between, and the hop could not be COUNTED — which is the entire job of
+            a number line at this grade. A full unit scale now underlies the choice ticks: minor
+            marks at every unit, labels thinned to stay legible at 288px, and min/max/start always
+            labelled. Choice ticks still draw on top, taller and bolder, so what is tappable stays
+            obvious. Nothing here is interactive and nothing is graded — it is the ruler. */}
+        {scaleTicks.map(({ n, labelled }) => (
+          <g key={`sc-${n}`} aria-hidden="true">
+            <line x1={xOf(n)} y1={59} x2={xOf(n)} y2={69} stroke="#22314F" strokeWidth={1} strokeOpacity={0.4} />
+            {/* A choice tick already labels its own position, in a bolder style at the same y.
+                Printing the ruler label too stacked "0" on "0" at identical coordinates. */}
+            {labelled && !choiceSet.has(n) && (
+              <text x={xOf(n)} y={86} textAnchor="middle" fontSize={9} fontWeight={600} fill="#22314F" fillOpacity={0.55}>
+                {n}
+              </text>
+            )}
+          </g>
+        ))}
         {/* hop arcs from start to the chosen landing, with a direction arrowhead */}
         {Array.from({ length: arcCount }).map((_, i) => {
           const a = spec.start + stepDir * i * arcSpan;
