@@ -13091,10 +13091,25 @@ function DragBucketW({ spec, value, onChange, disabled, seed, tone }: WProps<TDr
   /* S237. Same defect class, weaker form: 41 of 187 authored dragBucket specs list their items
    * already GROUPED by destination bucket, so the items can be sorted in runs without reading
    * them. Display order only; evaluate.ts scores `placed[i.id] === i.bucketId`, by id. */
-  const orderedItems = useMemo(
-    () => seededShuffle(spec.items, `${seed ?? spec.items.map((i) => i.id).join("|")}:buckets`),
-    [spec.items, seed]
-  );
+  const orderedItems = useMemo(() => {
+    // S237b. Same weakness as matchPairs: a shuffle can leave the items still grouped by bucket.
+    // Rotation does not help a grouping (a rotated run is still a run), so fall back to a
+    // round-robin deal across the buckets, which cannot be sorted in runs by construction.
+    const grouped = (order: typeof spec.items) => {
+      const keys = order.map((i) => i.bucketId);
+      const runs = keys.filter((k, i) => i > 0 && k !== keys[i - 1]).length;
+      return keys.length > 0 && runs === new Set(keys).size - 1;
+    };
+    const shuffled = seededShuffle(spec.items, `${seed ?? spec.items.map((i) => i.id).join("|")}:buckets`);
+    if (!grouped(shuffled)) return shuffled;
+    const queues = new Map<string, typeof spec.items>();
+    for (const item of shuffled) queues.set(item.bucketId, [...(queues.get(item.bucketId) ?? []), item]);
+    const dealt: typeof spec.items = [];
+    while (dealt.length < shuffled.length) {
+      for (const queue of queues.values()) { const next = queue.shift(); if (next) dealt.push(next); }
+    }
+    return dealt;
+  }, [spec.items, seed]);
   const placed = (value ?? {}) as Record<string, string>;
   const place = (itemId: string, bucketId: string) =>
     onChange({ ...placed, [itemId]: bucketId });
@@ -13178,10 +13193,17 @@ function MatchPairsW({ spec, value, onChange, disabled, seed, tone }: WProps<TMa
    * doubles here) and carries no answer on its own. Grading is untouched and cannot be touched —
    * evaluate.ts checks `links[l.id] === spec.pairs[l.id]`, by id, never by index. Seeded, never
    * Math.random (DETERMINISM.md §5), so the same question renders the same order every time. */
-  const orderedRight = useMemo(
-    () => seededShuffle(spec.right, `${seed ?? spec.right.map((r) => r.id).join("|")}:pairs`),
-    [spec.right, seed]
-  );
+  const orderedRight = useMemo(() => {
+    // S237b. A seeded shuffle is ALLOWED to return the identity permutation, and with three pairs
+    // that is a one-in-six chance — which a learner duly hit ("0.3/3-10, 0.9/9-10, 0.6/6-10" still
+    // rendered in lockstep). Shuffling is therefore not enough on its own: rotate until the rows
+    // no longer line up. Rotation is deterministic, terminates, and cannot reorder the answer key.
+    const aligned = (order: typeof spec.right) =>
+      spec.left.length === order.length && spec.left.every((l, i) => spec.pairs[l.id] === order[i]?.id);
+    let order = seededShuffle(spec.right, `${seed ?? spec.right.map((r) => r.id).join("|")}:pairs`);
+    for (let turn = 0; turn < order.length && aligned(order); turn++) order = [...order.slice(1), order[0]];
+    return order;
+  }, [spec.right, spec.left, spec.pairs, seed]);
   const links = (value ?? {}) as Record<string, string>;
   const [active, setActive] = useState<string | null>(null);
   const linkNumber = (leftId: string) => Object.keys(links).sort().indexOf(leftId) + 1;

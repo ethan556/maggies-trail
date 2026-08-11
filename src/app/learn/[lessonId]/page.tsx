@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import LessonPlayer, { type LessonTrailContext, type NextLesson } from "@/components/LessonPlayer";
 import { getCatalog, loadLessonById } from "@/lib/content.server";
-import { primaryConceptTag } from "@/lib/masteryMission.server";
+import { masteryMissionExists, primaryConceptTag } from "@/lib/masteryMission.server";
 
 /** Route context for the lesson-player trailhead. Computed server-side so the
  * learner always knows the course, chapter, and position without another
@@ -41,9 +41,13 @@ export default async function LearnPage({
   const { lessonId } = await params;
   const lesson = await loadLessonById(lessonId);
   if (!lesson) notFound();
-  const [{ next, context }, masteryTag] = await Promise.all([
+  const [{ next, context }, primaryTag] = await Promise.all([
     trailData(lessonId),
     primaryConceptTag(lesson)
   ]);
+  // S237. Offer the Mastery Studio link only where the mission actually exists. Having a concept
+  // tag is not the same as having a mission, and /mastery/[conceptTag] 404s on the difference —
+  // 571 of 1,701 lessons pointed at a dead page.
+  const masteryTag = primaryTag && (await masteryMissionExists(primaryTag)) ? primaryTag : null;
   return <LessonPlayer lesson={lesson} next={next} trailContext={context} masteryTag={masteryTag} />;
 }

@@ -27,11 +27,13 @@ import { seededShuffle } from "@/lib/prng";
  * what is correct — and the third test below asserts exactly that, because a "fix" that reordered
  * the answer key would be far worse than the defect.
  *
- * WHY NOT ASSERT "ORDER != AUTHORED ORDER". A seeded shuffle is allowed to return the identity
- * permutation for some seeds; asserting inequality on one spec would be flaky-by-construction.
- * The corpus-level assertion is the honest one: across every aligned authored spec, the rendered
- * right column must not be positionally aligned with the left in the overwhelming majority. A
- * regression that removes the shuffle drops this to 100% aligned and fails loudly.
+ * WHY THE THRESHOLD IS ZERO. It was not, at first. A seeded shuffle may legally return the
+ * identity permutation, so the gate originally allowed a small residue — and a learner promptly
+ * hit it: "Match each tenths decimal to its fraction" still rendered 0.3/3-10, 0.9/9-10, 0.6/6-10
+ * in lockstep, because with three pairs the identity is one permutation in six. Shuffling alone is
+ * a probabilistic fix to a correctness problem. Both engines now make the result deterministic —
+ * matchPairs rotates until the rows do not line up, dragBucket deals round-robin across buckets
+ * when a shuffle leaves the runs intact — so any residue at all is a regression.
  */
 
 type Sample = { lesson: string; spec: TWidget };
@@ -93,8 +95,11 @@ describe("S237 answer-by-position", () => {
       if (inAnswerOrder) aligned++;
       cleanup();
     }
-    // Identity permutations are legal for individual seeds; wholesale alignment is the regression.
-    expect(aligned / alignedPairs.length).toBeLessThan(0.25);
+    // S237b: this used to allow up to 25% — a seeded shuffle may return the identity permutation,
+    // and with three pairs that is one in six. A learner hit exactly that ("0.3/3-10, 0.9/9-10,
+    // 0.6/6-10" still in lockstep). The engine now rotates until the rows do not line up, so the
+    // only honest threshold is zero: not one authored instance may render in answer order.
+    expect(aligned).toBe(0);
   });
 
   it("SELF-CHECK: the detector fires when the shuffle is removed", () => {
@@ -132,10 +137,18 @@ describe("S237 answer-by-position", () => {
     let stillGrouped = 0;
     for (const { lesson, spec } of grouped) {
       const s = spec as Extract<TWidget, { type: "dragBucket" }>;
-      const shown = seededShuffle(s.items, `${lesson}:x:buckets`).map((i) => i.bucketId);
+      const { container } = render(
+        <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} seed={`${lesson}:x`} />
+      );
+      const labelToBucket = new Map(s.items.map((i) => [i.label, i.bucketId]));
+      const shown = Array.from(container.querySelectorAll("button"))
+        .map((b) => labelToBucket.get((b.textContent ?? "").trim()))
+        .filter((b): b is string => Boolean(b));
+      cleanup();
       const runs = shown.filter((k, i) => i > 0 && k !== shown[i - 1]).length;
       if (runs === new Set(shown).size - 1) stillGrouped++;
     }
-    expect(stillGrouped / grouped.length).toBeLessThan(0.35);
+    // Same tightening: a round-robin deal replaces a shuffle that leaves the runs intact.
+    expect(stillGrouped).toBe(0);
   });
 });

@@ -224,6 +224,28 @@ function selectPracticeBank(rows: SourceStep[], tag: string, seed: string, count
   return expanded;
 }
 
+/**
+ * S237. Does a Mastery Studio mission exist for this tag?
+ *
+ * The lesson-complete screen offered "Open Mastery Studio" whenever the lesson had a primary
+ * concept tag — but /mastery/[conceptTag] calls notFound() when buildMasteryMission returns null,
+ * and it returns null for any tag the mastery index has no cell or no tagged steps for. Measured
+ * across the corpus: 571 of 1,701 lessons offered that link and 404'd on it. One completion in
+ * three ended at a dead end, at the most rewarding moment in the product.
+ *
+ * The two guards below are buildMasteryMission's ONLY null paths, deliberately checked here rather
+ * than duplicated: a caller can ask whether the destination exists without paying to construct a
+ * whole 32-state mission just to throw it away. If a third null path is ever added to the builder
+ * it must be added here too — masteryMission.links.s237.test.ts pins the two functions in
+ * agreement across every authored tag, so the divergence fails loudly rather than silently
+ * restoring the 404.
+ */
+export async function masteryMissionExists(conceptTag: string): Promise<boolean> {
+  const index = await loadIndex();
+  if (!index.cells.get(conceptTag)) return false;
+  return (index.stepsByTag.get(conceptTag) ?? []).length > 0;
+}
+
 export async function buildMasteryMission(conceptTag: string, round = 1): Promise<TLesson | null> {
   const index = await loadIndex();
   const cell = index.cells.get(conceptTag);
