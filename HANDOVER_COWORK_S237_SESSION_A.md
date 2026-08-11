@@ -131,7 +131,15 @@ verified; tree clean). But:
 
 ---
 
-## 4. Work Package 1 — 127-engine learner-focus audit: **audit COMPLETE, fixes NOT STARTED**
+## 4. Work Package 1 — 127-engine learner-focus audit: **audit COMPLETE; systemic fixes 1–3 LANDED**
+
+> **Status update (end of session A).** Systemic patterns 1, 2 and 3 below are FIXED and committed
+> (`c7df15d`, `3237c7d`, `b466212`), as is the `signChart` crash (`a8baf9b`). Patterns 4 and 5, the
+> `describeState` answer-leak sweep, `compassConstruct`, and `matrixTransform` remain OPEN. The
+> per-engine LEAK rows not covered by a systemic fix are still open. See §9 for the exact ledger.
+> The audit CSV below is the ORIGINAL audit and has deliberately NOT been regenerated — rerunning it
+> is the verification step for the fixes, and doing that is the next session's job, not a claim this
+> session gets to make.
 
 `PREMIUM_ENGINE_LEARNER_FOCUS_AUDIT_S237.csv` is written at repo root: **128 lines = header + 127
 rows**, validated as exactly 127 unique engines against `scripts/engine-capabilities.json` with
@@ -259,27 +267,76 @@ figure matches the manifest exactly:**
 ?? HANDOVER_COWORK_S237_SESSION_A.md             (this file)
 ```
 
-**No tracked file has been modified.** No source, content, test, or gate has been touched. Nothing
-committed, nothing pushed. `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` was clobbered by the test suite
+**Superseded — see §9.** At the time §6 was first written nothing was committed. Session A then
+landed 5 commits on `cowork/s237` (source changes to `src/components/widgets.tsx` and
+`src/lib/describeState.ts`, plus one new test file
+`src/lib/describeState.signChart.s237.test.ts`). No content/curriculum file, and no existing test
+or gate, was modified or weakened. `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` was clobbered by the test suite
 and restored to its committed 11,487-row state (§3).
 
 ---
 
+## 9. What session A actually changed (5 commits on `cowork/s237`)
+
+Base `586c489246ff48971811301f18b3bb228b4c7acd`. Pushed to GitHub via a git bundle applied from the
+user's own machine — the sandbox's git proxy refuses to inject a credential for this repo
+("not in this session's authorized repository set"), so **`git push` from inside Cowork does not
+work**; commit locally, `git bundle create`, deliver, and have the user push.
+
+| Commit | What |
+|---|---|
+| `19b5413` | Session-A audit + handover (no source touched) |
+| `a8baf9b` | `signChart` crash + wrong model narrated |
+| `c7df15d` | "required before grading" removed from 8 engines via one `explorationProgress()` helper |
+| `3237c7d` | internal `spec.task` enums removed from 9 learner-facing sites across 7 engines |
+| `b466212` | raw enum discriminators removed from 4 engines |
+
+**Closed:** signChart (crash + false narration); the 8-engine grading-vocabulary template;
+9 `spec.task` sites; signedFractionLab correctness leak; conditionalTableLab condition/cell and
+readMetric; verticalLineScanner verdict.
+
+**Still open from the audit:** systemic patterns 4 (the `<details>` "Describe this model" panel as a
+whole) and 5 (`WIDGET_ACTIONS` design-system vocabulary, `describeState.ts:915-960`); the
+`describeState` answer-leak sweep (~12 engines); `compassConstruct` narrating the wrong
+construction; `matrixTransform` naming sliders that are steppers; `shapeHierarchyLab` evidenceKind
+chips; `unitCircleExplore` targetFeature.kind; `sequenceBuild` authored-over-derived stage bodies;
+`lineRelationLab` moves tile; `graphStoryLab` reveal vocabulary; `triangleAngleLab` "invariant sum";
+`areaModel` (the one UNCERTAIN row, still needs a human ruling).
+
+**House ruling set this session, applied to every fix above:** a counter STAYS when it reports the
+learner's own progress toward a required action (it is next-action feedback, and
+`requiredExplorations` genuinely gates the answer — deleting it strands the learner at a dead
+control). It is a LEAK when it names the system, exposes an authoring field, or frames the work as
+assessment input.
+
+**Method note worth carrying forward.** Every fix was verified by printing the actual learner-facing
+string and reading it, per CLAUDE.md step 5. That is what caught, with all tests green: three
+engines left opening mid-sentence in lowercase, a dangling `"Terms ."`, an empty `<p>`, and an
+entire additional leak (`readMetric`) that the 127-engine audit had missed. The tests would have
+shipped all five.
+
 ## 7. Next actions, in order
 
-1. **Set the house ruling on bare exploration counters** (§4) — it changes the LEAK set before any
-   fix lands.
-2. **Do the Vitest set difference** (§2): recorded-Windows-15 vs current-Linux-25. Do not start
-   fixing until you know which failures are new.
-3. **Fix the systemic shared-shell leaks first** (§4 patterns 1-5), single-writer on
-   `widgets.tsx` / `describeState.ts` per the execution prompt's shared-file ownership rule. Then
-   **rerun the 127-engine audit** and confirm the LEAK count drops for the right reasons.
+~~Set the house ruling on bare exploration counters~~ — **DONE**, see §9.
+~~Triage the signChart crash~~ — **DONE**, `a8baf9b`.
+
+1. **Rerun the 127-engine learner-focus audit** and confirm the LEAK count drops from 18 for the
+   right reasons — each row closing because the leak is gone, not because a fresh auditor phrased
+   it differently. This is the verification step for `c7df15d`/`3237c7d`/`b466212` and it has NOT
+   been run; the CSV in §4 is still the pre-fix audit.
+2. **Do the Vitest set difference** (§2): recorded-Windows-15 vs current-Linux-25. Still not done.
+   Do not start fixing until you know which failures are new. The 25-failure baseline predates this
+   session's commits, so re-establish it before attributing anything to them.
+3. **Finish the systemic leaks**: patterns 4 and 5 (§4) — the `<details>` "Describe this model"
+   panel and the `WIDGET_ACTIONS` map — single-writer on `widgets.tsx` / `describeState.ts`.
 4. **Browser-verify changed families at 390/768/1440 px, light and dark**, per Work Package 1's
-   exit condition.
-5. **Triage the three out-of-taxonomy findings** (§4): the `describeState` answer-leak sweep, the
-   `signChart` crash, the `compassConstruct` mis-narration. The crash is a live TypeError on
-   shipped content and arguably jumps the queue.
-6. Only then **Work Package 2** (17 reversible-play families) and the dependency-ordered queue.
+   exit condition. Nothing this session was browser-verified; verification was source reading,
+   printed output and unit tests only.
+5. **The `describeState` answer-leak sweep** (~12 engines speaking the target during active work) —
+   the largest remaining correctness/fairness item, and it contradicts a rule the codebase states
+   in its own comments.
+6. Then the remaining per-engine LEAK rows (§9), **Work Package 2** (17 reversible-play families),
+   and the dependency-ordered queue.
 
 ## 8. Standing constraints (unchanged, repeated because they are easy to lose)
 
