@@ -431,7 +431,9 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // S237b. Dropping the internal task token also dropped the only context sentence, leaving the
       // panel under the s44 substance floor and quieter than the diagram: the plot draws its axis
       // titles on screen and names them in its own aria-label. Say what the axes measure.
-      const axes=twoD?`Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}.`:`The number line is labelled ${spec.xLabel}.`;
+      // S237. unitRate draws a ray from the origin through the point; a description that omitted it
+      // would be quieter than the picture again, in the same way the axis sentence was.
+      const axes=`${twoD?`Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}.`:`The number line is labelled ${spec.xLabel}.`}${twoD&&spec.task==="unitRate"?" A straight line runs from the origin through the plotted point.":""}`;
       return `${axes} ${sentence(spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.y===undefined?point.x:`(${point.x}, ${point.y})`).join(", ")}`).join(". "))}. ${revealed.length} of ${truth.stages.length} exact states inspected.${typeof v.numeric==="number"?` Entered ${v.numeric}.`:selected?` Selected ${selected.label}.`:""}`}
     case "geometricConstraintLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};

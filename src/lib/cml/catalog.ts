@@ -325,8 +325,8 @@ export const CML_ENGINE_PROFILES: Partial<Record<TWidget["type"], EngineCMLProfi
   },
   pointSetReasoningLab: {
     kernel: "covariation", role: "supporting",
-    actionGoal: "Reason over a finite point set: read its coordinate story, and decide membership, extremes, and range from the points themselves.",
-    invariants: ["point-set-determines-range", "membership-is-decided-by-coordinates"], misconceptions: ["range-read-from-axis-not-points", "membership-guessed-from-proximity"],
+    actionGoal: "Reason over a finite point set: read its coordinate story, derive the unit rate of a proportional line, and decide membership, extremes, and range from the points themselves.",
+    invariants: ["point-set-determines-range", "membership-is-decided-by-coordinates", "unit-rate-is-output-per-one-input"], misconceptions: ["range-read-from-axis-not-points", "membership-guessed-from-proximity", "rate-is-the-difference-not-the-quotient"],
     representations: ["graph", "table", "language"]
   },
   geometricConstraintLab: {

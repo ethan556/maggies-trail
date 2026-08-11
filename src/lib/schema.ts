@@ -4854,16 +4854,25 @@ export const PlaceValueTransformLabSpec = z.object({
 /** pointSetReasoningLab — one finite point-set truth model for Session 150.
  * Coordinate stories and one-dimensional data spreads both become labelled observations. The same
  * state derives axis meaning, point reading, coordinate distance, constant-step extension, path
- * length, endpoints, range, range blindness, and outlier-driven range updates. */
+ * length, endpoints, range, range blindness, and outlier-driven range updates.
+ *
+ * S237 adds `unitRate`: read a point off a proportional graph and derive y ÷ x. It exists because
+ * 45 authored steps across seven lessons ask a learner to read a rate FROM A GRAPH through a bare
+ * numeric box with no graph on screen — `figure` takes a static registry name so it cannot show
+ * (4, 20) on one step and (2, 18) on the next, and `plotPoint` grades plotting rather than a typed
+ * rate. This task is the smallest thing that draws the point and grades the number. It is the only
+ * task that asserts a relationship BETWEEN the plotted points rather than reading them
+ * independently, so integrity checking requires every point to sit on the one line through the
+ * origin: a picture that disagrees with the derived rate is worse than no picture. */
 export type PointSetReasoningTask =
   | "axisMeaning" | "axisDistance" | "pointRead" | "sequenceExtend" | "pathLength" | "pointMeaning"
-  | "rangeEndpoints" | "rangeValue" | "rangeBlindness" | "rangeUpdate";
+  | "rangeEndpoints" | "rangeValue" | "rangeBlindness" | "rangeUpdate" | "unitRate";
 export type PointSetObservation = { id:string; label:string; x:number; y?:number };
 export type PointSetSeries = { id:string; label:string; points:readonly PointSetObservation[] };
 export type PointSetReasoningTruthInput = {
   task:PointSetReasoningTask; xLabel:string; yLabel?:string; sets:readonly PointSetSeries[];
   targetSetId?:string; targetPointId?:string; targetAxis?:"x"|"y"; targetX?:number;
-  pathPointIds?:readonly string[]; addedValue?:number;
+  pathPointIds?:readonly string[]; addedValue?:number; answerUnit?:string;
 };
 export type PointSetReasoningStage = { key:string; label:string; value:string };
 const pointSetClean=(value:number):number=>{const rounded=Math.round(value*1e12)/1e12;return Object.is(rounded,-0)?0:rounded};
@@ -4878,6 +4887,11 @@ export function pointSetReasoningTruth(spec:PointSetReasoningTruthInput){
     case "axisDistance":{const ids=spec.pathPointIds??target.points.slice(0,2).map(p=>p.id),a=point(ids[0]),b=point(ids[1]);const dx=Math.abs(b.x-a.x),dy=Math.abs((b.y??0)-(a.y??0));stages.push({key:`point:${a.id}`,label:"read the first endpoint",value:`(${pointSetFmt(a.x)}, ${pointSetFmt(a.y??0)})`},{key:`point:${b.id}`,label:"read the second endpoint",value:`(${pointSetFmt(b.x)}, ${pointSetFmt(b.y??0)})`},{key:"distance:changes",label:"measure coordinate changes",value:`|Δx|=${pointSetFmt(dx)}, |Δy|=${pointSetFmt(dy)}`},{key:"distance:total",label:"combine the travelled change",value:`${pointSetFmt(dx)} + ${pointSetFmt(dy)} = ${pointSetFmt(dx+dy)}`});answerNumber=pointSetClean(dx+dy);break}
     case "pointRead":{const p=point(spec.targetPointId),axis=spec.targetAxis??"y";stages.push({key:`point:${p.id}`,label:"locate the target observation",value:`(${pointSetFmt(p.x)}, ${pointSetFmt(p.y??0)})`},{key:`axis:${axis}`,label:`read the ${axis}-coordinate`,value:axis==="x"?pointSetFmt(p.x):pointSetFmt(p.y??0)});answerNumber=axis==="x"?p.x:(p.y??0);break}
     case "sequenceExtend":{const pts=[...target.points].sort((a,b)=>a.x-b.x);const a=pts[0]!,b=pts[1]!,rate=pointSetClean(((b.y??0)-(a.y??0))/(b.x-a.x)),tx=spec.targetX??(pts.at(-1)!.x+1),ty=pointSetClean((a.y??0)+rate*(tx-a.x));for(const p of pts)stages.push({key:`point:${p.id}`,label:`read ${p.label}`,value:`(${pointSetFmt(p.x)}, ${pointSetFmt(p.y??0)})`});stages.push({key:"sequence:rate",label:"derive the constant step",value:`${pointSetFmt(rate)} ${spec.yLabel??"output"} per ${spec.xLabel}`},{key:"sequence:extend",label:"extend to the target input",value:`${spec.xLabel} ${pointSetFmt(tx)} → ${pointSetFmt(ty)}`});answerNumber=ty;break}
+    case "unitRate":{const p=point(spec.targetPointId),py=p.y??0;if(p.x===0)throw new Error("unitRate needs a target point with a nonzero input value");const rate=pointSetClean(py/p.x);stages.push({key:"axis:x",label:"name the horizontal variable",value:spec.xLabel},{key:"axis:y",label:"name the vertical variable",value:spec.yLabel??"output"},{key:`point:${p.id}`,label:"read the plotted point",value:`(${pointSetFmt(p.x)}, ${pointSetFmt(py)})`},{key:"rate:origin",label:"check the line through the origin",value:`(0, 0) and (${pointSetFmt(p.x)}, ${pointSetFmt(py)}) lie on one straight line`},
+      // The unit phrase comes from the authored answerUnit, never from `${yLabel} per ${xLabel}` —
+      // that composition printed "5 miles per hours" the first time it was read, which is the
+      // derived-English-morphology defect CLAUDE.md bans outright.
+      {key:"rate:unit",label:"divide the output by the input",value:`${pointSetFmt(py)} ÷ ${pointSetFmt(p.x)} = ${pointSetFmt(rate)}${spec.answerUnit?` ${spec.answerUnit}`:""}`});answerNumber=rate;break}
     case "pathLength":{const ids=spec.pathPointIds??target.points.map(p=>p.id);let total=0;for(let i=0;i<ids.length;i++){const q=point(ids[i]);stages.push({key:`point:${q.id}`,label:`read path point ${i+1}`,value:`(${pointSetFmt(q.x)}, ${pointSetFmt(q.y??0)})`});if(i){const prev=point(ids[i-1]),leg=Math.abs(q.x-prev.x)+Math.abs((q.y??0)-(prev.y??0));total+=leg;stages.push({key:`path:leg:${i}`,label:`measure leg ${i}`,value:pointSetFmt(leg)})}}stages.push({key:"path:total",label:"add all path legs",value:pointSetFmt(total)});answerNumber=pointSetClean(total);break}
     case "pointMeaning":{const p=point(spec.targetPointId);stages.push({key:"axis:x",label:"name the horizontal variable",value:spec.xLabel},{key:"axis:y",label:"name the vertical variable",value:spec.yLabel??"y"},{key:`point:${p.id}`,label:"pair the two meanings",value:`${spec.xLabel}=${pointSetFmt(p.x)}, ${spec.yLabel??"y"}=${pointSetFmt(p.y??0)}`});answerClaim=`point:${pointSetFmt(p.x)}:${pointSetFmt(p.y??0)}:${spec.xLabel}:${spec.yLabel??"y"}`;break}
     case "rangeEndpoints":
@@ -4895,7 +4909,7 @@ const PointSetChoiceSpec=z.object({id:z.string().min(1),label:z.string().min(1),
 const PointSetNumericErrorSpec=z.object({value:z.number().finite(),feedback:z.string().min(1)});
 const PointSetAuthoredStageSpec=z.object({title:z.string().min(1),body:z.string().min(1)});
 export const PointSetReasoningLabSpec = z.object({
-  type: z.literal("pointSetReasoningLab"), task:z.enum(["axisMeaning","axisDistance","pointRead","sequenceExtend","pathLength","pointMeaning","rangeEndpoints","rangeValue","rangeBlindness","rangeUpdate"]), answerMode:z.enum(["numeric","choice","explore"]), prompt:z.string().min(1),
+  type: z.literal("pointSetReasoningLab"), task:z.enum(["axisMeaning","axisDistance","pointRead","sequenceExtend","pathLength","pointMeaning","rangeEndpoints","rangeValue","rangeBlindness","rangeUpdate","unitRate"]), answerMode:z.enum(["numeric","choice","explore"]), prompt:z.string().min(1),
   xLabel:z.string().min(1),yLabel:z.string().min(1).optional(),sets:z.array(PointSetSeriesSpec).min(1).max(4),targetSetId:z.string().min(1).optional(),targetPointId:z.string().min(1).optional(),targetAxis:z.enum(["x","y"]).optional(),targetX:z.number().finite().optional(),pathPointIds:z.array(z.string().min(1)).min(2).max(12).optional(),addedValue:z.number().finite().optional(),
   answerUnit:z.string().optional(),tolerance:z.number().nonnegative().default(0),choices:z.array(PointSetChoiceSpec).max(8).default([]),numericErrors:z.array(PointSetNumericErrorSpec).max(8).default([]),authoredStages:z.array(PointSetAuthoredStageSpec).max(20).default([]),requiredStageKeys:z.array(z.string().min(1)).max(30).default([]),requiredExplorations:z.number().int().min(1).max(30).default(1),successFeedback:z.string().min(1),explorationFeedback:z.string().min(1),fallbackFeedback:z.string().min(1)
 });
@@ -6874,10 +6888,14 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
       const setIds=spec.sets.map(set=>set.id);if(new Set(setIds).size!==setIds.length)errs.push("pointSetReasoningLab: set ids must be unique");
       for(const set of spec.sets){const ids=set.points.map(point=>point.id);if(new Set(ids).size!==ids.length)errs.push(`pointSetReasoningLab: point ids in ${set.id} must be unique`)}
       const target=spec.sets.find(set=>set.id===(spec.targetSetId??spec.sets[0]?.id));if(!target)errs.push("pointSetReasoningLab: targetSetId must name an authored set");
-      const twoD=new Set(["axisMeaning","axisDistance","pointRead","sequenceExtend","pathLength","pointMeaning"]);if(twoD.has(spec.task)&&target?.points.some(point=>point.y===undefined))errs.push("pointSetReasoningLab: coordinate tasks require y-values for every target point");
+      const twoD=new Set(["axisMeaning","axisDistance","pointRead","sequenceExtend","pathLength","pointMeaning","unitRate"]);if(twoD.has(spec.task)&&target?.points.some(point=>point.y===undefined))errs.push("pointSetReasoningLab: coordinate tasks require y-values for every target point");
       if(spec.targetPointId&&!target?.points.some(point=>point.id===spec.targetPointId))errs.push("pointSetReasoningLab: targetPointId must name a target-set point");
       if(spec.pathPointIds)for(const id of spec.pathPointIds)if(!target?.points.some(point=>point.id===id))errs.push(`pointSetReasoningLab: path point ${id} is missing`);
       if(spec.task==="sequenceExtend"&&target){const pts=[...target.points].sort((a,b)=>a.x-b.x);if(pts.length<2)errs.push("pointSetReasoningLab: sequence extension requires at least two points");else{const rate=((pts[1].y??0)-(pts[0].y??0))/(pts[1].x-pts[0].x);if(!Number.isFinite(rate)||pts.some((point,index)=>index>0&&Math.abs(((point.y??0)-(pts[0].y??0))-rate*(point.x-pts[0].x))>1e-9))errs.push("pointSetReasoningLab: sequence points must share one constant rate")}}
+      // unitRate is the one task whose answer is a relationship BETWEEN points, so every plotted
+      // point has to sit on the same line through the origin. A second point off that line would
+      // draw a picture the derived rate contradicts — the exact failure this engine exists to end.
+      if(spec.task==="unitRate"&&target){const p=(spec.targetPointId?target.points.find(point=>point.id===spec.targetPointId):undefined)??target.points[0];if(!p||p.x===0)errs.push("pointSetReasoningLab: unitRate requires a target point with a nonzero input value");else{const rate=(p.y??0)/p.x;for(const q of target.points){if(q.x===0&&(q.y??0)===0)continue;if(q.x===0||Math.abs((q.y??0)-rate*q.x)>1e-9)errs.push(`pointSetReasoningLab: point ${q.id} is off the proportional line the unit rate is read from`)}}}
       if(spec.task==="rangeBlindness"&&spec.sets.length<2)errs.push("pointSetReasoningLab: rangeBlindness requires two sets");
       let truth:ReturnType<typeof pointSetReasoningTruth>|undefined;try{truth=pointSetReasoningTruth(spec)}catch(error){errs.push(`pointSetReasoningLab: ${error instanceof Error?error.message:String(error)}`)}
       const valid=new Set(truth?.stages.map(stage=>stage.key)??[]);if(new Set(spec.requiredStageKeys).size!==spec.requiredStageKeys.length)errs.push("pointSetReasoningLab: requiredStageKeys must be unique");for(const key of spec.requiredStageKeys)if(!valid.has(key))errs.push(`pointSetReasoningLab: invalid required stage ${key}`);if(spec.requiredExplorations>valid.size)errs.push(`pointSetReasoningLab: requiredExplorations ${spec.requiredExplorations} exceeds ${valid.size} inspectable states`);
