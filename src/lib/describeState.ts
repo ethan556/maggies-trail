@@ -446,7 +446,9 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const lineSummary=spec.lines.map(line=>`${line.label}: ${line.sourceText}`).join("; ");
       const opened=truth.stages.filter(stage=>revealed.includes(stage.key)).map(stage=>`${stage.label}: ${stage.value}`).join("; ")||"no derived stages opened";
       const answer=spec.answerMode==="numeric"&&typeof v.numeric==="number"?` Entered ${v.numeric}.`:spec.answerMode==="choice"&&typeof v.choiceId==="string"?` Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:spec.answerMode==="point"&&Array.isArray(v.point)?` Entered point (${v.point[0]}, ${v.point[1]}).`:"";
-      return `Affine relationship lab. ${lineSummary}. ${revealed.length} valid stages inspected: ${opened}.${answer}`;
+      // S237b. Opened with the engine's own name — an authoring label, and the one thing on this
+      // panel that is not mathematics. The lines it describes are what the screen actually shows.
+      return `${sentence(lineSummary)}. ${revealed.length} of ${truth.stages.length} stages inspected: ${opened}.${answer}`;
     }
     case "quotientReasoningLab": {
       const truth = quotientReasoningTruth(spec);
@@ -1016,9 +1018,9 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   trialProbabilityLab: "Choose one exact fraction button. The evidence strip and claim marker project your fraction onto the same total, so numerator, denominator, complement, and theoretical-versus-experimental differences stay visible.",
   compoundEventLab: "Tab to the claim buttons and press Enter or Space to select exactly one count or probability claim. The stage cards and the full ordered sample space stay fixed while you choose, so the product of stage choices and the favourable-over-total probability remain separately visible.",
   compositeAreaLab: "Inspect the fixed geometric pieces, then Tab to the exact area-claim buttons and press Enter or Space. Added pieces use plus badges; cut-away pieces use minus badges and dashed berry patterns. Your selected claim stays visible on reveal.",
-  proportionalReasoningLab: "Use native buttons to normalize each row or build each multiplicative stage, then enter a value or select one exact claim. The initial view never states proportionality or the final result; conclusions appear only after the relevant rows are inspected, and reveal uses a separate ghost without replacing learner work.",
-  placeValueTransformLab: "Read the aligned base-ten source, then Tab through the derived-stage buttons and press Enter or Space to inspect the required digit, rounding, scaling, or exponent steps. Enter a value or choose one exact claim; reveal uses a separate ghost and never overwrites your work.",
-  graphStoryLab: "Read mode shows one labelled graph and exact claim buttons. Build mode uses Tab plus Enter or Space to add labelled segment cards in story order; Back removes the last card, Clear restarts, and reveal draws a separate dashed target without overwriting learner work.",
+  proportionalReasoningLab: "Use native buttons to normalize each row or build each multiplicative stage, then enter a value or select one exact claim. Each conclusion appears only once you have inspected the rows it depends on. A shown answer appears as a separate faded copy, so what you entered stays as you left it.",
+  placeValueTransformLab: "Read the aligned base-ten source, then Tab through the derived-stage buttons and press Enter or Space to inspect the required digit, rounding, scaling, or exponent steps. Enter a value or choose one exact claim. A shown answer appears as a separate faded copy, so the value you typed stays as you left it.",
+  graphStoryLab: "Read mode shows one labelled graph and exact claim buttons. Build mode uses Tab plus Enter or Space to add labelled segment cards in story order; Back removes the last card and Clear restarts. A shown answer is drawn as a separate dashed graph, so the cards you placed stay exactly where you left them.",
   conditionalTableLab: "Conditional mode uses row or column condition buttons and table-cell buttons. Read mode keeps the table fixed and uses exact claim buttons; highlighted cells and margins show the count or denominator used.",
   conicLocusLab: "One labelled slider changes eccentricity; arrow keys move among circle, ellipse, parabola, and hyperbola cases while the focus-directrix ratio and locus update.",
   derivativeRuleLab: "Product mode uses one labelled slider. Chain, quotient, and substitution modes use two labelled sliders; all live terms and linked representations update.",

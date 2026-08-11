@@ -7126,7 +7126,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">
-      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label} · {line.sourceKind}</p><p className="mt-1 font-extrabold">{line.sourceText}</p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
+      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label}</p><p className="mt-1 font-extrabold">{line.sourceText}</p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate plot of ${spec.lines.map(line=>line.label).join(", ")}; each line also has a distinct dash pattern and text label.`}>
         <rect x="0" y="0" width={W} height={H} rx="16" fill="currentColor" opacity="0.03"/>
         {xMin<=0&&xMax>=0&&<line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke="currentColor" opacity="0.35"/>}{yMin<=0&&yMax>=0&&<line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke="currentColor" opacity="0.35"/>}
@@ -16013,7 +16013,7 @@ function ConditionalTableConditionW({ spec, value, onChange, disabled, onEvent, 
     </div>
     <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="condition / denominator" value={`${conditionLabel(st.condition)} = ${denominator}`} tone={st.condition===spec.targetCondition?'good':'neutral'}/><LabReadout label="selected intersection" value={st.cell?`${cellLabel(st.cell)} = ${count(st.cell)}`:'choose a cell'} tone={st.cell===spec.targetCell?'good':'neutral'}/><LabReadout label="conditional probability" value={currentP===null?'—':`${numerator}/${denominator} = ${currentP.toFixed(3)}`}/></div>
     {st.cell && reverseCondition && <p className="rounded-xl border border-tangerine/25 bg-tangerine/5 p-3 text-sm font-bold">Same intersection, reversed condition: {count(st.cell)}/{reverseDen} = {reverseDen? (count(st.cell)/reverseDen).toFixed(3):'undefined'}. The numerator can stay fixed while the denominator changes.</p>}
-    <p className="text-center text-xs font-extrabold uppercase tracking-wide text-ink/70">Condition changes recorded: {st.switches}/{spec.requiredSwitches}</p>
+    <p className="text-center text-xs font-extrabold uppercase tracking-wide text-ink/70">{explorationProgress(st.switches, spec.requiredSwitches, "condition change", "made")}</p>
     {/* Reveal ghost: the asked-for conditional, assembled — mirrors evaluate
         (condition AND cell must both match). Shows which given and which
         intersection the question meant, with the fraction they produce. */}
