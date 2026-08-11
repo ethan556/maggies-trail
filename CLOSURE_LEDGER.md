@@ -105,3 +105,9 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 | CL-P1-052 | P1 | Learner-screen disclosure | The collapsed CML surface exposed “Mastery lens,” lifecycle badges, “Deep dive,” a generic multi-domain action goal, and representation data while the learner was still solving the task. | **CLOSED — PROGRESSIVE DISCLOSURE** | Collapsed state is one optional, task-specific prompt; lifecycle/color-key metadata and preview strip are removed; expanded exponent copy is rule-specific; all visible controls are at least 44 px and the 390 px state has no overflow. |
 | CL-P1-053 | P1 | Exponent visual meaning | `ep-01-02` paired a same-base product-rule illustration (`a³·a²=a⁵`) with power-of-a-power prose (`(aᵐ)ⁿ=aᵐⁿ`), visually contradicting the lesson explanation. | **CLOSED — RULE-SPECIFIC VISUALS** | The existing power-of-a-power factor-group asset now shows two copies of `2³` producing six factors; the separate product-of-powers illustration remains on its own rule state; interactive labels explain the repeated groups without exposing `task: exponentChain`. |
 
+## Session 229 Premium Rebuild Wave-C batch-2 update
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P1-048 | P1 | MCQ blind-guess leakage | Six repeated foundational prompts across Grades 2, 4, and 5 accounted for 24 additional keyed-option length or punctuation clues. | **IN PROGRESS — 46/697 REMEDIATED** | All 24 batch-2 rows now pass and all distractors, correct markers, and feedback remain intact; regenerated queue has 651 rows. Continue Wave C with repeated high-harm families before Wave D. |
+
