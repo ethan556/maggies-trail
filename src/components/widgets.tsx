@@ -4186,7 +4186,7 @@ function QuadDragW({ spec, value, onChange, disabled, tone , onEvent }: WProps<T
             <circle cx={X(msB[0])} cy={Y(msB[1])} r={3.5} fill={msHolds ? PALETTE.leaf : PALETTE.berry} />
           </g>
         )}
-      </svg>
+      <AxisCaptions w={W} h={W} /></svg>
       {spec.showMidsegment && (
         <p className={`text-center text-sm font-extrabold tabular-nums ${msHolds ? "text-leaf-ink" : "text-berry-ink"}`}
           aria-live="polite" data-testid="qd-ms-readout">
@@ -4403,7 +4403,7 @@ function DerivativeTraceW({ spec, value, onChange, disabled, tone }: WProps<TDer
             {d2 === null && <circle cx={X(x)} cy={Y2(0)} r={4.5} fill="#fff" stroke={PALETTE.berry} strokeWidth={2} />}
           </g>
         )}
-      </svg>
+      <AxisCaptions w={W} h={HT + HB + 8 + (spec.showSecond ? H2 + 8 : 0)} y="" /></svg>
       <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
         x = {fmt(x)} · f′(x) ={" "}
         {d === null ? <span className="text-berry-ink">does not exist</span> : <span className="text-sky-ink">{fmt(d)}</span>}
@@ -4632,7 +4632,7 @@ function AccumulateAreaW({ spec, value, onChange, disabled, tone }: WProps<TAccu
             </g>
           )}
         </g>
-      </svg>
+      <AxisCaptions w={W} h={HT + HB} y="" /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         area so far A = {fmt(A)}
         <br />
@@ -10302,7 +10302,7 @@ function RotationLabW({ spec, value, onChange, disabled, tone }: WProps<TRotatio
             strokeLinejoin="round"
           />
         )}
-      </svg>
+      <AxisCaptions w={300} h={300} /></svg>
       <label className="block text-sm">
         <span className={`mr-2 ${tone === "error" ? "text-berry-ink" : ""}`}>Turn (° counterclockwise)</span>
         <input
@@ -12184,7 +12184,7 @@ function QuadraticRootsW({ spec, value, onChange, disabled, tone, onEvent }: WPr
             roots {spec.targetR1} and {spec.targetR2}
           </text>
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-black tabular-nums" aria-live="polite">
         {a === 1 ? "" : a === -1 ? "−" : a}(x {sgn(-r1, "")})(x {sgn(-r2, "")}) = {co.a === 1 ? "" : co.a}x² {sgn(co.b, "x")} {sgn(co.c, "")}
       </p>
@@ -12318,7 +12318,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
             {...drag.handleProps}
           />
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         y = {a}(x {hSign})² {kSign}
       </p>
@@ -15869,8 +15869,12 @@ function AxisCaptions({ w, h, x = "x", y = "y" }: { w: number; h: number; x?: st
   const style = { fontSize: 11, fontWeight: 800, fill: PALETTE.ink, fillOpacity: 0.55 } as const;
   return (
     <g aria-hidden="true" data-testid="axis-captions">
-      <text x={w - 4} y={h - 4} textAnchor="end" {...style}>{x}</text>
-      <text x={4} y={12} textAnchor="start" {...style}>{y}</text>
+      {x ? <text x={w - 4} y={h - 4} textAnchor="end" {...style}>{x}</text> : null}
+      {/* A stacked plot shares one x-axis but gives each panel its OWN y meaning (derivativeTrace
+          stacks f, f′ and f″; accumulateArea stacks the curve over the running area). One caption
+          at the outer edge would name the top panel and silently mislabel the rest, so those pass
+          y="" and keep naming their panels in their own titles. */}
+      {y ? <text x={4} y={12} textAnchor="start" {...style}>{y}</text> : null}
     </g>
   );
 }
@@ -16398,7 +16402,7 @@ function RelatedRatesLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
           <text x={sx(tx)} y={sy(0) - 14} textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.tangerine}>x = {spec.targetX}</text>
         </g>
       );
-    })()}</svg>
+    })()}<AxisCaptions w={390} h={250} /></svg>
     <div className="grid grid-cols-3 gap-2"><LabReadout label="x" value={x.toFixed(1)} tone={st.x===spec.targetX?'good':'neutral'}/><LabReadout label="y" value={y.toFixed(2)}/><LabReadout label={spec.framing==="slope"?"dy/dx":"dy/dt"} value={verticalRate.toFixed(2)} tone="warn"/></div>
     <label className="grid gap-1 text-sm font-bold"><span>{spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"}</span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
     <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."}</p></div>;

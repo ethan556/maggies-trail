@@ -15,14 +15,13 @@ import { WidgetSpec, type TWidget } from "@/lib/schema";
  * what is being measured — so engines like coordinateProofLab drew full tick loops on both edges
  * while still leaving the plane anonymous.
  *
- * COVERAGE IS PARTIAL AND THE LIST IS EXPLICIT. The 17 engines below share the
- * `viewBox={`0 0 ${W} ${H}`}` shape, so a caption can be placed from values already in scope. The
- * remainder do not, each for its own reason (PointEntryW is square-scaled off `S`; DerivativeTraceW
- * stacks three panels into a composite height; QuadDragW is `W`×`W`), and each needs a placement
- * decision rather than a mechanical insert. They are listed in
- * COWORK_CACHE/axis-label-worklist-s237.csv, and four more — unitCircleExplore, polarTrace,
- * vectorExplore, matrixTransform — are abstract planes where naming the axes needs a ruling, not a
- * patch. This test asserts what is done; it does not pretend the sweep is finished.
+ * COVERAGE, AND WHAT IS DELIBERATELY LEFT. 23 engines are captioned across two batches — 17 that
+ * share the `viewBox={`0 0 ${W} ${H}`}` shape, then 6 more placed individually from whatever each
+ * component actually had in scope. Two were examined and correctly left alone (see below), and
+ * four remain OPEN pending a ruling rather than a patch: unitCircleExplore, polarTrace,
+ * vectorExplore and matrixTransform draw abstract planes where "what does x measure?" may have no
+ * honest answer. This test asserts what is done and names what is not; it does not imply the sweep
+ * is finished. The full list is COWORK_CACHE/axis-label-worklist-s237.csv.
  */
 
 const TOUCHED = [
@@ -30,7 +29,30 @@ const TOUCHED = [
   "taylorApprox", "slopeTriangle", "affineRelationshipLab", "scatterFit", "extraneousRootLab",
   "transformExplore", "systemsExplore", "lineExplore", "coordinateProofLab", "verticalLineScanner",
   "covariationScrubber",
+  // Second batch: non-uniform viewBoxes, each placed from what that component actually has in
+  // scope (a square S, a W-by-W box, a composite stacked height, two literals).
+  "quadDrag", "rotationLab", "relatedRatesLab", "quadraticExplore",
 ] as const;
+
+/**
+ * X-AXIS ONLY, DELIBERATELY. A stacked plot shares one x-axis but gives each panel its own y
+ * meaning — derivativeTrace stacks f, f′ and f″; accumulateArea stacks the curve over the running
+ * area. A single y caption at the outer edge would name the top panel and silently mislabel the
+ * rest, so these pass y="" and keep naming their panels in their own titles.
+ */
+const X_ONLY = ["derivativeTrace", "accumulateArea"] as const;
+
+/**
+ * NOT CAPTIONED, AND THE WORKLIST WAS WRONG ABOUT THEM. The automated classification counted any
+ * multi-line SVG as a coordinate plane, which over-counted twice:
+ *   pointEntry      — its "plane" is a 96px thumbnail that only appears once a point is entered,
+ *                     already aria-hidden. Captioning a preview swatch is clutter, not clarity.
+ *   dilationExplore — dispatches to DilationScaleW / AltitudeMeanW / SideSplitterW, which draw
+ *                     similar triangles and side-splitter figures. No axes exist to name; only
+ *                     quadraticExplore's two sub-components reference sx(0)/sy(0) and are real
+ *                     planes.
+ * Found by checking each for an axis-at-zero reference rather than trusting the class column.
+ */
 
 const authored = new Map<string, TWidget>();
 (function walk(dir: string) {
@@ -43,7 +65,7 @@ const authored = new Map<string, TWidget>();
       (function rec(node: unknown) {
         if (!node || typeof node !== "object") return;
         const record = node as Record<string, unknown>;
-        if (typeof record.type === "string" && (TOUCHED as readonly string[]).includes(record.type) && !authored.has(record.type)) {
+        if (typeof record.type === "string" && [...TOUCHED, ...X_ONLY].includes(record.type as never) && !authored.has(record.type)) {
           const spec = WidgetSpec.safeParse(record);
           if (spec.success) authored.set(record.type, spec.data as TWidget);
         }
@@ -74,6 +96,14 @@ describe("S237 axis captions", () => {
       if (!labels || labels.length !== 2 || labels.some((l) => !l)) bare.push(`${type}: ${JSON.stringify(labels)}`);
     }
     expect(bare).toEqual([]);
+  });
+
+  it("stacked plots name the shared x-axis and correctly leave y alone", () => {
+    for (const type of X_ONLY) {
+      const spec = authored.get(type);
+      if (!spec) continue;
+      expect(captionsOf(spec), type).toEqual(["x"]);
+    }
   });
 
   it("captions are decorative — they add nothing to the accessible name", () => {
