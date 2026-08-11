@@ -13377,7 +13377,45 @@ function parseOrderVal(label: string): number | null {
 
 /* ---------------- Build expression (token bank → expression line) ---------------- */
 
-function BuildExpressionW({ spec, value, onChange, disabled, tone }: WProps<TBuildExpression>) {
+function BuildExpressionW({ spec, value, onChange, disabled, seed, tone }: WProps<TBuildExpression>) {
+  /* S237. Reported from the app: "A pizza is fair-cut into 6 slices; you take 5" offered the bank
+   * 5 / 6 1 — the answer, 5/6, read straight off the first three tokens left to right. Measured
+   * across the corpus: 155 of 237 authored buildExpression specs list the correct sequence as the
+   * leading tokens of the bank, so two thirds of them could be built by tapping in order.
+   *
+   * The bank is now grouped rather than shuffled: operators and symbols first, then the numbers in
+   * ascending order. Grouping beats a shuffle here because it is stable — a learner returning to a
+   * step sees the same bank — and because leading with the operators means the row cannot read as
+   * the answer even by accident. Distractor tokens sort in among the rest instead of trailing at
+   * the end, where their position alone marked them as the ones not to use.
+   *
+   * Display order only. Grading joins the learner's chosen ids and compares against spec.correct
+   * and spec.acceptAlso (evaluate.ts), never against bank position. */
+  const orderedTokens = useMemo(() => {
+    const numeric = (label: string) => label.match(/-?\d+(?:\.\d+)?/);
+    const rank = (label: string) => { const m = numeric(label); return m ? Number(m[0]) : Number.NEGATIVE_INFINITY; };
+    const symbols = spec.tokens.filter((t) => !numeric(t.label));
+    const numbers = spec.tokens
+      .filter((t) => numeric(t.label))
+      .sort((a, b) => rank(a.label) - rank(b.label) || a.label.localeCompare(b.label));
+    const grouped = [...symbols, ...numbers];
+    // Belt and braces: an all-symbol bank (interval notation, complex-number forms) can survive
+    // grouping unchanged and still spell the answer. Fall back to the seeded shuffle McqW uses.
+    // Belt and braces. Grouping cannot help a bank whose tokens are all non-numeric — spelled-out
+    // place-value words ("six", "hundred", "eight"), interval notation, complex-number forms — so
+    // those keep authored order and can still spell the answer. Shuffle first; if the seed happens
+    // to reproduce the prefix, rotate until it does not. Rotation is deterministic and always
+    // terminates, which hoping for a luckier seed is not.
+    const spellsAnswer = (order: typeof grouped) => spec.correct.every((id, i) => order[i]?.id === id);
+    let display = grouped;
+    if (spellsAnswer(display)) {
+      display = seededShuffle(grouped, `${seed ?? spec.tokens.map((t) => t.id).join("|")}:tokens`);
+      for (let turn = 0; turn < display.length && spellsAnswer(display); turn++) {
+        display = [...display.slice(1), display[0]];
+      }
+    }
+    return display;
+  }, [spec.tokens, spec.correct, seed]);
   const seq = Array.isArray(value) ? (value as string[]) : [];
   const byId = new Map(spec.tokens.map((t) => [t.id, t.label]));
   const used = new Set(seq);
@@ -13425,7 +13463,7 @@ function BuildExpressionW({ spec, value, onChange, disabled, tone }: WProps<TBui
         );
       })()}
       <div className="flex flex-wrap gap-2">
-        {spec.tokens.map((t) => (
+        {orderedTokens.map((t) => (
           <button
             key={t.id}
             type="button"
