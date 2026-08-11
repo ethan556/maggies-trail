@@ -5,7 +5,7 @@ import {
   systemsPointOn,
   type SystemsPairValue
 } from "./mmip/systemsPairAdapter";
-import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, graphStoryTruth } from "./schema";
+import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, quotientRationalDisplay, graphStoryTruth } from "./schema";
 import {
   binomialExpand,
   rootsFormCoefs,
@@ -115,7 +115,18 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       let current={leftCoeff:spec.leftCoeff,leftConstant:spec.leftConstant,rightCoeff:spec.rightCoeff,rightConstant:spec.rightConstant,relation:spec.relation};
       for(const id of ids){const operation=byId.get(id);if(operation)current=equationTransformApply(current,operation)}
       const truth=equationTransformTruth(spec),symbol=current.relation==="eq"?"equals":current.relation==="lt"?"is less than":current.relation==="le"?"is at most":current.relation==="gt"?"is greater than":"is at least";
-      return `Transformation workbench. ${ids.length} of ${spec.operations.length} operations applied. Current normalized sides are ${current.leftCoeff}${spec.variable} plus ${current.leftConstant} ${symbol} ${current.rightCoeff}${spec.variable} plus ${current.rightConstant}. ${spec.answerMode==="numeric"&&typeof state.numeric==="number"?`Entered boundary ${state.numeric}; exact boundary ${truth.answerNumber}.`:""}`;
+      // S237. The entered-boundary clause is optional, and interpolating it after a literal space
+      // left "… plus 10. " — a trailing space on all 8 authored transform instances, the dangling
+      // -fragment class. Joined instead of concatenated, so an absent clause leaves no trace.
+      const entered = spec.answerMode==="numeric"&&typeof state.numeric==="number"
+        ? `Entered boundary ${state.numeric}; exact boundary ${truth.answerNumber}.`
+        : "";
+      return [
+        `Transformation workbench.`,
+        `${ids.length} of ${spec.operations.length} operations applied.`,
+        `Current normalized sides are ${current.leftCoeff}${spec.variable} plus ${current.leftConstant} ${symbol} ${current.rightCoeff}${spec.variable} plus ${current.rightConstant}.`,
+        entered,
+      ].filter(Boolean).join(" ");
     }
     case "signedFractionLab": {
       const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
@@ -465,8 +476,8 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // all, below the s44 substance floor. The widget devotes a labelled "Source state" panel to
       // exactly this string; the panel was the one channel that never said it.
       const source = spec.repeatBlock ? `0.(${spec.repeatBlock})`
-        : spec.dividend && spec.divisor ? `${quotientRationalKey(spec.dividend)} ÷ ${quotientRationalKey(spec.divisor)}`
-          : spec.dividend ? quotientRationalKey(spec.dividend)
+        : spec.dividend && spec.divisor ? `${quotientRationalDisplay(spec.dividend)} ÷ ${quotientRationalDisplay(spec.divisor)}`
+          : spec.dividend ? quotientRationalDisplay(spec.dividend)
             : spec.candidates.length ? spec.candidates.map((candidate) => candidate.label).join(" · ") : "exact quotient state";
       return `Source state ${source}. ${opened.length} of ${truth.stages.length} derived states inspected${openedText ? `: ${openedText}` : ""}. ${answer}`;
     }

@@ -5787,6 +5787,22 @@ export function quotientNormalize(value: QuotientRational): QuotientRational {
   return { num: sign * value.num / g, den: sign * value.den / g };
 }
 export function quotientRationalKey(value: QuotientRational): string { const n = quotientNormalize(value); return `${n.num}/${n.den}`; }
+/**
+ * S237. What a LEARNER should read. quotientRationalKey is an identity string — evaluate.ts
+ * compares it with === to decide whether an entered fraction is correct — so its "num/den" shape
+ * is load-bearing and must not change. But it was also being painted straight onto the screen,
+ * and a whole number normalises to den 1: dop-03-02's prominent "Source state" panel read
+ * `492/1 ÷ 15/1`, ns-02-01 read `1248/1 ÷ 24/1`. 39 authored instances show a division of whole
+ * numbers as a division of improper fractions, which is exactly the notation confusion the lesson
+ * is teaching against.
+ *
+ * Display drops the denominator when it is 1. Nothing else changes: the key function is untouched,
+ * so grading, stage identity and the fraction-error checks all still compare the same strings.
+ */
+export function quotientRationalDisplay(value: QuotientRational): string {
+  const n = quotientNormalize(value);
+  return n.den === 1 ? String(n.num) : `${n.num}/${n.den}`;
+}
 export function quotientDivideRational(left: QuotientRational, right: QuotientRational): QuotientRational {
   const a = quotientNormalize(left), b = quotientNormalize(right);
   if (b.num === 0) throw new Error("quotientReasoningLab cannot divide by zero");
