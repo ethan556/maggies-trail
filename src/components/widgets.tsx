@@ -1306,7 +1306,7 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
             </text>
           </g>
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         √({dx}² + {dy}²) = √{dx * dx + dy * dy} = {fmt(dist)}
       </p>
@@ -2300,7 +2300,7 @@ function GraphZoomW({ spec, value, onChange, disabled, tone }: WProps<TGraphZoom
         <text x={PAD} y={16} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
           magnification ×{Math.pow(2, zoom)}
         </text>
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         from the left y → {fmt(yl)} · from the right y → {fmt(yr)}
       </p>
@@ -2413,7 +2413,7 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
             </g>
           );
         })()}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {spec.mode === "exponential" ? `${base}^${spec.x}` : `log base ${base} of ${spec.x}`} = {fmt(shown)}
         <span className="ml-2 text-sm font-semibold text-ink/70">goal {fmt(goal)}</span>
@@ -2560,7 +2560,7 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
         <text x={W - PAD} y={16} textAnchor="end" fontSize={10} fontWeight={700} fill={PALETTE.leaf}>
           tangent slope {fmt(tangent)}
         </text>
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
         {spec.mode === "rolle" ? (
           <>f(A) = {fmt(fa)} · f(B) = {fmt(fb)} · secant slope {slope === null ? "undefined" : fmt(slope)}</>
@@ -4498,7 +4498,7 @@ function RiemannSumW({ spec, value, onChange, disabled, tone }: WProps<TRiemannS
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
         <text x={PAD} y={H - 12} fontSize={10} fill={PALETTE.ink} fillOpacity={0.7}>{spec.a}</text>
         <text x={W - PAD} y={H - 12} textAnchor="end" fontSize={10} fill={PALETTE.ink} fillOpacity={0.7}>{spec.b}</text>
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         estimate {fmt(est)} · true area {fmt(truth)}
         <br />
@@ -4890,7 +4890,7 @@ function SlopeFieldW({ spec, value, onChange, disabled, tone }: WProps<TSlopeFie
         <text x={X(0) + 8} y={Y(y0) - 7} fontSize={10} fontWeight={700} fill={PALETTE.tangerine}>
           (0, {y0})
         </text>
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {flat ? (
           <span className="text-leaf-ink">every segment on this line is FLAT — the solution never moves</span>
@@ -4991,7 +4991,7 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
         <circle className="ta" cx={X(x)} cy={Y(fx)} r={4} fill={PALETTE.ink} />
         <circle className="ta" cx={X(x)} cy={Y(px)} r={4} fill={PALETTE.tangerine} />
         <text x={PAD} y={14} fontSize={10} fontWeight={700} fill={PALETTE.sky}>the polynomial ({n + 1} terms)</text>
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-sm font-extrabold tabular-nums" aria-live="polite">
         at x = {fmt(x)}: true {fmt(fx)} · polynomial {fmt(px)} · error {fmt(err)}
         <br />
@@ -6780,7 +6780,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
             the line through A and B has slope {slopeTriangleLabel(spec)}
           </text>
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         slope = rise {"÷"} run = {slopeText}
         <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${hits ? "bg-leaf/15 text-leaf-ink" : "bg-ink/8 text-ink/70"}`}>
@@ -7132,7 +7132,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
         {xMin<=0&&xMax>=0&&<line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke="currentColor" opacity="0.35"/>}{yMin<=0&&yMax>=0&&<line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke="currentColor" opacity="0.35"/>}
         {spec.lines.map((line,index)=>{const plot=drawn[index]!;const endY=leRatToNumber(plot.to.y);return <g key={line.id}><line x1={sx(xMin)} y1={sy(leRatToNumber(plot.from.y))} x2={sx(xMax)} y2={sy(endY)} stroke="currentColor" strokeWidth="3" strokeDasharray={dashes[index]}/><text x={Math.min(W-pad-70,Math.max(pad,sx(xMax)-68))} y={Math.min(H-pad,Math.max(pad+12,sy(endY)-6+index*14))} fontSize="12" fontWeight="800">{line.label}</text>{line.tablePoints.map(([x,y],i)=><circle key={i} cx={sx(x)} cy={sy(y)} r="4" fill="white" stroke="currentColor" strokeWidth="2"/>)}</g>})}
         {spec.candidatePoint&&<g><circle cx={sx(spec.candidatePoint[0])} cy={sy(spec.candidatePoint[1])} r="7" fill="white" stroke="currentColor" strokeWidth="3"/><text x={sx(spec.candidatePoint[0])+8} y={sy(spec.candidatePoint[1])-8} fontSize="12" fontWeight="800">candidate</text></g>}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
     </section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open affine stage ${index+1}: ${stage.label}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70">{open?(authored?.body??stage.value):"Closed — activate to derive this state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "affine stage", "inspected")}</p>
@@ -8012,7 +8012,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
             <circle className="mt-drag-hit" data-testid="sf-drag-m" cx={sx(xB)} cy={sy(m * xB + b)} r={16} aria-hidden="true" {...dragTilt.handleProps} />
           </>
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         y = {fmt(m)}x {b >= 0 ? "+" : "−"} {fmt(Math.abs(b))}
         <span className={`ml-3 text-sm ${mse <= spec.tolerance ? "text-leaf-ink" : "text-ink/70"}`}>miss = {fmt(mse)}</span>
@@ -10171,7 +10171,7 @@ function ExtraneousRootLabW({ spec, value, onChange, onEvent, disabled, tone }: 
         })}
         <line data-testid="erl-probe-line" x1={X(probe)} y1={PAD - 12} x2={X(probe)} y2={H - PAD}
           stroke={PALETTE.ink} strokeWidth={1.2} strokeDasharray="3 3" strokeOpacity={0.6} />
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
 
       <div className="flex flex-wrap justify-center gap-2">
         <button type="button" data-testid="erl-square" onClick={square} disabled={disabled || st.squared}
@@ -10986,7 +10986,7 @@ function TransformExploreW({ spec, value, onChange, disabled, onEvent, tone }: W
             {...drag.handleProps}
           />
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>slide x (dx) = <span className="tabular-nums text-ink">{dx}</span></span>
         <input type="range" min={spec.dxMin} max={spec.dxMax} step={1} value={dx} disabled={disabled}
@@ -12047,7 +12047,7 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
             {...drag.handleProps}
           />
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
         ({x}, {y})
         <span className={`ml-3 text-sm ${on1 ? "text-sky-ink" : "text-ink/70"}`}>{on1 ? "✓" : "○"} line 1</span>
@@ -12656,7 +12656,7 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
             />
           </>
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
         y = {eq.slopeText}x {eqTail}
       </p>
@@ -15848,6 +15848,33 @@ function explorationProgress(done: number, needed: number, noun: string, verbPas
   return `${done} of ${needed} ${noun}${plural} ${verbPast}.${left > 0 ? ` ${left} more to go.` : ""}`;
 }
 
+/**
+ * S237. Names what a coordinate plane's axes MEASURE.
+ *
+ * A learner reported unlabelled graph axes. Measured across the registry: of 32 engines that draw
+ * a coordinate plane, 28 named neither axis — the plane was drawn, sometimes with numeric ticks,
+ * but nothing said which direction was which. Numeric ticks are a different thing and a different
+ * defect: they tell you WHERE you are, not WHAT is being measured.
+ *
+ * Captions sit at the plane's edges rather than on the axis lines, because the axes are not always
+ * at the centre (a first-quadrant plot has them at the border) and an edge caption reads correctly
+ * either way. Rendered last so they sit above the plot, and aria-hidden: the engines state their
+ * axes in their own accessible descriptions, and a stray "x" in the accessible name would be noise.
+ *
+ * Defaults are "x" and "y" because on these engines that is the honest answer — they plot the
+ * coordinate plane itself. Engines whose axes carry meaning (pointSetReasoningLab's "week" and
+ * "dollars saved") pass their own labels and already did so before this existed.
+ */
+function AxisCaptions({ w, h, x = "x", y = "y" }: { w: number; h: number; x?: string; y?: string }) {
+  const style = { fontSize: 11, fontWeight: 800, fill: PALETTE.ink, fillOpacity: 0.55 } as const;
+  return (
+    <g aria-hidden="true" data-testid="axis-captions">
+      <text x={w - 4} y={h - 4} textAnchor="end" {...style}>{x}</text>
+      <text x={4} y={12} textAnchor="start" {...style}>{y}</text>
+    </g>
+  );
+}
+
 function LabReadout({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "good" | "warn" }) {
   const cls = tone === "good" ? "border-leaf/35 bg-leaf/10 text-leaf-ink" : tone === "warn" ? "border-berry/35 bg-berry/10 text-berry-ink" : "border-ink/10 bg-white/80 text-ink";
   return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`}><div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65">{label}</div><div className="text-base font-black tabular-nums">{value}</div></div>;
@@ -15960,7 +15987,7 @@ function CoordinateProofLabW({spec,value,onChange,disabled,onEvent}:WProps<TCoor
     <polygon points={[A,B,C,D].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".12" stroke={atTarget?PALETTE.leaf:PALETTE.sky} strokeWidth="4"/>
     {evidence.includes('midpoints')&&<><line x1={X(A[0])} y1={Y(A[1])} x2={X(C[0])} y2={Y(C[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><line x1={X(B[0])} y1={Y(B[1])} x2={X(D[0])} y2={Y(D[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><circle cx={X(midAC[0])} cy={Y(midAC[1])} r="6" fill={PALETTE.tangerine}/><circle cx={X(midBD[0])} cy={Y(midBD[1])} r="6" fill={PALETTE.berry}/></>}
     {[A,B,C,D].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===3?9:6} fill={i===3?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+10} y={Y(p[1])-8} fontWeight="900" fontSize="12">{'ABCD'[i]}({p[0]},{p[1]})</text></g>)}
-  </svg>
+  <AxisCaptions w={W} h={H} /></svg>
   <div className="grid grid-cols-3 gap-2"><LabReadout label="claim" value={spec.targetClaim} tone={atTarget&&allEvidence?'good':'neutral'}/><LabReadout label="vertex D" value={`(${x}, ${y})`} tone={atTarget?'good':'neutral'}/><LabReadout label="proof moves" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
   <div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-sm font-bold"><span>D x-coordinate</span><input aria-label="D x-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={x} disabled={disabled} onChange={e=>setPoint(Number(e.target.value),y)} className="h-11 w-full accent-sky"/></label><label className="grid gap-1 text-sm font-bold"><span>D y-coordinate</span><input aria-label="D y-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={y} disabled={disabled} onChange={e=>setPoint(x,Number(e.target.value))} className="h-11 w-full accent-sky"/></label></div>
   <div className="grid grid-cols-3 gap-2">{(['slopes','midpoints','distances'] as const).map(k=><button key={k} type="button" disabled={disabled} aria-pressed={evidence.includes(k)} onClick={()=>toggle(k)} className={`min-h-12 rounded-xl border-2 text-sm font-extrabold ${evidence.includes(k)?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>Inspect {k}</button>)}</div>
@@ -16010,10 +16037,10 @@ function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVer
     {spec.relation==='sideways'&&<path d={`M ${sx(4)} ${sy(4)} Q ${sx(-1)} ${sy(0)} ${sx(4)} ${sy(-4)}`} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {(spec.relation==='discreteFunction'||spec.relation==='discreteNonFunction')&&([-3,-1,1,3].flatMap((px,i)=>{const ys=spec.relation==='discreteNonFunction'&&px===1?[1,3]:[i-2];return ys.map((py,j)=><circle key={`${px}-${j}`} cx={sx(px)} cy={sy(py)} r="7" fill={PALETTE.sky}/>) }))}
     <line x1={sx(x)} y1={sy(-G)} x2={sx(x)} y2={sy(G)} stroke={PALETTE.tangerine} strokeWidth="4"/><text x={sx(x)+7} y="20" fontWeight="900" fill={PALETTE.tangerine}>{c} hit{c===1?'':'s'}</text>
-  </svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
+  <AxisCaptions w={W} h={H} /></svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
 
 function CovariationScrubberW({spec,value,onChange,disabled,onEvent}:WProps<TCovariationScrubber>){const x=typeof value==='number'?value:spec.inputStart;useEffect(()=>{if(typeof value!=='number')onChange(x);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const y=spec.a*x+spec.b,set=(nx:number)=>{const d=moveRelation(x,nx,spec.targetInput);if(d)onEvent?.({control:'input',dir:d,kind:'efficient'});onChange(nx)};// S119: the window must be five DISTINCT inputs. Clamping each cell independently collapsed the window near a bound (x=0 with inputMin=0 gave [0,0,0,1,2]) — duplicate React keys, and three identical rows in a table whose whole job is showing neighbouring values. Slide the window instead of squashing it.
-  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/></svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
+  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/><AxisCaptions w={W} h={H} x={spec.inputLabel} y={spec.outputLabel} /></svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
 
 function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplingBiasLab>){
   const v=value&&typeof value==='object'?value as {method:'convenience'|'random'|'stratified';size:number;draws:number}:null;
