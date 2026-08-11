@@ -28,10 +28,10 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 | band | causal widget steps | exploration causal coverage | lessons with causal spine |
 |---|---:|---:|---:|
-| K–2 | 998/2523 (39.6%) | 727/883 (82.3%) | 389/410 (94.9%) |
-| G3–5 | 659/2539 (26.0%) | 565/846 (66.8%) | 330/419 (78.8%) |
-| G6–8 | 453/1548 (29.3%) | 272/563 (48.3%) | 186/245 (75.9%) |
-| HS | 558/3626 (15.4%) | 515/1183 (43.5%) | 495/627 (78.9%) |
+| K–2 | 1007/2523 (39.9%) | 727/883 (82.3%) | 389/410 (94.9%) |
+| G3–5 | 663/2543 (26.1%) | 569/850 (66.9%) | 333/419 (79.5%) |
+| G6–8 | 454/1549 (29.3%) | 273/564 (48.4%) | 186/245 (75.9%) |
+| HS | 567/3635 (15.6%) | 524/1192 (44.0%) | 495/627 (78.9%) |
 
 ## Honest prediction ceilings
 
@@ -58,7 +58,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 ## Representation-presence audit
 
-The strict whole-corpus text scan found **62** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the 64 reviewed rows above are authoritative for this phase.
+The strict whole-corpus text scan found **53** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the 64 reviewed rows above are authoritative for this phase.
 
 - cx-01-01/k1 [numeric] — Read it off the figure. Compute the distance from A(1, 2) to B(7, 10).
 - cx-01-03/k2 [numeric] — Perimeter on the grid. Find the perimeter of the triangle with vertices (0, 0), (3, 4), (6, 0).
@@ -73,11 +73,6 @@ The strict whole-corpus text scan found **62** candidates where a graded answer 
 - g2g-01-04/ch1 [numeric] — One more, for the road. A line plot shows 3 x's above the number 8. How many data points are at 8?
 - g2g-01-05/k1 [mcq] — A line plot shows stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
 - g2g-01-05/k3 [mcq] — A line plot shows stacks of 2, 6, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
-- g2g-02-01/k1 [numeric] — The picture graph shows 8 shells pictures for Tuesday. Each picture equals 1 shell. How many shells on Tuesday?
-- g2g-02-01/k2 [numeric] — The picture graph shows 5 pinecones pictures for Tuesday. Each picture equals 1 find. How many finds on Tuesday?
-- g2g-02-01/ch1 [numeric] — One more, for the road. The picture graph shows 4 apples pictures for Thursday. Each picture equals 1 vote. How many votes on Thursday?
-- g2g-02-02/k1 [numeric] — The picture graph shows 5 stickers pictures for Wednesday. Each picture equals 1 sticker. How many stickers on Wednesday?
-- g2g-02-02/k3 [numeric] — The picture graph shows 9 stickers pictures for Monday. Each picture equals 1 sticker. How many stickers on Monday?
 - g2g-03-03/k3 [mcq] — A line plot shows stacks of 2, 4, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
 - dr-01-01/ch1 [numeric] — Read a slope off a graph you cannot see. For f(x) = x², find f′(−4).
 - dr-01-03/k3 [mcq] — Local straightness. You magnify a graph at a point and it becomes indistinguishable from a straight line. What have you shown?
@@ -92,10 +87,6 @@ The strict whole-corpus text scan found **62** candidates where a graded answer 
 - la-01-03/k1 [mcq] — Find the shared vertex. A figure shows ray AB and ray AC. Which point is the vertex of the angle they form?
 - la-02-01/k2 [mcq] — Read the arrow marks. In a diagram, line P and line R both have a single arrowhead mark; line Q has a double arrowhead mark. Which lines are parallel to each other?
 - mc-05-01/i1 [numeric] — Read the nearest mark. An object's edge lands right on the third tick mark past 0 on an eighths-ruler. As a fraction (over 8), what is its numerator?
-- mmt-05-01/k1 [numeric] — Count another row. The picture graph shows 7 apple pictures for Tuesday. Each picture equals 1 vote. How many votes on Tuesday?
-- mmt-05-01/k2 [numeric] — Count once more. The picture graph shows 5 apple pictures for Friday. Each picture equals 1 vote. How many votes on Friday?
-- mmt-05-01/k3 [numeric] — Zero pictures. The picture graph shows 0 apple pictures for Saturday. Each picture equals 1 vote. How many votes on Saturday?
-- mmt-05-01/ch1 [numeric] — A big row. The picture graph shows 12 apple pictures for Sunday. Each picture equals 1 vote. How many votes on Sunday?
 - mmt-05-03/i1 [numeric] — Count the X's. A line plot shows 3 x's above the number 5. How many data points are at 5?
 - mmt-05-03/k1 [numeric] — Another number's X's. A line plot shows 6 x's above the number 8. How many data points are at 8?
 - mmt-05-03/i3 [numeric] — One more X-count. A line plot shows 2 x's above the number 3. How many data points are at 3?

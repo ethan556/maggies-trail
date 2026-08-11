@@ -2626,7 +2626,13 @@ export function correctAnswerText(spec: TWidget): string {
     case "conditionalTableLab": {
       if (spec.mode === "read" && spec.readMetric) {
         const truth=conditionalTableReadTruth(spec.counts,spec.readMetric,spec.targetCell);
-        return spec.readMetric.startsWith("relative") ? `${truth.numerator}/${truth.denominator} = ${truth.value}%` : String(truth.value);
+        // S237 — the reveal surface states the FRACTION, which is exact. `truth.value` is rounded to
+        // four places (schema.ts) and is the GRADING key, so it must not move; but printing it after
+        // an "=" made 20/30 read as "= 66.6667%", which is false. The percent is now marked
+        // approximate unless it is exact.
+        return spec.readMetric.startsWith("relative")
+          ? `${truth.numerator}/${truth.denominator}${truth.value === Math.round(truth.value * 100) / 100 ? ` = ${truth.value}%` : ` (\u2248 ${truth.value}%)`}`
+          : String(truth.value);
       }
       return `${spec.targetCell} within ${spec.targetCondition}; the condition supplies the denominator`;
     }

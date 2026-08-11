@@ -26,6 +26,9 @@ import {
   taylorFn,
   taylorPartial, traceSlopeAt, traceSecondAt } from "./evaluate";
 import { sequenceReasoningTruth } from "./schema";
+/** numeric's live preview: the SAME resolver the renderer draws from, so the spoken sentence
+ * and the drawn partition bar can never disagree (see the rotationLab note below). */
+import { numericPreviewParts } from "./schema";
 /** rotationLab's image and self-mapping test — the SAME functions the renderer and the grader
  * call, so the spoken description and the picture can never disagree. */
 import { rotationLabImage, rotationLabMapsOntoSelf } from "./schema";
@@ -65,6 +68,14 @@ const COMPASS_GOAL: Record<string, string> = {
   copyAngle: "a copy of the given angle at the new ray",
 };
 
+/** S237. numeric's live partition preview is aria-hidden like every other live preview, so its
+ * fraction is spoken here instead of being lost. Both morphologies are STORED, never derived:
+ * "1 parts are shaded" is a shipping defect in this codebase, and so is "1 parts is shaded". */
+const PART_NOUN = { one: "part", many: "parts" } as const;
+const PART_VERB = { one: "is", many: "are" } as const;
+const partNoun = (n: number): string => (n === 1 ? PART_NOUN.one : PART_NOUN.many);
+const partVerb = (n: number): string => (n === 1 ? PART_VERB.one : PART_VERB.many);
+
 /** S237. conditionalTableLab's readMetric is an internal discriminant; learners heard
  * "The target rowTotal uses 20." These are ordinary statistics names, so they get spoken as such. */
 const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
@@ -79,6 +90,37 @@ const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
 
 export function describeWidgetState(spec: TWidget, value: unknown): string | null {
   switch (spec.type) {
+    case "numeric": {
+      // A plain numeric entry narrates itself — one labelled text field — so this stays null
+      // for every step that declares no `previewDenominator`, and those steps get no panel,
+      // exactly as before. When the field IS set the widget draws a partition bar that is
+      // aria-hidden (the fractionEntry/pointEntry previews have no spoken twin at all — the
+      // known gap this branch exists NOT to repeat), so the same fraction is spoken here.
+      //
+      // Resolved through `numericPreviewParts`, the SAME function the renderer draws from, so
+      // the sentence cannot claim a bar the screen does not show. The answer is never stated:
+      // only the learner's own entry and the denominator the prompt already gave them.
+      const preview = numericPreviewParts(spec, value);
+      if (!preview) return null;
+      const { wholes, shaded, total } = preview;
+      const barNoun = wholes === 1 ? "bar" : "bars";
+      // An improper entry is DRAWN as whole bars plus a remainder, so it is SPOKEN that way
+      // too. Saying "5 of 3, every part shaded" would describe a single full bar — a picture
+      // that is not on screen and a quantity smaller than what the learner typed.
+      if (wholes > 0) {
+        const head = `You entered ${shaded === 0 ? wholes * total : shaded + wholes * total} of ${total}. `;
+        const body =
+          shaded === 0
+            ? `That fills ${wholes} whole ${barNoun} exactly.`
+            : `That is ${wholes} whole ${barNoun} and ${shaded} of ${total} ${partNoun(total)} of another.`;
+        return head + body;
+      }
+      return (
+        `You entered ${shaded} of ${total}. ` +
+        `The bar is cut into ${total} equal ${partNoun(total)}, ` +
+        `and ${shaded} ${partNoun(shaded)} ${partVerb(shaded)} shaded.`
+      );
+    }
     case "scaledCircleLab": {
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
       const scale = spec.drawingRadius !== undefined && spec.scale !== undefined

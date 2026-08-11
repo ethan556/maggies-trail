@@ -14,11 +14,11 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
 | K-2 | 364 | 46 | 0 | 0 | 410 |
-| 3-5 | 333 | 86 | 0 | 0 | 419 |
+| 3-5 | 334 | 85 | 0 | 0 | 419 |
 | 6-8 | 124 | 121 | 0 | 0 | 245 |
 | HS | 368 | 205 | 54 | 0 | 627 |
 
-**K–8 targets** — Tier A 821/200–250 ✓ · Tier B 253/200–300 ✓.
+**K–8 targets** — Tier A 822/200–250 ✓ · Tier B 252/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
@@ -94,4 +94,4 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
 
-Totals: 1701 lessons · A 1189 · B 458 · C 54 · D 0.
+Totals: 1701 lessons · A 1190 · B 457 · C 54 · D 0.

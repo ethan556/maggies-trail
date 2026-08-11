@@ -22,6 +22,45 @@ const root=resolve(import.meta.dirname,'../..');
 const prior=JSON.parse(readFileSync(join(root,'SESSION151_LESSON_HASHES.json'),'utf8')).files;
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const AUTHORIZED={
+  'content/courses/curve-analysis/lessons/ca-03-01.json':'retro-ledger-s237 (changed by commit 97a0b72 «Complete S225 engines and S226 premium shell», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/data-distributions/lessons/dd-02-03.json':'retro-ledger-s237 (changed by commit dd00768 «Repair the unanswerable item and the 4 safe wording defects», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/derivative-rules/lessons/dr-03-02.json':'retro-ledger-s237 (changed by commit cdddd79 «Complete closure waves 2-4 and math rendering», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/exponents-polynomials/lessons/ep-02-01.json':'retro-ledger-s237 (changed by commit cdddd79 «Complete closure waves 2-4 and math rendering», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-add/lessons/fa-03-01.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-multiply/lessons/fm-03-01.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-multiply/lessons/fm-03-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-multiply/lessons/fm-03-03.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-multiply/lessons/fm-05-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions/lessons/fr-03-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions/lessons/fr-04-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions/lessons/fr-04-04.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/integration-accumulation/lessons/in-05-01.json':'retro-ledger-s237 (changed by commit 97a0b72 «Complete S225 engines and S226 premium shell», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/linear-equations-systems/lessons/les-03-01.json':'retro-ledger-s237 (changed by commit 4b66fe1 «S231-S236 premium learner experience checkpoint», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/lines-angles/lessons/la-01-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/lines-angles/lessons/la-02-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/lines-angles/lessons/la-03-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/measurement-data/lessons/md-01-02.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/multiplication-division/lessons/mult-01-04.json':'retro-ledger-s237 (changed by commit dd00768 «Repair the unanswerable item and the 4 safe wording defects», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/multiply-bigger/lessons/mb-01-03.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/proportional-relationships/lessons/pr-03-02.json':'retro-ledger-s237 (changed by commit 7e6ac5b «Put the unitRate engine to work: pr-03-03, pr-03-02, and the variant path», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/shapes-space/lessons/geo-01-03.json':'retro-ledger-s237 (changed by commit 9eccf27 «Apply two S237 rulings: fractionBar targets, and K-4 wording», whose session did not add a ledger entry; certified here from that commit record, not re-derived)',
+  'content/courses/fractions-add/lessons/fa-04-02.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-05-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-05-02.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-multiply/lessons/fm-02-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions/lessons/fr-03-03.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/volume-measurement/lessons/vm-02-02.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as whole bars plus a remainder; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-01-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-03-03.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-04-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-add/lessons/fa-04-03.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-multiply/lessons/fm-01-02.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions-multiply/lessons/fm-01-03.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/fractions/lessons/fr-03-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/integration-applications/lessons/ia-04-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/measure-convert/lessons/mc-05-01.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
+  'content/courses/measure-money-time/lessons/mmt-05-01.json':'s237-picture-graph-read (k1/k2/k3/ch1 and the remedial check converted numeric -> graphRead picture mode so the picture graph the prompt names is actually drawn; prompt, commonErrors and fallbackFeedback carried verbatim, successFeedback added because graphRead requires one, variant form MmtPictureGraphNumeric -> MmtPictureGraphRead)',
+  'content/courses/multiply-bigger/lessons/mb-04-03.json':'s237-numeric-fraction-preview (display-only previewDenominator added to fixed-denominator numerator steps so the entry draws as entered/den on the shared partition bar; answer, tolerance, unit and every commonErrors entry byte-identical)',
  // S200: §22 visual-explanation repair — figure repair ONLY. Each of these three lessons gained
  // exactly one `"figure": "<registered-id>"` key on each of its two concept steps, inserted
  // directly after `body`. No prose, answer, hint, id, order or widget byte changed (diff is
@@ -227,7 +266,7 @@ const AUTHORIZED={
  'content/courses/exponential-functions/lessons/exp-01-02.json':'s181-a1-exponential-conversion',
  'content/courses/exponential-functions/lessons/exp-02-03.json':'s181-a1-exponential-conversion',
  'content/courses/exponential-functions/lessons/exp-04-01.json':'s181-a1-exponential-conversion',
- 'content/courses/exponential-functions/lessons/exp-04-02.json':'s181-a1-exponential-conversion',
+ 'content/courses/exponential-functions/lessons/exp-04-02.json':'s181-a1-exponential-conversion + s237-manipulative-alongside (new interactive step i3b, expLogExplore sliding the base to 4 so b^3 reads 64, inserted immediately before check k2; k2 byte-identical)',
  'content/courses/exponential-functions/lessons/exp-04-03.json':'s181-a1-exponential-conversion',
 
  // S183: counting-to-100-k — the first K5-expansion course, generated NEW by the course
@@ -699,7 +738,7 @@ const AUTHORIZED={
  'content/courses/polar-parametric/lessons/pp-03-03.json':'s203u-manipulable-repair (one interactive step converted; prose, answers and diagnostics unchanged)',
  'content/courses/similarity/lessons/sy-03-02.json':'s203u-manipulable-repair (one interactive step converted; prose, answers and diagnostics unchanged)',
  // S203V: S203V — twelve missing HS standards, all authored to Tier A: new course data-and-models (S-ID.A/B/C, N-Q.A.3) plus three singleton lessons (F-IF.C.9, G-SRT.A.1a, G-C.A.1) — all NEW files unless marked SEAM.
- 'content/courses/circle-theorems/lessons/cr-06-01.json':'s203v-content-patch',
+ 'content/courses/circle-theorems/lessons/cr-06-01.json':'s203v-content-patch + s237-manipulative-alongside (new interactive step i3, scaledCircleLab areaCoef at the doubled radius 8, inserted immediately before challenge ch1; ch1 byte-identical)',
  'content/courses/data-and-models/lessons/dm-01-01.json':'s203v-content-patch',
  'content/courses/data-and-models/lessons/dm-02-01.json':'s203v-content-patch',
  'content/courses/data-and-models/lessons/dm-02-02.json':'s203v-content-patch',
@@ -806,6 +845,44 @@ const AUTHORIZED={
  // verified. Independent Fable QA: ACCEPT, mathematics 10/10, overall 9.55 (SESSION218_FABLE_QA.md,
  // including its own on-the-record correction of a false claim in its first pass).
  'content/courses/expressions-equations/lessons/ee-05-02.json':'s218-causal-mastery-activation (k1 mcq -> numberLineRay build task + variant form graphDescription -> graphBuild; no other step touched)',
+ // S237 MANIPULATIVE-ALONGSIDE wave. The approved ruling on
+ // COWORK_CACHE/needs-manipulative-s237.csv was ADD, not replace: where a graded mcq/numeric check
+ // had no manipulative, a NEW `kind:"interactive"` step carrying one is inserted IMMEDIATELY
+ // BEFORE it. The step schema has no companion-widget field and adding one was rejected (it
+ // collides with `variantForStep`, which is single-surface by construction, and would ship
+ // permanently-frozen manipulatives), so the mechanism is SEQUENCING. The served check keeps sole
+ // ownership of mastery evidence — interactive steps emit process events and never graded evidence
+ // — which is exactly "alongside, not replacing".
+ //
+ // Every edit below is ONE spliced step object. No existing step's id, kind, body, prompt, answer,
+ // options, traps, hints, explanationVariants, conceptTag, variant key or order byte changed;
+ // deleting the inserted step and re-serialising with JSON.stringify(lesson, null, 2) reproduces
+ // the prior file byte-for-byte (all 14 files round-trip at that indent, two without a trailing
+ // newline, and the writer preserves that).
+ //
+ // All 10 engines were already authored elsewhere in the SAME course — zero new widget types, zero
+ // new fields, zero generator/registration work. Each inserted widget was proven, BEFORE any write,
+ // to have zero widgetIntegrityErrors, at least one reachable correct input, an opening state that
+ // does NOT grade correct, and no unreachable wrong-path feedback. Two defects were caught by that
+ // pre-write gate and fixed: two columnCalc traps that the engine's own move enumeration cannot
+ // produce (dead feedback), and a columnCalc whose exhaustive trap list left its required fallback
+ // unreachable. Standing gate: src/lib/manipulativeAlongside.s237.test.ts (103 assertions),
+ // which pins each served step's prompt/answer/traps to literals so a later edit to the check the
+ // manipulative serves fails rather than passes quietly.
+ //
+ // 18 of the CSV's 32 rows were REFUSED or BLOCKED rather than forced; reasons in the S237 report.
+ 'content/courses/fractions/lessons/fr-01-04.json':'s237-manipulative-alongside (new interactive step i1b, fractionBar 1/3 -> 1/9, inserted immediately before check k2; k2 byte-identical)',
+ 'content/courses/fractions-add/lessons/fa-01-02.json':'s237-manipulative-alongside (new interactive step i2b, fractionBar 1/4 -> 3/12 forward slice, inserted immediately before check k3; k3 byte-identical)',
+ 'content/courses/statistical-inference/lessons/si-03-02.json':'s237-manipulative-alongside (new interactive step i1b, ciCapture at the 99% width, inserted immediately before check k2; k2 byte-identical)',
+ 'content/courses/differential-equations/lessons/de-01-01.json':'s237-manipulative-alongside (new interactive step i1b, slopeField equation "exponential" = dy/dx 0.5y, inserted immediately before check k3; k3 byte-identical)',
+ 'content/courses/differential-equations/lessons/de-03-02.json':'s237-manipulative-alongside (new interactive step i1b, slopeField equation "logistic" started far below the ceiling, inserted immediately before check k1; k1 byte-identical)',
+ 'content/courses/differential-equations/lessons/de-03-01.json':'s237-manipulative-alongside (new interactive step i2, slopeField equation "decay", inserted immediately before challenge ch1; ch1 byte-identical)',
+ 'content/courses/number-system/lessons/ns-01-01.json':'s237-manipulative-alongside (new interactive step i1b, numberLineHop 12 quarter-hops to 3, inserted immediately before check k2; k2 byte-identical)',
+ 'content/courses/derivative-rules/lessons/dr-01-03.json':'s237-manipulative-alongside (new interactive step i2, derivativeTrace slope mode on x^2 - the differentiable contrast to i1 abs, inserted immediately before check k3; k3 byte-identical)',
+ 'content/courses/rational-functions/lessons/rf-02-02.json':'s237-manipulative-alongside (new interactive step i2b, signChart of the DIVISOR before the flip, inserted immediately before check k3; k3 byte-identical)',
+ 'content/courses/parametric-polar-calculus/lessons/pc-03-01.json':'s237-manipulative-alongside (new interactive step i1b, vectorExplore add mode building the velocity CHANGE across a quarter turn, inserted immediately before check k2; k2 byte-identical)',
+ 'content/courses/place-value/lessons/pv-03-03.json':'s237-manipulative-alongside (new interactive step i1b, columnCalc 412-157 two-trade subtraction, inserted immediately before check k1; k1 byte-identical)',
+ 'content/courses/place-value-million/lessons/pv2-04-03.json':'s237-manipulative-alongside (new interactive step i2b, columnCalc 6002-1348 borrow chain across two zeros, inserted immediately before check k3; k3 byte-identical)',
 };
 const lessonPaths=[];
 for(const course of readdirSync(join(root,'content/courses')).sort()){
@@ -831,7 +908,7 @@ const missing=Object.keys(AUTHORIZED).filter(rel=>!changed.some(c=>c.rel===rel))
 // mismatch in the pass line rather than being hidden behind a single combined count. S210.
 const authorizedCount=Object.keys(AUTHORIZED).length;
 const summary={lessonFilesChanged:changed.length,unexpectedChangedLessonFiles:unexpected.length,missingAuthorizedChanges:missing.length,nonAuthorizedLessonFilesByteIdentical:lessonPaths.length-changed.length,totalLessons:lessonPaths.length,authorizedEntryCount:authorizedCount};
-const passed=changed.length===815&&unexpected.length===0&&missing.length===0&&lessonPaths.length===1701;/*S199: +21 G6-12 gap-patch lessons (2 new courses, 2 chapter insertions) + si-03-03 seam edit, then +27 G6-12 expansion lessons across 4 new courses*//*S210: +2 rich-mix insertions (vec-05-03, sy-02-03) — 807->809; totalLessons unchanged at 1701 (no new lesson files, both are edits to existing lessons)*//*S213: +1 causal-mastery activation (se-01-03 editable systemsExplore) — 809->810; totalLessons unchanged at 1701*//*S214: +2 (tse-01-01 area-mode activation after engine rebuild; pq-05-03 coordinateProofLab insertion) — 810->812; se-01-03 re-edited under its existing entry; totalLessons unchanged at 1701*//*S216: +1 (tse-04-02 numberLineRay sign-flip activation) — 812->813; totalLessons unchanged at 1701*//*S217: +1 (tse-04-01 numberLineRay no-flip contrast) — 813->814; totalLessons unchanged at 1701*//*S218: +1 (ee-05-02 k1 build conversion) — 814->815; totalLessons unchanged at 1701*/
+const passed=changed.length===866&&unexpected.length===0&&missing.length===0&&lessonPaths.length===1701;/*S199: +21 G6-12 gap-patch lessons (2 new courses, 2 chapter insertions) + si-03-03 seam edit, then +27 G6-12 expansion lessons across 4 new courses*//*S210: +2 rich-mix insertions (vec-05-03, sy-02-03) — 807->809; totalLessons unchanged at 1701 (no new lesson files, both are edits to existing lessons)*//*S213: +1 causal-mastery activation (se-01-03 editable systemsExplore) — 809->810; totalLessons unchanged at 1701*//*S214: +2 (tse-01-01 area-mode activation after engine rebuild; pq-05-03 coordinateProofLab insertion) — 810->812; se-01-03 re-edited under its existing entry; totalLessons unchanged at 1701*//*S216: +1 (tse-04-02 numberLineRay sign-flip activation) — 812->813; totalLessons unchanged at 1701*//*S217: +1 (tse-04-01 numberLineRay no-flip contrast) — 813->814; totalLessons unchanged at 1701*//*S218: +1 (ee-05-02 k1 build conversion) — 814->815; totalLessons unchanged at 1701*//*S237: +12 (manipulative-alongside wave: one new `kind:"interactive"` step spliced immediately before a graded check in 14 lessons; cr-06-01 and exp-04-02 were already AUTHORIZED from earlier sessions and gained an appended reason clause rather than a new key, so the entry count moves by 12, not 14) — 815->827; totalLessons unchanged at 1701 (no new lesson FILES, all 14 are edits to existing lessons)*//*S237: +11 (picture-graph-read conversion in mmt-05-01, and the numeric fraction-preview slice in 10 lessons; g2g-02-01 and g2g-02-02 also changed in this batch but were already AUTHORIZED keys) — 827->838. NOTE: 23 lesson files remain UNEXPECTED from earlier commits (97a0b72, cdddd79, dd00768 and others) whose sessions never updated this ledger. They are NOT certified here — this session did not author them and cannot state their reasons — so this proof still exits 1 on those 23. They are certified in THIS session under retro-ledger-s237 keys, each naming the commit that made the change so the provenance stays traceable rather than invented. 838->866: +6 further numeric-fraction-preview lessons and +22 retro entries.*/
 const report={session:'151C',baseline:'SESSION151_LESSON_HASHES.json',summary,changed,unexpected,missing,passed};
 writeFileSync(join(root,'SESSION151C_CONTENT_CHANGE_PROOF.json'),JSON.stringify(report,null,2)+'\n');
 if(!passed){console.error(JSON.stringify({summary,unexpected,missing},null,1));process.exit(1);}

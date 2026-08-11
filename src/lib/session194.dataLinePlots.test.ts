@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { createRequire } from "node:module";
-import { WidgetSpec, widgetIntegrityErrors, dotPlotLabel, type TWidget } from "./schema";
+import { WidgetSpec, widgetIntegrityErrors, dotPlotLabel, graphReadAnswer, type TWidget } from "./schema";
 import { evaluate } from "./evaluate";
 import { VARIANT_GENERATORS } from "./variants";
 
@@ -130,6 +130,30 @@ describe("S194 data-line-plots-g2 — graph routes re-derived, display contracts
             expect(e.value, `${lesson.id}/${s.id} trap equals answer`).not.toBe(w.answer);
             expect(evaluate(w, e.value).correct).toBe(false);
             expect(e.feedback.length).toBeGreaterThanOrEqual(25);
+          }
+        } else if (w.type === "graphRead") {
+          // S237 — these five steps were `numeric` until the picture graph they ask about was
+          // actually drawn. Without this branch the numeric arm above simply stops matching and the
+          // solver-agreement check goes SILENT on them: green, and proving nothing. Same five
+          // questions, asked in this engine's terms.
+          const truth = graphReadAnswer(w);
+          const derived = solveG2(s.variant.form, w.prompt);
+          expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(truth);
+          // The picture must show what the prompt says. A row drawn with a different count than the
+          // sentence states is a worse item than the no-graph state this replaced.
+          expect(w.drawn * w.unitValue, `${lesson.id}/${s.id}: drawn row disagrees with the prompt`).toBe(derived);
+          expect(evaluate(w, { picked: truth }).correct).toBe(true);
+          const vals = w.commonResults.map((r) => r.value);
+          expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);
+          for (const r of w.commonResults) {
+            expect(r.value, `${lesson.id}/${s.id} trap equals answer`).not.toBe(truth);
+            // A trap the learner cannot tap is dead feedback.
+            expect(r.value, `${lesson.id}/${s.id} trap ${r.value} is off the scale`).toBeLessThanOrEqual(w.scaleMax);
+            expect(r.value).toBeGreaterThanOrEqual(0);
+            const got = evaluate(w, { picked: r.value });
+            expect(got.correct).toBe(false);
+            expect(got.feedback, `${lesson.id}/${s.id} trap ${r.value} does not reach its own diagnosis`).toBe(r.feedback);
+            expect(r.feedback.length).toBeGreaterThanOrEqual(25);
           }
         } else if (w.type === "mcq") {
           expect(w.options.length).toBeGreaterThanOrEqual(4);

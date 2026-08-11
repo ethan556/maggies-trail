@@ -13,7 +13,9 @@ import { MathDisplay, MathProse } from "@/components/math/MathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
 import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
-  rotationLabMapsOntoSelf
+  rotationLabMapsOntoSelf,
+  numericPreviewParts,
+  partitionBarDrawable
 } from "@/lib/schema";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import {
@@ -227,7 +229,7 @@ import type {
   TRelatedRatesLab
 } from "@/lib/schema";
 import { isEvalOp, applyEvalOp, columnCalcTruth, mixedRegroupTruth, slopeTriangleLabel, exactNumberTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberKey } from "@/lib/schema";
-import { gcd } from "@/lib/mathUtils";
+import { gcd, fractionText, terminatingDecimal, fractionWithDecimal } from "@/lib/mathUtils";
 import { circleMeasureReadout, circleReadout, compassSteps, complexProduct, curveAt, curveSlopeAt, dotProduct, evalRule, expLogReadout, lawOfCosinesAngle, lawOfCosinesSide, quadName, rosePetals, secantSlopeOver, accumAreaAt, accumFnAt, exactArea, integrandAt, riemannEstimate, sliceEstimate, taylorFn, taylorPartial, taylorTerm, sliceExact, sliceInterval, sliceMeasure, fieldSlope, traceAt, traceSlopeAt, traceSecondAt, snap2sf, transformPoint, type Reflect } from "@/lib/evaluate";
 
 /** The feedback tone the lesson player paints onto the stage frame — and now
@@ -368,6 +370,32 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
 
 /* ---------------- Numeric ---------------- */
 
+/** ONE den-partition bar with `shaded` cells filled — the shared drawing behind every live
+ * "what you just typed" preview (fractionEntry's fraction part, numeric's fixed-denominator
+ * bar). ROLE.active sky for filled cells, #fff for the remainder, ink hairlines between.
+ * Extracted verbatim from FractionEntryW so the two previews cannot drift into two different
+ * pictures of the same fraction. Callers gate on `partitionBarDrawable` first; the bar has
+ * only `total` cells, so a count past the whole simply fills them all. */
+function PartitionBar({ shaded, total }: { shaded: number; total: number }): ReactElement {
+  return (
+    <svg viewBox="0 0 120 18" className="h-4 w-28">
+      {Array.from({ length: total }, (_, k) => (
+        <rect
+          key={k}
+          x={1 + (k * 118) / total}
+          y={1}
+          width={118 / total - (total > 1 ? 1 : 0)}
+          height={16}
+          rx={2}
+          fill={k < shaded ? PALETTE.sky : "#fff"}
+          stroke={PALETTE.ink}
+          strokeWidth={1.2}
+        />
+      ))}
+    </svg>
+  );
+}
+
 function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
   const [raw, setRaw] = useState("");
   // Tone grammar: at retry the field itself carries the berry cue (the diagnosis is about the
@@ -382,6 +410,17 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
       : tone === "success"
         ? "border-leaf"
         : "border-ink/20";
+  // Live preview of the LEARNER's entry over the denominator the PROMPT already fixed
+  // ("How many fourths?" → previewDenominator 4): the same partition bar fractionEntry
+  // draws, so typing 3 makes 3/4 visible while they type. Additive only — the input, the
+  // unit span and the reveal ghost below are untouched, and a spec without
+  // `previewDenominator` resolves to null here and renders exactly as it always has.
+  //
+  // Resolved through `numericPreviewParts` — the SAME function describeWidgetState calls —
+  // so the drawn bar and the spoken sentence in the accessibility panel can never disagree
+  // about whether there is a bar or what is on it. It reads `value` (not the raw string)
+  // for that reason: `value` is what the panel is handed. Nothing here reaches grading.
+  const preview = numericPreviewParts(spec, value);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -402,6 +441,18 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
         />
         {spec.unit && <span className="text-lg">{spec.unit}</span>}
       </div>
+      {preview && (
+        <div className="flex flex-wrap items-center justify-center gap-2" aria-hidden="true">
+          {Array.from({ length: preview.wholes }, (_, k) => (
+            <svg key={`w${k}`} viewBox="0 0 40 18" className="h-4 w-9">
+              <rect x={1} y={1} width={38} height={16} rx={3} fill={PALETTE.sky} stroke={PALETTE.ink} strokeWidth={1.4} />
+            </svg>
+          ))}
+          {(preview.shaded > 0 || preview.wholes === 0) && (
+            <PartitionBar shaded={preview.shaded} total={preview.total} />
+          )}
+        </div>
+      )}
       {tone === "info" && !matches && (
         <GhostChip testid="num-ghost">
           Correct: {spec.answer}
@@ -487,7 +538,10 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
   const pvW = spec.allowWhole ? (() => { const n = Number(rawW.trim()); return Number.isInteger(n) && n >= 0 ? n : 0; })() : 0;
   const pvN = (() => { const n = Number(rawN.trim()); return Number.isInteger(n) && n >= 0 ? n : null; })();
   const pvD = (() => { const n = Number(rawD.trim()); return Number.isInteger(n) && n >= 1 ? n : null; })();
-  const showPreview = pvN !== null && pvD !== null && pvD <= 20 && pvN <= pvD * 2 && pvW <= 6 && (pvW > 0 || pvN > 0);
+  // The cap is now `partitionBarDrawable` (schema.ts) — the same predicate numeric's bar and
+  // its spoken description use. Same gate, stated in full: den <= 20 and num <= den * 2, on
+  // values the parses above already forced to be non-negative integers with den >= 1.
+  const showPreview = pvN !== null && pvD !== null && partitionBarDrawable(pvN, pvD) && pvW <= 6 && (pvW > 0 || pvN > 0);
   const previewBar = showPreview ? (
     <div className="flex flex-wrap items-center justify-center gap-2" aria-hidden="true">
       {sign === -1 && <span className="text-xl font-extrabold text-ink">−</span>}
@@ -496,23 +550,7 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
           <rect x={1} y={1} width={38} height={16} rx={3} fill={PALETTE.sky} stroke={PALETTE.ink} strokeWidth={1.4} />
         </svg>
       ))}
-      {pvD !== null && pvN !== null && pvN + pvD > 0 && (
-        <svg viewBox="0 0 120 18" className="h-4 w-28">
-          {Array.from({ length: pvD }, (_, k) => (
-            <rect
-              key={k}
-              x={1 + (k * 118) / pvD}
-              y={1}
-              width={118 / pvD - (pvD > 1 ? 1 : 0)}
-              height={16}
-              rx={2}
-              fill={k < pvN ? PALETTE.sky : "#fff"}
-              stroke={PALETTE.ink}
-              strokeWidth={1.2}
-            />
-          ))}
-        </svg>
-      )}
+      {pvD !== null && pvN !== null && pvN + pvD > 0 && <PartitionBar shaded={pvN} total={pvD} />}
     </div>
   ) : null;
   return (
@@ -1071,7 +1109,13 @@ function FractionBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps
     }
     onChange({ n: nn, d: nd });
   };
-  const decimal = d > 0 ? (n / d).toFixed(3).replace(/\.?0+$/, "") : "—";
+  // S237 — fraction first. This printed `(n/d).toFixed(3)`, so 4/12 rendered as "= 0.333" next
+  // to a ✓ equal: 4/12 is exactly 1/3 and 0.333 is not, so the "=" was false. The reduced
+  // fraction IS this lesson's subject (renaming/equivalence) and it is exact; a decimal is shown
+  // only when it terminates, and then only in parentheses.
+  const reduced = d > 0 ? fractionText(n, d) : "\u2014";
+  const exactDec = d > 0 ? terminatingDecimal(n, d) : null;
+  const decimal = d > 0 ? `${reduced}${exactDec !== null ? ` (${exactDec})` : ""}` : "\u2014";
   const eq = n * spec.targetDen === d * spec.targetNum;
   // Grade 1–2 partition items speak in part-language ("1 of 2 equal parts") and
   // fraction NOTATION stays a Grade-3 skill; when the target is named in the
@@ -1137,7 +1181,7 @@ function FractionBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps
       </svg>
       <div className="rounded-card border border-sky/20 bg-sky/5 px-3 py-2">
         <p className="text-[11px] font-extrabold uppercase tracking-wide text-sky-ink">Same magnitude on a number line</p>
-        <svg viewBox="0 0 300 54" className="mt-1 w-full" role="img" aria-label={`The fraction ${n} over ${d} is located at ${decimal} on the number line.`}>
+        <svg viewBox="0 0 300 54" className="mt-1 w-full" role="img" aria-label={`The fraction ${n} over ${d}, which is ${reduced}, is located between 0 and ${lineMax} on the number line.`}>
           <line x1={18} y1={28} x2={282} y2={28} stroke={PALETTE.ink} strokeWidth={2} />
           {Array.from({ length: lineMax + 1 }, (_, i) => (
             <g key={i}>
@@ -1743,7 +1787,11 @@ function SpinnerSimW({ spec, value, onChange, disabled, tone }: WProps<TSpinnerS
     return `M ${cx} ${cy} L ${cx + R * Math.cos(a0)} ${cy + R * Math.sin(a0)} A ${R} ${R} 0 ${large} 1 ${cx + R * Math.cos(a1)} ${cy + R * Math.sin(a1)} Z`;
   };
   const g = gcd(fav, spec.sectors) || 1;
-  const dec = (fav / spec.sectors).toFixed(3).replace(/\.?0+$/, "") || "0";
+  // S237 — a probability is a fraction here. The decimal is shown only when it TERMINATES (so
+  // "=" would be true), and then only in parentheses; 1/6 and 5/12 simply show no decimal rather
+  // than a rounded one presented as equal.
+  const decExact = terminatingDecimal(fav, spec.sectors);
+  const dec = decExact !== null ? ` (${decExact})` : "";
 
   return (
     <div className="grid gap-4">
@@ -1771,7 +1819,7 @@ function SpinnerSimW({ spec, value, onChange, disabled, tone }: WProps<TSpinnerS
         })()}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
-        P = {fav}/{spec.sectors} = {dec}
+        P = {fav}/{spec.sectors}{dec}
         {fav > 0 && g > 1 && <span className="ml-2 text-sm font-semibold text-ink/70">({fav / g}/{spec.sectors / g})</span>}
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
@@ -10744,7 +10792,9 @@ function ProbabilityAreaW({ spec, value, onChange, disabled, tone }: WProps<TPro
     );
   }
   const g = gcd(n, total);
-  const dec = (n / total).toFixed(3).replace(/\.?0+$/, "") || "0";
+  // S237 — same rule as spinnerSim: exact decimals only, in parentheses, never a rounded "=".
+  const decExact = terminatingDecimal(n, total);
+  const dec = decExact !== null ? `  (${decExact})` : "";
 
   return (
     <div className="grid gap-4">
@@ -10776,7 +10826,7 @@ function ProbabilityAreaW({ spec, value, onChange, disabled, tone }: WProps<TPro
       </svg>
       <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
         {n}/{total}
-        <span className="ml-3 text-base font-semibold text-ink/70">= {dec}{n > 0 && g > 1 ? `  (${n / g}/${total / g})` : ""}</span>
+        <span className="ml-3 text-base font-semibold text-ink/70">{n > 0 && g > 1 ? `= ${n / g}/${total / g}` : ""}{dec}</span>
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>shaded = <span className="tabular-nums text-ink">{n}</span></span>
@@ -16179,8 +16229,8 @@ function ConditionalTableConditionW({ spec, value, onChange, disabled, onEvent, 
         <tr><th>Total</th><td className="font-black tabular-nums">{spec.counts[0]+spec.counts[2]}</td><td className="font-black tabular-nums">{spec.counts[1]+spec.counts[3]}</td><td className="font-black tabular-nums">{spec.counts.reduce((a,b)=>a+b,0)}</td></tr></tbody>
       </table>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="condition / denominator" value={`${conditionLabel(st.condition)} = ${denominator}`} tone={st.condition===spec.targetCondition?'good':'neutral'}/><LabReadout label="selected intersection" value={st.cell?`${cellLabel(st.cell)} = ${count(st.cell)}`:'choose a cell'} tone={st.cell===spec.targetCell?'good':'neutral'}/><LabReadout label="conditional probability" value={currentP===null?'—':`${numerator}/${denominator} = ${currentP.toFixed(3)}`}/></div>
-    {st.cell && reverseCondition && <p className="rounded-xl border border-tangerine/25 bg-tangerine/5 p-3 text-sm font-bold">Same intersection, reversed condition: {count(st.cell)}/{reverseDen} = {reverseDen? (count(st.cell)/reverseDen).toFixed(3):'undefined'}. The numerator can stay fixed while the denominator changes.</p>}
+    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="condition / denominator" value={`${conditionLabel(st.condition)} = ${denominator}`} tone={st.condition===spec.targetCondition?'good':'neutral'}/><LabReadout label="selected intersection" value={st.cell?`${cellLabel(st.cell)} = ${count(st.cell)}`:'choose a cell'} tone={st.cell===spec.targetCell?'good':'neutral'}/><LabReadout label="conditional probability" value={currentP===null||numerator===null?'—':fractionWithDecimal(numerator, denominator)}/></div>
+    {st.cell && reverseCondition && <p className="rounded-xl border border-tangerine/25 bg-tangerine/5 p-3 text-sm font-bold">Same intersection, reversed condition: {reverseDen? fractionWithDecimal(count(st.cell), reverseDen) : 'undefined'}. The numerator can stay fixed while the denominator changes.</p>}
     <p className="text-center text-xs font-extrabold uppercase tracking-wide text-ink/70">{explorationProgress(st.switches, spec.requiredSwitches, "condition change", "made")}</p>
     {/* Reveal ghost: the asked-for conditional, assembled — mirrors evaluate
         (condition AND cell must both match). Shows which given and which

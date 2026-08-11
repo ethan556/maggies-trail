@@ -25,6 +25,19 @@ export const NumericSpec = z.object({
   answer: z.number(),
   tolerance: z.number().min(0).default(0),
   unit: z.string().optional(),
+  /** DISPLAY ONLY — never read by `evaluate`, `canCheck`, `correctAnswerText` or any
+   * integrity rule. Set it when the step asks for a NUMERATOR over a denominator the
+   * PROMPT has already fixed ("How many fourths are shaded?"): the widget then draws the
+   * learner's entry as entered/previewDenominator on the same live partition bar
+   * fractionEntry uses, so "3" is visibly 3/4 while they type.
+   *
+   * Grading is byte-identical with or without it: the answer is still the plain number in
+   * `answer`, compared against `tolerance`, exactly as before this field existed. A spec
+   * that omits it renders and grades exactly as it always has.
+   *
+   * The denominator is the PROMPT's, not the learner's — it is a given, not an answer, so
+   * showing it leaks nothing. */
+  previewDenominator: z.number().int().positive().optional(),
   /** Anticipated wrong answers mapped to misconception-diagnosing feedback. */
   commonErrors: z.array(z.object({ value: z.number(), feedback: z.string().min(1) })).default([]),
   /** Shown for wrong answers not in commonErrors. Must still be diagnostic, never generic. */
@@ -33,6 +46,59 @@ export const NumericSpec = z.object({
    * When absent the player's generic correct banner stands alone. */
   successFeedback: z.string().min(1).optional()
 });
+
+/** The honest-partition cap the live "what you just typed" previews share. A bar cannot
+ * truthfully show 333 parts, and a count far past the denominator stops reading as a
+ * fraction of ONE whole. Written once so fractionEntry's bar (widgets.tsx) and numeric's
+ * new bar can never drift apart on what a bar may honestly draw.
+ *
+ * Identical in effect to the gate fractionEntry has always used inline
+ * (`den <= 20 && num <= den * 2`, on values already parsed as non-negative integers with
+ * den >= 1); the integer/range guards here are those parse conditions made explicit, so
+ * this is that gate stated in full, never a looser one. */
+export function partitionBarDrawable(shaded: number, total: number): boolean {
+  return (
+    Number.isInteger(shaded) &&
+    Number.isInteger(total) &&
+    shaded >= 0 &&
+    total >= 1 &&
+    total <= 20 &&
+    shaded <= total * 2
+  );
+}
+
+/** numeric's live preview, resolved from the SAME spec + value the renderer draws and the
+ * accessibility panel speaks — so the bar on screen and the sentence a screen reader hears
+ * can never disagree (the rotationLab/numberLineRay contract, applied here).
+ *
+ * An IMPROPER entry is drawn the way a fraction model should draw it and the way this app's
+ * own `fractionEntry` already does: as WHOLE BARS plus a remainder. 5/3 is one filled bar and
+ * a second bar with 2 of 3 parts shaded — five thirds, visibly more than one whole. It is not
+ * one bar with every cell filled; that picture says "one whole" for an answer of one-and-two-
+ * thirds, and understating the answer is worse than drawing nothing.
+ *
+ * Returns null — draw nothing, say nothing — when the step declares no `previewDenominator`,
+ * when nothing is entered yet, when the entry is not a finite non-negative integer, or when
+ * the shape is past what a bar can honestly show (too many wholes, or a remainder past the
+ * partition cap). Pure, total, never throws. DISPLAY ONLY: no caller grades with it. */
+export function numericPreviewParts(
+  spec: Pick<TNumeric, "previewDenominator">,
+  value: unknown
+): { wholes: number; shaded: number; total: number } | null {
+  const total = spec.previewDenominator;
+  if (typeof total !== "number") return null;
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 0) return null;
+  if (!Number.isInteger(total) || total < 1 || total > 20) return null;
+  const wholes = Math.floor(value / total);
+  const shaded = value - wholes * total;
+  // Six is fractionEntry's own whole-bar ceiling; past it the row stops reading as a quantity.
+  if (wholes > MAX_PREVIEW_WHOLES) return null;
+  if (!partitionBarDrawable(shaded, total)) return null;
+  return { wholes, shaded, total };
+}
+
+/** The whole-bar ceiling both live previews share. */
+export const MAX_PREVIEW_WHOLES = 6;
 
 /** fractionEntry — the fraction-FORM analogue of `numeric`: the learner TYPES a
  * fraction (numerator over denominator, optionally with a whole-number part) and

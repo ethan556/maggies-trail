@@ -17,7 +17,7 @@ import { evaluate } from "./evaluate";
 import type { Band } from "./difficulty";
 import { VARIANT_GENERATORS, variantFor, variantForGenForm, lookupOrThrow } from "./variants";
 import type { VariantAnswer } from "./variants";
-import { WidgetSpec , widgetIntegrityErrors, type TWidget, distributionGapUnits, trialProbabilityEquivalent, compoundEventTotal, compoundEventChoiceCorrect, equationOutcomeChoiceCorrect, equationOutcomeTruth, shapeHierarchyChoiceCorrect, compositeAreaTarget, compositeAreaChoiceCorrect, triangleClosureForms, triangleClosureChoiceCorrect, signedFractionTruth, signedFractionChoiceCorrect, percentChangeTarget, percentChangeChoiceCorrect, conditionalTableReadTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipChoiceCorrect, placeValueTransformExplorationKeys, proportionalReasoningExplorationKeys, quotientReasoningExplorationKeys, quotientReasoningChoiceCorrect, quotientReasoningFractionCorrect, geometricConstraintExplorationKeys, geometricConstraintChoiceCorrect, geometricConstraintTruth, pointSetReasoningExplorationKeys, pointSetReasoningChoiceCorrect, pointSetReasoningTruth } from "./schema";
+import { WidgetSpec , widgetIntegrityErrors, type TWidget, distributionGapUnits, trialProbabilityEquivalent, compoundEventTotal, compoundEventChoiceCorrect, equationOutcomeChoiceCorrect, equationOutcomeTruth, shapeHierarchyChoiceCorrect, compositeAreaTarget, compositeAreaChoiceCorrect, triangleClosureForms, triangleClosureChoiceCorrect, signedFractionTruth, signedFractionChoiceCorrect, percentChangeTarget, percentChangeChoiceCorrect, conditionalTableReadTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipChoiceCorrect, placeValueTransformExplorationKeys, proportionalReasoningExplorationKeys, quotientReasoningExplorationKeys, quotientReasoningChoiceCorrect, quotientReasoningFractionCorrect, geometricConstraintExplorationKeys, geometricConstraintChoiceCorrect, geometricConstraintTruth, pointSetReasoningExplorationKeys, pointSetReasoningChoiceCorrect, pointSetReasoningTruth, graphReadAnswer } from "./schema";
 import { solvePrompt as solveG4Prompt } from "./g4Independent.cjs";
 import { solvePrompt as solveG0Prompt } from "./g0Independent.cjs";
 import { solvePrompt as solveG1Prompt } from "./g1Independent.cjs";
@@ -11927,6 +11927,45 @@ describe("variant gate — every problem a generator can ever produce", () => {
         expect(c.feedback).not.toMatch(NEGATION);
       }
       expect(parsed.successFeedback.length).toBeGreaterThanOrEqual(10);
+      return { v, w: parsed };
+    }
+
+    if (parsed.type === "graphRead") {
+      // S237. The five questions in this engine's terms. The engine has no typed answer: the learner
+      // taps a value, so "correct" is a reachable tap and every trap must be a tap that EXISTS.
+      const truth = graphReadAnswer(parsed);
+      expect(v.answer).toBe(truth);
+      const indep = check(parsed.prompt) as number;
+      expect(indep).toBe(truth);
+      // The row drawn must equal the quantity the prompt states. This engine exists because these
+      // items described a picture nobody drew; a picture that disagrees with the sentence would be
+      // a worse defect than the one it replaced, and only this line can see it.
+      expect(parsed.drawn * parsed.unitValue, "drawn row disagrees with the prompt").toBe(indep);
+      expect(evaluate(parsed, { picked: truth }).correct).toBe(true);
+      // Every value on the tap scale is reachable, so every value must grade — and only the truth
+      // may grade correct. This is the engine's version of "a trap that can grade correct is a bug",
+      // and it is exhaustive rather than a spot check.
+      for (let n = 0; n <= parsed.scaleMax; n++) {
+        expect(evaluate(parsed, { picked: n }).correct, `tap ${n} graded correct, truth is ${truth}`).toBe(n === truth);
+      }
+      const vals = parsed.commonResults.map((r) => r.value);
+      expect(new Set(vals).size, "duplicate trap values").toBe(vals.length);
+      for (const r of parsed.commonResults) {
+        expect(r.value).not.toBe(truth);
+        expect(r.value, `trap ${r.value} is off the tap scale — dead feedback`).toBeLessThanOrEqual(parsed.scaleMax);
+        expect(r.value).toBeGreaterThanOrEqual(0);
+        const got = evaluate(parsed, { picked: r.value });
+        expect(got.correct).toBe(false);
+        expect(got.feedback, `trap ${r.value} does not reach its own diagnosis`).toBe(r.feedback);
+        expect(got.feedback.length).toBeGreaterThanOrEqual(25);
+        expect(got.feedback).not.toMatch(NEGATION);
+      }
+      expect(parsed.fallbackFeedback.length).toBeGreaterThanOrEqual(25);
+      expect(parsed.successFeedback.length).toBeGreaterThanOrEqual(10);
+      expect(parsed.prompt.length).toBeGreaterThan(8);
+      // Stored English forms, never derived. The handler this replaced printed "1 apple pictures".
+      expect(parsed.unitNoun).not.toBe(parsed.unitNounPlural);
+      if (parsed.drawn === 1) expect(parsed.prompt).not.toMatch(/\b1 [a-z]+s\b/);
       return { v, w: parsed };
     }
 

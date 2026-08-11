@@ -47,7 +47,7 @@ function solvePrompt(form,input){const {prompt,options,state,n}=parse(input);
  case'MmtLengthCompareMcq':{const tuples=[...prompt.matchAll(/The ([a-z ]+) is (\d+) inches/g)].map(m=>[m[1],+m[2]]);const wanted=prompt.includes('longest')?Math.max(...tuples.map(x=>x[1])):Math.min(...tuples.map(x=>x[1]));return exact(options,tuples.find(x=>x[1]===wanted)[0]);}
  case'MmtLengthDifferenceNumeric':return n[0]-n[1];
  case'MmtLinePlotNumeric':return n[0];
- case'MmtPictureGraphNumeric':return n[0];
+ case'MmtPictureGraphRead':return n[0];
  case'MmtRulerReadNumeric':case'MmtRulerSubtractNumeric':return n[1]-n[0];
  case'MmtSkip5sNumeric':return n[0]*5;
  case'Pv1000BuildNumberNumeric':case'Pv1000TradingNumeric':return 100*n[0]+10*n[1]+n[2];
