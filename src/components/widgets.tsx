@@ -5669,7 +5669,7 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
             }}>{choice.label}</button>
         ))}
       </div>
-      <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}; ${selected.path}.` : "No signed-fraction claim selected."}</p>
+      <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No signed-fraction claim selected."}</p>
       {tone === "info" && selected && !signedFractionChoiceCorrect(spec, selected) && <GhostChip testid="sfl-ghost">correct result: {correct.label}</GhostChip>}
     </div>
   );

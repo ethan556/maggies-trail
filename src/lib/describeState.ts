@@ -52,6 +52,18 @@ const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : String(+n.
  * from these descriptions left the stage list as the opening words, which begins lowercase. */
 const sentence = (text: string): string => (text ? text[0].toUpperCase() + text.slice(1) : text);
 
+/** S237. conditionalTableLab's readMetric is an internal discriminant; learners heard
+ * "The target rowTotal uses 20." These are ordinary statistics names, so they get spoken as such. */
+const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
+  cell: "cell count",
+  rowTotal: "row total",
+  colTotal: "column total",
+  grandTotal: "grand total",
+  relativeWhole: "relative frequency of the whole table",
+  relativeRow: "relative frequency within the row",
+  relativeCol: "relative frequency within the column",
+};
+
 export function describeWidgetState(spec: TWidget, value: unknown): string | null {
   switch (spec.type) {
     case "scaledCircleLab": {
@@ -85,7 +97,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
       const truth = signedFractionTruth(spec);
       const sign = truth.sign < 0 ? "negative" : "positive";
-      return `Signed fraction ${spec.operation}. The derived result has ${sign} sign and magnitude ${truth.num}/${truth.den}. ${selected ? `Selected ${selected.label}, pathway ${selected.path}.` : "No exact claim selected."}`;
+      return `Signed fraction ${spec.operation}. The derived result has ${sign} sign and magnitude ${truth.num}/${truth.den}. ${selected ? `Selected ${selected.label}.` : "No exact claim selected."}`;
     }
     case "triangleClosureLab": {
       const state = value && typeof value === "object" ? value as { angle?: number; moves?: number; choice?: string } : {};
@@ -336,7 +348,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     }
     case "verticalLineScanner": {
       const v=(value as {x:number;maxIntersections:number;sweeps:number;verdict:string|null}|null) ?? {x:spec.scanStart,maxIntersections:0,sweeps:0,verdict:null};
-      return `The vertical scanner is at x = ${fmt(v.x)}. The greatest intersection count observed is ${fmt(v.maxIntersections)} after ${fmt(v.sweeps)} sweeps. Verdict: ${v.verdict ?? "not chosen"}.`;
+      return `The vertical scanner is at x = ${fmt(v.x)}. The greatest intersection count observed is ${fmt(v.maxIntersections)} after ${fmt(v.sweeps)} sweeps. Verdict: ${v.verdict === "not-function" ? "not a function" : v.verdict === "function" ? "a function" : "not chosen"}.`;
     }
     case "covariationScrubber": {
       const x=typeof value==="number"?value:spec.inputStart;
@@ -437,11 +449,11 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
         const choiceId=typeof value === "string" ? value : "";
         const choice=spec.answerChoices.find((candidate)=>candidate.id===choiceId);
         const truth=conditionalTableReadTruth(spec.counts,spec.readMetric,spec.targetCell);
-        return `The two-way table has row labels ${spec.rowLabels.join(" and ")} and column labels ${spec.colLabels.join(" and ")}. The target ${spec.readMetric} uses ${truth.numerator}${spec.readMetric.startsWith("relative")?` out of ${truth.denominator}`:""}. ${choice?`Selected claim: ${choice.label}.`:"No claim selected yet."}`;
+        return `The two-way table has row labels ${spec.rowLabels.join(" and ")} and column labels ${spec.colLabels.join(" and ")}. The target ${CONDITIONAL_TABLE_METRIC[spec.readMetric] ?? spec.readMetric} uses ${truth.numerator}${spec.readMetric.startsWith("relative")?` out of ${truth.denominator}`:""}. ${choice?`Selected claim: ${choice.label}.`:"No claim selected yet."}`;
       }
       const v=(value as {condition?:string;cell?:string|null;switches?:number}|null) ?? {};
       const condition=v.condition ?? spec.startCondition, cell=v.cell ?? "none", switches=v.switches ?? 0;
-      return `The selected condition is ${condition}; the selected intersection is ${cell}. ${switches} condition changes have been recorded. The highlighted row or column is the current denominator.`;
+      return `The selected condition is ${condition.startsWith("row") ? spec.rowLabels[Number(condition[3])] : spec.colLabels[Number(condition[3])]}; the selected intersection is ${cell === "none" ? "none" : `${spec.rowLabels[Number(cell[1])]} and ${spec.colLabels[Number(cell[3])]}`}. ${switches} condition changes have been recorded. The highlighted row or column is the current denominator.`;
     }
     case "conicLocusLab": {
       const v=(value as {eTenths:number;samples:number}|null) ?? {eTenths:spec.startEccentricityTenths,samples:0};
