@@ -32,7 +32,21 @@ const TOUCHED = [
   // Second batch: non-uniform viewBoxes, each placed from what that component actually has in
   // scope (a square S, a W-by-W box, a composite stacked height, two literals).
   "quadDrag", "rotationLab", "relatedRatesLab", "quadraticExplore",
+  // Third batch: the four that were held for a ruling. vectorExplore and matrixTransform are
+  // ordinary Cartesian planes — the vectors and the unit square live in x-y, so x/y is honest.
+  // unitCircleExplore plots a wave against ANGLE, so it gets angle°/value: calling its horizontal
+  // axis "x" would name the wrong quantity, which is worse than naming nothing.
+  "vectorExplore", "matrixTransform", "unitCircleExplore",
 ] as const;
+
+/**
+ * polarTrace is DELIBERATELY BARE, and that is the ruling rather than an omission. It draws a
+ * polar curve in a Cartesian projection: the quantities the learner manipulates are r and θ, but
+ * the horizontal and vertical directions on screen are not r and θ — they are the projection.
+ * Captioning them "x"/"y" would name axes the lesson never asks about, and captioning them
+ * "r"/"θ" would be false. The honest answer for this one engine is silence.
+ */
+const BARE_BY_RULING = ["polarTrace"] as const;
 
 /**
  * X-AXIS ONLY, DELIBERATELY. A stacked plot shares one x-axis but gives each panel its own y
@@ -117,6 +131,36 @@ describe("S237 axis captions", () => {
       expect(group?.getAttribute("aria-hidden"), type).toBe("true");
       cleanup();
     }
+  });
+
+  it("unitCircleExplore names the angle, not x", () => {
+    const spec = authored.get("unitCircleExplore");
+    if (spec) expect(captionsOf(spec)).toEqual(["angle°", "value"]);
+  });
+
+  it("polarTrace stays bare on purpose", () => {
+    // Asserted so a future sweep does not "finish the job" by captioning it. See the note above.
+    const specs: TWidget[] = [];
+    (function walk(dir: string) {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const file = join(dir, entry.name);
+        if (entry.isDirectory()) walk(file);
+        else if (file.endsWith(".json")) {
+          let parsed: unknown;
+          try { parsed = JSON.parse(readFileSync(file, "utf8")); } catch { continue; }
+          (function rec(node: unknown) {
+            if (!node || typeof node !== "object") return;
+            const record = node as Record<string, unknown>;
+            if (record.type === BARE_BY_RULING[0]) {
+              const spec = WidgetSpec.safeParse(record);
+              if (spec.success) specs.push(spec.data as TWidget);
+            }
+            for (const value of Object.values(record)) rec(value);
+          })(parsed);
+        }
+      }
+    })("content");
+    for (const spec of specs.slice(0, 3)) expect(captionsOf(spec)).toBeNull();
   });
 
   it("an engine that authors axis meanings uses them, not x and y", () => {

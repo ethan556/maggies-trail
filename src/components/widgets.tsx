@@ -2823,7 +2823,7 @@ function VectorExploreW({ spec, value, onChange, disabled, tone }: WProps<TVecto
         {spec.mode === "add" && (
           <text x={X(sx) + 6} y={Y(sy) + 12} fontSize={11} fontWeight={700} fill={PALETTE.berry}>u + v</text>
         )}
-      </svg>
+      <AxisCaptions w={W} h={W} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {spec.mode === "add" ? (
           <>
@@ -11528,7 +11528,7 @@ function UnitCircleExploreW({ spec, value, onChange, disabled, tone }: WProps<TU
             {...drag.handleProps}
           />
         )}
-      </svg>
+      <AxisCaptions w={W} h={H} x="angle°" y="value" /></svg>
 
       {wall !== 0 && spec.branch && (
         <p data-testid="uc-wallmsg" className="text-center text-sm font-extrabold text-berry-ink" aria-live="polite">
@@ -15233,7 +15233,7 @@ function MatrixTransformW({ spec, value, onChange, disabled, onEvent, tone }: WP
         </g>
         <g className="mx">{arrow(a, c, PALETTE.sky)}</g>
         <g className="mx">{arrow(b, d, PALETTE.tangerine)}</g>
-      </svg>
+      <AxisCaptions w={W} h={W} /></svg>
 
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
         <div className="grid gap-2">
