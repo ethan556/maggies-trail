@@ -5,7 +5,7 @@ import {
   systemsPointOn,
   type SystemsPairValue
 } from "./mmip/systemsPairAdapter";
-import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryTruth } from "./schema";
+import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, graphStoryTruth } from "./schema";
 import {
   binomialExpand,
   rootsFormCoefs,
@@ -101,7 +101,14 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
         // the equation has and this stated "outcome none". The equation itself is the given and
         // stays; the outcome is now withheld on classification steps exactly as the visible truth
         // panel is (widgets.tsx), so both channels ask the same work of the learner.
-        return `Equation ${spec.leftDisplay} equals ${spec.rightDisplay}.${spec.choices?.length ? "" : ` Normalized outcome ${equationOutcomeTruth(spec)}.`} ${selected ? `Selected ${selected.label}.` : "No claim selected."}`;
+        // S237b. Withholding the outcome dropped this below the s44 substance floor and left the
+        // panel narrating less than the screen: the widget prints the collected-terms residue in
+        // its own dashed panel and states it in the section's aria-label, and equationOutcome.s141
+        // pins that residue as deliberately exposed. Narrating it restores parity, not the answer.
+        const residue = Math.abs(spec.leftCoeff - spec.rightCoeff) < 1e-9
+          ? `${spec.leftConstant} = ${spec.rightConstant}`
+          : `${spec.leftCoeff - spec.rightCoeff}x = ${spec.rightConstant - spec.leftConstant}`;
+        return `Equation ${spec.leftDisplay} equals ${spec.rightDisplay}. Collecting like terms leaves ${residue}.${spec.choices?.length ? "" : ` Normalized outcome ${equationOutcomeTruth(spec)}.`} ${selected ? `Selected ${selected.label}.` : "No claim selected."}`;
       }
       const state=value&&typeof value==="object"&&!Array.isArray(value)?value as {stageIds?:string[];numeric?:number|""}:{};
       const ids=Array.isArray(state.stageIds)?state.stageIds:[],byId=new Map((spec.operations ?? []).map(operation=>[operation.id,operation]));
@@ -409,7 +416,12 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${fmt(v.numeric)}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):(typeof v.choiceId==="string"?`Selected ${spec.choices.find((choice)=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected.");
       return `Source values: ${source}. ${opened.length} of ${truth.stages.length} derived stages inspected${openedText?`: ${openedText}`:""}. ${answer}`;
     }
-    case "pointSetReasoningLab": {const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};const truth=pointSetReasoningTruth(spec),valid=new Set(pointSetReasoningExplorationKeys(spec)),revealed=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];const selected=typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId):undefined;return `${sentence(spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.y===undefined?point.x:`(${point.x}, ${point.y})`).join(", ")}`).join(". "))}. ${revealed.length} of ${truth.stages.length} exact states inspected.${typeof v.numeric==="number"?` Entered ${v.numeric}.`:selected?` Selected ${selected.label}.`:""}`}
+    case "pointSetReasoningLab": {const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};const truth=pointSetReasoningTruth(spec),valid=new Set(pointSetReasoningExplorationKeys(spec)),revealed=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];const selected=typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId):undefined;const twoD=spec.sets.some(set=>set.points.some(point=>point.y!==undefined));
+      // S237b. Dropping the internal task token also dropped the only context sentence, leaving the
+      // panel under the s44 substance floor and quieter than the diagram: the plot draws its axis
+      // titles on screen and names them in its own aria-label. Say what the axes measure.
+      const axes=twoD?`Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}.`:`The number line is labelled ${spec.xLabel}.`;
+      return `${axes} ${sentence(spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.y===undefined?point.x:`(${point.x}, ${point.y})`).join(", ")}`).join(". "))}. ${revealed.length} of ${truth.stages.length} exact states inspected.${typeof v.numeric==="number"?` Entered ${v.numeric}.`:selected?` Selected ${selected.label}.`:""}`}
     case "geometricConstraintLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
       const truth=geometricConstraintTruth(spec),valid=new Set(geometricConstraintExplorationKeys(spec));
@@ -447,7 +459,14 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
         : spec.answerMode === "choice" ? (typeof v.choiceId === "string" ? `Selected ${spec.choices.find((choice) => choice.id === v.choiceId)?.label ?? v.choiceId}.` : "No conclusion selected.")
           : spec.answerMode === "fraction" ? (() => { const f = v.fraction && typeof v.fraction === "object" ? v.fraction as {whole?:number;num?:number;den?:number} : {}; return typeof f.num === "number" && typeof f.den === "number" ? `Entered ${f.whole ? `${f.whole} ` : ""}${f.num}/${f.den}.` : "No fraction entered."; })()
             : "Exploration-only quotient state.";
-      return `${opened.length} of ${truth.stages.length} derived states inspected${openedText ? `: ${openedText}` : ""}. ${answer}`;
+      // S237b. Dropping the internal task token left this description with no mathematics in it at
+      // all, below the s44 substance floor. The widget devotes a labelled "Source state" panel to
+      // exactly this string; the panel was the one channel that never said it.
+      const source = spec.repeatBlock ? `0.(${spec.repeatBlock})`
+        : spec.dividend && spec.divisor ? `${quotientRationalKey(spec.dividend)} ÷ ${quotientRationalKey(spec.divisor)}`
+          : spec.dividend ? quotientRationalKey(spec.dividend)
+            : spec.candidates.length ? spec.candidates.map((candidate) => candidate.label).join(" · ") : "exact quotient state";
+      return `Source state ${source}. ${opened.length} of ${truth.stages.length} derived states inspected${openedText ? `: ${openedText}` : ""}. ${answer}`;
     }
     case "graphStoryLab": {
       if (spec.mode === "read") {
@@ -974,7 +993,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   fractionCompare: "The two bars are buttons naming their shaded fractions; a third button says they're equal. Press the bar showing more.",
   oddEvenPairs: "Press \"Pair two\" until no pair remains, then press odd or even.",
   lineExplore: "Two sliders — slope and intercept — with live value readouts. Arrow keys move them one step.",
-  matrixTransform: "Four steppers set the matrix entries a, b, c, d; the picture and determinant readout update as you change them.",
+  matrixTransform: "Four minus/plus button pairs step the matrix entries a, b, c, d; press one and the picture and determinant readout update.",
   fractionBar: "Sliders set how many equal parts and how many are shaded; the bar and its fraction readout follow.",
   slider: "One labelled slider; arrow keys move it one step and the readout speaks the value.",
   lineRelationLab: "Two labelled sliders rotate and translate the active line; live readouts name the relation, angle, and move count.",
