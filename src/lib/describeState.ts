@@ -48,6 +48,10 @@ import { rat } from "./mmip/lineFamilyModel";
  */
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : String(+n.toFixed(2)));
 
+/** S237. Sentence-case a fragment that lost its leading clause. Removing the internal task token
+ * from these descriptions left the stage list as the opening words, which begins lowercase. */
+const sentence = (text: string): string => (text ? text[0].toUpperCase() + text.slice(1) : text);
+
 export function describeWidgetState(spec: TWidget, value: unknown): string | null {
   switch (spec.type) {
     case "scaledCircleLab": {
@@ -374,16 +378,16 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const openedText=opened.map((key)=>stageByKey.get(key)).filter(Boolean).map((stage)=>`${stage!.label}: ${stage!.value}`).join("; ");
       const source=spec.values.map(fmt).join(spec.task.includes("Division")||spec.task==="divisionFirstMove"?" divided by ":", ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${fmt(v.numeric)}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):(typeof v.choiceId==="string"?`Selected ${spec.choices.find((choice)=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected.");
-      return `Base-ten task ${spec.task}. Source values: ${source}. ${opened.length} of ${truth.stages.length} derived stages inspected${openedText?`: ${openedText}`:""}. ${answer}`;
+      return `Source values: ${source}. ${opened.length} of ${truth.stages.length} derived stages inspected${openedText?`: ${openedText}`:""}. ${answer}`;
     }
-    case "pointSetReasoningLab": {const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};const truth=pointSetReasoningTruth(spec),valid=new Set(pointSetReasoningExplorationKeys(spec)),revealed=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];const selected=typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId):undefined;return `Point-set task ${spec.task}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.y===undefined?point.x:`(${point.x}, ${point.y})`).join(", ")}`).join(". ")}. ${revealed.length} of ${truth.stages.length} exact states inspected.${typeof v.numeric==="number"?` Entered ${v.numeric}.`:selected?` Selected ${selected.label}.`:""}`}
+    case "pointSetReasoningLab": {const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};const truth=pointSetReasoningTruth(spec),valid=new Set(pointSetReasoningExplorationKeys(spec)),revealed=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];const selected=typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId):undefined;return `${sentence(spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.y===undefined?point.x:`(${point.x}, ${point.y})`).join(", ")}`).join(". "))}. ${revealed.length} of ${truth.stages.length} exact states inspected.${typeof v.numeric==="number"?` Entered ${v.numeric}.`:selected?` Selected ${selected.label}.`:""}`}
     case "geometricConstraintLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
       const truth=geometricConstraintTruth(spec),valid=new Set(geometricConstraintExplorationKeys(spec));
       const opened=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];
       const openedSet=new Set(opened);const stages=truth.stages.map(stage=>`${stage.label}: ${openedSet.has(stage.key)?stage.value:"not inspected"}`).join("; ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):spec.answerMode==="choice"?(typeof v.choiceId==="string"?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected."):"Exploration mode.";
-      return `${spec.task.replaceAll(/([A-Z])/g," $1")}: ${stages}. ${answer}`;
+      return `${sentence(stages)}. ${answer}`;
     }
     case "exactNumberLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown;relation?:unknown}:{};
@@ -391,7 +395,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const revealed=Array.isArray(v.revealed)?new Set(v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item))):new Set<string>();
       const stages=truth.stages.map(stage=>`${stage.label}: ${revealed.has(stage.key)?stage.value:"not inspected"}`).join("; ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}.`:"No numeric answer entered."):spec.answerMode==="choice"?(typeof v.choiceId==="string"?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected."):spec.answerMode==="relation"?(v.relation?`Selected relation ${v.relation}.`:"No relation selected."):"Exploration mode.";
-      return `${spec.task.replaceAll(/([A-Z])/g," $1")}: ${stages}. ${answer}`;
+      return `${sentence(stages)}. ${answer}`;
     }
     case "affineRelationshipLab": {
       const v=(value&&typeof value==="object"?value:{}) as {revealed?:unknown;numeric?:unknown;choiceId?:unknown;point?:unknown};
@@ -414,7 +418,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
         : spec.answerMode === "choice" ? (typeof v.choiceId === "string" ? `Selected ${spec.choices.find((choice) => choice.id === v.choiceId)?.label ?? v.choiceId}.` : "No conclusion selected.")
           : spec.answerMode === "fraction" ? (() => { const f = v.fraction && typeof v.fraction === "object" ? v.fraction as {whole?:number;num?:number;den?:number} : {}; return typeof f.num === "number" && typeof f.den === "number" ? `Entered ${f.whole ? `${f.whole} ` : ""}${f.num}/${f.den}.` : "No fraction entered."; })()
             : "Exploration-only quotient state.";
-      return `Exact quotient task ${spec.task}. ${opened.length} of ${truth.stages.length} derived states inspected${openedText ? `: ${openedText}` : ""}. ${answer}`;
+      return `${opened.length} of ${truth.stages.length} derived states inspected${openedText ? `: ${openedText}` : ""}. ${answer}`;
     }
     case "graphStoryLab": {
       if (spec.mode === "read") {
@@ -667,7 +671,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const truth = sequenceReasoningTruth(spec), valid = new Set(truth.stages.map((stage) => stage.key));
       const explored = Array.isArray(state.explored) ? state.explored.filter((key) => valid.has(key)) : [];
       const choice = state.choiceId ? spec.choices.find((candidate) => candidate.id === state.choiceId) : undefined;
-      return `Sequence reasoning task ${spec.task}. Terms ${truth.terms.slice(0,8).map(fmt).join(", ")}. ${explored.length} exact states inspected. ${choice ? `Selected ${choice.label}.` : typeof state.numeric === "number" ? `Entered ${state.numeric}.` : "No final answer selected."}`;
+      return `${truth.terms.length?`Terms ${truth.terms.slice(0,8).map(fmt).join(", ")}.`:"No terms shown yet."} ${explored.length} exact states inspected. ${choice ? `Selected ${choice.label}.` : typeof state.numeric === "number" ? `Entered ${state.numeric}.` : "No final answer selected."}`;
     }
     case "triangleSolve": {
       const v = typeof value === "number" ? value : spec.start;

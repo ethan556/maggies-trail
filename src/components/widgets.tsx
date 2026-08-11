@@ -3458,7 +3458,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
   const termColor = (spec.task ?? "").startsWith("geometric") ? "border-tangerine/50 bg-tangerine/10 text-tangerine-ink" : "border-sky/45 bg-sky/10 text-sky-ink";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label={`Sequence workbench for ${spec.task}. ${truth.terms.length} visible terms. ${explored.length} exact states inspected.`}>
+    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label={`Sequence workbench. ${truth.terms.length} visible terms. ${explored.length} exact states inspected.`}>
       {truth.terms.length > 0 && <div className="grid gap-2">
         <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">term structure</p>
         <div className="flex flex-wrap items-center gap-2" role="list" aria-label="sequence terms">
@@ -7001,7 +7001,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="relation"?(truth.answerRelation==="lt"?"<":truth.answerRelation==="gt"?">":"="):correctChoice?.label??truth.answerClaim??"the exact-number conclusion";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p><p className="mt-2 text-sm font-semibold text-ink/65">Task: {spec.task.replaceAll(/([A-Z])/g," $1").toLowerCase()}.</p></section>
+    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p></section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this exact state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "exact state", "inspected")}</p>
     {/* S205K — the magnitude rail: exactNumberLab's manipulation surface for numeric mode.
@@ -7176,7 +7176,7 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact quotient source">
       <p className="text-xs font-black uppercase tracking-wide text-ink/55">Source state</p>
       <p className="mt-1 break-words text-2xl font-black tabular-nums">{source}</p>
-      <p className="mt-2 text-sm font-semibold text-ink/65">Task mode: {spec.task.replaceAll(/([A-Z])/g, " $1").toLowerCase()}.</p>
+      
     </section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact quotient derivation stages">
       {truth.stages.map((stage, index) => {
