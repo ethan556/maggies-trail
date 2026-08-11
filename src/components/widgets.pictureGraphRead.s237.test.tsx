@@ -64,11 +64,13 @@ function countStatedInPrompt(prompt: string): number {
   return Number(m[0]);
 }
 
-/** Icons actually painted for a picture row, counted from the DOM. */
+/** Icons actually painted for a picture row, counted from the DOM. Keyed on a testid rather
+ *  than on markup, so the count survives a rendering change (the row became an SVG in S237 so it
+ *  could scale to one line at phone widths) and keeps asserting the same property. */
 function iconsRendered(container: HTMLElement): number {
-  const row = container.querySelector('[role="img"]');
+  const row = container.querySelector('[role="img"][aria-label^="Picture graph"]');
   if (!row) return 0;
-  return row.querySelectorAll('span[aria-hidden="true"]').length;
+  return row.querySelectorAll('[data-testid="gread-icon"]').length;
 }
 
 /* ────────────────────────────── self-check ────────────────────────────── */

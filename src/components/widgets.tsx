@@ -7458,15 +7458,33 @@ function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead
             );
           })()
         ) : spec.mode === "picture" ? (
-          <div className="flex flex-wrap items-center gap-1.5" role="img"
+          // S237 — ONE ROW, ALWAYS. This was `flex-wrap` with fixed 32px cells, so a row of 12
+          // broke onto a second line at phone widths (found by capturing mmt-05-01/ch1 at 390px).
+          // A picture graph whose row wraps stops being a picture graph: "a longer row means a
+          // bigger total" is this lesson's own concept step, and two short rows read as less than
+          // one long one. The row is now an SVG whose viewBox scales the icons down to fit
+          // whatever width it is given, so length stays proportional to quantity at every size.
+          <div role="img"
             aria-label={`Picture graph for ${spec.categoryLabel}: ${spec.drawn} ${spec.drawn === 1 ? "picture" : "pictures"} drawn, each standing for ${spec.unitValue}.`}>
-            {Array.from({ length: spec.drawn }, (_, i) => (
-              <span key={i} aria-hidden="true"
-                className="grid h-8 w-8 place-items-center rounded-lg border-2 border-ink/25 bg-ink/5 text-lg leading-none">
-                {spec.icon}
-              </span>
-            ))}
-            {spec.drawn === 0 && <span className="text-sm font-bold text-ink/50">(no pictures at all)</span>}
+            {spec.drawn > 0 ? (
+              <svg
+                viewBox={`0 0 ${spec.drawn * 10} 10`}
+                className="w-full"
+                style={{ maxWidth: `${spec.drawn * 2.25}rem` }}
+                aria-hidden="true">
+                {Array.from({ length: spec.drawn }, (_, i) => (
+                  <g key={i} data-testid="gread-icon">
+                    <rect x={i * 10 + 0.6} y={0.6} width={8.8} height={8.8} rx={1.6}
+                      fill={PALETTE.ink} fillOpacity={0.05} stroke={PALETTE.ink} strokeOpacity={0.25} strokeWidth={0.5} />
+                    <text x={i * 10 + 5} y={5} textAnchor="middle" dominantBaseline="central" fontSize={5.6}>
+                      {spec.icon}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+            ) : (
+              <span className="text-sm font-bold text-ink/50">(no pictures at all)</span>
+            )}
           </div>
         ) : (
           <svg viewBox={`0 0 ${W} ${(spec.scaleMax + 1) * 12 + 16}`} className="w-full" role="img"
