@@ -409,6 +409,164 @@ describe("S238 unitChain — the whole authored corpus, every reachable crossing
   });
 });
 
+/* ------------------------------------------------------------------ *
+ * S238 — distributionCompareLab: 48 of the S237-measured pairs.
+ *
+ * The labels are data-driven three ways: the group tags sit under the MEANS (sp-02-01/i2
+ * authors meanA = meanB, so the tags printed on each other); the measure-mode reveal ghost
+ * shared the tags' baseline band; and judge-mode's two evidence lines ("gap ≈ …",
+ * "overlap ≈ …") centered on the same midpoint in one band and collided whenever both drew.
+ * The SVG text depends on spec × tone only (the learner's value moves rects, not text), so
+ * spec × {neutral, error, info} with value null IS the reachable label space.
+ * ------------------------------------------------------------------ */
+
+const dcl = (extra: Record<string, unknown>): Record<string, unknown> => ({
+  type: "distributionCompareLab", prompt: "p", mode: "measure",
+  meanA: 20, meanB: 8, variability: 4, answer: 3, tolerance: 0.01,
+  measureChoices: [
+    { value: 3, feedback: "Three variability-widths separate the means — count them on the tape." },
+    { value: 12, feedback: "12 is the raw gap in data units, not in variability-widths." }
+  ],
+  successFeedback: "Three variability-widths — a separation the overlap cannot explain away.",
+  ...extra
+});
+
+const DCL_CASES: Case[] = [
+  // THE NAMED TRIGGER, verbatim data from sp-02-01/i2: the means coincide, the markers share
+  // one x, and the two group tags drew on top of each other.
+  { name: "sp-02-01/i2 — meanA = meanB, coinciding markers",
+    spec: dcl({ meanA: 12, meanB: 12, variability: 2, answer: 0 }) },
+  { name: "sp-02-03/i2 — gap 0.25, tags one marker-width apart",
+    spec: dcl({ meanA: 82, meanB: 80, variability: 8, answer: 0.25 }) },
+  { name: "sp-02b-03 — named groups, gap 3", spec: dcl({ meanA: 13.2, meanB: 12, variability: 0.4,
+    answer: 3, groupALabel: "Service Y", groupBLabel: "Service X" }) },
+  { name: "dm-03-01/i2 — gap 15, the widest authored separation",
+    spec: dcl({ meanA: 240, meanB: 90, variability: 10, answer: 15 }) },
+  { name: "sp-02-02/i1 — judge, gap 0.4 (both evidence lines draw at error/info)",
+    spec: dcl({ mode: "judge", meanA: undefined, meanB: undefined, variability: undefined,
+      answer: undefined, measureChoices: [], gapUnits: 0.4,
+      judgeOptions: [
+        { id: "o", label: "Overlap dominates", correct: true, feedback: "Under half a variability-width cannot separate the groups." },
+        { id: "d", label: "Clearly different", feedback: "The curves share most of their area at this gap." }
+      ] }) },
+  { name: "si-03-03/i1 — judge, long group names at gap 1",
+    spec: dcl({ mode: "judge", meanA: undefined, meanB: undefined, variability: undefined,
+      answer: undefined, measureChoices: [], gapUnits: 1,
+      groupALabel: "Candidate A", groupBLabel: "Candidate B",
+      judgeOptions: [
+        { id: "o", label: "The bands overlap", correct: true, feedback: "A lead smaller than the margin is not a lead — it is a headline." },
+        { id: "a", label: "A is ahead", feedback: "The gap sits inside the margin, so the poll cannot say that." }
+      ] }) }
+];
+
+describe("S238 label collisions — distributionCompareLab", () => {
+  it("no two labels overlap, at any authored shape, at every tone that draws text", () => {
+    for (const c of DCL_CASES) {
+      for (const tone of ["neutral", "error", "info"] as const) {
+        const spec = WidgetSpec.parse(c.spec) as TWidget;
+        const { container } = render(
+          <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone={tone} />
+        );
+        const svg = container.querySelector("svg");
+        expect(svg, `${c.name} [${tone}]`).toBeTruthy();
+        const { boxes, skipped } = scanTextBoxes(svg!);
+        cleanup();
+        expect(skipped, `${c.name} [${tone}] — unmodellable labels`).toEqual([]);
+        expect(boxes.length, `${c.name} [${tone}] — drew no labels at all`).toBeGreaterThan(0);
+        const hits = collisions(boxes);
+        expect(
+          hits.map(describeCollision),
+          `${c.name} [${tone}]\n  ${hits.map(describeCollision).join("\n  ")}`
+        ).toEqual([]);
+      }
+    }
+  });
+
+  it("coinciding means still NAME both groups — merged into one honest tag, not dropped", () => {
+    const spec = WidgetSpec.parse(DCL_CASES[0].spec) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone="neutral" />
+    );
+    const { boxes } = scanTextBoxes(container.querySelector("svg")!);
+    const joined = texts(boxes).join(" | ");
+    expect(joined).toContain("Group A ○ · Group B ◇");
+    cleanup();
+    // …and separated means keep two separate tags — merging is geometry, not policy.
+    const wide = WidgetSpec.parse(DCL_CASES[3].spec) as TWidget;
+    const { container: c2 } = render(
+      <WidgetRenderer spec={wide} value={null} onChange={() => {}} disabled={false} tone="neutral" />
+    );
+    const wideTexts = texts(scanTextBoxes(c2.querySelector("svg")!).boxes);
+    expect(wideTexts).toContain("Group A ○");
+    expect(wideTexts).toContain("Group B ◇");
+    cleanup();
+  });
+
+  it("judge evidence still states BOTH deciding quantities at retry and reveal", () => {
+    for (const tone of ["error", "info"] as const) {
+      const spec = WidgetSpec.parse(DCL_CASES[4].spec) as TWidget;
+      const { container } = render(
+        <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone={tone} />
+      );
+      const said = texts(scanTextBoxes(container.querySelector("svg")!).boxes).join(" | ");
+      expect(said, tone).toContain("gap ≈");
+      expect(said, tone).toContain("overlap ≈");
+      cleanup();
+    }
+  });
+
+  it("the measure reveal still names its target, clear of the group tags", () => {
+    const spec = WidgetSpec.parse(DCL_CASES[0].spec) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone="info" />
+    );
+    const { boxes } = scanTextBoxes(container.querySelector("svg")!);
+    expect(texts(boxes).some((t) => t.startsWith("target ")), "the reveal ghost").toBe(true);
+    expect(collisions(boxes)).toEqual([]);
+    cleanup();
+  });
+});
+
+describe("S238 distributionCompareLab — the whole authored corpus", () => {
+  // The completeness claim behind "48 → 0": every authored spec × every tone that changes the
+  // drawn text. SVG text here depends on spec × tone only (value moves rects), so this IS the
+  // reachable label space, corpus-wide.
+  it("no authored spec draws overlapping labels at any tone", () => {
+    const courses = join(process.cwd(), "content", "courses");
+    let specs = 0;
+    for (const course of readdirSync(courses)) {
+      const dir = join(courses, course, "lessons");
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith(".json")) continue;
+        const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+          id: string;
+          steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+          remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+        };
+        const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+        for (const step of all) {
+          if (step.widget?.type !== "distributionCompareLab") continue;
+          specs++;
+          for (const tone of ["neutral", "error", "info"] as const) {
+            const spec = WidgetSpec.parse(step.widget) as TWidget;
+            const { container } = render(
+              <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone={tone} />
+            );
+            const { boxes, skipped } = scanTextBoxes(container.querySelector("svg")!);
+            cleanup();
+            const where = `${lesson.id}/${step.id} [${tone}]`;
+            expect(skipped, `${where} — unmodellable labels`).toEqual([]);
+            expect(collisions(boxes).map(describeCollision), where).toEqual([]);
+          }
+        }
+      }
+    }
+    // Counted from disk: 33 authored distributionCompareLab steps across 9 lessons.
+    expect(specs).toBe(33);
+  });
+});
+
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);

@@ -153,6 +153,30 @@ Reading note (rhythm step 5): ruler labels like "0.333333" are honest but ugly a
 fixed-marker geometry (value × t/0.66). Cosmetic formatting of ruler intermediates is a design
 decision left open — the collision defect is what this batch closed.
 
+## Batch 4 (same session): distributionCompareLab collisions closed — 48 → 0, corpus-proven
+
+Next by count after unitChain. Three data-driven classes, all fixed by geometry:
+
+1. **Group tag on group tag** — the tags sit under the MEANS, and sp-02-01/i2 authors
+   meanA = meanB, so "Group A ○" printed on "Group B ◇". When the modelled boxes would collide,
+   ONE merged tag names both groups at the midpoint ("Group A ○ · Group B ◇") — honest, because
+   the markers ARE at (nearly) one position. Separated means keep two tags: geometry, not policy.
+2. **Group tags vs the reveal ghost** — "target N units" shared the tags' baseline band. Bands
+   are now disjoint by construction (tags y=170, ghost y=188, tape y=192).
+3. **Judge evidence vs itself** — "gap ≈ …" (y=54) and "overlap ≈ …" (y=62) centered on the
+   same midpoint in one band and collided whenever both drew (every judge retry AND reveal).
+   The overlap line moved to y=76, still above the hatched region it describes.
+
+Gate: six named failure-class cases × three tones, paired acceptances (merged tag present at
+gap 0, two tags at gap 15, both evidence lines still state their quantities, the reveal still
+names its target), and a corpus-complete sweep — all 33 authored specs × 3 tones, zero
+collisions. SVG text here depends on spec × tone only (the learner's value moves rects), so
+that sweep IS the reachable label space. Detector verified to fire on the pre-fix layout
+(3 failed with the fix stashed). Browser evidence: `S238_SCREENSHOTS/07-dcl-sp0201-i2-390.png`.
+
+**Collision ledger after batch 4: 267 → 137.** Next by count: `slopeTriangle` (25),
+`samplingBiasLab` (14), `pointSetReasoningLab` (10), `signChart` (8), 18 smaller (80).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

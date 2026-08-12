@@ -8548,8 +8548,26 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
   const fmt = (n: number) => Number(n.toFixed(2)).toString().replace("-", "−");
   const answer = spec.mode === "measure" ? spec.answer ?? gap : null;
   const selectedRatio = selectedMeasure === null || answer === null || answer === 0 ? 0 : selectedMeasure / answer;
-  const tapeX = 112, tapeW = 296, tapeY = 190;
+  const tapeX = 112, tapeW = 296, tapeY = 192;
   const selectedW = Math.min(Math.abs(selectedRatio), 1.35) * tapeW;
+  // S238 — NO TWO LABELS MAY OVERLAP, for any authored gap. 48 of the S237-measured pairs
+  // lived in this engine, in three data-driven classes, all fixed by geometry rather than by
+  // per-lesson patches:
+  //   1. GROUP LABEL vs GROUP LABEL. The labels sit under the means, and sp-02-01/i2 authors
+  //      meanA = meanB — the markers coincide and "Group A ○" printed on "Group B ◇". Under
+  //      ~1.1 variability-units of separation the two boxes touch. When the modelled boxes
+  //      (0.72em/char, the S237 testkit constant) would collide, ONE merged label names both
+  //      groups at the midpoint — honest, because the markers ARE at (nearly) one position.
+  //   2. GROUP LABELS vs THE REVEAL GHOST. "target N units" occupied the same baseline band as
+  //      the labels. The bands are now disjoint by construction: labels at y=170 (box tops out
+  //      below the markers), ghost at y=188, tape moved to y=192.
+  //   3. JUDGE EVIDENCE vs ITSELF. "gap ≈ …" (y=54) and "overlap ≈ …" (y=62) shared one band
+  //      and both center on the same midpoint — they collided whenever both drew. The overlap
+  //      line moves to y=76, still above the hatched region it describes (top y=82).
+  const aTag = `${spec.groupALabel} ○`;
+  const bTag = `${spec.groupBLabel} ◇`;
+  const tagHalf = (s: string) => (s.length * 11 * 0.72) / 2;
+  const groupTagsMerged = X(bMean) - X(aMean) < tagHalf(aTag) + tagHalf(bTag) + 4;
   const selectedCorrect = selectedMeasure !== null && answer !== null && Math.abs(selectedMeasure - answer) <= spec.tolerance;
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border px-3 py-2 text-left text-sm font-bold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
@@ -8585,13 +8603,19 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
               <text x={(X(aMean) + X(bMean)) / 2} y={54} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
                 gap ≈ {fmt(gap)} variability-unit{gap === 1 ? "" : "s"}
               </text>
-              <text x={(X(aMean) + X(bMean)) / 2} y={baseY - 88} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
+              <text x={(X(aMean) + X(bMean)) / 2} y={baseY - 74} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
                 overlap ≈ {Math.round(overlap * 100)}%
               </text>
             </g>
           )}
-          <text x={X(aMean)} y={baseY + 28} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>{spec.groupALabel} ○</text>
-          <text x={X(bMean)} y={baseY + 28} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>{spec.groupBLabel} ◇</text>
+          {groupTagsMerged ? (
+            <text x={(X(aMean) + X(bMean)) / 2} y={baseY + 20} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>{aTag} · {bTag}</text>
+          ) : (
+            <>
+              <text x={X(aMean)} y={baseY + 20} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>{aTag}</text>
+              <text x={X(bMean)} y={baseY + 20} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>{bTag}</text>
+            </>
+          )}
           {spec.mode === "measure" && spec.meanA !== undefined && spec.meanB !== undefined && spec.variability !== undefined && (
             <>
               <line x1={X(aMean)} y1={26} x2={X(bMean)} y2={26} stroke={PALETTE.ink} strokeWidth={2} />
@@ -8607,8 +8631,8 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
               <rect x={tapeX} y={tapeY} width={tapeW} height={14} rx={7} fill="none" stroke={PALETTE.ink} strokeWidth={2} strokeDasharray="6 4" />
               {selectedMeasure !== null && selectedMeasure >= 0 && <rect x={tapeX} y={tapeY} width={selectedW} height={14} rx={7} fill={selectedCorrect ? PALETTE.leaf : PALETTE.sky} opacity={0.75} data-testid="dcl-measure-tape" />}
               {selectedMeasure !== null && selectedMeasure < 0 && <rect x={tapeX-selectedW} y={tapeY} width={selectedW} height={14} rx={7} fill={PALETTE.berry} opacity={0.75} data-testid="dcl-negative-tape" />}
-              <text x={tapeX+tapeW/2} y={220} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>dashed target = mean gap; solid tape = your variability-widths</text>
-              {tone === "info" && !selectedCorrect && <text data-testid="dcl-reveal-ghost" x={tapeX+tapeW} y={186} textAnchor="end" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target {fmt(answer)} units</text>}
+              <text x={tapeX+tapeW/2} y={222} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>dashed target = mean gap; solid tape = your variability-widths</text>
+              {tone === "info" && !selectedCorrect && <text data-testid="dcl-reveal-ghost" x={tapeX+tapeW} y={188} textAnchor="end" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target {fmt(answer)} units</text>}
             </>
           )}
         </svg>
