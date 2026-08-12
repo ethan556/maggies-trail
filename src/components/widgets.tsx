@@ -13093,7 +13093,12 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
   const G = spec.gridMax, W = 300, H = 300, pad = 12;
   const { sx, sy } = gridScales({ xMin: -G, xMax: G, yMin: -G, yMax: G, W, H, pad });
   const gridLines = integers(-G, G);
-  const polyPts = samplePolyline((x) => a * (x - h) * (x - h) + k, -G, G, sx, sy, { steps: 120, yClip: [-G - 1, G + 1] });
+  // (S238) `a` is an exact rational: the stored value (and every slider/target/gate) is the
+  // NUMERATOR over the fixed aDen, so 0 < a < 1 draws exactly — the ft-03-02 "wider" case.
+  const den = spec.aDen;
+  const aVal = a / den;
+  const aText = den === 1 ? String(a) : fractionText(a, den);
+  const polyPts = samplePolyline((x) => aVal * (x - h) * (x - h) + k, -G, G, sx, sy, { steps: 120, yClip: [-G - 1, G + 1] });
   const hSign = h >= 0 ? `− ${h}` : `+ ${Math.abs(h)}`;
   const kSign = k >= 0 ? `+ ${k}` : `− ${Math.abs(k)}`;
 
@@ -13117,7 +13122,10 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
       )
   });
 
-  const ctrl = (label: string, v: number, min: number, max: number, accent: string, set: (n: number) => void) => (
+  // (S238) A pinned parameter (min === max) renders no slider — an inert control is noise,
+  // the same rule fractionBar applies to a pinned numerator. The stretch-only ft-03-02 build
+  // pins h and k at the origin so the ONE thing on screen is the thing being taught.
+  const ctrl = (label: string, v: number, min: number, max: number, accent: string, set: (n: number) => void) => min === max ? null : (
     <label className="grid gap-1 text-sm font-bold text-ink/70">
       <span>{label} = <span className="tabular-nums text-ink">{v}</span></span>
       <input type="range" min={min} max={max} step={1} value={v} disabled={disabled}
@@ -13130,7 +13138,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`Parabola y = ${a}(x ${hSign})² ${kSign}, vertex at (${h}, ${k}).`}>
+        role="img" aria-label={`Parabola y = ${aText}(x ${hSign})² ${kSign}, vertex at (${h}, ${k})${spec.showParent ? ", with the parent y = x² dashed behind it" : ""}.`}>
         <style>{`.qe-curve,.qe-vtx{transition:none}@media (prefers-reduced-motion: no-preference){.qe-curve,.qe-vtx{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         {gridLines.map((g) => (
           <g key={g}>
@@ -13140,6 +13148,15 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
         ))}
         <line x1={sx(-G)} y1={sy(0)} x2={sx(G)} y2={sy(0)} stroke={PALETTE.ink} strokeWidth={1.5} />
         <line x1={sx(0)} y1={sy(-G)} x2={sx(0)} y2={sy(G)} stroke={PALETTE.ink} strokeWidth={1.5} />
+        {/* (S238) The parent y = x², dashed ink — the fixed reference that makes wider/narrower
+            a COMPARISON on screen. Drawn under the learner's curve; named by the prompt. */}
+        {spec.showParent && (
+          <polyline
+            data-testid="qe-parent"
+            points={samplePolyline((x) => x * x, -G, G, sx, sy, { steps: 120, yClip: [-G - 1, G + 1] })}
+            fill="none" stroke={PALETTE.ink} strokeWidth={2} strokeDasharray="5 4" strokeOpacity={0.45}
+          />
+        )}
         <polyline className="qe-curve" points={polyPts} fill="none" stroke={PALETTE.sky} strokeWidth={2.5} />
         {/* Reveal ghost (le-ghost's sibling): the target parabola + its vertex,
             dashed, so "shown the answer" is a visual contrast with the learner's
@@ -13147,7 +13164,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
         {tone === "info" && (a !== spec.targetA || h !== spec.targetH || k !== spec.targetK) && (
           <g data-testid="qe-ghost" aria-hidden="true">
             <polyline
-              points={samplePolyline((x) => spec.targetA * (x - spec.targetH) * (x - spec.targetH) + spec.targetK, -G, G, sx, sy, { steps: 120, yClip: [-G - 1, G + 1] })}
+              points={samplePolyline((x) => (spec.targetA / den) * (x - spec.targetH) * (x - spec.targetH) + spec.targetK, -G, G, sx, sy, { steps: 120, yClip: [-G - 1, G + 1] })}
               fill="none"
               stroke={PALETTE.tangerine}
               strokeWidth={2.5}
@@ -13173,9 +13190,14 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
         )}
       <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
-        y = {a}(x {hSign})² {kSign}
+        y = {aText}(x {hSign})² {kSign}
       </p>
-      {ctrl("a (stretch/flip)", a, spec.aMin, spec.aMax, "accent-sky", (x) => setVertex({ a: x, h, k }, ["a"]))}
+      <label className="grid gap-1 text-sm font-bold text-ink/70">
+        <span>a (stretch/flip) = <span className="tabular-nums text-ink">{aText}</span></span>
+        <input type="range" min={spec.aMin} max={spec.aMax} step={1} value={a} disabled={disabled}
+          aria-label="a (stretch/flip)" aria-valuetext={`a (stretch/flip) ${aText}`}
+          onChange={(e) => setVertex({ a: Number(e.target.value), h, k }, ["a"])} className="h-11 w-full accent-sky" />
+      </label>
       {ctrl("h (left/right)", h, spec.hMin, spec.hMax, "accent-sky", (x) => setVertex({ a, h: x, k }, ["h"]))}
       {ctrl("k (up/down)", k, spec.kMin, spec.kMax, "accent-sky", (x) => setVertex({ a, h, k: x }, ["k"]))}
     </div>
@@ -17381,7 +17403,78 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
     )}</div>;
 }
 
-function RelatedRatesLabW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TRelatedRatesLab>) {
+/** Exact π-multiple as text: piMul(12) = "12π", piMul(4, 3) = "4/3·π" when 3 ∤ 4. */
+function piMul(num: number, den = 1): string {
+  if (num % den === 0) return `${num / den}π`;
+  return `${num}/${den}·π`;
+}
+
+/** (S238) The growth models — a disc or balloon whose radius the learner grows, with every
+ * readout an exact multiple of π. Same state shape, grading, and process evidence as the
+ * ladder: {x, moves} with x the radius. The chain-rule structure IS the display: the rate
+ * readout is written as the formula instantiated, not just a number. */
+function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TRelatedRatesLab>) {
+  type State={x:number;moves:number};
+  const v=value&&typeof value==="object"?value as State:null;
+  const st=v??{x:spec.startX,moves:0};
+  useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
+  const sphere=spec.model==="sphereVolume";
+  const rMax=spec.ladderLength, r=Math.max(1,Math.min(rMax,st.x)), rate=spec.horizontalRate;
+  const setR=(next:number)=>{const d=moveRelation(st.x,next,spec.targetX);if(d)onEvent?.({control:"radius",dir:d,kind:"efficient"});onChange({x:next,moves:st.moves+1})};
+  // Exact readouts. circle: A = r²·π, dA/dt = 2r·rate·π. sphere: V = 4r³/3·π, dV/dt = 4r²·rate·π.
+  const sizeLabel=sphere?"V":"A";
+  const sizeText=sphere?piMul(4*r*r*r,3):piMul(r*r);
+  const rateLabel=sphere?"dV/dt":"dA/dt";
+  const rateText=sphere?piMul(4*r*r*rate):piMul(2*r*rate);
+  const targetRateText=sphere?piMul(4*spec.targetX*spec.targetX*rate):piMul(2*spec.targetX*rate);
+  const cx=150,cy=125,U=100/rMax,pr=r*U;
+  // WS-C: the disc's EDGE drags — radius = distance from center, on the same integer lattice
+  // as the slider (which stays: keyboard-parity path).
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:390,viewH:250,disabled,onDrag:(vx,vy)=>{
+    const next=snapToStep(Math.hypot(vx-cx,vy-cy)/U,1,rMax,1);
+    if(next!==st.x)setR(next);
+  }});
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+    <svg ref={svgRef} viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img"
+      aria-label={`A ${sphere?"balloon":"disc"} of radius ${r} growing at dr/dt = ${rate}. Its ${sphere?"volume":"area"} is ${sizeText} and ${rateLabel} is ${rateText}.`}>
+      <style>{`.rrg{transition:none}@media (prefers-reduced-motion: no-preference){.rrg{transition:r .16s ease-out}}`}</style>
+      {/* Concentric past-radii rings make GROWTH visible: the disc the learner had, still faint. */}
+      {Array.from({length:r-1},(_,i)=>i+1).map(k=><circle key={k} cx={cx} cy={cy} r={k*U} fill="none" stroke={PALETTE.ink} strokeOpacity={0.12} strokeWidth={1}/>)}
+      <circle className="rrg" cx={cx} cy={cy} r={pr} fill={PALETTE.sky} fillOpacity={sphere?0.28:0.18} stroke={PALETTE.sky} strokeWidth={3}/>
+      {sphere&&<ellipse className="rrg" cx={cx} cy={cy} rx={pr} ry={pr*0.32} fill="none" stroke={PALETTE.sky} strokeWidth={1.6} strokeOpacity={0.6}/>}
+      <line x1={cx} y1={cy} x2={cx+pr} y2={cy} stroke={PALETTE.ink} strokeWidth={2}/>
+      <circle cx={cx} cy={cy} r={3} fill={PALETTE.ink}/>
+      <text x={cx+pr/2} y={cy-8} textAnchor="middle" fontSize={12} fontWeight={800} fill={PALETTE.ink}>r = {r}</text>
+      <text x={300} y={40} textAnchor="middle" fontSize={12} fontWeight={800} fill={PALETTE.ink}>{sphere?"V = 4/3·πr³":"A = πr²"}</text>
+      <text x={300} y={58} textAnchor="middle" fontSize={12} fontWeight={800} fill={PALETTE.leaf}>{sphere?"dV/dt = 4πr²·dr/dt":"dA/dt = 2πr·dr/dt"}</text>
+      {/* Reveal ghost: the radius the question asks about, dashed — mirrors evaluate (x === targetX). */}
+      {tone==="info"&&st.x!==spec.targetX&&<g data-testid="rrg-ghost" aria-hidden="true">
+        <circle cx={cx} cy={cy} r={spec.targetX*U} fill="none" stroke={PALETTE.tangerine} strokeWidth={3} strokeDasharray="8 6"/>
+        <text x={cx} y={cy-spec.targetX*U-8} textAnchor="middle" fontSize={11} fontWeight={900} fill={PALETTE.tangerine}>r = {spec.targetX}, {rateLabel} = {targetRateText}</text>
+      </g>}
+      {!disabled&&<rect className="mt-drag-hit" data-testid="rrg-drag" x={20} y={10} width={260} height={230} aria-hidden="true" {...drag.handleProps}/>}
+    </svg>
+    <div className="grid grid-cols-3 gap-2">
+      <LabReadout label="r" value={String(r)} tone={st.x===spec.targetX?"good":"neutral"}/>
+      <LabReadout label={sizeLabel} value={sizeText}/>
+      <LabReadout label={rateLabel} value={`${sphere?`4π·${r}²·${rate}`:`2π·${r}·${rate}`} = ${rateText}`} tone="warn"/>
+    </div>
+    <label className="grid gap-1 text-sm font-bold"><span>Grow the radius — dr/dt stays {rate}; watch what {rateLabel} does</span>
+      <input aria-label="radius" type="range" min="1" max={rMax} step="1" value={st.x} disabled={disabled} onChange={e=>setR(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
+    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{sphere
+      ?"Differentiate V = 4/3·πr³: the chain rule brings the exponent down — dV/dt = 4πr²·dr/dt. The rate itself grows with the SQUARE of the radius."
+      :"Differentiate A = πr²: the chain rule turns the square into a doubling — dA/dt = 2πr·dr/dt. The bigger the disc, the faster the area runs."}</p></div>;
+}
+
+function RelatedRatesLabW(props: WProps<TRelatedRatesLab>) {
+  // Pure router, no hooks — same pattern as QuadraticExploreW, tested POSITIVELY on the new
+  // models so a spec that skipped zod's defaults falls to the ladder, never the reverse.
+  if (props.spec.model === "circleArea" || props.spec.model === "sphereVolume") return <RelatedRatesGrowthW {...props} />;
+  return <RelatedRatesLadderW {...props} />;
+}
+
+function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TRelatedRatesLab>) {
   type State={x:number;moves:number};const v=value&&typeof value==='object'?value as State:null;const st=v??{x:spec.startX,moves:0};
   useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const L=spec.ladderLength,x=Math.min(L-.05,st.x),y=Math.sqrt(Math.max(0,L*L-x*x)),verticalRate=-(x/y)*spec.horizontalRate;

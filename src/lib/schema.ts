@@ -846,6 +846,16 @@ export const QuadraticExploreSpec = z.object({
   targetA: z.number().int(),
   targetH: z.number().int(),
   targetK: z.number().int(),
+  /** (S238) Exact-rational leading coefficient, closing the S237 NOT-POSSIBLE row ft-03-02/k3:
+   * with aDen > 1, every `a` field (targetA, aMin, aMax, aStart) is a NUMERATOR over this fixed
+   * denominator, so a = 1/3 is authorable as targetA 1 over aDen 3 — drawable, gradable, and
+   * displayed as the exact fraction. Integers only, never floats: 0 < a < 1 lands exactly, the
+   * same house rule the roots form states for its crossings. Default 1 (a IS the integer) keeps
+   * every existing spec byte-identical. Vertex form only; the roots form keeps integer a. */
+  aDen: z.number().int().positive().default(1),
+  /** (S238) Draw the parent y = x² dashed behind the learner's curve — the reference that makes
+   * "wider or narrower THAN THE PARENT" a visible comparison instead of a remembered rule. */
+  showParent: z.boolean().default(false),
   aMin: z.number().int().default(-3),
   aMax: z.number().int().default(3),
   hMin: z.number().int().default(-5),
@@ -6223,6 +6233,15 @@ export const DerivativeRuleLabSpec = z.object({
 export const RelatedRatesLabSpec = z.object({
   type: z.literal("relatedRatesLab"),
   prompt: z.string().min(1),
+  /** (S238) WHICH related-rates model the lab draws. "ladder" is the original engine:
+   * x² + y² = L², slide the foot. The two growth models close the S237 NOT-POSSIBLE rows
+   * dc-02-01/k3 and /ch1: "circleArea" grows a disc (A = πr², dA/dt = 2πr·dr/dt) and
+   * "sphereVolume" grows a balloon (V = 4/3·πr³, dV/dt = 4πr²·dr/dt). In the growth models the
+   * slider is the RADIUS: `ladderLength` is read as the radius ceiling, `horizontalRate` as
+   * dr/dt, and `targetX`/`startX` as radii. Every readout is an exact multiple of π (integers
+   * in, integers out — except 4r³/3, printed as the exact fraction when 3 ∤ 4r³), so nothing
+   * is ever rounded. Default "ladder" leaves every existing lesson byte-identical. */
+  model: z.enum(["ladder", "circleArea", "sphereVolume"]).default("ladder"),
   ladderLength: z.number().int().min(5).max(15),
   /** (S205J) How the coupling is NARRATED. "rates" is the original engine: a time story, dx/dt
    * and dy/dt labels. "slope" strips time out entirely — same circle x² + y² = L², same slider,

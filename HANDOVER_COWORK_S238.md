@@ -25,11 +25,11 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,207 passing       (9,695 + 3,512; +2 opt-in sweep skips)
+vitest (2 shards)        13,246 passing       (9,698 + 3,548; +2 opt-in sweep skips)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
-content-change proof     870 / 870            <- was 866; vm-02-01, mc-05-02, dd-02-01,
+content-change proof     871 / 871            <- was 866; vm-02-01, mc-05-02, dd-02-01,
                                                  md-03-04 are the S238 entries
 validate:native          archive-only findings only
 check-registration       consistent
@@ -113,7 +113,12 @@ height; their real growth is WS-C side panels, not a bigger square.
    probe, probabilityArea, compassConstruct, triangleConstraintLab — 19 engines now on the
    substrate; the gate caught a missing svg ref that would have shipped a dead drag surface.
    Remaining frontier: algebraTiles (multi-range layout), solidSliceLab, spinnerSim,
-   riemannSum, the 1–5-use tail. Then the 8 NOT-POSSIBLE rows.
+   riemannSum, the 1–5-use tail. The NOT-POSSIBLE project OPENED in wave 18: 3 of 8 rows
+   closed (relatedRatesLab circleArea/sphereVolume models serve dc-02-01/k3+ch1;
+   quadraticExplore exact-rational aDen + showParent serves ft-03-02/k3; alongside gate now
+   17 rows; proof 871). REMAINING 5: percentBar flat-fee, systemsExplore vertical
+   constraints (×2), parametric-direction tracer (×2). Found, not fixed (frozen prose):
+   dc-02-01/ch1 authors two traps at value 36 — the second can never fire.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
 
 Environment traps (S237 §6) all still apply: kill `next start` by pid before rebuilding; never

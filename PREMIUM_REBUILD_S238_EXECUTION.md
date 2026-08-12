@@ -602,6 +602,45 @@ exposure: algebraTiles (17, three ranges — a tile-count layout problem, not a 
 drag), solidSliceLab (7), spinnerSim (6), shapeFamilyBuilder (6, four attribute counts —
 survival candidates), riemannSum (4), and the long tail of 1–5-use labs.
 
+## Wave 18 (same session): the NOT-POSSIBLE backlog opens — 3 of 8 rows closed by two engine builds
+
+The eight S237 NOT-POSSIBLE rows are requests for engines that did not exist; this wave built
+the two capabilities with the cleanest fits and served THREE rows with them, under the standing
+alongside ruling (new `kind:"interactive"` step immediately before the graded check; the check
+byte-identical).
+
+**relatedRatesLab grows** (`model: "circleArea" | "sphereVolume"`, default ladder — every
+existing lesson byte-identical): a disc or balloon whose radius the learner grows (slider +
+WS-C edge-drag), with EVERY readout an exact π-multiple — A = 25π, V = 500/3·π printed as the
+exact fraction when 3 ∤ 4r³ — and the rate readout showing the chain rule INSTANTIATED
+(“2π·5·1 = 10π”), not just a number. Serves dc-02-01/k3 (dA/dt) and /ch1 (dV/dt). The inserted
+labs run dr/dt = 1 with a radius cap of 5, so no reachable state prints the checks' graded
+numerals (12, 72). **quadraticExplore goes exact-rational** (`aDen`, default 1): every `a`
+field becomes a numerator over a fixed denominator, so a = 1/3 is authorable, drawable, and
+graded as integers — the house rule (exact rationals, never floats) extended rather than bent.
+With `showParent` the parent y = x² draws dashed behind the learner's curve, making “wider
+than the parent” a visible comparison; pinned h/k render no sliders (the inert-control rule).
+Serves ft-03-02/k3.
+
+The alongside gate grew to 17 rows (14 S237 + 3 S238) with input-space models for both new
+engines, and it earned its keep twice: it REJECTED my first-draft wrong-path pins (I had
+paraphrased the authored traps instead of copying them — the UNCHANGED contract caught the
+invention), and it surfaced a latent content quirk: **dc-02-01/ch1 authors TWO traps at value
+36, so the second (“volume-ish”, itself sloppy prose) can never fire — logged here for a
+human, not fixed (frozen prose).** The reveal-ghost uniqueness gate then caught the growth
+branch reusing the ladder's `rr-` testid prefix — renamed `rrg-`. Structural exemption added,
+stricter-documented: a vertex-form build with h/k pinned AT target cannot reach
+vertexFeedback (the scaledCircleLab precedent).
+
+Content-change proof 870 → 871 (ft-03-02 new key; dc-02-01 reason extended under its existing
+key). Browser QA read: both growth labs render with exact π readouts and live drag; the
+rational-a parabola sits visibly wider than the dashed parent at a = 1/3. Pixel evidence:
+`S238_SCREENSHOTS/22-np-*.png`.
+
+**NOT-POSSIBLE remaining: 5 of 8** — percentBar flat-fee (pr-04b-02/k3), systemsExplore
+vertical constraints (iar-03-01/ch1, iar-03-03/ch1), and a parametric-direction tracer
+(pp-04-01/k1, k2). Each is the same shape: one engine capability, then alongside insertion.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

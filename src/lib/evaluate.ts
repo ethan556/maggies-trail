@@ -1,3 +1,4 @@
+import { fractionText } from "@/lib/mathUtils";
 import type { TRule, TWidget, SolveBalanceRel } from "./schema";
 import { algebraTilesPartials, binomialExpand, circleScaleReadouts, columnCalcTruth, fmOutput, geometricTerm, sequenceReasoningTruth, prismVolume, hopSizeAnswer, roundSolidCoef, shapePartCount, solveBalanceSet, solveBalanceSetsEqual, extraneousCandidates, extraneousHolds, mixedRegroupTruth, quadName, signChartCuts, solveBalanceHolds, solveBalanceWitness, triangleRatio, UC_TRUE_FORMULAS , unitChainAnswer, unitChainWorlds, dotPlotLabel , slopeTriangleMatches, slopeTriangleTruth, slopeTriangleLabel , graphReadAnswer, distributionGapUnits, trialProbabilityEquivalent, compoundEventChoiceCorrect, compoundEventTotal, compoundEventFavourable, compositeAreaChoiceCorrect, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, triangleClosureChoiceCorrect, triangleClosureForms, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberChoiceCorrect, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientFractionFromMixed, quotientRationalKey, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningFractionCorrect, quotientReasoningTruth, graphStoryChoiceCorrect, graphStorySequenceKey, graphStoryTruth } from "./schema";
 export { binomialExpand, circleScaleReadouts, roundSolidCoef, rootsFormCoefs, shapePartCount, quadName, triangleRatio, midsegmentLength, signChartCuts, signChartValueAt, extraneousCandidates, extraneousHolds } from "./schema";
@@ -2638,7 +2639,7 @@ export function correctAnswerText(spec: TWidget): string {
     }
     case "conicLocusLab": return `eccentricity e = ${(spec.targetEccentricityTenths/10).toFixed(1)}`;
     case "derivativeRuleLab": return spec.mode === "product" ? `h ≤ ${spec.targetH}, so the second-order corner vanishes` : spec.mode === "quotient" ? `u′ = ${spec.targetInnerRate} and v′ = ${spec.targetOuterRate}, giving (${spec.targetInnerRate}·${spec.quotientV} − ${spec.quotientU}·${spec.targetOuterRate})/${spec.quotientV}²` : `inner rate ${spec.targetInnerRate} and outer rate ${spec.targetOuterRate}, giving total rate ${spec.targetInnerRate*spec.targetOuterRate}`;
-    case "relatedRatesLab": return `ladder foot x = ${spec.targetX}, with x² + y² = ${spec.ladderLength}²`;
+    case "relatedRatesLab": return spec.model === "circleArea" ? `radius r = ${spec.targetX}, where dA/dt = 2πr·dr/dt = ${2 * spec.targetX * spec.horizontalRate}π` : spec.model === "sphereVolume" ? `radius r = ${spec.targetX}, where dV/dt = 4πr²·dr/dt = ${4 * spec.targetX * spec.targetX * spec.horizontalRate}π` : `ladder foot x = ${spec.targetX}, with x² + y² = ${spec.ladderLength}²`;
     case "solveBalance": {
       const xs = (spec.c - spec.b) / spec.a;
       const r = spec.relation ?? "eq";
@@ -2883,7 +2884,7 @@ export function correctAnswerText(spec: TWidget): string {
       return `(${xs}, ${ys})`;
     }
     case "quadraticExplore":
-      return `y = ${spec.targetA}(x ${spec.targetH >= 0 ? `− ${spec.targetH}` : `+ ${Math.abs(spec.targetH)}`})² ${spec.targetK >= 0 ? `+ ${spec.targetK}` : `− ${Math.abs(spec.targetK)}`}`;
+      return `y = ${spec.aDen === 1 ? spec.targetA : fractionText(spec.targetA, spec.aDen)}(x ${spec.targetH >= 0 ? `− ${spec.targetH}` : `+ ${Math.abs(spec.targetH)}`})² ${spec.targetK >= 0 ? `+ ${spec.targetK}` : `− ${Math.abs(spec.targetK)}`}`;
     case "lengthCompare": {
       const label = spec.items.find((i) => i.id === spec.answerId)?.label ?? "";
       if (spec.mode === "difference")

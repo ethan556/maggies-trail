@@ -213,7 +213,45 @@ const ROWS: Row[] = [
       "c|They become 10|10 isn't a valid single digit. Each zero receives 10 then immediately lends 1 forward, settling at 9.",
       "d|Only the nearer one changes|Every zero the chain passes through changes — each one becomes 9, not just the nearest."
     ]
-  }
+  },
+  {
+    course: "derivatives-in-context", lesson: "dc-02-01",
+    inserted: "i2", serves: "k3", engine: "relatedRatesLab",
+    servedKind: "check", servedType: "numeric",
+    servedPrompt: "A circle's radius grows at dr/dt = 2 cm/s. Find dA/dt when r = 3, as a multiple of \u03c0 (give just the number).",
+    servedAnswer: "12",
+    servedWrongPaths: [
+      "6|That is 2\u03c0r at r = 3 without the dr/dt = 2. The chain rule multiplies by the rate: 2\u03c0(3)(2) = 12\u03c0.",
+      "9|That is the AREA (9\u03c0), not its rate of change.",
+      "18|Check: dA/dt = 2\u03c0r\u00b7(dr/dt) = 2\u03c0(3)(2) = 12\u03c0."
+    ]
+  },
+  {
+    course: "derivatives-in-context", lesson: "dc-02-01",
+    inserted: "i3", serves: "ch1", engine: "relatedRatesLab",
+    servedKind: "challenge", servedType: "numeric",
+    servedPrompt: "A spherical balloon's radius grows at 2 cm/s. Find dV/dt when r = 3, as a multiple of \u03c0 (give just the number).",
+    servedAnswer: "72",
+    // NOTE (found by this gate, not fixed — frozen prose): ch1 authors TWO traps at value 36;
+    // only the first can ever fire. Logged for a human in the execution report.
+    servedWrongPaths: [
+      "36|That is 4\u03c0r\u00b2 at r = 3 without the dr/dt = 2. Multiply by the rate: 4\u03c0(9)(2) = 72\u03c0.",
+      "36|That is the volume-ish, not the rate. dV/dt = 4\u03c0r\u00b2\u00b7(dr/dt) = 72\u03c0.",
+      "24|Check the derivative: d/dr[(4/3)\u03c0r\u00b3] = 4\u03c0r\u00b2, which is 36\u03c0 at r = 3, and then \u00d7 2 = 72\u03c0."
+    ]
+  },
+  {
+    course: "function-transformations", lesson: "ft-03-02",
+    inserted: "i3", serves: "k3", engine: "quadraticExplore",
+    servedKind: "check", servedType: "mcq",
+    servedPrompt: "For which value of a is y = a\u00b7x\u00b2 WIDER (flatter) than the parent y = x\u00b2?",
+    servedAnswer: "o1|a = \u2153",
+    servedWrongPaths: [
+      "o2|a = 3|Tripling heights makes the graph STEEPER and narrower \u2014 widening needs 0 < a < 1.",
+      "o3|a = \u22123|The minus flips it and the 3 still steepens it \u2014 upside down AND narrow, not wider.",
+      "o4|a = 1|Multiplying by 1 changes nothing \u2014 that IS the parent. Wider needs a fraction between 0 and 1."
+    ]
+  },
 ];
 
 const lessonJson = (r: Pick<Row, "course" | "lesson">) =>
@@ -279,6 +317,21 @@ function space(w: TWidget): { candidates: unknown[]; start: unknown } {
         candidates: [...columnCalcReachable(w.op, w.a, w.b)].map((value) => ({ value, complete: true })),
         start: { value: null, complete: false }
       };
+    case "relatedRatesLab": {
+      // {x, moves}: every slider position at full exploration, plus the target reached with
+      // too few moves (so explorationFeedback is provably reachable).
+      const c: unknown[] = [];
+      for (const x of range(1, w.ladderLength)) c.push({ x, moves: w.requiredMoves });
+      c.push({ x: w.targetX, moves: 0 });
+      return { candidates: c, start: { x: w.startX, moves: 0 } };
+    }
+    case "quadraticExplore": {
+      // Vertex form only (the inserted step's form): the a-numerator lattice crossed with the
+      // h/k lattices — pinned axes contribute their single value.
+      const c: unknown[] = [];
+      for (const a of range(w.aMin, w.aMax)) for (const h of range(w.hMin, w.hMax)) for (const k of range(w.kMin, w.kMax)) c.push({ a, h, k });
+      return { candidates: c, start: { a: w.aStart, h: w.hStart, k: w.kStart } };
+    }
     default:
       throw new Error(`manipulativeAlongside.s237: no input model for engine "${w.type}" — add one rather than skipping it`);
   }
@@ -292,7 +345,14 @@ function space(w: TWidget): { candidates: unknown[]; start: unknown } {
  * learner can actually reach is still checked.
  */
 function structurallyUnreachable(w: TWidget): Set<string> {
-  return w.type === "scaledCircleLab" ? new Set([w.fallbackFeedback]) : new Set<string>();
+  if (w.type === "scaledCircleLab") return new Set([w.fallbackFeedback]);
+  // (S238) A vertex-form quadraticExplore whose h and k are PINNED at their targets cannot reach
+  // vertexFeedback: a ≠ targetA fires shapeFeedback, and with a right the vertex is right by
+  // construction. Same judgement as scaledCircleLab's schema-required fallback — the field is
+  // required, not authored decoration.
+  if (w.type === "quadraticExplore" && w.form === "vertex" && w.hMin === w.hMax && w.kMin === w.kMax && w.hMin === w.targetH && w.kMin === w.targetK)
+    return new Set([w.vertexFeedback]);
+  return new Set<string>();
 }
 
 function auditWidget(w: TWidget): string[] {
@@ -341,11 +401,12 @@ function servedIdentity(step: Record<string, unknown>): {
 }
 
 describe("S237 manipulative alongside — the batch itself", () => {
-  it("covers 14 insertions across 14 distinct lessons, 10 distinct engines, no duplicate targets", () => {
-    expect(ROWS).toHaveLength(14);
-    expect(new Set(ROWS.map((r) => r.lesson)).size).toBe(14);
-    expect(new Set(ROWS.map((r) => r.engine)).size).toBe(10);
-    expect(new Set(ROWS.map((r) => `${r.lesson}/${r.serves}`)).size).toBe(14);
+  it("covers 17 insertions (14 S237 + 3 S238) across 16 distinct lessons, 12 distinct engines, no duplicate targets", () => {
+    expect(ROWS).toHaveLength(17);
+    // dc-02-01 legitimately appears twice (i2 serves k3, i3 serves ch1) — distinct TARGETS stay unique.
+    expect(new Set(ROWS.map((r) => r.lesson)).size).toBe(16);
+    expect(new Set(ROWS.map((r) => r.engine)).size).toBe(12);
+    expect(new Set(ROWS.map((r) => `${r.lesson}/${r.serves}`)).size).toBe(17);
   });
 });
 

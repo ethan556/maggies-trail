@@ -1,4 +1,5 @@
 import type { TWidget } from "./schema";
+import { fractionText } from "@/lib/mathUtils";
 import {
   systemsPairModel,
   systemsPairParams,
@@ -408,19 +409,21 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
         );
       }
       const v = (value as { a: number; h: number; k: number } | null) ?? null;
+      /* (S238) With aDen > 1 the stored a is a numerator; narrate the exact fraction. */
+      const aWord = (num: number) => (spec.aDen === 1 ? fmt(num) : fractionText(num, spec.aDen));
       if (!v) {
         // Untouched still narrates NUMBERS: the starting parabola and the goal.
         const sd = spec.aStart > 0 ? "opens upward" : spec.aStart < 0 ? "opens downward" : "is flattened (a = 0)";
         return (
-          `The parabola starts as y = ${fmt(spec.aStart)}(x − ${fmt(spec.hStart)})² + ${fmt(spec.kStart)}: ` +
+          `The parabola starts as y = ${aWord(spec.aStart)}(x − ${fmt(spec.hStart)})² + ${fmt(spec.kStart)}: ` +
           `vertex at (${fmt(spec.hStart)}, ${fmt(spec.kStart)}), and it ${sd}. ` +
-          `The target is a = ${fmt(spec.targetA)} with vertex (${fmt(spec.targetH)}, ${fmt(spec.targetK)}).`
+          `The target is a = ${aWord(spec.targetA)} with vertex (${fmt(spec.targetH)}, ${fmt(spec.targetK)}).`
         );
       }
       const dir = v.a > 0 ? "opens upward" : v.a < 0 ? "opens downward" : "is flattened (a = 0)";
       return (
-        `The parabola is y = ${fmt(v.a)}(x − ${fmt(v.h)})² + ${fmt(v.k)}: vertex at (${fmt(v.h)}, ${fmt(v.k)}), and it ${dir}. ` +
-        `The target is a = ${fmt(spec.targetA)} with vertex (${fmt(spec.targetH)}, ${fmt(spec.targetK)}).`
+        `The parabola is y = ${aWord(v.a)}(x − ${fmt(v.h)})² + ${fmt(v.k)}: vertex at (${fmt(v.h)}, ${fmt(v.k)}), and it ${dir}. ` +
+        `The target is a = ${aWord(spec.targetA)} with vertex (${fmt(spec.targetH)}, ${fmt(spec.targetK)}).`
       );
     }
     case "unitCircleExplore": {
@@ -646,6 +649,17 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
     }
     case "relatedRatesLab": {
       const v=(value as {x:number;moves:number}|null) ?? {x:spec.startX,moves:0};
+      /* (S238) Growth models narrate radius, size, and rate as exact π-multiples — the same
+       * numbers the sighted learner reads off the readout row. */
+      if (spec.model === "circleArea" || spec.model === "sphereVolume") {
+        const r = Math.max(1, Math.min(spec.ladderLength, v.x));
+        const rate = spec.horizontalRate;
+        if (spec.model === "sphereVolume") {
+          const vol = 4 * r * r * r;
+          return `A balloon of radius ${fmt(r)} growing at dr/dt = ${fmt(rate)}. Its volume is ${vol % 3 === 0 ? `${vol / 3}π` : `${vol}/3·π`} and dV/dt = 4πr²·dr/dt = ${fmt(4 * r * r * rate)}π. ${fmt(v.moves)} moves are recorded.`;
+        }
+        return `A disc of radius ${fmt(r)} growing at dr/dt = ${fmt(rate)}. Its area is ${fmt(r * r)}π and dA/dt = 2πr·dr/dt = ${fmt(2 * r * rate)}π. ${fmt(v.moves)} moves are recorded.`;
+      }
       const y=Math.sqrt(Math.max(0,spec.ladderLength**2-v.x**2));
       const dy=-(v.x/y)*spec.horizontalRate;
       /* Framing must match the pane (S205J): a screen-reader user in a slope lesson hears slope
