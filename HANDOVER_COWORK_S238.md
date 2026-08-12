@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,134 / 13,134      (9,654 + 3,480)
+vitest (2 shards)        13,141 / 13,141      (9,654 + 3,487)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -49,7 +49,9 @@ shipped (reading 672 / compact 768 / wide model 1024 / hero 1152-empty; six grap
 SVG cap 512→576) with pixel evidence in `S238_SCREENSHOTS/` · stale e2e assertions fixed
 stricter. **Batch 2:** `plotData` extended to `McqSpec` and 10 of the 16 inline-dataset rows
 wired (family status: 10 done, 4 blocked on §5 rulings, 2 blocked on a dots-vs-X glyph ruling);
-content-change proof 866→867; owed `gen:reports` head regenerated. Details and rationale:
+content-change proof 866→867; owed `gen:reports` head regenerated. **Batch 3:** unitChain's 82
+label collisions → 0, proven over every authored spec × reachable state; SliderW's range renamed
+to what it sets (estimateSlider house pattern). Details and rationale:
 `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
@@ -64,11 +66,13 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 ## 3. Suggested next actions (Plan v3 order, S237 measurements intact)
 
-1. **`unitChain` label collisions** (82 of the 267 measured; the gate
-   `widgets.labelCollision.s237` already exists — extend it to the engine, then fix).
-2. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
+1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
    distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
-3. `distributionCompareLab` collisions (48) next by count.
+2. `distributionCompareLab` collisions (48) — next by count now that unitChain's 82 are closed
+   (batch 3; corpus-complete state sweep in the gate is the pattern to copy). Then
+   `slopeTriangle` (25), `samplingBiasLab` (14).
+3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
+   execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
 
 Environment traps (S237 §6) all still apply: kill `next start` by pid before rebuilding; never
