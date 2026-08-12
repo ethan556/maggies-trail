@@ -474,6 +474,44 @@ pinned by name. Pixel evidence: `S238_SCREENSHOTS/18-fig-*.png` (eight captures)
 Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 137 pairs / 120 figures, ratcheted**.
 Everything left is 1–3 pairs; the flat tail continues by pairs × uses.
 
+## Wave 14 (same session, "bigger batches"): the entire 120-figure tail — 137 → 0. LEDGER CLOSED
+
+Three chunks instead of one wave-sized bite, per the user's instruction. Chunk A (30 figures,
+33 text edits + 8 scoped viewBox growths) 137 → 99; chunk B (31 figures, 44 edits + 8 growths)
+99 → 68; chunk C (the remaining 64 figures, 121 edits in one scoped, assert-all-before-write
+patch) 68 → 0. **The figures.tsx ledger closes: 352 → 0 colliding pairs across all 1,871
+registered figures**, five waves after it opened.
+
+Chunk C's recurring shapes were by now familiar — caption-band pitches opened from 12 to 14,
+side-by-side fs-11 pairs re-set at the fs-10 floor with a nudge, over-wide captions split into
+two lines with a scoped viewBox growth (perp-bisector-stage2/3/why, square-vs-cube-solutions,
+sp-same-gap-different-verdict, nls-substitute-recipe), tick labels dodged data-driven
+(si-moe-vs-n's 100/400), and one genuine redundancy DELETED: synthetic-division drew the
+remainder "0" twice at the identical position (the row map's white copy under the berry
+highlight) — the map now skips the highlighted column.
+
+READING the screenshots caught seven more things the box model cannot see: ti-twin-ladder's
+"+2πk family" caption and synthetic-division's bottom instruction ran off the right edge;
+iar-name-the-failure's and nls-substitute-recipe's morals ran off both edges (each split in
+two); regroup-bundle's and unbundle-break's fs-13 headlines clipped both sides (shortened —
+the panel labels already carry the trade story); tm8-reflect-rule's rule text ended exactly on
+the reflected point's dot; sy-dilation-parallel's "image" label sat on its dashed segment; and
+lc-partial-sums' bars rendered BLACK — `fill="{SKY}"` had literal braces (an invalid color)
+since authoring, fixed to the intended SKY. The re-sweep after these fixes caught the
+iar-name-the-failure split's own first draft at pitch 12 (0.6 overlap) — the sweep catching
+the fix's fix, exactly as designed.
+
+The ratchet is REWRITTEN for a closed ledger: the baseline is EMPTY, every one of the 1,871
+figures must render zero pairs, and the two named cohorts (the 78 wave-10–13 fixes, the 120
+wave-14 fixes) are pinned by name so a regression says which fix broke. The opt-in sweep's
+table is empty; re-run FIGURE_SWEEP=1 after any figure edit to keep it so. Vitest shard 2 is
+3,508 (+1: the ratchet's third, named-cohort test). Pixel evidence: 22 chunk-C captures +
+10 recaptures read this wave.
+
+Ledger state: **widgets.tsx 0 pairs · figures.tsx 0 pairs — both ledgers CLOSED**. Next in
+the user-ordered queue: NumericW accessible-name rename → WS-C direct manipulation → the 8
+NOT-POSSIBLE engine rows.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

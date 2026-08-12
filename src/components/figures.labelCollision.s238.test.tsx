@@ -1,25 +1,14 @@
 // @vitest-environment jsdom
 /**
- * S238 wave 10 — THE FIGURES LEDGER RATCHET (always-on).
+ * S238 waves 10–14 — THE FIGURES LEDGER RATCHET (always-on).
  *
  * figuresCollision.s238.test.tsx (opt-in, FIGURE_SWEEP=1) MEASURES the ledger; this file
- * FREEZES it. The baseline below is the measured remainder — 120 figures still carrying
- * label collisions after waves 10–13 closed the worst by exposure (pairs × authored uses):
- * 352 → 307 → 267 → 197 → 137 pairs. Fixed so far: compound-event-tree,
- * two-population-compare, si-claim-ladder, side-splitter, si-study-types, probability-line,
- * dr-tangent-line, ca-first-derivative-story, dd-pipeline, in-ftc-slope-is-height,
- * ia-strip-to-disc, dpv-round-whole, line-plot, magnitude-scale, equation-solution-types,
- * lc-indeterminate, sample-to-population, dop-remainder, line-intercepts,
- * si-accuracy-precision, sc-taylor-hug-peel, dr-e-self-derivative, mult3-which-op,
- * substitution-flow, dr-implicit-circle.
- *
- * BASELINE SEMANTICS — a ratchet, exactly like the accessibleParity one:
- *   · a figure NOT in the baseline must render with ZERO colliding pairs — a new collision
- *     anywhere in the 1,871-figure registry fails immediately;
- *   · a listed figure may only get BETTER — more pairs than its baseline fails;
- *   · a listed figure that reaches zero must LEAVE the list — the stale-entry check fails
- *     until it does, so the baseline is always exactly the dirty set, never an archive.
- * Entries only ever leave. Do not add to this list to make a build pass.
+ * FREEZES it. Waves 10–13 closed the worst 78 figures by exposure (pairs × authored uses):
+ * 352 → 307 → 267 → 197 → 137 pairs. Wave 14 closed the ENTIRE 120-figure remainder in
+ * three chunks: 137 → 99 → 68 → 0. The ledger is CLOSED: the baseline is empty, and every
+ * one of the 1,871 registered figures must render with ZERO colliding text pairs. A new
+ * collision anywhere in the registry fails immediately. Do not reintroduce a baseline to
+ * make a build pass — fix the figure.
  *
  * The box model's honesty rules apply (textBoxes.testkit.ts): rotated labels and tspans are
  * not modelled here — the opt-in sweep counts those per figure (156 corpus-wide) so nothing
@@ -30,131 +19,10 @@ import { cleanup, render } from "@testing-library/react";
 import { FIGURES } from "./figures";
 import { collisions, scanTextBoxes, describeCollision } from "./textBoxes.testkit";
 
-const BASELINE = new Map<string, number>([
-  ["as100-odd-even", 1],
-  ["as100-sub-tens-40", 1],
-  ["avp-distance-definition", 1],
-  ["avp-open-closed-circle", 2],
-  ["avp-pick-branch-then-apply", 2],
-  ["avp-right-side-decides", 2],
-  ["avp-same-distance-different-side", 1],
-  ["both-sides-scale", 1],
-  ["bt-theorem-line", 1],
-  ["bv-three-diagnoses", 2],
-  ["centroid", 1],
-  ["cg-pair-terms", 1],
-  ["chart-down-ten", 1],
-  ["circle-equation-distance", 1],
-  ["circumcenter", 1],
-  ["cn-four-methods", 1],
-  ["cnp-drawing-vs-proof", 1],
-  ["co-parabola-def", 1],
-  ["composition-path", 1],
-  ["cr-linear-vs-quadratic", 1],
-  ["cross-sections", 1],
-  ["distance-right-triangle", 1],
-  ["dm-least-precise-wins", 2],
-  ["dm-shape-outlier", 1],
-  ["dop-order-matters", 1],
-  ["dop-partial-products", 1],
-  ["dop-standard-algo", 1],
-  ["dpv-place-names", 1],
-  ["ev-weighted-not-plain", 1],
-  ["exp-mirror", 1],
-  ["exponent-unfold", 2],
-  ["extraneous-intersection", 2],
-  ["fna-hlt", 1],
-  ["fna-properties-anywhere", 2],
-  ["fna-secant-aroc", 1],
-  ["formula-rearrange", 1],
-  ["ft-inverse-swap", 1],
-  ["g7-aaa-same-shape", 1],
-  ["g7-perp-bisector-arcs", 1],
-  ["geo3-square-is-rect", 1],
-  ["gf-figure-vs-measure", 1],
-  ["gf-notation-hats", 1],
-  ["hole-vs-asymptote", 1],
-  ["hundred-more", 1],
-  ["iar-dashed-solid-rule", 1],
-  ["iar-name-the-failure", 1],
-  ["iar-region-corners", 1],
-  ["incenter", 1],
-  ["inverse-reflection", 2],
-  ["kite-diagonals", 1],
-  ["lc-partial-sums", 1],
-  ["lcd-clear", 1],
-  ["lf-same-line", 1],
-  ["mc-classify-angles", 1],
-  ["mc-length-ladder", 1],
-  ["mean-outlier-pull", 1],
-  ["near-double", 2],
-  ["nls-horizontal-cases", 1],
-  ["nls-no-phantom-here", 1],
-  ["nls-substitute-recipe", 1],
-  ["odometer-roll", 1],
-  ["partition-ratio", 1],
-  ["perp-bisector-stage2", 1],
-  ["perp-bisector-stage3", 1],
-  ["perp-bisector-why", 1],
-  ["perpendicular-rotation", 1],
-  ["place-value-ladder", 1],
-  ["pp-limacon", 1],
-  ["pr-percent-change", 1],
-  ["pr-which-on-top", 1],
-  ["pr7-commission-split", 1],
-  ["pr7-error-vs-size", 1],
-  ["pr7-flat-fee", 1],
-  ["pr7-interest-over-time", 1],
-  ["pr7-k-three-ways", 1],
-  ["pv1000-placeholder-507", 1],
-  ["pv4-carry-chain", 1],
-  ["pv4-ladder", 2],
-  ["ratio-groups", 1],
-  ["regroup-bundle", 1],
-  ["rno-change-sign", 1],
-  ["rno-opposites-cancel", 1],
-  ["rno7-sign-rules", 2],
-  ["rns-predict-decimal", 1],
-  ["rns-rational-def", 1],
-  ["sa7-lateral-shortcut", 1],
-  ["sa7-many-correct-cuts", 1],
-  ["sa7-same-rule-any-base", 1],
-  ["sa7-triangular-prism-parts", 2],
-  ["sa7-units-squared", 1],
-  ["shape-attributes", 1],
-  ["si-empirical-rule", 1],
-  ["si-moe-vs-n", 1],
-  ["smg1-half-ways", 1],
-  ["smg1-pizza-share", 1],
-  ["sp-overlap", 1],
-  ["sp-same-gap-different-verdict", 1],
-  ["sp7-prob-scale", 1],
-  ["sp7-tree", 2],
-  ["square-vs-cube-solutions", 1],
-  ["ssa-ambiguous", 2],
-  ["ssg2-thirds-vs-fourths", 1],
-  ["sy-dilation-parallel", 1],
-  ["synthetic-division", 1],
-  ["tangent-radius", 1],
-  ["thales-right-angle", 1],
-  ["ti-six-functions", 1],
-  ["ti-twin-ladder", 2],
-  ["tm8-reflect-rule", 1],
-  ["tno-add-tens-66", 1],
-  ["tno-add-tens-85", 1],
-  ["tno-digits-72", 1],
-  ["tno-sub-tens-50", 1],
-  ["tse-balance-same-both", 1],
-  ["tse-undo-order-track", 2],
-  ["tse7-factor-gcf-choice", 1],
-  ["tse7-factor-two-ways", 1],
-  ["unbundle-break", 1],
-  ["vec-components", 1],
-  ["vec-tiptotail", 1],
-]);
+const BASELINE = new Map<string, number>([]);
 
 describe("figures.tsx label collisions — the ratchet", () => {
-  it("no figure outside the baseline collides; listed figures only get better; fixed ones leave", () => {
+  it("every registered figure renders with zero colliding pairs (ledger closed, wave 14)", () => {
     const worse: string[] = [];
     const stale: string[] = [];
     let measured = 0;
@@ -204,6 +72,52 @@ describe("figures.tsx label collisions — the ratchet", () => {
       "approaching-e", "sigma-anatomy", "angle-pairs", "undefined-terms-trio",
       "ft-inverse-reversed-machine", "esn8-zero-exponent", "cpr-row-vs-column",
       "pc-polar-wedge", "se-graph-cross", "as-fact-family", "pra-pipeline"
+    ]) {
+      const F = FIGURES[id];
+      expect(F, `${id} left the registry`).toBeDefined();
+      const { container } = render(<F />);
+      for (const svg of Array.from(container.querySelectorAll("svg"))) {
+        const { boxes } = scanTextBoxes(svg);
+        expect(collisions(boxes).map(describeCollision), id).toEqual([]);
+      }
+      cleanup();
+    }
+  });
+
+  it("the hundred-and-twenty wave-14 fixes hold at exactly zero, by name", () => {
+    // The entire former baseline — wave 14's three chunks emptied it. Named so a regression
+    // says which fix broke rather than reporting a generic ratchet violation.
+    for (const id of [
+      "as100-odd-even", "as100-sub-tens-40", "avp-distance-definition", "avp-open-closed-circle",
+      "avp-pick-branch-then-apply", "avp-right-side-decides", "avp-same-distance-different-side", "both-sides-scale",
+      "bt-theorem-line", "bv-three-diagnoses", "centroid", "cg-pair-terms",
+      "chart-down-ten", "circle-equation-distance", "circumcenter", "cn-four-methods",
+      "cnp-drawing-vs-proof", "co-parabola-def", "composition-path", "cr-linear-vs-quadratic",
+      "cross-sections", "distance-right-triangle", "dm-least-precise-wins", "dm-shape-outlier",
+      "dop-order-matters", "dop-partial-products", "dop-standard-algo", "dpv-place-names",
+      "ev-weighted-not-plain", "exp-mirror", "exponent-unfold", "extraneous-intersection",
+      "fna-hlt", "fna-properties-anywhere", "fna-secant-aroc", "formula-rearrange",
+      "ft-inverse-swap", "g7-aaa-same-shape", "g7-perp-bisector-arcs", "geo3-square-is-rect",
+      "gf-figure-vs-measure", "gf-notation-hats", "hole-vs-asymptote", "hundred-more",
+      "iar-dashed-solid-rule", "iar-name-the-failure", "iar-region-corners", "incenter",
+      "inverse-reflection", "kite-diagonals", "lc-partial-sums", "lcd-clear",
+      "lf-same-line", "mc-classify-angles", "mc-length-ladder", "mean-outlier-pull",
+      "near-double", "nls-horizontal-cases", "nls-no-phantom-here", "nls-substitute-recipe",
+      "odometer-roll", "partition-ratio", "perp-bisector-stage2", "perp-bisector-stage3",
+      "perp-bisector-why", "perpendicular-rotation", "place-value-ladder", "pp-limacon",
+      "pr-percent-change", "pr-which-on-top", "pr7-commission-split", "pr7-error-vs-size",
+      "pr7-flat-fee", "pr7-interest-over-time", "pr7-k-three-ways", "pv1000-placeholder-507",
+      "pv4-carry-chain", "pv4-ladder", "ratio-groups", "regroup-bundle",
+      "rno-change-sign", "rno-opposites-cancel", "rno7-sign-rules", "rns-predict-decimal",
+      "rns-rational-def", "sa7-lateral-shortcut", "sa7-many-correct-cuts", "sa7-same-rule-any-base",
+      "sa7-triangular-prism-parts", "sa7-units-squared", "shape-attributes", "si-empirical-rule",
+      "si-moe-vs-n", "smg1-half-ways", "smg1-pizza-share", "sp-overlap",
+      "sp-same-gap-different-verdict", "sp7-prob-scale", "sp7-tree", "square-vs-cube-solutions",
+      "ssa-ambiguous", "ssg2-thirds-vs-fourths", "sy-dilation-parallel", "synthetic-division",
+      "tangent-radius", "thales-right-angle", "ti-six-functions", "ti-twin-ladder",
+      "tm8-reflect-rule", "tno-add-tens-66", "tno-add-tens-85", "tno-digits-72",
+      "tno-sub-tens-50", "tse-balance-same-both", "tse-undo-order-track", "tse7-factor-gcf-choice",
+      "tse7-factor-two-ways", "unbundle-break", "vec-components", "vec-tiptotail",
     ]) {
       const F = FIGURES[id];
       expect(F, `${id} left the registry`).toBeDefined();

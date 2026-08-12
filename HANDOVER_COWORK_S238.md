@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,172 passing       (9,665 + 3,507; +2 opt-in sweep skips)
+vitest (2 shards)        13,173 passing       (9,665 + 3,508; +2 opt-in sweep skips)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -68,8 +68,9 @@ widget-label change. The parity ratchet caught one regression en route (absValue
 range vs a suppressed edge label — fixed in the engine, baseline untouched). **Wave 9:** the
 user's four rulings landed — two graded-wrong prose fixes, the dot glyph, the mixed-number
 axis — closing the plotData family at 19 of 20 (dd-02-01/k2 excluded by leakage policy, a
-decision not a debt). Next queue, user-ordered: figures.tsx ledger → NumericW rename → WS-C →
-the 8 NOT-POSSIBLE engines. Details and rationale: `PREMIUM_REBUILD_S238_EXECUTION.md`.
+decision not a debt). **Waves 10–14: the figures.tsx ledger opened at 352 pairs and CLOSED at
+0** — see §3 item 2. Next queue, user-ordered: NumericW rename → WS-C → the 8 NOT-POSSIBLE
+engines. Details and rationale: `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
 count-vs-value distractor collapses onto the key: stacks 2,6,3,1 over 5,6,7,8 make mode = count
@@ -92,16 +93,17 @@ height; their real growth is WS-C side panels, not a bigger square.
    (item 4) are queued as an engine project. Proof count is now 870/870.
 2. ~~The collision tail~~ CLOSED in batch 8 — the sweep reports zero pairs corpus-wide.
    Re-run COLLISION_SWEEP=1 after any widget-label change to keep the table empty.
-   **Wave 10 then OPENED the figures.tsx ledger**: all 1,871 registered figures measured
-   (FIGURE_SWEEP=1 …figuresCollision.s238.test.tsx → COWORK_CACHE/
+   **Waves 10–14 then opened AND CLOSED the figures.tsx ledger**: all 1,871 registered
+   figures measured (FIGURE_SWEEP=1 …figuresCollision.s238.test.tsx → COWORK_CACHE/
    figure-collision-remainder-s238.csv, usage-weighted), the seventy-eight worst by exposure
-   closed across waves 10–13 (352 → 137 pairs; the IntLine and Pv3NumLine shared-helper fixes
-   each closed whole figure families), and the 120-figure remainder FROZEN by an always-on
-   ratchet
-   (figures.labelCollision.s238.test.tsx): unlisted figures must be clean, listed ones may
-   only improve, fixed ones must leave the baseline. Continue down the CSV by pairs × uses;
-   respect the 10-unit font floor (figures.test.ts) when re-laying labels — it caught one
-   of wave 10's own first drafts.
+   closed across waves 10–13 (352 → 137; IntLine and Pv3NumLine shared-helper fixes closed
+   whole families), then wave 14 closed the entire 120-figure tail in three chunks
+   (137 → 99 → 68 → 0). **figures.tsx: 0 colliding pairs.** The always-on ratchet
+   (figures.labelCollision.s238.test.tsx) now enforces a CLOSED ledger: empty baseline, every
+   figure must render zero pairs, both fix cohorts (78 + 120) pinned by name. Re-run the
+   opt-in sweep after ANY figure edit; its table is empty — keep it so. Respect the 10-unit
+   font floor (figures.test.ts) when re-laying labels. Wave 14's reading catches included a
+   figure whose bars had rendered black since authoring (fill="{SKY}" — literal braces).
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
