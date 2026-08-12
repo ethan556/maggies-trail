@@ -94,9 +94,9 @@ height; their real growth is WS-C side panels, not a bigger square.
    Re-run COLLISION_SWEEP=1 after any widget-label change to keep the table empty.
    **Wave 10 then OPENED the figures.tsx ledger**: all 1,871 registered figures measured
    (FIGURE_SWEEP=1 …figuresCollision.s238.test.tsx → COWORK_CACHE/
-   figure-collision-remainder-s238.csv, usage-weighted), the twenty-five worst by exposure
-   closed across waves 10–11 (352 → 267 pairs), and the 173-figure remainder FROZEN by an
-   always-on ratchet
+   figure-collision-remainder-s238.csv, usage-weighted), the forty-eight worst by exposure
+   closed across waves 10–12 (352 → 197 pairs; the IntLine shared-helper fix alone closed all
+   four rno7 figures), and the 150-figure remainder FROZEN by an always-on ratchet
    (figures.labelCollision.s238.test.tsx): unlisted figures must be clean, listed ones may
    only improve, fixed ones must leave the baseline. Continue down the CSV by pairs × uses;
    respect the 10-unit font floor (figures.test.ts) when re-laying labels — it caught one

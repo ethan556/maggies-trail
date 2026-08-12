@@ -3,9 +3,9 @@
  * S238 wave 10 — THE FIGURES LEDGER RATCHET (always-on).
  *
  * figuresCollision.s238.test.tsx (opt-in, FIGURE_SWEEP=1) MEASURES the ledger; this file
- * FREEZES it. The baseline below is the measured remainder — 173 figures still carrying
- * label collisions after wave 10 closed the ten worst by exposure (pairs × authored uses)
- * and wave 11 the next fifteen: 352 → 307 → 267 pairs. Fixed so far: compound-event-tree,
+ * FREEZES it. The baseline below is the measured remainder — 150 figures still carrying
+ * label collisions after waves 10–12 closed the worst by exposure (pairs × authored uses):
+ * 352 → 307 → 267 → 197 pairs. Fixed so far: compound-event-tree,
  * two-population-compare, si-claim-ladder, side-splitter, si-study-types, probability-line,
  * dr-tangent-line, ca-first-derivative-story, dd-pipeline, in-ftc-slope-is-height,
  * ia-strip-to-disc, dpv-round-whole, line-plot, magnitude-scale, equation-solution-types,
@@ -42,7 +42,6 @@ const BASELINE = new Map<string, number>([
   ["avp-right-side-decides", 2],
   ["avp-same-distance-different-side", 1],
   ["both-sides-scale", 1],
-  ["bt-probability-expansion", 5],
   ["bt-theorem-line", 1],
   ["bv-three-diagnoses", 2],
   ["centroid", 1],
@@ -52,19 +51,12 @@ const BASELINE = new Map<string, number>([
   ["circumcenter", 1],
   ["cn-four-methods", 1],
   ["cnp-drawing-vs-proof", 1],
-  ["co-conic-type", 5],
   ["co-parabola-def", 1],
   ["composition-path", 1],
-  ["cpr-event-as-set", 5],
-  ["cpr-indep-vs-disjoint", 1],
-  ["cpr-permutation-slots", 2],
   ["cpr-row-vs-column", 1],
   ["cr-linear-vs-quadratic", 1],
   ["cross-sections", 1],
-  ["dc-lhopital-tangents", 1],
-  ["dc-speeding-up-signs", 2],
   ["dd-stat-question", 2],
-  ["defined-terms-anatomy", 7],
   ["dilation-scale", 1],
   ["distance-right-triangle", 1],
   ["distribution-story", 1],
@@ -80,7 +72,6 @@ const BASELINE = new Map<string, number>([
   ["ev-weighted-not-plain", 1],
   ["exp-mirror", 1],
   ["exponent-unfold", 2],
-  ["extended-shapes", 2],
   ["extraneous-intersection", 2],
   ["fna-hlt", 1],
   ["fna-properties-anywhere", 2],
@@ -90,7 +81,6 @@ const BASELINE = new Map<string, number>([
   ["ft-inverse-swap", 1],
   ["g7-aaa-same-shape", 1],
   ["g7-perp-bisector-arcs", 1],
-  ["gauss-pairing", 6],
   ["geo3-square-is-rect", 1],
   ["gf-figure-vs-measure", 1],
   ["gf-notation-hats", 1],
@@ -109,7 +99,6 @@ const BASELINE = new Map<string, number>([
   ["lf-same-line", 1],
   ["mc-classify-angles", 1],
   ["mc-length-ladder", 1],
-  ["md3-lineplot", 3],
   ["mean-outlier-pull", 1],
   ["near-double", 2],
   ["nls-horizontal-cases", 1],
@@ -118,7 +107,6 @@ const BASELINE = new Map<string, number>([
   ["odometer-roll", 1],
   ["partition-ratio", 1],
   ["pc-polar-wedge", 1],
-  ["percent-price", 2],
   ["perp-bisector-stage2", 1],
   ["perp-bisector-stage3", 1],
   ["perp-bisector-why", 1],
@@ -133,7 +121,6 @@ const BASELINE = new Map<string, number>([
   ["pr7-flat-fee", 1],
   ["pr7-interest-over-time", 1],
   ["pr7-k-three-ways", 1],
-  ["pr7-point-1k", 5],
   ["pra-pipeline", 2],
   ["pv1000-placeholder-507", 1],
   ["pv3-borrow-zero", 1],
@@ -141,18 +128,13 @@ const BASELINE = new Map<string, number>([
   ["pv4-carry-chain", 1],
   ["pv4-ladder", 2],
   ["pv4-round-place", 1],
-  ["quad-family-tree", 1],
   ["ratio-groups", 1],
   ["regroup-bundle", 1],
   ["rigid-transformations", 1],
   ["rno-change-sign", 1],
   ["rno-opposites-cancel", 1],
   ["rno-same-sign", 2],
-  ["rno7-add-diff-line", 7],
-  ["rno7-add-same-line", 3],
-  ["rno7-change-line", 1],
   ["rno7-sign-rules", 2],
-  ["rno7-zero-pair", 3],
   ["rns-predict-decimal", 1],
   ["rns-rational-def", 1],
   ["sa7-lateral-shortcut", 1],
@@ -162,16 +144,12 @@ const BASELINE = new Map<string, number>([
   ["sa7-units-squared", 1],
   ["se-graph-cross", 2],
   ["shape-attributes", 1],
-  ["si-confounding", 2],
-  ["si-effect-vs-significance", 1],
   ["si-empirical-rule", 1],
   ["si-margin-band", 1],
   ["si-moe-vs-n", 1],
-  ["si-null-pile", 1],
   ["sigma-anatomy", 3],
   ["smg1-half-ways", 1],
   ["smg1-pizza-share", 1],
-  ["sohcahtoa-triangle", 2],
   ["solid-shapes", 2],
   ["sp-gap-vs-wobble", 2],
   ["sp-overlap", 1],
@@ -201,7 +179,6 @@ const BASELINE = new Map<string, number>([
   ["undefined-terms-trio", 3],
   ["vec-components", 1],
   ["vec-compose", 4],
-  ["vec-dot-angle", 3],
   ["vec-tiptotail", 1],
   ["vm-line-plot-read", 3],
 ]);
@@ -232,7 +209,7 @@ describe("figures.tsx label collisions — the ratchet", () => {
     expect(stale, "these figures are FIXED — remove them from the baseline so the ratchet tightens").toEqual([]);
   }, 300_000);
 
-  it("the twenty-five wave-10/11 fixes hold at exactly zero, by name", () => {
+  it("the forty-eight wave-10/11/12 fixes hold at exactly zero, by name", () => {
     // Redundant with the ratchet above, but named: these are the fixes this wave shipped,
     // and a regression should say so rather than reporting a generic baseline violation.
     for (const id of [
@@ -242,7 +219,13 @@ describe("figures.tsx label collisions — the ratchet", () => {
       "ia-strip-to-disc", "dpv-round-whole", "line-plot", "magnitude-scale",
       "equation-solution-types", "lc-indeterminate", "sample-to-population", "dop-remainder",
       "line-intercepts", "si-accuracy-precision", "sc-taylor-hug-peel", "dr-e-self-derivative",
-      "mult3-which-op", "substitution-flow", "dr-implicit-circle"
+      "mult3-which-op", "substitution-flow", "dr-implicit-circle",
+      "rno7-add-diff-line", "rno7-add-same-line", "rno7-zero-pair", "rno7-change-line",
+      "defined-terms-anatomy", "cpr-permutation-slots", "dc-speeding-up-signs", "vec-dot-angle",
+      "quad-family-tree", "extended-shapes", "percent-price", "md3-lineplot", "gauss-pairing",
+      "sohcahtoa-triangle", "cpr-event-as-set", "si-null-pile", "co-conic-type", "pr7-point-1k",
+      "bt-probability-expansion", "cpr-indep-vs-disjoint", "si-confounding",
+      "si-effect-vs-significance", "dc-lhopital-tangents"
     ]) {
       const F = FIGURES[id];
       expect(F, `${id} left the registry`).toBeDefined();

@@ -421,9 +421,39 @@ its canvas AND wider than it (caption tightened to "one ✕ per pencil: …" —
 authored prose). The ratchet baseline tightened 188 → 173 with all twenty-five fixes pinned by
 name. Pixel evidence: `S238_SCREENSHOTS/16-fig-*.png` (eight captures).
 
-Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 267 pairs / 173 figures, ratcheted**.
-Next by weight: rno7-add-diff-line (7 pairs), defined-terms-anatomy (7), cpr-permutation-slots,
-dc-speeding-up-signs, vec-dot-angle, quad-family-tree, extended-shapes (see the CSV).
+## Wave 12 (same session): twenty-three more figures — 267 → 197 pairs, baseline 173 → 150
+
+The highest-leverage single fix was a SHARED HELPER: `IntLine` (the integer number line all
+four rno7 figures draw) carried three defect classes at once — jump labels riding into every
+caller's title (y default 52 → 58), adjacent tick labels overlapping on wide ranges (a 2-char
+"-6" is 14.4 units against 13.5-unit spacing — wide ranges now label only even ticks, marks
+stay), and same-midpoint jumps stacking their labels (0→5 then 5→0 — labels now nudge APART;
+the first nudge draft pushed them across each other and the re-sweep caught it). One helper
+edit closed rno7-add-diff-line (7), rno7-add-same-line (3), rno7-zero-pair (3),
+rno7-change-line (1).
+
+Structural rebuilds: **defined-terms-anatomy** (four caption bands crowded into one strip —
+quadrants re-seated on a 340×200 canvas, every caption in its own band),
+**gauss-pairing** (four pair-labels shared one arc midpoint — now a stacked column under the
+arcs), **cpr-indep-vs-disjoint** (both panel captions were wider than their panels — split
+into two lines each, rows restacked), **co-conic-type** (the condition column got the width
+its longest entry needs — canvas 260). The rest were seat moves and band separations:
+cpr-permutation-slots (staggered notes), dc-speeding-up-signs (wider right column),
+vec-dot-angle (three crowded under-axis labels re-banded), quad-family-tree, extended-shapes
+(octagon caption to its own row), percent-price (percent tags centered in the inter-bar gap),
+md3-lineplot (16-unit ✕ pitch), sohcahtoa-triangle ("opp = 3" end-anchored inside the
+triangle, clear of the ratio column), cpr-event-as-set / si-null-pile / pr7-point-1k /
+bt-probability-expansion (caption bands dropped clear, canvases grown — bt's caption had
+also been CLIPPED below its 110-tall canvas), si-confounding, si-effect-vs-significance,
+dc-lhopital-tangents.
+
+The ratchet baseline was REWRITTEN from the fresh sweep (150 entries) rather than hand-pruned,
+and all forty-eight wave-10/11/12 fixes are pinned by name. Pixel evidence:
+`S238_SCREENSHOTS/17-fig-*.png` (ten captures).
+
+Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 197 pairs / 150 figures, ratcheted**.
+The remaining tail is flat (nothing above 5 pairs, most at 1–2) — continue down the CSV by
+pairs × uses, in bigger sweeps now that the shapes repeat.
 
 ## What S238 did NOT do (open, in Plan v3 priority order)
 

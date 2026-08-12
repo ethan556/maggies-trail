@@ -46,7 +46,7 @@ function QuadFamilyTree() {
       <text x={262} y={104} textAnchor="middle" fontSize={10} fill={INK} opacity={0.65}>
         exactly one
       </text>
-      <text x={262} y={115} textAnchor="middle" fontSize={10} fill={INK} opacity={0.65}>
+      <text x={262} y={118} textAnchor="middle" fontSize={10} fill={INK} opacity={0.65}>
         parallel pair
       </text>
     </svg>
@@ -1987,26 +1987,36 @@ function CoordPlane({ maxX = 5, maxY = 5, k, points, lineLabel }: { maxX?: numbe
 /** Grade 7 two-step-equations figure: −2(x − 6) = −2x + 12. */
 
 /** Grade 7 — a signed integer number line lo..hi with optional directed jumps and a landing dot. */
-function IntLine({ lo, hi, jumps, land, landLabel, y = 52 }: { lo: number; hi: number; jumps?: { from: number; to: number; color: string; label: string }[]; land?: number; landLabel?: string; y?: number }) {
+function IntLine({ lo, hi, jumps, land, landLabel, y = 58 }: { lo: number; hi: number; jumps?: { from: number; to: number; color: string; label: string }[]; land?: number; landLabel?: string; y?: number }) {
+  // S238 wave 12: y default 52 → 58 (the jump labels used to ride into every caller's title);
+  // wide ranges label only even ticks (a 2-char "-6" is 14.4 units against 13.5-unit spacing);
+  // jumps that share a midpoint (0→5 then 5→0) nudge their labels apart instead of stacking.
   const x0 = 22, x1 = 198;
   const px = (n: number) => x0 + ((n - lo) / (hi - lo)) * (x1 - x0);
   const ticks: number[] = [];
   for (let v = lo; v <= hi; v++) ticks.push(v);
+  const stride = hi - lo > 9 ? 2 : 1;
+  const mids = (jumps ?? []).map((j) => (px(j.from) + px(j.to)) / 2);
   return (
     <g>
       <line x1={x0} y1={y} x2={x1} y2={y} stroke={INK} strokeWidth={1.8} />
       {ticks.map((v) => (
         <g key={v}>
           <line x1={px(v)} y1={y - 5} x2={px(v)} y2={y + 5} stroke={INK} strokeWidth={1} />
-          <text x={px(v)} y={y + 18} fontSize="10" fill={INK} textAnchor="middle">{v}</text>
+          {v % stride === 0 && (
+            <text x={px(v)} y={y + 18} fontSize="10" fill={INK} textAnchor="middle">{v}</text>
+          )}
         </g>
       ))}
       {(jumps ?? []).map((j, i) => {
-        const midX = (px(j.from) + px(j.to)) / 2;
+        const midX = mids[i];
+        const twin = mids.findIndex((m, k) => k !== i && Math.abs(m - midX) < 30);
+        const away = twin !== -1 && (midX > mids[twin] || (midX === mids[twin] && i > twin));
+        const lx = twin === -1 ? midX : midX + (away ? 16 : -16);
         return (
           <g key={i}>
             <path d={`M ${px(j.from)} ${y - 8} Q ${midX} ${y - 24} ${px(j.to)} ${y - 8}`} fill="none" stroke={j.color} strokeWidth={1.6} />
-            <text x={midX} y={y - 26} fontSize="10" fontWeight="700" fill={j.color} textAnchor="middle">{j.label}</text>
+            <text x={lx} y={y - 26} fontSize="10" fontWeight="700" fill={j.color} textAnchor="middle">{j.label}</text>
           </g>
         );
       })}
@@ -2546,10 +2556,10 @@ function Pr7Origin() {
 /** Grade 7 proportional-relationships figure: The point (1, k) shows the unit rate. */
 function Pr7Point1k() {
   return (
-    <svg viewBox="0 0 210 116" role="img" aria-label="On a proportional graph, the point one-comma-k shows the unit rate directly; here the point one-four means the unit rate is four.">
+    <svg viewBox="0 0 210 128" role="img" aria-label="On a proportional graph, the point one-comma-k shows the unit rate directly; here the point one-four means the unit rate is four.">
       <title>The point (1, k) shows the unit rate.</title>
       <CoordPlane maxX={5} maxY={5} k={1.6} points={[{x:1,y:4,label:"(1,4)"}]} />
-      <text x="105" y="112" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">x=1 → unit rate = 4</text>
+      <text x="105" y="124" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">x=1 → unit rate = 4</text>
     </svg>
   );
 }
@@ -4099,10 +4109,10 @@ function Md3LinePlot() {
       <title>A line plot with halves.</title>
       <line x1="30" y1="80" x2="190" y2="80" stroke={INK} strokeWidth={1.6} />
       {[0,1,2,3,4].map((i)=>{const x=30+i*40;return <g key={i}><line x1={x} y1="76" x2={x} y2="84" stroke={INK} strokeWidth={1.3}/><text x={x} y="96" fontSize="10" fill={INK} textAnchor="middle">{i/2}</text></g>;})}
-      <text x="70" y="40" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
-      <text x="70" y="54" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
+      <text x="70" y="36" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
+      <text x="70" y="52" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
       <text x="70" y="68" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
-      <text x="110" y="54" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
+      <text x="110" y="52" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
       <text x="110" y="68" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
       <text x="150" y="68" fontSize="12" fill={BERRY} textAnchor="middle">✕</text>
     </svg>
@@ -8537,7 +8547,7 @@ function GaussPairing() {
   const bx = (i: number) => x0 + i * (bw + gap);
   const css = `@media (prefers-reduced-motion: no-preference){.gp-arc{opacity:0;animation:gp-in .4s ease-out forwards}.gp-a1{animation-delay:.2s}.gp-a2{animation-delay:.45s}.gp-a3{animation-delay:.7s}.gp-a4{animation-delay:.95s}@keyframes gp-in{to{opacity:1}}}`;
   return (
-    <svg viewBox="0 0 340 182" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 340 238" role="img" className="mx-auto w-full max-w-sm">
       <title>Eight bars form a staircase of heights 1 through 8. Curved brackets pair the outermost bars inward: 1 with 8, 2 with 7, 3 with 6, 4 with 5. Every pair adds to 9, and four pairs of 9 make 36 — the whole staircase's total.</title>
       <style>{css}</style>
       {Array.from({ length: n }, (_, i) => (
@@ -8552,7 +8562,7 @@ function GaussPairing() {
         return (
           <g key={p} className={`gp-arc gp-a${p + 1}`}>
             <path d={`M${xa},${yBase} Q${(xa + xb) / 2},${yBase + rise} ${xb},${yBase}`} fill="none" stroke={TANGERINE} strokeWidth={2} strokeLinecap="round" />
-            <text x={(xa + xb) / 2} y={yBase + rise / 2 + 12} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={TANGERINE}>{p + 1} + {n - p} = {pairSum}</text>
+            <text x={170} y={186 + p * 14} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={TANGERINE}>{p + 1} + {n - p} = {pairSum}</text>
           </g>
         );
       })}
@@ -8637,7 +8647,7 @@ function SohCahToaTriangle() {
   // 3-4-5 right triangle, theta at the left vertex; machine facts: 3/5=0.6, 4/5=0.8, 3/4=0.75
   const ax = 40, ay = 168, bx = 232, by = 168, cx = 232, cy = 24;
   return (
-    <svg viewBox="0 0 340 200" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 340 206" role="img" className="mx-auto w-full max-w-sm">
       <title>A 3-4-5 right triangle with the angle theta at the left vertex. The side opposite theta, of length 3, is drawn in berry red. The side adjacent to theta, of length 4, is drawn in leaf green. The hypotenuse, of length 5, is drawn in sky blue. Callouts read: sine of theta equals opposite over hypotenuse equals 3 fifths; cosine equals adjacent over hypotenuse equals 4 fifths; tangent equals opposite over adjacent equals 3 fourths.</title>
       <polygon points={`${ax},${ay} ${bx},${by} ${cx},${cy}`} fill="#F3F7FD" stroke="none" />
       <rect x={bx - 14} y={by - 14} width={14} height={14} fill="none" stroke={INK} strokeWidth={1.4} />
@@ -8647,12 +8657,12 @@ function SohCahToaTriangle() {
       <path d={`M ${ax + 34} ${ay} A 34 34 0 0 0 ${ax + 34 * Math.cos(Math.atan2(ay - cy, cx - ax))} ${ay - 34 * Math.sin(Math.atan2(ay - cy, cx - ax))}`} fill="none" stroke={TANGERINE} strokeWidth={2.2} />
       <text x={ax + 46} y={ay - 10} fontSize={13} fontWeight={800} fill={TANGERINE}>θ</text>
       <text x={(ax + bx) / 2} y={ay + 16} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>adjacent = 4</text>
-      <text x={bx + 8} y={(by + cy) / 2 + 4} fontSize={11} fontWeight={800} fill={BERRY}>opp = 3</text>
+      <text x={bx - 8} y={(by + cy) / 2 + 4} textAnchor="end" fontSize={11} fontWeight={800} fill={BERRY}>opp = 3</text>
       <text x={(ax + cx) / 2 - 14} y={(ay + cy) / 2 - 10} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY} transform={`rotate(-37 ${(ax + cx) / 2 - 14} ${(ay + cy) / 2 - 10})`}>hypotenuse = 5</text>
       <text x={300} y={52} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>sin θ = 3/5</text>
       <text x={300} y={76} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>cos θ = 4/5</text>
       <text x={300} y={100} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>tan θ = 3/4</text>
-      <text x={170} y={196} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK} opacity={0.75}>SOH · CAH · TOA — each ratio names its two sides</text>
+      <text x={170} y={200} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK} opacity={0.75}>SOH · CAH · TOA — each ratio names its two sides</text>
     </svg>
   );
 }
@@ -9024,31 +9034,33 @@ function UndefinedTermsTrio() {
 /** Defined terms built from undefined ones: segment, ray, angle, and a circle as a locus. */
 function DefinedTermsAnatomy() {
   return (
-    <svg viewBox="0 0 300 170" role="img" aria-label="A segment DE, a ray FG, an angle HJK with an arc at J, and a circle centered at O with one radius drawn">
+    <svg viewBox="0 0 340 200" role="img" aria-label="A segment DE, a ray FG, an angle HJK with an arc at J, and a circle centered at O with one radius drawn">
       <title>A segment DE, a ray FG, an angle HJK with an arc at J, and a circle centered at O with one radius drawn</title>
+      {/* S238 wave 12: the old 300×170 canvas stacked four caption bands into one crowded
+          strip — quadrants re-seated so every caption owns its own band. */}
       <line x1={25} y1={45} x2={95} y2={45} stroke={SKY} strokeWidth={2} />
       <LabeledPoint x={25} y={45} label="D" dx={-4} dy={-8} />
       <LabeledPoint x={95} y={45} label="E" dy={-8} />
-      <text x={60} y={70} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>segment DE: two endpoints</text>
-      <line x1={25} y1={110} x2={88} y2={110} stroke={SKY} strokeWidth={2} />
-      <polygon points="95,110 85,105.5 85,114.5" fill={SKY} />
-      <LabeledPoint x={25} y={110} label="F" dx={-4} dy={-8} />
-      <LabeledPoint x={62} y={110} label="G" dy={-8} />
-      <text x={60} y={136} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>ray FG: one endpoint,</text>
-      <text x={60} y={150} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>one direction forever</text>
-      <line x1={135} y1={120} x2={195} y2={120} stroke={SKY} strokeWidth={2} />
-      <line x1={135} y1={120} x2={180} y2={55} stroke={SKY} strokeWidth={2} />
-      <AngleArc vx={135} vy={120} ax={195} ay={120} bx={180} by={55} r={17} color={TANGERINE} />
-      <LabeledPoint x={135} y={120} label="J" dx={-12} dy={4} />
-      <LabeledPoint x={180} y={55} label="H" dy={-6} />
-      <LabeledPoint x={195} y={120} label="K" dy={16} />
-      <text x={168} y={148} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>∠HJK: two rays, vertex J</text>
-      <circle cx={255} cy={75} r={32} fill="none" stroke={SKY} strokeWidth={2} />
-      <LabeledPoint x={255} y={75} label="O" dy={14} />
-      <line x1={255} y1={75} x2={287} y2={75} stroke={LEAF} strokeWidth={1.8} />
-      <text x={271} y={70} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>r</text>
-      <text x={255} y={128} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>circle: ALL points</text>
-      <text x={255} y={142} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>at distance r from O</text>
+      <text x={85} y={70} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>segment DE: two endpoints</text>
+      <line x1={25} y1={105} x2={88} y2={105} stroke={SKY} strokeWidth={2} />
+      <polygon points="95,105 85,100.5 85,109.5" fill={SKY} />
+      <LabeledPoint x={25} y={105} label="F" dx={-4} dy={-8} />
+      <LabeledPoint x={62} y={105} label="G" dy={-8} />
+      <text x={85} y={150} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>ray FG: one endpoint,</text>
+      <text x={85} y={164} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>one direction forever</text>
+      <line x1={185} y1={115} x2={245} y2={115} stroke={SKY} strokeWidth={2} />
+      <line x1={185} y1={115} x2={230} y2={50} stroke={SKY} strokeWidth={2} />
+      <AngleArc vx={185} vy={115} ax={245} ay={115} bx={230} by={50} r={17} color={TANGERINE} />
+      <LabeledPoint x={185} y={115} label="J" dx={-12} dy={4} />
+      <LabeledPoint x={230} y={50} label="H" dy={-6} />
+      <LabeledPoint x={245} y={115} label="K" dy={16} />
+      <text x={245} y={180} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>∠HJK: two rays, vertex J</text>
+      <circle cx={265} cy={64} r={28} fill="none" stroke={SKY} strokeWidth={2} />
+      <LabeledPoint x={265} y={64} label="O" dy={14} />
+      <line x1={265} y1={64} x2={293} y2={64} stroke={LEAF} strokeWidth={1.8} />
+      <text x={279} y={59} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>r</text>
+      <text x={265} y={102} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>circle: ALL points</text>
+      <text x={265} y={116} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>at distance r from O</text>
     </svg>
   );
 }
@@ -11193,12 +11205,12 @@ function ExtendedShapes() {
     return [150 + 26 * Math.cos(a), 50 + 26 * Math.sin(a)];
   });
   return (
-    <svg viewBox="0 0 260 130" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 280 130" role="img" className="mx-auto w-full max-w-sm">
       <title>A heptagon with seven sides, an octagon with eight sides, and a square pyramid with a square base and four triangular faces meeting at a point.</title>
       <polygon points={heptPts.map((p) => p.join(",")).join(" ")} fill="none" stroke={SKY} strokeWidth={3} />
       <text x={50} y={95} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>heptagon: 7 sides</text>
       <polygon points={octPts.map((p) => p.join(",")).join(" ")} fill="none" stroke={SKY} strokeWidth={3} />
-      <text x={150} y={95} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>octagon: 8 sides</text>
+      <text x={150} y={112} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>octagon: 8 sides</text>
       <polygon points="205,70 245,70 235,60 215,60" fill={SKY} opacity={0.6} stroke={INK} strokeWidth={1} />
       <polygon points="205,70 225,25 215,60" fill={TANGERINE} opacity={0.7} stroke={INK} strokeWidth={1} />
       <polygon points="245,70 225,25 235,60" fill={TANGERINE} opacity={0.5} stroke={INK} strokeWidth={1} />
@@ -11328,12 +11340,12 @@ function PercentPrice() {
       <title>A twenty dollar price increased by fifteen percent tax to twenty-three dollars, and a similar price decreased by a percent for a markdown.</title>
       <rect x={20} y={30} width={90} height={26} rx={6} fill="#EAF2FC" stroke={INK} strokeWidth={1.2} />
       <text x={65} y={47} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>$20 price</text>
-      <text x={130} y={38} fontSize={11} fontWeight={800} fill={LEAF}>+15% tax</text>
+      <text x={130} y={24} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>+15% tax</text>
       <rect x={150} y={30} width={90} height={26} rx={6} fill="#EAF2FC" stroke={SKY} strokeWidth={2} />
       <text x={195} y={47} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>$23 total</text>
       <rect x={20} y={74} width={90} height={26} rx={6} fill="#FFE9D6" stroke={INK} strokeWidth={1.2} />
       <text x={65} y={91} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>$80 price</text>
-      <text x={130} y={82} fontSize={11} fontWeight={800} fill={BERRY}>−5% off</text>
+      <text x={130} y={68} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>−5% off</text>
       <rect x={150} y={74} width={90} height={26} rx={6} fill="#FFE9D6" stroke={SKY} strokeWidth={2} />
       <text x={195} y={91} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>$76 sale</text>
     </svg>
@@ -12277,7 +12289,7 @@ function VecTipToTail() {
 /** vec Ch3: two vectors with the angle between them and the projection (shadow) of u onto v (computed). */
 function VecDotAngle() {
   return (
-    <svg viewBox="0 0 220 180" role="img" aria-label="Two vectors from the origin: u equals 3,4 and v equals 5,0 along the x-axis, with an arc marking the angle between them and a dashed shadow showing the projection of u onto v, illustrating that the dot product measures alignment.">
+    <svg viewBox="0 0 220 186" role="img" aria-label="Two vectors from the origin: u equals 3,4 and v equals 5,0 along the x-axis, with an arc marking the angle between them and a dashed shadow showing the projection of u onto v, illustrating that the dot product measures alignment.">
       <title>The angle between two vectors and the projection of one onto the other.</title>
       <line x1="16" y1="150" x2="206" y2="150" stroke={INK} strokeWidth={1} opacity={0.6} />
       <line x1="32" y1="172" x2="32" y2="14" stroke={INK} strokeWidth={1} opacity={0.6} />
@@ -12287,10 +12299,10 @@ function VecDotAngle() {
       <line x1="32" y1="150" x2="92" y2="150" stroke={TANGERINE} strokeWidth={3} />
       <path d="M 58.0 150.0 L 58.0 148.5 L 57.8 147.0 L 57.6 145.5 L 57.3 144.0 L 56.9 142.6 L 56.4 141.1 L 55.9 139.7 L 55.3 138.4 L 54.5 137.0 L 53.8 135.8 L 52.9 134.5 L 52.0 133.3 L 51.0 132.2 L 49.9 131.1 L 48.8 130.1 L 47.6 129.2" fill="none" stroke={LEAF} strokeWidth={2} />
       <text x="96" y="68" fontSize="11" fontWeight="700" fill={BERRY}>u ⟨3,4⟩</text>
-      <text x="102" y="164" fontSize="11" fontWeight="700" fill={SKY}>v ⟨5,0⟩</text>
+      <text x="136" y="144" fontSize="11" fontWeight="700" fill={SKY}>v ⟨5,0⟩</text>
       <text x="62" y="142" fontSize="10" fontWeight="600" fill={LEAF}>θ ≈ 53°</text>
-      <text x="86" y="165" fontSize="10" fontWeight="600" fill={TANGERINE}>shadow 3</text>
-      <text x="16" y="168" fontSize="10" fill={INK}>u·v = |u||v|cos θ = 15</text>
+      <text x="86" y="163" fontSize="10" fontWeight="600" fill={TANGERINE}>shadow 3</text>
+      <text x="16" y="180" fontSize="10" fill={INK}>u·v = |u||v|cos θ = 15</text>
     </svg>
   );
 }
@@ -12402,14 +12414,14 @@ function CoEccentricityScale() {
 function CoConicType() {
   const row = (y: number, sig: string, verdict: string, col: string) => (
     <g>
-      <rect x={14} y={y} width={92} height={22} rx={5} fill={INK} opacity={0.06} stroke={INK} strokeWidth={0.8} />
+      <rect x={14} y={y} width={140} height={22} rx={5} fill={INK} opacity={0.06} stroke={INK} strokeWidth={0.8} />
       <text x={20} y={y + 15} fontSize="10" fontWeight="600" fill={INK}>{sig}</text>
-      <text x={118} y={y + 15} fontSize="12" fill={col}>→</text>
-      <text x={134} y={y + 15} fontSize="11" fontWeight="700" fill={col}>{verdict}</text>
+      <text x={162} y={y + 15} fontSize="12" fill={col}>→</text>
+      <text x={178} y={y + 15} fontSize="11" fontWeight="700" fill={col}>{verdict}</text>
     </g>
   );
   return (
-    <svg viewBox="0 0 210 148" role="img" aria-label="A classification table for conics from the general form A x squared plus C y squared. Equal A and C gives a circle; same sign but unequal gives an ellipse; opposite signs give a hyperbola; one squared term missing gives a parabola.">
+    <svg viewBox="0 0 260 148" role="img" aria-label="A classification table for conics from the general form A x squared plus C y squared. Equal A and C gives a circle; same sign but unequal gives an ellipse; opposite signs give a hyperbola; one squared term missing gives a parabola.">
       <title>Classifying a conic from its squared coefficients A and C.</title>
       <text x={14} y={14} fontSize="10" fontWeight="700" fill={INK}>Ax² + Cy² + … = 0</text>
       {row(22, "A = C", "circle", SKY)}
@@ -23045,7 +23057,7 @@ function VecOrderMatters() {
 function CprEventAsSet() {
   const cells = Array.from({ length: 20 }, (_, i) => i + 1);
   return (
-    <svg viewBox="0 0 300 130" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 300 142" role="img" className="mx-auto w-full max-w-sm">
       <title>Twenty cards numbered 1 to 20 laid out in a grid; the six multiples of 3 (3, 6, 9, 12, 15, 18) are shaded to show the event as a subset of the sample space.</title>
       {cells.map((n) => {
         const c = (n - 1) % 5;
@@ -23080,7 +23092,7 @@ function CprEventAsSet() {
       <text x={150} y={14} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         sample space: 20 cards — shaded event: multiple of 3
       </text>
-      <text x={150} y={126} textAnchor="middle" fontSize={11} fill={INK}>
+      <text x={150} y={136} textAnchor="middle" fontSize={11} fill={INK}>
         P(multiple of 3) = 6 ÷ 20 = 3/10
       </text>
     </svg>
@@ -23804,13 +23816,16 @@ function CprIndepVsDisjoint() {
       <circle cx={116} cy={60} r={28} fill={TANGERINE} opacity={0.25} stroke={TANGERINE} strokeWidth={1.6} />
       <text x={52} y={64} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>A</text>
       <text x={116} y={64} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>B</text>
-      <text x={82} y={104} textAnchor="middle" fontSize={10} fill={INK}>
-        A happened → B is impossible
+      <text x={82} y={99} textAnchor="middle" fontSize={10} fill={INK}>
+        A happened →
       </text>
-      <text x={82} y={120} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
+      <text x={82} y={112} textAnchor="middle" fontSize={10} fill={INK}>
+        B is impossible
+      </text>
+      <text x={82} y={127} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         P(B | A) = 0
       </text>
-      <text x={82} y={138} textAnchor="middle" fontSize={10} fill={TANGERINE} fontWeight={700}>
+      <text x={82} y={143} textAnchor="middle" fontSize={10} fill={TANGERINE} fontWeight={700}>
         maximally DEPENDENT
       </text>
       <line x1={165} y1={16} x2={165} y2={150} stroke={INK} strokeWidth={0.8} opacity={0.3} />
@@ -23822,13 +23837,16 @@ function CprIndepVsDisjoint() {
       <path d="M252 35 A28 28 0 0 0 252 85 A28 28 0 0 0 252 35 Z" fill={BERRY} opacity={0.5} />
       <text x={216} y={64} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>A</text>
       <text x={288} y={64} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>B</text>
-      <text x={248} y={104} textAnchor="middle" fontSize={10} fill={INK}>
-        A happened → B unchanged
+      <text x={248} y={99} textAnchor="middle" fontSize={10} fill={INK}>
+        A happened →
       </text>
-      <text x={248} y={120} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
+      <text x={248} y={112} textAnchor="middle" fontSize={10} fill={INK}>
+        B unchanged
+      </text>
+      <text x={248} y={127} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         P(B | A) = P(B)
       </text>
-      <text x={248} y={138} textAnchor="middle" fontSize={10} fill={LEAF} fontWeight={700}>
+      <text x={248} y={143} textAnchor="middle" fontSize={10} fill={LEAF} fontWeight={700}>
         they must OVERLAP
       </text>
       <text x={165} y={160} textAnchor="middle" fontSize={10} fill={INK} opacity={0.8}>
@@ -23859,7 +23877,7 @@ function CprPermutationSlots() {
           <text x={65 + i * 90} y={66} textAnchor="middle" fontSize={13} fontWeight={700} fill={TANGERINE}>
             {s.n} ways
           </text>
-          <text x={65 + i * 90} y={88} textAnchor="middle" fontSize={10} fill={INK} opacity={0.7}>
+          <text x={65 + i * 90} y={i === 1 ? 101 : 86} textAnchor="middle" fontSize={10} fill={INK} opacity={0.7}>
             {s.note}
           </text>
           {i < 2 && (
@@ -24047,7 +24065,7 @@ function SiConfounding() {
       <line x1={140} y1={56} x2={80} y2={76} stroke={TANGERINE} strokeWidth={2} />
       <line x1={180} y1={56} x2={240} y2={76} stroke={TANGERINE} strokeWidth={2} />
       <line x1={118} y1={93} x2={202} y2={93} stroke={BERRY} strokeWidth={1.6} strokeDasharray="5 4" />
-      <text x={160} y={88} textAnchor="middle" fontSize={10} fontWeight={700} fill={BERRY}>
+      <text x={160} y={83} textAnchor="middle" fontSize={10} fontWeight={700} fill={BERRY}>
         the tempting arrow
       </text>
       <text x={160} y={130} textAnchor="middle" fontSize={11} fill={INK}>
@@ -24398,7 +24416,7 @@ function SiNullPile() {
         gap of 0
       </text>
       <line x1={X(4)} y1={26} x2={X(4)} y2={114} stroke={TANGERINE} strokeWidth={2.4} />
-      <text x={X(4)} y={22} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>
+      <text x={X(4) - 6} y={36} textAnchor="end" fontSize={10} fontWeight={700} fill={TANGERINE}>
         observed +4
       </text>
       <text x={160} y={145} textAnchor="middle" fontSize={10} fill={INK} opacity={0.8}>
@@ -24410,7 +24428,7 @@ function SiNullPile() {
 
 function SiEffectVsSignificance() {
   return (
-    <svg viewBox="0 0 330 150" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 330 158" role="img" className="mx-auto w-full max-w-md">
       <title>A tiny effect measured on a huge sample can be statistically significant and still be far too small to matter. Significance answers whether the effect is real; effect size answers whether it is worth anything.</title>
       <text x={165} y={14} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         two different questions, and only one is about size
@@ -24444,7 +24462,7 @@ function SiEffectVsSignificance() {
       <text x={165} y={136} textAnchor="middle" fontSize={11} fill={INK}>
         a real effect of 0.3 points is still an effect of 0.3 points
       </text>
-      <text x={165} y={148} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
+      <text x={165} y={152} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
         with a big enough sample, almost any gap becomes &quot;significant&quot;
       </text>
     </svg>
@@ -24916,10 +24934,10 @@ function DcSpeedingUpSigns() {
         SAME sign speeds up · DIFFERENT sign slows down
       </text>
       {cells.map((c, i) => {
-        const x = 18 + (i % 2) * 136, y = 26 + Math.floor(i / 2) * 62;
+        const x = 18 + (i % 2) * 148, y = 26 + Math.floor(i / 2) * 62;
         return (
           <g key={i}>
-            <rect x={x} y={y} width={128} height={54} rx={7} fill={c.c} opacity={0.13} stroke={c.c} strokeWidth={1.4} />
+            <rect x={x} y={y} width={126} height={54} rx={7} fill={c.c} opacity={0.13} stroke={c.c} strokeWidth={1.4} />
             <text x={x + 10} y={y + 20} fontSize={12} fontWeight={700} fill={INK}>
               v {c.v} · a {c.a}
             </text>
@@ -25088,7 +25106,7 @@ function DcLhopitalTangents() {
   const X = (x: number) => 150 + x * 70;
   const Y = (y: number) => 96 - y * 15;
   return (
-    <svg viewBox="0 0 300 165" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 300 172" role="img" className="mx-auto w-full max-w-md">
       <title>Two curves that both pass through zero at the same point. Magnified, each becomes its own tangent line, so the ratio of the two functions turns into the ratio of the two slopes.</title>
       <text x={150} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         zoom in and both become their TANGENTS
@@ -25107,7 +25125,7 @@ function DcLhopitalTangents() {
       <text x={150} y={150} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>
         so f/g → 4/1 near the hole
       </text>
-      <text x={150} y={162} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+      <text x={150} y={166} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         L'Hôpital is not a trick — it is what local straightness does to a quotient
       </text>
     </svg>
@@ -26013,7 +26031,7 @@ function BtSymmetryTrap() {
 }
 function BtProbabilityExpansion() {
   return (
-    <svg viewBox="0 0 300 110" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 300 122" role="img" className="mx-auto w-full max-w-sm">
       <title>With p the chance of success and q equals one minus p, expanding p plus q to the n gives one term per success count, and the terms sum to one.</title>
       <text x={150} y={20} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>(p + q)ⁿ = 1</text>
       {[[26, 26], [70, 44], [120, 30], [176, 18], [222, 10]].map(([x, h], i) => (
@@ -26022,7 +26040,7 @@ function BtProbabilityExpansion() {
           <text x={x + 17} y={98} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>k={i}</text>
         </g>
       ))}
-      <text x={150} y={110} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>each term C(n,k)pᵏqⁿ⁻ᵏ is the chance of exactly k successes</text>
+      <text x={150} y={114} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>each term C(n,k)pᵏqⁿ⁻ᵏ is the chance of exactly k successes</text>
     </svg>
   );
 }
