@@ -81,7 +81,8 @@ test.describe("lesson-player state machine", () => {
 
     await page.getByRole("radio", { name: "14" }).click();
     await expect(page.getByText(/Your prediction:\s*14/)).toBeVisible();
-    await expect(page.locator(".trail-clearing-shell")).toBeVisible();
+    // Wave A replaced the clearing shell with the plain math stage (S238: stale selector fixed).
+    await expect(page.locator(".math-stage-shell")).toBeVisible();
     await expect(page.getByRole("button", { name: "Check" })).toBeVisible();
   });
 
@@ -90,7 +91,8 @@ test.describe("lesson-player state machine", () => {
     await page.goto(`/learn/${AS100.id}`);
 
     await expect(shell(page)).toHaveAttribute("data-step-id", "k1");
-    await expect(page.getByText(/Picked up where you left off — step 3 of 9/)).toBeVisible();
+    // Wave A compressed the resume banner copy (S238: stale copy fixed).
+    await expect(page.getByText(/Resumed at step 3 of 9/)).toBeVisible();
 
     const answer = page.getByRole("textbox", { name: "8 + 8 = ?" });
     await answer.fill("15");
@@ -113,7 +115,9 @@ test.describe("lesson-player state machine", () => {
     await expect(page.getByText("15", { exact: true })).toBeVisible();
     await expect(page.getByText("The answer:")).toBeVisible();
     await expect(page.getByText("16", { exact: true })).toBeVisible();
-    await expect(answer).toBeDisabled();
+    // S235 exploration checkpoints keep the model live after reveal — the learner can keep
+    // testing states without touching the saved score (S238: stale expectation fixed).
+    await expect(answer).toBeEnabled();
 
     // The second keypress lands after the first transition. The production latch must absorb it.
     await page.keyboard.press("Enter");
@@ -132,7 +136,7 @@ test.describe("lesson-player state machine", () => {
 
     await expect(shell(page)).toHaveAttribute("data-step-id", "c1");
     await expect(page.getByLabel("0 experience points")).toBeVisible();
-    await expect(page.getByText(/Picked up where you left off/)).toHaveCount(0);
+    await expect(page.getByText(/Resumed at step/)).toHaveCount(0);
     expect(
       await page.evaluate(() => window.localStorage.getItem("numera:lesson:v1:c1:as100-01-01"))
     ).toBeNull();
