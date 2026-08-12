@@ -666,6 +666,157 @@ describe("S238 label collisions — slopeTriangle", () => {
   });
 });
 
+/* ------------------------------------------------------------------ *
+ * S238 — samplingBiasLab: 14 of the S237-measured pairs, all ONE
+ * defect: "population 50%" and the "50" axis tick share x = 200 and
+ * printed on top of each other in every render of every authored spec.
+ * The tick yields (the caption names that position); 0/25/75/100 stay.
+ * ------------------------------------------------------------------ */
+
+describe("S238 label collisions — samplingBiasLab", () => {
+  it("every authored spec is clean at both tones, and the scale still reads", () => {
+    const courses = join(process.cwd(), "content", "courses");
+    let specs = 0;
+    for (const course of readdirSync(courses)) {
+      const dir = join(courses, course, "lessons");
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith(".json")) continue;
+        const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+          id: string;
+          steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+          remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+        };
+        const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+        for (const step of all) {
+          if (step.widget?.type !== "samplingBiasLab") continue;
+          specs++;
+          for (const tone of ["neutral", "info"] as const) {
+            const spec = WidgetSpec.parse(step.widget) as TWidget;
+            const { container } = render(
+              <WidgetRenderer spec={spec} value={{ method: "convenience", size: 30, draws: 4 }} onChange={() => {}} disabled={false} tone={tone} />
+            );
+            const svg = container.querySelector("svg");
+            expect(svg, `${lesson.id}/${step.id}`).toBeTruthy();
+            const { boxes, skipped } = scanTextBoxes(svg!);
+            const where = `${lesson.id}/${step.id} [${tone}]`;
+            expect(skipped, `${where} — unmodellable labels`).toEqual([]);
+            expect(collisions(boxes).map(describeCollision), where).toEqual([]);
+            // Paired acceptance: the population marker still names its position, and the
+            // remaining scale numbers are all there — suppression took ONE redundant tick.
+            const t = texts(boxes);
+            expect(t, where).toContain("population 50%");
+            for (const nTick of ["0", "25", "75", "100"]) expect(t, where).toContain(nTick);
+            cleanup();
+          }
+        }
+      }
+    }
+    // Counted from disk: 7 authored samplingBiasLab steps.
+    expect(specs).toBe(7);
+  });
+});
+
+/* ------------------------------------------------------------------ *
+ * S238 — pointSetReasoningLab (10 pairs: dd-04-01's two sets share
+ * values, so the 1D axis printed the same number once PER SET at one
+ * x) and signChart (8 pairs: pf-02-03's close roots overprinted their
+ * value/kind tags). Both engines' SVG text depends on spec × tone only
+ * (the learner's value drives buttons and HTML readouts), so spec ×
+ * {neutral, info} with value null IS the reachable label space.
+ * ------------------------------------------------------------------ */
+
+function corpusSweep(widgetType: string, expectedSpecs: number, extraAccept?: (t: string[], where: string) => void) {
+  const courses = join(process.cwd(), "content", "courses");
+  let specs = 0;
+  for (const course of readdirSync(courses)) {
+    const dir = join(courses, course, "lessons");
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".json")) continue;
+      const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+        id: string;
+        steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+        remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+      };
+      const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+      for (const step of all) {
+        if (step.widget?.type !== widgetType) continue;
+        specs++;
+        for (const tone of ["neutral", "info"] as const) {
+          const spec = WidgetSpec.parse(step.widget) as TWidget;
+          const { container } = render(
+            <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone={tone} />
+          );
+          const svg = container.querySelector("svg");
+          expect(svg, `${lesson.id}/${step.id}`).toBeTruthy();
+          const { boxes, skipped } = scanTextBoxes(svg!);
+          const where = `${lesson.id}/${step.id} [${tone}]`;
+          // The rotated y-axis caption is the ONE transform this model refuses; everything
+          // else must be measurable.
+          expect(skipped.filter((s) => !s.includes("non-translate transform")), `${where} — unmodellable labels`).toEqual([]);
+          expect(collisions(boxes).map(describeCollision), where).toEqual([]);
+          extraAccept?.(texts(boxes), where);
+          cleanup();
+        }
+      }
+    }
+  }
+  expect(specs).toBe(expectedSpecs);
+}
+
+describe("S238 label collisions — pointSetReasoningLab", () => {
+  it("all 23 authored specs are clean at both tones, and every distinct value keeps a label", () => {
+    corpusSweep("pointSetReasoningLab", 23);
+  });
+
+  it("dd-04-01/k2 verbatim: duplicated values get ONE axis label, not one per dot or set", () => {
+    // The named trigger, read off disk: set 1 stacks three 6's and set 2 repeats set 1's 2 —
+    // before S238 the axis printed "6" three times and "2" twice at identical positions.
+    const lesson = JSON.parse(
+      readFileSync(join(process.cwd(), "content/courses/data-distributions/lessons/dd-04-01.json"), "utf8")
+    ) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+    const raw = lesson.steps.find((s) => s.id === "k2")!.widget!;
+    const spec = WidgetSpec.parse(raw) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone="neutral" />
+    );
+    const { boxes } = scanTextBoxes(container.querySelector("svg")!);
+    expect(collisions(boxes)).toEqual([]);
+    // ONE label per distinct value — and every distinct value still named.
+    for (const xv of ["2", "3", "5", "6", "10"]) {
+      expect(texts(boxes).filter((t) => t === xv), `axis value ${xv}`).toHaveLength(1);
+    }
+    cleanup();
+  });
+});
+
+describe("S238 label collisions — signChart", () => {
+  it("all 28 authored specs are clean at both tones", () => {
+    corpusSweep("signChart", 28);
+  });
+
+  it("pf-02-03's shape: close roots stagger their tags onto a second row, both still named", () => {
+    const spec = WidgetSpec.parse({
+      type: "signChart", prompt: "p", leadingPositive: true,
+      roots: [{ x: -1, mult: 1 }, { x: 0, mult: 1 }],
+      successFeedback: "Both crossings flip the sign, exactly as the factors demand.",
+      crossFeedback: "An odd-multiplicity root crosses the axis, so the sign flips there.",
+      bounceFeedback: "An even-multiplicity root touches and turns back, so the sign holds."
+    }) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone="neutral" />
+    );
+    const { boxes } = scanTextBoxes(container.querySelector("svg")!);
+    expect(collisions(boxes)).toEqual([]);
+    const t = texts(boxes);
+    expect(t).toContain("-1");
+    expect(t).toContain("0");
+    expect(t.filter((s) => s === "cross"), "both kind tags survive").toHaveLength(2);
+    cleanup();
+  });
+});
+
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);

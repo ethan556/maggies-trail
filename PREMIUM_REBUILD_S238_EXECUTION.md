@@ -199,6 +199,34 @@ stashed). Browser evidence: `S238_SCREENSHOTS/08-slopetriangle-fg0202-i2-390.png
 **Collision ledger after batch 5: 267 → 112.** Next: `samplingBiasLab` (14),
 `pointSetReasoningLab` (10), `signChart` (8), 18 smaller (80).
 
+## Batch 6 (same session): samplingBiasLab, pointSetReasoningLab, signChart — the last NAMED engines
+
+Three engines, three one-cause fixes, all corpus-proven:
+
+- **samplingBiasLab (14 → 0):** "population 50%" and the "50" axis tick share x = 200 and
+  printed on each other in every render of every authored spec (7 specs × 2 tones = the 14).
+  The tick yields — the caption names that position — 0/25/75/100 stay. Corpus sweep: 7/7 specs
+  clean, caption + remaining scale asserted present.
+- **pointSetReasoningLab (10 → 0):** dd-04-01/k2 stacks duplicate values (three 6's in one set,
+  a shared 2 across sets) and the 1D axis printed the same number once PER DOT. Now ONE label
+  per distinct value (greedy skip for distinct-but-adjacent values; dots keep marking every
+  position), and the 2D branch's coordinate labels choose a clear corner (the slopeTriangle
+  candidate scheme). Corpus sweep: 23/23 specs × both tones; the dd-04-01/k2 verbatim case
+  asserts one label per distinct value with every value still named.
+- **signChart (8 → 0):** pf-02-03's close roots overprinted their value/kind tags. Close marks
+  (roots, poles, holes share one pass) stagger onto a second row — the viewBox grew 28 units to
+  give it space above the bottom caption. Corpus sweep: 28/28 specs × both tones; the pf-02-03
+  shape asserts both "cross" tags survive on their own rows.
+
+Detector verified to fire on all three pre-fix layouts (4 failed with the fix stashed).
+Browser evidence: `S238_SCREENSHOTS/09-signchart-pf0203-i1-390.png`, `10-pointset-dd0401-k2-390.png`.
+
+**Collision ledger after batch 6: 267 → 80.** All six NAMED engine rows from S237 §3.1 are now
+closed; what remains is the "18 smaller engines (80 pairs)" long tail — unnamed in the S237
+measurement, so the next session should re-run a corpus-wide sweep to enumerate them before
+fixing (the measuring sweep itself was never committed; the gate's three sweep patterns are the
+raw material for building it).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

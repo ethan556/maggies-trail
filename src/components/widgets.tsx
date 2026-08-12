@@ -3361,8 +3361,28 @@ function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart
   const holes = spec.holes ?? [];
   const spanXs = [...cuts.map((c) => c.x), ...holes];
   const lo = Math.min(...spanXs) - 2, hi = Math.max(...spanXs) + 2;
-  const W = 320, H = 170, PAD = 22, AXIS = 118;
+  const W = 320, H = 198, PAD = 22, AXIS = 118;
   const X = (x: number) => PAD + ((x - lo) / (hi - lo)) * (W - 2 * PAD);
+  // S238 — close cuts stagger their label pairs onto a second row instead of overprinting.
+  // pf-02-03 authors roots close enough that two "cross" tags (and the values above them)
+  // collided — 8 of the S237-measured pairs. Every marked x (roots, poles, holes) shares one
+  // greedy left-to-right pass: a mark's value+kind pair drops to the lower row when its boxes
+  // would touch the previous same-row pair's. Deterministic; the viewBox grew 28 units to give
+  // the second row its own space above the bottom caption. Width model: 0.72em/char (S237).
+  const markRow = (() => {
+    const marks = [...cuts.map((c) => c.x), ...holes].sort((a, b) => a - b);
+    const rows = new Map<number, 0 | 1>();
+    const lastEnd: [number, number] = [-Infinity, -Infinity];
+    for (const mx of marks) {
+      // the wider of the pair decides: the kind tag ("bounce"/"no flip") at 10px or the value at 11px
+      const w = Math.max(String(mx).length * 11 * 0.72, 7 * 10 * 0.72);
+      const x0 = X(mx) - w / 2;
+      const row: 0 | 1 = x0 >= lastEnd[0] + 4 ? 0 : x0 >= lastEnd[1] + 4 ? 1 : 0;
+      rows.set(mx, row);
+      lastEnd[row] = x0 + w;
+    }
+    return (x: number): number => (rows.get(x) ?? 0) * 28;
+  })();
   const mids: number[] = [];
   for (let i = 0; i < n; i++) {
     const a = i === 0 ? lo : cuts[i - 1].x;
@@ -3407,10 +3427,10 @@ function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart
           <g key={`pole-${p.x}`} data-testid={`sc-pole-${p.x}`}>
             <line x1={X(p.x)} y1={12} x2={X(p.x)} y2={H - 40} stroke={PALETTE.ink} strokeWidth={1.6}
               strokeDasharray="4 4" strokeOpacity={0.75} />
-            <text x={X(p.x)} y={AXIS + 18} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
+            <text x={X(p.x)} y={AXIS + 18 + markRow(p.x)} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
               {p.x}
             </text>
-            <text x={X(p.x)} y={AXIS + 32} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fontWeight={700} fillOpacity={0.8}>
+            <text x={X(p.x)} y={AXIS + 32 + markRow(p.x)} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fontWeight={700} fillOpacity={0.8}>
               {p.mult % 2 === 0 ? "no flip" : "flips"}
             </text>
           </g>
@@ -3419,10 +3439,10 @@ function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart
         {(spec.holes ?? []).map((h) => (
           <g key={`hole-${h}`} data-testid={`sc-hole-${h}`}>
             <circle cx={X(h)} cy={AXIS} r={5} fill="#fff" stroke={PALETTE.ink} strokeWidth={2} strokeDasharray="3 2" />
-            <text x={X(h)} y={AXIS + 18} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.8}>
+            <text x={X(h)} y={AXIS + 18 + markRow(h)} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.8}>
               {h}
             </text>
-            <text x={X(h)} y={AXIS + 32} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fontWeight={700} fillOpacity={0.6}>
+            <text x={X(h)} y={AXIS + 32 + markRow(h)} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fontWeight={700} fillOpacity={0.6}>
               hole
             </text>
           </g>
@@ -3430,10 +3450,10 @@ function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart
         {spec.roots.map((r) => (
           <g key={r.x}>
             <circle cx={X(r.x)} cy={AXIS} r={5} fill={r.mult % 2 === 0 ? PALETTE.tangerine : "#fff"} stroke={PALETTE.tangerine} strokeWidth={2} />
-            <text x={X(r.x)} y={AXIS + 18} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
+            <text x={X(r.x)} y={AXIS + 18 + markRow(r.x)} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
               {r.x}
             </text>
-            <text x={X(r.x)} y={AXIS + 32} textAnchor="middle" fontSize={10} fill={PALETTE.tangerine} fontWeight={700}>
+            <text x={X(r.x)} y={AXIS + 32 + markRow(r.x)} textAnchor="middle" fontSize={10} fill={PALETTE.tangerine} fontWeight={700}>
               {r.mult % 2 === 0 ? "bounce" : "cross"}
             </text>
           </g>
@@ -7217,7 +7237,22 @@ function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.
   // figure the lesson prose already names. Drawn only for that task, so the other ten are byte
   // identical. Integrity checking guarantees every point sits on this ray.
   const ray=(()=>{if(spec.task!=="unitRate")return null;const p=(spec.targetPointId?target.points.find(point=>point.id===spec.targetPointId):undefined)??target.points[0]!;const r=(p.y??0)/p.x;if(!Number.isFinite(r)||r<=0)return{x:p.x,y:p.y??0};const endX=Math.min(maxX,maxY/r);return{x:endX,y:r*endX}})();
-  return <svg viewBox="0 0 440 250" className="h-auto w-full" role="img" aria-label={`Coordinate point set. Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}. ${target.points.map(point=>`${point.label} at ${point.x}, ${point.y}`).join(". ")}.${ray?" A straight line runs from the origin through the plotted point.":""}`}><rect x="1" y="1" width="438" height="248" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1={sy(0)} x2="410" y2={sy(0)} stroke="currentColor" strokeWidth="3"/><line x1={sx(0)} y1="25" x2={sx(0)} y2="220" stroke="currentColor" strokeWidth="3"/>{ray&&<line data-testid="point-set-ray" x1={sx(0)} y1={sy(0)} x2={sx(ray.x)} y2={sy(ray.y)} stroke="currentColor" strokeWidth="2.5" strokeDasharray="7 5" opacity=".5"/>}{target.points.map(point=><g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y??0)} r="8" fill="currentColor"/><text x={sx(point.x)+10} y={sy(point.y??0)-10} fontSize="13" fontWeight="900">({point.x}, {point.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text><text x="16" y="125" textAnchor="middle" fontSize="13" fontWeight="900" transform="rotate(-90 16 125)">{spec.yLabel??"y"}</text></svg>}const all=spec.sets.flatMap(set=>set.points.map(point=>point.x)),min=Math.min(...all),max=Math.max(...all),sx=(x:number)=>40+(x-min)/(max-min||1)*360;return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><g key={`${set.id}-${point.id}`}><circle cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/><text x={sx(point.x)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{point.x}</text></g>))}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
+  // S238 — coordinate labels choose a clear corner (right-above by default), so two nearby
+  // points cannot print on each other. Same greedy candidate scheme as slopeTriangle, same
+  // 0.72em box model as the S237 testkit.
+  const placed2d:Array<{x0:number;x1:number;y0:number;y1:number}>=[];
+  const boxAt=(text:string,x:number,y:number,anchor:"start"|"end")=>{const w=text.length*13*0.72;const x0=anchor==="start"?x:x-w;return{x0,x1:x0+w,y0:y-13*0.98,y1:y+13*0.28}};
+  const clearOf=(b:{x0:number;x1:number;y0:number;y1:number})=>placed2d.every(p=>b.x1+2<=p.x0||b.x0>=p.x1+2||b.y1+2<=p.y0||b.y0>=p.y1+2);
+  const labelSeat=(point:{x:number;y?:number},text:string)=>{const px=sx(point.x),py=sy(point.y??0);const seats=[{x:px+10,y:py-10,anchor:"start" as const},{x:px-10,y:py-10,anchor:"end" as const},{x:px+10,y:py+22,anchor:"start" as const},{x:px-10,y:py+22,anchor:"end" as const}];const seat=seats.find(s=>clearOf(boxAt(text,s.x,s.y,s.anchor)))??seats[0];placed2d.push(boxAt(text,seat.x,seat.y,seat.anchor));return seat};
+  return <svg viewBox="0 0 440 250" className="h-auto w-full" role="img" aria-label={`Coordinate point set. Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}. ${target.points.map(point=>`${point.label} at ${point.x}, ${point.y}`).join(". ")}.${ray?" A straight line runs from the origin through the plotted point.":""}`}><rect x="1" y="1" width="438" height="248" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1={sy(0)} x2="410" y2={sy(0)} stroke="currentColor" strokeWidth="3"/><line x1={sx(0)} y1="25" x2={sx(0)} y2="220" stroke="currentColor" strokeWidth="3"/>{ray&&<line data-testid="point-set-ray" x1={sx(0)} y1={sy(0)} x2={sx(ray.x)} y2={sy(ray.y)} stroke="currentColor" strokeWidth="2.5" strokeDasharray="7 5" opacity=".5"/>}{target.points.map(point=>{const text=`(${point.x}, ${point.y})`;const seat=labelSeat(point,text);return <g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y??0)} r="8" fill="currentColor"/><text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="13" fontWeight="900">{text}</text></g>})}<text x="220" y="242" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text><text x="16" y="125" textAnchor="middle" fontSize="13" fontWeight="900" transform="rotate(-90 16 125)">{spec.yLabel??"y"}</text></svg>}const all=spec.sets.flatMap(set=>set.points.map(point=>point.x)),min=Math.min(...all),max=Math.max(...all),sx=(x:number)=>40+(x-min)/(max-min||1)*360;
+  // S238 — ONE axis label per distinct value. The sets stack dots per value, and dd-04-01's two
+  // sets share values, so the same number printed on top of itself once per set (10 of the
+  // S237-measured pairs). The dots keep their per-set rows; the axis names each position once.
+  // A greedy left-to-right pass also drops a label whose box would touch the previous kept one
+  // (distinct-but-adjacent values in a wide range) — the dot still marks the position.
+  const distinctXs=[...new Set(spec.sets.flatMap(set=>set.points.map(point=>point.x)))].sort((a,b)=>a-b);
+  const keptXs:number[]=[];{let lastX1=-Infinity;for(const xv of distinctXs){const w=String(xv).length*11*0.72;const x0=sx(xv)-w/2;if(x0>=lastX1+4){keptXs.push(xv);lastX1=x0+w}}}
+  return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><circle key={`${set.id}-${point.id}`} cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/>))}{keptXs.map(xv=><text key={xv} x={sx(xv)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{xv}</text>)}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
 function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this point-set state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>{choice.label}</button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
@@ -16559,7 +16594,11 @@ function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplin
     <div className="grid grid-cols-3 gap-2">{(['convenience','random','stratified'] as const).map(m=><button type="button" key={m} disabled={disabled} onClick={()=>setMethod(m)} aria-pressed={method===m} className={`min-h-14 rounded-xl border-2 px-2 text-sm font-extrabold ${method===m?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{m}</button>)}</div>
     <label className="grid gap-1 text-sm font-bold"><span>Sample size: {size}</span><input aria-label="sample size" type="range" min={spec.sizeMin} max={spec.sizeMax} step={spec.sizeStep} value={size} disabled={disabled} onChange={e=>setSize(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
     <div className="grid grid-cols-2 gap-3"><div className="rounded-2xl border border-ink/10 p-3"><div className="mb-2 text-xs font-extrabold uppercase tracking-wide">systematic bias</div><div className="h-5 rounded-full bg-ink/10"><div className="h-5 rounded-full bg-berry transition-all" style={{width:`${Math.min(100,Math.abs(bias)*4)}%`}}/></div><p className="mt-2 text-sm font-bold">{Math.abs(bias)<=2?'selection centers near the population':'selection keeps pulling estimates away from the population'}</p></div><div className="rounded-2xl border border-ink/10 p-3"><div className="mb-2 text-xs font-extrabold uppercase tracking-wide">random variability</div><div className="h-5 rounded-full bg-ink/10"><div className="h-5 rounded-full bg-tangerine transition-all" style={{width:`${Math.min(100,variability*4)}%`}}/></div><p className="mt-2 text-sm font-bold">larger samples tighten the spread, but do not repair biased selection</p></div></div>
-    <div className="rounded-2xl border border-ink/10 bg-white p-3"><div className="mb-2 flex items-center justify-between gap-2 text-xs font-extrabold uppercase tracking-wide"><span>repeated sample estimates</span><span>{mean===null?'no samples yet':`mean ${mean.toFixed(1)}%`}</span></div><svg viewBox="0 0 400 112" className="w-full" role="img" aria-label={`${draws} repeated estimates; population truth is 50 percent${mean===null?'':`; current mean ${mean.toFixed(1)} percent`}.`}><line x1="20" y1="84" x2="380" y2="84" stroke={PALETTE.ink} strokeWidth="2"/><line x1="200" y1="12" x2="200" y2="94" stroke={PALETTE.leaf} strokeWidth="3" strokeDasharray="6 4"/><text x="200" y="108" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.leaf}>population 50%</text>{[0,25,50,75,100].map(n=><text key={n} x={20+n*3.6} y="101" textAnchor="middle" fontSize="9" fill={PALETTE.ink}>{n}</text>)}{estimates.map((n,i)=><circle key={i} cx={20+n*3.6} cy={70-(i%4)*15} r="6" fill={Math.abs(n-50)>12?PALETTE.berry:PALETTE.sky} fillOpacity=".85"><title>{`sample ${i+1}: ${n.toFixed(1)}%`}</title></circle>)}</svg><p className="mt-1 text-sm font-bold text-ink/70">Bias moves the center. Sample size changes the spread. Repetition reveals both.</p></div>
+    <div className="rounded-2xl border border-ink/10 bg-white p-3"><div className="mb-2 flex items-center justify-between gap-2 text-xs font-extrabold uppercase tracking-wide"><span>repeated sample estimates</span><span>{mean===null?'no samples yet':`mean ${mean.toFixed(1)}%`}</span></div><svg viewBox="0 0 400 112" className="w-full" role="img" aria-label={`${draws} repeated estimates; population truth is 50 percent${mean===null?'':`; current mean ${mean.toFixed(1)} percent`}.`}><line x1="20" y1="84" x2="380" y2="84" stroke={PALETTE.ink} strokeWidth="2"/><line x1="200" y1="12" x2="200" y2="94" stroke={PALETTE.leaf} strokeWidth="3" strokeDasharray="6 4"/><text x="200" y="108" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.leaf}>population 50%</text>{/* S238: the 50 tick is dropped, not moved — "population 50%" sits at the same x and
+    already names that position, and the two printed on top of each other (7 authored
+    specs × both tones = 14 of the S237-measured colliding pairs, all this one defect).
+    Same rule as HopLandingW: a scale label yields where another label names its spot. */}
+    {[0,25,75,100].map(n=><text key={n} x={20+n*3.6} y="101" textAnchor="middle" fontSize="9" fill={PALETTE.ink}>{n}</text>)}{estimates.map((n,i)=><circle key={i} cx={20+n*3.6} cy={70-(i%4)*15} r="6" fill={Math.abs(n-50)>12?PALETTE.berry:PALETTE.sky} fillOpacity=".85"><title>{`sample ${i+1}: ${n.toFixed(1)}%`}</title></circle>)}</svg><p className="mt-1 text-sm font-bold text-ink/70">Bias moves the center. Sample size changes the spread. Repetition reveals both.</p></div>
     <button type="button" disabled={disabled} onClick={draw} className="min-h-12 rounded-xl bg-cta px-4 font-extrabold text-white">Draw sample {draws+1}</button><div className="grid grid-cols-3 gap-2"><LabReadout label="population" value={spec.populationLabel}/><LabReadout label="draws" value={`${draws}/${spec.requiredDraws}`} tone={draws>=spec.requiredDraws?'good':'neutral'}/><LabReadout label="design" value={method} tone={method===spec.targetMethod?'good':method==='convenience'?'warn':'neutral'}/></div></div>}
 
 function shapePoints(sides:number,right:number,equal:number,parallel:number){if(sides===3)return [[50,180],[150,35],[260,180]];if(sides===4){if(right===4&&equal===4)return [[70,45],[235,45],[235,195],[70,195]];if(right===4)return [[50,65],[270,65],[270,185],[50,185]];if(equal===4)return [[160,35],[275,120],[160,205],[45,120]];if(parallel===1)return [[85,55],[235,55],[280,190],[40,190]];return [[45,70],[260,45],[285,185],[75,205]]}const cx=160,cy=125,r=95;return Array.from({length:sides},(_,i)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/sides),cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/sides)])}
