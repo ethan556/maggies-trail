@@ -94,7 +94,7 @@ test.describe("lesson-player state machine", () => {
     // Wave A compressed the resume banner copy (S238: stale copy fixed).
     await expect(page.getByText(/Resumed at step 3 of 9/)).toBeVisible();
 
-    const answer = page.getByRole("textbox", { name: "8 + 8 = ?" });
+    const answer = page.getByRole("textbox", { name: "Your answer" });
     await answer.fill("15");
     await page.getByRole("button", { name: "Check" }).click();
 

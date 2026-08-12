@@ -512,6 +512,33 @@ Ledger state: **widgets.tsx 0 pairs · figures.tsx 0 pairs — both ledgers CLOS
 the user-ordered queue: NumericW accessible-name rename → WS-C direct manipulation → the 8
 NOT-POSSIBLE engine rows.
 
+## Wave 15 (same session): NumericW names what it takes — the last prompt-as-name instance
+
+The deferred batch-3 item, run as its own mechanical batch exactly as recorded. `NumericW` —
+the numeric answer box behind ~3,659 authored steps — carried `aria-label={spec.prompt}`: the
+whole task sentence as the text field's accessible name, the same class-B defect fixed on
+estimateSlider (S237) and SliderW (batch 3). Same remedy, same house pattern: a visible
+`<label>` now WRAPS the input, so the accessible name and the visible name are one string by
+construction — **"Your answer"**, with the unit folded in when the content states one
+("Your answer (cm)"), mirroring the lab widgets' existing numeric fields. The old inline unit
+span is gone with it: the unit lives in the name instead of being printed twice for a screen
+reader. The mcq radiogroup's prompt-as-group-name remains untouched — that one is correct ARIA
+practice.
+
+The mechanical pass this batch existed for: two unit-test sites (answerSurface.tone.s206) and
+four e2e sites (player-viewport, player-state) queried the textbox BY the prompt string —
+renamed to the new name — plus three raw `input[aria-label='8 + 8 = ?']` attribute selectors
+inside `page.evaluate` blocks that the role-query sweep could not see; the full playwright run
+caught those (12 failures across the five viewport projects), now selected structurally
+(`label input[inputmode='decimal']`). **One gate corrected, stricter:** the S237
+numeric-preview additive guard PINNED `aria-label={spec.prompt}` — the defect itself. It now
+pins the house pattern instead: name = "Your answer (unit)", `aria-label` gone, ghost grammar
+untouched.
+
+New gate: four cases in widgets.estimateSliderLabel.s237.test.tsx (name with unit, generic
+without, unit-stated-once, reveal-ghost untouched). Vitest shard 2 is 3,512 (+4). Pixel
+evidence: `S238_SCREENSHOTS/19-numeric-your-answer-label.png`.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

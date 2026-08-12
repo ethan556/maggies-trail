@@ -235,14 +235,17 @@ describe("numeric WITHOUT previewDenominator renders exactly as before (the ~3,6
     expect(screen.getByTestId("a11y-panel")).toBeTruthy();
   });
 
-  it("the input, the unit span and the reveal ghost are untouched by the new field", () => {
-    // The preview is ADDITIVE. Everything NumericW rendered before must still render, with the
-    // same accessible name, the same unit, and the same tone="info" ghost chip.
+  it("the input, its unit-bearing name and the reveal ghost are untouched by the new field", () => {
+    // The preview is ADDITIVE. Everything NumericW renders besides it must still render: the
+    // labelled input, the unit, and the tone="info" ghost chip. S238 CORRECTION (stricter, not
+    // looser): this guard originally pinned aria-label={spec.prompt} — the prompt-as-name
+    // defect itself. The house pattern (estimateSlider S237, SliderW + NumericW S238) names the
+    // control by a visible wrapping <label> stating what it takes, with the unit folded into
+    // the name; the guard now pins THAT, and pins the aria-label gone.
     for (const spec of [withoutPreview({ unit: "quarters" }), withPreview({ unit: "quarters" })]) {
       const holder = mount(spec, "info");
-      const box = screen.getByRole("textbox");
-      expect(box.getAttribute("aria-label")).toBe(BASE.prompt);
-      expect(screen.getByText("quarters")).toBeTruthy();
+      const box = screen.getByRole("textbox", { name: "Your answer (quarters)" });
+      expect(box.getAttribute("aria-label")).toBeNull();
       fireEvent.change(box, { target: { value: "2" } });
       expect(holder.v).toBe(2); // the emitted value is the plain number, exactly as before
       expect(screen.getByTestId("num-ghost").textContent).toContain("3 quarters");

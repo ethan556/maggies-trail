@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,173 passing       (9,665 + 3,508; +2 opt-in sweep skips)
+vitest (2 shards)        13,177 passing       (9,665 + 3,512; +2 opt-in sweep skips)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -104,8 +104,10 @@ height; their real growth is WS-C side panels, not a bigger square.
    opt-in sweep after ANY figure edit; its table is empty — keep it so. Respect the 10-unit
    font floor (figures.test.ts) when re-laying labels. Wave 14's reading catches included a
    figure whose bars had rendered black since authoring (fill="{SKY}" — literal braces).
-3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
-   execution report batch-3 section.
+3. ~~`NumericW` prompt-as-accessible-name~~ DONE (wave 15): visible wrapping <label>
+   ("Your answer", unit folded in), all prompt-name query sites renamed, three raw attribute
+   selectors in e2e evaluate blocks included; the S237 numeric-preview guard corrected to pin
+   the new contract (stricter). Next: WS-C direct manipulation, then the 8 NOT-POSSIBLE rows.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
 
 Environment traps (S237 §6) all still apply: kill `next start` by pid before rebuilding; never

@@ -219,3 +219,59 @@ describe("S238: the generic slider names what it sets", () => {
     expect(range.getAttribute("aria-valuetext")).toBe("2 groups, 12 in all");
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * S238 wave 15 — the same contract on `numeric`, the LAST recorded
+ * prompt-as-name instance (deferred from batch 3 as its own mechanical
+ * batch: the old name was load-bearing across the test harness).
+ *
+ * NumericW carried `aria-label={spec.prompt}` — the whole task sentence
+ * as the text field's accessible name. Same remedy, same house pattern:
+ * a visible <label> wraps the input, the name states the unit when the
+ * content states one ("Your answer (cm)", mirroring the lab widgets'
+ * numeric fields), and stays generic and TRUE when it does not.
+ * ------------------------------------------------------------------ */
+
+const numericBase = {
+  type: "numeric",
+  prompt: "A ribbon is cut into 3 equal pieces of 4 cm. How long was the ribbon?",
+  answer: 12, tolerance: 0,
+  fallbackFeedback: "Count the three equal pieces again — each one is four centimetres long."
+};
+
+describe("S238: the numeric field names what it takes", () => {
+  it("the textbox's accessible name is 'Your answer (unit)', visible, and never the prompt", () => {
+    const { container } = mount({ ...numericBase, unit: "cm" });
+    const input = container.querySelector("input") as HTMLInputElement;
+    expect(input).toBeTruthy();
+    const name = accessibleName(input);
+    expect(name).toBe("Your answer (cm)");
+    expect(name).not.toContain("ribbon");
+    // Visible, not aria-only: the wrapping label's text IS the name.
+    expect(input.closest("label")?.textContent).toBe("Your answer (cm)");
+    expect(input.getAttribute("aria-label")).toBeNull();
+  });
+
+  it("without a unit the name stays generic and TRUE — no invented quantity", () => {
+    const { container } = mount(numericBase);
+    const input = container.querySelector("input") as HTMLInputElement;
+    expect(accessibleName(input)).toBe("Your answer");
+  });
+
+  it("the unit is stated ONCE — in the name, not repeated in a sibling span", () => {
+    const { container } = mount({ ...numericBase, unit: "cm" });
+    // The old layout printed the unit twice for screen readers: once in the name, once as an
+    // inline span after the box. The label is now the only place the unit appears.
+    const label = container.querySelector("label") as HTMLElement;
+    const outside = (container.textContent ?? "").replace(label.textContent ?? "", "").replace(numericBase.prompt, "");
+    expect(outside).not.toContain("cm");
+  });
+
+  it("the reveal ghost still states value AND unit — naming did not touch tone grammar", () => {
+    const spec = WidgetSpec.parse({ ...numericBase, unit: "cm" }) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={7} onChange={() => {}} disabled={false} tone="info" />
+    );
+    expect(container.textContent).toContain("Correct: 12 cm");
+  });
+});

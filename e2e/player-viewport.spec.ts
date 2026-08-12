@@ -108,7 +108,7 @@ test.describe("lesson-player viewport contract", () => {
     await seedResume(page, AS100, 2);
     await page.goto(`/learn/${AS100.id}`);
 
-    const input = page.getByRole("textbox", { name: "8 + 8 = ?" });
+    const input = page.getByRole("textbox", { name: "Your answer" });
     await input.fill("15");
     await page.getByRole("button", { name: "Check" }).click();
     await expect(page.locator("[data-player-phase='retry']")).toBeVisible();
@@ -119,7 +119,7 @@ test.describe("lesson-player viewport contract", () => {
     // short-landscape the race lost ~1 run in 3. Wait until the settled layout actually owns the
     // input's center; a PERMANENTLY occluded input never satisfies this and still fails here.
     await page.waitForFunction(() => {
-      const el = document.querySelector<HTMLInputElement>("input[aria-label='8 + 8 = ?']");
+      const el = document.querySelector<HTMLInputElement>("label input[inputmode='decimal']");
       if (!el) return false;
       const b = el.getBoundingClientRect();
       const at = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
@@ -127,7 +127,7 @@ test.describe("lesson-player viewport contract", () => {
     }, undefined, { timeout: 3000 });
     await expectNoHorizontalOverflow(page);
     const geometry = await page.evaluate(() => {
-      const input = document.querySelector<HTMLInputElement>("input[aria-label='8 + 8 = ?']")!;
+      const input = document.querySelector<HTMLInputElement>("label input[inputmode='decimal']")!;
       const footer = document.querySelector<HTMLElement>(".trail-action-dock")!;
       const action = document.querySelector<HTMLElement>(".trail-primary-action")!;
       const feedback = document.querySelector<HTMLElement>("[data-testid='feedback-scroll']")!;
@@ -159,7 +159,7 @@ test.describe("lesson-player viewport contract", () => {
     await seedResume(page, AS100, 2);
     await page.goto(`/learn/${AS100.id}`);
 
-    const input = page.getByRole("textbox", { name: "8 + 8 = ?" });
+    const input = page.getByRole("textbox", { name: "Your answer" });
     const before = await page.evaluate(() => window.scrollY);
     await input.fill("15");
     await page.getByRole("button", { name: "Check" }).click();
@@ -169,7 +169,7 @@ test.describe("lesson-player viewport contract", () => {
     await page.waitForTimeout(600);
 
     const geometry = await page.evaluate(() => {
-      const el = document.querySelector<HTMLInputElement>("input[aria-label='8 + 8 = ?']")!;
+      const el = document.querySelector<HTMLInputElement>("label input[inputmode='decimal']")!;
       const dock = document.querySelector<HTMLElement>(".trail-action-dock")!;
       const box = el.getBoundingClientRect();
       const at = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
@@ -200,7 +200,7 @@ test.describe("lesson-player viewport contract", () => {
     await seedResume(page, FNA, 6, { ...baseProfile, textScale: "xl" });
     await page.goto(`/learn/${FNA.id}`);
 
-    const input = page.getByRole("textbox", { name: "For what x does p(x) = 9? (Enter the only valid solution.)" });
+    const input = page.getByRole("textbox", { name: "Your answer" });
     await input.fill("4");
     await page.getByRole("button", { name: "Check" }).click();
     await expect(page.getByText(/candidate must satisfy the condition/)).toBeVisible();

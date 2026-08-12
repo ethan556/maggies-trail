@@ -545,12 +545,22 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
-      <div className="flex items-center gap-2">
+      {/* S238 — the control names WHAT IT TAKES, not the task. The whole prompt sentence as
+          the input's accessible name was the last class-B naming instance recorded in the S238
+          batch-3 log: the prompt is already on screen and read in document order, so repeating
+          it as the name means a screen-reader user hears the word problem again on every focus
+          while never being told what the field IS. Same house pattern as estimateSlider (S237)
+          and SliderW (S238): a visible <label> WRAPS the input, so the accessible name and the
+          visible name are one string by construction — "Your answer", with the unit folded in
+          when the content states one, exactly as the lab widgets' "Your answer (unit)" fields
+          already do. The old inline unit span is gone with it: the unit now lives in the name
+          instead of being printed twice. */}
+      <label className="grid justify-start gap-1 text-sm font-bold text-ink/75">
+        <span>Your answer{spec.unit ? ` (${spec.unit})` : ""}</span>
         <input
           value={raw}
           inputMode="decimal"
           autoComplete="off"
-          aria-label={spec.prompt}
           disabled={disabled}
           onChange={(e) => {
             const t = e.target.value;
@@ -560,8 +570,7 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
           }}
           className={`min-h-11 w-32 rounded-card border-2 ${border} bg-white px-4 py-2 text-center text-2xl font-bold focus:border-sky disabled:opacity-70`}
         />
-        {spec.unit && <span className="text-lg">{spec.unit}</span>}
-      </div>
+      </label>
       {preview && (
         <div className="flex flex-wrap items-center justify-center gap-2" aria-hidden="true">
           {Array.from({ length: preview.wholes }, (_, k) => (

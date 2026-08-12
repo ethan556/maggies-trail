@@ -112,14 +112,14 @@ describe("numeric tone grammar", () => {
 
   it("retry paints the berry cue on the input itself and shows no ghost", () => {
     show(num, 7, "error");
-    expect(screen.getByRole("textbox", { name: "How many cm?" }).className).toContain("border-berry");
+    expect(screen.getByRole("textbox", { name: "Your answer (cm)" }).className).toContain("border-berry");
     expect(screen.queryByTestId("num-ghost")).toBeNull();
   });
 
   it("renders nothing extra without a tone", () => {
     show(num, 7);
     expect(screen.queryByTestId("num-ghost")).toBeNull();
-    expect(screen.getByRole("textbox", { name: "How many cm?" }).className).not.toContain("border-berry");
+    expect(screen.getByRole("textbox", { name: "Your answer (cm)" }).className).not.toContain("border-berry");
   });
 });
 
