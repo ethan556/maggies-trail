@@ -358,11 +358,13 @@ function Pv3NumLine({ lo, hi, step, mark, markLabel, target, targetLabel, y = 56
       {target !== undefined && (
         <g>
           <circle cx={px(target)} cy={y} r={6} fill={LEAF} />
-          {targetLabel && <text x={px(target)} y={y - 24} fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">{targetLabel}</text>}
+          {/* S238 wave 13: x clamped so an edge target's label stays on-canvas; the mark
+              label moved below the line, out of this label's band. */}
+          {targetLabel && <text x={Math.max(x0 + targetLabel.length * 4, Math.min(px(target), x1 - targetLabel.length * 4))} y={y - 24} fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">{targetLabel}</text>}
         </g>
       )}
       <circle cx={px(mark)} cy={y} r={5} fill={BERRY} />
-      <text x={px(mark)} y={y - 12} fontSize="12" fontWeight="700" fill={BERRY} textAnchor="middle">{markLabel}</text>
+      <text x={px(mark)} y={y + 36} fontSize="12" fontWeight="700" fill={BERRY} textAnchor="middle">{markLabel}</text>
     </g>
   );
 }
@@ -451,13 +453,13 @@ function FracAreaGrid({ cols, rows, shadeCols, shadeRows, x0 = 70, y0 = 22, cell
 /** Grade 6 data-distributions figure: Statistical questions expect varied answers. */
 function DdStatQuestion() {
   return (
-    <svg viewBox="0 0 210 92" role="img" aria-label="A statistical question expects variety: asking one person's height has a single answer, but asking a whole class's heights gives many varied answers.">
+    <svg viewBox="0 0 210 108" role="img" aria-label="A statistical question expects variety: asking one person's height has a single answer, but asking a whole class's heights gives many varied answers.">
       <title>Statistical questions expect varied answers.</title>
-      <text x="16" y="30" fontSize="11" fill={INK}>"How tall is Maria?"</text>
-      <text x="150" y="30" fontSize="11" fontWeight="700" fill={BERRY}>1 answer</text>
-      <text x="16" y="60" fontSize="11" fill={INK}>"How tall is each</text>
-      <text x="16" y="76" fontSize="11" fill={INK}>student?"</text>
-      <text x="150" y="68" fontSize="11" fontWeight="700" fill={LEAF}>many ✓</text>
+      <text x="16" y="28" fontSize="11" fill={INK}>"How tall is Maria?"</text>
+      <text x="204" y="44" textAnchor="end" fontSize="11" fontWeight="700" fill={BERRY}>1 answer</text>
+      <text x="16" y="66" fontSize="11" fill={INK}>"How tall is each</text>
+      <text x="16" y="82" fontSize="11" fill={INK}>student?"</text>
+      <text x="204" y="98" textAnchor="end" fontSize="11" fontWeight="700" fill={LEAF}>many ✓</text>
     </svg>
   );
 }
@@ -1176,11 +1178,11 @@ function RnoSameSign() {
       <title>Same signs add: −3 + (−5) = −8.</title>
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">−3 + (−5) = −8</text>
       <line x1="24" y1="50" x2="196" y2="50" stroke={INK} strokeWidth="2"/>
-      <line x1="24.0" y1="47" x2="24.0" y2="53" stroke={INK} strokeWidth="1"/><text x="24.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-10</text><line x1="38.3" y1="47" x2="38.3" y2="53" stroke={INK} strokeWidth="1"/><text x="38.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-9</text><line x1="52.7" y1="47" x2="52.7" y2="53" stroke={INK} strokeWidth="1"/><text x="52.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-8</text><line x1="67.0" y1="47" x2="67.0" y2="53" stroke={INK} strokeWidth="1"/><text x="67.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-7</text><line x1="81.3" y1="47" x2="81.3" y2="53" stroke={INK} strokeWidth="1"/><text x="81.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-6</text><line x1="95.7" y1="47" x2="95.7" y2="53" stroke={INK} strokeWidth="1"/><text x="95.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-5</text><line x1="110.0" y1="47" x2="110.0" y2="53" stroke={INK} strokeWidth="1"/><text x="110.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-4</text><line x1="124.3" y1="47" x2="124.3" y2="53" stroke={INK} strokeWidth="1"/><text x="124.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-3</text><line x1="138.7" y1="47" x2="138.7" y2="53" stroke={INK} strokeWidth="1"/><text x="138.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-2</text><line x1="153.0" y1="47" x2="153.0" y2="53" stroke={INK} strokeWidth="1"/><text x="153.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-1</text><line x1="167.3" y1="47" x2="167.3" y2="53" stroke={INK} strokeWidth="1"/><text x="167.3" y="66" fontSize="10" fill={INK} textAnchor="middle">0</text><line x1="181.7" y1="47" x2="181.7" y2="53" stroke={INK} strokeWidth="1"/><text x="181.7" y="66" fontSize="10" fill={INK} textAnchor="middle">1</text><line x1="196.0" y1="47" x2="196.0" y2="53" stroke={INK} strokeWidth="1"/><text x="196.0" y="66" fontSize="10" fill={INK} textAnchor="middle">2</text>
+      <line x1="24.0" y1="47" x2="24.0" y2="53" stroke={INK} strokeWidth="1"/><text x="24.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-10</text><line x1="38.3" y1="47" x2="38.3" y2="53" stroke={INK} strokeWidth="1"/><line x1="52.7" y1="47" x2="52.7" y2="53" stroke={INK} strokeWidth="1"/><text x="52.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-8</text><line x1="67.0" y1="47" x2="67.0" y2="53" stroke={INK} strokeWidth="1"/><text x="67.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-7</text><line x1="81.3" y1="47" x2="81.3" y2="53" stroke={INK} strokeWidth="1"/><text x="81.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-6</text><line x1="95.7" y1="47" x2="95.7" y2="53" stroke={INK} strokeWidth="1"/><text x="95.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-5</text><line x1="110.0" y1="47" x2="110.0" y2="53" stroke={INK} strokeWidth="1"/><text x="110.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-4</text><line x1="124.3" y1="47" x2="124.3" y2="53" stroke={INK} strokeWidth="1"/><text x="124.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-3</text><line x1="138.7" y1="47" x2="138.7" y2="53" stroke={INK} strokeWidth="1"/><text x="138.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-2</text><line x1="153.0" y1="47" x2="153.0" y2="53" stroke={INK} strokeWidth="1"/><text x="153.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-1</text><line x1="167.3" y1="47" x2="167.3" y2="53" stroke={INK} strokeWidth="1"/><text x="167.3" y="66" fontSize="10" fill={INK} textAnchor="middle">0</text><line x1="181.7" y1="47" x2="181.7" y2="53" stroke={INK} strokeWidth="1"/><text x="181.7" y="66" fontSize="10" fill={INK} textAnchor="middle">1</text><line x1="196.0" y1="47" x2="196.0" y2="53" stroke={INK} strokeWidth="1"/><text x="196.0" y="66" fontSize="10" fill={INK} textAnchor="middle">2</text>
       <circle cx="124.3" cy="50" r="4" fill={SKY}/>
       <circle cx="52.7" cy="50" r="5" fill={BERRY}/>
       <path d="M 124.3 40 Q 88.5 28 52.7 40" fill="none" stroke={TANGERINE} strokeWidth="1.6"/>
-      <text x="88.5" y="28" fontSize="10" fill={TANGERINE} textAnchor="middle">−5</text>
+      <text x="88.5" y="34" fontSize="10" fill={TANGERINE} textAnchor="middle">−5</text>
     </svg>
   );
 }
@@ -4340,7 +4342,7 @@ function Pv3Jump() {
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">47 + 23: jump to a friendly 50</text>
       <Pv3NumLine lo={40} hi={80} step={10} mark={47} markLabel="47" target={70} targetLabel="70" />
       <path d="M 50 44 Q 60 30 74 44" fill="none" stroke={TANGERINE} strokeWidth={1.6} />
-      <text x="62" y="30" fontSize="10" fill={TANGERINE} textAnchor="middle">+3</text>
+      <text x="62" y="33" fontSize="10" fill={TANGERINE} textAnchor="middle">+3</text>
     </svg>
   );
 }
@@ -4371,7 +4373,7 @@ function Pv3BorrowZero() {
       <text x="16" y="42" fontSize="12" fill={INK}>hundreds 3 → 2</text>
       <text x="16" y="62" fontSize="12" fill={BERRY} fontWeight="700">tens 0 → 10 → 9</text>
       <text x="16" y="82" fontSize="12" fill={INK}>ones 5 → 15</text>
-      <text x="150" y="62" fontSize="11" fill={INK} textAnchor="middle">borrow, then borrow again</text>
+      <text x="105" y="104" fontSize="11" fill={INK} textAnchor="middle">borrow, then borrow again</text>
     </svg>
   );
 }
@@ -5781,7 +5783,7 @@ function DistributionStory() {
       ))}
       <text x={px(15)} y={y0 - 12 - 3 * gap - 4} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>shape: peak at 15, symmetric</text>
       <text x={px(5) - 20} y={y0 + 34} textAnchor="start" fontSize={10} fontWeight={800} fill={LEAF}>center: median 15</text>
-      <text x={px(25) + 16} y={y0 + 34} textAnchor="end" fontSize={10} fontWeight={800} fill={SKY}>spread: range 20</text>
+      <text x={272} y={y0 + 34} textAnchor="end" fontSize={10} fontWeight={800} fill={SKY}>spread: range 20</text>
       <text x={140} y={y0 + 48} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>one plot, three questions: what shape, where's the middle, how far does it stretch?</text>
     </svg>
   );
@@ -7548,17 +7550,17 @@ function RigidTransformations() {
   return (
     <svg viewBox="0 0 300 130" role="img" className="mx-auto w-full max-w-sm">
       <title>Three rigid motions. A translation slides a triangle to a new spot. A reflection flips it across a line like a mirror. A rotation turns it around a point. In every case the moved copy is the same size and shape as the original.</title>
-      <text x={50} y={16} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>translate (slide)</text>
+      <text x={50} y={14} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>translate (slide)</text>
       {tri(30, 60, 12, SKY)}
       <line x1={44} y1={60} x2={60} y2={60} stroke={INK} strokeWidth={1.4} markerEnd="url(#rtArrow)" />
       {tri(74, 60, 12, TANGERINE)}
       <line x1={104} y1={16} x2={104} y2={116} stroke={INK} strokeWidth={1} opacity={0.25} />
-      <text x={150} y={16} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>reflect (flip)</text>
+      <text x={150} y={28} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>reflect (flip)</text>
       {tri(128, 60, 12, SKY)}
       <line x1={150} y1={26} x2={150} y2={100} stroke={BERRY} strokeWidth={1.4} strokeDasharray="4 3" />
       {tri(172, 60, 12, TANGERINE, true)}
       <line x1={204} y1={16} x2={204} y2={116} stroke={INK} strokeWidth={1} opacity={0.25} />
-      <text x={252} y={16} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>rotate (turn)</text>
+      <text x={252} y={14} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>rotate (turn)</text>
       {tri(240, 62, 12, SKY)}
       <circle cx={258} cy={70} r={2.5} fill={BERRY} />
       <path d="M 250 54 A 14 14 0 0 1 272 62" fill="none" stroke={INK} strokeWidth={1.2} markerEnd="url(#rtArrow)" />
@@ -7623,7 +7625,7 @@ function TransversalAngles() {
       <text x={106} y={56} textAnchor="middle" fontSize={10} fontWeight={800} fill="white">b</text>
       <text x={195} y={97} textAnchor="middle" fontSize={10} fontWeight={800} fill="white">b</text>
       <text x={244} y={30} fontSize={10} fontWeight={700} fill={TANGERINE}>a = a</text>
-      <text x={244} y={128} fontSize={10} fontWeight={700} fill={LEAF}>b = b</text>
+      <text x={250} y={128} fontSize={10} fontWeight={700} fill={LEAF}>b = b</text>
       <text x={30} y={132} fontSize={10} fontWeight={700} fill={INK}>parallel lines + a transversal</text>
     </svg>
   );
@@ -8425,7 +8427,7 @@ function ApproachingE() {
       <title>Four bars show the value of one dollar after a year at 100 percent interest, compounded more and more often: yearly gives 2 dollars, quarterly about 2.44, monthly about 2.61, daily about 2.71. The bars rise toward — but never pass — a dashed line at e, approximately 2.718.</title>
       <style>{css}</style>
       <line x1={24} y1={Y(Math.E)} x2={316} y2={Y(Math.E)} stroke={BERRY} strokeWidth={1.8} strokeDasharray="6 4" />
-      <text x={310} y={Y(Math.E) - 6} textAnchor="end" fontSize={11} fontWeight={800} fill={BERRY}>e ≈ 2.718 — the ceiling</text>
+      <text x={310} y={Y(Math.E) - 22} textAnchor="end" fontSize={11} fontWeight={800} fill={BERRY}>e ≈ 2.718 — the ceiling</text>
       {vals.map((v, i) => (
         <g key={i} className={`ae-bar ae-b${i + 1}`} style={{ transformBox: "fill-box" } as React.CSSProperties}>
           <rect x={40 + i * 72} y={Y(v)} width={44} height={y0 - Y(v)} rx={6} fill={i === 3 ? LEAF : SKY} opacity={0.85} />
@@ -8512,8 +8514,8 @@ function SigmaAnatomy() {
       <title>A summation expression taken apart. The large sigma carries three labeled parts: below it, k equals 1 — where the counter starts; above it, 5 — where the counter stops; to its right, 2k plus 1 — the rule each k is fed through. Underneath, the expression unrolls into 3 plus 5 plus 7 plus 9 plus 11, which equals 35.</title>
       <style>{css}</style>
       <text x={104} y={92} textAnchor="middle" fontSize={54} fontWeight={800} fill={INK}>Σ</text>
-      <text x={104} y={40} textAnchor="middle" fontSize={13} fontWeight={800} fill={BERRY}>5</text>
-      <text x={104} y={118} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>k = 1</text>
+      <text x={104} y={34} textAnchor="middle" fontSize={13} fontWeight={800} fill={BERRY}>5</text>
+      <text x={104} y={122} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>k = 1</text>
       <text x={162} y={82} fontSize={16} fontWeight={800} fill={SKY}>(2k + 1)</text>
       <g className="sa-tag sa-t1">
         <line x1={124} y1={34} x2={196} y2={22} stroke={BERRY} strokeWidth={1.4} />
@@ -8525,8 +8527,8 @@ function SigmaAnatomy() {
       </g>
       <g className="sa-tag sa-t3">
         <line x1={230} y1={76} x2={258} y2={56} stroke={SKY} strokeWidth={1.4} />
-        <text x={262} y={52} fontSize={10.5} fontWeight={800} fill={SKY}>feed each k</text>
-        <text x={262} y={64} fontSize={10.5} fontWeight={800} fill={SKY}>through this rule</text>
+        <text x={238} y={46} fontSize={10.5} fontWeight={800} fill={SKY}>feed each k</text>
+        <text x={238} y={60} fontSize={10.5} fontWeight={800} fill={SKY}>through this rule</text>
       </g>
       <g className="sa-row">
         <text x={170} y={158} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>
@@ -8850,7 +8852,7 @@ function AnglePairs() {
       <path d="M 250 61 A 22 22 0 0 1 208 61" fill="none" stroke={LEAF} strokeWidth={2.5} />
       <text x={229} y={44} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={LEAF}>x</text>
       <text x={229} y={86} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={LEAF}>x</text>
-      <text x={229} y={118} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>vertical angles are equal</text>
+      <text x={229} y={131} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>vertical angles are equal</text>
     </svg>
   );
 }
@@ -9011,7 +9013,7 @@ function LabeledPoint({ x, y, label, dx = 8, dy = -6, color = INK, r = 3 }: { x:
 /** The three undefined terms — a point, a line (arrows both ways), a plane — each with its notation. */
 function UndefinedTermsTrio() {
   return (
-    <svg viewBox="0 0 300 170" role="img" aria-label="Point A, line BC with arrows on both ends, and plane P drawn as a tilted parallelogram">
+    <svg viewBox="0 0 310 170" role="img" aria-label="Point A, line BC with arrows on both ends, and plane P drawn as a tilted parallelogram">
       <title>Point A, line BC with arrows on both ends, and plane P drawn as a tilted parallelogram</title>
       <LabeledPoint x={50} y={70} label="A" color={SKY} />
       <text x={50} y={110} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>point A</text>
@@ -9022,11 +9024,11 @@ function UndefinedTermsTrio() {
       <LabeledPoint x={135} y={81} label="B" dy={14} />
       <LabeledPoint x={175} y={59} label="C" dy={14} />
       <text x={155} y={120} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>line BC</text>
-      <text x={155} y={136} textAnchor="middle" fontSize={10} fill={INK}>extends forever both ways</text>
+      <text x={155} y={158} textAnchor="middle" fontSize={10} fill={INK}>extends forever both ways</text>
       <polygon points="215,60 285,45 275,95 205,110" fill={SKY} opacity={0.15} stroke={SKY} strokeWidth={1.5} />
       <text x={247} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>P</text>
       <text x={247} y={126} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>plane P</text>
-      <text x={247} y={142} textAnchor="middle" fontSize={10} fill={INK}>a flat surface, no edge</text>
+      <text x={244} y={142} textAnchor="middle" fontSize={10} fill={INK}>a flat surface, no edge</text>
     </svg>
   );
 }
@@ -9793,7 +9795,7 @@ function DilationScale() {
       <polygon points={`${P2} ${Q2} ${R2}`} className="dil-img" fill={BERRY} opacity={0.14} stroke={BERRY} strokeWidth={2.4} />
       <polygon points={`${P} ${Q} ${R}`} fill={SKY} opacity={0.2} stroke={SKY} strokeWidth={2} />
       <circle cx={O[0]} cy={O[1]} r={4} fill={INK} />
-      <text x={O[0] - 2} y={O[1] + 16} fontSize={11} fontWeight={700} fill={INK}>O</text>
+      <text x={O[0] - 10} y={O[1] + 4} fontSize={11} fontWeight={700} fill={INK}>O</text>
       <text x={150} y={168} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>image = O + k·(point − O),  k = 1.5</text>
     </svg>
   );
@@ -11021,7 +11023,7 @@ function ShapeAttributes() {
 /** Three 3D solids: cube (all flat faces), cone and cylinder (flat + curved). */
 function SolidShapes() {
   return (
-    <svg viewBox="0 0 250 110" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 260 110" role="img" className="mx-auto w-full max-w-sm">
       <title>A cube with six flat faces, a cone with one flat face and one curved surface, and a cylinder with two flat faces and one curved surface.</title>
       <rect x={14} y={30} width={40} height={40} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1.2} />
       <polygon points="14,30 24,20 64,20 54,30" fill={SKY} opacity={0.6} stroke={INK} strokeWidth={1} />
@@ -11029,11 +11031,11 @@ function SolidShapes() {
       <text x={39} y={90} textAnchor="middle" fontSize={10} fontWeight={700} fill={SKY}>cube: 6 flat</text>
       <polygon points="105,70 130,20 155,70" fill={TANGERINE} opacity={0.5} stroke={INK} strokeWidth={1.2} />
       <ellipse cx={130} cy={70} rx={25} ry={7} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
-      <text x={130} y={90} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>cone: 1 flat + curved</text>
+      <text x={130} y={104} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>cone: 1 flat + curved</text>
       <ellipse cx={210} cy={30} rx={25} ry={7} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
       <rect x={185} y={30} width={50} height={35} fill={TANGERINE} opacity={0.5} stroke={INK} strokeWidth={1} />
       <ellipse cx={210} cy={65} rx={25} ry={7} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
-      <text x={210} y={95} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>cylinder: 2 flat + curved</text>
+      <text x={210} y={90} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>cylinder: 2 flat + curved</text>
     </svg>
   );
 }
@@ -11045,12 +11047,12 @@ function HalvesQuarters() {
       <title>A circle cut into two equal halves, one sky and one plain, and a rectangle cut into four equal quarters, alternating sky and tangerine.</title>
       <path d="M 60 20 A 30 30 0 0 1 60 80 Z" fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1.2} />
       <path d="M 60 20 A 30 30 0 0 0 60 80 Z" fill="none" stroke={INK} strokeWidth={1.2} />
-      <text x={60} y={100} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>2 halves</text>
+      <text x={56} y={100} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>2 halves</text>
       <rect x={140} y={25} width={30} height={25} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
       <rect x={170} y={25} width={30} height={25} fill={TANGERINE} opacity={0.6} stroke={INK} strokeWidth={1} />
       <rect x={140} y={50} width={30} height={25} fill={TANGERINE} opacity={0.6} stroke={INK} strokeWidth={1} />
       <rect x={170} y={50} width={30} height={25} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
-      <text x={170} y={92} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>4 fourths (quarters)</text>
+      <text x={172} y={92} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>4 fourths (quarters)</text>
     </svg>
   );
 }
@@ -11519,7 +11521,7 @@ function PlaceByPlaceCompare() {
       {a.map((d, i) => (
         <text key={`at${i}`} x={38 + i * 34} y={42} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>{d}</text>
       ))}
-      <text x={20} y={42} fontSize={12} fontWeight={700} fill={SKY}>275</text>
+      <text x={28} y={42} textAnchor="end" fontSize={12} fontWeight={700} fill={SKY}>275</text>
       {b.map((d, i) => (
         <rect key={`b${i}`} x={24 + i * 34} y={60} width={28} height={28} rx={5}
           fill={i === 0 ? "#FFE3E3" : "#FFE9D6"} stroke={i === 0 ? BERRY : INK} strokeWidth={i === 0 ? 2.5 : 1} />
@@ -11527,7 +11529,7 @@ function PlaceByPlaceCompare() {
       {b.map((d, i) => (
         <text key={`bt${i}`} x={38 + i * 34} y={80} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>{d}</text>
       ))}
-      <text x={20} y={80} fontSize={12} fontWeight={700} fill={TANGERINE}>312</text>
+      <text x={28} y={80} textAnchor="end" fontSize={12} fontWeight={700} fill={TANGERINE}>312</text>
       <text x={130} y={62} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>2 &lt; 3, decided!</text>
       <text x={70} y={112} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>275 &lt; 312</text>
     </svg>
@@ -11765,19 +11767,19 @@ function FnaInverseReflection() {
 /** pra Ch1: the list→test→divide→finish pipeline for factoring cubics (static flow). */
 function PraPipeline() {
   return (
-    <svg viewBox="0 0 360 120" role="img" aria-label="Four-stage pipeline for factoring a cubic: list the rational-root candidates, test until f of c equals zero, divide synthetically so the degree drops, then finish by solving the leftover quadratic.">
+    <svg viewBox="0 0 368 124" role="img" aria-label="Four-stage pipeline for factoring a cubic: list the rational-root candidates, test until f of c equals zero, divide synthetically so the degree drops, then finish by solving the leftover quadratic.">
       <title>The list, test, divide, finish pipeline for factoring cubics.</title>
       <g>
         <rect x="10" y="24" width="78" height="64" rx="10" fill="none" stroke={SKY} strokeWidth={2} />
         <text x="49" y="48" fontSize={12} fontWeight={700} fill={SKY} textAnchor="middle">1. LIST</text>
-        <text x="49" y="66" fontSize={10} fill={INK} textAnchor="middle">candidates ±p/q</text>
+        <text x="49" y="102" fontSize={10} fill={INK} textAnchor="middle">candidates ±p/q</text>
         
       </g>
       <VectorArrow x1={88} y1={56} x2={95} y2={56} color={INK} />
       <g>
         <rect x="97" y="24" width="78" height="64" rx="10" fill="none" stroke={TANGERINE} strokeWidth={2} />
         <text x="136" y="48" fontSize={12} fontWeight={700} fill={TANGERINE} textAnchor="middle">2. TEST</text>
-        <text x="136" y="66" fontSize={10} fill={INK} textAnchor="middle">find f(c) = 0</text>
+        <text x="136" y="115" fontSize={10} fill={INK} textAnchor="middle">find f(c) = 0</text>
         
       </g>
       <VectorArrow x1={175} y1={56} x2={183} y2={56} color={INK} />
@@ -11791,7 +11793,7 @@ function PraPipeline() {
       <g>
         <rect x="272" y="24" width="78" height="64" rx="10" fill="none" stroke={BERRY} strokeWidth={2} />
         <text x="311" y="48" fontSize={12} fontWeight={700} fill={BERRY} textAnchor="middle">4. FINISH</text>
-        <text x="311" y="66" fontSize={10} fill={INK} textAnchor="middle">solve the quadratic</text>
+        <text x="311" y="102" fontSize={10} fill={INK} textAnchor="middle">solve the quadratic</text>
         
       </g>
     </svg>
@@ -12375,13 +12377,13 @@ function VecCompose() {
     <svg viewBox="0 0 262 155" role="img" aria-label="A three-stage pipeline: the vector 1,0 is reflected over the line y equals x to become 0,1, then reflected over the x-axis to become 0, negative 1. The two reflections together equal a single 90 degree clockwise rotation.">
       <title>Composing two reflections into one rotation.</title>
       {cell(18, 1, 0, "⟨1,0⟩", INK)}
-      <text x={72} y={88} fontSize="10" fill={INK}>reflect</text>
-      <text x={73} y={100} fontSize="10" fill={INK}>y = x</text>
-      <text x={78} y={116} fontSize="14" fill={SKY}>→</text>
+      <text x={72} y={84} fontSize="10" fill={INK}>reflect</text>
+      <text x={73} y={97} fontSize="10" fill={INK}>y = x</text>
+      <text x={78} y={118} fontSize="14" fill={SKY}>→</text>
       {cell(112, 0, 1, "⟨0,1⟩", SKY)}
-      <text x={168} y={88} fontSize="10" fill={INK}>reflect</text>
-      <text x={168} y={100} fontSize="10" fill={INK}>x-axis</text>
-      <text x={174} y={116} fontSize="14" fill={TANGERINE}>→</text>
+      <text x={168} y={84} fontSize="10" fill={INK}>reflect</text>
+      <text x={168} y={97} fontSize="10" fill={INK}>x-axis</text>
+      <text x={174} y={118} fontSize="14" fill={TANGERINE}>→</text>
       {cell(208, 0, -1, "⟨0,−1⟩", BERRY)}
       <text x={12} y={18} fontSize="10" fontWeight="600" fill={INK}>two reflections = 90° clockwise rotation</text>
     </svg>
@@ -13794,7 +13796,7 @@ function AsFactFamily() {
       <text x={120} y={30} textAnchor="middle" fontSize={16} fontWeight={800} fill={TANGERINE}>13</text>
       <text x={62} y={104} textAnchor="middle" fontSize={16} fontWeight={800} fill={SKY}>6</text>
       <text x={178} y={104} textAnchor="middle" fontSize={16} fontWeight={800} fill={SKY}>7</text>
-      <text x={120} y={116} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>6+7=13 · 13−6=7</text>
+      <text x={120} y={120} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>6+7=13 · 13−6=7</text>
     </svg>
   );
 }
@@ -15456,7 +15458,7 @@ function VmLinePlotRead() {
     <svg viewBox="0 0 260 100" role="img" className="mx-auto w-full max-w-sm">
       <title>A line plot stacks an X above a number line for each measurement.</title>
       <line x1={20} y1={74} x2={240} y2={74} stroke={INK} strokeWidth={2} />
-      {[["2",1],["3",3],["4",2],["5",1]].map(([n,cnt],i)=>{const x=40+i*54;return <g key={i}><text x={x} y={90} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>{n}</text>{Array.from({length:cnt as number}).map((_,j)=>(<text key={j} x={x} y={68-j*14} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>✕</text>))}</g>})}
+      {[["2",1],["3",3],["4",2],["5",1]].map(([n,cnt],i)=>{const x=40+i*54;return <g key={i}><text x={x} y={90} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>{n}</text>{Array.from({length:cnt as number}).map((_,j)=>(<text key={j} x={x} y={68-j*17} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>✕</text>))}</g>})}
     </svg>
   );
 }
@@ -16817,7 +16819,7 @@ function SeGraphCross() {
       <title>Graphing y equals two x and y equals x plus three, the two lines cross at the point three, six, which is the solution.</title>
       <line x1={20} y1={110} x2={185} y2={110} stroke={INK} strokeWidth={1.2} /><line x1={30} y1={20} x2={30} y2={120} stroke={INK} strokeWidth={1.2} />
       <line x1={30} y1={110} x2={130} y2={30} stroke={SKY} strokeWidth={2} /><text x={120} y={44} fontSize={11} fontWeight={800} fill={SKY}>y=2x</text>
-      <line x1={30} y1={80} x2={160} y2={30} stroke={TANGERINE} strokeWidth={2} /><text x={150} y={50} fontSize={11} fontWeight={800} fill={TANGERINE}>y=x+3</text>
+      <line x1={30} y1={80} x2={160} y2={30} stroke={TANGERINE} strokeWidth={2} /><text x={154} y={50} fontSize={11} fontWeight={800} fill={TANGERINE}>y=x+3</text>
       <circle cx={100} cy={45} r={4.5} fill={BERRY} /><text x={104} y={60} fontSize={11} fontWeight={800} fill={BERRY}>(3, 6)</text>
     </svg>
   );
@@ -23619,7 +23621,7 @@ function CprRowVsColumn() {
       <text x={112} y={41} textAnchor="middle" fontSize={12} fill={INK}>60</text>
       <text x={52} y={69} textAnchor="middle" fontSize={12} fill={INK} opacity={0.4}>70</text>
       <text x={112} y={69} textAnchor="middle" fontSize={12} fill={INK} opacity={0.4}>30</text>
-      <text x={82} y={96} textAnchor="middle" fontSize={11} fill={INK}>
+      <text x={82} y={96} textAnchor="middle" fontSize={10} fill={INK}>
         P(sport | bus) = 40/100
       </text>
       <text x={82} y={114} textAnchor="middle" fontSize={13} fontWeight={700} fill={SKY}>
@@ -23636,7 +23638,7 @@ function CprRowVsColumn() {
       <text x={278} y={41} textAnchor="middle" fontSize={12} fill={INK} opacity={0.4}>60</text>
       <text x={218} y={69} textAnchor="middle" fontSize={12} fill={INK}>70</text>
       <text x={278} y={69} textAnchor="middle" fontSize={12} fill={INK} opacity={0.4}>30</text>
-      <text x={248} y={96} textAnchor="middle" fontSize={11} fill={INK}>
+      <text x={248} y={96} textAnchor="middle" fontSize={10} fill={INK}>
         P(bus | sport) = 40/110
       </text>
       <text x={248} y={114} textAnchor="middle" fontSize={13} fontWeight={700} fill={TANGERINE}>
@@ -24254,7 +24256,7 @@ function SiAccuracyPrecision() {
 function SiMarginBand() {
   const X = (p: number) => 30 + p * 260;
   return (
-    <svg viewBox="0 0 320 150" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 320 158" role="img" className="mx-auto w-full max-w-md">
       <title>A poll result of forty-eight percent with a three point margin either side, shown as a band from forty-five to fifty-one percent. Every value inside the band is a plausible truth; the single number is only the middle of it.</title>
       <text x={160} y={14} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         a poll is a band, not a point
@@ -24283,7 +24285,7 @@ function SiMarginBand() {
       <text x={160} y={136} textAnchor="middle" fontSize={11} fill={INK}>
         48% ± 3 → every value from 45 to 51 is plausible
       </text>
-      <text x={160} y={148} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
+      <text x={160} y={152} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
         the margin covers random wobble only — never bias
       </text>
     </svg>
@@ -24802,7 +24804,7 @@ function InRiemannTrap() {
             <path d={`M ${xs.map((x) => `${(X(x) * 0.45 + 8).toFixed(1)} ${Y(f(x)).toFixed(1)}`).join(" L ")}`}
               fill="none" stroke={INK} strokeWidth={2} />
             <line x1={8} y1={Y(0)} x2={X(2) * 0.45 + 8} y2={Y(0)} stroke={INK} strokeWidth={1} strokeOpacity={0.5} />
-            <text x={X(1) * 0.45 + 8} y={148} textAnchor="middle" fontSize={11} fontWeight={700}
+            <text x={X(1) * 0.45 + 8} y={148} textAnchor="middle" fontSize={10} fontWeight={700}
               fill={side === 0 ? SKY : BERRY}>
               {side === 0 ? "left: always SHORT" : "right: always OVER"}
             </text>
@@ -25021,7 +25023,7 @@ function PcPolarWedge() {
       <text x={206} y={72} fontSize={13} fontWeight={700} fill={INK}>½ · r · (r dθ)</text>
       <text x={206} y={92} fontSize={13} fontWeight={700} fill={BERRY}>= ½r² dθ</text>
       <text x={206} y={112} fontSize={10} fill={INK} fillOpacity={0.8}>the ½ IS</text>
-      <text x={206} y={124} fontSize={10} fill={INK} fillOpacity={0.8}>the triangle</text>
+      <text x={206} y={126} fontSize={10} fill={INK} fillOpacity={0.8}>the triangle</text>
       <text x={150} y={158} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         lose the ½ and a circle will catch you: ∫½(2)²dθ over a full turn is 4π = πr²
       </text>
@@ -25272,8 +25274,8 @@ function FtInverseReversedMachine() {
       <path d="M164 108 l8 5 -8 5 z" fill={INK} />
       <text x={182} y={118} fontSize={12} fontWeight={800} fill={SKY}>x</text>
       <path d="M218 44 C252 44 252 110 220 112" fill="none" stroke={INK} strokeWidth={1.3} opacity={0.55} strokeDasharray="4 3" />
-      <text x={236} y={80} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.7}>order</text>
-      <text x={236} y={92} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.7}>flips</text>
+      <text x={244} y={78} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.7}>order</text>
+      <text x={244} y={92} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.7}>flips</text>
     </svg>
   );
 }
@@ -26108,7 +26110,7 @@ function EvOutcomesShareValue() {
 }
 function EvDistributionInventory() {
   return (
-    <svg viewBox="0 0 300 120" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 300 124" role="img" className="mx-auto w-full max-w-sm">
       <title>A probability distribution is the complete inventory: every value paired with its probability, and the probabilities add to one.</title>
       <line x1={24} y1={90} x2={286} y2={90} stroke={INK} strokeWidth={1.3} />
       {[[1, 18], [3, 46], [3, 46], [1, 18]].map(([, h], i) => (
@@ -26118,7 +26120,7 @@ function EvDistributionInventory() {
         </g>
       ))}
       <text x={150} y={18} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>every value, every probability</text>
-      <text x={150} y={116} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>the bars must total exactly 1</text>
+      <text x={150} y={118} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>the bars must total exactly 1</text>
     </svg>
   );
 }
@@ -26244,17 +26246,17 @@ function EvLongRunDomain() {
 }
 function EvRiskOutsideExpectation() {
   return (
-    <svg viewBox="0 0 300 110" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 320 110" role="img" className="mx-auto w-full max-w-sm">
       <title>Two things sit outside expectation's reach: a ruinous loss is not made acceptable by a favourable average, and a single play is not the long run.</title>
       <rect x={18} y={22} width={126} height={56} rx={8} fill={BERRY} opacity={0.13} stroke={BERRY} strokeWidth={1.4} />
       <text x={81} y={42} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>RISK</text>
-      <text x={81} y={58} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>a ruinous loss is still</text>
+      <text x={81} y={57} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>a ruinous loss is still</text>
       <text x={81} y={70} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>ruinous on average</text>
-      <rect x={156} y={22} width={126} height={56} rx={8} fill={BERRY} opacity={0.13} stroke={BERRY} strokeWidth={1.4} />
-      <text x={219} y={42} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>ONE PLAY</text>
-      <text x={219} y={58} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>a single trial is not</text>
-      <text x={219} y={70} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>the long run</text>
-      <text x={150} y={98} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>expectation answers one question well — and only that one</text>
+      <rect x={179} y={22} width={126} height={56} rx={8} fill={BERRY} opacity={0.13} stroke={BERRY} strokeWidth={1.4} />
+      <text x={242} y={42} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>ONE PLAY</text>
+      <text x={242} y={57} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>a single trial is not</text>
+      <text x={242} y={70} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>the long run</text>
+      <text x={160} y={98} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>expectation answers ONE question — and only that one</text>
     </svg>
   );
 }
@@ -26913,12 +26915,12 @@ function SpGapVsWobble() {
   return (
     <svg viewBox="0 0 280 150" role="img" className="mx-auto w-full max-w-sm">
       <title>Two situations with the same six-unit gap between group means. In the top row each group wobbles by only one unit, so the bands stay clearly apart. In the bottom row each group wobbles by four units, so the bands overlap heavily. The same gap means more when the wobble is small.</title>
-      <text x={4} y={34} fontSize={10} fontWeight={700} fill={INK}>small</text>
-      <text x={4} y={44} fontSize={10} fontWeight={700} fill={INK}>wobble</text>
+      <text x={4} y={32} fontSize={10} fontWeight={700} fill={INK}>small</text>
+      <text x={4} y={45} fontSize={10} fontWeight={700} fill={INK}>wobble</text>
       {row(40, 9, 15, 1)}
       <text x={210} y={44} fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>6 MADs apart</text>
-      <text x={4} y={98} fontSize={10} fontWeight={700} fill={INK}>large</text>
-      <text x={4} y={108} fontSize={10} fontWeight={700} fill={INK}>wobble</text>
+      <text x={4} y={96} fontSize={10} fontWeight={700} fill={INK}>large</text>
+      <text x={4} y={109} fontSize={10} fontWeight={700} fill={INK}>wobble</text>
       {row(104, 9, 15, 4)}
       <text x={210} y={108} fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>1.5 MADs apart</text>
       <text x={140} y={140} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>same gap of 6 — the wobble decides whether it counts</text>
@@ -27151,7 +27153,7 @@ function Esn8ZeroExponent() {
           {i < 4 && <text x={216} y={50 + i * 24} fontSize={10} fontWeight={700} fill={TANGERINE}>÷ 2</text>}
         </g>
       ))}
-      <text x={150} y={144} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>the pattern forces 2⁰ = 1 — nothing is being multiplied</text>
+      <text x={150} y={148} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>the pattern forces 2⁰ = 1 — nothing is being multiplied</text>
     </svg>
   );
 }

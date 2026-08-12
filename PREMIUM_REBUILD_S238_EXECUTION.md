@@ -451,9 +451,28 @@ The ratchet baseline was REWRITTEN from the fresh sweep (150 entries) rather tha
 and all forty-eight wave-10/11/12 fixes are pinned by name. Pixel evidence:
 `S238_SCREENSHOTS/17-fig-*.png` (ten captures).
 
-Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 197 pairs / 150 figures, ratcheted**.
-The remaining tail is flat (nothing above 5 pairs, most at 1–2) — continue down the CSV by
-pairs × uses, in bigger sweeps now that the shapes repeat.
+## Wave 13 (same session): thirty more figures — 197 → 137 pairs, baseline 120
+
+The biggest sweep yet, and again a SHARED HELPER led: `Pv3NumLine` (six K–5 number-line
+figures) put its mark label in the same band wide target labels need — the mark moved BELOW
+the line and edge targets' labels now x-clamp onto the canvas, closing pv4-round-place and
+pv3-jump while four already-clean sibling figures stayed clean under the ratchet. The other
+twenty-eight were the recurring shapes: caption bands separated (often +4–8 canvas units),
+side-by-side texts staggered or end-anchored apart, ✕-stack pitches opened to the glyph's real
+height, and two panel layouts re-seated (dd-stat-question's answers to their own right-aligned
+rows; pra-pipeline's sub-captions out of boxes that could never hold them).
+
+READING the screenshots caught five more things the box model cannot see: sigma-anatomy's
+callout and undefined-terms-trio's plane caption ran off the right edge, ev-risk's footer ran
+off both edges (reworded within the fs-10 floor), and pra-pipeline's stage-4 caption sat on
+its box's border — and the ratchet caught the sigma fix's FIRST draft creating a brand-new
+pair with "(2k + 1)", which is the ratchet doing exactly what it was built for.
+
+Baseline rewritten from the fresh sweep (120 entries); all seventy-eight wave-10–13 fixes
+pinned by name. Pixel evidence: `S238_SCREENSHOTS/18-fig-*.png` (eight captures).
+
+Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 137 pairs / 120 figures, ratcheted**.
+Everything left is 1–3 pairs; the flat tail continues by pairs × uses.
 
 ## What S238 did NOT do (open, in Plan v3 priority order)
 

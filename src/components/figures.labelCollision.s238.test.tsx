@@ -3,9 +3,9 @@
  * S238 wave 10 — THE FIGURES LEDGER RATCHET (always-on).
  *
  * figuresCollision.s238.test.tsx (opt-in, FIGURE_SWEEP=1) MEASURES the ledger; this file
- * FREEZES it. The baseline below is the measured remainder — 150 figures still carrying
- * label collisions after waves 10–12 closed the worst by exposure (pairs × authored uses):
- * 352 → 307 → 267 → 197 pairs. Fixed so far: compound-event-tree,
+ * FREEZES it. The baseline below is the measured remainder — 120 figures still carrying
+ * label collisions after waves 10–13 closed the worst by exposure (pairs × authored uses):
+ * 352 → 307 → 267 → 197 → 137 pairs. Fixed so far: compound-event-tree,
  * two-population-compare, si-claim-ladder, side-splitter, si-study-types, probability-line,
  * dr-tangent-line, ca-first-derivative-story, dd-pipeline, in-ftc-slope-is-height,
  * ia-strip-to-disc, dpv-round-whole, line-plot, magnitude-scale, equation-solution-types,
@@ -31,9 +31,6 @@ import { FIGURES } from "./figures";
 import { collisions, scanTextBoxes, describeCollision } from "./textBoxes.testkit";
 
 const BASELINE = new Map<string, number>([
-  ["angle-pairs", 1],
-  ["approaching-e", 3],
-  ["as-fact-family", 2],
   ["as100-odd-even", 1],
   ["as100-sub-tens-40", 1],
   ["avp-distance-definition", 1],
@@ -53,22 +50,15 @@ const BASELINE = new Map<string, number>([
   ["cnp-drawing-vs-proof", 1],
   ["co-parabola-def", 1],
   ["composition-path", 1],
-  ["cpr-row-vs-column", 1],
   ["cr-linear-vs-quadratic", 1],
   ["cross-sections", 1],
-  ["dd-stat-question", 2],
-  ["dilation-scale", 1],
   ["distance-right-triangle", 1],
-  ["distribution-story", 1],
   ["dm-least-precise-wins", 2],
   ["dm-shape-outlier", 1],
   ["dop-order-matters", 1],
   ["dop-partial-products", 1],
   ["dop-standard-algo", 1],
   ["dpv-place-names", 1],
-  ["esn8-zero-exponent", 3],
-  ["ev-distribution-inventory", 4],
-  ["ev-risk-outside-expectation", 4],
   ["ev-weighted-not-plain", 1],
   ["exp-mirror", 1],
   ["exponent-unfold", 2],
@@ -77,20 +67,17 @@ const BASELINE = new Map<string, number>([
   ["fna-properties-anywhere", 2],
   ["fna-secant-aroc", 1],
   ["formula-rearrange", 1],
-  ["ft-inverse-reversed-machine", 3],
   ["ft-inverse-swap", 1],
   ["g7-aaa-same-shape", 1],
   ["g7-perp-bisector-arcs", 1],
   ["geo3-square-is-rect", 1],
   ["gf-figure-vs-measure", 1],
   ["gf-notation-hats", 1],
-  ["halves-quarters", 1],
   ["hole-vs-asymptote", 1],
   ["hundred-more", 1],
   ["iar-dashed-solid-rule", 1],
   ["iar-name-the-failure", 1],
   ["iar-region-corners", 1],
-  ["in-riemann-trap", 1],
   ["incenter", 1],
   ["inverse-reflection", 2],
   ["kite-diagonals", 1],
@@ -106,12 +93,10 @@ const BASELINE = new Map<string, number>([
   ["nls-substitute-recipe", 1],
   ["odometer-roll", 1],
   ["partition-ratio", 1],
-  ["pc-polar-wedge", 1],
   ["perp-bisector-stage2", 1],
   ["perp-bisector-stage3", 1],
   ["perp-bisector-why", 1],
   ["perpendicular-rotation", 1],
-  ["place-by-place-compare", 2],
   ["place-value-ladder", 1],
   ["pp-limacon", 1],
   ["pr-percent-change", 1],
@@ -121,19 +106,13 @@ const BASELINE = new Map<string, number>([
   ["pr7-flat-fee", 1],
   ["pr7-interest-over-time", 1],
   ["pr7-k-three-ways", 1],
-  ["pra-pipeline", 2],
   ["pv1000-placeholder-507", 1],
-  ["pv3-borrow-zero", 1],
-  ["pv3-jump", 2],
   ["pv4-carry-chain", 1],
   ["pv4-ladder", 2],
-  ["pv4-round-place", 1],
   ["ratio-groups", 1],
   ["regroup-bundle", 1],
-  ["rigid-transformations", 1],
   ["rno-change-sign", 1],
   ["rno-opposites-cancel", 1],
-  ["rno-same-sign", 2],
   ["rno7-sign-rules", 2],
   ["rns-predict-decimal", 1],
   ["rns-rational-def", 1],
@@ -142,16 +121,11 @@ const BASELINE = new Map<string, number>([
   ["sa7-same-rule-any-base", 1],
   ["sa7-triangular-prism-parts", 2],
   ["sa7-units-squared", 1],
-  ["se-graph-cross", 2],
   ["shape-attributes", 1],
   ["si-empirical-rule", 1],
-  ["si-margin-band", 1],
   ["si-moe-vs-n", 1],
-  ["sigma-anatomy", 3],
   ["smg1-half-ways", 1],
   ["smg1-pizza-share", 1],
-  ["solid-shapes", 2],
-  ["sp-gap-vs-wobble", 2],
   ["sp-overlap", 1],
   ["sp-same-gap-different-verdict", 1],
   ["sp7-prob-scale", 1],
@@ -170,17 +144,13 @@ const BASELINE = new Map<string, number>([
   ["tno-add-tens-85", 1],
   ["tno-digits-72", 1],
   ["tno-sub-tens-50", 1],
-  ["transversal-angles", 1],
   ["tse-balance-same-both", 1],
   ["tse-undo-order-track", 2],
   ["tse7-factor-gcf-choice", 1],
   ["tse7-factor-two-ways", 1],
   ["unbundle-break", 1],
-  ["undefined-terms-trio", 3],
   ["vec-components", 1],
-  ["vec-compose", 4],
   ["vec-tiptotail", 1],
-  ["vm-line-plot-read", 3],
 ]);
 
 describe("figures.tsx label collisions — the ratchet", () => {
@@ -209,7 +179,7 @@ describe("figures.tsx label collisions — the ratchet", () => {
     expect(stale, "these figures are FIXED — remove them from the baseline so the ratchet tightens").toEqual([]);
   }, 300_000);
 
-  it("the forty-eight wave-10/11/12 fixes hold at exactly zero, by name", () => {
+  it("the seventy-eight wave-10/11/12/13 fixes hold at exactly zero, by name", () => {
     // Redundant with the ratchet above, but named: these are the fixes this wave shipped,
     // and a regression should say so rather than reporting a generic baseline violation.
     for (const id of [
@@ -225,7 +195,15 @@ describe("figures.tsx label collisions — the ratchet", () => {
       "quad-family-tree", "extended-shapes", "percent-price", "md3-lineplot", "gauss-pairing",
       "sohcahtoa-triangle", "cpr-event-as-set", "si-null-pile", "co-conic-type", "pr7-point-1k",
       "bt-probability-expansion", "cpr-indep-vs-disjoint", "si-confounding",
-      "si-effect-vs-significance", "dc-lhopital-tangents"
+      "si-effect-vs-significance", "dc-lhopital-tangents",
+      "vec-compose", "solid-shapes", "place-by-place-compare", "rno-same-sign",
+      "dd-stat-question", "pv4-round-place", "pv3-jump", "rigid-transformations",
+      "dilation-scale", "ev-distribution-inventory", "ev-risk-outside-expectation",
+      "sp-gap-vs-wobble", "si-margin-band", "in-riemann-trap", "vm-line-plot-read",
+      "halves-quarters", "pv3-borrow-zero", "distribution-story", "transversal-angles",
+      "approaching-e", "sigma-anatomy", "angle-pairs", "undefined-terms-trio",
+      "ft-inverse-reversed-machine", "esn8-zero-exponent", "cpr-row-vs-column",
+      "pc-polar-wedge", "se-graph-cross", "as-fact-family", "pra-pipeline"
     ]) {
       const F = FIGURES[id];
       expect(F, `${id} left the registry`).toBeDefined();
