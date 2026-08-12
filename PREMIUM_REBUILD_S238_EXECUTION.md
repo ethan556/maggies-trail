@@ -574,6 +574,34 @@ Vitest shard 1 is 9,681 (+16). Direct-manipulation coverage now spans 14 engines
 substrate; the remaining frontier by exposure is expLogExplore (29), signChart (28),
 algebraTiles (17), probabilityArea (15), triangleConstraintLab (13), compassConstruct (12).
 
+## Wave 17 (same session): WS-C batch 2 — five more engines, gesture matched to the mathematics
+
+Continuing straight down the exposure list: **expLogExplore (29 uses), signChart (28),
+probabilityArea (15), triangleConstraintLab (13), compassConstruct (12)** — 97 more authored
+steps. Each conversion asked "what is the learner's object?" first: expLogExplore's readout
+POINT now drags vertically and the engine solves for the base that puts it there (y^(1/x)
+in exponential mode, x^(1/y) in log mode, snapped to the slider's 0.1 lattice, with the
+y ≈ 0 log singularity skipped rather than exploded); signChart's exploratory PROBE drags
+along the axis it probes (only when the probe exists — it is local state, never graded);
+probabilityArea SWEEPS its shading exactly like hundredthsGrid, row-major from the bottom;
+compassConstruct OPENS by pulling — radius = distance from center A in perpBisector mode,
+chord from the starting mark in hexagon mode — because that is what a compass is;
+triangleConstraintLab's angle ARM swings about vertex A on the authored angleStep lattice.
+Every slider stays as the keyboard-parity path; grading, tone, and process evidence are
+untouched by construction.
+
+Fourteen new gate cases (61 total in the drag suite). The gate caught one real omission —
+compassConstruct's svg was missing its `ref`, so the drag surface rendered but mapped nothing;
+a browser-only class of bug caught in jsdom because the suite pins VALUES, not just presence.
+Pointer-driven QA at 1440/390 read: the expLog point rides its vertical line onto the goal
+ring; the probe lands on a root and the readout names the factor; the compass arcs cross live;
+the triangle re-solves at every swing. Pixel evidence: `S238_SCREENSHOTS/21-wsc2-*.png`.
+
+Vitest shard 1 is 9,695 (+14). Drag-substrate coverage: 19 engines. Remaining frontier by
+exposure: algebraTiles (17, three ranges — a tile-count layout problem, not a single-value
+drag), solidSliceLab (7), spinnerSim (6), shapeFamilyBuilder (6, four attribute counts —
+survival candidates), riemannSum (4), and the long tail of 1–5-use labs.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,193 passing       (9,681 + 3,512; +2 opt-in sweep skips)
+vitest (2 shards)        13,207 passing       (9,695 + 3,512; +2 opt-in sweep skips)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -109,8 +109,11 @@ height; their real growth is WS-C side panels, not a bigger square.
    selectors in e2e evaluate blocks included; the S237 numeric-preview guard corrected to pin
    the new contract (stricter). WS-C batch 1 landed in wave 16 (fractionBar, barBuilder,
    clockSet, hundredthsGrid drag on the useSvgDrag substrate, sliders kept as keyboard
-   parity; 16-case gate; pixel QA at 1440/390). WS-C continues by exposure (expLogExplore 29,
-   signChart 28, algebraTiles 17 …), then the 8 NOT-POSSIBLE rows.
+   parity; 16-case gate; pixel QA at 1440/390). Batch 2 (wave 17): expLogExplore, signChart
+   probe, probabilityArea, compassConstruct, triangleConstraintLab — 19 engines now on the
+   substrate; the gate caught a missing svg ref that would have shipped a dead drag surface.
+   Remaining frontier: algebraTiles (multi-range layout), solidSliceLab, spinnerSim,
+   riemannSum, the 1–5-use tail. Then the 8 NOT-POSSIBLE rows.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
 
 Environment traps (S237 §6) all still apply: kill `next start` by pid before rebuilding; never

@@ -899,3 +899,207 @@ describe("hundredthsGrid drag", () => {
     expect(screen.queryByTestId("hg-drag")).toBeNull();
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * WS-C wave 17 (S238) — batch 2: five more slider-proxy engines.
+ * expLogExplore (pull the readout point onto the goal ring), signChart
+ * (drag the probe along the axis), probabilityArea (sweep the shading),
+ * compassConstruct (open the compass by pulling), triangleConstraintLab
+ * (swing the angle arm). Same contract throughout.
+ * ------------------------------------------------------------------ */
+
+describe("expLogExplore drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "expLogExplore",
+    prompt: "Find the base whose square is 9.",
+    mode: "exponential",
+    x: 2, targetBase: 3, startBase: 2,
+    successFeedback: "Base 3 — three squared is nine.",
+    lowFeedback: "The curve is too shallow — raise the base.",
+    highFeedback: "The curve overshoots — lower the base."
+  }) as TWidget;
+
+  it("pulling the point to height y solves for the base on the 0.1 lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 210);
+    // M = max(x, goal, 4)*1.12 = 9*1.12 = 10.08; W=300,H=210,PAD=30.
+    // Pull to y = 9: vy = H-PAD - (9/M)*(H-2*PAD) = 180 - (9/10.08)*150 = 46.07 ⇒ base = 3.
+    fireEvent.pointerDown(screen.getByTestId("ele-drag"), { clientX: 150, clientY: 46 });
+    expect(holder.v).toBe(3);
+  });
+
+  it("a pull below the axis in exponential mode is ignored, never NaN", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 210);
+    fireEvent.pointerDown(screen.getByTestId("ele-drag"), { clientX: 150, clientY: 205 });
+    expect(holder.v).toBe(2); // the mount-effect start value, untouched
+  });
+
+  it("the base slider remains; the surface is gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "choose the base" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ele-drag")).toBeNull();
+  });
+});
+
+describe("signChart probe drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "signChart",
+    prompt: "Where is P positive?",
+    roots: [{ x: -1, mult: 1 }, { x: 3, mult: 1 }],
+    leadingPositive: true,
+    probeX: true,
+    successFeedback: "Positive outside the roots — the parabola opens upward.",
+    crossFeedback: "An odd root crosses — the sign flips there.",
+    bounceFeedback: "An even root bounces — the sign holds there."
+  }) as TWidget;
+
+  it("dragging along the axis moves the probe on the integer lattice", () => {
+    const { container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 198);
+    // lo=-3, hi=5, W=320, PAD=22: x=2 sits at 22 + (5/8)*276 = 194.5
+    fireEvent.pointerDown(screen.getByTestId("sc-probe-drag"), { clientX: 194, clientY: 118 });
+    expect(screen.getByTestId("sc-probe-readout").textContent).toContain("P(2)");
+  });
+
+  it("the probe dial remains the keyboard path; no surface without probeX or when disabled", () => {
+    mount(spec);
+    expect(screen.getByTestId("sc-probe-dial")).toBeTruthy();
+    cleanup();
+    const noProbe = WidgetSpec.parse({
+      type: "signChart",
+      prompt: "Claim the signs.",
+      roots: [{ x: 0, mult: 1 }],
+      leadingPositive: true,
+      successFeedback: "Signs flip across an odd root — claim matched.",
+      crossFeedback: "An odd root crosses — the sign flips there.",
+      bounceFeedback: "An even root bounces — the sign holds there."
+    }) as TWidget;
+    mount(noProbe);
+    expect(screen.queryByTestId("sc-probe-drag")).toBeNull();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("sc-probe-drag")).toBeNull();
+  });
+});
+
+describe("probabilityArea drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "probabilityArea",
+    prompt: "Shade 3/10 of the grid.",
+    rows: 2, cols: 5, targetNum: 3, targetDen: 10, start: 0,
+    successFeedback: "3 of 10 cells — three tenths.",
+    lowFeedback: "Not enough cells shaded.",
+    highFeedback: "Too many cells shaded."
+  }) as TWidget;
+
+  it("a press shades through the cell under the pointer (row-major from the bottom)", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    // H = 300*rows/cols = 120; pad=6; cw=57.6, ch=54. Bottom row r=0. Cell col 2, bottom row:
+    pinRect(svg, 300, 120);
+    fireEvent.pointerDown(screen.getByTestId("pa-drag"), { clientX: 6 + 2 * 57.6 + 28, clientY: 90 });
+    expect(holder.v).toBe(3);
+  });
+
+  it("a sweep to the top row reaches the second row's cells, and back down again", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 120);
+    const hit = screen.getByTestId("pa-drag");
+    fireEvent.pointerDown(hit, { clientX: 20, clientY: 90, pointerId: 1 });
+    expect(holder.v).toBe(1);
+    fireEvent.pointerMove(hit, { clientX: 6 + 1 * 57.6 + 28, clientY: 30, pointerId: 1 }); // top row col 1 ⇒ 7
+    expect(holder.v).toBe(7);
+    fireEvent.pointerUp(hit, { clientX: 20, clientY: 30, pointerId: 1 });
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "cells shaded" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("pa-drag")).toBeNull();
+  });
+});
+
+describe("compassConstruct drag", () => {
+  const perp = WidgetSpec.parse({
+    type: "compassConstruct",
+    prompt: "Open the compass past half the segment.",
+    mode: "perpBisector",
+    span: 6, target: 4, start: 2,
+    successFeedback: "Radius 4 — the arcs cross above and below.",
+    lowFeedback: "Too narrow — the arcs cannot reach each other.",
+    highFeedback: "Wider than needed — the crossings just slide along the same line."
+  }) as TWidget;
+
+  it("pulling away from center A opens the radius on the integer lattice", () => {
+    const { holder, container } = mount(perp);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 210);
+    // A = (60, 120), U = 22. A pull to (60 + 4*22, 120) = (148, 120) ⇒ r = 4.
+    fireEvent.pointerDown(screen.getByTestId("cmp-drag"), { clientX: 148, clientY: 120 });
+    expect(holder.v).toBe(4);
+  });
+
+  it("the radius clamps to the 1..12 lattice from any pull", () => {
+    const { holder, container } = mount(perp);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 210);
+    fireEvent.pointerDown(screen.getByTestId("cmp-drag"), { clientX: 61, clientY: 120 });
+    expect(holder.v).toBe(1);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(perp);
+    expect(screen.getByRole("slider", { name: "how wide the compass is opened" })).toBeTruthy();
+    cleanup();
+    mount(perp, true);
+    expect(screen.queryByTestId("cmp-drag")).toBeNull();
+  });
+});
+
+describe("triangleConstraintLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "triangleConstraintLab",
+    prompt: "Swing the included angle to 60 degrees under SAS.",
+    targetCriterion: "SAS", startCriterion: "SAS",
+    sideA: 5, sideB: 8, targetAngle: 60, angleStart: 35, angleStep: 5, requiredMoves: 2,
+    successFeedback: "SAS with the 60-degree included angle locks one triangle.",
+    criterionFeedback: "Pick the criterion whose givens include the angle BETWEEN the sides.",
+    angleFeedback: "Set the included angle to 60 degrees.",
+    evidenceFeedback: "Try several criteria and watch whether a second triangle appears."
+  }) as TWidget;
+
+  it("a drag steers ray AC about A, snapped to angleStep", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 380, 230);
+    // A = (45, 185). Pointer at 60° above the base ray: (45 + 100cos60, 185 − 100sin60) = (95, 98.4)
+    fireEvent.pointerDown(screen.getByTestId("tcl-drag"), { clientX: 95, clientY: 98, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(60);
+  });
+
+  it("the swing clamps to the authored 20–140 window", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 380, 230);
+    // Nearly straight left, just above the base ray: atan2(5, -40) ≈ 172.9° → clamps to 140.
+    fireEvent.pointerDown(screen.getByTestId("tcl-drag"), { clientX: 5, clientY: 180, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(140);
+  });
+
+  it("the angle slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "triangle constraint angle" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("tcl-drag")).toBeNull();
+  });
+});
