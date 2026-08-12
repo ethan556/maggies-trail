@@ -539,12 +539,49 @@ New gate: four cases in widgets.estimateSliderLabel.s237.test.tsx (name with uni
 without, unit-stated-once, reveal-ghost untouched). Vitest shard 2 is 3,512 (+4). Pixel
 evidence: `S238_SCREENSHOTS/19-numeric-your-answer-label.png`.
 
+## Wave 16 (same session): WS-C batch 1 — four K–5 slider-proxy engines join the drag grammar
+
+The conversion frontier was MEASURED first, not guessed: every registered engine carrying an
+`input[type=range]` was inventoried against corpus usage and against the existing `useSvgDrag`
+substrate (ten lab widgets already converted in earlier sessions; `exactNumberLab`, the largest
+range-carrier at 358 uses, turned out to already have its S205K drag rail). The real frontier,
+by exposure: **fractionBar (103 uses), barBuilder (70), clockSet (40), hundredthsGrid (36)** —
+249 authored steps where the learner thinks "move the thing" and got a detached slider.
+
+All four now drag, each with the gesture its mathematics asks for: fractionBar's FILL EDGE
+drags along the part lattice (the denominator stays a slider by WS-C's own survival rule —
+partition count is genuinely scalar, and a numerator pinned by numMin === numMax gets no drag
+surface exactly as it gets no slider); barBuilder's BARS pull up and down, and one sweep can
+paint several categories (tally/pictograph displays keep their stepper mark-making); clockSet's
+HANDS turn — a rim press always grabs the minute hand (outside the hour hand's reach only the
+minute hand lives; the tip-nearest rule alone mischose at 12:00 when the hands overlap — the
+new gate caught that first draft), an inner press compares tips; hundredthsGrid SWEEPS the
+fill boundary cell by cell, with a plain press preserving the cells' exact historical tap
+semantics. Every conversion keeps its sliders as the keyboard-parity path per the substrate's
+accessibility contract — drag is redundant, never the only route — so the keyboard gate,
+tone grammar, process evidence, and grading are untouched by construction (395 affected-suite
+tests re-run green; the widget collision sweep stays EMPTY).
+
+Sixteen new cases extend the direct-manipulation regression suite (snapped values only, clamps
+at the lattice edges, sweep-across-categories, same-hand-per-gesture, prefilled cells never
+unshade, no hit surface when disabled or pinned). Real-browser QA drove each engine BY POINTER
+at 1440 and 390 and read the results: values land on the lattice, readouts and sliders stay in
+sync. Pixel evidence: `S238_SCREENSHOTS/20-wsc-*.png` (six captures). No hero-tier assignments:
+these are compact K–5 manipulatives, not heroes, and the tier joins only after a hero-scale
+conversion QA per the standing rule.
+
+Vitest shard 1 is 9,681 (+16). Direct-manipulation coverage now spans 14 engines on the shared
+substrate; the remaining frontier by exposure is expLogExplore (29), signChart (28),
+algebraTiles (17), probabilityArea (15), triangleConstraintLab (13), compassConstruct (12).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.
 - The inline-dataset `plotData` family — extend to `McqSpec` (8 rows ready; handover §8's
   suggested first action, deferred here in favor of Plan v3's shell-first ordering).
-- WS-C direct-manipulation conversion (the big one) and hero-tier assignments that come with it.
+- WS-C direct-manipulation conversion — batch 1 landed (wave 16: fractionBar, barBuilder,
+  clockSet, hundredthsGrid); the tail continues by exposure. Hero-tier still assigns only
+  with a hero-scale conversion.
 - WS-A brand productionization, WS-H landing rebuild, WS-J avatars (assets are concept boards
   only — see the two hard rules in Plan v3 Part 0).
 - The five rulings in handover §5 still need user answers.

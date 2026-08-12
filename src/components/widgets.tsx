@@ -1264,10 +1264,31 @@ function FractionBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps
   const canScaleUp = n * 2 <= spec.numMax && d * 2 <= spec.denMax;
   const canScaleDown = n % 2 === 0 && d % 2 === 0 && n / 2 >= spec.numMin && d / 2 >= spec.denMin;
 
+  // WS-C (S238): the fill edge is the thing the learner reasons about, so it DRAGS. A press or
+  // sweep on YOUR bar shades up to the part boundary under the finger — the same lattice the
+  // numerator slider drives (that slider stays: it is the keyboard-parity path). The
+  // denominator stays a slider on purpose: partition count is a genuinely scalar quantity, not
+  // a position (WS-C's slider-survival rule). A numerator pinned by numMin === numMax gets no
+  // drag surface, exactly as it gets no slider.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: svgH,
+    disabled: disabled || numFixed,
+    onDrag: (vx) => {
+      const wholes = Math.max(1, Math.ceil(n / Math.max(d, 1)));
+      const sw = (W - 2 * pad) / (wholes * d);
+      const p = snapToStep((vx - pad) / sw, spec.numMin, Math.min(spec.numMax, wholes * d), 1);
+      if (p !== n) adjust(p, d, "n");
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${svgH}`}
         className="mx-auto w-full max-w-sm"
         role="img"
@@ -1311,6 +1332,18 @@ function FractionBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps
               target fill
             </text>
           </g>
+        )}
+        {!disabled && !numFixed && (
+          <rect
+            className="mt-drag-hit"
+            data-testid="fb-drag"
+            x={pad - 8}
+            y={16}
+            width={W - 2 * pad + 16}
+            height={48}
+            aria-hidden="true"
+            {...drag.handleProps}
+          />
         )}
       </svg>
       <div className="rounded-card border border-sky/20 bg-sky/5 px-3 py-2">
@@ -9217,10 +9250,45 @@ function ClockSetW({ spec, value, onChange, disabled, tone }: WProps<TClockSet>)
   const [hx, hy] = hand(hourAngle, R * 0.52);
   const mm = String(minute).padStart(2, "0");
 
+  // WS-C (S238): the hands themselves DRAG — setting a clock is turning its hands, not moving
+  // two detached sliders. A press picks whichever hand's TIP is nearer and the gesture then
+  // steers that hand's angle (minute snapped to the authored minuteStep, hour to whole hours)
+  // while the other hand holds still, exactly as the two sliders behave. The sliders stay:
+  // they are the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const grabbedHand = useRef<"hour" | "minute" | null>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: W,
+    disabled,
+    onDrag: (vx, vy) => {
+      const theta = ((Math.atan2(vx - cx, cy - vy) * 180) / Math.PI + 360) % 360;
+      if (grabbedHand.current === null) {
+        // Outside the hour hand's reach only the minute hand lives, so a rim press always
+        // grabs it — even at 12:00, when both hands point the same way and the hour TIP is
+        // nearer to most of the face. Inside that reach, nearest tip wins.
+        const rad = Math.hypot(vx - cx, vy - cy);
+        grabbedHand.current =
+          rad > R * 0.66 ? "minute" : Math.hypot(vx - hx, vy - hy) < Math.hypot(vx - mx, vy - my) ? "hour" : "minute";
+      }
+      if (grabbedHand.current === "minute") {
+        const m = (Math.round(theta / 6 / spec.minuteStep) * spec.minuteStep) % 60;
+        if (m !== minute) onChange({ hour, minute: m });
+      } else {
+        const h = ((Math.round(theta / 30 - minute / 60) % 12) + 12) % 12 || 12;
+        if (h !== hour) onChange({ hour: h, minute });
+      }
+    },
+    onEnd: () => {
+      grabbedHand.current = null;
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${W}`} className="mx-auto w-56" role="img" aria-label={`Clock showing ${hour}:${mm}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${W}`} className="mx-auto w-56" role="img" aria-label={`Clock showing ${hour}:${mm}.`}>
         <style>{`.ck-h,.ck-m{transition:none}@media (prefers-reduced-motion: no-preference){.ck-h,.ck-m{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         <circle cx={cx} cy={cy} r={R} fill="#fff" stroke={PALETTE.ink} strokeWidth={2.5} />
         {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => {
@@ -9248,6 +9316,9 @@ function ClockSetW({ spec, value, onChange, disabled, tone }: WProps<TClockSet>)
           );
         })()}
         <circle cx={cx} cy={cy} r={4} fill={PALETTE.ink} />
+        {!disabled && (
+          <rect className="mt-drag-hit" data-testid="ck-drag" x={0} y={0} width={W} height={W} aria-hidden="true" {...drag.handleProps} />
+        )}
       </svg>
       <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">{hour}:{mm}</p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
@@ -11161,6 +11232,25 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
   })();
   const setBar = (i: number, v: number) => onChange(hs.map((h, j) => (j === i ? v : h)));
 
+  // WS-C (S238): the bar itself DRAGS. Press or sweep anywhere in the chart area and the bar
+  // under the pointer takes the snapped height at the pointer — pulling a bar up IS the action
+  // the chart asks for, and one sweep can paint several categories. The per-category sliders
+  // stay as the keyboard-parity path. (Hooks sit above the tally/pictograph early return so
+  // the call order is unconditional; those displays render no chart and no drag surface.)
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx, vy) => {
+      const i = Math.max(0, Math.min(spec.categories.length - 1, Math.floor((vx - padX) / barW)));
+      const raw = ((baseY - vy) / (baseY - padTop)) * spec.maxVal;
+      const next = snapToStep(raw, 0, spec.maxVal, spec.step);
+      if (next !== hs[i]) setBar(i, next);
+    }
+  });
+
   // S185: tally and pictograph displays — the same counts drawn as MARKS. Each category is a row;
   // per-row Add/Remove steppers are the mark-making action (native buttons, keyboard-clean).
   if (spec.display === "tally" || spec.display === "pictograph") {
@@ -11225,7 +11315,7 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Bar chart: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Bar chart: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
         <style>{`.bb-bar{transition:none}@media (prefers-reduced-motion: no-preference){.bb-bar{transition:y .16s ease-out,height .16s ease-out}}`}</style>
         {gridVals.map((g) => (
           <g key={g}>
@@ -11256,6 +11346,18 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
           <text x={W / 2} y={H - 2} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{spec.axisLabel}</text>
         )}
         <line x1={padX} y1={baseY} x2={W - padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        {!disabled && (
+          <rect
+            className="mt-drag-hit"
+            data-testid="bb-drag"
+            x={padX}
+            y={padTop - 8}
+            width={W - 2 * padX}
+            height={baseY - padTop + 8}
+            aria-hidden="true"
+            {...drag.handleProps}
+          />
+        )}
       </svg>
       <div className="grid gap-2">
         {spec.categories.map((c, i) => (
@@ -11376,10 +11478,34 @@ function HundredthsGridW({ spec, value, onChange, disabled, tone }: WProps<THund
     );
   }
   const dec = (n / total).toFixed(spec.mode === "tenths" ? 1 : 2);
+  // WS-C (S238): drag-to-shade. A PRESS keeps the exact tap semantics the cells always had
+  // (press a filled cell → the fill ends before it; press an empty one → the fill reaches it);
+  // a SWEEP then pulls the boundary along with the pointer, cell by cell, column-major. The
+  // per-cell onClick stays as written — the drag surface reproduces it on press — and the
+  // slider below remains the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const gesturePressed = useRef(false);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx, vy) => {
+      const c = Math.max(0, Math.min(cols - 1, Math.floor((vx - pad) / cw)));
+      const r = Math.max(0, Math.min(rows - 1, Math.floor((vy - pad) / ch)));
+      const i = c * rows + r;
+      const next = clamp(gesturePressed.current ? i + 1 : i < n ? i : i + 1);
+      gesturePressed.current = true;
+      if (next !== n) onChange(next);
+    },
+    onEnd: () => {
+      gesturePressed.current = false;
+    }
+  });
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm touch-manipulation" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm touch-manipulation" role="img"
         aria-label={`Decimal grid: ${n} of ${total} shaded${spec.showDecimal ? `, ${dec}` : ""}.`}>
         <style>{`.hg-cell rect{transition:none}@media (prefers-reduced-motion: no-preference){.hg-cell rect{transition:fill .12s ease-out}}`}</style>
         <g className="hg-cell">{cellRects}</g>
@@ -11403,6 +11529,18 @@ function HundredthsGridW({ spec, value, onChange, disabled, tone }: WProps<THund
             </g>
           );
         })()}
+        {!disabled && (
+          <rect
+            className="mt-drag-hit"
+            data-testid="hg-drag"
+            x={pad}
+            y={pad}
+            width={W - 2 * pad}
+            height={H - 2 * pad}
+            aria-hidden="true"
+            {...drag.handleProps}
+          />
+        )}
       </svg>
       {spec.mode === "hundredths" && (
         <div className="mx-auto flex w-full max-w-sm justify-between px-1" aria-hidden="true">

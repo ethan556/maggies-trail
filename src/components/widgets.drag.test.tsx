@@ -670,3 +670,232 @@ describe("polarTrace limaçon drag", () => {
     expect(screen.queryByTestId("pt-drag")).toBeNull();
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * WS-C wave 16 (S238) — four K–5 slider-proxy engines join the drag
+ * grammar: fractionBar (drag the fill edge), barBuilder (pull the bar),
+ * clockSet (turn the hand), hundredthsGrid (sweep the shading).
+ * Same contract as the ten lab widgets above: snapped values only,
+ * sliders retained as the keyboard-parity path, no hit area when done.
+ * ------------------------------------------------------------------ */
+
+describe("fractionBar drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "fractionBar",
+    prompt: "Build 3/4.",
+    numStart: 1, denStart: 4, numMin: 1, numMax: 8, denMin: 2, denMax: 12,
+    targetNum: 3, targetDen: 4,
+    successFeedback: "3 of 4 equal parts — three fourths.",
+    lowFeedback: "Not enough parts shaded yet.",
+    highFeedback: "Too many parts shaded."
+  }) as TWidget;
+
+  it("press at a part boundary shades up to it (numerator on the integer lattice)", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 62);
+    // pad=10, usable=280, d=4 ⇒ part width 70; x = 10 + 3*70 = 220 ⇒ n = 3
+    fireEvent.pointerDown(screen.getByTestId("fb-drag"), { clientX: 220, clientY: 40 });
+    expect(holder.v).toEqual({ n: 3, d: 4 });
+  });
+
+  it("drag left of the bar clamps at numMin, never below", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 62);
+    fireEvent.pointerDown(screen.getByTestId("fb-drag"), { clientX: 3, clientY: 40 });
+    expect(holder.v).toEqual({ n: 1, d: 4 });
+  });
+
+  it("the numerator slider remains the keyboard path, and the hit area is gone when disabled", () => {
+    const { container } = mount(spec);
+    expect(screen.getByRole("slider", { name: "numerator" })).toBeTruthy();
+    void container;
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("fb-drag")).toBeNull();
+  });
+
+  it("a pinned numerator (numMin === numMax) renders no drag surface, like its missing slider", () => {
+    const pinned = WidgetSpec.parse({
+      type: "fractionBar",
+      prompt: "Cut the bar into more parts.",
+      numStart: 1, denStart: 2, numMin: 1, numMax: 1, denMin: 2, denMax: 8,
+      targetNum: 1, targetDen: 4,
+      successFeedback: "1 of 4 — same one part, smaller share.",
+      lowFeedback: "More parts needed.",
+      highFeedback: "Fewer parts needed."
+    }) as TWidget;
+    mount(pinned);
+    expect(screen.queryByTestId("fb-drag")).toBeNull();
+  });
+});
+
+describe("barBuilder drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "barBuilder",
+    prompt: "Build the bars to match the counts.",
+    categories: ["cats", "dogs"],
+    maxVal: 10, step: 1, target: [4, 7],
+    successFeedback: "Both bars match the counts.",
+    partialFeedback: "One bar matches — check the other against its count."
+  }) as TWidget;
+
+  it("press in a column sets THAT bar to the snapped height at the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 200);
+    // padX=30, barW=120: x=90 is category 0. baseY=174, padTop=12: value 4 sits at
+    // y = 174 - 0.4*162 = 109.2
+    fireEvent.pointerDown(screen.getByTestId("bb-drag"), { clientX: 90, clientY: 109 });
+    expect(holder.v).toEqual([4, 0]);
+  });
+
+  it("one sweep paints a second category without releasing", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 200);
+    const hit = screen.getByTestId("bb-drag");
+    fireEvent.pointerDown(hit, { clientX: 90, clientY: 109, pointerId: 1 });
+    // move into category 1 at value 7: y = 174 - 0.7*162 = 60.6
+    fireEvent.pointerMove(hit, { clientX: 210, clientY: 61, pointerId: 1 });
+    expect(holder.v).toEqual([4, 7]);
+  });
+
+  it("drag above the ceiling clamps at maxVal; sliders remain; disabled removes the surface", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 200);
+    fireEvent.pointerDown(screen.getByTestId("bb-drag"), { clientX: 90, clientY: 5 });
+    expect(holder.v).toEqual([10, 0]);
+    expect(screen.getByRole("slider", { name: "cats height" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("bb-drag")).toBeNull();
+  });
+
+  it("tally display renders no drag surface (steppers are the mark-making action)", () => {
+    const tally = WidgetSpec.parse({
+      type: "barBuilder",
+      prompt: "Tally the pets.",
+      categories: ["cats", "dogs"],
+      maxVal: 10, step: 1, target: [4, 7], display: "tally",
+      successFeedback: "Tallies match the counts.",
+      partialFeedback: "One row matches — check the other against its count."
+    }) as TWidget;
+    mount(tally);
+    expect(screen.queryByTestId("bb-drag")).toBeNull();
+  });
+});
+
+describe("clockSet drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "clockSet",
+    prompt: "Set the clock to 3:30.",
+    targetHour: 3, targetMinute: 30, minuteStep: 5,
+    successFeedback: "3:30 — the minute hand points straight down.",
+    hourFeedback: "Check the hour hand — the short one names the hour.",
+    minuteFeedback: "Check the minute hand — the long one counts the minutes."
+  }) as TWidget;
+
+  it("a press near the minute hand's reach turns the MINUTE hand, snapped to minuteStep", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 220);
+    // start 12:00 — minute tip at (110, 36.4), hour tip at (110, 62.2). Press at 3 o'clock
+    // FAR from center (radius ~74 > both tip distances measured from their tips? the minute
+    // tip is nearer at the rim) — theta=90° ⇒ minute 15.
+    fireEvent.pointerDown(screen.getByTestId("ck-drag"), { clientX: 195, clientY: 110, pointerId: 1 });
+    expect(holder.v).toEqual({ hour: 12, minute: 15 });
+  });
+
+  it("one gesture keeps steering the SAME hand even when the pointer wanders inward", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 220);
+    const hit = screen.getByTestId("ck-drag");
+    fireEvent.pointerDown(hit, { clientX: 195, clientY: 110, pointerId: 1 }); // grabs minute
+    fireEvent.pointerMove(hit, { clientX: 110, clientY: 160, pointerId: 1 }); // straight down, close in
+    expect(holder.v).toEqual({ hour: 12, minute: 30 });
+    fireEvent.pointerUp(hit, { clientX: 110, clientY: 160, pointerId: 1 });
+  });
+
+  it("a press near the hour hand's tip turns the HOUR hand to a whole hour, minute untouched", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 220);
+    // hour tip sits at (110, 62.2) for 12:00 (length 47.8). Press just off that tip toward
+    // 1 o'clock at the same short radius: theta=30° ⇒ hour 1.
+    fireEvent.pointerDown(screen.getByTestId("ck-drag"), { clientX: 134, clientY: 68.6, pointerId: 1 });
+    expect(holder.v).toEqual({ hour: 1, minute: 0 });
+  });
+
+  it("sliders remain the keyboard path; the drag surface is gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "hour hand" })).toBeTruthy();
+    expect(screen.getByRole("slider", { name: "minute hand" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ck-drag")).toBeNull();
+  });
+});
+
+describe("hundredthsGrid drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "hundredthsGrid",
+    prompt: "Shade 0.34.",
+    mode: "hundredths",
+    prefilled: 0, start: 0, target: 34, showDecimal: true,
+    successFeedback: "34 hundredths — three full columns and four more.",
+    lowFeedback: "Not enough hundredths shaded.",
+    highFeedback: "Too many hundredths shaded."
+  }) as TWidget;
+
+  it("a press keeps the cells' tap semantics: an empty cell pulls the fill through it", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    // pad=6, cw=ch=28.8, column-major. Cell col 3, row 3 = index 33; press ⇒ n = 34.
+    fireEvent.pointerDown(screen.getByTestId("hg-drag"), { clientX: 6 + 3 * 28.8 + 14, clientY: 6 + 3 * 28.8 + 14, pointerId: 1 });
+    expect(holder.v).toBe(34);
+  });
+
+  it("a sweep drags the boundary with the pointer, and back again", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    const hit = screen.getByTestId("hg-drag");
+    fireEvent.pointerDown(hit, { clientX: 20, clientY: 20, pointerId: 1 }); // cell 0 ⇒ 1
+    expect(holder.v).toBe(1);
+    fireEvent.pointerMove(hit, { clientX: 6 + 4 * 28.8 + 14, clientY: 290, pointerId: 1 }); // col 4 bottom ⇒ 50
+    expect(holder.v).toBe(50);
+    fireEvent.pointerMove(hit, { clientX: 20, clientY: 6 + 1 * 28.8 + 14, pointerId: 1 }); // col 0 row 1 ⇒ 2
+    expect(holder.v).toBe(2);
+    fireEvent.pointerUp(hit, { clientX: 20, clientY: 40, pointerId: 1 });
+  });
+
+  it("the sweep never unshades the prefilled cells", () => {
+    const locked = WidgetSpec.parse({
+      type: "hundredthsGrid",
+      prompt: "Add 0.2 more.",
+      mode: "hundredths",
+      prefilled: 30, start: 30, target: 50, showDecimal: true,
+      successFeedback: "50 hundredths in all.",
+      lowFeedback: "Not enough added yet.",
+      highFeedback: "Too much added."
+    }) as TWidget;
+    const { holder, container } = mount(locked);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    fireEvent.pointerDown(screen.getByTestId("hg-drag"), { clientX: 20, clientY: 20, pointerId: 1 });
+    expect(holder.v).toBe(30);
+  });
+
+  it("slider remains; disabled removes the surface", () => {
+    mount(spec);
+    expect(screen.getByRole("slider")).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("hg-drag")).toBeNull();
+  });
+});
