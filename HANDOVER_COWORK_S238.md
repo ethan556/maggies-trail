@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,141 / 13,141      (9,654 + 3,487)
+vitest (2 shards)        13,146 / 13,146      (9,654 + 3,492)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -51,7 +51,9 @@ stricter. **Batch 2:** `plotData` extended to `McqSpec` and 10 of the 16 inline-
 wired (family status: 10 done, 4 blocked on §5 rulings, 2 blocked on a dots-vs-X glyph ruling);
 content-change proof 866→867; owed `gen:reports` head regenerated. **Batch 3:** unitChain's 82
 label collisions → 0, proven over every authored spec × reachable state; SliderW's range renamed
-to what it sets (estimateSlider house pattern). Details and rationale:
+to what it sets (estimateSlider house pattern). **Batch 4:** distributionCompareLab's 48 → 0,
+proven over all 33 authored specs × 3 tones (merged group tags at coinciding means; disjoint
+label bands; judge evidence un-stacked). Collision ledger: 267 → 137. Details and rationale:
 `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
@@ -68,9 +70,10 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
    distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
-2. `distributionCompareLab` collisions (48) — next by count now that unitChain's 82 are closed
-   (batch 3; corpus-complete state sweep in the gate is the pattern to copy). Then
-   `slopeTriangle` (25), `samplingBiasLab` (14).
+2. Label collisions, next by count: `slopeTriangle` (25), `samplingBiasLab` (14),
+   `pointSetReasoningLab` (10), `signChart` (8), 18 smaller engines (80). The corpus-complete
+   sweep pattern is in the gate twice now (unitChain by reachable state, DCL by spec × tone) —
+   copy whichever matches the engine's state dependence.
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
