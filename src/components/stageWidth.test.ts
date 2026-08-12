@@ -14,10 +14,11 @@ describe("stage width tiers", () => {
     expect(tiers).toEqual(registered);
   });
 
-  it("maps each tier to a distinct, monotone width class", () => {
-    expect(stageWidthClass("narrow")).toBe("max-w-xl");
-    expect(stageWidthClass("medium")).toBe("max-w-2xl");
-    expect(stageWidthClass("wide")).toBe("max-w-3xl");
+  it("maps each tier to a distinct, monotone width class (Plan v3 WS-D bands)", () => {
+    expect(stageWidthClass("narrow")).toBe("max-w-2xl");
+    expect(stageWidthClass("medium")).toBe("max-w-3xl");
+    expect(stageWidthClass("wide")).toBe("max-w-5xl");
+    expect(stageWidthClass("hero")).toBe("max-w-6xl");
   });
 
   it("prose-only steps (no widget) get the reading column", () => {

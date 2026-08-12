@@ -1,19 +1,26 @@
 import type { TWidget } from "@/lib/schema";
 
 /**
- * The lesson player's principled width system (three tiers, not per-widget
- * hard-coding):
+ * The lesson player's principled width system (semantic roles, not per-widget
+ * hard-coding). Bands follow OPTIMIZATION_PLAN_V3.md WS-D §1 — the stage is
+ * sized by what the step is doing, and the mathematics never floats as a
+ * small diagram inside a large page:
  *
- * - `narrow`  — the reading column. Prose, MCQs, numeric entry, token/tile
- *               builders: text-first steps where a wider stage would only
- *               stretch line lengths.
- * - `medium`  — simple visual tools (ten frames, fraction bars, clocks,
- *               number lines): compact by design; a little extra room keeps
- *               controls and visual together without diluting either.
- * - `wide`    — mathematical laboratories (coordinate planes, constructions,
- *               simulations, calculus panels, multi-representation systems):
- *               these earn the widest stage a tablet/desktop can give while
- *               the prose above them stays at reading width.
+ * - `narrow`  — the reading column (Plan v3: 600–680px). Prose, MCQs, numeric
+ *               entry, token/tile builders: text-first steps where a wider
+ *               stage would only stretch line lengths.
+ * - `medium`  — compact manipulatives (Plan v3: 720–820px). Ten frames,
+ *               fraction bars, clocks, number lines: compact by design; a
+ *               little extra room keeps controls and visual together.
+ * - `wide`    — wide models (Plan v3: 920–1080px). Mathematical laboratories:
+ *               coordinate planes, constructions, simulations, calculus
+ *               panels — these earn the widest stage a tablet/desktop can
+ *               give while the prose above them stays at reading width.
+ * - `hero`    — hero labs (Plan v3: 1100–1280px). Reserved for
+ *               multi-representation systems as they are converted under
+ *               WS-C/WS-B; assignment is evidence-driven (pixel QA at 1440px
+ *               per engine family), so the tier ships with the architecture
+ *               and engines opt in with their conversion, not by guess.
  *
  * The player applies the tier to the step's main column AND to the header /
  * footer inner containers, so actions and progress never detach from the
@@ -23,7 +30,7 @@ import type { TWidget } from "@/lib/schema";
  * The Record is exhaustive over the widget union: registering a new widget
  * without choosing its tier is a compile error, same contract as evaluate().
  */
-export type StageTier = "narrow" | "medium" | "wide";
+export type StageTier = "narrow" | "medium" | "wide" | "hero";
 
 export const STAGE_TIER: Record<TWidget["type"], StageTier> = {
   // A number line with labelled ticks, plus a symbolic strip and a both-sides row beneath it.
@@ -168,15 +175,19 @@ export const STAGE_TIER: Record<TWidget["type"], StageTier> = {
   relatedRatesLab: "wide"
 };
 
-/** Tailwind max-width class for a tier (statically enumerated so the JIT sees them). */
+/** Tailwind max-width class for a tier (statically enumerated so the JIT sees them).
+ * Plan v3 WS-D bands: reading 600–680 → 2xl (672px) · compact 720–820 → 3xl (768px) ·
+ * wide model 920–1080 → 5xl (1024px) · hero lab 1100–1280 → 6xl (1152px). */
 export function stageWidthClass(tier: StageTier): string {
   switch (tier) {
     case "narrow":
-      return "max-w-xl";
-    case "medium":
       return "max-w-2xl";
-    case "wide":
+    case "medium":
       return "max-w-3xl";
+    case "wide":
+      return "max-w-5xl";
+    case "hero":
+      return "max-w-6xl";
   }
 }
 

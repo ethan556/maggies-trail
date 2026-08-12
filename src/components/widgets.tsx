@@ -8152,7 +8152,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Scatter with a trend line, y equals ${fmt(m)} x plus ${fmt(b)}.`}>
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
         {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
@@ -10673,7 +10673,7 @@ function DilationScaleW({ spec, value, onChange, disabled, tone }: WProps<TDilat
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white" role="img" aria-label={`Image dilated by ${fmtK}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white" role="img" aria-label={`Image dilated by ${fmtK}.`}>
         <style>{`.dl-img{transition:none}@media (prefers-reduced-motion: no-preference){.dl-img{transition:all .18s ease-out}}`}</style>
         {integers(G0, G1).map((g) => (
           <g key={g}>
@@ -11161,7 +11161,7 @@ function TransformExploreW({ spec, value, onChange, disabled, onEvent, tone }: W
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Reflect ${reflect === "none" ? "off" : "over the " + reflect + "-axis"}, shifted (${dx}, ${dy}).`}>
         {gridLines.map((gg) => (
           <g key={gg}>
@@ -12216,7 +12216,7 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
   return (
     <div className="grid gap-4" ref={rootRef}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Line 1 is ${pairViews.a.equation.display}; line 2 is ${pairViews.b.equation.display}. Point (${x}, ${y}); ${on1 ? "on" : "not on"} line 1, ${on2 ? "on" : "not on"} line 2.`}>
         <style>{`.se-pt{transition:none}@media (prefers-reduced-motion: no-preference){.se-pt{transition:all .16s ease-out}}`}</style>
         {xs.map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.08} />)}
@@ -12520,7 +12520,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Parabola y = ${a}(x ${hSign})² ${kSign}, vertex at (${h}, ${k}).`}>
         <style>{`.qe-curve,.qe-vtx{transition:none}@media (prefers-reduced-motion: no-preference){.qe-curve,.qe-vtx{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         {gridLines.map((g) => (
@@ -12829,7 +12829,7 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
       <svg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
-        className="mx-auto w-full max-w-lg rounded-card border border-ink/10 bg-white"
+        className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
         role="img"
         aria-label={`Graph of y = ${eq.slopeText}x ${eqTail}. Slope ${eq.slopeText}, y-intercept ${eq.interceptText}.`}
       >

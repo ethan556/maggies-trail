@@ -554,7 +554,7 @@ export default function LessonPlayer({
         className={`trail-step-enter relative z-[1] mx-auto w-full ${widthCls} ${colTransition} flex-1 px-4 pb-10 pt-4`}
       >
         {/* Prose lives in the reading column even when the stage below widens. */}
-        <div className="mx-auto w-full max-w-xl">
+        <div className="mx-auto w-full max-w-2xl">
           {st.resumedAt !== null && (
             <div
               aria-live="polite"
@@ -650,7 +650,7 @@ export default function LessonPlayer({
               <p
                 data-testid="process-cue"
                 aria-live="polite"
-                className="banner-in mx-auto mt-3 flex w-full max-w-xl items-start gap-2 rounded-card border border-sky/30 bg-sky/5 px-4 py-2.5 text-sm font-semibold text-ink/80 dark:text-paper/80"
+                className="banner-in mx-auto mt-3 flex w-full max-w-2xl items-start gap-2 rounded-card border border-sky/30 bg-sky/5 px-4 py-2.5 text-sm font-semibold text-ink/80 dark:text-paper/80"
               >
                 <AppIcon name="compass" size={16} className="mt-0.5 shrink-0 text-sky-ink" />
                 <span>{processCue}</span>
@@ -658,7 +658,7 @@ export default function LessonPlayer({
             )}
             {cmlEnabled && !finalized && cmlMoveCount > 0 && (
               <div
-                className="mx-auto mt-3 flex w-full max-w-xl justify-end gap-2"
+                className="mx-auto mt-3 flex w-full max-w-2xl justify-end gap-2"
                 role="group"
                 aria-label="Model controls"
               >
@@ -694,7 +694,7 @@ export default function LessonPlayer({
           </div>
         )}
 
-        <div className="mx-auto w-full max-w-xl">
+        <div className="mx-auto w-full max-w-2xl">
           {s.kind === "recap" && (
             <div className="mt-5 grid gap-3">
               <h2 className="text-sm font-bold uppercase tracking-wide text-ink/70">{COPY.keepGoing}</h2>

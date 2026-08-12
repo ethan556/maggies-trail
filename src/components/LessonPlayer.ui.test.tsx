@@ -116,17 +116,17 @@ const mainEl = () => document.querySelector("main") as HTMLElement;
 describe("width tiers in the player", () => {
   it("prose steps use the reading column; a wide lab widens main, header and footer together", () => {
     render(<LessonPlayer lesson={tierLesson} />);
-    // c1: concept step → narrow
-    expect(mainEl().className).toContain("max-w-xl");
+    // c1: concept step → narrow (reading column, Plan v3 band 600–680)
+    expect(mainEl().className).toContain("max-w-2xl");
     fireEvent.click(btn(/^Continue$/));
-    // i1: lineExplore → wide, and all three regions agree
-    expect(mainEl().className).toContain("max-w-3xl");
+    // i1: lineExplore → wide model (Plan v3 band 920–1080), all three regions agree
+    expect(mainEl().className).toContain("max-w-5xl");
     const header = document.querySelector("header div") as HTMLElement;
     const footer = document.querySelector("footer div") as HTMLElement;
-    expect(header.className).toContain("max-w-3xl");
-    expect(footer.className).toContain("max-w-3xl");
+    expect(header.className).toContain("max-w-5xl");
+    expect(footer.className).toContain("max-w-5xl");
     // the prose inside the wide step still reads at column width
-    expect(mainEl().querySelector(".max-w-xl")).toBeTruthy();
+    expect(mainEl().querySelector(".max-w-2xl")).toBeTruthy();
   });
 
   it("a narrow widget (numeric) returns the column to reading width", () => {
@@ -136,7 +136,7 @@ describe("width tiers in the player", () => {
     fireEvent.change(screen.getByRole("slider", { name: /intercept b/ }), { target: { value: "1" } });
     fireEvent.click(btn(/^Check$/));
     fireEvent.click(btn(/^Continue$/)); // → k1 numeric
-    expect(mainEl().className).toContain("max-w-xl");
+    expect(mainEl().className).toContain("max-w-2xl");
   });
 });
 
