@@ -245,6 +245,25 @@ export type StageTone = "neutral" | "success" | "error" | "info";
  * "correct state" statement used by chip-form ghosts across the programme.
  * One definition, so the grammar (styling, hidden-ness, testid) cannot drift
  * engine by engine. */
+/** S237b — HOW WIDE IS A LABEL? An SVG label's box cannot be measured at render time (and jsdom
+ *  has no layout at all), so the widgets that lay labels out along a scale model one: characters ×
+ *  font-size × 0.72 wide, and 1.26 × font-size tall.
+ *
+ *  THOSE TWO NUMBERS WERE MEASURED, NOT GUESSED, and the first draft of this fix had them wrong.
+ *  It assumed 0.62em wide and exactly 1em tall — plausible, and both too small. Chromium at 360px
+ *  reports a digit at font-size 11 as 7.5px wide and 13.0px tall against a 10.7px rendered em:
+ *  0.70em and 1.21em. `e2e/s237-label-collision.spec.ts` caught the difference as a real 2.8×1.3px
+ *  overlap between two labels this file had already placed on separate rows. The constants now sit
+ *  just above the measurement, so the arithmetic errs toward giving a label more room than it
+ *  needs. `widgets.labelCollision.s237.test.tsx` re-derives the same boxes from the rendered
+ *  attributes and fails on any overlap. */
+const LABEL_EM = 0.72;
+/** Height of a label's box as a multiple of its font size — ascender to descender. */
+const LABEL_LINE = 1.26;
+/** Minimum clear space between two drawn labels, in viewBox units. */
+const LABEL_GAP = 2;
+const labelHalfWidth = (text: string, fontSize: number) => (text.length * fontSize * LABEL_EM) / 2;
+
 function GhostChip({ testid, children }: { testid: string; children: ReactNode }) {
   return (
     <p
@@ -7258,6 +7277,13 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
   };
   const correctChoice=spec.choices.find(choice=>affineRelationshipChoiceCorrect(spec,choice));
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the derived affine conclusion":spec.answerMode==="point"&&truth.answerPoint?`(${truth.answerPoint[0]}, ${truth.answerPoint[1]})`:"the completed affine exploration";
+  /** S237b — the end-of-line name used to be clamped into the plot INDEPENDENTLY per line
+   *  (`Math.min(H-pad, Math.max(pad+12, sy(endY)-6+index*14))`). Two lines that both leave the
+   *  frame below clamp to the SAME y, and fg-03-02 drew "Function A" and "Function B" at identical
+   *  coordinates — one label, unreadable, and the plot's only key. Clamping happens once now and
+   *  the names are then separated by a label height (16 > 12 × 1.26, the measured line box for a
+   *  12px label), shifted up together if there is no room. */
+  const lineLabelY=(()=>{const gap=16,lo=pad+12,hi=H-pad;const ys=drawn.map(plot=>Math.min(hi,Math.max(lo,sy(leRatToNumber(plot.to.y))-6)));for(let i=1;i<ys.length;i++)if(ys[i]-ys[i-1]<gap)ys[i]=ys[i-1]+gap;const over=ys.length>0?ys[ys.length-1]-hi:0;if(over>0)for(let i=0;i<ys.length;i++)ys[i]-=over;return ys;})();
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">
@@ -7265,7 +7291,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate plot of ${spec.lines.map(line=>line.label).join(", ")}; each line also has a distinct dash pattern and text label.`}>
         <rect x="0" y="0" width={W} height={H} rx="16" fill="currentColor" opacity="0.03"/>
         {xMin<=0&&xMax>=0&&<line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke="currentColor" opacity="0.35"/>}{yMin<=0&&yMax>=0&&<line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke="currentColor" opacity="0.35"/>}
-        {spec.lines.map((line,index)=>{const plot=drawn[index]!;const endY=leRatToNumber(plot.to.y);return <g key={line.id}><line x1={sx(xMin)} y1={sy(leRatToNumber(plot.from.y))} x2={sx(xMax)} y2={sy(endY)} stroke="currentColor" strokeWidth="3" strokeDasharray={dashes[index]}/><text x={Math.min(W-pad-70,Math.max(pad,sx(xMax)-68))} y={Math.min(H-pad,Math.max(pad+12,sy(endY)-6+index*14))} fontSize="12" fontWeight="800">{line.label}</text>{line.tablePoints.map(([x,y],i)=><circle key={i} cx={sx(x)} cy={sy(y)} r="4" fill="white" stroke="currentColor" strokeWidth="2"/>)}</g>})}
+        {spec.lines.map((line,index)=>{const plot=drawn[index]!;const endY=leRatToNumber(plot.to.y);return <g key={line.id}><line x1={sx(xMin)} y1={sy(leRatToNumber(plot.from.y))} x2={sx(xMax)} y2={sy(endY)} stroke="currentColor" strokeWidth="3" strokeDasharray={dashes[index]}/><text x={Math.min(W-pad-70,Math.max(pad,sx(xMax)-68))} y={lineLabelY[index]} fontSize="12" fontWeight="800">{line.label}</text>{line.tablePoints.map(([x,y],i)=><circle key={i} cx={sx(x)} cy={sy(y)} r="4" fill="white" stroke="currentColor" strokeWidth="2"/>)}</g>})}
         {spec.candidatePoint&&<g><circle cx={sx(spec.candidatePoint[0])} cy={sy(spec.candidatePoint[1])} r="7" fill="white" stroke="currentColor" strokeWidth="3"/><text x={sx(spec.candidatePoint[0])+8} y={sy(spec.candidatePoint[1])-8} fontSize="12" fontWeight="800">candidate</text></g>}
       <AxisCaptions w={W} h={H} /></svg>
     </section>
@@ -10753,6 +10779,37 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
   const hScale = linScale(0, spec.maxVal, baseY, padTop);
   const gridVals = [];
   for (let g = 0; g <= spec.maxVal; g += spec.step) gridVals.push(g);
+  /** S237b — THE Y AXIS COULD NOT BE READ. `maxVal` and `step` are authored data, so the number of
+   *  gridlines is data-driven: g5d-01-01/i1 asks for bars of 40 and 25 with `maxVal: 45, step: 1`,
+   *  which put 46 labels into a 162px column — 3.5px apart, in a 9px font. Every label overprinted
+   *  its neighbours (574 colliding pairs in the authored corpus, all from this engine).
+   *  The GRIDLINES still draw at every step — the chart keeps its resolution. Only labels that
+   *  cannot clear the previously drawn one are dropped, top value first so the axis always states
+   *  its ceiling, then downward. */
+  const axisLabelled = (() => {
+    const MIN_GAP = Math.ceil(9 * LABEL_LINE) + 1; // 13: one 9px label's full height, plus air
+    const top = gridVals[gridVals.length - 1];
+    const bottom = gridVals[0];
+    const keep = new Set<number>([top, bottom]); // the ceiling and the baseline always state themselves
+    let lastY = hScale(top);
+    const floorY = hScale(bottom);
+    for (const g of [...gridVals].reverse().slice(1)) {
+      const y = hScale(g);
+      if (y - lastY < MIN_GAP || floorY - y < MIN_GAP) continue;
+      lastY = y;
+      keep.add(g);
+    }
+    return keep;
+  })();
+  /** S237b — a category name is authored text and the column it sits under is 240/n units wide, so
+   *  whether two names touch is data-driven: g4s-01-01 puts "Pack 1"…"Pack 8" under 34-unit
+   *  columns. The label shrinks to fit its own column rather than being clipped or dropped — a bar
+   *  whose name you cannot read is not a bar chart. 7 is the floor; below that it stops being text. */
+  const catFont = (() => {
+    const longest = Math.max(1, ...spec.categories.map((c) => c.length));
+    const fit = (barW - LABEL_GAP) / (longest * LABEL_EM);
+    return Math.max(7, Math.min(spec.histogram ? 8 : 10, Math.floor(fit * 2) / 2));
+  })();
   const setBar = (i: number, v: number) => onChange(hs.map((h, j) => (j === i ? v : h)));
 
   // S185: tally and pictograph displays — the same counts drawn as MARKS. Each category is a row;
@@ -10824,7 +10881,9 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
         {gridVals.map((g) => (
           <g key={g}>
             <line x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={0.1} />
-            <text x={padX - 5} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.5}>{g}</text>
+            {axisLabelled.has(g) && (
+              <text x={padX - 5} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.5}>{g}</text>
+            )}
           </g>
         ))}
         {spec.categories.map((c, i) => {
@@ -10838,7 +10897,9 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
               <rect className="bb-bar" x={x} y={top} width={w} height={baseY - top} rx={spec.histogram ? 0 : 2}
                 fill={done ? PALETTE.leaf : PALETTE.sky} stroke={spec.histogram ? "#fff" : "none"} strokeWidth={spec.histogram ? 1 : 0} />
               <text x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{hs[i]}</text>
-              <text x={x + w / 2} y={baseY + 14} fontSize={spec.histogram ? 8 : 10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{c}</text>
+              {/* S237b — 11, not 14: at 14 the category row's descenders ran into the axis caption
+                  two rows below (dd-02-02's "10–19" bins against "minutes read"). */}
+              <text x={x + w / 2} y={baseY + 11} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{c}</text>
             </g>
           );
         })}
@@ -11212,6 +11273,30 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
     return null;
   };
   const fmt = (n: number) => (den !== undefined ? `mark ${fmtNum(n)} of ${den}` : fmtNum(n));
+  /** S237b — THE SAME COLLISION numberLineHop had, from the same cause: a label per tick, with the
+   *  tick count coming from authored data. ns-04-01/e1 and ns-05-01/i1 run −10…10 with
+   *  `tickStep: 1`, which is 21 labels across 280px — "−10" is 20 units wide and its neighbour
+   *  "−9" starts 14 units away, so the two overprint. TICK MARKS still draw at every step; the
+   *  ENDS always keep their labels (they state the line's range) and an interior label is dropped
+   *  when it cannot clear the last one drawn. */
+  const labelledTicks = (() => {
+    const keep = new Set<number>();
+    if (ticks.length === 0) return keep;
+    const half = (t: number) => ((tickLabel(t) ?? "").length * 11 * LABEL_EM) / 2;
+    const first = ticks[0];
+    const last = ticks[ticks.length - 1];
+    keep.add(first);
+    keep.add(last);
+    let end = sx(first) + half(first) + LABEL_GAP;
+    const lastStart = sx(last) - half(last) - LABEL_GAP;
+    for (const t of ticks.slice(1, -1)) {
+      const x = sx(t);
+      if (x - half(t) < end || x + half(t) > lastStart) continue;
+      end = x + half(t) + LABEL_GAP;
+      keep.add(t);
+    }
+    return keep;
+  })();
 
   // Direct manipulation: press or drag anywhere on the line and the marker
   // snaps there (same value lattice as the slider, which stays the keyboard path).
@@ -11246,7 +11331,7 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
         {ticks.map((t) => (
           <g key={t}>
             <line x1={sx(t)} y1={y - 5} x2={sx(t)} y2={y + 5} stroke={PALETTE.ink} strokeWidth={t === 0 || t === den ? 2.5 : 1.5} />
-            {tickLabel(t) !== null && (
+            {tickLabel(t) !== null && labelledTicks.has(t) && (
               <text x={sx(t)} y={y + 20} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{tickLabel(t)}</text>
             )}
           </g>
@@ -12327,8 +12412,12 @@ function QuadraticRootsW({ spec, value, onChange, disabled, tone, onEvent }: WPr
           </g>
         ))}
         <polyline points={polyPts} fill="none" stroke={hit ? PALETTE.leaf : PALETTE.sky} strokeWidth={2.6} />
-        {/* the roots: where the curve meets the axis, which is what "solution" means */}
-        {[r1, r2].map((r, i) => (
+        {/* the roots: where the curve meets the axis, which is what "solution" means.
+            S237b — a repeated root is ONE place on the axis. Drawing [r1, r2] unconditionally
+            stacked two identical circles and two identical labels at identical coordinates
+            (qu-02-01/02/03, whose parabolas touch the axis at 0), which reads as a smeared,
+            bolder number rather than as the double root it is. */}
+        {(r1 === r2 ? [r1] : [r1, r2]).map((r, i) => (
           <g key={i}>
             <circle data-testid="qr-root" cx={sx(r)} cy={sy(0)} r={6} fill={hit ? PALETTE.leaf : PALETTE.tangerine} />
             <text x={sx(r)} y={sy(0) + 20} textAnchor="middle" fontSize={11} fontWeight={900} fill={PALETTE.tangerine}>{r}</text>
@@ -14061,6 +14150,17 @@ function LogEstimateSliderW({ spec, value, onChange, disabled, onEvent, tone }: 
   const toPos = (v: number) =>
     Math.round((Math.log(Math.min(Math.max(v, spec.min), spec.max) / spec.min) / Math.log(spec.max / spec.min)) * 1000);
   const v = typeof value === "number" ? value : (spec.start ?? spec.min);
+  /** S237b — WHAT DOES THIS SLIDER SET? Reported from g3w-01-01 ("4 boxes hold 6 pencils each…"):
+   *  the learner read the control as TWO sliders and expected one to be labelled "the number of
+   *  boxes" and the other "the number of pencils". There is only one quantity here, and nothing on
+   *  screen named it — the control had no visible label at all, and its accessible name was the
+   *  whole prompt sentence, which is a description of the task, not of the control.
+   *
+   *  `unitLabel` is the honest source for the name and it is what the readout below already
+   *  prints. When a step declares none, the label stays generic and true rather than inventing a
+   *  quantity the content never stated. The <label> element does the naming for assistive tech
+   *  too, so the prompt-as-aria-label is gone; `aria-valuetext` still speaks value + unit. */
+  const quantity = spec.unitLabel ? `Your estimate — ${spec.unitLabel}` : "Your estimate";
   useEffect(() => {
     if (typeof value !== "number") onChange(spec.start ?? spec.min);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -14068,70 +14168,103 @@ function LogEstimateSliderW({ spec, value, onChange, disabled, onEvent, tone }: 
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <input
-        type="range"
-        min={0}
-        max={1000}
-        step={1}
-        value={toPos(v)}
-        disabled={disabled}
-        aria-label={spec.prompt}
-        aria-valuetext={`${v.toLocaleString()}${spec.unitLabel ? ` ${spec.unitLabel}` : ""}`}
-        onChange={(e) => {
-          const next = toValue(Number(e.target.value));
-          // Process evidence on the estimate itself. moveRelation's direction is
-          // scale-invariant (monotone slider), so the log scale needs no special case.
-          const dir = moveRelation(v, next, spec.target);
-          if (dir) onEvent?.({ control: "estimate", dir });
-          onChange(next);
-        }}
-        className="h-11 w-full accent-sky"
-      />
-      {/* Where you are on the multiplicative scale — the marker slides smoothly so
-          equal *pixel* moves feel like equal *multiplications*. */}
-      <div className="relative h-1.5 w-full rounded-full bg-ink/10" aria-hidden="true">
-        {/* Reveal ghost: the whole ACCEPTANCE BAND on the multiplicative track —
-            mirrors evaluate (target ÷ f … target × f), drawn as a dashed band
-            with the exact target ticked, so "estimate" stays an interval idea. */}
-        {tone === "info" && !(v >= spec.target / spec.acceptFactor && v <= spec.target * spec.acceptFactor) && (
-          <div data-testid="es-ghost" aria-hidden="true">
-            <div
-              className="absolute top-1/2 h-3 -translate-y-1/2 rounded-full border-2 border-dashed border-tangerine/80 bg-tangerine/10"
-              style={{
-                left: `${toPos(spec.target / spec.acceptFactor) / 10}%`,
-                width: `${(toPos(spec.target * spec.acceptFactor) - toPos(spec.target / spec.acceptFactor)) / 10}%`
-              }}
-            />
-            <div
-              className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded"
-              style={{ left: `${toPos(spec.target) / 10}%`, background: PALETTE.tangerine }}
-            />
+      {/* ONE INSTRUMENT, NOT TWO. The slider, the scale it runs along and that scale's landmarks
+          are bound into a single labelled card. Before this they were three loose rows, and the
+          decorative track — a dot with a white ring, at the exact size and shape of a range thumb,
+          directly under a real range input — read as a second, unlabelled slider. */}
+      <div className="grid gap-2 rounded-card border-2 border-ink/15 bg-white/60 p-3 dark:bg-ink/5">
+        {/* The name WRAPS the control (the house pattern — see barBuilder, fractionGrid), so the
+            accessible name and the visible name are the same string by construction. */}
+        <label className="grid gap-1 text-sm font-bold text-ink/75">
+          <span>{quantity}</span>
+          <input
+            type="range"
+            min={0}
+            max={1000}
+            step={1}
+            value={toPos(v)}
+            disabled={disabled}
+            aria-valuetext={`${v.toLocaleString()}${spec.unitLabel ? ` ${spec.unitLabel}` : ""}`}
+            onChange={(e) => {
+              const next = toValue(Number(e.target.value));
+              // Process evidence on the estimate itself. moveRelation's direction is
+              // scale-invariant (monotone slider), so the log scale needs no special case.
+              const dir = moveRelation(v, next, spec.target);
+              if (dir) onEvent?.({ control: "estimate", dir });
+              onChange(next);
+            }}
+            className="h-11 w-full accent-sky"
+          />
+        </label>
+        {/* Where you are on the multiplicative scale — the marker slides smoothly so
+            equal *pixel* moves feel like equal *multiplications*. */}
+        <div className="relative h-1.5 w-full rounded-full bg-ink/10" aria-hidden="true">
+          {/* Reveal ghost: the whole ACCEPTANCE BAND on the multiplicative track —
+              mirrors evaluate (target ÷ f … target × f), drawn as a dashed band
+              with the exact target ticked, so "estimate" stays an interval idea. */}
+          {tone === "info" && !(v >= spec.target / spec.acceptFactor && v <= spec.target * spec.acceptFactor) && (
+            <div data-testid="es-ghost" aria-hidden="true">
+              <div
+                className="absolute top-1/2 h-3 -translate-y-1/2 rounded-full border-2 border-dashed border-tangerine/80 bg-tangerine/10"
+                style={{
+                  left: `${toPos(spec.target / spec.acceptFactor) / 10}%`,
+                  width: `${(toPos(spec.target * spec.acceptFactor) - toPos(spec.target / spec.acceptFactor)) / 10}%`
+                }}
+              />
+              <div
+                className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded"
+                style={{ left: `${toPos(spec.target) / 10}%`, background: PALETTE.tangerine }}
+              />
+            </div>
+          )}
+          {/* A CARET, NOT A THUMB. It points up at the slider that drives it, so the two rows read
+              as one instrument, and it cannot be mistaken for something you can grab. */}
+          <div
+            data-testid="es-marker"
+            className="absolute -top-2 h-4 w-2.5 -translate-x-1/2 transition-[left] duration-200 ease-out motion-reduce:transition-none"
+            /* A range thumb's CENTRE travels from an inset to width − inset, not from 0% to 100%,
+               so a marker placed at a flat percentage misses it by that inset at each end — a
+               caret pointing at nothing, exactly where a learner parks the slider. The inset was
+               MEASURED off a 390px capture, not assumed: Chromium paints the thumb 21px across
+               with its centre 14.5px inside the input's 314px box at the minimum. Two earlier
+               guesses (0px, then 8px) both left a visible gap in the screenshot. */
+            style={{ left: `calc(${toPos(v) / 10}% + ${((0.5 - toPos(v) / 1000) * 29).toFixed(2)}px)` }}
+          >
+            <svg viewBox="0 0 10 16" className="h-full w-full" aria-hidden="true" focusable="false">
+              <path d="M5 0 L9.5 6 H0.5 Z" fill={PALETTE.sky} />
+              <rect x="4" y="5" width="2" height="11" rx="1" fill={PALETTE.sky} />
+            </svg>
+          </div>
+        </div>
+        {/* The scale's landmarks belong WITH the scale. They used to sit below the big readout,
+            two rows away from the track they annotate. */}
+        {spec.ticks.length > 0 && (
+          <div className="relative h-5 w-full" aria-hidden="true">
+            {spec.ticks.map((t) => {
+              // End landmarks are anchored by their EDGE, not their centre: a centred label at
+              // 0%/100% hangs half-way off the card. Moving the label instead of the position
+              // would put a number over a place on the scale it does not mark.
+              const pos = toPos(t) / 10;
+              const anchor = pos <= 2 ? "" : pos >= 98 ? "-translate-x-full" : "-translate-x-1/2";
+              return (
+                <span
+                  key={t}
+                  className={`absolute whitespace-nowrap text-xs font-bold text-ink/70 ${anchor}`}
+                  style={{ left: `${pos}%` }}
+                >
+                  {t.toLocaleString()}
+                </span>
+              );
+            })}
           </div>
         )}
-        <div
-          className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-white transition-[left] duration-200 ease-out motion-reduce:transition-none"
-          style={{ left: `${toPos(v) / 10}%`, background: PALETTE.sky }}
-        />
+        <p className="text-center text-3xl font-extrabold tabular-nums" aria-live="polite">
+          {v.toLocaleString()}
+          {spec.unitLabel && (
+            <span className="ml-2 text-base font-semibold text-ink/70">{spec.unitLabel}</span>
+          )}
+        </p>
       </div>
-      <p className="text-center text-3xl font-extrabold tabular-nums" aria-live="polite">
-        {v.toLocaleString()}
-        {spec.unitLabel && (
-          <span className="ml-2 text-base font-semibold text-ink/70">{spec.unitLabel}</span>
-        )}
-      </p>
-      {spec.ticks.length > 0 && (
-        <div className="relative h-5 w-full" aria-hidden="true">
-          {spec.ticks.map((t) => (
-            <span
-              key={t}
-              className="absolute -translate-x-1/2 text-xs font-bold text-ink/70"
-              style={{ left: `${toPos(t) / 10}%` }}
-            >
-              {t.toLocaleString()}
-            </span>
-          ))}
-        </div>
-      )}
       <p className="text-center text-xs text-ink/70">
         The scale stretches — each step multiplies, so big numbers fit too.
       </p>
@@ -14318,7 +14451,6 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   /** S237. Unit ruler under the choice ticks — see the comment at the render site. Whole units
    *  only; on a fractional lattice the whole numbers are the landmarks the question is posed in.
    *  Thinned to <= 12 labels so they stay readable in a 288px viewBox. */
-  const choiceSet = useMemo(() => new Set(ticks), [ticks]);
   const scaleTicks = useMemo(() => {
     const first = Math.ceil(spec.min);
     const last = Math.floor(spec.max);
@@ -14338,6 +14470,69 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
       labelled: n % labelStride === 0 || n === first || n === last || n === spec.start,
     }));
   }, [spec.min, spec.max, spec.start]);
+  /** S237b — WHERE EVERY LABEL GOES. Reported from the running app: g3w-01-02/i1 (0…60, hops of 7,
+   *  authored trap landings 8 and 28) printed `78 10`, `221`, `2830`, `4042`, `490`. Two separate
+   *  causes, both fixed here.
+   *
+   *  1. THE RULER AND THE CHOICES SHARED ONE BASELINE (y = 86). They mean different things — the
+   *     scale of the line versus the positions a hop can reach — so the ruler now has its own row
+   *     BELOW the choice labels, and the viewBox grows to fit whatever is drawn. Suppression alone
+   *     would not have been enough: `28` and `30` are different numbers 9.6 units apart, and no
+   *     rule that keeps both can put them on one line.
+   *  2. A RULER LABEL NEXT TO A CHOICE LABEL IS REDUNDANT ANYWAY. Where a choice tick already names
+   *     a position, a fainter copy of a neighbouring round number a few units away reads as noise
+   *     even on its own row, so it is dropped once the two boxes come within a label's clearance.
+   *     The ruler's TICK MARKS always stay — the line keeps its scale; only duplicate text goes.
+   *
+   *  Choice labels can also collide with EACH OTHER, which is the rest of `78`: an authored trap
+   *  landing (8) sits one unit from a lattice landing (7). Those stagger onto a second row rather
+   *  than being dropped, because every one of them is tappable and its position is the answer.
+   *  A label with no free row is left undrawn — its tick still marks the spot and the radio button
+   *  below still names it — but on the authored corpus that case never arises. */
+  const labelPlan = useMemo(() => {
+    const ROW_GAP = Math.ceil(11 * LABEL_LINE) + 1; // 15: one 11px label, plus air
+    const ROWS = [86, 86 + ROW_GAP];
+    const xAt = (n: number) => 16 + (288 * (n - spec.min)) / span;
+    const rowEnd = ROWS.map(() => -Infinity);
+    const choice = new Map<number, { label: string; fontSize: number; x: number; y: number }>();
+    for (const n of ticks) {
+      const isWhole = !spec.denom || n % spec.denom === 0;
+      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
+      const fontSize = spec.denom && !isWhole ? 9 : 11;
+      const x = xAt(n);
+      const half = labelHalfWidth(label, fontSize);
+      const row = rowEnd.findIndex((end) => x - half >= end);
+      if (row < 0) continue;
+      rowEnd[row] = x + half + LABEL_GAP;
+      choice.set(n, { label, fontSize, x, y: ROWS[row] });
+    }
+    const lastRow = Math.max(ROWS[0], ...[...choice.values()].map((c) => c.y));
+    const rulerY = lastRow + ROW_GAP;
+    const drawn = [...choice.values()];
+    const ruler: { n: number; x: number; label: string }[] = [];
+    let rulerEnd = -Infinity;
+    for (const { n, labelled } of scaleTicks) {
+      if (!labelled) continue;
+      // On a rational lattice `n` counts DENOM-ths, so printing it raw would name 7 sixths "7".
+      // Every authored denom step hops by 1, so each of these positions is also a choice and the
+      // label is suppressed below — but a generator that hops by 2 would have printed the wrong
+      // number, and a scale that lies is worse than no scale.
+      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
+      const x = xAt(n);
+      const half = labelHalfWidth(label, 9);
+      if (drawn.some((c) => Math.abs(c.x - x) < half + labelHalfWidth(c.label, c.fontSize) + LABEL_GAP)) continue;
+      if (x - half < rulerEnd) continue;
+      rulerEnd = x + half + LABEL_GAP;
+      ruler.push({ n, x, label });
+    }
+    // A SINGLE surviving ruler label is not a scale — it is a stray number. Once suppression has
+    // removed the labels that duplicated a choice, one leftover (the reported case left only `60`,
+    // alone on its own row under a line already numbered 0..56) reads as unrelated to the line
+    // rather than as its end. A scale needs two reference points to be one; below that the tick
+    // marks carry the scale by themselves, which is what they did before any label existed.
+    const scale = ruler.length >= 2 ? ruler : [];
+    return { choice, ruler: scale, rulerY, height: (scale.length > 0 ? rulerY : lastRow) + 8 };
+  }, [ticks, scaleTicks, spec.denom, spec.min, span]);
   // S119: ONE ARC PER HOP, not per unit. The previous version drew
   // `|chosen - start|` arcs each spanning a single unit, so a count-by-tens
   // lesson with three hops of ten drew THIRTY arcs — and the hop count is the
@@ -14354,7 +14549,7 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 320 96" className="w-full" role="group" aria-label="Number line">
+      <svg viewBox={`0 0 320 ${labelPlan.height}`} className="w-full" role="group" aria-label="Number line">
         <style>{css}</style>
         <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
         {/* S237. The line used to tick ONLY the tappable choices, so everything between them was
@@ -14364,17 +14559,14 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
             marks at every unit, labels thinned to stay legible at 288px, and min/max/start always
             labelled. Choice ticks still draw on top, taller and bolder, so what is tappable stays
             obvious. Nothing here is interactive and nothing is graded — it is the ruler. */}
-        {scaleTicks.map(({ n, labelled }) => (
-          <g key={`sc-${n}`} aria-hidden="true">
-            <line x1={xOf(n)} y1={59} x2={xOf(n)} y2={69} stroke="#22314F" strokeWidth={1} strokeOpacity={0.4} />
-            {/* A choice tick already labels its own position, in a bolder style at the same y.
-                Printing the ruler label too stacked "0" on "0" at identical coordinates. */}
-            {labelled && !choiceSet.has(n) && (
-              <text x={xOf(n)} y={86} textAnchor="middle" fontSize={9} fontWeight={600} fill="#22314F" fillOpacity={0.55}>
-                {n}
-              </text>
-            )}
-          </g>
+        {scaleTicks.map(({ n }) => (
+          <line key={`sc-${n}`} aria-hidden="true" x1={xOf(n)} y1={59} x2={xOf(n)} y2={69} stroke="#22314F" strokeWidth={1} strokeOpacity={0.4} />
+        ))}
+        {/* The ruler's own row, below every choice label — see labelPlan. */}
+        {labelPlan.ruler.map(({ n, x, label }) => (
+          <text key={`sl-${n}`} aria-hidden="true" x={x} y={labelPlan.rulerY} textAnchor="middle" fontSize={9} fontWeight={600} fill="#22314F" fillOpacity={0.55}>
+            {label}
+          </text>
         ))}
         {/* hop arcs from start to the chosen landing, with a direction arrowhead */}
         {Array.from({ length: arcCount }).map((_, i) => {
@@ -14400,7 +14592,7 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
           // are the hops. On an integer line (no denom) every tick is a whole number and this
           // reduces to exactly the previous rendering.
           const isWhole = !spec.denom || n % spec.denom === 0;
-          const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
+          const placed = labelPlan.choice.get(n);
           return (
             <g key={n}>
               <line
@@ -14412,17 +14604,19 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
                 strokeWidth={isWhole ? 2 : 1.2}
                 strokeOpacity={isWhole ? 1 : 0.55}
               />
-              <text
-                x={xOf(n)}
-                y={86}
-                textAnchor="middle"
-                fontSize={spec.denom && !isWhole ? 9 : 11}
-                fontWeight={isStart || isWhole ? 800 : 600}
-                fill="#22314F"
-                fillOpacity={isWhole ? 1 : 0.7}
-              >
-                {label}
-              </text>
+              {placed && (
+                <text
+                  x={placed.x}
+                  y={placed.y}
+                  textAnchor="middle"
+                  fontSize={placed.fontSize}
+                  fontWeight={isStart || isWhole ? 800 : 600}
+                  fill="#22314F"
+                  fillOpacity={isWhole ? 1 : 0.7}
+                >
+                  {placed.label}
+                </text>
+              )}
               {isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" fillOpacity={0.55} />}
               {isChosen && !isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" />}
             </g>

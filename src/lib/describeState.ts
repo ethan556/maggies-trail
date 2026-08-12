@@ -156,6 +156,30 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       if (!plot) return null;
       return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
     }
+    case "estimateSlider": {
+      // S237b. Exact-comparison mode is a row of labelled buttons and narrates itself, exactly as
+      // before — this branch is only for the continuous log slider.
+      //
+      // What it adds: the multiplicative TRACK below the slider is aria-hidden, and its landmarks
+      // were the only thing on screen saying where the scale's numbers sit. A screen-reader user
+      // had no route to them (the same gap the `numeric` preview branch exists to close). Drawn
+      // from `spec.ticks` — the SAME values the renderer prints — so this cannot claim a scale the
+      // screen does not show, and the target is never stated: the widget reveals the acceptance
+      // band only under tone === "info", which this function does not receive.
+      if ((spec.choices?.length ?? 0) > 0) return null;
+      const v = typeof value === "number" ? value : (spec.start ?? spec.min);
+      const unit = spec.unitLabel ? ` ${spec.unitLabel}` : "";
+      const marks = spec.ticks.map((t) => t.toLocaleString("en-US"));
+      const marked =
+        marks.length === 0
+          ? ""
+          : ` It is marked at ${marks.length === 1 ? marks[0] : `${marks.slice(0, -1).join(", ")} and ${marks[marks.length - 1]}`}.`;
+      return (
+        `One slider sets a single estimate${unit ? `, in ${spec.unitLabel}` : ""}. ` +
+        `The scale beneath it multiplies rather than adds, so equal moves are equal factors.${marked} ` +
+        `Your estimate now reads ${v.toLocaleString("en-US")}${unit}.`
+      );
+    }
     case "scaledCircleLab": {
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
       const scale = spec.drawingRadius !== undefined && spec.scale !== undefined
