@@ -567,6 +567,105 @@ describe("S238 distributionCompareLab — the whole authored corpus", () => {
   });
 });
 
+/* ------------------------------------------------------------------ *
+ * S238 — slopeTriangle: 25 of the S237-measured pairs, and the worst
+ * was the START STATE of every authored lesson: each begins at run 1,
+ * so "run 1" printed on "A (1, 1)" the moment the step opened
+ * (fg-02-02, the reported case). Labels here are anchored to geometry
+ * the learner drags, so the sweep drives VALUE STATES, not just specs.
+ * ------------------------------------------------------------------ */
+
+function stBoxesOf(raw: Record<string, unknown>, value: unknown, tone: "neutral" | "info"): { boxes: TextBox[]; skipped: string[] } {
+  const spec = WidgetSpec.parse(raw) as TWidget;
+  const { container } = render(
+    <WidgetRenderer spec={spec} value={value} onChange={() => {}} disabled={false} tone={tone} />
+  );
+  const svg = container.querySelector("svg");
+  expect(svg, "slopeTriangle must draw its grid SVG").toBeTruthy();
+  const scan = scanTextBoxes(svg!);
+  cleanup();
+  return scan;
+}
+
+const FG0202 = {
+  type: "slopeTriangle", prompt: "p", ax: 1, ay: 1, bx: 4, by: 7,
+  gridMax: 10, legMax: 9, runStart: 1, riseStart: 0,
+  successFeedback: "Run 3 and rise 6 — the triangle's line lands exactly on B.",
+  fallbackFeedback: "Extend the legs until the line through A points straight at B."
+} as const;
+
+describe("S238 label collisions — slopeTriangle", () => {
+  it("the reported start state no longer overprints A, and the solved state is clean", () => {
+    for (const [value, name] of [
+      [{ run: 1, rise: 0 }, "the authored start (run 1) — the reported collision"],
+      [{ run: 3, rise: 6 }, "the solved triangle"],
+      [{ run: 1, rise: 1 }, "both legs tiny"],
+      [{ run: -2, rise: -3 }, "legs pointing away from B"],
+      [{ run: 9, rise: 9 }, "legs at legMax"]
+    ] as const) {
+      for (const tone of ["neutral", "info"] as const) {
+        const { boxes, skipped } = stBoxesOf(FG0202, value, tone);
+        expect(skipped, `${name} [${tone}]`).toEqual([]);
+        const hits = collisions(boxes);
+        expect(hits.map(describeCollision), `${name} [${tone}]`).toEqual([]);
+      }
+    }
+  });
+
+  it("every label is still THERE — flipped to a clear corner, never dropped", () => {
+    const { boxes } = stBoxesOf(FG0202, { run: 1, rise: 0 }, "neutral");
+    const t = texts(boxes);
+    expect(t).toContain("A (1, 1)");
+    expect(t).toContain("B (4, 7)");
+    expect(t.some((s) => s.startsWith("run ")), "the run reading").toBe(true);
+    expect(t.some((s) => s.startsWith("rise ")), "the rise reading").toBe(true);
+  });
+
+  it("the whole authored corpus, across a targeted state grid", () => {
+    const courses = join(process.cwd(), "content", "courses");
+    let specs = 0;
+    for (const course of readdirSync(courses)) {
+      const dir = join(courses, course, "lessons");
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith(".json")) continue;
+        const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+          id: string;
+          steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+          remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+        };
+        const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+        for (const step of all) {
+          if (step.widget?.type !== "slopeTriangle") continue;
+          specs++;
+          const w = step.widget as { ax: number; ay: number; bx: number; by: number; legMax: number; runStart: number; riseStart: number };
+          // The states a learner actually passes through: the authored start, the solved
+          // triangle (B − A), tiny legs in all four directions, and both extremes.
+          const states = [
+            { run: w.runStart, rise: w.riseStart },
+            { run: w.bx - w.ax, rise: w.by - w.ay },
+            { run: 1, rise: 1 }, { run: -1, rise: 1 }, { run: 1, rise: -1 }, { run: -1, rise: -1 },
+            { run: w.legMax, rise: w.legMax }, { run: -w.legMax, rise: -w.legMax }
+          ].map((s) => ({
+            run: Math.max(-w.legMax, Math.min(w.legMax, s.run)),
+            rise: Math.max(-w.legMax, Math.min(w.legMax, s.rise))
+          }));
+          for (const st of states) {
+            for (const tone of ["neutral", "info"] as const) {
+              const { boxes, skipped } = stBoxesOf(step.widget, st, tone);
+              const where = `${lesson.id}/${step.id} run=${st.run} rise=${st.rise} [${tone}]`;
+              expect(skipped, `${where} — unmodellable labels`).toEqual([]);
+              expect(collisions(boxes).map(describeCollision), where).toEqual([]);
+            }
+          }
+        }
+      }
+    }
+    // Counted from disk: 10 authored slopeTriangle steps (fg-02-02 + lf-01-02/lf-01-03).
+    expect(specs).toBe(10);
+  });
+});
+
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);

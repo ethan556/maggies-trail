@@ -6885,6 +6885,77 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   const hits = verdict.passes;
   const atStart = legValue.run === spec.runStart && legValue.rise === spec.riseStart;
 
+  // S238 — NO TWO LABELS MAY OVERLAP, for any learner-reachable triangle. 25 of the
+  // S237-measured pairs lived here, and the worst was the START STATE of every authored lesson:
+  // each begins at run 1, so "run 1" printed on "A (1, 1)" the moment the step opened
+  // (fg-02-02, the reported case). The labels are anchored to GEOMETRY the learner drags, so no
+  // fixed bands exist — instead each point label chooses among four callout corners and the
+  // rise label between the leg's two sides, greedily, first candidate whose modelled box
+  // (0.72em/char — the S237 testkit constant) clears everything already placed plus the fixed
+  // obstacles (the run label, the axis captions, the reveal ghost when drawn). Deterministic:
+  // same state, same layout, forever. The run label keeps its canonical seat — it is the
+  // learner's primary reading and everything else yields to it.
+  type STBox = { x0: number; x1: number; y0: number; y1: number };
+  const stBox = (text: string, x: number, y: number, anchor: "start" | "middle" | "end"): STBox => {
+    const w = text.length * 11 * 0.72;
+    const x0 = anchor === "start" ? x : anchor === "middle" ? x - w / 2 : x - w;
+    return { x0, x1: x0 + w, y0: y - 11 * 0.98, y1: y + 11 * 0.28 };
+  };
+  const stClear = (b: STBox, placed: STBox[]) =>
+    placed.every((p) => b.x1 + 2 <= p.x0 || b.x0 >= p.x1 + 2 || b.y1 + 2 <= p.y0 || b.y0 >= p.y1 + 2);
+  const stPick = (
+    text: string,
+    candidates: Array<{ x: number; y: number; anchor: "start" | "middle" | "end" }>,
+    placed: STBox[]
+  ) => {
+    for (const c of candidates) if (stClear(stBox(text, c.x, c.y, c.anchor), placed)) return c;
+    return candidates[0];
+  };
+  const stLayout = (() => {
+    const runText = `run ${legs.runText}`;
+    const riseText = `rise ${legs.riseText}`;
+    const aText = `A (${spec.ax}, ${spec.ay})`;
+    const bText = `B (${spec.bx}, ${spec.by})`;
+    const placed: STBox[] = [
+      stBox("x", W - 4, H - 4, "end"),
+      stBox("y", 4, 12, "start")
+    ];
+    if (tone === "info" && !hits)
+      placed.push(stBox(`the line through A and B has slope ${slopeTriangleLabel(spec)}`, W / 2, 30, "middle"));
+    type STLabelPos = { x: number; y: number; anchor: "start" | "middle" | "end" };
+    let run: STLabelPos | null = null;
+    let rise: STLabelPos | null = null;
+    if (!legs.degenerate) {
+      run = { x: (sx(n(legs.anchor.x)) + sx(n(legs.corner.x))) / 2, y: sy(n(legs.anchor.y)) + 15, anchor: "middle" };
+      placed.push(stBox(runText, run.x, run.y, run.anchor));
+      const riseY = (sy(n(legs.corner.y)) + sy(n(legs.tip.y))) / 2;
+      rise = stPick(riseText, [
+        { x: sx(n(legs.corner.x)) + 6, y: riseY, anchor: "start" },
+        { x: sx(n(legs.corner.x)) - 6, y: riseY, anchor: "end" },
+        { x: sx(n(legs.corner.x)) + 6, y: riseY - 14, anchor: "start" },
+        { x: sx(n(legs.corner.x)) - 6, y: riseY - 14, anchor: "end" },
+        { x: sx(n(legs.corner.x)) + 6, y: riseY + 14, anchor: "start" },
+        { x: sx(n(legs.corner.x)) - 6, y: riseY + 14, anchor: "end" }
+      ], placed);
+      placed.push(stBox(riseText, rise.x, rise.y, rise.anchor));
+    }
+    /** Four callout corners, then the same four pushed a full label-height further out. */
+    const ring = (px: number, py: number, dx: number, upY: number, downY: number) => [
+      { x: px + dx, y: py + downY, anchor: "start" as const },
+      { x: px - dx, y: py + downY, anchor: "end" as const },
+      { x: px + dx, y: py - upY, anchor: "start" as const },
+      { x: px - dx, y: py - upY, anchor: "end" as const },
+      { x: px + dx, y: py + downY + 14, anchor: "start" as const },
+      { x: px - dx, y: py + downY + 14, anchor: "end" as const },
+      { x: px + dx, y: py - upY - 14, anchor: "start" as const },
+      { x: px - dx, y: py - upY - 14, anchor: "end" as const }
+    ];
+    const a = stPick(aText, ring(sx(spec.ax), sy(spec.ay), 8, 10, 16), placed);
+    placed.push(stBox(aText, a.x, a.y, a.anchor));
+    const b = stPick(bText, ring(sx(spec.bx), sy(spec.by), 10, 8, 18), placed);
+    return { run, rise, a, b };
+  })();
+
   return (
     <div className="grid gap-3" ref={rootRef}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -6908,21 +6979,27 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
           <g>
             <line data-morph-actor={ST_ACTOR_RUN} x1={sx(n(legs.anchor.x))} y1={sy(n(legs.anchor.y))} x2={sx(n(legs.corner.x))} y2={sy(n(legs.corner.y))} stroke={PALETTE.sky} strokeWidth={4} strokeLinecap="round" />
             <line data-morph-actor={ST_ACTOR_RISE} x1={sx(n(legs.corner.x))} y1={sy(n(legs.corner.y))} x2={sx(n(legs.tip.x))} y2={sy(n(legs.tip.y))} stroke={PALETTE.sky} strokeWidth={4} strokeLinecap="round" />
-            <text x={(sx(n(legs.anchor.x)) + sx(n(legs.corner.x))) / 2} y={sy(n(legs.anchor.y)) + 15} fontSize="11" fontWeight="900" textAnchor="middle" fill={PALETTE.sky}>
-              run {legs.runText}
-            </text>
-            <text x={sx(n(legs.corner.x)) + 6} y={(sy(n(legs.corner.y)) + sy(n(legs.tip.y))) / 2} fontSize="11" fontWeight="900" fill={PALETTE.sky}>
-              rise {legs.riseText}
-            </text>
+            {stLayout.run && (
+              <text x={stLayout.run.x} y={stLayout.run.y} fontSize="11" fontWeight="900" textAnchor={stLayout.run.anchor} fill={PALETTE.sky}>
+                run {legs.runText}
+              </text>
+            )}
+            {stLayout.rise && (
+              <text x={stLayout.rise.x} y={stLayout.rise.y} fontSize="11" fontWeight="900" textAnchor={stLayout.rise.anchor} fill={PALETTE.sky}>
+                rise {legs.riseText}
+              </text>
+            )}
           </g>
         )}
         {/* B is the target (tangerine); A is fixed structure (ink). */}
         <circle cx={sx(spec.bx)} cy={sy(spec.by)} r={7} fill="none" stroke={PALETTE.tangerine} strokeWidth={3} />
-        <text x={sx(spec.bx) + 10} y={sy(spec.by) - 8} fontSize="11" fontWeight="900" fill={PALETTE.tangerine}>B ({spec.bx}, {spec.by})</text>
+        <text x={stLayout.b.x} y={stLayout.b.y} fontSize="11" fontWeight="900" textAnchor={stLayout.b.anchor} fill={PALETTE.tangerine}>B ({spec.bx}, {spec.by})</text>
         <circle cx={sx(spec.ax)} cy={sy(spec.ay)} r={5} fill={PALETTE.ink} />
-        <text x={sx(spec.ax) + 8} y={sy(spec.ay) + 16} fontSize="11" fontWeight="900" fill={PALETTE.ink}>A ({spec.ax}, {spec.ay})</text>
+        <text x={stLayout.a.x} y={stLayout.a.y} fontSize="11" fontWeight="900" textAnchor={stLayout.a.anchor} fill={PALETTE.ink}>A ({spec.ax}, {spec.ay})</text>
         {tone === "info" && !hits && (
-          <text data-testid="st-ghost" x={W / 2} y={16} fontSize="11" fontWeight="900" textAnchor="middle" fill={PALETTE.tangerine}>
+          /* S238: y=30, its own band — at y=16 the widest ghost ("…slope undefined", the
+             vertical lf-01-03/i3 line) overlapped the y-axis caption. */
+          <text data-testid="st-ghost" x={W / 2} y={30} fontSize="11" fontWeight="900" textAnchor="middle" fill={PALETTE.tangerine}>
             the line through A and B has slope {slopeTriangleLabel(spec)}
           </text>
         )}

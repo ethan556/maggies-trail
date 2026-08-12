@@ -177,6 +177,28 @@ that sweep IS the reachable label space. Detector verified to fire on the pre-fi
 **Collision ledger after batch 4: 267 → 137.** Next by count: `slopeTriangle` (25),
 `samplingBiasLab` (14), `pointSetReasoningLab` (10), `signChart` (8), 18 smaller (80).
 
+## Batch 5 (same session): slopeTriangle collisions closed — 25 → 0, and the start-state shame
+
+The worst of the 25 was the START STATE of every authored lesson: each begins at run 1, so
+"run 1" printed on "A (1, 1)" the moment the step opened (fg-02-02, the reported case). The
+labels here are anchored to GEOMETRY the learner drags, so no fixed bands exist — instead a
+small deterministic callout layout: each point label chooses among eight candidate corners
+(4 + a further ring) and the rise label among six leg-side seats, greedily, first candidate
+whose modelled box clears everything already placed plus the fixed obstacles (run label, axis
+captions, reveal ghost). The run label keeps its canonical seat — it is the learner's primary
+reading and everything else yields to it. The reveal ghost also moved to its own band (y=30):
+at y=16 the widest ghost ("…slope undefined", the vertical lf-01-03/i3 line) overlapped the
+y-axis caption — a pre-existing pair the sweep caught.
+
+Gate: the reported state and four more named states × both tones, a never-dropped acceptance
+(all four labels still present, flipped not suppressed), and a corpus sweep — all 10 authored
+specs × 8 learner states (start, solved, four tiny-leg directions, both legMax extremes) ×
+both tones, zero collisions. Detector verified to fire pre-fix (2 failed with the fix
+stashed). Browser evidence: `S238_SCREENSHOTS/08-slopetriangle-fg0202-i2-390.png`.
+
+**Collision ledger after batch 5: 267 → 112.** Next: `samplingBiasLab` (14),
+`pointSetReasoningLab` (10), `signChart` (8), 18 smaller (80).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.
