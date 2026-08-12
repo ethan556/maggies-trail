@@ -866,6 +866,93 @@ describe("S238 label collisions — doubleNumberLine", () => {
   });
 });
 
+/* ------------------------------------------------------------------ *
+ * S238 batch 8 — the ENTIRE remaining collision tail, closed with one
+ * shared mechanism (s238Seat: first candidate seat whose modelled box
+ * clears every stated obstacle by a 2-unit margin, deterministic
+ * fallback to the first seat). 16 engines, 68 pairs → 0. Unlike the
+ * per-engine sweeps above, these engines were fixed as a batch, so
+ * they are gated as a batch: every authored spec of every one of the
+ * 16 types, at all THREE tones (the reveal ghosts that carried most
+ * of the pairs render at info only), across EVERY svg the widget
+ * draws. No skip assertion here — some of these engines legitimately
+ * carry rotated captions the box model refuses; the committed opt-in
+ * sweep (collisionSweep.s238.test.tsx) counts those corpus-wide.
+ * ------------------------------------------------------------------ */
+
+describe("S238 batch 8 — the collision tail stays closed", () => {
+  // Counted from disk; a count drift means authored content changed under the gate.
+  const TAIL: Array<[string, number]> = [
+    ["lengthCompare", 66], ["slider", 28], ["trialProbabilityLab", 15], ["graphStoryLab", 14],
+    ["secantSlope", 11], ["circleMeasureExplore", 11], ["vectorExplore", 10], ["argandExplore", 7],
+    ["accumulateArea", 7], ["angleMeasure", 6], ["lineExplore", 6], ["conicLocusLab", 5],
+    ["circleAngleExplore", 5], ["taylorApprox", 3], ["absValueLine", 3], ["triangleClosureLab", 1]
+  ];
+
+  it("every authored spec of all 16 tail engines is collision-free at all three tones", () => {
+    const types = new Map(TAIL);
+    const seen = new Map<string, number>();
+    const courses = join(process.cwd(), "content", "courses");
+    for (const course of readdirSync(courses)) {
+      const dir = join(courses, course, "lessons");
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith(".json")) continue;
+        const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+          id: string;
+          steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+          remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+        };
+        const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+        for (const step of all) {
+          const t = String(step.widget?.type ?? "");
+          if (!types.has(t)) continue;
+          seen.set(t, (seen.get(t) ?? 0) + 1);
+          for (const tone of ["neutral", "error", "info"] as const) {
+            const spec = WidgetSpec.parse(step.widget) as TWidget;
+            const { container } = render(
+              <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone={tone} />
+            );
+            const where = `${t} ${lesson.id}/${step.id} [${tone}]`;
+            for (const svg of Array.from(container.querySelectorAll("svg"))) {
+              const { boxes } = scanTextBoxes(svg);
+              expect(collisions(boxes).map(describeCollision), where).toEqual([]);
+            }
+            cleanup();
+          }
+        }
+      }
+    }
+    for (const [t, n] of TAIL) expect(seen.get(t) ?? 0, `${t}: authored spec count`).toBe(n);
+  }, 120_000);
+
+  it("cr-01-02/i1 verbatim — the last pair to fall: the ghost's label takes the centered escape seat", () => {
+    // arc 110 with targetAngle 35 exhausts the ghost's four edge seats: both ghost endpoints
+    // sit under the "arc AB = 110°" banner's span, and the two lowered seats land beside A's
+    // label. The escape is the fifth seat — centered inside the rim, below the banner, above
+    // the point labels.
+    const lesson = JSON.parse(
+      readFileSync(join(process.cwd(), "content/courses/circle-theorems/lessons/cr-01-02.json"), "utf8")
+    ) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+    const raw = lesson.steps.find((s) => s.id === "i1")!.widget!;
+    const spec = WidgetSpec.parse(raw) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} tone="info" />
+    );
+    const { boxes } = scanTextBoxes(container.querySelector("svg")!);
+    expect(collisions(boxes).map(describeCollision)).toEqual([]);
+    const ghost = boxes.find((b) => b.text === "target arc")!;
+    expect(ghost, "the ghost is still labelled — moved, never dropped").toBeTruthy();
+    // Centered escape seat: inside the 220-wide viewBox with room to spare on both sides —
+    // the four edge seats all spill or clash on this spec.
+    expect(ghost.x0).toBeGreaterThan(4);
+    expect(ghost.x1).toBeLessThan(216);
+    const banner = boxes.find((b) => b.text.startsWith("arc AB"))!;
+    expect(ghost.y0, "sits BELOW the arc banner").toBeGreaterThanOrEqual(banner.y1 + 2);
+    cleanup();
+  });
+});
+
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);

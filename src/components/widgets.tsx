@@ -5,6 +5,30 @@ import FigureView from "@/components/FigureView";
 import { FIGURE_IDS } from "@/components/figureIds";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { PALETTE } from "@/lib/palette";
+
+/* S238 — shared label-dodge helpers for SVG engines whose labels ride data positions.
+ * Box model: 0.72em per character, 0.98em ascent / 0.28em descent — the constants MEASURED in
+ * Chromium for the S237 label-collision testkit (textBoxes.testkit.ts). A label "clashes" when
+ * the modelled boxes come within 2 units. Engines use these to let a secondary label yield its
+ * seat (flip below / to the other anchor side) when it would print on a primary one. */
+type S238Box = { x0: number; x1: number; y0: number; y1: number };
+function s238Box(text: string, x: number, y: number, anchor: "start" | "middle" | "end", fs: number): S238Box {
+  const w = text.length * fs * 0.72;
+  const x0 = anchor === "start" ? x : anchor === "middle" ? x - w / 2 : x - w;
+  return { x0, x1: x0 + w, y0: y - fs * 0.98, y1: y + fs * 0.28 };
+}
+function s238Clash(a: S238Box, b: S238Box): boolean {
+  return !(a.x1 + 2 <= b.x0 || a.x0 >= b.x1 + 2 || a.y1 + 2 <= b.y0 || a.y0 >= b.y1 + 2);
+}
+/** First seat whose box clears every obstacle; falls back to the first seat. */
+function s238Seat(
+  text: string,
+  fs: number,
+  seats: Array<{ x: number; y: number; anchor: "start" | "middle" | "end" }>,
+  obstacles: S238Box[]
+): { x: number; y: number; anchor: "start" | "middle" | "end" } {
+  return seats.find((c) => obstacles.every((o) => !s238Clash(s238Box(text, c.x, c.y, c.anchor, fs), o))) ?? seats[0];
+}
 import { gridScales, integers, linScale, samplePolyline } from "@/components/plotUtils";
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
@@ -1620,7 +1644,13 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
         <circle cx={cx} cy={cy} r={7} fill={PALETTE.ink}/>
         <text x={(ax+cx)/2} y={cy+18} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{a}</text>
         <text x={(cx+bx)/2+6} y={(cy+by)/2-5} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{b}</text>
-        <text x={(ax+bx)/2} y={(ay+by)/2-8} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{c} target</text>
+        {(() => { const t = `${c} target`; const seat = s238Seat(t, 12, [
+          { x: (ax+bx)/2, y: (ay+by)/2-8, anchor: "middle" },
+          { x: (ax+bx)/2, y: (ay+by)/2+18, anchor: "middle" },
+          { x: (ax+bx)/2 - 8, y: (ay+by)/2-8, anchor: "end" },
+          { x: (ax+bx)/2 + 8, y: (ay+by)/2-8, anchor: "start" }
+        ], [s238Box(String(a), (ax+cx)/2, cy+18, "middle", 12), s238Box(String(b), (cx+bx)/2+6, (cy+by)/2-5, "middle", 12)]);
+        return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="12" fontWeight="800" fill={PALETTE.ink}>{t}</text>; })()}
       </svg>
       <div className="grid gap-1 text-center">
         <p className="text-sm font-bold text-ink/60">endpoint span</p>
@@ -1824,7 +1854,7 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
             <p className="text-center text-sm font-bold text-ink/70"><span className="text-leaf-ink">✓ favourable: {spec.favourable}</span> · total outcomes: {spec.total}</p>
           </div>
         )}
-        <svg viewBox="0 0 520 116" className="mt-3 w-full" role="img" aria-label={selected ? `Your fraction ${selected.label} predicts ${fmt(claim!)} favourable outcomes out of the same total ${spec.total}.` : `Probability claim line from zero to ${axisMax}; no fraction selected.`}>
+        <svg viewBox="0 0 520 132" className="mt-3 w-full" role="img" aria-label={selected ? `Your fraction ${selected.label} predicts ${fmt(claim!)} favourable outcomes out of the same total ${spec.total}.` : `Probability claim line from zero to ${axisMax}; no fraction selected.`}>
           <line x1={xFor(0)} y1={62} x2={xFor(axisMax)} y2={62} stroke={PALETTE.ink} strokeWidth={2} />
           <line x1={xFor(0)} y1={54} x2={xFor(0)} y2={70} stroke={PALETTE.ink} strokeWidth={2} />
           <line x1={xFor(spec.total)} y1={48} x2={xFor(spec.total)} y2={76} stroke={PALETTE.ink} strokeWidth={2} />
@@ -1835,7 +1865,9 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
           {reference !== null && (
             <g data-testid="tpl-reference" aria-hidden="true">
               <path d={`M ${xFor(reference)} 39 l 7 7 l -7 7 l -7 -7 Z`} fill={PALETTE.tangerine} />
-              <text x={xFor(reference)} y={108} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>given theoretical {spec.referenceNum}/{spec.referenceDen}</text>
+              {/* S238: its own band at y=128 (viewBox grew 116→132) — at 108 it shared the
+                  "target c/d" ghost's band whenever the two x-positions were close */}
+              <text x={xFor(reference)} y={128} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>given theoretical {spec.referenceNum}/{spec.referenceDen}</text>
             </g>
           )}
           {claim !== null && (
@@ -2302,9 +2334,23 @@ function CircleAngleExploreW({ spec, value, onChange, disabled, tone }: WProps<T
                 strokeDasharray="5 4"
                 strokeLinecap="round"
               />
-              <text x={gax + 6} y={gay - 5} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
-                target arc
-              </text>
+              {(() => { const seat = s238Seat("target arc", 10, [
+                { x: gax + 6, y: gay - 5, anchor: "start" },
+                { x: gax + 6, y: gay + 16, anchor: "start" },
+                { x: gbx - 6, y: gby - 5, anchor: "end" },
+                { x: gax + 6, y: gay + 30, anchor: "start" },
+                // Centered just inside the rim: below the arc-AB banner AND below the rim
+                // stroke's dip at the box's edge columns (y=50 keeps the glyphs off the arc,
+                // measured in Chromium), x-clear of the A/B point labels. The escape for arcs
+                // wide enough that BOTH ghost endpoints sit under the banner's span and beside
+                // A's label.
+                { x: cx, y: 50, anchor: "middle" }
+              ], [
+                s238Box(`arc AB = ${central}°`, cx, 22, "middle", 11),
+                s238Box("A", ax - 12, ay - 6, "start", 11),
+                s238Box("B", bx + 5, by - 6, "start", 11)
+              ]);
+              return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>target arc</text>; })()}
             </g>
           );
         })()}
@@ -2689,7 +2735,8 @@ function SecantSlopeW({ spec, value, onChange, disabled, tone }: WProps<TSecantS
           <g data-testid="ss-ghost" aria-hidden="true">
             <line x1={X(a - spec.targetH)} y1={PAD} x2={X(a - spec.targetH)} y2={H - PAD} stroke={PALETTE.tangerine} strokeWidth={1.6} strokeDasharray="4 3" />
             <line x1={X(a + spec.targetH)} y1={PAD} x2={X(a + spec.targetH)} y2={H - PAD} stroke={PALETTE.tangerine} strokeWidth={1.6} strokeDasharray="4 3" />
-            <text x={X(a)} y={26} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target zone</text>
+            {/* S238: y=34 — at 26 this shared the band of the top-right "tangent slope N" caption */}
+            <text x={X(a)} y={34} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target zone</text>
           </g>
         )}
         {!disabled && (
@@ -2806,15 +2853,24 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
             </g>
           );
         })()}
-        {spec.mode === "multiply" && (
+        {spec.mode === "multiply" && (() => {
+          /* S238: at the authored start w multiplies to z itself, so "z × w" printed ON "z".
+             The product yields — z is the learner's own point and keeps its seat. */
+          const seat = s238Seat("z × w", 10, [
+            { x: X(pRe) + 7, y: Y(pIm) - 6, anchor: "start" },
+            { x: X(pRe) + 7, y: Y(pIm) + 16, anchor: "start" },
+            { x: X(pRe) - 7, y: Y(pIm) - 6, anchor: "end" }
+          ], [s238Box("z", X(re) + 7, Y(im) - 6, "start", 10)]);
+          return (
           <g className="ag">
             <line x1={X(0)} y1={Y(0)} x2={X(pRe)} y2={Y(pIm)} stroke={PALETTE.berry} strokeWidth={2.4} />
             <circle cx={X(pRe)} cy={Y(pIm)} r={4.5} fill={PALETTE.berry} />
-            <text x={X(pRe) + 7} y={Y(pIm) - 6} fontSize={10} fontWeight={700} fill={PALETTE.berry}>
+            <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={10} fontWeight={700} fill={PALETTE.berry}>
               z × w
             </text>
           </g>
-        )}
+          );
+        })()}
         <line className="ag" x1={X(0)} y1={Y(0)} x2={X(re)} y2={Y(im)} stroke={PALETTE.sky} strokeWidth={2.4} />
         <circle className="ag" cx={X(re)} cy={Y(im)} r={drag.dragging ? 6.5 : 4.5} fill={PALETTE.sky} />
         <text x={X(re) + 7} y={Y(im) - 6} fontSize={10} fontWeight={700} fill={PALETTE.sky}>z</text>
@@ -2935,7 +2991,12 @@ function VectorExploreW({ spec, value, onChange, disabled, tone }: WProps<TVecto
         {tone === "info" && spec.mode === "add" && !(sx === spec.targetX && sy === spec.targetY) && (
           <g data-testid="ve-ghost" aria-hidden="true" strokeDasharray="6 5" opacity={0.9}>
             {arrow(0, 0, spec.targetX - spec.ux, spec.targetY - spec.uy, PALETTE.tangerine, 2.2)}
-            <text x={X(spec.targetX - spec.ux) + 7} y={Y(spec.targetY - spec.uy) + 12} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>v here</text>
+            {(() => { const seat = s238Seat("v here", 10, [
+              { x: X(spec.targetX - spec.ux) + 7, y: Y(spec.targetY - spec.uy) + 12, anchor: "start" },
+              { x: X(spec.targetX - spec.ux) + 7, y: Y(spec.targetY - spec.uy) - 12, anchor: "start" },
+              { x: X(spec.targetX - spec.ux) - 7, y: Y(spec.targetY - spec.uy) + 12, anchor: "end" }
+            ], [s238Box("u", X(spec.ux) + 6, Y(spec.uy) - 5, "start", 11), s238Box("v", X(vx) + 6, Y(vy) - 5, "start", 11)]);
+            return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>v here</text>; })()}
           </g>
         )}
         {tone === "info" && spec.mode === "dot" && d !== spec.targetDot && mu > 0 && (() => {
@@ -2946,7 +3007,12 @@ function VectorExploreW({ spec, value, onChange, disabled, tone }: WProps<TVecto
             <g data-testid="ve-ghost" aria-hidden="true">
               <line x1={X(p0x - nx * L)} y1={Y(p0y - ny * L)} x2={X(p0x + nx * L)} y2={Y(p0y + ny * L)}
                 stroke={PALETTE.tangerine} strokeWidth={2.2} strokeDasharray="6 5" />
-              <text x={X(p0x) + 6} y={Y(p0y) - 6} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>u·v = {spec.targetDot}</text>
+              {(() => { const t = `u·v = ${spec.targetDot}`; const seat = s238Seat(t, 10, [
+                { x: X(p0x) + 6, y: Y(p0y) - 6, anchor: "start" },
+                { x: X(p0x) + 6, y: Y(p0y) + 16, anchor: "start" },
+                { x: X(p0x) - 6, y: Y(p0y) - 6, anchor: "end" }
+              ], [s238Box("u", X(spec.ux) + 6, Y(spec.uy) - 5, "start", 11), s238Box("v", X(vx) + 6, Y(vy) - 5, "start", 11)]);
+              return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>{t}</text>; })()}
             </g>
           );
         })()}
@@ -2966,9 +3032,12 @@ function VectorExploreW({ spec, value, onChange, disabled, tone }: WProps<TVecto
             {...drag.handleProps}
           />
         )}
-        {spec.mode === "add" && (
-          <text x={X(sx) + 6} y={Y(sy) + 12} fontSize={11} fontWeight={700} fill={PALETTE.berry}>u + v</text>
-        )}
+        {spec.mode === "add" && (() => { const seat = s238Seat("u + v", 11, [
+            { x: X(sx) + 6, y: Y(sy) + 12, anchor: "start" },
+            { x: X(sx) + 6, y: Y(sy) + 26, anchor: "start" },
+            { x: X(sx) - 6, y: Y(sy) + 12, anchor: "end" }
+          ], [s238Box("u", X(spec.ux) + 6, Y(spec.uy) - 5, "start", 11), s238Box("v", X(vx) + 6, Y(vy) - 5, "start", 11)]);
+          return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={11} fontWeight={700} fill={PALETTE.berry}>u + v</text>; })()}
       <AxisCaptions w={W} h={W} /></svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {spec.mode === "add" ? (
@@ -3130,7 +3199,9 @@ function CircleChordTangentArcW({ spec, value, onChange, disabled, tone }: WProp
             <text x={X(half / 2)} y={Y(v) - 7} textAnchor="middle" fontSize={10} fontWeight={700} fill={PALETTE.sky}>
               {fmt(half)}
             </text>
-            <text x={X(0) + 10} y={Y(v / 2)} fontSize={10} fontWeight={700} fill={PALETTE.sky}>
+            {/* S238: 16 below the chord, not at the segment midpoint — at v = 0 the midpoint IS
+                the chord row, and "d = 0" printed on the half-chord labels. */}
+            <text x={X(0) + 10} y={Y(v) + 16} fontSize={10} fontWeight={700} fill={PALETTE.sky}>
               d = {v}
             </text>
             {tone === "info" && !atGoal && (
@@ -4820,7 +4891,8 @@ function AccumulateAreaW({ spec, value, onChange, disabled, tone }: WProps<TAccu
         <line x1={PAD} y1={YT(0)} x2={W - PAD} y2={YT(0)} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.45} />
         <line className="aa" x1={X(x)} y1={YT(0)} x2={X(x)} y2={YT(fx)} stroke={PALETTE.tangerine} strokeWidth={2} />
         <circle className="aa" cx={X(x)} cy={YT(fx)} r={4} fill={PALETTE.tangerine} />
-        <text x={X(x) + 6} y={YT(fx) - 5} fontSize={10} fontWeight={700} fill={PALETTE.tangerine}>
+        <text x={X(x) + 6} y={Math.max(YT(fx) - 5, 28)} fontSize={10} fontWeight={700} fill={PALETTE.tangerine}>
+          {/* S238: clamped below the "f — the height" caption band */}
           f = {fmt(fx)}
         </text>
         {/* Reveal ghost (area mode): the x whose swept area reaches the target.
@@ -5204,7 +5276,8 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
             {[-1, 1].map((b) => (
               <line key={b} x1={X(b)} y1={16} x2={X(b)} y2={H - 26} stroke={PALETTE.berry} strokeWidth={1.4} strokeDasharray="4 3" strokeOpacity={0.8} />
             ))}
-            <text x={X(1) + 4} y={26} fontSize={10} fontWeight={700} fill={PALETTE.berry}>radius</text>
+            {/* S238: y=40 — at 26 "radius" grazed the "target: N terms" band above it */}
+            <text x={X(1) + 4} y={40} fontSize={10} fontWeight={700} fill={PALETTE.berry}>radius</text>
           </>
         )}
         <path d={seg((t) => taylorFn(spec.fn, t), spec.fn === "geometric")} fill="none" stroke={PALETTE.ink} strokeWidth={2.4} />
@@ -5231,7 +5304,8 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
         })()}
         <circle className="ta" cx={X(x)} cy={Y(fx)} r={4} fill={PALETTE.ink} />
         <circle className="ta" cx={X(x)} cy={Y(px)} r={4} fill={PALETTE.tangerine} />
-        <text x={PAD} y={14} fontSize={10} fontWeight={700} fill={PALETTE.sky}>the polynomial ({n + 1} terms)</text>
+        {/* S238: y=28 — at 14 this shared the band of the info-tone "target: N terms" caption */}
+        <text x={PAD} y={28} fontSize={10} fontWeight={700} fill={PALETTE.sky}>the polynomial ({n + 1} terms)</text>
       <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-sm font-extrabold tabular-nums" aria-live="polite">
         at x = {fmt(x)}: true {fmt(fx)} · polynomial {fmt(px)} · error {fmt(err)}
@@ -7627,17 +7701,31 @@ function GraphStoryPlot({ spec, kinds, labels, ghost = false, testid }: {
       <line x1="34" y1="194" x2="34" y2="16" stroke={PALETTE.ink} strokeWidth="2" />
       <text x="338" y="214" textAnchor="end" fontSize="11" fontWeight="800" fill={PALETTE.ink}>{spec.xAxisLabel}</text>
       <text x="12" y="18" fontSize="11" fontWeight="800" fill={PALETTE.ink}>{spec.yAxisLabel}</text>
-      {truth.geometry.map((segment, index) => (
+      {(() => {
+        /* S238 — segment labels ride the curve, so a story that starts high put "Fills steadily"
+           on the y-axis caption, and adjacent segments could graze each other. Greedy pass:
+           each label takes its canonical seat unless the modelled box clashes with the y-axis
+           caption or an already-placed segment label; then it steps down in 13-unit rows. */
+        const placedBoxes: S238Box[] = [s238Box(spec.yAxisLabel, 12, 18, "start", 11)];
+        return truth.geometry.map((segment, index) => {
+          const text = labels[index] ?? String(index + 1);
+          const seat = s238Seat(text, 10, [0, 13, 26].map((dy) => ({
+            x: segment.labelAt[0], y: Math.max(14, segment.labelAt[1]) + dy, anchor: "middle" as const
+          })), placedBoxes);
+          placedBoxes.push(s238Box(text, seat.x, seat.y, seat.anchor, 10));
+          return (
         <g key={`${segment.kind}-${index}`}>
           <path d={segment.path} fill="none" stroke={ghost ? PALETTE.tangerine : PALETTE.sky}
             strokeWidth={ghost ? 5 : 6} strokeDasharray={ghost ? "9 7" : segment.kind === "flat" ? "12 5" : undefined}
             strokeLinecap="round" />
           <circle cx={segment.start[0]} cy={segment.start[1]} r="4" fill={ghost ? PALETTE.tangerine : PALETTE.sky} />
           {index === truth.geometry.length - 1 && <circle cx={segment.end[0]} cy={segment.end[1]} r="4" fill={ghost ? PALETTE.tangerine : PALETTE.sky} />}
-          <text x={segment.labelAt[0]} y={Math.max(14,segment.labelAt[1])} textAnchor="middle" fontSize="10" fontWeight="900"
-            fill={PALETTE.ink}>{labels[index] ?? String(index + 1)}</text>
+          <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="10" fontWeight="900"
+            fill={PALETTE.ink}>{text}</text>
         </g>
-      ))}
+          );
+        });
+      })()}
       {kinds.length === 0 && <text x="190" y="110" textAnchor="middle" fontSize="13" fontWeight="800" fill={PALETTE.ink} opacity=".55">Add story stages to draw the graph.</text>}
     </svg>
   );
@@ -10156,7 +10244,9 @@ function AngleMeasureW({ spec, value, onChange, disabled, tone, onEvent }: WProp
           return (
             <g data-testid="am-ghost" aria-hidden="true">
               <line x1={cx} y1={vy} x2={tx} y2={ty} stroke={PALETTE.tangerine} strokeWidth={2.2} strokeDasharray="5 4" />
-              <text x={tx + (tx >= cx ? 6 : -6)} y={ty - 6} fontSize={10} fontWeight={800} textAnchor={tx >= cx ? "start" : "end"} fill={PALETTE.tangerine}>
+              {/* S238: at 0.6R along the ray, inside the protractor — at the tip it sat on the
+                  degree ring and printed on the scale ("60" under a 60° target). */}
+              <text x={cx + 0.6 * R * Math.cos(tr)} y={vy - 0.6 * R * Math.sin(tr) - 5} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>
                 target
               </text>
             </g>
@@ -13109,15 +13199,15 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
               strokeWidth={2.5}
               strokeDasharray="6 4"
             />
-            <text
-              x={sx(0) + 8}
-              y={sy(n(targetPlot.intercept.y)) - 8}
-              fontSize={11}
-              fontWeight={800}
-              fill={PALETTE.tangerine}
-            >
-              target
-            </text>
+            {(() => { const seat = s238Seat("target", 11, [
+              { x: sx(0) + 8, y: sy(n(targetPlot.intercept.y)) - 8, anchor: "start" },
+              { x: sx(0) - 8, y: sy(n(targetPlot.intercept.y)) - 8, anchor: "end" },
+              { x: sx(0) + 8, y: sy(n(targetPlot.intercept.y)) + 18, anchor: "start" }
+            ], [
+              s238Box(`run ${tri.runText}`, sx((n(tri.anchor.x) + cornerX) / 2), sy(anchorY) + 14, "middle", 11),
+              s238Box(`rise ${tri.riseText}`, sx(cornerX) + 6, sy(anchorY + n(tri.rise) / 2), "start", 11)
+            ]);
+            return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target</text>; })()}
           </g>
         )}
         {/* y-intercept + unit point */}
@@ -13395,7 +13485,12 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
               <circle className="mt-glide" cx={MX(0)} cy={MY(p)} r="5" fill="#FF8A3D" />
               <text x={MX(0) + 7} y={MY(p) + 3} fontSize="10" fontWeight="700" fill="#FF8A3D">focus (0, {p})</text>
               <circle className="mt-glide" cx={MX(Px)} cy={MY(Py)} r="4" fill="#22314F" />
-              <text x={MX(Px) + 6} y={MY(Py)} fontSize="10" fontWeight="700" fill="#3AA76D">both = {2 * p}</text>
+              {(() => { const t = `both = ${2 * p}`; const seat = s238Seat(t, 10, [
+                { x: MX(Px) + 6, y: MY(Py), anchor: "start" },
+                { x: MX(Px) + 6, y: MY(Py) + 18, anchor: "start" },
+                { x: MX(Px) - 6, y: MY(Py) + 18, anchor: "end" }
+              ], [s238Box(`focus (0, ${p})`, MX(0) + 7, MY(p) + 3, "start", 10)]);
+              return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="10" fontWeight="700" fill="#3AA76D">{t}</text>; })()}
             </svg>
           );
         })()
@@ -15106,7 +15201,9 @@ function LengthDifferenceW({ spec, value, onChange, disabled, tone }: WProps<TLe
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 340, rowH = 44, top = 26, padR = 16, x0 = 18;
+  // S238: top 26 → 38 — the info-tone "the overhang is N" ghost (y=14) shared the first
+  // bar label's band; the extra 12 units give the ghost its own row. H derives from top.
+  const W = 340, rowH = 44, top = 38, padR = 16, x0 = 18;
   const u = (W - x0 - padR) / longer.length;
   const H = top + 2 * rowH + 34;
   const set = (n: number) => onChange(n);
@@ -15527,8 +15624,10 @@ function AbsValueLineW({ spec, value, onChange, disabled, tone }: WProps<TAbsVal
         viewBox={`0 0 ${W} ${axisY + 22}`}
         className="mx-auto w-full max-w-md"
         role="img"
-        aria-label={`A number line from ${fmtSigned(Math.ceil(lo))} to ${fmtSigned(
-          Math.floor(hi)
+        aria-label={`A number line from ${fmtSigned(Math.min(0, ...values))} to ${fmtSigned(
+          Math.max(0, ...values)
+          // S238: the spoken range is the MARKED span (items and zero — all visibly labelled),
+          // not the ±1 padding edge, whose tick label is suppressed when an item crowds it.
         )}. Each number is marked with a bracket showing its distance from zero.`}
       >
         {/* axis */}
@@ -15544,7 +15643,10 @@ function AbsValueLineW({ spec, value, onChange, disabled, tone }: WProps<TAbsVal
               strokeWidth={t === 0 ? 2.4 : 1}
               strokeOpacity={t === 0 ? 1 : 0.4}
             />
-            {(t === 0 || t === Math.ceil(lo) || t === Math.floor(hi)) && (
+            {/* S238: an EDGE label is suppressed when an authored item sits within a label's
+                width of it — ns-05-02 puts −50 one unit from the −51 edge, and the item's own
+                number names that region; the tick MARK stays. */}
+            {(t === 0 || ((t === Math.ceil(lo) || t === Math.floor(hi)) && values.every((iv) => Math.abs(x(iv) - x(t)) >= 26))) && (
               <text x={x(t)} y={axisY + 18} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.ink} fillOpacity={0.6}>
                 {fmtSigned(t)}
               </text>
@@ -16867,7 +16969,8 @@ function ConicLocusLabW({ spec, value, onChange, disabled, onEvent, tone }: WPro
       <defs><pattern id="conic-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M 25 0 L 0 0 0 25" fill="none" stroke={PALETTE.ink} strokeOpacity=".05"/></pattern></defs>
       <rect width="380" height="250" fill="url(#conic-grid)"/>
       <line x1={directrixX} y1="18" x2={directrixX} y2="232" stroke={PALETTE.tangerine} strokeWidth="3" strokeDasharray="8 6"/>
-      <text x={directrixX+8} y="28" fontSize="11" fontWeight="900" fill={PALETTE.tangerine}>directrix</text>
+      {/* S238: y=34 — at 28 this sat in the info-tone "target: e …" caption band */}
+      <text x={directrixX+8} y="34" fontSize="11" fontWeight="900" fill={PALETTE.tangerine}>directrix</text>
       {shape}
       <circle cx={focusX} cy={cy} r="7" fill={PALETTE.berry}/><text x={focusX+10} y={cy-9} fontSize="11" fontWeight="900" fill={PALETTE.berry}>focus</text>
       <text x="190" y="239" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.ink}>PF ÷ PD = e = {e.toFixed(1)}</text>

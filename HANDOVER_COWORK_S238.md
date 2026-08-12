@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,157 passing       (9,654 + 3,503; +1 opt-in sweep skip)
+vitest (2 shards)        13,159 passing       (9,654 + 3,505; +1 opt-in sweep skip)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -59,9 +59,13 @@ samplingBiasLab (14), pointSetReasoningLab (10) and signChart (8) → 0, corpus-
 NAMED engine rows from S237 §3.1 are closed. **Batch 7:** the tail RE-MEASURED with a committed
 opt-in sweep (COLLISION_SWEEP=1 …collisionSweep.s238.test.tsx → COWORK_CACHE/
 label-collision-remainder-s238.csv), then its two largest engines closed: triangleSolve (21→0,
-both renderer modes) and doubleNumberLine (15→0). Tail after batch 7: 68 pairs / 16 engines,
-largest 9. Details and rationale:
-`PREMIUM_REBUILD_S238_EXECUTION.md`.
+both renderer modes) and doubleNumberLine (15→0). **Batch 8:** the ENTIRE remaining tail (16
+engines, 68 pairs) → 0 via one shared dodge mechanism (`s238Seat` in widgets.tsx), gated by an
+always-on 198-spec batch sweep in widgets.labelCollision.s237.test.tsx. **The S237 collision
+ledger closes: 267 → 0.** The opt-in sweep now reports an empty table; re-run it after ANY
+widget-label change. The parity ratchet caught one regression en route (absValueLine's aria
+range vs a suppressed edge label — fixed in the engine, baseline untouched). Details and
+rationale: `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
 count-vs-value distractor collapses onto the key: stacks 2,6,3,1 over 5,6,7,8 make mode = count
@@ -77,12 +81,10 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
    distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
-2. The collision tail is now ENUMERATED in COWORK_CACHE/label-collision-remainder-s238.csv:
-   68 pairs / 16 engines — circleMeasureExplore (9), argandExplore (9), lengthCompare (6),
-   vectorExplore (6), conicLocusLab (5), graphStoryLab (5), angleMeasure (4), and nine ≤3s.
-   Re-run the sweep with COLLISION_SWEEP=1 after any fix; the greedy-seat scheme (slopeTriangle
-   / triangleSolve) and band separation (DNL) cover most shapes. `figures.tsx` (4,953 text
-   nodes) remains deliberately unmeasured.
+2. ~~The collision tail~~ CLOSED in batch 8 — the sweep reports zero pairs corpus-wide.
+   What remains of this workstream: `figures.tsx` (4,953 text nodes) is deliberately
+   unmeasured — measuring it is a NEW ledger, opened the same way (sweep first, then fix by
+   size). Re-run COLLISION_SWEEP=1 after any widget-label change to keep the table empty.
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.

@@ -252,6 +252,59 @@ Post-fix re-measurement: **104 → 68 pairs across 16 engines**, largest now 9
 stashed). One vitest flake investigated per Trap B: variants.test addition-patterns timed out
 under build CPU contention, passes solo and in a clean shard run.
 
+## Batch 8 (same session): the tail closed — 68 → 0, the collision ledger runs dry
+
+The whole remaining tail (16 engines, 68 pairs) fell to ONE shared mechanism instead of sixteen
+bespoke layouts: `s238Seat(text, fs, seats, obstacles)` in widgets.tsx — first candidate seat
+whose modelled box (same 0.72em/0.98em/0.28em Chromium-calibrated model as the testkit) clears
+every stated obstacle by a 2-unit margin, deterministic fallback to the first seat. Engines
+whose collisions were a fixed pair got fixed-offset moves; engines whose label position depends
+on authored values got seats.
+
+Per-engine, what actually collided and what moved: **conicLocusLab** (directrix label off the
+"directrix" tag), **secantSlope** ("target zone" off the secant readout), **trialProbabilityLab**
+("given theoretical" out of the bar row — viewBox grew 116 → 132), **argandExplore** ("z × w"
+dodges the z tag), **vectorExplore** ("v here" / "u·v = N" / "u + v" dodge the u and v tags — the
+u+v fix required an IIFE inside the `mode === "add"` branch), **circleMeasureExplore** (the
+chordDistance `d = …` readout rides its chord instead of the diameter label),
+**angleMeasure** (the target tick label moved inside the arc at 0.6R), **triangleClosureLab**
+(`{c} target` takes the first of four seats including end-anchored escapes), **accumulateArea**
+(the running-area readout clamps below the curve cap), **taylorApprox** (polynomial caption and
+radius bar drop to their own bands), **lengthCompare** (the comparison caption band moved clear
+of the rulers), **slider**'s conic visual (`both = 2p` dodges the focus tag),
+**circleAngleExplore** (below), **absValueLine** (an EDGE tick label is suppressed when an
+authored item sits within a label-width of it — ns-05-02 puts −50 one unit from the −51 edge;
+the tick MARK stays), **graphStoryLab** (segment labels take a greedy 0/13/26 stagger seeded
+with the y-axis caption's box), **lineExplore** (the ghost's "target" dodges the run/rise tags).
+
+**The last pair to fall** was circleAngleExplore cr-01-02/i1: arc 110 with targetAngle 35
+exhausts the ghost's four edge seats — both ghost endpoints sit under the "arc AB = 110°"
+banner's span and the two lowered seats land beside A's label — so the fallback re-created the
+reported pair. The fix is a fifth, centered escape seat (x=cx, y=50): below the banner, below
+the rim stroke's dip at the box's edge columns (y=37 cleared every TEXT but put the glyphs ON
+the blue arc — caught by screenshot, not by the box model), x-clear of A and B. Pixel evidence:
+`S238_SCREENSHOTS/11-circleangle-cr0102-i1-reveal-390.png`, captured from the real player
+(3 wrong checks → "Show me how" → revealed ghost), with a real-getBoundingClientRect overlap
+assertion in the capture script — zero overlapping pairs in Chromium.
+
+**Parity ratchet caught a real regression of the absValueLine fix:** suppressing the −51 edge
+label left "51" spoken in the svg's aria-label but absent from the visible interface
+(`widgets.accessibleParity.s237.test.tsx`, absValueLine|51). The aria-label now states the
+MARKED span (extreme items and zero — all always visibly labelled) instead of the ±1 padding
+edge. The gate did exactly what its ratchet promises; nothing was added to its baseline.
+
+Gates: always-on batch gate added to `widgets.labelCollision.s237.test.tsx` — every authored
+spec of all 16 tail engines (counts pinned per engine, 198 specs) × all THREE tones × every svg,
+zero collisions; plus cr-01-02/i1 verbatim asserting the ghost's label took the centered escape
+seat. Detector verified to fire pre-fix (2 failed with widgets.tsx stashed). Re-measurement:
+`COLLISION_SWEEP=1` sweep reports **zero colliding pairs corpus-wide** — 11,947 specs × 3
+tones, renders failed 0. The committed remainder CSV is now the empty table.
+
+**The label-collision ledger closes: 267 measured at S237 → 0.** (`figures.tsx`, 4,953 text
+nodes, remains deliberately unmeasured — that is a different ledger, not a quiet part of this
+one.) `validate:native` this run also lists `tsconfig.tsbuildinfo` alongside node_modules/.next
+— gitignored compiler artifact, same archive-only class.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.
