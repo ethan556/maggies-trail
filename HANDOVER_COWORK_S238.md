@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,154 / 13,154      (9,654 + 3,500)
+vitest (2 shards)        13,157 passing       (9,654 + 3,503; +1 opt-in sweep skip)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -56,7 +56,11 @@ proven over all 33 authored specs × 3 tones (merged group tags at coinciding me
 label bands; judge evidence un-stacked). **Batch 5:** slopeTriangle's 25 → 0 via a deterministic
 callout layout (every authored lesson's START state was the reported collision). **Batch 6:**
 samplingBiasLab (14), pointSetReasoningLab (10) and signChart (8) → 0, corpus-proven — all six
-NAMED engine rows from S237 §3.1 are closed. Collision ledger: 267 → 80. Details and rationale:
+NAMED engine rows from S237 §3.1 are closed. **Batch 7:** the tail RE-MEASURED with a committed
+opt-in sweep (COLLISION_SWEEP=1 …collisionSweep.s238.test.tsx → COWORK_CACHE/
+label-collision-remainder-s238.csv), then its two largest engines closed: triangleSolve (21→0,
+both renderer modes) and doubleNumberLine (15→0). Tail after batch 7: 68 pairs / 16 engines,
+largest 9. Details and rationale:
 `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
@@ -73,11 +77,12 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
    distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
-2. The collision long tail: "18 smaller engines (80 pairs)" — UNNAMED in the S237 measurement,
-   and the measuring sweep was never committed. Re-measure first: build a corpus-wide sweep from
-   the gate's patterns (unitChain: reachable states · DCL/samplingBias/pointSet/signChart:
-   spec × tone · slopeTriangle: targeted state grid + callout layout), enumerate the 18, then
-   fix by count. Also `figures.tsx` (4,953 text nodes) remains deliberately unmeasured.
+2. The collision tail is now ENUMERATED in COWORK_CACHE/label-collision-remainder-s238.csv:
+   68 pairs / 16 engines — circleMeasureExplore (9), argandExplore (9), lengthCompare (6),
+   vectorExplore (6), conicLocusLab (5), graphStoryLab (5), angleMeasure (4), and nine ≤3s.
+   Re-run the sweep with COLLISION_SWEEP=1 after any fix; the greedy-seat scheme (slopeTriangle
+   / triangleSolve) and band separation (DNL) cover most shapes. `figures.tsx` (4,953 text
+   nodes) remains deliberately unmeasured.
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
