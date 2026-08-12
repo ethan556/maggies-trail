@@ -633,9 +633,14 @@ const measureHandlers: Record<string, FormHandler> = {
   },
   mcLinePlotBuildNumeric: (rand, band) => {
     const a = bandInt(rand, band, [2, 5], [3, 7], [4, 9]), b = pick(rand, 1, 5), total = a + b + pick(rand, 1, 5), missing = total - a - b;
-    return num("g4-measure", `A line plot must contain ${total} data marks. It already has ${countN(a, "mark")} at 1/2 and ${countN(b, "mark")} at 3/4. How many marks are still missing?`, missing,
+    const built = num("g4-measure", `A line plot must contain ${total} data marks. It already has ${countN(a, "mark")} at 1/2 and ${countN(b, "mark")} at 3/4. How many marks are still missing?`, missing,
       [[a + b, `That counts the marks already placed instead of subtracting them from the required total.`], [total, `That repeats the target total and ignores the marks already shown.`]],
       `Subtract both shown frequencies from the total number of data values.`);
+    // DISPLAY ONLY (PlotDataSpec, S238 wave 9): the placed marks the prompt states, drawn —
+    // 1/2 and 3/4 as quarters over den 4. The MISSING count is not on the plot; only the
+    // stated total (in the prose) closes the subtraction, so nothing leaks. Same obligation
+    // as every wired variant-bearing row: the re-ask takes the plot with it (mc-05-02/k2).
+    return { ...built, widget: { ...built.widget, plotData: { values: [2, 3], counts: [a, b], denominator: 4 } } };
   },
   mcLinePlotBuildMcq: (rand) => mcq(rand, "g4-measure", `The dataset is 1/4, 1/4, 1/2, 3/4. Which line-plot description matches it?`,
     ["Two marks at 1/4, one at 1/2, and one at 3/4", `Correct — each data value contributes exactly one mark above its location.`],

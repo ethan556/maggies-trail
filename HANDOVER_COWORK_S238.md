@@ -25,11 +25,12 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,159 passing       (9,654 + 3,505; +1 opt-in sweep skip)
+vitest (2 shards)        13,170 passing       (9,665 + 3,505; +1 opt-in sweep skip)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
-content-change proof     867 / 867            <- was 866; vm-02-01 is the new entry
+content-change proof     870 / 870            <- was 866; vm-02-01, mc-05-02, dd-02-01,
+                                                 md-03-04 are the S238 entries
 validate:native          archive-only findings only
 check-registration       consistent
 build                    EXIT:0
@@ -64,8 +65,11 @@ engines, 68 pairs) → 0 via one shared dodge mechanism (`s238Seat` in widgets.t
 always-on 198-spec batch sweep in widgets.labelCollision.s237.test.tsx. **The S237 collision
 ledger closes: 267 → 0.** The opt-in sweep now reports an empty table; re-run it after ANY
 widget-label change. The parity ratchet caught one regression en route (absValueLine's aria
-range vs a suppressed edge label — fixed in the engine, baseline untouched). Details and
-rationale: `PREMIUM_REBUILD_S238_EXECUTION.md`.
+range vs a suppressed edge label — fixed in the engine, baseline untouched). **Wave 9:** the
+user's four rulings landed — two graded-wrong prose fixes, the dot glyph, the mixed-number
+axis — closing the plotData family at 19 of 20 (dd-02-01/k2 excluded by leakage policy, a
+decision not a debt). Next queue, user-ordered: figures.tsx ledger → NumericW rename → WS-C →
+the 8 NOT-POSSIBLE engines. Details and rationale: `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
 count-vs-value distractor collapses onto the key: stacks 2,6,3,1 over 5,6,7,8 make mode = count
@@ -79,8 +83,13 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 ## 3. Suggested next actions (Plan v3 order, S237 measurements intact)
 
-1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
-   distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
+1. ~~Bring the user the rulings~~ RULED AND LANDED (wave 9, 2026-08-12): graded-wrong fixes
+   only (g2g-01-05/k3 count reorder, mc-05-02/k2 mark reorder — both proof-ledgered); dot-glyph
+   mode (dd-02-01/i1 wired; k2 stays leakage-excluded); mixed-number formatter mode (md-03-04's
+   three wired; the line-plot generator now prints "2½", never "2.5"). **The plotData family is
+   CLOSED at 19 of 20** — the 20th is a decision, not a debt. The cosmetic fraction/decimal
+   inversions (S237 §5 item 3) stay logged, untouched by ruling; the 8 NOT-POSSIBLE rows
+   (item 4) are queued as an engine project. Proof count is now 870/870.
 2. ~~The collision tail~~ CLOSED in batch 8 — the sweep reports zero pairs corpus-wide.
    What remains of this workstream: `figures.tsx` (4,953 text nodes) is deliberately
    unmeasured — measuring it is a NEW ledger, opened the same way (sweep first, then fix by

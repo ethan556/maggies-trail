@@ -31960,6 +31960,19 @@ const GENERATORS: VariantGen[] = [
       const support = band === "support";
       const base = pick(rand, 2, band === "stretch" ? 8 : 5);
       const marks = [base, base + 0.5, base + 1];
+      // S238 wave 9 (user-ruled): the md-03-04 forms print half-marks the way the AUTHORED
+      // lesson writes them — "2½", never "2.5" — so an item and its re-ask share one dialect,
+      // and the emitted plot's mixed-style axis matches the sentence it illustrates.
+      const half = (v: number) => (Number.isInteger(v) ? String(v) : `${Math.floor(v)}\u00bd`);
+      // DISPLAY ONLY (PlotDataSpec): the plot the prompt states, in half-units over den 2,
+      // mixed-style labels — the same given, drawn. Same obligation as the vm-02-01 forms:
+      // a wired row's generator must take the plot with it on every re-ask.
+      const halfPlot = (ms: readonly number[], cs: readonly number[]) => ({
+        values: ms.map((m) => Math.round(m * 2)),
+        counts: [...cs],
+        denominator: 2,
+        labelStyle: "mixed" as const,
+      });
       const quarterMarks = [
         { q: 1, label: "1/4" },
         { q: 2, label: "1/2" },
@@ -32225,15 +32238,15 @@ const GENERATORS: VariantGen[] = [
         return mcq(
           rand,
           "line-plot",
-          `A line plot has X's only at ${marks[0]}, ${marks[1]}, and ${marks[2]} inches. Between which lengths do ALL the measurements fall?`,
+          `A line plot has X's only at ${half(marks[0])}, ${half(marks[1])}, and ${half(marks[2])} inches. Between which lengths do ALL the measurements fall?`,
           [
-            `${marks[0]} to ${marks[2]} inches`,
-            `The smallest mark used is ${marks[0]} and the largest is ${marks[2]}, so those are the endpoints of the data's span.`,
+            `${half(marks[0])} to ${half(marks[2])} inches`,
+            `The smallest mark used is ${half(marks[0])} and the largest is ${half(marks[2])}, so those are the endpoints of the data's span.`,
           ],
           [
-            [`${marks[0]} to ${marks[1]} inches`, `That interval leaves out every X at ${marks[2]} inches.`],
-            [`${marks[1]} to ${marks[2]} inches`, `That interval leaves out every X at ${marks[0]} inches.`],
-            [`0 to ${marks[2]} inches`, `The range begins at the smallest observed value, ${marks[0]}, not automatically at zero.`],
+            [`${half(marks[0])} to ${half(marks[1])} inches`, `That interval leaves out every X at ${half(marks[2])} inches.`],
+            [`${half(marks[1])} to ${half(marks[2])} inches`, `That interval leaves out every X at ${half(marks[0])} inches.`],
+            [`0 to ${half(marks[2])} inches`, `The range begins at the smallest observed value, ${half(marks[0])}, not automatically at zero.`],
           ]
         );
       }
@@ -32241,17 +32254,22 @@ const GENERATORS: VariantGen[] = [
       if (form === "halfMarks") {
         const counts = [pick(rand, 2, 5), pick(rand, 2, 5), pick(rand, 2, 5), pick(rand, 2, 5)];
         const answer = counts[1] + counts[3];
-        return num(
+        const hm = [base, base + 0.5, base + 1, base + 1.5];
+        const built = num(
           "line-plot",
-          `A line plot shows ${base} (${counts[0]} X's), ${base + 0.5} (${counts[1]} X's), ${base + 1} (${counts[2]} X's), and ${base + 1.5} (${counts[3]} X's). How many measurements land on HALF-unit marks?`,
+          `A line plot shows ${half(hm[0])} (${counts[0]} X's), ${half(hm[1])} (${counts[1]} X's), ${half(hm[2])} (${counts[2]} X's), and ${half(hm[3])} (${counts[3]} X's). How many measurements land on HALF-unit marks?`,
           answer,
           0,
           [
-            [counts[1], `${counts[1]} counts only the first half-unit mark. The ${base + 1.5} mark must be included too.`],
+            [counts[1], `${counts[1]} counts only the first half-unit mark. The ${half(hm[3])} mark must be included too.`],
             [counts.reduce((s, n) => s + n, 0), `${counts.reduce((s, n) => s + n, 0)} counts every X, including whole-unit marks. The question asks only for values ending in one-half.`],
           ],
           `The half-unit marks carry ${counts[1]} and ${counts[3]} X's, for ${counts[1]} + ${counts[3]} = ${answer}.`
         );
+        return {
+          ...built,
+          widget: { ...(built.widget as Extract<TWidget, { type: "numeric" }>), plotData: halfPlot(hm, counts) },
+        };
       }
 
       let counts = draw(
@@ -32263,32 +32281,40 @@ const GENERATORS: VariantGen[] = [
         const winner = pick(rand, 0, 2);
         const max = pick(rand, 5, band === "stretch" ? 9 : 7);
         counts = counts.map((c, i) => (i === winner ? max : Math.min(c, max - 1)));
-        const correct = `${marks[winner]} inches`;
-        return mcq(
+        const correct = `${half(marks[winner])} inches`;
+        const built = mcq(
           rand,
           "line-plot",
-          `A line plot has ${counts[0]} X's at ${marks[0]}, ${counts[1]} X's at ${marks[1]}, and ${counts[2]} X's at ${marks[2]}. Which length is most common?`,
-          [correct, `${marks[winner]} has ${counts[winner]} X's, more than either other mark.`],
+          `A line plot has ${counts[0]} X's at ${half(marks[0])}, ${counts[1]} X's at ${half(marks[1])}, and ${counts[2]} X's at ${half(marks[2])}. Which length is most common?`,
+          [correct, `${half(marks[winner])} has ${counts[winner]} X's, more than either other mark.`],
           [
-            [`${marks[(winner + 1) % 3]} inches`, `That mark has ${counts[(winner + 1) % 3]} X's, fewer than the ${counts[winner]} above ${marks[winner]}.`],
-            [`${marks[(winner + 2) % 3]} inches`, `That mark has ${counts[(winner + 2) % 3]} X's, fewer than the ${counts[winner]} above ${marks[winner]}.`],
-            [`All three are equally common`, `The columns do not have equal X-counts; ${marks[winner]} has the unique maximum.`],
+            [`${half(marks[(winner + 1) % 3])} inches`, `That mark has ${counts[(winner + 1) % 3]} X's, fewer than the ${counts[winner]} above ${half(marks[winner])}.`],
+            [`${half(marks[(winner + 2) % 3])} inches`, `That mark has ${counts[(winner + 2) % 3]} X's, fewer than the ${counts[winner]} above ${half(marks[winner])}.`],
+            [`All three are equally common`, `The columns do not have equal X-counts; ${half(marks[winner])} has the unique maximum.`],
           ]
         );
+        return {
+          ...built,
+          widget: { ...(built.widget as Extract<TWidget, { type: "mcq" }>), plotData: halfPlot(marks, counts) },
+        };
       }
 
       const answer = counts.reduce((s, n) => s + n, 0);
-      return num(
+      const built = num(
         "line-plot",
-        `A line plot has ${counts[0]} X's at ${marks[0]}, ${counts[1]} X's at ${marks[1]}, and ${counts[2]} X's at ${marks[2]}. How many measurements are shown in all?`,
+        `A line plot has ${counts[0]} X's at ${half(marks[0])}, ${counts[1]} X's at ${half(marks[1])}, and ${counts[2]} X's at ${half(marks[2])}. How many measurements are shown in all?`,
         answer,
         0,
         [
           [Math.max(...counts), `${Math.max(...counts)} is the tallest single stack, not the total number of X's across the plot.`],
-          [counts[0] + counts[1], `${counts[0] + counts[1]} counts only the first two stacks. The X's above ${marks[2]} must be included too.`],
+          [counts[0] + counts[1], `${counts[0] + counts[1]} counts only the first two stacks. The X's above ${half(marks[2])} must be included too.`],
         ],
         `Add the frequencies above all three marks: ${counts.join(" + ")} = ${answer} measurements.`
       );
+      return {
+        ...built,
+        widget: { ...(built.widget as Extract<TWidget, { type: "numeric" }>), plotData: halfPlot(marks, counts) },
+      };
     },
   },
   {

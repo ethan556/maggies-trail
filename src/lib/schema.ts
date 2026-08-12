@@ -33,7 +33,18 @@ export const PlotDataSpec = z.object({
   /** X's stacked above each value, one entry per value. */
   counts: z.array(z.number().int().nonnegative()).min(2),
   /** Absent = a whole-number axis, exactly as in `dotPlot`. */
-  denominator: z.number().int().min(2).optional()
+  denominator: z.number().int().min(2).optional(),
+  /** The mark the figure stacks. Absent = "x", the canonical line-plot glyph every wired row
+   * already draws. "dot" exists for lessons whose FROZEN prose says dots — dd-02-01 teaches
+   * "one dot per data value" and asks the learner to "count the dots", so drawing X's there
+   * would trade the absent-diagram defect for a figure-text contradiction (user-ruled
+   * 2026-08-12). Display-only like every field here; grading never reads it. */
+  glyph: z.enum(["x", "dot"]).optional(),
+  /** How the axis writes a fractional value. Absent = improper form ("5/2"), what every wired
+   * row before wave 9 draws. "mixed" exists for md-03-04, whose FROZEN prose writes halves as
+   * mixed numbers ("2½") — the one shared formatter would otherwise put "5/2" on an axis whose
+   * own prompt says "2½" (user-ruled 2026-08-12: formatter mode, not a prose edit). */
+  labelStyle: z.enum(["mixed"]).optional()
 });
 export type TPlotData = z.infer<typeof PlotDataSpec>;
 
@@ -77,7 +88,7 @@ export const MAX_PLOT_STACK = 10;
  * never throws. DISPLAY ONLY: no caller grades with it. */
 export function plotDataParts(
   spec: { plotData?: TPlotData }
-): { values: number[]; counts: number[]; labels: string[]; denominator?: number } | null {
+): { values: number[]; counts: number[]; labels: string[]; denominator?: number; glyph: "x" | "dot" } | null {
   const d = spec.plotData;
   if (!d) return null;
   const { values, counts, denominator } = d;
@@ -89,8 +100,9 @@ export function plotDataParts(
   return {
     values: [...values],
     counts: [...counts],
-    labels: values.map((v) => dotPlotLabel(v, denominator)),
-    denominator
+    labels: values.map((v) => dotPlotLabel(v, denominator, d.labelStyle)),
+    denominator,
+    glyph: d.glyph ?? "x"
   };
 }
 
@@ -1731,13 +1743,24 @@ export const DotPlotSpec = z.object({
 /** Reduced fraction label for a dot-plot numerator under `denominator` — the ONE formatter the
  * renderer, the grader's feedback, describeState and correctAnswerText all share, so the label
  * in a diagnosis can never disagree with the axis. */
-export function dotPlotLabel(numerator: number, denominator?: number): string {
+/** The vulgar-fraction glyphs the authored prose actually writes ("2½" in md-03-04). STORED,
+ * never derived — a proper fraction with no glyph falls back to the spaced form ("2 1/3"). */
+const VULGAR = { "1/2": "½", "1/4": "¼", "3/4": "¾" } as const;
+
+export function dotPlotLabel(numerator: number, denominator?: number, style?: "mixed"): string {
   if (!denominator) return String(numerator);
   let a = Math.abs(numerator), b = denominator;
   while (b) [a, b] = [b, a % b];
   const g = a || 1;
   const n = numerator / g, d = denominator / g;
-  return d === 1 ? String(n) : `${n}/${d}`;
+  if (d === 1) return String(n);
+  if (style !== "mixed") return `${n}/${d}`;
+  // Mixed mode (S238 wave 9, user-ruled): "5/2" becomes "2½" — the form md-03-04's frozen
+  // prompts write. Whole part first, remainder as a stored vulgar glyph where one exists.
+  const whole = Math.floor(n / d), rem = n - whole * d;
+  const frac = VULGAR[`${rem}/${d}` as keyof typeof VULGAR] ?? `${rem}/${d}`;
+  if (whole === 0) return frac;
+  return frac.length === 1 ? `${whole}${frac}` : `${whole} ${frac}`;
 }
 
 /** boxPlot — set the five-number summary (min, Q1, median, Q3, max) to draw a box-and-whisker. */

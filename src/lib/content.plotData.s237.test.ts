@@ -69,6 +69,12 @@ function allLessons(): Lesson[] {
  * land on an exact numerator — a label the declared denominator cannot express is a disagreement,
  * not something to round into agreement. */
 function numeratorOf(label: string, den: number): number | null {
+  // "2½" / "½" — the vulgar half md-03-04's frozen prose writes (S238 wave 9).
+  const h = /^(\d*)½$/.exec(label.trim());
+  if (h) {
+    const scaled = ((h[1] === "" ? 0 : Number(h[1])) + 0.5) * den;
+    return Number.isInteger(scaled) ? scaled : null;
+  }
   const m = /^(\d+)(?:\/(\d+))?$/.exec(label.trim());
   if (!m) return null;
   const n = Number(m[1]);
@@ -146,6 +152,60 @@ function plotStatedIn(prompt: string, den: number):
     }
     return { kind: "marks", values, counts };
   }
+  // "(2 → 3 X's, 2½ → 1 X, 3 → 4 X's)" — md-03-04's authored arrow-with-count sentence.
+  const arrowCount = [...prompt.matchAll(/(\d*½|\d+(?:\/\d+)?)\s*(?:→|->)\s*(\d+)\s*X/g)];
+  if (arrowCount.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of arrowCount) {
+      const v = numeratorOf(m[1], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[2]));
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "2 (4 X's), 2½ (2 X's), …" — md-03-04/ch1 and the regenerated halfMarks sentence.
+  // AFTER the ft-paren pattern above, which owns the "1/4 ft (2 X's)" shape.
+  const bareParen = [...prompt.matchAll(/(\d*½|\d+)\s*\((\d+)\s*X/g)];
+  if (bareParen.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of bareParen) {
+      const v = numeratorOf(m[1], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[2]));
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "3 marks at 1/2, 1 mark at 5/8, and 1 mark at 3/4" — mc-05-02's unit-less sentence, and
+  // the regenerated mcLinePlotBuildNumeric one. AFTER the ft variant, which owns "at 1/4 ft".
+  const atMarksBare = [...prompt.matchAll(/(\d+)\s*marks?\s+at\s+(\d*½|\d+(?:\/\d+)?)/g)];
+  if (atMarksBare.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of atMarksBare) {
+      const v = numeratorOf(m[2], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[1]));
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "3 X's at 2½" — the regenerated default/totalCount sentence, count first.
+  const xAt = [...prompt.matchAll(/(\d+)\s*X's at\s+(\d*½|\d+(?:\/\d+)?)/g)];
+  if (xAt.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of xAt) {
+      const v = numeratorOf(m[2], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[1]));
+    }
+    return { kind: "marks", values, counts };
+  }
   const sum = /(\d+\/\d+(?:\s*\+\s*\d+\/\d+)+)\s*=\s*\?\/(\d+)/.exec(prompt);
   if (sum) {
     const over = Number(sum[2]);
@@ -216,6 +276,26 @@ function answerFromPlot(prompt: string, plot: TPlotData): number | null {
     const i = plot.values.indexOf(t);
     return i === -1 ? null : plot.counts[i];
   }
+  // "How many measurements land on HALF-unit marks?" / "…measured a HALF-inch length
+  // (ending in ½)?" — the COUNT of marks at non-whole positions (md-03-04/ch1, halfMarks).
+  if (/HALF-unit marks|HALF-inch length/i.test(prompt)) {
+    return plot.counts.reduce((s, c, i) => (plot.values[i] % den !== 0 ? s + c : s), 0);
+  }
+  // "A line plot must contain N data marks. … How many marks are still missing?" — the
+  // regenerated mcLinePlotBuildNumeric shape: the stated total minus every drawn mark.
+  const mustContain = /must contain (\d+) data marks/i.exec(prompt);
+  if (mustContain && /still missing/i.test(prompt)) {
+    return Number(mustContain[1]) - plot.counts.reduce((s, c) => s + c, 0);
+  }
+  // "(Count the dots above 2.)" — the COUNT of marks at exactly that value (dd-02-01/i1,
+  // the dot-glyph row). Before the generic shapes for the same reason as the others.
+  const dotsAbove = /count the dots above (\d+(?:\/\d+)?)/i.exec(prompt);
+  if (dotsAbove) {
+    const t = numeratorOf(dotsAbove[1], den);
+    if (t === null) return null;
+    const i = plot.values.indexOf(t);
+    return i === -1 ? null : plot.counts[i];
+  }
   // "how many ribbons were measured in all?" / "How many measurements are shown in all?" —
   // the COUNT of X's on the whole plot.
   if (/in all/i.test(prompt)) return plot.counts.reduce((s, c) => s + c, 0);
@@ -245,7 +325,7 @@ function answerFromPlot(prompt: string, plot: TPlotData): number | null {
 function mcqAnswerLabelFromPlot(prompt: string, plot: TPlotData): string | null {
   const units = answerFromPlot(prompt, plot);
   if (units === null || !Number.isInteger(units)) return null;
-  return dotPlotLabel(units, plot.denominator);
+  return dotPlotLabel(units, plot.denominator, plot.labelStyle);
 }
 
 /* ------------------------------------------------------------------ *
@@ -275,18 +355,26 @@ function authoredAnswerInUnits(w: Record<string, unknown>, den: number): number 
 }
 
 describe("plotData — the corpus contract", () => {
-  it("is declared on exactly the 14 measured steps of the inline-dataset family", () => {
+  it("is declared on exactly the 19 measured steps of the inline-dataset family", () => {
     // S237 wired vm-02-02's four graded steps; S238 extended the field to mcq and wired the
     // rest of the READY family (S237 handover §3.2): vm-02-01 whole, the three g2g mode checks,
-    // g2g-03-03's, and vm-02-02's two stragglers (i2, rem-lo-k). Still ABSENT by decision, not
-    // drift: md-03-04 (×3) and mc-05-02 (×1) await the mixed-number-axis and mark-order rulings
-    // (S237 handover §5), and dd-02-01 (×2) says "dots" where this figure draws X's — drawing
-    // the wrong glyph would trade one figure-text defect for another.
+    // g2g-03-03's, and vm-02-02's two stragglers (i2, rem-lo-k). The S238 wave-9 rulings
+    // (2026-08-12) then closed the family: dd-02-01/i1 (glyph "dot" — its prose SAYS dots),
+    // md-03-04's three (labelStyle "mixed" — its prose writes "2½", never "5/2"), and
+    // mc-05-02/k2 (its marks reordered to ascend, the axis's own requirement). The ONE row
+    // still absent is a decision, not drift: dd-02-01/k2 stays excluded by the mcq LEAKAGE
+    // policy — its options ARE datasets, so drawing the dataset would print the answer —
+    // regardless of glyph.
     expect(declared.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "dd-02-01/i1",
       "g2g-01-05/k1",
       "g2g-01-05/k3",
       "g2g-01-05/rem-g2g-mode-k",
       "g2g-03-03/k3",
+      "mc-05-02/k2",
+      "md-03-04/ch1",
+      "md-03-04/k1",
+      "md-03-04/k2",
       "vm-02-01/ch1",
       "vm-02-01/k1",
       "vm-02-01/k2",
@@ -300,9 +388,53 @@ describe("plotData — the corpus contract", () => {
     ]);
   });
 
+  // dd-02-01/i1's prompt REFERENCES the plot ("In the pets dot plot…") rather than stating it —
+  // that absent diagram is the defect the wiring fixes — so its dataset is derived from the
+  // lesson's OWN c1 sentence instead, by a dedicated two-route test below.
+  const STATED_IN_LESSON_BODY = new Set(["dd-02-01/i1"]);
+
   it("every declared plot agrees with its OWN prompt, mark for mark and X for X", () => {
     for (const d of declared) {
+      if (STATED_IN_LESSON_BODY.has(`${d.lesson}/${d.step}`)) continue;
       expect(disagreements(String(d.w.prompt), d.plot), `${d.lesson}/${d.step}`).toEqual([]);
+    }
+  });
+
+  it("dd-02-01/i1 draws the pets plot c1 states — raw-list tally and stated heights agree", () => {
+    // TWO independent routes through the frozen c1 sentence "The pets data 0,1,1,2,2,2,3,4
+    // becomes stacks of height 1,2,3,1,1": tally the raw list, and read the stated heights.
+    // Both must agree with each other AND with the declared plot — a transposed stack fails
+    // twice.
+    const lesson = allLessons().find((l) => l.id === "dd-02-01")!;
+    const c1 = lesson.steps.find((s) => s.id === "c1") as unknown as { body: string };
+    const m = /pets data ([\d,]+) becomes stacks of height ([\d,]+)/.exec(c1.body);
+    expect(m, "c1 no longer states the pets dataset — the derivation route is broken").not.toBeNull();
+    const raw = m![1].split(",").map(Number);
+    const stated = m![2].split(",").map(Number);
+    const tally = new Map<number, number>();
+    for (const v of raw) tally.set(v, (tally.get(v) ?? 0) + 1);
+    const values = [...tally.keys()].sort((a, b) => a - b);
+    expect(values.map((v) => tally.get(v)!), "c1's own two statements disagree").toEqual(stated);
+    const d = declared.find((x) => x.lesson === "dd-02-01" && x.step === "i1")!;
+    expect(d.plot.values).toEqual(values);
+    expect(d.plot.counts).toEqual(stated);
+    // …and the near-identical rejection: a plot with one stack transposed must disagree.
+    expect([...d.plot.counts].reverse()).not.toEqual(stated);
+  });
+
+  it('the glyph is "dot" exactly where the prose says dots, and absent everywhere else', () => {
+    for (const d of declared) {
+      const expected = STATED_IN_LESSON_BODY.has(`${d.lesson}/${d.step}`) ? "dot" : undefined;
+      expect(d.plot.glyph, `${d.lesson}/${d.step}`).toBe(expected);
+    }
+  });
+
+  it('labelStyle is "mixed" exactly where the prose writes mixed numbers, absent everywhere else', () => {
+    // md-03-04's frozen prompts write "2½"; every other wired row's prose writes improper or
+    // whole values, which the default formatter already matches.
+    for (const d of declared) {
+      const expected = d.lesson === "md-03-04" ? "mixed" : undefined;
+      expect(d.plot.labelStyle, `${d.lesson}/${d.step}`).toBe(expected);
     }
   });
 
@@ -335,7 +467,7 @@ describe("plotData — the corpus contract", () => {
       ).toBe(true);
       checked++;
     }
-    expect(checked).toBe(6);
+    expect(checked).toBe(7);
   });
 
   it("every declared plot is drawable, and passes the shared integrity rules", () => {
@@ -396,8 +528,12 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
   const withVariant = declared.filter((d) => d.variant !== undefined);
   const withoutVariant = declared.filter((d) => d.variant === undefined);
 
-  it("exactly the 7 variant-bearing steps regenerate; the 7 static rows are the ones expected", () => {
+  it("exactly the 11 variant-bearing steps regenerate; the 8 static rows are the ones expected", () => {
     expect(withVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "mc-05-02/k2",
+      "md-03-04/ch1",
+      "md-03-04/k1",
+      "md-03-04/k2",
       "vm-02-01/ch1",
       "vm-02-01/k1",
       "vm-02-01/k2",
@@ -407,6 +543,7 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
       "vm-02-02/k3"
     ]);
     expect(withoutVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "dd-02-01/i1",
       "g2g-01-05/k1",
       "g2g-01-05/k3",
       "g2g-01-05/rem-g2g-mode-k",

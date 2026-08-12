@@ -439,7 +439,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
  * the sentence cannot disagree. It draws `values` and `counts` only; no answer is reachable
  * from here. */
 function LinePlotFigure({ parts }: { parts: NonNullable<ReturnType<typeof plotDataParts>> }): ReactElement {
-  const { values, counts, labels } = parts;
+  const { values, counts, labels, glyph } = parts;
   const tallest = Math.max(...counts);
   const cols = { gridTemplateColumns: `repeat(${values.length}, 1fr)` };
   return (
@@ -456,13 +456,16 @@ function LinePlotFigure({ parts }: { parts: NonNullable<ReturnType<typeof plotDa
             className="flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg pb-1"
             style={{ minHeight: `${tallest * 1.85 + 0.25}rem` }}
           >
+            {/* S238 glyph ruling: "dot" for lessons whose frozen prose says dots (dd-02-01
+                teaches "one dot per data value"); same cell geometry either way, so the two
+                glyphs cannot drift into two different plots. */}
             {Array.from({ length: counts[i] }, (_, k) => (
               <span
                 key={k}
-                data-testid="plot-x"
+                data-testid={glyph === "dot" ? "plot-dot" : "plot-x"}
                 className="flex h-7 w-7 items-center justify-center text-lg font-black text-ink/75"
               >
-                ✗
+                {glyph === "dot" ? "●" : "✗"}
               </span>
             ))}
           </div>

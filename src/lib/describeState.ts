@@ -84,11 +84,21 @@ const partVerb = (n: number): string => (n === 1 ? PART_VERB.one : PART_VERB.man
  * All three count forms are STORED and selected, never derived: "no X" for an empty mark (a
  * prompt writes that stack as "3/4 → —", and "0 X's" is not how anyone reads it), "1 X", and
  * "N X's" — the same plural the authored prompts and the generators already write. */
-const MARK_PHRASE = { zero: "no X", one: "1 X", many: "X's" } as const;
-const markPhrase = (n: number): string =>
-  n === 0 ? MARK_PHRASE.zero : n === 1 ? MARK_PHRASE.one : `${n} ${MARK_PHRASE.many}`;
-const plotStacksPhrase = (labels: readonly string[], counts: readonly number[]): string =>
-  labels.map((l, i) => `${markPhrase(counts[i])} above ${l}`).join(", ");
+const MARK_PHRASE = {
+  x: { zero: "no X", one: "1 X", many: "X's" },
+  // S238 glyph ruling: dd-02-01's prose says dots, so its plot draws — and speaks — dots.
+  // Stored forms for the dot glyph too, same rule, same three slots.
+  dot: { zero: "no dot", one: "1 dot", many: "dots" }
+} as const;
+const markPhrase = (n: number, glyph: keyof typeof MARK_PHRASE): string => {
+  const p = MARK_PHRASE[glyph];
+  return n === 0 ? p.zero : n === 1 ? p.one : `${n} ${p.many}`;
+};
+const plotStacksPhrase = (
+  labels: readonly string[],
+  counts: readonly number[],
+  glyph: keyof typeof MARK_PHRASE
+): string => labels.map((l, i) => `${markPhrase(counts[i], glyph)} above ${l}`).join(", ");
 
 /** S237. conditionalTableLab's readMetric is an internal discriminant; learners heard
  * "The target rowTotal uses 20." These are ordinary statistics names, so they get spoken as such. */
@@ -120,7 +130,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // given the question is about; the entry preview below follows if there is one. A step
       // with no `plotData` reaches an unchanged branch.
       const plot = plotDataParts(spec);
-      const plotSaid = plot ? `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}. ` : "";
+      const plotSaid = plot ? `A line plot with ${plotStacksPhrase(plot.labels, plot.counts, plot.glyph)}. ` : "";
       const preview = numericPreviewParts(spec, value);
       if (!preview) return plotSaid === "" ? null : plotSaid.trimEnd();
       const { wholes, shaded, total } = preview;
@@ -154,7 +164,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // fractionEntry/pointEntry gap, unchanged and deliberately not widened by this branch.
       const plot = plotDataParts(spec);
       if (!plot) return null;
-      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
+      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts, plot.glyph)}.`;
     }
     case "mcq": {
       // S238. mcq narrates itself — a labelled radiogroup — so this stays null for every step
@@ -164,7 +174,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // fractionEntry branches: three surfaces, one dialect.
       const plot = plotDataParts(spec);
       if (!plot) return null;
-      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
+      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts, plot.glyph)}.`;
     }
     case "estimateSlider": {
       // S237b. Exact-comparison mode is a row of labelled buttons and narrates itself, exactly as
@@ -300,7 +310,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // S237: the stack list now comes from the shared `plotStacksPhrase`, so this branch and the
       // display-only `plotData` branches speak one dialect. It also fixes the plural this branch
       // used to derive away entirely ("2 X above 1/4"); the forms are stored, per CLAUDE.md.
-      const stacks = plotStacksPhrase(spec.values.map((_, i) => lbl(i)), spec.given as number[]);
+      const stacks = plotStacksPhrase(spec.values.map((_, i) => lbl(i)), spec.given as number[], "x");
       const askL = lbl(spec.askIndex);
       if (!v || v.every((c) => c === 0))
         return `A line plot with ${stacks}. The question asks about the stack above ${askL}; no X is counted yet.`;
@@ -308,7 +318,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       // The count clause takes the same stored plural as the stack list above it — before S237
       // this half said "2 X are counted" while the half in front of it said "2 X's above 1/4",
       // two dialects inside one sentence. The verb was already stored; the noun now is too.
-      return `A line plot with ${stacks}. ${markPhrase(counted)} ${counted === 1 ? "is" : "are"} counted so far${v[spec.askIndex] > 0 ? `, ${v[spec.askIndex]} of them above ${askL}` : ""}.`;
+      return `A line plot with ${stacks}. ${markPhrase(counted, "x")} ${counted === 1 ? "is" : "are"} counted so far${v[spec.askIndex] > 0 ? `, ${v[spec.askIndex]} of them above ${askL}` : ""}.`;
     }
     case "areaModel": {
       if (!spec.countGrid) return null;

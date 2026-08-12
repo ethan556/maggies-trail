@@ -305,6 +305,62 @@ nodes, remains deliberately unmeasured — that is a different ledger, not a qui
 one.) `validate:native` this run also lists `tsconfig.tsbuildinfo` alongside node_modules/.next
 — gitignored compiler artifact, same archive-only class.
 
+## Wave 9 (same session): the FOUR user rulings land — the plotData family closes 19 of 20
+
+The user ruled on every outstanding content question (2026-08-12): fix the two graded-wrong
+prose defects only; add a dot-glyph mode; give the shared formatter a mixed-number mode; and
+queue figures.tsx → NumericW → WS-C → the 8 NOT-POSSIBLE engines next.
+
+**1. The graded-wrong fixes (frozen prose, now user-authorized, proof-ledgered):**
+
+- **g2g-01-05/k3** — the collapsed distractor. Stacks 2,6,3,1 above 5,6,7,8 put the mode AND
+  the tallest-stack count both at 6, so bare "6 inches" (graded wrong) sat beside "6 inches —
+  its stack is tallest" (graded right). Counts reordered to 6,2,3,1: the key becomes 5 inches
+  and the count-trap "6 inches" is a real axis value and genuinely wrong — the exact shape k1
+  and rem-g2g-mode-k already use. Three content deltas, nothing else.
+- **mc-05-02/k2** — marks reordered to ascend (1/2, 5/8, 3/4; the axis's own requirement),
+  explanationVariants[0] to match.
+
+The cosmetic fraction/decimal inversions (g5u-03-02, g5f-02-02/03) stay logged and untouched,
+per the ruling.
+
+**2. The dot glyph** (`PlotDataSpec.glyph: "x" | "dot"`, absent = x): dd-02-01/i1 asked the
+learner to "count the dots" in a pets plot the screen never drew, and drawing X's would have
+contradicted the lesson's own "one dot per data value". Wired with dots; the spoken dialect
+gained the stored dot forms ("no dot", "1 dot", "N dots") beside the X forms. dd-02-01/k2
+stays excluded FOREVER by the mcq leakage policy (its options ARE datasets) — that was policy
+before the glyph ruling and is unchanged by it.
+
+**3. The mixed-number axis** (`PlotDataSpec.labelStyle: "mixed"`, absent = improper):
+`dotPlotLabel` gained a mixed mode with STORED vulgar glyphs (½ ¼ ¾; spaced "1 2/3" fallback,
+never derived), so md-03-04's axis writes "2½" exactly as its frozen prompts do. Its three rows
+wired (k1 mcq, k2/ch1 numeric). The three variant forms serving them — default, totalCount,
+halfMarks (and rangeSpan for consistency) — now print half-marks as "2½", never "2.5", so an
+item and its re-ask share one dialect, and all three emit the plot on every re-ask.
+mc-05-02/k2 wired too (den 8, improper labels reduce to the exact prompt notation), and its
+mcLinePlotBuildNumeric form emits the placed-marks plot.
+
+**Family status: 19 of 20 rows wired; the 20th (dd-02-01/k2) is excluded by decision.**
+
+**Gates extended, not weakened:** the corpus contract's declared list pins 19 rows; the parser
+gained the four wave-9 notations (arrow-with-count, bare-paren, unit-less marks-at, count-first
+X's-at) and the vulgar-half reader; answerFromPlot gained the half-marks and missing-marks
+shapes; dd-02-01/i1's dataset is derived from c1's OWN sentence by two routes (raw-list tally
+vs stated heights); glyph and labelStyle are each pinned corpus-wide (exactly where the prose
+demands them, absent everywhere else); mcq label checks 6 → 7; variant-bearing rows 7 → 11,
+each swept 40 seeds with figure-text agreement AND answer-from-plot re-asserted. Renderer
+gates: dots drawn where ruled (zero X's), mixed labels drawn ("2", "2½", "3", "3½"), formatter
+mode unit-pinned. Output READ per the working rhythm (scripts/measure/print-wave9-plotdata.mts)
+— every trap true of its drawn numbers.
+
+**Parity note:** the accessibleParity ratchet stayed green through all of wave 9 — the new
+spoken sentences state only stacks the prompts and figures show.
+
+Pixel evidence from the real player: `S238_SCREENSHOTS/12-dotglyph-dd0201-i1-390.png` (the
+pets plot in dots), `13-mixedaxis-md0304-ch1-390.png` ("2½"/"3½" on the axis),
+`14-markorder-mc0502-k2-390.png` (ascending marks). Content-change proof: 867 → 870 (mc-05-02,
+dd-02-01, md-03-04 new keys; g2g-01-05 clause appended).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

@@ -562,7 +562,8 @@ describe("the display plot and the interactive dotPlot draw the SAME picture for
       values: [1, 2, 3],
       counts: [2, 3, 1],
       labels: ["1/4", "1/2", "3/4"],
-      denominator: 4
+      denominator: 4,
+      glyph: "x" // S238 wave 9: the resolver states the glyph; absent in the spec means X
     });
     expect(plotDataParts({})).toBeNull();
   });
@@ -647,5 +648,108 @@ describe("S238: the authored mcq rows draw the plot their prompt describes", () 
     // Never the answer: the sentence states stacks the prompt already printed, nothing more.
     expect(said).not.toContain("most common");
     expect(said).not.toContain("correct");
+  });
+});
+
+/* ------------------------------------------------------------------ *
+ * S238 wave 9 — the dot glyph (user-ruled 2026-08-12). dd-02-01 teaches
+ * "one dot per data value" and asks the learner to "count the dots", so
+ * its plot draws — and speaks — dots. Every other wired row keeps the
+ * canonical X, pinned by the corpus contract's glyph test; here the
+ * RENDERED half is pinned: the glyph character, its testid, and the
+ * unchanged column geometry.
+ * ------------------------------------------------------------------ */
+
+describe("S238: the dot glyph draws dots where the prose says dots", () => {
+  const DD0201 = JSON.parse(
+    readFileSync(join(process.cwd(), "content/courses/data-distributions/lessons/dd-02-01.json"), "utf8")
+  ) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+  const i1 = () => {
+    const s = DD0201.steps.find((x) => x.id === "i1");
+    if (!s?.widget) throw new Error("dd-02-01/i1 lost its widget");
+    return WidgetSpec.parse(s.widget) as TWidget;
+  };
+
+  it("dd-02-01/i1 draws the pets plot in dots — no X anywhere, same grid, same labels", () => {
+    mount(i1());
+    expect(figure()).toBeTruthy();
+    const dotCounts = columns().map((c) => c.querySelectorAll("[data-testid='plot-dot']").length);
+    expect(dotCounts).toEqual([1, 2, 3, 1, 1]);
+    expect(drawnCounts(), "an X in a dot plot is the defect the glyph exists to prevent").toEqual([0, 0, 0, 0, 0]);
+    expect(drawnLabels()).toEqual(["0", "1", "2", "3", "4"]);
+    const dot = document.querySelector("[data-testid='plot-dot']")!;
+    expect(dot.textContent).toBe("●");
+    // Same cell geometry as the X glyph — the two variants cannot drift into two pictures.
+    expect(dot.className).toContain("h-7 w-7");
+  });
+
+  it("a screen-reader learner hears dots, in the same dialect, all three stored forms", () => {
+    const said = describeWidgetState(i1(), null)!;
+    expect(said).toBe("A line plot with 1 dot above 0, 2 dots above 1, 3 dots above 2, 1 dot above 3, 1 dot above 4.");
+    expect(said).not.toContain("X");
+  });
+
+  it("the glyph is display-only: grading is byte-identical with and without the whole block", () => {
+    const raw = DD0201.steps.find((x) => x.id === "i1")!.widget!;
+    const { plotData: _drop, ...rest } = raw;
+    const withPlot = WidgetSpec.parse(raw) as TWidget;
+    const without = WidgetSpec.parse(rest) as TWidget;
+    for (const v of [3, 2, 8, null]) {
+      expect(evaluate(withPlot, v), JSON.stringify(v)).toEqual(evaluate(without, v));
+      expect(canCheck(withPlot, v), JSON.stringify(v)).toBe(canCheck(without, v));
+    }
+    expect(evaluate(withPlot, 3).correct).toBe(true);
+    expect(evaluate(withPlot, 2).correct).toBe(false);
+  });
+
+  it("an x-glyph row still draws X's and zero dots — the two testids cannot cross", () => {
+    mount(WidgetSpec.parse(mcqWidget(G2G0105, "k1")) as TWidget);
+    expect(drawnCounts()).toEqual([2, 5, 3, 1]);
+    expect(columns().every((c) => c.querySelectorAll("[data-testid='plot-dot']").length === 0)).toBe(true);
+  });
+});
+
+/* ------------------------------------------------------------------ *
+ * S238 wave 9 — the mixed-number axis (user-ruled 2026-08-12).
+ * md-03-04's frozen prose writes halves as "2½"; the one shared
+ * formatter's mixed mode draws that exact string, so the axis and the
+ * prompt cannot disagree about notation.
+ * ------------------------------------------------------------------ */
+
+describe("S238: the mixed-number axis writes halves the way the prose does", () => {
+  const MD0304 = JSON.parse(
+    readFileSync(join(process.cwd(), "content/courses/measurement-data/lessons/md-03-04.json"), "utf8")
+  ) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+
+  it("md-03-04/ch1 draws 2, 2½, 3, 3½ — never 5/2 — with its stacks intact", () => {
+    const s = MD0304.steps.find((x) => x.id === "ch1")!;
+    mount(WidgetSpec.parse(s.widget!) as TWidget);
+    expect(figure()).toBeTruthy();
+    expect(drawnLabels()).toEqual(["2", "2½", "3", "3½"]);
+    expect(drawnCounts()).toEqual([4, 2, 1, 3]);
+  });
+
+  it("md-03-04/k1's mcq draws the pencil plot and keeps its keyed option honest", () => {
+    const s = MD0304.steps.find((x) => x.id === "k1")!;
+    mount(WidgetSpec.parse(s.widget!) as TWidget);
+    expect(drawnLabels()).toEqual(["2", "2½", "3"]);
+    expect(drawnCounts()).toEqual([3, 1, 4]);
+    expect(screen.getAllByRole("radio").length).toBe(4);
+  });
+
+  it("a screen-reader learner hears the mixed labels in the shared dialect", () => {
+    const s = MD0304.steps.find((x) => x.id === "ch1")!;
+    const said = describeWidgetState(WidgetSpec.parse(s.widget!) as TWidget, null)!;
+    expect(said).toBe("A line plot with 4 X's above 2, 2 X's above 2½, 1 X above 3, 3 X's above 3½.");
+  });
+
+  it("the formatter's mixed mode: improper by default, mixed on request, glyphs only where stored", () => {
+    expect(dotPlotLabel(5, 2)).toBe("5/2");
+    expect(dotPlotLabel(5, 2, "mixed")).toBe("2½");
+    expect(dotPlotLabel(4, 2, "mixed")).toBe("2");
+    expect(dotPlotLabel(1, 2, "mixed")).toBe("½");
+    expect(dotPlotLabel(7, 4, "mixed")).toBe("1¾");
+    expect(dotPlotLabel(6, 8, "mixed")).toBe("¾"); // reduces FIRST, then formats
+    expect(dotPlotLabel(5, 3, "mixed")).toBe("1 2/3"); // no stored glyph — spaced fallback, never invented
   });
 });

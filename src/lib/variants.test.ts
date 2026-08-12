@@ -7518,8 +7518,10 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   },
   // Line plots: count the printed Xs, not the number of labeled positions.
   "line-plot": (p) => {
+    // S238 wave 9: the generator now writes half-marks the way the authored lesson does —
+    // "2\u00bd", never "2.5". The route reads the glyph by STRING SUFFIX, not arithmetic.
     const [prompt, labelsRaw] = p.split("||");
-    const rows = [...prompt.matchAll(/(\d+) X's at (\d+(?:\.5)?)/g)].map((m) => ({ count: Number(m[1]), mark: Number(m[2]) }));
+    const rows = [...prompt.matchAll(/(\d+) X's at (\d+\u00bd?)/g)].map((m) => ({ count: Number(m[1]), mark: m[2] }));
     rows.sort((a, b) => b.count - a.count);
     const wanted = `${rows[0].mark} inches`;
     for (const label of labelsRaw.split(";;")) if (label === wanted) return label;
@@ -7532,15 +7534,16 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   },
   "line-plot@rangeSpan": (p) => {
     const [prompt, labelsRaw] = p.split("||");
-    const m = prompt.match(/only at (\d+(?:\.5)?), (\d+(?:\.5)?), and (\d+(?:\.5)?)/)!;
+    const m = prompt.match(/only at (\d+\u00bd?), (\d+\u00bd?), and (\d+\u00bd?)/)!;
     const wanted = `${m[1]} to ${m[3]} inches`;
     for (const label of labelsRaw.split(";;")) if (label === wanted) return label;
     throw new Error("no endpoint range");
   },
   "line-plot@halfMarks": (p) => {
+    // A half-mark IS the \u00bd suffix — read off the string, no float arithmetic at all.
     let total = 0;
-    for (const m of p.matchAll(/(\d+(?:\.5)?) \((\d+) X's\)/g)) {
-      if (Number(m[1]) % 1 === 0.5) total += Number(m[2]);
+    for (const m of p.matchAll(/(\d+\u00bd?) \((\d+) X(?:'s)?\)/g)) {
+      if (m[1].endsWith("\u00bd")) total += Number(m[2]);
     }
     return total;
   },

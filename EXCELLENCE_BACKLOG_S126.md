@@ -72,7 +72,7 @@ The strict whole-corpus text scan found **53** candidates where a graded answer 
 - g2g-01-04/k2 [numeric] — A line plot shows 3 x's above the number 9. How many data points are at 9?
 - g2g-01-04/ch1 [numeric] — One more, for the road. A line plot shows 3 x's above the number 8. How many data points are at 8?
 - g2g-01-05/k1 [mcq] — A line plot shows stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
-- g2g-01-05/k3 [mcq] — A line plot shows stacks of 2, 6, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
+- g2g-01-05/k3 [mcq] — A line plot shows stacks of 6, 2, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
 - g2g-03-03/k3 [mcq] — A line plot shows stacks of 2, 4, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
 - dr-01-01/ch1 [numeric] — Read a slope off a graph you cannot see. For f(x) = x², find f′(−4).
 - dr-01-03/k3 [mcq] — Local straightness. You magnify a graph at a point and it becomes indistinguishable from a straight line. What have you shown?
