@@ -121,6 +121,38 @@ resolver, one renderer, one spoken dialect — no second shape:
   `place-value-transform-mutations-s145` M28 (accessibility mutation not rejected) — verified
   PRE-EXISTING at baseline `39bf84c` (33/35 there, 34/35 now), left for a dedicated session.
 
+## Batch 3 (same session): unitChain label collisions closed — 82 → 0, corpus-proven
+
+The next item by count in S237 §3.1. The ruler labels derive from the LEARNER'S value, so the
+collisions are state-driven: value 1 puts "1.333333" on the t=0.88 tick ON the "ruler counts in
+kg" caption (the reported screenshot), and a wrong crossing on mc-01-03/k3 reaches 4,000,000 —
+labels wider than the tick spacing itself.
+
+- **Fix, same remedy as HopLandingW:** the caption and the value labels now occupy disjoint
+  vertical bands (labels y=76, caption y=92), and an intermediate label (t = 0.22/0.44/0.88) is
+  drawn only when its box clears every kept box — the end (t=0) and the marker (t=0.66, the
+  actual reading) always keep theirs. **Tick MARKS always stay**; only redundant text drops.
+- **Gate extended two ways:** seven named failure-class cases (including the reported one), and
+  a corpus-complete sweep — all 19 authored unitChain specs × every learner-reachable crossing
+  state (≤2³ dir-sequences) × both tones — zero collisions. Verified the detector FIRES on the
+  pre-fix layout (1 failed with the fix stashed, 14/14 with it).
+- **Browser evidence:** `S238_SCREENSHOTS/06-unitchain-mc0101-k1-{390,1440}.png` — labels on
+  their own row, caption clear below.
+
+**Plus the class-B slider naming defect (S237 §3.1):** `SliderW` carried
+`aria-label={spec.prompt}` — the whole task sentence as the range's accessible name, the exact
+defect S237 fixed on estimateSlider. Same house pattern applied: a visible `<label>` wraps the
+control ("Your value — liters left" / "Number of groups" / generic-and-true "Your value"),
+gated in `widgets.estimateSliderLabel.s237.test.tsx`. **Deferred, recorded:** `NumericW` (the
+other named instance) still names its input with the prompt — its accessible name is load-bearing
+across the e2e and unit harness (`getByRole("textbox", { name: <prompt> })` sites), so renaming
+it is a mechanical pass over the test suite that deserves its own batch, not a rider on this one.
+The mcq radiogroup's prompt-as-group-name is correct ARIA practice and was left alone.
+
+Reading note (rhythm step 5): ruler labels like "0.333333" are honest but ugly artifacts of the
+fixed-marker geometry (value × t/0.66). Cosmetic formatting of ruler intermediates is a design
+decision left open — the collision defect is what this batch closed.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

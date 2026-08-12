@@ -7672,6 +7672,31 @@ function UnitChainW({ spec, value, onChange, disabled, tone }: WProps<TUnitChain
   // say the unit got smaller: the conflict is on screen without the widget grading mid-flight.
   const W = 340, H = 96, x0 = 18, x1 = W - 18, mx = x0 + (x1 - x0) * 0.66;
   const labelAt = (t: number) => fmtUC((v.value * t) / 0.66 === Infinity ? 0 : v.value * (t / 0.66));
+  // S238 — NO TWO RULER LABELS MAY OVERLAP, for any learner-reachable value. The labels are
+  // derived from v.value, and a wrong crossing can make them arbitrarily wide ("1333333.333333"
+  // after multiplying where a division was asked), so a fixed five-label layout collides for
+  // SOME states and not others — 82 of the S237-measured pairs were exactly this engine. Same
+  // remedy as HopLandingW: TICK MARKS ALWAYS STAY (the ruler keeps its scale); only redundant
+  // TEXT is dropped. The end (t=0) and the marker (t=0.66, the actual reading) always keep
+  // their labels; an intermediate label is drawn only when its box clears every kept box.
+  // Width model: 0.72em per character — the constant measured for the S237 testkit; the
+  // vertical fix (labels at y=76, caption at y=92, disjoint bands) handles the caption the
+  // reported "1.333333 over 'ruler counts in kg'" screenshot showed.
+  const RULER_TICKS = [0, 0.22, 0.44, 0.66, 0.88] as const;
+  const rulerLabelBox = (t: number): { t: number; x0: number; x1: number } => {
+    const cx = x0 + (x1 - x0) * t;
+    const half = (labelAt(t).length * 10 * 0.72) / 2;
+    return { t, x0: cx - half, x1: cx + half };
+  };
+  const rulerKept: number[] = (() => {
+    const kept = [rulerLabelBox(0), rulerLabelBox(0.66)];
+    const GAP = 4;
+    for (const t of [0.22, 0.44, 0.88]) {
+      const b = rulerLabelBox(t);
+      if (kept.every((k) => b.x1 + GAP <= k.x0 || b.x0 >= k.x1 + GAP)) kept.push(b);
+    }
+    return kept.map((b) => b.t);
+  })();
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -7702,13 +7727,15 @@ function UnitChainW({ spec, value, onChange, disabled, tone }: WProps<TUnitChain
         <text x={x0} y={14} fontSize="10" fontWeight="800" fill={PALETTE.ink} fillOpacity=".55">the quantity — it never changes</text>
         {/* The ruler: learner-denominated, sky. Relabels on each crossing; marker stays put. */}
         <line x1={x0} y1={58} x2={x1} y2={58} stroke={PALETTE.sky} strokeWidth="2.5" />
-        {[0, 0.22, 0.44, 0.66, 0.88].map((t) => (
+        {RULER_TICKS.map((t) => (
           <g key={t}>
             <line x1={x0 + (x1 - x0) * t} y1={52} x2={x0 + (x1 - x0) * t} y2={64} stroke={PALETTE.sky} strokeWidth={t === 0.66 ? 3 : 1.5} />
-            <text x={x0 + (x1 - x0) * t} y={80} fontSize="10" fontWeight={t === 0.66 ? 900 : 600} textAnchor="middle"
-              fill={t === 0.66 ? PALETTE.sky : PALETTE.ink} fillOpacity={t === 0.66 ? 1 : 0.55} className="transition-opacity motion-reduce:transition-none">
-              {labelAt(t)}
-            </text>
+            {rulerKept.includes(t) && (
+              <text x={x0 + (x1 - x0) * t} y={76} fontSize="10" fontWeight={t === 0.66 ? 900 : 600} textAnchor="middle"
+                fill={t === 0.66 ? PALETTE.sky : PALETTE.ink} fillOpacity={t === 0.66 ? 1 : 0.55} className="transition-opacity motion-reduce:transition-none">
+                {labelAt(t)}
+              </text>
+            )}
           </g>
         ))}
         <circle cx={mx} cy={30} r={6} fill={PALETTE.sky} stroke="#fff" strokeWidth="2" />
@@ -12985,6 +13012,19 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
     const next = Math.max(spec.min, Math.min(spec.max, v + direction * spec.step));
     if (next !== v) onChange(next);
   };
+  // S238 — the control names WHAT IT SETS, not the task. The whole prompt sentence as the
+  // range's accessible name was the exact defect fixed on estimateSlider in S237: the prompt is
+  // already on screen and read in document order, so repeating it as the name means a
+  // screen-reader user hears the word problem again on every focus while never being told what
+  // the slider controls. Same remedy, same house pattern: a visible <label> WRAPS the control,
+  // so the accessible name and the visible name are one string by construction. The name states
+  // the quantity when the content states one (`unitLabel`), and stays generic and TRUE when it
+  // does not — an invented quantity would be worse than a vague one.
+  const quantity = spec.unitLabel
+    ? `Your value — ${spec.unitLabel}`
+    : spec.groupSize
+      ? "Number of groups"
+      : "Your value";
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -12998,20 +13038,22 @@ function SliderW({ spec, value, onChange, disabled, tone }: WProps<TSlider>) {
         >
           −
         </button>
-        <input
-          type="range"
-          min={spec.min}
-          max={spec.max}
-          step={spec.step}
-          value={v}
-          disabled={disabled}
-          aria-label={spec.prompt}
-          aria-valuetext={
-            spec.groupSize ? `${v} groups, ${total} in all` : String(v)
-          }
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="h-11 w-full accent-sky"
-        />
+        <label className="grid gap-1 text-sm font-bold text-ink/75">
+          <span>{quantity}</span>
+          <input
+            type="range"
+            min={spec.min}
+            max={spec.max}
+            step={spec.step}
+            value={v}
+            disabled={disabled}
+            aria-valuetext={
+              spec.groupSize ? `${v} groups, ${total} in all` : String(v)
+            }
+            onChange={(e) => onChange(Number(e.target.value))}
+            className="h-11 w-full accent-sky"
+          />
+        </label>
         <button
           type="button"
           onClick={() => move(1)}

@@ -171,3 +171,51 @@ describe("S237b estimateSlider — one labelled control", () => {
     expect(container.querySelectorAll("button").length).toBeGreaterThanOrEqual(2);
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * S238 — the same contract on the generic `slider` engine.
+ *
+ * The S237 handover named this the remaining class-B instance: SliderW still carried
+ * `aria-label={spec.prompt}` — the whole task sentence as the control's accessible name,
+ * the exact defect the file above exists to prevent. Same remedy, same house pattern:
+ * a visible <label> wraps the range, naming what it SETS.
+ * ------------------------------------------------------------------ */
+
+const sliderBase = {
+  type: "slider",
+  prompt: "A tank holds 8 liters. Slide to show how many liters remain after 3 liters pour out.",
+  min: 0, max: 8, step: 1, start: 8, target: 5, visual: "bar",
+  successFeedback: "5 liters — 8 minus the 3 that poured away.",
+  lowFeedback: "Too few left — only 3 liters poured out, not more.",
+  highFeedback: "Too many left — 3 liters DID pour out, so count down from 8."
+};
+
+describe("S238: the generic slider names what it sets", () => {
+  it("the range's accessible name is the quantity, visible, and never the prompt", () => {
+    const { container } = mount({ ...sliderBase, unitLabel: "liters left" });
+    const range = container.querySelector('input[type="range"]') as HTMLElement;
+    expect(range).toBeTruthy();
+    const name = accessibleName(range);
+    expect(name).toBe("Your value — liters left");
+    expect(name).not.toContain("tank holds");
+    // Visible, not aria-only: the wrapping label's text IS the name.
+    expect(range.closest("label")?.textContent).toContain("Your value — liters left");
+    expect(range.getAttribute("aria-label")).toBeNull();
+  });
+
+  it("with no unitLabel the name stays generic and TRUE — no invented quantity", () => {
+    const { container } = mount(sliderBase);
+    const range = container.querySelector('input[type="range"]') as HTMLElement;
+    expect(accessibleName(range)).toBe("Your value");
+  });
+
+  it("a groups slider is named for the groups it counts, and its valuetext still totals", () => {
+    const { container } = mount({
+      ...sliderBase, visual: "groups", groupSize: 6, max: 5, start: 2, target: 4,
+      prompt: "Build 4 equal groups of 6.", itemEmoji: "🍎"
+    });
+    const range = container.querySelector('input[type="range"]') as HTMLElement;
+    expect(accessibleName(range)).toBe("Number of groups");
+    expect(range.getAttribute("aria-valuetext")).toBe("2 groups, 12 in all");
+  });
+});

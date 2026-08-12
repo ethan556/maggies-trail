@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from "vitest";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { cleanup, render } from "@testing-library/react";
 import { WidgetRenderer } from "./widgets";
 import { WidgetSpec, type TWidget } from "@/lib/schema";
@@ -247,6 +249,163 @@ describe("S237b label collisions — numberLinePlace", () => {
     // 21 tick marks + the axis + the marker's stem are all still drawn.
     expect(container.querySelectorAll("svg line").length).toBeGreaterThanOrEqual(22);
     cleanup();
+  });
+});
+
+/* ------------------------------------------------------------------ *
+ * S238 — unitChain: 82 of the 267 S237-measured pairs lived here.
+ * ------------------------------------------------------------------ */
+
+const chain = (extra: Record<string, unknown>): Record<string, unknown> => ({
+  type: "unitChain", prompt: "p",
+  startValue: 1, startUnit: "kg", targetUnit: "g",
+  hops: [{ from: "kg", to: "g", factor: 1000, bigger: "from" }],
+  fallbackFeedback: "walk the crossings again, one hop at a time — say which unit is bigger first",
+  successFeedback: "crossed the whole chain correctly, hop by hop", ...extra
+});
+
+/** The ruler labels derive from the LEARNER'S value, so the colliding states are learner
+ * states, not just authored specs. Each case names the value that produces it. */
+const UC_STATES: Array<{ name: string; spec: Record<string, unknown>; value: unknown }> = [
+  // THE REPORTED CASE: mc-01-01 at its start state. value 1 puts "1.333333" on the t=0.88
+  // tick, which sat ON the "ruler counts in kg" caption before S238 separated the bands.
+  { name: "mc-01-01/k1 start — 1.333333 over the caption", spec: chain({}),
+    value: { unitIdx: 0, value: 1, dirs: [] } },
+  { name: "correct crossing — 1000 g", spec: chain({}),
+    value: { unitIdx: 1, value: 1000, dirs: ["mul"] } },
+  { name: "the WRONG crossing — 0.001, every label a long decimal", spec: chain({}),
+    value: { unitIdx: 1, value: 0.001, dirs: ["div"] } },
+  // mc-01-03/k3 multiplied where a division was asked: 4,000,000 g — the widest labels the
+  // authored corpus can reach, wider than the tick spacing itself.
+  { name: "mc-01-03/k3 wrong crossing — 4,000,000, labels wider than the tick gap",
+    spec: chain({ startValue: 4000, startUnit: "g", targetUnit: "kg",
+      hops: [{ from: "g", to: "kg", factor: 1000, bigger: "to" }] }),
+    value: { unitIdx: 1, value: 4000000, dirs: ["mul"] } },
+  // vm-01-03/k1 two wrong crossings compound: 2 km ÷1000 ÷100 = 0.00002.
+  { name: "vm-01-03/k1 double-wrong — 0.00002, ten-character decimals",
+    spec: chain({ startValue: 2, startUnit: "km", targetUnit: "cm",
+      hops: [{ from: "km", to: "m", factor: 1000, bigger: "from" }, { from: "m", to: "cm", factor: 100, bigger: "from" }] }),
+    value: { unitIdx: 2, value: 0.00002, dirs: ["div", "div"] } },
+  { name: "vm-01-01/k1 — a decimal start (1.5 m)", spec: chain({ startValue: 1.5, startUnit: "m", targetUnit: "cm",
+      hops: [{ from: "m", to: "cm", factor: 100, bigger: "from" }] }),
+    value: { unitIdx: 0, value: 1.5, dirs: [] } },
+  { name: "long unit words in the caption — gallons", spec: chain({ startValue: 1.5, startUnit: "gallons", targetUnit: "cups",
+      hops: [{ from: "gallons", to: "cups", factor: 16, bigger: "from" }] }),
+    value: { unitIdx: 0, value: 1.5, dirs: [] } }
+];
+
+function ucBoxesOf(raw: Record<string, unknown>, value: unknown, tone: "neutral" | "info"): { boxes: TextBox[]; skipped: string[] } {
+  const spec = WidgetSpec.parse(raw) as TWidget;
+  const { container } = render(
+    <WidgetRenderer spec={spec} value={value} onChange={() => {}} disabled={false} tone={tone} />
+  );
+  const svg = container.querySelector("svg");
+  expect(svg, "unitChain must draw its ruler SVG").toBeTruthy();
+  const scan = scanTextBoxes(svg!);
+  cleanup();
+  return scan;
+}
+
+describe("S238 label collisions — unitChain", () => {
+  it("no two labels overlap, for any learner-reachable state exercised", () => {
+    for (const c of UC_STATES) {
+      for (const tone of ["neutral", "info"] as const) {
+        const { boxes, skipped } = ucBoxesOf(c.spec, c.value, tone);
+        expect(skipped, `${c.name} [${tone}] — unmodellable labels`).toEqual([]);
+        expect(boxes.length, `${c.name} [${tone}] — drew no labels at all`).toBeGreaterThan(1);
+        const hits = collisions(boxes);
+        expect(
+          hits.map(describeCollision),
+          `${c.name} [${tone}]\n  ${hits.map(describeCollision).join("\n  ")}`
+        ).toEqual([]);
+      }
+    }
+  });
+
+  it("the ruler still reads as a ruler — marker value, zero end, and the caption all present", () => {
+    // The paired acceptance: suppression may drop redundant intermediate text, never the
+    // reading itself. At the benign start state the full five-label scale survives.
+    const start = ucBoxesOf(UC_STATES[0].spec, UC_STATES[0].value, "neutral");
+    expect(texts(start.boxes)).toContain("0");        // the ruler's zero end
+    expect(texts(start.boxes)).toContain("1");        // the marker — the current reading
+    expect(texts(start.boxes)).toContain("1.333333"); // t=0.88 kept: nothing overlaps at value 1
+    expect(texts(start.boxes).join(" ")).toContain("ruler counts in kg");
+    expect(numbers(start.boxes).length, "a scale, not a lone number").toBeGreaterThanOrEqual(4);
+
+    // The extreme state keeps the invariants even while intermediates are dropped.
+    const wide = ucBoxesOf(UC_STATES[3].spec, UC_STATES[3].value, "neutral");
+    expect(texts(wide.boxes)).toContain("0");
+    expect(texts(wide.boxes)).toContain("4000000");   // the marker reading survives
+    expect(texts(wide.boxes).join(" ")).toContain("ruler counts in kg");
+  });
+
+  it("every tick MARK stays even where its label is dropped — the scale is never eaten", () => {
+    const spec = WidgetSpec.parse(UC_STATES[3].spec) as TWidget;
+    const { container } = render(
+      <WidgetRenderer spec={spec} value={UC_STATES[3].value} onChange={() => {}} disabled={false} />
+    );
+    // The axis line plus all five tick lines are drawn regardless of which labels survive.
+    expect(container.querySelectorAll("svg line").length).toBeGreaterThanOrEqual(6);
+    cleanup();
+  });
+});
+
+describe("S238 unitChain — the whole authored corpus, every reachable crossing state", () => {
+  // The hand-picked cases above explain the failure classes; this sweep is the completeness
+  // claim behind "82 → 0": every authored unitChain spec, at every state a learner can reach
+  // by crossing hops in either direction (≤ 2^3 sequences, hops caps at 3), both tones.
+  it("no authored spec can reach a state where two labels overlap", () => {
+    const courses = join(process.cwd(), "content", "courses");
+    type Hop = { from: string; to: string; factor: number; bigger: "from" | "to" };
+    let specs = 0, states = 0;
+    for (const course of readdirSync(courses)) {
+      const dir = join(courses, course, "lessons");
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith(".json")) continue;
+        const lesson = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+          id: string;
+          steps: Array<{ id: string; widget?: Record<string, unknown> }>;
+          remedials?: Array<{ check?: { id: string; widget?: Record<string, unknown> }; concept?: { id: string; widget?: Record<string, unknown> } }>;
+        };
+        const all = [...lesson.steps, ...(lesson.remedials ?? []).flatMap((r) => [r.check, r.concept]).filter((s): s is NonNullable<typeof s> => Boolean(s))];
+        for (const step of all) {
+          if (step.widget?.type !== "unitChain") continue;
+          specs++;
+          const w = step.widget as { startValue: number; hops: Hop[] };
+          // Every dir-sequence prefix: at depth d the learner has crossed d hops, each mul or div.
+          const reachable: Array<{ unitIdx: number; value: number; dirs: Array<"mul" | "div"> }> = [
+            { unitIdx: 0, value: w.startValue, dirs: [] }
+          ];
+          for (let d = 0; d < w.hops.length; d++) {
+            for (const st of [...reachable]) {
+              if (st.unitIdx !== d) continue;
+              for (const dir of ["mul", "div"] as const) {
+                reachable.push({
+                  unitIdx: d + 1,
+                  value: dir === "mul" ? st.value * w.hops[d].factor : st.value / w.hops[d].factor,
+                  dirs: [...st.dirs, dir]
+                });
+              }
+            }
+          }
+          for (const st of reachable) {
+            for (const tone of ["neutral", "info"] as const) {
+              states++;
+              const { boxes, skipped } = ucBoxesOf(step.widget, st, tone);
+              const where = `${lesson.id}/${step.id} value=${st.value} dirs=[${st.dirs}] [${tone}]`;
+              expect(skipped, `${where} — unmodellable labels`).toEqual([]);
+              const hits = collisions(boxes);
+              expect(hits.map(describeCollision), where).toEqual([]);
+            }
+          }
+        }
+      }
+    }
+    // The corpus this sweep claims to cover: the 19 authored unitChain specs, counted from
+    // disk (4+4+2 in volume-measurement, 3+3+3 in measure-convert).
+    expect(specs).toBe(19);
+    expect(states).toBeGreaterThanOrEqual(19 * 3 * 2);
   });
 });
 
