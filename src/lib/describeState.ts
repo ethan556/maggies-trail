@@ -156,6 +156,16 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       if (!plot) return null;
       return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
     }
+    case "mcq": {
+      // S238. mcq narrates itself — a labelled radiogroup — so this stays null for every step
+      // that declares no `plotData`, exactly as before. When the plot IS declared it is drawn
+      // aria-hidden (LinePlotFigure), so the dataset the question is about is spoken here — the
+      // identical sentence, from the identical `plotDataParts` call, as the numeric and
+      // fractionEntry branches: three surfaces, one dialect.
+      const plot = plotDataParts(spec);
+      if (!plot) return null;
+      return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts)}.`;
+    }
     case "estimateSlider": {
       // S237b. Exact-comparison mode is a row of labelled buttons and narrates itself, exactly as
       // before — this branch is only for the continuous log slider.

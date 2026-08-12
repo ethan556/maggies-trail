@@ -567,3 +567,85 @@ describe("the display plot and the interactive dotPlot draw the SAME picture for
     expect(plotDataParts({})).toBeNull();
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * S238 — the SAME block on `mcq`, same figure, same guard rails.
+ * ------------------------------------------------------------------ */
+
+// The authored rows, read off disk exactly as the vm-02-02 half does: one fraction-axis mcq
+// (vm-02-01/k1) and one whole-number-axis mcq (g2g-01-05/k1). The expected datasets were read
+// BY HAND from each authored prompt — the second route beside the corpus gate's parser.
+const VM0201 = JSON.parse(
+  readFileSync(join(process.cwd(), "content/courses/volume-measurement/lessons/vm-02-01.json"), "utf8")
+) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+const G2G0105 = JSON.parse(
+  readFileSync(join(process.cwd(), "content/courses/data-line-plots-g2/lessons/g2g-01-05.json"), "utf8")
+) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+
+const mcqWidget = (lesson: { steps: Array<{ id: string; widget?: Record<string, unknown> }> }, id: string) => {
+  const s = lesson.steps.find((x) => x.id === id);
+  if (!s?.widget) throw new Error(`no step ${id} with a widget`);
+  return s.widget;
+};
+
+describe("S238: the authored mcq rows draw the plot their prompt describes", () => {
+  it("vm-02-01/k1: 2/3/1/2 X's above 1/4, 1/2, 3/4, 1 — a fraction axis on an mcq", () => {
+    mount(WidgetSpec.parse(mcqWidget(VM0201, "k1")) as TWidget);
+    expect(figure()).toBeTruthy();
+    expect(drawnCounts()).toEqual([2, 3, 1, 2]);
+    expect(drawnLabels()).toEqual(["1/4", "1/2", "3/4", "1"]);
+    // The options are still there, still buttons, still labelled — the plot displaced nothing.
+    expect(screen.getByRole("radio", { name: "1/2 ft" })).toBeTruthy();
+    expect(screen.getAllByRole("radio").length).toBe(3);
+  });
+
+  it("g2g-01-05/k1: 2/5/3/1 x's above 5, 6, 7, 8 — a whole-number axis, no denominator", () => {
+    mount(WidgetSpec.parse(mcqWidget(G2G0105, "k1")) as TWidget);
+    expect(figure()).toBeTruthy();
+    expect(drawnCounts()).toEqual([2, 5, 3, 1]);
+    expect(drawnLabels()).toEqual(["5", "6", "7", "8"]);
+  });
+
+  it("the figure is aria-hidden and read-only on mcq exactly as on the entry surfaces", () => {
+    mount(WidgetSpec.parse(mcqWidget(VM0201, "k1")) as TWidget);
+    expect(figure()!.getAttribute("aria-hidden")).toBe("true");
+    expect(figure()!.querySelectorAll("button, input, [tabindex]").length).toBe(0);
+  });
+
+  it("grading is untouched: evaluate and canCheck are identical with and without the field", () => {
+    const raw = mcqWidget(VM0201, "k1");
+    const { plotData: _drop, ...rest } = raw;
+    const withPlot = WidgetSpec.parse(raw) as TWidget;
+    const without = WidgetSpec.parse(rest) as TWidget;
+    // the key · a wrong pick · nothing picked · a non-id
+    for (const v of ["a", "b", null, "zz"]) {
+      expect(evaluate(withPlot, v), JSON.stringify(v)).toEqual(evaluate(without, v));
+      expect(canCheck(withPlot, v), JSON.stringify(v)).toBe(canCheck(without, v));
+    }
+    expect(evaluate(withPlot, "a").correct).toBe(true); // …and still the RIGHT result
+    expect(evaluate(withPlot, "b").correct).toBe(false);
+  });
+
+  it("a plain mcq from another lesson still draws no plot — the corpus guard, third surface", () => {
+    const plain = WidgetSpec.parse({
+      type: "mcq",
+      prompt: "Which is larger?",
+      options: [
+        { id: "a", label: "3/4", correct: true, feedback: "3/4 covers more of the whole than 1/4 does." },
+        { id: "b", label: "1/4", feedback: "1/4 is one part of four; 3/4 is three of those same parts." }
+      ]
+    }) as TWidget;
+    mount(plain);
+    expect(figure()).toBeNull();
+    expect(describeWidgetState(plain, null)).toBeNull();
+  });
+
+  it("a screen-reader learner hears the same dataset, in the shared dialect", () => {
+    const spec = WidgetSpec.parse(mcqWidget(VM0201, "k1")) as TWidget;
+    const said = describeWidgetState(spec, null)!;
+    expect(said).toBe("A line plot with 2 X's above 1/4, 3 X's above 1/2, 1 X above 3/4, 2 X's above 1.");
+    // Never the answer: the sentence states stacks the prompt already printed, nothing more.
+    expect(said).not.toContain("most common");
+    expect(said).not.toContain("correct");
+  });
+});

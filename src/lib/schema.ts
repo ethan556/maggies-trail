@@ -3,22 +3,6 @@ import { gcd } from "./mathUtils";
 
 /* ---------------- Widget specs ---------------- */
 
-export const McqSpec = z.object({
-  type: z.literal("mcq"),
-  prompt: z.string().min(1),
-  options: z
-    .array(
-      z.object({
-        id: z.string().min(1),
-        label: z.string().min(1),
-        correct: z.boolean().default(false),
-        /** Diagnostic feedback: names the misconception for wrong picks, reinforces for right. */
-        feedback: z.string().min(1)
-      })
-    )
-    .min(2)
-});
-
 /** DISPLAY ONLY — the line plot a prompt already DESCRIBES, drawn instead of spelled in ASCII.
  *
  * THE DEFECT THIS CLOSES. `vm-02-02` ("Using Line Plot Data") asks four graded questions about a
@@ -52,6 +36,30 @@ export const PlotDataSpec = z.object({
   denominator: z.number().int().min(2).optional()
 });
 export type TPlotData = z.infer<typeof PlotDataSpec>;
+
+export const McqSpec = z.object({
+  type: z.literal("mcq"),
+  prompt: z.string().min(1),
+  /** DISPLAY ONLY — see `PlotDataSpec` above (S238 extended it here from numeric/fractionEntry;
+   * same field, same resolver, same renderer — never a second shape). The MCQ-specific rule is
+   * about LEAKAGE: the plot may only state what the prompt already states. It is correct for
+   * "read the plot" questions whose options are interpretations of a dataset the prompt spells
+   * out; it is WRONG for any step where an option IS the dataset (e.g. "Which data set does this
+   * plot show?") — drawing the plot there would print the answer. Grading never reads it:
+   * evaluate() looks at option ids alone, byte-identical with or without the field. */
+  plotData: PlotDataSpec.optional(),
+  options: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        label: z.string().min(1),
+        correct: z.boolean().default(false),
+        /** Diagnostic feedback: names the misconception for wrong picks, reinforces for right. */
+        feedback: z.string().min(1)
+      })
+    )
+    .min(2)
+});
 
 /** The most columns a plot may draw, and the tallest stack it may show. Past these the picture
  * stops being readable at a phone width and starts being a smear — the same judgement
@@ -6632,9 +6640,9 @@ function plotDataIntegrityErrors(where: string, d: TPlotData): string[] {
 
 export function widgetIntegrityErrors(spec: TWidget): string[] {
   const errs: string[] = [];
-  // Display-only, shared by two surfaces, and therefore checked before the per-type switch:
-  // neither branch owns it and neither may drift from the other on what it means.
-  if ((spec.type === "numeric" || spec.type === "fractionEntry") && spec.plotData)
+  // Display-only, shared by three surfaces, and therefore checked before the per-type switch:
+  // no branch owns it and none may drift from the others on what it means. (S238 added mcq.)
+  if ((spec.type === "numeric" || spec.type === "fractionEntry" || spec.type === "mcq") && spec.plotData)
     errs.push(...plotDataIntegrityErrors(spec.type, spec.plotData));
   switch (spec.type) {
     case "numberLineRay": {

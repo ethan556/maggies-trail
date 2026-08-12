@@ -328,9 +328,14 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
    * change what a screen reader calls each choice. */
   const reveal = tone === "info";
   const retry = tone === "error";
+  // The plot the prompt DESCRIBES (display-only; see PlotDataSpec) — the same block `numeric`
+  // and `fractionEntry` draw, resolved through the same function, placed the same way: prompt,
+  // plot, then the options. A spec without `plotData` renders exactly as it always has.
+  const plot = plotDataParts(spec);
   return (
     <div role="radiogroup" aria-label={spec.prompt} className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {plot && <LinePlotFigure parts={plot} />}
       {ordered.map((o) => {
         const selected = value === o.id;
         const ghost = reveal && o.correct;

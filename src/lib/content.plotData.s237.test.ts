@@ -34,7 +34,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { plotDataParts, widgetIntegrityErrors, WidgetSpec, type TWidget, type TPlotData } from "./schema";
+import { dotPlotLabel, plotDataParts, widgetIntegrityErrors, WidgetSpec, type TWidget, type TPlotData } from "./schema";
 import { variantForStep } from "./variants";
 
 const COURSES = join(process.cwd(), "content", "courses");
@@ -78,10 +78,12 @@ function numeratorOf(label: string, den: number): number | null {
   return Number.isInteger(scaled) ? scaled : null;
 }
 
-/** The three notations the corpus and the generators actually use to state a plot in words.
+/** The five notations the corpus and the generators actually use to state a plot in words.
  *
  *   marks  "1/4 → XX, 1/2 → XXX, 3/4 → X"      (an em-dash stack is a listed mark with no X's)
  *          "3 marks at 1/4 ft, 2 at 1/2 ft, …"  (the quarterNumerator generator's sentence)
+ *          "1/4 ft (2 X's), 1/2 ft (3 X's), …"  (the fractionMode/Total/atOrAbove sentence, S238)
+ *          "stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches"  (the g2g sentence, S238)
  *   terms  "2/4 + 6/4 + 3/4 = ?/4"              (each term is one stack ALREADY in fourths)
  *
  * Returns null when the sentence states no dataset at all — which is a REJECTION this gate
@@ -111,6 +113,36 @@ function plotStatedIn(prompt: string, den: number):
       if (v === null) return null;
       values.push(v);
       counts.push(Number(m[1]));
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "1/4 ft (2 X's), 1/2 ft (3 X's), …" — the sentence the fractionMode / fractionTotal /
+  // atOrAbove generators print. Value first, count in the parenthesis.
+  const ftParen = [...prompt.matchAll(/(\d+(?:\/\d+)?)\s*ft\s*\((\d+)\s*X/g)];
+  if (ftParen.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of ftParen) {
+      const v = numeratorOf(m[1], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[2]));
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches" — the authored g2g sentence.
+  // Counts come first, values second, and the two lists must pair off exactly.
+  const stacks = /stacks of ([\d,\sand]+?) x'?s above ([\d,\sand]+?) inches/.exec(prompt);
+  if (stacks) {
+    const nums = (s: string) => (s.match(/\d+/g) ?? []).map(Number);
+    const counts = nums(stacks[1]);
+    const rawValues = nums(stacks[2]);
+    if (counts.length !== rawValues.length || counts.length < 2) return null;
+    const values: number[] = [];
+    for (const rv of rawValues) {
+      const v = numeratorOf(String(rv), den);
+      if (v === null) return null;
+      values.push(v);
     }
     return { kind: "marks", values, counts };
   }
@@ -156,16 +188,64 @@ function disagreements(prompt: string, plot: TPlotData): string[] {
 }
 
 /** The value the DRAWN plot implies for each question shape, in numerator units over the plot's
- * own denominator. Null when the prompt is not one of the shapes whose answer the plot fixes. */
+ * own denominator. Null when the prompt is not one of the shapes whose answer the plot fixes.
+ *
+ * Order matters where sentences share words: the S238 shapes that read a COUNT of marks
+ * ("or longer", "measured N foot", "in all", split-equally) are matched before the generic
+ * total-length shape, because their prompts must never fall through to a Σ value×count. */
 function answerFromPlot(prompt: string, plot: TPlotData): number | null {
+  const den = plot.denominator ?? 1;
   const present = plot.values.filter((_, i) => plot.counts[i] > 0);
   if (/how much longer is the longest/i.test(prompt)) {
     if (present.length < 2) return null;
     return present[present.length - 1] - present[0];
   }
+  // "How many ribbons measured 3/4 foot OR LONGER?" / "How many measurements are 1/2 ft or
+  // longer?" — a COUNT of X's at or above the stated threshold.
+  const thresh = /(\d+(?:\/\d+)?)\s*(?:foot|ft)\s+or longer/i.exec(prompt);
+  if (thresh) {
+    const t = numeratorOf(thresh[1], den);
+    if (t === null) return null;
+    return plot.counts.reduce((s, c, i) => (plot.values[i] >= t ? s + c : s), 0);
+  }
+  // "how many items measured 1 foot?" — the COUNT of X's at exactly that mark.
+  const atValue = /measured (\d+(?:\/\d+)?)\s*(?:foot|ft)\?/i.exec(prompt);
+  if (atValue) {
+    const t = numeratorOf(atValue[1], den);
+    if (t === null) return null;
+    const i = plot.values.indexOf(t);
+    return i === -1 ? null : plot.counts[i];
+  }
+  // "how many ribbons were measured in all?" / "How many measurements are shown in all?" —
+  // the COUNT of X's on the whole plot.
+  if (/in all/i.test(prompt)) return plot.counts.reduce((s, c) => s + c, 0);
+  // "split equally among the 4 cups, how much is in each?" — the plot's total, divided.
+  const split = /split equally among the (\d+) cups/i.exec(prompt);
+  if (split) {
+    const n = Number(split[1]);
+    if (n < 1) return null;
+    return plot.values.reduce((s, v, i) => s + v * plot.counts[i], 0) / n;
+  }
+  // "which length is MOST common?" / "Which measurement is most common?" — the mode's VALUE,
+  // demanding a unique tallest stack (a tie would make the authored answer unfixable).
+  if (/most common/i.test(prompt)) {
+    const max = Math.max(...plot.counts);
+    if (plot.counts.filter((c) => c === max).length !== 1) return null;
+    return plot.values[plot.counts.indexOf(max)];
+  }
   if (/total length/i.test(prompt) || /what is the numerator/i.test(prompt))
     return plot.values.reduce((s, v, i) => s + v * plot.counts[i], 0);
   return null;
+}
+
+/** For an MCQ in this family, the LABEL the plot-derived answer must appear as: the mode's or
+ * total's axis label, formatted by the ONE shared formatter, so "6" or "1/2" or "2". The correct
+ * option's label must BEGIN with it (labels carry units and rationale tails: "1/2 ft",
+ * "6 inches — its stack is tallest"). Boundary-guarded so "6" can never match "60 inches". */
+function mcqAnswerLabelFromPlot(prompt: string, plot: TPlotData): string | null {
+  const units = answerFromPlot(prompt, plot);
+  if (units === null || !Number.isInteger(units)) return null;
+  return dotPlotLabel(units, plot.denominator);
 }
 
 /* ------------------------------------------------------------------ *
@@ -195,12 +275,28 @@ function authoredAnswerInUnits(w: Record<string, unknown>, den: number): number 
 }
 
 describe("plotData — the corpus contract", () => {
-  it("is declared on exactly the 4 measured steps, all of them vm-02-02's", () => {
+  it("is declared on exactly the 14 measured steps of the inline-dataset family", () => {
+    // S237 wired vm-02-02's four graded steps; S238 extended the field to mcq and wired the
+    // rest of the READY family (S237 handover §3.2): vm-02-01 whole, the three g2g mode checks,
+    // g2g-03-03's, and vm-02-02's two stragglers (i2, rem-lo-k). Still ABSENT by decision, not
+    // drift: md-03-04 (×3) and mc-05-02 (×1) await the mixed-number-axis and mark-order rulings
+    // (S237 handover §5), and dd-02-01 (×2) says "dots" where this figure draws X's — drawing
+    // the wrong glyph would trade one figure-text defect for another.
     expect(declared.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "g2g-01-05/k1",
+      "g2g-01-05/k3",
+      "g2g-01-05/rem-g2g-mode-k",
+      "g2g-03-03/k3",
+      "vm-02-01/ch1",
+      "vm-02-01/k1",
+      "vm-02-01/k2",
+      "vm-02-01/rem-rl-k",
       "vm-02-02/ch1",
+      "vm-02-02/i2",
       "vm-02-02/k1",
       "vm-02-02/k2",
-      "vm-02-02/k3"
+      "vm-02-02/k3",
+      "vm-02-02/rem-lo-k"
     ]);
   });
 
@@ -212,6 +308,7 @@ describe("plotData — the corpus contract", () => {
 
   it("the drawn plot is the dataset the FROZEN ANSWER comes from", () => {
     for (const d of declared) {
+      if (d.w.type === "mcq") continue; // the mcq direction has its own label check below
       const den = d.plot.denominator ?? 1;
       const fromPlot = answerFromPlot(String(d.w.prompt), d.plot);
       expect(fromPlot, `${d.lesson}/${d.step}: no answer shape recognised`).not.toBeNull();
@@ -219,6 +316,26 @@ describe("plotData — the corpus contract", () => {
         authoredAnswerInUnits(d.w, den)
       );
     }
+  });
+
+  it("for the mcq rows, the CORRECT OPTION states the value the drawn plot fixes", () => {
+    // The mcq analog of the frozen-answer check: the plot must be the dataset the keyed option
+    // comes from. The label check is boundary-guarded — "6" must match "6 inches", never "60".
+    let checked = 0;
+    for (const d of declared) {
+      if (d.w.type !== "mcq") continue;
+      const label = mcqAnswerLabelFromPlot(String(d.w.prompt), d.plot);
+      expect(label, `${d.lesson}/${d.step}: no answer shape recognised`).not.toBeNull();
+      const options = d.w.options as Array<{ label: string; correct?: boolean }>;
+      const correct = options.find((o) => o.correct);
+      expect(correct, `${d.lesson}/${d.step}: no keyed option`).toBeDefined();
+      expect(
+        correct!.label === label || correct!.label.startsWith(`${label} `),
+        `${d.lesson}/${d.step}: the plot fixes "${label}" but the keyed option reads "${correct!.label}"`
+      ).toBe(true);
+      checked++;
+    }
+    expect(checked).toBe(6);
   });
 
   it("every declared plot is drawable, and passes the shared integrity rules", () => {
@@ -240,6 +357,11 @@ describe("plotData — the corpus contract", () => {
           expect(t.value).not.toBe(d.w.answer);
           expect(t.feedback.length).toBeGreaterThanOrEqual(25);
         }
+      } else if (d.w.type === "mcq") {
+        // Grading reads option ids alone; the field must not have disturbed the key.
+        const options = d.w.options as Array<{ label: string; correct?: boolean; feedback: string }>;
+        expect(options.filter((o) => o.correct).length, `${d.lesson}/${d.step}`).toBe(1);
+        for (const o of options) expect(o.feedback.length, `${d.lesson}/${d.step}`).toBeGreaterThanOrEqual(25);
       } else {
         for (const t of (d.w.commonEntries ?? []) as Array<{ whole?: number; num: number; den: number; feedback: string }>) {
           expect(t.feedback.length).toBeGreaterThanOrEqual(25);
@@ -267,10 +389,36 @@ describe("plotData — the corpus contract", () => {
 
 describe("plotData survives the re-ask: every declared generator emits it", () => {
   const SEEDS = 40;
+  type PlotWidget = Extract<TWidget, { type: "numeric" | "fractionEntry" | "mcq" }>;
+  // Only the steps that can regenerate carry the obligation; the remedials and the two
+  // variant-less steps are pinned BY NAME so a variant added later fails loudly here and
+  // forces the generator to take the plot with it.
+  const withVariant = declared.filter((d) => d.variant !== undefined);
+  const withoutVariant = declared.filter((d) => d.variant === undefined);
 
-  it("each of the 4 steps regenerates WITH a plot that agrees with its regenerated prompt", () => {
-    for (const d of declared) {
-      expect(d.variant, `${d.lesson}/${d.step}: no variant declared`).toBeDefined();
+  it("exactly the 7 variant-bearing steps regenerate; the 7 static rows are the ones expected", () => {
+    expect(withVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "vm-02-01/ch1",
+      "vm-02-01/k1",
+      "vm-02-01/k2",
+      "vm-02-02/ch1",
+      "vm-02-02/k1",
+      "vm-02-02/k2",
+      "vm-02-02/k3"
+    ]);
+    expect(withoutVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
+      "g2g-01-05/k1",
+      "g2g-01-05/k3",
+      "g2g-01-05/rem-g2g-mode-k",
+      "g2g-03-03/k3",
+      "vm-02-01/rem-rl-k",
+      "vm-02-02/i2",
+      "vm-02-02/rem-lo-k"
+    ]);
+  });
+
+  it("each variant-bearing step regenerates WITH a plot that agrees with its regenerated prompt", () => {
+    for (const d of withVariant) {
       let seen = 0;
       for (let i = 0; i < SEEDS; i++) {
         const v = variantForStep(
@@ -278,7 +426,7 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
           `plot:${d.lesson}:${d.step}:${i}`
         );
         expect(v, `${d.lesson}/${d.step}: generator declined seed ${i}`).not.toBeNull();
-        const w = WidgetSpec.parse(v!.widget) as Extract<TWidget, { type: "numeric" | "fractionEntry" }>;
+        const w = WidgetSpec.parse(v!.widget) as PlotWidget;
         expect(w.plotData, `${d.lesson}/${d.step} seed ${i}: regenerated WITHOUT a plot`).toBeDefined();
         expect(
           disagreements(w.prompt, w.plotData!),
@@ -292,13 +440,25 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
   });
 
   it("the regenerated plot is the dataset the regenerated ANSWER comes from", () => {
-    for (const d of declared) {
+    for (const d of withVariant) {
       for (let i = 0; i < SEEDS; i++) {
         const v = variantForStep(
           { widget: { type: d.w.type as string }, variant: d.variant! },
           `plotans:${d.lesson}:${d.step}:${i}`
         )!;
-        const w = WidgetSpec.parse(v.widget) as Extract<TWidget, { type: "numeric" | "fractionEntry" }>;
+        const w = WidgetSpec.parse(v.widget) as PlotWidget;
+        if (w.type === "mcq") {
+          // The regenerated mcq's KEYED OPTION must state the value the regenerated plot fixes —
+          // the same label check the authored rows pass, applied across the seed sweep.
+          const label = mcqAnswerLabelFromPlot(w.prompt, w.plotData!);
+          expect(label, `${d.lesson}/${d.step} seed ${i}: ${w.prompt}`).not.toBeNull();
+          const correct = w.options.find((o) => o.correct)!;
+          expect(
+            correct.label === label || correct.label.startsWith(`${label} `),
+            `${d.lesson}/${d.step} seed ${i}: plot fixes "${label}", keyed option reads "${correct.label}"`
+          ).toBe(true);
+          continue;
+        }
         const den = w.plotData!.denominator ?? 1;
         const fromPlot = answerFromPlot(w.prompt, w.plotData!);
         expect(fromPlot, `${d.lesson}/${d.step} seed ${i}: ${w.prompt}`).not.toBeNull();
@@ -310,14 +470,14 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
   });
 
   it("the generated plots are FRESH — the picture moves with the seed, not just the sentence", () => {
-    for (const d of declared) {
+    for (const d of withVariant) {
       const seen = new Set<string>();
       for (let i = 0; i < SEEDS; i++) {
         const v = variantForStep(
           { widget: { type: d.w.type as string }, variant: d.variant! },
           `plotfresh:${d.lesson}:${d.step}:${i}`
         )!;
-        const w = v.widget as Extract<TWidget, { type: "numeric" | "fractionEntry" }>;
+        const w = v.widget as PlotWidget;
         seen.add(JSON.stringify(w.plotData));
       }
       expect(seen.size, `${d.lesson}/${d.step}: the plot ignores the seed`).toBeGreaterThan(3);
@@ -328,7 +488,7 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
     // Found by READING the printed output: vm-02-02/k3 carries `previewDenominator: 4`, but the
     // generator that rebuilds it on a re-ask did not, so the live "what you just typed" bar
     // vanished the moment the learner asked for a fresh one. Both display fields must survive.
-    const k3 = declared.find((d) => d.step === "k3")!;
+    const k3 = declared.find((d) => d.lesson === "vm-02-02" && d.step === "k3")!;
     for (let i = 0; i < SEEDS; i++) {
       const v = variantForStep({ widget: { type: "numeric" }, variant: k3.variant! }, `plotprev:${i}`)!;
       const w = WidgetSpec.parse(v.widget) as Extract<TWidget, { type: "numeric" }>;
@@ -342,10 +502,10 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
   });
 
   it("and it is deterministic: one seed rebuilds one plot, forever", () => {
-    for (const d of declared) {
+    for (const d of withVariant) {
       const call = () =>
         (variantForStep({ widget: { type: d.w.type as string }, variant: d.variant! }, `plotdet:${d.step}`)!
-          .widget as Extract<TWidget, { type: "numeric" | "fractionEntry" }>).plotData;
+          .widget as PlotWidget).plotData;
       expect(JSON.stringify(call())).toBe(JSON.stringify(call()));
     }
   });
@@ -400,6 +560,24 @@ describe("the prompt reader ACCEPTS the authored shapes and REJECTS what it must
       values: [2, 3],
       counts: [3, 1]
     });
+  });
+
+  it("reads the generator's \"N ft (C X's)\" sentence — and REJECTS a single mark (S238)", () => {
+    expect(
+      plotStatedIn("A line plot shows 1/4 ft (2 X's), 1/2 ft (3 X's), 3/4 ft (1 X), 1 ft (2 X's). Which length is most common?", 4)
+    ).toEqual({ kind: "marks", values: [1, 2, 3, 4], counts: [2, 3, 1, 2] });
+    expect(plotStatedIn("A line plot shows 1/2 ft (3 X's). Which length is most common?", 4)).toBeNull();
+  });
+
+  it("reads the g2g \"stacks of … x's above …\" sentence — and REJECTS unpaired lists (S238)", () => {
+    expect(
+      plotStatedIn("A line plot shows stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?", 1)
+    ).toEqual({ kind: "marks", values: [5, 6, 7, 8], counts: [2, 5, 3, 1] });
+    // Three counts against four values is a sentence that states no drawable dataset: pairing
+    // them off by position would silently invent a stack.
+    expect(
+      plotStatedIn("A line plot shows stacks of 2, 5, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?", 1)
+    ).toBeNull();
   });
 
   it("REJECTS a label the declared denominator cannot express", () => {

@@ -32073,13 +32073,24 @@ const GENERATORS: VariantGen[] = [
           `${m.label} ft`,
           `${m.label} has ${counts[quarterMarks.indexOf(m)]} X${counts[quarterMarks.indexOf(m)] === 1 ? "" : "'s"}, fewer than the ${max} above ${quarterMarks[winner].label}.`,
         ] as [string, string]);
-        return mcq(
+        const built = mcq(
           rand,
           "line-plot",
           `A line plot shows ${quarterPlot(counts)}. Which length is most common?`,
           [`${quarterMarks[winner].label} ft`, `${quarterMarks[winner].label} has the tallest stack with ${max} X's.`],
           [...wrongs, [`All lengths are equally common`, `The stacks are not equal; ${quarterMarks[winner].label} has the unique maximum.`]]
         );
+        // DISPLAY ONLY (PlotDataSpec, S238 — the vm-02-01/k1 absent-diagram row): the plot the
+        // prompt names, drawn. The values are the four quarter marks the sentence lists and the
+        // counts are the SAME array the sentence is written from — no re-parsing. The mode this
+        // plot shows is the dataset's, which the prompt already states in ASCII, so no leak.
+        return {
+          ...built,
+          widget: {
+            ...(built.widget as Extract<TWidget, { type: "mcq" }>),
+            plotData: { values: [1, 2, 3, 4], counts: [...counts], denominator: 4 },
+          },
+        };
       }
 
       if (form === "fractionTotal") {
@@ -32093,7 +32104,7 @@ const GENERATORS: VariantGen[] = [
           }
         );
         const answer = counts.reduce((sum, n) => sum + n, 0);
-        return num(
+        const built = num(
           "line-plot",
           `A line plot shows ${quarterPlot(counts)}. How many measurements are shown in all?`,
           answer,
@@ -32104,6 +32115,16 @@ const GENERATORS: VariantGen[] = [
           ],
           `Add the frequencies: ${counts.join(" + ")} = ${answer} measurements.`
         );
+        // DISPLAY ONLY (PlotDataSpec, S238 — the vm-02-01/k2 absent-diagram row): same
+        // counts array the sentence prints, same four quarter marks. The graded total is a
+        // COUNT of X's, which the ASCII already states stack by stack, so no leak.
+        return {
+          ...built,
+          widget: {
+            ...(built.widget as Extract<TWidget, { type: "numeric" }>),
+            plotData: { values: [1, 2, 3, 4], counts: [...counts], denominator: 4 },
+          },
+        };
       }
 
       if (form === "fractionRange") {
@@ -32138,7 +32159,7 @@ const GENERATORS: VariantGen[] = [
         const answer = counts.slice(threshold).reduce((sum, n) => sum + n, 0);
         const total = counts.reduce((sum, n) => sum + n, 0);
         const thresholdOnly = counts[threshold];
-        return num(
+        const built = num(
           "line-plot",
           `A line plot shows ${quarterPlot(counts)}. How many measurements are ${quarterMarks[threshold].label} ft or longer?`,
           answer,
@@ -32149,6 +32170,15 @@ const GENERATORS: VariantGen[] = [
           ],
           `Count the stacks at ${quarterMarks.slice(threshold).map((m) => m.label).join(", ")}: ${counts.slice(threshold).join(" + ")} = ${answer}.`
         );
+        // DISPLAY ONLY (PlotDataSpec, S238 — the vm-02-01/ch1 absent-diagram row): same counts
+        // the sentence prints. The threshold count is read off stacks the ASCII already states.
+        return {
+          ...built,
+          widget: {
+            ...(built.widget as Extract<TWidget, { type: "numeric" }>),
+            plotData: { values: [1, 2, 3, 4], counts: [...counts], denominator: 4 },
+          },
+        };
       }
 
       if (form === "quarterNumerator") {
