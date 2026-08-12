@@ -47,7 +47,9 @@ for (const title of [
 for (const assertion of [
   "toHaveAttribute(\"data-player-phase\", \"retry\")",
   "toHaveValue(\"15\")",
-  "toBeDisabled()",
+  // S238: was toBeDisabled() — S235 exploration checkpoints deliberately keep the model live
+  // after reveal, and the state spec now asserts that (equally load-bearing, same site).
+  "toBeEnabled()",
   "toHaveURL(/\\/learn\\/as100-01-02$/)",
   "toBeGreaterThanOrEqual(43.5)",
   "inputCenterOwned",

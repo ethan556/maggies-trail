@@ -84,6 +84,43 @@ build                    EXIT:0
 **HEAD at end of session: `2aa3fca`** — three commits on `39bf84c`: plan adoption (`d410598`),
 WS-D stage roles (`e89f23d`), stale e2e fixes (`2aa3fca`).
 
+## Batch 2 (same session): `plotData` extended to `McqSpec` — the family closed to 10 of 16
+
+The S237 handover's suggested first action, executed after the shell work. One field, one
+resolver, one renderer, one spoken dialect — no second shape:
+
+- **Schema:** `PlotDataSpec` moved above `McqSpec`; `plotData` optional on mcq with the
+  MCQ-specific leakage rule documented (never where an option IS the dataset — dd-02-01/k2's
+  shape stays excluded by policy). Integrity pre-switch now covers all three surfaces.
+- **Renderer:** `McqW` draws the same `LinePlotFigure` from the same `plotDataParts` call,
+  placed prompt → plot → options. `describeWidgetState` gained the mcq case in the identical
+  dialect. Grading asserted byte-identical with and without the field.
+- **Rows wired (10):** vm-02-01 k1(mcq)/k2/ch1/rem-rl-k · g2g-01-05 k1/k3/rem-g2g-mode-k (mcq)
+  · g2g-03-03 k3 (mcq) · vm-02-02 i2 (fractionEntry) + rem-lo-k (mcq). The three vm-02-01
+  variant forms (fractionMode, fractionTotal, atOrAbove) now emit the block on every re-ask.
+- **Gates extended, not weakened:** corpus contract pins the 14 declared rows by name AND the
+  7 variant-less rows by name; the prompt reader learned the two new authored notations (each
+  acceptance paired with a rejection); the mcq answer direction is a boundary-guarded label
+  check against the keyed option; 40-seed sweeps cover the mcq generator.
+- **Still absent by decision:** md-03-04 (×3) and mc-05-02 (×1) blocked on the §5 rulings;
+  dd-02-01 (×2) says "dots" where this figure draws X's — needs a glyph ruling, not a hack.
+- **Proof:** content-change proof extended (866→867 authorized; vm-02-01 new entry, three
+  files' reasons appended) and green at 867/867.
+- **Read output (rhythm step 5):** `scripts/measure/print-plotdata-s238.mts` printed all 10
+  authored rows and 9 generated seeds; all read clean. One authored defect FOUND and NOT fixed
+  (frozen prose): **g2g-01-05/k3's distractor "6 inches" collapses onto the correct value** —
+  stacks 2,6,3,1 above 5,6,7,8 make the mode 6 AND the tall-stack count 6, so the
+  count-vs-value trap shares its label with the key ("6 inches — its stack is tallest" is
+  correct, bare "6 inches" is wrong). A learner reading the plot correctly can be marked wrong.
+  Pre-existing; needs a ruling (swap k3's counts, e.g. 2,5,3,1 variant, or reword the trap).
+- **Housekeeping (owed from S237 §4):** `gen:manifest` + the head of `gen:reports` regenerated
+  (PLAN registry → contentVersion e00cf089, PLAYBOOK_STATUS product-wide tiers A1190/B457/C54,
+  PRODUCT_STATE refreshed). The `player-harness-contract-s127` audit expected the pre-S235
+  `toBeDisabled()` token and was corrected to the equally-strict `toBeEnabled()` (stated here
+  per the never-weaken rule). The full `gen:reports` chain still exits 1 deeper in:
+  `place-value-transform-mutations-s145` M28 (accessibility mutation not rejected) — verified
+  PRE-EXISTING at baseline `39bf84c` (33/35 there, 34/35 now), left for a dedicated session.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

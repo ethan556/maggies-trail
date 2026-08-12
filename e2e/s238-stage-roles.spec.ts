@@ -93,10 +93,12 @@ test("1440px: a prose step stays at reading width", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await seedResume(page, 0);
   await page.goto(`/learn/${LESSON.id}`);
-  await page.locator("main").waitFor({ state: "visible" });
+  // Pin the precondition before measuring: the player must actually be ON the prose step.
+  // (Under parallel load a mid-hydration measurement once read a stale width; anchoring on the
+  // step attribute makes the width assertion measure the state it claims to measure.)
+  await expect(page.locator("[data-player-phase]")).toHaveAttribute("data-step-index", "0", { timeout: 15_000 });
 
   // max-w-2xl = 672px — the reading column never inflates to lab width.
-  // Polled: under parallel load the first paint can be measured mid-layout.
   await expect
     .poll(async () => (await page.locator("main").boundingBox())!.width, { timeout: 10_000 })
     .toBeLessThanOrEqual(700);
