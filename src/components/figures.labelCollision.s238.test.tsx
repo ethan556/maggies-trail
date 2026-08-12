@@ -3,11 +3,15 @@
  * S238 wave 10 — THE FIGURES LEDGER RATCHET (always-on).
  *
  * figuresCollision.s238.test.tsx (opt-in, FIGURE_SWEEP=1) MEASURES the ledger; this file
- * FREEZES it. The baseline below is the measured remainder — 188 figures still carrying
- * label collisions after wave 10 closed the ten worst by exposure (pairs × authored uses):
- * compound-event-tree, two-population-compare, si-claim-ladder, side-splitter,
- * si-study-types, probability-line, dr-tangent-line, ca-first-derivative-story,
- * dd-pipeline, in-ftc-slope-is-height — 45 pairs, all to zero.
+ * FREEZES it. The baseline below is the measured remainder — 173 figures still carrying
+ * label collisions after wave 10 closed the ten worst by exposure (pairs × authored uses)
+ * and wave 11 the next fifteen: 352 → 307 → 267 pairs. Fixed so far: compound-event-tree,
+ * two-population-compare, si-claim-ladder, side-splitter, si-study-types, probability-line,
+ * dr-tangent-line, ca-first-derivative-story, dd-pipeline, in-ftc-slope-is-height,
+ * ia-strip-to-disc, dpv-round-whole, line-plot, magnitude-scale, equation-solution-types,
+ * lc-indeterminate, sample-to-population, dop-remainder, line-intercepts,
+ * si-accuracy-precision, sc-taylor-hug-peel, dr-e-self-derivative, mult3-which-op,
+ * substitution-flow, dr-implicit-circle.
  *
  * BASELINE SEMANTICS — a ratchet, exactly like the accessibleParity one:
  *   · a figure NOT in the baseline must render with ZERO colliding pairs — a new collision
@@ -68,13 +72,8 @@ const BASELINE = new Map<string, number>([
   ["dm-shape-outlier", 1],
   ["dop-order-matters", 1],
   ["dop-partial-products", 1],
-  ["dop-remainder", 2],
   ["dop-standard-algo", 1],
   ["dpv-place-names", 1],
-  ["dpv-round-whole", 2],
-  ["dr-e-self-derivative", 1],
-  ["dr-implicit-circle", 1],
-  ["equation-solution-types", 3],
   ["esn8-zero-exponent", 3],
   ["ev-distribution-inventory", 4],
   ["ev-risk-outside-expectation", 4],
@@ -98,7 +97,6 @@ const BASELINE = new Map<string, number>([
   ["halves-quarters", 1],
   ["hole-vs-asymptote", 1],
   ["hundred-more", 1],
-  ["ia-strip-to-disc", 2],
   ["iar-dashed-solid-rule", 1],
   ["iar-name-the-failure", 1],
   ["iar-region-corners", 1],
@@ -106,18 +104,13 @@ const BASELINE = new Map<string, number>([
   ["incenter", 1],
   ["inverse-reflection", 2],
   ["kite-diagonals", 1],
-  ["lc-indeterminate", 5],
   ["lc-partial-sums", 1],
   ["lcd-clear", 1],
   ["lf-same-line", 1],
-  ["line-intercepts", 1],
-  ["line-plot", 3],
-  ["magnitude-scale", 6],
   ["mc-classify-angles", 1],
   ["mc-length-ladder", 1],
   ["md3-lineplot", 3],
   ["mean-outlier-pull", 1],
-  ["mult3-which-op", 2],
   ["near-double", 2],
   ["nls-horizontal-cases", 1],
   ["nls-no-phantom-here", 1],
@@ -167,11 +160,8 @@ const BASELINE = new Map<string, number>([
   ["sa7-same-rule-any-base", 1],
   ["sa7-triangular-prism-parts", 2],
   ["sa7-units-squared", 1],
-  ["sample-to-population", 2],
-  ["sc-taylor-hug-peel", 2],
   ["se-graph-cross", 2],
   ["shape-attributes", 1],
-  ["si-accuracy-precision", 4],
   ["si-confounding", 2],
   ["si-effect-vs-significance", 1],
   ["si-empirical-rule", 1],
@@ -191,7 +181,6 @@ const BASELINE = new Map<string, number>([
   ["square-vs-cube-solutions", 1],
   ["ssa-ambiguous", 2],
   ["ssg2-thirds-vs-fourths", 1],
-  ["substitution-flow", 4],
   ["sy-dilation-parallel", 1],
   ["synthetic-division", 1],
   ["tangent-radius", 1],
@@ -243,13 +232,17 @@ describe("figures.tsx label collisions — the ratchet", () => {
     expect(stale, "these figures are FIXED — remove them from the baseline so the ratchet tightens").toEqual([]);
   }, 300_000);
 
-  it("the ten wave-10 fixes hold at exactly zero, by name", () => {
+  it("the twenty-five wave-10/11 fixes hold at exactly zero, by name", () => {
     // Redundant with the ratchet above, but named: these are the fixes this wave shipped,
     // and a regression should say so rather than reporting a generic baseline violation.
     for (const id of [
       "compound-event-tree", "two-population-compare", "si-claim-ladder", "side-splitter",
       "si-study-types", "probability-line", "dr-tangent-line", "ca-first-derivative-story",
-      "dd-pipeline", "in-ftc-slope-is-height"
+      "dd-pipeline", "in-ftc-slope-is-height",
+      "ia-strip-to-disc", "dpv-round-whole", "line-plot", "magnitude-scale",
+      "equation-solution-types", "lc-indeterminate", "sample-to-population", "dop-remainder",
+      "line-intercepts", "si-accuracy-precision", "sc-taylor-hug-peel", "dr-e-self-derivative",
+      "mult3-which-op", "substitution-flow", "dr-implicit-circle"
     ]) {
       const F = FIGURES[id];
       expect(F, `${id} left the registry`).toBeDefined();

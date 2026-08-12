@@ -166,7 +166,7 @@ function LineIntercepts() {
       <text x={yInt.x + 8} y={yInt.y - 2} fontSize={11} fontWeight={800} fill={TANGERINE}>
         y-int (x = 0)
       </text>
-      <text x={xInt.x - 6} y={xInt.y + 20} fontSize={11} fontWeight={800} fill={LEAF}>
+      <text x={xInt.x} y={xInt.y + 26} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>
         x-int (y = 0)
       </text>
     </svg>
@@ -3096,8 +3096,8 @@ function DpvRoundWhole() {
       <line x1="24" y1="47" x2="24" y2="61" stroke={INK} strokeWidth={1.6}/><text x="24" y="74" fontSize="11" fill={INK} textAnchor="middle">3</text>
       <line x1="110" y1="49" x2="110" y2="59" stroke={INK} strokeWidth={1}/><text x="110" y="74" fontSize="10" fill={INK} textAnchor="middle">3.5</text>
       <line x1="196" y1="47" x2="196" y2="61" stroke={INK} strokeWidth={1.6}/><text x="196" y="74" fontSize="11" fill={INK} textAnchor="middle">4</text>
-      <circle cx="171" cy="54" r="5" fill={BERRY}/><text x="171" y="40" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">3.7</text>
-      <circle cx="196" cy="54" r="5" fill={LEAF}/><text x="196" y="30" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">up → 4</text>
+      <circle cx="171" cy="54" r="5" fill={BERRY}/><text x="171" y="74" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">3.7</text>
+      <circle cx="196" cy="54" r="5" fill={LEAF}/><text x="206" y="36" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="end">up → 4</text>
     </svg>
   );
 }
@@ -3669,9 +3669,9 @@ function DopRemainder() {
       <title>A remainder means different things.</title>
       <text x="105" y="20" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">27 ÷ 4 = 6 remainder 3</text>
       <text x="16" y="46" fontSize="11" fill={INK}>"how many buses?" →</text>
-      <text x="168" y="46" fontSize="12" fontWeight="700" fill={SKY} textAnchor="middle">7</text>
+      <text x="200" y="46" fontSize="12" fontWeight="700" fill={SKY} textAnchor="end">7</text>
       <text x="16" y="72" fontSize="11" fill={INK}>"how many each?" →</text>
-      <text x="168" y="72" fontSize="12" fontWeight="700" fill={LEAF} textAnchor="middle">6 r3</text>
+      <text x="200" y="72" fontSize="12" fontWeight="700" fill={LEAF} textAnchor="end">6 r3</text>
     </svg>
   );
 }
@@ -3898,10 +3898,10 @@ function Mult3WhichOp() {
   return (
     <svg viewBox="0 0 210 84" role="img" aria-label="Choosing the operation: equal groups joined means multiply, while sharing or splitting into groups means divide.">
       <title>Which operation: join vs share.</title>
-      <text x="16" y="30" fontSize="12" fill={INK}>equal groups joined →</text>
-      <text x="165" y="30" fontSize="14" fontWeight="700" fill={SKY} textAnchor="middle">×</text>
-      <text x="16" y="64" fontSize="12" fill={INK}>share / split apart →</text>
-      <text x="165" y="64" fontSize="14" fontWeight="700" fill={BERRY} textAnchor="middle">÷</text>
+      <text x="16" y="30" fontSize="11" fill={INK}>equal groups joined →</text>
+      <text x="196" y="30" fontSize="14" fontWeight="700" fill={SKY} textAnchor="middle">×</text>
+      <text x="16" y="64" fontSize="11" fill={INK}>share / split apart →</text>
+      <text x="196" y="64" fontSize="14" fontWeight="700" fill={BERRY} textAnchor="middle">÷</text>
     </svg>
   );
 }
@@ -5011,7 +5011,7 @@ function LinePlot() {
     [3 / 4, 1]
   ];
   return (
-    <svg viewBox="0 0 320 116" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 320 126" role="img" className="mx-auto w-full max-w-sm">
       <title>A line plot of five pencil lengths in eighths of an inch: three X marks stacked above one half, one above five eighths, one above three fourths.</title>
       <line x1={ox - 10} y1={oy} x2={ox + u + 14} y2={oy} stroke={INK} strokeWidth={2} />
       {ticks.map((f) => (
@@ -5024,16 +5024,16 @@ function LinePlot() {
       ))}
       {marks.flatMap(([f, n]) =>
         Array.from({ length: n }, (_, i) => (
-          <text key={`${f}-${i}`} x={X(f)} y={oy - 10 - i * 16} textAnchor="middle" fontSize={14} fontWeight={800} fill={SKY}>
+          <text key={`${f}-${i}`} x={X(f)} y={oy - 10 - i * 19} textAnchor="middle" fontSize={14} fontWeight={800} fill={SKY}>
             ✕
           </text>
         ))
       )}
-      <text x={X(1 / 2)} y={oy - 10 - 3 * 16} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>
+      <text x={X(1 / 2)} y={14} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>
         1/2 came up 3 times
       </text>
       <text x={ox + u / 2} y={oy + 34} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.7}>
-        five pencils: 1/2, 3/4, 1/2, 5/8, 1/2 — one ✕ per measurement
+        one ✕ per pencil: 1/2, 3/4, 1/2, 5/8, 1/2
       </text>
     </svg>
   );
@@ -7310,8 +7310,8 @@ function MagnitudeScale() {
         <g key={label}>
           <line x1={x} y1={64} x2={x} y2={76} stroke={SKY} strokeWidth={2.5} />
           <circle cx={x} cy={70} r={4} fill={i % 2 === 0 ? TANGERINE : BERRY} />
-          <text x={x} y={i % 2 === 0 ? 54 : 100} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{label}</text>
-          <text x={x} y={i % 2 === 0 ? 42 : 112} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>{pow}</text>
+          <text x={i === 5 ? 298 : x} y={i % 2 === 0 ? 54 : 100} textAnchor={i === 5 ? "end" : "middle"} fontSize={10} fontWeight={700} fill={INK}>{label}</text>
+          <text x={i === 5 ? 298 : x} y={i % 2 === 0 ? 40 : 114} textAnchor={i === 5 ? "end" : "middle"} fontSize={10} fontWeight={800} fill={SKY}>{pow}</text>
         </g>
       ))}
       <text x={150} y={140} textAnchor="middle" fontSize={11} fontWeight={700} fill={LEAF}>21 orders of magnitude — atom to Sun</text>
@@ -7422,22 +7422,22 @@ function EquationSolutionTypes() {
     ["infinitely many", "2x + 3 = 2x + 3", "3 = 3  ✓", SKY],
   ];
   return (
-    <svg viewBox="0 0 300 150" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 340 150" role="img" className="mx-auto w-full max-w-sm">
       <title>Three outcomes for a one-variable equation. First, three x plus one equals x plus seven reduces to x equals three — one solution. Second, two x plus three equals two x plus five reduces to three equals five, which is false — no solution. Third, two x plus three equals two x plus three reduces to three equals three, always true — infinitely many solutions.</title>
       {cards.map(([label, eq, result, color], i) => {
-        const x = 6 + i * 97;
+        const x = 10 + i * 110;
         return (
           <g key={label}>
-            <rect x={x} y={22} width={88} height={104} rx={9} fill="white" stroke={color} strokeWidth={2} />
-            <rect x={x} y={22} width={88} height={22} rx={9} fill={color} opacity={0.15} />
-            <text x={x + 44} y={37} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={color}>{label}</text>
-            <text x={x + 44} y={72} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>{eq}</text>
-            <line x1={x + 14} y1={84} x2={x + 74} y2={84} stroke={INK} strokeWidth={1} opacity={0.3} />
-            <text x={x + 44} y={106} textAnchor="middle" fontSize={13} fontWeight={800} fill={color}>{result}</text>
+            <rect x={x} y={22} width={104} height={104} rx={9} fill="white" stroke={color} strokeWidth={2} />
+            <rect x={x} y={22} width={104} height={22} rx={9} fill={color} opacity={0.15} />
+            <text x={x + 52} y={37} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={color}>{label}</text>
+            <text x={x + 52} y={72} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{eq}</text>
+            <line x1={x + 22} y1={84} x2={x + 82} y2={84} stroke={INK} strokeWidth={1} opacity={0.3} />
+            <text x={x + 52} y={106} textAnchor="middle" fontSize={13} fontWeight={800} fill={color}>{result}</text>
           </g>
         );
       })}
-      <text x={150} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>what does it reduce to?</text>
+      <text x={170} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>what does it reduce to?</text>
     </svg>
   );
 }
@@ -7496,18 +7496,20 @@ function SubstitutionFlow() {
     ["y = 2(2)−1 = 3", "back-substitute"],
   ];
   return (
-    <svg viewBox="0 0 300 170" role="img" className="mx-auto w-full max-w-xs">
+    <svg viewBox="0 0 300 186" role="img" className="mx-auto w-full max-w-xs">
       <title>The substitution method in four steps: start with y equals two x minus one where y is alone, plug that into the other equation to get three x plus the quantity two x minus one equals nine, solve that for x to get x equals two, then back-substitute to find y equals three.</title>
+      {/* S238 wave 11: every note used to sit BESIDE its equation and overlap it — now it
+          sits under the equation inside a taller box. */}
       {boxes.map(([eq, note], i) => {
-        const y = 8 + i * 40;
+        const y = 8 + i * 44;
         const color = i === boxes.length - 1 ? LEAF : SKY;
         return (
           <g key={i}>
-            <rect x={40} y={y} width={220} height={30} rx={7} fill="white" stroke={color} strokeWidth={2} />
-            <text x={52} y={y + 19} fontSize={11.5} fontWeight={800} fill={INK}>{eq}</text>
-            <text x={252} y={y + 19} textAnchor="end" fontSize={10} fontStyle="italic" fill={color}>{note}</text>
+            <rect x={40} y={y} width={220} height={36} rx={7} fill="white" stroke={color} strokeWidth={2} />
+            <text x={52} y={y + 15} fontSize={11.5} fontWeight={800} fill={INK}>{eq}</text>
+            <text x={52} y={y + 29} fontSize={10} fontStyle="italic" fill={color}>{note}</text>
             {i < boxes.length - 1 && (
-              <line x1={150} y1={y + 30} x2={150} y2={y + 40} stroke={INK} strokeWidth={1.6} markerEnd="url(#subArrow)" />
+              <line x1={150} y1={y + 36} x2={150} y2={y + 44} stroke={INK} strokeWidth={1.6} markerEnd="url(#subArrow)" />
             )}
           </g>
         );
@@ -11548,10 +11550,10 @@ function SampleToPopulation() {
       <text x={69} y={38} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>Sample: 50</text>
       <text x={69} y={58} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>30 like pizza</text>
       <text x={69} y={72} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>(30/50 = 3/5)</text>
-      <text x={148} y={50} fontSize={13} fontWeight={800} fill={LEAF}>× 10</text>
+      <text x={146} y={50} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>× 10</text>
       <rect x={168} y={14} width={110} height={60} rx={8} fill="#FFE9D6" stroke={SKY} strokeWidth={2} />
       <text x={223} y={38} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>School: 500</text>
-      <text x={223} y={58} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>≈300 like pizza</text>
+      <text x={223} y={58} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>≈300 like pizza</text>
       <text x={140} y={104} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>Same ratio, scaled up</text>
     </svg>
   );
@@ -12669,21 +12671,21 @@ function LcJumpGraph() {
 function LcIndeterminate() {
   const stage = (x: number, top: string, sub: string, col: string) => (
     <g>
-      <rect x={x} y={40} width={44} height={30} rx={7} fill={col} fillOpacity={0.14} stroke={col} strokeWidth={1.5} />
-      <text x={x + 22} y={59} fontSize="11" fontWeight="700" fill={col} textAnchor="middle">{top}</text>
-      <text x={x + 22} y={88} fontSize="10" fill={INK} textAnchor="middle">{sub}</text>
+      <rect x={x} y={40} width={54} height={30} rx={7} fill={col} fillOpacity={0.14} stroke={col} strokeWidth={1.5} />
+      <text x={x + 27} y={59} fontSize="11" fontWeight="700" fill={col} textAnchor="middle">{top}</text>
+      <text x={x + 27} y={88} fontSize="10" fill={INK} textAnchor="middle">{sub}</text>
     </g>
   );
   return (
-    <svg viewBox="0 0 240 110" role="img" aria-label="A four-stage pipeline for resolving an indeterminate limit: it starts at 0 over 0, then factor or rationalize, then cancel the shared factor, then substitute to reach the answer.">
+    <svg viewBox="0 0 340 110" role="img" aria-label="A four-stage pipeline for resolving an indeterminate limit: it starts at 0 over 0, then factor or rationalize, then cancel the shared factor, then substitute to reach the answer.">
       <title>Resolving a 0/0 indeterminate limit by factor-cancel-substitute.</title>
-      {stage(8, "0/0", "start", BERRY)}
-      <text x={56} y={60} fontSize="14" fill={INK}>→</text>
-      {stage(66, "factor", "or rationalize", SKY)}
-      <text x={114} y={60} fontSize="14" fill={INK}>→</text>
-      {stage(124, "cancel", "the hole", TANGERINE)}
-      <text x={172} y={60} fontSize="14" fill={INK}>→</text>
-      {stage(182, "sub in", "get L", LEAF)}
+      {stage(6, "0/0", "start", BERRY)}
+      <text x={69} y={60} fontSize="14" fill={INK}>→</text>
+      {stage(88, "factor", "or rationalize", SKY)}
+      <text x={151} y={60} fontSize="14" fill={INK}>→</text>
+      {stage(170, "cancel", "the hole", TANGERINE)}
+      <text x={233} y={60} fontSize="14" fill={INK}>→</text>
+      {stage(252, "sub in", "get L", LEAF)}
       <text x={12} y={22} fontSize="10" fontWeight="700" fill={INK}>Indeterminate? Keep going.</text>
     </svg>
   );
@@ -24219,7 +24221,7 @@ function SiAccuracyPrecision() {
           <text x={b.cx} y={106} textAnchor="middle" fontSize={10} fontWeight={700} fill={b.c}>
             {b.t.split(", ")[0]}
           </text>
-          <text x={b.cx} y={118} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+          <text x={b.cx} y={120} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
             {b.t.split(", ")[1]}
           </text>
         </g>
@@ -24679,7 +24681,7 @@ function DrChainGears() {
 function DrImplicitCircle() {
   const cx = 150, cy = 88, R = 58;
   return (
-    <svg viewBox="0 0 300 165" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 300 172" role="img" className="mx-auto w-full max-w-sm">
       <title>A circle of radius five with the tangent drawn at the point three, four. The radius to that point has slope four over three, and the tangent is perpendicular to it, with slope minus three over four.</title>
       <text x={150} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         no y = f(x) needed — differentiate the equation itself
@@ -24696,7 +24698,7 @@ function DrImplicitCircle() {
       <text x={150} y={150} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>
         x² + y² = 25 → 2x + 2y·(dy/dx) = 0 → dy/dx = −x/y = −3/4
       </text>
-      <text x={150} y={162} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+      <text x={150} y={166} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         and −3/4 is exactly perpendicular to the radius, slope 4/3
       </text>
     </svg>
@@ -24721,7 +24723,7 @@ function DrESelfDerivative() {
           <g key={a}>
             <line x1={X(a - 0.7)} y1={Y(h - h * 0.7)} x2={X(a + 0.7)} y2={Y(h + h * 0.7)} stroke={TANGERINE} strokeWidth={2.2} />
             <circle cx={X(a)} cy={Y(h)} r={3.6} fill={TANGERINE} />
-            <text x={X(a) + 6} y={Y(h) - 6} fontSize={10} fontWeight={700} fill={INK}>
+            <text x={a === -1 ? X(a) - 8 : X(a) + 6} y={Y(h) - 6} textAnchor={a === -1 ? "end" : undefined} fontSize={10} fontWeight={700} fill={INK}>
               slope {h.toFixed(2)}
             </text>
           </g>
@@ -24941,7 +24943,7 @@ function IaStripToDisc() {
   const X = (x: number) => 26 + x * 34;
   const Y = (y: number) => 108 - y * 26;
   return (
-    <svg viewBox="0 0 300 165" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 300 172" role="img" className="mx-auto w-full max-w-md">
       <title>A thin rectangle standing under a curve, and the same rectangle after being spun about the axis: it has become a disc whose radius is the height of the curve.</title>
       <text x={150} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         spin the strip and it becomes a COIN
@@ -24951,7 +24953,7 @@ function IaStripToDisc() {
         fill="none" stroke={INK} strokeWidth={2.2} />
       <rect x={X(1.6)} y={Y(0.5 + 1.9 * 0.55)} width={X(0.4) - X(0)} height={Y(0) - Y(0.5 + 1.9 * 0.55)}
         fill={TANGERINE} fillOpacity={0.45} stroke={TANGERINE} strokeWidth={1.2} />
-      <text x={X(1.8) + 12} y={Y(0.8)} fontSize={10} fontWeight={700} fill={TANGERINE}>
+      <text x={X(1.8)} y={122} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>
         height f(x)
       </text>
       <text x={144} y={Y(1)} fontSize={20} fontWeight={700} fill={INK} fillOpacity={0.6}>→</text>
@@ -24964,7 +24966,7 @@ function IaStripToDisc() {
       <text x={150} y={152} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>
         so the slice is worth πr² = π[f(x)]²
       </text>
-      <text x={150} y={164} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+      <text x={150} y={167} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         same slicing, same summing — only the MEASUREMENT changed
       </text>
     </svg>
@@ -25019,7 +25021,7 @@ function ScTaylorHugPeel() {
       .map((x) => `${X(x).toFixed(1)} ${Math.max(8, Math.min(150, Y(g(x)))).toFixed(1)}`)
       .join(" L ");
   return (
-    <svg viewBox="0 0 300 165" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 300 176" role="img" className="mx-auto w-full max-w-md">
       <title>A curve and its Taylor polynomial. Inside the radius of convergence the polynomial lies on top of the curve. Outside it, the polynomial peels away and runs off, and adding more terms makes it worse.</title>
       <text x={150} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         it HUGS inside the radius — and PEELS AWAY outside
@@ -25039,7 +25041,7 @@ function ScTaylorHugPeel() {
       <line x1={20} y1={Y(0)} x2={280} y2={Y(0)} stroke={INK} strokeWidth={0.8} strokeOpacity={0.35} />
       <text x={36} y={30} fontSize={10} fontWeight={700} fill={SKY}>the polynomial</text>
       <text x={196} y={44} fontSize={10} fontWeight={700} fill={BERRY}>runs away</text>
-      <text x={150} y={163} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+      <text x={150} y={170} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         outside the radius, MORE terms make it worse — the boundary is hard
       </text>
     </svg>

@@ -396,9 +396,34 @@ the study-types berry footer tightened to "different randomisations buy differen
 instead of shrinking below the floor). The floor was NOT weakened.
 
 Pixel evidence from the built registry page: `S238_SCREENSHOTS/15-fig-*.png` (seven captures).
-Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 307 pairs / 188 figures, ratcheted**.
-Next by weight: si-accuracy-precision, ia-strip-to-disc, sample-to-population, dpv-round-whole,
-magnitude-scale, lc-indeterminate (see the CSV's uses column).
+
+## Wave 11 (same session): the next fifteen figures — 307 → 267 pairs, baseline 188 → 173
+
+Straight down the usage-weighted CSV. All fifteen to zero, three of them structural rebuilds:
+**equation-solution-types** (three 15-char equations cannot share 97-unit centers at fs 11 —
+wider canvas, wider cards, eq at fs 10), **substitution-flow** (every step's italic note sat
+BESIDE its equation and overlapped it — notes moved under the equations inside taller boxes),
+**lc-indeterminate** ("or rationalize" is 101 units wide against a 58-unit stage pitch — canvas
+340, stage 54/pitch 82). The rest were seat moves and band separations: **line-plot** (fs-14 ✕
+marks at 16-unit pitch are 17.6 tall — pitch 19, annotation clear of the stack),
+**magnitude-scale** (name and power rows 0.6 units into each other — offsets opened; the last
+point's labels end-anchor instead of running off the canvas), **dpv-round-whole** ("3.7" joins
+the value row, "up → 4" end-anchored below the title band), **dop-remainder** /
+**mult3-which-op** (answers/symbols end-anchored past their phrases), **line-intercepts**
+(x-int caption centered under its marker), **sample-to-population** (× 10 centered in the gap
+BETWEEN the cards), **si-accuracy-precision** (caption rows separated), **dr-e-self-derivative**
+(the a=−1 tangent label anchors left), **dr-implicit-circle** / **ia-strip-to-disc** /
+**sc-taylor-hug-peel** (caption bands separated in slightly taller canvases).
+
+Reading the SCREENSHOTS (not the model) caught three visual clips the collision gate cannot
+see: magnitude-scale's last labels ran off the right edge, and line-plot's caption sat below
+its canvas AND wider than it (caption tightened to "one ✕ per pencil: …" — figure code, not
+authored prose). The ratchet baseline tightened 188 → 173 with all twenty-five fixes pinned by
+name. Pixel evidence: `S238_SCREENSHOTS/16-fig-*.png` (eight captures).
+
+Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 267 pairs / 173 figures, ratcheted**.
+Next by weight: rno7-add-diff-line (7 pairs), defined-terms-anatomy (7), cpr-permutation-slots,
+dc-speeding-up-signs, vec-dot-angle, quad-family-tree, extended-shapes (see the CSV).
 
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
