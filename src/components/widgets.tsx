@@ -3732,12 +3732,48 @@ function SasSssTriangleW({ spec, value, onChange, disabled, tone }: WProps<TTria
         <text x={(ox + Bx) / 2} y={oy + 15} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
           {spec.a}
         </text>
-        <text x={(ox + Cx) / 2 - 12} y={(oy + Cy) / 2} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
-          {spec.b}
-        </text>
-        <text x={(Bx + Cx) / 2 + 8} y={(By + Cy) / 2} fontSize={11} fontWeight={700} fill={PALETTE.sky}>
-          {fmt(third)}
-        </text>
+        {/* S238 — a shallow triangle slides side b's label into the angle° (rt-05-03: "4" on
+            "30°"). Same greedy seat scheme as the ratios mode below: angle° and side a keep
+            their canonical seats; b and the third side take the first clear seat. */}
+        {(() => {
+          type Seat = { x: number; y: number; anchor: "start" | "middle" | "end" };
+          const box = (text: string, s: Seat, fs: number) => {
+            const w = text.length * fs * 0.72;
+            const x0 = s.anchor === "start" ? s.x : s.anchor === "middle" ? s.x - w / 2 : s.x - w;
+            return { x0, x1: x0 + w, y0: s.y - fs * 0.98, y1: s.y + fs * 0.28 };
+          };
+          const placed = [
+            box(`${Math.round(angle)}°`, { x: ox + 16, y: oy - 6, anchor: "start" }, 10),
+            box(String(spec.a), { x: (ox + Bx) / 2, y: oy + 15, anchor: "middle" }, 11)
+          ];
+          const clear = (b: ReturnType<typeof box>) =>
+            placed.every((p) => b.x1 + 2 <= p.x0 || b.x0 >= p.x1 + 2 || b.y1 + 2 <= p.y0 || b.y0 >= p.y1 + 2);
+          const pick = (text: string, seats: Seat[]) => {
+            const seat = seats.find((s) => clear(box(text, s, 11))) ?? seats[0];
+            placed.push(box(text, seat, 11));
+            return seat;
+          };
+          const bSeat = pick(String(spec.b), [
+            { x: (ox + Cx) / 2 - 12, y: (oy + Cy) / 2, anchor: "start" },
+            { x: (ox + Cx) / 2 - 12, y: (oy + Cy) / 2 - 14, anchor: "start" },
+            { x: (ox + Cx) / 2 - 6, y: (oy + Cy) / 2 - 14, anchor: "end" }
+          ]);
+          const tSeat = pick(fmt(third), [
+            { x: (Bx + Cx) / 2 + 8, y: (By + Cy) / 2, anchor: "start" },
+            { x: (Bx + Cx) / 2 + 8, y: (By + Cy) / 2 + 14, anchor: "start" },
+            { x: (Bx + Cx) / 2 + 8, y: (By + Cy) / 2 - 14, anchor: "start" }
+          ]);
+          return (
+            <>
+              <text x={bSeat.x} y={bSeat.y} textAnchor={bSeat.anchor} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
+                {spec.b}
+              </text>
+              <text x={tSeat.x} y={tSeat.y} textAnchor={tSeat.anchor} fontSize={11} fontWeight={700} fill={PALETTE.sky}>
+                {fmt(third)}
+              </text>
+            </>
+          );
+        })()}
         <text x={ox + 16} y={oy - 6} fontSize={10} fontWeight={700} fill={PALETTE.leaf}>
           {Math.round(angle)}°
         </text>
@@ -3825,16 +3861,55 @@ function TriangleRatiosW({ spec, value, onChange, disabled, tone }: WProps<TTria
         <path className="tr" d={`M${ox + 24},${oy} A 24 24 0 0 0 ${(ox + 24 * Math.cos(rad)).toFixed(1)},${(oy - 24 * Math.sin(rad)).toFixed(1)}`}
           fill="none" stroke={PALETTE.leaf} strokeWidth={2} />
         <text x={ox + 30} y={oy - 10} fontSize={11} fontWeight={900} fill={PALETTE.leaf}>{angle}°</text>
-        {/* side labels move; that is the point */}
+        {/* side labels move; that is the point. S238 — and BECAUSE they move, their collisions
+            are state-driven: a steep triangle slid "hyp" into "opp", a shallow one slid "hyp"
+            into the angle°. Same greedy candidate scheme as slopeTriangle: angle° and adj keep
+            their canonical seats (they cannot meet), then hyp and opp each take the first seat
+            whose modelled box (0.72em/char, the S237 testkit constant) clears the placed ones. */}
         <text data-testid="tr-adj" className="tr" x={(ox + Bx) / 2} y={oy + 16} textAnchor="middle" fontSize={11} fontWeight={700} fill={PALETTE.ink}>
           adj {fmt1(adj)}
         </text>
-        <text data-testid="tr-opp" className="tr" x={Bx + 6} y={(By + Cy) / 2} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
-          opp {fmt1(opp)}
-        </text>
-        <text data-testid="tr-hyp" className="tr" x={(ox + Bx) / 2 - 16} y={(oy + Cy) / 2 - 4} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
-          hyp {fmt1(hyp)}
-        </text>
+        {(() => {
+          type Seat = { x: number; y: number; anchor: "start" | "middle" | "end" };
+          const box = (text: string, s: Seat) => {
+            const w = text.length * 11 * 0.72;
+            const x0 = s.anchor === "start" ? s.x : s.anchor === "middle" ? s.x - w / 2 : s.x - w;
+            return { x0, x1: x0 + w, y0: s.y - 11 * 0.98, y1: s.y + 11 * 0.28 };
+          };
+          const placed = [
+            box(`${angle}°`, { x: ox + 30, y: oy - 10, anchor: "start" }),
+            box(`adj ${fmt1(adj)}`, { x: (ox + Bx) / 2, y: oy + 16, anchor: "middle" })
+          ];
+          const clear = (b: ReturnType<typeof box>) =>
+            placed.every((p) => b.x1 + 2 <= p.x0 || b.x0 >= p.x1 + 2 || b.y1 + 2 <= p.y0 || b.y0 >= p.y1 + 2);
+          const pick = (text: string, seats: Seat[]) => {
+            const seat = seats.find((s) => clear(box(text, s))) ?? seats[0];
+            placed.push(box(text, seat));
+            return seat;
+          };
+          const hypText = `hyp ${fmt1(hyp)}`;
+          const hypSeat = pick(hypText, [
+            { x: (ox + Bx) / 2 - 16, y: (oy + Cy) / 2 - 4, anchor: "start" },
+            { x: (ox + Bx) / 2 - 24, y: (oy + Cy) / 2 - 16, anchor: "middle" },
+            { x: (ox + Bx) / 2 - 8, y: (oy + Cy) / 2 - 16, anchor: "end" }
+          ]);
+          const oppText = `opp ${fmt1(opp)}`;
+          const oppSeat = pick(oppText, [
+            { x: Bx + 6, y: (By + Cy) / 2, anchor: "start" },
+            { x: Bx + 6, y: (By + Cy) / 2 + 14, anchor: "start" },
+            { x: Bx + 6, y: (By + Cy) / 2 - 14, anchor: "start" }
+          ]);
+          return (
+            <>
+              <text data-testid="tr-opp" className="tr" x={oppSeat.x} y={oppSeat.y} textAnchor={oppSeat.anchor} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
+                {oppText}
+              </text>
+              <text data-testid="tr-hyp" className="tr" x={hypSeat.x} y={hypSeat.y} textAnchor={hypSeat.anchor} fontSize={11} fontWeight={700} fill={PALETTE.ink}>
+                {hypText}
+              </text>
+            </>
+          );
+        })()}
         {tone === "info" && Math.abs(angle - spec.target) > 1e-9 && (
           <g data-testid="tr-ghost" aria-hidden="true">
             <line x1={ox} y1={oy}
@@ -8175,7 +8250,11 @@ function DoubleNumberLineW({ spec, value, onChange, disabled, tone, onEvent }: W
     onChange(nt);
   };
 
-  const W = 320, H = 132, pad = 26, topY = 42, botY = 96;
+  // S238 — the row captions get their OWN bands. At x=4 on the tick-label baseline the top
+  // caption ("real metres", g7-01-01) printed on the first tick's "0", and the bottom caption
+  // did the same below — 15 of the S237-measured colliding pairs, all this one geometry. The
+  // viewBox grew 20 units so the captions sit clear above/below every tick label band.
+  const W = 320, H = 152, pad = 26, topY = 52, botY = 106;
   const sx = linScale(0, spec.steps, pad, W - pad);
   const ticks = integers(0, spec.steps);
   // S119: on a fraction lattice every value is a count of 1/denom units and renders as a true
@@ -8195,8 +8274,8 @@ function DoubleNumberLineW({ spec, value, onChange, disabled, tone, onEvent }: W
         aria-label={`Paired lines; your entry at the marked tick is ${fmt(top)}.`}>
         <line x1={pad - 8} y1={topY} x2={W - pad + 8} y2={topY} stroke={PALETTE.sky} strokeWidth={2} />
         <line x1={pad - 8} y1={botY} x2={W - pad + 8} y2={botY} stroke={PALETTE.tangerine} strokeWidth={2} />
-        <text x={4} y={topY - 12} fontSize={9} fontWeight={800} fill={PALETTE.sky}>{spec.topLabel}</text>
-        <text x={4} y={botY + 22} fontSize={9} fontWeight={800} fill={PALETTE.tangerine}>{spec.bottomLabel}</text>
+        <text x={4} y={10} fontSize={9} fontWeight={800} fill={PALETTE.sky}>{spec.topLabel}</text>
+        <text x={4} y={botY + 34} fontSize={9} fontWeight={800} fill={PALETTE.tangerine}>{spec.bottomLabel}</text>
         {ticks.map((t) => {
           const asked = t === spec.askAtStep;
           return (

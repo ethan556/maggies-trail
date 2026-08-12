@@ -817,6 +817,55 @@ describe("S238 label collisions — signChart", () => {
   });
 });
 
+/* ------------------------------------------------------------------ *
+ * S238 batch 7 — the long tail's two largest engines, from the
+ * committed re-measurement (COWORK_CACHE/label-collision-remainder-
+ * s238.csv): triangleSolve (21 pairs — the moving side labels slid
+ * into each other and into the angle°) and doubleNumberLine (15 —
+ * the row captions printed on the first tick's "0").
+ * ------------------------------------------------------------------ */
+
+describe("S238 label collisions — triangleSolve", () => {
+  it("all 15 authored specs are clean at every tone (their start states held the 21 pairs)", () => {
+    corpusSweep("triangleSolve", 15);
+  });
+
+  it("rt-01-04's ratios triangle stays clean across steep and shallow learner states", () => {
+    const lesson = JSON.parse(
+      readFileSync(join(process.cwd(), "content/courses/right-triangles-trig/lessons/rt-01-04.json"), "utf8")
+    ) as { steps: Array<{ id: string; widget?: Record<string, unknown> }> };
+    const raw = lesson.steps.find((s) => s.widget?.type === "triangleSolve")!.widget!;
+    const spec = WidgetSpec.parse(raw) as TWidget;
+    for (const st of [
+      { angle: 20, scale: 1, scaleMoves: 0 },
+      { angle: 40, scale: 1.4, scaleMoves: 1 },
+      { angle: 60, scale: 0.8, scaleMoves: 2 },
+      { angle: 80, scale: 1.2, scaleMoves: 1 }
+    ]) {
+      const { container } = render(
+        <WidgetRenderer spec={spec} value={st} onChange={() => {}} disabled={false} tone="neutral" />
+      );
+      const svg = container.querySelector("svg")!;
+      const { boxes } = scanTextBoxes(svg);
+      expect(collisions(boxes).map(describeCollision), `angle ${st.angle} scale ${st.scale}`).toEqual([]);
+      // Every reading survives — moved to a clear seat, never dropped.
+      const t = texts(boxes);
+      for (const tag of ["adj ", "opp ", "hyp "]) expect(t.some((s) => s.startsWith(tag)), tag).toBe(true);
+      expect(t.some((s) => s.endsWith("°")), "the angle label").toBe(true);
+      cleanup();
+    }
+  });
+});
+
+describe("S238 label collisions — doubleNumberLine", () => {
+  it("all 3 authored specs are clean, and both row captions plus the 0 tick survive", () => {
+    corpusSweep("doubleNumberLine", 3, (t, where) => {
+      expect(t, where).toContain("0");
+      expect(t.length, `${where}: both captions and a full tick row`).toBeGreaterThanOrEqual(8);
+    });
+  });
+});
+
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);

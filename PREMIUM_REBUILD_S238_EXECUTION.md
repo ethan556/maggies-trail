@@ -227,6 +227,31 @@ measurement, so the next session should re-run a corpus-wide sweep to enumerate 
 fixing (the measuring sweep itself was never committed; the gate's three sweep patterns are the
 raw material for building it).
 
+## Batch 7 (same session): the tail re-measured and its two largest engines closed
+
+The S237 measuring sweep was never committed, so batch 7 rebuilt it as a committed, OPT-IN
+measurement (`src/components/collisionSweep.s238.test.tsx`, `COLLISION_SWEEP=1` to run — 11,947
+authored specs × 3 tones in ~77s, never fails, writes
+`COWORK_CACHE/label-collision-remainder-s238.csv`). First run enumerated the tail at 104 pairs /
+18 engines (vs S237's "80 / 18" — this sweep adds the error tone).
+
+Fixed the two largest by the same greedy-seat scheme, corpus-proven:
+
+- **triangleSolve (21 → 0):** the side labels move with the triangle, so a steep triangle slid
+  "hyp" into "opp" and a shallow one slid it into the angle° — in BOTH renderer modes (the
+  ratios lab and the sas/sss builder; rt-05-03's "4" on "30°" was the builder's). angle° and the
+  base side keep their canonical seats; the moving labels take the first clear seat. Gate:
+  15/15 authored specs × 3 tones + rt-01-04 across four learner states, every reading asserted
+  present.
+- **doubleNumberLine (15 → 0):** both row captions ("real metres", "drawing cm", "litres") sat
+  on the first tick's "0" band. The captions now own their own bands above/below everything
+  (viewBox +20). Gate: 3/3 specs, captions and full tick rows asserted present.
+
+Post-fix re-measurement: **104 → 68 pairs across 16 engines**, largest now 9
+(circleMeasureExplore, argandExplore). Detector verified to fire pre-fix (3 failed with the fix
+stashed). One vitest flake investigated per Trap B: variants.test addition-patterns timed out
+under build CPU contention, passes solo and in a clean shard run.
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.
