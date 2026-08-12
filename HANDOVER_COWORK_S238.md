@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,146 / 13,146      (9,654 + 3,492)
+vitest (2 shards)        13,149 / 13,149      (9,654 + 3,495)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -53,7 +53,9 @@ content-change proof 866→867; owed `gen:reports` head regenerated. **Batch 3:*
 label collisions → 0, proven over every authored spec × reachable state; SliderW's range renamed
 to what it sets (estimateSlider house pattern). **Batch 4:** distributionCompareLab's 48 → 0,
 proven over all 33 authored specs × 3 tones (merged group tags at coinciding means; disjoint
-label bands; judge evidence un-stacked). Collision ledger: 267 → 137. Details and rationale:
+label bands; judge evidence un-stacked). **Batch 5:** slopeTriangle's 25 → 0 via a deterministic
+callout layout (every authored lesson's START state was the reported collision). Collision
+ledger: 267 → 112. Details and rationale:
 `PREMIUM_REBUILD_S238_EXECUTION.md`.
 
 **New defect for a ruling (found by reading, NOT fixed — frozen prose):** `g2g-01-05/k3`'s
@@ -70,10 +72,11 @@ height; their real growth is WS-C side panels, not a bigger square.
 
 1. **Bring the user the rulings** — S237 §5's five, plus S238's `g2g-01-05/k3` collapsed
    distractor and the dd-02-01 dots-vs-X glyph question. Cheap to ask, all blocking content.
-2. Label collisions, next by count: `slopeTriangle` (25), `samplingBiasLab` (14),
-   `pointSetReasoningLab` (10), `signChart` (8), 18 smaller engines (80). The corpus-complete
-   sweep pattern is in the gate twice now (unitChain by reachable state, DCL by spec × tone) —
-   copy whichever matches the engine's state dependence.
+2. Label collisions, next by count: `samplingBiasLab` (14), `pointSetReasoningLab` (10 —
+   duplicate axis values drawn on themselves, dd-04-01), `signChart` (8 — two `cross` labels for
+   close roots, pf-02-03), 18 smaller engines (80). Three sweep patterns now live in the gate:
+   unitChain (reachable crossing states), DCL (spec × tone), slopeTriangle (targeted state grid
+   + callout layout) — copy whichever matches the engine's state dependence.
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.
