@@ -25,7 +25,7 @@ gate table.
 
 ```
 typecheck                clean
-vitest (2 shards)        13,170 passing       (9,665 + 3,505; +1 opt-in sweep skip)
+vitest (2 shards)        13,172 passing       (9,665 + 3,507; +2 opt-in sweep skips)
 playwright               132 / 132            ALL 5 projects (not just chromium) vs next start
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
@@ -91,9 +91,15 @@ height; their real growth is WS-C side panels, not a bigger square.
    inversions (S237 §5 item 3) stay logged, untouched by ruling; the 8 NOT-POSSIBLE rows
    (item 4) are queued as an engine project. Proof count is now 870/870.
 2. ~~The collision tail~~ CLOSED in batch 8 — the sweep reports zero pairs corpus-wide.
-   What remains of this workstream: `figures.tsx` (4,953 text nodes) is deliberately
-   unmeasured — measuring it is a NEW ledger, opened the same way (sweep first, then fix by
-   size). Re-run COLLISION_SWEEP=1 after any widget-label change to keep the table empty.
+   Re-run COLLISION_SWEEP=1 after any widget-label change to keep the table empty.
+   **Wave 10 then OPENED the figures.tsx ledger**: all 1,871 registered figures measured
+   (FIGURE_SWEEP=1 …figuresCollision.s238.test.tsx → COWORK_CACHE/
+   figure-collision-remainder-s238.csv, usage-weighted), the ten worst by exposure closed
+   (352 → 307 pairs), and the 188-figure remainder FROZEN by an always-on ratchet
+   (figures.labelCollision.s238.test.tsx): unlisted figures must be clean, listed ones may
+   only improve, fixed ones must leave the baseline. Continue down the CSV by pairs × uses;
+   respect the 10-unit font floor (figures.test.ts) when re-laying labels — it caught one
+   of wave 10's own first drafts.
 3. `NumericW` prompt-as-accessible-name — deferred mechanically-heavy rename, reasons in the
    execution report batch-3 section.
 4. When a parallel wave launches, build the §4.2 precache first (`/.cowork-cache/`), not before.

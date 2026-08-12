@@ -361,6 +361,45 @@ pets plot in dots), `13-mixedaxis-md0304-ch1-390.png` ("2½"/"3½" on the axis),
 `14-markorder-mc0502-k2-390.png` (ascending marks). Content-change proof: 867 → 870 (mc-05-02,
 dd-02-01, md-03-04 new keys; g2g-01-05 clause appended).
 
+## Wave 10 (same session): the figures.tsx ledger OPENS — measured whole, worst ten closed, ratcheted
+
+The user-ordered queue's first item. Same method that closed the widgets ledger: measure
+everything, commit the measurement, close by size, freeze the remainder.
+
+**Measured** (`figuresCollision.s238.test.tsx`, opt-in `FIGURE_SWEEP=1`, ~12s): all 1,871
+registered figures rendered once — their whole reachable space, since concept figures are
+zero-prop and static — 198 with collisions, **352 pairs**, 156 unmodellable texts (rotated
+labels/tspans, counted per figure so nothing goes quiet), 0 render failures. Every CSV row
+carries the figure's authored usage count so fixing prioritizes by exposure (pairs × uses).
+
+**Closed — the top ten by exposure, 45 pairs → 0:** compound-event-tree (9-unit pitch stacked
+every die label into its neighbour — 14-unit pitch, taller canvas), si-study-types (three
+100-unit columns could never hold "observational study" at fs 11 — rebuilt as full-width rows;
+its single-line footers were wider than the canvas — split into three), si-claim-ladder (a rung
+cannot hold its design name AND claim side by side — claims moved under the titles),
+dd-pipeline (words spilled into the "›" glyphs — boxes sized to the model's own word widths,
+separators became DRAWN arrows that cannot collide), two-population-compare (three 43-unit
+labels on three 24-unit segments — tick-divided units, ONE label, gap caption on its own band),
+probability-line (five likelihood words on one 200-unit row — two staggered rows, edge word
+anchored inward), side-splitter / dr-tangent-line / in-ftc-slope-is-height /
+ca-first-derivative-story (seat nudges; the cubic rescaled so its peak clears the header band).
+
+**Frozen** (`figures.labelCollision.s238.test.tsx`, ALWAYS-ON, ~4s): the 188 remaining dirty
+figures are a pinned baseline with parity-ratchet semantics — any unlisted figure must render
+zero pairs, listed figures may only improve, and a figure that reaches zero MUST leave the list
+(stale entries fail). The registry cannot silently get worse anywhere. Detector verified to
+fire pre-fix (both tests fail with figures.tsx stashed).
+
+**A gate caught a fix:** figures.test.ts's 10-unit font floor rejected the fs-9 text the first
+rework used — layouts re-solved at fs 10 (dd-pipeline boxes widened to the model's word widths;
+the study-types berry footer tightened to "different randomisations buy different things"
+instead of shrinking below the floor). The floor was NOT weakened.
+
+Pixel evidence from the built registry page: `S238_SCREENSHOTS/15-fig-*.png` (seven captures).
+Ledger state: **widgets.tsx 0 pairs · figures.tsx 352 → 307 pairs / 188 figures, ratcheted**.
+Next by weight: si-accuracy-precision, ia-strip-to-disc, sample-to-population, dpv-round-whole,
+magnitude-scale, lc-indeterminate (see the CSV's uses column).
+
 ## What S238 did NOT do (open, in Plan v3 priority order)
 
 - The 267 measured label collisions (S237 §3.1) — `unitChain` (82) is the named next target.

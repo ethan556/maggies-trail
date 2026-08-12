@@ -477,9 +477,13 @@ function DdDataAnswers() {
 /** Grade 6 data-distributions figure: The stats pipeline: pose, collect, display, summarize. */
 function DdPipeline() {
   return (
-    <svg viewBox="0 0 210 100" role="img" aria-label="The statistics pipeline runs in four steps: pose a statistical question, collect data, display it, then summarize what it shows.">
+    <svg viewBox="0 0 296 100" role="img" aria-label="The statistics pipeline runs in four steps: pose a statistical question, collect data, display it, then summarize what it shows.">
       <title>The stats pipeline: pose, collect, display, summarize.</title>
-      {["pose","collect","display","summarize"].map((lbl,i)=>(<g key={i}><rect x={12+i*48} y={40} width={42} height={24} rx={4} fill={[BERRY,SKY,LEAF,TANGERINE][i]} fillOpacity={0.22} stroke={INK} strokeWidth={0.9}/><text x={33+i*48} y={55} fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">{lbl}</text>{i<3&&<text x={58+i*48} y={56} fontSize="12" fill={INK} textAnchor="middle">›</text>}</g>))}
+      {/* S238 wave 10: boxes sized to the box model's own word widths ("summarize" is 65
+          units at fs 10 — the legibility floor), so every label sits INSIDE its box in the
+          real font too; the separators are DRAWN arrows, not text glyphs, so they can never
+          collide with a label. */}
+      {["pose","collect","display","summarize"].map((lbl,i)=>(<g key={i}><rect x={2+i*74} y={40} width={66} height={24} rx={4} fill={[BERRY,SKY,LEAF,TANGERINE][i]} fillOpacity={0.22} stroke={INK} strokeWidth={0.9}/><text x={35+i*74} y={55} fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">{lbl}</text>{i<3&&<path d={`M ${69.5+i*74} 52 L ${74.5+i*74} 52 M ${72+i*74} 49.5 L ${74.5+i*74} 52 L ${72+i*74} 54.5`} fill="none" stroke={INK} strokeWidth={1.2}/>}</g>))}
     </svg>
   );
 }
@@ -9845,11 +9849,11 @@ function SideSplitter() {
       <LabeledPoint x={E[0]} y={E[1]} label="E" dx={6} dy={2} color={TANGERINE} r={3.5} />
       <LabeledPoint x={B[0]} y={B[1]} label="B" dx={-12} dy={8} color={SKY} />
       <LabeledPoint x={C[0]} y={C[1]} label="C" dx={6} dy={8} color={SKY} />
-      <text x={72} y={92} fontSize={10} fontWeight={700} fill={INK}>4</text>
+      <text x={66} y={96} fontSize={10} fontWeight={700} fill={INK}>4</text>
       <text x={62} y={130} fontSize={10} fontWeight={700} fill={INK}>6</text>
-      <text x={165} y={92} fontSize={10} fontWeight={700} fill={INK}>6</text>
+      <text x={168} y={98} fontSize={10} fontWeight={700} fill={INK}>6</text>
       <text x={182} y={130} fontSize={10} fontWeight={700} fill={INK}>9</text>
-      <text x={150} y={170} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>DE ∥ BC ⇒ AD:DB = AE:EC</text>
+      <text x={146} y={172} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={INK}>DE ∥ BC ⇒ AD:DB = AE:EC</text>
     </svg>
   );
 }
@@ -11559,20 +11563,23 @@ function TwoPopulationCompare() {
   const ox = 20, u = 6, y = 60;
   const px = (v: number) => ox + v * u;
   return (
-    <svg viewBox="0 0 260 100" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 260 112" role="img" className="mx-auto w-full max-w-sm">
       <title>Group A has a mean of twenty and Group B has a mean of eight, a gap of three variability-units of size four each.</title>
       <line x1={px(0)} y1={y} x2={px(28)} y2={y} stroke={INK} strokeWidth={2} />
       <circle cx={px(meanB)} cy={y} r={5} fill={SKY} stroke={INK} strokeWidth={1} />
       <text x={px(meanB)} y={y - 12} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>B: {meanB}</text>
       <circle cx={px(meanA)} cy={y} r={5} fill={TANGERINE} stroke={INK} strokeWidth={1} />
       <text x={px(meanA)} y={y - 12} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>A: {meanA}</text>
+      {/* S238 wave 10: three 6-char labels cannot share three 24-unit segments — tick marks
+          divide the units, ONE label names their size, and the gap caption gets its own band. */}
       {[0, 1, 2].map((i) => (
-        <g key={i}>
-          <line x1={px(meanB + i * unit)} y1={y + 14} x2={px(meanB + (i + 1) * unit)} y2={y + 14} stroke={LEAF} strokeWidth={2.5} />
-          <text x={px(meanB + i * unit + unit / 2)} y={y + 28} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>1 unit</text>
-        </g>
+        <line key={i} x1={px(meanB + i * unit)} y1={y + 14} x2={px(meanB + (i + 1) * unit)} y2={y + 14} stroke={LEAF} strokeWidth={2.5} />
       ))}
-      <text x={140} y={94} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>Gap = 3 variability-units</text>
+      {[0, 1, 2, 3].map((i) => (
+        <line key={`t${i}`} x1={px(meanB + i * unit)} y1={y + 9} x2={px(meanB + i * unit)} y2={y + 19} stroke={LEAF} strokeWidth={1.6} />
+      ))}
+      <text x={px(meanB + 1.5 * unit)} y={y + 28} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>1 unit</text>
+      <text x={140} y={106} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>Gap = 3 variability-units</text>
     </svg>
   );
 }
@@ -11592,12 +11599,14 @@ function ProbabilityLine() {
     <svg viewBox="0 0 260 90" role="img" className="mx-auto w-full max-w-md">
       <title>A probability number line from zero to one, labeled impossible at zero, unlikely near one quarter, an even chance at one half, likely near three quarters, and certain at one.</title>
       <line x1={px(0)} y1={y} x2={px(1)} y2={y} stroke={INK} strokeWidth={2} />
+      {/* S238 wave 10: five likelihood words cannot share one row on a 200-unit line —
+          they alternate between two rows, and the leftmost anchors inward off the edge. */}
       {marks.map((m, i) => (
         <g key={m.v}>
           <line x1={px(m.v)} y1={y - 6} x2={px(m.v)} y2={y + 6} stroke={INK} strokeWidth={i === 2 ? 2.5 : 1} />
           <text x={px(m.v)} y={y - 12} textAnchor="middle" fontSize={11} fontWeight={800}
             fill={i === 0 ? BERRY : i === 4 ? LEAF : i === 2 ? INK : TANGERINE}>{m.label}</text>
-          <text x={px(m.v)} y={y + 24} textAnchor="middle" fontSize={10} fontWeight={700}
+          <text x={i === 0 ? 2 : px(m.v)} y={y + (i % 2 === 0 ? 24 : 38)} textAnchor={i === 0 ? "start" : "middle"} fontSize={10} fontWeight={700}
             fill={i === 0 ? BERRY : i === 4 ? LEAF : i === 2 ? INK : TANGERINE}>{m.sub}</text>
         </g>
       ))}
@@ -11609,28 +11618,30 @@ function ProbabilityLine() {
 function CompoundEventTree() {
   const dieVals = [1, 2, 3, 4, 5, 6];
   return (
-    <svg viewBox="0 0 300 160" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 300 200" role="img" className="mx-auto w-full max-w-md">
       <title>A tree diagram for flipping a coin then rolling a die: two branches for heads and tails, each splitting into six branches for the die faces one through six.</title>
-      <circle cx={20} cy={80} r={4} fill={INK} />
-      <line x1={24} y1={80} x2={70} y2={30} stroke={INK} strokeWidth={1.2} />
-      <line x1={24} y1={80} x2={70} y2={130} stroke={INK} strokeWidth={1.2} />
-      <text x={45} y={48} fontSize={11} fontWeight={800} fill={SKY}>H</text>
-      <text x={45} y={112} fontSize={11} fontWeight={800} fill={TANGERINE}>T</text>
-      <circle cx={72} cy={30} r={3} fill={SKY} />
-      <circle cx={72} cy={130} r={3} fill={TANGERINE} />
+      {/* S238 wave 10: a fs-10 label is 12.6 units tall, so the old 9-unit pitch stacked
+          every die face into its neighbour — 14-unit pitch in a taller canvas. */}
+      <circle cx={20} cy={100} r={4} fill={INK} />
+      <line x1={24} y1={100} x2={70} y2={47} stroke={INK} strokeWidth={1.2} />
+      <line x1={24} y1={100} x2={70} y2={153} stroke={INK} strokeWidth={1.2} />
+      <text x={40} y={66} fontSize={11} fontWeight={800} fill={SKY}>H</text>
+      <text x={40} y={144} fontSize={11} fontWeight={800} fill={TANGERINE}>T</text>
+      <circle cx={72} cy={45} r={3} fill={SKY} />
+      <circle cx={72} cy={155} r={3} fill={TANGERINE} />
       {dieVals.map((v, i) => (
         <g key={`h${v}`}>
-          <line x1={76} y1={30} x2={140} y2={8 + i * 9} stroke={SKY} strokeWidth={0.7} opacity={0.7} />
-          <text x={144} y={11 + i * 9} fontSize={10} fontWeight={700} fill={SKY}>{v}</text>
+          <line x1={76} y1={45} x2={140} y2={7 + i * 14} stroke={SKY} strokeWidth={0.7} opacity={0.7} />
+          <text x={144} y={10 + i * 14} fontSize={10} fontWeight={700} fill={SKY}>{v}</text>
         </g>
       ))}
       {dieVals.map((v, i) => (
         <g key={`t${v}`}>
-          <line x1={76} y1={130} x2={140} y2={104 + i * 9} stroke={TANGERINE} strokeWidth={0.7} opacity={0.7} />
-          <text x={144} y={107 + i * 9} fontSize={10} fontWeight={700} fill={TANGERINE}>{v}</text>
+          <line x1={76} y1={155} x2={140} y2={117 + i * 14} stroke={TANGERINE} strokeWidth={0.7} opacity={0.7} />
+          <text x={144} y={120 + i * 14} fontSize={10} fontWeight={700} fill={TANGERINE}>{v}</text>
         </g>
       ))}
-      <text x={230} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>12 outcomes</text>
+      <text x={230} y={100} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>12 outcomes</text>
     </svg>
   );
 }
@@ -23937,36 +23948,37 @@ function SiStudyTypes() {
     { t: "experiment", q: "what CAUSES what?", c: TANGERINE, note: "random ASSIGNMENT → cause" },
   ];
   return (
-    <svg viewBox="0 0 330 150" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 330 212" role="img" className="mx-auto w-full max-w-md">
       <title>Three study designs side by side. A sample survey uses random sampling and can generalise to a population. An observational study can only report association. An experiment uses random assignment and is the only design that can establish cause.</title>
+      {/* S238 wave 10: "observational study" is 150 units wide at fs 11 — three 100-unit
+          columns could never hold these strings, so the panels are full-width ROWS: design
+          left, question right, its randomisation-buys note beneath. */}
       {panels.map((p, i) => (
         <g key={p.t}>
-          <rect x={8 + i * 108} y={20} width={100} height={94} rx={9} fill={p.c} opacity={0.13} stroke={p.c} strokeWidth={1.8} />
-          <text x={58 + i * 108} y={38} textAnchor="middle" fontSize={11} fontWeight={700} fill={p.c}>
+          <rect x={8} y={24 + i * 50} width={314} height={44} rx={9} fill={p.c} opacity={0.13} stroke={p.c} strokeWidth={1.8} />
+          <text x={16} y={41 + i * 50} fontSize={10} fontWeight={700} fill={p.c}>
             {p.t}
           </text>
-          <text x={58 + i * 108} y={58} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
+          <text x={306} y={41 + i * 50} textAnchor="end" fontSize={10} fontWeight={700} fill={INK}>
             {p.q}
           </text>
-          <text x={58 + i * 108} y={80} textAnchor="middle" fontSize={10} fill={INK} opacity={0.85}>
-            {p.note.split(" → ")[0]}
-          </text>
-          <text x={58 + i * 108} y={94} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
-            ↓
-          </text>
-          <text x={58 + i * 108} y={107} textAnchor="middle" fontSize={10} fill={INK} opacity={0.85}>
-            {p.note.split(" → ")[1]}
+          <text x={16} y={58 + i * 50} fontSize={10} fill={INK} opacity={0.85}>
+            {p.note}
           </text>
         </g>
       ))}
       <text x={165} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         the design decides what the claim is allowed to say
       </text>
-      <text x={165} y={132} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
-        random SAMPLING buys generalisation · random ASSIGNMENT buys causation
+      {/* Split across three lines — the old single-line footers were wider than the canvas. */}
+      <text x={165} y={178} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
+        random SAMPLING buys generalisation
       </text>
-      <text x={165} y={146} textAnchor="middle" fontSize={10} fill={BERRY} fontWeight={700}>
-        they are different randomisations and they buy different things
+      <text x={165} y={191} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>
+        random ASSIGNMENT buys causation
+      </text>
+      <text x={165} y={204} textAnchor="middle" fontSize={10} fill={BERRY} fontWeight={700}>
+        different randomisations buy different things
       </text>
     </svg>
   );
@@ -24439,29 +24451,31 @@ function SiEffectVsSignificance() {
 
 function SiClaimLadder() {
   const rungs = [
-    { y: 30, w: 300, c: TANGERINE, t: "randomised experiment", claim: "X causes Y" },
-    { y: 60, w: 240, c: LEAF, t: "random-sample survey", claim: "the population is about ___" },
-    { y: 90, w: 180, c: SKY, t: "observational study", claim: "X and Y go together" },
-    { y: 120, w: 120, c: BERRY, t: "voluntary online poll", claim: "some people who clicked said ___" },
+    { y: 32, w: 300, c: TANGERINE, t: "randomised experiment", claim: "X causes Y" },
+    { y: 66, w: 240, c: LEAF, t: "random-sample survey", claim: "the population is about ___" },
+    { y: 100, w: 180, c: SKY, t: "observational study", claim: "X and Y go together" },
+    { y: 134, w: 120, c: BERRY, t: "voluntary online poll", claim: "some people who clicked said ___" },
   ];
   return (
-    <svg viewBox="0 0 330 150" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 330 176" role="img" className="mx-auto w-full max-w-md">
       <title>A ladder of study designs. The stronger the design, the stronger the claim it can carry: a voluntary poll supports almost nothing, an observational study supports association, a random sample supports a population estimate, and only a randomised experiment supports a causal claim.</title>
       <text x={165} y={14} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         how strong a claim may this design carry?
       </text>
+      {/* S238 wave 10: a 240-unit rung cannot hold a 144-unit design name AND a 194-unit
+          claim side by side — the claim moves to its own line under the title. */}
       {rungs.map((r) => (
         <g key={r.t}>
-          <rect x={12} y={r.y - 10} width={r.w} height={22} rx={6} fill={r.c} opacity={0.18} stroke={r.c} strokeWidth={1.4} />
-          <text x={20} y={r.y + 5} fontSize={10} fontWeight={700} fill={INK}>
+          <rect x={12} y={r.y - 11} width={r.w} height={20} rx={6} fill={r.c} opacity={0.18} stroke={r.c} strokeWidth={1.4} />
+          <text x={20} y={r.y + 4} fontSize={10} fontWeight={700} fill={INK}>
             {r.t}
           </text>
-          <text x={r.w + 2} y={r.y + 5} fontSize={10} fill={INK} fillOpacity={0.85} textAnchor="end" dx={-6}>
-            {r.claim}
+          <text x={24} y={r.y + 18} fontSize={10} fill={INK} fillOpacity={0.85}>
+            → {r.claim}
           </text>
         </g>
       ))}
-      <text x={165} y={146} textAnchor="middle" fontSize={10} fill={INK} opacity={0.8}>
+      <text x={165} y={170} textAnchor="middle" fontSize={10} fill={INK} opacity={0.8}>
         a claim may travel DOWN the ladder, never up
       </text>
     </svg>
@@ -24596,7 +24610,7 @@ function DrTangentLine() {
       <path d={`M ${xs.map((x) => `${X(x).toFixed(1)} ${Y(x * x).toFixed(1)}`).join(" L ")}`} fill="none" stroke={INK} strokeWidth={2.2} />
       <line x1={X(1.6)} y1={Y(6 * 1.6 - 9)} x2={X(4.2)} y2={Y(6 * 4.2 - 9)} stroke={TANGERINE} strokeWidth={2.6} />
       <circle cx={X(3)} cy={Y(9)} r={4.5} fill={TANGERINE} />
-      <text x={X(3) + 8} y={Y(9) - 6} fontSize={11} fontWeight={700} fill={INK}>(3, 9)</text>
+      <text x={X(3) + 10} y={Y(9) + 18} fontSize={11} fontWeight={700} fill={INK}>(3, 9)</text>
       <text x={150} y={140} textAnchor="middle" fontSize={11} fill={INK}>
         f′(3) = 6, so the tangent is y − 9 = 6(x − 3), i.e. y = 6x − 9
       </text>
@@ -24804,11 +24818,11 @@ function InFtcSlopeIsHeight() {
       <text x={X(a) + 6} y={YT(f(a)) - 4} fontSize={11} fontWeight={700} fill={TANGERINE}>
         f = 2.8
       </text>
-      <text x={30} y={24} fontSize={10} fontWeight={700} fill={INK} fillOpacity={0.7}>f</text>
+      <text x={30} y={30} fontSize={10} fontWeight={700} fill={INK} fillOpacity={0.7}>f</text>
       <path d={`M ${xs.map((x) => `${X(x).toFixed(1)} ${YB(A(x)).toFixed(1)}`).join(" L ")}`} fill="none" stroke={LEAF} strokeWidth={2.6} />
       <line x1={X(a - h)} y1={YB(A(a) - f(a) * h)} x2={X(a + h)} y2={YB(A(a) + f(a) * h)} stroke={TANGERINE} strokeWidth={2.4} strokeDasharray="4 3" />
       <circle cx={X(a)} cy={YB(A(a))} r={4} fill={LEAF} />
-      <text x={X(a) + 8} y={YB(A(a)) + 14} fontSize={11} fontWeight={700} fill={TANGERINE}>
+      <text x={X(a) + 30} y={YB(A(a)) + 14} fontSize={11} fontWeight={700} fill={TANGERINE}>
         slope 2.8
       </text>
       <text x={30} y={118} fontSize={10} fontWeight={700} fill={LEAF}>A — the area so far</text>
@@ -24821,12 +24835,14 @@ function InFtcSlopeIsHeight() {
 
 function CaFirstDerivativeStory() {
   const X = (x: number) => 30 + (x + 3) * 40;
-  const YT = (y: number) => 60 - y * 2.4;
+  // S238 wave 10: the old scale (60 - 2.4y) put the peak 21 units from the top, driving the
+  // "max" tag into the header band; this one leaves room for the tag above the peak.
+  const YT = (y: number) => 68 - y * 2.0;
   const AX = 132;
   const f = (x: number) => x ** 3 - 12 * x;
   const xs = Array.from({ length: 61 }, (_, i) => -3.4 + (i * 6.8) / 60);
   return (
-    <svg viewBox="0 0 300 175" role="img" className="mx-auto w-full max-w-md">
+    <svg viewBox="0 0 300 188" role="img" className="mx-auto w-full max-w-md">
       <title>A cubic above, and the sign chart of its derivative below. Where the derivative is positive the curve climbs; where it is negative the curve falls; and the two sign changes mark the peak and the valley.</title>
       <text x={150} y={12} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>
         the sign chart of f′ IS the shape of f
@@ -24850,7 +24866,7 @@ function CaFirstDerivativeStory() {
           <text x={X(Number(x))} y={AX + 34} textAnchor="middle" fontSize={10} fontWeight={700} fill={String(c)}>{String(w)}</text>
         </g>
       ))}
-      <text x={150} y={168} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
+      <text x={150} y={180} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         + to − is a peak · − to + is a valley · no change is no extremum
       </text>
     </svg>
