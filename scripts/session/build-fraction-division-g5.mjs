@@ -216,7 +216,7 @@ function VisualModelMcq() {
     options: [
       { label: "3 wholes cut into fourths, and you count the pieces: 12", correct: true, feedback: `Correct — dividing by a fraction asks how many of that piece fit, and twelve fourths fit in three wholes.` },
       { label: "3 cut into 4 equal parts, giving 3/4", correct: false, feedback: `That models 3 ÷ 4. Dividing BY 1/4 asks how many fourths fit, which makes the answer larger.` },
-      { label: "1/4 of 3, giving 0.75", correct: false, feedback: `That is 3 × 1/4. Dividing by a fraction below one makes the result bigger, not smaller.` },
+      { label: "1/4 of 3, giving 3/4", correct: false, feedback: `That is 3 × 1/4. Dividing by a fraction below one makes the result bigger, not smaller.` },
       { label: "Nothing — you cannot divide by a fraction", correct: false, feedback: `You can, and the question it answers is simply "how many of these fit?"` },
     ] };
 }
