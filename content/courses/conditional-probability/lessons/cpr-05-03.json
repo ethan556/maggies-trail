@@ -116,38 +116,16 @@
         "Ordered over ordered gives the same answer as unordered over unordered: 60/336 = 10/56. Mixing them does not."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "P(all red) = 10/56 uses combinations top and bottom. What happens if you use C(5,3) = 10 over 8P3 = 336?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "It is wrong — the top counts groups while the bottom counts ordered picks.",
-            "correct": true,
-            "feedback": "Right. Fix it either way: 10/56 with combinations, or 60/336 with permutations. Both give 0.179."
-          },
-          {
-            "id": "o2",
-            "label": "It is fine — the orderings cancel out anyway.",
-            "correct": false,
-            "feedback": "They cancel only when *both* counts include them. Here only the denominator does, so the answer comes out six times too small."
-          },
-          {
-            "id": "o3",
-            "label": "It is fine, since probabilities are always ratios.",
-            "correct": false,
-            "feedback": "A ratio is only meaningful when both counts measure the same kind of thing. Mixing groups with ordered picks does not."
-          },
-          {
-            "id": "o4",
-            "label": "It is wrong, but only because 336 is bigger than 56.",
-            "correct": false,
-            "feedback": "Size is not the issue — 60/336 is also a bigger-denominator fraction, and it is correct. Consistency is the issue."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "count-prob",
-        "form": "ratioMismatch"
+        "type": "probabilityArea",
+        "prompt": "P(all red) = 10/56 using combinations for both counts. Switch to counting ORDERED picks instead: 8P3 = 336 total arrangements of 3 marbles from the 8. Shade every arrangement that is all red.",
+        "rows": 16,
+        "cols": 21,
+        "targetNum": 60,
+        "targetDen": 336,
+        "start": 0,
+        "successFeedback": "60 of 336. 5P3 = 5 × 4 × 3 = 60 ordered all-red arrangements, and 60/336 = 10/56 — the same probability, because switching from combinations to permutations on BOTH counts leaves the ratio unchanged.",
+        "lowFeedback": "Not enough shaded yet. Every ordered arrangement of 3 reds from the 5 available counts separately: that's 5 × 4 × 3 = 60 arrangements, not just C(5,3) = 10.",
+        "highFeedback": "Too many shaded. Only 5 marbles are red, so an all-red ordered arrangement still has just 5 × 4 × 3 = 60 possibilities — no more."
       }
     },
     {

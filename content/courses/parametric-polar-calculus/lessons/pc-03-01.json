@@ -141,38 +141,19 @@
         "Acceleration is not the derivative of SPEED. It is the derivative of VELOCITY, and velocity includes a direction that can change on its own."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "A particle moves on the unit circle: r = ⟨cos t, sin t⟩. Its speed is 1 at every instant. Is it accelerating?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "Yes — a = ⟨−cos t, −sin t⟩ has magnitude 1. The DIRECTION of the velocity keeps changing, even though its length does not.",
-            "correct": true,
-            "feedback": "Right, and this is the point of the whole chapter: acceleration is the derivative of VELOCITY, not of speed. A constant speed does not mean no acceleration."
-          },
-          {
-            "id": "o2",
-            "label": "No — the speed never changes, so there is no acceleration.",
-            "correct": false,
-            "feedback": "That confuses speed with velocity. The velocity vector is swinging round the whole time, and changing a vector's DIRECTION is a change — one that requires acceleration."
-          },
-          {
-            "id": "o3",
-            "label": "Only at the top and bottom of the circle.",
-            "correct": false,
-            "feedback": "|a| = 1 at every single instant. There is nowhere on the circle where the particle is coasting."
-          },
-          {
-            "id": "o4",
-            "label": "Yes, and its speed must therefore be increasing.",
-            "correct": false,
-            "feedback": "The speed is fixed at 1 forever. The acceleration is entirely PERPENDICULAR to the motion, so it turns the particle without hurrying it."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "g13-parametric-polar-calculus",
-        "form": "parametric-polar-calculus__pc-vector-motion__mcq"
+        "type": "vectorExplore",
+        "mode": "add",
+        "ux": 1,
+        "uy": 0,
+        "targetX": 0,
+        "targetY": 0,
+        "vxStart": 0,
+        "vyStart": 1,
+        "gridMax": 6,
+        "prompt": "A particle moves on the unit circle: r = ⟨cos t, sin t⟩. At t = 0 its position is ⟨1, 0⟩. Steer v until ⟨1, 0⟩ + v lands on the origin ⟨0, 0⟩ — that displacement is the particle's acceleration at that instant.",
+        "successFeedback": "v = ⟨−1, 0⟩ — and that IS the acceleration at t = 0: a = ⟨−cos 0, −sin 0⟩ = ⟨−1, 0⟩, pointing from the particle straight back to the center. Its length is 1, not 0 — the particle accelerates every instant, even though its speed never changes.",
+        "lowFeedback": "The across-component of ⟨1, 0⟩ + v hasn't reached 0 yet. Slide v sideways until the sum's x-coordinate is exactly 0.",
+        "highFeedback": "The across-component is right — now the up-component of the sum needs to reach 0 too. Slide v vertically until ⟨1, 0⟩ + v lands exactly on the origin."
       }
     },
     {

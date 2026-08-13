@@ -29,9 +29,9 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 | band | causal widget steps | exploration causal coverage | lessons with causal spine |
 |---|---:|---:|---:|
 | K–2 | 1009/2525 (40.0%) | 728/884 (82.4%) | 389/410 (94.9%) |
-| G3–5 | 663/2543 (26.1%) | 569/850 (66.9%) | 333/419 (79.5%) |
+| G3–5 | 664/2543 (26.1%) | 569/850 (66.9%) | 333/419 (79.5%) |
 | G6–8 | 455/1550 (29.4%) | 274/565 (48.5%) | 186/245 (75.9%) |
-| HS | 574/3642 (15.8%) | 531/1199 (44.3%) | 496/627 (79.1%) |
+| HS | 576/3642 (15.8%) | 531/1199 (44.3%) | 496/627 (79.1%) |
 
 ## Honest prediction ceilings
 

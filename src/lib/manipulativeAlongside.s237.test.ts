@@ -24,7 +24,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { Lesson, WidgetSpec, widgetIntegrityErrors, columnCalcReachable, type TWidget } from "./schema";
+import { Lesson, WidgetSpec, widgetIntegrityErrors, columnCalcReachable, columnCalcTruth, type TWidget } from "./schema";
 import { evaluate, signChartCuts } from "./evaluate";
 import { widgetWrongPaths } from "./pedagogy";
 
@@ -42,9 +42,11 @@ interface Row {
   servedKind: string;
   servedType: string;
   servedPrompt: string;
-  /** mcq: "<correct id>|<correct label>"; numeric: the answer */
+  /** mcq: "<correct id>|<correct label>"; numeric/columnCalc: the answer;
+   * vectorExplore: "<mode>|u=(ux,uy)|target=(x,y)" (add) or "<mode>|u=(ux,uy)|targetDot=d" (dot) */
   servedAnswer: string;
-  /** mcq: "<id>|<label>|<feedback>" per wrong option, in order; numeric: "<value>|<feedback>" */
+  /** mcq: "<id>|<label>|<feedback>" per wrong option, in order; numeric/columnCalc: "<value>|<feedback>"
+   * per commonError/commonResult; vectorExplore: [lowFeedback, highFeedback] */
   servedWrongPaths: string[];
 }
 
@@ -181,13 +183,21 @@ const ROWS: Row[] = [
   {
     course: "parametric-polar-calculus", lesson: "pc-03-01",
     inserted: "i1b", serves: "k2", engine: "vectorExplore",
-    servedKind: "check", servedType: "mcq",
-    servedPrompt: "A particle moves on the unit circle: r = ⟨cos t, sin t⟩. Its speed is 1 at every instant. Is it accelerating?",
-    servedAnswer: "o1|Yes — a = ⟨−cos t, −sin t⟩ has magnitude 1. The DIRECTION of the velocity keeps changing, even though its length does not.",
+    servedKind: "check", servedType: "vectorExplore",
+    servedPrompt: "A particle moves on the unit circle: r = ⟨cos t, sin t⟩. At t = 0 its position is ⟨1, 0⟩. Steer v until ⟨1, 0⟩ + v lands on the origin ⟨0, 0⟩ — that displacement is the particle's acceleration at that instant.",
+    servedAnswer: "add|u=(1,0)|target=(0,0)",
+    // NOTE (S240): k2 was authored MCQ ("is it accelerating" — identification) through S237-S240;
+    // the user ruled on 2026-08-13 to convert it to execution (vectorExplore), one of 4 held-back
+    // rows requiring a human decision (see HANDOVER_COWORK_S240.md §3.2). No compatible
+    // vectorExplore-shaped variant form exists for the pc-vector-motion tag (only mcq/numeric
+    // forms are registered under gen "g13-parametric-polar-calculus"), so the step's `variant`
+    // declaration was removed rather than left pointing at a now-mismatched mcq form — the same
+    // state i1/i1b (the vectorExplore INTERACTIVE steps in this lesson) already carry. Building a
+    // vectorExplore-shaped template-bank form is out of scope for this conversion. This snapshot
+    // is the POST-conversion content.
     servedWrongPaths: [
-      "o2|No — the speed never changes, so there is no acceleration.|That confuses speed with velocity. The velocity vector is swinging round the whole time, and changing a vector's DIRECTION is a change — one that requires acceleration.",
-      "o3|Only at the top and bottom of the circle.||a| = 1 at every single instant. There is nowhere on the circle where the particle is coasting.",
-      "o4|Yes, and its speed must therefore be increasing.|The speed is fixed at 1 forever. The acceleration is entirely PERPENDICULAR to the motion, so it turns the particle without hurrying it."
+      "The across-component of ⟨1, 0⟩ + v hasn't reached 0 yet. Slide v sideways until the sum's x-coordinate is exactly 0.",
+      "The across-component is right — now the up-component of the sum needs to reach 0 too. Slide v vertically until ⟨1, 0⟩ + v lands exactly on the origin."
     ]
   },
   {
@@ -205,13 +215,16 @@ const ROWS: Row[] = [
   {
     course: "place-value-million", lesson: "pv2-04-03",
     inserted: "i2b", serves: "k3", engine: "columnCalc",
-    servedKind: "check", servedType: "mcq",
-    servedPrompt: "When a borrow chain reaches past two zero digits to find a nonzero one, what happens to those two zeros?",
-    servedAnswer: "a|Both become 9",
+    servedKind: "check", servedType: "columnCalc",
+    servedPrompt: "What is 8,003 − 3,457? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+    servedAnswer: "4546",
+    // NOTE (S240): k3 was authored MCQ ("what happens to the zeros" — identification) through
+    // S237-S240; the user ruled on 2026-08-13 to convert it to execution (columnCalc), one of 4
+    // held-back rows requiring a human decision (see HANDOVER_COWORK_S240.md §3.2). This
+    // snapshot is the POST-conversion content.
     servedWrongPaths: [
-      "b|They stay 0|They can't stay 0 — each one both receives and lends a borrow, which lands them at 9, not 0.",
-      "c|They become 10|10 isn't a valid single digit. Each zero receives 10 then immediately lends 1 forward, settling at 9.",
-      "d|Only the nearer one changes|Every zero the chain passes through changes — each one becomes 9, not just the nearest."
+      "5454|5,454 subtracted the smaller digit from the larger in every column instead of breaking a ten wherever the top digit was too small — 7−3, 5−0, 4−0, and the untouched 8−3. Reaching the chain past both zeros to the thousands digit gives 4,546.",
+      "4654|4,654 worked the ones and tens columns by subtracting the smaller digit from the larger — 7−3 and 5−0 — instead of borrowing, but then broke the thousands digit correctly once the chain reached the hundreds place. A skipped borrow is still owed: redoing ones and tens with that same break gives 4,546."
     ]
   },
   {
@@ -447,7 +460,20 @@ function servedIdentity(step: Record<string, unknown>): {
 } {
   const w = step.widget as
     | { type: "mcq"; prompt: string; options: Array<{ id: string; label: string; correct?: boolean; feedback: string }> }
-    | { type: "numeric"; prompt: string; answer: number; commonErrors: Array<{ value: number; feedback: string }> };
+    | { type: "numeric"; prompt: string; answer: number; commonErrors: Array<{ value: number; feedback: string }> }
+    | { type: "columnCalc"; prompt: string; op: "add" | "subtract" | "multiply"; a: number; b: number; commonResults: Array<{ value: number; feedback: string }> }
+    | {
+        type: "vectorExplore";
+        prompt: string;
+        mode: "add" | "dot";
+        ux: number;
+        uy: number;
+        targetX: number;
+        targetY: number;
+        targetDot: number;
+        lowFeedback: string;
+        highFeedback: string;
+      };
   if (w.type === "mcq") {
     const correct = w.options.filter((o) => o.correct);
     expect(correct, "a graded mcq must have exactly one correct option").toHaveLength(1);
@@ -457,6 +483,27 @@ function servedIdentity(step: Record<string, unknown>): {
       prompt: w.prompt,
       answer: `${correct[0].id}|${correct[0].label}`,
       wrongPaths: w.options.filter((o) => !o.correct).map((o) => `${o.id}|${o.label}|${o.feedback}`)
+    };
+  }
+  if (w.type === "columnCalc") {
+    return {
+      kind: step.kind as string,
+      type: w.type,
+      prompt: w.prompt,
+      answer: `${columnCalcTruth(w.op, w.a, w.b)}`,
+      wrongPaths: w.commonResults.map((r) => `${r.value}|${r.feedback}`)
+    };
+  }
+  if (w.type === "vectorExplore") {
+    return {
+      kind: step.kind as string,
+      type: w.type,
+      prompt: w.prompt,
+      answer:
+        w.mode === "add"
+          ? `add|u=(${w.ux},${w.uy})|target=(${w.targetX},${w.targetY})`
+          : `dot|u=(${w.ux},${w.uy})|targetDot=${w.targetDot}`,
+      wrongPaths: [w.lowFeedback, w.highFeedback]
     };
   }
   return {

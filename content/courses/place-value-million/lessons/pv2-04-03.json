@@ -218,35 +218,27 @@
         "The zeros aren't skipped; each one flips to 9 as the chain passes."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "When a borrow chain reaches past two zero digits to find a nonzero one, what happens to those two zeros?",
-        "options": [
+        "type": "columnCalc",
+        "prompt": "What is 8,003 − 3,457? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+        "op": "subtract",
+        "a": 8003,
+        "b": 3457,
+        "commonResults": [
           {
-            "id": "a",
-            "label": "Both become 9",
-            "correct": true,
-            "feedback": "Each zero receives 10 (becoming 10), then immediately lends 1 onward to the next column, leaving 9."
+            "value": 5454,
+            "feedback": "5,454 subtracted the smaller digit from the larger in every column instead of breaking a ten wherever the top digit was too small — 7−3, 5−0, 4−0, and the untouched 8−3. Reaching the chain past both zeros to the thousands digit gives 4,546."
           },
           {
-            "id": "b",
-            "label": "They stay 0",
-            "feedback": "They can't stay 0 — each one both receives and lends a borrow, which lands them at 9, not 0."
-          },
-          {
-            "id": "c",
-            "label": "They become 10",
-            "feedback": "10 isn't a valid single digit. Each zero receives 10 then immediately lends 1 forward, settling at 9."
-          },
-          {
-            "id": "d",
-            "label": "Only the nearer one changes",
-            "feedback": "Every zero the chain passes through changes — each one becomes 9, not just the nearest."
+            "value": 4654,
+            "feedback": "4,654 worked the ones and tens columns by subtracting the smaller digit from the larger — 7−3 and 5−0 — instead of borrowing, but then broke the thousands digit correctly once the chain reached the hundreds place. A skipped borrow is still owed: redoing ones and tens with that same break gives 4,546."
           }
-        ]
+        ],
+        "fallbackFeedback": "Start in the ones: 3 cannot give 7, and the tens and hundreds are both 0 with nothing to lend. Reach left to the thousands and let the chain resolve on the way back.",
+        "successFeedback": "4,546. The borrow reached all the way to the 8 thousands, which dropped to 7, and the ones finally got their extra ten. The two zero columns in between both flipped to 9 along the way."
       },
       "variant": {
         "gen": "g4-place-million",
-        "form": "pvAcrossZerosMcq"
+        "form": "pvAcrossZerosColumn"
       }
     },
     {

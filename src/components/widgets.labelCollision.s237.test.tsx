@@ -882,9 +882,15 @@ describe("S238 label collisions — doubleNumberLine", () => {
 
 describe("S238 batch 8 — the collision tail stays closed", () => {
   // Counted from disk; a count drift means authored content changed under the gate.
+  // S240: vectorExplore 10->11 (pc-03-01/k2, mcq->vectorExplore held-back-rows conversion). Its
+  // opening state (vxStart=0, vyStart=0) put the "v here" reveal ghost and the "u + v" sum label
+  // on the same horizontal seat band — neither s238Seat call treats the other's label as an
+  // obstacle, so they collided at info tone. Fixed as content, not engine code: vyStart=1 moves
+  // the sum label off that band; the required v (target - u) is unaffected since vxStart/vyStart
+  // is only ever the drag's starting point, never part of evaluate()'s grading.
   const TAIL: Array<[string, number]> = [
     ["lengthCompare", 66], ["slider", 28], ["trialProbabilityLab", 15], ["graphStoryLab", 14],
-    ["secantSlope", 11], ["circleMeasureExplore", 11], ["vectorExplore", 10], ["argandExplore", 7],
+    ["secantSlope", 11], ["circleMeasureExplore", 11], ["vectorExplore", 11], ["argandExplore", 7],
     ["accumulateArea", 7], ["angleMeasure", 6], ["lineExplore", 6], ["conicLocusLab", 5],
     ["circleAngleExplore", 5], ["taylorApprox", 3], ["absValueLine", 3], ["triangleClosureLab", 1]
   ];
