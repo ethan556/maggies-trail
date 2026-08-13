@@ -179,5 +179,51 @@ any of the above counts were written down — nothing here is pre-fix numbers.
 - `pv-03-03/k1`, `pv2-04-03/k3`, `pc-03-01/k2`, `cpr-05-03/k2` — the four rows that must NOT be
   converted without a separate user ruling (conversion changes what is graded). Still untouched.
 - No gate compares option labels for near-duplication (S238 §4's class) — still worth building.
-- Grade-vocabulary CSV and the other §4 defects carried in S238/S239 — unchanged, still frozen
-  prose awaiting a ruling.
+- Grade-vocabulary CSV and the other §4 defects carried in S238/S239 — true as of this wave's
+  commit. **Superseded the same day by a post-commit re-audit — see the addendum below.**
+
+---
+
+## Addendum (same session, after the wave commit): grade-vocabulary CSV re-audited, closed
+
+Written after `c058a2b` landed, prompted by asking "what's next" and finding the standing queue
+actually empty. Before proposing new scope, the oldest carried-forward item — the
+grade-vocabulary CSV, called "the highest harm-per-effort item" in every handover since S238 —
+got a fresh look instead of another unverified restatement.
+
+**Finding: all 60 flagged surfaces are already fixed. None of S238/S239/S240 had re-checked the
+claim against live content — each just repeated the prior session's line.** Verification method,
+in order of rigor: (1) whole-file substring search for each row's exact CSV text and bare term;
+(2) a precise per-step search — locate the exact lesson/step the row names (including `remedials`,
+which a first pass missed and briefly over-counted as "step gone"), then search only within that
+step's JSON subtree; (3) manual full-JSON reads of a spread of ~10 rows across all 6 terms,
+covering every status the script produced.
+
+Result: zero rows are byte-identical to the S237 CSV text. Two rows (`la-02-02`/`la-03-02`,
+`invariant`) still contain the term — but only inside the internal `cml` authoring-metadata block
+(`kernel: "spatial-invariance"`, an `invariants` id array) that is never rendered to a learner;
+both steps' actual learner-facing `body` text was already reworded ("make the right-angle
+invariant visible" → "show that the right angle stays the same"; "their invariant sum" → "their
+sum, which never changes"). Every other row is either reworded in place or its step was
+restructured away entirely. Confirmed examples, old → new:
+
+- `g2a-01-02/c1`: "the ONES digit carries the verdict" → "the ONES digit tells you"
+- `fr-03-01/k3`: "Repair Rio's reasoning" / "What's the repair?" → "Fix Rio's thinking" / "What
+  should we tell Rio?"
+- `fr-04-02/i2`: "That verdict belongs to the 3/4 duel" → "That answer belongs to the 3/4 duel"
+- `kgb-03-04/c1`: "Composition scales: four small triangles…" → "Shapes build bigger shapes: four
+  small triangles…"
+- `g1e-01-01` (`rem-g1e-equal-meaning-c`): "checking the claim" → "checking if it is true"
+- `md-01-02`, `g4s-03-02`: both `reasoning` instances — confirmed zero occurrences of the word
+  anywhere in either file (grepped raw, not just the flagged step).
+
+This was not this session's edit — someone else's session fixed the prose at some point after
+S237 without updating the backlog line (the repo's root `CLAUDE.md` describes a separate,
+parallel "variant generation" workstream on this same content; that is the likeliest author, though
+this addendum does not attempt to identify which session). `COWORK_CACHE/grade-vocabulary-s237.csv`
+is left in place as a historical artifact — nothing reads it programmatically (checked) — but it
+no longer describes current content and should not be re-flagged as open without re-checking first.
+
+**Process note for future sessions: a standing "still open, unchanged" line in a handover is a
+claim, not a fact, once enough time or parallel work has passed. Re-verify before restating it,
+the same way a gate result is re-run rather than assumed.**

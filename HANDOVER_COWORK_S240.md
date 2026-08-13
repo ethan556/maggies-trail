@@ -113,8 +113,22 @@ on each. Unchanged across S238/S239/S240; still needs a person to decide, not an
 ## 4. Content defects FOUND but NOT FIXED (frozen prose — need a user ruling)
 
 Everything in S238's §4 and S239's §4 stands except the two items S240 closed (markdown-bold,
-elapsedTime exposure — see §2 above). Remaining: dc-02-01/ch1 double-36 trap; cosmetic inversions;
-grade-vocabulary CSV (still the highest harm-per-effort item, per S238).
+elapsedTime exposure — see §2 above) and one more closed by re-audit, not by editing. Remaining:
+dc-02-01/ch1 double-36 trap; cosmetic inversions.
+
+**Grade-vocabulary CSV — drop this from the list. Re-audited post-commit, already resolved.** It
+had been carried forward as "the highest harm-per-effort item" since S238 with no session actually
+re-checking it against live content. A full re-check this session (exact-text match, then a
+per-step search including `remedials`, then manual reads spanning all 6 flagged terms — see
+`PREMIUM_REBUILD_S240_EXECUTION.md`'s addendum for the method and confirmed before/after examples)
+found all 60 originally-flagged surfaces already reworded to plain K–4 language, done by some
+other session at an unknown point after S237. The only remaining trace of a flagged term
+(`invariant`, in `la-02-02`/`la-03-02`) is inside internal `cml` authoring metadata, never
+rendered to a learner — both steps' actual learner-facing text is already fixed too. The CSV
+itself is left in place as a historical artifact; treat it as stale, not as a live worklist.
+
+**Take-away for next session: don't restate a carried-forward "still open" item without
+re-checking it first** — this one sat unverified through three handovers.
 
 No gate compares option labels for near-duplication (S238 §4's class) — still worth building.
 
