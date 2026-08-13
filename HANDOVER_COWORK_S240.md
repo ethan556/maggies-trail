@@ -1,12 +1,28 @@
 # HANDOVER — Cowork S240 → next session
 
 Written at the end of S240 (2026-08-13), original wave: **the last 5 NOT-POSSIBLE rows close.**
-**Updated same day, in place, after two further S240 commits landed post-write** (§0/§1/§3.2 below
-now reflect the true HEAD, not the mid-session snapshot — see §2.5 and the two new addenda in
-`PREMIUM_REBUILD_S240_EXECUTION.md` for what each commit did). Supersedes `HANDOVER_COWORK_S239.md`
-§3 (that queue item is done); that file and `HANDOVER_COWORK_S238.md` stay correct on everything
-else — §5/§6 environment traps and commit conventions there still apply verbatim, as do
-S237-D-2's §6/§7.
+**Updated same day, in place, multiple times, as further S240 commits landed post-write** (§0/§1/
+§3.2/§3.1/§4 below reflect the true HEAD, not any mid-session snapshot — see §2.5, §2.6, and the
+addenda in `PREMIUM_REBUILD_S240_EXECUTION.md` for what each commit did). Supersedes
+`HANDOVER_COWORK_S239.md` §3 (that queue item is done); that file and `HANDOVER_COWORK_S238.md`
+stay correct on everything else — §5/§6 environment traps and commit conventions there still apply
+verbatim, as do S237-D-2's §6/§7.
+
+**On user rulings vs. autonomous engineering calls, stated plainly because this file blurred the
+line once already this session (§4's g5u-03-02 paragraph briefly overstated a ruling that hadn't
+happened yet, caught and fixed before it shipped):** the three held-back widget conversions
+(§2.5), the g5f-02-02/g5f-02-03 fraction-vs-decimal fix (§4), and g5u-03-02's closure (§4) were
+all explicit user rulings via `AskUserQuestion`, on specific frozen-content questions. The hero
+stage tier promotions (§2.6) are different in kind: the user's instruction was the priority order
+itself ("1->2->3" — cosmetic inversions, then hero tier pixel QA, then scope Plan v3), not a
+per-engine ruling. Which 7 of the ~66 "wide" engines qualified was an autonomous, evidence-driven
+engineering decision made under `stageWidth.ts`'s own PRE-EXISTING standing rule ("evidence-driven,
+not by guess") — the same category of autonomous call as fixing a label collision found by
+`COLLISION_SWEEP=1`, not the same category as changing frozen lesson prose. Commit `cd613bf`'s
+message says "(user ruling 2026-08-13)" in its title, matching this session's other commit-title
+convention — that phrasing is imprecise for this one; the ruling was the priority order, not the
+per-engine promotions. Recorded here rather than silently left, per this file's own standing
+practice of correcting a claim before it gets carried forward as fact.
 
 **`OPTIMIZATION_PLAN_V3.md` remains the canonical program document.**
 
@@ -22,12 +38,15 @@ git merge-base --is-ancestor 80a5c1c HEAD; echo "ancestry:$?"    # MUST be 0
 npm ci
 ```
 
-**HEAD at end of S240: `19577e5`** — six commits on `80a5c1c` (S239's final commit), in order:
+**HEAD at end of S240: `cd613bf`** — nine commits on `80a5c1c` (S239's final commit), in order:
 `c058a2b` (the 5 NOT-POSSIBLE rows + two engines), `d31ea6a` (grade-vocabulary re-audit, no code
 change), `3324778` (the near-duplication gate + `dc-02-01/ch1` fix), `c88d91b` (the three
 held-back rows converted per the user's ruling — §2.5 below), `7fb4c4f` (docs-only: this file
 brought up to date after the first four commits), `19577e5` (the g5f-02-02/g5f-02-03
-fraction/decimal format fix — §4 above).
+fraction/decimal format fix — §4 below), `23fde97` (docs-only: g5u-03-02's closure corrected to
+reflect the user's actual confirmation, not an assumed one), `cd613bf` (the hero stage tier's
+first pass, 7 engines promoted, 2 pre-existing label defects fixed — §2.6 below), and this
+docs-only commit.
 `git push` is still proxy-blocked; work travels as an **incremental** bundle
 (`git bundle create <f> 80a5c1c..HEAD` — a FULL bundle of the whole branch exceeded the delivery
 size limit once and had to be redone incremental; don't default to `--all`/full-history unless
@@ -52,38 +71,43 @@ collision). This file is the map.
 
 ## 1. Gate results at session end — YOUR BASELINE
 
-**This is the `c88d91b` baseline (all four S240 commits included), re-run in full, not the
-mid-session `c058a2b` snapshot the numbers below replace:**
+**This is the `cd613bf` baseline (all nine S240 commits included), re-run in full. The counts below
+are unchanged from the earlier `c88d91b` baseline this section previously documented — the g5f fix
+(`19577e5`) and the hero-tier wave (`cd613bf`) didn't move validate:content/lint:pedagogy/
+content-change-proof at all, and vitest's total is an exact match — so this table now speaks for
+all of `c88d91b`..`cd613bf`, not just the commit named below:**
 
 ```
 typecheck                clean
 vitest (2 shards)        13,385 tests / 354 files — 13,383 passed, 2 pre-existing skips, 0 real
-                         failures (both shards EXIT:0). Running 2 shards concurrently on this
-                         sandbox's 2 CPUs produced 2 spurious timeouts in figures.test.ts under
-                         contention; re-ran that file alone afterward and it passed in 2.03s —
-                         contention, not a regression. Re-run the isolated file if you see the
-                         same pattern rather than assuming a real failure.
-playwright               NOT clean at c88d91b — see below, this is a real gap, not an oversight
+                         failures (both shards EXIT:0). Run ALONE this time (not concurrent with
+                         validate:content/lint:pedagogy) specifically to avoid the contention
+                         pattern this session hit twice before (figures.test.ts, then
+                         variants.surface.test.ts/variants.test.ts) — came back clean with zero
+                         spurious timeouts, which is itself a useful data point: run vitest
+                         without other heavy gates racing it on this sandbox's 2 CPUs when you can
+                         afford the wall-clock, rather than parallelizing and re-diagnosing after.
+playwright               STILL not re-run since c88d91b — same real gap, not an oversight. Nothing
+                         in the g5f fix or the hero-tier wave touches routes this suite exercises
+                         differently than validate:content/lint:pedagogy/vitest already cover, but
+                         the 132/132 figure from early S240 remains unconfirmed. Re-run it fresh
+                         before trusting it.
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
-content-change proof     874 / 874        (873 -> 874: cpr-05-03 is a new AUTHORIZED key;
-                         pc-03-01 and pv2-04-03 kept their existing keys and gained an appended
-                         reason clause)
-validate:native          archive-only findings (node_modules, .next, tsconfig.tsbuildinfo — the
-                         third one appears because tsc's incremental mode writes it even under
-                         --noEmit; `rm -rf test-results tsconfig.tsbuildinfo` before this gate as
-                         always, but don't be surprised if it's back)
+content-change proof     874 / 874        unchanged since c88d91b — the g5f fix appended reason
+                         clauses to existing AUTHORIZED keys (no new key); the hero-tier wave
+                         touched src/ only, no lesson content at all
+validate:native          2 findings, both expected archive-only (node_modules, .next)
 check-registration       consistent
 build                    EXIT:0            check the EXIT CODE, never grep for "error"
-gen:reports              NOT re-run this baseline (see below) — last known state still
-                         place-value-transform-mutations-s145 M28 (34/35), PRE-EXISTING since
-                         S145, unchanged through S238/S239/S240
-COLLISION_SWEEP           the vectorExplore fix below is covered by the standing
-                         widgets.labelCollision.s237.test.tsx suite (part of the main vitest run,
-                         not a separate opt-in sweep for this particular defect) — 32/32 passing,
-                         TAIL count for vectorExplore now 11 (was 10)
+gen:reports              STILL not re-run this baseline — same reasoning as before, nothing this
+                         session's later commits touch that gen:reports audits beyond what the
+                         gates above already re-confirm. Next session should run it fresh regardless.
+COLLISION_SWEEP=1        re-run fresh after the hero-tier wave's two label-position fixes:
+                         0 collisions, 11,957 specs, 0 renders failed, corpus-wide — confirms
+                         neither fix introduced a new collision anywhere in the 1,701-lesson corpus.
 FIGURE_SWEEP=1           NOT re-run this baseline — no figure-rendering code touched since the
-                         last EMPTY result; figures.test.ts's contention timeout above is unrelated
+                         last EMPTY result
 ```
 
 **Two honest gaps at this baseline, both explained in §2.5:**
@@ -205,19 +229,88 @@ reachable-set correction — is in `PREMIUM_REBUILD_S240_EXECUTION.md`'s two new
 
 ---
 
+## 2.6. What S240 closed, item 2 of the user's "1->2->3" order: hero stage tier, first pass (`cd613bf`)
+
+`stageWidth.ts`'s `hero` tier (1100–1280px) has existed since early Plan v3 work but had never
+been assigned to any widget — the code's own comment required real pixel-QA evidence per engine,
+not a guess, and S239 §2's WS-D finding (some labs measured OVERSIZED, not undersized, the first
+time anyone actually looked) was the standing reason nobody had done that measurement yet. See
+this file's top for the note on what kind of decision this was (autonomous, evidence-driven — not
+a per-engine user ruling).
+
+**Scoping.** Three parallel research passes read every "wide"-tier engine's component source in
+`widgets.tsx` (18,765 lines, one file) for two facts: genuine multi-representation (a synced
+diagram PLUS a separate live equation/numeric readout — the qualifying bar per `stageWidth.ts`'s
+own comment) and whether the engine's own SVG sizing is already capped by an inner `max-w-*` well
+under 1024px (in which case promoting the *stage* tier does nothing — a different, out-of-scope
+problem). Most genuinely multi-rep engines — `derivativeTrace`, `matrixTransform`,
+`unitCircleExplore`, the whole algebra/precalc "explore" family — self-cap there and were excluded
+from this pass on that basis. 8 cleared both bars.
+
+**Real 1440px pointer QA, before vs. after, at the actually-promoted width — not simulated.**
+Captured each of the 8 at the current `wide` tier, temporarily reassigned all 8 to `hero` in
+`stageWidth.ts`, rebuilt, re-captured the identical steps at the real, live `hero` tier.
+Screenshots: `S240_SCREENSHOTS/14`–`23`.
+
+- **7 promoted:** `trialProbabilityLab`, `samplingBiasLab`, `percentChangeLab`,
+  `conditionalTableLab`, `derivativeRuleLab` (product mode directly tested), `covariationScrubber`,
+  `affineRelationshipLab`. All scaled cleanly — content genuinely used the added room rather than
+  just adding empty margin.
+- **1 rejected, reverted to `wide`:** `relatedRatesLab`. Its sliding-ladder diagram is a naturally
+  tall/narrow construction; hero width added empty margin to the right of it, not more diagram —
+  no evidence of benefit. Reasoning recorded inline in `stageWidth.ts` so it isn't re-litigated
+  from nothing next time someone eyes this engine for hero.
+
+**Two real, pre-existing label defects found by this pass, unrelated to the tier itself — both
+reproduced at BOTH wide and hero width, fixed:**
+
+1. `trialProbabilityLab`'s `"whole = N"` axis label overflowed its own SVG viewBox on the right
+   edge whenever `spec.total === axisMax` (the common case) — a center-anchor sitting at the
+   axis's own rightmost tick, not a container-sizing issue. `textAnchor="middle"` → `"end"`.
+2. `affineRelationshipLab`'s `"Function A"`/`"Function B"` end-of-line legend labels rendered
+   touching — S237b's existing same-clamped-y fix used a 16-unit gap that a real browser proved
+   too tight for bold proportional text (the box model that gap was derived from, `textBoxes.
+   testkit.ts`, explicitly warns it under-estimates wide proportional words, and this instance
+   cleared the model's own math by under a unit — which is also why the corpus-wide
+   `COLLISION_SWEEP=1` sweep, 0 hits across 11,957 specs, never caught it). Gap 16 → 20.
+
+Both fixes are display-only — no grading/answer/`evaluate()` logic touched. Full reasoning, the
+seeding/prediction-gate debugging (see this file's §5 for the general lesson), and complete gate
+results are in `PREMIUM_REBUILD_S240_EXECUTION.md`'s new addendum. Gate results here in brief:
+`tsc` clean; vitest 354 files/13,385 tests, 13,383 passed/2 pre-existing skips/0 failures, exact
+match to this session's baseline; `validate:content` 1840/1840; `lint:pedagogy` 1711/1711;
+`validate:native` 2 expected archive-only findings; `check:registration` consistent;
+`content-change-proof` 874/874 unchanged (this wave is `src/` code only, no lesson content
+touched); `build` EXIT:0; `COLLISION_SWEEP=1` 0 collisions/11,957 specs/0 renders failed, both
+before and after the two fixes.
+
+**What's still open for a future hero-tier pass:** the self-capped multi-rep engines excluded from
+this pass by scoping (`derivativeTrace`, `accumulateArea`, `sliceSum`, `binomialAreaLab`,
+`matrixTransform`, `quadraticExplore`, `unitCircleExplore`, `systemsExplore`, and others) are
+real candidates IF their own inner Tailwind cap is widened alongside a tier promotion — that's a
+more invasive, per-engine change than this pass made and needs its own evidence-driven look, not
+an assumption that "promote + widen" is automatically safe. Also open: any engine newly converted
+under WS-C/WS-B since this pass that might now qualify.
+
+---
+
 ## 3. The queue — where to pick up
 
 **The NOT-POSSIBLE queue that ran S237→S240 is fully closed.** There is no standing "next 5" —
 the next session needs a fresh instruction from the user on where Plan v3 work resumes. Candidates,
 unranked, all still open exactly as S239 left them:
 
-### 3.1 Also open, per Plan v3 (unchanged from S239)
+### 3.1 Also open, per Plan v3 (mostly unchanged from S239)
 
 WS-A brand productionization, WS-H landing rebuild, WS-J avatars (concept boards only — Plan v3
 Part 0 hard rules) · WS-E prediction purge · WS-G MCQ factory · WS-F sound/voice · §4.2 precache
-only when a parallel wave launches · hero tier only with 1440px pixel QA evidence (S239 §2's WS-D
-finding: the first 1440 QA of several labs found them OVERSIZED, not undersized — don't assume,
-measure).
+only when a parallel wave launches.
+
+**Hero tier had its first pass this session — §2.6 above, not "still open" in the S239 sense
+anymore.** 7 engines are now promoted with real pixel-QA evidence; the rule itself is unchanged
+(any future promotion still needs the same evidence, not an assumption) and there's a real
+follow-on list of self-capped candidates noted at the end of §2.6, but this is no longer an
+un-started item.
 
 ### 3.2 The four held-back rows — ruled on and closed (was open through S238/S239/early S240)
 
@@ -321,18 +414,45 @@ One more, hit fresh in the `c88d91b` wave:
   here (15–60s+, see §1) — give the script a genuinely generous timeout (120s used this wave, not
   the 5s+ default many tools assume) and run it via `nohup ... & disown` + poll, not inline,
   since it will exceed a 2-minute tool-call default.
-- **`PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K's queue half) regenerated mid-gate-sequence
-  THREE separate times this session**, always collapsing from its committed 11,488-line form to a
-  1,078-row consolidated form matching `CLOSURE_LEDGER.md`'s "1,078 open rows" claim. The trigger
-  is now effectively confirmed, not just circumstantial: all three times, the CSV was untouched
-  right up until `npm run build` ran, and changed immediately after — no other gate in the
-  sequence (typecheck, vitest, validate:content, lint:pedagogy, validate:native,
-  check:registration) ever produced this side effect on its own across many runs this session.
-  Something in `next build`'s static generation (most plausibly a page that server-renders a
-  workload/admin view and imports the consolidation logic as a side effect of prerendering it)
-  regenerates the file. `git checkout -- PREMIUM_PENDING_WORKLOAD_QUEUE.csv` restores it, as
-  Trap K prescribes — but budget for doing this **after every `npm run build` in the session**,
-  not once: check `git status` immediately after each build, not just before the final commit.
+- **`PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K's queue half) regenerated mid-gate-sequence FOUR
+  separate times this session** (a fourth, during the hero-tier wave's build), always collapsing
+  from its committed 11,488-line form to a 1,078-row consolidated form matching
+  `CLOSURE_LEDGER.md`'s "1,078 open rows" claim. The trigger is effectively confirmed at this
+  point: every time, the CSV was untouched right up until `npm run build` ran, and changed
+  immediately after — no other gate in the sequence (typecheck, vitest, validate:content,
+  lint:pedagogy, validate:native, check:registration) ever produced this side effect on its own
+  across many runs this session. Something in `next build`'s static generation (most plausibly a
+  page that server-renders a workload/admin view and imports the consolidation logic as a side
+  effect of prerendering it) regenerates the file. `git checkout -- PREMIUM_PENDING_WORKLOAD_QUEUE.csv`
+  restores it, as Trap K prescribes — but budget for doing this **after every `npm run build` in
+  the session**, not once: check `git status` immediately after each build, not just before the
+  final commit.
+- **Seeding a `LessonSnapshot` via `localStorage` to jump to a target step silently no-ops if
+  `i` (the target index) is `0`.** `src/lib/lessonState.ts`'s `restoreQueue()` treats `i <= 0` as
+  "nothing worth resuming" and discards the snapshot, loading the lesson fresh from its real step
+  0 instead — no error, no console warning, just a normal-looking page that happens to be the
+  wrong step. Symptom: every screenshot in a batch comes back showing the SAME kind of content
+  (the lesson's actual first step) regardless of which lesson/widget was targeted — that
+  uniformity across otherwise-independent targets is the tell that it's one systematic seeding
+  bug, not several unrelated per-widget issues. Fix: `stepIds` must be the lesson's FULL, real
+  step-id sequence (every id must resolve via `stepIndex(lesson)` — base steps AND remedial
+  concept/check pairs — or the whole snapshot is rejected too), and `i` must be that target step's
+  actual index within it (≥ 1), not a 0-based index into a hand-picked subset array.
+- **A "make a prediction first" gate (S200-era) hides a step's manipulative behind a commit
+  click.** A screenshot taken right after navigation, with no interaction, may capture the
+  prediction card instead of the widget it's gating — the card looks complete on its own (prompt,
+  three options, a dismissible note), so this doesn't look like a broken capture unless you
+  already know the widget should be there. Dismiss it the same way `LessonPlayer.play.test.tsx`'s
+  own `commitPrediction()` helper does: click the first `role="radio"` option, wait briefly, then
+  capture.
+- **A stale `next start` from earlier in the same session can survive across shell calls and keep
+  answering `curl` while `pgrep -af`/`ss -ltnp` intermittently fail to surface it** (the multi-line
+  self-match hazard above muddied one `pgrep` check; a plain `ss -ltnp | grep <port>` missed the
+  listener once too, for reasons not fully pinned down). `fuser <port>/tcp` reliably found the
+  owning PID every time this session; `fuser -k <port>/tcp` is the clean kill. When the question
+  is "is anything bound to this port" rather than "is a process matching this text running,"
+  reach for the port-based check first — process-name pattern matching and port-binding checks
+  aren't always equally reliable for the same question, on this sandbox at least.
 
 ---
 

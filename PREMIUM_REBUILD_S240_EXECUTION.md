@@ -570,3 +570,125 @@ Trap K's `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` regenerated a **third** time this 
 immediately after this addendum's `npm run build` — see this wave's handover §5 for the
 session-total count and the now-effectively-confirmed link to `next build`. Restored via
 `git checkout --` before staging this commit, same remedy as the first two occurrences.
+
+## Addendum 5 (same session, next commit): hero stage tier — first pass, 7 engines promoted, 2 pre-existing label defects fixed
+
+The user's own priority order for this session was 1) cosmetic inversions (Addendum 4) → 2) hero
+tier pixel QA → 3) scope a Plan v3 workstream. This addendum is item 2: `src/components/
+stageWidth.ts` has shipped a `hero` stage tier (1100–1280px, `max-w-6xl`) since S218/early Plan v3
+work, but **zero widgets had ever been assigned it** — the code comment was explicit that
+assignment must be "evidence-driven (pixel QA at 1440px per engine family)," not a guess, and
+S239 §2's WS-D finding (some labs measured OVERSIZED, not undersized, the first time anyone
+actually looked) was the standing reason nobody had done that measurement yet.
+
+### Scoping: which "wide"-tier engines are even plausible candidates
+
+`stageWidth.ts`'s own comment ties `hero` to "multi-representation systems" — genuinely showing a
+synced graph/diagram PLUS a separate live symbolic or numeric readout, not just one large diagram.
+Before spending screenshot budget, three parallel research passes read every one of the ~66
+"wide"-tier engines' component source in `widgets.tsx` (18,765 lines, one file) for two facts:
+whether it's genuinely multi-representation, and whether its own SVG/canvas sizing is capped by an
+inner Tailwind `max-w-*` well under 1024px (in which case promoting the *stage* tier alone does
+nothing — the inner cap is the real bottleneck, a distinct problem from this pass's scope).
+
+Result: roughly two dozen engines are real multi-rep (a graph plus a live equation string, a table
+plus a synced plot, dual LaTeX panels, etc.), but most of those self-cap their SVG at `max-w-md`/
+`max-w-xl` (448–576px) — `derivativeTrace`, `accumulateArea`, `sliceSum`, `binomialAreaLab`, and
+the whole algebra/precalc "explore" family (`quadraticExplore`, `matrixTransform`,
+`unitCircleExplore`, `systemsExplore`, `numberLineRay`, etc.) all fall in this bucket. Those are
+**not candidates for this pass** — widening the stage tier would only add padding around an
+unchanged diagram; raising their own inner cap is a separate, more invasive change out of scope
+here. Eight engines cleared both bars (genuine multi-rep AND uncapped/responsive inner sizing):
+`trialProbabilityLab`, `samplingBiasLab`, `percentChangeLab`, `relatedRatesLab`,
+`conditionalTableLab`, `derivativeRuleLab` (product mode), `covariationScrubber`,
+`affineRelationshipLab`.
+
+### Real 1440px pointer QA: before/after, at the actual promoted width
+
+For each of the 8, found a real authored lesson step (`sp-03-03/i1`, `sp-01-02/i1`, `pr-04-02/i1`,
+`dc-02-01/i1b`, `cpr-03-02/i1`, `dr-03-01/i1`, `fg-03-01/i1`, `fg-03-02/i1`), captured it at the
+current `wide` tier (1024px), then temporarily reassigned all 8 to `hero` in `stageWidth.ts`,
+rebuilt, and re-captured the identical steps at the real, live `hero` tier (1152px) — not a
+simulated/dev-tools resize. Screenshots and the full per-engine table are in
+`S240_SCREENSHOTS/14`–`23` and this file's reasoning below; the tier assignments themselves are
+`stageWidth.ts`'s own record, not restated here.
+
+**Seeding gotcha, caught before it produced false readings:** the first round of screenshots all
+came back at the *narrow* (672px) tier regardless of the target widget, for every one of the 8 —
+not 8 independent bugs, one systematic cause. `src/lib/lessonState.ts`'s `restoreQueue()` rejects
+any snapshot with `i <= 0` (`i === 0` reads as "nothing worth resuming," so a fresh lesson loads
+instead) — the seeding script had been passing a filtered array of just the widget's own step id
+(index 0) rather than the lesson's FULL step-id sequence with the widget's real position in it.
+Root-caused by reading `lessonState.ts` directly rather than guessing at a second workaround; fixed
+by seeding the real per-lesson step order and the widget's actual index. A second round of
+screenshots landed on "make a prediction first" gate cards instead of the widgets themselves (the
+gate hides the manipulative until the learner commits, by design, S200-era) — fixed by clicking
+the first `role="radio"` option first, the same interaction `LessonPlayer.play.test.tsx`'s own
+`commitPrediction()` helper uses, before capturing.
+
+### The verdict, per engine
+
+Seven promoted: `trialProbabilityLab`, `samplingBiasLab`, `percentChangeLab`,
+`conditionalTableLab`, `derivativeRuleLab`, `covariationScrubber`, `affineRelationshipLab`. All
+scaled cleanly at hero width — content genuinely used the added room (a synced table+graph pair
+got visibly more comfortable; an area-model diagram grew attractively rather than leaving empty
+margin) — no new overflow, no broken layout.
+
+One rejected: `relatedRatesLab`. Its sliding-ladder diagram is a naturally tall/narrow construction
+(a ladder against a wall); the extra ~130px of hero width became empty margin to the right of the
+diagram, not more diagram — the before and after screenshots (`S240_SCREENSHOTS/14`, vs. the
+`wide`-tier baseline) show no benefit. Left at `wide`, with the reasoning recorded inline in
+`stageWidth.ts` so a future session doesn't have to re-derive it from nothing.
+
+### Two real, pre-existing defects found by this pass — unrelated to the tier itself, fixed
+
+Both reproduced identically at wide AND hero width, proving they were never about container size:
+
+1. **`trialProbabilityLab`'s "whole = N" axis label clipped its own viewBox.** `xFor(spec.total)`
+   sits at the axis's own rightmost tick (x=494 of a 520-unit viewBox) whenever `spec.total ===
+   axisMax` — the common case, no choice's claim exceeds the total. The label was
+   `textAnchor="middle"` at that x, so roughly half a 9-character bold label overflowed past 520
+   and clipped, regardless of the stage's rendered pixel width (a viewBox-internal coordinate
+   problem). Fixed: `textAnchor="end"`, so the label's right edge sits at the tick instead of its
+   center — the same convention a rightmost axis tick label commonly uses. `content/courses/
+   sampling-and-probability`'s corpus wasn't touched; this is widget code, not content.
+2. **`affineRelationshipLab`'s two-line legend overlapped.** S237b had already fixed the case where
+   two lines clamp to the identical Y (same coordinates, one label unreadable) by separating
+   same-clamped labels with a 16-unit gap — derived from `textBoxes.testkit.ts`'s modelled box
+   height for 12px text (12 × 1.26 ≈ 15.1, so 16 "just" clears it). That file's own header warns
+   the 1.26em constant "still UNDER-estimates a wide proportional word," and "Function A"/
+   "Function B" are exactly that: a real browser rendered them touching, with the model itself only
+   0.88 units from calling it a collision (which is why `COLLISION_SWEEP=1`'s corpus-wide sweep —
+   11,957 specs × 3 tones, 0 hits — never caught it: technically clear by the model's own math, just
+   not by enough to read cleanly). Fixed: gap 16 → 20, giving the model ~5 units of clearance
+   instead of ~0.9, matching ordinary line-height convention for 12px text rather than its bare
+   minimum. Both fixes re-verified by real-browser screenshot (`S240_SCREENSHOTS/15`-`16`,
+   `22`-`23`) and by re-running `COLLISION_SWEEP=1` after the fix (still 0 hits corpus-wide, 11,957
+   specs, 0 renders failed — confirms neither fix introduced a new collision anywhere else).
+
+### Verification
+
+- `npx tsc --noEmit`: clean (the `STAGE_TIER` Record stays exhaustive over `TWidget["type"]`;
+  `"hero"` was already a valid `StageTier` member, just unused).
+- `npx vitest run` (2 shards, run alone — not concurrent with `validate:content`/`lint:pedagogy`
+  this time, learning from this session's earlier contention timeouts): 354 files / 13,385 tests —
+  **13,383 passed, 2 pre-existing skips, 0 failures, exact match to this session's established
+  baseline.** Zero regressions from either the tier reassignments or the two widget-code fixes.
+- `validate:content` 1840/1840, `lint:pedagogy` 1711/1711, `validate:native` 2 expected
+  archive-only findings, `check:registration` consistent, `content-change-proof` 874/874
+  unchanged (no lesson content files touched — this wave is `src/` code only).
+- `build` EXIT:0. Trap K's CSV regenerated again (the fourth time this session) immediately after
+  this wave's build; restored via `git checkout --`, per the now-standard per-build check.
+- `COLLISION_SWEEP=1`: 0 collisions, 11,957 specs, 0 renders failed — both before confirming the
+  two fixes and after, corpus-wide.
+
+### An environment note worth carrying forward
+
+A stale `next start` process from earlier QA work in this same session survived across shell
+calls and answered `curl` successfully, but `pgrep -af`/`ss -ltnp` intermittently failed to
+surface it (the multi-line-script self-match hazard documented in this wave's handover §5 muddied
+one check; a plain `ss -ltnp | grep 3100` missed it once too). `fuser 3100/tcp` reliably found the
+owning PID every time in this session; `fuser -k 3100/tcp` is the clean kill. Prefer a port-based
+check over a process-name pattern match when the goal is "is anything bound to this port," not
+"is a process matching this text running" — the two questions aren't always answered the same way
+by the same tool.
