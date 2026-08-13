@@ -232,11 +232,13 @@ const ROWS: Row[] = [
     servedKind: "challenge", servedType: "numeric",
     servedPrompt: "A spherical balloon's radius grows at 2 cm/s. Find dV/dt when r = 3, as a multiple of \u03c0 (give just the number).",
     servedAnswer: "72",
-    // NOTE (found by this gate, not fixed — frozen prose): ch1 authors TWO traps at value 36;
-    // only the first can ever fire. Logged for a human in the execution report.
+    // NOTE (found by this gate; fixed same session — see pedagogy.ts's numeric
+    // duplicate-value check, added right after this gate flagged it): ch1 used to author TWO
+    // traps at value 36, where only the first could ever fire. Merged into one diagnosis that
+    // names both slips the coincidence hides (4\u03c0r\u00b2 without \u00d7dr/dt, or the volume misread
+    // as the rate) rather than silently dropping one. This snapshot is the POST-fix content.
     servedWrongPaths: [
-      "36|That is 4\u03c0r\u00b2 at r = 3 without the dr/dt = 2. Multiply by the rate: 4\u03c0(9)(2) = 72\u03c0.",
-      "36|That is the volume-ish, not the rate. dV/dt = 4\u03c0r\u00b2\u00b7(dr/dt) = 72\u03c0.",
+      "36|36 is a coincidence of two different slips at r = 3: 4\u03c0r\u00b2 without the \u00d7(dr/dt) factor, or the volume (4/3)\u03c0r\u00b3 misread as the rate. Either way, dV/dt = 4\u03c0r\u00b2(dr/dt) = 4\u03c0(9)(2) = 72\u03c0.",
       "24|Check the derivative: d/dr[(4/3)\u03c0r\u00b3] = 4\u03c0r\u00b2, which is 36\u03c0 at r = 3, and then \u00d7 2 = 72\u03c0."
     ]
   },

@@ -475,12 +475,44 @@ function lintStep(s: TStep, where: string, ctx: LintCtx = STANDARD_CTX): string[
   }
   if (s.widget?.type === "numeric") {
     const tol = s.widget.tolerance ?? 0;
+    const seenVals = new Set<string>();
     for (const e of s.widget.commonErrors) {
       if (Math.abs(e.value - s.widget.answer) <= tol) {
         errs.push(
           `${where}/${s.id}: commonError ${e.value} equals the correct answer — the right response would be shown error feedback`
         );
       }
+      // Mirrors the fractionEntry/pointEntry "two traps share a value" check in
+      // widgetIntegrityErrors (schema.ts) — numeric had no equivalent. evaluate.ts's
+      // numeric branch resolves a wrong entry with `commonErrors.find(e => e.value === v)`,
+      // so when two entries share a value only the FIRST-authored feedback can ever fire;
+      // the second is dead. (S238 §4 defect 2, dc-02-01/ch1, shipped past every existing
+      // gate through this exact gap.)
+      const key = String(e.value);
+      if (seenVals.has(key)) {
+        errs.push(
+          `${where}/${s.id}: two commonErrors share the value ${e.value} — evaluate.ts matches the first by value, so the second's diagnosis can never fire`
+        );
+      }
+      seenVals.add(key);
+    }
+  }
+  // Two DIFFERENT mcq options presenting the identical label text to the learner, regardless
+  // of which is graded correct — a learner cannot act on a choice they cannot tell apart from
+  // another. Exact-text only (normalized for whitespace/case): catching near-duplicate-but-
+  // distinct phrasing (S238 §4 defect 1's class, g2g-01-05/k3 — options whose labels differ but
+  // whose underlying scenarios overlap) needs semantic judgment a mechanical check cannot
+  // safely make without false-positiving on legitimately similar options ("8" vs "8 remainder
+  // 2"). Checked against the full corpus before landing: zero exact-duplicate hits, so this
+  // adds coverage without disturbing anything authored so far.
+  if (s.widget?.type === "mcq") {
+    const seenLabels = new Set<string>();
+    for (const o of s.widget.options) {
+      const key = o.label.trim().toLowerCase().replace(/\s+/g, " ");
+      if (seenLabels.has(key)) {
+        errs.push(`${where}/${s.id}: two options share the label "${o.label.trim()}" — a learner cannot tell them apart`);
+      }
+      seenLabels.add(key);
     }
   }
   for (const f of incorrectFeedbackStrings(s)) {
