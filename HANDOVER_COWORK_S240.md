@@ -38,7 +38,14 @@ git merge-base --is-ancestor 80a5c1c HEAD; echo "ancestry:$?"    # MUST be 0
 npm ci
 ```
 
-**HEAD at end of S240: `cd613bf`** — nine commits on `80a5c1c` (S239's final commit), in order:
+**SUPERSEDED BY §2.7-§2.9 BELOW — read those first.** HEAD at time of THIS writing is `1d2d2a8`,
+with a background implementation wave (WS-J full build-out) still running past it — see §2.9 for
+the exact in-flight state. The `cd613bf` baseline this paragraph originally described is thirteen
+commits behind current HEAD. Kept below verbatim for its own historical accuracy (the hero-tier
+wave's own record), not as the current bootstrap target.
+
+**HEAD at end of the `cd613bf` baseline (superseded, see above): `cd613bf`** — nine commits on
+`80a5c1c` (S239's final commit), in order:
 `c058a2b` (the 5 NOT-POSSIBLE rows + two engines), `d31ea6a` (grade-vocabulary re-audit, no code
 change), `3324778` (the near-duplication gate + `dc-02-01/ch1` fix), `c88d91b` (the three
 held-back rows converted per the user's ruling — §2.5 below), `7fb4c4f` (docs-only: this file
@@ -70,6 +77,9 @@ collision). This file is the map.
 ---
 
 ## 1. Gate results at session end — YOUR BASELINE
+
+**SUPERSEDED — see §2.7 for the current baseline (post wave-1 implementation, HEAD `1d2d2a8`) and
+§2.9 for what's still in flight past it.** Kept below for the `cd613bf` point-in-time record.
 
 **This is the `cd613bf` baseline (all nine S240 commits included), re-run in full. The counts below
 are unchanged from the earlier `c88d91b` baseline this section previously documented — the g5f fix
@@ -294,13 +304,151 @@ under WS-C/WS-B since this pass that might now qualify.
 
 ---
 
+## 2.7. Plan v3 implementation wave 1 — WS-A, WS-H, WS-G, WS-E, WS-J first slice (5 commits,
+`134c5f3`..`1d2d2a8`, current confirmed HEAD `1d2d2a8`)
+
+**Full record: `PLAN_V3_WAVE1_EXECUTION.md`.** Do not duplicate its detail here — read it. Summary
+only:
+
+The user confirmed scoping all four Plan v3 workstreams (WS-A/H/G/E, in that order — separate
+plan docs, already delivered: `WS_A_BRAND_PLAN.md`, `WS_H_LANDING_PLAN.md`,
+`WS_G_QA_FACTORIES_PLAN.md`, `WS_E_PREDICTION_PURGE_PLAN.md`), then instructed moving straight to
+implementation using a standing multi-agent pattern: fable-model agents for deep planning/
+architecture, opus for orchestration, sonnet for implementation. Two background Workflows executed
+this: `wf_9aa38109-00d` (WS-A → WS-H/G/E, 9 agents) and `wf_b88c70df-334` (WS-J first slice, no
+prior plan doc existed for it, 2 agents). WS-J was added to the wave by explicit user instruction
+mid-stream.
+
+**What shipped, one commit per workstream, in dependency order:**
+- `53f5817` WS-J first slice — avatar concept ledger (16 board-anchored concepts), production
+  spec, `src/lib/avatars.ts` manifest (every entry `enabled: false` — no art exists), honesty-gated
+  tests, placeholder silhouette.
+- `134c5f3` WS-A — real Maggie's Trail brand system (mark/wordmark/`brand.tsx`) replacing "Tally
+  Peak" everywhere it rendered, built from the user's approved concept image.
+- `3b8df69` WS-H — real hero manipulative on the landing page (not a mockup), honest
+  catalogue-derived proof strip, public nav, `HeroWidget` retired.
+- `21a0726` WS-G — two MCQ integrity gates (exactly-one-correct; near-duplicate option labels),
+  both fire clean on the full corpus, landed as hard errors (no remediation queue needed).
+- `366860b` WS-E — real prediction-gate adjudication rubric + read-only evidence generator + a
+  23-gate hand-adjudicated pilot, replacing a rubber-stamp CSV whose `reason` column repeated one
+  boilerplate sentence across all 1,362 rows.
+- `1d2d2a8` — this wave's consolidated execution record (`PLAN_V3_WAVE1_EXECUTION.md` itself).
+
+**Current baseline — independently re-run by the orchestrating session against the combined
+result, NOT taken from any agent's self-report (full detail in `PLAN_V3_WAVE1_EXECUTION.md` §7):**
+
+```
+typecheck                 clean
+vitest (4 shards)         357/359 files, 13,429 tests passed, 2 pre-existing skips, 0 failed
+validate:content          1840 / 1840
+lint:pedagogy              1711 / 1711
+validate:native           3 findings, all 3 the documented archive-only set (node_modules, .next,
+                          tsconfig.tsbuildinfo) — nothing else
+check-registration         consistent
+build                     EXIT:0, 57/57 static pages, homepage route 4.26 kB / 216 kB First Load JS
+content/courses/           untouched — verified empty diff before, during, and after every commit
+```
+
+Not re-run this baseline (same honest-gap discipline as §1): `playwright test` e2e,
+`content-change-proof`, `gen:reports`, `COLLISION_SWEEP=1`/`FIGURE_SWEEP=1`. Nothing in this wave's
+diff touches lesson content or figure rendering, so none of these are expected to move — but "not
+expected to move" is not the same as "confirmed," per this file's own standing discipline. Run
+fresh before trusting.
+
+## 2.8. Three governance decisions the user made this session (durable — do not re-ask)
+
+Asked via `AskUserQuestion` after the wave-1 report surfaced them as escalations. Record here so a
+future session doesn't re-litigate:
+
+1. **CI: staying manual.** No `.github/`/`.husky/` work is wanted. The existing 240-session manual
+   gate discipline continues. (Raised independently by both WS-H's perf-budget question and WS-G's
+   gate-sequence question — one ruling resolved both.)
+2. **Art production path: wait and revisit.** No brand/avatar art beyond hand-authored simple
+   vector geometry (what WS-A already shipped) gets produced right now — not in-session, not
+   externally commissioned. Nothing is blocked by this; every workstream's fallback (structure +
+   spec + honest placeholder) is already what shipped. Investigated whether Canva (connected this
+   session) could help first: its `generate-design` tool only produces marketing/document
+   templates from a fixed type list (poster, business card, logo, social post, etc.) — no
+   character-portrait/illustration output, no reference-image style-matching input. Confirmed by
+   reading its actual tool schema, not assumed. Ruled out, not attempted.
+3. **WS-E Phase 2 (the real 1,362-gate prediction re-adjudication): greenlit, per-batch rulings.**
+   The user wants batches of 20-50 gates at a time, reviewed and ruled on before the next batch —
+   same pattern as this session's earlier frozen-content rulings (§3.2, §4). **This unblocks real
+   corpus-scale work that was previously an open escalation.** Not started yet as of this writing —
+   see §3 for where to pick this up.
+
+**Still genuinely open, not urgent, no gate depends on it:** WS-A's Option B chrome retint
+(`#22314F` → `#0D1B2A` app-wide, to remove the interim navy/ink mismatch between new brand assets
+and existing chrome) remains undecided. Revisit whenever, no cost to waiting.
+
+## 2.9. IN FLIGHT AT TIME OF THIS WRITING — WS-J full implementation
+
+**Read this section before doing anything else if you are picking this session back up.** After
+wave 1 shipped WS-J's first slice (architecture only, zero art), the user instructed "fully
+implement ws-J. designing and producing ALL the avatars." Investigated image-generation options
+first (ToolSearch, SuggestSkills, SearchMcpRegistry all empty; Canva ruled out per §2.8 item 2) —
+confirmed no path to real art exists in this environment. User chose (via `AskUserQuestion`,
+picking between "full system now, art later" / "try Canva" / "user supplies art") to proceed with
+the full non-art system: expand the manifest from 16 to the full 56-60 avatar concepts, wire
+`Profile.avatarId` + `sync.ts` (the follow-up wave 1 deliberately deferred), build the real picker
+UI, propagate to safe render surfaces. **Every avatar stays `enabled: false` — this is correct,
+not a shortcoming, per WS-J's own non-negotiable rule (§2.7's `53f5817` line, and
+`AVATAR_ART_PRODUCTION_SPEC.md`).**
+
+Launched as background Workflow **`wf_5cd3bdae-fdc`, task ID `wn4nduo71`**, 5 agents across 4
+phases (Resolve [fable] → Build Foundations [2× sonnet, parallel: manifest+ledger expansion, and
+Profile.avatarId+sync wiring] → Build Picker [sonnet] → Propagate [sonnet]). Script saved at
+`/root/.claude/projects/-home-claude/f5d7c3cb-2cef-55e5-9722-835c8b26e904/workflows/scripts/ws-j-full-implementation-wf_5cd3bdae-fdc.js`
+— resumable via `Workflow({scriptPath, resumeFromRunId: 'wf_5cd3bdae-fdc'})` if it needs to be
+re-run with edits (completed agent calls replay from cache).
+
+**As of this writing: still running.** Last observed via `git status` (uncommitted, in the working
+tree, NOT yet committed — do not assume these are final or gate-verified):
+`AVATAR_ART_PRODUCTION_SPEC.md`, `AVATAR_CONCEPT_LEDGER.md`, `src/lib/avatars.ts`,
+`src/lib/avatars.test.ts` (manifest-expansion agent); `src/lib/progress.ts`, `src/lib/sync.ts`,
+`src/lib/sync.test.ts`, `src/server/syncService.s43.test.ts` (profile/sync agent). Both "Build
+Foundations" agents were still active; "Build Picker" and "Propagate" had not started.
+
+**When it completes, in order:**
+1. Read the full result via `TaskOutput` / the journal file the task-notification points to — do
+   not trust any agent's self-report without independently re-running gates, exactly as §2.7's
+   wave did.
+2. Verify the non-negotiable rule was honored: `grep -rn "design-reference" src/ public/` should
+   show only comments explaining why it's NOT referenced (same pattern as `53f5817`); every
+   `AvatarDefinition` must still be `enabled: false`; no new file under `public/avatars/` except
+   the existing honest placeholder.
+3. Verify no collision with wave 1's already-landed files (`SiteNav.tsx`, `page.tsx`, etc.) —
+   check `git diff` touches only the files the workflow's own prompts scoped it to.
+4. Reset `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K) via `git checkout --` before committing —
+   it will have regenerated from every `vitest run` the agents did internally.
+5. Run the full gate sequence fresh (§1's command list) against the combined result.
+6. Commit (one commit per logical slice, matching this wave's convention), build + verify (isolated
+   -clone purge-and-restore + `git fsck --full --strict`, per §0) + deliver an incremental bundle
+   from `5c5d5f9` (or whatever the user's last CONFIRMED-pushed SHA is by then — check via
+   `git fetch origin` and `git log origin/cowork/s237..HEAD` before assuming).
+7. Update this file and `PLAN_V3_WAVE1_EXECUTION.md` (or a new dated addendum) with the real
+   outcome.
+8. Move to WS-E Phase 2 batch 1 (§2.8 item 3, §3 below) — the user has already greenlit this, it
+   just hadn't started as of this writing because starting two large concurrent efforts at once
+   risked splitting attention on both.
+
+---
+
 ## 3. The queue — where to pick up
 
-**The NOT-POSSIBLE queue that ran S237→S240 is fully closed.** There is no standing "next 5" —
-the next session needs a fresh instruction from the user on where Plan v3 work resumes. Candidates,
-unranked, all still open exactly as S239 left them:
+**SUPERSEDED — §3.1 below is the S239-era snapshot, kept for history. The real current queue is
+§2.9's numbered list (WS-J full implementation, in flight) followed by WS-E Phase 2 batch 1
+(§2.8 item 3, now user-greenlit with a per-batch-rulings review method).** The NOT-POSSIBLE queue
+that ran S237→S240 is fully closed; wave 1 (§2.7) closed a first slice of WS-A/H/G/E/J. What's
+still genuinely open per Plan v3: WS-A's later phases (raster PWA icons, OG image, chrome retint,
+typography, cleanup — `PLAN_V3_WAVE1_EXECUTION.md` §9), WS-H's explainer panels + breadth rail +
+perf CI (deferred by user ruling, §2.8 item 1), WS-G's remediation burn-down + `authoredMath.ts`
+extension + e2e scaling, WS-E's full Phase 2 (queued, see above) + Phase 3 interruption-cost
+softening, WS-J's render-surface propagation beyond what §2.9's wave lands + all actual art
+(deferred by user ruling, §2.8 item 2) · WS-F sound/voice (untouched, no plan doc yet) · §4.2
+precache only when a parallel wave launches.
 
-### 3.1 Also open, per Plan v3 (mostly unchanged from S239)
+### 3.1 Also open, per Plan v3 (S239-era snapshot — see the superseding note above)
 
 WS-A brand productionization, WS-H landing rebuild, WS-J avatars (concept boards only — Plan v3
 Part 0 hard rules) · WS-E prediction purge · WS-G MCQ factory · WS-F sound/voice · §4.2 precache
