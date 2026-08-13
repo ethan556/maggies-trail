@@ -404,6 +404,22 @@ interface LintCtx {
 const STANDARD_CTX: LintCtx = { conceptWordMax: 80 };
 const EARLY_CTX: LintCtx = { conceptWordMax: 25 };
 
+/** A DELIBERATELY conservative fold for near-duplicate mcq option-label detection: whitespace,
+ * case, a LEADING or TRAILING run of quote/terminal-punctuation characters, and one leading
+ * filler word ("a"/"an"/"the"). Nothing else. This is exact-match-after-folding, never fuzzy or
+ * edit-distance matching, and it never touches a character embedded INSIDE the text — so a
+ * decimal point, minus sign, fraction slash, or percent/degree/currency symbol is always left
+ * alone. That is what keeps "8" and "8 remainder 2" (this file's own worked false-positive
+ * example, see the block below) folding to two different strings rather than colliding. Detecting
+ * options whose PHRASING differs but whose underlying scenario overlaps (S238 §4 defect 1's
+ * class) needs real semantic judgment, which is exactly what this function refuses to attempt —
+ * that class of case belongs in MCQ_DISTRACTOR_AUDIT.csv's detector pipeline, not here. */
+function mcqNearDuplicateKey(label: string): string {
+  const DECORATIVE_EDGE = /^["'’‘“”.,!?;:]+|["'’‘“”.,!?;:]+$/g;
+  const folded = label.trim().toLowerCase().replace(/\s+/g, " ").replace(DECORATIVE_EDGE, "").trim();
+  return folded.replace(/^(a|an|the)\s+/, "");
+}
+
 /** Rules that apply to a step wherever it appears (core sequence or remedial pair). */
 function lintStep(s: TStep, where: string, ctx: LintCtx = STANDARD_CTX): string[] {
   const errs: string[] = [];
@@ -513,6 +529,26 @@ function lintStep(s: TStep, where: string, ctx: LintCtx = STANDARD_CTX): string[
         errs.push(`${where}/${s.id}: two options share the label "${o.label.trim()}" — a learner cannot tell them apart`);
       }
       seenLabels.add(key);
+    }
+  }
+  // Near-duplicate phrasing: two DIFFERENT (not already exact-duplicate) mcq option labels that
+  // fold to the same text once whitespace, case, edge punctuation and a leading filler word are
+  // conservatively normalized away (see mcqNearDuplicateKey above for exactly what folds and,
+  // more importantly, what never does). Kept deliberately separate from the exact-duplicate loop
+  // above so the two checks never double-report the same pair.
+  if (s.widget?.type === "mcq") {
+    const seenNearDup = new Map<string, { exactKey: string; label: string }>();
+    for (const o of s.widget.options) {
+      const exactKey = o.label.trim().toLowerCase().replace(/\s+/g, " ");
+      const nearKey = mcqNearDuplicateKey(o.label);
+      if (!nearKey) continue;
+      const prior = seenNearDup.get(nearKey);
+      if (prior && prior.exactKey !== exactKey) {
+        errs.push(
+          `${where}/${s.id}: options "${prior.label}" and "${o.label.trim()}" are near-duplicate phrasing (differ only by whitespace/case/punctuation/a filler word) — a learner cannot reliably tell them apart`
+        );
+      }
+      if (!prior) seenNearDup.set(nearKey, { exactKey, label: o.label.trim() });
     }
   }
   for (const f of incorrectFeedbackStrings(s)) {

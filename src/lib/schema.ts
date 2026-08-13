@@ -8750,6 +8750,16 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
       }
       break;
     }
+    case "mcq": {
+      // Same shape as the ~10 Lab choice-widgets below (scaledCircleLab, compoundEventLab,
+      // compositeAreaLab, …): evaluate.ts's mcq branch grades by looking up the selected
+      // option's `correct` flag directly (`spec.options.find((o) => o.id === value).correct`),
+      // so two options both marked correct would let a learner be graded right on either pick
+      // with nothing catching it before now.
+      const correct = spec.options.filter((o) => o.correct);
+      if (correct.length !== 1) errs.push(`mcq: expected exactly one correct option, found ${correct.length}`);
+      break;
+    }
     case "placeCompare": {
       const num = (s: string) => Number(s);
       const truth = num(spec.left) < num(spec.right) ? "lt" : num(spec.left) > num(spec.right) ? "gt" : "eq";
