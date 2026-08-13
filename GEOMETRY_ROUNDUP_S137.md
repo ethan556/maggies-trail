@@ -14,4 +14,4 @@ The six graded claims remain separate but now share visible causal evidence: sca
 - Registered engines added: **2**
 - Exact-fit experiences: **6/6**
 - Live reviewed K–8 queue: **0**
-- Tier counts: **A 1187 · B 458 · C 56 · D 0**
+- Tier counts: **A 1190 · B 457 · C 54 · D 0**

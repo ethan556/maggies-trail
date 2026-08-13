@@ -1436,10 +1436,37 @@ function ElapsedTimeW({ spec, value, onChange, disabled, tone }: WProps<TElapsed
   const hhmm = (h: number, m: number) => `${h}:${String(m).padStart(2, "0")}`;
   const dur = `${Math.floor(elapsed / 60)}h ${elapsed % 60}min`;
 
+  // WS-C (S239): the FINISH CLOCK'S MINUTE HAND is the learner's object — time that passes is
+  // the finish hand carried forward (clockSet's turning gesture, plus wrap tracking: each move
+  // adds the nearest signed hand delta, so winding past 12 accumulates whole hours and winding
+  // back subtracts them, clamped at zero and at the authored maximum). The duration slider
+  // stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const turn = useRef<{ lastMin: number; acc: number } | null>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: 300,
+    viewH: 130,
+    disabled,
+    onDrag: (vx, vy) => {
+      const theta = ((Math.atan2(vx - 238, 62 - vy) * 180) / Math.PI + 360) % 360;
+      const rawMin = theta / 6;
+      const t = turn.current ?? (turn.current = { lastMin: endMin, acc: elapsed });
+      const d = ((((rawMin - t.lastMin + 30) % 60) + 60) % 60) - 30;
+      t.lastMin = rawMin;
+      t.acc = Math.max(0, Math.min(spec.maxMinutes, t.acc + d));
+      const next = snapToStep(t.acc, 0, spec.maxMinutes, spec.minuteStep);
+      if (next !== elapsed) onChange(next);
+    },
+    onEnd: () => {
+      turn.current = null;
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 300 130" className="mx-auto w-full max-w-sm" role="img"
+      <svg ref={svgRef} viewBox="0 0 300 130" className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Start ${hhmm(spec.startHour, spec.startMinute)}, finish ${hhmm(endHour, endMin)}; ${dur} between.`}>
         {clockFace(62, 62, 48, spec.startHour, spec.startMinute, PALETTE.ink, "start")}
         {clockFace(238, 62, 48, endHour, endMin, PALETTE.berry, "end")}
@@ -1460,6 +1487,9 @@ function ElapsedTimeW({ spec, value, onChange, disabled, tone }: WProps<TElapsed
             </text>
           );
         })()}
+        {!disabled && (
+          <circle className="mt-drag-hit" data-testid="et-drag" cx={238} cy={62} r={56} aria-hidden="true" {...drag.handleProps} />
+        )}
       </svg>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>time that passes</span>
@@ -1489,10 +1519,23 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
   const dist = Math.sqrt(dx * dx + dy * dy);
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
+  // WS-C (S239): the MOVING POINT is the learner's object — the legs and the hypotenuse are
+  // consequences of where it sits. A press or sweep carries the point to the integer lattice
+  // point under the pointer; the two sliders stay as the keyboard-parity paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const nx = snapToStep(G0 + ((vx - pad) / (W - 2 * pad)) * (G1 - G0), G0, G1, 1);
+      const ny = snapToStep(G0 + ((H - pad - vy) / (H - 2 * pad)) * (G1 - G0), G0, G1, 1);
+      if (nx !== x || ny !== y) onChange({ x: nx, y: ny });
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-card border border-ink/10 bg-white"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm rounded-card border border-ink/10 bg-white"
         role="img" aria-label={`Moving point at ${x}, ${y}; legs ${dx} and ${dy}; separation ${fmt(dist)}.`}>
         {integers(G0, G1).map((g) => (
           <g key={g}>
@@ -1517,7 +1560,8 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
             </text>
           </g>
         )}
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} />
+      {!disabled && <rect className="mt-drag-hit" data-testid="dgr-drag" x={0} y={0} width={W} height={H - 16} aria-hidden="true" {...drag.handleProps} />}</svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         √({dx}² + {dy}²) = √{dx * dx + dy * dy} = {fmt(dist)}
       </p>
@@ -1679,10 +1723,19 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
     onChange({ angle: next, moves: moves+1, choice: state.choice });
   };
   const optionClass = (active:boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
+  // WS-C (S239): the HINGED BEAM is the learner's object — opening a frame is swinging its arm,
+  // the same gesture triangleConstraintLab ships. A press or sweep steers the free beam about
+  // the hinge on the authored angleStep lattice; the slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({svgRef, viewW: 290, viewH: 165, disabled, onDrag: (vx, vy) => {
+    const theta = Math.atan2(cy - vy, vx - cx) * 180 / Math.PI;
+    const next = snapToStep(theta, 0, 180, spec.angleStep);
+    if (next !== angle) move(next);
+  }});
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="rounded-2xl border border-ink/10 bg-white p-3">
-      <svg viewBox="0 0 290 165" className="mx-auto w-full max-w-md" role="img" aria-label={`Beams ${a}, ${b}, and ${c}. Frame currently opened to ${angle} degrees. Endpoint span ${span.toFixed(1)}.`}>
+      <svg ref={svgRef} viewBox="0 0 290 165" className="mx-auto w-full max-w-md" role="img" aria-label={`Beams ${a}, ${b}, and ${c}. Frame currently opened to ${angle} degrees. Endpoint span ${span.toFixed(1)}.`}>
         <line x1={ax} y1={ay} x2={cx} y2={cy} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
         <line x1={cx} y1={cy} x2={bx} y2={by} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
         <line x1={ax} y1={ay} x2={bx} y2={by} stroke={closesHere ? PALETTE.leaf : flatHere ? PALETTE.berry : PALETTE.tangerine} strokeWidth={4} strokeDasharray="7 5"/>
@@ -1696,6 +1749,7 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
           { x: (ax+bx)/2 + 8, y: (ay+by)/2-8, anchor: "start" }
         ], [s238Box(String(a), (ax+cx)/2, cy+18, "middle", 12), s238Box(String(b), (cx+bx)/2+6, (cy+by)/2-5, "middle", 12)]);
         return <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="12" fontWeight="800" fill={PALETTE.ink}>{t}</text>; })()}
+        {!disabled && <rect className="mt-drag-hit" data-testid="tclo-drag" x={0} y={0} width={290} height={165} aria-hidden="true" {...drag.handleProps} />}
       </svg>
       <div className="grid gap-1 text-center">
         <p className="text-sm font-bold text-ink/60">endpoint span</p>
@@ -1968,10 +2022,28 @@ function SpinnerSimW({ spec, value, onChange, disabled, tone }: WProps<TSpinnerS
   const decExact = terminatingDecimal(fav, spec.sectors);
   const dec = decExact !== null ? ` (${decExact})` : "";
 
+  // WS-C (S239): the SHADING BOUNDARY is the learner's object — hundredthsGrid's sweep in polar
+  // form. A press or sweep pulls the shaded wedge boundary around the wheel to the sector under
+  // the pointer (that sector shades, exactly the cells' tap rule); the slider stays as the
+  // keyboard-parity path, and 0 winning parts stays reachable there.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: 200,
+    viewH: 210,
+    disabled,
+    onDrag: (vx, vy) => {
+      if (Math.hypot(vx - cx, vy - cy) < 10) return; // dead center has no angle
+      const theta = ((Math.atan2(vx - cx, cy - vy) * 180) / Math.PI + 360) % 360;
+      const next = Math.min(spec.sectors, Math.floor((theta / 360) * spec.sectors) + 1);
+      if (next !== fav) onChange(next);
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 200 210" className="mx-auto w-full max-w-[15rem]" role="img"
+      <svg ref={svgRef} viewBox="0 0 200 210" className="mx-auto w-full max-w-[15rem]" role="img"
         aria-label={`Wheel of ${spec.sectors} equal parts with ${fav} shaded.`}>
         <style>{`.sp-w{transition:none}@media (prefers-reduced-motion: no-preference){.sp-w{transition:fill .12s ease-out}}`}</style>
         {Array.from({ length: spec.sectors }, (_, i) => (
@@ -1992,6 +2064,9 @@ function SpinnerSimW({ spec, value, onChange, disabled, tone }: WProps<TSpinnerS
             </g>
           );
         })()}
+        {!disabled && (
+          <circle className="mt-drag-hit" data-testid="sps-drag" cx={cx} cy={cy} r={R + 8} aria-hidden="true" {...drag.handleProps} />
+        )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         P = {fav}/{spec.sectors}{dec}
@@ -2350,10 +2425,38 @@ function CircleAngleExploreW({ spec, value, onChange, disabled, tone }: WProps<T
     spec.mode === "inscribed" ? "angle at P" :
     spec.mode === "tangentChord" ? "tangent–chord angle" : "the OPPOSITE angle";
 
+  // WS-C (S239): the ARC'S ENDPOINTS are the learner's object — arc AB straddles the top
+  // symmetrically, so dragging either endpoint along the rim widens or narrows the arc on the
+  // slider's own 2° lattice. P (inscribed mode only, where its slider exists) slides along the
+  // far arc the same way. Sliders stay as the keyboard-parity paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pointerDeg = (vx: number, vy: number) => ((Math.atan2(cy - vy, vx - cx) * 180) / Math.PI + 360) % 360;
+  const dragA = useSvgDrag({
+    svgRef, viewW: 220, viewH: 200, disabled,
+    onDrag: (vx, vy) => {
+      const next = snapToStep(2 * ((90 - pointerDeg(vx, vy) + 360) % 360), 20, 340, 2);
+      if (next !== arc) onChange(next);
+    }
+  });
+  const dragB = useSvgDrag({
+    svgRef, viewW: 220, viewH: 200, disabled,
+    onDrag: (vx, vy) => {
+      const next = snapToStep(2 * ((pointerDeg(vx, vy) - 90 + 360) % 360), 20, 340, 2);
+      if (next !== arc) onChange(next);
+    }
+  });
+  const dragP = useSvgDrag({
+    svgRef, viewW: 220, viewH: 200, disabled: disabled || spec.mode !== "inscribed",
+    onDrag: (vx, vy) => {
+      const next = snapToStep((((pointerDeg(vx, vy) - bDeg + 360) % 360) / (360 - arc)) * 100, 5, 95, 1);
+      if (next !== pPos) setPPos(next);
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 220 200" className="mx-auto w-full max-w-[26rem]" role="img"
+      <svg ref={svgRef} viewBox="0 0 220 200" className="mx-auto w-full max-w-[26rem]" role="img"
         aria-label={`A circle whose highlighted arc measures ${central} degrees. The ${label} reads ${shown} degrees.`}>
         <style>{`.ca-live{transition:none}@media (prefers-reduced-motion: no-preference){.ca-live{transition:all .12s linear}}`}</style>
         <circle cx={cx} cy={cy} r={R} fill="none" stroke={PALETTE.ink} strokeWidth={1.4} strokeOpacity={0.45} />
@@ -2432,6 +2535,15 @@ function CircleAngleExploreW({ spec, value, onChange, disabled, tone }: WProps<T
         <text x={cx} y={188} textAnchor="middle" fontSize={11} fill={PALETTE.ink} fillOpacity={0.75}>
           {spec.mode === "cyclic" ? `angle at P = ${inscribed}° · opposite = ${180 - inscribed}°` : `central ${central}° · half of it is ${inscribed}°`}
         </text>
+        {!disabled && (
+          <>
+            {spec.mode === "inscribed" && (
+              <circle className="mt-drag-hit" data-testid="ca-drag-p" cx={px} cy={py} r={15} aria-hidden="true" {...dragP.handleProps} />
+            )}
+            <circle className="mt-drag-hit" data-testid="ca-drag-a" cx={ax} cy={ay} r={15} aria-hidden="true" {...dragA.handleProps} />
+            <circle className="mt-drag-hit" data-testid="ca-drag-b" cx={bx} cy={by} r={15} aria-hidden="true" {...dragB.handleProps} />
+          </>
+        )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {label}: {shown}°
@@ -5016,10 +5128,25 @@ function AccumulateAreaW({ spec, value, onChange, disabled, tone }: WProps<TAccu
   const TAN = 0.9;
   const tan = { x1: x - TAN, y1: A - fx * TAN, x2: x + TAN, y2: A + fx * TAN };
 
+  // WS-C (S239): the SWEEP FRONTIER is the learner's object — the slider's own label already
+  // says "drag x". A press or sweep anywhere on either panel pulls the frontier to the 0.25
+  // lattice point under the pointer; the slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: HT + HB,
+    disabled,
+    onDrag: (vx) => {
+      const next = snapToStep(XMIN + ((vx - PAD) / (W - 2 * PAD)) * (XMAX - XMIN), XMIN, XMAX, 0.25);
+      if (next !== x) onChange(next);
+    }
+  });
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${HT + HB}`} className="mx-auto w-full max-w-xl" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${HT + HB}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The area under f up to x equals ${fmt(x)} is ${fmt(A)}, and the height of f there is ${fmt(fx)}. Underneath, the accumulation curve has slope ${fmt(fx)} at that point.`}>
         <style>{`.aa{transition:none}@media (prefers-reduced-motion: no-preference){.aa{transition:all .1s linear}}`}</style>
         <text x={PAD} y={12} fontSize={10} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>f — the height</text>
@@ -5082,7 +5209,11 @@ function AccumulateAreaW({ spec, value, onChange, disabled, tone }: WProps<TAccu
             </g>
           )}
         </g>
-      <AxisCaptions w={W} h={HT + HB} y="" /></svg>
+      <AxisCaptions w={W} h={HT + HB} y="" />
+      {!disabled && (
+        <rect className="mt-drag-hit" data-testid="aa-drag" x={PAD - 8} y={0} width={W - 2 * PAD + 16} height={HT + HB}
+          aria-hidden="true" {...drag.handleProps} />
+      )}</svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         area so far A = {fmt(A)}
         <br />
@@ -5133,11 +5264,31 @@ function SliceSumW({ spec, value, onChange, disabled, tone }: WProps<TSliceSum>)
   const axisY = H - 60;
   const RY = (r: number) => (r / yMax) * 42;
 
+  // WS-C (S239): the INSPECTED SLICE is the learner's object — a local probe, exactly signChart's
+  // class (never graded). A press or sweep over the region highlights the slice under the
+  // pointer: by angle from the pole in sector mode, by x elsewhere. The inspect slider stays as
+  // the keyboard-parity path; the slice COUNT stays a slider by the partition survival rule.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: spec.mode === "sector" ? 260 : W,
+    viewH: spec.mode === "sector" ? 180 : H,
+    disabled,
+    onDrag: (vx, vy) => {
+      const raw =
+        spec.mode === "sector"
+          ? Math.atan2(150 - vy, vx - 60)
+          : a + ((vx - PAD) / (W / 2 - PAD - 8)) * (b - a);
+      const next = Math.max(1, Math.min(n, Math.floor((raw - a) / h) + 1));
+      if (next !== k) setK(next);
+    }
+  });
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {spec.mode === "sector" ? (
-        <svg viewBox="0 0 260 180" className="mx-auto w-full max-w-[24rem]" role="img"
+        <svg ref={svgRef} viewBox="0 0 260 180" className="mx-auto w-full max-w-[24rem]" role="img"
           aria-label={`A polar region cut into ${n} wedges. Wedge ${kk} has area ${fmt(sliceMeasure(spec.mode, xk))} times d-theta, and the running total is ${fmt(est)} against an exact ${fmt(truth)}.`}>
           <style>{`.sw{transition:none}@media (prefers-reduced-motion: no-preference){.sw{transition:all .12s ease-out}}`}</style>
           {(() => {
@@ -5173,9 +5324,10 @@ function SliceSumW({ spec, value, onChange, disabled, tone }: WProps<TSliceSum>)
               </>
             );
           })()}
+          {!disabled && <rect className="mt-drag-hit" data-testid="ssm-drag" x={0} y={0} width={260} height={180} aria-hidden="true" {...drag.handleProps} />}
         </svg>
       ) : (
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`${n} slices. Slice ${kk} measures ${fmt(sliceMeasure(spec.mode, xk))}, and the running total is ${fmt(est)} against an exact ${fmt(truth)}.`}>
         <style>{`.ss2{transition:none}@media (prefers-reduced-motion: no-preference){.ss2{transition:all .12s ease-out}}`}</style>
         {Array.from({ length: n }, (_, i) => {
@@ -5217,6 +5369,7 @@ function SliceSumW({ spec, value, onChange, disabled, tone }: WProps<TSliceSum>)
             })}
           </g>
         )}
+        {!disabled && <rect className="mt-drag-hit" data-testid="ssm-drag" x={PAD - 6} y={0} width={W / 2 - PAD} height={H} aria-hidden="true" {...drag.handleProps} />}
       </svg>
       )}
       <p className="text-center text-sm font-extrabold tabular-nums" aria-live="polite">
@@ -5309,10 +5462,25 @@ function SlopeFieldW({ spec, value, onChange, disabled, tone }: WProps<TSlopeFie
   const slopeHere = fieldSlope(spec.equation, 0, y0);
   const flat = Math.abs(slopeHere) < 1e-9 && Math.abs(fieldSlope(spec.equation, 2, y0)) < 1e-9;
 
+  // WS-C (S239): the STARTING POINT is the learner's object — the solution is seeded where the
+  // dot sits on the y-axis. A press or sweep anywhere pulls (0, y0) to the integer lattice
+  // point under the pointer; the slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (_vx, vy) => {
+      const next = snapToStep(YMIN + ((H - PAD - vy) / (H - 2 * PAD)) * (YMAX - YMIN), 0, 8, 1);
+      if (next !== y0) onChange(next);
+    }
+  });
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`A field of slope segments. The solution starting at y equals ${y0} ${flat ? "never moves — it is an equilibrium" : "threads through the field"}.`}>
         <style>{`.sf{transition:none}@media (prefers-reduced-motion: no-preference){.sf{transition:d .15s ease-out}}`}</style>
         {segs.map((sg, i) => {
@@ -5340,7 +5508,11 @@ function SlopeFieldW({ spec, value, onChange, disabled, tone }: WProps<TSlopeFie
         <text x={X(0) + 8} y={Y(y0) - 7} fontSize={10} fontWeight={700} fill={PALETTE.tangerine}>
           (0, {y0})
         </text>
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} />
+      {!disabled && (
+        <rect className="mt-drag-hit" data-testid="sfd-drag" x={0} y={PAD - 12} width={W} height={H - 2 * PAD + 16}
+          aria-hidden="true" {...drag.handleProps} />
+      )}</svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {flat ? (
           <span className="text-leaf-ink">every segment on this line is FLAT — the solution never moves</span>
@@ -5401,10 +5573,26 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
   const termList = Array.from({ length: Math.min(n + 1, 7) }, (_, k) => taylorTerm(spec.fn, k, x));
   const shrinking = termList.length > 2 && Math.abs(termList[termList.length - 1]) < Math.abs(termList[termList.length - 2]);
 
+  // WS-C (S239): in x-mode the EVALUATION POINT is the learner's object — a position on the
+  // axis, dragged along it (snapped to the slider's own tenths lattice). Terms mode keeps its
+  // slider alone: a term COUNT is genuinely scalar (the fractionBar-denominator survival rule).
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled: disabled || terms,
+    onDrag: (vx) => {
+      const t = XMIN + ((vx - PAD) / (W - 2 * PAD)) * (XMAX - XMIN);
+      const next = snapToStep(t * 10, 1, 15, 1);
+      if (next !== v) onChange(next);
+    }
+  });
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img"
         aria-label={`The function against its ${n}-term polynomial. At x = ${fmt(x)} the true value is ${fmt(fx)} and the polynomial gives ${fmt(px)}, an error of ${fmt(err)}.`}>
         <style>{`.ta{transition:none}@media (prefers-reduced-motion: no-preference){.ta{transition:d .15s ease-out}}`}</style>
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={0.8} strokeOpacity={0.35} />
@@ -5443,7 +5631,11 @@ function TaylorApproxW({ spec, value, onChange, disabled, tone }: WProps<TTaylor
         <circle className="ta" cx={X(x)} cy={Y(px)} r={4} fill={PALETTE.tangerine} />
         {/* S238: y=28 — at 14 this shared the band of the info-tone "target: N terms" caption */}
         <text x={PAD} y={28} fontSize={10} fontWeight={700} fill={PALETTE.sky}>the polynomial ({n + 1} terms)</text>
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} />
+      {!disabled && !terms && (
+        <rect className="mt-drag-hit" data-testid="ta-drag" x={PAD - 8} y={12} width={W - 2 * PAD + 16} height={H - 32}
+          aria-hidden="true" {...drag.handleProps} />
+      )}</svg>
       <p className="text-center text-sm font-extrabold tabular-nums" aria-live="polite">
         at x = {fmt(x)}: true {fmt(fx)} · polynomial {fmt(px)} · error {fmt(err)}
         <br />
@@ -5598,7 +5790,8 @@ function AlgebraTilesW({ spec, value, onChange, disabled, tone }: WProps<TAlgebr
   // The rectangle is laid out to the right of the loose tiles it is being filled from, so the
   // learner sees the pile and the shape it has to become side by side.
   const areaOx = views.area ? W - views.area.width - 18 : 0;
-  const areaOy = 14;
+  // S239 (read catch): at 14 the frame's top edge label ("−3") clipped at the viewBox top.
+  const areaOy = 18;
   const xTiles = atSigned(views.mat.xPos, views.mat.xNeg, (sign, i) => (
     <g key={`x${i}`}>
       <rect x={12 + xOffset + i * (XW + gap)} y={16} width={XW} height={XH} rx={3}
@@ -5634,10 +5827,44 @@ function AlgebraTilesW({ spec, value, onChange, disabled, tone }: WProps<TAlgebr
       ? ` It sits in a rectangle ${views.mat.edges.width} by ${views.mat.edges.height}, ${views.area.filledCount} of ${views.area.cells.length} parts covered.`
       : "";
 
+  // WS-C (S239): the TILES are the learner's object \u2014 this is the multi-range layout answer.
+  // Each pile's ROW is its own sweep surface: dragging along the long-tile row or the unit row
+  // counts tiles up to the pointer (the tile under the finger is included; left of the first
+  // tile is zero), keeping the pile's current sign \u2014 magnitude is the spatial quantity a row
+  // shows, and sign changes stay on the sliders (the keyboard-parity paths, which also remain
+  // the only route while the mat is framed). On an area mat the rectangle's CELLS are the
+  // primary act: tapping a dashed hole PRODUCES its tile through the model's own placeTile \u2014
+  // sign comes from the CELL, which is how \u22123(x + 2) builds \u22123x \u2212 6 by touch \u2014 and tapping a
+  // filled cell takes that tile back. The x\u00b2-pile stays slider-and-cells only: its row shares
+  // the long-tile band, and every x\u00b2 state is reachable through both existing paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const atPitchX = XW + gap, atPitchU = UW + gap;
+  const atRowNext = (vx: number, rowStart: number, pitch: number, cur: number) => {
+    const m = Math.max(0, Math.min(spec.maxTiles, Math.floor((vx - rowStart) / pitch) + 1));
+    return cur < 0 ? -m : m;
+  };
+  const atDragBlocked = disabled || views.mat.framed;
+  const dragX = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled: atDragBlocked,
+    onDrag: (vx) => {
+      const next = atRowNext(vx, 12 + xOffset, atPitchX, xv);
+      if (next !== xv)
+        atRunEdit({ kind: "setXCoefficient", value: next }, "physical", AT_SRC.mat, { coalesceKey: "drag:x" });
+    }
+  });
+  const dragU = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled: atDragBlocked,
+    onDrag: (vx) => {
+      const next = atRowNext(vx, 12, atPitchU, cv);
+      if (next !== cv)
+        atRunEdit({ kind: "setConstant", value: next }, "physical", AT_SRC.mat, { coalesceKey: "drag:unit" });
+    }
+  });
+
   return (
     <div className="grid gap-4" ref={atRoot}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={
           views.mat.framed && views.mat.edges
             ? `Tile board showing the rectangle ${views.mat.edges.width} by ${views.mat.edges.height}. Its tiles are still inside it, so nothing is on the mat yet.`
@@ -5670,6 +5897,17 @@ function AlgebraTilesW({ spec, value, onChange, disabled, tone }: WProps<TAlgebr
                 strokeOpacity={c.filled ? 1 : 0.45}
                 strokeWidth={1.5}
                 strokeDasharray={c.filled ? undefined : "4 3"}
+                {...(!atDragBlocked
+                  ? {
+                      style: { cursor: "pointer" },
+                      onClick: () =>
+                        atRunEdit(
+                          { kind: c.filled ? "removeTile" : "placeTile", tile: c.kind, sign: c.sign < 0 ? -1 : 1 },
+                          "physical",
+                          AT_SRC.mat
+                        )
+                    }
+                  : {})}
               />
             ))}
             <rect x={-1} y={-1} width={views.area.width + 2} height={views.area.height + 2} rx={3}
@@ -5686,8 +5924,24 @@ function AlgebraTilesW({ spec, value, onChange, disabled, tone }: WProps<TAlgebr
         <g data-morph-actor="sqPos:mat sqNeg:mat square:mat expression:mat">{sqTiles}</g>
         <g data-morph-actor="xPos:mat xNeg:mat x:mat expression:mat">{xTiles}</g>
         <g data-morph-actor="uPos:mat uNeg:mat unit:mat expression:mat">{uTiles}</g>
-        <text x={W - 8} y={40} fontSize={10} fontWeight={700} textAnchor="end" fill={xRowOff ? PALETTE.berry : PALETTE.ink} fillOpacity={xRowOff ? 0.9 : 0.5}>long = x</text>
-        <text x={W - 8} y={92} fontSize={10} fontWeight={700} textAnchor="end" fill={cRowOff ? PALETTE.berry : PALETTE.ink} fillOpacity={cRowOff ? 0.9 : 0.5}>small = 1</text>
+        {/* S239 (read catch, from the browser): with a rectangle on the mat these captions sat ON
+            its cells — visually, and swallowing their pointer events. They end clear of the frame,
+            and as pure labels they never intercept a press. */}
+        <text x={views.area ? areaOx - 6 : W - 8} y={views.area ? 34 : 40} fontSize={10} fontWeight={700} textAnchor="end" style={{ pointerEvents: "none" }} fill={xRowOff ? PALETTE.berry : PALETTE.ink} fillOpacity={xRowOff ? 0.9 : 0.5}>long = x</text>
+        <text x={views.area ? areaOx - 6 : W - 8} y={92} fontSize={10} fontWeight={700} textAnchor="end" style={{ pointerEvents: "none" }} fill={cRowOff ? PALETTE.berry : PALETTE.ink} fillOpacity={cRowOff ? 0.9 : 0.5}>small = 1</text>
+        {!atDragBlocked && (() => {
+          // The sweep bands stop short of the rectangle (when one is on the mat) so the cells
+          // stay tappable, and short of the row captions on the right.
+          const bandEnd = views.area ? areaOx - 6 : W - 48;
+          return (
+            <>
+              <rect className="mt-drag-hit" data-testid="at-drag-x" x={6} y={10} width={Math.max(0, bandEnd - 6)} height={54}
+                aria-hidden="true" {...dragX.handleProps} />
+              <rect className="mt-drag-hit" data-testid="at-drag-unit" x={6} y={70} width={Math.max(0, bandEnd - 6)} height={32}
+                aria-hidden="true" {...dragU.handleProps} />
+            </>
+          );
+        })()}
       </svg>
       {/* S215 — THE FRAME ROW. A distribute lesson has NO "open it for me" button any more: the
           rectangle is FILLED by producing tiles, which is the mathematics the step exists to
@@ -5884,10 +6138,29 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const amount = (spec.whole * pct) / 100;
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
+  // One setter for both inputs, so a drag emits the same process evidence a slider move does.
+  const setPct = (next: number) => {
+    if (next === pct) return;
+    const dir = moveRelation(pct, next, spec.targetPercent);
+    if (dir) onEvent?.({ control: "percent", dir });
+    onChange(next);
+  };
+  // WS-C (S239): the FILL EDGE is the learner's object — the same gesture fractionBar ships.
+  // A press or sweep on the bar pulls the fill to the percent lattice point under the pointer;
+  // the percent slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx) => setPct(snapToStep(((vx - pad) / barW) * 100, 0, 100, spec.percentStep))
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`Bar filled to ${pct} percent, which is ${fmt(amount)}${spec.unit ? " " + spec.unit : ""}.`}>
         <style>{`.pb-fill{transition:none}@media (prefers-reduced-motion: no-preference){.pb-fill{transition:width .14s ease-out}}`}</style>
         <rect x={pad} y={barY} width={barW} height={barH} rx={4} fill="#fff" stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={1.5} />
@@ -5918,6 +6191,10 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
             </text>
           </g>
         )}
+        {!disabled && (
+          <rect className="mt-drag-hit" data-testid="pb-drag" x={pad - 8} y={barY - 10} width={barW + 16} height={barH + 20}
+            aria-hidden="true" {...drag.handleProps} />
+        )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {pct}% of {fmt(spec.whole)} = {fmt(amount)}{spec.unit ? ` ${spec.unit}` : ""}
@@ -5926,12 +6203,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
         <span>percent</span>
         <input type="range" min={0} max={100} step={spec.percentStep} value={pct} disabled={disabled}
           aria-label="percent chosen" aria-valuetext={`${pct} percent`}
-          onChange={(e) => {
-            const next = Number(e.target.value);
-            const dir = moveRelation(pct, next, spec.targetPercent);
-            if (dir) onEvent?.({ control: "percent", dir });
-            onChange(next);
-          }} className="h-11 w-full accent-sky" />
+          onChange={(e) => setPct(Number(e.target.value))} className="h-11 w-full accent-sky" />
       </label>
     </div>
   );
@@ -6166,6 +6438,31 @@ function IntegerChipsW({ spec, value, onChange, disabled, onEvent, tone }: WProp
   const canRemoveZeroPair = pairs > 0;
   const R = 11, gap = 26, cols = 10, padL = 16;
   const W = 300, H = 128;
+
+  // WS-C (S239): the CHIPS are the learner's object — each sign's rows are a sweep surface
+  // (algebraTiles' row rule). Dragging across a band counts chips up to the pointer, row-major:
+  // the chip under the finger is included, left of the first chip is zero. The two sliders stay
+  // as the keyboard-parity paths; zero pairs keep their own buttons.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const chipCount = (vx: number, vy: number, bandY: number, max: number) => {
+    const row = Math.max(0, Math.round((vy - bandY) / gap));
+    const col = Math.max(-1, Math.min(cols - 1, Math.floor((vx - padL + R) / gap)));
+    return Math.max(0, Math.min(max, row * cols + col + 1));
+  };
+  const dragPos = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const next = chipCount(vx, vy, 22, spec.maxPos);
+      if (next !== pos) update(next, neg, "positive-chips");
+    }
+  });
+  const dragNeg = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const next = chipCount(vx, vy, 82, spec.maxNeg);
+      if (next !== neg) update(pos, next, "negative-chips");
+    }
+  });
   const chip = (i: number, y: number, color: string, sign: string, cancelled: boolean) => {
     const c = i % cols, r = Math.floor(i / cols);
     const cx = padL + c * gap, cy = y + r * gap;
@@ -6181,10 +6478,16 @@ function IntegerChipsW({ spec, value, onChange, disabled, onEvent, tone }: WProp
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Chip board: ${pos} plus, ${neg} minus; ${pairs} zero pairs cancel, leaving ${sum}.`}>
         {Array.from({ length: pos }, (_, i) => chip(i, 22, PALETTE.leaf, "+", i < pairs))}
         {Array.from({ length: neg }, (_, i) => chip(i, 82, PALETTE.berry, "−", i < pairs))}
+        {!disabled && (
+          <>
+            <rect className="mt-drag-hit" data-testid="ic-drag-pos" x={0} y={4} width={W} height={56} aria-hidden="true" {...dragPos.handleProps} />
+            <rect className="mt-drag-hit" data-testid="ic-drag-neg" x={0} y={64} width={W} height={60} aria-hidden="true" {...dragNeg.handleProps} />
+          </>
+        )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {pos} + ({-neg}) = {sum}
@@ -7162,6 +7465,24 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   const setLeg = (k: keyof STVal, value: number) =>
     runEdit(k === "run" ? { kind: "setRunLeg", run: leRat(value) } : { kind: "setRiseLeg", rise: leRat(value) }, `stepper-${k}`);
 
+  // WS-C (S239): the TRIANGLE'S TIP is the learner's object — carrying the far corner sets run
+  // and rise together, which is what building a slope triangle IS. Every drag move flows
+  // through the SAME runEdit path as the steppers under one "drag" gesture key, so the graph
+  // coalesces the gesture exactly as it coalesces a stepper run and undo stays one-step. The
+  // steppers and sliders stay as the keyboard-parity paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const stDrag = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const mathX = ((vx - pad) / (W - 2 * pad)) * 2 * G - G;
+      const mathY = ((H - pad - vy) / (H - 2 * pad)) * 2 * G - G;
+      const nextRun = snapToStep(mathX - spec.ax, -spec.legMax, spec.legMax, 1);
+      const nextRise = snapToStep(mathY - spec.ay, -spec.legMax, spec.legMax, 1);
+      if (nextRun !== legValue.run) runEdit({ kind: "setRunLeg", run: leRat(nextRun) }, "drag");
+      if (nextRise !== legValue.rise) runEdit({ kind: "setRiseLeg", rise: leRat(nextRise) }, "drag");
+    }
+  });
+
   const stepper = (label: string, k: keyof STVal) => (
     <div className="rounded-xl border border-ink/12 p-3">
       <div className="flex items-center justify-between gap-2">
@@ -7265,7 +7586,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   return (
     <div className="grid gap-3" ref={rootRef}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img"
         aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}, and its line ${hits ? "passes through" : "misses"} B.`}>
         {ticks.map((g) => (
           <g key={g}>
@@ -7309,7 +7630,12 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
             the line through A and B has slope {slopeTriangleLabel(spec)}
           </text>
         )}
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} />
+      {!disabled && (
+        <circle className="mt-drag-hit" data-testid="st-drag"
+          cx={sx(legs.degenerate ? spec.ax : n(legs.tip.x))} cy={sy(legs.degenerate ? spec.ay : n(legs.tip.y))} r={22}
+          aria-hidden="true" {...stDrag.handleProps} />
+      )}</svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         slope = rise {"÷"} run = {slopeText}
         <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${hits ? "bg-leaf/15 text-leaf-ink" : "bg-ink/8 text-ink/70"}`}>
@@ -8677,10 +9003,24 @@ function FractionOfSetW({ spec, value, onChange, disabled, tone }: WProps<TFract
   const rows = Math.ceil(spec.setSize / cols);
   const W = padL * 2 + (cols - 1) * gapX + 2 * R, H = padT * 2 + (rows - 1) * gapY + 2 * R;
 
+  // WS-C (S239): the ITEMS are the learner's object, and selection is first-k by construction —
+  // so a press or sweep chooses every item up to the one under the pointer, row-major (the
+  // hundredthsGrid rule). The slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const col = Math.max(-1, Math.min(cols - 1, Math.floor((vx - padL + gapX / 2) / gapX)));
+      const row = Math.max(0, Math.min(rows - 1, Math.floor((vy - padT + gapY / 2) / gapY)));
+      const next = Math.max(0, Math.min(spec.setSize, row * cols + col + 1));
+      if (next !== n) onChange(next);
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xs" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xs" role="img"
         aria-label={`Set of ${spec.setSize}; ${n} chosen.`}>
         <style>{`.fs-item{transition:none}@media (prefers-reduced-motion: no-preference){.fs-item{transition:fill .12s ease-out}}`}</style>
         {showGroups &&
@@ -8709,6 +9049,7 @@ function FractionOfSetW({ spec, value, onChange, disabled, tone }: WProps<TFract
             })}
           </g>
         )}
+        {!disabled && <rect className="mt-drag-hit" data-testid="fos-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {n} of {spec.setSize} chosen
@@ -8893,10 +9234,32 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
   const rows: Array<[keyof typeof start, string]> = [["min", "minimum"], ["q1", "first quartile Q1"], ["med", "median"], ["q3", "third quartile Q3"], ["max", "maximum"]];
   const set = (k: keyof typeof start, v: number) => onChange({ ...cur, [k]: v });
 
+  // WS-C (S239): the FIVE-NUMBER SKELETON is the learner's object — whisker caps, box edges and
+  // the median line are handles at positions on the axis. A press grabs whichever handle is
+  // nearest (held for the whole gesture, the clockSet rule, so crossing another handle never
+  // swaps hands mid-drag) and carries it to the integer under the pointer. The five sliders
+  // stay as the keyboard-parity paths, with the same no-ordering semantics.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const grabbed = useRef<keyof typeof start | null>(null);
+  const drag = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx) => {
+      if (grabbed.current === null) {
+        const keys: Array<keyof typeof start> = ["min", "q1", "med", "q3", "max"];
+        grabbed.current = keys.reduce((best, k) => (Math.abs(vx - sx(cur[k])) < Math.abs(vx - sx(cur[best])) ? k : best), "min" as keyof typeof start);
+      }
+      const next = snapToStep(spec.axisMin + ((vx - pad) / (W - 2 * pad)) * (spec.axisMax - spec.axisMin), spec.axisMin, spec.axisMax, 1);
+      if (next !== cur[grabbed.current]) set(grabbed.current, next);
+    },
+    onEnd: () => {
+      grabbed.current = null;
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot: low ${cur.min}, lower-mid ${cur.q1}, mid ${cur.med}, upper-mid ${cur.q3}, high ${cur.max}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot: low ${cur.min}, lower-mid ${cur.q1}, mid ${cur.med}, upper-mid ${cur.q3}, high ${cur.max}.`}>
         <line x1={pad - 6} y1={H - 18} x2={W - pad + 6} y2={H - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
         {[spec.axisMin, Math.round((spec.axisMin + spec.axisMax) / 2), spec.axisMax].map((t) => (
           <text key={t} x={sx(t)} y={H - 5} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}</text>
@@ -8928,6 +9291,7 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
               </g>
             );
           })()}
+        {!disabled && <rect className="mt-drag-hit" data-testid="bpl-drag" x={pad - 10} y={midY - 26} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
       </svg>
       <div className="grid gap-2 sm:grid-cols-2">
         {rows.map(([k, label]) => (
@@ -9284,13 +9648,51 @@ function PlaceValueW({ spec, value, onChange, disabled, tone }: WProps<TPlaceVal
     return <rect key={`u${i}`} x={8 + col * (U + 3)} y={112 + row * (U + 3)} width={U} height={U} fill={PALETTE.tangerine} stroke={PALETTE.tangerine} strokeWidth={1} />;
   });
 
+  // WS-C (S239): the BLOCKS are the learner's object — each place's band is a sweep surface
+  // (algebraTiles' row rule). Dragging across a band counts blocks up to the pointer: the block
+  // under the finger is included, left of the first block is zero; the ones wrap row-major.
+  // The three sliders stay as the keyboard-parity paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const sweep1D = (vx: number, pitch: number, max: number) =>
+    Math.max(0, Math.min(max, Math.floor((vx - 8) / pitch) + 1));
+  const dragH = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx) => {
+      const next = sweep1D(vx, FL + 6, spec.maxHundreds);
+      if (next !== h) onChange({ h: next, t, o });
+    }
+  });
+  const dragT = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx) => {
+      const next = sweep1D(vx, ROD_W + 4, spec.maxTens);
+      if (next !== t) onChange({ h, t: next, o });
+    }
+  });
+  const dragO = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx, vy) => {
+      const col = Math.max(-1, Math.min(9, Math.floor((vx - 8) / (U + 3))));
+      const row = Math.max(0, Math.floor((vy - 112) / (U + 3)));
+      const next = Math.max(0, Math.min(spec.maxOnes, row * 10 + col + 1));
+      if (next !== o) onChange({ h, t, o: next });
+    }
+  });
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Base-ten blocks showing ${total}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Base-ten blocks showing ${total}.`}>
         {flats}
         {rods}
         {units}
+        {!disabled && (
+          <>
+            <rect className="mt-drag-hit" data-testid="pv-drag-h" x={0} y={4} width={W} height={52} aria-hidden="true" {...dragH.handleProps} />
+            <rect className="mt-drag-hit" data-testid="pv-drag-t" x={0} y={56} width={W} height={50} aria-hidden="true" {...dragT.handleProps} />
+            <rect className="mt-drag-hit" data-testid="pv-drag-o" x={0} y={106} width={W} height={H - 106} aria-hidden="true" {...dragO.handleProps} />
+          </>
+        )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         100×{h} + 10×{t} + {o} = {total} <span className="ml-1 text-sm font-semibold text-ink/70">(target {spec.target})</span>
@@ -10618,6 +11020,32 @@ function BinomialAreaLabW({ spec, value, onChange, onEvent, disabled, tone }: WP
     onChange({ a, b, moves: st.moves + 1 });
   };
 
+  // WS-C (S239): the STRIP EDGES are the learner's object — the across partition is the right
+  // edge of its strip, the down partition the bottom edge, and pulling one through the x-block
+  // is what makes a negative partition visible. The canvas rescales as |a|,|b| grow, so each
+  // gesture maps in the frame it STARTED in (frozen scale). Sliders stay as keyboard-parity paths.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const gestureScale = useRef<number | null>(null);
+  const frameScale = () => gestureScale.current ?? (gestureScale.current = scale);
+  const dragA = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (vx) => {
+      const fs = frameScale();
+      const next = snapToStep((vx - OX) / (U * fs) - pX * 4, -9, 9, 1);
+      if (next !== st.a) set(next, st.b, "a");
+    },
+    onEnd: () => { gestureScale.current = null; }
+  });
+  const dragB = useSvgDrag({
+    svgRef, viewW: W, viewH: H, disabled,
+    onDrag: (_vx, vy) => {
+      const fs = frameScale();
+      const next = snapToStep((vy - OY) / (U * fs) - qX * 4, -9, 9, 1);
+      if (next !== st.b) set(st.a, next, "b");
+    },
+    onEnd: () => { gestureScale.current = null; }
+  });
+
   const term = (c: number, suffix: string) =>
     `${c < 0 ? "\u2212" : ""}${Math.abs(c)}${suffix}`;
   const expansion = `${term(mine.x2, "x\u00b2")} ${mine.middle < 0 ? "\u2212" : "+"} ${Math.abs(mine.middle)}x ${mine.constant < 0 ? "\u2212" : "+"} ${Math.abs(mine.constant)}`;
@@ -10628,6 +11056,7 @@ function BinomialAreaLabW({ spec, value, onChange, onEvent, disabled, tone }: WP
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white"
         role="img"
@@ -10710,6 +11139,14 @@ function BinomialAreaLabW({ spec, value, onChange, onEvent, disabled, tone }: WP
           <text data-testid="bal-ghost" x={W / 2} y={H - 8} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.tangerine} aria-hidden="true">
             target sides: {sideLabel(pX, targetA)} by {sideLabel(qX, targetB)}
           </text>
+        )}
+        {!disabled && (
+          <>
+            <rect className="mt-drag-hit" data-testid="bal-drag-a" x={OX + xw + px(st.a) - 14} y={OY - 6} width={28} height={xh + 12}
+              aria-hidden="true" {...dragA.handleProps} />
+            <rect className="mt-drag-hit" data-testid="bal-drag-b" x={OX - 6} y={OY + xh + px(st.b) - 14} width={xw + 12} height={28}
+              aria-hidden="true" {...dragB.handleProps} />
+          </>
         )}
       </svg>
 
@@ -10837,10 +11274,32 @@ function ExtraneousRootLabW({ spec, value, onChange, onEvent, disabled, tone }: 
   const rhsAt = m * probe + b;
   const inReflected = rhsAt < 0;
 
+  // WS-C (S239): the PROBE is the learner's object — signChart's class exactly (local state,
+  // never graded). A press or sweep pulls the dashed probe line to the integer under the
+  // pointer. The axis window stretches to hold the probe, so the gesture works in the frame it
+  // STARTED in (frozen per drag) — otherwise each move would re-derive the axis it is mapping
+  // against. The probe slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const gestureFrame = useRef<{ lo: number; hi: number } | null>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx) => {
+      const f = gestureFrame.current ?? (gestureFrame.current = { lo, hi });
+      const next = snapToStep(f.lo + ((vx - PAD) / (W - 2 * PAD)) * (f.hi - f.lo), Math.ceil(f.lo), Math.floor(f.hi), 1);
+      if (next !== probe) moveProbe(next);
+    },
+    onEnd: () => {
+      gestureFrame.current = null;
+    }
+  });
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
         aria-label={`Two curves. ${st.squared ? "Both sides have been squared." : "Both sides un-squared."} They meet at ${cands.length} point${cands.length === 1 ? "" : "s"}.`}>
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={1.2} strokeOpacity={0.55} />
         {/* the region the line spends below the axis — the part squaring reflects upward */}
@@ -10862,7 +11321,8 @@ function ExtraneousRootLabW({ spec, value, onChange, onEvent, disabled, tone }: 
         })}
         <line data-testid="erl-probe-line" x1={X(probe)} y1={PAD - 12} x2={X(probe)} y2={H - PAD}
           stroke={PALETTE.ink} strokeWidth={1.2} strokeDasharray="3 3" strokeOpacity={0.6} />
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} />
+      {!disabled && <rect className="mt-drag-hit" data-testid="erl-drag" x={PAD - 8} y={PAD - 12} width={W - 2 * PAD + 16} height={H - 2 * PAD + 12} aria-hidden="true" {...drag.handleProps} />}</svg>
 
       <div className="flex flex-wrap justify-center gap-2">
         <button type="button" data-testid="erl-square" onClick={square} disabled={disabled || st.squared}
@@ -10952,10 +11412,31 @@ function RotationLabW({ spec, value, onChange, disabled, tone }: WProps<TRotatio
   const cueDir = spec.targetAngle > angle ? 1 : -1;
   const cueTrail = [0, 1, 2, 3, 4].map((i) => rotationLabImage(tracked, centre, angle + cueDir * i * 5));
 
+  // WS-C (S239): the TURN is the learner's object — a rotation is performed by grabbing the
+  // image and carrying it around the centre. The drag reads the pointer's angle about the
+  // centre relative to the tracked preimage point (the first vertex in symmetry mode), snapped
+  // to the authored angleStep and wrapped to 0–359; the slider stays as the keyboard-parity path.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: 300,
+    viewH: 300,
+    disabled,
+    onDrag: (vx, vy) => {
+      const mx = ((vx - 150) / 120) * g, my = ((150 - vy) / 120) * g;
+      if (Math.hypot(mx - centre[0], my - centre[1]) < 0.3) return; // dead centre has no angle
+      const pointer = (Math.atan2(my - centre[1], mx - centre[0]) * 180) / Math.PI;
+      const ref = (Math.atan2(tracked[1] - centre[1], tracked[0] - centre[0]) * 180) / Math.PI;
+      const raw = ((pointer - ref) % 360 + 360) % 360;
+      const next = (Math.round(raw / spec.angleStep) * spec.angleStep) % 360;
+      if (next !== angle) onChange({ angle: next });
+    }
+  });
+
   return (
     <div className="space-y-3">
       <p className="text-sm"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 300 300" role="img" className="mx-auto w-full max-w-sm">
+      <svg ref={svgRef} viewBox="0 0 300 300" role="img" className="mx-auto w-full max-w-sm">
         <title>{exact}</title>
         <line x1={px(-g)} y1={py(0)} x2={px(g)} y2={py(0)} stroke="#22314F" strokeWidth={1} opacity={0.4} />
         <line x1={px(0)} y1={py(-g)} x2={px(0)} y2={py(g)} stroke="#22314F" strokeWidth={1} opacity={0.4} />
@@ -10993,7 +11474,8 @@ function RotationLabW({ spec, value, onChange, disabled, tone }: WProps<TRotatio
             strokeLinejoin="round"
           />
         )}
-      <AxisCaptions w={300} h={300} /></svg>
+      <AxisCaptions w={300} h={300} />
+      {!disabled && <rect className="mt-drag-hit" data-testid="rl-drag" x={0} y={0} width={300} height={284} aria-hidden="true" {...drag.handleProps} />}</svg>
       <label className="block text-sm">
         <span className={`mr-2 ${tone === "error" ? "text-berry-ink" : ""}`}>Turn (° counterclockwise)</span>
         <input
@@ -16527,6 +17009,26 @@ function FractionGridW({ spec, value, onChange, disabled, tone, onEvent }: WProp
   const cw = (W - 2 * pad) / cols;
   const rh = (W - 2 * pad) / rows;
   const atTarget = rows === spec.den1 && shadeR === spec.num1 && cols === spec.den2 && shadeC === spec.num2;
+  // WS-C (S239): the two SHADING EDGES are the learner's object — the row fill pulls down from
+  // the top, the column fill pulls right from the left, and their overlap is the product. Each
+  // edge drags on its own partition lattice (fractionBar's fill-edge gesture, one per factor);
+  // the shade sliders stay as keyboard-parity paths, and the partition COUNTS stay sliders by
+  // the denominator survival rule.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const dragR = useSvgDrag({
+    svgRef, viewW: W, viewH: W, disabled,
+    onDrag: (_vx, vy) => {
+      const next = snapToStep((vy - pad) / rh, 0, rows, 1);
+      if (next !== shadeR) set({ shadeR: next });
+    }
+  });
+  const dragC = useSvgDrag({
+    svgRef, viewW: W, viewH: W, disabled,
+    onDrag: (vx) => {
+      const next = snapToStep((vx - pad) / cw, 0, cols, 1);
+      if (next !== shadeC) set({ shadeC: next });
+    }
+  });
   const ctrl = (label: string, val: number, min: number, max: number, key: "rows" | "cols" | "shadeR" | "shadeC") => (
     <label className="grid gap-1 text-sm font-bold text-ink/70">
       <span>
@@ -16550,6 +17052,7 @@ function FractionGridW({ spec, value, onChange, disabled, tone, onEvent }: WProp
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${W}`}
         className="mx-auto w-56"
         role="img"
@@ -16580,6 +17083,14 @@ function FractionGridW({ spec, value, onChange, disabled, tone, onEvent }: WProp
               <line key={`gc${i}`} x1={pad + ((W - 2 * pad) / spec.den2) * (i + 1)} y1={pad} x2={pad + ((W - 2 * pad) / spec.den2) * (i + 1)} y2={W - pad} />
             ))}
           </g>
+        )}
+        {!disabled && (
+          <>
+            <rect className="mt-drag-hit" data-testid="fgr-drag-r" x={pad} y={pad + rh * shadeR - 12} width={W - 2 * pad} height={24}
+              aria-hidden="true" {...dragR.handleProps} />
+            <rect className="mt-drag-hit" data-testid="fgr-drag-c" x={pad + cw * shadeC - 12} y={pad} width={24} height={W - 2 * pad}
+              aria-hidden="true" {...dragC.handleProps} />
+          </>
         )}
       </svg>
       <p role="status" aria-live="polite" className="text-center text-xl font-extrabold tabular-nums">
@@ -16907,9 +17418,21 @@ function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
   const W=360,H=220,cx=180,cy=110,rad=(a:number)=>a*Math.PI/180;
   const line=(a:number,o:number,color:string,width=4,dash?:string)=>{const r=rad(a),dx=Math.cos(r)*190,dy=Math.sin(r)*190,nx=-Math.sin(r)*o*18,ny=Math.cos(r)*o*18;return <line x1={cx-dx+nx} y1={cy+dy+ny} x2={cx+dx+nx} y2={cy-dy+ny} stroke={color} strokeWidth={width} strokeLinecap="round" strokeDasharray={dash}/>};
   const good=relation===spec.targetRelation && moves>=spec.requiredMoves && !(spec.targetRelation==='parallel'&&offset===0);
+  // WS-C (S239): the ACTIVE LINE is the learner's object — the relation IS its tilt, so a press
+  // or sweep rotates it about its own anchor to the angleStep lattice direction under the
+  // pointer (a line has no direction, so the angle folds mod 180). The rotate slider stays as
+  // the keyboard-parity path; the translate slider stays a slider (offset is the secondary
+  // quantity, and one surface must not steer both).
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx,vy)=>{
+    const r=rad(angle),ax=cx-Math.sin(r)*offset*18,ay=cy+Math.cos(r)*offset*18;
+    const theta=((Math.atan2(ay-vy,vx-ax)*180/Math.PI)%180+180)%180;
+    const next=Math.min(175,snapToStep(theta,0,180,spec.angleStep))%180;
+    if(next!==angle)set({angle:next});
+  }});
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Two lines are ${relation}; the angle between them is ${diff} degrees.`}>
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Two lines are ${relation}; the angle between them is ${diff} degrees.`}>
       <defs><pattern id="lr-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke={PALETTE.ink} strokeOpacity=".06"/></pattern></defs><rect width={W} height={H} fill="url(#lr-grid)"/>
       {line(spec.baseAngle,0,PALETTE.ink,5)}{line(angle,offset,PALETTE.sky,5)}
       {relation==='parallel' && <g><line x1="40" y1="40" x2="40" y2="78" stroke={PALETTE.leaf} strokeWidth="2" strokeDasharray="4 3"/><text x="48" y="62" fontSize="11" fontWeight="800" fill={PALETTE.leaf}>equal distance</text></g>}
@@ -16930,6 +17453,7 @@ function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
           </text>
         </g>
       )}
+      {!disabled && <rect className="mt-drag-hit" data-testid="lrl-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />}
     </svg>
     <div className="grid grid-cols-2 gap-2"><LabReadout label="relation" value={relation} tone={good?'good':relation==='intersecting'?'warn':'neutral'}/><LabReadout label="angle" value={`${diff}°`} tone={diff===0||diff===90?'good':'neutral'}/></div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "move", "made")}</p>
@@ -17003,12 +17527,22 @@ function CoordinateProofLabW({spec,value,onChange,disabled,onEvent}:WProps<TCoor
   const toggle=(k:string)=>{const next=evidence.includes(k)?evidence.filter(e=>e!==k):[...evidence,k];onEvent?.({control:`evidence-${k}`,dir:spec.requiredEvidence.includes(k as 'slopes'|'midpoints'|'distances')?'toward':'neutral'});onChange({x,y,moves:moves+1,evidence:next})};
   const W=380,H=300,P=30,G=spec.gridMax-spec.gridMin,X=(n:number)=>P+(n-spec.gridMin)*(W-2*P)/G,Y=(n:number)=>H-P-(n-spec.gridMin)*(H-2*P)/G,atTarget=x===spec.target[0]&&y===spec.target[1],allEvidence=spec.requiredEvidence.every(e=>evidence.includes(e));
   const mAB=coordSlope(A,B),mCD=coordSlope(C,D),mBC=coordSlope(B,C),mAD=coordSlope(A,D),midAC=coordMid(A,C),midBD=coordMid(B,D),dAB=coordDist(A,B),dCD=coordDist(C,D),dBC=coordDist(B,C),dAD=coordDist(A,D);
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Quadrilateral A B C D with D at ${x}, ${y}; ${evidence.join(', ')||'no'} evidence selected.`}>
+  // WS-C (S239): VERTEX D is the learner's object — the proof is about where D must sit. A
+  // press or sweep carries D to the integer lattice point under the pointer (triangleAngleLab's
+  // vertex gesture); the two coordinate sliders stay as the keyboard-parity paths.
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx,vy)=>{
+    const nx=snapToStep(spec.gridMin+(vx-P)*G/(W-2*P),spec.gridMin,spec.gridMax,1);
+    const ny=snapToStep(spec.gridMin+(H-P-vy)*G/(H-2*P),spec.gridMin,spec.gridMax,1);
+    if(nx!==x||ny!==y)setPoint(nx,ny);
+  }});
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Quadrilateral A B C D with D at ${x}, ${y}; ${evidence.join(', ')||'no'} evidence selected.`}>
     {Array.from({length:G+1},(_,i)=>spec.gridMin+i).map(g=><g key={g}><line x1={X(g)} y1={Y(spec.gridMin)} x2={X(g)} y2={Y(spec.gridMax)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={X(spec.gridMin)} y1={Y(g)} x2={X(spec.gridMax)} y2={Y(g)} stroke={PALETTE.ink} strokeOpacity=".07"/><text x={X(g)} y={H-8} textAnchor="middle" fontSize="9">{g}</text><text x="12" y={Y(g)+3} textAnchor="middle" fontSize="9">{g}</text></g>)}
     <polygon points={[A,B,C,D].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".12" stroke={atTarget?PALETTE.leaf:PALETTE.sky} strokeWidth="4"/>
     {evidence.includes('midpoints')&&<><line x1={X(A[0])} y1={Y(A[1])} x2={X(C[0])} y2={Y(C[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><line x1={X(B[0])} y1={Y(B[1])} x2={X(D[0])} y2={Y(D[1])} stroke={PALETTE.tangerine} strokeWidth="2" strokeDasharray="6 4"/><circle cx={X(midAC[0])} cy={Y(midAC[1])} r="6" fill={PALETTE.tangerine}/><circle cx={X(midBD[0])} cy={Y(midBD[1])} r="6" fill={PALETTE.berry}/></>}
     {[A,B,C,D].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===3?9:6} fill={i===3?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+10} y={Y(p[1])-8} fontWeight="900" fontSize="12">{'ABCD'[i]}({p[0]},{p[1]})</text></g>)}
-  <AxisCaptions w={W} h={H} /></svg>
+  <AxisCaptions w={W} h={H} />
+  {!disabled&&<rect className="mt-drag-hit" data-testid="cpl-drag" x={0} y={0} width={W} height={H-16} aria-hidden="true" {...drag.handleProps}/>}</svg>
   <div className="grid grid-cols-3 gap-2"><LabReadout label="claim" value={spec.targetClaim} tone={atTarget&&allEvidence?'good':'neutral'}/><LabReadout label="vertex D" value={`(${x}, ${y})`} tone={atTarget?'good':'neutral'}/><LabReadout label="proof moves" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
   <div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-sm font-bold"><span>D x-coordinate</span><input aria-label="D x-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={x} disabled={disabled} onChange={e=>setPoint(Number(e.target.value),y)} className="h-11 w-full accent-sky"/></label><label className="grid gap-1 text-sm font-bold"><span>D y-coordinate</span><input aria-label="D y-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={y} disabled={disabled} onChange={e=>setPoint(x,Number(e.target.value))} className="h-11 w-full accent-sky"/></label></div>
   <div className="grid grid-cols-3 gap-2">{(['slopes','midpoints','distances'] as const).map(k=><button key={k} type="button" disabled={disabled} aria-pressed={evidence.includes(k)} onClick={()=>toggle(k)} className={`min-h-12 rounded-xl border-2 text-sm font-extrabold ${evidence.includes(k)?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>Inspect {k}</button>)}</div>
@@ -17023,9 +17557,15 @@ function SolidSliceLabW({spec,value,onChange,disabled,onEvent}:WProps<TSolidSlic
   const v=value&&typeof value==='object'?value as {fraction:number;moves:number;compare:boolean}:null,fraction=v?.fraction??spec.startFraction,moves=v?.moves??0,compare=v?.compare??false;useEffect(()=>{if(!v)onChange({fraction,moves:0,compare:false});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const setFraction=(nf:number)=>{const d=moveRelation(fraction,nf,spec.targetFraction);if(d)onEvent?.({control:'section-height',dir:d});onChange({fraction:nf,moves:moves+1,compare})};const setCompare=()=>{onEvent?.({control:'comparison-solid',dir:'toward'});onChange({fraction,moves:moves+1,compare:!compare})};
   const area=solidSectionArea(spec,fraction),base=spec.baseArea??Math.PI*spec.radius*spec.radius,ratio=base?area/base:0,y=205-fraction*150,rx=78*(spec.solid==='cone'?(1-fraction):spec.solid==='sphere'?Math.sqrt(Math.max(0,1-Math.pow(2*fraction-1,2))):1),atTarget=Math.abs(fraction-spec.targetFraction)<=spec.tolerance,done=atTarget&&moves>=spec.requiredMoves&&(!spec.comparisonRequired||compare);
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className={`grid gap-3 ${compare?'sm:grid-cols-2':''}`}><svg viewBox="0 0 300 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${spec.solid} sliced at ${(fraction*100).toFixed(0)} percent of its height; section area ${area.toFixed(2)}.`}>
+  // WS-C (S239): the SECTION PLANE is the learner's object — it slices at a height. A press or
+  // sweep on the solid pulls the plane to the fractionStep lattice height under the pointer;
+  // the slider stays as the keyboard-parity path.
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:300,viewH:250,disabled,onDrag:(_vx,vy)=>{const next=snapToStep((205-vy)/150,0,1,spec.fractionStep);if(next!==fraction)setFraction(next);}});
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className={`grid gap-3 ${compare?'sm:grid-cols-2':''}`}><svg ref={svgRef} viewBox="0 0 300 250" className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${spec.solid} sliced at ${(fraction*100).toFixed(0)} percent of its height; section area ${area.toFixed(2)}.`}>
     {spec.solid==='cone'?<path d="M 150 28 L 55 218 L 245 218 Z" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/>:spec.solid==='sphere'?<circle cx="150" cy="125" r="96" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/>:<><ellipse cx="150" cy="45" rx="82" ry="24" fill={PALETTE.sky} fillOpacity=".12" stroke={PALETTE.sky} strokeWidth="4"/><path d="M 68 45 L 68 210 M 232 45 L 232 210" stroke={PALETTE.sky} strokeWidth="4"/><ellipse cx="150" cy="210" rx="82" ry="24" fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/></>}
     <ellipse cx="150" cy={y} rx={Math.max(2,rx)} ry={Math.max(2,rx*.28)} fill={PALETTE.tangerine} fillOpacity=".32" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="150" y="238" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>section = {(ratio*100).toFixed(0)}% of base area</text>
+    {!disabled&&<rect className="mt-drag-hit" data-testid="ssl-drag" x={0} y={12} width={300} height={216} aria-hidden="true" {...drag.handleProps}/>}
   </svg>{compare&&<div className="rounded-2xl border border-leaf/25 bg-leaf/5 p-4"><div className="flex h-full min-h-48 flex-col items-center justify-center gap-3"><div className="h-24 w-36 border-4 border-leaf bg-leaf/10"><div className="relative top-1/2 border-t-4 border-dashed border-tangerine"/></div><p className="text-center font-extrabold">Equal-area comparison prism</p><p className="text-center text-sm font-bold text-ink/70">At the same height its section is {base.toFixed(2)} square units.</p></div></div>}</div>
   <div className="grid grid-cols-2 gap-2"><LabReadout label="slice height" value={`${(fraction*100).toFixed(0)}%`} tone={atTarget?'good':'neutral'}/><LabReadout label="section area" value={area.toFixed(2)} tone={spec.solid==='cylinder'||spec.solid==='prism'?'good':'neutral'}/></div>
   <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "move", "made")}</p>
@@ -17044,7 +17584,7 @@ function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTria
   const set=(nx:number,ny:number)=>{const safeY=Math.max(2,ny);const before=triAngles(spec.fixedA,spec.fixedB,[x,y])[0],after=triAngles(spec.fixedA,spec.fixedB,[nx,safeY])[0];const dir=moveRelation(before,after,spec.targetAngleA);if(dir)onEvent?.({control:'vertex',dir,kind:'efficient'});onChange({x:nx,y:safeY,moves:moves+1})};
   const W=340,H=260,P=24,G=spec.gridMax,X=(n:number)=>P+n*(W-2*P)/G,Y=(n:number)=>H-P-n*(H-2*P)/G;const C:[number,number]=[x,y],angs=triAngles(spec.fixedA,spec.fixedB,C),sum=angs.reduce((a,b)=>a+b,0);
   const svgRef=useRef<SVGSVGElement>(null);const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx,vy)=>set(snapToStep((vx-P)*G/(W-2*P),0,G,0.25),snapToStep((H-P-vy)*G/(H-2*P),2,G,0.25))});
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Triangle angles ${angs.map(a=>a.toFixed(1)).join(', ')} degrees; sum ${sum.toFixed(1)} degrees.`}>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Triangle angles ${angs.map(a=>a.toFixed(1)).join(', ')} degrees; sum ${sum.toFixed(1)} degrees.`}>
     <polygon points={[spec.fixedA,spec.fixedB,C].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".14" stroke={PALETTE.sky} strokeWidth="4"/>
     {[spec.fixedA,spec.fixedB,C].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===2?9:6} fill={i===2?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+(i===2?10:-20)} y={Y(p[1])-10} fontSize="12" fontWeight="900" fill={i===2?PALETTE.tangerine:PALETTE.ink}>{angs[i].toFixed(0)}°</text></g>)}
     {!disabled&&<circle className="mt-drag-hit" cx={X(x)} cy={Y(y)} r="24" {...drag.handleProps}/>}<text x="170" y="22" textAnchor="middle" fontWeight="900" fill={PALETTE.leaf}>A + B + C = {sum.toFixed(0)}°</text>
@@ -17052,16 +17592,29 @@ function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTria
 }
 
 function scannerCount(kind: TVerticalLineScanner['relation'], x:number){if(kind==='circle')return Math.abs(x)<4?2:Math.abs(x)===4?1:0;if(kind==='sideways')return x>=0&&x<=4?2:0;if(kind==='discreteNonFunction')return Math.abs(x-1)<.26?2:Math.abs(x-3)<.26?1:0;if(kind==='discreteFunction')return [ -3,-1,1,3].some(v=>Math.abs(x-v)<.26)?1:0;return 1;}
-function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVerticalLineScanner>){const v=value&&typeof value==='object'?value as {x:number;maxIntersections:number;sweeps:number;verdict:'function'|'not-function'|null}:null;const x=v?.x??spec.scanStart,max=v?.maxIntersections??0,sweeps=v?.sweeps??0,verdict=v?.verdict??null;useEffect(()=>{if(!v)onChange({x,maxIntersections:scannerCount(spec.relation,x),sweeps:0,verdict:null});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const setX=(nx:number)=>{const c=scannerCount(spec.relation,nx);onEvent?.({control:'scanner',dir:c>1?'toward':'neutral',state:{intersections:c}});onChange({x:nx,maxIntersections:Math.max(max,c),sweeps:sweeps+1,verdict})};const W=360,H=260,G=5,{sx,sy}=gridScales({xMin:-G,xMax:G,yMin:-G,yMax:G,W,H,pad:22});const pts=samplePolyline((q)=>spec.relation==='quadratic'?q*q/3-2:spec.relation==='linear'?0.7*q+1:0,-G,G,sx,sy,{steps:100,yClip:[-G,G]});const c=scannerCount(spec.relation,x);return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Vertical scanner at x ${x} intersects ${c} times.`}>{integers(-G,G).map(g=><g key={g}><line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={sx(-G)} y1={sy(g)} x2={sx(G)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity=".07"/></g>)}
+function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVerticalLineScanner>){const v=value&&typeof value==='object'?value as {x:number;maxIntersections:number;sweeps:number;verdict:'function'|'not-function'|null}:null;const x=v?.x??spec.scanStart,max=v?.maxIntersections??0,sweeps=v?.sweeps??0,verdict=v?.verdict??null;useEffect(()=>{if(!v)onChange({x,maxIntersections:scannerCount(spec.relation,x),sweeps:0,verdict:null});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const setX=(nx:number)=>{const c=scannerCount(spec.relation,nx);onEvent?.({control:'scanner',dir:c>1?'toward':'neutral',state:{intersections:c}});onChange({x:nx,maxIntersections:Math.max(max,c),sweeps:sweeps+1,verdict})};const W=360,H=260,G=5,{sx,sy}=gridScales({xMin:-G,xMax:G,yMin:-G,yMax:G,W,H,pad:22});const pts=samplePolyline((q)=>spec.relation==='quadratic'?q*q/3-2:spec.relation==='linear'?0.7*q+1:0,-G,G,sx,sy,{steps:100,yClip:[-G,G]});const c=scannerCount(spec.relation,x);
+  // WS-C (S239): the SCANNER LINE is the learner's object — sweeping it across the relation is
+  // the test itself. A press or sweep anywhere pulls the scanner to the scanStep lattice point
+  // under the pointer; the slider stays as the keyboard-parity path.
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx)=>{const next=snapToStep(-G+((vx-22)/(W-44))*(2*G),spec.xMin,spec.xMax,spec.scanStep);if(next!==x)setX(next);}});
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Vertical scanner at x ${x} intersects ${c} times.`}>{integers(-G,G).map(g=><g key={g}><line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity=".07"/><line x1={sx(-G)} y1={sy(g)} x2={sx(G)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity=".07"/></g>)}
     {(spec.relation==='linear'||spec.relation==='quadratic')&&<polyline points={pts} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {spec.relation==='circle'&&<circle cx={sx(0)} cy={sy(0)} r={Math.abs(sx(4)-sx(0))} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {spec.relation==='sideways'&&<path d={`M ${sx(4)} ${sy(4)} Q ${sx(-1)} ${sy(0)} ${sx(4)} ${sy(-4)}`} fill="none" stroke={PALETTE.sky} strokeWidth="4"/>}
     {(spec.relation==='discreteFunction'||spec.relation==='discreteNonFunction')&&([-3,-1,1,3].flatMap((px,i)=>{const ys=spec.relation==='discreteNonFunction'&&px===1?[1,3]:[i-2];return ys.map((py,j)=><circle key={`${px}-${j}`} cx={sx(px)} cy={sy(py)} r="7" fill={PALETTE.sky}/>) }))}
     <line x1={sx(x)} y1={sy(-G)} x2={sx(x)} y2={sy(G)} stroke={PALETTE.tangerine} strokeWidth="4"/><text x={sx(x)+7} y="20" fontWeight="900" fill={PALETTE.tangerine}>{c} hit{c===1?'':'s'}</text>
-  <AxisCaptions w={W} h={H} /></svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
+  <AxisCaptions w={W} h={H} />
+  {!disabled&&<rect className="mt-drag-hit" data-testid="vls-drag" x={0} y={0} width={W} height={H-18} aria-hidden="true" {...drag.handleProps}/>}</svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
 
 function CovariationScrubberW({spec,value,onChange,disabled,onEvent}:WProps<TCovariationScrubber>){const x=typeof value==='number'?value:spec.inputStart;useEffect(()=>{if(typeof value!=='number')onChange(x);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const y=spec.a*x+spec.b,set=(nx:number)=>{const d=moveRelation(x,nx,spec.targetInput);if(d)onEvent?.({control:'input',dir:d,kind:'efficient'});onChange(nx)};// S119: the window must be five DISTINCT inputs. Clamping each cell independently collapsed the window near a bound (x=0 with inputMin=0 gave [0,0,0,1,2]) — duplicate React keys, and three identical rows in a table whose whole job is showing neighbouring values. Slide the window instead of squashing it.
-  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/><AxisCaptions w={W} h={H} x={spec.inputLabel} y={spec.outputLabel} /></svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
+  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});
+  // WS-C (S239): the POINT ON THE LINE is the learner's object — the slider's own label says
+  // "drag". A press or sweep on the graph pulls the shared input to the integer lattice point
+  // under the pointer; the slider stays as the keyboard-parity path.
+  const svgRef=useRef<SVGSVGElement>(null);
+  const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx)=>{const next=snapToStep(((vx-24)/(W-48))*G,spec.inputMin,spec.inputMax,1);if(next!==x)set(next);}});
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/><AxisCaptions w={W} h={H} x={spec.inputLabel} y={spec.outputLabel} />{!disabled&&<rect className="mt-drag-hit" data-testid="cvs-drag" x={0} y={0} width={W} height={H-16} aria-hidden="true" {...drag.handleProps}/>}</svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
 
 function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplingBiasLab>){
   const v=value&&typeof value==='object'?value as {method:'convenience'|'random'|'stratified';size:number;draws:number}:null;

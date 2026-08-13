@@ -1103,3 +1103,876 @@ describe("triangleConstraintLab drag", () => {
     expect(screen.queryByTestId("tcl-drag")).toBeNull();
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * WS-C S239 — the tail closes. Every remaining slider-proxy engine
+ * whose object is spatial joins the drag grammar: 1D positions
+ * (percentBar, accumulateArea, slopeField, taylorApprox·radius,
+ * verticalLineScanner, covariationScrubber, solidSliceLab), polar and
+ * angular objects (spinnerSim, triangleClosureLab, lineRelationLab,
+ * rotationLab, circleAngleExplore, elapsedTime), probes (sliceSum,
+ * extraneousRootLab), 2D points (distanceGrid, coordinateProofLab,
+ * slopeTriangle), handles and edges (boxPlot, fractionGrid,
+ * binomialAreaLab), and count sweeps (integerChips, placeValue,
+ * fractionOfSet, algebraTiles rows + area cells). Same contract:
+ * values pinned, slider parity, no surface when disabled.
+ * ------------------------------------------------------------------ */
+
+describe("percentBar drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "percentBar", whole: 40, targetPercent: 20, percentStep: 5, startPercent: 0, unit: "dollars",
+    prompt: "The bill is $40. Shade a 20% tip.",
+    successFeedback: "$8 — a fifth of the bill.", lowFeedback: "Under 20%.", highFeedback: "Over 20%."
+  }) as TWidget;
+
+  it("a press pulls the fill edge to the percent lattice under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 96);
+    // pad=12, barW=296; 20% sits at x = 12 + 0.2*296 = 71.2
+    fireEvent.pointerDown(screen.getByTestId("pb-drag"), { clientX: 71, clientY: 44, pointerId: 1 });
+    expect(holder.v).toBe(20);
+  });
+
+  it("a sweep past the bar end clamps to 100", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 96);
+    fireEvent.pointerDown(screen.getByTestId("pb-drag"), { clientX: 316, clientY: 44, pointerId: 1 });
+    expect(holder.v).toBe(100);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "percent chosen" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("pb-drag")).toBeNull();
+  });
+});
+
+describe("accumulateArea drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "accumulateArea", fn: "line", mode: "area", targetArea: 4, targetX: 0, start: 0,
+    prompt: "f(x) = 2x. Drag x until the swept area reaches 4.",
+    successFeedback: "x = 2, area 4.", lowFeedback: "Not enough area yet.", highFeedback: "Too far."
+  }) as TWidget;
+
+  it("a press pulls the sweep frontier to the 0.25 lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 228);
+    // PAD=26, usable 268; x=2 sits at 26 + 0.5*268 = 160
+    fireEvent.pointerDown(screen.getByTestId("aa-drag"), { clientX: 160, clientY: 100, pointerId: 1 });
+    expect(holder.v).toBe(2);
+    fireEvent.pointerMove(screen.getByTestId("aa-drag"), { clientX: 200, clientY: 180, pointerId: 1 }); // raw 2.597 → 2.5
+    expect(holder.v).toBe(2.5);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "how far the area has been swept" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("aa-drag")).toBeNull();
+  });
+});
+
+describe("slopeField drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "slopeField", equation: "linear", targetY0: 5, startY0: 1,
+    prompt: "dy/dx = x. Drag the starting value to y = 5.",
+    successFeedback: "Every solution is a vertical shift.", lowFeedback: "Below 5.", highFeedback: "Above 5."
+  }) as TWidget;
+
+  it("a press pulls the initial condition to the integer under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 210);
+    // PAD=26, H=210: y=5 sits at vy = 184 − (5/8)*158 = 85.25
+    fireEvent.pointerDown(screen.getByTestId("sfd-drag"), { clientX: 150, clientY: 85, pointerId: 1 });
+    expect(holder.v).toBe(5);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "the initial condition" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("sfd-drag")).toBeNull();
+  });
+});
+
+describe("taylorApprox drag (radius mode only)", () => {
+  const radiusSpec = WidgetSpec.parse({
+    type: "taylorApprox", fn: "geometric", mode: "radius", targetXTenths: 10, xStart: 3,
+    prompt: "Slide x toward the edge of convergence.",
+    successFeedback: "At x = 1 the terms stop shrinking.", lowFeedback: "Not there yet.", highFeedback: "Past it."
+  }) as TWidget;
+  const termsSpec = WidgetSpec.parse({
+    type: "taylorApprox", fn: "exp", mode: "terms", atX: 1, tolerance: 0.01, targetN: 4, nStart: 0,
+    prompt: "Add terms until the polynomial hugs e at x = 1.",
+    successFeedback: "Four terms past the constant.", lowFeedback: "Not enough terms.", highFeedback: "More than you need."
+  }) as TWidget;
+
+  it("dragging the evaluation point snaps to the tenths lattice", () => {
+    const { holder, container } = mount(radiusSpec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 160);
+    // geometric: XMIN=-1.6, XMAX=1.6, PAD=24, usable 272; x=1.0 sits at 24 + (2.6/3.2)*272 = 245
+    fireEvent.pointerDown(screen.getByTestId("ta-drag"), { clientX: 245, clientY: 80, pointerId: 1 });
+    expect(holder.v).toBe(10);
+  });
+
+  it("terms mode gets NO drag surface — a term count is scalar (survival rule)", () => {
+    mount(termsSpec);
+    expect(screen.queryByTestId("ta-drag")).toBeNull();
+    expect(screen.getByRole("slider", { name: "number of terms" })).toBeTruthy();
+  });
+
+  it("radius slider remains; surface gone when disabled", () => {
+    mount(radiusSpec);
+    expect(screen.getByRole("slider", { name: "the evaluation point, in tenths" })).toBeTruthy();
+    cleanup();
+    mount(radiusSpec, true);
+    expect(screen.queryByTestId("ta-drag")).toBeNull();
+  });
+});
+
+describe("verticalLineScanner drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "verticalLineScanner", relation: "circle", targetVerdict: "not-function",
+    xMin: -5, xMax: 5, scanStart: -5, scanStep: 0.5, requiredSweeps: 8,
+    prompt: "Sweep the vertical line across the circle.",
+    successFeedback: "Two crossings — not a function.",
+    moreSweepFeedback: "Keep sweeping.", verdictFeedback: "Look at the maximum count."
+  }) as TWidget;
+
+  it("a press pulls the scanner to the scanStep lattice and records the hits", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 360, 260);
+    // pad=22, usable 316; x=3 sits at 22 + (8/10)*316 = 274.8
+    fireEvent.pointerDown(screen.getByTestId("vls-drag"), { clientX: 275, clientY: 100, pointerId: 1 });
+    const v = holder.v as { x: number; maxIntersections: number };
+    expect(v.x).toBe(3);
+    expect(v.maxIntersections).toBe(2); // the circle crosses twice at |x| < 4
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider")).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("vls-drag")).toBeNull();
+  });
+});
+
+describe("covariationScrubber drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "covariationScrubber", prompt: "Move x to 4.", a: 2, b: 3,
+    inputMin: 0, inputMax: 8, inputStart: 0, targetInput: 4, inputLabel: "x", outputLabel: "y",
+    contextTemplate: "At input {x}, the function outputs {y}.",
+    successFeedback: "At x = 4, y = 11 everywhere.", lowFeedback: "Increase x.", highFeedback: "Decrease x."
+  }) as TWidget;
+
+  it("a press on the graph pulls the shared input to the integer under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = screen.getByTestId("cvs-drag").closest("svg") as SVGSVGElement;
+    pinRect(svg, 340, 220);
+    // pad=24, G=8, usable 292; x=4 sits at 24 + 0.5*292 = 170
+    fireEvent.pointerDown(screen.getByTestId("cvs-drag"), { clientX: 170, clientY: 100, pointerId: 1 });
+    expect(holder.v).toBe(4);
+    expect(container).toBeTruthy();
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider")).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("cvs-drag")).toBeNull();
+  });
+});
+
+describe("solidSliceLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "solidSliceLab", prompt: "Stop where the cross-section is greatest.",
+    solid: "sphere", radius: 5, height: 10, targetFraction: 0.5, startFraction: 0.1,
+    fractionStep: 0.05, tolerance: 0.03, comparisonRequired: false, requiredMoves: 4,
+    successFeedback: "The middle slice wins.", positionFeedback: "Not the largest yet.",
+    comparisonFeedback: "Add the comparison solid.", invariantFeedback: "Try more heights."
+  }) as TWidget;
+
+  it("a press pulls the section plane to the fractionStep height under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 250);
+    // y = 205 − fraction*150; fraction 0.5 sits at vy = 130
+    fireEvent.pointerDown(screen.getByTestId("ssl-drag"), { clientX: 150, clientY: 130, pointerId: 1 });
+    expect((holder.v as { fraction: number }).fraction).toBe(0.5);
+    expect((holder.v as { moves: number }).moves).toBe(1);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "section height" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ssl-drag")).toBeNull();
+  });
+});
+
+describe("spinnerSim drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "spinnerSim", prompt: "Shade six sectors.", sectors: 12, targetFavourable: 6, favourableStart: 0,
+    successFeedback: "Six sectors.", lowFeedback: "Keep going.", highFeedback: "Too many."
+  }) as TWidget;
+
+  it("the sector under the pointer pulls the shading boundary through it", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 200, 210);
+    // 3 o'clock = 90° from 12 = sector index 3 → 4 shaded
+    fireEvent.pointerDown(screen.getByTestId("sps-drag"), { clientX: 190, clientY: 100, pointerId: 1 });
+    expect(holder.v).toBe(4);
+    // just right of 12 o'clock → exactly 1
+    fireEvent.pointerMove(screen.getByTestId("sps-drag"), { clientX: 101, clientY: 20, pointerId: 1 });
+    expect(holder.v).toBe(1);
+    // just LEFT of 12 o'clock → the whole wheel
+    fireEvent.pointerMove(screen.getByTestId("sps-drag"), { clientX: 95, clientY: 20, pointerId: 1 });
+    expect(holder.v).toBe(12);
+    fireEvent.pointerUp(screen.getByTestId("sps-drag"), { clientX: 95, clientY: 20, pointerId: 1 });
+  });
+
+  it("slider remains (zero stays reachable there); surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "winning sectors" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("sps-drag")).toBeNull();
+  });
+});
+
+describe("triangleClosureLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "triangleClosureLab", prompt: "Will beams of 7, 8, and 12 form a triangle?",
+    sides: [7, 8, 12], angleStart: 30, angleStep: 5, requiredMoves: 2,
+    choices: [
+      { id: "a", label: "Yes", verdict: "forms", feedback: "The shorter pair out-reaches the longest beam." },
+      { id: "b", label: "No", verdict: "does-not-form", feedback: "Check the sum: 7 + 8 = 15 > 12." },
+      { id: "c", label: "Only as base", verdict: "does-not-form", feedback: "Position doesn't matter — 7 + 8 > 12 either way." }
+    ],
+    fallbackFeedback: "Compare 7 + 8 with 12.", successFeedback: "The frame closes."
+  }) as TWidget;
+
+  it("a drag swings the hinged beam on the angleStep lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 290, 165);
+    // hinge at (145, 130); straight up = 90°
+    fireEvent.pointerDown(screen.getByTestId("tclo-drag"), { clientX: 145, clientY: 50, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(90);
+  });
+
+  it("a pull below the base clamps at 0", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 290, 165);
+    fireEvent.pointerDown(screen.getByTestId("tclo-drag"), { clientX: 250, clientY: 160, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(0);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "hinge angle" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("tclo-drag")).toBeNull();
+  });
+});
+
+describe("lineRelationLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "lineRelationLab", targetRelation: "parallel", baseAngle: 0, angleStart: 35, offsetStart: 2,
+    angleStep: 5, requiredMoves: 3, prompt: "Turn the blue line parallel to the dark one.",
+    successFeedback: "Equal angles force parallel.", angleFeedback: "The angles still differ.",
+    distanceFeedback: "Position is not what the converse is about."
+  }) as TWidget;
+
+  it("a drag rotates the active line about its own anchor, mod 180", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 360, 220);
+    // anchor at angle 35, offset 2: (180 − sin35°*36, 110 + cos35°*36) ≈ (159.4, 139.5); straight above → 90°
+    fireEvent.pointerDown(screen.getByTestId("lrl-drag"), { clientX: 159, clientY: 50, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(90);
+    expect((holder.v as { offset: number }).offset).toBe(2); // translation untouched
+  });
+
+  it("both sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "active line angle" })).toBeTruthy();
+    expect(screen.getByRole("slider", { name: "active line offset" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("lrl-drag")).toBeNull();
+  });
+});
+
+describe("rotationLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "rotationLab", mode: "coordinateRule", prompt: "Quarter turn counterclockwise.",
+    point: [5, 2], centre: [0, 0], targetAngle: 90, angleStart: 0, angleStep: 90, gridMax: 8,
+    successFeedback: "The image is (−2, 5).", lowFeedback: "Not far enough.", highFeedback: "Too far."
+  }) as TWidget;
+
+  it("carrying the image around the centre sets the turn on the angleStep lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    // preimage (5,2) is at atan2(2,5) ≈ 21.8°; pointer at ≈111.8° (radius 5) → turn 90.
+    // math (−1.86, 4.64) → pixel (150 − 27.9, 150 − 69.6) ≈ (122, 80)
+    fireEvent.pointerDown(screen.getByTestId("rl-drag"), { clientX: 122, clientY: 80, pointerId: 1 });
+    expect((holder.v as { angle: number }).angle).toBe(90);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "Rotation angle in degrees counterclockwise" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("rl-drag")).toBeNull();
+  });
+});
+
+describe("circleAngleExplore endpoint drag", () => {
+  const central = WidgetSpec.parse({
+    type: "circleAngleExplore", mode: "central", targetAngle: 140, startArc: 80,
+    prompt: "Open the arc to 140°.",
+    successFeedback: "140° of arc, 140° at the centre.", lowFeedback: "Wider.", highFeedback: "Narrower."
+  }) as TWidget;
+  const inscribed = WidgetSpec.parse({
+    type: "circleAngleExplore", mode: "inscribed", targetAngle: 40, startArc: 80,
+    prompt: "Make the angle at P read 40°.",
+    successFeedback: "Half of 80.", lowFeedback: "Wider.", highFeedback: "Narrower."
+  }) as TWidget;
+  const cyclic = WidgetSpec.parse({
+    type: "circleAngleExplore", mode: "cyclic", targetAngle: 100, startArc: 80,
+    prompt: "Opposite angles.",
+    successFeedback: "Supplementary.", lowFeedback: "Wider.", highFeedback: "Narrower."
+  }) as TWidget;
+
+  it("dragging endpoint A along the rim widens the arc symmetrically", () => {
+    const { holder, container } = mount(central);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 200);
+    // arc 140 puts A at 20°: (110 + 66cos20°, 96 − 66sin20°) ≈ (172, 73.4)
+    fireEvent.pointerDown(screen.getByTestId("ca-drag-a"), { clientX: 172, clientY: 73, pointerId: 1 });
+    expect(holder.v).toBe(140);
+  });
+
+  it("dragging endpoint B mirrors the same mapping", () => {
+    const { holder, container } = mount(central);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 200);
+    // arc 100 puts B at 140°: (110 + 66cos140°, 96 − 66sin140°) ≈ (59.4, 53.6)
+    fireEvent.pointerDown(screen.getByTestId("ca-drag-b"), { clientX: 59, clientY: 53, pointerId: 1 });
+    expect(holder.v).toBe(100);
+  });
+
+  it("P slides along the far arc in inscribed mode (its slider's own lattice)", () => {
+    const { container } = mount(inscribed);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 220, 200);
+    // arc 80 → bDeg 130; pPos 50 → pDeg 270 (the bottom): (110, 162)
+    fireEvent.pointerDown(screen.getByTestId("ca-drag-p"), { clientX: 110, clientY: 162, pointerId: 1 });
+    expect((screen.getByRole("slider", { name: "where P sits" }) as HTMLInputElement).value).toBe("50");
+  });
+
+  it("cyclic mode renders NO P surface (P has no slider there — parity rule)", () => {
+    mount(cyclic);
+    expect(screen.queryByTestId("ca-drag-p")).toBeNull();
+    expect(screen.getByTestId("ca-drag-a")).toBeTruthy();
+  });
+
+  it("arc slider remains; surfaces gone when disabled", () => {
+    mount(central);
+    expect(screen.getByRole("slider", { name: "arc size in degrees" })).toBeTruthy();
+    cleanup();
+    mount(central, true);
+    expect(screen.queryByTestId("ca-drag-a")).toBeNull();
+    expect(screen.queryByTestId("ca-drag-b")).toBeNull();
+  });
+});
+
+describe("sliceSum probe drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "sliceSum", mode: "areaBetween", tolerance: 0.005, nStart: 2, ruleStart: "left",
+    prompt: "Inspect a slice, then raise the count.",
+    successFeedback: "Top minus bottom.", lowFeedback: "Under 1/6.", highFeedback: "Over 1/6."
+  }) as TWidget;
+
+  it("sweeping the region highlights the slice under the pointer (local, never graded)", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 330, 190);
+    // [a,b]=[0,1], n=2: x=0.75 sits at 26 + 0.75*131 ≈ 124 → slice 2
+    fireEvent.pointerDown(screen.getByTestId("ssm-drag"), { clientX: 124, clientY: 100, pointerId: 1 });
+    expect((screen.getByRole("slider", { name: "which slice to inspect" }) as HTMLInputElement).value).toBe("2");
+    expect(holder.v).toEqual({ n: 2, rule: "left" }); // the graded state never moved
+  });
+
+  it("both sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "number of slices" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ssm-drag")).toBeNull();
+  });
+});
+
+describe("extraneousRootLab probe drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "extraneousRootLab", prompt: "Find the candidate that survives.",
+    radical: { c: 6, scale: 1 }, line: { m: 1, b: 0 }, probeStart: -4,
+    targetPhase: "identifyTrue", trueRoot: 3, phantomRoot: -2, requiredMoves: 2,
+    successFeedback: "x = 3 survives.", phantomPickedFeedback: "−2 satisfies only the squared pair.",
+    notSquaredFeedback: "Square both sides first.", signRegionFeedback: "The line is negative here.",
+    domainConfusionFeedback: "That x is neither candidate."
+  }) as TWidget;
+
+  it("dragging carries the probe line to the integer under the pointer, in the gesture's own frame", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 340, 210);
+    // lo=−8, hi=5 (max of cands 3, probe −4, −c+6=0, plus 2), usable 288: x=3 sits at 26 + (11/13)*288 ≈ 270
+    fireEvent.pointerDown(screen.getByTestId("erl-drag"), { clientX: 270, clientY: 100, pointerId: 1 });
+    expect((screen.getByTestId("erl-probe") as HTMLInputElement).value).toBe("3");
+    expect((holder.v as { pick: number | null }).pick).toBeNull(); // probing is not picking
+    fireEvent.pointerUp(screen.getByTestId("erl-drag"), { clientX: 270, clientY: 100, pointerId: 1 });
+  });
+
+  it("probe slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByTestId("erl-probe")).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("erl-drag")).toBeNull();
+  });
+});
+
+describe("distanceGrid drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "distanceGrid", prompt: "Move the point to (6, 6).",
+    anchor: [2, 3], targetPoint: [6, 6], gridMin: 0, gridMax: 8, startX: 2, startY: 3,
+    successFeedback: "√(4² + 3²) = 5.", wrongPointFeedback: "Not at (6, 6) yet."
+  }) as TWidget;
+
+  it("a press carries the point to the integer lattice point under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    // pad=16, usable 268: (6,6) sits at (16 + 0.75*268, 300−16 − 0.75*268) = (217, 83)
+    fireEvent.pointerDown(screen.getByTestId("dgr-drag"), { clientX: 217, clientY: 83, pointerId: 1 });
+    expect(holder.v).toEqual({ x: 6, y: 6 });
+  });
+
+  it("a pull past the grid clamps to its edge", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    fireEvent.pointerDown(screen.getByTestId("dgr-drag"), { clientX: 500, clientY: 83, pointerId: 1 });
+    expect((holder.v as { x: number }).x).toBe(8);
+  });
+
+  it("sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "point across" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("dgr-drag")).toBeNull();
+  });
+});
+
+describe("coordinateProofLab drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "coordinateProofLab", prompt: "Place D so ABCD is a parallelogram.",
+    fixed: [[1, 1], [6, 1], [8, 5]], target: [3, 5], start: [8, 8], targetClaim: "parallelogram",
+    gridMin: 0, gridMax: 10, requiredEvidence: ["slopes", "midpoints"], requiredMoves: 4,
+    successFeedback: "D = (3, 5).", positionFeedback: "Evidence still disagrees.",
+    evidenceFeedback: "Inspect both slopes and midpoints."
+  }) as TWidget;
+
+  it("a press carries vertex D to the integer lattice point under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 380, 300);
+    // P=30, X pitch 32, Y pitch 24: (3,5) sits at (126, 150)
+    fireEvent.pointerDown(screen.getByTestId("cpl-drag"), { clientX: 126, clientY: 150, pointerId: 1 });
+    const v = holder.v as { x: number; y: number; moves: number };
+    expect([v.x, v.y]).toEqual([3, 5]);
+    expect(v.moves).toBe(1);
+  });
+
+  it("sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "D x-coordinate" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("cpl-drag")).toBeNull();
+  });
+});
+
+describe("boxPlot handle drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "boxPlot", prompt: "Set the summary: 78, 82, 85, 88, 92.",
+    axisMin: 60, axisMax: 100, targetMin: 78, targetQ1: 82, targetMed: 85, targetQ3: 88, targetMax: 92,
+    startMin: 60, startQ1: 70, startMed: 80, startQ3: 90, startMax: 100,
+    successFeedback: "A tight box IS consistency.", orderFeedback: "Keep the five in order.",
+    valueFeedback: "Not yet 78, 82, 85, 88, 92."
+  }) as TWidget;
+
+  it("a press grabs the nearest handle and holds it for the whole gesture", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 130);
+    const hit = screen.getByTestId("bpl-drag");
+    // pad=22, 276 px per 40 units. Press beside min (60 → x=22)…
+    fireEvent.pointerDown(hit, { clientX: 24, clientY: 58, pointerId: 1 });
+    // …and pull to 78 (x = 22 + 18/40*276 ≈ 146)
+    fireEvent.pointerMove(hit, { clientX: 146, clientY: 58, pointerId: 1 });
+    expect((holder.v as { min: number }).min).toBe(78);
+    // crossing q1's seat does NOT swap hands: min keeps following, q1 stays put
+    fireEvent.pointerMove(hit, { clientX: 200, clientY: 58, pointerId: 1 });
+    expect((holder.v as { min: number }).min).toBe(86);
+    expect((holder.v as { q1: number }).q1).toBe(70);
+    fireEvent.pointerUp(hit, { clientX: 200, clientY: 58, pointerId: 1 });
+  });
+
+  it("five sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getAllByRole("slider").length).toBe(5);
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("bpl-drag")).toBeNull();
+  });
+});
+
+describe("fractionGrid shade-edge drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "fractionGrid", prompt: "1/2 × 1/3.", num1: 1, den1: 2, num2: 1, den2: 3,
+    rowFeedback: "Rows carry the first factor.", colFeedback: "Columns carry the 1/3.",
+    successFeedback: "1 of 6 is 1/6."
+  }) as TWidget;
+
+  it("the row edge drags down on the row lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 240, 240);
+    fireEvent.change(screen.getByRole("slider", { name: "row count" }), { target: { value: "2" } });
+    const hit = screen.getByTestId("fgr-drag-r");
+    fireEvent.pointerDown(hit, { clientX: 120, clientY: 10, pointerId: 1 });
+    // rh = 228/2 = 114; vy=130 → raw 1.09 → 1
+    fireEvent.pointerMove(hit, { clientX: 120, clientY: 130, pointerId: 1 });
+    expect((holder.v as { shadeR: number }).shadeR).toBe(1);
+    fireEvent.pointerUp(hit, { clientX: 120, clientY: 130, pointerId: 1 });
+  });
+
+  it("the column edge drags right on the column lattice", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 240, 240);
+    fireEvent.change(screen.getByRole("slider", { name: "column count" }), { target: { value: "3" } });
+    const hit = screen.getByTestId("fgr-drag-c");
+    // cw = 228/3 = 76; vx = 6 + 2*76 = 158 → shadeC 2
+    fireEvent.pointerDown(hit, { clientX: 158, clientY: 120, pointerId: 1 });
+    expect((holder.v as { shadeC: number }).shadeC).toBe(2);
+  });
+
+  it("partition sliders remain (survival rule); surfaces gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "row count" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("fgr-drag-r")).toBeNull();
+    expect(screen.queryByTestId("fgr-drag-c")).toBeNull();
+  });
+});
+
+describe("binomialAreaLab strip-edge drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "binomialAreaLab", requiredMoves: 3, startA: 1, startB: 0,
+    prompt: "Build (x + 3)(x + 3).", pX: 1, qX: 1, targetA: 3, targetB: 3, asks: "middle",
+    successFeedback: "x² + 6x + 9.", productMiddleFeedback: "The strips were multiplied.",
+    partialFeedback: "One partition has arrived.", signFeedback: "Right sizes, wrong direction."
+  }) as TWidget;
+
+  it("the across edge drags to the unit lattice, including through the block to negatives", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 340, 250);
+    const hit = screen.getByTestId("bal-drag-a");
+    // scale=1, U=13, OX=46, xw=52: a=3 puts the edge at 46 + (4+3)*13 = 137
+    fireEvent.pointerDown(hit, { clientX: 137, clientY: 60, pointerId: 1 });
+    expect((holder.v as { a: number }).a).toBe(3);
+    // pulling back through the block: 46 + (4−2)*13 = 72 → a = −2
+    fireEvent.pointerMove(hit, { clientX: 72, clientY: 60, pointerId: 1 });
+    expect((holder.v as { a: number }).a).toBe(-2);
+    fireEvent.pointerUp(hit, { clientX: 72, clientY: 60, pointerId: 1 });
+  });
+
+  it("the down edge drags the same way", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 340, 250);
+    // OY=30, xh=52: b=3 puts the edge at 30 + 7*13 = 121
+    fireEvent.pointerDown(screen.getByTestId("bal-drag-b"), { clientX: 70, clientY: 121, pointerId: 1 });
+    expect((holder.v as { b: number }).b).toBe(3);
+  });
+
+  it("sliders remain; surfaces gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "across partition" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("bal-drag-a")).toBeNull();
+  });
+});
+
+describe("integerChips row sweep", () => {
+  const spec = WidgetSpec.parse({
+    type: "integerChips", target: -7, maxPos: 10, maxNeg: 10, posStart: 0, negStart: 0,
+    prompt: "Build −3 + (−4) with chips.",
+    successFeedback: "−7 — debts add.", lowFeedback: "Too far negative.", highFeedback: "No positives belong."
+  }) as TWidget;
+
+  it("sweeping a band counts chips through the one under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 128);
+    // chip pitch 26 from padL 16: third chip's centre is 68
+    fireEvent.pointerDown(screen.getByTestId("ic-drag-pos"), { clientX: 68, clientY: 30, pointerId: 1 });
+    expect(holder.v).toEqual({ pos: 3, neg: 0 });
+    fireEvent.pointerUp(screen.getByTestId("ic-drag-pos"), { clientX: 68, clientY: 30, pointerId: 1 });
+    fireEvent.pointerDown(screen.getByTestId("ic-drag-neg"), { clientX: 146, clientY: 88, pointerId: 1 });
+    expect(holder.v).toEqual({ pos: 3, neg: 6 });
+    fireEvent.pointerUp(screen.getByTestId("ic-drag-neg"), { clientX: 146, clientY: 88, pointerId: 1 });
+  });
+
+  it("sweeping left of the first chip reaches zero", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 128);
+    const hit = screen.getByTestId("ic-drag-pos");
+    fireEvent.pointerDown(hit, { clientX: 68, clientY: 30, pointerId: 1 });
+    fireEvent.pointerMove(hit, { clientX: 3, clientY: 30, pointerId: 1 });
+    expect(holder.v).toEqual({ pos: 0, neg: 0 });
+    fireEvent.pointerUp(hit, { clientX: 3, clientY: 30, pointerId: 1 });
+  });
+
+  it("sliders and zero-pair buttons remain; surfaces gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "positive chips" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ic-drag-pos")).toBeNull();
+    expect(screen.queryByTestId("ic-drag-neg")).toBeNull();
+  });
+});
+
+describe("placeValue block sweep", () => {
+  const spec = WidgetSpec.parse({
+    type: "placeValue", prompt: "Build 156 with blocks.", target: 156,
+    maxHundreds: 4, maxTens: 12, maxOnes: 15, hStart: 0, tStart: 0, oStart: 0,
+    successFeedback: "156 — 1 hundred, 5 tens, 6 ones.", lowFeedback: "Less than 156.", highFeedback: "More than 156."
+  }) as TWidget;
+
+  it("each place's band counts blocks through the one under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 150);
+    fireEvent.pointerDown(screen.getByTestId("pv-drag-h"), { clientX: 74, clientY: 30, pointerId: 1 }); // 2nd flat
+    expect(holder.v).toEqual({ h: 2, t: 0, o: 0 });
+    fireEvent.pointerUp(screen.getByTestId("pv-drag-h"), { clientX: 74, clientY: 30, pointerId: 1 });
+    fireEvent.pointerDown(screen.getByTestId("pv-drag-t"), { clientX: 60, clientY: 80, pointerId: 1 }); // 5th rod
+    expect(holder.v).toEqual({ h: 2, t: 5, o: 0 });
+    fireEvent.pointerUp(screen.getByTestId("pv-drag-t"), { clientX: 60, clientY: 80, pointerId: 1 });
+    fireEvent.pointerDown(screen.getByTestId("pv-drag-o"), { clientX: 89, clientY: 116, pointerId: 1 }); // 8th one
+    expect(holder.v).toEqual({ h: 2, t: 5, o: 8 });
+    fireEvent.pointerUp(screen.getByTestId("pv-drag-o"), { clientX: 89, clientY: 116, pointerId: 1 });
+  });
+
+  it("the ones wrap row-major like the drawing", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 150);
+    // row 1, col 2 → 13 ones: vx = 8 + 2*11 + 4 = 34, vy = 112 + 11 + 4 = 127
+    fireEvent.pointerDown(screen.getByTestId("pv-drag-o"), { clientX: 34, clientY: 127, pointerId: 1 });
+    expect((holder.v as { o: number }).o).toBe(13);
+  });
+
+  it("sliders remain; surfaces gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "hundreds" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("pv-drag-h")).toBeNull();
+  });
+});
+
+describe("fractionOfSet sweep", () => {
+  const spec = WidgetSpec.parse({
+    type: "fractionOfSet", prompt: "Choose 3/4 of the 12 counters.", setSize: 12, num: 3, den: 4, groupsHint: true,
+    successFeedback: "9 counters.", lowFeedback: "Not enough yet.", highFeedback: "Too many."
+  }) as TWidget;
+
+  it("a press chooses every item up to the one under the pointer, row-major", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 278, 114);
+    // cols=6; item 9 (row 1, col 2) sits at (24 + 2*40, 22 + 40) = (104, 62)
+    fireEvent.pointerDown(screen.getByTestId("fos-drag"), { clientX: 104, clientY: 62, pointerId: 1 });
+    expect(holder.v).toBe(9);
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "how many chosen" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("fos-drag")).toBeNull();
+  });
+});
+
+describe("algebraTiles row sweep and area cells", () => {
+  const classic = WidgetSpec.parse({
+    type: "algebraTiles", targetX: 3, targetConst: 2, maxTiles: 8, xStart: 0, constStart: 0,
+    prompt: "Build (2x + 3) + (x − 1) with tiles.",
+    successFeedback: "3x + 2.", xFeedback: "The x-tiles are wrong.", constFeedback: "The units are off."
+  }) as TWidget;
+  const area = WidgetSpec.parse({
+    type: "algebraTiles", targetX: -3, targetConst: -6, maxTiles: 8, xStart: 0, constStart: 0,
+    area: { width: [0, -3], height: [1, 2], mode: "distribute" },
+    prompt: "Fill the rectangle for −3(x + 2).",
+    successFeedback: "−3x − 6.", xFeedback: "The x-cells are not all covered.", constFeedback: "The unit cells are off."
+  }) as TWidget;
+
+  it("sweeping the long-tile row counts tiles through the one under the pointer", () => {
+    const { holder, container } = mount(classic);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 130);
+    // pitch 25 from x=12: third tile's middle is 72
+    fireEvent.pointerDown(screen.getByTestId("at-drag-x"), { clientX: 72, clientY: 40, pointerId: 1 });
+    expect((holder.v as { x: number }).x).toBe(3);
+    fireEvent.pointerUp(screen.getByTestId("at-drag-x"), { clientX: 72, clientY: 40, pointerId: 1 });
+  });
+
+  it("sweeping the unit row does the same on its own pitch, and left of the first tile is zero", () => {
+    const { holder, container } = mount(classic);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 130);
+    const hit = screen.getByTestId("at-drag-unit");
+    // pitch 23 from x=12: second tile's middle is 44
+    fireEvent.pointerDown(hit, { clientX: 44, clientY: 85, pointerId: 1 });
+    expect((holder.v as { c: number }).c).toBe(2);
+    fireEvent.pointerMove(hit, { clientX: 8, clientY: 85, pointerId: 1 });
+    expect((holder.v as { c: number }).c).toBe(0);
+    fireEvent.pointerUp(hit, { clientX: 8, clientY: 85, pointerId: 1 });
+  });
+
+  it("the sweep keeps the pile's current sign — magnitude is the spatial quantity", () => {
+    const { holder, container } = mount(classic);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 130);
+    fireEvent.change(screen.getByRole("slider", { name: "long tiles" }), { target: { value: "-2" } });
+    expect((holder.v as { x: number }).x).toBe(-2);
+    fireEvent.pointerDown(screen.getByTestId("at-drag-x"), { clientX: 72, clientY: 40, pointerId: 1 });
+    expect((holder.v as { x: number }).x).toBe(-3);
+  });
+
+  it("tapping a dashed cell produces its tile WITH the cell's sign; tapping again takes it back", () => {
+    const { holder } = mount(area);
+    // the distribute rectangle for −3(x+2): 3 negative x-cells and 6 negative unit-cells
+    const xCells = screen.getAllByTestId("at-cell-x-neg");
+    expect(xCells.length).toBe(3);
+    fireEvent.click(xCells[0]);
+    expect((holder.v as { x: number }).x).toBe(-1);
+    const filled = screen.getAllByTestId("at-cell-x-neg-filled");
+    expect(filled.length).toBe(1);
+    fireEvent.click(filled[0]);
+    expect((holder.v as { x: number }).x).toBe(0);
+  });
+
+  it("sliders remain; sweep bands gone when disabled", () => {
+    mount(classic);
+    expect(screen.getByRole("slider", { name: "long tiles" })).toBeTruthy();
+    expect(screen.getByRole("slider", { name: "small tiles" })).toBeTruthy();
+    cleanup();
+    mount(classic, true);
+    expect(screen.queryByTestId("at-drag-x")).toBeNull();
+    expect(screen.queryByTestId("at-drag-unit")).toBeNull();
+  });
+});
+
+describe("elapsedTime hand turn", () => {
+  const spec = WidgetSpec.parse({
+    type: "elapsedTime", prompt: "Set how long the film runs.",
+    startHour: 2, startMinute: 15, targetMinutes: 45, minuteStep: 5, maxMinutes: 120, startElapsed: 0,
+    successFeedback: "45 minutes.", lowFeedback: "Not enough time.", highFeedback: "Too much time."
+  }) as TWidget;
+
+  it("turning the finish hand accumulates elapsed time, wrapping past 12", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 130);
+    const hit = screen.getByTestId("et-drag");
+    // finish clock centre (238, 62); hand starts at :15. Press at :30 (straight down)
+    fireEvent.pointerDown(hit, { clientX: 238, clientY: 112, pointerId: 1 });
+    expect(holder.v).toBe(15);
+    // sweep on to :45 (9 o'clock side)
+    fireEvent.pointerMove(hit, { clientX: 188, clientY: 62, pointerId: 1 });
+    expect(holder.v).toBe(30);
+    // keep going through :00 — the wrap ADDS, it does not reset
+    fireEvent.pointerMove(hit, { clientX: 238, clientY: 12, pointerId: 1 });
+    expect(holder.v).toBe(45);
+    // wind back a notch to :50
+    fireEvent.pointerMove(hit, { clientX: 195, clientY: 37, pointerId: 1 });
+    expect(holder.v).toBe(35);
+    fireEvent.pointerUp(hit, { clientX: 195, clientY: 37, pointerId: 1 });
+  });
+
+  it("slider remains; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "minutes that pass" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("et-drag")).toBeNull();
+  });
+});
+
+describe("slopeTriangle tip drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "slopeTriangle", prompt: "Build the slope triangle from A so the line passes through B.",
+    ax: 1, ay: 1, bx: 4, by: 7, runStart: 1, riseStart: 0, gridMax: 10, legMax: 9,
+    successFeedback: "Slope 2.", fallbackFeedback: "3 across and 6 up."
+  }) as TWidget;
+
+  it("carrying the tip sets run and rise together through the model", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 340, 300);
+    // tip (4,7): vx = 26 + (14/20)*288 ≈ 228, vy = 274 − (17/20)*248 ≈ 63
+    fireEvent.pointerDown(screen.getByTestId("st-drag"), { clientX: 228, clientY: 63, pointerId: 1 });
+    expect(holder.v).toEqual({ run: 3, rise: 6 });
+    fireEvent.pointerUp(screen.getByTestId("st-drag"), { clientX: 228, clientY: 63, pointerId: 1 });
+  });
+
+  it("steppers and sliders remain; surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "Set run (across)" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("st-drag")).toBeNull();
+  });
+});

@@ -29,7 +29,7 @@
 | M25 | mathematical | scientific-coefficient-not-single-digit | Rejected ✓ |
 | M26 | schema | plain-zod-object-required | Rejected ✓ |
 | M27 | schema | zod-effects-union-collapse | Rejected ✓ |
-| M28 | accessibility | keyboard-stage-button-missing | Rejected ✓ |
+| M28 | accessibility | keyboard-stage-button-missing | NOT REJECTED ✗ |
 | M29 | accessibility | digit-table-label-missing | Rejected ✓ |
 | M30 | grading | fabricated-exploration-filter-missing | Rejected ✓ |
 | M31 | reveal | reveal-overwrite-protection-missing | Rejected ✓ |
@@ -44,4 +44,4 @@
 - ✓ Nearest-tenth rounding uses the hundredths digit
 - ✓ Subtracting a negative exponent adds its magnitude
 
-**Result:** 35/35 mutations rejected; controls 3/3.
+**Result:** 34/35 mutations rejected; controls 3/3.

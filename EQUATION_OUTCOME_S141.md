@@ -6,4 +6,4 @@ One normalized equation truth drives the cancellation residue, grading, feedback
 - Executed seeded problems: **3,456/3,456**
 - Registered widgets: **127** (121 manipulatives)
 - Live reviewed K–8 queue: **0**
-- Tiers: **A 1187 · B 458 · C 56 · D 0**
+- Tiers: **A 1190 · B 457 · C 54 · D 0**

@@ -7,7 +7,7 @@
 - **Surface-preserving variant declarations:** 7.
 - **Lessons:** sp-03-02, sp-03-03; both finish at an honest Tier B.
 - **Reviewed K–8 queue:** 56 → **0**, zero unreviewed.
-- **Product tiers:** A 1187 · B 458 · C 56 · D 0.
+- **Product tiers:** A 1190 · B 457 · C 54 · D 0.
 - **Registry:** 127 widget types, 121 manipulatives.
 
 ## Breakthrough relationship

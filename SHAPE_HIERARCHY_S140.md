@@ -12,4 +12,4 @@ The family closes three lessons without forcing their two arithmetic angle-sum s
 - Executed seeded problems: **11,520/11,520**
 - Registered widgets: **127** (121 manipulatives)
 - Live reviewed K–8 queue: **0**
-- Tiers: **A 1187 · B 458 · C 56 · D 0**
+- Tiers: **A 1190 · B 457 · C 54 · D 0**

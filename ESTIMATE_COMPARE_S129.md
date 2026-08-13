@@ -6,7 +6,7 @@
 - **Converted experiences:** 4 (three lesson interactions plus the remedial retry).
 - **Tier:** C20 → **B27**; Tier B is intentional because prediction would repeat an object-reading comparison.
 - **Reviewed K–8 queue at Session 129 close:** 62 → **61**. Current live queue: **0**, zero unreviewed.
-- **Product tiers at Session 129 close:** A 608 · B 204 · C 289 · D 28. Current: A 1187 · B 458 · C 56 · D 0.
+- **Product tiers at Session 129 close:** A 608 · B 204 · C 289 · D 28. Current: A 1190 · B 457 · C 54 · D 0.
 
 ## Independently derived candidates
 
