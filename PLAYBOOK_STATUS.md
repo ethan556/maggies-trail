@@ -68,4 +68,4 @@ below is served by engines that already exist and already pass their gates.
 | `circleAngleExplore` | 5 | cr-01-01 cr-01-02 cr-01-03 cr-04-02 cr-05-03 |
 | `transformExplore` | 7 | gf-04-01 gf-05-01 gf-05-02 tm-01-01 tm-01-02 tm-01b-01 tm-01b-02 |
 
-Product-wide: 1701 lessons · A 1190 · B 457 · C 54 · D 0.
+Product-wide: 1701 lessons · A 1190 · B 458 · C 53 · D 0.

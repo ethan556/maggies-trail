@@ -28,4 +28,34 @@ describe("MathProse", () => {
     render(<p><MathProse text="Count the equal groups before you answer." /></p>);
     expect(screen.getByText("Count the equal groups before you answer.")).toBeTruthy();
   });
+
+  // S240: widget.prompt (and explanationVariants, which route through the same component)
+  // used the same **bold** convention as step `body` text but silently showed literal
+  // asterisks — only `Rich` (body-only) understood them. cpr-01-03/i1's "**or**" was the
+  // reading-caught instance; the fix is in MathProse itself, not a one-off prompt edit.
+  it("renders **bold** as a strong element, not literal asterisks", () => {
+    const { container } = render(<p><MathProse text="Shade every sector that is a multiple of 3 **or** a multiple of 4." /></p>);
+    expect(container.textContent).not.toContain("*");
+    const strong = container.querySelector("strong");
+    expect(strong?.textContent).toBe("or");
+    expect(container.textContent).toBe("Shade every sector that is a multiple of 3 or a multiple of 4.");
+  });
+
+  it("renders math shorthand inside a bold segment", async () => {
+    const { container } = render(<p><MathProse text="Which grows faster, **2^4** or 3^2?" /></p>);
+    const strong = container.querySelector("strong");
+    expect(strong).toBeTruthy();
+    await waitFor(() => expect(strong!.querySelectorAll(".katex")).toHaveLength(1));
+    expect(container.querySelectorAll(".katex")).toHaveLength(2);
+    expect(container.textContent).not.toContain("*");
+  });
+
+  it("handles multiple bold spans in one prompt", () => {
+    const { container } = render(<p><MathProse text={'That is the number doing **both**. "At least one" includes **sport-only** and instrument-only.'} /></p>);
+    const strongs = container.querySelectorAll("strong");
+    expect(strongs).toHaveLength(2);
+    expect(strongs[0].textContent).toBe("both");
+    expect(strongs[1].textContent).toBe("sport-only");
+    expect(container.textContent).not.toContain("*");
+  });
 });

@@ -4,6 +4,6 @@ One table truth now drives cell counts, row and column totals, grand totals, and
 
 - Authored causal experiences: **14/14**
 - Executed seeded problems: **9,216/9,216**
-- Registered widgets: **127** (121 manipulatives)
+- Registered widgets: **129** (123 manipulatives)
 - Live reviewed K–8 queue: **0**
-- Tiers: **A 1190 · B 457 · C 54 · D 0**
+- Tiers: **A 1190 · B 458 · C 53 · D 0**

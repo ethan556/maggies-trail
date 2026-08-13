@@ -78,10 +78,10 @@ async function loadIndex(): Promise<Index> {
 
 const STATIC_RESPONSE = new Set(['mcq', 'numeric', 'fractionEntry', 'pointEntry', 'buildExpression', 'placeCompare', 'rationalCompare']);
 const DIRECT = new Set([
-  'slider','lineExplore','fractionBar','quadraticExplore','unitCircleExplore','systemsExplore','numberLinePlace','functionMachine','probabilityArea','hundredthsGrid',
+  'slider','lineExplore','fractionBar','quadraticExplore','unitCircleExplore','systemsExplore','feasibleRegionExplore','numberLinePlace','functionMachine','probabilityArea','hundredthsGrid',
   'transformExplore','angleMeasure','dilationExplore','barBuilder','dotPlot','boxPlot','areaModel','placeValue','doubleNumberLine','scatterFit','fractionOfSet',
   'percentBar','integerChips','volumeBuilder','netFold','ratioTable','elapsedTime','treeDiagram','spinnerSim','circleAngleExplore','expLogExplore','secantSlope',
-  'argandExplore','matrixTransform','vectorExplore','circleMeasureExplore','polarTrace','signChart','sequenceBuild','triangleSolve','compassConstruct',
+  'argandExplore','matrixTransform','vectorExplore','circleMeasureExplore','polarTrace','parametricTrace','signChart','sequenceBuild','triangleSolve','compassConstruct',
   'derivativeTrace','riemannSum','accumulateArea','sliceSum','slopeField','taylorApprox','triangleConstraintLab','coordinateProofLab','solidSliceLab',
   'pointSetReasoningLab','geometricConstraintLab','exactNumberLab','affineRelationshipLab','lineRelationLab','triangleAngleLab','verticalLineScanner','covariationScrubber','samplingBiasLab','shapeFamilyBuilder','unitRuler','quotientReasoningLab','proportionalReasoningLab','placeValueTransformLab','graphStoryLab','conditionalTableLab',
   'conicLocusLab','derivativeRuleLab','relatedRatesLab','quadDrag','sampleSim','ciCapture','shuffleTest','distanceGrid','algebraTiles','clockSet','balanceScale',

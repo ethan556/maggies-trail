@@ -1976,3 +1976,179 @@ describe("slopeTriangle tip drag", () => {
     expect(screen.queryByTestId("st-drag")).toBeNull();
   });
 });
+
+// S240: percentBar's flat-fee segment (pr-04b-02/k3's alongside), feasibleRegionExplore, and
+// parametricTrace — the three engines added this wave. Same contract as above: a drag lands on
+// the SNAPPED value the widget's own math maps to, the slider stays as keyboard parity, and the
+// drag surface disappears once the step is disabled.
+
+describe("percentBar flatFee drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "percentBar", whole: 50, targetPercent: 40, percentStep: 5, startPercent: 0, unit: "dollars",
+    flatFee: 5, feeLabel: "flat fee",
+    prompt: "A service charges a flat $5 fee plus a percent of the order.",
+    successFeedback: "40%.", lowFeedback: "Under 40%.", highFeedback: "Over 40%."
+  }) as TWidget;
+
+  it("the fee segment shifts the percent track — a press lands on the lattice point THAT shift implies", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 320, 96);
+    // feeW=34 (flatFee>0), trackX=12+34=46, barW=320-24-34=262; 40% sits at 46+0.4*262=150.8.
+    // Under the OLD (no-fee) geometry this same clientX would read ~46% (pad=12, barW=296), so
+    // landing on 40 here proves the fee segment actually moved the track, not just decoration.
+    fireEvent.pointerDown(screen.getByTestId("pb-drag"), { clientX: 151, clientY: 44, pointerId: 1 });
+    expect(holder.v).toBe(40);
+  });
+
+  it("renders the fee segment and names it in the bar's accessible label", () => {
+    mount(spec);
+    expect(screen.getByTestId("pb-fee")).toBeTruthy();
+    expect(screen.getByRole("img", { name: /flat fee/ })).toBeTruthy();
+  });
+
+  it("the fee segment is absent when flatFee is 0 — every pre-S240 percentBar renders byte-identical", () => {
+    const noFee = WidgetSpec.parse({ ...spec, flatFee: 0 }) as TWidget;
+    mount(noFee);
+    expect(screen.queryByTestId("pb-fee")).toBeNull();
+  });
+
+  it("slider remains; drag surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "percent chosen" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("pb-drag")).toBeNull();
+  });
+});
+
+describe("feasibleRegionExplore fence drag", () => {
+  // iar-03-01's exact numbers.
+  const spec = WidgetSpec.parse({
+    type: "feasibleRegionExplore",
+    prompt: "Drag the flour limit fence and watch what happens to the corner at (6, 0).",
+    slantM: -1, slantB: 6, verticalMin: 2, verticalMax: 6, verticalStep: 1, verticalStart: 6, verticalTarget: 4,
+    xMax: 8, yMax: 8, fenceLabel: "flour limit",
+    successFeedback: "At x ≤ 4 the corner (6,0) is gone.", lowFeedback: "Still farther out than x = 4.", highFeedback: "Past x = 4."
+  }) as TWidget;
+
+  it("a press pulls the fence to the vertical lattice under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    // pad=34, plotW=232; x=4 of [0,8] sits at 34 + (4/8)*232 = 150
+    fireEvent.pointerDown(screen.getByTestId("fre-drag"), { clientX: 150, clientY: 150, pointerId: 1 });
+    expect(holder.v).toBe(4);
+  });
+
+  it("clamps to verticalMin/verticalMax, not to 0 or the plot edge", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    const hit = screen.getByTestId("fre-drag");
+    fireEvent.pointerDown(hit, { clientX: 0, clientY: 150, pointerId: 1 }); // far past the left edge
+    expect(holder.v).toBe(2); // verticalMin, not 0
+    fireEvent.pointerMove(hit, { clientX: 300, clientY: 150, pointerId: 1 }); // far past the right edge
+    expect(holder.v).toBe(6); // verticalMax
+    fireEvent.pointerUp(hit, { clientX: 300, clientY: 150, pointerId: 1 });
+  });
+
+  it("also drags correctly on iar-03-03's non-integer-corner configuration", () => {
+    const spec2 = WidgetSpec.parse({
+      ...spec,
+      slantM: -0.5, slantB: 4, verticalMin: 2, verticalMax: 8, verticalStart: 4, verticalTarget: 5,
+      fenceLabel: "dough limit"
+    }) as TWidget;
+    const { holder, container } = mount(spec2);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 300, 300);
+    // x=5 of [0,8] sits at 34 + (5/8)*232 = 179
+    fireEvent.pointerDown(screen.getByTestId("fre-drag"), { clientX: 179, clientY: 150, pointerId: 1 });
+    expect(holder.v).toBe(5);
+  });
+
+  it("slider remains; drag surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "flour limit position" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("fre-drag")).toBeNull();
+  });
+});
+
+describe("parametricTrace point drag — line mode", () => {
+  // pp-04-01/i1b's exact numbers.
+  const spec = WidgetSpec.parse({
+    type: "parametricTrace",
+    prompt: "For x = t + 1, y = 2t, drag the point forward and watch which way the arrows point.",
+    mode: "line", lineX0: 1, lineYK: 2, tMin: 0, tMax: 3, tStep: 0.1, tStart: 0, targetT: 2, tTolerance: 0.15,
+    successFeedback: "At t = 2 the point has reached (3, 4).", lowFeedback: "Not far enough yet.", highFeedback: "Too far."
+  }) as TWidget;
+
+  it("a press pulls the traced point to the t-lattice under the pointer", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 260, 260);
+    // full sweep x in [1,4], padded 18% -> [0.46,4.54]; pad=28, plotW=204.
+    // t=2 -> x=3 -> px = 28 + ((3-0.46)/4.08)*204 = 155
+    fireEvent.pointerDown(screen.getByTestId("ptr-drag"), { clientX: 155, clientY: 130, pointerId: 1 });
+    expect(holder.v).toBe(2);
+  });
+
+  it("clamps to tMin/tMax at the ends of the path", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 260, 260);
+    const hit = screen.getByTestId("ptr-drag");
+    fireEvent.pointerDown(hit, { clientX: 0, clientY: 130, pointerId: 1 });
+    expect(holder.v).toBe(0);
+    fireEvent.pointerMove(hit, { clientX: 260, clientY: 130, pointerId: 1 });
+    expect(holder.v).toBe(3);
+    fireEvent.pointerUp(hit, { clientX: 260, clientY: 130, pointerId: 1 });
+  });
+
+  it("slider remains; drag surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "parameter t" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ptr-drag")).toBeNull();
+  });
+});
+
+describe("parametricTrace point drag — circle mode", () => {
+  // pp-04-01/i2's exact numbers.
+  const spec = WidgetSpec.parse({
+    type: "parametricTrace",
+    prompt: "x = cos t, y = sin t starts at (1, 0). Drag the point forward to t = π/2 and watch which way it turns.",
+    mode: "circle", tMin: 0, tMax: 6.283185307179586, tStep: 0.1, tStart: 0, targetT: 1.5707963267948966, tTolerance: 0.15,
+    successFeedback: "At t = π/2 the point has swung up to (0, 1).", lowFeedback: "Not far enough yet.", highFeedback: "Too far."
+  }) as TWidget;
+
+  it("the press anchors the turn at the current point; dragging around accumulates t continuously, never wrapping backward", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 260, 260);
+    const hit = screen.getByTestId("ptr-drag");
+    // full sweep x,y in [-1,1], padded 18% floored at 0.5 -> [-1.5,1.5]; pad=28, plotW=plotH=204.
+    // t=0 -> (1,0) -> screen (198,130): the opening press anchors the turn — no jump yet.
+    fireEvent.pointerDown(hit, { clientX: 198, clientY: 130, pointerId: 1 });
+    expect(holder.v).toBe(0);
+    // t=π/2 -> (0,1) -> screen (130,62): a quarter turn forward, landing near the target.
+    fireEvent.pointerMove(hit, { clientX: 130, clientY: 62, pointerId: 1 });
+    expect(holder.v).toBeCloseTo(1.6, 5);
+    // t=π -> (-1,0) -> screen (62,130): ANOTHER quarter turn forward must ADD to 3.1, not
+    // wrap back toward 0 the way a naive absolute-angle reading would.
+    fireEvent.pointerMove(hit, { clientX: 62, clientY: 130, pointerId: 1 });
+    expect(holder.v).toBeCloseTo(3.1, 5);
+    fireEvent.pointerUp(hit, { clientX: 62, clientY: 130, pointerId: 1 });
+  });
+
+  it("slider remains; drag surface gone when disabled", () => {
+    mount(spec);
+    expect(screen.getByRole("slider", { name: "parameter t" })).toBeTruthy();
+    cleanup();
+    mount(spec, true);
+    expect(screen.queryByTestId("ptr-drag")).toBeNull();
+  });
+});

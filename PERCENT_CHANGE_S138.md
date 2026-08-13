@@ -14,4 +14,4 @@ The given percent is not an adjustable target. The engine keeps the base price, 
 
 - Exact-fit experiences: **7/7**
 - Live reviewed K–8 queue: **0**
-- Tier counts: **A 1190 · B 457 · C 54 · D 0**
+- Tier counts: **A 1190 · B 458 · C 53 · D 0**

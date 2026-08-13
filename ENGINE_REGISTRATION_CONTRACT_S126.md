@@ -2,8 +2,8 @@
 
 Regenerate with `npm run check:engine-registration`. The contract is discovered from the current registry and source; it does not freeze an obsolete ‘8/11/12-file’ count.
 
-- Widget types: **127**
-- Core-complete: **127**
+- Widget types: **129**
+- Core-complete: **129**
 - Core-incomplete: **0**
 
 | type | spec | eval cases | pedagogy | renderer | registered | stage | sample | describe | missing core |
@@ -49,6 +49,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | exactNumberLab | ExactNumberLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | expLogExplore | ExpLogExploreSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | extraneousRootLab | ExtraneousRootLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| feasibleRegionExplore | FeasibleRegionExploreSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | fractionBar | FractionBarSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | fractionCompare | FractionCompareSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | fractionEntry | FractionEntrySpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
@@ -76,6 +77,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | numberLineRay | NumberLineRaySpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | numeric | NumericSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | oddEvenPairs | OddEvenPairsSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| parametricTrace | ParametricTraceSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | percentBar | PercentBarSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | percentChangeLab | PercentChangeLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | placeCompare | PlaceCompareSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |

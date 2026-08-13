@@ -411,6 +411,23 @@ export const SAMPLES: unknown[] = [
     offLine2Feedback: "On the blue line, but not the orange one (y = −x + 5). The solution is the single point on both."
   },
   {
+    type: "feasibleRegionExplore",
+    prompt: "Drag the flour limit in to x ≤ 4 and watch the corner at (6, 0) disappear.",
+    slantM: -1,
+    slantB: 6,
+    verticalMin: 0,
+    verticalMax: 6,
+    verticalStep: 1,
+    verticalStart: 6,
+    verticalTarget: 4,
+    xMax: 8,
+    yMax: 8,
+    fenceLabel: "flour limit",
+    successFeedback: "At x ≤ 4, the corner (6, 0) is gone — cut off by the new fence — and two new corners, (4, 0) and (4, 2), have taken its place.",
+    lowFeedback: "The fence is farther out than x = 4 — (6, 0) is still a corner. Bring it in further.",
+    highFeedback: "The fence has come in past x = 4 — check where it now crosses the other boundary lines."
+  },
+  {
     type: "numberLinePlace",
     prompt: "Slide the marker to −3 on the number line.",
     min: -10,
@@ -1055,6 +1072,36 @@ export const SAMPLES: unknown[] = [
     successFeedback: "n = 2 gives FOUR petals, not two. The even case sweeps out its petals and then retraces the gaps on the way round, doubling the count; the odd case comes back onto its own path instead. That is the whole petal rule, and it is impossible to believe until you have watched it happen.",
     lowFeedback: "Fewer than 4 petals. Try a larger n — but note the count does not simply climb with n.",
     highFeedback: "More than 4 petals. Come back down — and notice that n = 3 gives only 3, fewer than n = 2 gives."
+  },
+  {
+    type: "parametricTrace",
+    prompt: "For x = t + 1, y = 2t, drag the point forward and watch which way the arrows point.",
+    mode: "line",
+    lineX0: 1,
+    lineYK: 2,
+    tMin: 0,
+    tMax: 4,
+    tStep: 0.1,
+    tStart: 0,
+    targetT: 2,
+    tTolerance: 0.15,
+    successFeedback: "At t = 2 the point sits at (3, 4) — every arrow along the way pointed up and to the right, because both coordinates grow as t grows.",
+    lowFeedback: "Not far enough yet — keep dragging forward; t is still short of 2.",
+    highFeedback: "Too far — you've dragged past t = 2. Bring it back a little."
+  },
+  {
+    type: "parametricTrace",
+    prompt: "x = cos t, y = sin t starts at (1, 0). Drag forward to t = π/2 and watch which way it turns.",
+    mode: "circle",
+    tMin: 0,
+    tMax: 6.283185307179586,
+    tStep: 0.1,
+    tStart: 0,
+    targetT: 1.5707963267948966,
+    tTolerance: 0.15,
+    successFeedback: "At t = π/2 the point has swung up to (0, 1) — counterclockwise the whole way, which is the standard direction for increasing t on the unit circle.",
+    lowFeedback: "Not far enough yet — keep dragging forward around the circle.",
+    highFeedback: "Too far — you've swept past t = π/2. Bring it back a little."
   },
   {
     type: "circleMeasureExplore",

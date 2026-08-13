@@ -16,7 +16,7 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | K-2 | 364 | 46 | 0 | 0 | 410 |
 | 3-5 | 334 | 85 | 0 | 0 | 419 |
 | 6-8 | 124 | 121 | 0 | 0 | 245 |
-| HS | 368 | 205 | 54 | 0 | 627 |
+| HS | 368 | 206 | 53 | 0 | 627 |
 
 **K–8 targets** — Tier A 822/200–250 ✓ · Tier B 252/200–300 ✓.
 
@@ -66,7 +66,7 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | g7-03b-02 — When the Conditions Leave a Choice | Grade 7: Geometry (G7) | 29/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-02-02 — When There Are Infinitely Many | Grade 8: Linear Equations & Systems (G8) | 29/39 | equations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | pr-04b-01 — Simple Interest | Grade 7: Proportional Relationships (G7) | 29/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
-| pr-04b-02 — Commission and Fees | Grade 7: Proportional Relationships (G7) | 29/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| pr-04b-02 — Commission and Fees | Grade 7: Proportional Relationships (G7) | 29/39 | ratios & proportions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | pr-04b-03 — Percent Error | Grade 7: Proportional Relationships (G7) | 29/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 
 ## Honest Tier-B ceilings — prediction would be redundant or unsafe (15)
@@ -94,4 +94,4 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
 
-Totals: 1701 lessons · A 1190 · B 457 · C 54 · D 0.
+Totals: 1701 lessons · A 1190 · B 458 · C 53 · D 0.

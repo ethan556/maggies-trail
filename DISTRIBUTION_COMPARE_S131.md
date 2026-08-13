@@ -6,7 +6,7 @@
 - **Converted experiences:** 26: 18 standardized-gap measurements and 8 overlap conclusions.
 - **Lessons:** sp-02-01, sp-02-02, sp-02-03; all finish at an honest Tier B.
 - **Reviewed K–8 queue:** 59 → **0**, zero unreviewed.
-- **Product tiers:** A 1190 · B 457 · C 54 · D 0.
+- **Product tiers:** A 1190 · B 458 · C 53 · D 0.
 
 ## Breakthrough relationship
 

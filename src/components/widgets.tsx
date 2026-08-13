@@ -148,6 +148,7 @@ import type {
   TMatrixTransform,
   TCircleMeasureExplore,
   TPolarTrace,
+  TParametricTrace,
   TSignChart,
   TExtraneousRootLab,
   TBinomialAreaLab,
@@ -217,6 +218,7 @@ import type {
   TFractionCompare,
   TOddEvenPairs,
   TSystemsExplore,
+  TFeasibleRegionExplore,
   TTapDiagram,
   TTenFrame,
   TToggleExplore,
@@ -253,7 +255,7 @@ import type {
   TDerivativeRuleLab,
   TRelatedRatesLab
 } from "@/lib/schema";
-import { isEvalOp, applyEvalOp, columnCalcTruth, mixedRegroupTruth, slopeTriangleLabel, exactNumberTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberKey } from "@/lib/schema";
+import { isEvalOp, applyEvalOp, columnCalcTruth, mixedRegroupTruth, slopeTriangleLabel, exactNumberTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberKey, feasibleRegionCorners } from "@/lib/schema";
 import { gcd, fractionText, terminatingDecimal, fractionWithDecimal } from "@/lib/mathUtils";
 import { circleMeasureReadout, circleReadout, compassSteps, complexProduct, curveAt, curveSlopeAt, dotProduct, evalRule, expLogReadout, lawOfCosinesAngle, lawOfCosinesSide, quadName, rosePetals, secantSlopeOver, accumAreaAt, accumFnAt, exactArea, integrandAt, riemannEstimate, sliceEstimate, taylorFn, taylorPartial, taylorTerm, sliceExact, sliceInterval, sliceMeasure, fieldSlope, traceAt, traceSlopeAt, traceSecondAt, snap2sf, transformPoint, type Reflect } from "@/lib/evaluate";
 
@@ -3603,6 +3605,149 @@ function PolarTraceW({ spec, value, onChange, disabled, tone }: WProps<TPolarTra
   );
 }
 
+/* ---------------- ParametricTrace (scrub t, watch direction accumulate as arrowheads) ---------------- */
+
+function ParametricTraceW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TParametricTrace>) {
+  const val = typeof value === "number" ? (value as number) : null;
+  const t = val ?? spec.tStart;
+  useEffect(() => {
+    if (val === null) onChange(spec.tStart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const xAt = (tt: number) => (spec.mode === "line" ? tt + spec.lineX0 : Math.cos(tt));
+  const yAt = (tt: number) => (spec.mode === "line" ? spec.lineYK * tt : Math.sin(tt));
+  const setT = (next: number) => {
+    if (next === t) return;
+    const dir = moveRelation(t, next, spec.targetT);
+    if (dir) onEvent?.({ control: "t", dir });
+    onChange(next);
+  };
+
+  const W = 260, H = 260, pad = 28;
+  const plotW = W - 2 * pad, plotH = H - 2 * pad;
+  // Bounding box of the FULL sweep [tMin, tMax], sampled generally — no per-mode hardcoding, so
+  // any authored lineX0/lineYK/tMin/tMax combination frames correctly.
+  const { minX, maxX, minY, maxY } = useMemo(() => {
+    let mnX = Infinity, mxX = -Infinity, mnY = Infinity, mxY = -Infinity;
+    for (let i = 0; i <= 48; i++) {
+      const tt = spec.tMin + ((spec.tMax - spec.tMin) * i) / 48;
+      const x = xAt(tt), y = yAt(tt);
+      mnX = Math.min(mnX, x); mxX = Math.max(mxX, x);
+      mnY = Math.min(mnY, y); mxY = Math.max(mxY, y);
+    }
+    const padX = Math.max((mxX - mnX) * 0.18, 0.5);
+    const padY = Math.max((mxY - mnY) * 0.18, 0.5);
+    return { minX: mnX - padX, maxX: mxX + padX, minY: mnY - padY, maxY: mxY + padY };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spec.mode, spec.lineX0, spec.lineYK, spec.tMin, spec.tMax]);
+
+  const X = (mx: number) => pad + ((mx - minX) / (maxX - minX)) * plotW;
+  const Y = (my: number) => H - pad - ((my - minY) / (maxY - minY)) * plotH;
+  const invX = (px: number) => minX + ((px - pad) / plotW) * (maxX - minX);
+  const invY = (py: number) => minY + ((H - pad - py) / plotH) * (maxY - minY);
+
+  const sample = (from: number, to: number, n: number) => {
+    const out: string[] = [];
+    for (let i = 0; i <= n; i++) {
+      const tt = from + ((to - from) * i) / n;
+      out.push(`${X(xAt(tt)).toFixed(1)} ${Y(yAt(tt)).toFixed(1)}`);
+    }
+    return out.join(" L ");
+  };
+  const arrow = (px: number, py: number, angle: number, colour: string) => {
+    const L = 7.5;
+    return (
+      <path
+        d={`M ${px} ${py} L ${px - L * Math.cos(angle - 0.45)} ${py - L * Math.sin(angle - 0.45)} L ${px - L * Math.cos(angle + 0.45)} ${py - L * Math.sin(angle + 0.45)} Z`}
+        fill={colour}
+      />
+    );
+  };
+
+  // S240: the TRACED POINT is the learner's object — dragging it along the curve is watching
+  // t increase, one motion, exactly what k1/k2 ask about ("as t increases the point moves…").
+  // Arrowheads appear only on the TRACED portion (tMin..t), so direction is discovered by
+  // dragging, never stated up front; the full path is shown lightly as undirected context.
+  const turn = useRef<{ lastRaw: number; acc: number } | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx, vy) => {
+      if (spec.mode === "line") {
+        // x = t + lineX0 has a fixed +1 coefficient on t, so it is always monotonic — t inverts
+        // directly from the pointer's x, no wraparound tracking needed.
+        const next = snapToStep(invX(vx) - spec.lineX0, spec.tMin, spec.tMax, spec.tStep);
+        if (next !== t) setT(next);
+        return;
+      }
+      // circle mode: unwrap the pointer angle into a continuously increasing t, so a multi-turn
+      // drag does not snap backward at the 0/2π seam (same technique elapsedTime's hand uses).
+      let rawAngle = Math.atan2(invY(vy), invX(vx));
+      if (rawAngle < 0) rawAngle += 2 * Math.PI;
+      const st = turn.current ?? (turn.current = { lastRaw: rawAngle, acc: t });
+      let delta = rawAngle - st.lastRaw;
+      if (delta > Math.PI) delta -= 2 * Math.PI;
+      if (delta < -Math.PI) delta += 2 * Math.PI;
+      st.lastRaw = rawAngle;
+      st.acc = Math.max(spec.tMin, Math.min(spec.tMax, st.acc + delta));
+      const next = snapToStep(st.acc, spec.tMin, spec.tMax, spec.tStep);
+      if (next !== t) setT(next);
+    },
+    onEnd: () => {
+      turn.current = null;
+    }
+  });
+
+  const traced = t > spec.tMin + 1e-6;
+  const handleX = X(xAt(t)), handleY = Y(yAt(t));
+  const ARROWS = 3;
+  const targetOk = Math.abs(t - spec.targetT) <= spec.tTolerance;
+
+  return (
+    <div className="grid gap-4">
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
+        aria-label={`Parametric ${spec.mode === "line" ? "line" : "circle"} at t ${t.toFixed(2)}, point (${xAt(t).toFixed(2)}, ${yAt(t).toFixed(2)}).`}>
+        <path d={`M ${sample(spec.tMin, spec.tMax, 48)}`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.22} strokeWidth={1.6} />
+        {traced && <path d={`M ${sample(spec.tMin, t, 24)}`} fill="none" stroke={PALETTE.sky} strokeWidth={2.4} strokeLinecap="round" />}
+        {traced && Array.from({ length: ARROWS }, (_, i) => {
+          const frac = (i + 1) / (ARROWS + 1);
+          const tt = spec.tMin + (t - spec.tMin) * frac;
+          const dt = Math.max(1e-3, (t - spec.tMin) * 0.015);
+          const p1x = X(xAt(tt)), p1y = Y(yAt(tt));
+          const p2x = X(xAt(tt + dt)), p2y = Y(yAt(tt + dt));
+          const angle = Math.atan2(p2y - p1y, p2x - p1x);
+          return <Fragment key={i}>{arrow(p1x, p1y, angle, PALETTE.sky)}</Fragment>;
+        })}
+        {/* Reveal ghost: the target t's point. */}
+        {tone === "info" && !targetOk && (
+          <g data-testid="ptr-ghost" aria-hidden="true">
+            <circle cx={X(xAt(spec.targetT))} cy={Y(yAt(spec.targetT))} r={6} fill="none" stroke={PALETTE.berry} strokeWidth={2.2} />
+            <text x={X(xAt(spec.targetT))} y={Y(yAt(spec.targetT)) - 10} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.berry}>target</text>
+          </g>
+        )}
+        <circle cx={handleX} cy={handleY} r={drag.dragging ? 7 : 5.5} fill={PALETTE.tangerine} stroke="#fff" strokeWidth={1.5} />
+        {!disabled && (
+          <rect className="mt-drag-hit" data-testid="ptr-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />
+        )}
+      </svg>
+      <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
+        t ≈ {t.toFixed(2)} → ({xAt(t).toFixed(2)}, {yAt(t).toFixed(2)})
+      </p>
+      <label className="grid gap-1 text-sm font-bold text-ink/70">
+        <span>t</span>
+        <input type="range" min={spec.tMin} max={spec.tMax} step={spec.tStep} value={t} disabled={disabled}
+          aria-label="parameter t" aria-valuetext={`t is ${t.toFixed(2)}`}
+          onChange={(e) => setT(Number(e.target.value))} className="h-11 w-full accent-sky" />
+      </label>
+    </div>
+  );
+}
+
 /* ---------------- SignChart (produce the chart, don't read it) ---------------- */
 
 function SignChartW({ spec, value, onChange, disabled, tone }: WProps<TSignChart>) {
@@ -6134,7 +6279,16 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   }, []);
 
   const W = 320, H = 96, pad = 12, barY = 26, barH = 34;
-  const barW = W - 2 * pad;
+  // S240: flat-fee structure. A fixed-width lead segment ahead of the percent track — its width
+  // never depends on `pct`, which IS the point: as the learner sweeps the percent, they watch
+  // this segment hold still while the percent segment grows or shrinks beside it. The segment is
+  // deliberately unlabeled with a dollar amount (only `feeLabel`, e.g. "flat fee") — pairing a
+  // fixed amount next to a scaling one is the structure pr-04b-02/k3 asks about; printing the
+  // combined total would hand over the check's own answer. `flatFee` defaults to 0, under which
+  // this whole branch is inert and every existing percentBar instance renders byte-identical.
+  const feeW = spec.flatFee > 0 ? 34 : 0;
+  const trackX = pad + feeW;
+  const barW = W - 2 * pad - feeW;
   const amount = (spec.whole * pct) / 100;
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
@@ -6154,22 +6308,33 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
     viewW: W,
     viewH: H,
     disabled,
-    onDrag: (vx) => setPct(snapToStep(((vx - pad) / barW) * 100, 0, 100, spec.percentStep))
+    onDrag: (vx) => setPct(snapToStep(((vx - trackX) / barW) * 100, 0, 100, spec.percentStep))
   });
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
-        aria-label={`Bar filled to ${pct} percent, which is ${fmt(amount)}${spec.unit ? " " + spec.unit : ""}.`}>
+        aria-label={`Bar filled to ${pct} percent, which is ${fmt(amount)}${spec.unit ? " " + spec.unit : ""}.${spec.flatFee > 0 ? ` Plus a ${spec.feeLabel ?? "flat fee"} shown as a fixed segment before the percent track.` : ""}`}>
         <style>{`.pb-fill{transition:none}@media (prefers-reduced-motion: no-preference){.pb-fill{transition:width .14s ease-out}}`}</style>
-        <rect x={pad} y={barY} width={barW} height={barH} rx={4} fill="#fff" stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={1.5} />
-        <rect className="pb-fill" x={pad} y={barY} width={(barW * pct) / 100} height={barH} rx={4} fill={PALETTE.sky} fillOpacity={0.75} />
+        {feeW > 0 && (
+          <g data-testid="pb-fee">
+            <rect x={pad} y={barY} width={feeW} height={barH} rx={4} fill={PALETTE.ink} fillOpacity={0.35} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.5} />
+            {/* S240 collision fix: the "0%" tick label sits on the barY-6 row (own text below), so
+                the fee label gets its OWN row further up rather than sharing one — barY-18 clears
+                the tick label's modelled box (see textBoxes.testkit.ts) with margin to spare. */}
+            <text x={pad + feeW / 2} y={barY - 18} fontSize={8} fontWeight={800} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.75}>
+              {spec.feeLabel ?? "flat fee"}
+            </text>
+          </g>
+        )}
+        <rect x={trackX} y={barY} width={barW} height={barH} rx={4} fill="#fff" stroke={PALETTE.ink} strokeOpacity={0.35} strokeWidth={1.5} />
+        <rect className="pb-fill" x={trackX} y={barY} width={(barW * pct) / 100} height={barH} rx={4} fill={PALETTE.sky} fillOpacity={0.75} />
         {[0, 25, 50, 75, 100].map((t) => (
           <g key={t}>
-            <line x1={pad + (barW * t) / 100} y1={barY} x2={pad + (barW * t) / 100} y2={barY + barH} stroke={PALETTE.ink} strokeOpacity={0.25} />
-            <text x={pad + (barW * t) / 100} y={barY - 6} fontSize={9} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}%</text>
-            <text x={pad + (barW * t) / 100} y={barY + barH + 14} fontSize={9} textAnchor="middle" fill={PALETTE.tangerine} fillOpacity={0.8}>
+            <line x1={trackX + (barW * t) / 100} y1={barY} x2={trackX + (barW * t) / 100} y2={barY + barH} stroke={PALETTE.ink} strokeOpacity={0.25} />
+            <text x={trackX + (barW * t) / 100} y={barY - 6} fontSize={9} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}%</text>
+            <text x={trackX + (barW * t) / 100} y={barY + barH + 14} fontSize={9} textAnchor="middle" fill={PALETTE.tangerine} fillOpacity={0.8}>
               {fmt((spec.whole * t) / 100)}
             </text>
           </g>
@@ -6178,27 +6343,32 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
         {tone === "info" && pct !== spec.targetPercent && (
           <g data-testid="pct-ghost" aria-hidden="true">
             <line
-              x1={pad + (barW * spec.targetPercent) / 100}
+              x1={trackX + (barW * spec.targetPercent) / 100}
               y1={barY - 4}
-              x2={pad + (barW * spec.targetPercent) / 100}
+              x2={trackX + (barW * spec.targetPercent) / 100}
               y2={barY + barH + 4}
               stroke={PALETTE.tangerine}
               strokeWidth={2.6}
               strokeDasharray="5 4"
             />
-            <text x={pad + (barW * spec.targetPercent) / 100} y={barY + barH + 26} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
+            <text x={trackX + (barW * spec.targetPercent) / 100} y={barY + barH + 26} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
               target
             </text>
           </g>
         )}
         {!disabled && (
-          <rect className="mt-drag-hit" data-testid="pb-drag" x={pad - 8} y={barY - 10} width={barW + 16} height={barH + 20}
+          <rect className="mt-drag-hit" data-testid="pb-drag" x={pad - 8} y={barY - 10} width={W - 2 * pad + 16} height={barH + 20}
             aria-hidden="true" {...drag.handleProps} />
         )}
       </svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         {pct}% of {fmt(spec.whole)} = {fmt(amount)}{spec.unit ? ` ${spec.unit}` : ""}
       </p>
+      {feeW > 0 && (
+        <p className="text-center text-sm font-bold" style={{ color: PALETTE.ink, opacity: 0.75 }}>
+          + {spec.feeLabel ?? "flat fee"} (fixed — does not grow with the percent)
+        </p>
+      )}
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>percent</span>
         <input type="range" min={0} max={100} step={spec.percentStep} value={pct} disabled={disabled}
@@ -13431,6 +13601,111 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
   );
 }
 
+/* ---------------- FeasibleRegionExplore (drag a constraint fence, watch the region reshape) ---------------- */
+
+/** Where the infinite line y = m·x + b crosses the [0,xMax]×[0,yMax] box — general on purpose,
+ * so any authored slantM/slantB/xMax/yMax combination clips correctly, not just the two lessons
+ * this widget ships with today. */
+function slantSegment(m: number, b: number, xMax: number, yMax: number): [{ x: number; y: number }, { x: number; y: number }] {
+  const EPS = 1e-6;
+  const pts: { x: number; y: number }[] = [];
+  if (b >= -EPS && b <= yMax + EPS) pts.push({ x: 0, y: b });
+  const yAtXMax = m * xMax + b;
+  if (yAtXMax >= -EPS && yAtXMax <= yMax + EPS) pts.push({ x: xMax, y: yAtXMax });
+  if (m !== 0) {
+    const xAtY0 = -b / m;
+    if (xAtY0 >= -EPS && xAtY0 <= xMax + EPS) pts.push({ x: xAtY0, y: 0 });
+    const xAtYMax = (yMax - b) / m;
+    if (xAtYMax >= -EPS && xAtYMax <= xMax + EPS) pts.push({ x: xAtYMax, y: yMax });
+  }
+  const uniq: { x: number; y: number }[] = [];
+  for (const p of pts) if (!uniq.some((q) => Math.abs(q.x - p.x) < 1e-6 && Math.abs(q.y - p.y) < 1e-6)) uniq.push(p);
+  return [uniq[0] ?? { x: 0, y: b }, uniq[1] ?? { x: xMax, y: yAtXMax }];
+}
+
+function FeasibleRegionExploreW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TFeasibleRegionExplore>) {
+  const val = typeof value === "number" ? (value as number) : null;
+  const vertical = val ?? spec.verticalStart;
+  useEffect(() => {
+    if (val === null) onChange(spec.verticalStart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const W = 300, H = 300, pad = 34;
+  const plotW = W - 2 * pad, plotH = H - 2 * pad;
+  const X = (mx: number) => pad + (mx / spec.xMax) * plotW;
+  const Y = (my: number) => H - pad - (my / spec.yMax) * plotH;
+  const fmt = (n: number) => (Math.abs(n - Math.round(n)) < 1e-6 ? String(Math.round(n)) : String(Math.round(n * 10) / 10));
+  const label = spec.fenceLabel ?? "fence";
+
+  // S240: the FENCE is the learner's object — it is literally the thing both host checks ask
+  // about ("add a flour limit x ≤ 4", "the dough limit relaxes to x ≤ 5"). Dragging it recomputes
+  // the region's corners live via feasibleRegionCorners, the SAME general derivation the schema
+  // exports and the manipulativeAlongside gate audits against — nothing here is precomputed per
+  // lesson, so the picture is honest for any spec, including the non-integer (5, 1.5) corner.
+  const corners = useMemo(() => feasibleRegionCorners(spec.slantM, spec.slantB, vertical), [spec.slantM, spec.slantB, vertical]);
+  const [slantStart, slantEnd] = useMemo(() => slantSegment(spec.slantM, spec.slantB, spec.xMax, spec.yMax), [spec.slantM, spec.slantB, spec.xMax, spec.yMax]);
+
+  const setVertical = (next: number) => {
+    if (next === vertical) return;
+    const dir = moveRelation(vertical, next, spec.verticalTarget);
+    if (dir) onEvent?.({ control: "vertical", dir });
+    onChange(next);
+  };
+  const svgRef = useRef<SVGSVGElement>(null);
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: W,
+    viewH: H,
+    disabled,
+    onDrag: (vx) => setVertical(snapToStep(((vx - pad) / plotW) * spec.xMax, spec.verticalMin, spec.verticalMax, spec.verticalStep))
+  });
+
+  const polygon = corners.map((c) => `${X(c.x).toFixed(1)},${Y(c.y).toFixed(1)}`).join(" ");
+  const fenceX = X(vertical);
+
+  return (
+    <div className="grid gap-4">
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
+        aria-label={`Region with the ${label} at x ${vertical}. Corners: ${corners.map((c) => `(${fmt(c.x)}, ${fmt(c.y)})`).join(", ")}.`}>
+        <line x1={X(0)} y1={Y(0)} x2={X(spec.xMax)} y2={Y(0)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
+        <line x1={X(0)} y1={Y(0)} x2={X(0)} y2={Y(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
+        {corners.length >= 3 && (
+          <polygon points={polygon} fill={PALETTE.sky} fillOpacity={0.22} stroke={PALETTE.sky} strokeWidth={2} strokeLinejoin="round" />
+        )}
+        <line x1={X(slantStart.x)} y1={Y(slantStart.y)} x2={X(slantEnd.x)} y2={Y(slantEnd.y)} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={2} />
+        <line x1={fenceX} y1={Y(0)} x2={fenceX} y2={Y(spec.yMax)} stroke={PALETTE.tangerine} strokeWidth={2.6} strokeDasharray="5 4" />
+        <text x={fenceX} y={Y(spec.yMax) - 8} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
+          {label}: x ≤ {fmt(vertical)}
+        </text>
+        {corners.map((c, i) => (
+          <g key={i}>
+            <circle cx={X(c.x)} cy={Y(c.y)} r={3.5} fill={PALETTE.leaf} />
+            <text x={X(c.x) + 6} y={Y(c.y) - 6} fontSize={9} fontWeight={700} fill={PALETTE.leaf}>({fmt(c.x)}, {fmt(c.y)})</text>
+          </g>
+        ))}
+        {/* Reveal ghost: where the fence should land. */}
+        {tone === "info" && vertical !== spec.verticalTarget && (
+          <g data-testid="fre-ghost" aria-hidden="true">
+            <line x1={X(spec.verticalTarget)} y1={Y(0)} x2={X(spec.verticalTarget)} y2={Y(spec.yMax)} stroke={PALETTE.berry} strokeWidth={2} strokeDasharray="2 3" />
+            <text x={X(spec.verticalTarget)} y={Y(spec.yMax) + 10} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.berry}>target</text>
+          </g>
+        )}
+        {!disabled && (
+          <rect className="mt-drag-hit" data-testid="fre-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />
+        )}
+      </svg>
+      <label className="grid gap-1 text-sm font-bold text-ink/70">
+        <span>{label} (x ≤ …)</span>
+        <input type="range" min={spec.verticalMin} max={spec.verticalMax} step={spec.verticalStep} value={vertical} disabled={disabled}
+          aria-label={`${label} position`} aria-valuetext={`x ${vertical}`}
+          onChange={(e) => setVertical(Number(e.target.value))} className="h-11 w-full accent-sky" />
+      </label>
+    </div>
+  );
+}
+
 /* ---------------- QuadraticExplore (a, h, k → parabola + vertex + equation) ---------------- */
 
 function QuadraticExploreW(props: WProps<TQuadraticExplore>) {
@@ -18120,6 +18395,8 @@ function WidgetBody(props: WProps<TWidget>) {
       return <UnitCircleExploreW {...props} spec={spec} />;
     case "systemsExplore":
       return <SystemsExploreW {...props} spec={spec} />;
+    case "feasibleRegionExplore":
+      return <FeasibleRegionExploreW {...props} spec={spec} />;
     case "numberLinePlace":
       return <NumberLinePlaceW {...props} spec={spec} />;
     case "functionMachine":
@@ -18214,6 +18491,8 @@ function WidgetBody(props: WProps<TWidget>) {
       return <CircleMeasureExploreW {...props} spec={spec} />;
     case "polarTrace":
       return <PolarTraceW {...props} spec={spec} />;
+    case "parametricTrace":
+      return <ParametricTraceW {...props} spec={spec} />;
     case "signChart":
       return <SignChartW {...props} spec={spec} />;
     case "extraneousRootLab":
@@ -18400,6 +18679,7 @@ export const REGISTERED_WIDGETS = [
   "binomialAreaLab",
   "shapeParts",
   "polarTrace",
+  "parametricTrace",
   "circleMeasureExplore",
   "vectorExplore",
   "matrixTransform",
@@ -18431,6 +18711,7 @@ export const REGISTERED_WIDGETS = [
   "quadraticExplore",
   "unitCircleExplore",
   "systemsExplore",
+  "feasibleRegionExplore",
   "numberLinePlace",
   "functionMachine",
   "probabilityArea",

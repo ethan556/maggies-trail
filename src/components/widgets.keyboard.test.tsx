@@ -123,6 +123,7 @@ const GATED: string[] = [
   "plotPoint",
   "pointEntry",
   "polarTrace",
+  "parametricTrace",
   "probabilityArea",
   "hundredthsGrid",
   "pointSetReasoningLab",
@@ -151,6 +152,7 @@ const GATED: string[] = [
   "steppedReveal",
   "subitizeFlash",
   "systemsExplore",
+  "feasibleRegionExplore",
   "tapDiagram",
   "taylorApprox",
   "tenFrame",
@@ -717,6 +719,13 @@ describe("P2 keyboard gate — every registered widget", () => {
     expectSolved(spec, holder);
   });
 
+  it("feasibleRegionExplore", () => {
+    const { spec, holder, container } = mount("feasibleRegionExplore");
+    auditNativeControls(container);
+    fireEvent.change(screen.getByLabelText(/flour limit position/i), { target: { value: "4" } });
+    expectSolved(spec, holder);
+  });
+
   it("numberLinePlace", () => {
     const { spec, holder, container } = mount("numberLinePlace");
     auditNativeControls(container);
@@ -991,6 +1000,13 @@ describe("P2 keyboard gate — every registered widget", () => {
     auditNativeControls(container);
     fireEvent.change(screen.getByLabelText(/the multiplier n/i), { target: { value: "2" } });
     expectSolved(spec, holder); // n = 2 -> 4 petals
+  });
+
+  it("parametricTrace", () => {
+    const { spec, holder, container } = mount("parametricTrace");
+    auditNativeControls(container);
+    fireEvent.change(screen.getByLabelText(/parameter t/i), { target: { value: "2" } });
+    expectSolved(spec, holder);
   });
 
   it("circleMeasureExplore", () => {

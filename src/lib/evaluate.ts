@@ -1049,6 +1049,22 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
         ? { correct: false, feedback: spec.lowFeedback }
         : { correct: false, feedback: spec.highFeedback };
     }
+    case "feasibleRegionExplore": {
+      const v = value as number | null | undefined;
+      if (typeof v !== "number") return { correct: false, feedback: "Drag the fence, then check." };
+      if (v === spec.verticalTarget) return { correct: true, feedback: spec.successFeedback };
+      return v < spec.verticalTarget
+        ? { correct: false, feedback: spec.lowFeedback }
+        : { correct: false, feedback: spec.highFeedback };
+    }
+    case "parametricTrace": {
+      const v = value as number | null | undefined;
+      if (typeof v !== "number") return { correct: false, feedback: "Drag t along the path, then check." };
+      if (Math.abs(v - spec.targetT) <= spec.tTolerance) return { correct: true, feedback: spec.successFeedback };
+      return v < spec.targetT
+        ? { correct: false, feedback: spec.lowFeedback }
+        : { correct: false, feedback: spec.highFeedback };
+    }
     case "integerChips": {
       const v = value as { pos: number; neg: number } | null | undefined;
       if (!v || typeof v.pos !== "number") return { correct: false, feedback: "Add chips, then check." };
@@ -2410,6 +2426,8 @@ export function canCheck(spec: TWidget, value: unknown): boolean {
     case "scatterFit":
     case "fractionOfSet":
     case "percentBar":
+    case "feasibleRegionExplore":
+    case "parametricTrace":
     case "integerChips":
     case "volumeBuilder":
     case "netFold":
@@ -2767,6 +2785,10 @@ export function correctAnswerText(spec: TWidget): string {
       return String((spec.setSize * spec.num) / spec.den);
     case "percentBar":
       return `${spec.targetPercent}% = ${(spec.whole * spec.targetPercent) / 100}`;
+    case "feasibleRegionExplore":
+      return `fence at x = ${spec.verticalTarget}`;
+    case "parametricTrace":
+      return `t ≈ ${spec.targetT.toFixed(2)}`;
     case "integerChips":
       return String(spec.target);
     case "mixedRegroup": {

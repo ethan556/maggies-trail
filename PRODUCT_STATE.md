@@ -4,8 +4,8 @@ Regenerate with `node scripts/gen-product-state.mjs`. Every count below is deriv
 from disk (the curriculum manifest, the schema registry, and a content walk) so the
 rest of the docs can cite this file instead of re-counting. Commit `not-recorded-in-source-archive`.
 
-Authored corpus SHA-256: `f0821c5406b065b2e24dc5aebbf337ba6b04609adb1f255f171b8baea8823ac2`  
-State generated: `2026-08-13T02:31:50.376Z`
+Authored corpus SHA-256: `bdfbe3fe78922454f48cdf2e11e7210862b7d09abbaf7e81e606e4288023be61`  
+State generated: `2026-08-13T04:50:04.445Z`
 
 ## Catalogue
 
@@ -13,9 +13,9 @@ State generated: `2026-08-13T02:31:50.376Z`
 | --- | --: |
 | Courses | 129 |
 | Lessons | 1701 |
-| Lesson steps | 15638 |
-| Widget types (registry) | 127 |
-| Interactive manipulatives (manip ≥ 1) | 121 |
+| Lesson steps | 15645 |
+| Widget types (registry) | 129 |
+| Interactive manipulatives (manip ≥ 1) | 123 |
 | Interactive lessons (≥1 widget step) | 1701 |
 | MCQ-heavy lessons (>60% graded MCQ) | 257 |
 | Reading-heavy lessons (words/step over band ceiling) | 7 |
@@ -25,8 +25,8 @@ State generated: `2026-08-13T02:31:50.376Z`
 | tier | lessons |
 | --- | --: |
 | A — complete laboratory | 1190 |
-| B — rich, one phase missing | 457 |
-| C — conventional-plus | 54 |
+| B — rich, one phase missing | 458 |
+| C — conventional-plus | 53 |
 | D — misclassified / weak | 0 |
 
 K–8: Tier A 822, Tier B 252.

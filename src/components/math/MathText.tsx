@@ -16,7 +16,7 @@
  * feedback, and widget prompts/options. KaTeX remains lazy: a lesson without authored math
  * tokens pays no renderer or stylesheet cost.
  */
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { RenderedMath } from "@/lib/math/renderMath";
 import { authoredMathParts } from "@/lib/math/authoredMath";
 
@@ -53,14 +53,32 @@ export function MathInline({ tex, fallback = tex }: { tex: string; fallback?: st
   return <span className="math-inline" dangerouslySetInnerHTML={{ __html: out.html }} />;
 }
 
-/** Mixed prose + authored power shorthand. Only the power tokens are sent to
- * KaTeX; surrounding words and punctuation retain normal wrapping and speech. */
-export function MathProse({ text, includeArithmetic = false }: { text: string; includeArithmetic?: boolean }) {
-  return <>{authoredMathParts(text, { includeArithmetic }).map((part, index) => (
+function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) {
+  return authoredMathParts(text, { includeArithmetic }).map((part, index) => (
     part.tex
-      ? <span key={index}><MathInline tex={part.tex} fallback={part.source} />{part.text}</span>
+      ? <span key={`${keyPrefix}${index}`}><MathInline tex={part.tex} fallback={part.source} />{part.text}</span>
       : part.text
-  ))}</>;
+  ));
+}
+
+/** Mixed prose + authored power shorthand. Only the power tokens are sent to
+ * KaTeX; surrounding words and punctuation retain normal wrapping and speech.
+ *
+ * Bold: authors write `**word**` the same way they do in step `body` text (see the `Rich`
+ * component in playerChrome.tsx, the original home of this convention). `body` text and
+ * `MathProse` text used to diverge here — `**or**` inside a widget prompt rendered as literal
+ * asterisks, since only `Rich` split on them. Fixed by splitting first (odd segments bold),
+ * then running the SAME math tokenizer over every segment, so `**8 × 3**` still gets its math
+ * treatment inside the bold. Text with no `**` at all — the overwhelming majority of callers —
+ * takes a fast path that reproduces the pre-fix output exactly (no extra wrapping element). */
+export function MathProse({ text, includeArithmetic = false }: { text: string; includeArithmetic?: boolean }) {
+  if (!text.includes("**")) return <>{mathParts(text, includeArithmetic, "m")}</>;
+  const segments = text.split("**");
+  return <>{segments.map((seg, si) =>
+    si % 2 === 1
+      ? <strong key={si}>{mathParts(seg, includeArithmetic, `${si}-`)}</strong>
+      : <Fragment key={si}>{mathParts(seg, includeArithmetic, `${si}-`)}</Fragment>
+  )}</>;
 }
 
 export function MathDisplay({ tex }: { tex: string }) {

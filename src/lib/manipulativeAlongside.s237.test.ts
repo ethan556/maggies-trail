@@ -252,6 +252,63 @@ const ROWS: Row[] = [
       "o4|a = 1|Multiplying by 1 changes nothing \u2014 that IS the parent. Wider needs a fraction between 0 and 1."
     ]
   },
+  {
+    course: "proportional-relationships", lesson: "pr-04b-02",
+    inserted: "i2b", serves: "k3", engine: "percentBar",
+    servedKind: "check", servedType: "mcq",
+    servedPrompt: "A service charges a flat $5 fee plus 3% of the order. The order doubles from $100 to $200. What happens to the total charge?",
+    servedAnswer: "a|It rises from $8 to $11 \u2014 less than double",
+    servedWrongPaths: [
+      "b|It doubles from $8 to $16|That would need every part to double. The flat $5 stays $5 however large the order.",
+      "c|It stays at $8|The percentage part grows with the order: 3% of $200 is $6, not $3.",
+      "d|It rises from $8 to $13|Check the percent: 3% of $200 is $6, so the total is 5 + 6 = $11."
+    ]
+  },
+  {
+    course: "inequalities-and-regions", lesson: "iar-03-01",
+    inserted: "i2", serves: "ch1", engine: "feasibleRegionExplore",
+    servedKind: "challenge", servedType: "mcq",
+    servedPrompt: "Add a flour limit x \u2264 4. What happens to the corner (6, 0)?",
+    servedAnswer: "o1|It leaves the region; (4, 0) and (4, 2) become corners",
+    servedWrongPaths: [
+      "o2|It stays \u2014 old corners are permanent|(6, 0) now fails x \u2264 4: it's not even feasible, let alone a corner.",
+      "o3|The region becomes empty|Plenty survives \u2014 (0, 0) alone passes all four fences."
+    ]
+  },
+  {
+    course: "inequalities-and-regions", lesson: "iar-03-03",
+    inserted: "i2", serves: "ch1", engine: "feasibleRegionExplore",
+    servedKind: "challenge", servedType: "numeric",
+    servedPrompt: "If the dough limit relaxes to x \u2264 5, the best profit becomes\u2026",
+    servedAnswer: "21",
+    servedWrongPaths: [
+      "20|That was the OLD optimum. The new corner (5, 1.5) earns 3\u00b75 + 4\u00b71.5 = 21.",
+      "23|That over-credits: y falls to 1.5 when x rises \u2014 the oven cap claws back 2 slots.",
+      "15|That's the cookies alone; the 1.5 pans add 4\u00b71.5 = 6 more."
+    ]
+  },
+  {
+    course: "polar-parametric", lesson: "pp-04-01",
+    inserted: "i1b", serves: "k1", engine: "parametricTrace",
+    servedKind: "check", servedType: "mcq",
+    servedPrompt: "For x = t + 1, y = 2t, as t increases the point moves:",
+    servedAnswer: "o1|up and to the right",
+    servedWrongPaths: [
+      "o2|down and to the left|Both x and y INCREASE with t (positive coefficients), so the motion is up-right.",
+      "o3|in a circle|Linear-in-t coordinates trace a straight LINE, not a circle. Here it heads up-right."
+    ]
+  },
+  {
+    course: "polar-parametric", lesson: "pp-04-01",
+    inserted: "i2", serves: "k2", engine: "parametricTrace",
+    servedKind: "check", servedType: "mcq",
+    servedPrompt: "x = cos t, y = sin t starts at (1, 0). At t = \u03c0/2 it reaches (0, 1), so it travels:",
+    servedAnswer: "o1|counterclockwise",
+    servedWrongPaths: [
+      "o2|clockwise|Clockwise would go (1,0) \u2192 (0,\u22121). Here it rises to (0,1): counterclockwise.",
+      "o3|back and forth on a line|Sine and cosine together trace a CIRCLE, and this one goes counterclockwise."
+    ]
+  },
 ];
 
 const lessonJson = (r: Pick<Row, "course" | "lesson">) =>
@@ -332,6 +389,15 @@ function space(w: TWidget): { candidates: unknown[]; start: unknown } {
       for (const a of range(w.aMin, w.aMax)) for (const h of range(w.hMin, w.hMax)) for (const k of range(w.kMin, w.kMax)) c.push({ a, h, k });
       return { candidates: c, start: { a: w.aStart, h: w.hStart, k: w.kStart } };
     }
+    case "percentBar":
+      // value IS the dragged percent, 0..100 on the step lattice.
+      return { candidates: range(0, 100, w.percentStep), start: w.startPercent };
+    case "feasibleRegionExplore":
+      // value IS the dragged vertical-fence position — the lattice the drag snaps to.
+      return { candidates: range(w.verticalMin, w.verticalMax, w.verticalStep), start: w.verticalStart };
+    case "parametricTrace":
+      // value IS the dragged parameter t — the lattice the drag snaps to.
+      return { candidates: range(w.tMin, w.tMax, w.tStep), start: w.tStart };
     default:
       throw new Error(`manipulativeAlongside.s237: no input model for engine "${w.type}" — add one rather than skipping it`);
   }
@@ -401,12 +467,13 @@ function servedIdentity(step: Record<string, unknown>): {
 }
 
 describe("S237 manipulative alongside — the batch itself", () => {
-  it("covers 17 insertions (14 S237 + 3 S238) across 16 distinct lessons, 12 distinct engines, no duplicate targets", () => {
-    expect(ROWS).toHaveLength(17);
-    // dc-02-01 legitimately appears twice (i2 serves k3, i3 serves ch1) — distinct TARGETS stay unique.
-    expect(new Set(ROWS.map((r) => r.lesson)).size).toBe(16);
-    expect(new Set(ROWS.map((r) => r.engine)).size).toBe(12);
-    expect(new Set(ROWS.map((r) => `${r.lesson}/${r.serves}`)).size).toBe(17);
+  it("covers 22 insertions (14 S237 + 3 S238 + 5 S240) across 20 distinct lessons, 15 distinct engines, no duplicate targets", () => {
+    expect(ROWS).toHaveLength(22);
+    // dc-02-01 and pp-04-01 each legitimately appear twice (different `serves` targets) —
+    // distinct TARGETS stay unique.
+    expect(new Set(ROWS.map((r) => r.lesson)).size).toBe(20);
+    expect(new Set(ROWS.map((r) => r.engine)).size).toBe(15);
+    expect(new Set(ROWS.map((r) => `${r.lesson}/${r.serves}`)).size).toBe(22);
   });
 });
 
@@ -513,6 +580,12 @@ function openedOn(w: TWidget, solution: unknown): TWidget | null {
       const v = solution as { vx: number; vy: number };
       return parse({ ...w, vxStart: v.vx, vyStart: v.vy });
     }
+    case "percentBar":
+      return parse({ ...w, startPercent: solution as number });
+    case "feasibleRegionExplore":
+      return parse({ ...w, verticalStart: solution as number });
+    case "parametricTrace":
+      return parse({ ...w, tStart: solution as number });
     // ciCapture opens with zero intervals drawn, scaledCircleLab with nothing chosen, signChart
     // with every interval "+", columnCalc with an unresolved grid, and numberLineHop's landing is
     // start ± hop·hops with hop ≥ 1 and hops ≥ 1 — so on those five the opening state can never BE
@@ -542,6 +615,9 @@ describe("S237 — the gate's own discrimination, proved on mutants of the shipp
       if (w.type === "derivativeTrace") broken = WidgetSpec.parse({ ...w, targetSlope: 999 }) as TWidget;
       if (w.type === "vectorExplore") broken = WidgetSpec.parse({ ...w, targetX: 99 }) as TWidget;
       if (w.type === "ciCapture") broken = WidgetSpec.parse({ ...w, targetLevel: 51 }) as TWidget;
+      if (w.type === "percentBar") broken = WidgetSpec.parse({ ...w, percentStep: 200 }) as TWidget;
+      if (w.type === "feasibleRegionExplore") broken = WidgetSpec.parse({ ...w, verticalTarget: w.verticalMax + 100 }) as TWidget;
+      if (w.type === "parametricTrace") broken = WidgetSpec.parse({ ...w, targetT: w.tMax + 100 }) as TWidget;
       if (broken) {
         mutated++;
         const problems = auditWidget(broken).join(" | ");

@@ -1382,6 +1382,76 @@ export function systemsExploreEditErrors(spec: {
   return errs;
 }
 
+/** feasibleRegionExplore (S240) — a first-quadrant region bounded by x ≥ 0, y ≥ 0, one slanted
+ * line (y ≤ slantM·x + slantB), and a vertical fence (x ≤ vertical) the learner drags. Corners
+ * are computed GENERALLY — every pairwise intersection of the four boundary lines, filtered to
+ * the ones satisfying all four constraints, sorted by angle around the centroid — never
+ * hard-coded per lesson, so any slantM/slantB/vertical combination renders correctly, including
+ * a non-integer corner (e.g. (5, 1.5)). Built for iar-03-01/iar-03-03's "adding or relaxing a
+ * constraint reshapes the region" checks, which a bare two-line systemsExplore crossing cannot
+ * show — that engine has no shading, no multi-constraint model, and its line model cannot
+ * represent a vertical line at all (see PREMIUM_REBUILD_S240_EXECUTION.md).
+ *
+ * Deliberately grades only the FENCE POSITION (a scalar vs. a target, low/high feedback — the
+ * same shape as every other single-drag engine), never a computed profit or optimum: the widget
+ * teaches how the region's corners change as the fence moves; the arithmetic ON a corner is the
+ * graded check's own job, and showing it here would print that check's answer. */
+export const FeasibleRegionExploreSpec = z.object({
+  type: z.literal("feasibleRegionExplore"),
+  prompt: z.string().min(1),
+  /** The one slanted boundary: y ≤ slantM·x + slantB. slantM should be negative (a resource
+   * trade-off line); slantB > 0 is where it meets the y-axis. */
+  slantM: z.number(),
+  slantB: z.number().positive(),
+  /** The draggable fence: x ≤ vertical. */
+  verticalMin: z.number().int().min(0),
+  verticalMax: z.number().int().positive(),
+  verticalStep: z.number().int().positive().default(1),
+  verticalStart: z.number().int(),
+  verticalTarget: z.number().int(),
+  xMax: z.number().int().positive().default(8),
+  yMax: z.number().int().positive().default(8),
+  /** What to call the fence in its on-canvas label, e.g. "flour limit". Defaults to "fence". */
+  fenceLabel: z.string().optional(),
+  successFeedback: z.string().min(1),
+  lowFeedback: z.string().min(1),
+  highFeedback: z.string().min(1)
+});
+
+/**
+ * Cross-field authoring checks, kept OUT of the schema itself — a `.superRefine` on a
+ * discriminated-union member breaks `z.discriminatedUnion`'s ability to see the literal `type`
+ * key (it needs a plain `ZodObject`, not a `ZodEffects` wrapper), which silently collapses the
+ * WHOLE `TWidget` union to `never` at the type level. `systemsExploreEditErrors` above is the
+ * house precedent for this split; this is the same shape for feasibleRegionExplore.
+ */
+export function feasibleRegionExploreErrors(spec: {
+  verticalMin: number; verticalMax: number; verticalStep: number; verticalStart: number; verticalTarget: number;
+}): string[] {
+  const errs: string[] = [];
+  if (spec.verticalMin > spec.verticalMax) errs.push("feasibleRegionExplore: verticalMin must not exceed verticalMax");
+  const inLattice = (v: number) => v >= spec.verticalMin && v <= spec.verticalMax && (v - spec.verticalMin) % spec.verticalStep === 0;
+  if (!inLattice(spec.verticalStart)) errs.push(`feasibleRegionExplore: verticalStart ${spec.verticalStart} is not reachable on the [${spec.verticalMin}, ${spec.verticalMax}] step-${spec.verticalStep} lattice`);
+  if (!inLattice(spec.verticalTarget)) errs.push(`feasibleRegionExplore: verticalTarget ${spec.verticalTarget} is not reachable on the [${spec.verticalMin}, ${spec.verticalMax}] step-${spec.verticalStep} lattice`);
+  return errs;
+}
+
+/** Given the region's fixed shape (x ≥ 0, y ≥ 0, y ≤ slantM·x + slantB, x ≤ vertical), return its
+ * corners in polygon (angular) order. General on purpose — no lesson-specific casing — so it is
+ * correct for any spec, including the non-integer (5, 1.5) that iar-03-03's relaxed fence
+ * produces. Exported so the widget and its tests share one derivation. */
+export function feasibleRegionCorners(slantM: number, slantB: number, vertical: number): { x: number; y: number }[] {
+  const EPS = 1e-7;
+  const candidates: { x: number; y: number }[] = [{ x: 0, y: 0 }, { x: 0, y: slantB }, { x: vertical, y: 0 }, { x: vertical, y: slantM * vertical + slantB }];
+  if (slantM !== 0) candidates.push({ x: -slantB / slantM, y: 0 });
+  const feasible = candidates.filter((p) => p.x >= -EPS && p.y >= -EPS && p.y <= slantM * p.x + slantB + EPS && p.x <= vertical + EPS);
+  const uniq: { x: number; y: number }[] = [];
+  for (const p of feasible) if (!uniq.some((q) => Math.abs(q.x - p.x) < 1e-6 && Math.abs(q.y - p.y) < 1e-6)) uniq.push(p);
+  const cx = uniq.reduce((s, p) => s + p.x, 0) / uniq.length;
+  const cy = uniq.reduce((s, p) => s + p.y, 0) / uniq.length;
+  return uniq.sort((a, b) => Math.atan2(a.y - cy, a.x - cx) - Math.atan2(b.y - cy, b.x - cx));
+}
+
 /** numberLinePlace — drag a marker along a number line to a target value (integers, negatives, or
  * fractions via a fractional step). Reuses linScale for the mapping. */
 export const NumberLinePlaceSpec = z.object({
@@ -2187,7 +2257,14 @@ export const FractionOfSetSpec = z.object({
   highFeedback: z.string().min(1)
 });
 
-/** percentBar — a bar of 100 parts; drag to a percent and see the matching amount of a whole. */
+/** percentBar — a bar of 100 parts; drag to a percent and see the matching amount of a whole.
+ *
+ * `flatFee`/`feeLabel` (S240): an optional fixed-width lead segment ahead of the percent track,
+ * for prompts like "a flat fee plus a percent" (pr-04b-02/k3) where the STRUCTURE — one part
+ * fixed, one part scaling — is what the learner needs to see, not a computed total. `flatFee`
+ * defaults to 0, under which nothing renders differently: every percentBar instance authored
+ * before this field existed is byte-identical. Grading is unchanged either way — `value` is
+ * still just the percent; the fee segment is a rendering annotation, never graded. */
 export const PercentBarSpec = z.object({
   type: z.literal("percentBar"),
   prompt: z.string().min(1),
@@ -2196,6 +2273,8 @@ export const PercentBarSpec = z.object({
   percentStep: z.number().int().positive().default(5),
   startPercent: z.number().int().min(0).max(100).default(0),
   unit: z.string().optional(),
+  flatFee: z.number().nonnegative().default(0),
+  feeLabel: z.string().optional(),
   successFeedback: z.string().min(1),
   lowFeedback: z.string().min(1),
   highFeedback: z.string().min(1)
@@ -3085,6 +3164,47 @@ export const PolarTraceSpec = z.object({
   lowFeedback: z.string().min(1),
   highFeedback: z.string().min(1)
 });
+
+/** parametricTrace (S240) — a parametric path x(t), y(t) the learner scrubs with a t-handle;
+ * arrowheads along the traced portion show DIRECTION of travel as t increases. Two closed modes,
+ * never an arbitrary formula string (matching this file's convention elsewhere, e.g.
+ * `RiemannSumSpec.fn`, `SlopeFieldSpec.equation`): "line" is x = t + lineX0, y = lineYK·t;
+ * "circle" is the standard CCW unit circle x = cos t, y = sin t. Built for pp-04-01's k1/k2
+ * orientation checks, which neither `polarTrace` (polar r(θ) curves only, no Cartesian x(t)/y(t))
+ * nor `vectorExplore` (two fixed-length arrows, no t, no path) can serve (see
+ * PREMIUM_REBUILD_S240_EXECUTION.md).
+ *
+ * Grades the scrubbed T itself, by tolerance (t is continuous — an exact-lattice match like
+ * percentBar/elapsedTime use doesn't fit a target such as π/2), never a stated direction: the
+ * widget rehearses WATCHING the arrowheads accumulate as t grows; naming the direction in words
+ * is the graded check's own job. */
+export const ParametricTraceSpec = z.object({
+  type: z.literal("parametricTrace"),
+  prompt: z.string().min(1),
+  mode: z.enum(["line", "circle"]),
+  /** line mode only: x = t + lineX0, y = lineYK·t. */
+  lineX0: z.number().int().default(1),
+  lineYK: z.number().int().default(2),
+  tMin: z.number().default(0),
+  tMax: z.number().positive(),
+  tStep: z.number().positive().default(0.1),
+  tStart: z.number().default(0),
+  targetT: z.number(),
+  tTolerance: z.number().positive().default(0.15),
+  successFeedback: z.string().min(1),
+  lowFeedback: z.string().min(1),
+  highFeedback: z.string().min(1)
+});
+
+/** Cross-field authoring checks — see the comment on `feasibleRegionExploreErrors` for why these
+ * stay out of the schema's own `.superRefine`. */
+export function parametricTraceErrors(spec: { tMin: number; tMax: number; tStart: number; targetT: number }): string[] {
+  const errs: string[] = [];
+  if (spec.tMin > spec.tMax) errs.push("parametricTrace: tMin must not exceed tMax");
+  if (spec.tStart < spec.tMin - 1e-9 || spec.tStart > spec.tMax + 1e-9) errs.push("parametricTrace: tStart must be within [tMin, tMax]");
+  if (spec.targetT < spec.tMin - 1e-9 || spec.targetT > spec.tMax + 1e-9) errs.push("parametricTrace: targetT must be within [tMin, tMax]");
+  return errs;
+}
 
 /** S116 (k): the ordered cuts a sign chart is divided by — roots AND poles, merged and sorted.
  * Both split the line and both flip the sign by the parity of their multiplicity; they differ only
@@ -6561,6 +6681,7 @@ export const WidgetSpec = z.discriminatedUnion("type", [
   QuadraticExploreSpec,
   UnitCircleExploreSpec,
   SystemsExploreSpec,
+  FeasibleRegionExploreSpec,
   NumberLinePlaceSpec,
   FunctionMachineSpec,
   ProbabilityAreaSpec,
@@ -6616,6 +6737,7 @@ export const WidgetSpec = z.discriminatedUnion("type", [
   BinomialAreaLabSpec,
   ShapePartsSpec,
   PolarTraceSpec,
+  ParametricTraceSpec,
   CircleMeasureExploreSpec,
   VectorExploreSpec,
   MatrixTransformSpec,
@@ -6835,6 +6957,12 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
      */
     case "systemsExplore":
       errs.push(...systemsExploreEditErrors(spec));
+      break;
+    case "feasibleRegionExplore":
+      errs.push(...feasibleRegionExploreErrors(spec));
+      break;
+    case "parametricTrace":
+      errs.push(...parametricTraceErrors(spec));
       break;
     case "scaledCircleLab": {
       if ((spec.drawingRadius === undefined) !== (spec.scale === undefined))
@@ -8983,6 +9111,7 @@ export type TFractionBar = z.infer<typeof FractionBarSpec>;
 export type TQuadraticExplore = z.infer<typeof QuadraticExploreSpec>;
 export type TUnitCircleExplore = z.infer<typeof UnitCircleExploreSpec>;
 export type TSystemsExplore = z.infer<typeof SystemsExploreSpec>;
+export type TFeasibleRegionExplore = z.infer<typeof FeasibleRegionExploreSpec>;
 export type TNumberLinePlace = z.infer<typeof NumberLinePlaceSpec>;
 export type TFunctionMachine = z.infer<typeof FunctionMachineSpec>;
 export type TProbabilityArea = z.infer<typeof ProbabilityAreaSpec>;
@@ -9034,6 +9163,7 @@ export type TExtraneousRootLab = z.infer<typeof ExtraneousRootLabSpec>;
 export type TBinomialAreaLab = z.infer<typeof BinomialAreaLabSpec>;
 export type TShapeParts = z.infer<typeof ShapePartsSpec>;
 export type TPolarTrace = z.infer<typeof PolarTraceSpec>;
+export type TParametricTrace = z.infer<typeof ParametricTraceSpec>;
 export type TCircleMeasureExplore = z.infer<typeof CircleMeasureExploreSpec>;
 export type TVectorExplore = z.infer<typeof VectorExploreSpec>;
 export type TMatrixTransform = z.infer<typeof MatrixTransformSpec>;

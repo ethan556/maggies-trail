@@ -189,6 +189,10 @@ export function widgetWrongPaths(w: NonNullable<TStep["widget"]>): string[] {
       return [w.lowFeedback, w.highFeedback];
     case "percentBar":
       return [w.lowFeedback, w.highFeedback];
+    case "feasibleRegionExplore":
+      return [w.lowFeedback, w.highFeedback];
+    case "parametricTrace":
+      return [w.lowFeedback, w.highFeedback];
     case "integerChips":
       return [w.lowFeedback, w.highFeedback];
     case "volumeBuilder":
