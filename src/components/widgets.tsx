@@ -1960,7 +1960,15 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
           <line x1={xFor(0)} y1={54} x2={xFor(0)} y2={70} stroke={PALETTE.ink} strokeWidth={2} />
           <line x1={xFor(spec.total)} y1={48} x2={xFor(spec.total)} y2={76} stroke={PALETTE.ink} strokeWidth={2} />
           <text x={xFor(0)} y={88} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>0</text>
-          <text x={xFor(spec.total)} y={91} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>whole = {spec.total}</text>
+          {/* S240: was textAnchor="middle" at xFor(spec.total) — when spec.total === axisMax (the
+              common case, no choice's claim exceeds the total), that tick sits at the axis's own
+              right end (x=494 of a 520-wide viewBox), and a center-anchored multi-character label
+              ("whole = N") overflowed the viewBox's right edge and clipped, regardless of the
+              stage's rendered width (a viewBox-internal coordinate issue, not a container-sizing
+              one — confirmed by testing at both the wide and hero stage tiers). End-anchoring
+              keeps the label's right edge at the tick, the same convention the axis's own last
+              tick label commonly uses, and it now always stays inside the 520-unit frame. */}
+          <text x={xFor(spec.total)} y={91} textAnchor="end" fontSize={11} fontWeight={800} fill={PALETTE.ink}>whole = {spec.total}</text>
           <line x1={xFor(spec.favourable)} y1={28} x2={xFor(spec.favourable)} y2={76} stroke={PALETTE.leaf} strokeWidth={3} strokeDasharray="4 4" />
           <text x={xFor(spec.favourable)} y={20} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.leaf}>evidence {spec.favourable}</text>
           {reference !== null && (
@@ -8180,9 +8188,15 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
    *  (`Math.min(H-pad, Math.max(pad+12, sy(endY)-6+index*14))`). Two lines that both leave the
    *  frame below clamp to the SAME y, and fg-03-02 drew "Function A" and "Function B" at identical
    *  coordinates — one label, unreadable, and the plot's only key. Clamping happens once now and
-   *  the names are then separated by a label height (16 > 12 × 1.26, the measured line box for a
-   *  12px label), shifted up together if there is no room. */
-  const lineLabelY=(()=>{const gap=16,lo=pad+12,hi=H-pad;const ys=drawn.map(plot=>Math.min(hi,Math.max(lo,sy(leRatToNumber(plot.to.y))-6)));for(let i=1;i<ys.length;i++)if(ys[i]-ys[i-1]<gap)ys[i]=ys[i-1]+gap;const over=ys.length>0?ys[ys.length-1]-hi:0;if(over>0)for(let i=0;i<ys.length;i++)ys[i]-=over;return ys;})();
+   *  the names are then separated by a label height, shifted up together if there is no room.
+   *  S240: gap was 16 (> 12 × 1.26, the textBoxes.testkit box height for a 12px label) — that
+   *  model's own header calls 1.26em "just above" the measured digit height and warns it "still
+   *  UNDER-estimates a wide proportional word," which "Function A"/"Function B" both are. A real
+   *  browser (found via hero-tier pixel QA on fg-03-02, both at the wide AND hero stage widths —
+   *  a viewBox-relative layout, so container width doesn't change this) rendered the two labels
+   *  touching. 20 gives the model itself ~5 units of clearance instead of ~0.9, matching ordinary
+   *  line-height conventions for 12px text rather than the model's bare minimum. */
+  const lineLabelY=(()=>{const gap=20,lo=pad+12,hi=H-pad;const ys=drawn.map(plot=>Math.min(hi,Math.max(lo,sy(leRatToNumber(plot.to.y))-6)));for(let i=1;i<ys.length;i++)if(ys[i]-ys[i-1]<gap)ys[i]=ys[i-1]+gap;const over=ys.length>0?ys[ys.length-1]-hi:0;if(over>0)for(let i=0;i<ys.length;i++)ys[i]-=over;return ys;})();
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">

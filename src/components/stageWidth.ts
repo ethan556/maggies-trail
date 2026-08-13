@@ -17,10 +17,31 @@ import type { TWidget } from "@/lib/schema";
  *               panels — these earn the widest stage a tablet/desktop can
  *               give while the prose above them stays at reading width.
  * - `hero`    — hero labs (Plan v3: 1100–1280px). Reserved for
- *               multi-representation systems as they are converted under
- *               WS-C/WS-B; assignment is evidence-driven (pixel QA at 1440px
- *               per engine family), so the tier ships with the architecture
- *               and engines opt in with their conversion, not by guess.
+ *               multi-representation systems (a synced graph/diagram PLUS a
+ *               separate live symbolic or numeric readout, not just one rich
+ *               diagram) whose own inner sizing is unconstrained by a
+ *               narrower Tailwind cap of its own — assignment is
+ *               evidence-driven, not by guess. S240 ran the first pass: real
+ *               1440px pointer QA, before/after screenshots at wide vs hero
+ *               width, on every "wide" engine judged a plausible candidate.
+ *               Most self-cap their SVG well under 1024px regardless of the
+ *               stage tier (promoting the stage alone would do nothing for
+ *               those) or are single-diagram-plus-caption, not genuinely
+ *               multi-rep. Seven cleared the bar (trialProbabilityLab,
+ *               samplingBiasLab, percentChangeLab, conditionalTableLab,
+ *               derivativeRuleLab, covariationScrubber,
+ *               affineRelationshipLab) — two had real pre-existing label
+ *               defects caught by this pass and fixed (trialProbabilityLab's
+ *               "whole = N" axis label clipped its own viewBox regardless of
+ *               container width; affineRelationshipLab's two-line legend
+ *               overlapped at a gap the box model called clear by under a
+ *               unit). relatedRatesLab was trialled and reverted: its ladder
+ *               diagram stays narrow at any container width, so hero just
+ *               added empty margin. Full before/after evidence and the
+ *               per-engine reasoning are in HANDOVER_COWORK_S240.md. The next
+ *               candidates are engines newly converted under WS-C/WS-B or
+ *               self-capped engines whose inner cap gets widened alongside a
+ *               tier promotion — neither in scope this pass.
  *
  * The player applies the tier to the step's main column AND to the header /
  * footer inner containers, so actions and progress never detach from the
@@ -45,8 +66,8 @@ export const STAGE_TIER: Record<TWidget["type"], StageTier> = {
   lineRelationLab: "wide",
   triangleAngleLab: "wide",
   verticalLineScanner: "wide",
-  covariationScrubber: "wide",
-  samplingBiasLab: "wide",
+  covariationScrubber: "hero",
+  samplingBiasLab: "hero",
   shapeFamilyBuilder: "wide",
   shapeHierarchyLab: "wide",
   unitRuler: "wide",
@@ -135,9 +156,9 @@ export const STAGE_TIER: Record<TWidget["type"], StageTier> = {
   scatterFit: "wide",
   boxPlot: "wide",
   distributionCompareLab: "wide",
-  trialProbabilityLab: "wide",
+  trialProbabilityLab: "hero",
   scaledCircleLab: "wide",
-  percentChangeLab: "wide",
+  percentChangeLab: "hero",
   triangleClosureLab: "wide",
   compoundEventLab: "wide",
   compositeAreaLab: "wide",
@@ -166,14 +187,18 @@ export const STAGE_TIER: Record<TWidget["type"], StageTier> = {
   pointSetReasoningLab: "wide",
   geometricConstraintLab: "wide",
   exactNumberLab: "wide",
-  affineRelationshipLab: "wide",
+  affineRelationshipLab: "hero",
   quotientReasoningLab: "wide",
   proportionalReasoningLab: "wide",
   placeValueTransformLab: "wide",
   graphStoryLab: "wide",
-  conditionalTableLab: "wide",
+  conditionalTableLab: "hero",
   conicLocusLab: "wide",
-  derivativeRuleLab: "wide",
+  derivativeRuleLab: "hero",
+  // Trialled at hero width during S240's pixel QA and reverted: the ladder diagram's own
+  // aspect ratio keeps it narrow regardless of container width (a portrait-shaped construction,
+  // not a wide one), so the extra ~130px became empty margin on the right, not more diagram —
+  // no evidence of benefit. See HANDOVER_COWORK_S240.md for the before/after comparison.
   relatedRatesLab: "wide"
 };
 
