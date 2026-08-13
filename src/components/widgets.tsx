@@ -124,6 +124,7 @@ import {
 } from "@/lib/mmip/lineFamilyModel";
 import { actionsFor, describeWidgetState } from "@/lib/describeState";
 import { NumberLineRayW } from "@/components/widgets/numberLineRay";
+import { CovariationScrubberW } from "@/components/widgets/covariationScrubber";
 import type {
   TAlgebraTiles,
   TAngleMeasure,
@@ -237,7 +238,6 @@ import type {
   TSolidSliceLab,
   TTriangleAngleLab,
   TVerticalLineScanner,
-  TCovariationScrubber,
   TSamplingBiasLab,
   TShapeFamilyBuilder,
   TShapeHierarchyLab,
@@ -17895,15 +17895,6 @@ function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVer
     <line x1={sx(x)} y1={sy(-G)} x2={sx(x)} y2={sy(G)} stroke={PALETTE.tangerine} strokeWidth="4"/><text x={sx(x)+7} y="20" fontWeight="900" fill={PALETTE.tangerine}>{c} hit{c===1?'':'s'}</text>
   <AxisCaptions w={W} h={H} />
   {!disabled&&<rect className="mt-drag-hit" data-testid="vls-drag" x={0} y={0} width={W} height={H-18} aria-hidden="true" {...drag.handleProps}/>}</svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
-
-function CovariationScrubberW({spec,value,onChange,disabled,onEvent}:WProps<TCovariationScrubber>){const x=typeof value==='number'?value:spec.inputStart;useEffect(()=>{if(typeof value!=='number')onChange(x);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);const y=spec.a*x+spec.b,set=(nx:number)=>{const d=moveRelation(x,nx,spec.targetInput);if(d)onEvent?.({control:'input',dir:d,kind:'efficient'});onChange(nx)};// S119: the window must be five DISTINCT inputs. Clamping each cell independently collapsed the window near a bound (x=0 with inputMin=0 gave [0,0,0,1,2]) — duplicate React keys, and three identical rows in a table whose whole job is showing neighbouring values. Slide the window instead of squashing it.
-  const lo=Math.max(spec.inputMin,Math.min(x-2,spec.inputMax-4));const rows=Array.from({length:5},(_,i)=>lo+i).filter(v=>v>=spec.inputMin&&v<=spec.inputMax);const W=340,H=220,G=Math.max(6,spec.inputMax),{sx,sy}=gridScales({xMin:0,xMax:G,yMin:0,yMax:Math.max(6,spec.a*G+spec.b),W,H,pad:24});
-  // WS-C (S239): the POINT ON THE LINE is the learner's object — the slider's own label says
-  // "drag". A press or sweep on the graph pulls the shared input to the integer lattice point
-  // under the pointer; the slider stays as the keyboard-parity path.
-  const svgRef=useRef<SVGSVGElement>(null);
-  const drag=useSvgDrag({svgRef,viewW:W,viewH:H,disabled,onDrag:(vx)=>{const next=snapToStep(((vx-24)/(W-48))*G,spec.inputMin,spec.inputMax,1);if(next!==x)set(next);}});
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-sky/20 bg-sky/5 p-4 text-center text-lg font-black">{spec.contextTemplate.replace('{x}',String(x)).replace('{y}',String(y))}</div><label className="grid gap-1 text-sm font-bold"><span>Drag the shared input</span><input type="range" min={spec.inputMin} max={spec.inputMax} step="1" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value))} className="h-11 w-full accent-sky"/></label><div className="grid gap-3 md:grid-cols-2"><div className="overflow-hidden rounded-2xl border border-ink/10"><table className="w-full text-center text-sm"><thead className="bg-ink/5"><tr><th className="p-2">{spec.inputLabel}</th><th className="p-2">{spec.outputLabel}</th></tr></thead><tbody>{rows.map(r=><tr key={r} className={r===x?'bg-sky/10 font-black':''}><td className="p-2">{r}</td><td className="p-2">{spec.a*r+spec.b}</td></tr>)}</tbody></table></div><svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Graph of y equals ${spec.a} x plus ${spec.b}, current point ${x}, ${y}.`}><line x1={sx(0)} y1={sy(0)} x2={sx(G)} y2={sy(spec.a*G+spec.b)} stroke={PALETTE.sky} strokeWidth="4"/><circle cx={sx(x)} cy={sy(y)} r="8" fill={PALETTE.tangerine}/><AxisCaptions w={W} h={H} x={spec.inputLabel} y={spec.outputLabel} />{!disabled&&<rect className="mt-drag-hit" data-testid="cvs-drag" x={0} y={0} width={W} height={H-16} aria-hidden="true" {...drag.handleProps}/>}</svg></div><div className="grid grid-cols-3 gap-2"><LabReadout label="equation" value={`y=${spec.a}x${spec.b>=0?'+':''}${spec.b}`}/><LabReadout label="unit rate" value={String(spec.a)} tone="good"/><LabReadout label="current pair" value={`(${x}, ${y})`} tone={x===spec.targetInput?'good':'neutral'}/></div></div>}
 
 function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplingBiasLab>){
   const v=value&&typeof value==='object'?value as {method:'convenience'|'random'|'stratified';size:number;draws:number}:null;

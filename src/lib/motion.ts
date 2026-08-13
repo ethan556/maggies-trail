@@ -51,7 +51,7 @@ export function easeLerp(from: number, to: number, t: number): number {
  * Respects reduced motion (snaps instantly). Safe under SSR/jsdom: if rAF is missing
  * or motion is reduced, it returns the target immediately.
  */
-export function useCountUp(target: number, durationMs = MOTION.settleMs): number {
+export function useCountUp(target: number, durationMs: number = MOTION.settleMs): number {
   const [display, setDisplay] = useState(target);
   const fromRef = useRef(target);
   useEffect(() => {

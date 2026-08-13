@@ -1,8 +1,9 @@
 /* Solid-fill text contrast (S237) — WCAG 2.1 AA, SC 1.4.3.
  *
  * The defect this pins: `bg-sky` (#2E7CD6) under `text-white` is 4.23:1, and AA needs 4.5:1.
- * It was found by the browser axe sweep on HeroWidget's CTA and it was never one button — eight
- * elements across six files paired an opaque brand fill with white text.
+ * It was found by the browser axe sweep on the landing hero's CTA (HeroWidget at the time; now
+ * LandingHero, WS-H) and it was never one button — eight elements across six files paired an
+ * opaque brand fill with white text.
  *
  * The gate is written for the PROPERTY, not for the repair: *no opaque solid fill may carry white
  * text unless that fill's own hex clears 4.5:1 against white*. It therefore fails for any future
