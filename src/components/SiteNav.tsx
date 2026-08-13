@@ -10,6 +10,7 @@ import { dueItems, localDateStr } from "@/lib/engine";
 import { progressStore } from "@/lib/progress";
 import { AppIcon, type IconName } from "@/components/ui";
 import { storageSet } from "@/lib/safeStorage";
+import { MaggieBrandLockup } from "@/components/brand";
 
 type NavItem = { href: string; label: string; icon: IconName };
 
@@ -75,17 +76,6 @@ function ThemeToggle() {
     >
       <AppIcon name={dark ? "sun" : "moon"} size={18} />
     </button>
-  );
-}
-
-/** The tally-trail mark, nav-sized — three trail dots ending on a summit pill. */
-function Mark() {
-  return (
-    <svg width="34" height="12" viewBox="0 0 34 12" aria-hidden className="shrink-0">
-      <circle cx="6" cy="6" r="4" className="fill-sky" />
-      <rect x="13" y="2" width="12" height="8" rx="4" className="fill-tangerine" />
-      <circle cx="31" cy="6" r="3" className="fill-ink/25 dark:fill-paper/25" />
-    </svg>
   );
 }
 
@@ -233,8 +223,7 @@ export default function SiteNav() {
       <header className="sticky top-0 z-30 border-b border-ink/8 bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70 dark:border-paper/8">
         <nav aria-label="Main" className="mx-auto flex max-w-5xl items-center gap-2 px-4 py-2.5">
           <Link href="/" className="mr-auto flex min-h-11 min-w-11 items-center justify-center gap-2 font-extrabold tracking-tight sm:justify-start md:mr-3">
-            <Mark />
-            <span className="hidden sm:inline">{brand}</span>
+            <MaggieBrandLockup>{brand}</MaggieBrandLockup>
           </Link>
 
           {/* Desktop primary links */}

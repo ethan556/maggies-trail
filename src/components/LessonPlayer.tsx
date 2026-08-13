@@ -366,7 +366,7 @@ export default function LessonPlayer({
         <SummitRoute walked={st.queue.length} />
         <div className="summit-in relative flex flex-col items-center gap-3">
           <SparkBurst className="left-1/2 top-6" />
-          <Image src="/brand/logo-tally-peak.svg" alt="" width={64} height={64} unoptimized priority aria-hidden="true" />
+          <Image src="/brand/maggies-mark.svg" alt="" width={64} height={64} unoptimized priority aria-hidden="true" />
           <h1 className="text-3xl font-extrabold tracking-tight">{COPY.lessonDone}</h1>
           <p className="text-sm font-semibold text-ink/70 dark:text-paper/70">{st.lesson.title}</p>
           {trailContext && (
