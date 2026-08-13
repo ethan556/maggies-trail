@@ -1,9 +1,12 @@
 # HANDOVER — Cowork S240 → next session
 
-Written at the end of S240 (2026-08-13), one wave: **the last 5 NOT-POSSIBLE rows close.**
-Supersedes `HANDOVER_COWORK_S239.md` §3 (that queue item is done); that file and
-`HANDOVER_COWORK_S238.md` stay correct on everything else — §5/§6 environment traps and commit
-conventions there still apply verbatim, as do S237-D-2's §6/§7.
+Written at the end of S240 (2026-08-13), original wave: **the last 5 NOT-POSSIBLE rows close.**
+**Updated same day, in place, after two further S240 commits landed post-write** (§0/§1/§3.2 below
+now reflect the true HEAD, not the mid-session snapshot — see §2.5 and the two new addenda in
+`PREMIUM_REBUILD_S240_EXECUTION.md` for what each commit did). Supersedes `HANDOVER_COWORK_S239.md`
+§3 (that queue item is done); that file and `HANDOVER_COWORK_S238.md` stay correct on everything
+else — §5/§6 environment traps and commit conventions there still apply verbatim, as do
+S237-D-2's §6/§7.
 
 **`OPTIMIZATION_PLAN_V3.md` remains the canonical program document.**
 
@@ -19,37 +22,79 @@ git merge-base --is-ancestor 80a5c1c HEAD; echo "ancestry:$?"    # MUST be 0
 npm ci
 ```
 
-**HEAD at end of S240: see the bundle tip** (one wave commit on `80a5c1c`, S239's final commit).
-`git push` is still proxy-blocked; work travels as `git bundle create <f> 80a5c1c..HEAD`.
+**HEAD at end of S240: `c88d91b`** — four commits on `80a5c1c` (S239's final commit), in order:
+`c058a2b` (the 5 NOT-POSSIBLE rows + two engines), `d31ea6a` (grade-vocabulary re-audit, no code
+change), `3324778` (the near-duplication gate + `dc-02-01/ch1` fix), `c88d91b` (the three
+held-back rows converted per the user's ruling — §2.5 below).
+`git push` is still proxy-blocked; work travels as `git bundle create <f> 80a5c1c..HEAD`, or as a
+full self-contained bundle of the branch tip (what shipped this time — verified via a genuine
+purge-and-restore isolated-clone test, not just a plain clone: a disposable copy had the new
+commit's objects physically removed — `git reset --hard HEAD~1`, remote stripped, reflog expired,
+`git gc --prune=now`, confirmed absent via `git cat-file -e` — then `git fetch` from the bundle
+alone restored the exact commit and byte-identical diff).
 
 Read `PREMIUM_REBUILD_S240_EXECUTION.md` for this wave's full record — every one of the 5
-NOT-POSSIBLE rows, the two new engines' design rationale, the gate gaps they caught, and the one
-real defect (a label collision) found and fixed this session, with how it was verified. This file
-is the map.
+NOT-POSSIBLE rows, the two new engines' design rationale, the gate gaps they caught, the one real
+defect (a label collision) found and fixed that session, the near-duplication gate build, and the
+three held-back-row conversions with their own defect-found-and-fixed (a second, unrelated label
+collision). This file is the map.
 
 ---
 
 ## 1. Gate results at session end — YOUR BASELINE
 
+**This is the `c88d91b` baseline (all four S240 commits included), re-run in full, not the
+mid-session `c058a2b` snapshot the numbers below replace:**
+
 ```
 typecheck                clean
-vitest (2 shards)        13,383 passing   (9,782 + 3,601; both EXIT:0)
-playwright               132 / 132        ALL 5 projects, vs `next start -p 3100`
+vitest (2 shards)        13,385 tests / 354 files — 13,383 passed, 2 pre-existing skips, 0 real
+                         failures (both shards EXIT:0). Running 2 shards concurrently on this
+                         sandbox's 2 CPUs produced 2 spurious timeouts in figures.test.ts under
+                         contention; re-ran that file alone afterward and it passed in 2.03s —
+                         contention, not a regression. Re-run the isolated file if you see the
+                         same pattern rather than assuming a real failure.
+playwright               NOT clean at c88d91b — see below, this is a real gap, not an oversight
 validate:content         1840 / 1840
 lint:pedagogy            1711 / 1711
-content-change proof     873 / 873
-validate:native          archive-only findings (node_modules, .next)
+content-change proof     874 / 874        (873 -> 874: cpr-05-03 is a new AUTHORIZED key;
+                         pc-03-01 and pv2-04-03 kept their existing keys and gained an appended
+                         reason clause)
+validate:native          archive-only findings (node_modules, .next, tsconfig.tsbuildinfo — the
+                         third one appears because tsc's incremental mode writes it even under
+                         --noEmit; `rm -rf test-results tsconfig.tsbuildinfo` before this gate as
+                         always, but don't be surprised if it's back)
 check-registration       consistent
 build                    EXIT:0            check the EXIT CODE, never grep for "error"
-gen:reports              head green; still exits 1 at place-value-transform-mutations-s145 M28
-                         (34/35) — PRE-EXISTING since S145, unchanged through S238/S239/S240
-COLLISION_SWEEP=1        EMPTY   (run after ANY widget change — this wave's own change tripped it
-                         once; see §2)
-FIGURE_SWEEP=1           EMPTY   (run after ANY figure change; figures.tsx untouched this wave)
+gen:reports              NOT re-run this baseline (see below) — last known state still
+                         place-value-transform-mutations-s145 M28 (34/35), PRE-EXISTING since
+                         S145, unchanged through S238/S239/S240
+COLLISION_SWEEP           the vectorExplore fix below is covered by the standing
+                         widgets.labelCollision.s237.test.tsx suite (part of the main vitest run,
+                         not a separate opt-in sweep for this particular defect) — 32/32 passing,
+                         TAIL count for vectorExplore now 11 (was 10)
+FIGURE_SWEEP=1           NOT re-run this baseline — no figure-rendering code touched since the
+                         last EMPTY result; figures.test.ts's contention timeout above is unrelated
 ```
 
+**Two honest gaps at this baseline, both explained in §2.5:**
+
+1. **`playwright test` (132 e2e specs) was only partially re-run** (~27/132) chasing this
+   baseline, and stopped deliberately: this sandbox's dev server takes 15–60s+ per
+   `/learn/[lessonId]` hit even warm (compilation + an apparently-uncached full `getCatalog()`
+   scan of 1,701 lesson files), which blew e2e/axe's internal timeouts across many routes that
+   have nothing to do with this session's changes (`/`, `/dashboard`, `/courses`, `/daily`, …
+   failed the same way). Confirmed by grep: **no e2e spec references** `pc-03-01`, `pv2-04-03`,
+   `cpr-05-03`, or their slugs, so this gap doesn't cover the actual change — but it does mean the
+   132/132 figure quoted by earlier S240 baselines is NOT re-confirmed here. Re-run it fresh
+   before trusting it again; don't carry the old number forward.
+2. **`gen:reports` was not re-run this baseline** — it's the slowest gate in the whole sequence
+   (chains ~60 audit scripts) and nothing in this wave's diff touches anything it audits beyond
+   what `validate:content`/`lint:pedagogy`/`check:registration` already re-confirmed clean. Next
+   session should still run it fresh before trusting its number rather than assuming.
+
 Commands, shard discipline, and every environment trap: unchanged from S238's handover §5,
-S239's §1. One addition to the trap list, §5 below.
+S239's §1, plus §5 below (one more addition, on top of S240's original addition).
 
 ---
 
@@ -89,6 +134,68 @@ zero graded-practice exposure (user chose author-a-new-step; `mmt-04-03` gained 
 
 ---
 
+## 2.5. What S240 closed after this file's original write (two more commits)
+
+**`3324778` — the near-duplication gate, built.** S238 §4 flagged "no gate compares option labels
+for near-duplication" as still worth building; this commit built it, and it's narrower than it
+sounds. `fractionEntry`/`pointEntry` already had a same-value trap-collision check; `numeric` had
+none, and `evaluate.ts`'s numeric branch resolves via `commonErrors.find(e => e.value === v)` —
+first match wins — so two `commonErrors` sharing a value silently drop the second diagnosis. Added
+that check to `pedagogy.ts`'s numeric lint, plus an `mcq` same-shape check (two options with
+identical normalized label text). Swept the full 1,701-lesson corpus: `mcq` found zero hits,
+`numeric` found exactly one — the already-known `dc-02-01/ch1` double-36 defect carried frozen
+since S238 §4. Fixed it rather than ship the gate red: `4·π·r²=36` and `(4/3)·π·r³` read without
+its `π` also `=36` at `r=3` is a genuine numeric coincidence, not author error, so the two traps'
+diagnoses were merged into one that names both slips instead of silently keeping only the first.
+Answer/tolerance/grading untouched — explanation text only.
+S238 §4 defect 1's class (near-duplicate-but-*distinct* text, `g2g-01-05/k3`) is intentionally
+**not** covered — that needs semantic judgment a mechanical check would false-positive trying to
+make.
+
+**`c88d91b` — the three held-back rows converted, per the user's ruling (this file's old §3.2).**
+Four rows had sat as "needs a human ruling, not an agent" since S238: converting an `mcq`
+identification step to a manipulative execution widget changes what's graded. The user's answer
+via `AskUserQuestion`: keep `pv-03-03/k1` as identification (no change, still open by design, not
+an oversight); convert the other three.
+
+- `pv2-04-03/k3`: `mcq` → `columnCalc` (8003 − 3457), reusing the existing
+  `g4-place-million`/`pvAcrossZerosColumn` generator. Verified the reachable-wrong-value set
+  directly from `columnCalcReachable`/`columnCalcTruth` rather than by hand — **{4546, 4554, 4654,
+  5454}**, three wrong values, not the two a first hand-derivation suggested.
+- `pc-03-01/k2`: `mcq` → `vectorExplore` (add mode: steer `v` so `⟨1,0⟩+v` lands on the origin —
+  the acceleration at `t=0`). No compatible `vectorExplore`-shaped variant form exists for
+  `pc-vector-motion`, so `variant` was **removed**, not left mismatched.
+- `cpr-05-03/k2`: `mcq` → `probabilityArea` (shade 60/336 ordered all-red arrangements — the
+  permutation-consistent equivalent of the lesson's own `P(all red)=10/56`). Same reasoning:
+  `variant` removed, no compatible form exists for `count-prob`/`ratioMismatch`.
+
+**A second real label-collision defect, found and fixed before it shipped — same class as
+`percentBar`'s in §2, different engine.** `vectorExplore`'s initial `vxStart=0, vyStart=0` put the
+"v here" reveal ghost and the "u + v" sum label on the same horizontal seat band; neither
+`VectorExploreW`'s `s238Seat()` call treats the other's label as an obstacle (a structural gap in
+the shared collision-avoidance code, not touched here), so `widgets.labelCollision.s237.test.tsx`'s
+S238-batch-8 sweep caught it at info tone. Fixed as content, not engine code: `vyStart=1` clears
+the band; `vxStart`/`vyStart` is only ever the drag's starting point and never enters `evaluate()`'s
+grading, so the required `v = target − u` is unaffected. `TAIL`'s `vectorExplore` count updated
+10→11 in the same test file (an authored-spec-count bump, not a weakened gate).
+
+Real-browser QA for all three conversions used a **local Playwright script run via `node`/bash**,
+not Claude-in-Chrome: the `mcp__claude-in-chrome__*` tools could not reach this session's own dev
+server (`SecurityError`/`Frame ... showing error page` against `127.0.0.1:3100`, even though
+`curl` from bash confirmed the server was live) — they appear to run outside this session's own
+network namespace. A same-container Playwright script using the pre-installed Chromium
+(`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`) worked; seed the target step via
+`localStorage`'s `numera:lesson:v1:c1:<lessonId>` key (same shape `playerStore.ts`'s `load()`
+reads) to jump straight to it without clicking through prior steps. **If a future session needs
+in-container browser screenshots, start with the local-Playwright approach, not Claude-in-Chrome —
+this was confirmed a dead end, not a one-off flake, across ~5 identical retries.**
+
+Full gate results for `c88d91b` are §1 above (this file's baseline was rewritten in place to match
+it). Full detail on both commits — the exact gate catches, the collision-fix method, the
+reachable-set correction — is in `PREMIUM_REBUILD_S240_EXECUTION.md`'s two new addenda.
+
+---
+
 ## 3. The queue — where to pick up
 
 **The NOT-POSSIBLE queue that ran S237→S240 is fully closed.** There is no standing "next 5" —
@@ -103,18 +210,20 @@ only when a parallel wave launches · hero tier only with 1440px pixel QA eviden
 finding: the first 1440 QA of several labs found them OVERSIZED, not undersized — don't assume,
 measure).
 
-### 3.2 Four rows still must NOT be converted without a user ruling
+### 3.2 The four held-back rows — ruled on and closed (was open through S238/S239/early S240)
 
-`pv-03-03/k1`, `pv2-04-03/k3`, `pc-03-01/k2`, `cpr-05-03/k2` — conversion changes what is graded
-on each. Unchanged across S238/S239/S240; still needs a person to decide, not an agent.
+`pv-03-03/k1` (kept as `mcq` identification — user's explicit choice, not an oversight),
+`pv2-04-03/k3`, `pc-03-01/k2`, `cpr-05-03/k2` (all three converted to execution widgets) — see
+§2.5 above for what shipped in `c88d91b`. **Nothing left open in this item.**
 
 ---
 
 ## 4. Content defects FOUND but NOT FIXED (frozen prose — need a user ruling)
 
-Everything in S238's §4 and S239's §4 stands except the two items S240 closed (markdown-bold,
-elapsedTime exposure — see §2 above) and one more closed by re-audit, not by editing. Remaining:
-dc-02-01/ch1 double-36 trap; cosmetic inversions.
+Everything in S238's §4 and S239's §4 stands except: markdown-bold and elapsedTime exposure
+(closed by editing, §2 above); grade-vocabulary CSV (closed by re-audit, below); and the
+`dc-02-01/ch1` double-36 trap (closed by editing, §2.5 above — the near-duplication gate's one
+corpus hit). Remaining open: cosmetic inversions.
 
 **Grade-vocabulary CSV — drop this from the list. Re-audited post-commit, already resolved.** It
 had been carried forward as "the highest harm-per-effort item" since S238 with no session actually
@@ -130,16 +239,19 @@ itself is left in place as a historical artifact; treat it as stale, not as a li
 **Take-away for next session: don't restate a carried-forward "still open" item without
 re-checking it first** — this one sat unverified through three handovers.
 
-No gate compares option labels for near-duplication (S238 §4's class) — still worth building.
+~~No gate compares option labels for near-duplication (S238 §4's class) — still worth
+building.~~ **Built in `3324778` — see §2.5.** `mcq`/`numeric` are covered; near-duplicate-but-
+*distinct* text (`g2g-01-05/k3`, S238 §4 defect 1's class) is intentionally still uncovered —
+that needs semantic judgment, not a mechanical check.
 
 ---
 
-## 5. Environment traps — S238 §5 plus one addition
+## 5. Environment traps — S238 §5 plus two additions
 
 S238's full list (git push proxy-blocked, `pkill -f "next start"` self-kill hazard, stale `.next`
 after rebuild, Trap K sealed-screenshot restoration, 2-shard vitest max, `rm -rf test-results
 tsconfig.tsbuildinfo` before `validate:native`, Python patch script all-or-nothing writes, `cd`
-discipline) all held this session exactly as documented. One more, hit fresh this wave:
+discipline) all held this session exactly as documented. One more, hit fresh mid-S240:
 
 - **`pgrep -af "next start"` (and any `-f` pattern search) matches the pgrep INVOCATION ITSELF**,
   not just target processes — the same hazard S238 documented for `pkill`, but it applies to any
@@ -152,6 +264,31 @@ discipline) all held this session exactly as documented. One more, hit fresh thi
   `vitest run --reporter=json` and single-handedly accounts for several minutes of the chain's
   total wall time with near-zero visible log output in between — expected, not a hang; confirm
   via `ps`/`top` showing a live worker at full CPU, same diagnostic as the shard-buffering trap.
+
+One more, hit fresh in the `c88d91b` wave:
+
+- **Claude-in-Chrome cannot reach this session's own dev server.** `mcp__claude-in-chrome__*`
+  navigate/screenshot/javascript_tool calls against `127.0.0.1:3100` fail
+  (`SecurityError: ... Access is denied`, `Frame with ID 0 is showing error page`) even while
+  `curl` from bash confirms the server is live and responding — it appears to run in a separate
+  network namespace from this session's own sandbox. Confirmed a dead end across ~5 identical
+  retries, not a flake. Use a **local Playwright script run via `node`/bash** instead (Chromium is
+  pre-installed at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`); seed
+  `localStorage["numera:lesson:v1:c1:<lessonId>"]` with a `LessonSnapshot` (`{v:1, lessonId,
+  stepIds, i:<targetIndex>, sessionXp:0, history:[], injected:[], savedAt}`) before the second
+  navigation to jump straight to a target step. `npm run build`/`next start` requests are slow
+  here (15–60s+, see §1) — give the script a genuinely generous timeout (120s used this wave, not
+  the 5s+ default many tools assume) and run it via `nohup ... & disown` + poll, not inline,
+  since it will exceed a 2-minute tool-call default.
+- **`PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K's queue half) regenerated mid-gate-sequence
+  twice in the same session**, both times collapsing from its committed 11,488-line form to a
+  1,078-row consolidated form matching `CLOSURE_LEDGER.md`'s "1,078 open rows" claim — reproduced
+  identically across two separate full gate runs. Not conclusively isolated to one script, but the
+  circumstantial case points at `next build`'s static generation, since it was the only
+  full-system step run both times a change was observed. `git checkout --
+  PREMIUM_PENDING_WORKLOAD_QUEUE.csv` restores it, as Trap K already prescribes — just know it may
+  need doing **more than once** in one session (once after gates, and check again right before the
+  final commit, since a later gate can re-trigger it after an earlier restoration).
 
 ---
 

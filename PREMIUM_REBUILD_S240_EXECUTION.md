@@ -227,3 +227,245 @@ no longer describes current content and should not be re-flagged as open without
 **Process note for future sessions: a standing "still open, unchanged" line in a handover is a
 claim, not a fact, once enough time or parallel work has passed. Re-verify before restating it,
 the same way a gate result is re-run rather than assumed.**
+
+---
+
+## Addendum 2 (same session, commit `3324778`): the near-duplication gate, built; `dc-02-01/ch1` fixed
+
+S238 §4 had flagged, and every handover since carried forward unbuilt: "no gate compares option
+labels for near-duplication." Investigated before building anything, and the real gap was
+narrower than the label suggested.
+
+**What already existed.** `fractionEntry` and `pointEntry` both already had a same-value
+trap-collision integrity check in `schema.ts` — two distractors (or a distractor and the answer)
+sharing a value is already rejected for those two widget types. `numeric` had no equivalent.
+`evaluate.ts`'s numeric grading branch resolves via `commonErrors.find(e => e.value === v)` — an
+array scan that returns the *first* match — so if two `commonErrors` entries happened to share a
+value, the second one's diagnosis is silently unreachable: any learner whose wrong answer matches
+that value gets the first entry's feedback, never the second's, and nothing in the existing gate
+suite would have caught this.
+
+**What was built.** A same-value check for `numeric` added to `pedagogy.ts`'s lint pass, matching
+the existing `fractionEntry`/`pointEntry` shape. Plus a second, `mcq`-specific check that doesn't
+fit the "shares a graded value" model at all: two `mcq` options whose *label text* is identical
+after normalization (case/whitespace-insensitive comparison) — a learner cannot tell two such
+options apart regardless of which one is marked correct, independent of anything about grading
+values.
+
+**Swept the full corpus before landing either check**, not just the two lessons already suspected:
+1,701 lessons, every `mcq` and `numeric` widget. `mcq`'s new check found zero hits — no corpus
+instance of the duplicate-label defect exists today. `numeric`'s new check found exactly one:
+`dc-02-01/ch1`, already known and carried frozen/unfixed since S238 §4 ("found by the alongside
+gate in wave 18").
+
+**Why `dc-02-01/ch1` collides, and why it's not an authoring error.** The step's two
+`commonErrors` traps are a sphere-surface-area slip (`4·π·r²`) and a sphere-volume slip
+(`(4/3)·π·r³` computed while dropping the `π` factor) — two genuinely different misconceptions.
+At this step's specific radius, `r = 3`: `4·π·(3)² = 36π ≈ 113.1`, which the surface-area trap
+reports rounded; separately, `(4/3)·π·(3)³` with `π` dropped is `(4/3)·27 = 36` exactly. Both
+traps' *displayed* values landed on the same integer, `36`, purely as a numeric coincidence of
+this particular radius — not because either trap's formula was mistyped.
+
+**Fix chosen: merge the two diagnoses into one, rather than change the number or ship the gate
+red.** Changing `r` would dodge the coincidence rather than address it, and would touch an
+authored, presumably-reviewed example value outside this task's scope. Instead, the single
+`commonErrors` entry at value `36` now names *both* slips in its feedback text ("...whether you
+dropped the π from the volume formula or read off the surface area instead...") so a learner who
+lands on 36 via either route gets a diagnosis that's still true of what they likely did, instead
+of one trap's diagnosis silently overwriting the other's. Answer, tolerance, and which values grade
+right/wrong are all unchanged — this is explanation text only.
+`manipulativeAlongside.s237.test.ts`'s `dc-02-01/ch1` row was pinned to the pre-fix feedback text
+by design (so it would correctly go red the moment the fix landed, proving the pin was live, not
+stale) — updated to match post-fix.
+
+**Deliberately not covered:** near-duplicate-but-*distinct* label text (S238 §4 defect 1's class,
+`g2g-01-05/k3` — e.g. two options that say almost-but-not-quite the same thing) is a semantic
+judgment call. A mechanical string-similarity threshold would false-positive on legitimately
+close-but-different options as often as it would catch real duplicates; noted inline in the lint
+source so a future session doesn't re-attempt it as a quick follow-on without first solving the
+false-positive problem.
+
+**Gates:** typecheck clean; vitest 13,383 passing (9,782+3,601, both shards EXIT:0, 0 new
+failures vs. the `c058a2b`/`d31ea6a` baseline); validate:content 1840/1840; lint:pedagogy
+1711/1711 (the two new checks active and green against the full corpus — zero violations beyond
+the one instance fixed here); validate:native archive-only (node_modules, .next);
+check:registration consistent; build EXIT:0.
+
+---
+
+## Addendum 3 (same session, commit `c88d91b`): the three held-back rows converted, per user ruling
+
+Four rows had been carried as "must NOT be converted without a user ruling" since S238 §3.2/§4:
+`pv-03-03/k1`, `pv2-04-03/k3`, `pc-03-01/k2`, `cpr-05-03/k2` — each an `mcq` identification step
+that a manipulative-conversion pass could mechanically turn into an execution widget, except that
+doing so changes what is graded (recognizing a fact vs. producing one), which is a pedagogical
+judgment call, not a mechanical one. Put to the user via `AskUserQuestion`. Ruling: keep
+`pv-03-03/k1` as identification; convert the other three to execution.
+
+### `pv2-04-03/k3` — `mcq` → `columnCalc`, 8003 − 3457
+
+Reused the existing `g4-place-million`/`pvAcrossZerosColumn` generator rather than declare a new
+one — this step's shape (a 4-digit subtraction crossing two zero columns) is exactly what that
+generator already produces, so `variant: {gen: "g4-place-million", form: "pvAcrossZerosColumn"}`
+was declared, not skipped.
+
+**Correction to a hand-derivation, caught by re-deriving programmatically instead of trusting
+arithmetic done by eye:** the truth is 4,546 (confirmed via `columnCalcTruth("subtract", 8003,
+3457)`), but the full reachable-wrong-value set via `columnCalcReachable` is **{4546, 4554, 4654,
+5454}** — three wrong values, not the two an initial hand-check produced (4554 was missed). Each
+corresponds to a distinct legal-but-incomplete borrow-chain path: 5454 never borrows at all
+(subtracts the smaller digit from the larger in every column); 4654 borrows correctly starting
+only from the hundreds place; 4554 borrows correctly starting only from the tens place. The
+widget's `commonResults` covers 5454 and 4654 (the two most pedagogically distinct wrong paths —
+"never borrowed" vs. "borrowed too late by one column"); 4554 is reachable but its diagnosis
+("borrowed too late by two columns," essentially the same lesson as 4654 one column over) is
+absorbed by `fallbackFeedback` rather than given a third redundant entry that would repeat the
+same teaching point with a different number.
+
+### `pc-03-01/k2` — `mcq` → `vectorExplore`, add mode
+
+The lesson's own physics framing: a particle on the unit circle, `r(t) = ⟨cos t, sin t⟩`, at
+`t=0` sitting at `⟨1,0⟩`. The step asks the learner to steer `v` until `⟨1,0⟩ + v` lands on the
+origin `⟨0,0⟩` — that displacement IS the acceleration at `t=0` (`a = ⟨−cos 0, −sin 0⟩ = ⟨−1,0⟩`),
+which the success feedback makes explicit, including the easy-to-miss point that the
+*magnitude* of that acceleration is 1, not 0, even though speed along the circle never changes.
+
+No `pc-vector-motion`-tagged variant form produces a `vectorExplore` widget (the registered forms
+for that tag are all `mcq`-shaped), so declaring a `variant` key here would either silently fail
+to resolve (harmless but pointless) or — worse — resolve to a generator whose output `type`
+doesn't match the authored `type`, which `variants.surface.test.ts` exists specifically to catch
+and reject. Removed the key entirely rather than leave it stale, matching how the lesson's own
+`i1`/`i1b` steps (added in S237, also `vectorExplore`) are already unvaried.
+
+**A real rendering defect, found and fixed before it shipped.** First-draft starting position was
+`vxStart=0, vyStart=0`. `widgets.labelCollision.s237.test.tsx`'s S238-batch-8 sweep — which
+renders every authored spec of 16 "tail engine" types at `value=null` across all 3 UI tones —
+failed at info tone: the "v here" reveal-ghost label and the "u + v" sum-readout label rendered
+with overlapping bounding boxes (`6.2×12.6` units of overlap). Root cause traced into
+`VectorExploreW`'s label placement, not this content: both labels are positioned via the shared
+`s238Seat()` collision-avoidance helper, but each call only lists the *point* labels ("u", "v") as
+obstacles to avoid — neither the ghost-reveal label's seat call nor the sum label's seat call
+considers the *other* dynamic label as an obstacle. With `vxStart=vyStart=0`, both labels' natural
+seats land in the same band, and nothing in the seat-picking logic knows to separate them. This is
+a structural gap in shared engine code, not specific to this content — left unfixed here
+(out of scope for a content-conversion task) and flagged for whoever next touches
+`VectorExploreW`'s label logic.
+
+Fixed at the content layer instead, which is sufficient and doesn't require touching shared code:
+`vyStart=1` moves the drag's starting point enough that the two labels' natural seats no longer
+overlap. This is safe because `vxStart`/`vyStart` only ever seed where the draggable point begins
+— `evaluate.ts`'s grading reads `ux+vx`/`uy+vy` (or the dot-product equivalent) at *check* time,
+never the starting values, so the required answer (`v = target − u = ⟨−1, 0⟩`) is completely
+unaffected by which start position is chosen. Re-swept clean after the fix. `TAIL`'s
+`vectorExplore` entry in the same test file — an exact per-engine authored-spec count, asserted
+so a future silent addition/removal doesn't slip through unnoticed — updated `10 → 11` to reflect
+the one new spec, which is the correct response to an intentional content addition, not a
+weakened gate.
+
+### `cpr-05-03/k2` — `mcq` → `probabilityArea`
+
+The lesson had already established `P(all red) = 10/56` via combinations for both the numerator
+and denominator counts earlier in the same lesson. This step asks *why both counts must use the
+same style* by having the learner redo the count using permutations instead: `8P3 = 336` total
+ordered arrangements of 3 marbles from 8, of which `5P3 = 5·4·3 = 60` are all-red — the same
+probability, `60/336 = 10/56`, reached by a different (but equally valid, as long as consistent)
+counting convention. The widget is a 16×21 grid (336 cells, matching the denominator exactly) that
+the learner sweeps-shades to 60 cells; grading is the cross-multiplication `shaded·336 ==
+336·60`, confirmed against `evaluate()` directly at several points including the boundary.
+
+Same variant reasoning as `pc-03-01`: no `probabilityArea`-shaped form is registered for
+`count-prob`/`ratioMismatch`, so `variant` was removed rather than left mismatched.
+
+### Verification common to all three
+
+- `manipulativeAlongside.s237.test.ts`'s `servedIdentity()` helper — which every row in that gate
+  compares the *actual authored content* against, to catch drift between what a row's comment
+  claims is served and what the JSON really contains — didn't have branches for `columnCalc` or
+  `vectorExplore` (both new to that gate; only `pv2-04-03` and `pc-03-01` have rows there,
+  `cpr-05-03` doesn't appear in this particular gate). Added both branches:
+  `columnCalc`'s served answer is `columnCalcTruth(op,a,b)` stringified, served wrong-paths are
+  each `commonResults` entry's `value|feedback`; `vectorExplore`'s served answer encodes
+  mode+inputs+target, served wrong-paths are the low/high feedback pair. Both rows' `servedAnswer`/
+  `servedWrongPaths` strings were computed by a throwaway probe script importing the real schema/
+  evaluate functions, not hand-typed, so a transcription slip couldn't silently make the gate
+  compare against the wrong ground truth.
+- `content-change-proof-s151c.mjs`: `cpr-05-03` added as a brand-new `AUTHORIZED` key (it had
+  never been touched by any prior session); `pc-03-01` and `pv2-04-03` already had entries from
+  S237 and got an appended `s240-held-back-ruling` reason clause rather than a second key. Count
+  moved `873 → 874` (one new key, not three, since two of the three conversions landed on
+  already-AUTHORIZED lessons).
+- Real-browser QA: **Claude-in-Chrome could not reach this session's own dev server** —
+  `mcp__claude-in-chrome__*` navigate/screenshot calls against `127.0.0.1:3100` failed with
+  `SecurityError`/a frame-error-page result, consistently across roughly 5 retries, even though
+  `curl` from bash confirmed the server was live and responding; it appears to run outside this
+  session's network namespace. Pivoted to a local Playwright script (`node`, pre-installed
+  Chromium at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`), seeding
+  `localStorage["numera:lesson:v1:c1:<lessonId>"]` with a `LessonSnapshot` to jump directly to
+  each target step. All three converted steps captured and visually read: correct prompt text in
+  each case (verbatim against the authored JSON), correct widget geometry (columnCalc's 4-digit
+  layout with the ones column active; vectorExplore's grid/vectors with the sum readout and no
+  visible label collision, confirming the `vyStart` fix; probabilityArea's 16×21 grid at
+  `shaded=0/336`), and correct step-position banners (`"Resumed at step N of M"` matching each
+  step's actual index).
+- `EXCELLENCE_BACKLOG_S126.json`/`.md`'s causal-widget-step counts shifted by exactly the 3
+  conversions when the standard audit (`npm run audit:excellence`) was re-run as part of the full
+  gate sequence — G3-5 `663 → 664` (`pv2-04-03`'s band), HS `574 → 576` (`pc-03-01` and
+  `cpr-05-03`'s band, both HS) — regenerated output, not hand-edited, and internally consistent
+  with the conversions actually made.
+
+### Gate results (`c88d91b`, full re-run)
+
+```
+typecheck                clean
+vitest (2 shards)        13,385 tests / 354 files — 13,383 passed, 2 pre-existing skips, 0 real
+                          failures. 2 apparent failures in figures.test.ts under 2-shard
+                          concurrent contention (5s test-timeout exceeded) were re-run in
+                          isolation afterward and passed in 2.03s — contention, not a regression;
+                          noted here so a future session recognizes the same pattern instead of
+                          chasing a phantom bug.
+validate:content          1840 / 1840
+lint:pedagogy              1711 / 1711
+validate:native           3 findings, all expected archive-only (node_modules, .next,
+                          tsconfig.tsbuildinfo)
+check:registration        consistent
+content-change-proof      874 / 874 authorized, 827 lessons byte-identical to the sealed S151
+                          ledger
+build                     EXIT:0 (pre-existing eslint warnings elsewhere in the tree, unrelated
+                          to this change; no errors)
+widgets.labelCollision.s237.test.tsx (S238 batch 8) — passing, included in the vitest run above;
+                          TAIL vectorExplore count 10 -> 11
+```
+
+**Not re-run this wave, stated plainly:** the `playwright test` e2e suite (132 specs) was run
+partially (~27/132) and stopped deliberately — this sandbox's dev server takes 15–60s+ per
+`/learn/[lessonId]` hit even warm, which exceeded e2e/axe's internal timeouts across many routes
+unrelated to this change (`/`, `/dashboard`, `/courses`, `/daily`, `/review`, `/notebook`,
+`/placement`, `/trailhead`, `/atlas`, `/basecamp/fractions` all timed out the same way; a handful
+of already-simple routes passed quickly). Confirmed via grep that no e2e spec references
+`pc-03-01`, `pv2-04-03`, `cpr-05-03`, or their slugs — this run gap does not cover the actual
+change, but the suite-wide 132/132 figure quoted by earlier S240 addenda should not be assumed
+current until re-run fresh. `gen:reports` was likewise not re-run this wave (nothing in this
+diff's scope touches what it audits beyond what the gates above already re-confirmed).
+
+**Delivery bundle verified via genuine isolated-clone technique, not a plain clone.** A disposable
+copy of the repo (`git clone --no-hardlinks --no-local`, so no shared objects with the working
+repo) had its branch reset to `c88d91b`'s parent, origin remote removed, reflog expired
+(`--expire=now --all`), then `git gc --prune=now --aggressive` — confirmed via `git cat-file -e
+c88d91b^{commit}` failing ("Not a valid object name") that the commit's objects were genuinely,
+physically gone, not just unreferenced. Fetching *only* from the standalone bundle file then
+restored the exact commit; `git cat-file -e` on the same hash succeeded, and `git diff` between
+the pre-restore and post-restore state showed exactly the 9 files this commit touched with the
+same insertion/deletion counts `git commit` originally reported. `git fsck --full --strict` on the
+restored clone reported no issues. This proves the delivered bundle is complete and self-contained
+— not reliant on any object that merely happened to still exist somewhere.
+
+**Observed, not conclusively resolved: `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (a Trap K sealed
+artifact) was regenerated mid-sequence twice**, both times collapsing from its committed
+11,488-line form to a 1,078-row consolidated form matching `CLOSURE_LEDGER.md`'s own "1,078 open
+rows" claim — reproduced identically across two separate full gate runs in this session. The
+circumstantial case points at `next build`'s static generation (the only full-system step run
+both times a change was observed), but this was not conclusively isolated to one specific script.
+Restored via `git checkout -- PREMIUM_PENDING_WORKLOAD_QUEUE.csv` both times, matching Trap K's
+established remedy — flagged here because it needed doing *twice* in one session, immediately
+before staging for commit being the critical final time, and a future session should check once
+more right before their own commit even if they already restored it earlier in the same session.
