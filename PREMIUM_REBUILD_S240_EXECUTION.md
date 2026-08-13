@@ -469,3 +469,104 @@ Restored via `git checkout -- PREMIUM_PENDING_WORKLOAD_QUEUE.csv` both times, ma
 established remedy — flagged here because it needed doing *twice* in one session, immediately
 before staging for commit being the critical final time, and a future session should check once
 more right before their own commit even if they already restored it earlier in the same session.
+
+## Addendum 4 (same session, commit `19577e5`): cosmetic inversions disambiguated — g5f-02-02/g5f-02-03 fixed, g5u-03-02 confirmed not a defect
+
+S238's content-defects note described "two cosmetic inversions where the decimal leads and the
+fraction follows" (`g5u-03-02.json:38`; the distractor labels in `g5f-02-02`/`g5f-02-03`) as one
+class of defect, carried forward unverified through S238/S239/early S240. Re-checking both against
+live content found they are **not** the same thing.
+
+### `g5u-03-02` — investigated, found to match a universal corpus convention, not a defect
+
+`g5u-03-02.json:38`'s `successFeedback` ("About 0.83 — the exact answer is 5/6, comfortably
+between 1/2 and 1.") is an `estimateSlider` widget — a decimal-estimate control by design. Swept
+every `successFeedback` string in the corpus containing a fraction: `g5u-03-01`, `g5u-03-04`,
+`g4x-03-04` ("About 6 — the exact value is 35/6, which is 5 5/6, just under seven."), and others
+all use the identical "About [decimal estimate] — the exact value is [fraction]" shape. This is
+the universal convention for this widget type corpus-wide, not an inversion of anything.
+
+The user's first ruling on this item was "investigate further first," not an approval to close,
+so before treating it as closed the investigation also checked whether a different corpus-wide
+precedent existed that `g5u-03-02` should have matched instead. It doesn't: the one relevant prior
+case, `pr-01-01`/`pr-01-03`'s decimal-axis fix (`CONVERSION_LOG.md`, S119 entry — a
+`doubleNumberLine` axis-tick formatter that rendered 1/4 as "0.25" and was fixed to a true
+fraction lattice via `hopLabel`), is a rendering bug: an axis label *accidentally* showing a
+decimal when the lattice makes an exact fraction available. `g5u-03-02` is structurally different
+— an estimation widget *correctly* reporting a decimal estimate alongside the exact fraction,
+which is its designed function, not a formatter failing to reach a fraction it should have hit.
+
+Taken back to the user with the concrete text side by side (`g5u-03-02` vs. `g4x-03-04`) and the
+precedent distinction above. **User confirmed closure with no edit, 2026-08-13.** Dropped from the
+content-defects list; no lesson file touched.
+
+### `g5f-02-02`/`g5f-02-03` — a real, differently-shaped defect, fixed
+
+Both lessons share one `mcq` ("To model 3 ÷ 1/4, what does the picture show?"), reused across 4
+step instances (`g5f-02-02/k2`; `g5f-02-03/k1`, `g5f-02-03/ch1`, and `g5f-02-03`'s remedial
+check). Two structurally parallel wrong options — each naming a wrong operation and its result —
+were formatted inconsistently: `"3 cut into 4 equal parts, giving 3/4"` (fraction) vs. `"1/4 of 3,
+giving 0.75"` (decimal, same value: 0.75 = 3/4). This is a within-widget sibling-format mismatch,
+not the "decimal leads, fraction follows" ordering issue the old note described — a different
+defect shape than `g5u-03-02`, despite both having been filed under the same old note.
+
+Swept the full corpus for this exact defect class (`mcq` options mixing a fraction and a decimal
+for what could be the same underlying value) before treating it as isolated: 7 total hits, 4 of
+which are legitimate (`tf-01-03`, `sr-05-01` ×2, `ns-05-03` — genuinely different candidate
+values, or the fraction-vs-decimal comparison IS the question). Only the g5f instance (counted 3×
+due to reuse) is a real mismatch.
+
+User's ruling: match the fraction, not the decimal — citing the same `pr-01-01`/`pr-01-03`
+precedent above as support (a decimal "sidesteps the subject" in a fraction-focused lesson;
+`fraction-division-g5` is the same situation). Changed `"giving 0.75"` → `"giving 3/4"` in all 4
+JSON instances across both lesson files, and in `scripts/session/build-fraction-division-g5.mjs`
+(the original scaffolding script, which still had the stale text — left alone it would have
+silently regenerated the old wording on any future re-run). The script's first option text had
+already drifted from the live JSON before this session for an unrelated reason; left as-is, out of
+scope for this ruling. Grading is unaffected: both options are already `correct:false`, and the
+fix is display text only.
+
+**A tool-level catch worth recording:** the first `Edit` call against `g5f-02-03.json` used
+`replace_all:false` against a non-unique `old_string` (the stale text appears 3 times in that
+file). The tool reported success with no non-uniqueness warning, but only replaced the *last*
+occurrence (the remedial's, deepest-nested). Caught by explicitly `grep -c`-verifying the file
+afterward rather than trusting the tool's success message — 2 of 3 occurrences were still stale.
+Fixed by re-running with `replace_all:true`, then re-verified via grep count. Same "trust but
+verify" discipline as this wave's other ground-truth checks (§ above).
+
+`content-change-proof-s151c.mjs`: both lessons were already `AUTHORIZED` (`s197-batch-f-new-
+course`, both new-since-S197 content) — appended an `s240-fraction-decimal-format-ruling` clause
+to both existing reasons rather than adding new keys, so the authorized count is unchanged at
+874/874.
+
+Real-browser screenshot (production server via `next start`, not `next dev` — see §1's speed note;
+`g5f-02-02/k2`, captured with the same local-Playwright/localStorage-seed technique as Addendum
+3): both `"giving 3/4"` options render as properly typeset stacked fractions, confirming the fix
+through the math-typesetting pipeline, not just the source JSON.
+
+### Gate results (`19577e5`, full re-run)
+
+```
+typecheck                clean
+validate:content          1840 / 1840
+lint:pedagogy              1711 / 1711
+validate:native           2 findings, both expected archive-only (node_modules, .next)
+check:registration        consistent
+build                     EXIT:0
+content-change-proof      874 / 874 authorized (no new key; two appended reason clauses)
+vitest (2 shards)        354 files / 13,385 tests — all passing except 2 apparent failures under
+                          2-shard-plus-two-concurrent-gates contention (validate:content and
+                          lint:pedagogy were running at the same time as this vitest pass):
+                          variants.surface.test.ts's full-corpus sweep and variants.test.ts's
+                          g10-similarity 150-seed sweep, both "Test timed out in 5000ms." Neither
+                          failure references g5f-02-02/g5f-02-03 or fraction/decimal formatting.
+                          Re-ran both files together in isolation with zero concurrent load
+                          (background, ~345s): 2/2 files, 3997/3997 tests passed — confirming
+                          contention, not a regression, same pattern as figures.test.ts earlier
+                          this session (§ above), just on different files this time.
+```
+
+Trap K's `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` regenerated a **third** time this session,
+immediately after this addendum's `npm run build` — see this wave's handover §5 for the
+session-total count and the now-effectively-confirmed link to `next build`. Restored via
+`git checkout --` before staging this commit, same remedy as the first two occurrences.

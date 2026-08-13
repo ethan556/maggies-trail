@@ -22,16 +22,25 @@ git merge-base --is-ancestor 80a5c1c HEAD; echo "ancestry:$?"    # MUST be 0
 npm ci
 ```
 
-**HEAD at end of S240: `c88d91b`** — four commits on `80a5c1c` (S239's final commit), in order:
+**HEAD at end of S240: `19577e5`** — six commits on `80a5c1c` (S239's final commit), in order:
 `c058a2b` (the 5 NOT-POSSIBLE rows + two engines), `d31ea6a` (grade-vocabulary re-audit, no code
 change), `3324778` (the near-duplication gate + `dc-02-01/ch1` fix), `c88d91b` (the three
-held-back rows converted per the user's ruling — §2.5 below).
-`git push` is still proxy-blocked; work travels as `git bundle create <f> 80a5c1c..HEAD`, or as a
-full self-contained bundle of the branch tip (what shipped this time — verified via a genuine
-purge-and-restore isolated-clone test, not just a plain clone: a disposable copy had the new
-commit's objects physically removed — `git reset --hard HEAD~1`, remote stripped, reflog expired,
-`git gc --prune=now`, confirmed absent via `git cat-file -e` — then `git fetch` from the bundle
-alone restored the exact commit and byte-identical diff).
+held-back rows converted per the user's ruling — §2.5 below), `7fb4c4f` (docs-only: this file
+brought up to date after the first four commits), `19577e5` (the g5f-02-02/g5f-02-03
+fraction/decimal format fix — §4 above).
+`git push` is still proxy-blocked; work travels as an **incremental** bundle
+(`git bundle create <f> 80a5c1c..HEAD` — a FULL bundle of the whole branch exceeded the delivery
+size limit once and had to be redone incremental; don't default to `--all`/full-history unless
+asked). Verified via a genuine purge-and-restore isolated-clone test each time, not a plain clone:
+a disposable copy (`git clone --no-hardlinks --no-local`, so no shared objects with the working
+repo) had its branch reset back to `80a5c1c`, remote stripped, reflog expired
+(`--expire=now --all`), `git gc --prune=now --aggressive` — confirmed every newer commit's objects
+were physically gone via `git cat-file -e` failing — then `git fetch` from the incremental bundle
+ALONE restored the full chain back to true HEAD, confirmed via `git cat-file -e` succeeding and a
+`git diff`/`git fsck --full --strict` producing exactly the expected file set with no integrity
+errors. **The fetch refspec must name the actual branch** (`cowork/s237:refs/heads/<local-name>`)
+— a bundle built from a named branch has no `HEAD` ref; `git fetch <bundle> HEAD:...` fails with
+`fatal: couldn't find remote ref HEAD` even though the bundle is completely valid.
 
 Read `PREMIUM_REBUILD_S240_EXECUTION.md` for this wave's full record — every one of the 5
 NOT-POSSIBLE rows, the two new engines' design rationale, the gate gaps they caught, the one real
@@ -221,9 +230,41 @@ measure).
 ## 4. Content defects FOUND but NOT FIXED (frozen prose — need a user ruling)
 
 Everything in S238's §4 and S239's §4 stands except: markdown-bold and elapsedTime exposure
-(closed by editing, §2 above); grade-vocabulary CSV (closed by re-audit, below); and the
+(closed by editing, §2 above); grade-vocabulary CSV (closed by re-audit, below); the
 `dc-02-01/ch1` double-36 trap (closed by editing, §2.5 above — the near-duplication gate's one
-corpus hit). Remaining open: cosmetic inversions.
+corpus hit); and cosmetic inversions (closed — one instance by re-audit, one by editing, both
+below). **Nothing remains open in this section.**
+
+**Cosmetic inversions — the old note described one class of defect; investigation found two
+different things, closed differently.** S237-D's note read "two cosmetic inversions where the
+decimal leads and the fraction follows" (`g5u-03-02.json:38`, distractor labels in
+`g5f-02-02`/`g5f-02-03`). Neither instance actually matches that description on inspection:
+
+- `g5u-03-02.json:38` ("About 0.83 — the exact answer is 5/6...") is an `estimateSlider`
+  success-feedback string. Swept every such string in the corpus with a fraction in it —
+  `g5u-03-01`, `g5u-03-04`, `g4x-03-04`, and others all use the identical "About [estimate] —
+  the exact value is [fraction]" shape. This is the universal convention for this widget type
+  (which is, by design, a decimal-estimate control), not an inversion of anything. **Dropped
+  from the list, no edit.** The user's first answer was "investigate further first," not an
+  approval to close — the deeper look (the estimateSlider sweep above, plus checking whether a
+  different corpus-wide convention existed that this should have matched instead — it doesn't;
+  the one relevant precedent, `pr-01-01`/`pr-01-03`'s decimal-axis fix in `CONVERSION_LOG.md`'s
+  S119 entry, is about a fraction-lattice AXIS LABEL rendering as an accidental decimal, a
+  rendering bug — structurally different from an estimation widget correctly reporting a decimal
+  estimate, its designed function) was taken back to the user with the concrete text side by side
+  (`g5u-03-02` vs. `g4x-03-04`), and the user confirmed closure with no edit on 2026-08-13.
+- `g5f-02-02`/`g5f-02-03` (commit `19577e5`) had a REAL, different inconsistency: one shared
+  `mcq`, reused across 4 step instances (`g5f-02-02/k2`; `g5f-02-03/k1`, `ch1`, and its
+  remedial), had two structurally parallel wrong options format the same value differently —
+  "giving 3/4" vs. "giving 0.75". Corpus-swept the whole defect class (mcq options mixing a
+  fraction and a decimal) before treating it as isolated: 7 total hits, 4 of which are
+  legitimate (`tf-01-03`, `sr-05-01`, `ns-05-03` — genuinely different candidate values, or the
+  fraction-vs-decimal comparison IS the question). Only this one was a real mismatch. **Fixed**:
+  "giving 0.75" → "giving 3/4" in all 4 JSON instances plus the original scaffolding script
+  (`scripts/session/build-fraction-division-g5.mjs`, which still had the stale text — left
+  alone it would have silently regenerated the old wording on any future re-run). User's
+  direction: match the fraction, not the decimal — consistent with the `pr-01-01`/`pr-01-03`
+  precedent that a decimal "sidesteps the subject" in a fraction-focused lesson.
 
 **Grade-vocabulary CSV — drop this from the list. Re-audited post-commit, already resolved.** It
 had been carried forward as "the highest harm-per-effort item" since S238 with no session actually
@@ -281,14 +322,17 @@ One more, hit fresh in the `c88d91b` wave:
   the 5s+ default many tools assume) and run it via `nohup ... & disown` + poll, not inline,
   since it will exceed a 2-minute tool-call default.
 - **`PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K's queue half) regenerated mid-gate-sequence
-  twice in the same session**, both times collapsing from its committed 11,488-line form to a
-  1,078-row consolidated form matching `CLOSURE_LEDGER.md`'s "1,078 open rows" claim — reproduced
-  identically across two separate full gate runs. Not conclusively isolated to one script, but the
-  circumstantial case points at `next build`'s static generation, since it was the only
-  full-system step run both times a change was observed. `git checkout --
-  PREMIUM_PENDING_WORKLOAD_QUEUE.csv` restores it, as Trap K already prescribes — just know it may
-  need doing **more than once** in one session (once after gates, and check again right before the
-  final commit, since a later gate can re-trigger it after an earlier restoration).
+  THREE separate times this session**, always collapsing from its committed 11,488-line form to a
+  1,078-row consolidated form matching `CLOSURE_LEDGER.md`'s "1,078 open rows" claim. The trigger
+  is now effectively confirmed, not just circumstantial: all three times, the CSV was untouched
+  right up until `npm run build` ran, and changed immediately after — no other gate in the
+  sequence (typecheck, vitest, validate:content, lint:pedagogy, validate:native,
+  check:registration) ever produced this side effect on its own across many runs this session.
+  Something in `next build`'s static generation (most plausibly a page that server-renders a
+  workload/admin view and imports the consolidation logic as a side effect of prerendering it)
+  regenerates the file. `git checkout -- PREMIUM_PENDING_WORKLOAD_QUEUE.csv` restores it, as
+  Trap K prescribes — but budget for doing this **after every `npm run build` in the session**,
+  not once: check `git status` immediately after each build, not just before the final commit.
 
 ---
 
