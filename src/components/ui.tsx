@@ -50,7 +50,27 @@ export type IconName =
   | "scale"
   | "functionCurve"
   | "calculus"
-  | "dice";
+  | "dice"
+  /* Trail set — WS-A brand vocabulary, same 24x24 / 2px grammar. */
+  | "compassRose"
+  | "signpost"
+  | "waypoint"
+  | "map"
+  | "ascent"
+  | "trailhead"
+  | "bridge"
+  | "trailBadge"
+  | "summit"
+  | "cairn"
+  | "pine"
+  | "basecamp"
+  | "summitFlag"
+  | "elevation"
+  | "backpack"
+  | "lantern"
+  | "binoculars"
+  | "sunrise"
+  | "northStar";
 
 /**
  * One visual grammar: 24×24 grid, 2px rounded strokes, no fills, currentColor.
@@ -224,7 +244,137 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M4 20V4M4 20h16" />
       <path d="M8 16v-4M12 16V8M16 16v-6" />
     </>
-  )
+  ),
+
+  /* Trail — navigation */
+  compassRose: (
+    <>
+      <path d="M12 3.3A8.7 8.7 0 0 1 12 20.7 8.7 8.7 0 0 1 12 3.3z" />
+      <path d="M12 5.6 13.3 10.7 18.4 12 13.3 13.3 12 18.4 10.7 13.3 5.6 12 10.7 10.7z" />
+    </>
+  ),
+  signpost: (
+    <>
+      <path d="M12 21.5V3.5" />
+      <path d="M12 6H5.2L3 8.5 5.2 11H12" />
+      <path d="M12 13.8h6.8l2.2 2.5-2.2 2.5H12" />
+    </>
+  ),
+  waypoint: (
+    <>
+      <path d="M12 21c0-4.5-5.5-6.2-5.5-10.5a5.5 5.5 0 1 1 11 0C17.5 14.8 12 16.5 12 21z" />
+      <path d="M12 10.5h.01" />
+    </>
+  ),
+  map: (
+    <>
+      <path d="M3 6.6 9 4.4v13L3 19.6z" />
+      <path d="M9 4.4 15 6.6v13L9 17.4z" />
+      <path d="M15 6.6 21 4.4v13L15 19.6z" />
+    </>
+  ),
+
+  /* Trail — the path */
+  ascent: (
+    <>
+      <path d="M3.5 19.5c4-.6 6.8-2.8 8.5-6.2S15.6 6.6 20.5 4.8" />
+      <path d="M15.6 4.2 20.8 4.6 20.2 9.8" />
+    </>
+  ),
+  trailhead: (
+    <>
+      <path d="M4 21v-6.8a8 8 0 0 1 16 0V21" />
+      <path d="M12 21v-7.6" />
+    </>
+  ),
+  bridge: (
+    <>
+      <path d="M2.5 16.5h19" />
+      <path d="M6.5 16.5V7.5M17.5 16.5V7.5" />
+      <path d="M6.5 7.5c3 4.6 8 4.6 11 0" />
+      <path d="M9.6 16.5v-3.6M12 16.5v-4.6M14.4 16.5v-3.6" />
+    </>
+  ),
+  trailBadge: (
+    <>
+      <path d="M12 2.8 20 5.6v6.6c0 4.6-3.6 7.2-8 8.8-4.4-1.6-8-4.2-8-8.8V5.6z" />
+      <path d="M8.2 14.4 12 8.8l3.8 5.6z" />
+    </>
+  ),
+
+  /* Trail — landmarks */
+  summit: <path d="M2.5 19.5 9 7.5l3.4 6.2L15.8 8l5.7 11.5z" />,
+  cairn: (
+    <>
+      <path d="M5.5 20.5h13" />
+      <path d="M12 20.5c-2.9 0-5.2-1-5.2-2.3s2.3-2.3 5.2-2.3 5.2 1 5.2 2.3-2.3 2.3-5.2 2.3z" />
+      <path d="M12 15.5c-2.2 0-3.9-.9-3.9-2s1.7-2 3.9-2 3.9.9 3.9 2-1.7 2-3.9 2z" />
+      <path d="M12 11.2c-1.6 0-2.8-.8-2.8-1.7s1.2-1.7 2.8-1.7 2.8.8 2.8 1.7-1.2 1.7-2.8 1.7z" />
+    </>
+  ),
+  pine: (
+    <>
+      <path d="M12 3 8.4 9h7.2z" />
+      <path d="M12 7.4 6.6 15h10.8z" />
+      <path d="M12 12 5 20h14z" />
+      <path d="M12 20v1.5" />
+    </>
+  ),
+  basecamp: (
+    <>
+      <path d="M12 4.5 3 20.5h18z" />
+      <path d="M12 11 8.6 20.5M12 11l3.4 9.5" />
+    </>
+  ),
+  summitFlag: (
+    <>
+      <path d="M6.5 21V3.5" />
+      <path d="M6.5 5h11l-2.6 3.6L17.5 12h-11" />
+    </>
+  ),
+
+  /* Trail — terrain */
+  elevation: (
+    <>
+      <path d="M3 19.5h18" />
+      <path d="M3.5 16.2 7.5 11l3 3.2 4.2-7.4 3.1 5.4 2.7-2.8" />
+    </>
+  ),
+
+  /* Trail — kit */
+  backpack: (
+    <>
+      <path d="M7 8.5h10a3 3 0 0 1 3 3V18a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18v-6.5a3 3 0 0 1 3-3z" />
+      <path d="M9 8.5V6.8a3 3 0 0 1 6 0v1.7" />
+      <path d="M8.5 20.5v-4.8a3.5 3.5 0 0 1 7 0v4.8" />
+    </>
+  ),
+  lantern: (
+    <>
+      <path d="M10 4.2a2 2 0 0 1 4 0" />
+      <path d="M7.6 7h8.8" />
+      <path d="M8.8 7h6.4l.6 10.2a1.9 1.9 0 0 1-1.9 2h-3.8a1.9 1.9 0 0 1-1.9-2z" />
+      <path d="M12 11v3.6" />
+    </>
+  ),
+  binoculars: (
+    <>
+      <path d="M6.5 8.5h1.8a2.5 2.5 0 0 1 2.5 2.5v6.5a2.7 2.7 0 0 1-5.4 0V11a2.5 2.5 0 0 1 1.1-2.5z" />
+      <path d="M17.5 8.5h-1.8a2.5 2.5 0 0 0-2.5 2.5v6.5a2.7 2.7 0 0 0 5.4 0V11a2.5 2.5 0 0 0-1.1-2.5z" />
+      <path d="M10.8 12.5h2.4" />
+      <path d="M7 8.5V6.4h2.4v2.1M17 8.5V6.4h-2.4v2.1" />
+    </>
+  ),
+
+  /* Trail — moments */
+  sunrise: (
+    <>
+      <path d="M3.5 19.5h17" />
+      <path d="M7.6 15.9a4.4 4.4 0 0 1 8.8 0" />
+      <path d="M12 6.2v2.4M5.6 9.1l1.7 1.7M18.4 9.1l-1.7 1.7M2.8 15.9h2M19.2 15.9h2" />
+    </>
+  ),
+  northStar: <path d="M12 2.8 14.1 9.9 21.2 12 14.1 14.1 12 21.2 9.9 14.1 2.8 12 9.9 9.9z" />
 };
 
 export function AppIcon({
