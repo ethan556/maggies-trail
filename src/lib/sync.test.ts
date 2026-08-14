@@ -26,12 +26,20 @@ describe("mergeProfiles — algebraic properties", () => {
   });
 
   it("breaks LWW ties deterministically by deviceId, so both devices converge", () => {
-    const a = p({ deviceId: "dev-a", dailyGoal: 2 });
-    const b = p({ deviceId: "dev-b", dailyGoal: 5 }); // identical updatedAt
+    const a = p({ deviceId: "dev-a", dailyGoal: 2, avatarId: "avatar-002" });
+    const b = p({ deviceId: "dev-b", dailyGoal: 5, avatarId: "avatar-101" }); // identical updatedAt
     // lwwWinner returns a POSITIONAL label, so resolve it to the actual profile before comparing.
     const winnerOf = (x: SyncedProfile, y: SyncedProfile) => (lwwWinner(x, y) === "a" ? x : y);
     expect(winnerOf(a, b).deviceId).toBe(winnerOf(b, a).deviceId); // same device wins either way
     expect(mergeProfiles(a, b).dailyGoal).toBe(mergeProfiles(b, a).dailyGoal);
+    expect(mergeProfiles(a, b).avatarId).toBe(mergeProfiles(b, a).avatarId);
+  });
+
+  it("avatarId: last-write-wins, mirroring displayName", () => {
+    const older = p({ updatedAt: "2026-03-01T08:00:00.000Z", avatarId: "avatar-002" });
+    const fresher = p({ updatedAt: "2026-03-02T08:00:00.000Z", avatarId: "avatar-101" });
+    expect(mergeProfiles(older, fresher).avatarId).toBe("avatar-101");
+    expect(mergeProfiles(fresher, older).avatarId).toBe("avatar-101"); // order-independent
   });
 });
 
@@ -178,6 +186,7 @@ describe("REGRESSION s46: completed lessons cannot resurrect as active", () => {
 describe("isSyncedProfile — authenticated trust boundary", () => {
   it("accepts a valid current profile, including resumable lesson state", () => {
     const valid = p({
+      avatarId: "avatar-101",
       mastery: {
         fractions: {
           tag: "fractions", mastery: 0.72, attempts: 8, correctStreak: 2,
@@ -201,7 +210,8 @@ describe("isSyncedProfile — authenticated trust boundary", () => {
     ["invalid league", { league: { week: "2026-W30", tier: 1, weeklyXp: 5, lastResult: "teleported" } }],
     ["out-of-range resume index", { activeLessons: { l1: { v: 1, lessonId: "l1", stepIds: ["s1"], i: 1, sessionXp: 0, history: [], injected: [], savedAt: "now" } } }],
     ["impossible prediction totals", { missedPredictions: { l1: { missed: 4, total: 3, at: "2026-07-22" } } }],
-    ["wrong preference type", { reduceMotion: "yes" }]
+    ["wrong preference type", { reduceMotion: "yes" }],
+    ["wrong avatarId type", { avatarId: 123 }]
   ])("rejects %s", (_label, patch) => {
     expect(isSyncedProfile({ ...p(), ...patch })).toBe(false);
   });

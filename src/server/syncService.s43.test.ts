@@ -118,6 +118,15 @@ describe("the conflict matrix", () => {
     expect(merged.displayName).toBe("Ana Banana");
   });
 
+  it("an avatar chosen on one device survives the merge (the avatarId fix)", () => {
+    const { session, learnerId } = makeFamily();
+    ok(pushProfile(db, session, learnerId, base({ updatedAt: "2026-07-17T09:00:00.000Z" })));
+    const merged = ok(
+      pushProfile(db, session, learnerId, base({ deviceId: "devB", updatedAt: "2026-07-17T11:00:00.000Z", avatarId: "avatar-101" }))
+    ).profile;
+    expect(merged.avatarId).toBe("avatar-101");
+  });
+
   it("entitlement is server-authoritative: client premium discarded; the row grants and revokes", () => {
     const { session, learnerId, accountId } = makeFamily();
     // Device claims premium out of thin air → discarded.

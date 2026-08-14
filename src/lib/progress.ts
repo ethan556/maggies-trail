@@ -39,6 +39,10 @@ export interface Profile {
   /** first name given in onboarding — personalizes the trail ("David's Trail");
    * absent = the default brand, Maggie's Trail */
   displayName?: string;
+  /** id of the chosen portrait from the AVATARS manifest (see ./avatars.ts), e.g. "avatar-101";
+   * absent = no selection yet — resolves to the generated-initials/placeholder fallback, never
+   * an error state */
+  avatarId?: string;
   /** lessons-per-day target; absent = 1 */
   dailyGoal?: number;
   /** completions per local date, for the daily-goal ring */

@@ -151,6 +151,7 @@ export function isSyncedProfile(value: unknown): value is SyncedProfile {
   }
 
   if (value.displayName !== undefined && !shortString(value.displayName, 200)) return false;
+  if (value.avatarId !== undefined && !shortString(value.avatarId, 64)) return false;
   if (value.dailyGoal !== undefined && !integerIn(value.dailyGoal, 1, 100)) return false;
   if (!optionalBoolean(value.reduceMotion) || !optionalBoolean(value.followRecs)) return false;
   if (value.updatedAt !== undefined && !shortString(value.updatedAt, 64)) return false;
@@ -336,6 +337,7 @@ export function mergeProfiles(a: SyncedProfile, b: SyncedProfile): SyncedProfile
 
     // ---- last-write-wins (a genuine "latest intent") ----
     displayName: prefsFrom.displayName ?? a.displayName ?? b.displayName,
+    avatarId: prefsFrom.avatarId ?? a.avatarId ?? b.avatarId,
     onboarding: prefsFrom.onboarding ?? a.onboarding ?? b.onboarding,
     dailyGoal: prefsFrom.dailyGoal ?? a.dailyGoal ?? b.dailyGoal,
     reduceMotion: prefsFrom.reduceMotion ?? a.reduceMotion ?? b.reduceMotion,
