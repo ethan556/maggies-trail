@@ -405,19 +405,33 @@ const STANDARD_CTX: LintCtx = { conceptWordMax: 80 };
 const EARLY_CTX: LintCtx = { conceptWordMax: 25 };
 
 /** A DELIBERATELY conservative fold for near-duplicate mcq option-label detection: whitespace,
- * case, a LEADING or TRAILING run of quote/terminal-punctuation characters, and one leading
- * filler word ("a"/"an"/"the"). Nothing else. This is exact-match-after-folding, never fuzzy or
- * edit-distance matching, and it never touches a character embedded INSIDE the text — so a
- * decimal point, minus sign, fraction slash, or percent/degree/currency symbol is always left
- * alone. That is what keeps "8" and "8 remainder 2" (this file's own worked false-positive
- * example, see the block below) folding to two different strings rather than colliding. Detecting
- * options whose PHRASING differs but whose underlying scenario overlaps (S238 §4 defect 1's
- * class) needs real semantic judgment, which is exactly what this function refuses to attempt —
- * that class of case belongs in MCQ_DISTRACTOR_AUDIT.csv's detector pipeline, not here. */
+ * case, a LEADING or TRAILING run of quote/terminal-punctuation characters, one leading filler
+ * word ("a"/"an"/"the") and one trailing filler particle ("too"/"also"/"as well"). Nothing else.
+ * This is exact-match-after-folding, never fuzzy or edit-distance matching, and it never touches a
+ * character embedded INSIDE the text — so a decimal point, minus sign, fraction slash, or
+ * percent/degree/currency symbol is always left alone. That is what keeps "8" and "8 remainder 2"
+ * (this file's own worked false-positive example, see the block below) folding to two different
+ * strings rather than colliding. Detecting options whose PHRASING differs but whose underlying
+ * scenario overlaps (S238 §4 defect 1's class) needs real semantic judgment, which is exactly what
+ * this function refuses to attempt — that class of case belongs in MCQ_DISTRACTOR_AUDIT.csv's
+ * detector pipeline, not here.
+ *
+ * The trailing-filler list is restricted to pure discourse particles carrying NO quantitative
+ * meaning. Words that read as filler in prose but are load-bearing in a math option — "total",
+ * "altogether", "in total", "each", "exactly", "only" — are deliberately EXCLUDED: "18" and
+ * "18 total" can be genuinely different answers, and folding them is precisely the false positive
+ * this check exists to avoid. Measured across all 2,633 corpus mcq widgets, adding trailing-filler
+ * folding changes nothing (0 hits before, 0 after) — it is here so the rule matches its stated
+ * definition, not to chase a known defect. */
 function mcqNearDuplicateKey(label: string): string {
   const DECORATIVE_EDGE = /^["'’‘“”.,!?;:]+|["'’‘“”.,!?;:]+$/g;
   const folded = label.trim().toLowerCase().replace(/\s+/g, " ").replace(DECORATIVE_EDGE, "").trim();
-  return folded.replace(/^(a|an|the)\s+/, "");
+  const noLeadingFiller = folded.replace(/^(a|an|the)\s+/, "");
+  // Trailing filler is stripped AFTER the leading article so "A cat too" and "Cat" fold alike,
+  // then edge punctuation is re-stripped because removing the particle can expose a comma
+  // ("Yes, too." → "yes, too" → "yes," → "yes"). Both filler patterns require adjacent
+  // whitespace, so a bare one-word option ("Too", "The") is never folded down to nothing.
+  return noLeadingFiller.replace(/\s+(too|also|as well)$/, "").replace(DECORATIVE_EDGE, "").trim();
 }
 
 /** Rules that apply to a step wherever it appears (core sequence or remedial pair). */

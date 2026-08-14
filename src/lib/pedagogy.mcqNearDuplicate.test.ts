@@ -64,6 +64,67 @@ describe("WS-G mcq near-duplicate option-label detection", () => {
     expect(errs.some((e) => e.includes("near-duplicate phrasing"))).toBe(false);
   });
 
+  it("TRUE POSITIVE: catches phrasing that differs only by a TRAILING filler particle", () => {
+    const bad = structuredClone(base);
+    const k1 = bad.steps.find((s) => s.id === "k1");
+    if (k1?.widget?.type !== "mcq") throw new Error("fixture drifted: k1 is no longer an mcq step");
+    const optA = k1.widget.options.find((o) => o.id === "a")!;
+    const optD = k1.widget.options.find((o) => o.id === "d")!;
+    // "…, too." exercises the re-strip of edge punctuation exposed by removing the particle:
+    // "3 bags…, too." → "3 bags…, too" → "3 bags…," → "3 bags…".
+    optD.label = `${optA.label}, too.`;
+
+    const errs = lintLesson(bad);
+    expect(errs.some((e) => e.includes("near-duplicate phrasing"))).toBe(true);
+    expect(errs.some((e) => e.includes("share the label"))).toBe(false);
+  });
+
+  it("PROTECTED FALSE POSITIVE: a quantitatively load-bearing trailing word is NOT filler ('18' vs '18 total')", () => {
+    const safe = structuredClone(base);
+    const k1 = safe.steps.find((s) => s.id === "k1");
+    if (k1?.widget?.type !== "mcq") throw new Error("fixture drifted: k1 is no longer an mcq step");
+    const optA = k1.widget.options.find((o) => o.id === "a")!;
+    const optB = k1.widget.options.find((o) => o.id === "b")!;
+    optA.label = "18";
+    optB.label = "18 total";
+
+    const errs = lintLesson(safe);
+    expect(errs.some((e) => e.includes("near-duplicate phrasing"))).toBe(false);
+  });
+
+  it("PROTECTED FALSE POSITIVE: a bare one-word option is never folded to nothing ('Too' vs 'Also' stay distinct)", () => {
+    const safe = structuredClone(base);
+    const k1 = safe.steps.find((s) => s.id === "k1");
+    if (k1?.widget?.type !== "mcq") throw new Error("fixture drifted: k1 is no longer an mcq step");
+    const optA = k1.widget.options.find((o) => o.id === "a")!;
+    const optB = k1.widget.options.find((o) => o.id === "b")!;
+    optA.label = "Too";
+    optB.label = "Also";
+
+    const errs = lintLesson(safe);
+    expect(errs.some((e) => e.includes("near-duplicate phrasing"))).toBe(false);
+  });
+
+  it("PROTECTED FALSE POSITIVE: a sign or embedded operator keeps options distinct ('(−4, 1)' vs '(4, 1)')", () => {
+    // The corpus sweep behind this rule found 318 pairs of this exact shape (sign flips, decimal
+    // shifts, ± mirrors) that an all-punctuation-stripping fold would have wrongly merged. They
+    // are the single largest false-positive class, so they get a pinned regression test.
+    const safe = structuredClone(base);
+    const k1 = safe.steps.find((s) => s.id === "k1");
+    if (k1?.widget?.type !== "mcq") throw new Error("fixture drifted: k1 is no longer an mcq step");
+    const optA = k1.widget.options.find((o) => o.id === "a")!;
+    const optB = k1.widget.options.find((o) => o.id === "b")!;
+    const optC = k1.widget.options.find((o) => o.id === "c")!;
+    optA.label = "(−4, 1)";
+    optB.label = "(4, 1)";
+    optC.label = "1.26";
+    const optD = k1.widget.options.find((o) => o.id === "d")!;
+    optD.label = "12.6";
+
+    const errs = lintLesson(safe);
+    expect(errs.some((e) => e.includes("near-duplicate phrasing"))).toBe(false);
+  });
+
   it("the unmodified seed lesson still lints clean (self-check: the new rule adds no false positives here)", () => {
     expect(lintLesson(base)).toEqual([]);
   });
