@@ -6,6 +6,9 @@ import { addDays, computeStreak, localDateStr } from "@/lib/engine";
 import { classify, PROFICIENT, retainedMastery, summarize, type MasteryBand } from "@/lib/mastery";
 import { awardNewBadges, BADGES } from "@/lib/achievements";
 import { progressStore, type Profile } from "@/lib/progress";
+import { trailNameFrom } from "@/lib/personalize";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
+import { AvatarPicker } from "@/components/AvatarPicker";
 
 export interface ProfileCourse {
   slug: string;
@@ -215,6 +218,7 @@ function PrefToggle({ label, desc, on, onToggle }: { label: string; desc: string
 
 export default function ProfileClient({ courses }: { courses: ProfileCourse[] }) {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
   useEffect(() => {
     const p = progressStore.load();
     awardNewBadges(p, { courses });
@@ -230,6 +234,47 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
 
   return (
     <div className="space-y-8">
+      <section className="flex flex-wrap items-center gap-4 rounded-card border border-ink/10 bg-surface p-4 shadow-e1 dark:border-paper/12">
+        <AvatarDisplay
+          avatarId={profile.avatarId}
+          size={512}
+          className="h-20 w-20 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
+        />
+        <div className="min-w-0 flex-1">
+          <p className="text-lg font-extrabold">{trailNameFrom(profile.displayName)}</p>
+          <button
+            type="button"
+            aria-expanded={avatarPickerOpen}
+            aria-controls="avatar-picker-panel"
+            onClick={() => setAvatarPickerOpen((v) => !v)}
+            className="pressable mt-1 inline-flex min-h-11 items-center text-sm font-bold text-sky-ink hover:underline"
+          >
+            {avatarPickerOpen ? "Close" : "Change avatar"}
+          </button>
+        </div>
+      </section>
+
+      {avatarPickerOpen && (
+        <section id="avatar-picker-panel" className="rounded-card border border-ink/10 bg-surface p-4 shadow-e1 dark:border-paper/12">
+          <h2 className="waymark-label text-sm font-extrabold uppercase tracking-wide text-muted">
+            Choose your avatar
+          </h2>
+          <p className="mt-1 text-sm text-content-2">Pick one that feels right. You can change it anytime.</p>
+          <div className="mt-3">
+            <AvatarPicker
+              grade={profile.onboarding?.grade}
+              value={profile.avatarId}
+              onChange={(id) => {
+                const p = progressStore.load();
+                p.avatarId = id;
+                progressStore.save(p);
+                setProfile(p);
+              }}
+            />
+          </div>
+        </section>
+      )}
+
       <div className="grid grid-cols-3 gap-3">
         {[
           { label: "Trail mix (XP)", value: profile.xp, accent: true },

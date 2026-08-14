@@ -12,6 +12,16 @@ import {
 import { progressStore } from "@/lib/progress";
 import { cleanName } from "@/lib/personalize";
 import { AppIcon } from "@/components/ui";
+import { AvatarPicker } from "@/components/AvatarPicker";
+import { AVATARS } from "@/lib/avatars";
+
+// WS-J: the avatar stage between "grade" and "goal" only renders once the manifest has at least
+// one enabled entry. Today (every entry `enabled: false`) it's a mandatory screen with zero
+// selectable options — a dead stage — so the grade stage skips straight to "goal", exactly as it
+// did before this pass, and the existing name→grade→goal walkthrough test stays green. The moment
+// art lands and a flag flips, this flips to true with no further wiring: see
+// OnboardingFlow.avatar.test.tsx for the enabled path, mocked ahead of real art.
+const HAS_ENABLED_AVATARS = AVATARS.some((a) => a.enabled);
 
 // Every band with a trail belongs here. K/1/2 and 9–13 had trails in onboarding.ts all along and
 // the picker never offered them, so `trailsForGrade` was dead code above Grade 8 — a whole HS and
@@ -103,6 +113,7 @@ function StepDots({ current }: { current: 1 | 2 | 3 }) {
 type Stage =
   | { at: "name" }
   | { at: "grade" }
+  | { at: "avatar"; grade: GradeLevel }
   | { at: "goal"; grade: GradeLevel }
   | { at: "placement"; goal: Goal; grade: GradeLevel }
   | { at: "gradetrail"; goal: Goal; grade: GradeLevel }
@@ -111,6 +122,9 @@ type Stage =
 export default function OnboardingFlow() {
   const [stage, setStage] = useState<Stage>({ at: "name" });
   const [nameDraft, setNameDraft] = useState("");
+  // Mirrors nameDraft: never prefilled from a prior profile (onboarding is a first-run flow, not
+  // an edit flow — see commitName below, which has the same "never prefilled" property for names).
+  const [avatarId, setAvatarId] = useState<string | undefined>(undefined);
 
   /** Save the name (if any) immediately, so it sticks even if they never finish. */
   function commitName(raw: string) {
@@ -210,9 +224,44 @@ export default function OnboardingFlow() {
               key={g.id}
               label={g.label}
               sub={g.sub}
-              onClick={() => setStage({ at: "goal", grade: g.id })}
+              onClick={() =>
+                setStage(HAS_ENABLED_AVATARS ? { at: "avatar", grade: g.id } : { at: "goal", grade: g.id })
+              }
             />
           ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (stage.at === "avatar") {
+    return (
+      <div className="step-in">
+        <StepDots current={1} />
+        <h1 className="text-2xl font-extrabold">Choose your avatar</h1>
+        <p className="mt-1 text-content-2">Pick one that feels right. You can change it anytime.</p>
+        <div className="mt-4">
+          <AvatarPicker
+            grade={stage.grade}
+            value={avatarId}
+            onChange={(id) => {
+              // Commit immediately, mirroring commitName — it sticks even if the learner bails
+              // out of onboarding before reaching "done".
+              const p = progressStore.load();
+              p.avatarId = id;
+              progressStore.save(p);
+              setAvatarId(id);
+            }}
+          />
+        </div>
+        <div className="mt-5">
+          <button
+            type="button"
+            onClick={() => setStage({ at: "goal", grade: stage.grade })}
+            className="pressable min-h-11 rounded-pill bg-cta px-6 py-3 font-extrabold text-white shadow-e1 transition-colors hover:bg-primary-hover hover:shadow-e2"
+          >
+            Continue
+          </button>
         </div>
       </div>
     );
