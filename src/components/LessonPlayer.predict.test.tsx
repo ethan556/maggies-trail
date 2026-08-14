@@ -2,10 +2,12 @@
 /**
  * The predict → manipulate → observe loop, walked in the REAL player.
  * The contract under test:
- *  1. On a predict step, the manipulative and Check are HIDDEN until the
- *     learner commits (progressive disclosure — the interaction tests a
- *     belief, it doesn't wander).
- *  2. Committing reveals the manipulative and pins the chosen prediction.
+ *  1. On a predict step, the manipulative is MOUNTED BUT INERT until the
+ *     learner commits — visible (dimmed) so the learner sees what they are
+ *     predicting about, but aria-hidden and non-interactive, with Check
+ *     absent (WS-E Phase 3: the gate still gates, it just doesn't blank
+ *     the stage).
+ *  2. Committing activates the manipulative and pins the chosen prediction.
  *  3. Completing the step shows the outcome comparison: confirmation when the
  *     prediction held, the model's answer when it didn't — never a penalty.
  *  4. Enter stands down while a prediction is pending.
@@ -75,23 +77,38 @@ beforeEach(() => {
 const btn = (name: RegExp) => screen.getByRole("button", { name });
 
 describe("predict → manipulate → observe", () => {
-  it("hides the manipulative and Check until the learner commits a prediction", () => {
+  it("keeps the manipulative mounted but inert (and Check absent) until the learner commits", () => {
     render(<LessonPlayer lesson={predictLesson()} />);
     fireEvent.click(btn(/^Continue$/)); // past c1 → i1
     expect(screen.getByText(/Make a prediction first/)).toBeTruthy();
+    // Out of the accessibility tree (aria-hidden)…
     expect(screen.queryByRole("slider")).toBeNull();
+    // …but PRESENT in the DOM: the learner sees the thing they're predicting about.
+    expect(screen.getByRole("slider", { hidden: true })).toBeTruthy();
+    const shell = document.querySelector('[data-predict-pending="true"]') as HTMLElement;
+    expect(shell).toBeTruthy();
+    expect(shell.getAttribute("aria-hidden")).toBe("true");
+    expect(shell.hasAttribute("inert")).toBe(true); // no focus, no clicks
+    expect(shell.className).toContain("pointer-events-none");
+    expect(shell.className).toContain("opacity-50"); // dimmed, not blank
+    // The dim/undim transition runs only under motion-safe — reduced-motion
+    // users get a plain state swap, never an animation.
+    expect(shell.className).toContain("motion-safe:transition-opacity");
+    expect(shell.className).not.toMatch(/(^|\s)transition-opacity/);
     expect(screen.queryByRole("button", { name: /^Check$/ })).toBeNull();
     // Enter stands down while a prediction is pending
     fireEvent.keyDown(window, { key: "Enter" });
     expect(screen.queryByRole("status")).toBeNull();
   });
 
-  it("committing reveals the manipulative, pins the prediction, and a CONFIRMED prediction says so", () => {
+  it("committing activates the manipulative, pins the prediction, and a CONFIRMED prediction says so", () => {
     render(<LessonPlayer lesson={predictLesson()} />);
     fireEvent.click(btn(/^Continue$/));
     fireEvent.click(screen.getByRole("radio", { name: /It goes up by 4/ }));
     expect(screen.getByText(/Your prediction:/)).toBeTruthy();
+    // Fully interactive post-commit: back in the a11y tree, inert gate gone.
     expect(screen.getByRole("slider")).toBeTruthy();
+    expect(document.querySelector('[data-predict-pending]')).toBeNull();
     fireEvent.change(screen.getByRole("slider"), { target: { value: "20" } });
     fireEvent.click(btn(/^Check$/));
     expect(screen.getByText(/Your prediction held/)).toBeTruthy();
@@ -178,9 +195,11 @@ describe("flagship conversion integration (fa-01-01, fraction equivalence)", () 
       })
     );
     render(<LessonPlayer lesson={flagship} />);
-    // The predict gate is up and the manipulative hidden.
+    // The predict gate is up; the manipulative is mounted but inert (out of
+    // the a11y tree, present in the DOM) — WS-E Phase 3.
     expect(screen.getByText(/Make a prediction first/)).toBeTruthy();
     expect(screen.queryByRole("button", { name: /Move 267/ })).toBeNull();
+    expect(screen.getByRole("button", { name: "Move 267 up", hidden: true })).toBeTruthy();
     fireEvent.click(screen.getByRole("radio", { name: /The hundreds spot/ }));
     // Presentation order is 627, 267, 672, 276 → sort ascending with arrow buttons.
     fireEvent.click(screen.getByRole("button", { name: "Move 267 up" })); // 267,627,672,276

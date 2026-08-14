@@ -27,8 +27,8 @@ const clickContinue = () => fireEvent.click(btn(/^Continue$/));
 const clickCheck = () => fireEvent.click(btn(/^Check$/));
 
 /** i1 now opens with a prediction gate (added in the flagship tier upgrades):
- * the manipulative stays hidden until the learner commits. Commitments are
- * ungraded, so the walk picks the first option. */
+ * the manipulative is mounted but inert until the learner commits. Commitments
+ * are ungraded, so the walk picks the first option. */
 function commitPrediction() {
   fireEvent.click(screen.getAllByRole("radio")[0]);
 }
@@ -84,11 +84,14 @@ describe("lesson playthrough (scripted DOM walk)", () => {
     expect(screen.getByText(/Maya packs 3 bags/)).toBeTruthy();
     expect(document.querySelector(".stage")).toBeTruthy();
     clickContinue();
-    // i1 opens with the prediction gate — the manipulative (and its stage) stays
-    // hidden until the learner commits. Commit, then the widget sits on the stage.
+    // i1 opens with the prediction gate — the manipulative is mounted but INERT
+    // (dimmed, aria-hidden, untouchable) until the learner commits, so the learner
+    // sees what they are predicting about (WS-E Phase 3). Commit lifts the gate
+    // and the widget becomes interactive on its stage.
     expect(screen.getByText(/Make a prediction first/)).toBeTruthy();
-    expect(document.querySelector(".stage")).toBeNull();
+    expect(document.querySelector('[data-predict-pending="true"] .stage')).toBeTruthy();
     commitPrediction();
+    expect(document.querySelector("[data-predict-pending]")).toBeNull();
     expect(document.querySelector(".stage")).toBeTruthy();
     setSlider(5);
     clickCheck();

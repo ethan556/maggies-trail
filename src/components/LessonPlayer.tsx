@@ -462,6 +462,10 @@ export default function LessonPlayer({
   const s = st.queue[st.i];
   const actionable = s.kind !== "concept" && s.kind !== "recap";
   const finalized = st.phase === "correct" || st.phase === "revealed";
+  // WS-E Phase 3: a pending prediction no longer unmounts the widget — it renders
+  // mounted-but-inert behind the gate (dimmed, aria-hidden, non-interactive) so the
+  // learner can see what they are predicting about. Commit still gates interaction.
+  const predictPending = Boolean(s.predict && st.prediction === null);
   // Availability, not kind — same defect as the hint control below. 118 interactive
   // steps (116 of them the very steps that also carried stranded hint ladders) author
   // explanationVariants that this gate discarded, so the learner finished an explored
@@ -588,10 +592,12 @@ export default function LessonPlayer({
           {early && <Narration step={s} stepKey={`${s.id}:${st.i}`} />}
           {s.body && <Rich text={s.body} early={early} />}
 
-          {s.predict && st.prediction === null && (
-            /* Predict before you touch: the manipulative stays hidden until the
-               learner commits, so the interaction tests a belief rather than
-               wandering. Commitments are safe — never graded, never penalized. */
+          {predictPending && s.predict && (
+            /* Predict before you touch: the manipulative stays inert (visible but
+               dimmed and untouchable, below) until the learner commits, so the
+               interaction tests a belief rather than wandering — while the learner
+               can still see the thing they are predicting about. Commitments are
+               safe — never graded, never penalized. */
             <div className="trail-prediction-card mt-5 rounded-card border border-tangerine/30 bg-tangerine/7 p-4 shadow-e2">
               <p className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wide text-tangerine-ink">
                 <AppIcon name="compass" size={14} />
@@ -631,14 +637,24 @@ export default function LessonPlayer({
           )}
         </div>
 
-        {/* The manipulative gets the step's full stage width — the loudest thing on screen. */}
-        {!(s.predict && st.prediction === null) && s.widget && (
-          <div className="math-stage-shell mt-4">
+        {/* The manipulative gets the step's full stage width — the loudest thing on screen.
+            While a prediction is pending it is mounted but inert — dimmed, aria-hidden,
+            and non-interactive — instead of absent from the DOM (WS-E Phase 3 softening).
+            Opacity transitions only under motion-safe; reduced-motion gets a plain swap. */}
+        {s.widget && (
+          <div
+            className={`math-stage-shell mt-4 motion-safe:transition-opacity motion-safe:duration-300 ${
+              predictPending ? "pointer-events-none select-none opacity-50" : ""
+            }`}
+            aria-hidden={predictPending || undefined}
+            inert={predictPending || undefined}
+            data-predict-pending={predictPending ? "true" : undefined}
+          >
             <WidgetView
               spec={s.widget}
               value={st.value}
               onChange={setCMLValue}
-              disabled={false}
+              disabled={predictPending}
               seed={`${st.lesson.id}:${s.id}`}
               tone={stageTone}
               onEvent={onProcessEvent}
@@ -882,7 +898,7 @@ export default function LessonPlayer({
               </button>
             )}
 
-            {actionable && st.phase === "work" && s.widget && !(s.predict && st.prediction === null) && (
+            {actionable && st.phase === "work" && s.widget && !predictPending && (
               <button
                 type="button"
                 onClick={st.check}
