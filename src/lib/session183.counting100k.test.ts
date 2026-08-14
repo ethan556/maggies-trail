@@ -165,8 +165,16 @@ describe("counting-to-100-k authored content", () => {
   it("tier preconditions: predict on i1, 4 variant-backed graded steps, hints ladders, remedial per lesson", () => {
     for (const l of lessons) {
       const i1 = l.steps.find((s: { id: string }) => s.id === "i1");
-      expect(i1.predict, l.id).toBeDefined();
-      expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId), l.id).toBe(true);
+      // S241 WS-E Phase 4: these i1 gates were REMOVED by explicit user ruling (REMOVE verdicts
+      // + the ruled repetition-thinning policy; see PREDICTION_GATE_ADJUDICATION.csv). Absent
+      // gates must STAY absent; every other lesson's gate must still be present and coherent.
+      const S241_REMOVED = new Set(["k100-01-02", "k100-01-03", "k100-01-04", "k100-01-05", "k100-03-01", "k100-03-04", "k100-03-06"]);
+      if (S241_REMOVED.has(l.id)) {
+        expect(i1.predict, l.id).toBeUndefined();
+      } else {
+        expect(i1.predict, l.id).toBeDefined();
+        expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId), l.id).toBe(true);
+      }
       const graded = l.steps.filter((s: { kind: string }) => s.kind === "check" || s.kind === "challenge");
       expect(graded.length, l.id).toBe(4);
       for (const g of graded) {

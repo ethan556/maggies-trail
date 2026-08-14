@@ -123,8 +123,17 @@ describe("S196 measure-problems-g4 — routes re-derived, conversion direction p
         ["concept", "interactive", "check", "concept", "interactive", "check", "check", "challenge", "recap"]
       );
       const [i1] = lesson.steps.filter((s: { kind: string }) => s.kind === "interactive");
-      expect(i1.predict).toBeDefined();
-      expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      // S241 WS-E Phase 4: some i1 prediction gates in this course were REMOVED by explicit
+      // user ruling (REMOVE verdicts + the ruled repetition-thinning policy; see
+      // PREDICTION_GATE_ADJUDICATION.csv). For those lessons the gate must be ABSENT; every
+      // other lesson's gate must still be present and internally coherent — same rigor, new truth.
+      const S241_REMOVED = new Set(["g4v-01-02", "g4v-01-03", "g4v-01-04", "g4v-02-01"]);
+      if (S241_REMOVED.has(lesson.id)) {
+        expect(i1.predict).toBeUndefined();
+      } else {
+        expect(i1.predict).toBeDefined();
+        expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      }
 
       for (const s of lesson.steps) {
         if (!s.widget) continue;

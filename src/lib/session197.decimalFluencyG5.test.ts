@@ -133,8 +133,16 @@ describe("S197 decimal-fluency-g5 — routes re-derived, decimal hazards pinned"
         ["concept", "interactive", "check", "concept", "interactive", "check", "check", "challenge", "recap"]
       );
       const [i1] = lesson.steps.filter((s: { kind: string }) => s.kind === "interactive");
-      expect(i1.predict).toBeDefined();
-      expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      // S241 WS-E Phase 4: g5d-01-03's i1 prediction gate was REMOVED by the user-ruled thinning
+      // policy (g5d-01-05 kept as the family's canonical gate). Every other lesson in this
+      // course must still carry a coherent gate — the assertion is conditional, not deleted:
+      // a gate that exists must be internally consistent, exactly as before.
+      if (lesson.id === "g5d-01-03") {
+        expect(i1.predict).toBeUndefined();
+      } else {
+        expect(i1.predict).toBeDefined();
+        expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      }
 
       for (const s of lesson.steps) {
         if (!s.widget) continue;

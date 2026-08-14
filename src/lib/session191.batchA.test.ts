@@ -69,8 +69,17 @@ for (const course of COURSES) {
           ["concept", "interactive", "check", "concept", "interactive", "check", "check", "challenge", "recap"]
         );
         const [i1] = lesson.steps.filter((s: { kind: string }) => s.kind === "interactive");
-        expect(i1.predict).toBeDefined();
-        expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+        // S241 WS-E Phase 4: some i1 prediction gates in this course were REMOVED by explicit
+        // user ruling (REMOVE verdicts + the ruled repetition-thinning policy; see
+        // PREDICTION_GATE_ADJUDICATION.csv). For those lessons the gate must be ABSENT; every
+        // other lesson's gate must still be present and internally coherent — same rigor, new truth.
+        const S241_REMOVED = new Set(["g1e-03-02", "g1p-01-04"]);
+        if (S241_REMOVED.has(lesson.id)) {
+          expect(i1.predict).toBeUndefined();
+        } else {
+          expect(i1.predict).toBeDefined();
+          expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+        }
 
         for (const s of lesson.steps.filter((x: { kind: string }) => x.kind === "check" || x.kind === "challenge")) {
           const w = WidgetSpec.parse(s.widget) as TWidget;

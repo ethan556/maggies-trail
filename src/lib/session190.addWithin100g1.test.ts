@@ -36,8 +36,16 @@ describe("S190 add-within-100-g1 — every lesson re-derived, every check via th
         ["concept", "interactive", "check", "concept", "interactive", "check", "check", "challenge", "recap"]
       );
       const [i1] = lesson.steps.filter((s: { kind: string }) => s.kind === "interactive");
-      expect(i1.predict).toBeDefined();
-      expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      // S241 WS-E Phase 4: g1a-01-01's i1 prediction gate was REMOVED by the user-ruled thinning
+      // policy (g1a-02-03 kept as the family's canonical gate). Every other lesson in this
+      // course must still carry a coherent gate — the assertion is conditional, not deleted:
+      // a gate that exists must be internally consistent, exactly as before.
+      if (lesson.id === "g1a-01-01") {
+        expect(i1.predict).toBeUndefined();
+      } else {
+        expect(i1.predict).toBeDefined();
+        expect(i1.predict.options.some((o: { id: string }) => o.id === i1.predict.outcomeId)).toBe(true);
+      }
 
       for (const s of lesson.steps.filter((x: { kind: string }) => x.kind === "check" || x.kind === "challenge")) {
         const w = WidgetSpec.parse(s.widget) as TWidget;

@@ -84,7 +84,13 @@ describe("S198 compare-numbers-k — course shape and recipe", () => {
   it("the all-A K recipe holds in EVERY lesson", () => {
     for (const lesson of lessons) {
       const i1 = lesson.steps[1];
-      expect(i1.predict, `${lesson.id}: i1 predict step missing`).toBeDefined();
+      // S241 WS-E Phase 4: kcm-03-03's i1 gate was REMOVED by the ruled thinning policy
+      // (see PREDICTION_GATE_ADJUDICATION.csv); it must stay absent. All other lessons keep the recipe.
+      if (lesson.id === "kcm-03-03") {
+        expect(i1.predict, `${lesson.id}: removed gate must stay removed`).toBeUndefined();
+      } else {
+        expect(i1.predict, `${lesson.id}: i1 predict step missing`).toBeDefined();
+      }
       const hasHop = (lesson.steps as Array<{ widget?: { type: string } }>)
         .some((s) => s.widget?.type === "numberLineHop");
       expect(hasHop, `${lesson.id}: no numberLineHop (the only adapt-3 K engine)`).toBe(true);

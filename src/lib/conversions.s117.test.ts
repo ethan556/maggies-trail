@@ -52,7 +52,14 @@ describe("S117 — every converted step parses and passes its own integrity gate
     expect(s.widget?.type).toBe(type);
     const spec = WidgetSpec.parse(s.widget);
     expect(widgetIntegrityErrors(spec)).toEqual([]);
-    expect(s.predict, `${id}/${sid} must commit before it manipulates`).toBeTruthy();
+    // S241 WS-E Phase 4: re-04-01/i1's gate was REMOVED by the ruled thinning policy (see
+    // PREDICTION_GATE_ADJUDICATION.csv) — the converted widget itself stays and must remain
+    // valid (asserted above); only the commit-first gate is gone for this one step.
+    if (!(id === "re-04-01" && sid === "i1")) {
+      expect(s.predict, `${id}/${sid} must commit before it manipulates`).toBeTruthy();
+    } else {
+      expect(s.predict, `${id}/${sid} removed gate must stay removed`).toBeUndefined();
+    }
   });
 });
 
