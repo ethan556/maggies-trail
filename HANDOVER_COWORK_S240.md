@@ -381,56 +381,71 @@ future session doesn't re-litigate:
 (`#22314F` → `#0D1B2A` app-wide, to remove the interim navy/ink mismatch between new brand assets
 and existing chrome) remains undecided. Revisit whenever, no cost to waiting.
 
-## 2.9. IN FLIGHT AT TIME OF THIS WRITING — WS-J full implementation
+## 2.9. WS-J full implementation — COMPLETE (4 commits, `ba3047b`..`066f14e`)
 
-**Read this section before doing anything else if you are picking this session back up.** After
-wave 1 shipped WS-J's first slice (architecture only, zero art), the user instructed "fully
+After wave 1 shipped WS-J's first slice (architecture only, zero art), the user instructed "fully
 implement ws-J. designing and producing ALL the avatars." Investigated image-generation options
-first (ToolSearch, SuggestSkills, SearchMcpRegistry all empty; Canva ruled out per §2.8 item 2) —
-confirmed no path to real art exists in this environment. User chose (via `AskUserQuestion`,
-picking between "full system now, art later" / "try Canva" / "user supplies art") to proceed with
-the full non-art system: expand the manifest from 16 to the full 56-60 avatar concepts, wire
-`Profile.avatarId` + `sync.ts` (the follow-up wave 1 deliberately deferred), build the real picker
-UI, propagate to safe render surfaces. **Every avatar stays `enabled: false` — this is correct,
-not a shortcoming, per WS-J's own non-negotiable rule (§2.7's `53f5817` line, and
-`AVATAR_ART_PRODUCTION_SPEC.md`).**
+first (ToolSearch, SuggestSkills, SearchMcpRegistry all empty; Canva ruled out per §2.8 item 2 —
+its `generate-design` tool only produces marketing/document templates from a fixed type list, no
+character-portrait output, confirmed by reading its actual schema) — confirmed no path to real art
+exists in this environment. User chose (via `AskUserQuestion`, picking between "full system now,
+art later" / "try Canva" / "user supplies art") to proceed with the full non-art system.
 
-Launched as background Workflow **`wf_5cd3bdae-fdc`, task ID `wn4nduo71`**, 5 agents across 4
-phases (Resolve [fable] → Build Foundations [2× sonnet, parallel: manifest+ledger expansion, and
-Profile.avatarId+sync wiring] → Build Picker [sonnet] → Propagate [sonnet]). Script saved at
-`/root/.claude/projects/-home-claude/f5d7c3cb-2cef-55e5-9722-835c8b26e904/workflows/scripts/ws-j-full-implementation-wf_5cd3bdae-fdc.js`
-— resumable via `Workflow({scriptPath, resumeFromRunId: 'wf_5cd3bdae-fdc'})` if it needs to be
-re-run with edits (completed agent calls replay from cache).
+Ran as background Workflow `wf_5cd3bdae-fdc` (5 agents, 4 phases: Resolve [fable] → Build
+Foundations [2× sonnet, parallel] → Build Picker [sonnet] → Propagate [sonnet]). **The run's outer
+task tracking was lost mid-flight once** (a `TaskOutput` lookup came back "No task found" after an
+unrelated tool-call interruption) — resumed cleanly via
+`Workflow({scriptPath: '.../ws-j-full-implementation-wf_5cd3bdae-fdc.js', resumeFromRunId: 'wf_5cd3bdae-fdc'})`,
+which replayed the already-completed agents from cache (confirmed via `git status` showing the
+identical file set before and after resume — no duplicated or divergent work) and continued live
+from the first incomplete phase. Worth knowing: outer task-tracking loss and run-level resume are
+different layers: **the resume mechanism is the reliable recovery path.**
 
-**As of this writing: still running.** Last observed via `git status` (uncommitted, in the working
-tree, NOT yet committed — do not assume these are final or gate-verified):
-`AVATAR_ART_PRODUCTION_SPEC.md`, `AVATAR_CONCEPT_LEDGER.md`, `src/lib/avatars.ts`,
-`src/lib/avatars.test.ts` (manifest-expansion agent); `src/lib/progress.ts`, `src/lib/sync.ts`,
-`src/lib/sync.test.ts`, `src/server/syncService.s43.test.ts` (profile/sync agent). Both "Build
-Foundations" agents were still active; "Build Picker" and "Propagate" had not started.
+**What shipped, one commit per slice, all independently re-verified (not taken from any agent
+self-report):**
+- `ba3047b` — manifest+ledger expansion: 16 → 60 avatar concepts (48 human across 4 bands at 12
+  each, 12 symbols), every entry `enabled: false`, structurally guaranteed (`defineAvatar()`
+  hardcodes it, doesn't accept it as a parameter — no call site can set an avatar live).
+- `3d0716e` — `Profile.avatarId` + `sync.ts` LWW merge/validation (the follow-up wave 1
+  deliberately deferred). Closed a real trap: `mergeProfiles` rebuilds its return object
+  field-by-field, so a field validated-but-not-merged silently evaporates on cross-device sync —
+  verified this by reading the implementation, not assumed.
+- `4555ce6` — `AvatarDisplay`/`AvatarPicker` components, wired into `OnboardingFlow.tsx` (new
+  stage between grade and goal, conditionally skipped while zero avatars are enabled — a mandatory
+  screen with no options would be a dead stage) and `ProfileClient.tsx` (always-reachable "change
+  avatar" section).
+- `066f14e` — propagation to `SiteNav.tsx`, `DashboardClient.tsx`, `FamilyClient.tsx` (each
+  child's own profile), `LeaderboardClient.tsx` (own row only — rivals are synthetic pacers and
+  never get a portrait, not even a placeholder). Teacher roster deferred (needs a real
+  `insightService.ts` API-contract change — `ClassClient.tsx` reads server-side
+  `skill_evidence`/`lesson_completions` projections that never touch the `profiles` table).
+  Trail-map marker deferred (`src/world/`'s `WorldLandmark` has no x/y/node concept yet to pin a
+  marker to — re-verified WS-E's actual commit touched none of `src/world/`).
 
-**When it completes, in order:**
-1. Read the full result via `TaskOutput` / the journal file the task-notification points to — do
-   not trust any agent's self-report without independently re-running gates, exactly as §2.7's
-   wave did.
-2. Verify the non-negotiable rule was honored: `grep -rn "design-reference" src/ public/` should
-   show only comments explaining why it's NOT referenced (same pattern as `53f5817`); every
-   `AvatarDefinition` must still be `enabled: false`; no new file under `public/avatars/` except
-   the existing honest placeholder.
-3. Verify no collision with wave 1's already-landed files (`SiteNav.tsx`, `page.tsx`, etc.) —
-   check `git diff` touches only the files the workflow's own prompts scoped it to.
-4. Reset `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` (Trap K) via `git checkout --` before committing —
-   it will have regenerated from every `vitest run` the agents did internally.
-5. Run the full gate sequence fresh (§1's command list) against the combined result.
-6. Commit (one commit per logical slice, matching this wave's convention), build + verify (isolated
-   -clone purge-and-restore + `git fsck --full --strict`, per §0) + deliver an incremental bundle
-   from `5c5d5f9` (or whatever the user's last CONFIRMED-pushed SHA is by then — check via
-   `git fetch origin` and `git log origin/cowork/s237..HEAD` before assuming).
-7. Update this file and `PLAN_V3_WAVE1_EXECUTION.md` (or a new dated addendum) with the real
-   outcome.
-8. Move to WS-E Phase 2 batch 1 (§2.8 item 3, §3 below) — the user has already greenlit this, it
-   just hadn't started as of this writing because starting two large concurrent efforts at once
-   risked splitting attention on both.
+Every avatar remains `enabled: false` — every surface above renders the honest placeholder
+silhouette today. Correct, not a shortcoming.
+
+**Combined gate results, independently re-run from a clean state:**
+
+```
+typecheck                 clean
+vitest (4 shards)         13,474 tests passed, 2 pre-existing skips, 0 failed, 364 files
+                          (5581+4252+2284+1357 — confirmed matching the agents' own counts)
+validate:content          1840 / 1840 (unchanged, no lesson content touched)
+lint:pedagogy              1711 / 1711 (unchanged)
+validate:native           3 findings, all 3 the documented archive-only set — nothing else
+check:registration         consistent
+build                     EXIT:0, 57/57 static pages, zero avatar-related warnings
+```
+
+Also verified: `design-reference/` referenced only in explanatory comments across every new/
+touched file, never as an asset path; `public/avatars/` still contains only
+`placeholder-neutral.svg` + `README.md`, zero new binary art; zero collisions with WS-A/H/G/E's
+files (`schema.ts`/`pedagogy.ts`/`authoredMath.ts`/`page.tsx`/`widgets.tsx`/`LessonPlayer.tsx`/
+`layout.tsx` all confirmed untouched).
+
+**Next: WS-E Phase 2 batch 1** (§2.8 item 3) — user-greenlit, per-batch rulings as the review
+method, not yet started as of this writing.
 
 ---
 
