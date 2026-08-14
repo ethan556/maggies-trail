@@ -4,23 +4,23 @@ Regenerate with `npm run audit:excellence`. This report is generated from live l
 
 ## Gate summary
 
-- Live K–8 C/D queue: **0**
-- Classified: **0**
+- Live K–8 C/D queue: **5**
+- Classified: **5**
 - UNREVIEWED: **0**
-- Representation absent: **0**; partial: **0**
-- Honest prediction ceilings currently detected outside the C/D queue: **15**
+- Representation absent: **0**; partial: **4**
+- Honest prediction ceilings currently detected outside the C/D queue: **18**
 
 ## Candidate disposition
 
 | disposition | lessons |
 |---|--:|
-
+| decline | 5 |
 
 ## Honest resting tier
 
 | tier | lessons |
 |---|--:|
-
+| C-intentional | 5 |
 
 ## Step-weighted causal coverage
 
@@ -35,12 +35,15 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 ## Honest prediction ceilings
 
+- **c120-04-03** (G1, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-01-02** (G2, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-01-03** (G2, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
+- **mmt-03-02** (G2, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-01** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-02** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ssg2-02-02** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ssg2-02-03** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
+- **df3-03-03** (G3, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **dop-01-03** (G5, B29): unsafe — The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface.
 - **dpv-03-01** (G5, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **rr-05-03** (G6, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
@@ -55,6 +58,11 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 | lesson | current | action | representation | prediction | target | candidate | remedial routes |
 |---|---:|---|---|---|---|---|---:|
+| asv-01-01 — The Triangle's Half (G6) | C25 | decline | geometric figure: partial | redundant | C-intentional | none — prediction gate removed by ruled WS-E thinning (S241); canonical sibling asv-01-03 carries the triangle-half claim with the transplanted half-origin clause | 1 |
+| asv-04-02 — Surface Area with Triangular Faces (G6) | C25 | decline | geometric figure: partial | leaked | C-intentional | none — gate REMOVED by S241 round-1 ruling: prompt hands over its own answer (two identical triangle ends), unfixable by rewrite | 1 |
+| asv-05-03 — Volume in the Real World (G6) | C25 | decline | geometric figure: partial | redundant | C-intentional | none — prediction gate removed by ruled WS-E thinning (S241); canonical asv-05-02 carries the fractional-edge claim with the transplanted condition-naming clause | 1 |
+| dd-03-03 — Choosing Mean vs Median (G6) | C25 | decline | table: partial | redundant | C-intentional | none — prediction gate removed by ruled WS-E thinning (S241); canonical dd-05-02 carries the outlier-drags-the-mean claim via the transplanted clause | 1 |
+| dd-05-03 — The Data Detective (G6) | C25 | decline | none: yes | leaked | C-intentional | none — gate REMOVED by S241 round-1 ruling: circular workflow-ordering question with no mathematical claim, nothing salvageable | 1 |
 
 ## Representation-presence audit
 
