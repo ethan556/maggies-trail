@@ -11,7 +11,7 @@ marked *(pixels)* is certified from screenshots by an adversarial reviewer, neve
 | 2 | **Direct manipulation where meaningful** — the learner moves the object itself; sliders/steppers/numeric survive only as the precision fallback or where the quantity is genuinely scalar | pixels + `DIRECT_MANIPULATION_AUDIT.csv` |
 | 3 | **Continuous transitions where state changes** — state morphs, never teleports, wherever motion communicates mathematics (CMR ≥ 90%) | pixels |
 | 4 | **0 unnecessary persistent controls or pedagogical labels** during active reasoning — screen contract: prompt + mathematical object + one contextual action | machine (chrome census) + pixels |
-| 5 | **0 purpose-free predictions** — every surviving gate independently judged necessary (PGR = 100%) | machine (`PREDICTION_GATE_AUDIT.csv` verdicts) |
+| 5 | **0 purpose-free predictions** — every surviving gate independently judged necessary (PGR = 100%) | machine (`PREDICTION_GATE_ADJUDICATION.csv` `proposed_verdict`, RULED per gate: KEEP/REWRITE = surviving; REMOVE must not exist in content once Phase 4 lands. `PREDICTION_GATE_AUDIT.csv` is superseded — retained only as a historical artifact) |
 | 6 | **Immediate response** — no Apply button where avoidable; consequence appears where the action occurred | pixels |
 | 7 | **Excellent at 390px** — no overflow, no sub-44px targets, no wrapped one-row structures | machine (e2e) + pixels |
 | 8 | **Complete keyboard + reduced-motion paths** — any lesson completable keyboard-only; `prefers-reduced-motion` end-to-end | machine (e2e + axe) |
