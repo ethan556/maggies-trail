@@ -12,6 +12,18 @@ rubric." It replaces nothing in the codebase by itself — it is the yardstick P
 (re-adjudication) will hold up against `PREDICTION_GATE_ADJUDICATION.csv`, gate by gate, by a human
 or a Fable-reviewed process (§7 question 2 of the plan is still open: who adjudicates, concretely).
 
+Version: **v1.1** (2026-08-14).
+
+- **v1.1** — §4.3 gains a second litmus test: an "always / every / never / no matter what" claim
+  earns invariant credit only if it is actually **true** across its own natural domain, not merely
+  universal in grammatical form. Motivated by a real gap found while adjudicating batch 1 —
+  `koa-01-01`, worked in full in §4.3 — where a false universal earned invariant credit on its
+  form alone. Addition only: no existing category, test, disqualifier, verdict definition, or
+  worked example changed. `koa-01-01`'s row in `PREDICTION_GATE_ADJUDICATION.csv` was
+  re-adjudicated under the new test (KEEP → REWRITE); no other row was touched.
+- **v1.0** — original rubric (S240): five categories, three verdicts, §2's absolute rule, and the
+  23-gate pilot.
+
 ---
 
 ## 0. Scope — what this rubric governs and what it doesn't
@@ -281,6 +293,65 @@ One instance (20 apples, 4 per bag), relabeled with a general-sounding definitio
 no hypothetical, no "always." Structurally identical to `mult-01-02` (rows of cars) and
 `mult-01-04` (frog hops) in the same course — all three ask "solve this one instance" and reveal
 "here's what the operation is called," never "here's what stays true as something changes."
+
+**Second litmus test (added v1.1): a universal claim must be TRUE, not merely universal in form.**
+The first litmus test asks whether a reveal reaches past the single instance. A reveal can pass it
+and still be wrong, because "always" is a *claim* that a relationship holds across variation, not
+evidence that it does — and the form of the sentence is the only thing the first test looks at.
+**Before crediting invariant on an "always / every / never / no matter what" claim, check the
+claim against the edge cases a reader would naturally supply — zero, one, the identity element,
+the empty group, a negative, the case where the two quantities are equal — and if the claim breaks
+under any case inside its own natural domain, it does not earn invariant credit as written.** Two
+boundaries keep this a correctness check rather than a licence to fail every generalisation:
+
+- **The domain is the one the reveal's own words open, not the one the gate's numbers occupy.**
+  "Putting groups together" ranges over all groups, including empty ones, even though the widget
+  in front of this learner holds 3 and 2. Narrowing a claim to the cases it survives is the
+  author's job, and doing it is exactly the REWRITE fix below — a reader is not obliged to supply
+  the missing scope on the author's behalf.
+- **The counterexample must be one the course's own number world can actually meet.** A
+  kindergarten claim about putting groups together is not falsified by negative blocks; there are
+  no negative blocks anywhere in `add-subtract-10-k`. Zero is a different matter — it is in that
+  world, and the course teaches it outright (below). Manufacture a counterexample out of material
+  the grade never touches and you are grading the sentence's phrasing, not its truth.
+
+**REWRITE example (universal in form, false in substance)** — `koa-01-01` (`add-subtract-10-k`,
+grade K; the case this test was written for):
+> prompt: *"One group has 3 blocks. Another has 2. What happens when you put them together?"*
+> options: *"There will be more than 3"* (outcome) / *"There will still be 3"* / *"There will be
+> fewer than 3"*
+> reveal: *"Putting groups together always makes MORE, because the second group's objects join the
+> first."*
+
+It passes the first litmus test cleanly — which is what makes it the useful example. There is an
+explicit "always," a stated mechanism ("the second group's objects join the first"), and the
+instance's own answer never appears: 5 is nowhere in the reveal, so this cannot be the "single
+instance, relabeled" failure. It fails the second test. Put a group of 3 together with a group of
+0 and the count does not go up; "always makes MORE" is false as written. Zero is the first edge
+case any reader supplies for an additive claim, and here it is not a pedantic one — the same
+course's `koa-03-09` asks *"What is 6 + 0?"* and reveals *"Zero means NO objects were added, so
+the group is untouched and the count stays 6,"* carrying the distractor *"7 — it grows by one,"*
+which is `koa-01-01`'s over-generalisation come back in learner form. Credit invariant on the
+"always" here and the rubric certifies a sentence a later lesson in the same course has to undo.
+
+**Verdict consequence.** A universal that fails this check is not admissible invariant evidence at
+all, so a gate carrying invariant on that sentence alone loses the category and must be re-tested
+against the other four (§6 step 3). The usual landing place is **REWRITE**, not REMOVE, because a
+false universal is typically a scoping failure with the raw material intact: `koa-01-01`'s rule,
+its mechanism, and its first-addend-fixation distractor (*"There will still be 3"*) all survive a
+one-clause repair — "putting together two groups that each have something in them always makes
+MORE," or dropping "always" for a claim about the two non-empty groups the gate actually shows.
+Record that scoping clause as the named gap §3's REWRITE bar requires. REMOVE stays reserved for
+the case where no scoping saves the claim and no other category applies.
+
+**A claim that passes.** `koa-03-07`'s *"The parts of 5 are 2 and 3. Taking one part away always
+leaves the other: 5 − 3 = 2."* is universal in form and true across its domain — the "always"
+clause holds at every part-whole split of 5, including the 0/5 split, where taking 0 away does
+leave 5 — so it earns the category. Note the scope of this test: it is a
+correctness check on the specific sentence being cited as invariant evidence, not a mathematical
+audit of the whole reveal. A factual slip elsewhere in a reveal is a content defect to record for
+an author (`CLAUDE.md` non-negotiable #1: record it, don't fix it), not something this rubric's
+three verdicts are built to express.
 
 ### 4.4 Estimate
 
