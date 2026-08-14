@@ -11,6 +11,7 @@ import { progressStore } from "@/lib/progress";
 import { AppIcon, type IconName } from "@/components/ui";
 import { storageSet } from "@/lib/safeStorage";
 import { MaggieBrandLockup } from "@/components/brand";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 
 type NavItem = { href: string; label: string; icon: IconName };
 
@@ -48,6 +49,26 @@ function useDueCount() {
     };
   }, []);
   return due;
+}
+
+/** WS-J: the active learner's chosen avatar (or undefined — AvatarDisplay renders the honest
+ *  placeholder either way). This header is mounted once in the shell and persists across
+ *  client-side navigation, so — mirroring useDueCount just above — it re-reads on focus/
+ *  visibility rather than only on mount, catching an avatar changed on /profile or a switched
+ *  active child on /family without requiring a full page reload. */
+function useAvatarId() {
+  const [avatarId, setAvatarId] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const read = () => setAvatarId(progressStore.load().avatarId);
+    read();
+    window.addEventListener("focus", read);
+    document.addEventListener("visibilitychange", read);
+    return () => {
+      window.removeEventListener("focus", read);
+      document.removeEventListener("visibilitychange", read);
+    };
+  }, []);
+  return avatarId;
 }
 
 function useIsActive() {
@@ -97,6 +118,7 @@ function DueBadge({ due, active }: { due: number; active: boolean }) {
 function AccountMenu() {
   const [open, setOpen] = useState(false);
   const isActive = useIsActive();
+  const avatarId = useAvatarId();
   const ref = useRef<HTMLDivElement>(null);
   const anySecondaryActive = SECONDARY.some((l) => isActive(l.href));
 
@@ -126,7 +148,11 @@ function AccountMenu() {
           anySecondaryActive || open ? "bg-sky/12 text-sky-ink" : "text-content-2 hover:bg-sky/10 hover:text-sky-ink"
         }`}
       >
-        <AppIcon name="profile" size={18} />
+        <AvatarDisplay
+          avatarId={avatarId}
+          size={256}
+          className="h-6 w-6 shrink-0 rounded-full ring-1 ring-ink/15 dark:ring-paper/20"
+        />
         <span>Account</span>
         <AppIcon
           name="chevronDown"

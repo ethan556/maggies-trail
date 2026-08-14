@@ -14,6 +14,7 @@ import { dashboardRecommendation, type DashRec } from "@/lib/dashboardRecommenda
 export { dashboardRecommendation, type DashRec } from "@/lib/dashboardRecommendation";
 import { AppIcon, type IconName, SectionHeader } from "@/components/ui";
 import AssignmentsCard from "@/components/AssignmentsCard";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 
 export interface DashCourse {
   /** canonical world course id — the Basecamp route key */
@@ -289,7 +290,14 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
     <div className="relative">
       <TrailAtmosphere />
       <div className="relative z-[1]">
-      <h1 className="text-3xl font-extrabold tracking-tight">Your trail</h1>
+      <div className="flex items-center gap-3">
+        <AvatarDisplay
+          avatarId={profile?.avatarId}
+          size={256}
+          className="h-11 w-11 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
+        />
+        <h1 className="text-3xl font-extrabold tracking-tight">Your trail</h1>
+      </div>
 
       {profile && (
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">

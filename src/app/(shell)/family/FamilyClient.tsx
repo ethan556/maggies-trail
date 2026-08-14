@@ -9,6 +9,7 @@ import { computeStreak, dueItems, localDateStr } from "@/lib/engine";
 import { summarize } from "@/lib/mastery";
 import type { Profile } from "@/lib/progress";
 import { addChild, getRoster, readChildProfile, removeChild, renameChild, setActiveChild, type Roster } from "@/lib/roster";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 
 function childStats(p: Profile, today: string) {
   const s = summarize(p.mastery ?? {});
@@ -65,7 +66,8 @@ export default function FamilyClient({
 
       <ul className="grid gap-3 sm:grid-cols-2">
         {roster.children.map((c) => {
-          const st = childStats(readChildProfile(c.id), today);
+          const childProfile = readChildProfile(c.id);
+          const st = childStats(childProfile, today);
           const active = c.id === roster.activeId;
           return (
             <li
@@ -73,30 +75,37 @@ export default function FamilyClient({
               className={`rounded-card border p-4 shadow-e1 ${active ? "border-tangerine/60 bg-tangerine/5" : "border-ink/10 bg-surface dark:border-paper/12"}`}
             >
               <div className="flex items-start justify-between gap-2">
-                {editing === c.id ? (
-                  <input
-                    autoFocus
-                    value={editName}
-                    aria-label="learner name"
-                    onChange={(e) => setEditName(e.target.value)}
-                    onBlur={() => {
-                      setRoster(renameChild(c.id, editName));
-                      setEditing(null);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
+                <div className="flex min-w-0 flex-1 items-center gap-3">
+                  <AvatarDisplay
+                    avatarId={childProfile.avatarId}
+                    size={256}
+                    className="h-10 w-10 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
+                  />
+                  {editing === c.id ? (
+                    <input
+                      autoFocus
+                      value={editName}
+                      aria-label="learner name"
+                      onChange={(e) => setEditName(e.target.value)}
+                      onBlur={() => {
                         setRoster(renameChild(c.id, editName));
                         setEditing(null);
-                      }
-                    }}
-                    className="w-full rounded border-2 border-sky bg-transparent px-2 py-1 font-extrabold"
-                  />
-                ) : (
-                  <div>
-                    <p className="text-lg font-extrabold">{c.name}</p>
-                    {c.grade != null && <p className="text-xs font-bold text-ink/70 dark:text-paper/70">Grade {c.grade === 0 ? "K" : c.grade}</p>}
-                  </div>
-                )}
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          setRoster(renameChild(c.id, editName));
+                          setEditing(null);
+                        }
+                      }}
+                      className="w-full min-w-0 rounded border-2 border-sky bg-transparent px-2 py-1 font-extrabold"
+                    />
+                  ) : (
+                    <div className="min-w-0">
+                      <p className="text-lg font-extrabold">{c.name}</p>
+                      {c.grade != null && <p className="text-xs font-bold text-ink/70 dark:text-paper/70">Grade {c.grade === 0 ? "K" : c.grade}</p>}
+                    </div>
+                  )}
+                </div>
                 {active && <span className="shrink-0 rounded-full bg-tangerine px-2 py-0.5 text-xs font-extrabold text-night">active</span>}
               </div>
 

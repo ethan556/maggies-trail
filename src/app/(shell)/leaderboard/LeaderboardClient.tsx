@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { localDateStr } from "@/lib/engine";
 import { DEMOTE_COUNT, PROMOTE_COUNT, standings, TIERS, ensureLeague, type Standing } from "@/lib/league";
 import { progressStore, type Profile } from "@/lib/progress";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 
 function daysUntilMonday(): number {
   return ((8 - new Date().getDay()) % 7) || 7;
@@ -94,6 +95,18 @@ export default function LeaderboardClient() {
                 <span className="w-8 text-right tabular-nums text-ink/70 dark:text-paper/70">
                   {r.rank}
                 </span>
+                {r.isUser ? (
+                  <AvatarDisplay
+                    avatarId={profile.avatarId}
+                    size={256}
+                    className="h-7 w-7 shrink-0 rounded-full ring-2 ring-sky/40"
+                  />
+                ) : (
+                  // Rivals are synthetic pacers, not real people — never a library portrait here.
+                  // A plain spacer (not the placeholder silhouette) keeps every row's name aligned
+                  // without implying a rival has — or is missing — an identity to pick.
+                  <span aria-hidden className="h-7 w-7 shrink-0" />
+                )}
                 <span className="flex-1">
                   {r.name}
                   {r.isUser && " ⭐"}
