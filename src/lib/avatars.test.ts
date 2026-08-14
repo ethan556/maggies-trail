@@ -31,10 +31,13 @@ const BLOCK_BAND: Record<string, AgeBand> = {
   "1": "explorer",
   "2": "adventurer",
   "3": "summit"
-  // "4" is reserved for kind "symbol" avatars, which still carry a real ageBand (see the
-  // AvatarKind doc comment in avatars.ts) but aren't covered by this block map — no manifest
-  // entries use block "4" yet, so there is nothing to check against here.
+  // "4" (kind "symbol") is deliberately absent from this fixed map: unlike blocks 0-3, a symbol's
+  // `ageBand` isn't determined by its id block — it's assigned per entry by thematic/tonal fit
+  // (see the AvatarKind doc comment in avatars.ts and AVATAR_CONCEPT_LEDGER.md's symbol expansion
+  // table). The block-agreement test below checks block-4 entries against ALL_AGE_BANDS and
+  // `kind === "symbol"` instead of one fixed band.
 };
+const ALL_AGE_BANDS: AgeBand[] = ["early", "explorer", "adventurer", "summit"];
 
 describe("AVATARS manifest shape", () => {
   it("every id is unique", () => {
@@ -64,12 +67,18 @@ describe("AVATARS manifest shape", () => {
     }
   });
 
-  it("id numeric block encodes the age band (0xx early / 1xx explorer / 2xx adventurer / 3xx summit)", () => {
+  it("id numeric block encodes the age band for human blocks (0xx early / 1xx explorer / 2xx adventurer / 3xx summit); the symbol block (4xx) carries kind 'symbol' and a valid ageBand instead of one fixed band", () => {
     for (const avatar of AVATARS) {
       const digits = avatar.id.replace("avatar-", "");
       expect(digits, avatar.id).toMatch(/^\d{3}$/);
       const block = digits[0];
-      expect(avatar.ageBand, `${avatar.id} block ${block}`).toBe(BLOCK_BAND[block]);
+      if (block === "4") {
+        expect(avatar.kind, avatar.id).toBe("symbol");
+        expect(ALL_AGE_BANDS, avatar.id).toContain(avatar.ageBand);
+      } else {
+        expect(avatar.kind, avatar.id).toBe("human");
+        expect(avatar.ageBand, `${avatar.id} block ${block}`).toBe(BLOCK_BAND[block]);
+      }
     }
   });
 
@@ -87,9 +96,64 @@ describe("AVATARS manifest shape", () => {
     }
   });
 
-  it("today's 16 entries are all kind 'human' (no symbol concepts exist yet — see the concept ledger)", () => {
-    expect(AVATARS.every((a) => a.kind === "human")).toBe(true);
-    expect(AVATARS).toHaveLength(16);
+  it("the manifest totals 60 entries: 48 human at 12 per band, plus 12 symbol at 3 per band", () => {
+    expect(AVATARS).toHaveLength(60);
+    const human = AVATARS.filter((a) => a.kind === "human");
+    const symbol = AVATARS.filter((a) => a.kind === "symbol");
+    expect(human).toHaveLength(48);
+    expect(symbol).toHaveLength(12);
+    for (const band of ["early", "explorer", "adventurer", "summit"] as const) {
+      expect(human.filter((a) => a.ageBand === band), `human count in ${band}`).toHaveLength(12);
+      expect(symbol.filter((a) => a.ageBand === band), `symbol count in ${band}`).toHaveLength(3);
+    }
+  });
+
+  it("the original 16 board-anchored ids are present with their band/order/kind unchanged by the expansion", () => {
+    const original: Array<[string, AgeBand, number]> = [
+      ["avatar-001", "early", 1],
+      ["avatar-002", "early", 2],
+      ["avatar-003", "early", 3],
+      ["avatar-004", "early", 4],
+      ["avatar-005", "early", 5],
+      ["avatar-006", "early", 6],
+      ["avatar-007", "early", 7],
+      ["avatar-008", "early", 8],
+      ["avatar-101", "explorer", 1],
+      ["avatar-102", "explorer", 2],
+      ["avatar-103", "explorer", 3],
+      ["avatar-104", "explorer", 4],
+      ["avatar-201", "adventurer", 1],
+      ["avatar-202", "adventurer", 2],
+      ["avatar-203", "adventurer", 3],
+      ["avatar-204", "adventurer", 4]
+    ];
+    expect(original).toHaveLength(16);
+    for (const [id, band, order] of original) {
+      const avatar = getAvatar(id);
+      expect(avatar, id).toBeDefined();
+      expect(avatar!.ageBand, id).toBe(band);
+      expect(avatar!.order, id).toBe(order);
+      expect(avatar!.kind, id).toBe("human");
+      expect(avatar!.enabled, id).toBe(false);
+    }
+  });
+
+  it("every one of the 44 net-new expansion ids (early 009-012, explorer 105-112, adventurer 205-212, summit 301-312, symbol 401-412) resolves and is disabled", () => {
+    const expansionIds = [
+      "avatar-009", "avatar-010", "avatar-011", "avatar-012",
+      "avatar-105", "avatar-106", "avatar-107", "avatar-108", "avatar-109", "avatar-110", "avatar-111", "avatar-112",
+      "avatar-205", "avatar-206", "avatar-207", "avatar-208", "avatar-209", "avatar-210", "avatar-211", "avatar-212",
+      "avatar-301", "avatar-302", "avatar-303", "avatar-304", "avatar-305", "avatar-306",
+      "avatar-307", "avatar-308", "avatar-309", "avatar-310", "avatar-311", "avatar-312",
+      "avatar-401", "avatar-402", "avatar-403", "avatar-404", "avatar-405", "avatar-406",
+      "avatar-407", "avatar-408", "avatar-409", "avatar-410", "avatar-411", "avatar-412"
+    ];
+    expect(expansionIds).toHaveLength(44);
+    for (const id of expansionIds) {
+      const avatar = getAvatar(id);
+      expect(avatar, id).toBeDefined();
+      expect(avatar!.enabled, id).toBe(false);
+    }
   });
 });
 
@@ -120,6 +184,15 @@ describe("getAvatar / isValidAvatarId", () => {
     expect(getAvatar("avatar-999")).toBeUndefined();
   });
 
+  it("getAvatar resolves the expansion bands and kinds too (summit human, symbol)", () => {
+    expect(getAvatar("avatar-301")?.ageBand).toBe("summit");
+    expect(getAvatar("avatar-301")?.kind).toBe("human");
+    expect(getAvatar("avatar-401")?.kind).toBe("symbol");
+    // avatar-401 is assigned "adventurer" by thematic fit (AVATAR_CONCEPT_LEDGER.md's symbol
+    // expansion table), not gated to it — any band can select it via "See all avatars".
+    expect(getAvatar("avatar-401")?.ageBand).toBe("adventurer");
+  });
+
   it("isValidAvatarId is false for every id today, because nothing is enabled yet", () => {
     for (const avatar of AVATARS) {
       expect(isValidAvatarId(avatar.id), avatar.id).toBe(false);
@@ -136,6 +209,9 @@ describe("getAvatarSrc", () => {
     expect(getAvatarSrc("avatar-001", 256)).toBeUndefined();
     expect(getAvatarSrc("avatar-001", 512)).toBeUndefined();
     expect(getAvatarSrc("avatar-999", 256)).toBeUndefined();
+    // Same rule for the 44 net-new expansion entries — disabled is disabled, regardless of age.
+    expect(getAvatarSrc("avatar-312", 512)).toBeUndefined();
+    expect(getAvatarSrc("avatar-412", 256)).toBeUndefined();
   });
 });
 

@@ -35,9 +35,13 @@ export type AgeBand = "early" | "explorer" | "adventurer" | "summit";
  *  plan's manifest shape (`OPTIMIZATION_PLAN_V3.md:146`) has no separate "bandless" case — but a
  *  symbol's band need not gate its visibility the way a human portrait's does: the plan's "See all
  *  avatars" escape hatch (`:148`) makes any collection, symbols included, reachable regardless of
- *  the band a learner's grade opens by default. No symbol concepts exist yet (see
- *  AVATAR_CONCEPT_LEDGER.md finding 4); how their `ageBand` values get assigned is a decision for
- *  whoever designs them. */
+ *  the band a learner's grade opens by default. Twelve symbol concepts exist below (avatar-401
+ *  through avatar-412, id block `4` per AVATAR_ART_PRODUCTION_SPEC.md §5, every one `enabled:
+ *  false`) — their `ageBand` values were assigned three-per-band by thematic/tonal fit (a fox or
+ *  owl portrait reads `early`; a topographic badge or constellation reads `summit`) rather than
+ *  concentrated in one band, precisely because that band is a default/preload grouping, not an
+ *  access restriction — see AVATAR_CONCEPT_LEDGER.md's "Expansion concept tables" section for the
+ *  full reasoning. */
 export type AvatarKind = "human" | "symbol";
 
 /** `OPTIMIZATION_PLAN_V3.md:146`'s exact manifest shape. `id` is the sole value ever persisted on
@@ -84,15 +88,23 @@ function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: num
 }
 
 /**
- * The manifest. Sixteen entries — exactly the 16 board-anchored concepts catalogued in
- * `AVATAR_CONCEPT_LEDGER.md`, none of them production-ready. The remaining slots this library will
- * eventually hold (band expansion to ~12 each, plus 8–12 neutral/symbolic options — see
- * `AVATAR_ART_PRODUCTION_SPEC.md` §5b) have no concept to anchor a manifest entry to yet, so they
- * are documented there as reserved id ranges rather than fabricated here as empty entries.
+ * The manifest. Sixty entries: the original 16 board-anchored concepts (avatar-001…008,
+ * avatar-101…104, avatar-201…204 — `AVATAR_CONCEPT_LEDGER.md`'s original concept table, C01–C16)
+ * plus 44 net-new expansion concepts that bring every human band to its ~12 target and stand up
+ * the symbol collection for the first time — 4 more `early`, 8 more `explorer`, 8 more
+ * `adventurer`, all 12 `summit` (zero board anchors existed for this band — see finding 1), and
+ * all 12 `symbol` (zero board anchors existed for any symbol — see finding 4). None of the 60 is
+ * production-ready; every single entry below is `enabled: false`. See
+ * `AVATAR_CONCEPT_LEDGER.md`'s "Expansion concept tables" section for the full trait rationale
+ * behind each of the 44 net-new entries — hairstyle, accessories, clothing, expression only, never
+ * race, ethnicity, or an invented name, matching the original 16's register exactly.
  *
  * Ids follow the per-band block convention in AVATAR_ART_PRODUCTION_SPEC.md §5: 0xx = early,
  * 1xx = explorer, 2xx = adventurer, 3xx = summit, 4xx = symbol. `avatars.test.ts` checks every
- * entry's block agrees with its `ageBand`.
+ * human entry's block agrees with its `ageBand` one-to-one; symbol entries (block 4xx) carry a
+ * real `ageBand` too, but — per the `AvatarKind` doc comment above — it's assigned per-entry by
+ * thematic fit rather than fixed by the block, so that same test checks it's a valid `AgeBand`
+ * rather than one band for the whole block.
  */
 export const AVATARS: AvatarDefinition[] = [
   // ---- early (K-2) — anchors from board 2 (C05-C08) and board 3 (C09-C12) ----
@@ -112,6 +124,15 @@ export const AVATARS: AvatarDefinition[] = [
   defineAvatar("avatar-007", "early", "human", 7),
   // C12: short straight black hair, side-swept fringe; royal-blue zip jacket over a striped tee
   defineAvatar("avatar-008", "early", "human", 8),
+  // ---- early expansion — net-new, no board source (P2) ----
+  // curly afro-textured hair shaped into a rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream color-blocked tee
+  defineAvatar("avatar-009", "early", "human", 9),
+  // two short braided pigtails finished with small colorful beads; easy smile; rust-red overalls over a cream long-sleeve top
+  defineAvatar("avatar-010", "early", "human", 10),
+  // chin-length straight hair held back with a wide fabric headband; round dark-rimmed glasses; golden-yellow cardigan over a cream tee
+  defineAvatar("avatar-011", "early", "human", 11),
+  // short loose curls with a single flower hair clip; freckles across the cheeks; sage-green tunic top with rust trim
+  defineAvatar("avatar-012", "early", "human", 12),
 
   // ---- explorer (3-5) — anchors from board 4 (C13-C16) ----
   // C13: short twists/coils on top with faded sides; royal-blue track jacket, white shoulder stripes
@@ -122,6 +143,23 @@ export const AVATARS: AvatarDefinition[] = [
   defineAvatar("avatar-103", "explorer", "human", 3),
   // C16: long wavy brown hair; gold hoop earrings; denim jacket over a cream top
   defineAvatar("avatar-104", "explorer", "human", 4),
+  // ---- explorer expansion — net-new, no board source (P2) ----
+  // curly afro-textured hair in a rounded high puff with a thin patterned headband; easy grin; royal-blue zip-up hoodie over a cream striped tee
+  defineAvatar("avatar-105", "explorer", "human", 5),
+  // two neat box braids gathered into low pigtails; round wire-rimmed glasses; golden-yellow raglan tee under an open chambray shirt
+  defineAvatar("avatar-106", "explorer", "human", 6),
+  // patterned teal-and-cream head wrap framing the face, loose strands at the temples; small gold stud earrings; sage-green quarter-zip pullover over a cream tee
+  defineAvatar("avatar-107", "explorer", "human", 7),
+  // short tightly-coiled hair cut close with a sharp side part; confident grin; teal track jacket with cream trim over a cream tee
+  defineAvatar("avatar-108", "explorer", "human", 8),
+  // straight waist-length hair in a high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee
+  defineAvatar("avatar-109", "explorer", "human", 9),
+  // short wavy hair with a deep side part; thin round glasses; rust bomber-style jacket over a cream tee
+  defineAvatar("avatar-110", "explorer", "human", 10),
+  // chin-length curly bob; small silver hoop earrings; forest-green cardigan over a cream striped tee
+  defineAvatar("avatar-111", "explorer", "human", 11),
+  // short natural coils with a faded side part and a single thin braid accent; warm smile; denim jacket over a golden-yellow tee
+  defineAvatar("avatar-112", "explorer", "human", 12),
 
   // ---- adventurer (6-8) — anchors from board 1 (C01-C04) ----
   // C01: long thin box braids past the shoulders; gold hoop earrings + pendant; dark-green ribbed top
@@ -131,10 +169,88 @@ export const AVATARS: AvatarDefinition[] = [
   // C03: short tousled black hair with a fringe; navy zip jacket over a black hoodie
   defineAvatar("avatar-203", "adventurer", "human", 3),
   // C04: very long wavy dark hair; turquoise earrings + pendant; patterned rust-red top
-  defineAvatar("avatar-204", "adventurer", "human", 4)
+  defineAvatar("avatar-204", "adventurer", "human", 4),
+  // ---- adventurer expansion — net-new, no board source (P2) ----
+  // short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee
+  defineAvatar("avatar-205", "adventurer", "human", 5),
+  // two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket
+  defineAvatar("avatar-206", "adventurer", "human", 6),
+  // loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top
+  defineAvatar("avatar-207", "adventurer", "human", 7),
+  // chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee
+  defineAvatar("avatar-208", "adventurer", "human", 8),
+  // long single braid resting over one shoulder; wide open smile; royal-blue track jacket over a cream striped tee
+  defineAvatar("avatar-209", "adventurer", "human", 9),
+  // short wavy hair with a tousled side part; relaxed half-smile; forest-green hoodie under a light denim jacket
+  defineAvatar("avatar-210", "adventurer", "human", 10),
+  // shoulder-length twists with a faded undercut at the sides; small hoop earrings; denim zip jacket over a teal tee
+  defineAvatar("avatar-211", "adventurer", "human", 11),
+  // long wavy hair swept into a high half-up twist; turquoise stud earrings; lilac hoodie over a cream tee
+  defineAvatar("avatar-212", "adventurer", "human", 12),
 
-  // ---- summit (9-13) — zero board anchors; see AVATAR_CONCEPT_LEDGER.md finding 1 (P0) ----
-  // ---- symbol — zero board anchors; net-new, brand-language design (P2) ----
+  // ---- summit (9-13) — zero board anchors; all 12 net-new (P0 — see AVATAR_CONCEPT_LEDGER.md
+  // finding 1). Read genuinely older per AVATAR_ART_PRODUCTION_SPEC.md §3: board 1's most-mature
+  // concepts as a floor, not a ceiling — layered/older clothing, self-possessed rather than
+  // beaming expressions. Introduces locs to the library for the first time (three times, so it's
+  // a recurring style rather than a token), plus side-shaves/short crops and longer braid forms
+  // not used in the younger bands. ----
+  // short tapered coils with a subtle side part; quiet half-smile; charcoal quarter-zip pullover over a light-gray tee
+  defineAvatar("avatar-301", "summit", "human", 1),
+  // shoulder-length locs tied back in a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee
+  defineAvatar("avatar-302", "summit", "human", 2),
+  // straight dark hair in a low bun with loose face-framing strands; thin wire-rimmed glasses; navy button-up shirt, sleeves rolled
+  defineAvatar("avatar-303", "summit", "human", 3),
+  // short undercut with longer curls left on top; confident closed-mouth smile; rust bomber jacket over a charcoal tee
+  defineAvatar("avatar-304", "summit", "human", 4),
+  // long single braid over one shoulder with a few loose flyaway strands; freckles; forest-green flannel shirt over a cream tee
+  defineAvatar("avatar-305", "summit", "human", 5),
+  // loose shoulder-length wavy hair with a center part; small hoop earrings; cream cardigan over a rust top
+  defineAvatar("avatar-306", "summit", "human", 6),
+  // short locs cropped close to the head; faint, self-possessed smile; denim trucker jacket over a cream tee
+  defineAvatar("avatar-307", "summit", "human", 7),
+  // long straight hair with a deep side part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck
+  defineAvatar("avatar-308", "summit", "human", 8),
+  // twin long braids past the chest tied off with simple dark cord; steady, self-possessed expression; teal flannel shirt, sleeves rolled, over a cream tee
+  defineAvatar("avatar-309", "summit", "human", 9),
+  // short cropped locs with a faded undercut; relaxed half-smile; golden-yellow crewneck sweater over a collared cream shirt
+  defineAvatar("avatar-310", "summit", "human", 10),
+  // loose waves pulled into a low ponytail beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under a rust cardigan
+  defineAvatar("avatar-311", "summit", "human", 11),
+  // short tousled wavy hair; thin rectangular glasses; charcoal bomber jacket over an olive tee
+  defineAvatar("avatar-312", "summit", "human", 12),
+
+  // ---- symbol — zero board anchors; all 12 net-new, brand-illustration-language design (P2).
+  // Physically grouped here by id block (4xx), matching AVATAR_ART_PRODUCTION_SPEC.md §5's table,
+  // even though each entry's `ageBand` (see the `AvatarKind` doc comment above) is assigned
+  // individually by thematic/tonal fit rather than by this grouping — three per band, so every
+  // band's default collection includes a few symbols without concentrating all twelve in one
+  // band, while "See all avatars" keeps every symbol reachable from every band regardless. `order`
+  // continues each band's sequence past its 12 human portraits (13-15), so it stays unique within
+  // that `ageBand`, per the manifest-shape test. ----
+  // Maggie mark medallion — the twin-peaks-and-trail icon as a dimensional badge, deep navy on warm ivory with a summit-orange star accent [ageBand: adventurer]
+  defineAvatar("avatar-401", "adventurer", "symbol", 13),
+  // compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks [ageBand: summit]
+  defineAvatar("avatar-402", "summit", "symbol", 13),
+  // summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc [ageBand: early]
+  defineAvatar("avatar-403", "early", "symbol", 13),
+  // owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze [ageBand: early]
+  defineAvatar("avatar-404", "early", "symbol", 14),
+  // fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze [ageBand: early]
+  defineAvatar("avatar-405", "early", "symbol", 15),
+  // constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines [ageBand: summit]
+  defineAvatar("avatar-406", "summit", "symbol", 14),
+  // topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory [ageBand: summit]
+  defineAvatar("avatar-407", "summit", "symbol", 15),
+  // trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc [ageBand: explorer]
+  defineAvatar("avatar-408", "explorer", "symbol", 13),
+  // compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy [ageBand: explorer]
+  defineAvatar("avatar-409", "explorer", "symbol", 14),
+  // mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile [ageBand: adventurer]
+  defineAvatar("avatar-410", "adventurer", "symbol", 14),
+  // acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark [ageBand: explorer]
+  defineAvatar("avatar-411", "explorer", "symbol", 15),
+  // lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph [ageBand: adventurer]
+  defineAvatar("avatar-412", "adventurer", "symbol", 15)
 ];
 
 /**

@@ -2,9 +2,10 @@
 
 **Purpose.** The commissioning spec every final avatar portrait must be individually re-rendered
 to. Written from `OPTIMIZATION_PLAN_V3.md:141-143,150-151`. Nothing in this document describes
-work already done — see `AVATAR_CONCEPT_LEDGER.md` for what exists today (16 concept-only board
-candidates, zero production renders) and the honest-placeholder policy at the end of this file for
-exactly what ships while that remains true.
+work already done — see `AVATAR_CONCEPT_LEDGER.md` for what exists today (60 concept-only
+candidates — the original 16 board-anchored ones plus 44 net-new expansion concepts covering every
+band and the symbol collection — zero production renders) and the honest-placeholder policy at the
+end of this file for exactly what ships while that remains true.
 
 **The non-negotiable this whole document serves:** *every shipped avatar is an independent
 production asset. A student never selects a quadrant of a board, and no board crop is ever claimed
@@ -99,6 +100,12 @@ choice, not a requirement: FABLE-A may compress any band down to ~8–10 without
 already-assigned id, because compression only ever drops *trailing* slots (e.g. skip `009`–`012`)
 — it never renumbers `001`–`008`.
 
+**This target is now met at the concept level** (`src/lib/avatars.ts` declares all 60 ids below,
+every one `enabled: false`; `AVATAR_CONCEPT_LEDGER.md` carries a trait description for each of the
+44 net-new ones) — §5a and §5b together are consequently a complete, current filename list for the
+whole manifest, not a mix of declared ids and aspirational ranges. None of this is production art;
+see §8.
+
 ### 5a. Explicit filenames — highest priority (P0 summit, P1 anchors)
 
 No board concept anchors any `summit` portrait (`AVATAR_CONCEPT_LEDGER.md` finding 1) — these are
@@ -140,19 +147,71 @@ The 16 board-anchored concepts (already declared, `enabled: false`, in `src/lib/
 | avatar-203 | C03 | avatar-203-256.webp, avatar-203-512.webp |
 | avatar-204 | C04 | avatar-204-256.webp, avatar-204-512.webp |
 
-### 5b. Remaining slots — P2 (band expansion + symbols)
+### 5b. Explicit filenames — band expansion + symbols (P2)
 
-Lower priority than §5a because these have no anchor concept yet to re-render *or* extend from —
-they need new concepts designed first (band expansion needs FABLE-A-directed new characters in the
-established art language; symbols need a design pass in the brand's illustration language once
-WS-A's tokens are stable). Listed by range; each id follows the same two-file rule as §5a.
+Lower priority than §5a's P0/P1 rows, but no longer open ranges: every id below now has a concept
+behind it in `AVATAR_CONCEPT_LEDGER.md`'s "Expansion concept tables" section (hairstyle,
+accessories, clothing, expression — the same non-sensitive vocabulary as every other concept in
+this library) and a declared `enabled: false` entry in `src/lib/avatars.ts`. What's still missing
+is exactly what was always missing for §5a's rows too: production art. Listed individually, same
+two-file rule as §5a.
 
-| Range | Count | Band | Kind |
-|---|---|---|---|
-| avatar-009 – avatar-012 | 4 | early | human |
-| avatar-105 – avatar-112 | 8 | explorer | human |
-| avatar-205 – avatar-212 | 8 | adventurer | human |
-| avatar-401 – avatar-412 | 12 | *(symbol)* | symbol |
+The 4 `early`-expansion concepts:
+
+| id | concept source | files |
+|---|---|---|
+| avatar-009 | none — net-new commission | avatar-009-256.webp, avatar-009-512.webp |
+| avatar-010 | none — net-new commission | avatar-010-256.webp, avatar-010-512.webp |
+| avatar-011 | none — net-new commission | avatar-011-256.webp, avatar-011-512.webp |
+| avatar-012 | none — net-new commission | avatar-012-256.webp, avatar-012-512.webp |
+
+The 8 `explorer`-expansion concepts:
+
+| id | concept source | files |
+|---|---|---|
+| avatar-105 | none — net-new commission | avatar-105-256.webp, avatar-105-512.webp |
+| avatar-106 | none — net-new commission | avatar-106-256.webp, avatar-106-512.webp |
+| avatar-107 | none — net-new commission | avatar-107-256.webp, avatar-107-512.webp |
+| avatar-108 | none — net-new commission | avatar-108-256.webp, avatar-108-512.webp |
+| avatar-109 | none — net-new commission | avatar-109-256.webp, avatar-109-512.webp |
+| avatar-110 | none — net-new commission | avatar-110-256.webp, avatar-110-512.webp |
+| avatar-111 | none — net-new commission | avatar-111-256.webp, avatar-111-512.webp |
+| avatar-112 | none — net-new commission | avatar-112-256.webp, avatar-112-512.webp |
+
+The 8 `adventurer`-expansion concepts:
+
+| id | concept source | files |
+|---|---|---|
+| avatar-205 | none — net-new commission | avatar-205-256.webp, avatar-205-512.webp |
+| avatar-206 | none — net-new commission | avatar-206-256.webp, avatar-206-512.webp |
+| avatar-207 | none — net-new commission | avatar-207-256.webp, avatar-207-512.webp |
+| avatar-208 | none — net-new commission | avatar-208-256.webp, avatar-208-512.webp |
+| avatar-209 | none — net-new commission | avatar-209-256.webp, avatar-209-512.webp |
+| avatar-210 | none — net-new commission | avatar-210-256.webp, avatar-210-512.webp |
+| avatar-211 | none — net-new commission | avatar-211-256.webp, avatar-211-512.webp |
+| avatar-212 | none — net-new commission | avatar-212-256.webp, avatar-212-512.webp |
+
+The 12 `symbol` concepts (kind `symbol`; each one's individually-assigned `ageBand` — not fixed by
+the `4xx` id block — is recorded in `AVATAR_CONCEPT_LEDGER.md`'s symbol expansion table, not
+repeated here since it has no bearing on the filename):
+
+| id | concept source | files |
+|---|---|---|
+| avatar-401 | none — net-new commission | avatar-401-256.webp, avatar-401-512.webp |
+| avatar-402 | none — net-new commission | avatar-402-256.webp, avatar-402-512.webp |
+| avatar-403 | none — net-new commission | avatar-403-256.webp, avatar-403-512.webp |
+| avatar-404 | none — net-new commission | avatar-404-256.webp, avatar-404-512.webp |
+| avatar-405 | none — net-new commission | avatar-405-256.webp, avatar-405-512.webp |
+| avatar-406 | none — net-new commission | avatar-406-256.webp, avatar-406-512.webp |
+| avatar-407 | none — net-new commission | avatar-407-256.webp, avatar-407-512.webp |
+| avatar-408 | none — net-new commission | avatar-408-256.webp, avatar-408-512.webp |
+| avatar-409 | none — net-new commission | avatar-409-256.webp, avatar-409-512.webp |
+| avatar-410 | none — net-new commission | avatar-410-256.webp, avatar-410-512.webp |
+| avatar-411 | none — net-new commission | avatar-411-256.webp, avatar-411-512.webp |
+| avatar-412 | none — net-new commission | avatar-412-256.webp, avatar-412-512.webp |
+
+Every id declared anywhere in `src/lib/avatars.ts` now has an explicit row in §5a or §5b — there is
+no longer an id in the manifest that is only described by a range.
 
 ### 5c. The one file that exists today
 
