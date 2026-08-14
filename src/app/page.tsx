@@ -4,7 +4,7 @@ import { COPY } from "@/lib/copy";
 import { getCatalog } from "@/lib/content.server";
 import { AppIcon, LinkButton, Badge } from "@/components/ui";
 import { ProofStrip } from "@/components/ProofStrip";
-import { MaggieBrandLockup } from "@/components/brand";
+import { MaggieBrandLockup, MaggieMark } from "@/components/brand";
 
 const LandingHero = dynamic(() => import("@/components/LandingHero"), {
   loading: () => (
@@ -70,7 +70,7 @@ export default async function Home() {
       <header className="sticky top-0 z-30 border-b border-ink/8 bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70 dark:border-paper/8">
         <nav aria-label="Main" className="mx-auto flex max-w-5xl items-center gap-2 px-4 py-2.5">
           <Link href="/" className="mr-auto flex min-h-11 items-center gap-2 font-extrabold tracking-tight">
-            <MaggieBrandLockup>{COPY.appName}</MaggieBrandLockup>
+            <MaggieBrandLockup markSize={34}>{COPY.appName}</MaggieBrandLockup>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
@@ -96,6 +96,14 @@ export default async function Home() {
         {/* Hero */}
         <section className="grid items-center gap-10 md:grid-cols-[1.05fr_1fr]">
           <div>
+            {/* The mark leads the page. A cold visitor meets the identity before the words:
+                at 28px in the nav it is a favicon, at ~88px here it is the brand. Sized in CSS
+                rather than through `size` so it can step down on narrow viewports without a
+                second render — `size` only seeds the intrinsic width/height. */}
+            <MaggieMark
+              size={88}
+              className="mb-5 h-[68px] w-[68px] drop-shadow-sm md:h-[88px] md:w-[88px]"
+            />
             <Badge tone="sky" icon="route" className="mb-4">
               {gradeSpan} math you can touch
             </Badge>

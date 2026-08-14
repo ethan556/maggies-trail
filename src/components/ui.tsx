@@ -57,7 +57,6 @@ export type IconName =
   | "waypoint"
   | "map"
   | "ascent"
-  | "trailhead"
   | "bridge"
   | "trailBadge"
   | "summit"
@@ -76,7 +75,13 @@ export type IconName =
  * One visual grammar: 24×24 grid, 2px rounded strokes, no fills, currentColor.
  * Optical size is controlled by the `size` prop; stroke stays visually constant.
  */
-const PATHS: Record<IconName, React.ReactNode> = {
+/** Names rendered by the duotone TONED map below; the rest are single-weight strokes.
+ *  Splitting the union this way keeps BOTH maps exhaustive — a new IconName that is in
+ *  neither map is a type error, not a blank icon at runtime. */
+type TonedIconName = keyof typeof TONED;
+type LineIconName = Exclude<IconName, TonedIconName>;
+
+const PATHS: Record<LineIconName, React.ReactNode> = {
   home: <path d="M4 11.5 12 5l8 6.5M6 10.5V19h12v-8.5" />,
   notebook: <path d="M7 4h10.5v16H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2ZM9.5 4v16M13 9.5h2.5" />,
   /* ---- course-content icons (trail waymarks for topics) ---- */
@@ -245,137 +250,181 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M8 16v-4M12 16V8M16 16v-6" />
     </>
   ),
+};
 
-  /* Trail — navigation */
+/**
+ * Trail set — the duotone half of the vocabulary.
+ *
+ * The 36 entries in PATHS above are single-weight strokes. These 19 are built from three
+ * tones instead, because a line-only glyph cannot carry a second plane and reads flat at
+ * display sizes:
+ *
+ *   fg      currentColor              the subject, as solid mass
+ *   tint    currentColor @ 0.26       the plane behind it — theme-safe by construction,
+ *                                     since it is the SAME colour at lower alpha and so
+ *                                     inverts correctly in dark mode with no variant
+ *   accent  var(--icon-accent)        Summit Orange, at most ONCE per icon, on the element
+ *                                     that IS the icon's point — the star on the summit,
+ *                                     the flame in the lantern, the north half of the
+ *                                     needle, the lit door of the tent, the deck you cross
+ *
+ * Depth is exactly two planes, never three. Pure-environment icons (pine) stay two-tone on
+ * purpose: an accent forced into every glyph is what makes a set read as decorated rather
+ * than designed.
+ *
+ * Every path was rendered at 16/20/24/32/64 and reviewed by eye before landing, per
+ * CLAUDE.md's "print the generated output and read it" rule.
+ */
+const ACCENT = "var(--icon-accent, #F08A24)";
+
+const TONED = {
+  /* Navigation */
   compassRose: (
     <>
-      <path d="M12 3.3A8.7 8.7 0 0 1 12 20.7 8.7 8.7 0 0 1 12 3.3z" />
-      <path d="M12 5.6 13.3 10.7 18.4 12 13.3 13.3 12 18.4 10.7 13.3 5.6 12 10.7 10.7z" />
+      <path d="M12 2.4a9.6 9.6 0 1 0 0 19.2 9.6 9.6 0 0 0 0-19.2z" fill="currentColor" opacity={0.26} />
+      <path d="M12 2.4a9.6 9.6 0 1 0 0 19.2 9.6 9.6 0 0 0 0-19.2z" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 20.4 9.3 12h5.4z" fill="currentColor" />
+      <path d="M12 3.6 14.7 12H9.3z" fill={ACCENT} />
     </>
   ),
   signpost: (
     <>
-      <path d="M12 21.5V3.5" />
-      <path d="M12 6H5.2L3 8.5 5.2 11H12" />
-      <path d="M12 13.8h6.8l2.2 2.5-2.2 2.5H12" />
+      <path d="M12 22.4c3.4 0 6.2-.4 6.2-1s-2.8-1-6.2-1-6.2.4-6.2 1 2.8 1 6.2 1z" fill="currentColor" opacity={0.26} />
+      <path d="M10.8 2.8h2.4v18.3a1.2 1.2 0 0 1-2.4 0z" fill="currentColor" />
+      <path d="M13.2 12.7h6.4l2.4 2.8-2.4 2.8h-6.4z" fill="currentColor" />
+      <path d="M10.8 5.5H4.4L2 8.3l2.4 2.8h6.4z" fill={ACCENT} />
     </>
   ),
   waypoint: (
     <>
-      <path d="M12 21c0-4.5-5.5-6.2-5.5-10.5a5.5 5.5 0 1 1 11 0C17.5 14.8 12 16.5 12 21z" />
-      <path d="M12 10.5h.01" />
+      <path d="M12 22c2.6 0 4.7-.7 4.7-1.6S14.6 18.8 12 18.8s-4.7.7-4.7 1.6S9.4 22 12 22z" fill="currentColor" opacity={0.26} />
+      <path d="M12 1.7a7 7 0 0 0-7 7c0 4.8 7 11.1 7 11.1s7-6.3 7-11.1a7 7 0 0 0-7-7z" fill="currentColor" />
+      <path d="M12 6.2a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2z" fill={ACCENT} />
     </>
   ),
   map: (
     <>
-      <path d="M3 6.6 9 4.4v13L3 19.6z" />
-      <path d="M9 4.4 15 6.6v13L9 17.4z" />
-      <path d="M15 6.6 21 4.4v13L15 19.6z" />
+      <path d="M2.3 6.5 8.7 4.2v13.3L2.3 19.8zM15.3 6.5 21.7 4.2v13.3l-6.4 2.3zM8.7 4.2 15.3 6.5v13.3L8.7 17.5z" fill="currentColor" opacity={0.26} />
+      <path d="M2.3 6.5 8.7 4.2 15.3 6.5 21.7 4.2v13.3l-6.4 2.3-6.6-2.3-6.4 2.3z" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.7 4.2v13.3M15.3 6.5v13.3" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5.2 15.4c2.4-1.2 1.6-3.6 3.6-4.6s3.6.4 5-1.8" stroke={ACCENT} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
 
-  /* Trail — the path */
+  /* The path */
   ascent: (
     <>
-      <path d="M3.5 19.5c4-.6 6.8-2.8 8.5-6.2S15.6 6.6 20.5 4.8" />
-      <path d="M15.6 4.2 20.8 4.6 20.2 9.8" />
-    </>
-  ),
-  trailhead: (
-    <>
-      <path d="M4 21v-6.8a8 8 0 0 1 16 0V21" />
-      <path d="M12 21v-7.6" />
+      <path d="M1.8 20.8 12.6 5.2 22.2 20.8z" fill="currentColor" opacity={0.26} />
+      <path d="M6.6 20.8c2.8-1.6 2.2-4.2 4.4-5.8s2.8-3.6 2.2-5.6" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12.6 1.6l.95 2.6 2.6.95-2.6.95-.95 2.6-.95-2.6-2.6-.95 2.6-.95z" fill={ACCENT} />
     </>
   ),
   bridge: (
     <>
-      <path d="M2.5 16.5h19" />
-      <path d="M6.5 16.5V7.5M17.5 16.5V7.5" />
-      <path d="M6.5 7.5c3 4.6 8 4.6 11 0" />
-      <path d="M9.6 16.5v-3.6M12 16.5v-4.6M14.4 16.5v-3.6" />
+      <path d="M1.8 19.6h20.4v2.2H1.8z" fill="currentColor" opacity={0.26} />
+      <path d="M5.6 4.2h2.6v11.2H5.6zM15.8 4.2h2.6v11.2h-2.6z" fill="currentColor" />
+      <path d="M6.9 5c2.6 5.6 7.6 5.6 10.2 0" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.6 15.4v-3.4M12 15.4v-4.4M14.4 15.4v-3.4" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M1.8 15.4h20.4v2.6H1.8z" fill={ACCENT} />
     </>
   ),
   trailBadge: (
     <>
-      <path d="M12 2.8 20 5.6v6.6c0 4.6-3.6 7.2-8 8.8-4.4-1.6-8-4.2-8-8.8V5.6z" />
-      <path d="M8.2 14.4 12 8.8l3.8 5.6z" />
+      <path d="M12 1.6 20.7 4.9v7.1c0 5.1-4 8-8.7 9.6-4.7-1.6-8.7-4.5-8.7-9.6V4.9z" fill="currentColor" />
+      <path d="M12 4.1v17.5c-4.7-1.6-8.7-4.5-8.7-9.6V4.9z" fill="currentColor" opacity={0.26} />
+      <path d="M8 14.9 12 8.7l4 6.2z" fill={ACCENT} />
     </>
   ),
 
-  /* Trail — landmarks */
-  summit: <path d="M2.5 19.5 9 7.5l3.4 6.2L15.8 8l5.7 11.5z" />,
+  /* Landmarks */
+  summit: (
+    <>
+      <path d="M15.6 6.8 22.2 20.6H9z" fill="currentColor" opacity={0.26} />
+      <path d="M8.5 9.6 15.2 20.6H1.8z" fill="currentColor" />
+      <path d="M18.4 1.4l.9 2.5 2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9z" fill={ACCENT} />
+    </>
+  ),
   cairn: (
     <>
-      <path d="M5.5 20.5h13" />
-      <path d="M12 20.5c-2.9 0-5.2-1-5.2-2.3s2.3-2.3 5.2-2.3 5.2 1 5.2 2.3-2.3 2.3-5.2 2.3z" />
-      <path d="M12 15.5c-2.2 0-3.9-.9-3.9-2s1.7-2 3.9-2 3.9.9 3.9 2-1.7 2-3.9 2z" />
-      <path d="M12 11.2c-1.6 0-2.8-.8-2.8-1.7s1.2-1.7 2.8-1.7 2.8.8 2.8 1.7-1.2 1.7-2.8 1.7z" />
+      <path d="M12 22.2c4.5 0 8.1-.5 8.1-1.2s-3.6-1.2-8.1-1.2-8.1.5-8.1 1.2 3.6 1.2 8.1 1.2z" fill="currentColor" opacity={0.26} />
+      <path d="M12 15.2c-3.6 0-6.5 1.2-6.5 2.7s2.9 2.7 6.5 2.7 6.5-1.2 6.5-2.7-2.9-2.7-6.5-2.7z" fill="currentColor" />
+      <path d="M12 9.9c-2.7 0-4.9 1-4.9 2.3s2.2 2.3 4.9 2.3 4.9-1 4.9-2.3-2.2-2.3-4.9-2.3z" fill="currentColor" />
+      <path d="M12 5.2c-1.8 0-3.3.8-3.3 1.9s1.5 1.9 3.3 1.9 3.3-.8 3.3-1.9-1.5-1.9-3.3-1.9z" fill={ACCENT} />
     </>
   ),
   pine: (
     <>
-      <path d="M12 3 8.4 9h7.2z" />
-      <path d="M12 7.4 6.6 15h10.8z" />
-      <path d="M12 12 5 20h14z" />
-      <path d="M12 20v1.5" />
+      <path d="M17.6 5.4 22.4 13h-3l3.2 5.6h-9.2L17.2 13h-2.6z" fill="currentColor" opacity={0.26} />
+      <path d="M9 2.2 13.8 9.8h-2.7l3.5 6.1h-2.9l3.6 5.5H2.7l3.6-5.5H4.4l3.5-6.1H5.2z" fill="currentColor" />
+      <path d="M7.9 21.4h2.2v1.2H7.9z" fill="currentColor" opacity={0.26} />
     </>
   ),
   basecamp: (
     <>
-      <path d="M12 4.5 3 20.5h18z" />
-      <path d="M12 11 8.6 20.5M12 11l3.4 9.5" />
+      <path d="M12 3.2 22.2 20.8H12z" fill="currentColor" opacity={0.26} />
+      <path d="M12 3.2 1.8 20.8H12z" fill="currentColor" />
+      <path d="M12 11.8 15.6 20.8H8.4z" fill={ACCENT} />
     </>
   ),
   summitFlag: (
     <>
-      <path d="M6.5 21V3.5" />
-      <path d="M6.5 5h11l-2.6 3.6L17.5 12h-11" />
+      <path d="M12 22.2c4 0 7.2-.5 7.2-1.1s-3.2-1.1-7.2-1.1-7.2.5-7.2 1.1 3.2 1.1 7.2 1.1z" fill="currentColor" opacity={0.26} />
+      <path d="M5.4 2.4h2.2v18.4a1.1 1.1 0 0 1-2.2 0z" fill="currentColor" />
+      <path d="M7.6 3.8h12l-2.9 4 2.9 4h-12z" fill={ACCENT} />
     </>
   ),
 
-  /* Trail — terrain */
+  /* Terrain */
   elevation: (
     <>
-      <path d="M3 19.5h18" />
-      <path d="M3.5 16.2 7.5 11l3 3.2 4.2-7.4 3.1 5.4 2.7-2.8" />
+      <path d="M2.2 20.4V15l4.6-5.9 3.2 3.5L14.8 4l3.5 6.1 3.5-3.6v13.9z" fill="currentColor" opacity={0.26} />
+      <path d="M2.2 20.4h19.6" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.2 16.4 6.8 10.6l3.2 3.5L14.8 5.6l3.5 6.1 3.5-3.6" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14.8 5.6a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8z" fill={ACCENT} />
     </>
   ),
 
-  /* Trail — kit */
+  /* Kit */
   backpack: (
     <>
-      <path d="M7 8.5h10a3 3 0 0 1 3 3V18a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18v-6.5a3 3 0 0 1 3-3z" />
-      <path d="M9 8.5V6.8a3 3 0 0 1 6 0v1.7" />
-      <path d="M8.5 20.5v-4.8a3.5 3.5 0 0 1 7 0v4.8" />
+      <path d="M7 7.6h10a3.6 3.6 0 0 1 3.6 3.6v7.4A2.8 2.8 0 0 1 17.8 21.4H6.2a2.8 2.8 0 0 1-2.8-2.8v-7.4A3.6 3.6 0 0 1 7 7.6z" fill="currentColor" />
+      <path d="M8.4 21.4v-4.9a3.6 3.6 0 0 1 7.2 0v4.9z" fill="currentColor" opacity={0.26} />
+      <path d="M8.8 7.6V5.9a3.2 3.2 0 0 1 6.4 0v1.7" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10.3 17.6h3.4" stroke={ACCENT} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
   lantern: (
     <>
-      <path d="M10 4.2a2 2 0 0 1 4 0" />
-      <path d="M7.6 7h8.8" />
-      <path d="M8.8 7h6.4l.6 10.2a1.9 1.9 0 0 1-1.9 2h-3.8a1.9 1.9 0 0 1-1.9-2z" />
-      <path d="M12 11v3.6" />
+      <path d="M8.4 8h7.2l.8 10.4H7.6z" fill="currentColor" opacity={0.26} />
+      <path d="M9.2 5.2a2.8 2.8 0 0 1 5.6 0" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7.4 5.4h9.2l-1.1 2.6H8.5z" fill="currentColor" />
+      <path d="M6.8 18.4h10.4v2.8H6.8z" fill="currentColor" />
+      <path d="M12 10.4c1.85 1.7 1.85 4.2 0 5.8-1.85-1.6-1.85-4.1 0-5.8z" fill={ACCENT} />
     </>
   ),
   binoculars: (
     <>
-      <path d="M6.5 8.5h1.8a2.5 2.5 0 0 1 2.5 2.5v6.5a2.7 2.7 0 0 1-5.4 0V11a2.5 2.5 0 0 1 1.1-2.5z" />
-      <path d="M17.5 8.5h-1.8a2.5 2.5 0 0 0-2.5 2.5v6.5a2.7 2.7 0 0 0 5.4 0V11a2.5 2.5 0 0 0-1.1-2.5z" />
-      <path d="M10.8 12.5h2.4" />
-      <path d="M7 8.5V6.4h2.4v2.1M17 8.5V6.4h-2.4v2.1" />
+      <path d="M10.6 10.2h2.8v3.4h-2.8z" fill="currentColor" opacity={0.26} />
+      <path d="M6.9 5a4.1 4.1 0 0 1 4.1 4.1v7.1a4.1 4.1 0 0 1-8.2 0V9.1A4.1 4.1 0 0 1 6.9 5zM17.1 5a4.1 4.1 0 0 1 4.1 4.1v7.1a4.1 4.1 0 0 1-8.2 0V9.1A4.1 4.1 0 0 1 17.1 5z" fill="currentColor" />
+      <path d="M6.9 13.9a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8zM17.1 13.9a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8z" fill={ACCENT} />
     </>
   ),
 
-  /* Trail — moments */
+  /* Moments */
   sunrise: (
     <>
-      <path d="M3.5 19.5h17" />
-      <path d="M7.6 15.9a4.4 4.4 0 0 1 8.8 0" />
-      <path d="M12 6.2v2.4M5.6 9.1l1.7 1.7M18.4 9.1l-1.7 1.7M2.8 15.9h2M19.2 15.9h2" />
+      <path d="M12 3.4v2.8M4.6 6.5l2 2M19.4 6.5l-2 2M1.6 15.4h2.6M19.8 15.4h2.6" stroke="currentColor" strokeWidth={2.1} strokeLinecap="round" strokeLinejoin="round" opacity={0.26} />
+      <path d="M12 9.4a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6z" fill={ACCENT} />
+      <path d="M2.2 18.2h19.6M6.6 21.4h10.8" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
-  northStar: <path d="M12 2.8 14.1 9.9 21.2 12 14.1 14.1 12 21.2 9.9 14.1 2.8 12 9.9 9.9z" />
-};
+  northStar: (
+    <>
+      <path d="M12 1.4 14.8 9.2 22.6 12 14.8 14.8 12 22.6 9.2 14.8 1.4 12 9.2 9.2z" fill="currentColor" opacity={0.26} />
+      <path d="M12 4.6 13.9 10.1 19.4 12 13.9 13.9 12 19.4 10.1 13.9 4.6 12 10.1 10.1z" fill={ACCENT} />
+    </>
+  ),
+} satisfies Partial<Record<IconName, React.ReactNode>>;
 
 export function AppIcon({
   name,
@@ -388,23 +437,28 @@ export function AppIcon({
   className?: string;
   title?: string;
 }) {
+  const toned = (TONED as Partial<Record<IconName, React.ReactNode>>)[name];
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      {...(toned
+        ? {}
+        : {
+            stroke: "currentColor",
+            strokeWidth: 2,
+            strokeLinecap: "round" as const,
+            strokeLinejoin: "round" as const
+          })}
       className={className}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
     >
       {title ? <title>{title}</title> : null}
-      {PATHS[name]}
+      {toned ?? PATHS[name as LineIconName]}
     </svg>
   );
 }
