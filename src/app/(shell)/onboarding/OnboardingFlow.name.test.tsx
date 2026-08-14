@@ -38,6 +38,10 @@ describe("onboarding name step", () => {
     render(<OnboardingFlow />);
     fireEvent.click(screen.getByRole("button", { name: /keep maggie's trail/i }));
     fireEvent.click(screen.getByRole("button", { name: /grade 3/i }));
+    // Since production art landed (2026-08-14) the avatar stage sits between grade and goal and is
+    // no longer skipped; picking is optional, so Continue walks straight through it. Not a stale
+    // assertion — a real, deliberate flow change. See OnboardingFlow.avatar.test.tsx.
+    fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
     fireEvent.click(screen.getByRole("button", { name: /keep up with school/i }));
 
     const diagnostic = screen.getByRole("link", { name: /take the 12-item diagnostic/i });

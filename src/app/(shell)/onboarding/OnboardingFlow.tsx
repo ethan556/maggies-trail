@@ -15,12 +15,12 @@ import { AppIcon } from "@/components/ui";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { AVATARS } from "@/lib/avatars";
 
-// WS-J: the avatar stage between "grade" and "goal" only renders once the manifest has at least
-// one enabled entry. Today (every entry `enabled: false`) it's a mandatory screen with zero
-// selectable options — a dead stage — so the grade stage skips straight to "goal", exactly as it
-// did before this pass, and the existing name→grade→goal walkthrough test stays green. The moment
-// art lands and a flag flips, this flips to true with no further wiring: see
-// OnboardingFlow.avatar.test.tsx for the enabled path, mocked ahead of real art.
+// WS-J: the avatar stage between "grade" and "goal" only renders while the manifest has at least
+// one enabled entry — a screen with zero selectable options is a dead stage, so the grade step
+// would skip straight to "goal" instead. Production art landed 2026-08-14, so this is true and the
+// stage renders for every grade; the guard stays because it is what keeps onboarding honest if
+// every entry is ever disabled again (art pulled after a QA rejection). See
+// OnboardingFlow.avatar.test.tsx for the live path and the emptied-manifest path.
 const HAS_ENABLED_AVATARS = AVATARS.some((a) => a.enabled);
 
 // Every band with a trail belongs here. K/1/2 and 9–13 had trails in onboarding.ts all along and
