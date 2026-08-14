@@ -2093,16 +2093,30 @@ function Sp7GapUnits() {
   );
 }
 
-/** Grade 7 sampling-probability figure: Dot-plot overlap shows how groups compare. */
+/** Grade 7 sampling-probability figure: Dot-plot overlap shows how groups compare.
+ *
+ *  S241 (D-15, rule A14): the two piles used to be drawn at IDENTICAL centres wherever they
+ *  share a value (70, 90, 110, 130) — same cx, same cy, same radius — so group B's tangerine
+ *  dots painted over group A's sky dots and a learner counting A read the wrong frequency.
+ *  The picture whose whole subject is OVERLAP was drawing it as data loss. Both redundancies
+ *  from the rule are used: the piles are DODGED half a dot either side of their shared value
+ *  (marked by a tick, so the pairing stays legible), and B is drawn HOLLOW against A's filled
+ *  dots, so the groups stay tellable apart without relying on colour. */
 function Sp7DotplotOverlap() {
+  const dot = 2.8, dodge = 3.6;
+  const stack = (n: number) => Array.from({ length: n }, (_, j) => 54 - j * 8);
+  const heights = [0, 1, 2, 3, 4].map((i) => 4 - Math.abs(i - 2));
   return (
-    <svg viewBox="0 0 210 92" role="img" aria-label="Two dot plots on the same scale: heavy overlap of the dots means the groups are similar, while separated clusters mean they differ.">
+    <svg viewBox="0 0 210 96" role="img" aria-label="Two dot plots on the same scale: heavy overlap of the dots means the groups are similar, while separated clusters mean they differ. Group A's filled dots sit just left of each value and group B's hollow dots just right, so where the two groups share a value both piles stay countable.">
       <title>Dot-plot overlap shows how groups compare.</title>
       <line x1="20" y1="60" x2="196" y2="60" stroke={INK} strokeWidth={1.6}/>
-      {[0,1,2,3,4].map((g,i)=>(<g key={`a${i}`}>{Array.from({length:3-Math.abs(i-2)+1},(_,j)=>(<circle key={j} cx={50+i*20} cy={54-j*8} r={3} fill={SKY}/>))}</g>))}
-      {[0,1,2,3,4].map((g,i)=>(<g key={`b${i}`}>{Array.from({length:3-Math.abs(i-2)+1},(_,j)=>(<circle key={j} cx={70+i*20} cy={54-j*8} r={3} fill={TANGERINE}/>))}</g>))}
-      <text x="60" y="80" fontSize="10" fill={SKY}>group A</text>
-      <text x="150" y="80" fontSize="10" fill={TANGERINE}>group B</text>
+      {[50,70,90,110,130,150].map((v)=>(<line key={v} x1={v} y1="60" x2={v} y2="65" stroke={INK} strokeWidth={1.1}/>))}
+      {heights.map((n,i)=>(<g key={`a${i}`}>{stack(n).map((cy,j)=>(<circle key={j} cx={50+i*20-dodge} cy={cy} r={dot} fill={SKY}/>))}</g>))}
+      {heights.map((n,i)=>(<g key={`b${i}`}>{stack(n).map((cy,j)=>(<circle key={j} cx={70+i*20+dodge} cy={cy} r={dot} fill="#ffffff" stroke={TANGERINE} strokeWidth={1.4}/>))}</g>))}
+      <circle cx="52" cy="80" r={dot} fill={SKY}/>
+      <text x="60" y="84" fontSize="10" fill={SKY}>group A</text>
+      <circle cx="142" cy="80" r={dot} fill="#ffffff" stroke={TANGERINE} strokeWidth={1.4}/>
+      <text x="150" y="84" fontSize="10" fill={TANGERINE}>group B</text>
     </svg>
   );
 }
@@ -5582,6 +5596,18 @@ function HistogramScores() {
   return (
     <svg viewBox="0 0 280 140" role="img" className="mx-auto w-full max-w-sm">
       <title>A histogram of quiz scores with four touching bars: scores 0 to 4 have one student, 5 to 9 have two, 10 to 14 have four, and 15 to 19 have three.</title>
+      {/* S241 (D-17, rule C1): the frequency axis. This is the lesson's canonical picture of a
+          histogram, and it had no y-axis line, no frequency ticks and no axis name — the counts
+          were printed on top of the bars, so "height shows how many" was a claim the drawing
+          never supported. One tick per student, labelled, plus the axis's own name. */}
+      <text x={ox - 16} y={14} textAnchor="start" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>how many scores</text>
+      <line x1={ox - 8} y1={y0} x2={ox - 8} y2={y0 - 4 * uh - 8} stroke={INK} strokeWidth={2} />
+      {[0, 1, 2, 3, 4].map((n) => (
+        <g key={`f${n}`}>
+          <line x1={ox - 13} y1={y0 - n * uh} x2={ox - 8} y2={y0 - n * uh} stroke={INK} strokeWidth={1.2} />
+          <text x={ox - 16} y={y0 - n * uh + 3.5} textAnchor="end" fontSize={10} fontWeight={700} fill={INK}>{n}</text>
+        </g>
+      ))}
       <line x1={ox - 8} y1={y0} x2={ox + bw * 4 + 8} y2={y0} stroke={INK} strokeWidth={2} />
       {bins.map((b, i) => (
         <g key={b.label}>
@@ -7691,11 +7717,26 @@ function RoundSolids() {
 /** Three small scatter plots side by side showing the association types: points trending
  *  up (positive), down (negative), and with no pattern (none). Color-coded per panel. */
 function ScatterAssociation() {
+  /* S241 (D-17, rules A1/C4): three bare 50%-opacity segments used to stand in for three
+   * coordinate planes — no axis names, no ticks, no origin. This is the lesson's canonical
+   * picture of a scatter plot, and bv-01-01 teaches exactly the vocabulary it was missing:
+   * "one measurement for its across-position (x) and the other for its up-position (y)". Each
+   * panel now names both axes, marks the origin the directions are read FROM, and carries tick
+   * strokes so "as x goes up, y tends to go up" has countable steps behind it. */
   const panel = (ox: number, pts: [number, number][], label: string, color: string) => (
     <g key={label}>
       <text x={ox + 32} y={16} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={color}>{label}</text>
       <line x1={ox + 6} y1={30} x2={ox + 6} y2={92} stroke={INK} strokeWidth={1} opacity={0.5} />
       <line x1={ox + 6} y1={92} x2={ox + 62} y2={92} stroke={INK} strokeWidth={1} opacity={0.5} />
+      {[20, 40].map((d) => (
+        <g key={d}>
+          <line x1={ox + 6 + d} y1={92} x2={ox + 6 + d} y2={95} stroke={INK} strokeWidth={1} opacity={0.5} />
+          <line x1={ox + 3} y1={92 - d} x2={ox + 6} y2={92 - d} stroke={INK} strokeWidth={1} opacity={0.5} />
+        </g>
+      ))}
+      <text x={ox + 2} y={62} textAnchor="end" fontSize={10} fontWeight={700} fill={INK}>y</text>
+      <text x={ox + 34} y={104} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>x</text>
+      <text x={ox + 3} y={104} textAnchor="end" fontSize={10} fill={INK} opacity={0.75}>0</text>
       {pts.map(([px, py], i) => (
         <circle key={i} cx={ox + 6 + px} cy={92 - py} r={2.6} fill={color} opacity={0.85} />
       ))}
@@ -7705,11 +7746,12 @@ function ScatterAssociation() {
   const down: [number, number][] = [[6, 50], [14, 42], [22, 36], [30, 26], [38, 22], [46, 12], [52, 8]];
   const none: [number, number][] = [[8, 30], [16, 12], [24, 46], [32, 22], [40, 40], [48, 16], [52, 34]];
   return (
-    <svg viewBox="0 0 300 105" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 300 122" role="img" className="mx-auto w-full max-w-sm">
       <title>Three scatter plots. On the left, points rise from lower-left to upper-right — a positive association. In the middle, points fall from upper-left to lower-right — a negative association. On the right, points are scattered with no pattern — no association.</title>
       {panel(6, up, "positive", LEAF)}
       {panel(108, down, "negative", BERRY)}
       {panel(210, none, "none", SKY)}
+      <text x={150} y={118} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>x = across-position · y = up-position</text>
     </svg>
   );
 }
@@ -7729,8 +7771,26 @@ function ScatterBestFit() {
   return (
     <svg viewBox="0 0 300 140" role="img" className="mx-auto w-full max-w-sm">
       <title>A scatter plot of about a dozen points trending upward, with a single straight line drawn through the middle of the cloud. The line of best fit passes close to the points, with roughly as many points above it as below it.</title>
+      {/* S241 (D-17, rules A1/C4/A7): the plane the "line of best fit" lives on used to be two
+          bare segments — no variable names, no ticks, no origin — so "runs through the middle of
+          the cloud" was a claim with no readable coordinates behind it. Axis names plus a
+          countable scale on both axes; the origin's 0 is shared by the two axes. */}
       <line x1={ox} y1={oy} x2={ox} y2={14} stroke={INK} strokeWidth={1.2} opacity={0.5} />
       <line x1={ox} y1={oy} x2={270} y2={oy} stroke={INK} strokeWidth={1.2} opacity={0.5} />
+      {[2, 4, 6, 8].map((v) => (
+        <g key={`x${v}`}>
+          <line x1={X(v)} y1={oy} x2={X(v)} y2={oy + 4} stroke={INK} strokeWidth={1.2} opacity={0.5} />
+          <text x={X(v)} y={oy + 13} textAnchor="middle" fontSize={10} fill={INK} opacity={0.75}>{v}</text>
+        </g>
+      ))}
+      {[0, 4, 8].map((v) => (
+        <g key={`y${v}`}>
+          <line x1={ox - 4} y1={Y(v)} x2={ox} y2={Y(v)} stroke={INK} strokeWidth={1.2} opacity={0.5} />
+          <text x={ox - 7} y={Y(v) + 3.5} textAnchor="end" fontSize={10} fill={INK} opacity={0.75}>{v}</text>
+        </g>
+      ))}
+      <text x={ox - 7} y={18} textAnchor="end" fontSize={10} fontWeight={700} fill={INK}>y</text>
+      <text x={264} y={oy + 13} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>x</text>
       <line x1={X(0.4)} y1={Y(lineY(0.4))} x2={X(8.6)} y2={Y(lineY(8.6))} stroke={TANGERINE} strokeWidth={2.5} />
       {pts.map(([px, py], i) => (
         <circle key={i} cx={X(px)} cy={Y(py)} r={3} fill={SKY} opacity={0.85} stroke="white" strokeWidth={0.6} />
@@ -11182,21 +11242,33 @@ function FiveMinuteClock() {
 function SingleScaleGraph() {
   const bars = [3, 6, 4];
   const labels = ["cats", "dogs", "birds"];
+  /* S241 (D-16, rules A4/C1): the caption said "each line = 1" and the <title> said "each
+   * gridline is worth exactly one" over a chart that drew NO gridlines and numbered its axis
+   * 0 · 2 · 4 · 6. The one thing the lesson asks the learner to do — "read straight up from the
+   * top of the bar to the number beside it" — was undrawable for the cats bar at 3, and the
+   * claim was about lines that did not exist. Now every unit HAS a line and every line HAS its
+   * number: `u` is the unit, one gridline per unit, one label per gridline. The taller viewBox
+   * buys the 14-unit row pitch those seven labels need to stay clear of each other. */
+  const u = 14, y0 = 118;
+  const ticks = [0, 1, 2, 3, 4, 5, 6];
   return (
-    <svg viewBox="0 0 220 130" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 220 150" role="img" className="mx-auto w-full max-w-sm">
       <title>A bar graph with three bars for cats, dogs, and birds, where each gridline is worth exactly one -- the bar for dogs reaches six, showing six votes directly.</title>
-      <line x1={30} y1={20} x2={30} y2={100} stroke={INK} strokeWidth={1.2} />
-      <line x1={30} y1={100} x2={210} y2={100} stroke={INK} strokeWidth={1.2} />
-      {[0, 2, 4, 6].map((v) => (
-        <text key={v} x={20} y={102 - v * 12} textAnchor="end" fontSize={10} fill={INK}>{v}</text>
+      {ticks.filter((v) => v > 0).map((v) => (
+        <line key={v} x1={30} y1={y0 - v * u} x2={210} y2={y0 - v * u} stroke={INK} strokeWidth={0.8} opacity={0.3} />
+      ))}
+      <line x1={30} y1={y0 - 6 * u - 6} x2={30} y2={y0} stroke={INK} strokeWidth={1.2} />
+      <line x1={30} y1={y0} x2={210} y2={y0} stroke={INK} strokeWidth={1.2} />
+      {ticks.map((v) => (
+        <text key={v} x={24} y={y0 - v * u + 3.5} textAnchor="end" fontSize={10} fill={INK}>{v}</text>
       ))}
       {bars.map((v, i) => (
         <g key={i}>
-          <rect x={55 + i * 50} y={100 - v * 12} width={30} height={v * 12} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
-          <text x={70 + i * 50} y={116} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{labels[i]}</text>
+          <rect x={55 + i * 50} y={y0 - v * u} width={30} height={v * u} fill={SKY} opacity={0.85} stroke={INK} strokeWidth={1} />
+          <text x={70 + i * 50} y={134} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{labels[i]}</text>
         </g>
       ))}
-      <text x={110} y={12} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>each line = 1</text>
+      <text x={110} y={20} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>each line = 1</text>
     </svg>
   );
 }

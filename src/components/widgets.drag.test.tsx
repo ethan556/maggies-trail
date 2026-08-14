@@ -2089,9 +2089,11 @@ describe("parametricTrace point drag — line mode", () => {
     const { holder, container } = mount(spec);
     const svg = container.querySelector("svg") as SVGSVGElement;
     pinRect(svg, 260, 260);
-    // full sweep x in [1,4], padded 18% -> [0.46,4.54]; pad=28, plotW=204.
-    // t=2 -> x=3 -> px = 28 + ((3-0.46)/4.08)*204 = 155
-    fireEvent.pointerDown(screen.getByTestId("ptr-drag"), { clientX: 155, clientY: 130, pointerId: 1 });
+    // S241 (D-10): the framing box now always CONTAINS THE ORIGIN, because the readout speaks in
+    // coordinates and x = 0 has to be somewhere on the picture. Full sweep x in [1,4] widened to
+    // [0,4], padded 18% of the span -> [-0.72,4.72]; pad=28, plotW=204.
+    // t=2 -> x=3 -> px = 28 + ((3+0.72)/5.44)*204 = 167.5
+    fireEvent.pointerDown(screen.getByTestId("ptr-drag"), { clientX: 167, clientY: 130, pointerId: 1 });
     expect(holder.v).toBe(2);
   });
 

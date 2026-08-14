@@ -290,6 +290,50 @@ const LABEL_LINE = 1.26;
 const LABEL_GAP = 2;
 const labelHalfWidth = (text: string, fontSize: number) => (text.length * fontSize * LABEL_EM) / 2;
 
+/* S241 (D-25, rule A7/A8/A9) — TICK VALUES FOR A VALUE-GRADED PLANE.
+ *
+ * A plane whose readout is a NUMBER (y = mx + b, |z|, the corner (5, 1.5), the point (x, y)) has
+ * to carry numbers, or the learner is asked to verify arithmetic against a picture that states
+ * nothing. Faint gridlines are not a scale: they say "some unit", never "this unit" — and on the
+ * engines that rescale live (argandExplore's product, parametricTrace's fitted window) the same
+ * lattice means a different unit from frame to frame unless a numeral says otherwise.
+ *
+ * The step comes off a 1-2-2.5-5-10 ladder, the same reasoning as HopLandingW's ruler: landmarks a
+ * learner already counts in beat an arithmetically even division nobody can read a position off.
+ * `ends` adds the two extremes — used where the extremes are AUTHORED, meaningful numbers (a
+ * scatterFit window, a feasibleRegion ceiling, an Argand grid radius, which is the printed extent
+ * rule A9 asks for) and left off where they are derived padding (a curve's fitted bounding box).
+ * An interior tick within half a step of an end is dropped so the two never crowd.
+ */
+function niceTicks(min: number, max: number, opts?: { target?: number; ends?: boolean; integer?: boolean }): number[] {
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  const span = hi - lo;
+  if (!(span > 0) || !Number.isFinite(span)) return [lo];
+  const raw = span / Math.max(2, opts?.target ?? 4);
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  let step = [1, 2, 2.5, 5, 10].map((k) => k * mag).find((s) => s >= raw - 1e-9) ?? 10 * mag;
+  if (opts?.integer) step = Math.max(1, Math.ceil(step - 1e-9));
+  const round = (v: number) => Number(v.toFixed(6));
+  const inner: number[] = [];
+  for (let k = Math.ceil(lo / step - 1e-9); k * step <= hi + 1e-9; k++) inner.push(round(k * step));
+  if (!opts?.ends) return inner;
+  return [round(lo), ...inner.filter((v) => v - lo > step / 2 - 1e-9 && hi - v > step / 2 - 1e-9), round(hi)];
+}
+/** A tick's printed form: an exact value, never a rounded stand-in (rule A10). */
+const tickText = (v: number) => String(Number(v.toFixed(4)));
+/** Boxes standing for everything OUTSIDE the viewBox, so an s238Seat search treats the canvas edge
+ * as an obstacle and a label that would clip simply takes another seat (rule B2). */
+function s238Walls(w: number, h: number): S238Box[] {
+  const FAR = 1e5;
+  return [
+    { x0: -FAR, x1: 0, y0: -FAR, y1: FAR },
+    { x0: w, x1: FAR, y0: -FAR, y1: FAR },
+    { x0: -FAR, x1: FAR, y0: -FAR, y1: 0 },
+    { x0: -FAR, x1: FAR, y0: h, y1: FAR }
+  ];
+}
+
 function GhostChip({ testid, children }: { testid: string; children: ReactNode }) {
   return (
     <p
@@ -1563,7 +1607,13 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
           </g>
         )}
       <AxisCaptions w={W} h={H} />
-      {!disabled && <rect className="mt-drag-hit" data-testid="dgr-drag" x={0} y={0} width={W} height={H - 16} aria-hidden="true" {...drag.handleProps} />}</svg>
+      {/* S241 (D-13, rule E4): the grab surface is the MOVING POINT, not the plane. A 300×284
+          `touch-action: none` rect made the whole grid a scroll-dead zone on a phone — against
+          useSvgDrag's own contract ("the handle only; the page still scrolls natively"). The puck
+          is a fat 40-unit target centred on the point; once pressed, pointer capture keeps the
+          sweep alive anywhere on (or off) the stage, so carrying the point to any lattice square
+          works exactly as before. */}
+      {!disabled && <circle className="mt-drag-hit" data-testid="dgr-drag" cx={sx(x)} cy={sy(y)} r={20} aria-hidden="true" {...drag.handleProps} />}</svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         √({dx}² + {dy}²) = √{dx * dx + dy * dy} = {fmt(dist)}
       </p>
@@ -2118,6 +2168,47 @@ function dotColumns(values: number[], lo: number, hi: number, bins: number): Arr
   return out;
 }
 
+/* S241 (D-09, rule B3) — HOW TALL A PILE IS ALLOWED TO GET.
+ *
+ * Both dot-pile engines used a fixed 5px row pitch with no ceiling, while retention keeps 200
+ * polls / 300 relabellings. Past ~22 dots in one column the stack drew above the viewBox and the
+ * extra dots simply vanished, silently: the readout went on counting "200 polls" against a
+ * picture that had stopped growing, and the judgement the engines exist for — "could chance alone
+ * do this?" — was being made against a truncated null distribution.
+ *
+ * WHY UNIFORM RESCALE RATHER THAN A CAP OR COARSER BINS. The lesson is the SHAPE of the
+ * distribution, so the only safe transform is one that is the same for every column: shrinking a
+ * single pitch keeps every column's height exactly proportional to its count, so the profile
+ * (centre, spread, which tail is heavy) is preserved to the pixel. Capping stacks would flatten
+ * the mode — the tallest column is the one that carries the centre. Wider bins would help the
+ * ordinary case but not the honest worst case: a degenerate sampling distribution (small n, every
+ * poll landing on the same proportion) puts every retained value in ONE bin no matter how the
+ * axis is cut, so binning alone can still overflow. Pitch is derived from the tallest column and
+ * the available headroom, so the pile fills its frame and never leaves it, at any n.
+ *
+ * The dot radius shrinks with the pitch (floored, so a dot is never invisible): at extreme
+ * densities the marks merge into a solid column whose height still reads as the count — a
+ * histogram bar, which is the honest limit of a dot plot, not a lie about it. */
+function dotPileGeometry(
+  cols: Array<{ b: number; k: number }>,
+  headroom: number,
+  basePitch = 5,
+  baseR = 2.4,
+  minR = 0.9
+): { pitch: number; r: number; tallest: number; compressed: boolean } {
+  let tallest = 0;
+  for (const c of cols) tallest = Math.max(tallest, c.k + 1);
+  if (tallest <= 1) return { pitch: basePitch, r: baseR, tallest, compressed: false };
+  const needed = (tallest - 1) * basePitch + baseR;
+  if (needed <= headroom) return { pitch: basePitch, r: baseR, tallest, compressed: false };
+  const s = headroom / needed;
+  const r = Math.max(minR, baseR * s);
+  // Pitch absorbs whatever the radius floor did not, so the topmost dot's crown lands exactly on
+  // the headroom line: (tallest - 1) * pitch + r === headroom.
+  const pitch = Math.max(0, (headroom - r) / (tallest - 1));
+  return { pitch, r, tallest, compressed: true };
+}
+
 const DOT_MOTION = `.mt-dot{opacity:1}@media (prefers-reduced-motion: no-preference){.mt-dot{animation:mt-drop .28s ease-out}@keyframes mt-drop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}}`;
 
 /* ---------------- SampleSim (repeated polls pile into a sampling distribution) ---------------- */
@@ -2151,6 +2242,10 @@ function SampleSimW({ spec, onChange, disabled, value, tone }: WProps<TSampleSim
   const W = 320, H = 150, PADX = 18, AXIS = 118, BINS = 41;
   const x = (t: number) => PADX + t * (W - 2 * PADX);
   const cols = dotColumns(ps, 0, 1, BINS);
+  // S241 (D-09): the pile is bounded by the band between the first row of dots and PILE_TOP,
+  // which sits clear of the "truth 60%" caption at y = 9. Every retained poll is drawn.
+  const PILE_TOP = 14;
+  const pile = dotPileGeometry(cols, AXIS - 4 - PILE_TOP);
   const near = ps.filter((v) => Math.abs(v - spec.populationP) <= 0.05).length;
   const spread = ps.length > 1 ? Math.max(...ps) - Math.min(...ps) : 0;
 
@@ -2176,7 +2271,7 @@ function SampleSimW({ spec, onChange, disabled, value, tone }: WProps<TSampleSim
           truth {Math.round(spec.populationP * 100)}%
         </text>
         {cols.map((c, i) => (
-          <circle className="mt-dot" key={i} cx={x(c.b / (BINS - 1))} cy={AXIS - 4 - c.k * 5} r={2.4}
+          <circle className="mt-dot" key={i} cx={x(c.b / (BINS - 1))} cy={AXIS - 4 - c.k * pile.pitch} r={pile.r}
             fill={Math.abs(ps[i] - spec.populationP) <= 0.05 ? PALETTE.leaf : PALETTE.sky} fillOpacity={0.85} />
         ))}
         <text x={W - PADX} y={H - 2} fontSize={10} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.6}>
@@ -2185,6 +2280,10 @@ function SampleSimW({ spec, onChange, disabled, value, tone }: WProps<TSampleSim
       </svg>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {ps.length} polls · spread {Math.round(spread * 100)} points · {ps.length ? Math.round((near / ps.length) * 100) : 0}% landed within 5 points of the truth
+        {/* S241 (D-09): once the rows are squeezed, the depth of the deepest column is the one
+            thing the picture can no longer be counted for — so it is stated, in text, for
+            everyone. */}
+        {pile.compressed ? ` · tallest pile ${pile.tallest}` : ""}
       </p>
       <div className="flex flex-wrap justify-center gap-2">
         {spec.sizes.map((n) => (
@@ -2341,6 +2440,18 @@ function ShuffleTestW({ spec, onChange, disabled, value, tone }: WProps<TShuffle
   const x = (v: number) => PADX + ((v + lim) / (2 * lim)) * (W - 2 * PADX);
   const cols = dotColumns(nulls, -lim, lim, BINS);
   const extreme = nulls.filter((d) => Math.abs(d) >= Math.abs(observed) - 1e-9).length;
+  // S241 (D-09): pile bounded by the band below the "observed" caption at y = 8.
+  const PILE_TOP = 12;
+  const pile = dotPileGeometry(cols, AXIS - 4 - PILE_TOP);
+  /* S241 (D-21, rule A9) — THE AXIS NOW STATES ITS OWN SCALE.
+   * `lim` grows the moment a relabelling lands further out than anything before it, which re-maps
+   * every dot already on screen. With "0" as the only numeral, that rescale was invisible: two
+   * piles of identical width could stand for quite different spreads, and the learner comparing
+   * the observed gap against "how far chance reaches" had no number to reach it with. Five
+   * numerals across the gap axis (±lim, ±lim/2, 0) make the current scale readable, so a rescale
+   * announces itself by changing the numbers rather than by silently moving the dots. */
+  const gapTicks = [-lim, -lim / 2, 0, lim / 2, lim];
+  const gapTickText = (v: number) => (Math.abs(v) < 1e-9 ? "0" : String(Number(v.toFixed(2))));
 
   return (
     <div className="grid gap-4">
@@ -2352,10 +2463,21 @@ function ShuffleTestW({ spec, onChange, disabled, value, tone }: WProps<TShuffle
         aria-label={`Pile of gaps produced by relabelling the data at random. ${nulls.length} relabellings so far, ${extreme} of them as extreme as the gap actually observed.`}>
         <style>{DOT_MOTION}</style>
         <line x1={PADX} y1={AXIS} x2={W - PADX} y2={AXIS} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
-        <line x1={x(0)} y1={AXIS} x2={x(0)} y2={AXIS + 5} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.6} />
-        <text x={x(0)} y={AXIS + 16} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>
-          0
-        </text>
+        <g data-testid="sht-axis" aria-hidden="true">
+          {gapTicks.map((v) => {
+            const txt = gapTickText(v);
+            const half = labelHalfWidth(txt, 10);
+            const tx = Math.min(Math.max(x(v), half + 1), W - half - 1);
+            return (
+              <Fragment key={txt}>
+                <line x1={x(v)} y1={AXIS} x2={x(v)} y2={AXIS + 5} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.6} />
+                <text x={tx} y={AXIS + 16} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>
+                  {txt}
+                </text>
+              </Fragment>
+            );
+          })}
+        </g>
         <line x1={x(observed)} y1={10} x2={x(observed)} y2={AXIS} stroke={PALETTE.tangerine} strokeWidth={2.4} />
         <text x={x(observed)} y={8} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.tangerine}>
           observed
@@ -2364,7 +2486,7 @@ function ShuffleTestW({ spec, onChange, disabled, value, tone }: WProps<TShuffle
           const v = nulls[i];
           const hot = Math.abs(v) >= Math.abs(observed) - 1e-9;
           return (
-            <circle className="mt-dot" key={i} cx={x(-lim + (c.b / (BINS - 1)) * 2 * lim)} cy={AXIS - 4 - c.k * 5} r={2.4}
+            <circle className="mt-dot" key={i} cx={x(-lim + (c.b / (BINS - 1)) * 2 * lim)} cy={AXIS - 4 - c.k * pile.pitch} r={pile.r}
               fill={hot ? PALETTE.berry : PALETTE.sky} fillOpacity={hot ? 1 : 0.55} />
           );
         })}
@@ -2375,6 +2497,8 @@ function ShuffleTestW({ spec, onChange, disabled, value, tone }: WProps<TShuffle
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         {nulls.length} relabellings · {extreme} reached the observed gap
         {nulls.length ? ` (${Math.round((extreme / nulls.length) * 100)}%)` : ""}
+        {/* S241 (D-09): see SampleSimW — the squeezed pile states its own depth. */}
+        {pile.compressed ? ` · tallest pile ${pile.tallest}` : ""}
       </p>
       <div className="flex justify-center gap-2">
         <button type="button" aria-label="relabel once" disabled={disabled} onClick={() => run(1)}
@@ -3024,6 +3148,36 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
       })
   });
 
+  /* S241 (D-12, rule A9). THE PLANE MUST SAY WHAT ONE SQUARE IS WORTH.
+   *
+   * In multiply mode G is not the authored gridMax — it grows to hold z·w, so dragging z outward
+   * shrinks EVERY grid square live, under the learner's own hand. With an unlabelled lattice that
+   * rescale is invisible: the arrow keeps its length while the number it stands for changes, and
+   * two frames that look identical mean different moduli. Numerals on the two axes are what make
+   * it honest — at the extents (the printed-extent rule) and at the origin, on an INTEGER step so
+   * every numeral lands on the lattice the sliders actually snap to.
+   *
+   * Existing floating labels (z, z × w, the ghost's "z here") ride data positions and can land on
+   * a numeral, so they are re-seated through the house dodge with these boxes as obstacles rather
+   * than the numerals being dropped — the scale is the thing that must not disappear.
+   */
+  const TICK_FS = 9;
+  const axisTicks = niceTicks(-G, G, { target: 3, ends: true, integer: true });
+  const reTickY = Y(0) + 13, imTickX = X(0) - 5;
+  const tickBoxes: S238Box[] = [
+    ...axisTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), X(v), reTickY, "middle", TICK_FS)),
+    ...axisTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), imTickX, Y(v) + 3.2, "end", TICK_FS)),
+    s238Box("0", imTickX, reTickY, "end", TICK_FS)
+  ];
+  const zSeat = s238Seat("z", 10, [
+    { x: X(re) + 7, y: Y(im) - 6, anchor: "start" },
+    { x: X(re) + 7, y: Y(im) + 16, anchor: "start" },
+    { x: X(re) - 7, y: Y(im) - 6, anchor: "end" },
+    { x: X(re) - 7, y: Y(im) + 16, anchor: "end" },
+    { x: X(re) + 7, y: Y(im) - 20, anchor: "start" },
+    { x: X(re) - 7, y: Y(im) - 20, anchor: "end" }
+  ], tickBoxes);
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -3040,6 +3194,23 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
         <line x1={X(0)} y1={Y(-G)} x2={X(0)} y2={Y(G)} stroke={PALETTE.ink} strokeWidth={1.2} strokeOpacity={0.6} />
         <text x={X(G) - 10} y={Y(0) - 5} fontSize={10} fill={PALETTE.ink} fillOpacity={0.7}>real</text>
         <text x={X(0) + 5} y={Y(G) + 11} fontSize={10} fill={PALETTE.ink} fillOpacity={0.7}>imaginary</text>
+        {/* The scale, printed. See the note above the tick boxes: in multiply mode this is the
+            only thing that tells the learner the grid under their drag has changed meaning. */}
+        <g data-testid="ag-ticks" aria-hidden="true">
+          {axisTicks.map((v) => (
+            <Fragment key={`t${v}`}>
+              <line x1={X(v)} y1={Y(0) - 3} x2={X(v)} y2={Y(0) + 3} stroke={PALETTE.ink} strokeWidth={1.2} strokeOpacity={0.6} />
+              <line x1={X(0) - 3} y1={Y(v)} x2={X(0) + 3} y2={Y(v)} stroke={PALETTE.ink} strokeWidth={1.2} strokeOpacity={0.6} />
+              {v !== 0 && (
+                <>
+                  <text x={X(v)} y={reTickY} textAnchor="middle" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+                  <text x={imTickX} y={Y(v) + 3.2} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+                </>
+              )}
+            </Fragment>
+          ))}
+          <text x={imTickX} y={reTickY} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>0</text>
+        </g>
         <circle cx={X(spec.targetRe)} cy={Y(spec.targetIm)} r={7} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.2} />
         {/* Reveal ghost (multiply mode only — in place mode the target ring IS
             the answer's location). Multiplying by w rotates/scales, so the ring
@@ -3051,11 +3222,19 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
           if (d === 0) return null;
           const zr = (spec.targetRe * spec.mulRe + spec.targetIm * spec.mulIm) / d;
           const zi = (spec.targetIm * spec.mulRe - spec.targetRe * spec.mulIm) / d;
+          const ghostSeat = s238Seat("z here", 10, [
+            { x: X(zr) + 8, y: Y(zi) + 4, anchor: "start" },
+            { x: X(zr) - 8, y: Y(zi) + 4, anchor: "end" },
+            { x: X(zr) + 8, y: Y(zi) - 10, anchor: "start" },
+            { x: X(zr) - 8, y: Y(zi) - 10, anchor: "end" },
+            { x: X(zr) + 8, y: Y(zi) - 24, anchor: "start" },
+            { x: X(zr) - 8, y: Y(zi) - 24, anchor: "end" }
+          ], [...tickBoxes, s238Box("z", zSeat.x, zSeat.y, zSeat.anchor, 10)]);
           return (
             <g data-testid="ag-ghost" aria-hidden="true">
               <line x1={X(0)} y1={Y(0)} x2={X(zr)} y2={Y(zi)} stroke={PALETTE.tangerine} strokeWidth={2.2} strokeDasharray="6 5" />
               <circle cx={X(zr)} cy={Y(zi)} r={5.5} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="4 3" />
-              <text x={X(zr) + 8} y={Y(zi) + 4} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>z here</text>
+              <text x={ghostSeat.x} y={ghostSeat.y} textAnchor={ghostSeat.anchor} fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>z here</text>
             </g>
           );
         })()}
@@ -3065,8 +3244,14 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
           const seat = s238Seat("z × w", 10, [
             { x: X(pRe) + 7, y: Y(pIm) - 6, anchor: "start" },
             { x: X(pRe) + 7, y: Y(pIm) + 16, anchor: "start" },
-            { x: X(pRe) - 7, y: Y(pIm) - 6, anchor: "end" }
-          ], [s238Box("z", X(re) + 7, Y(im) - 6, "start", 10)]);
+            { x: X(pRe) - 7, y: Y(pIm) - 6, anchor: "end" },
+            { x: X(pRe) - 7, y: Y(pIm) + 16, anchor: "end" },
+            // S241: a product that lands ON an axis has the axis's own numerals under both of the
+            // seats beside it (z·w = −2 − 16i sits on the imaginary axis at the "−16" tick), so
+            // the label needs a rung clear of the scale row entirely.
+            { x: X(pRe) + 7, y: Y(pIm) - 20, anchor: "start" },
+            { x: X(pRe) - 7, y: Y(pIm) - 20, anchor: "end" }
+          ], [s238Box("z", zSeat.x, zSeat.y, zSeat.anchor, 10), ...tickBoxes]);
           return (
           <g className="ag">
             <line x1={X(0)} y1={Y(0)} x2={X(pRe)} y2={Y(pIm)} stroke={PALETTE.berry} strokeWidth={2.4} />
@@ -3079,7 +3264,7 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
         })()}
         <line className="ag" x1={X(0)} y1={Y(0)} x2={X(re)} y2={Y(im)} stroke={PALETTE.sky} strokeWidth={2.4} />
         <circle className="ag" cx={X(re)} cy={Y(im)} r={drag.dragging ? 6.5 : 4.5} fill={PALETTE.sky} />
-        <text x={X(re) + 7} y={Y(im) - 6} fontSize={10} fontWeight={700} fill={PALETTE.sky}>z</text>
+        <text x={zSeat.x} y={zSeat.y} textAnchor={zSeat.anchor} fontSize={10} fontWeight={700} fill={PALETTE.sky}>z</text>
         {!disabled && (
           <circle
             className="mt-drag-hit"
@@ -3636,8 +3821,16 @@ function ParametricTraceW({ spec, value, onChange, disabled, tone, onEvent }: WP
   const plotW = W - 2 * pad, plotH = H - 2 * pad;
   // Bounding box of the FULL sweep [tMin, tMax], sampled generally — no per-mode hardcoding, so
   // any authored lineX0/lineYK/tMin/tMax combination frames correctly.
+  //
+  // S241 (D-10, rules A3/A8). THE ORIGIN IS ALWAYS IN FRAME. The readout speaks in coordinates
+  // ("t ≈ 2.00 → (3.00, 4.00)") and the aria says "point (x, y)", so the picture owes the learner
+  // the coordinate system those numbers are read in. Framing the curve alone did not just leave
+  // the axes undrawn — on the authored line spec (x = t + 1, t from 0) it put x = 0 OUTSIDE the
+  // window entirely, so "x = t + lineX0" had no visible anchor to be about. Including 0 in the
+  // bounding box before padding is what makes an axis drawable at all; the circle mode is
+  // unaffected (its box already straddles the origin).
   const { minX, maxX, minY, maxY } = useMemo(() => {
-    let mnX = Infinity, mxX = -Infinity, mnY = Infinity, mxY = -Infinity;
+    let mnX = 0, mxX = 0, mnY = 0, mxY = 0;
     for (let i = 0; i <= 48; i++) {
       const tt = spec.tMin + ((spec.tMax - spec.tMin) * i) / 48;
       const x = xAt(tt), y = yAt(tt);
@@ -3715,11 +3908,54 @@ function ParametricTraceW({ spec, value, onChange, disabled, tone, onEvent }: WP
   const ARROWS = 3;
   const targetOk = Math.abs(t - spec.targetT) <= spec.tTolerance;
 
+  // S241 (D-10) — the coordinate system the readout is quoted in. Axes through the origin, a
+  // stroke and a numeral at each 1-2-5 landmark, and the origin marked once at (0, 0): "x = t + 1"
+  // is a claim about a place, and the learner can now see the place.
+  const TICK_FS = 9;
+  const axisX = X(0), axisY = Y(0);
+  const xTicks = niceTicks(minX, maxX, { target: 4 });
+  const yTicks = niceTicks(minY, maxY, { target: 4 });
+  const xTickY = axisY + 12, yTickX = axisX - 5;
+  const tickBoxes: S238Box[] = [
+    ...xTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), X(v), xTickY, "middle", TICK_FS)),
+    ...yTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), yTickX, Y(v) + 3.2, "end", TICK_FS)),
+    s238Box("0", yTickX, xTickY, "end", TICK_FS)
+  ];
+  const ghostX = X(xAt(spec.targetT)), ghostY = Y(yAt(spec.targetT));
+  const ghostSeat = s238Seat("target", 10, [
+    { x: ghostX, y: ghostY - 10, anchor: "middle" },
+    { x: ghostX, y: ghostY + 20, anchor: "middle" },
+    { x: ghostX + 10, y: ghostY - 10, anchor: "start" },
+    { x: ghostX - 10, y: ghostY - 10, anchor: "end" }
+  ], [...tickBoxes, ...s238Walls(W, H)]);
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Parametric ${spec.mode === "line" ? "line" : "circle"} at t ${t.toFixed(2)}, point (${xAt(t).toFixed(2)}, ${yAt(t).toFixed(2)}).`}>
+        <g data-testid="ptr-axes" aria-hidden="true">
+          <line x1={pad - 6} y1={axisY} x2={W - pad + 6} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.4} />
+          <line x1={axisX} y1={pad - 6} x2={axisX} y2={H - pad + 6} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.4} />
+          {xTicks.map((v) => (
+            <Fragment key={`xt${v}`}>
+              <line x1={X(v)} y1={axisY - 3} x2={X(v)} y2={axisY + 3} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.2} />
+              {v !== 0 && (
+                <text x={X(v)} y={xTickY} textAnchor="middle" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          {yTicks.map((v) => (
+            <Fragment key={`yt${v}`}>
+              <line x1={axisX - 3} y1={Y(v)} x2={axisX + 3} y2={Y(v)} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.2} />
+              {v !== 0 && (
+                <text x={yTickX} y={Y(v) + 3.2} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          <circle cx={axisX} cy={axisY} r={2.6} fill={PALETTE.ink} fillOpacity={0.7} />
+          <text x={yTickX} y={xTickY} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>0</text>
+        </g>
         <path d={`M ${sample(spec.tMin, spec.tMax, 48)}`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.22} strokeWidth={1.6} />
         {traced && <path d={`M ${sample(spec.tMin, t, 24)}`} fill="none" stroke={PALETTE.sky} strokeWidth={2.4} strokeLinecap="round" />}
         {traced && Array.from({ length: ARROWS }, (_, i) => {
@@ -3734,13 +3970,19 @@ function ParametricTraceW({ spec, value, onChange, disabled, tone, onEvent }: WP
         {/* Reveal ghost: the target t's point. */}
         {tone === "info" && !targetOk && (
           <g data-testid="ptr-ghost" aria-hidden="true">
-            <circle cx={X(xAt(spec.targetT))} cy={Y(yAt(spec.targetT))} r={6} fill="none" stroke={PALETTE.berry} strokeWidth={2.2} />
-            <text x={X(xAt(spec.targetT))} y={Y(yAt(spec.targetT)) - 10} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.berry}>target</text>
+            <circle cx={ghostX} cy={ghostY} r={6} fill="none" stroke={PALETTE.berry} strokeWidth={2.2} />
+            <text x={ghostSeat.x} y={ghostSeat.y} textAnchor={ghostSeat.anchor} fontSize={10} fontWeight={800} fill={PALETTE.berry}>target</text>
           </g>
         )}
         <circle cx={handleX} cy={handleY} r={drag.dragging ? 7 : 5.5} fill={PALETTE.tangerine} stroke="#fff" strokeWidth={1.5} />
+        <AxisCaptions w={W} h={H} />
+        {/* S241 (D-13, rule E4): the grab surface is the TRACED POINT. The old full-viewBox rect
+            put `touch-action: none` over the entire 260×260 plot, swallowing page scroll mid-
+            lesson; the hook's contract is a handle-only opt-out. Pressing the puck and sweeping
+            still drives t exactly as before — pointer capture tracks the finger past the puck,
+            which is what makes a multi-turn circle drag work. */}
         {!disabled && (
-          <rect className="mt-drag-hit" data-testid="ptr-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />
+          <circle className="mt-drag-hit" data-testid="ptr-drag" cx={handleX} cy={handleY} r={20} aria-hidden="true" {...drag.handleProps} />
         )}
       </svg>
       <p className="text-center text-lg font-extrabold tabular-nums" aria-live="polite">
@@ -3982,7 +4224,24 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
     arith || geoTerm
       ? Math.max(spec.targetTerm, ...sums, 1)
       : Math.max(limit ?? 1, spec.targetSum ?? 1, ...sums) * 1.12;
-  const Y = (y: number) => H - 18 - (y / top) * (H - 40);
+  /* S241 (D-22, rule B4) — THE NEGATIVE HALF OF A CONTROL THAT INVITES IT.
+   *
+   * The step dial runs from d = −5, so partial sums go negative routinely — and the strip mapped
+   * every value onto [0, top] from a baseline pinned at the frame's bottom edge. A negative sum
+   * landed BELOW that edge (`Y(sm) > H − 18`), where its bar height came out negative and was
+   * clamped to `Math.max(…, 1)`: a 1px sliver at a position that stood for nothing, or nothing at
+   * all once it fell past y = 130. The picture went inert exactly where the learner was
+   * exploring.
+   *
+   * The domain now stretches to whatever the sums actually reach (`base = min(0, …sums)`), and
+   * bars are drawn from the ZERO LINE — up for positive sums, down for negative ones — so a
+   * negative partial sum reads as what it is: a bar hanging below zero, its length the size of
+   * the sum. When nothing is negative, `base` is 0 and every coordinate is identical to before,
+   * so the positive case is untouched. */
+  const base = Math.min(0, ...sums);
+  const span = Math.max(top - base, 1e-6);
+  const Y = (y: number) => H - 18 - ((y - base) / span) * (H - 40);
+  const zeroY = Y(0);
 
   return (
     <div className="grid gap-4">
@@ -3995,7 +4254,12 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
               ? `Terms starting at ${spec.first} multiplied by ${v} each time. Term ${spec.atPosition} is ${nth}.`
               : `Partial sums climbing toward ${fmt(limit ?? 0)}.`
         }>
-        <line x1={PAD} y1={H - 18} x2={W - PAD} y2={H - 18} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
+        <line x1={PAD} y1={zeroY} x2={W - PAD} y2={zeroY} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
+        {base < 0 && (
+          <text x={PAD - 4} y={zeroY + 3.2} textAnchor="end" fontSize={10} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>
+            0
+          </text>
+        )}
         {!arith && !geoTerm && limit !== null && (
           <>
             {/* the learner's CURRENT forever-sum: sky, the learner-controlled value */}
@@ -4014,12 +4278,22 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
             </text>
           </g>
         )}
-        {sums.map((sm, i) => (
-          <g key={i}>
-            <rect x={PAD + 4 + i * 36} y={Y(sm)} width={26} height={Math.max(H - 18 - Y(sm), 1)} fill={PALETTE.sky} fillOpacity={0.35} stroke={PALETTE.sky} strokeWidth={1} />
-            <rect x={PAD + 4 + i * 36} y={Y(sm)} width={26} height={Math.max(Y(sm - terms[i]) - Y(sm), 1)} fill={PALETTE.leaf} fillOpacity={0.75} />
-          </g>
-        ))}
+        {sums.map((sm, i) => {
+          // Bar: zero line → the partial sum, in whichever direction that is.
+          const ySum = Y(sm), yPrev = Y(sm - terms[i]);
+          // The 1px floor keeps a tiny sum visible; it grows AWAY from the baseline, so a bar
+          // never straddles the zero line it is measured from.
+          const barH = Math.max(Math.abs(zeroY - ySum), 1);
+          return (
+            <g key={i}>
+              <rect x={PAD + 4 + i * 36} y={sm >= 0 ? zeroY - barH : zeroY} width={26} height={barH}
+                fill={PALETTE.sky} fillOpacity={0.35} stroke={PALETTE.sky} strokeWidth={1} />
+              {/* the slice this term added — leaf, and on the side the term moved the sum */}
+              <rect x={PAD + 4 + i * 36} y={Math.min(ySum, yPrev)} width={26} height={Math.max(Math.abs(yPrev - ySum), 1)}
+                fill={PALETTE.leaf} fillOpacity={0.75} />
+            </g>
+          );
+        })}
       </svg>
       <p className="text-center text-sm font-bold tabular-nums text-ink/70" aria-live="polite">
         terms: {terms.slice(0, 5).map((x) => fmt(x)).join(", ")} …
@@ -5648,6 +5922,29 @@ function SlopeFieldW({ spec, value, onChange, disabled, tone }: WProps<TSlopeFie
         })}
         <line x1={PAD} y1={Y(0)} x2={W - PAD} y2={Y(0)} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
         <line x1={X(0)} y1={PAD - 10} x2={X(0)} y2={H - PAD} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.4} />
+        {/* S241 (D-25, rule A7). The graded quantity here IS a y-value — "where the curve starts:
+            y at x = 0" — and the readout quotes a slope at that height, so the height has to be
+            readable off the picture. Two bare axis strokes carried no number at all; the initial
+            condition was set by counting unlabelled segment rows. */}
+        <g data-testid="sfd-ticks" aria-hidden="true">
+          {niceTicks(XMIN, XMAX, { target: 4, ends: true }).map((v) => (
+            <Fragment key={`xt${v}`}>
+              <line x1={X(v)} y1={Y(0) - 3} x2={X(v)} y2={Y(0) + 3} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
+              {v !== 0 && (
+                <text x={X(v)} y={Y(0) + 13} textAnchor="middle" fontSize={9} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          {niceTicks(YMIN, YMAX, { target: 4, ends: true }).map((v) => (
+            <Fragment key={`yt${v}`}>
+              <line x1={X(0) - 3} y1={Y(v)} x2={X(0) + 3} y2={Y(v)} stroke={PALETTE.ink} strokeWidth={1} strokeOpacity={0.5} />
+              {v !== 0 && (
+                <text x={X(0) - 5} y={Y(v) + 3.2} textAnchor="end" fontSize={9} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          <text x={X(0) - 5} y={Y(0) + 13} textAnchor="end" fontSize={9} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>0</text>
+        </g>
         {d && <path className="sf" d={d} fill="none" stroke={PALETTE.sky} strokeWidth={2.8} strokeLinecap="round" />}
         {/* Reveal ghost: the solution the task asked for, threaded through the same field. */}
         {ghostD && (
@@ -8034,7 +8331,27 @@ function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.
   const boxAt=(text:string,x:number,y:number,anchor:"start"|"end")=>{const w=text.length*13*0.72;const x0=anchor==="start"?x:x-w;return{x0,x1:x0+w,y0:y-13*0.98,y1:y+13*0.28}};
   const clearOf=(b:{x0:number;x1:number;y0:number;y1:number})=>placed2d.every(p=>b.x1+2<=p.x0||b.x0>=p.x1+2||b.y1+2<=p.y0||b.y0>=p.y1+2);
   const labelSeat=(point:{x:number;y?:number},text:string)=>{const px=sx(point.x),py=sy(point.y??0);const seats=[{x:px+10,y:py-10,anchor:"start" as const},{x:px-10,y:py-10,anchor:"end" as const},{x:px+10,y:py+22,anchor:"start" as const},{x:px-10,y:py+22,anchor:"end" as const}];const seat=seats.find(s=>clearOf(boxAt(text,s.x,s.y,s.anchor)))??seats[0];placed2d.push(boxAt(text,seat.x,seat.y,seat.anchor));return seat};
-  return <svg viewBox="0 0 440 250" className="h-auto w-full" role="img" aria-label={`Coordinate point set. Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}. ${target.points.map(point=>`${point.label} at ${point.x}, ${point.y}`).join(". ")}.${ray?" A straight line runs from the origin through the plotted point.":""}`}><rect x="1" y="1" width="438" height="248" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1={sy(0)} x2="410" y2={sy(0)} stroke="currentColor" strokeWidth="3"/><line x1={sx(0)} y1="25" x2={sx(0)} y2="220" stroke="currentColor" strokeWidth="3"/>{ray&&<line data-testid="point-set-ray" x1={sx(0)} y1={sy(0)} x2={sx(ray.x)} y2={sy(ray.y)} stroke="currentColor" strokeWidth="2.5" strokeDasharray="7 5" opacity=".5"/>}{target.points.map(point=>{const text=`(${point.x}, ${point.y})`;const seat=labelSeat(point,text);return <g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y??0)} r="8" fill="currentColor"/><text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="13" fontWeight="900">{text}</text></g>})}<text x="220" y="242" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text><text x="16" y="125" textAnchor="middle" fontSize="13" fontWeight="900" transform="rotate(-90 16 125)">{spec.yLabel??"y"}</text></svg>}const all=spec.sets.flatMap(set=>set.points.map(point=>point.x)),min=Math.min(...all),max=Math.max(...all),sx=(x:number)=>40+(x-min)/(max-min||1)*360;
+  // S241 (rule B2), found while numbering these axes: the seat search knew about other labels but
+  // not about the canvas, so a point at the domain's right edge (cg-01-03's "(4, 6)") took the
+  // right-hand seat and printed from x = 405 to 461 in a 440-unit box — the coordinate the task
+  // asks the learner to READ was the part hanging off the card. The walls make the edge an
+  // obstacle like any other, so such a label takes the left seat instead of being clipped.
+  for(const wall of s238Walls(440,268)) placed2d.push(wall);
+  /* S241 (D-25, rules A7/A8). The axes were NAMED but never NUMBERED, on the one engine whose
+   * whole job is reading a value off a plotted point: "what is the rate?" is answered by dividing
+   * the coordinates, and the picture offered no way to check that (4, 20) sits where it says it
+   * does. A 1-2-5 tick ladder on each axis with the origin printed once at their meeting point.
+   * The scale numerals are seated FIRST, so the existing coordinate-label dodge treats them as
+   * obstacles and a point label near an axis moves rather than printing on the scale. */
+  const T_FS=10,xTickY=sy(0)+16,yTickX=sx(0)-6;
+  const xTickVals=niceTicks(minX,maxX,{target:4}).filter(v=>v!==0),yTickVals=niceTicks(minY,maxY,{target:4}).filter(v=>v!==0);
+  for(const v of xTickVals) placed2d.push(s238Box(tickText(v),sx(v),xTickY,"middle",T_FS));
+  for(const v of yTickVals) placed2d.push(s238Box(tickText(v),yTickX,sy(v)+3.5,"end",T_FS));
+  placed2d.push(s238Box("0",yTickX,xTickY,"end",T_FS));
+  return <svg viewBox="0 0 440 268" className="h-auto w-full" role="img" aria-label={`Coordinate point set. Horizontal axis ${spec.xLabel}; vertical axis ${spec.yLabel??"y"}. ${target.points.map(point=>`${point.label} at ${point.x}, ${point.y}`).join(". ")}.${ray?" A straight line runs from the origin through the plotted point.":""}`}><rect x="1" y="1" width="438" height="266" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1={sy(0)} x2="410" y2={sy(0)} stroke="currentColor" strokeWidth="3"/><line x1={sx(0)} y1="25" x2={sx(0)} y2="220" stroke="currentColor" strokeWidth="3"/>{/* Numerals are SIBLINGS of the point groups, never wrapped in a <g>: the S237 unitRate gate
+    reads the coordinate label as `svg.querySelector("g text")`, and a tick group placed ahead of
+    the points would quietly hand that gate a different label to measure. */}
+{xTickVals.map(v=><line key={`xt${v}`} data-testid="point-set-tick" x1={sx(v)} y1={sy(0)} x2={sx(v)} y2={sy(0)+6} stroke="currentColor" strokeWidth="2" opacity=".55"/>)}{yTickVals.map(v=><line key={`yt${v}`} data-testid="point-set-tick" x1={sx(0)-6} y1={sy(v)} x2={sx(0)} y2={sy(v)} stroke="currentColor" strokeWidth="2" opacity=".55"/>)}{xTickVals.map(v=><text key={`xv${v}`} data-testid="point-set-tick-value" x={sx(v)} y={xTickY} textAnchor="middle" fontSize={T_FS} fontWeight="800" opacity=".75">{tickText(v)}</text>)}{yTickVals.map(v=><text key={`yv${v}`} data-testid="point-set-tick-value" x={yTickX} y={sy(v)+3.5} textAnchor="end" fontSize={T_FS} fontWeight="800" opacity=".75">{tickText(v)}</text>)}<text data-testid="point-set-tick-value" x={yTickX} y={xTickY} textAnchor="end" fontSize={T_FS} fontWeight="800" opacity=".75">0</text>{ray&&<line data-testid="point-set-ray" x1={sx(0)} y1={sy(0)} x2={sx(ray.x)} y2={sy(ray.y)} stroke="currentColor" strokeWidth="2.5" strokeDasharray="7 5" opacity=".5"/>}{target.points.map(point=>{const text=`(${point.x}, ${point.y})`;const seat=labelSeat(point,text);return <g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y??0)} r="8" fill="currentColor"/><text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize="13" fontWeight="900">{text}</text></g>})}<text x="220" y="258" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text><text x="16" y="125" textAnchor="middle" fontSize="13" fontWeight="900" transform="rotate(-90 16 125)">{spec.yLabel??"y"}</text></svg>}const all=spec.sets.flatMap(set=>set.points.map(point=>point.x)),min=Math.min(...all),max=Math.max(...all),sx=(x:number)=>40+(x-min)/(max-min||1)*360;
   // S238 — ONE axis label per distinct value. The sets stack dots per value, and dd-04-01's two
   // sets share values, so the same number printed on top of itself once per set (10 of the
   // S237-measured pairs). The dots keep their per-set rows; the axis names each position once.
@@ -9107,6 +9424,32 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
     }
   });
 
+  /* S241 (D-25, rule A7). THE PLANE WHERE THE ANSWER IS A NUMBER PRINTS NUMBERS.
+   *
+   * The readout says "y = 2.5x + 3" and grading is the mean squared residual, but the picture was
+   * gridlines at 6% opacity and nothing else: the learner tuned two numbers against a surface on
+   * which no number appeared, and b — the height where the line crosses x = 0 — was unverifiable
+   * by eye. Endpoint values plus 1-2-5 landmarks on both edges, with a darker stroke on the
+   * x = 0 / y = 0 lines when the window contains them (clamped to the frame when it does not, so
+   * the reference line is still drawn where the scale is read from).
+   */
+  const TICK_FS = 9;
+  const xTicks = niceTicks(spec.xMin, spec.xMax, { target: 4, ends: true });
+  const yTicks = niceTicks(spec.yMin, spec.yMax, { target: 4, ends: true });
+  const axisX = sx(Math.min(Math.max(0, spec.xMin), spec.xMax));
+  const axisY = sy(Math.min(Math.max(0, spec.yMin), spec.yMax));
+  const xTickY = sy(spec.yMin) + 14;
+  // The x captions share this bottom band, so the last numeral yields its centred seat rather
+  // than printing on "x" — the caption is the one label whose position is not negotiable.
+  const xTickSeats = xTicks.map((v) => ({
+    v,
+    seat: s238Seat(tickText(v), TICK_FS, [
+      { x: sx(v), y: xTickY, anchor: "middle" },
+      { x: sx(v) + 3, y: xTickY, anchor: "end" },
+      { x: sx(v) - 3, y: xTickY, anchor: "start" }
+    ], [s238Box("x", W - 4, H - 4, "end", 11), s238Box("y", 4, 12, "start", 11)])
+  }));
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -9115,6 +9458,24 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
         {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
         {integers(spec.yMin, spec.yMax).map((g) => <line key={`y${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
+        <g data-testid="sf-ticks" aria-hidden="true">
+          <line x1={sx(spec.xMin)} y1={axisY} x2={sx(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+          <line x1={axisX} y1={sy(spec.yMin)} x2={axisX} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+          {xTickSeats.map(({ v, seat }) => (
+            <Fragment key={`xt${v}`}>
+              <line x1={sx(v)} y1={sy(spec.yMin)} x2={sx(v)} y2={sy(spec.yMin) + 4} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+              <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+            </Fragment>
+          ))}
+          {yTicks.map((v) => (
+            <Fragment key={`yt${v}`}>
+              <line x1={sx(spec.xMin)} y1={sy(v)} x2={sx(spec.xMin) + 4} y2={sy(v)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+              {/* Anchored INSIDE the left edge: the widest authored y value is "140", and outside
+                  the 18-unit pad that label would start at x = −4 and lose its first digit. */}
+              <text x={sx(spec.xMin) + 6} y={sy(v) - 3} textAnchor="start" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+            </Fragment>
+          ))}
+        </g>
         {/* Reveal ghost: the least-squares line, dashed — the canonical member
             of evaluate's accept set (mse ≤ tolerance). Residual whiskers stay
             attached to the learner's line so the contrast reads as "your tilt
@@ -11659,7 +12020,15 @@ function RotationLabW({ spec, value, onChange, disabled, tone }: WProps<TRotatio
           />
         )}
       <AxisCaptions w={300} h={300} />
-      {!disabled && <rect className="mt-drag-hit" data-testid="rl-drag" x={0} y={0} width={300} height={284} aria-hidden="true" {...drag.handleProps} />}</svg>
+      {/* S241 (D-13, rule E4): the grab surface is the IMAGE — the thing the learner carries round
+          the centre — not the whole plane. A 300×284 `touch-action: none` rect made this stage a
+          scroll-dead zone at 390px, against useSvgDrag's handle-only contract. In symmetry mode
+          the handle is the image polygon itself; in coordinate-rule mode it is a fat puck on the
+          image point. Either way the press anchors on the image and pointer capture carries the
+          turn wherever the finger goes, so the orbit drag is unchanged. */}
+      {!disabled && (spec.mode === "symmetryOrder" && images.length >= 3
+        ? <polygon className="mt-drag-hit" data-testid="rl-drag" points={poly(images)} aria-hidden="true" {...drag.handleProps} />
+        : <circle className="mt-drag-hit" data-testid="rl-drag" cx={px(images[0]?.[0] ?? 0)} cy={py(images[0]?.[1] ?? 0)} r={20} aria-hidden="true" {...drag.handleProps} />)}</svg>
       <label className="block text-sm">
         <span className={`mr-2 ${tone === "error" ? "text-berry-ink" : ""}`}>Turn (° counterclockwise)</span>
         <input
@@ -13678,36 +14047,115 @@ function FeasibleRegionExploreW({ spec, value, onChange, disabled, tone, onEvent
   const polygon = corners.map((c) => `${X(c.x).toFixed(1)},${Y(c.y).toFixed(1)}`).join(" ");
   const fenceX = X(vertical);
 
+  /* S241 (D-11, rules A2/A7/B2). WHAT THIS PLANE OWED THE LEARNER AND DID NOT PAY.
+   *
+   * It drew two bare segments and then printed exact corner coordinates against them — "(5, 1.5)"
+   * on a plane with no name on either axis and not one number anywhere, so the corner the whole
+   * task is about was unverifiable by looking. Worse, that label was seated at `X(c.x) + 6`
+   * anchor start unconditionally: the corner ON the fence at x = xMax put its text past the
+   * 300-unit viewBox and the coordinate the learner needed was the part that got clipped.
+   *
+   * Both are fixed with furniture, not with a special case: a 1-2-5 tick ladder with numerals on
+   * both axes (the origin printed once, where the two meet), x/y captions, and every floating
+   * label — corners, the fence banner, the reveal ghost — seated by the house dodge with the
+   * CANVAS EDGES as obstacles (`s238Walls`), so "inside the viewBox" is a property of the search
+   * rather than a coordinate someone has to remember to check.
+   */
+  const TICK_FS = 9;
+  const axisX = X(0), axisY = Y(0);
+  const xTickY = axisY + 12, yTickX = axisX - 5;
+  const xTicks = niceTicks(0, spec.xMax, { target: 4, ends: true });
+  const yTicks = niceTicks(0, spec.yMax, { target: 4, ends: true });
+  const fenceText = `${label}: x ≤ ${fmt(vertical)}`;
+  const fenceHalf = labelHalfWidth(fenceText, 10);
+  const fenceLabelX = Math.min(Math.max(fenceX, fenceHalf + 2), W - fenceHalf - 2);
+  const fenceLabelY = Y(spec.yMax) - 8;
+  const ghostShown = tone === "info" && vertical !== spec.verticalTarget;
+  const ghostLabelX = X(spec.verticalTarget), ghostLabelY = Y(spec.yMax) + 10;
+  const furniture: S238Box[] = [
+    ...xTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), X(v), xTickY, "middle", TICK_FS)),
+    ...yTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), yTickX, Y(v) + 3.2, "end", TICK_FS)),
+    s238Box("0", yTickX, xTickY, "end", TICK_FS),
+    s238Box("x", W - 4, H - 4, "end", 11),
+    s238Box("y", 4, 12, "start", 11),
+    s238Box(fenceText, fenceLabelX, fenceLabelY, "middle", 10),
+    ...(ghostShown ? [s238Box("target", ghostLabelX, ghostLabelY, "middle", TICK_FS)] : []),
+    ...s238Walls(W, H)
+  ];
+  const cornerLabels = (() => {
+    const placed: S238Box[] = [];
+    return corners.map((c) => {
+      const text = `(${fmt(c.x)}, ${fmt(c.y)})`;
+      const px = X(c.x), py = Y(c.y);
+      const seat = s238Seat(text, TICK_FS, [
+        { x: px + 6, y: py - 6, anchor: "start" },
+        { x: px - 6, y: py - 6, anchor: "end" },
+        { x: px + 6, y: py + 14, anchor: "start" },
+        { x: px - 6, y: py + 14, anchor: "end" },
+        { x: px, y: py - 12, anchor: "middle" }
+      ], [...furniture, ...placed]);
+      placed.push(s238Box(text, seat.x, seat.y, seat.anchor, TICK_FS));
+      return { text, seat, px, py };
+    });
+  })();
+
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img"
         aria-label={`Region with the ${label} at x ${vertical}. Corners: ${corners.map((c) => `(${fmt(c.x)}, ${fmt(c.y)})`).join(", ")}.`}>
-        <line x1={X(0)} y1={Y(0)} x2={X(spec.xMax)} y2={Y(0)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
-        <line x1={X(0)} y1={Y(0)} x2={X(0)} y2={Y(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
+        <g data-testid="fre-axes" aria-hidden="true">
+          <line x1={axisX} y1={axisY} x2={X(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
+          <line x1={axisX} y1={axisY} x2={axisX} y2={Y(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.5} />
+          {xTicks.map((v) => (
+            <Fragment key={`xt${v}`}>
+              <line x1={X(v)} y1={axisY} x2={X(v)} y2={axisY + 4} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.2} />
+              {v !== 0 && (
+                <text x={X(v)} y={xTickY} textAnchor="middle" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          {yTicks.map((v) => (
+            <Fragment key={`yt${v}`}>
+              <line x1={axisX - 4} y1={Y(v)} x2={axisX} y2={Y(v)} stroke={PALETTE.ink} strokeOpacity={0.5} strokeWidth={1.2} />
+              {v !== 0 && (
+                <text x={yTickX} y={Y(v) + 3.2} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              )}
+            </Fragment>
+          ))}
+          <text x={yTickX} y={xTickY} textAnchor="end" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>0</text>
+        </g>
         {corners.length >= 3 && (
           <polygon points={polygon} fill={PALETTE.sky} fillOpacity={0.22} stroke={PALETTE.sky} strokeWidth={2} strokeLinejoin="round" />
         )}
         <line x1={X(slantStart.x)} y1={Y(slantStart.y)} x2={X(slantEnd.x)} y2={Y(slantEnd.y)} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={2} />
         <line x1={fenceX} y1={Y(0)} x2={fenceX} y2={Y(spec.yMax)} stroke={PALETTE.tangerine} strokeWidth={2.6} strokeDasharray="5 4" />
-        <text x={fenceX} y={Y(spec.yMax) - 8} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
-          {label}: x ≤ {fmt(vertical)}
+        <text x={fenceLabelX} y={fenceLabelY} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
+          {fenceText}
         </text>
-        {corners.map((c, i) => (
+        {cornerLabels.map((c, i) => (
           <g key={i}>
-            <circle cx={X(c.x)} cy={Y(c.y)} r={3.5} fill={PALETTE.leaf} />
-            <text x={X(c.x) + 6} y={Y(c.y) - 6} fontSize={9} fontWeight={700} fill={PALETTE.leaf}>({fmt(c.x)}, {fmt(c.y)})</text>
+            <circle cx={c.px} cy={c.py} r={3.5} fill={PALETTE.leaf} />
+            <text x={c.seat.x} y={c.seat.y} textAnchor={c.seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.leaf}>{c.text}</text>
           </g>
         ))}
         {/* Reveal ghost: where the fence should land. */}
-        {tone === "info" && vertical !== spec.verticalTarget && (
+        {ghostShown && (
           <g data-testid="fre-ghost" aria-hidden="true">
-            <line x1={X(spec.verticalTarget)} y1={Y(0)} x2={X(spec.verticalTarget)} y2={Y(spec.yMax)} stroke={PALETTE.berry} strokeWidth={2} strokeDasharray="2 3" />
-            <text x={X(spec.verticalTarget)} y={Y(spec.yMax) + 10} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.berry}>target</text>
+            <line x1={ghostLabelX} y1={Y(0)} x2={ghostLabelX} y2={Y(spec.yMax)} stroke={PALETTE.berry} strokeWidth={2} strokeDasharray="2 3" />
+            <text x={ghostLabelX} y={ghostLabelY} textAnchor="middle" fontSize={TICK_FS} fontWeight={800} fill={PALETTE.berry}>target</text>
           </g>
         )}
+        <AxisCaptions w={W} h={H} />
+        {/* S241 (D-13, rule E4): the grab surface is the FENCE — a band tracking the dashed line,
+            the way the compliant peers (percentBar, boxPlot, numberLinePlace) confine theirs. The
+            old 300×300 rect held `touch-action: none` over the entire plane, so a scroll gesture
+            anywhere on this graph was swallowed on a phone. Pressing the fence and sweeping still
+            pulls it to any lattice x: pointer capture reports positions far outside the band, and
+            the existing clamp to verticalMin/verticalMax is what bounds the result. */}
         {!disabled && (
-          <rect className="mt-drag-hit" data-testid="fre-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />
+          <rect className="mt-drag-hit" data-testid="fre-drag" x={fenceX - 16} y={Y(spec.yMax) - 6} width={32} height={Y(0) - Y(spec.yMax) + 12}
+            aria-hidden="true" {...drag.handleProps} />
         )}
       </svg>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
@@ -15190,7 +15638,37 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
     onChange(adding ? [...pts, { x, y }] : pts.filter((p) => !(p.x === x && p.y === y)));
   };
   const rows = Array.from({ length: spec.rows }, (_, i) => spec.rows - i); // top → bottom
-  const CELL = 48; // 44px cell (h-11/w-11) + 4px gap-1
+  /* S241 (D-04, rules E5/E6) — ONE TRACK SOURCE FOR EVERY LAYER OF THIS GRID.
+   *
+   * The three layers used to size themselves from three different numbers: the cells from
+   * `minmax(0,1fr)` tracks under fixed 44px (`h-11 w-11`) buttons, the x-label row from a fixed
+   * `repeat(cols, 2.75rem)`, and the connectTargets overlay from a hardcoded `const CELL = 48`.
+   * They agree only while the stage is wide enough for 44px cells. At `cols: 8` on the ~334px
+   * stage of a 390px phone the tracks fell to ~35px while the buttons did not — so neighbouring
+   * tap targets overlapped by ~9px, the 476px label row drifted off its columns, and the "line
+   * through the points" missed the very cells it was drawn through.
+   *
+   * Now the y band, the cells, the x band and the overlay are ITEMS OF ONE GRID, placed on the
+   * same tracks (`gridColumn`/`gridRow` below). The track is the single source of truth:
+   *   · a track is `minmax(0, PP_MAX_CELL)` — at most 44px, and it shrinks when the stage is
+   *     narrower than `cols × 44px` instead of letting fixed-width content overflow it;
+   *   · a cell button is `w-full aspect-square`, so its box IS its track, and the label bands
+   *     sit in the same tracks and rows — they cannot drift;
+   *   · the overlay spans the cell block and draws in CELL UNITS (`viewBox="0 0 cols rows"`),
+   *     so its geometry follows the real cell size at any width, with no pitch constant.
+   *
+   * THE 390px TRADEOFF, stated plainly. 8 columns × 44px = 352px of cells alone; the stage is
+   * ~334px. A 44px pitch at `cols: 8` is therefore impossible, and something has to give. What
+   * gives is CELL SIZE, not spacing: cells shrink to ~39px at cols 8 (44px is still reached at
+   * ≤ 7 columns on the same stage, and on any wider stage). In exchange the pitch is now the
+   * WHOLE target — the 4px separation is padding INSIDE the button, so the tappable area equals
+   * the pitch exactly, with no dead gutters and, critically, NO OVERLAP: every tap lands on the
+   * cell under the finger. A ~39px unambiguous target is the honest trade against a nominal 44px
+   * target whose edges belonged to its neighbour.
+   */
+  const PP_MAX_CELL = "2.75rem"; // 44px — the tap-target ceiling, never a floor-and-ceiling both
+  const cellCol = spec.yLabels ? 2 : 1; // the first cell column; column 1 is the y-label band
+  const rowOf = (y: number) => spec.rows - y + 1; // y counts from the bottom, grid rows from the top
   // Reveal ghost: dashed rings on every TARGET cell whenever the selection is
   // not yet the exact target set — the correct pattern shown against the
   // learner's dots (their marks stay visible inside or outside the rings).
@@ -15201,85 +15679,134 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
     spec.connectTargets === true &&
     spec.targets.every((t) => has(t.x, t.y)) &&
     pts.length === spec.targets.length;
+  /* S241 (D-25, rule A8) — WHERE ZERO IS.
+   *
+   * A cell lattice labelled 1…N draws its axes as the grid's own left and bottom edges: cell 1
+   * spans [0, 1], so the corner where the two label bands meet IS the origin. It was the one
+   * number this plane never printed — on the engine whose lessons TEACH coordinates, against a
+   * companion `coordinate-plane` figure that labels "(0, 0)" — and the gap is exactly what makes
+   * a learner read the first column as x = 0 and be off by one on every point.
+   *
+   * Marked only where both bands are numeric AND start at 1. The 15 authored specs whose labels
+   * already include "0" show their origin, and a categorical grid ("Hundreds / Tens / Ones") has
+   * no origin to mark: printing one there would be a number about nothing.
+   */
+  const numericBand = (labels?: string[]) =>
+    labels !== undefined && labels.length > 0 && labels.every((l) => l.trim() !== "" && Number.isFinite(Number(l)));
+  const showOrigin =
+    numericBand(spec.xLabels) && numericBand(spec.yLabels) &&
+    Number(spec.xLabels![0]) === 1 && Number(spec.yLabels![0]) === 1;
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <div className="flex justify-center gap-1">
+      {/* ONE grid, no gaps: the y band, the cells, the x band and the connect overlay are all
+          placed on the same tracks, so no layer can drift out of alignment with another. The
+          separation between cells is padding INSIDE each button, which keeps the tap target
+          equal to the track pitch. */}
+      <div
+        className="relative grid w-full justify-center"
+        style={{ gridTemplateColumns: `${spec.yLabels ? "auto " : ""}repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
+      >
+        <style>{`@media (prefers-reduced-motion: no-preference){.pp-dot{animation:pp-pop .18s ease-out backwards}.pp-line{stroke-dasharray:100;animation:pp-draw .6s ease-out backwards}}@keyframes pp-pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}@keyframes pp-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}`}</style>
         {spec.yLabels && (
-          <div className="grid gap-1" aria-hidden="true">
+          // `display: contents` so the spans are items of the grid ABOVE: each label shares its
+          // row track with the cells it names, at any cell size.
+          <div aria-hidden="true" style={{ display: "contents" }}>
             {rows.map((y) => (
-              <span key={y} className="flex h-11 items-center pr-1 text-xs font-bold text-ink/70">
+              <span
+                key={y}
+                className="flex items-center justify-end pr-1 text-xs font-bold text-ink/70"
+                style={{ gridColumn: 1, gridRow: rowOf(y) }}
+              >
                 {spec.yLabels?.[y - 1] ?? y}
               </span>
             ))}
           </div>
         )}
-        <div className="relative grid gap-1" style={{ gridTemplateColumns: `repeat(${spec.cols}, minmax(0,1fr))` }}>
-          <style>{`@media (prefers-reduced-motion: no-preference){.pp-dot{animation:pp-pop .18s ease-out backwards}}@keyframes pp-pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}`}</style>
-          {rows.flatMap((y) =>
-            Array.from({ length: spec.cols }, (_, xi) => {
-              const x = xi + 1;
-              const marked = has(x, y);
-              return (
-                <button
-                  key={`${x},${y}`}
-                  type="button"
-                  disabled={disabled}
-                  aria-pressed={marked}
-                  aria-label={`${spec.xLabels?.[x - 1] ?? `column ${x}`}, ${spec.yLabels?.[y - 1] ?? `row ${y}`}`}
-                  onClick={() => toggle(x, y)}
-                  className={`relative h-11 w-11 rounded-lg border-2 text-xl leading-none transition-colors motion-reduce:transition-none ${
-                    marked ? "border-sky bg-sky/15" : "border-ink/15 bg-white hover:border-ink/35"
-                  } disabled:opacity-70`}
+        {showOrigin && (
+          // The corner where the two label bands meet IS (0, 0): column 1 of the x-label row.
+          <span
+            data-testid="pp-origin"
+            aria-hidden="true"
+            className="pointer-events-none pt-1 pr-1 text-right text-xs font-bold text-ink/70"
+            style={{ gridColumn: 1, gridRow: spec.rows + 1 }}
+          >
+            0
+          </span>
+        )}
+        {rows.flatMap((y) =>
+          Array.from({ length: spec.cols }, (_, xi) => {
+            const x = xi + 1;
+            const marked = has(x, y);
+            return (
+              <button
+                key={`${x},${y}`}
+                type="button"
+                disabled={disabled}
+                aria-pressed={marked}
+                aria-label={`${spec.xLabels?.[x - 1] ?? `column ${x}`}, ${spec.yLabels?.[y - 1] ?? `row ${y}`}`}
+                onClick={() => toggle(x, y)}
+                style={{ gridColumn: cellCol + xi, gridRow: rowOf(y) }}
+                className="group relative aspect-square w-full min-w-0 p-0.5 disabled:opacity-70"
+              >
+                {/* The visible chip is inset by the padding: same 4px separation as before, but
+                    the 4px now belongs to the button rather than sitting between two of them. */}
+                <span
+                  className={`flex h-full w-full items-center justify-center rounded-lg border-2 text-xl leading-none transition-colors motion-reduce:transition-none ${
+                    marked ? "border-sky bg-sky/15" : "border-ink/15 bg-white group-hover:border-ink/35"
+                  }`}
                 >
                   {marked ? <span className="pp-dot inline-block">●</span> : ""}
-                  {ghost && isTarget(x, y) && (
-                    <span
-                      data-testid="pp-ghost"
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0.5 rounded-md border-2 border-dashed border-tangerine"
-                    />
-                  )}
-                </button>
-              );
-            })
-          )}
-          {allTargetsMarked && (
-            <svg
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 opacity-100"
-              width={spec.cols * CELL - 4}
-              height={spec.rows * CELL - 4}
-            >
-              {/* The line "draws itself" through the points once they align — the moment
-                  the relationship becomes visible. Reduced motion shows it fully drawn. */}
-              <style>{`@media (prefers-reduced-motion: no-preference){.pp-line{stroke-dasharray:2400;animation:pp-draw .6s ease-out backwards}}@keyframes pp-draw{from{stroke-dashoffset:2400}to{stroke-dashoffset:0}}`}</style>
-              <polyline
-                className="pp-line"
-                points={spec.targets
-                  .map((t) => `${(t.x - 1) * CELL + 22},${(spec.rows - t.y) * CELL + 22}`)
-                  .join(" ")}
-                fill="none"
-                stroke={PALETTE.sky}
-                strokeWidth={3}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
-        </div>
+                </span>
+                {ghost && isTarget(x, y) && (
+                  <span
+                    data-testid="pp-ghost"
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-1 rounded-md border-2 border-dashed border-tangerine"
+                  />
+                )}
+              </button>
+            );
+          })
+        )}
+        {allTargetsMarked && (
+          // Absolutely positioned ON THE CELL BLOCK's grid area, and drawn in cell units — one
+          // unit is one track, whatever a track currently measures. Cell (x, y)'s centre is
+          // (x − 0.5, rows − y + 0.5), exactly where the button is, at every viewport width.
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            viewBox={`0 0 ${spec.cols} ${spec.rows}`}
+            style={{ gridColumn: `${cellCol} / span ${spec.cols}`, gridRow: `1 / span ${spec.rows}` }}
+          >
+            {/* The line "draws itself" through the points once they align — the moment
+                the relationship becomes visible. Reduced motion shows it fully drawn. */}
+            <polyline
+              className="pp-line"
+              pathLength={100}
+              points={spec.targets.map((t) => `${t.x - 0.5},${spec.rows - t.y + 0.5}`).join(" ")}
+              fill="none"
+              stroke={PALETTE.sky}
+              strokeWidth={0.07} /* ≈3px at a 44px cell, and it thins with the cell */
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+        {spec.xLabels && (
+          <div aria-hidden="true" style={{ display: "contents" }}>
+            {Array.from({ length: spec.cols }, (_, i) => (
+              <span
+                key={i}
+                className="pt-1 text-center text-xs font-bold text-ink/70"
+                style={{ gridColumn: cellCol + i, gridRow: spec.rows + 1 }}
+              >
+                {spec.xLabels?.[i] ?? i + 1}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
-      {spec.xLabels && (
-        <div
-          className="mx-auto grid gap-1 text-center text-xs font-bold text-ink/70"
-          style={{ gridTemplateColumns: `repeat(${spec.cols}, 2.75rem)` }}
-          aria-hidden="true"
-        >
-          {Array.from({ length: spec.cols }, (_, i) => (
-            <span key={i}>{spec.xLabels?.[i] ?? i + 1}</span>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

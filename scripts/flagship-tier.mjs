@@ -4,7 +4,8 @@
 //
 //   node scripts/flagship-tier.mjs          # writes FLAGSHIP_TIERS.md
 //
-// Deterministic: reads content + scripts/engine-capabilities.json only.
+// Deterministic: reads content, scripts/engine-capabilities.json, and the ruled
+// prediction-gate adjudication (PREDICTION_GATE_ADJUDICATION.csv) only.
 // The engine-owned half of each score comes from the capability table, which
 // src/lib/engineCapabilities.test.ts pins against the registry and the real
 // onEvent/ghost wiring — the table cannot drift into flattery.
@@ -63,6 +64,86 @@ for (const dir of readdirSync(coursesDir)) {
     const l = JSON.parse(readFileSync(join(lessonsDir, f), "utf8"));
     lessons.push({ course, lesson: l, file: `${dir}/lessons/${f}` });
     for (const r of l.remedials ?? []) remedialTags.add(r.conceptTag);
+  }
+}
+
+// ------------------------------------------- ruled prediction-gate adjudication --
+// S241: the prediction dimension used to credit mere PRESENCE, so complying with WS-E's
+// corpus ruling looked identical to decay. That ruling removed 68 gates — 17 with verdict
+// REMOVE and 51 cut by the repetition-thinning policy (WS_E_RULING_ROUND_1.md §B) — and the
+// scorer read every one of those absences as a lesson that had gotten worse.
+//
+// THE RULE (verdict + presence-on-disk; never the note text). For each RULED row in
+// PREDICTION_GATE_ADJUDICATION.csv, look up its lesson/step on disk and ask whether that step
+// still carries `predict`:
+//
+//   verdict REMOVE,  gate absent   → EXCUSED. The gate was ruled unfit; its absence is compliance.
+//   verdict KEEP,    gate absent   → EXCUSED. A KEEP gate can only be missing because the ruled
+//                                    repetition-thinning pass cut this copy in favour of the
+//                                    family's canonical anchor (17 + 51 = the 68 ruled removals,
+//                                    and the CSV contains no other KEEP-absent row).
+//   verdict KEEP,    gate present  → not excused; the live gate is scored on its own merits,
+//                                    exactly as before. Excusal only ever concerns ABSENCE.
+//   verdict REWRITE, gate absent   → NOT excused. REWRITE fixes a gate in place, so the gate is
+//                                    still supposed to exist; its disappearance is a real
+//                                    regression and still scores 0.
+//   no row at all                  → NOT excused. An unadjudicated lesson with no gate scores 0.
+//
+// Note text is deliberately not consulted: the "[ESCALATED: Repetition family …]" flag names the
+// family, not the member that was cut — it sits on 35 of the 51 removed rows AND on 116 rows whose
+// gate is still live, so string-matching it would both under- and over-excuse. Verdict plus
+// presence is exact.
+//
+// An excused absence is IMPUTED at the score the ruled step would have earned had its gate stayed
+// (the same manip≥2 ? 3 : 2 formula a live gate gets on that step), so a lesson lands exactly
+// where it stood before it complied — no penalty, and no windfall either.
+const ADJUDICATION_PATH = join(root, "PREDICTION_GATE_ADJUDICATION.csv");
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c !== '"') cell += c;
+      else if (text[i + 1] === '"') { cell += '"'; i++; }
+      else quoted = false;
+    } else if (c === '"') quoted = true;
+    else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; }
+    else if (c !== "\r") cell += c;
+  }
+  if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
+  return rows;
+}
+
+// lessonId -> [{ stepId, verdict, step }] for gates the ruling removed and disk confirms are gone.
+const ruledGateRemovals = new Map();
+if (!existsSync(ADJUDICATION_PATH)) {
+  console.warn("flagship-tier: PREDICTION_GATE_ADJUDICATION.csv not found — no ruled gate removals excused");
+} else {
+  const table = parseCsv(readFileSync(ADJUDICATION_PATH, "utf8")).filter((r) => r.length > 1);
+  const header = table[0];
+  const col = (name) => {
+    const i = header.indexOf(name);
+    if (i < 0) throw new Error(`flagship-tier: adjudication CSV is missing the ${name} column`);
+    return i;
+  };
+  const [cLesson, cStep, cVerdict] = [col("lesson_id"), col("step_id"), col("proposed_verdict")];
+  const byId = new Map(lessons.map(({ lesson }) => [lesson.id, lesson]));
+  for (const r of table.slice(1)) {
+    const verdict = r[cVerdict];
+    // REWRITE keeps the gate in place, so it is never an excusable absence.
+    if (verdict !== "REMOVE" && verdict !== "KEEP") continue;
+    const lesson = byId.get(r[cLesson]);
+    const step = (lesson?.steps ?? []).find((s) => s.id === r[cStep]);
+    // The step must still exist and must no longer carry a gate: a step that vanished entirely is
+    // not gate thinning, and a step that still predicts is scored as the live gate it is.
+    if (!step || step.predict) continue;
+    if (!ruledGateRemovals.has(lesson.id)) ruledGateRemovals.set(lesson.id, []);
+    ruledGateRemovals.get(lesson.id).push({ stepId: step.id, verdict, step });
   }
 }
 
@@ -126,10 +207,14 @@ function scoreLesson(course, l) {
   const minOf = (k) => (engines.length ? Math.min(...engines.map((e) => e[k])) : 0);
 
   const d = {};
-  // 1 meaningful prediction
+  // 1 meaningful prediction — quality-aware: a live gate is scored on the step it sits on, and a
+  // gate whose absence the WS-E ruling ordered (REMOVE, or thinned away as a KEEP duplicate) is
+  // imputed at the same value rather than scored as a missing gate. See THE RULE above.
   const predictSteps = steps.filter((s) => s.predict);
-  d.prediction =
-    predictSteps.length === 0 ? 0 : predictSteps.some((s) => manipOfStep(s.widget) >= 2) ? 3 : 2;
+  const excusedRemovals = ruledGateRemovals.get(l.id) ?? [];
+  const gateValue = (s) => (manipOfStep(s.widget) >= 2 ? 3 : 2);
+  const gateScores = [...predictSteps, ...excusedRemovals.map((r) => r.step)].map(gateValue);
+  d.prediction = gateScores.length === 0 ? 0 : Math.max(...gateScores);
   // 2 direct manipulation · 3 visible consequence
   d.manip = widgetSteps.length ? Math.max(...widgetSteps.map((s) => manipOfStep(s.widget)), 0) : maxOf("manip");
   d.conseq = maxOf("conseq");
@@ -188,11 +273,13 @@ function scoreLesson(course, l) {
   // phase", the missing phase being direct manipulation. They can never reach A.
   else if (d.manip === 1 && d.conseq >= 2 && d.misconception >= 2 && total >= 26) tier = "B";
   else tier = "C";
-  return { d, total, tier };
+  // The excused removals travel with the row so the imputed prediction score is always
+  // traceable back to the CSV verdict that justified it.
+  return { d, total, tier, ruledGateRemovals: excusedRemovals.map(({ stepId, verdict }) => ({ stepId, verdict })) };
 }
 
 const rows = lessons.map(({ course, lesson, file }) => {
-  const { d, total, tier } = scoreLesson(course, lesson);
+  const { d, total, tier, ruledGateRemovals: removals } = scoreLesson(course, lesson);
   const tags = (lesson.steps ?? []).map((s) => s.conceptTag).filter(Boolean);
   const hay = `${lesson.title} ${course.title} ${tags.join(" ")}`;
   const focus = FOCUS.filter(([, re]) => re.test(hay)).map(([n]) => n);
@@ -209,6 +296,7 @@ const rows = lessons.map(({ course, lesson, file }) => {
     tier,
     focus,
     loadBearing: tags.some((t) => remedialTags.has(t)),
+    ruledGateRemovals: removals,
     predictionEligibility: predictionEligibility(lesson, caps)
   };
 });
@@ -225,6 +313,14 @@ md.push("**Tier rules** — A: prediction≥2 ∧ manip≥2 ∧ consequence≥2 
 md.push("B: manip≥2 ∧ consequence≥2 ∧ total≥24 with one A-gate missing — or a model-grounded pick");
 md.push("(manip 1: e.g. fractionCompare) at conseq≥2 ∧ misconception≥2 ∧ total≥26. C: choice/entry");
 md.push("interaction or under the B bar. D: no interactive step, or misconception sensitivity 0.");
+md.push("");
+md.push("**Prediction is quality-aware, not presence-counted.** A gate the WS-E corpus ruling");
+md.push("(`PREDICTION_GATE_ADJUDICATION.csv`) ordered gone — verdict REMOVE, or a KEEP copy cut by the");
+md.push("repetition-thinning policy — is imputed at the score it would have earned, so complying with");
+md.push("the ruling costs a lesson nothing. Excused by verdict + absence on disk, never by note text.");
+md.push("A missing REWRITE gate, or a missing gate no ruling covers, still scores 0.");
+md.push(`Ruled removals excused in this run: **${rows.reduce((n, r) => n + r.ruledGateRemovals.length, 0)}** gates`);
+md.push(`across **${rows.filter((r) => r.ruledGateRemovals.length).length}** lessons.`);
 md.push("");
 
 const bands = ["K-2", "3-5", "6-8", "HS"];

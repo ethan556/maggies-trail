@@ -17,7 +17,7 @@ import { evaluate } from "./evaluate";
 import type { Band } from "./difficulty";
 import { VARIANT_GENERATORS, variantFor, variantForGenForm, lookupOrThrow } from "./variants";
 import type { VariantAnswer } from "./variants";
-import { WidgetSpec , widgetIntegrityErrors, type TWidget, distributionGapUnits, trialProbabilityEquivalent, compoundEventTotal, compoundEventChoiceCorrect, equationOutcomeChoiceCorrect, equationOutcomeTruth, shapeHierarchyChoiceCorrect, compositeAreaTarget, compositeAreaChoiceCorrect, triangleClosureForms, triangleClosureChoiceCorrect, signedFractionTruth, signedFractionChoiceCorrect, percentChangeTarget, percentChangeChoiceCorrect, conditionalTableReadTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipChoiceCorrect, placeValueTransformExplorationKeys, proportionalReasoningExplorationKeys, quotientReasoningExplorationKeys, quotientReasoningChoiceCorrect, quotientReasoningFractionCorrect, geometricConstraintExplorationKeys, geometricConstraintChoiceCorrect, geometricConstraintTruth, pointSetReasoningExplorationKeys, pointSetReasoningChoiceCorrect, pointSetReasoningTruth, graphReadAnswer } from "./schema";
+import { MAX_PLOT_POINT_DIM, WidgetSpec , widgetIntegrityErrors, type TWidget, distributionGapUnits, trialProbabilityEquivalent, compoundEventTotal, compoundEventChoiceCorrect, equationOutcomeChoiceCorrect, equationOutcomeTruth, shapeHierarchyChoiceCorrect, compositeAreaTarget, compositeAreaChoiceCorrect, triangleClosureForms, triangleClosureChoiceCorrect, signedFractionTruth, signedFractionChoiceCorrect, percentChangeTarget, percentChangeChoiceCorrect, conditionalTableReadTruth, exactNumberExplorationKeys, exactNumberChoiceCorrect, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipChoiceCorrect, placeValueTransformExplorationKeys, proportionalReasoningExplorationKeys, quotientReasoningExplorationKeys, quotientReasoningChoiceCorrect, quotientReasoningFractionCorrect, geometricConstraintExplorationKeys, geometricConstraintChoiceCorrect, geometricConstraintTruth, pointSetReasoningExplorationKeys, pointSetReasoningChoiceCorrect, pointSetReasoningTruth, graphReadAnswer } from "./schema";
 import { solvePrompt as solveG4Prompt } from "./g4Independent.cjs";
 import { solvePrompt as solveG0Prompt } from "./g0Independent.cjs";
 import { solvePrompt as solveG1Prompt } from "./g1Independent.cjs";
@@ -12052,6 +12052,112 @@ describe("variant gate — every problem a generator can ever produce", () => {
       });
     }
   }
+
+  /* GRAPH-SURFACE FIDELITY ACROSS THE FULL (form × band) CROSS PRODUCT — D-01/D-02/D-03.
+   *
+   * The sweeps above are per-generator and skip a corner: the form sweep runs every declared form
+   * but only at the DEFAULT band, and the band sweep runs support/stretch but hands a non-
+   * declarationOnly generator only its `default` form. A form whose spec depends on the band is
+   * therefore ungated — which is precisely where `bvScatterPlot` shipped a 10×10 plotPoint against
+   * the schema's `max(8)`, invisible because the serving path never parsed it either (D-03).
+   *
+   * These two hold the emitted graph spec to the standard's field-level rules, which the type-only
+   * surface guard cannot see: A13 (a fraction prompt gets a fraction line) and C9/F2 (a coordinate
+   * grid the schema accepts). Both are corpus-wide ratchets: a NEW generator emitting either widget
+   * is gated on arrival, at every band, with no per-generator opt-in to forget.
+   *
+   * Shape: PROBE, then SWEEP. Generating every (generator × form × band × seed) outright is ~110k
+   * problems and blows the 5s per-test budget, so the walk first probes each (generator, form) on a
+   * few seeds to learn which ones can emit the widget under gate — a form's widget TYPE does not
+   * vary with the band, only its fields do — and then sweeps only those combinations hard, across
+   * all three bands and enough seeds to move every drawn parameter. The probe is shared by both
+   * tests and computed once. */
+  type Combo = { tag: string; form: string | undefined };
+  const emitAt = (c: Combo, band: Band, seed: string) => {
+    const g = VARIANT_GENERATORS.find((x) => x.tag === c.tag)!;
+    return c.form === undefined ? variantFor(c.tag, seed, band) : variantForForm(g, seed, band, c.form);
+  };
+  let graphCombos: Map<string, Combo[]> | null = null;
+  /** Every (generator, form) that emits `type`, discovered once and reused by both gates. */
+  const combosEmitting = (type: string): Combo[] => {
+    if (graphCombos === null) {
+      graphCombos = new Map();
+      for (const g of VARIANT_GENERATORS) {
+        const forms: (string | undefined)[] = [...(g.declarationOnly ? [] : [undefined]), ...(g.forms ?? [])];
+        for (const form of forms) {
+          const c: Combo = { tag: g.tag, form };
+          for (let s = 0; s < 4; s++) {
+            const v = emitAt(c, "core", `probe-${s}`);
+            if (v === null) continue;
+            const list = graphCombos.get(v.widget.type) ?? [];
+            if (!list.some((x) => x.tag === c.tag && x.form === c.form)) list.push(c);
+            graphCombos.set(v.widget.type, list);
+          }
+        }
+      }
+    }
+    return graphCombos.get(type) ?? [];
+  };
+  const sweepEmitted = (type: string, visit: (widget: TWidget, where: string) => void) => {
+    for (const c of combosEmitting(type)) {
+      for (const band of ["support", "core", "stretch"] as const) {
+        for (let s = 0; s < 40; s++) {
+          const v = emitAt(c, band, `surface-${s}`);
+          if (v === null || v.widget.type !== type) continue;
+          visit(v.widget, `${c.tag}@${c.form ?? "default"}@${band} seed surface-${s}`);
+        }
+      }
+    }
+  };
+
+  it("A13 — every generated numberLinePlace whose prompt names a fraction ships fractionDen", () => {
+    /* The prompt is the contract the learner reads. "place the marker at 1/6", "on a TWELFTHS
+     * ruler" and "a 0→1 line" all promise a fraction ruler; without `fractionDen` the renderer
+     * draws a 0→n INTEGER line instead, so the picture contradicts the sentence — and on the
+     * equivalent-fractions ruler the integer label under the target additionally PRINTS the mark
+     * the learner was asked to derive (D-01, D-02). A fraction-line spec is authored in jump units,
+     * so `fractionDen` must equal `max`; `widgetIntegrityErrors` owns the rest of that contract. */
+    const FRACTION_PROMPT = /\b\d+\s*\/\s*\d+\b|0\s*→\s*1|\b(halves|thirds|fourths|quarters|fifths|sixths|sevenths|eighths|ninths|tenths|elevenths|twelfths)\b/i;
+    let seen = 0;
+    sweepEmitted("numberLinePlace", (widget, where) => {
+      if (widget.type !== "numberLinePlace") return;
+      if (!FRACTION_PROMPT.test(widget.prompt)) return;
+      seen++;
+      expect(widget.fractionDen, `${where}: fraction prompt "${widget.prompt}" on a line with no fractionDen — the learner is told a fraction ruler and shown an integer one`).toBeDefined();
+      expect(widget.fractionDen, `${where}: fraction line must be authored in jump units (max = fractionDen)`).toBe(widget.max);
+      expect(widgetIntegrityErrors(widget), where).toEqual([]);
+    });
+    // The walk must actually reach fraction lines, or the assertion above is vacuous and would keep
+    // passing after a regression that stopped emitting them at all.
+    expect(seen, "no generated fraction number line was reached — the sweep has gone blind").toBeGreaterThan(0);
+  });
+
+  it("C9/F2 — every generated plotPoint parses against the schema on every band", () => {
+    /* `WidgetSpec.parse` is the assertion: it carries the `cols`/`rows ≤ 8` cap that keeps a
+     * 44px button lattice inside the 390px phone stage. This gate is where that cap is enforced —
+     * `variantForStep` serves generated specs UNPARSED (see its comment: per-serve parsing costs
+     * more than generating the problem does), so nothing downstream of here will notice a grid the
+     * schema forbids. The on-grid check is the companion failure mode: capping a grid while leaving
+     * the drawn point's range uncapped would produce a target the learner cannot tap. */
+    let seen = 0;
+    sweepEmitted("plotPoint", (widget, where) => {
+      if (widget.type !== "plotPoint") return;
+      seen++;
+      const parsed = WidgetSpec.parse(widget);
+      /* Asserted as well as parsed: the parse failure message is a zod issue list, while this
+       * names the rule and the offending generator directly. */
+      expect(widget.cols, `${where}: ${widget.cols} columns exceeds the schema cap`).toBeLessThanOrEqual(MAX_PLOT_POINT_DIM);
+      expect(widget.rows, `${where}: ${widget.rows} rows exceeds the schema cap`).toBeLessThanOrEqual(MAX_PLOT_POINT_DIM);
+      for (const t of widget.targets) {
+        expect(t.x, `${where}: target x=${t.x} sits outside a ${widget.cols}-column grid`).toBeLessThanOrEqual(widget.cols);
+        expect(t.y, `${where}: target y=${t.y} sits outside a ${widget.rows}-row grid`).toBeLessThanOrEqual(widget.rows);
+      }
+      if (widget.xLabels) expect(widget.xLabels.length, `${where}: xLabels must label the tracks the grid actually draws`).toBe(widget.cols);
+      if (widget.yLabels) expect(widget.yLabels.length, `${where}: yLabels must label the tracks the grid actually draws`).toBe(widget.rows);
+      expect(widgetIntegrityErrors(parsed as TWidget), where).toEqual([]);
+    });
+    expect(seen, "no generated plotPoint was reached — the sweep has gone blind").toBeGreaterThan(0);
+  });
 
   it("banding changes surface difficulty, not the concept (eq-two-step ranges)", () => {
     const maxRHS = (band: Band) => {

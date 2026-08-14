@@ -20,7 +20,7 @@
 // A generator that cannot state which mistake produces each trap does not belong in this file.
 
 import { hashSeed, mulberry32 } from "./prng";
-import { affineRelationshipTruth, exactNumberTruth, geometricConstraintTruth, pointSetReasoningTruth, placeValueTransformTruth, proportionalReasoningTruth, quotientReasoningTruth, quotientRationalKey, type TExactNumberLab, type TGeometricConstraintLab, type TPointSetReasoningLab, type TAffineRelationshipLab, type TEquationOutcomeLab, type TGraphStoryLab, type TPlaceValueTransformLab, type TProportionalReasoningLab, type TQuotientReasoningLab, type TShapeHierarchyLab, type TWidget } from "./schema";
+import { MAX_PLOT_POINT_DIM, affineRelationshipTruth, exactNumberTruth, geometricConstraintTruth, pointSetReasoningTruth, placeValueTransformTruth, proportionalReasoningTruth, quotientReasoningTruth, quotientRationalKey, type TExactNumberLab, type TGeometricConstraintLab, type TPointSetReasoningLab, type TAffineRelationshipLab, type TEquationOutcomeLab, type TGraphStoryLab, type TPlaceValueTransformLab, type TProportionalReasoningLab, type TQuotientReasoningLab, type TShapeHierarchyLab, type TWidget } from "./schema";
 import type { Band } from "./difficulty";
 import { G4_GENERATORS } from "./g4Variants";
 import { G0_GENERATORS } from "./g0Variants";
@@ -29315,6 +29315,11 @@ const GENERATORS: VariantGen[] = [
             max: n,
             step: 1,
             tickStep: 1,
+            // A13 — the prompt frames a fraction line, so the line must BE one: authored in jump
+            // units, drawn 0→1 with unlabeled interior ticks. Without this the refresh handed the
+            // learner a 0→n INTEGER line while telling them about 1/n (D-01); the authored analogue
+            // fr-02-02 k2 carries `fractionDen` for exactly this prompt.
+            fractionDen: n,
             start: 0,
             target: 1,
             commonPlacements: [
@@ -29399,6 +29404,9 @@ const GENERATORS: VariantGen[] = [
           max: n,
           step: 1,
           tickStep: 1,
+          // A13 — "a 0→1 line" in the prompt has to be a 0→1 line on screen (D-01). fr-02-02 k1
+          // authors this same sentence with `fractionDen`; the generated twin now matches it.
+          fractionDen: n,
           start: 0,
           target: 1,
           commonPlacements: [
@@ -29681,6 +29689,11 @@ const GENERATORS: VariantGen[] = [
             max: ruler,
             step: 1,
             tickStep: 1,
+            // A13 — a "ruler in ${many}" is a fraction line, not a 0→${ruler} integer line (D-02).
+            // It also stops the axis printing the answer: on a fraction line the interior ticks go
+            // UNLABELED, so the mark the learner must derive is no longer written under it. The
+            // authored analogue fr-03-01 k2 carries `fractionDen` on this identical prompt.
+            fractionDen: ruler,
             start: 0,
             target,
             commonPlacements: [
@@ -37826,8 +37839,14 @@ const GENERATORS: VariantGen[] = [
         );
       }
       if (form === "bvScatterPlot") {
-        const { x, y } = draw(rand, (r) => ({ x: pick(r, 2, hi), y: pick(r, 2, hi) }), ({ x, y }) => x !== y);
-        const labels = Array.from({ length: hi }, (_, i) => String(i + 1));
+        // C9/F2 — the grid is a BUTTON LATTICE on a 390px stage, so its size is capped by the
+        // schema, not by the band. At stretch `hi` is 10, which `PlotPointSpec` forbids (max 8):
+        // the spec was invalid and reached the learner only because the serving path never parsed
+        // it (D-03). The plotted point must sit inside the grid, so the whole form draws from the
+        // capped dimension — stretch keeps its harder work in the other forms' ranges.
+        const dim = Math.min(hi, MAX_PLOT_POINT_DIM);
+        const { x, y } = draw(rand, (r) => ({ x: pick(r, 2, dim), y: pick(r, 2, dim) }), ({ x, y }) => x !== y);
+        const labels = Array.from({ length: dim }, (_, i) => String(i + 1));
         const yNear = y === 2 ? 3 : y - 1;
         return {
           tag: "g8-bv-scatter-basics",
@@ -37835,8 +37854,8 @@ const GENERATORS: VariantGen[] = [
           widget: {
             type: "plotPoint",
             prompt: `On a scatter plot with x = ${C.x} and y = ${C.y}, plot the point (${x}, ${y}).`,
-            cols: hi,
-            rows: hi,
+            cols: dim,
+            rows: dim,
             xLabels: labels,
             yLabels: labels,
             targets: [{ x, y }],
@@ -40465,6 +40484,18 @@ export function variantForGenForm(
  * A tag is a SKILL, not a SURFACE. Until variants can be declared per step rather than per tag, the
  * honest rule is that freshness may change the numbers but never the manipulative. Where the types
  * disagree the authored item is served unchanged — no refresh is strictly better than a downgrade.
+ *
+ * WHAT THIS GUARD DOES NOT DO (F2, D-03). It checks the widget's TYPE and nothing else: the spec
+ * itself is handed to the renderer unparsed, so a generated spec the schema FORBIDS still reaches a
+ * learner — which is how bvScatterPlot's stretch band drew a 10×10 grid against `PlotPointSpec`'s
+ * `max(8)` without anything noticing. Parsing here was measured and deliberately NOT taken: it is
+ * value-preserving (verified over the full generated corpus) but `WidgetSpec` is a ~100-member
+ * discriminated union whose parse costs about 2.3× the generator that produced the spec, and
+ * `variants.resolver.test.ts`'s corpus walk makes ~71k calls to this function inside a single 5s
+ * test — the gate goes red on cost alone. Per-serve validation needs to get cheap first (validate
+ * once per gen×form×band rather than once per serve), which is a larger change than this guard.
+ * Until then the schema cap is enforced where it is affordable and LOUD: `variants.test.ts` parses
+ * every generator × form × band, so an out-of-schema spec fails CI instead of reaching a learner.
  */
 export function variantForStep(
   step: { widget?: { type?: string }; conceptTag?: string; variant?: { gen: string; form?: string } },

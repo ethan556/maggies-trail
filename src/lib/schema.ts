@@ -436,11 +436,18 @@ export const BuildExpressionSpec = z.object({
   successFeedback: z.string().min(1)
 });
 
+/** The widest coordinate button grid that still fits the 390px phone stage: past 8 columns the
+ * 44px cells overlap their neighbours and the tap target stops being unambiguous — on the one
+ * surface whose entire task is "tap the right cell". Exported so a GENERATOR can be capped by the
+ * schema's own number instead of a hand-copied literal that can drift out of agreement with it
+ * (D-03: the g8-bv-scatter stretch band emitted 10×10 for exactly that reason). */
+export const MAX_PLOT_POINT_DIM = 8;
+
 export const PlotPointSpec = z.object({
   type: z.literal("plotPoint"),
   prompt: z.string().min(1),
-  cols: z.number().int().min(2).max(8),
-  rows: z.number().int().min(2).max(8),
+  cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
+  rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
   /** Optional axis labels; x left→right, y bottom→top. */
   xLabels: z.array(z.string()).optional(),
   yLabels: z.array(z.string()).optional(),
