@@ -12,9 +12,27 @@ are commissioning references only. No board crop is production art or a user-sel
 composite, per `OPTIMIZATION_PLAN_V3.md:141`** ("A student never selects a quadrant of a board, and
 no board crop is ever claimed as final art"). The four PNGs stay in `design-reference/` untouched
 and are never imported by `src/` or copied into `public/`. The 44 expansion concepts have no board
-source at all — nothing to crop even in principle — but the same non-negotiable applies to them
+source at all — nothing to crop even in principle — but the same non-negotiable applied to them
 identically: concept-only prose here, zero pixels, `enabled: false`, until FABLE-Q-gated production
-art exists.
+art existed.
+
+**PRODUCTION STATUS — 2026-08-14: all 60 shipped.** Every concept in this ledger has been rendered
+as real production art and exported to its two WebP deliverables; every `Production status` cell
+below now reads `shipped 2026-08-14`, and every entry in `src/lib/avatars.ts` is `enabled: true`.
+What shipped is **code-authored dimensional vector illustration** — layered SVG with
+gradient-modelled volume, soft shadows and highlights, rasterised to 1024x1024 masters (kept in
+`art/avatar-masters/`) and downsampled by `scripts/build-avatar-assets.mjs`. No image-generation
+model was used; see `AVATAR_ART_PRODUCTION_SPEC.md` §2 for the honest description of the finish and
+§8 for how the honest-placeholder policy resolved. Not one pixel came from a board: the four
+`design-reference/` PNGs remain untouched, uncropped, and unimported.
+
+Two things this ledger's trait columns describe, and two things they never did: they describe
+**hairstyle, accessories, clothing and expression**. They do not describe skin tone or ethnicity —
+and neither does the art. Every portrait is drawn in **one unified, non-representational figure
+tone**, a warm neutral treated as a stylised sculptural material. That is deliberate and is what
+lets 48 distinct portraits ship encoding no race, ethnicity or gender
+(`OPTIMIZATION_PLAN_V3.md:146,150`). A head covering is a garment and nothing more. No avatar has a
+name.
 
 Every row in the "Concept table" below was produced by directly viewing all four boards in this
 session (not inferred from filenames or prior notes). Concept IDs are assigned `C01`–`C16` = board
@@ -64,18 +82,20 @@ use (`OPTIMIZATION_PLAN_V3.md:150`: "Avatar with braids and green top," never in
 
 `Assigned avatar id` is the deterministic filename id this concept will anchor once re-rendered
 (see `AVATAR_ART_PRODUCTION_SPEC.md` §File-naming convention). `Production status` is
-`concept-only` for all 16 — none has been individually re-rendered to the production spec, so none
-is `enabled: true` in `src/lib/avatars.ts`. `Regeneration priority` follows the P0/P1/P2 scale
-defined in the production spec; P1 here means "anchored concept, needs an individual re-render,"
-not "already usable."
+`shipped 2026-08-14` for all 16 — each was individually re-rendered to the production spec from its
+concept description, never cropped from its source board, and each is now `enabled: true` in
+`src/lib/avatars.ts` with both files on disk. `Regeneration priority` records the P0/P1/P2 scale
+these commissions were *ordered* by (P1 here meant "anchored concept, needs an individual
+re-render"); it is history now, kept so the sequencing rationale stays legible.
 
 ## Findings for FABLE-A and future commissioning sessions
 
 *(Findings 1–4 below record the state at 16 concepts. All four gaps they identify are now closed
 at the concept level by the "Expansion concept tables" section further down — 44 net-new concepts
-bringing every band to 12 and standing up the symbol collection — though every one of those new
-concepts is exactly as concept-only/`enabled: false` as the 16 were when these findings were
-written. Each finding below keeps its original text plus a short status note.)*
+bringing every band to 12 and standing up the symbol collection — and closed in art on 2026-08-14,
+when all 60 were rendered, exported and enabled. Each finding below keeps its original text plus a
+short status note; those notes were written at the concept-only stage and are left as-is rather
+than rewritten, since the top-of-file production status supersedes them.)*
 
 1. **The `summit` band (grades 9–13 / roughly ages 14–18) has zero anchors.** No board reads
    high-school age; board 1 — the most mature of the four — reads middle-school (~12–14). All
@@ -131,9 +151,9 @@ written. Each finding below keeps its original text plus a short status note.)*
 ## Expansion concept tables (net-new — no board source)
 
 44 concepts, none anchored to any board, written directly to the trait vocabulary established by
-the 16 above. Every one is `concept-only` / `enabled: false` in `src/lib/avatars.ts`, exactly like
-the 16 — nothing here is closer to shipping than the original set; this section only removes the
-excuse of "no concept exists yet" for the P0/P2 gaps findings 1–4 identified.
+the 16 above. Every one is now `shipped 2026-08-14` / `enabled: true` in `src/lib/avatars.ts`,
+exactly like the 16 — this section first removed the excuse of "no concept exists yet" for the
+P0/P2 gaps findings 1–4 identified, and the art that followed closed them.
 
 **Method.** Two lanes, split by category ownership so neither has to harmonize against the other's
 work or risks colliding on an id:
@@ -269,3 +289,10 @@ restricting *who* may pick a given symbol — the plan's "See all avatars" reach
 - No trait description in this document, or in any future expansion of it, should characterize
   race or ethnicity. Hairstyle, accessories, clothing, and expression are the vocabulary; skin
   tone and ethnic categorization are not, per `OPTIMIZATION_PLAN_V3.md:140,146,150`.
+- A 61st avatar joins the same way these 60 did: concept row here → art authored to
+  `AVATAR_ART_PRODUCTION_SPEC.md` → 1024x1024 master into `art/avatar-masters/` →
+  `node scripts/build-avatar-assets.mjs` → `defineAvatar(..., true)` in `src/lib/avatars.ts`. It
+  must use the same single unified figure tone as every existing portrait; a portrait that
+  introduced a second tone would start encoding exactly what this library refuses to encode.
+  `avatars.test.ts` fails the moment an entry claims `enabled: true` without both real files, so
+  the flag and the art land in one change or not at all.
