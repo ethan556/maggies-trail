@@ -104,7 +104,10 @@ export default async function Home() {
                 straight onto the background. Height-only sizing (`w-auto`) keeps the
                 cropped viewBox's aspect intact at every breakpoint. */}
             <MaggieMarkOpen className="mx-auto mb-7 block h-[132px] w-auto md:h-[176px]" />
-            <Badge tone="sky" icon="icon-807" className="mb-4">
+            {/* `Badge` is `inline-flex`, so `mx-auto` alone cannot centre it — an inline box
+                has no auto margins to distribute. `flex w-fit` makes it a block-level flex
+                box sized to its content, which `mx-auto` can then centre. */}
+            <Badge tone="sky" icon="icon-807" className="mx-auto mb-4 flex w-fit">
               {gradeSpan} math you can touch
             </Badge>
             <h1 className="text-display font-extrabold leading-[1.03] tracking-tight md:text-display-lg">
