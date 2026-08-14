@@ -305,16 +305,16 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
             done={profile.lessonsByDay?.[today] ?? 0}
             goal={profile.dailyGoal ?? 1}
           />
-          <Stat label="Trail mix (XP)" value={String(profile.xp)} accent icon="spark" />
+          <Stat label="Trail mix (XP)" value={String(profile.xp)} accent icon="icon-801" />
           <Stat
             label="Day streak"
             value={String(streak)}
-            icon="flame"
+            icon="icon-802"
             accent={streak > 0 && (profile.lessonsByDay?.[today] ?? 0) > 0}
             iconClassName={streak > 0 && (profile.lessonsByDay?.[today] ?? 0) > 0 ? "flame-pop" : ""}
           />
-          <Stat label="Reviews due" value={String(due)} icon="review" />
-          <Stat label="Lessons walked" value={String(done.size)} icon="route" />
+          <Stat label="Reviews due" value={String(due)} icon="icon-603" />
+          <Stat label="Lessons walked" value={String(done.size)} icon="icon-807" />
         </div>
       )}
       {surprisesDue > 0 && (
@@ -441,7 +441,7 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
         * Basecamp (the canonical world course surface /courses/[slug] already redirects to). */}
       <SectionHeader
         waymark
-        icon="route"
+        icon="icon-807"
         title="The trail map"
         className="mt-10 mb-1"
         action={
@@ -480,7 +480,7 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-extrabold marker:hidden [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center gap-2">
                   <AppIcon
-                    name="chevronRight"
+                    name="icon-701"
                     size={16}
                     className={`text-muted transition-transform ${open ? "rotate-90" : ""}`}
                   />

@@ -389,7 +389,7 @@ export default function LessonPlayer({
           </div>
           <div className="flex min-w-[9rem] flex-1 flex-col items-center justify-center gap-1 rounded-card border border-ink/10 bg-surface px-4 py-3 dark:border-paper/15">
             <span className="flex items-center gap-1.5 text-2xl font-extrabold tabular-nums">
-              <span className="flame-pop inline-flex"><AppIcon name="flame" size={22} className="text-tangerine-ink" /></span>
+              <span className="flame-pop inline-flex"><AppIcon name="icon-802" size={22} className="text-tangerine-ink" /></span>
               {streak}
             </span>
             <p className="text-xs font-bold text-ink/70 dark:text-paper/70">day streak</p>
@@ -398,7 +398,7 @@ export default function LessonPlayer({
 
         {st.predictions.length > 0 && (
           <p className="flex items-center gap-2 rounded-card border border-sky/30 bg-sky/5 px-4 py-2 text-sm font-bold text-ink/70 dark:text-paper/70">
-            <AppIcon name="compass" size={16} className="shrink-0 text-sky-ink" />
+            <AppIcon name="icon-808" size={16} className="shrink-0 text-sky-ink" />
             <span>
               Predictions: {held} of {st.predictions.length} held
               {st.predictions.some((x) => !x.held)
@@ -446,7 +446,7 @@ export default function LessonPlayer({
               onClick={() => usePlayer.getState().restart()}
               className="pressable flex min-h-11 items-center gap-2 rounded-card border-2 border-ink/20 px-6 py-3 font-bold dark:border-paper/25"
             >
-              <AppIcon name="repeat" size={16} />
+              <AppIcon name="icon-806" size={16} />
               {COPY.replay}
             </button>
           </div>
@@ -520,7 +520,7 @@ export default function LessonPlayer({
             aria-label="Exit lesson"
             className="pressable trail-exit flex h-11 w-11 shrink-0 items-center justify-center rounded-pill border border-ink/8 bg-surface/75 text-ink/70 shadow-e1 backdrop-blur hover:border-sky/35 hover:bg-sky/8 hover:text-sky-ink dark:border-paper/10 dark:text-paper/70"
           >
-            <AppIcon name="arrowLeft" size={20} />
+            <AppIcon name="icon-703" size={20} />
           </Link>
           <div className="min-w-0 flex-1">
             <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2 px-0.5">
@@ -544,7 +544,7 @@ export default function LessonPlayer({
             />
           </div>
           <span className="trail-xp-chip flex shrink-0 items-center gap-1 whitespace-nowrap rounded-pill border border-tangerine/25 bg-tangerine/10 px-2.5 py-1 text-xs font-extrabold tabular-nums text-[#9B4A18] shadow-e1 dark:text-tangerine-ink" aria-label={`${shownXp} experience points`}>
-            <AppIcon name="spark" size={13} />
+            <AppIcon name="icon-801" size={13} />
             {shownXp} XP
           </span>
         </div>
@@ -600,7 +600,7 @@ export default function LessonPlayer({
                safe — never graded, never penalized. */
             <div className="trail-prediction-card mt-5 rounded-card border border-tangerine/30 bg-tangerine/7 p-4 shadow-e2">
               <p className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wide text-tangerine-ink">
-                <AppIcon name="compass" size={14} />
+                <AppIcon name="icon-808" size={14} />
                 Make a prediction first
               </p>
               <p className="mt-1 text-lg font-bold"><MathProse text={s.predict.prompt} /></p>
@@ -625,7 +625,7 @@ export default function LessonPlayer({
           )}
           {s.predict && st.prediction !== null && !finalized && (
             <p className="mt-4 inline-flex min-h-8 items-center gap-1.5 rounded-full border border-tangerine/40 bg-tangerine/15 px-3 py-1 text-sm font-bold text-tangerine-ink">
-              <AppIcon name="target" size={14} className="shrink-0" />
+              <AppIcon name="icon-803" size={14} className="shrink-0" />
               <span>
                 Your prediction:{" "}
                 <MathProse text={s.predict.options.find((o) => o.id === st.prediction)?.label ?? ""} />
@@ -668,7 +668,7 @@ export default function LessonPlayer({
                 aria-live="polite"
                 className="banner-in mx-auto mt-3 flex w-full max-w-2xl items-start gap-2 rounded-card border border-sky/30 bg-sky/5 px-4 py-2.5 text-sm font-semibold text-ink/80 dark:text-paper/80"
               >
-                <AppIcon name="compass" size={16} className="mt-0.5 shrink-0 text-sky-ink" />
+                <AppIcon name="icon-808" size={16} className="mt-0.5 shrink-0 text-sky-ink" />
                 <span>{processCue}</span>
               </p>
             )}
@@ -718,7 +718,7 @@ export default function LessonPlayer({
                 {s.takeaways?.map((t, i) => (
                   <li key={i} className="flex items-start gap-2.5 rounded-card border-2 border-leaf/40 bg-leaf/10 px-4 py-3">
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-pill bg-cta-good text-white" aria-hidden="true">
-                      <AppIcon name="check" size={12} />
+                      <AppIcon name="icon-704" size={12} />
                     </span>
                     <span><MathProse text={t} includeArithmetic /></span>
                   </li>
@@ -763,7 +763,7 @@ export default function LessonPlayer({
               bury the stage it refers to. */}
           <div data-testid="feedback-scroll" className="max-h-[42dvh] overflow-y-auto overscroll-contain">
             {st.phase === "retry" && (
-              <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
+              <StatusBanner tone="error" icon="icon-803" title={COPY.nudgeBanner}>
                 <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
                   Your work is still on the stage — adjust it and check again.
@@ -775,7 +775,7 @@ export default function LessonPlayer({
                 <SparkBurst key={`spark-${st.i}`} className="left-1/2 top-0" />
               <StatusBanner
                 tone="success"
-                icon="check"
+                icon="icon-704"
                 title={COPY.correctBanner}
                 titleExtra={
                   <span className="rounded-pill bg-leaf/15 px-2 py-0.5 text-sm tabular-nums">+{st.lastXp} XP</span>
@@ -789,7 +789,7 @@ export default function LessonPlayer({
               </div>
             )}
             {st.phase === "revealed" && s.widget && (
-              <StatusBanner tone="info" icon="route" title={COPY.revealBanner}>
+              <StatusBanner tone="info" icon="icon-807" title={COPY.revealBanner}>
                 <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <div className="mt-2 flex flex-wrap items-stretch gap-2">
                   {revealYours !== null && revealYours !== revealAnswer && (
@@ -808,7 +808,7 @@ export default function LessonPlayer({
             {finalized && st.explorationActive && (
               <StatusBanner
                 tone={st.explorationCorrect === null ? "info" : st.explorationCorrect ? "success" : "error"}
-                icon={st.explorationCorrect === null ? "compass" : st.explorationCorrect ? "check" : "target"}
+                icon={st.explorationCorrect === null ? "icon-808" : st.explorationCorrect ? "icon-704" : "icon-803"}
                 title={
                   st.explorationCorrect === null
                     ? "Exploration state ready"
@@ -831,7 +831,7 @@ export default function LessonPlayer({
               return (
                 <StatusBanner
                   tone={confirmed ? "leaf-info" : "info"}
-                  icon="compass"
+                  icon="icon-808"
                   title={confirmed ? "Your prediction held. ✓" : "Not what you predicted — that's the interesting part."}
                 >
                   <p className="mt-1 text-sm">
@@ -893,7 +893,7 @@ export default function LessonPlayer({
                 onClick={() => st.next()}
                 className="pressable trail-primary-action min-h-11 rounded-card bg-cta px-8 py-3 font-bold text-white shadow-[0_6px_18px_rgba(46,124,214,0.20)]"
               >
-                <AppIcon name="chevronRight" size={17} />
+                <AppIcon name="icon-701" size={17} />
                 {COPY.continue}
               </button>
             )}
@@ -905,7 +905,7 @@ export default function LessonPlayer({
                 disabled={!canCheck(s.widget, st.value)}
                 className="pressable trail-primary-action min-h-11 rounded-card bg-cta px-8 py-3 font-bold text-white shadow-[0_6px_18px_rgba(46,124,214,0.20)] disabled:opacity-40 disabled:shadow-none"
               >
-                <AppIcon name="target" size={17} />
+                <AppIcon name="icon-803" size={17} />
                 {COPY.check}
               </button>
             )}
@@ -926,7 +926,7 @@ export default function LessonPlayer({
                   onClick={st.tryAgain}
                   className="pressable trail-primary-action min-h-11 rounded-card bg-cta-danger px-8 py-3 font-bold text-white shadow-[0_6px_18px_rgba(214,69,93,0.18)]"
                 >
-                  <AppIcon name="repeat" size={17} />
+                  <AppIcon name="icon-806" size={17} />
                   {COPY.tryAgain}
                 </button>
               </>
@@ -941,7 +941,7 @@ export default function LessonPlayer({
                     disabled={!canCheck(s.widget, st.value)}
                     className="pressable min-h-11 rounded-card border-2 border-sky px-4 py-2 font-bold text-sky-ink disabled:opacity-40"
                   >
-                    <AppIcon name="target" size={17} />
+                    <AppIcon name="icon-803" size={17} />
                     Check this state
                   </button>
                 )}
@@ -959,7 +959,7 @@ export default function LessonPlayer({
                   onClick={() => st.next()}
                   className="pressable trail-primary-action min-h-11 rounded-card bg-cta-good px-8 py-3 font-bold text-white shadow-[0_6px_18px_rgba(47,163,107,0.18)]"
                 >
-                  <AppIcon name="chevronRight" size={17} />
+                  <AppIcon name="icon-701" size={17} />
                   {COPY.continue}
                 </button>
               </>

@@ -87,16 +87,16 @@ describe("courseIcon is total over the shipped catalog", () => {
       } catch {
         continue;
       }
-      if (courseIcon(title) === "route") misses.push(title);
+      if (courseIcon(title) === "icon-807") misses.push(title);
     }
     expect(misses).toEqual([]);
   });
 
   it("maps representative topics to their content icons", () => {
-    expect(courseIcon("Fractions from Scratch")).toBe("fraction");
-    expect(courseIcon("Calculus: The Derivative")).toBe("calculus");
-    expect(courseIcon("Kindergarten: Shapes & Sorting")).toBe("shapes");
-    expect(courseIcon("Grade 7: Sampling & Probability")).toBe("dice");
-    expect(courseIcon("Lines & Angles")).toBe("angle");
+    expect(courseIcon("Fractions from Scratch")).toBe("icon-904");
+    expect(courseIcon("Calculus: The Derivative")).toBe("icon-911");
+    expect(courseIcon("Kindergarten: Shapes & Sorting")).toBe("icon-907");
+    expect(courseIcon("Grade 7: Sampling & Probability")).toBe("icon-912");
+    expect(courseIcon("Lines & Angles")).toBe("icon-908");
   });
 });

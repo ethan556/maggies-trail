@@ -113,7 +113,7 @@ export function Basecamp({
                 {course && <p className="mt-1 text-sm text-content-2">{MAINTENANCE_COPY[course.maintenance]}</p>}
               </div>
               {next ? (
-                <LinkButton href={waypointHref(next.lessonId)} size="md" iconRight="chevronRight">
+                <LinkButton href={waypointHref(next.lessonId)} size="md" iconRight="icon-701">
                   {completedSet.size > 0 ? `Continue: ${waypoints[next.lessonId]?.title ?? "next waypoint"}` : "Begin expedition"}
                 </LinkButton>
               ) : firstWaypointId ? (

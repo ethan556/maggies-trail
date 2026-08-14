@@ -61,7 +61,7 @@ export default function SyllabusClient({ chapters }: { chapters: SyllabusChapter
                 {doneCount} of {total} lessons walked
               </p>
               {next ? (
-                <LinkButton href={`/learn/${next.id}`} size="md" iconRight="chevronRight">
+                <LinkButton href={`/learn/${next.id}`} size="md" iconRight="icon-701">
                   {doneCount === 0 ? "Start the trail" : `Continue: ${next.title}`}
                 </LinkButton>
               ) : total > 0 ? (

@@ -200,7 +200,7 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
                   aria-hidden
                   className="absolute bottom-0.5 right-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-ink text-paper shadow-e1 dark:bg-paper dark:text-ink"
                 >
-                  <AppIcon name="check" size={14} />
+                  <AppIcon name="icon-704" size={14} />
                 </span>
               )}
             </button>

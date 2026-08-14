@@ -111,7 +111,7 @@ export default function AdminClient() {
     return (
       <div>
         <h1 className="mb-4 text-2xl font-extrabold tracking-tight">Institution admin</h1>
-        <EmptyState icon="compass" title="No institutional database here">
+        <EmptyState icon="icon-808" title="No institutional database here">
         This deployment runs local-first without a durable database, so district features are off. The learning
         experience is unaffected.
         </EmptyState>
@@ -122,7 +122,7 @@ export default function AdminClient() {
     return (
       <div>
         <h1 className="mb-4 text-2xl font-extrabold tracking-tight">Institution admin</h1>
-        <EmptyState icon="account" title="No organizations to administer">
+        <EmptyState icon="icon-607" title="No organizations to administer">
         District and school tools appear here for signed-in administrators. If you expect access, ask your district
         administrator to add you, or sign in with an admin account.
         </EmptyState>
@@ -135,7 +135,7 @@ export default function AdminClient() {
 
   return (
     <div>
-      <SectionHeader title="Institution admin" icon="chart" waymark as="h1" />
+      <SectionHeader title="Institution admin" icon="icon-805" waymark as="h1" />
       <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="Districts" value={String(districts.length)} tone="sky" />
         <StatTile label="Schools" value={String(schools.length)} tone="leaf" />
@@ -230,7 +230,7 @@ function OverviewTab({ orgs, districts, onChange }: { orgs: OrgRow[]; districts:
             {districts.map((d) => (
               <li key={d.id}>
                 <div className="flex items-center gap-2">
-                  <Badge tone="sky" icon="chart">District</Badge>
+                  <Badge tone="sky" icon="icon-805">District</Badge>
                   <span className="font-bold">{d.name}</span>
                   {d.status === "retired" && <Badge tone="muted">retired</Badge>}
                 </div>
@@ -375,13 +375,13 @@ function RosterTab({ districts }: { districts: OrgRow[] }) {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button variant="secondary" onClick={() => run(true)} disabled={busy || !districtId} icon="compass">
+        <Button variant="secondary" onClick={() => run(true)} disabled={busy || !districtId} icon="icon-808">
           Dry run
         </Button>
         <Button
           onClick={() => run(false)}
           disabled={busy || !districtId || !result || !result.plan.applicable}
-          icon="check"
+          icon="icon-704"
         >
           Apply import
         </Button>
@@ -394,9 +394,9 @@ function RosterTab({ districts }: { districts: OrgRow[] }) {
           <div className="mb-3 flex items-center gap-2">
             <h3 className="text-sm font-extrabold">{result.applied ? "Applied" : "Dry run"} — plan</h3>
             {result.plan.applicable ? (
-              <Badge tone="leaf" icon="check">ready</Badge>
+              <Badge tone="leaf" icon="icon-704">ready</Badge>
             ) : (
-              <Badge tone="berry" icon="repeat">blocked</Badge>
+              <Badge tone="berry" icon="icon-806">blocked</Badge>
             )}
           </div>
           <div className="mb-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -603,7 +603,7 @@ function ReportsTab({ orgs }: { orgs: OrgRow[] }) {
             <option value="grade">Grade</option>
           </select>
         </label>
-        <Button onClick={run} disabled={busy || !orgId} icon="chart">
+        <Button onClick={run} disabled={busy || !orgId} icon="icon-805">
           Run report
         </Button>
       </div>

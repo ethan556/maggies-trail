@@ -64,22 +64,22 @@ export function resolveTrailName(): string {
  * "lines & angles" lands angle before geometry lands shapes).
  */
 const ICON_RULES: Array<[RegExp, IconName]> = [
-  [/\bangle|lines & angles/i, "angle"],
-  [/triangle|shape|polygon|quadrilateral|geometry|similar|congruen|circle theorems|construct|coordinate proofs|solid|transformation/i, "shapes"],
-  [/probab|sampling|chance|dice/i, "dice"],
-  [/statist|data|distribution|bivariate|inference/i, "chart"],
-  [/fraction|ratio|rate|proportion|percent|equal shares/i, "fraction"],
-  [/clock|time\b/i, "clock"],
-  [/measure|measurement|volume|length|convert/i, "ruler"],
-  [/calculus|derivative|integral|limit/i, "calculus"],
-  [/function|quadratic|polynomial|exponential|logarithm|sequence|series|trig|conic|vector|matri|polar|parametric|graph/i, "functionCurve"],
-  [/equation|expression|inequal|system|algebra|balance/i, "scale"],
-  [/count|place value|number|tens|million|120|1,000|decimal|integer|exponent|root|scientific|array|odd/i, "tally"],
-  [/word problem|story problem|multi-step/i, "operations"],
-  [/add|subtract|multipl|divi|operation|fluency/i, "operations"],
+  [/\bangle|lines & angles/i, "icon-908"],
+  [/triangle|shape|polygon|quadrilateral|geometry|similar|congruen|circle theorems|construct|coordinate proofs|solid|transformation/i, "icon-907"],
+  [/probab|sampling|chance|dice/i, "icon-912"],
+  [/statist|data|distribution|bivariate|inference/i, "icon-805"],
+  [/fraction|ratio|rate|proportion|percent|equal shares/i, "icon-904"],
+  [/clock|time\b/i, "icon-906"],
+  [/measure|measurement|volume|length|convert/i, "icon-905"],
+  [/calculus|derivative|integral|limit/i, "icon-911"],
+  [/function|quadratic|polynomial|exponential|logarithm|sequence|series|trig|conic|vector|matri|polar|parametric|graph/i, "icon-910"],
+  [/equation|expression|inequal|system|algebra|balance/i, "icon-909"],
+  [/count|place value|number|tens|million|120|1,000|decimal|integer|exponent|root|scientific|array|odd/i, "icon-902"],
+  [/word problem|story problem|multi-step/i, "icon-903"],
+  [/add|subtract|multipl|divi|operation|fluency/i, "icon-903"],
   // S198 Batch G kindergarten titles; exact-anchored so no earlier routing changes
-  [/^how many\?$|^comparing$/i, "tally"],
-  [/^measuring & sorting$/i, "ruler"],
+  [/^how many\?$|^comparing$/i, "icon-902"],
+  [/^measuring & sorting$/i, "icon-905"],
 ];
 
 /**
@@ -88,5 +88,5 @@ const ICON_RULES: Array<[RegExp, IconName]> = [
  */
 export function courseIcon(title: string): IconName {
   for (const [re, icon] of ICON_RULES) if (re.test(title)) return icon;
-  return "route";
+  return "icon-807";
 }

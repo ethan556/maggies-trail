@@ -54,14 +54,14 @@ export function CausalMasteryPanel({ step, value }: { step: TStep; value: unknow
         className="pressable flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left sm:px-4"
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky/10 text-sky-ink" aria-hidden="true">
-          <AppIcon name="compass" size={16} />
+          <AppIcon name="icon-808" size={16} />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-extrabold">See another form</span>
           <span className="block text-sm text-content-2"><MathProse text={summary} /></span>
         </span>
         <AppIcon
-          name="chevronDown"
+          name="icon-702"
           size={18}
           className={`shrink-0 text-muted transition-transform duration-200 motion-reduce:transition-none ${expanded ? "rotate-180" : ""}`}
         />

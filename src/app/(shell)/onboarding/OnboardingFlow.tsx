@@ -77,7 +77,7 @@ function ChoiceButton({
         aria-hidden
         className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-sky-ink motion-reduce:transition-none"
       >
-        <AppIcon name="chevronRight" size={18} />
+        <AppIcon name="icon-701" size={18} />
       </span>
     </button>
   );
@@ -307,7 +307,7 @@ export default function OnboardingFlow() {
               <span className="block font-extrabold">Take the 12-item diagnostic</span>
               <span className="mt-0.5 block text-sm text-content-2">Recommended · domain-balanced, confidence-aware, and easy to retake later.</span>
             </span>
-            <AppIcon name="chevronRight" size={18} className="shrink-0 text-sky-ink" />
+            <AppIcon name="icon-701" size={18} className="shrink-0 text-sky-ink" />
           </Link>
           <ChoiceButton
             label="Start at my grade level"

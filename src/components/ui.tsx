@@ -14,43 +14,48 @@ import * as React from "react";
 
 /* ------------------------------------------------------------------ Icons -- */
 
+/** Icons carry alphanumeric identifiers only — an icon has no name. Blocks mirror
+ *  AVATAR_ART_PRODUCTION_SPEC.md §5's per-band allocation so a later addition never
+ *  renumbers an earlier one: 0xx–5xx the duotone trail set, 6xx shell, 7xx chrome,
+ *  8xx status/reward, 9xx mathematics. What each id depicts lives in the icon
+ *  reference sheet, never in the identifier. */
 export type IconName =
-  | "home"
-  | "courses"
-  | "review"
-  | "daily"
-  | "family"
-  | "profile"
-  | "account"
-  | "premium"
-  | "more"
-  | "sun"
-  | "moon"
-  | "check"
-  | "spark"
-  | "flame"
-  | "target"
-  | "compass"
-  | "repeat"
-  | "route"
-  | "chevronRight"
-  | "chevronDown"
-  | "arrowLeft"
-  | "lock"
-  | "trophy"
-  | "chart"
-  | "notebook"
-  | "tally"
-  | "operations"
-  | "fraction"
-  | "ruler"
-  | "clock"
-  | "shapes"
-  | "angle"
-  | "scale"
-  | "functionCurve"
-  | "calculus"
-  | "dice"
+  | "icon-601"
+  | "icon-602"
+  | "icon-603"
+  | "icon-604"
+  | "icon-605"
+  | "icon-606"
+  | "icon-607"
+  | "icon-608"
+  | "icon-609"
+  | "icon-706"
+  | "icon-707"
+  | "icon-704"
+  | "icon-801"
+  | "icon-802"
+  | "icon-803"
+  | "icon-808"
+  | "icon-806"
+  | "icon-807"
+  | "icon-701"
+  | "icon-702"
+  | "icon-703"
+  | "icon-705"
+  | "icon-804"
+  | "icon-805"
+  | "icon-901"
+  | "icon-902"
+  | "icon-903"
+  | "icon-904"
+  | "icon-905"
+  | "icon-906"
+  | "icon-907"
+  | "icon-908"
+  | "icon-909"
+  | "icon-910"
+  | "icon-911"
+  | "icon-912"
   /* Trail set — alphanumeric ids only, per the naming ruling: an icon carries no name,
      just an identifier. Blocks mirror AVATAR_ART_PRODUCTION_SPEC.md §5 so a later
      addition never renumbers an earlier one — 0xx navigation, 1xx the path, 2xx
@@ -86,169 +91,169 @@ type TonedIconName = keyof typeof TONED;
 type LineIconName = Exclude<IconName, TonedIconName>;
 
 const PATHS: Record<LineIconName, React.ReactNode> = {
-  home: <path d="M4 11.5 12 5l8 6.5M6 10.5V19h12v-8.5" />,
-  notebook: <path d="M7 4h10.5v16H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2ZM9.5 4v16M13 9.5h2.5" />,
+  "icon-601": <path d="M4 11.5 12 5l8 6.5M6 10.5V19h12v-8.5" />,
+  "icon-901": <path d="M7 4h10.5v16H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2ZM9.5 4v16M13 9.5h2.5" />,
   /* ---- course-content icons (trail waymarks for topics) ---- */
-  tally: <path d="M5 5v14M9 5v14M13 5v14M17 5v14M3.5 16.5 19 8" />,
-  operations: (
+  "icon-902": <path d="M5 5v14M9 5v14M13 5v14M17 5v14M3.5 16.5 19 8" />,
+  "icon-903": (
     <>
       <path d="M7 4.5v6M4 7.5h6" />
       <path d="M14.5 14.5 20 20M20 14.5 14.5 20" />
     </>
   ),
-  fraction: (
+  "icon-904": (
     <>
       <rect x="4" y="6" width="16" height="12" rx="2" />
       <path d="M10 6v12" />
       <path d="M6.5 9.5h1M6.5 12h1M6.5 14.5h1" />
     </>
   ),
-  ruler: (
+  "icon-905": (
     <>
       <rect x="3" y="9" width="18" height="6" rx="1.5" />
       <path d="M7 9v3M11 9v3M15 9v3M19 9v3" />
     </>
   ),
-  clock: (
+  "icon-906": (
     <>
       <circle cx="12" cy="12" r="8.5" />
       <path d="M12 7.5V12l3 2" />
     </>
   ),
-  shapes: (
+  "icon-907": (
     <>
       <path d="M9 4 4 12h10z" />
       <circle cx="16.5" cy="15.5" r="4.5" />
     </>
   ),
-  angle: (
+  "icon-908": (
     <>
       <path d="M5 19h14M5 19 15 6" />
       <path d="M10.5 19a6 6 0 0 0-1.7-4.2" />
     </>
   ),
-  scale: (
+  "icon-909": (
     <>
       <path d="M12 4v15M7.5 19.5h9" />
       <path d="M12 6 5 8.5m7-2.5 7 2.5" />
       <path d="M3 12.5 5 8.5l2 4a2.6 2.6 0 0 1-4 0ZM17 12.5l2-4 2 4a2.6 2.6 0 0 1-4 0Z" />
     </>
   ),
-  functionCurve: (
+  "icon-910": (
     <>
       <path d="M4 19V5M4 19h16" />
       <path d="M5.5 16.5c4-1 5-9 7.5-9s3.5 5 6 5.5" />
     </>
   ),
-  calculus: (
+  "icon-911": (
     <>
       <path d="M4 18c5 0 6-11 12-12" />
       <path d="M9 8.5 19 15" />
       <circle cx="14" cy="11.7" r="1.4" />
     </>
   ),
-  dice: (
+  "icon-912": (
     <>
       <rect x="4.5" y="4.5" width="15" height="15" rx="3" />
       <path d="M9 9h.01M15 9h.01M12 12h.01M9 15h.01M15 15h.01" />
     </>
   ),
-  courses: (
+  "icon-602": (
     <>
       <path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5z" />
       <path d="M5 18.5A1.5 1.5 0 0 1 6.5 20H19" />
     </>
   ),
-  review: (
+  "icon-603": (
     <>
       <path d="M20 12a8 8 0 1 1-2.3-5.6" />
       <path d="M20 4v4h-4" />
     </>
   ),
-  daily: (
+  "icon-604": (
     <>
       <path d="M12 7v5l3 2" />
       <circle cx="12" cy="12" r="8" />
     </>
   ),
-  family: (
+  "icon-605": (
     <>
       <circle cx="8" cy="9" r="2.5" />
       <circle cx="16" cy="9" r="2.5" />
       <path d="M4 19c0-2.5 2-4 4-4s4 1.5 4 4M12 19c0-2.5 2-4 4-4s4 1.5 4 4" />
     </>
   ),
-  profile: (
+  "icon-606": (
     <>
       <circle cx="12" cy="8.5" r="3.5" />
       <path d="M5 19c0-3.3 3.1-5 7-5s7 1.7 7 5" />
     </>
   ),
-  account: (
+  "icon-607": (
     <>
       <circle cx="12" cy="12" r="8" />
       <path d="M12 8v4l2.5 1.5" />
     </>
   ),
-  premium: <path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.7l5.4-.8z" />,
-  more: (
+  "icon-608": <path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.7l5.4-.8z" />,
+  "icon-609": (
     <>
       <circle cx="6" cy="12" r="1.4" />
       <circle cx="12" cy="12" r="1.4" />
       <circle cx="18" cy="12" r="1.4" />
     </>
   ),
-  sun: (
+  "icon-706": (
     <>
       <circle cx="12" cy="12" r="4" />
       <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" />
     </>
   ),
-  moon: <path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5z" />,
-  check: <path d="m5 12.5 4.5 4.5L19 7" />,
-  spark: <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" />,
-  flame: <path d="M12 3c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1.5-.8-2.7-1.6-3.6C15.6 8.4 16 11 14 11.5c1-2.4-.6-6.3-2-8.5z" />,
-  target: (
+  "icon-707": <path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5z" />,
+  "icon-704": <path d="m5 12.5 4.5 4.5L19 7" />,
+  "icon-801": <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" />,
+  "icon-802": <path d="M12 3c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1.5-.8-2.7-1.6-3.6C15.6 8.4 16 11 14 11.5c1-2.4-.6-6.3-2-8.5z" />,
+  "icon-803": (
     <>
       <circle cx="12" cy="12" r="8" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="12" cy="12" r="0.6" />
     </>
   ),
-  compass: (
+  "icon-808": (
     <>
       <circle cx="12" cy="12" r="8.5" />
       <path d="m15 9-1.6 4.4L9 15l1.6-4.4z" />
     </>
   ),
-  repeat: (
+  "icon-806": (
     <>
       <path d="M4 9a5 5 0 0 1 5-5h7l-2.5-2.5M20 15a5 5 0 0 1-5 5H8l2.5 2.5" />
     </>
   ),
-  route: (
+  "icon-807": (
     <>
       <circle cx="6" cy="18" r="2.2" />
       <circle cx="18" cy="6" r="2.2" />
       <path d="M8 18h6a3 3 0 0 0 0-6H10a3 3 0 0 1 0-6h6" />
     </>
   ),
-  chevronRight: <path d="m9 6 6 6-6 6" />,
-  chevronDown: <path d="m6 9 6 6 6-6" />,
-  arrowLeft: <path d="M19 12H5M11 6l-6 6 6 6" />,
-  lock: (
+  "icon-701": <path d="m9 6 6 6-6 6" />,
+  "icon-702": <path d="m6 9 6 6 6-6" />,
+  "icon-703": <path d="M19 12H5M11 6l-6 6 6 6" />,
+  "icon-705": (
     <>
       <rect x="5" y="11" width="14" height="9" rx="2" />
       <path d="M8 11V8a4 4 0 0 1 8 0v3" />
     </>
   ),
-  trophy: (
+  "icon-804": (
     <>
       <path d="M8 4h8v4a4 4 0 0 1-8 0z" />
       <path d="M8 5H5v1a3 3 0 0 0 3 3M16 5h3v1a3 3 0 0 1-3 3M10 12v3M14 12v3M8 20h8M9 20l.5-3h5l.5 3" />
     </>
   ),
-  chart: (
+  "icon-805": (
     <>
       <path d="M4 20V4M4 20h16" />
       <path d="M8 16v-4M12 16V8M16 16v-6" />
@@ -644,7 +649,7 @@ export function SectionHeader({
           aria-hidden
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-pill bg-sky/10 text-sky-ink"
         >
-          <AppIcon name={icon ?? "route"} size={17} />
+          <AppIcon name={icon ?? "icon-807"} size={17} />
         </span>
         <span className="truncate">{title}</span>
       </Tag>
@@ -733,10 +738,10 @@ export function StatTile({
 
 type NoticeTone = "info" | "success" | "warning" | "error";
 const NOTICE: Record<NoticeTone, { ring: string; icon: IconName; label: string }> = {
-  info: { ring: "border-sky/40 bg-sky/8", icon: "compass", label: "Note" },
-  success: { ring: "border-leaf/40 bg-leaf/10", icon: "check", label: "Success" },
-  warning: { ring: "border-tangerine/50 bg-tangerine/10", icon: "spark", label: "Heads up" },
-  error: { ring: "border-berry/40 bg-berry/10", icon: "repeat", label: "Error" }
+  info: { ring: "border-sky/40 bg-sky/8", icon: "icon-808", label: "Note" },
+  success: { ring: "border-leaf/40 bg-leaf/10", icon: "icon-704", label: "Success" },
+  warning: { ring: "border-tangerine/50 bg-tangerine/10", icon: "icon-801", label: "Heads up" },
+  error: { ring: "border-berry/40 bg-berry/10", icon: "icon-806", label: "Error" }
 };
 
 export function Notice({
@@ -796,7 +801,7 @@ export function ProgressBar({
 /* ---------------------------------------------------------- Empty state ---- */
 
 export function EmptyState({
-  icon = "compass",
+  icon = "icon-808",
   title,
   children,
   action

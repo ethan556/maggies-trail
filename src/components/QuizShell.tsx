@@ -197,7 +197,7 @@ export default function QuizShell({
 
       {phase === "retry" && (
         <div className="banner-in mt-4">
-          <StatusBanner tone="error" icon="target" title={COPY.nudgeBanner}>
+          <StatusBanner tone="error" icon="icon-803" title={COPY.nudgeBanner}>
             <p className="text-sm"><MathProse text={feedback} includeArithmetic /></p>
           </StatusBanner>
         </div>
@@ -207,7 +207,7 @@ export default function QuizShell({
         <div className="banner-in mt-4">
           <StatusBanner
             tone={revealed ? "info" : "success"}
-            icon={revealed ? "route" : "check"}
+            icon={revealed ? "icon-807" : "icon-704"}
             title={revealed ? COPY.revealBanner : COPY.correctBanner}
           >
             {revealed && (
@@ -242,7 +242,7 @@ export default function QuizShell({
         <div className="banner-in mt-3">
           <StatusBanner
             tone={explorationCorrect === null ? "info" : explorationCorrect ? "success" : "error"}
-            icon={explorationCorrect === null ? "compass" : explorationCorrect ? "check" : "target"}
+            icon={explorationCorrect === null ? "icon-808" : explorationCorrect ? "icon-704" : "icon-803"}
             title={
               explorationCorrect === null
                 ? "Exploration state ready"

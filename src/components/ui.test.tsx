@@ -16,7 +16,7 @@ describe("Button", () => {
   it("renders a native button, forwards clicks, and respects disabled", () => {
     const onClick = vi.fn();
     const { rerender } = render(
-      <Button onClick={onClick} icon="check">
+      <Button onClick={onClick} icon="icon-704">
         Save
       </Button>
     );
@@ -45,12 +45,12 @@ describe("LinkButton", () => {
 
 describe("AppIcon", () => {
   it("is decorative (aria-hidden) without a title, and labelled with one", () => {
-    const { container, rerender } = render(<AppIcon name="home" />);
+    const { container, rerender } = render(<AppIcon name="icon-601" />);
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("aria-hidden")).toBe("true");
     expect(svg.getAttribute("role")).toBeNull();
 
-    rerender(<AppIcon name="home" title="Home" />);
+    rerender(<AppIcon name="icon-601" title="Home" />);
     const labelled = container.querySelector("svg")!;
     expect(labelled.getAttribute("role")).toBe("img");
     expect(labelled.getAttribute("aria-label")).toBe("Home");

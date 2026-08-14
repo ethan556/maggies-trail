@@ -123,7 +123,7 @@ export default function ClassClient({ classId, courses }: { classId: string; cou
     return (
       <div>
         <h1 className="mb-4 text-2xl font-extrabold tracking-tight">Class</h1>
-        <EmptyState icon="compass" title="No class database here">
+        <EmptyState icon="icon-808" title="No class database here">
         This deployment runs local-first, so cross-device class tools are off. The device-local classroom on{" "}
         <Link href="/teach" className="font-bold text-sky-ink underline">
           Teach
@@ -136,7 +136,7 @@ export default function ClassClient({ classId, courses }: { classId: string; cou
     return (
       <div>
         <h1 className="mb-4 text-2xl font-extrabold tracking-tight">Class</h1>
-        <EmptyState icon="lock" title="This class isn't available to you">
+        <EmptyState icon="icon-705" title="This class isn't available to you">
         You need to be its teacher or an administrator of its school. Head back to{" "}
         <Link href="/teach" className="font-bold text-sky-ink underline">
           Teach
@@ -153,15 +153,15 @@ export default function ClassClient({ classId, courses }: { classId: string; cou
           ← Teach
         </Link>
       </div>
-      <SectionHeader title={className} icon="route" waymark as="h1" />
+      <SectionHeader title={className} icon="icon-807" waymark as="h1" />
 
       {insights && (
         <>
           <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <StatTile label="Learners" value={String(insights.counts.total)} icon="family" tone="sky" />
-            <StatTile label="On track" value={String(insights.counts.tier1)} icon="check" tone="leaf" />
-            <StatTile label="Watch" value={String(insights.counts.tier2)} icon="target" tone="tangerine" />
-            <StatTile label="Intensive" value={String(insights.counts.tier3)} icon="flame" tone="berry" />
+            <StatTile label="Learners" value={String(insights.counts.total)} icon="icon-605" tone="sky" />
+            <StatTile label="On track" value={String(insights.counts.tier1)} icon="icon-704" tone="leaf" />
+            <StatTile label="Watch" value={String(insights.counts.tier2)} icon="icon-803" tone="tangerine" />
+            <StatTile label="Intensive" value={String(insights.counts.tier3)} icon="icon-802" tone="berry" />
           </div>
           <TierTrailBar counts={insights.counts} />
         </>
@@ -265,7 +265,7 @@ function AssignmentsSection({
 
   return (
     <section className="mb-8">
-      <SectionHeader title="Assignments" icon="courses" waymark />
+      <SectionHeader title="Assignments" icon="icon-602" waymark />
       <Surface tone="surface" border className="mb-4 p-4">
         <h3 className="mb-3 text-sm font-extrabold">Assign from the trail</h3>
         {msg && (
@@ -328,7 +328,7 @@ function AssignmentsSection({
           <Button variant="secondary" onClick={() => create(false)} disabled={busy || !refId}>
             Save draft
           </Button>
-          <Button onClick={() => create(true)} disabled={busy || !refId} icon="check">
+          <Button onClick={() => create(true)} disabled={busy || !refId} icon="icon-704">
             Publish
           </Button>
         </div>
@@ -345,7 +345,7 @@ function AssignmentsSection({
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="truncate font-bold">{a.title}</span>
-                      {a.published ? <Badge tone="leaf" icon="check">published</Badge> : <Badge tone="muted">draft</Badge>}
+                      {a.published ? <Badge tone="leaf" icon="icon-704">published</Badge> : <Badge tone="muted">draft</Badge>}
                     </div>
                     <div className="mt-0.5 text-xs text-muted">
                       {a.kind === "course" ? "Course" : "Lesson"} · {a.lessonCount} lesson{a.lessonCount === 1 ? "" : "s"}
@@ -391,7 +391,7 @@ function TierSection({ insights }: { insights: Insights | null }) {
   if (insights.tiers.length === 0)
     return (
       <section className="mb-8">
-        <SectionHeader title="Where each learner is" icon="target" waymark />
+        <SectionHeader title="Where each learner is" icon="icon-803" waymark />
         <p className="text-sm text-muted">
           No enrolled learners yet — tiers appear once students join with the class code.
         </p>
@@ -399,7 +399,7 @@ function TierSection({ insights }: { insights: Insights | null }) {
     );
   return (
     <section className="mb-8">
-      <SectionHeader title="Where each learner is" icon="target" waymark />
+      <SectionHeader title="Where each learner is" icon="icon-803" waymark />
       <p className="mb-3 text-xs text-muted">
         Recomputed from evidence — insufficient evidence stays Tier&nbsp;1 by design. As of {insights.generatedFor}.
       </p>
@@ -454,7 +454,7 @@ function GroupsSection({ groups }: { groups: Group[] }) {
   if (groups.length === 0) return null;
   return (
     <section className="mb-8">
-      <SectionHeader title="Small groups" icon="family" waymark />
+      <SectionHeader title="Small groups" icon="icon-605" waymark />
       <p className="mb-3 text-xs text-muted">Learners who share a focus skill, most urgent first.</p>
       <ul className="grid gap-2 sm:grid-cols-2">
         {groups.map((g) => (
@@ -557,7 +557,7 @@ function InterventionSection({
 
   return (
     <section className="mb-8">
-      <SectionHeader title="Intervention cases" icon="compass" waymark />
+      <SectionHeader title="Intervention cases" icon="icon-808" waymark />
 
       <Surface tone="surface" border className="mb-4 p-4">
         <h3 className="mb-2 text-sm font-extrabold">Open a case</h3>
@@ -602,7 +602,7 @@ function InterventionSection({
           <p className="mt-2 text-xs text-muted">Focus tags will attach: {suggested.focusTags.join(", ")}</p>
         )}
         <div className="mt-3">
-          <Button onClick={open} disabled={busy || !learnerId || !reason.trim()} icon="check">
+          <Button onClick={open} disabled={busy || !learnerId || !reason.trim()} icon="icon-704">
             Open case
           </Button>
         </div>

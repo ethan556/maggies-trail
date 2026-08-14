@@ -17,27 +17,27 @@ type NavItem = { href: string; label: string; icon: IconName };
 
 /** Primary learner destinations — always visible on desktop and in the mobile bar. */
 const PRIMARY: NavItem[] = [
-  { href: "/dashboard", label: "Home", icon: "home" },
-  { href: "/courses", label: "Learn", icon: "courses" },
-  { href: "/review", label: "Review", icon: "review" },
-  { href: "/daily", label: "Daily", icon: "daily" }
+  { href: "/dashboard", label: "Home", icon: "icon-601" },
+  { href: "/courses", label: "Learn", icon: "icon-602" },
+  { href: "/review", label: "Review", icon: "icon-603" },
+  { href: "/daily", label: "Daily", icon: "icon-604" }
 ];
 
 /** Secondary destinations — an account menu on desktop, the "More" sheet on mobile.
  *  WS-E Phase 5: the world-layer surfaces (Trailhead / Atlas / Journal) lead the list — they
  *  were real, tested routes with no click path from the visible UI until linked here. */
 const SECONDARY: NavItem[] = [
-  { href: "/trailhead", label: "Trailhead", icon: "route" },
-  { href: "/atlas", label: "Atlas", icon: "compass" },
-  { href: "/journal", label: "Journal", icon: "tally" },
-  { href: "/notebook", label: "Notebook", icon: "notebook" },
-  { href: "/profile", label: "Profile", icon: "profile" },
-  { href: "/family", label: "Family", icon: "family" },
-  { href: "/teach", label: "Teach", icon: "chart" },
-  { href: "/admin", label: "Admin", icon: "account" },
-  { href: "/standards", label: "Standards", icon: "chart" },
-  { href: "/account", label: "Account", icon: "account" },
-  { href: "/premium", label: "Premium", icon: "premium" }
+  { href: "/trailhead", label: "Trailhead", icon: "icon-807" },
+  { href: "/atlas", label: "Atlas", icon: "icon-808" },
+  { href: "/journal", label: "Journal", icon: "icon-902" },
+  { href: "/notebook", label: "Notebook", icon: "icon-901" },
+  { href: "/profile", label: "Profile", icon: "icon-606" },
+  { href: "/family", label: "Family", icon: "icon-605" },
+  { href: "/teach", label: "Teach", icon: "icon-805" },
+  { href: "/admin", label: "Admin", icon: "icon-607" },
+  { href: "/standards", label: "Standards", icon: "icon-805" },
+  { href: "/account", label: "Account", icon: "icon-607" },
+  { href: "/premium", label: "Premium", icon: "icon-608" }
 ];
 
 /** Due-review count, refreshed on focus/visibility so post-lesson misses show without reload. */
@@ -100,7 +100,7 @@ function ThemeToggle() {
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       className="pressable flex min-h-11 min-w-11 items-center justify-center rounded-pill border border-ink/12 text-content hover:border-sky hover:text-sky-ink dark:border-paper/15"
     >
-      <AppIcon name={dark ? "sun" : "moon"} size={18} />
+      <AppIcon name={dark ? "icon-706" : "icon-707"} size={18} />
     </button>
   );
 }
@@ -160,7 +160,7 @@ function AccountMenu() {
         />
         <span>Account</span>
         <AppIcon
-          name="chevronDown"
+          name="icon-702"
           size={14}
           className={open ? "rotate-180 transition-transform" : "transition-transform"}
         />
@@ -331,7 +331,7 @@ export default function SiteNav() {
             onClick={() => setMoreOpen(true)}
             className="flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 pt-1.5 text-[11px] font-bold text-content-2"
           >
-            <AppIcon name="more" size={22} />
+            <AppIcon name="icon-609" size={22} />
             More
           </button>
         </div>

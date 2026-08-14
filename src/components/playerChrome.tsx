@@ -58,7 +58,7 @@ export function Narration({ step, stepKey }: { step: TStep; stepKey: string }) {
         onClick={() => speak(text)}
         className="inline-flex min-h-11 items-center gap-1.5 rounded-full border-2 border-sky/40 bg-sky/10 px-4 font-bold text-sky-ink"
       >
-        <AppIcon name="compass" size={16} />
+        <AppIcon name="icon-808" size={16} />
         Listen
       </button>
       <button
@@ -193,7 +193,7 @@ const TRAIL_GUIDE = {
   concept: {
     label: TRAIL_STAGE.concept,
     cue: "Notice the landmark before you move on.",
-    icon: "compass" as const,
+    icon: "icon-808" as const,
     // Ink, not a raw Tailwind violet. The palette is semantic (§20): sky =
     // learner-controlled, tangerine = target/attention, leaf = confirmed,
     // berry = conflict, ink = fixed mathematical structure. A concept step is
@@ -204,25 +204,25 @@ const TRAIL_GUIDE = {
   interactive: {
     label: TRAIL_STAGE.interactive,
     cue: "Move the model and watch what must change.",
-    icon: "route" as const,
+    icon: "icon-807" as const,
     tone: "text-sky-ink"
   },
   check: {
     label: TRAIL_STAGE.check,
     cue: "Leave the model behind and prove the idea yourself.",
-    icon: "target" as const,
+    icon: "icon-803" as const,
     tone: "text-leaf-ink"
   },
   challenge: {
     label: TRAIL_STAGE.challenge,
     cue: "Use the idea where the route is less obvious.",
-    icon: "trophy" as const,
+    icon: "icon-804" as const,
     tone: "text-tangerine-ink"
   },
   recap: {
     label: TRAIL_STAGE.recap,
     cue: "Name the pattern you can carry to the next trail.",
-    icon: "notebook" as const,
+    icon: "icon-901" as const,
     // Recap consolidates what has been confirmed, so it speaks in leaf — the
     // same token the "confirmed relationship" contract already uses.
     tone: "text-leaf-ink"
@@ -297,7 +297,7 @@ export function TrailClearingLabel({ kind }: { kind: TStep["kind"] }) {
   const guide = TRAIL_GUIDE[kind];
   return (
     <div className="trail-clearing-label" aria-hidden="true">
-      <AppIcon name="route" size={13} />
+      <AppIcon name="icon-807" size={13} />
       <span>{TRAIL.clearing}</span>
       <span className="trail-clearing-label__dot" />
       <span>{guide.label}</span>

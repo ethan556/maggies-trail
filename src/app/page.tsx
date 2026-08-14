@@ -14,17 +14,17 @@ const LandingHero = dynamic(() => import("@/components/LandingHero"), {
 
 const PILLARS = [
   {
-    icon: "compass" as const,
+    icon: "icon-808" as const,
     title: "Predict, then find out",
     body: "You commit to an answer before you touch the manipulative — then the math shows whether you were right. The surprise is the lesson."
   },
   {
-    icon: "target" as const,
+    icon: "icon-803" as const,
     title: "Feedback that names the mix-up",
     body: "Wrong answers get a real diagnosis — which error you made and how to repair it — never just “nope, try again.”"
   },
   {
-    icon: "repeat" as const,
+    icon: "icon-806" as const,
     title: "Review that remembers",
     body: "Missed questions come back right when you'd start to forget — 1, 3, 7, 21 days — with fresh numbers each time."
   }
@@ -104,7 +104,7 @@ export default async function Home() {
               size={88}
               className="mb-5 h-[68px] w-[68px] drop-shadow-sm md:h-[88px] md:w-[88px]"
             />
-            <Badge tone="sky" icon="route" className="mb-4">
+            <Badge tone="sky" icon="icon-807" className="mb-4">
               {gradeSpan} math you can touch
             </Badge>
             <h1 className="text-display font-extrabold leading-[1.03] tracking-tight md:text-display-lg">
@@ -115,7 +115,7 @@ export default async function Home() {
               feedback that names your exact mix-up and a review trail that remembers what you missed.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <LinkButton href="/onboarding" size="lg" iconRight="chevronRight">
+              <LinkButton href="/onboarding" size="lg" iconRight="icon-701">
                 Start the trail
               </LinkButton>
               <LinkButton href="/courses" size="lg" variant="secondary">
@@ -163,7 +163,7 @@ export default async function Home() {
               {courseCount} courses, Kindergarten through calculus
             </h2>
             <Link href="/courses" className="hidden min-h-11 shrink-0 items-center gap-1 px-2 text-sm font-bold text-sky-ink hover:underline sm:flex">
-              See all <AppIcon name="chevronRight" size={16} />
+              See all <AppIcon name="icon-701" size={16} />
             </Link>
           </div>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -184,7 +184,7 @@ export default async function Home() {
                     <span className="mt-0.5 block truncate text-sm text-content-2">{course.tagline}</span>
                   </span>
                   <span className="shrink-0 text-xs font-bold text-muted">{lessonCount}</span>
-                  <AppIcon name="chevronRight" size={18} className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-sky-ink" />
+                  <AppIcon name="icon-701" size={18} className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-sky-ink" />
                 </Link>
               </li>
             ))}
@@ -202,7 +202,7 @@ export default async function Home() {
           <p className="mx-auto mt-2 max-w-md text-white">
             Every course's first chapter is open with no sign-up — keep your streak, and watch the review queue work.
           </p>
-          <LinkButton href="/onboarding" size="lg" variant="secondary" iconRight="chevronRight" className="mt-5 !bg-white !text-[rgb(var(--cta))]">
+          <LinkButton href="/onboarding" size="lg" variant="secondary" iconRight="icon-701" className="mt-5 !bg-white !text-[rgb(var(--cta))]">
             Start the trail
           </LinkButton>
         </section>

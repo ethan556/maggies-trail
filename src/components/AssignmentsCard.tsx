@@ -63,7 +63,7 @@ export default function AssignmentsCard() {
   return (
     <section className="mt-4">
       <p className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-sky-ink">
-        <AppIcon name="route" size={14} /> From your teacher
+        <AppIcon name="icon-807" size={14} /> From your teacher
       </p>
       <ul className="space-y-2">
         {assignments.map((a) => {
@@ -103,7 +103,7 @@ export default function AssignmentsCard() {
                 </Link>
               ) : (
                 <span className="flex shrink-0 items-center gap-1.5 font-extrabold text-leaf-ink">
-                  <AppIcon name="check" size={18} /> Complete
+                  <AppIcon name="icon-704" size={18} /> Complete
                 </span>
               )}
             </li>
