@@ -1,0 +1,219 @@
+{
+  "artifact": "TRUTH_MANIFEST_S242",
+  "generatedAt": "2026-08-14T22:59:33.710Z",
+  "sourceSeal": {
+    "commit": "2d5f39f10e9e09da365af55e25a0a1064e9e02b7",
+    "branch": "cowork/s237",
+    "committedAt": "2026-08-14T21:58:08+00:00",
+    "subject": "S241: handover \u2014 session record, plus the generators behind committed artifacts",
+    "workingTreeClean": true,
+    "trackedFiles": 4800,
+    "note": "Bundle maggiestrails241HANDOVER5908eec2d5f39f applied on top of origin/cowork/s237 (5908eec). origin is one commit BEHIND this seal."
+  },
+  "runtime": {
+    "node": "v22.22.2",
+    "expectedByPlan": "Node 24",
+    "actualIsSupported": "Node 22.22.2 \u2014 plan claim of Node 24 is WRONG for this container"
+  },
+  "corpus": {
+    "courses": 129,
+    "lessonFiles": 1701,
+    "topLevelSteps": 15645,
+    "stepsByKind": {
+      "check": 5060,
+      "concept": 3684,
+      "interactive": 3498,
+      "challenge": 1702,
+      "recap": 1701
+    },
+    "remedialBlocks": 1697,
+    "remedialSteps": 3394,
+    "totalStepsIncludingRemedials": 19039,
+    "note": "15,645 = top-level steps (the figure every prior doc quotes). 19,039 = including the 1,697 remedial concept+check pairs. Both are correct; they measure different things. Always state which."
+  },
+  "hashes": {
+    "authoredCorpusLive": "a01d31a9f5d3ff48cc7a1d9b55a08a129a19e16774de309a6d412d3957ce6c8a",
+    "authoredCorpusRecordedInManifest": "bdfbe3fe78922454f48cdf2e11e7210862b7d09abbaf7e81e606e4288023be61",
+    "agree": false,
+    "corpusFingerprintLive": "a2c49c7296b1783eea4b56a338fd5669053c49f7991b4826577c9118c377b257",
+    "diagnosis": "NOT a corrupt tree. content/curriculum-manifest.json was last regenerated at c058a2b (Aug 13); lessons changed at ad83214 (Aug 14, S241 graph fixes). One stale artifact, one command to fix: npm run gen:manifest.",
+    "consequence": "scripts/gen-product-state.mjs:31 refuses to run while they disagree, so PRODUCT_STATE.json cannot currently be regenerated."
+  },
+  "generators": {
+    "live": 442,
+    "priorClaim": 434,
+    "verdict": "CORRECTED +8",
+    "method": "executed VARIANT_GENERATORS.length via tsx against the sealed tree",
+    "referencedByDeclarations": 429,
+    "neverDeclared": 13,
+    "declarationOnly": 17,
+    "totalDeclaredForms": 2657,
+    "regexRebuildGenerators": 50,
+    "regexRebuildFormPairs": 201,
+    "formsDefinedBySupply": 2657,
+    "distinctGenFormPairsExercised": 2896
+  },
+  "variantDeclarations": {
+    "live": 5897,
+    "priorClaim": 4268,
+    "verdict": "CORRECTED +1629",
+    "withExplicitForm": 5519
+  },
+  "variantDelivery": {
+    "surfaceScope": "Practice and Review only \u2014 Mastery Studio honours declarations (97.5% of its practice-bank states are generated, covering 72.9% of declaring steps)",
+    "poolEligibleItemsOnPractice": 6762,
+    "refreshableToday": 419,
+    "refreshableTodayPercent": 6.2,
+    "refreshableAfterBothFixes": 6027,
+    "refreshableAfterFixPercent": 89.1,
+    "chaptersWithZeroRefreshableToday": 461,
+    "chaptersTotal": 530,
+    "declaringStepsPoolEligible": 5835,
+    "declaringStepsServedToday": 227,
+    "declaringStepsBlockedByGateEvenIfForwarded": 5431,
+    "distinctDeadConceptTags": 1504,
+    "declaredFormIgnoredOnPracticePath": true,
+    "servedViaAliasToDifferentGenerator": 6,
+    "verdict": "P0 NEW FINDING. Two compounding bugs: page.tsx/review-steps do not forward step.variant; PracticeClient:72 and ReviewClient:117 gate on hasVariants(conceptTag) before the resolver. Both must be fixed together.",
+    "watchNumber": "419 -> 6027 of 6762"
+  },
+  "predictionGates": {
+    "live": 1294,
+    "originalAdjudicated": 1362,
+    "verdict": "CONFIRMED \u2014 Phase 4 already applied in source"
+  },
+  "pedagogyGate": {
+    "command": "node scripts/cml-lint.mjs . --strict",
+    "errors": 5,
+    "warnings": 332,
+    "breakdown": {
+      "prediction-not-causal": 293,
+      "flagship-response-heavy": 39,
+      "flagship-missing-prediction": 3,
+      "flagship-without-manipulation": 1,
+      "flagship-missing-direct-surface": 1
+    },
+    "priorClaimBreakdown": {
+      "prediction-not-causal": 228,
+      "flagship-response-heavy": 21
+    },
+    "verdict": "headline 5/332 CONFIRMED; breakdown CORRECTED \u2014 228/21 were an artifact of the script printing only its first 250 issues"
+  },
+  "buildPurity": {
+    "priorAttribution": "next build",
+    "actualTrigger": "npx vitest run src/components/figureTextAdversarialAudit.test.tsx",
+    "writer": "src/components/figureTextAdversarialAudit.test.tsx:218",
+    "effect": "PREMIUM_PENDING_WORKLOAD_QUEUE.csv 11,487 -> 1,078 rows (10,409 deleted) while the test REPORTS PASS",
+    "reproducedThisSession": true,
+    "restored": true,
+    "otherUnguardedWriters": [
+      "src/components/collisionSweep.s238.test.tsx:63",
+      "src/components/figuresCollision.s238.test.tsx:82",
+      "e2e/wave04-math-rendering.spec.ts:29,49"
+    ]
+  },
+  "gatesRunThisSession": {
+    "typecheck": {
+      "command": "npx tsc --noEmit",
+      "result": "PASS \u2014 0 errors"
+    },
+    "mathFormat": {
+      "command": "node scripts/verify-math-format.mjs",
+      "result": "PASS",
+      "caveat": "green while 7,815 real presentation defects exist \u2014 it is a wiring check, not a rendering check"
+    },
+    "nativeIntegrity": {
+      "command": "node scripts/native-integrity.mjs",
+      "result": "FAIL (exit 1)",
+      "cause": "scripts/brand/gen_avatar_prompt_pack.py hardcodes /home/claude/ paths \u2014 introduced by 2d5f39f, the S241 handover commit itself",
+      "detail": "4 findings: node_modules, .next, tsconfig.tsbuildinfo (all expected in a working checkout per CLAUDE.md) + scripts/brand/gen_avatar_prompt_pack.py hardcoded /home/claude paths (genuine, introduced by 2d5f39f). Fixing the script removes the genuine finding but the gate still exits 1 on the expected artifacts."
+    },
+    "cmlStrict": {
+      "result": "FAIL \u2014 5 errors, 332 warnings"
+    },
+    "npmAudit": {
+      "result": "1 high \u2014 nanoid <3.3.18 (transitive via postcss)"
+    },
+    "build": {
+      "command": "npm run build",
+      "result": "PASS exit 0, compiled in 85s",
+      "purity": "all 4,800 tracked files byte-identical after \u2014 the build is pure"
+    }
+  },
+  "generatorSeal": {
+    "recordedAt": "2026-08-07T01:55:54.931Z",
+    "sealedInputs": 29,
+    "changedSinceSeal": 7,
+    "changed": [
+      "src/lib/evaluate.ts",
+      "src/lib/g2Independent.cjs",
+      "src/lib/g2Variants.ts",
+      "src/lib/g4Variants.ts",
+      "src/lib/schema.ts",
+      "src/lib/variants.test.ts",
+      "src/lib/variants.ts"
+    ],
+    "verdict": "CONFIRMED stale \u2014 plan said 7, actual 7"
+  },
+  "pendingQueue": {
+    "totalRows": 11487,
+    "byWorkstream": {
+      "MATH_TYPESETTING": 9579,
+      "ILLUSTRATION_REPLACEMENT": 1078,
+      "MCQ_DISTRACTOR_REVIEW": 572,
+      "PREDICTION_GATE_REVIEW": 200,
+      "CLOSURE_LEDGER": 27,
+      "ENGINE_REVERSIBLE_PLAY": 17,
+      "PREMIUM_REBUILD_WAVE": 8,
+      "INTERACTION_NECESSITY_REVIEW": 3,
+      "ENGINE_DISPOSITION_REVIEW": 3
+    },
+    "note": "11,485 of 11,487 rows carry OPEN* status (2 CLOSURE_LEDGER rows have compound free-text status). 1,078 is a workstream slice, NOT a superseded total. The PREDICTION_GATE_REVIEW=200 rows ARE stale \u2014 source shows those gates already resolved."
+  },
+  "engines": {
+    "registry": 129,
+    "agreedBy": [
+      "scripts/engine-capabilities.json",
+      "src/lib/schema.ts z.literal count",
+      "src/components/widgets.tsx switch"
+    ],
+    "reversiblePlayOpen": 17,
+    "caveat": "the 17 was measured against a 127-engine denominator; feasibleRegionExplore and parametricTrace (S240) have never been screened"
+  },
+  "tests": {
+    "testFiles": 384,
+    "e2eSpecs": 11,
+    "recordedInProductState": {
+      "tests": 12925,
+      "testFiles": 322
+    },
+    "note": "PRODUCT_STATE test numbers are carried forward from Session 218 and are not current"
+  },
+  "mathPresentation": {
+    "stringsScanned": 118138,
+    "indexRows": 7815,
+    "wordTearingOccurrences": 6664,
+    "wordTearingDistinctStrings": 5582,
+    "isFloorNotTotal": true,
+    "widerCoverageEstimate": 10656,
+    "falsePositiveRateOnSample": "0 of 25 hand-judged",
+    "cause": "authoredMath.ts:256 arithmetic atom \\d*[A-Za-z] has no left word boundary; the final letter of an English word is absorbed into the adjacent math island",
+    "fix": "(?<![A-Za-z]) on the leading atom \u2014 semantic-math change, route via ARCH-01/ARCH-02",
+    "priorClaim4028": "UNPROVEN on this seal \u2014 not re-derived. The 263 'genuine floor' reading is rejected by the source document itself as 'wrong by more than 15x'.",
+    "gateBlindness": "verify:math-format passes throughout; grep -c authoredMath scripts/verify-math-format.mjs = 0"
+  },
+  "independentQA": {
+    "performed": true,
+    "method": "separate assessor tasked to refute; re-derived 6 load-bearing claims by different methods; ran npm run build; re-ran the vitest mutation; hand-judged 25 word-tearing rows",
+    "corrections": [
+      "scope narrowed to Practice/Review (Mastery Studio works)",
+      "headline metric replaced 227->5835 with 419->6027 of 6762",
+      "4028 refutation withdrawn -> UNPROVEN",
+      "6664/7815 relabelled as floors",
+      "2657 vs 2896 forms split",
+      "validate:native green claim corrected",
+      "structural-bypass counts corrected to 337/344, 155, 209"
+    ],
+    "treeCleanAfter": true
+  }
+}
