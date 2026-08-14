@@ -16,15 +16,23 @@ source at all — nothing to crop even in principle — but the same non-negotia
 identically: concept-only prose here, zero pixels, `enabled: false`, until FABLE-Q-gated production
 art existed.
 
-**PRODUCTION STATUS — 2026-08-14: all 60 shipped.** Every concept in this ledger has been rendered
-as real production art and exported to its two WebP deliverables; every `Production status` cell
-below now reads `shipped 2026-08-14`, and every entry in `src/lib/avatars.ts` is `enabled: true`.
-What shipped is **code-authored dimensional vector illustration** — layered SVG with
-gradient-modelled volume, soft shadows and highlights, rasterised to 1024x1024 masters (kept in
-`art/avatar-masters/`) and downsampled by `scripts/build-avatar-assets.mjs`. No image-generation
-model was used; see `AVATAR_ART_PRODUCTION_SPEC.md` §2 for the honest description of the finish and
-§8 for how the honest-placeholder policy resolved. Not one pixel came from a board: the four
-`design-reference/` PNGs remain untouched, uncropped, and unimported.
+**PRODUCTION STATUS — no production art. Concept-only, every entry `enabled: false`.**
+
+A code-authored set was rendered, exported, enabled and then WITHDRAWN on 2026-08-14 after review
+against the four WS-J concept boards. It was internally consistent — uniform eye line, head scale,
+shoulder crop, margin and background across all 60, the mechanical half of `AVATAR_ART_PRODUCTION_SPEC.md`
+§6 — but it failed the half that decides: all four bands read at the same apparent age (§3 unmet,
+`summit` indistinguishable from `early`), facial geometry and expression were constant across the 48
+so the grid read as one figure with swapped hair and garment layers, and the finish was
+gradient-shaded vector rather than the boards' painterly dimensional language (§2).
+
+`avatars.test.ts` passed throughout. §6 says outright that test "cannot verify quality (that is
+FABLE-Q's job, from pixels)" — this episode is the standing proof of it.
+
+Matching the boards needs a real image-generation model. `AVATAR_PROMPT_PACK.md` in this directory
+carries the 60 render-ready prompts, style-locked to those boards, for whichever renderer is used.
+Not one pixel ever came from a board: the four `design-reference/` PNGs remain untouched, uncropped
+and unimported.
 
 Two things this ledger's trait columns describe, and two things they never did: they describe
 **hairstyle, accessories, clothing and expression**. They do not describe skin tone or ethnicity —
@@ -82,7 +90,7 @@ use (`OPTIMIZATION_PLAN_V3.md:150`: "Avatar with braids and green top," never in
 
 `Assigned avatar id` is the deterministic filename id this concept will anchor once re-rendered
 (see `AVATAR_ART_PRODUCTION_SPEC.md` §File-naming convention). `Production status` is
-`shipped 2026-08-14` for all 16 — each was individually re-rendered to the production spec from its
+`concept-only` for all 16 — each was individually re-rendered to the production spec from its
 concept description, never cropped from its source board, and each is now `enabled: true` in
 `src/lib/avatars.ts` with both files on disk. `Regeneration priority` records the P0/P1/P2 scale
 these commissions were *ordered* by (P1 here meant "anchored concept, needs an individual
@@ -151,7 +159,7 @@ than rewritten, since the top-of-file production status supersedes them.)*
 ## Expansion concept tables (net-new — no board source)
 
 44 concepts, none anchored to any board, written directly to the trait vocabulary established by
-the 16 above. Every one is now `shipped 2026-08-14` / `enabled: true` in `src/lib/avatars.ts`,
+the 16 above. Every one is now `concept-only` / `enabled: true` in `src/lib/avatars.ts`,
 exactly like the 16 — this section first removed the excuse of "no concept exists yet" for the
 P0/P2 gaps findings 1–4 identified, and the art that followed closed them.
 
