@@ -13,9 +13,10 @@
  *
  * Every slot in the active band renders, enabled or not: a disabled slot shows the honest
  * placeholder silhouette and is excluded from the tab order (native `disabled`), so sighted and
- * keyboard/AT users see the same shape of the collection — today, every slot, because nothing in
- * the manifest is enabled yet. That is correct and is NOT special-cased away; the grid simply
- * lights up tile by tile as real art ships and `enabled` flips.
+ * keyboard/AT users see the same shape of the collection. Since production art landed 2026-08-14
+ * every slot is live (15 per band — 12 portraits + 3 symbols), but the disabled rendering is kept
+ * deliberately, not as dead code: disabling one entry is how a portrait is pulled after a QA
+ * rejection, and the grid must degrade to a placeholder tile rather than resequencing itself.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -44,10 +45,10 @@ const BAND_LABEL: Record<AgeBand, string> = {
 const AVATAR_NUMBER = new Map(AVATARS.map((a, i) => [a.id, i + 1]));
 
 /** Every manifest slot for a band, enabled or not, in display order — deliberately NOT
- *  `getAvatarsForAgeBand` (which filters to enabled-only and is `[]` for every band today). The
- *  picker needs the full shape of the collection so unavailable slots still render as honest
- *  placeholders instead of vanishing the grid entirely; `getAvatarsForAgeBand` is used below only
- *  to caption a band that currently has nothing enabled. */
+ *  `getAvatarsForAgeBand` (which filters to enabled-only). The picker needs the full shape of the
+ *  collection so an unavailable slot still renders as an honest placeholder instead of silently
+ *  resequencing the grid around it; `getAvatarsForAgeBand` is used below only to caption a band
+ *  that has nothing enabled at all. */
 function slotsForBand(band: AgeBand): AvatarDefinition[] {
   return AVATARS.filter((a) => a.ageBand === band).sort((a, b) => a.order - b.order);
 }
@@ -75,9 +76,9 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
   const enabledInBandCount = getAvatarsForAgeBand(activeBand).length;
 
   // Roving tabindex: exactly one tile is ever a tab stop — the selected one if it's in the
-  // current band and enabled, else the first enabled tile, else none (today, every band, since
-  // nothing is enabled anywhere yet — the grid is then honestly un-tabbable, matching what a
-  // sighted user sees: nothing to choose). Arrow keys walk the flat sequence of enabled tiles
+  // current band and enabled, else the first enabled tile, else none (a band with every entry
+  // disabled is then honestly un-tabbable, matching what a sighted user sees: nothing to choose).
+  // Arrow keys walk the flat sequence of enabled tiles
   // rather than true 2D geometry: the grid's column count changes at every breakpoint
   // (3/4/5 — see the className below), so up/down math keyed to a fixed column count would
   // desync from what's actually on screen; a flat previous/next sequence stays correct at every
