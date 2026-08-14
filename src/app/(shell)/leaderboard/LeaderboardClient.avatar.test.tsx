@@ -3,9 +3,9 @@
  * WS-J propagation — the leaderboard shows an avatar ONLY on the learner's own row; rivals are
  * synthetic pacers, never real people, and never get a library portrait (the WS-J research report,
  * §5: "Rivals never get library portraits — would fake real peers and burn placeholder slots").
- * This file owns the FALLBACK half of that contract (no choice yet, or a stored id that no longer
- * resolves) — see LeaderboardClient.avatarEnabled.test.tsx for a real stored id resolving on the
- * user's row against the shipped art.
+ * Against the REAL, unmodified avatars manifest (everything `enabled: false` today) — see
+ * LeaderboardClient.avatarEnabled.test.tsx for a mocked-enabled id actually resolving on the user's
+ * row.
  */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
@@ -21,7 +21,7 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
-describe("LeaderboardClient own-row avatar — the placeholder fallback path", () => {
+describe("LeaderboardClient own-row avatar — real manifest, everything disabled today", () => {
   it("shows the honest placeholder on the user's own row, and no avatar image on any rival row", async () => {
     const { container } = render(<LeaderboardClient />);
     await screen.findAllByRole("listitem");
@@ -38,9 +38,9 @@ describe("LeaderboardClient own-row avatar — the placeholder fallback path", (
     }
   });
 
-  it("falls back to the placeholder on the user's row for a stored id that no longer resolves", async () => {
+  it("still falls back to the placeholder on the user's row for a chosen-but-disabled real manifest id", async () => {
     const p = progressStore.load();
-    p.avatarId = "avatar-901";
+    p.avatarId = "avatar-301";
     progressStore.save(p);
     const { container } = render(<LeaderboardClient />);
     await screen.findAllByRole("listitem");

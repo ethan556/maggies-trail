@@ -2,9 +2,8 @@
 /**
  * WS-J propagation — each learner row in Family shows that child's OWN avatar, read from their own
  * stored profile (not whichever child happens to be active), falling back to the honest
- * placeholder. This file owns the FALLBACK half of that contract (no choice yet, or a stored id
- * that no longer resolves) — see FamilyClient.avatarEnabled.test.tsx for a real stored id
- * resolving against the shipped art.
+ * placeholder. Against the REAL, unmodified avatars manifest (everything `enabled: false` today) —
+ * see FamilyClient.avatarEnabled.test.tsx for a mocked-enabled id actually resolving.
  */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
@@ -20,7 +19,7 @@ beforeEach(() => {
 });
 afterEach(cleanup);
 
-describe("FamilyClient child-row avatar — the placeholder fallback path", () => {
+describe("FamilyClient child-row avatar — real manifest, everything disabled today", () => {
   it("shows the honest placeholder beside the default child's name", async () => {
     render(<FamilyClient skills={{}} courses={[]} tagGrades={{}} />);
     const name = await screen.findByText("Learner 1");
@@ -28,9 +27,9 @@ describe("FamilyClient child-row avatar — the placeholder fallback path", () =
     expect(row.querySelector("img")?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
-  it("falls back to the placeholder for a stored id that no longer names a usable avatar", async () => {
+  it("still falls back to the placeholder for a chosen-but-disabled real manifest id", async () => {
     const p = progressStore.load();
-    p.avatarId = "avatar-901";
+    p.avatarId = "avatar-001";
     progressStore.save(p);
     render(<FamilyClient skills={{}} courses={[]} tagGrades={{}} />);
     const name = await screen.findByText("Learner 1");

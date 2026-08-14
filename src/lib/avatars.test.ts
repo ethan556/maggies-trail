@@ -2,19 +2,16 @@
  * Avatar manifest contract.
  *
  * Two kinds of check here. Most are ordinary shape/behavior tests (ids unique, paths follow the
- * naming convention, gradeToAgeBand's boundaries, the service functions' behavior over the
- * manifest). The last group is the honesty gate: it is what stands between this manifest and an
- * edit that quietly ships a board crop, an unrendered placeholder, or a 0-byte file as if it were
- * finished art. See AVATAR_ART_PRODUCTION_SPEC.md §8.
- *
- * Production art landed 2026-08-14, so that gate is no longer vacuous: all 60 entries are
- * `enabled: true` and it now decodes 120 real WebP files off disk on every run.
+ * naming convention, gradeToAgeBand's boundaries, the service functions' behavior over today's
+ * all-disabled manifest). The last group is the honesty gate: it is what stands between this
+ * manifest and a future edit that quietly ships a board crop or an unrendered placeholder as if it
+ * were finished art. See AVATAR_ART_PRODUCTION_SPEC.md §8.
  *
  * Runs in vitest's default `node` environment (see vitest.config.ts) — nothing here touches
  * localStorage/window, so no jsdom override is needed.
  */
 import { describe, expect, it } from "vitest";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import {
   AVATAR_PLACEHOLDER_SRC,
@@ -41,36 +38,6 @@ const BLOCK_BAND: Record<string, AgeBand> = {
   // `kind === "symbol"` instead of one fixed band.
 };
 const ALL_AGE_BANDS: AgeBand[] = ["early", "explorer", "adventurer", "summit"];
-
-/**
- * Dependency-free WebP header reader — returns the encoded canvas size, or null if the bytes are
- * not a WebP at all. Deliberately parses the file rather than trusting its name: a renamed PNG, a
- * truncated write, or a 0-byte placeholder all fail here, which is the entire point of the gate
- * below. Handles all three chunk layouts (lossy VP8, lossless VP8L, extended VP8X) so a future
- * re-encode at different settings does not silently turn this check off.
- */
-function webpSize(bytes: Buffer): { width: number; height: number } | null {
-  if (bytes.length < 30) return null;
-  if (bytes.toString("ascii", 0, 4) !== "RIFF" || bytes.toString("ascii", 8, 12) !== "WEBP") return null;
-  const fourcc = bytes.toString("ascii", 12, 16);
-  if (fourcc === "VP8 ") {
-    // Key-frame header: 3-byte frame tag, then the 3-byte start code, then 14-bit w/h.
-    if (bytes.toString("hex", 23, 26) !== "9d012a") return null;
-    return { width: bytes.readUInt16LE(26) & 0x3fff, height: bytes.readUInt16LE(28) & 0x3fff };
-  }
-  if (fourcc === "VP8L") {
-    if (bytes[20] !== 0x2f) return null;
-    const bits = bytes.readUInt32LE(21);
-    return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
-  }
-  if (fourcc === "VP8X") {
-    return {
-      width: (bytes[24] | (bytes[25] << 8) | (bytes[26] << 16)) + 1,
-      height: (bytes[27] | (bytes[28] << 8) | (bytes[29] << 16)) + 1
-    };
-  }
-  return null;
-}
 
 describe("AVATARS manifest shape", () => {
   it("every id is unique", () => {
@@ -167,11 +134,11 @@ describe("AVATARS manifest shape", () => {
       expect(avatar!.ageBand, id).toBe(band);
       expect(avatar!.order, id).toBe(order);
       expect(avatar!.kind, id).toBe("human");
-      expect(avatar!.enabled, id).toBe(true);
+      expect(avatar!.enabled, id).toBe(false);
     }
   });
 
-  it("every one of the 44 net-new expansion ids (early 009-012, explorer 105-112, adventurer 205-212, summit 301-312, symbol 401-412) resolves and is enabled", () => {
+  it("every one of the 44 net-new expansion ids (early 009-012, explorer 105-112, adventurer 205-212, summit 301-312, symbol 401-412) resolves and is disabled", () => {
     const expansionIds = [
       "avatar-009", "avatar-010", "avatar-011", "avatar-012",
       "avatar-105", "avatar-106", "avatar-107", "avatar-108", "avatar-109", "avatar-110", "avatar-111", "avatar-112",
@@ -185,7 +152,7 @@ describe("AVATARS manifest shape", () => {
     for (const id of expansionIds) {
       const avatar = getAvatar(id);
       expect(avatar, id).toBeDefined();
-      expect(avatar!.enabled, id).toBe(true);
+      expect(avatar!.enabled, id).toBe(false);
     }
   });
 });
@@ -226,86 +193,38 @@ describe("getAvatar / isValidAvatarId", () => {
     expect(getAvatar("avatar-401")?.ageBand).toBe("adventurer");
   });
 
-  it("isValidAvatarId is true for every id, now that every entry is enabled and backed by files", () => {
+  it("isValidAvatarId is false for every id today, because nothing is enabled yet", () => {
     for (const avatar of AVATARS) {
-      expect(isValidAvatarId(avatar.id), avatar.id).toBe(true);
+      expect(isValidAvatarId(avatar.id), avatar.id).toBe(false);
     }
   });
 
   it("isValidAvatarId is false for an unknown id", () => {
     expect(isValidAvatarId("avatar-does-not-exist")).toBe(false);
   });
-
-  // The disabled branch is the whole safety mechanism of AVATAR_ART_PRODUCTION_SPEC.md §8, so it
-  // keeps a real test even though no entry ships disabled today. `AVATARS` holds live objects that
-  // the service functions read on every call, so flipping one flag exercises the true code path
-  // (rather than a mock of it) and proves a pulled portrait becomes unusable everywhere at once.
-  // Restored in `finally` so no other test in this file can observe the mutation.
-  it("a disabled entry is unusable — isValidAvatarId false, getAvatarSrc undefined, dropped from its band", () => {
-    const victim = AVATARS.find((a) => a.id === "avatar-005")!;
-    try {
-      victim.enabled = false;
-      expect(isValidAvatarId("avatar-005")).toBe(false);
-      expect(getAvatarSrc("avatar-005", 256)).toBeUndefined();
-      expect(getAvatarSrc("avatar-005", 512)).toBeUndefined();
-      expect(getAvatarsForAgeBand("early").map((a) => a.id)).not.toContain("avatar-005");
-      // getAvatar still finds it — inspection is deliberately not gated on `enabled`.
-      expect(getAvatar("avatar-005")).toBeDefined();
-    } finally {
-      victim.enabled = true;
-    }
-    expect(isValidAvatarId("avatar-005")).toBe(true);
-  });
 });
 
 describe("getAvatarSrc", () => {
-  it("returns each enabled id's own declared path, at both sizes", () => {
-    expect(getAvatarSrc("avatar-001", 256)).toBe("/avatars/avatar-001-256.webp");
-    expect(getAvatarSrc("avatar-001", 512)).toBe("/avatars/avatar-001-512.webp");
-    // The 44 net-new expansion entries resolve identically — summit human and symbol included.
-    expect(getAvatarSrc("avatar-312", 512)).toBe("/avatars/avatar-312-512.webp");
-    expect(getAvatarSrc("avatar-412", 256)).toBe("/avatars/avatar-412-256.webp");
-  });
-
-  it("never returns a path for an unknown id", () => {
+  it("never returns a path for a disabled or unknown id", () => {
+    expect(getAvatarSrc("avatar-001", 256)).toBeUndefined();
+    expect(getAvatarSrc("avatar-001", 512)).toBeUndefined();
     expect(getAvatarSrc("avatar-999", 256)).toBeUndefined();
-    expect(getAvatarSrc("avatar-does-not-exist", 512)).toBeUndefined();
-  });
-
-  it("every path it hands back matches that entry's own manifest fields — no drift", () => {
-    for (const avatar of AVATARS) {
-      expect(getAvatarSrc(avatar.id, 256), avatar.id).toBe(avatar.src256);
-      expect(getAvatarSrc(avatar.id, 512), avatar.id).toBe(avatar.src512);
-    }
+    // Same rule for the 44 net-new expansion entries — disabled is disabled, regardless of age.
+    expect(getAvatarSrc("avatar-312", 512)).toBeUndefined();
+    expect(getAvatarSrc("avatar-412", 256)).toBeUndefined();
   });
 });
 
 describe("getAvatarsForAgeBand / getDefaultAvatarForGrade", () => {
-  it("every band returns its full 15 (12 human + 3 symbol), sorted by order", () => {
+  it("every band returns empty today — honest reflection of zero enabled entries", () => {
     for (const band of ["early", "explorer", "adventurer", "summit"] as const) {
-      const list = getAvatarsForAgeBand(band);
-      expect(list, band).toHaveLength(15);
-      expect(list.every((a) => a.ageBand === band && a.enabled), band).toBe(true);
-      expect(list.map((a) => a.order), band).toEqual([...list.map((a) => a.order)].sort((x, y) => x - y));
+      expect(getAvatarsForAgeBand(band)).toEqual([]);
     }
   });
 
-  it("getDefaultAvatarForGrade resolves for every grade, to the order-1 entry of that grade's band", () => {
-    const expected: Array<[number, string]> = [
-      [0, "avatar-001"],
-      [2, "avatar-001"],
-      [3, "avatar-101"],
-      [5, "avatar-101"],
-      [6, "avatar-201"],
-      [8, "avatar-201"],
-      [9, "avatar-301"],
-      [13, "avatar-301"]
-    ];
-    for (const [grade, id] of expected) {
-      const avatar = getDefaultAvatarForGrade(grade);
-      expect(avatar, `grade ${grade}`).toBeDefined();
-      expect(avatar!.id, `grade ${grade}`).toBe(id);
-      expect(avatar!.order, `grade ${grade}`).toBe(1);
+  it("getDefaultAvatarForGrade is undefined everywhere today, so callers fall through the legacy chain", () => {
+    for (const grade of [0, 2, 3, 5, 6, 8, 9, 13]) {
+      expect(getDefaultAvatarForGrade(grade)).toBeUndefined();
     }
   });
 });
@@ -316,68 +235,24 @@ describe("AVATAR_PLACEHOLDER_SRC", () => {
     expect(AVATARS.some((a) => AVATAR_PLACEHOLDER_SRC.includes(a.id))).toBe(false);
   });
 
-  it("the placeholder file itself actually exists on disk (still the pre-choice fallback)", () => {
+  it("the placeholder file itself actually exists on disk (it's the one asset this pass ships)", () => {
     const path = join(process.cwd(), "public", AVATAR_PLACEHOLDER_SRC);
     expect(existsSync(path)).toBe(true);
   });
 });
 
 describe("honesty gate — enabled art must be real (see AVATAR_ART_PRODUCTION_SPEC.md §8)", () => {
-  const enabled = AVATARS.filter((a) => a.enabled);
-
-  it("the gate has real work to do — every one of the 60 entries is enabled and therefore checked", () => {
-    // This is the guard that keeps the file check below from ever quietly going vacuous again the
-    // way it was while the manifest ran ahead of the art. If entries are legitimately disabled in
-    // future, lower this number deliberately — never delete the assertion.
-    expect(enabled).toHaveLength(60);
-    expect(AVATARS.every((a) => a.enabled)).toBe(true);
+  it("nothing in the manifest is enabled yet (documents today's honest-placeholder state)", () => {
+    expect(AVATARS.every((a) => !a.enabled)).toBe(true);
   });
 
-  it("every enabled avatar has BOTH its 256 and 512 webp files on disk, non-empty", () => {
-    expect(enabled.length).toBeGreaterThan(0);
+  it("every enabled avatar has BOTH its 256 and 512 webp files on disk — vacuous today, permanent going forward", () => {
+    const enabled = AVATARS.filter((a) => a.enabled);
     for (const avatar of enabled) {
-      for (const src of [avatar.src256, avatar.src512]) {
-        const path = join(process.cwd(), "public", src);
-        expect(existsSync(path), `enabled avatar ${avatar.id} is missing ${src}`).toBe(true);
-        expect(statSync(path).size, `${src} is empty`).toBeGreaterThan(0);
-      }
+      const p256 = join(process.cwd(), "public", avatar.src256);
+      const p512 = join(process.cwd(), "public", avatar.src512);
+      expect(existsSync(p256), `enabled avatar ${avatar.id} is missing ${avatar.src256}`).toBe(true);
+      expect(existsSync(p512), `enabled avatar ${avatar.id} is missing ${avatar.src512}`).toBe(true);
     }
-  });
-
-  it("every one of those files really decodes as a WebP at its declared size — not a 0-byte or renamed stand-in", () => {
-    // Filename presence alone cannot tell finished art from a truncated write or a renamed board
-    // crop. Reading the actual container header is what makes this gate mean something: 120 files,
-    // each proven to be a WebP whose encoded canvas is exactly the size its filename claims.
-    let checked = 0;
-    for (const avatar of enabled) {
-      for (const [size, src] of [[256, avatar.src256], [512, avatar.src512]] as const) {
-        const path = join(process.cwd(), "public", src);
-        const bytes = readFileSync(path);
-        expect(bytes.length, `${src} is suspiciously small (${bytes.length} bytes)`).toBeGreaterThan(1000);
-        const decoded = webpSize(bytes);
-        expect(decoded, `${src} is not a decodable WebP`).not.toBeNull();
-        expect(decoded, `${src} decodes at the wrong size`).toEqual({ width: size, height: size });
-        checked++;
-      }
-    }
-    expect(checked, "the two-files-per-avatar contract").toBe(enabled.length * 2);
-    expect(checked).toBe(120);
-  });
-
-  it("the webp reader is not blind — it rejects the placeholder SVG and empty bytes", () => {
-    // A checker that returns a size for anything would make the test above pass on garbage.
-    expect(webpSize(readFileSync(join(process.cwd(), "public", AVATAR_PLACEHOLDER_SRC)))).toBeNull();
-    expect(webpSize(Buffer.alloc(0))).toBeNull();
-    expect(webpSize(Buffer.alloc(64))).toBeNull();
-  });
-
-  it("ships no avatar-shaped file that the manifest does not declare", () => {
-    // The mirror of the check above: an orphan at /avatars/avatar-777-256.webp would be art with
-    // no entry behind it — exactly the "dropped in under the expected filename" case §6 warns about.
-    const dir = join(process.cwd(), "public", "avatars");
-    const declared = new Set(AVATARS.flatMap((a) => [a.src256, a.src512].map((s) => s.split("/").pop()!)));
-    const onDisk = readdirSync(dir).filter((n) => /^avatar-.*\.webp$/.test(n));
-    expect(onDisk).toHaveLength(120);
-    expect(onDisk.filter((n) => !declared.has(n))).toEqual([]);
   });
 });

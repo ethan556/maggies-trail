@@ -1,49 +1,17 @@
 // @vitest-environment jsdom
 /**
  * The shared avatar-display component: avatarId -> getAvatarSrc, falling back to the honest
- * placeholder silhouette for anything absent, unknown, or disabled.
- *
- * Production art landed 2026-08-14, so the resolving path now runs against the real manifest and
- * the real files — this test reads the resolved src back off disk to prove the component points at
- * something that actually exists, not just at a well-formed string. The fallback path keeps its own
- * coverage: "no choice yet" is permanent, and a disabled entry (art pulled) is mocked below.
+ * placeholder silhouette for anything absent, unknown, or (today) simply not yet enabled.
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { existsSync, statSync } from "node:fs";
-import { join } from "node:path";
 import React from "react";
 import { AvatarDisplay } from "./AvatarDisplay";
-import { AVATAR_PLACEHOLDER_SRC, AVATARS } from "@/lib/avatars";
+import { AVATAR_PLACEHOLDER_SRC } from "@/lib/avatars";
 
 afterEach(cleanup);
 
-describe("AvatarDisplay — real (unmodified) manifest, art landed", () => {
-  it("resolves a real manifest id to its own shipped asset, at both sizes", () => {
-    render(<AvatarDisplay avatarId="avatar-001" size={256} alt="current avatar" />);
-    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe("/avatars/avatar-001-256.webp");
-    cleanup();
-    render(<AvatarDisplay avatarId="avatar-001" size={512} alt="current avatar" />);
-    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe("/avatars/avatar-001-512.webp");
-  });
-
-  it("every src it can render for every manifest id is a real file on disk", () => {
-    // The end-to-end proof this component exists for: an id a learner could have stored resolves to
-    // bytes that are actually served. avatars.test.ts checks the manifest against disk; this checks
-    // the string the DOM would fetch.
-    for (const avatar of AVATARS) {
-      for (const size of [256, 512] as const) {
-        cleanup();
-        render(<AvatarDisplay avatarId={avatar.id} size={size} alt="a" />);
-        const src = screen.getByAltText("a").getAttribute("src")!;
-        expect(src, avatar.id).not.toBe(AVATAR_PLACEHOLDER_SRC);
-        const path = join(process.cwd(), "public", src);
-        expect(existsSync(path), `${avatar.id} renders ${src}, which does not exist`).toBe(true);
-        expect(statSync(path).size, src).toBeGreaterThan(0);
-      }
-    }
-  });
-
+describe("AvatarDisplay — real (unmodified) manifest, everything disabled today", () => {
   it("falls back to the placeholder when no avatarId is given", () => {
     render(<AvatarDisplay alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
@@ -51,6 +19,12 @@ describe("AvatarDisplay — real (unmodified) manifest, art landed", () => {
 
   it("falls back to the placeholder for an unknown id", () => {
     render(<AvatarDisplay avatarId="avatar-does-not-exist" alt="current avatar" />);
+    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+  });
+
+  it("falls back to the placeholder for a real but disabled manifest id", () => {
+    // avatar-001 exists in the real manifest but, like every entry today, enabled: false.
+    render(<AvatarDisplay avatarId="avatar-001" alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
@@ -76,11 +50,11 @@ describe("AvatarDisplay — real (unmodified) manifest, art landed", () => {
   });
 });
 
-describe("AvatarDisplay — with a disabled avatar (art pulled after a QA rejection)", () => {
+describe("AvatarDisplay — with an enabled avatar (mocked ahead of real production art)", () => {
   vi.resetModules();
   vi.doMock("@/lib/avatars", async () => {
     const actual = await vi.importActual<typeof import("@/lib/avatars")>("@/lib/avatars");
-    const AVATARS = actual.AVATARS.map((a) => (a.id === "avatar-101" ? { ...a, enabled: false } : a));
+    const AVATARS = actual.AVATARS.map((a) => (a.id === "avatar-101" ? { ...a, enabled: true } : a));
     const isValidAvatarId = (id: string) => AVATARS.some((a) => a.id === id && a.enabled);
     const getAvatar = (id: string) => AVATARS.find((a) => a.id === id);
     return {
@@ -96,9 +70,9 @@ describe("AvatarDisplay — with a disabled avatar (art pulled after a QA reject
     };
   });
 
-  it("falls back to the placeholder for a real id whose entry has been disabled", async () => {
+  it("resolves the real src for a mocked-enabled id", async () => {
     const { AvatarDisplay: MockedAvatarDisplay } = await import("./AvatarDisplay");
     render(<MockedAvatarDisplay avatarId="avatar-101" size={256} alt="current avatar" />);
-    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe("/avatars/avatar-101-256.webp");
   });
 });

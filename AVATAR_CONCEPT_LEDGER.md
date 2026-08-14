@@ -63,22 +63,22 @@ use (`OPTIMIZATION_PLAN_V3.md:150`: "Avatar with braids and green top," never in
 
 | Concept ID | Source board:position | Assigned avatar id | Apparent maturity (as drawn) | Provisional band (FABLE-A to confirm) | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|---|---|---|---|
-| C01 | 1:1 | avatar-201 | Early teen (~12–14) | adventurer | Long thin box braids past the shoulders; small gold hoop earrings + a fine pendant necklace; dark-green ribbed top | shipped 2026-08-14 | P1 |
-| C02 | 1:2 | avatar-202 | Early teen (~12–14) | adventurer | Tousled wavy golden-brown hair; freckles; cream drawstring hoodie under a blue denim jacket | shipped 2026-08-14 | P1 |
-| C03 | 1:3 | avatar-203 | Early teen (~12–14) | adventurer | Short tousled black hair with a fringe; dark navy zip jacket over a black hoodie, light tee beneath | shipped 2026-08-14 | P1 |
-| C04 | 1:4 | avatar-204 | Early teen (~12–14) | adventurer | Very long wavy dark hair; teardrop turquoise earrings + a small pendant necklace; patterned rust-red top | shipped 2026-08-14 | P1 |
-| C05 | 2:1 | avatar-001 | Young child (~5–7) | early | Two high puff buns with braided sections and gold bead accents; broad open smile; yellow tee under light-blue denim overalls | shipped 2026-08-14 | P1 |
-| C06 | 2:2 | avatar-002 | Young child (~5–7) | early | Straight black hair with a fringe; round dark-rimmed glasses; royal-blue hoodie | shipped 2026-08-14 | P1 |
-| C07 | 2:3 | avatar-003 | Young child (~5–7) | early | Dark wavy high ponytail with a yellow scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket | shipped 2026-08-14 | P1 |
-| C08 | 2:4 | avatar-004 | Young child (~5–7) | early | Loose curly mid-brown hair; freckles; big smile; green-and-cream raglan tee | shipped 2026-08-14 | P1 |
-| C09 | 3:1 | avatar-005 | Young child (~6–8) | early | Teal/sea-green head covering (hijab-style, drapes over the shoulders); cream top with delicate floral embroidery; gentle smile | shipped 2026-08-14 | P1 |
-| C10 | 3:2 | avatar-006 | Young child (~6–8) | early | Short tightly-coiled dark hair; wide grin; golden-yellow drawstring hoodie | shipped 2026-08-14 | P1 |
-| C11 | 3:3 | avatar-007 | Young child (~6–8) | early | Shoulder-length coppery-red hair; freckles across the nose and cheeks; sage-green tee under blue denim overalls | shipped 2026-08-14 | P1 |
-| C12 | 3:4 | avatar-008 | Young child (~6–8) | early | Short straight black hair, side-swept fringe; royal-blue zip jacket over a striped tee | shipped 2026-08-14 | P1 |
-| C13 | 4:1 | avatar-101 | Upper elementary (~9–11) | explorer | Short twists/coils on top with faded sides; bright smile; royal-blue track jacket with double white shoulder stripes and a white zip | shipped 2026-08-14 | P1 |
-| C14 | 4:2 | avatar-102 | Upper elementary (~9–11) | explorer | Straight black chin-length bob, center part; small stud earrings; lilac cardigan over a cream collared shirt | shipped 2026-08-14 | P1 |
-| C15 | 4:3 | avatar-103 | Upper elementary (~9–11) | explorer | Short wavy black hair; soft smile; forest-green crewneck over a cream tee | shipped 2026-08-14 | P1 |
-| C16 | 4:4 | avatar-104 | Preteen (~10–12) | explorer | Long wavy brown hair; small gold hoop earrings; blue denim jacket over a cream top | shipped 2026-08-14 | P1 |
+| C01 | 1:1 | avatar-201 | Early teen (~12–14) | adventurer | Long thin box braids past the shoulders; small gold hoop earrings + a fine pendant necklace; dark-green ribbed top | concept-only | P1 |
+| C02 | 1:2 | avatar-202 | Early teen (~12–14) | adventurer | Tousled wavy golden-brown hair; freckles; cream drawstring hoodie under a blue denim jacket | concept-only | P1 |
+| C03 | 1:3 | avatar-203 | Early teen (~12–14) | adventurer | Short tousled black hair with a fringe; dark navy zip jacket over a black hoodie, light tee beneath | concept-only | P1 |
+| C04 | 1:4 | avatar-204 | Early teen (~12–14) | adventurer | Very long wavy dark hair; teardrop turquoise earrings + a small pendant necklace; patterned rust-red top | concept-only | P1 |
+| C05 | 2:1 | avatar-001 | Young child (~5–7) | early | Two high puff buns with braided sections and gold bead accents; broad open smile; yellow tee under light-blue denim overalls | concept-only | P1 |
+| C06 | 2:2 | avatar-002 | Young child (~5–7) | early | Straight black hair with a fringe; round dark-rimmed glasses; royal-blue hoodie | concept-only | P1 |
+| C07 | 2:3 | avatar-003 | Young child (~5–7) | early | Dark wavy high ponytail with a yellow scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket | concept-only | P1 |
+| C08 | 2:4 | avatar-004 | Young child (~5–7) | early | Loose curly mid-brown hair; freckles; big smile; green-and-cream raglan tee | concept-only | P1 |
+| C09 | 3:1 | avatar-005 | Young child (~6–8) | early | Teal/sea-green head covering (hijab-style, drapes over the shoulders); cream top with delicate floral embroidery; gentle smile | concept-only | P1 |
+| C10 | 3:2 | avatar-006 | Young child (~6–8) | early | Short tightly-coiled dark hair; wide grin; golden-yellow drawstring hoodie | concept-only | P1 |
+| C11 | 3:3 | avatar-007 | Young child (~6–8) | early | Shoulder-length coppery-red hair; freckles across the nose and cheeks; sage-green tee under blue denim overalls | concept-only | P1 |
+| C12 | 3:4 | avatar-008 | Young child (~6–8) | early | Short straight black hair, side-swept fringe; royal-blue zip jacket over a striped tee | concept-only | P1 |
+| C13 | 4:1 | avatar-101 | Upper elementary (~9–11) | explorer | Short twists/coils on top with faded sides; bright smile; royal-blue track jacket with double white shoulder stripes and a white zip | concept-only | P1 |
+| C14 | 4:2 | avatar-102 | Upper elementary (~9–11) | explorer | Straight black chin-length bob, center part; small stud earrings; lilac cardigan over a cream collared shirt | concept-only | P1 |
+| C15 | 4:3 | avatar-103 | Upper elementary (~9–11) | explorer | Short wavy black hair; soft smile; forest-green crewneck over a cream tee | concept-only | P1 |
+| C16 | 4:4 | avatar-104 | Preteen (~10–12) | explorer | Long wavy brown hair; small gold hoop earrings; blue denim jacket over a cream top | concept-only | P1 |
 
 `Assigned avatar id` is the deterministic filename id this concept will anchor once re-rendered
 (see `AVATAR_ART_PRODUCTION_SPEC.md` §File-naming convention). `Production status` is
@@ -186,36 +186,36 @@ traits repeating across different combinations is expected and fine). Glasses la
 
 | Assigned avatar id | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|
-| avatar-009 | Curly afro-textured hair shaped into a rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream color-blocked tee | shipped 2026-08-14 | P2 |
-| avatar-010 | Two short braided pigtails finished with small colorful beads; easy smile; rust-red overalls over a cream long-sleeve top | shipped 2026-08-14 | P2 |
-| avatar-011 | Chin-length straight hair held back with a wide fabric headband; round dark-rimmed glasses; golden-yellow cardigan over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-012 | Short loose curls with a single flower hair clip; freckles across the cheeks; sage-green tunic top with rust trim | shipped 2026-08-14 | P2 |
+| avatar-009 | Curly afro-textured hair shaped into a rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream color-blocked tee | concept-only | P2 |
+| avatar-010 | Two short braided pigtails finished with small colorful beads; easy smile; rust-red overalls over a cream long-sleeve top | concept-only | P2 |
+| avatar-011 | Chin-length straight hair held back with a wide fabric headband; round dark-rimmed glasses; golden-yellow cardigan over a cream tee | concept-only | P2 |
+| avatar-012 | Short loose curls with a single flower hair clip; freckles across the cheeks; sage-green tunic top with rust trim | concept-only | P2 |
 
 ### Explorer expansion (avatar-105–112, 8 net-new, `explorer`, P2)
 
 | Assigned avatar id | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|
-| avatar-105 | Curly afro-textured hair in a rounded high puff with a thin patterned headband; easy grin; royal-blue zip-up hoodie over a cream striped tee | shipped 2026-08-14 | P2 |
-| avatar-106 | Two neat box braids gathered into low pigtails; round wire-rimmed glasses; golden-yellow raglan tee under an open chambray shirt | shipped 2026-08-14 | P2 |
-| avatar-107 | Patterned teal-and-cream head wrap framing the face, loose strands at the temples; small gold stud earrings; sage-green quarter-zip pullover over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-108 | Short tightly-coiled hair cut close with a sharp side part; confident grin; teal track jacket with cream trim over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-109 | Straight waist-length hair in a high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-110 | Short wavy hair with a deep side part; thin round glasses; rust bomber-style jacket over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-111 | Chin-length curly bob; small silver hoop earrings; forest-green cardigan over a cream striped tee | shipped 2026-08-14 | P2 |
-| avatar-112 | Short natural coils with a faded side part and a single thin braid accent; warm smile; denim jacket over a golden-yellow tee | shipped 2026-08-14 | P2 |
+| avatar-105 | Curly afro-textured hair in a rounded high puff with a thin patterned headband; easy grin; royal-blue zip-up hoodie over a cream striped tee | concept-only | P2 |
+| avatar-106 | Two neat box braids gathered into low pigtails; round wire-rimmed glasses; golden-yellow raglan tee under an open chambray shirt | concept-only | P2 |
+| avatar-107 | Patterned teal-and-cream head wrap framing the face, loose strands at the temples; small gold stud earrings; sage-green quarter-zip pullover over a cream tee | concept-only | P2 |
+| avatar-108 | Short tightly-coiled hair cut close with a sharp side part; confident grin; teal track jacket with cream trim over a cream tee | concept-only | P2 |
+| avatar-109 | Straight waist-length hair in a high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee | concept-only | P2 |
+| avatar-110 | Short wavy hair with a deep side part; thin round glasses; rust bomber-style jacket over a cream tee | concept-only | P2 |
+| avatar-111 | Chin-length curly bob; small silver hoop earrings; forest-green cardigan over a cream striped tee | concept-only | P2 |
+| avatar-112 | Short natural coils with a faded side part and a single thin braid accent; warm smile; denim jacket over a golden-yellow tee | concept-only | P2 |
 
 ### Adventurer expansion (avatar-205–212, 8 net-new, `adventurer`, P2)
 
 | Assigned avatar id | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|
-| avatar-205 | Short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-206 | Two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket | shipped 2026-08-14 | P2 |
-| avatar-207 | Loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top | shipped 2026-08-14 | P2 |
-| avatar-208 | Chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee | shipped 2026-08-14 | P2 |
-| avatar-209 | Long single braid resting over one shoulder; wide open smile; royal-blue track jacket over a cream striped tee | shipped 2026-08-14 | P2 |
-| avatar-210 | Short wavy hair with a tousled side part; relaxed half-smile; forest-green hoodie under a light denim jacket | shipped 2026-08-14 | P2 |
-| avatar-211 | Shoulder-length twists with a faded undercut at the sides; small hoop earrings; denim zip jacket over a teal tee | shipped 2026-08-14 | P2 |
-| avatar-212 | Long wavy hair swept into a high half-up twist; turquoise stud earrings; lilac hoodie over a cream tee | shipped 2026-08-14 | P2 |
+| avatar-205 | Short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee | concept-only | P2 |
+| avatar-206 | Two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket | concept-only | P2 |
+| avatar-207 | Loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top | concept-only | P2 |
+| avatar-208 | Chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee | concept-only | P2 |
+| avatar-209 | Long single braid resting over one shoulder; wide open smile; royal-blue track jacket over a cream striped tee | concept-only | P2 |
+| avatar-210 | Short wavy hair with a tousled side part; relaxed half-smile; forest-green hoodie under a light denim jacket | concept-only | P2 |
+| avatar-211 | Shoulder-length twists with a faded undercut at the sides; small hoop earrings; denim zip jacket over a teal tee | concept-only | P2 |
+| avatar-212 | Long wavy hair swept into a high half-up twist; turquoise stud earrings; lilac hoodie over a cream tee | concept-only | P2 |
 
 ### Summit expansion (avatar-301–312, 12 net-new, `summit`, P0)
 
@@ -230,18 +230,18 @@ braids.
 
 | Assigned avatar id | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|
-| avatar-301 | Short tapered coils with a subtle side part; quiet half-smile; charcoal quarter-zip pullover over a light-gray tee | shipped 2026-08-14 | P0 |
-| avatar-302 | Shoulder-length locs tied back in a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee | shipped 2026-08-14 | P0 |
-| avatar-303 | Straight dark hair in a low bun with loose face-framing strands; thin wire-rimmed glasses; navy button-up shirt, sleeves rolled | shipped 2026-08-14 | P0 |
-| avatar-304 | Short undercut with longer curls left on top; confident closed-mouth smile; rust bomber jacket over a charcoal tee | shipped 2026-08-14 | P0 |
-| avatar-305 | Long single braid over one shoulder with a few loose flyaway strands; freckles; forest-green flannel shirt over a cream tee | shipped 2026-08-14 | P0 |
-| avatar-306 | Loose shoulder-length wavy hair with a center part; small hoop earrings; cream cardigan over a rust top | shipped 2026-08-14 | P0 |
-| avatar-307 | Short locs cropped close to the head; faint, self-possessed smile; denim trucker jacket over a cream tee | shipped 2026-08-14 | P0 |
-| avatar-308 | Long straight hair with a deep side part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck | shipped 2026-08-14 | P0 |
-| avatar-309 | Twin long braids past the chest tied off with simple dark cord; steady, self-possessed expression; teal flannel shirt, sleeves rolled, over a cream tee | shipped 2026-08-14 | P0 |
-| avatar-310 | Short cropped locs with a faded undercut; relaxed half-smile; golden-yellow crewneck sweater over a collared cream shirt | shipped 2026-08-14 | P0 |
-| avatar-311 | Loose waves pulled into a low ponytail beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under a rust cardigan | shipped 2026-08-14 | P0 |
-| avatar-312 | Short tousled wavy hair; thin rectangular glasses; charcoal bomber jacket over an olive tee | shipped 2026-08-14 | P0 |
+| avatar-301 | Short tapered coils with a subtle side part; quiet half-smile; charcoal quarter-zip pullover over a light-gray tee | concept-only | P0 |
+| avatar-302 | Shoulder-length locs tied back in a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee | concept-only | P0 |
+| avatar-303 | Straight dark hair in a low bun with loose face-framing strands; thin wire-rimmed glasses; navy button-up shirt, sleeves rolled | concept-only | P0 |
+| avatar-304 | Short undercut with longer curls left on top; confident closed-mouth smile; rust bomber jacket over a charcoal tee | concept-only | P0 |
+| avatar-305 | Long single braid over one shoulder with a few loose flyaway strands; freckles; forest-green flannel shirt over a cream tee | concept-only | P0 |
+| avatar-306 | Loose shoulder-length wavy hair with a center part; small hoop earrings; cream cardigan over a rust top | concept-only | P0 |
+| avatar-307 | Short locs cropped close to the head; faint, self-possessed smile; denim trucker jacket over a cream tee | concept-only | P0 |
+| avatar-308 | Long straight hair with a deep side part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck | concept-only | P0 |
+| avatar-309 | Twin long braids past the chest tied off with simple dark cord; steady, self-possessed expression; teal flannel shirt, sleeves rolled, over a cream tee | concept-only | P0 |
+| avatar-310 | Short cropped locs with a faded undercut; relaxed half-smile; golden-yellow crewneck sweater over a collared cream shirt | concept-only | P0 |
+| avatar-311 | Loose waves pulled into a low ponytail beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under a rust cardigan | concept-only | P0 |
+| avatar-312 | Short tousled wavy hair; thin rectangular glasses; charcoal bomber jacket over an olive tee | concept-only | P0 |
 
 ### Symbol expansion (avatar-401–412, 12 net-new, P2)
 
@@ -267,18 +267,18 @@ restricting *who* may pick a given symbol — the plan's "See all avatars" reach
 
 | Assigned avatar id | Band | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|---|
-| avatar-401 | adventurer | Maggie mark medallion — the twin-peaks-and-trail icon rendered as a dimensional badge, deep navy on warm ivory with a summit-orange star accent | shipped 2026-08-14 | P2 |
-| avatar-402 | summit | Compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks | shipped 2026-08-14 | P2 |
-| avatar-403 | early | Summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc | shipped 2026-08-14 | P2 |
-| avatar-404 | early | Owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze | shipped 2026-08-14 | P2 |
-| avatar-405 | early | Fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze | shipped 2026-08-14 | P2 |
-| avatar-406 | summit | Constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines | shipped 2026-08-14 | P2 |
-| avatar-407 | summit | Topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory | shipped 2026-08-14 | P2 |
-| avatar-408 | explorer | Trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc | shipped 2026-08-14 | P2 |
-| avatar-409 | explorer | Compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy | shipped 2026-08-14 | P2 |
-| avatar-410 | adventurer | Mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile | shipped 2026-08-14 | P2 |
-| avatar-411 | explorer | Acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark | shipped 2026-08-14 | P2 |
-| avatar-412 | adventurer | Lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph | shipped 2026-08-14 | P2 |
+| avatar-401 | adventurer | Maggie mark medallion — the twin-peaks-and-trail icon rendered as a dimensional badge, deep navy on warm ivory with a summit-orange star accent | concept-only | P2 |
+| avatar-402 | summit | Compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks | concept-only | P2 |
+| avatar-403 | early | Summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc | concept-only | P2 |
+| avatar-404 | early | Owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze | concept-only | P2 |
+| avatar-405 | early | Fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze | concept-only | P2 |
+| avatar-406 | summit | Constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines | concept-only | P2 |
+| avatar-407 | summit | Topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory | concept-only | P2 |
+| avatar-408 | explorer | Trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc | concept-only | P2 |
+| avatar-409 | explorer | Compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy | concept-only | P2 |
+| avatar-410 | adventurer | Mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile | concept-only | P2 |
+| avatar-411 | explorer | Acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark | concept-only | P2 |
+| avatar-412 | adventurer | Lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph | concept-only | P2 |
 
 ## Non-negotiable reminders for whoever picks this up next
 

@@ -2,13 +2,12 @@
 /**
  * The one avatar picker (onboarding + profile). Two regimes, matching the two describe blocks:
  *
- *  - the REAL, unmodified manifest — production art landed 2026-08-14, so every slot in every band
- *    is live: selection, keyboard nav, and the "Avatar N" / "Avatar N selected" labeling contract
- *    (OPTIMIZATION_PLAN_V3.md:150) all run against the shipped assets, no mocks;
- *  - a manifest with entries mocked `enabled: false`, standing in for art pulled after a QA
- *    rejection. That is the inverse of the mock this file used to carry (which stood in for art
- *    that had not been drawn yet) and it guards the same code: a slot the manifest disables must
- *    still render as an honest placeholder, stay out of the tab order, and never fire onChange.
+ *  - the REAL, unmodified manifest (every entry `enabled: false` today) — every slot must still
+ *    render as an honest, non-selectable placeholder, never an empty grid;
+ *  - a manifest with a few entries mocked `enabled: true`, standing in for real production art
+ *    landing later — selection, keyboard nav, and the "Avatar N" / "Avatar N selected" labeling
+ *    contract (OPTIMIZATION_PLAN_V3.md:150) all have to work the moment real art ships, with zero
+ *    further wiring.
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
@@ -22,85 +21,31 @@ function numberOf(id: string): number {
   return AVATARS.findIndex((a) => a.id === id) + 1;
 }
 
-describe("AvatarPicker — real (unmodified) manifest, art landed", () => {
-  it("opens the grade-appropriate band and every slot is selectable", () => {
+describe("AvatarPicker — real (unmodified) manifest, everything disabled today", () => {
+  it("opens the grade-appropriate band and shows every slot, non-selectable", () => {
     const onChange = vi.fn();
     render(<AvatarPicker value={undefined} onChange={onChange} grade={0} />);
     expect(screen.getByText("Early (K–2)")).toBeTruthy();
 
     const radios = screen.getAllByRole("radio");
-    // early band: 12 human + 3 symbol = 15 slots, all present, all enabled.
+    // early band: 12 human + 3 symbol = 15 slots, all present, none enabled.
     expect(radios).toHaveLength(15);
     for (const r of radios) {
-      expect((r as HTMLButtonElement).disabled).toBe(false);
+      expect((r as HTMLButtonElement).disabled).toBe(true);
       expect(r.getAttribute("aria-checked")).toBe("false");
     }
 
     fireEvent.click(radios[0]);
-    expect(onChange).toHaveBeenCalledWith("avatar-001");
+    expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("shows no 'placeholder for now' caption — every band has real art behind it", () => {
-    for (const grade of [0, 3, 6, 9]) {
-      cleanup();
-      render(<AvatarPicker value={undefined} onChange={vi.fn()} grade={grade} />);
-      expect(screen.queryByText(/every option above is a placeholder for now/i)).toBeNull();
-      expect(screen.getAllByRole("radio")).toHaveLength(15);
-    }
-  });
-
-  it("every tile's image resolves to that avatar's own shipped 256 asset", () => {
-    const { container } = render(<AvatarPicker value={undefined} onChange={vi.fn()} grade={0} />);
-    const early = AVATARS.filter((a) => a.ageBand === "early").sort((a, b) => a.order - b.order);
-    const srcs = Array.from(container.querySelectorAll("img")).map((i) => i.getAttribute("src"));
-    expect(srcs).toEqual(early.map((a) => a.src256));
-    // The honest placeholder is not among them any more — these are real assets.
-    expect(srcs.some((s) => s?.includes("placeholder"))).toBe(false);
-  });
-
-  it("labels the selected tile 'Avatar N selected' and reflects aria-checked", () => {
-    render(<AvatarPicker value="avatar-002" onChange={vi.fn()} grade={0} />);
-    const selected = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")} selected` });
-    expect(selected.getAttribute("aria-checked")).toBe("true");
-    // Only one tile is ever the selected one.
-    expect(screen.getAllByRole("radio").filter((r) => r.getAttribute("aria-checked") === "true")).toHaveLength(1);
-  });
-
-  it("arrow keys walk the whole band; Home/End jump to its ends", () => {
+  it("captions a band with nothing enabled yet, honestly, without hiding the grid", () => {
     render(<AvatarPicker value={undefined} onChange={vi.fn()} grade={0} />);
-    const tiles = screen.getAllByRole("radio");
-    const first = tiles[0];
-    const last = tiles[tiles.length - 1];
-
-    first.focus();
-    expect(document.activeElement).toBe(first);
-    fireEvent.keyDown(first, { key: "ArrowRight" });
-    expect(document.activeElement).toBe(tiles[1]);
-    fireEvent.keyDown(tiles[1], { key: "ArrowDown" });
-    expect(document.activeElement).toBe(tiles[2]);
-    fireEvent.keyDown(tiles[2], { key: "ArrowLeft" });
-    expect(document.activeElement).toBe(tiles[1]);
-
-    fireEvent.keyDown(tiles[1], { key: "End" });
-    expect(document.activeElement).toBe(last);
-    // Clamped at the last tile — no wraparound past the end.
-    fireEvent.keyDown(last, { key: "ArrowRight" });
-    expect(document.activeElement).toBe(last);
-    fireEvent.keyDown(last, { key: "Home" });
-    expect(document.activeElement).toBe(first);
-  });
-
-  it("only the roving tile is a tab stop", () => {
-    render(<AvatarPicker value="avatar-002" onChange={vi.fn()} grade={0} />);
-    const tiles = screen.getAllByRole("radio");
-    const selected = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")} selected` });
-    expect(selected.getAttribute("tabindex")).toBe("0");
-    expect(tiles.filter((t) => t.getAttribute("tabindex") === "0")).toHaveLength(1);
+    expect(screen.getByText(/every option above is a placeholder for now/i)).toBeTruthy();
   });
 
   it("'See all avatars' reveals every band; switching bands swaps the visible grid", () => {
-    const onChange = vi.fn();
-    render(<AvatarPicker value={undefined} onChange={onChange} grade={0} />);
+    render(<AvatarPicker value={undefined} onChange={vi.fn()} grade={0} />);
     fireEvent.click(screen.getByRole("button", { name: "See all avatars" }));
     const summitTab = screen.getByRole("button", { name: "Summit (9–13)" });
     fireEvent.click(summitTab);
@@ -111,18 +56,7 @@ describe("AvatarPicker — real (unmodified) manifest, art landed", () => {
     // summit is also 12 human + 3 symbol = 15 slots.
     expect(screen.getAllByRole("radio")).toHaveLength(15);
     // summit-only anchor id, proof the grid actually swapped rather than relabeling in place.
-    const summitTile = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-301")}` });
-    expect((summitTile as HTMLButtonElement).disabled).toBe(false);
-    fireEvent.click(summitTile);
-    expect(onChange).toHaveBeenCalledWith("avatar-301");
-  });
-
-  it("a symbol is selectable from inside its band's grid, with no separate human/symbol toggle", () => {
-    const onChange = vi.fn();
-    render(<AvatarPicker value={undefined} onChange={onChange} grade={0} />);
-    // avatar-403 (summit star) is assigned to `early` by thematic fit and sits at order 13.
-    fireEvent.click(screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-403")}` }));
-    expect(onChange).toHaveBeenCalledWith("avatar-403");
+    expect(screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-301")}` })).toBeTruthy();
   });
 
   it("defaults to a stable band when no grade is known", () => {
@@ -131,16 +65,12 @@ describe("AvatarPicker — real (unmodified) manifest, art landed", () => {
   });
 });
 
-describe("AvatarPicker — with entries disabled (art pulled after a QA rejection)", () => {
+describe("AvatarPicker — with enabled avatars (mocked ahead of real production art)", () => {
   vi.resetModules();
   vi.doMock("@/lib/avatars", async () => {
     const actual = await vi.importActual<typeof import("@/lib/avatars")>("@/lib/avatars");
-    // Everything in `early` off except avatar-002; `explorer` entirely off.
-    const AVATARS = actual.AVATARS.map((a) =>
-      (a.ageBand === "early" && a.id !== "avatar-002") || a.ageBand === "explorer"
-        ? { ...a, enabled: false }
-        : a
-    );
+    const enable = new Set(["avatar-001", "avatar-002", "avatar-003", "avatar-101"]);
+    const AVATARS = actual.AVATARS.map((a) => (enable.has(a.id) ? { ...a, enabled: true } : a));
     const isValidAvatarId = (id: string) => AVATARS.some((a) => a.id === id && a.enabled);
     const getAvatar = (id: string) => AVATARS.find((a) => a.id === id);
     return {
@@ -163,40 +93,78 @@ describe("AvatarPicker — with entries disabled (art pulled after a QA rejectio
     return render(<MockedPicker {...props} />);
   }
 
-  it("a disabled slot still renders, shows the placeholder, and never fires onChange", async () => {
+  it("selectable tiles are only the enabled ones; activating one commits immediately via onChange", async () => {
     const onChange = vi.fn();
     await renderMockedPicker({ value: undefined, onChange, grade: 0 });
 
-    // The band keeps its full shape — 15 slots — rather than collapsing to the one that survived.
-    const radios = screen.getAllByRole("radio");
-    expect(radios).toHaveLength(15);
-    const disabled = radios.filter((r) => (r as HTMLButtonElement).disabled);
-    expect(disabled).toHaveLength(14);
+    const avatar1 = screen.getByRole("radio", { name: "Avatar 1" });
+    expect((avatar1 as HTMLButtonElement).disabled).toBe(false);
+    fireEvent.click(avatar1);
+    expect(onChange).toHaveBeenCalledWith("avatar-001");
 
-    fireEvent.click(disabled[0]);
-    expect(onChange).not.toHaveBeenCalled();
-    expect(disabled[0].querySelector("img")?.getAttribute("src")).toContain("placeholder");
-
-    // The one surviving tile is still fully selectable.
-    const live = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")}` });
-    expect((live as HTMLButtonElement).disabled).toBe(false);
-    fireEvent.click(live);
-    expect(onChange).toHaveBeenCalledWith("avatar-002");
+    // A disabled slot in the same band never fires onChange.
+    const stillDisabled = screen.getAllByRole("radio").filter((r) => (r as HTMLButtonElement).disabled);
+    expect(stillDisabled.length).toBeGreaterThan(0);
+    fireEvent.click(stillDisabled[0]);
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("disabled tiles are excluded from the tab order; the roving stop lands on the live one", async () => {
+  it("labels the selected tile 'Avatar N selected' and reflects aria-checked", async () => {
+    await renderMockedPicker({ value: "avatar-002", onChange: vi.fn(), grade: 0 });
+    const selected = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")} selected` });
+    expect(selected.getAttribute("aria-checked")).toBe("true");
+    // Only one tile is ever the selected one.
+    expect(screen.getAllByRole("radio").filter((r) => r.getAttribute("aria-checked") === "true")).toHaveLength(1);
+  });
+
+  it("arrow keys move focus across enabled tiles only; Home/End jump to the ends", async () => {
     await renderMockedPicker({ value: undefined, onChange: vi.fn(), grade: 0 });
-    const radios = screen.getAllByRole("radio");
-    for (const r of radios.filter((x) => (x as HTMLButtonElement).disabled)) {
-      expect(r.getAttribute("tabindex")).toBe("-1");
-    }
-    expect(screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")}` }).getAttribute("tabindex")).toBe("0");
+    const a1 = screen.getByRole("radio", { name: "Avatar 1" });
+    const a2 = screen.getByRole("radio", { name: "Avatar 2" });
+    const a3 = screen.getByRole("radio", { name: "Avatar 3" });
+
+    a1.focus();
+    expect(document.activeElement).toBe(a1);
+    fireEvent.keyDown(a1, { key: "ArrowRight" });
+    expect(document.activeElement).toBe(a2);
+    fireEvent.keyDown(a2, { key: "ArrowRight" });
+    expect(document.activeElement).toBe(a3);
+    // Clamped at the last enabled tile — no wraparound past the end.
+    fireEvent.keyDown(a3, { key: "ArrowRight" });
+    expect(document.activeElement).toBe(a3);
+
+    fireEvent.keyDown(a3, { key: "Home" });
+    expect(document.activeElement).toBe(a1);
+    fireEvent.keyDown(a1, { key: "End" });
+    expect(document.activeElement).toBe(a3);
   });
 
-  it("a band with nothing enabled is captioned honestly, without hiding the grid", async () => {
-    await renderMockedPicker({ value: undefined, onChange: vi.fn(), grade: 3 });
-    expect(screen.getByText(/every option above is a placeholder for now/i)).toBeTruthy();
-    expect(screen.getAllByRole("radio")).toHaveLength(15);
-    expect(screen.getAllByRole("radio").every((r) => (r as HTMLButtonElement).disabled)).toBe(true);
+  it("only the roving tile is a tab stop; disabled tiles are excluded from the tab order", async () => {
+    await renderMockedPicker({ value: "avatar-002", onChange: vi.fn(), grade: 0 });
+    const a1 = screen.getByRole("radio", { name: "Avatar 1" });
+    const a2 = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-002")} selected` });
+    const a3 = screen.getByRole("radio", { name: "Avatar 3" });
+    // The selected tile is the roving tab stop when it's in view.
+    expect(a2.getAttribute("tabindex")).toBe("0");
+    expect(a1.getAttribute("tabindex")).toBe("-1");
+    expect(a3.getAttribute("tabindex")).toBe("-1");
+
+    const disabled = screen.getAllByRole("radio").find((r) => (r as HTMLButtonElement).disabled)!;
+    expect(disabled.getAttribute("tabindex")).toBe("-1");
+  });
+
+  it("'See all avatars' switches bands and the newly-enabled explorer tile is selectable", async () => {
+    const onChange = vi.fn();
+    await renderMockedPicker({ value: undefined, onChange, grade: 0 });
+    fireEvent.click(screen.getByRole("button", { name: "See all avatars" }));
+    fireEvent.click(screen.getByRole("button", { name: "Explorer (3–5)" }));
+
+    const explorerTile = screen.getByRole("radio", { name: `Avatar ${numberOf("avatar-101")}` });
+    expect((explorerTile as HTMLButtonElement).disabled).toBe(false);
+    fireEvent.click(explorerTile);
+    expect(onChange).toHaveBeenCalledWith("avatar-101");
+    // Nothing else is enabled in this band in the mock, so the honest caption still shows... except
+    // explorer now HAS one enabled entry, so it should NOT show for explorer.
+    expect(screen.queryByText(/every option above is a placeholder for now/i)).toBeNull();
   });
 });
