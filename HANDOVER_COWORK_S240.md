@@ -447,6 +447,39 @@ files (`schema.ts`/`pedagogy.ts`/`authoredMath.ts`/`page.tsx`/`widgets.tsx`/`Les
 **Next: WS-E Phase 2 batch 1** (§2.8 item 3) — user-greenlit, per-batch rulings as the review
 method, not yet started as of this writing.
 
+## 2.10. WS-E Phase 2 batch 1 — RULED (commit `3630be4`)
+
+First real batch under the user's per-batch-rulings process. All 20 `add-subtract-10-k`
+(kindergarten) prediction gates adjudicated against `WS_E_PREDICTION_RUBRIC.md` — **8 KEEP / 10
+REWRITE / 2 REMOVE**, delivered as `PREDICTION_GATE_ADJUDICATION_BATCH1.csv` (kept permanently
+alongside `_PILOT.csv` as a per-batch record) and merged into the master CSV's 20 rows.
+
+**User ruled twice, both via `AskUserQuestion`:** (1) batch approved as proposed; (2) a rubric gap
+the adjudicator found — `koa-01-01`'s reveal is grammatically universal ("always makes MORE") but
+mathematically false at +0 — gets fixed by adding a correctness check, not left alone. Rubric
+bumped to **v1.1** (§4.3 gains the check, with `koa-01-01` as the worked failing example and
+`koa-03-07` as a worked passing example — read it before adjudicating batch 2, the test applies to
+every future batch too). `koa-01-01` itself re-adjudicated under the new rule: KEEP → REWRITE.
+
+**Model note:** fable hit its monthly spend limit mid-adjudication (`API error: You've hit your
+monthly spend limit. /model to switch models.`). Substituted opus for both the batch adjudication
+and the rubric amendment. **If a future session reaches for fable and it's still capped, opus is
+the tested fallback for this kind of work — don't silently drop to sonnet for adjudication/rubric
+work without flagging it, the qualitative-judgment bar is the whole point of the tier choice.**
+
+**A real gotcha hit and fixed, worth not repeating:** merging batch 1 into the master CSV via a
+naive `csv.DictWriter` (even with `open(..., newline='')`) wrote the whole file as CRLF —
+Python's csv module defaults to `\r\n` line endings regardless of that flag. This makes every
+future `git diff` on the file unreadable (every line shows as changed). Caught before committing
+by an unexpectedly large `git diff --stat`; fixed by a byte-level `\r\n` → `\n` pass, verified the
+fix touched only line terminators. **If you're scripting a CSV merge here, pass
+`lineterminator='\n'` to the writer up front, or check `git diff --stat` immediately after any
+Python csv-module write to this file before trusting it's a small diff.**
+
+**Course selection for batch 1** was mine (no course-selection instruction given): a clean,
+complete course near the pilot's own size (20 gates vs. the pilot's 23), for comparable review
+load. No pedagogical ordering has been established yet — batch 2's course is an open choice.
+
 ---
 
 ## 3. The queue — where to pick up
