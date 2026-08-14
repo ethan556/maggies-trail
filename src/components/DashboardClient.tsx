@@ -435,7 +435,26 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
         </Link>
       )}
 
-      <SectionHeader waymark icon="route" title="The trail map" className="mt-10 mb-1" />
+      {/* WS-E Phase 5: this section carried the "trail map" name while being a plain course
+        * accordion. It now routes honestly into the World system — the header opens the living
+        * map surfaces (Trailhead / Atlas), and each course card below links straight to its
+        * Basecamp (the canonical world course surface /courses/[slug] already redirects to). */}
+      <SectionHeader
+        waymark
+        icon="route"
+        title="The trail map"
+        className="mt-10 mb-1"
+        action={
+          <span className="flex items-center gap-3 text-sm font-bold">
+            <Link href="/trailhead" className="text-sky-ink hover:underline">
+              Open the living map
+            </Link>
+            <Link href="/atlas" className="text-sky-ink hover:underline">
+              Atlas
+            </Link>
+          </span>
+        }
+      />
       {Array.from(new Set(courses.map((c) => c.gradeLevel)))
         .sort((a, b) => a - b)
         .map((g) => {
@@ -523,7 +542,7 @@ function TrailBand({
                 </div>
               ) : (
                 <Link
-                  href={`/courses/${c.slug}`}
+                  href={`/basecamp/${c.courseId}`}
                   className="lift block rounded-card bg-surface p-4 ring-1 ring-ink/8 hover:ring-sky/50 dark:bg-dusk dark:ring-paper/10"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">

@@ -56,6 +56,28 @@ describe("SiteNav shell", () => {
     expect(within(menu).getByRole("menuitem", { name: /premium/i }).getAttribute("href")).toBe("/premium");
   });
 
+  it("links the world layer (Trailhead / Atlas / Journal) from the secondary menu — WS-E Phase 5", () => {
+    render(<SiteNav />);
+    fireEvent.click(screen.getByRole("button", { name: /account and more/i }));
+    const menu = screen.getByRole("menu");
+    for (const [label, href] of [
+      ["Trailhead", "/trailhead"],
+      ["Atlas", "/atlas"],
+      ["Journal", "/journal"]
+    ]) {
+      expect(within(menu).getByRole("menuitem", { name: new RegExp(`^${label}$`, "i") }).getAttribute("href")).toBe(href);
+    }
+  });
+
+  it("surfaces the world layer in the mobile More sheet too", () => {
+    render(<SiteNav />);
+    fireEvent.click(screen.getByRole("button", { name: /^more$/i }));
+    const sheet = screen.getByRole("dialog", { name: /more destinations/i });
+    expect(within(sheet).getByRole("link", { name: /trailhead/i }).getAttribute("href")).toBe("/trailhead");
+    expect(within(sheet).getByRole("link", { name: /atlas/i }).getAttribute("href")).toBe("/atlas");
+    expect(within(sheet).getByRole("link", { name: /journal/i }).getAttribute("href")).toBe("/journal");
+  });
+
   it("renders Teach only once in the desktop secondary menu", () => {
     render(<SiteNav />);
     fireEvent.click(screen.getByRole("button", { name: /account and more/i }));

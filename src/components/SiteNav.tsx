@@ -23,8 +23,13 @@ const PRIMARY: NavItem[] = [
   { href: "/daily", label: "Daily", icon: "daily" }
 ];
 
-/** Secondary destinations — an account menu on desktop, the "More" sheet on mobile. */
+/** Secondary destinations — an account menu on desktop, the "More" sheet on mobile.
+ *  WS-E Phase 5: the world-layer surfaces (Trailhead / Atlas / Journal) lead the list — they
+ *  were real, tested routes with no click path from the visible UI until linked here. */
 const SECONDARY: NavItem[] = [
+  { href: "/trailhead", label: "Trailhead", icon: "route" },
+  { href: "/atlas", label: "Atlas", icon: "compass" },
+  { href: "/journal", label: "Journal", icon: "tally" },
   { href: "/notebook", label: "Notebook", icon: "notebook" },
   { href: "/profile", label: "Profile", icon: "profile" },
   { href: "/family", label: "Family", icon: "family" },
