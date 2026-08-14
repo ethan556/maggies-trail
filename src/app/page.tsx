@@ -4,7 +4,7 @@ import { COPY } from "@/lib/copy";
 import { getCatalog } from "@/lib/content.server";
 import { AppIcon, LinkButton, Badge } from "@/components/ui";
 import { ProofStrip } from "@/components/ProofStrip";
-import { MaggieBrandLockup, MaggieMark } from "@/components/brand";
+import { MaggieBrandLockup, MaggieMarkOpen } from "@/components/brand";
 
 const LandingHero = dynamic(() => import("@/components/LandingHero"), {
   loading: () => (
@@ -96,14 +96,14 @@ export default async function Home() {
         {/* Hero */}
         <section className="grid items-center gap-10 md:grid-cols-[1.05fr_1fr]">
           <div>
-            {/* The mark leads the page. A cold visitor meets the identity before the words:
-                at 28px in the nav it is a favicon, at ~88px here it is the brand. Sized in CSS
-                rather than through `size` so it can step down on narrow viewports without a
-                second render — `size` only seeds the intrinsic width/height. */}
-            <MaggieMark
-              size={88}
-              className="mb-5 h-[68px] w-[68px] drop-shadow-sm md:h-[88px] md:w-[88px]"
-            />
+            {/* The mark leads the page, centred over this column while the copy below stays
+                left-aligned — the identity is the thing a cold visitor meets first, the
+                sentences are still something they read. Badged `MaggieMark` is deliberately
+                NOT used here: at display size its navy rounded square reads as a boxed
+                sticker on an ivory page, so this is the open ridgeline variant, navy ink
+                straight onto the background. Height-only sizing (`w-auto`) keeps the
+                cropped viewBox's aspect intact at every breakpoint. */}
+            <MaggieMarkOpen className="mx-auto mb-7 block h-[132px] w-auto md:h-[176px]" />
             <Badge tone="sky" icon="icon-807" className="mb-4">
               {gradeSpan} math you can touch
             </Badge>
