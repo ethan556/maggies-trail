@@ -12,7 +12,10 @@ import { WidgetRenderer } from "./widgets";
 import { WidgetSpec, type TWidget } from "@/lib/schema";
 import { collisions, describeCollision, scanTextBoxes } from "./textBoxes.testkit";
 
-describe.skipIf(!process.env.COLLISION_SWEEP)("S238 corpus collision sweep", () => {
+/* S242 / VIS-00 — BLOCKING. This sweep covers the authored + remedial widget corpus at three tones (62s) and was behind COLLISION_SWEEP=1, so it ran only
+ * when somebody remembered to ask. VIS-00 requires every graph gate to block; it passes clean
+ * at this seal, so there is nothing to ratchet down from — zero is the entry state. */
+describe("S238 corpus collision sweep", () => {
   it("measures every authored spec x 3 tones", () => {
     const courses = join(process.cwd(), "content", "courses");
     const rows: string[] = ["widget_type,lesson,step,tone,pairs,detail"];

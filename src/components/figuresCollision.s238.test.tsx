@@ -41,7 +41,10 @@ function usageCounts(): Map<string, number> {
   return uses;
 }
 
-describe.skipIf(!process.env.FIGURE_SWEEP)("S238 figures.tsx collision sweep", () => {
+/* S242 / VIS-00 — BLOCKING. This sweep covers every figures.tsx placement (7s) and was behind FIGURE_SWEEP=1, so it ran only
+ * when somebody remembered to ask. VIS-00 requires every graph gate to block; it passes clean
+ * at this seal, so there is nothing to ratchet down from — zero is the entry state. */
+describe("S238 figures.tsx collision sweep", () => {
   it("measures every registered figure once", () => {
     const uses = usageCounts();
     const rows: string[] = ["figure_id,uses,pairs,skipped_texts,detail"];

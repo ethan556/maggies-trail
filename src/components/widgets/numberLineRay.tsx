@@ -34,6 +34,7 @@
  */
 
 import { useCallback, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { MathProse } from "@/components/math/MathText";
 import { PALETTE } from "@/lib/palette";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import type { TNumberLineRay } from "@/lib/schema";
@@ -355,7 +356,7 @@ export function NumberLineRayW({ spec, value, onChange, disabled, tone, onEvent,
 
   return (
     <div className="grid gap-3" ref={rootRef} data-testid="nlr-root">
-      <p className="text-lg font-bold">{spec.prompt}</p>
+      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
 
       {/* ───────── the number line: the mathematical object, and the primary control ───────── */}
       <div className="relative mx-auto w-full max-w-md">

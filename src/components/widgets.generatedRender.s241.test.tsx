@@ -86,11 +86,6 @@ const RULERS = new Set(["numberLinePlace", "numberLineHop", "numberLineRay", "ab
  *     (`:8163`/`:8168`), so on a verify-the-solution item the candidate is routinely at the
  *     domain's top-right corner — the seat the line labels already occupy.
  */
-const KNOWN_GENERATED_COLLISIONS = new Set<string>([
-  "trialProbabilityLab|prob-fraction@trialRelFreq",
-  "affineRelationshipLab|g8-les-system-verify@lesVerifyPoint"
-]);
-
 type Emitted = { widget: TWidget; cell: string; where: string };
 
 /** Every generator × form × band, deduped, capped per cell. `typeFilter` selects what to keep. */
@@ -186,29 +181,30 @@ describe("S241 PG-01 — every generated graph spec parses, draws, and draws leg
   }, 300_000);
 
   it("no generated graph draws two labels on top of each other", () => {
-    // (c) + the ratchet. See KNOWN_GENERATED_COLLISIONS — two cells are open findings, everything
-    // else must be clean, and anything new fails here on arrival.
-    const fresh: string[] = [];
-    const knownStillFiring = new Set<string>();
-    for (const { widget, where, cell } of GRAPH_SPECS) {
+    /* (c), and as of S242 there is no allowlist to check against — VIS-00 does not permit one.
+     *
+     * There used to be two entries. One had stopped firing some time ago and nobody noticed, which
+     * is the quieter cost of an allowlist: it does not only excuse the defects it names, it also
+     * stops anyone finding out when they are fixed. The other was real —
+     * `affineRelationshipLab@lesVerifyPoint` drew "candidate" through "First equation" and "Second
+     * equation" by up to 68 x 10 units — and is fixed at source in widgets.tsx by giving the
+     * marker a six-placement search around its point with far-left fallbacks that the line-label
+     * band cannot reach.
+     *
+     * Zero is now the only passing value. */
+    const found: string[] = [];
+    for (const { widget, where } of GRAPH_SPECS) {
       const spec = WidgetSpec.parse(widget) as TWidget;
       for (const tone of ["neutral", "error"] as const) {
         const f = drawOnce(spec, tone);
-        if (f.collisions.length === 0) continue;
-        if (KNOWN_GENERATED_COLLISIONS.has(cell)) knownStillFiring.add(cell);
-        else fresh.push(`${where} [${tone}]: ${f.collisions.slice(0, 2).join(" | ")}`);
+        if (f.collisions.length) found.push(`${where} [${tone}]: ${f.collisions.slice(0, 2).join(" | ")}`);
       }
     }
-    if (fresh.length) {
+    if (found.length) {
       // eslint-disable-next-line no-console
-      console.log(`\n[PG-01] ${fresh.length} NEW generated collision(s):\n  ${fresh.slice(0, 20).join("\n  ")}`);
+      console.log(`\n[PG-01] ${found.length} generated collision(s):\n  ${found.slice(0, 20).join("\n  ")}`);
     }
-    const stale = [...KNOWN_GENERATED_COLLISIONS].filter((c) => !knownStillFiring.has(c));
-    if (stale.length) {
-      // eslint-disable-next-line no-console
-      console.log(`\n[PG-01] baseline entries that no longer fire — delete them:\n  ${stale.join("\n  ")}`);
-    }
-    expect(fresh).toEqual([]);
+    expect(found).toEqual([]);
   }, 300_000);
 
   it("nothing passes by drawing nothing, and nothing goes quiet by becoming unmeasurable", () => {
@@ -298,7 +294,11 @@ describe("S241 PG-01 — every generated graph spec parses, draws, and draws leg
 /** Engines whose labels the S237 box model cannot place, corpus-wide, authored included. */
 const UNMODELLABLE_BY_DESIGN = new Set(["shapeHierarchyLab"]);
 
-describe.skipIf(!process.env.GENERATED_RENDER_SWEEP)("S241 PG-01 — full generated corpus", () => {
+/* S242 / VIS-00 — THIS SWEEP NOW BLOCKS. It was behind GENERATED_RENDER_SWEEP=1, which meant the
+ * broadest evidence in the repository ran only when somebody remembered to ask for it, and the plan
+ * is explicit that every graph gate must block. It walks 20,000+ generated specs at three tones and
+ * takes about two minutes — real, and cheap against a suite that already runs for several. */
+describe("S241 PG-01 — full generated corpus", () => {
   let specs: Emitted[] = [];
   beforeAll(() => {
     specs = walk({ perCell: 3, seeds: 25, keep: () => true });
@@ -318,8 +318,7 @@ describe.skipIf(!process.env.GENERATED_RENDER_SWEEP)("S241 PG-01 — full genera
         const f = drawOnce(parsed.data as TWidget, tone);
         if (f.threw) bad.push(`${where} [${tone}]: THREW ${f.threw}`);
         if (f.skipped.length) unmodellable.set(widget.type, (unmodellable.get(widget.type) ?? 0) + f.skipped.length);
-        if (f.collisions.length && !KNOWN_GENERATED_COLLISIONS.has(cell))
-          bad.push(`${where} [${tone}]: ${f.collisions.slice(0, 2).join(" | ")}`);
+        if (f.collisions.length) bad.push(`${where} [${tone}]: ${f.collisions.slice(0, 2).join(" | ")}`);
       }
     }
     if (unmodellable.size) {
