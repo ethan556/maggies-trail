@@ -179,6 +179,59 @@ describe("S242 — power shapes that used to orphan their exponent", () => {
   });
 });
 
+describe("S242 / GEN-01 — two leaks the generated-side sweep found that no source scan could", () => {
+  /* Both of these were invisible until `scripts/audit/generator-quality-sweep.mts` generated
+   * 102,251 problems and read the strings the generators actually emit. Neither shape occurs in
+   * authored lesson JSON at all — they are built at runtime from drawn values — so every previous
+   * audit, all of which read source, was structurally incapable of seeing them. */
+
+  it("an exponent may carry the authored minus sign U+2212, not only the ASCII hyphen", () => {
+    // The exponent class was [A-Za-z0-9?π∞+-]: ASCII hyphen, no U+2212. Generators write the
+    // typographic minus, so "1/81 = 3^−4" matched no exponent and the learner read a literal caret
+    // on an exponent lesson — 12 occurrences, all on `exp-solve`, whose subject IS negative powers.
+    expect(islands("1/81 = 3^−4, so x = −4.")).toContain("3^−4");
+    expect(prose("1/81 = 3^−4, so x = −4.")).not.toContain("^");
+    expect(islands("(1/2)^−4 = 2^4 = 16, so x = −4, not 2.")).toContain("(1/2)^−4");
+    // The ASCII form must keep working — this widened the class, it did not swap it.
+    expect(islands("2^-1 is one half.")).toContain("2^-1");
+  });
+
+  it("a coefficient welded to sqrt( does not block the radical island", () => {
+    // `\bsqrt` needs a word boundary, and there is none between "4" and "s". So "4sqrt(3)" matched
+    // NOTHING — not the radical island, not the arithmetic run — and stayed raw. It is an mcq
+    // option label on a simplify-the-radical question, so the learner chose between "4sqrt(3)" and
+    // "2sqrt(3)" as literal text on the one question where the notation is the point.
+    expect(islands("4sqrt(3)")).toEqual(["4sqrt(3)"]);
+    expect(islands("Which is 2sqrt(3) or 4sqrt(3)?")).toEqual(["2sqrt(3)", "4sqrt(3)"]);
+    expect(prose("4sqrt(3)")).not.toContain("sqrt");
+  });
+
+  it("the coefficient must not swallow the space in front of a bare radical", () => {
+    // The first cut of the fix was `\d*\s*sqrt`, whose `\d*` matched nothing and whose `\s*` then
+    // ate the preceding space: "Evaluate sqrt(4) * sqrt(4)." produced the island " sqrt(4)". An
+    // island that carries leading whitespace re-flows the sentence around it.
+    for (const island of islands("Evaluate sqrt(4) * sqrt(4).")) expect(island).toBe(island.trim());
+    expect(islands("Evaluate sqrt(4) * sqrt(4).")).toEqual(["sqrt(4)", "sqrt(4)"]);
+  });
+
+  it("a power on a fraction's denominator stays with the fraction", () => {
+    // The fraction island stopped at the denominator, so "1/6^3" was claimed as "1/6" and the
+    // "^3" was left in the prose — a typeset one-sixth followed by a literal caret and a 3, on the
+    // negative-exponent lesson whose whole content is 6^(-3) = 1/6^3.
+    const text = "A negative exponent takes the reciprocal: 6^(-3) = 1/6^3 = 1/216.";
+    expect(islands(text)).toContain("1/6^3");
+    expect(prose(text)).not.toContain("^");
+    // A bare fraction is unchanged — the power is optional, not required.
+    expect(islands("Compare 3/4 and 2/3.")).toEqual(["3/4", "2/3"]);
+  });
+
+  it("a letter before sqrt is still a word, not a coefficient", () => {
+    // The lookbehind admits a digit and refuses a letter, so an English word ending in a letter
+    // followed by "sqrt" cannot start a radical.
+    expect(islands("asqrt(3)")).toEqual([]);
+  });
+});
+
 describe("ARCH-01 — the S237 false-statement guard still holds", () => {
   // These are worse than a torn word: polished KaTeX asserting something untrue. The boundary
   // change must not reopen them.

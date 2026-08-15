@@ -14,8 +14,8 @@ interaction or under the B bar. D: no interactive step, or misconception sensiti
 repetition-thinning policy — is imputed at the score it would have earned, so complying with
 the ruling costs a lesson nothing. Excused by verdict + absence on disk, never by note text.
 A missing REWRITE gate, or a missing gate no ruling covers, still scores 0.
-Ruled removals excused in this run: **68** gates
-across **68** lessons.
+Ruled removals excused in this run: **65** gates
+across **65** lessons.
 
 ## Tier distribution
 
