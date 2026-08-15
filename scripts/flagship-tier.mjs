@@ -78,10 +78,20 @@ for (const dir of readdirSync(coursesDir)) {
 // still carries `predict`:
 //
 //   verdict REMOVE,  gate absent   → EXCUSED. The gate was ruled unfit; its absence is compliance.
-//   verdict KEEP,    gate absent   → EXCUSED. A KEEP gate can only be missing because the ruled
-//                                    repetition-thinning pass cut this copy in favour of the
-//                                    family's canonical anchor (17 + 51 = the 68 ruled removals,
-//                                    and the CSV contains no other KEEP-absent row).
+//   verdict THIN,    gate absent   → EXCUSED. The repetition-thinning pass cut this copy in favour
+//                                    of the family's canonical anchor. 17 REMOVE + 48 THIN = the 65
+//                                    excused absences; the other 3 thinned rows are THIN-REVERSED
+//                                    and their gates are PRESENT, so they are scored, not excused.
+//   verdict KEEP,    gate absent   → NOT excused, and this is a S242 TIGHTENING of the rule.
+//                                    It used to be excused, on the reasoning that a KEEP gate could
+//                                    only be missing because the thinning pass took it — true at the
+//                                    time and an inference, not a record. S242 wrote the record: the
+//                                    51 thinned rows now carry an explicit THIN verdict, so there is
+//                                    no longer any KEEP-absent row in the file, and there is no
+//                                    longer any reason to guess. If one appears, a gate went missing
+//                                    with nothing recording why, and that is drift the scorer should
+//                                    surface rather than absorb — which is what it did for however
+//                                    long it took anyone to notice the count was 65.
 //   verdict KEEP,    gate present  → not excused; the live gate is scored on its own merits,
 //                                    exactly as before. Excusal only ever concerns ABSENCE.
 //   verdict REWRITE, gate absent   → NOT excused. REWRITE fixes a gate in place, so the gate is
@@ -135,8 +145,9 @@ if (!existsSync(ADJUDICATION_PATH)) {
   const byId = new Map(lessons.map(({ lesson }) => [lesson.id, lesson]));
   for (const r of table.slice(1)) {
     const verdict = r[cVerdict];
-    // REWRITE keeps the gate in place, so it is never an excusable absence.
-    if (verdict !== "REMOVE" && verdict !== "KEEP") continue;
+    // REWRITE keeps the gate in place, so it is never an excusable absence. THIN replaced the
+    // KEEP-absent inference in S242 — see the rule block above for why that is stricter.
+    if (verdict !== "REMOVE" && verdict !== "THIN") continue;
     const lesson = byId.get(r[cLesson]);
     const step = (lesson?.steps ?? []).find((s) => s.id === r[cStep]);
     // The step must still exist and must no longer carry a gate: a step that vanished entirely is
