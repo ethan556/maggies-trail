@@ -29,6 +29,25 @@
  * is untouched; only the four symbols change. A corpus-wide sweep of every signChart string that
  * states a full sign pattern found 11 such strings and this one mismatch.
  *
+ * ══════════════════════════════════════════════════════════════════════════════════════════════
+ * SUPERSEDED BY PRED-01. The three predictions below are WITHDRAWN and this script no longer
+ * writes them.
+ *
+ * The prediction re-certification compared all 1,362 adjudicated gates against the live corpus and
+ * found that these three steps DID have predictions: reviewed, adjudicated KEEP, and then stripped
+ * by the Phase 4 thinning pass along with 48 others, with no rationale recorded for any of them.
+ * The flagship contract broke as a consequence, and by the time the strict gate saw it the only
+ * visible fact was an absence — which is why it read as content that had never been written.
+ *
+ * So the reconstruction was answering the right question with the wrong information. The
+ * adjudicated originals are restored verbatim by scripts/session/s242-pred01-restore.mjs; reviewed
+ * content beats reconstructed content even when the reconstruction reads well.
+ *
+ * What this script still does: the pra-04-02 sign-pattern correction, which is independent of the
+ * prediction work and still needed. The arithmetic assertions are kept because they document how
+ * the sign pattern was established.
+ * ══════════════════════════════════════════════════════════════════════════════════════════════
+ *
  * Run: node scripts/session/s242-cml01-predictions.mjs [--check]
  * `--check` verifies the edits are present and the arithmetic still holds, and writes nothing.
  */
@@ -155,12 +174,14 @@ for (const edit of EDITS) {
   const steps = json.steps ?? json.lesson?.steps;
   const step = steps[edit.step];
   if (CHECK) {
-    const ok = Boolean(step.predict?.outcomeId === edit.predict.outcomeId);
+    // Only the sign-pattern correction is this script's to certify now.
     const okReplace = !edit.replace || step.widget[edit.replace.key].includes(edit.replace.to);
-    console.log(`${ok && okReplace ? "ok  " : "MISS"} ${edit.file}#${edit.step}`);
-    if (!ok || !okReplace) process.exitCode = 1;
+    console.log(`${okReplace ? "ok  " : "MISS"} ${edit.file}#${edit.step}${edit.replace ? "" : " (prediction withdrawn — see PRED-01)"}`);
+    if (!okReplace) process.exitCode = 1;
     continue;
   }
+  // PRED-01: the reconstructed predictions are withdrawn. Only the sign-pattern correction runs.
+  if (!edit.replace) { continue; }
   if (edit.replace) {
     const before = step.widget[edit.replace.key];
     if (!before.includes(edit.replace.from) && !before.includes(edit.replace.to)) {
@@ -169,7 +190,6 @@ for (const edit of EDITS) {
     }
     step.widget[edit.replace.key] = before.replace(edit.replace.from, edit.replace.to);
   }
-  steps[edit.step] = withPredict(step, edit.predict);
   fs.writeFileSync(full, JSON.stringify(json, null, 2) + "\n");
   changed++;
 }
