@@ -32086,21 +32086,23 @@ const GENERATORS: VariantGen[] = [
             ]), t.vals, t.cts);
         }
         if (form === "ddShapeOutlier") {
-          const base = pick(rand, 0, support ? 2 : 5), out = base + pick(rand, 9, band === "stretch" ? 18 : 13);
+          /* S242, ruled 2026-08-15. The outlier used to sit 9-18 above the cluster, which needs a
+           * 10-19 column lattice against `MAX_PLOT_COLUMNS` = 8 — so this form could not draw at
+           * all, and listing only the occupied positions would have drawn the gap at one-step
+           * width, the exact lie the question teaches learners to catch (GG-15). The ruling was to
+           * fit the generator to the medium rather than stretch the medium past legibility: an
+           * outlier needs its gap to be VISIBLE, not maximal. At base+6 or base+7 the cluster
+           * occupies four positions, two or three sit empty, and the outlier stands alone — which
+           * is what "isolated beyond a gap" looks like on a readable phone-width plot. */
+          const base = pick(rand, 0, support ? 2 : 5), out = base + pick(rand, 6, 7);
           const data = [base, base, base, base + 1, base + 1, base + 2, base + 3, out];
-          /* NOT drawn, deliberately. A uniform lattice from ${base} to ${out} is 10-19 columns and
-           * `MAX_PLOT_COLUMNS` is 8 (schema.ts:78); listing only the occupied positions instead
-           * would draw the outlier's gap at the same width as a one-step gap, which GG-15 forbids
-           * precisely because that is the lie this question teaches learners to catch. So the
-           * figure is unreachable for this form under the current widget contract, and a
-           * misleading figure is worse than an honest sentence. Raising MAX_PLOT_COLUMNS is a
-           * renderer decision, not a generator one. */
-          return mcq(rand, "line-plot", `In the data ${data.join(", ")}, what role does ${out} play?`,
+          const t = tally(data);
+          return withPlot(mcq(rand, "line-plot", `In the data ${data.join(", ")}, what role does ${out} play?`,
             [`It is an outlier, isolated beyond a gap from the cluster`, `Correct — the other values cluster from ${base} to ${base + 3}, while ${out} sits far away.`],
             [
               ["It is the peak because it is the largest number", `A peak is the most frequent region, not the greatest numerical value.`],
               ["It should automatically be deleted as an error", `An outlier may be valid data and needs investigation before any removal decision.`],
-            ]);
+            ]), t.vals, t.cts);
         }
         if (form === "ddShapeClusterCount") {
           const item = draw(rand, (r) => {
@@ -32108,25 +32110,26 @@ const GENERATORS: VariantGen[] = [
             const answer = c1 + c2, total = answer + c3 + c4, tallest = Math.max(c1, c2, c3, c4);
             return { c1, c2, c3, c4, answer, total, tallest };
           }, (x) => new Set([x.answer, x.total, x.tallest]).size === 3);
-          const out = start + 8 * step;
-          return num("line-plot", `A dot plot has ${item.c1} dots at ${values[0]}, ${item.c2} at ${values[1]}, ${item.c3} at ${values[2]}, and 1 at the outlier ${out}. How many observations are in the low cluster at ${values[0]} and ${values[1]}?`, item.answer, 0,
+          const out = start + 7 * step; // S242: 8 lattice positions, at the MAX_PLOT_COLUMNS cap.
+          return withPlot(num("line-plot", `A dot plot has ${item.c1} dots at ${values[0]}, ${item.c2} at ${values[1]}, ${item.c3} at ${values[2]}, and 1 at the outlier ${out}. How many observations are in the low cluster at ${values[0]} and ${values[1]}?`, item.answer, 0,
             [
               [item.total, `${item.total} counts the entire distribution, including the higher value and the outlier.`],
               [item.tallest, `${item.tallest} is only the height of the tallest single stack. The cluster uses two stacks.`],
-            ], `The low cluster contains ${item.c1} + ${item.c2} = ${item.answer} observations.`);
-            // Not drawn: start .. out is nine positions of `step`, one over MAX_PLOT_COLUMNS (8).
+            ], `The low cluster contains ${item.c1} + ${item.c2} = ${item.answer} observations.`),
+            Array.from({ length: 8 }, (_, i) => start + i * step),
+            [item.c1, item.c2, item.c3, 0, 0, 0, 0, item.c4]);
         }
-        const base = pick(rand, 0, support ? 2 : 4), out = base + pick(rand, 8, band === "stretch" ? 16 : 12);
+        // S242: same ruling as ddShapeOutlier — the cluster holds base..base+2, so an outlier at
+        // base+5..base+7 leaves two to four empty positions and still reads as isolated.
+        const base = pick(rand, 0, support ? 2 : 4), out = base + pick(rand, 5, 7);
         const data = [base, base, base, base + 1, base + 1, base + 2, out];
-        /* Not drawn, same reason as ddShapeOutlier: ${base}..${out} is 9-17 uniform columns
-         * against MAX_PLOT_COLUMNS = 8, and an uneven lattice would misdraw the very gap the
-         * question is about. */
-        return mcq(rand, "line-plot", `The data are ${data.join(", ")}. Which description tells the full story?`,
+        const t = tally(data);
+        return withPlot(mcq(rand, "line-plot", `The data are ${data.join(", ")}. Which description tells the full story?`,
           [`Clustered at ${base}–${base + 1}, followed by a gap and an outlier at ${out}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated.`],
           [
             [`Symmetric around ${Math.round((base + out) / 2)}`, `The frequencies and long empty interval do not mirror around a central value.`],
             [`Evenly spread from ${base} to ${out}`, `Most positions in that interval have no observations, so the data are not evenly spread.`],
-          ]);
+          ]), t.vals, t.cts);
       }
 
       if (form === "fractionMode") {

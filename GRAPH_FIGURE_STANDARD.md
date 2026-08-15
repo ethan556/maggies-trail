@@ -232,6 +232,31 @@ Motivation: plotPoint cols=8 compresses `1fr` tracks to ~35px under fixed 44px b
 touch hits on the exact surface whose task is "tap the right cell" (D-04); drag pucks r=16–18 fall
 under 44px at mobile scale (polish, `widgets.tsx:2951` et al.).
 
+### A1-R1 — Display mode is a typography preference, not a rendering defect (ruled 2026-08-15)
+
+An expression that reaches the learner as correctly-set inline mathematics **has rendered**. Whether
+it would read better as display math is a separate, lower-priority judgement, and it does not make
+the row a defect.
+
+*Why this needed ruling.* The S242 presentation index found the standing "at least 4,028 display
+defects, plausibly 4,300–4,600" figure decomposes as 3,560 rows that render correctly inline but
+where an earlier audit's `display_recommended` column preferred display mode, plus 868 that
+genuinely fail to render as mathematics at all, plus 175 that are shown to no learner in any
+surface (`cml.misconceptions[]`, `narration`, `approxFormula.op`). Collapsing those into one number
+made MATH-03 look like a ~4,400-row correctness programme when the correctness part is ~868.
+
+*Consequences, so this is actionable rather than decorative.*
+- **MATH-03 is scoped to what fails to render**: the 868, plus the word-tearing class ARCH-01 closes.
+- The 3,560 become an **optional typography pass**, ranked by learner exposure. They are not release
+  blockers and must not be counted as open defects.
+- The 175 never-shown rows **leave the audit entirely** — an audit that counts strings no learner can
+  reach is measuring the wrong corpus.
+- A row may still be raised individually where display mode carries real meaning — a stacked
+  fraction, an integral with bounds, a multi-line derivation. This ruling refuses the blanket sweep,
+  not the specific case.
+
+---
+
 **E5-EX1 — the one ratified exception: a dense cell grid on a narrow stage may fall to ≥ 38px
 provided every target is unambiguous.** Ruled 2026-08-15 (S242) by the product owner, on the
 arithmetic below. This is an exception to E5's threshold, not a repeal of it: E5 continues to

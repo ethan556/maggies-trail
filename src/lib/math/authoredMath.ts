@@ -253,9 +253,38 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   collect(text, /(?<![\w/])\d+\s*\/\s*\d+(?![\w/])/g, candidates);
 
   if (includeArithmetic) {
-    const atom = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|\d*[A-Za-z](?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
+    /* S242 (ARCH-01, ruled 2026-08-15) — THE SINGLE-LETTER ATOM NEEDS WORD BOUNDARIES.
+     *
+     * `\d*[A-Za-z]` matched ONE letter with no regard for what sat either side of it, so the atom
+     * happily consumed the last letter of an English word and the run built an "expression" out of
+     * it. "Position −6" tokenized as the island `n −6`, and the learner saw "Positio" followed by a
+     * KaTeX italic n − 6 — the word broken, and the authored U+2212 re-set as binary subtraction.
+     * Measured across 39,236 authored strings before the fix: 3,113 such tears.
+     *
+     * The same hole destroyed radicals, which is what makes this one assertion worth its weight.
+     * In "a = sqrt(25)" the scanner took `a`, `=`, then the `s` of `sqrt`, emitting `a = s` and
+     * leaving `qrt(25)` as prose — 875 of the 879 raw-sqrt rows in the S242 index sit on
+     * arithmetic-on surfaces. With the boundaries, `s` followed by `q` is no longer an atom, the
+     * run cannot form, and the always-on `sqrt(...)` island at the top of `mathMatches` gets to
+     * claim the text instead. That ordering is why widening `includeArithmetic` must never precede
+     * this fix.
+     *
+     * Cost, measured the same way: ZERO. Every island the boundaries remove was a tear — the set
+     * of islands lost that were not tears is empty. `(x) = x^2`, `x + 3 = 10` and `2x + 4` all
+     * still typeset unchanged, because a parenthesised group, a number and a multi-digit
+     * coefficient are all still atoms. Fixtures in `authoredMath.wordBoundary.s242.test.ts`. */
+    const atom = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
     const operator = String.raw`(?:=|≤|≥|≠|<|>|\+|−|×|÷|·|\*)`;
-    collect(text, new RegExp(`${atom}(?:\\s*${operator}\\s*${atom})+`, "g"), candidates);
+    /* S242 (ARCH-01). The arithmetic run is collected into its OWN array. The S237 boundary guard
+     * below judges "is this candidate the tail of a longer expression the scanner cut into?" —
+     * a question that is only meaningful about candidates the ARITHMETIC scanner produced. It used
+     * to run over the whole `candidates` array, so it also judged the always-on islands collected
+     * at the top of this function, and dropped them for the crime of following an operator. That
+     * is why "a = sqrt(25)" rendered NOTHING once the atom stopped tearing: the radical island
+     * exists, and the guard threw it away because `=` sat in front of it. A power, a radical or a
+     * fraction after an equals sign is the single most ordinary shape in this corpus. */
+    const arithmetic: Match[] = [];
+    collect(text, new RegExp(`${atom}(?:\\s*${operator}\\s*${atom})+`, "g"), arithmetic);
     // S237. The operator class above deliberately omits the ASCII hyphen, so the scanner cannot
     // cross one — it restarts AFTER it and emits the tail as if it were a whole expression.
     // "x^2 - x - 6 = 0" produced the island "6 = 0"; "x^2 - 2x - 8 = 0" produced "8 = 0";
@@ -269,12 +298,13 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     // ranges ("Ages 3-5") and hyphenation, converting things that are not arithmetic at all.
     // Dropping is honest: those rows revert to genuinely-open MATH_TYPESETTING work, which is
     // where the audit already counts them.
-    for (let i = candidates.length - 1; i >= 0; i--) {
-      const before = text.slice(0, candidates[i].start).replace(/\s+$/, "");
-      if (/[-−+×÷*/^=<>≤≥≠·.)]$/.test(before) || isFalseNumericClaim(candidates[i].source)) {
-        candidates.splice(i, 1);
+    for (let i = arithmetic.length - 1; i >= 0; i--) {
+      const before = text.slice(0, arithmetic[i].start).replace(/\s+$/, "");
+      if (/[-−+×÷*/^=<>≤≥≠·.)]$/.test(before) || isFalseNumericClaim(arithmetic[i].source)) {
+        arithmetic.splice(i, 1);
       }
     }
+    candidates.push(...arithmetic);
   }
 
   // WS-G. That guard judges candidates the arithmetic SCANNER cut out of a longer expression, so

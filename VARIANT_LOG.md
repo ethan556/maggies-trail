@@ -4225,3 +4225,76 @@ sliders are named for the STATISTIC each sets, the image should describe the SHA
 label now speaks box-plot geometry — "The box runs 3 to 10, its centre line at 7, with whiskers
 reaching 0 and 14" — reporting the same five numbers in standard vocabulary while reusing none of
 the control names.
+
+### Session 242, part 7 — the ARCH rulings, landed
+
+**ARCH-01 approved and landed, and it was two lines, not one.** The word-boundary guard
+(`(?<![A-Za-z])…(?![A-Za-z])` on the single-letter atom) was prototyped against the corpus before
+being proposed: tears 3,113 → 0 across 39,236 authored strings, and **the set of islands lost that
+were NOT tears was empty** — the fix costs nothing.
+
+Landing it exposed a second defect in the same function that the prototype could not see. With
+`a = s` no longer forming, `"a = sqrt(25)"` still rendered nothing — because the **S237 boundary
+guard was mis-scoped**. That guard drops a candidate preceded by an operator, on the sound reasoning
+that such a candidate is the tail of a longer expression the arithmetic scanner cut into (it exists
+because `"x^2 - x - 6 = 0"` once emitted the island `6 = 0` — a FALSE STATEMENT in polished KaTeX).
+But it iterated the **whole** candidate array, including the always-on power, radical and fraction
+islands collected at the top of `mathMatches`. So it threw away every legitimate radical, power and
+fraction that happened to follow an equals sign — the single most ordinary shape in this corpus. The
+arithmetic run is now collected into its own array and only that array is judged.
+
+**The two together take the presentation index from 7,815 rows to 171.**
+
+| pattern | before | after |
+|---|---:|---:|
+| WORD_TEARING | 6,664 | **0** |
+| RAW_FRACTION | 875 | **0** |
+| RAW_CARET | 183 | 77 |
+| RAW_INEQUALITY | 58 | 58 |
+| RAW_DERIVATIVE | 20 | 20 |
+| RAW_PI | 13 | 14 |
+| RAW_INTEGRAL | 2 | 2 |
+| **total** | **7,815** | **171** |
+
+The fraction and caret collapse is the guard fix, not the boundary fix: those rows were never
+tokenizer failures, they were legitimate islands being discarded after an operator. What remains is
+mostly genuinely unmapped — `<=`/`>=` are absent from the symbol table (70 rows, 100% leak) — plus
+the derivative/integral prose that is correctly left as prose (~10% and ~8% real, respectively).
+
+`authoredMath.wordBoundary.s242.test.ts` guards all four properties, because a later edit to the
+atom could plausibly reopen any of them: tearing at both edges, radicals surviving an arithmetic-on
+surface, legitimate mathematics still typesetting (the "costs nothing" claim needs its own
+assertions), and the S237 false-statement guard still holding — a broken word is ugly, a false
+equation is wrong, and this fix must not trade the second for the first.
+
+**ARCH-02 ruled: display mode is a typography preference, not a rendering defect.** Recorded as
+`GRAPH_FIGURE_STANDARD.md` **A1-R1**. An expression that reaches the learner as correctly-set inline
+mathematics has rendered. Consequences, stated so the ruling is actionable: MATH-03 is scoped to the
+**868** strings that genuinely fail to render plus the tearing class ARCH-01 just closed; the 3,560
+mode-preference rows become an optional typography pass ranked by exposure and **must not be counted
+as open defects**; the 175 rows shown to no learner leave the audit entirely. Individual rows may
+still be raised where display mode carries real meaning — the ruling refuses the blanket sweep, not
+the specific case.
+
+**MAX_PLOT_COLUMNS ruled: keep 8, fit the generators to it.** The cap exists because past it "the
+picture stops being readable at a phone width and starts being a smear" — the same 390px arithmetic
+as E5, and at 19 columns a 390px stage gives ~17px per column with dots to stack inside. So the
+three outlier forms were changed instead of the renderer: `ddShapeOutlier` and `ddShapeFullStory`
+now place the outlier at base+5..base+7 and `ddShapeClusterCount` at `start + 7·step`. **An outlier
+needs its gap to be visible, not maximal** — the cluster occupies four positions, two to four sit
+empty, and the outlier stands alone, which is what "isolated beyond a gap" looks like on a plot
+someone can actually read. All eight dd\* forms now attach `plotData` **120/120**, GG-15 and the
+generated-render sweep both pass, and D-18 is fully closed rather than 5-of-8.
+
+**Gate results.**
+
+| Gate | Result |
+|---|---|
+| `npm run typecheck` | EXIT 0 |
+| full suite (group protocol) | **13,776 passed / 0 failed across 387 files** |
+| `npm run validate:content` | 1840/1840 clean |
+| `npm run lint:pedagogy` | 1711/1711 clean |
+| `npm run validate:native` | EXIT 1 on `node_modules` alone |
+| `node scripts/check-registration.mjs` | EXIT 0 |
+| `npm run build` | EXIT 0, 0 tracked files changed |
+| `generator-guard check` | 29/29, re-sealed |
