@@ -78,14 +78,21 @@ const INDEXES: Index[] = [
   {
     file: "MATH_MACHINE_EXPRESSION_LEAK_INDEX.csv",
     what: "Implementation-form mathematics that survives tokenization and reaches the screen as written.",
-    test: (r) => {
+    test: (r, raw) => {
       if (/\bMath\.[a-z]/i.test(r)) return "javascript expression";
       if (/\d[eE][+-]\d\d\b/.test(r)) return "exponential notation";
-      // An asterisk BETWEEN OPERANDS. The first cut matched any single `*` and reported 197 rows of
-      // markdown italics — `*then*`, `*after*` — as multiplication. Those are a real defect too, but
-      // a different one with a different fix, so they get their own shape below.
-      if (/[\dA-Za-z)]\s*\*\s*[\dA-Za-z(]/.test(r)) return "asterisk multiplication";
-      if (/(?<!\*)\*(?!\*)/.test(r)) return "markdown italic not rendered";
+      // An asterisk BETWEEN OPERANDS. Two passes of getting this wrong are recorded here because
+      // both are easy to repeat. First cut: matched any single `*` and called 197 rows of markdown
+      // italics — `*then*`, `*after*` — multiplication. Second cut: tested the RESIDUE for operands,
+      // which mislabelled 61 rows the other way, because in "For f(x) = 5 * 3^x" the tokenizer has
+      // already claimed `3^x`, leaving the residue "5 * ," with nothing to the right of the
+      // asterisk. Whether the `*` SURVIVES is a question about the residue; what KIND of asterisk it
+      // is, is a question about the raw text. They are asked separately.
+      if (/(?<!\*)\*(?!\*)/.test(r)) {
+        return /[\dA-Za-z)]\s*\*\s*[-−+]?\s*[\dA-Za-z(]/.test(raw)
+          ? "asterisk multiplication"
+          : "markdown italic not rendered";
+      }
       if (/<=|>=/.test(r)) return "ASCII inequality";
       if (/\bsqrt\s*\(/i.test(r)) return "raw sqrt(";
       if (/\^/.test(r)) return "raw caret";
@@ -202,7 +209,10 @@ function examine(text: string, arithmetic: boolean, meta: Omit<Row, "surface" | 
    * emphasis as multiplication and 16 as pi-times-something. A SINGLE asterisk is NOT consumed by
    * either renderer, so `*then*` really does render as literal asterisks; that survives here on
    * purpose and is reported under its own shape. */
-  const rendered = text.split("**").join("");
+  // Bold markers, then italic RUNS, exactly as MathProse resolves them — including the rule that
+  // keeps "5 * 3^x" out of it. An asterisk surviving both is one the learner really sees.
+  const rendered = text.split("**").join("")
+    .replace(/(?<![A-Za-z0-9])\*(?![\s*])([^*\n]*?)(?<![\s*])\*(?![A-Za-z0-9])/g, "$1");
   const residue = authoredMathParts(rendered, { includeArithmetic: arithmetic })
     .map((p) => (p.source === undefined ? p.text : ""))
     .join("");

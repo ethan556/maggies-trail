@@ -78,6 +78,10 @@ export function Narration({ step, stepKey }: { step: TStep; stepKey: string }) {
   );
 }
 
+/** Step body prose. Bold is split here; ITALICS are handled inside `MathProse`, which every
+ *  segment below is passed through — so `*then*` renders emphasised in body text and in widget
+ *  prompts from one rule, rather than from two that can drift. See MathText.tsx for why that rule
+ *  has to be careful: the same character is multiplication in "f(x) = 5 * 3^x". */
 export function Rich({ text, early }: { text: string; early?: boolean }) {
   const parts = text.split("**");
   return (

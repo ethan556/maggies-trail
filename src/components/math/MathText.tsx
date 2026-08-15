@@ -61,6 +61,47 @@ function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) 
   ));
 }
 
+/* S242. ITALICS, AND WHY THE RULE IS THE CAREFUL PART.
+ *
+ * `*emphasis*` was reaching the screen with its asterisks: both renderers split on `**` and
+ * nothing handled a single one. 138 authored strings are affected — "A word like *then* or
+ * *after* points to order", "*more* does not always mean add" — and in every one the emphasis is
+ * doing real instructional work, marking the keyword the sentence is about.
+ *
+ * The reason it was never fixed by simply splitting on `*` is that THE SAME CHARACTER IS
+ * MULTIPLICATION in this corpus: "For f(x) = 5 * 3^x, what is f(2)?". Split naively and that
+ * prompt becomes "For f(x) = 5 " + italic " 3^x, what is f(2)?" with the asterisks eaten — a
+ * silently wrong equation, which is far worse than a visible asterisk.
+ *
+ * So an italic run must be evidence of emphasis rather than a guess:
+ *   · the opening `*` is not preceded by a letter or digit  → "2*3*4" and "a*b*c" cannot start one
+ *   · the opening `*` is not followed by whitespace          → "5 * 3^x" cannot start one
+ *   · the closing `*` is not preceded by whitespace          → an unclosed run cannot swallow a line
+ *   · the closing `*` is not followed by a letter or digit
+ *   · the content holds no `*` and no newline                → runs cannot nest or straddle lines
+ * Measured against the whole corpus plus a sample from every generator: 223 strings carry a single
+ * asterisk after bold is removed; 138 match this rule and every one is emphasis; 85 do not match
+ * and every one is multiplication. No string falls on the wrong side.
+ *
+ * Bold is split FIRST so `**a *b* c**` works, and the math tokenizer runs inside every leaf so
+ * `**8 × 3**` and `*x^2*` still typeset. Text with no emphasis at all — the overwhelming majority
+ * of callers — keeps the original fast path and its exact output, no extra wrapping element. */
+const ITALIC_RUN = /(?<![A-Za-z0-9])\*(?![\s*])([^*\n]*?)(?<![\s*])\*(?![A-Za-z0-9])/g;
+
+/** Split one bold-free segment into italic and plain runs, in order. */
+function italicRuns(segment: string): Array<{ text: string; italic: boolean }> {
+  const runs: Array<{ text: string; italic: boolean }> = [];
+  let cursor = 0;
+  for (const match of segment.matchAll(ITALIC_RUN)) {
+    const start = match.index ?? 0;
+    if (start > cursor) runs.push({ text: segment.slice(cursor, start), italic: false });
+    runs.push({ text: match[1], italic: true });
+    cursor = start + match[0].length;
+  }
+  if (cursor < segment.length) runs.push({ text: segment.slice(cursor), italic: false });
+  return runs;
+}
+
 /** Mixed prose + authored power shorthand. Only the power tokens are sent to
  * KaTeX; surrounding words and punctuation retain normal wrapping and speech.
  *
@@ -69,16 +110,27 @@ function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) 
  * `MathProse` text used to diverge here — `**or**` inside a widget prompt rendered as literal
  * asterisks, since only `Rich` split on them. Fixed by splitting first (odd segments bold),
  * then running the SAME math tokenizer over every segment, so `**8 × 3**` still gets its math
- * treatment inside the bold. Text with no `**` at all — the overwhelming majority of callers —
- * takes a fast path that reproduces the pre-fix output exactly (no extra wrapping element). */
+ * treatment inside the bold. */
 export function MathProse({ text, includeArithmetic = false }: { text: string; includeArithmetic?: boolean }) {
-  if (!text.includes("**")) return <>{mathParts(text, includeArithmetic, "m")}</>;
+  const hasBold = text.includes("**");
+  if (!hasBold) {
+    const runs = italicRuns(text);
+    if (runs.length === 1 && !runs[0].italic) return <>{mathParts(text, includeArithmetic, "m")}</>;
+    return <>{runs.map((run, ri) =>
+      run.italic
+        ? <em key={ri}>{mathParts(run.text, includeArithmetic, `m${ri}-`)}</em>
+        : <Fragment key={ri}>{mathParts(run.text, includeArithmetic, `m${ri}-`)}</Fragment>
+    )}</>;
+  }
   const segments = text.split("**");
-  return <>{segments.map((seg, si) =>
-    si % 2 === 1
-      ? <strong key={si}>{mathParts(seg, includeArithmetic, `${si}-`)}</strong>
-      : <Fragment key={si}>{mathParts(seg, includeArithmetic, `${si}-`)}</Fragment>
-  )}</>;
+  return <>{segments.map((seg, si) => {
+    const inner = italicRuns(seg).map((run, ri) =>
+      run.italic
+        ? <em key={ri}>{mathParts(run.text, includeArithmetic, `${si}-${ri}-`)}</em>
+        : <Fragment key={ri}>{mathParts(run.text, includeArithmetic, `${si}-${ri}-`)}</Fragment>
+    );
+    return si % 2 === 1 ? <strong key={si}>{inner}</strong> : <Fragment key={si}>{inner}</Fragment>;
+  })}</>;
 }
 
 export function MathDisplay({ tex }: { tex: string }) {
