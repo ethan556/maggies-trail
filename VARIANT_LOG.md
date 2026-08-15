@@ -4417,3 +4417,29 @@ disagreed with every Linux run after it.
 
 Gates: typecheck 0 · full suite **13,802 passed / 0 failed across 389 files** · content 1840/1840 ·
 pedagogy 1711/1711 · registration OK · build EXIT 0 and byte-pure.
+
+### Session 242, part 11 — PERF-01 route budgets
+
+`scripts/audit/route-budgets.mjs` + `ROUTE_BUDGETS.json` (32 routes), wired as
+`npm run audit:route-budgets`. Reads `.next/app-build-manifest.json` rather than scraping build
+stdout, because stdout formatting is not an API.
+
+**A ratchet, not a target**: each budget is the measured S242 value plus max(5%, 10 kB). An
+aspirational budget nobody can pass gets deleted, and a deleted budget protects nothing. A route
+with NO budget is also a failure, not a pass — silence on new routes is how a budget file quietly
+stops covering the app.
+
+**Stated plainly in the script**: this measure runs larger than the "First Load JS" Next prints
+(~3.4 MB vs ~918 kB for `/review`) because the manifest lists chunks Next excludes from that
+headline. The two numbers must not be compared. What matters for a ratchet is a consistent
+artifact-derived measure; absolute page weight needs a network trace and is PERF-01's remaining work.
+
+`/practice/[chapterId]` and `/review` are budgeted at their current size, not their right size —
+they pull the whole generator registry and widget library client-side. Splitting that is real work;
+this only guarantees they do not get worse meanwhile. Lower the numbers in the same commit that
+splits them.
+
+Verified it fails closed: dropping `/review`'s budget to 100 kB exits 1 with the breach named.
+
+Gates: typecheck 0 · full suite **13,802 passed / 0 failed across 389 files** · content 1840/1840 ·
+pedagogy 1711/1711 · registration OK.
