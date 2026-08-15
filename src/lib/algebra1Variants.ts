@@ -38,18 +38,18 @@ function exponential(r:Rand,b:Band,form:string):Variant{
  const [concept,surface]=form.split('__');
  if(concept==='exp-compare'){
   const x=pick(r,2,maxByBand(b,3,4,5)),a=pick(r,1,5),c=pick(r,1,5),p=pick(r,2,4),q=pick(r,2,5);const fv=a*p**x,gv=c*q**x;
-  if(surface==='numeric')return num(EXP,`Evaluate g(x) = ${c} * ${q}^x at x = ${x}.`,gv,[[c*q*x,'That multiplies by the exponent once instead of using repeated multiplication.'],[q**x,'That omits the initial coefficient.']],`Substitution gives g(${x}) = ${c} * ${q}^${x} = ${gv}.`,0,{kind:'exp-eval',a:c,b:q,v:x});
-  const answer=fv===gv?'They are equal':fv>gv?'f(x)':'g(x)';return mcq(r,EXP,`At x = ${x}, which is larger: f(x) = ${a} * ${p}^x or g(x) = ${c} * ${q}^x?`,[answer,`Evaluating both at x = ${x} gives ${fv} and ${gv}, so ${answer} is the correct comparison.`],[['The function with the larger initial coefficient always wins','The initial coefficient alone cannot decide the comparison after repeated growth.'],['The function with the larger base always wins','A larger base can be offset at a specific input by the other initial coefficient.'],['There is not enough information','Both formulas and the comparison input are provided, so direct evaluation decides.']]);
+  if(surface==='numeric')return num(EXP,`Evaluate g(x) = ${c} · ${q}^x at x = ${x}.`,gv,[[c*q*x,'That multiplies by the exponent once instead of using repeated multiplication.'],[q**x,'That omits the initial coefficient.']],`Substitution gives g(${x}) = ${c} · ${q}^${x} = ${gv}.`,0,{kind:'exp-eval',a:c,b:q,v:x});
+  const answer=fv===gv?'They are equal':fv>gv?'f(x)':'g(x)';return mcq(r,EXP,`At x = ${x}, which is larger: f(x) = ${a} · ${p}^x or g(x) = ${c} · ${q}^x?`,[answer,`Evaluating both at x = ${x} gives ${fv} and ${gv}, so ${answer} is the correct comparison.`],[['The function with the larger initial coefficient always wins','The initial coefficient alone cannot decide the comparison after repeated growth.'],['The function with the larger base always wins','A larger base can be offset at a specific input by the other initial coefficient.'],['There is not enough information','Both formulas and the comparison input are provided, so direct evaluation decides.']]);
  }
  if(concept==='exp-graph-read'){
   const a=pick(r,2,12),base=choose(r,[2,3,4,0.5,0.25] as const);
-  if(surface==='numeric')return num(EXP,`For f(x) = ${a} * ${base}^x, what is the y-intercept?`,a,[[base,'The base controls growth or decay, but the intercept occurs at x = 0.'],[a*base,'That evaluates at x = 1 rather than x = 0.']],`At x = 0, ${base}^0 = 1, so the y-intercept is ${a}.`,0,{kind:'exp-zero',a,b:base});
-  const kind=base>1?'increasing exponential growth':'decreasing exponential decay';return mcq(r,EXP,`Which description matches f(x) = ${a} * ${base}^x?`,[`${kind} with y-intercept ${a}`,`The factor ${base} determines ${base>1?'growth':'decay'}, and f(0) = ${a}.`],[`${kind} with y-intercept ${base}`,'The base is not the y-intercept; substituting x = 0 leaves the coefficient.'],[base>1?'decreasing exponential decay':'increasing exponential growth','The direction is reversed: compare the base with 1.'],['a line with constant slope','Exponential change uses a constant ratio rather than a constant difference.']);
+  if(surface==='numeric')return num(EXP,`For f(x) = ${a} · ${base}^x, what is the y-intercept?`,a,[[base,'The base controls growth or decay, but the intercept occurs at x = 0.'],[a*base,'That evaluates at x = 1 rather than x = 0.']],`At x = 0, ${base}^0 = 1, so the y-intercept is ${a}.`,0,{kind:'exp-zero',a,b:base});
+  const kind=base>1?'increasing exponential growth':'decreasing exponential decay';return mcq(r,EXP,`Which description matches f(x) = ${a} · ${base}^x?`,[`${kind} with y-intercept ${a}`,`The factor ${base} determines ${base>1?'growth':'decay'}, and f(0) = ${a}.`],[`${kind} with y-intercept ${base}`,'The base is not the y-intercept; substituting x = 0 leaves the coefficient.'],[base>1?'decreasing exponential decay':'increasing exponential growth','The direction is reversed: compare the base with 1.'],['a line with constant slope','Exponential change uses a constant ratio rather than a constant difference.']);
  }
  if(concept==='exp-growth-decay'){
   const decay=r()<0.5,q=choose(r,[2,3,4] as const),base=decay?1/q:q,x=pick(r,2,4),unit=pick(r,2,8),a=decay?unit*q**x:unit,ans=round(a*base**x);
-  if(surface==='numeric')return num(EXP,`Evaluate f(x) = ${a} * ${decay?`(1/${q})`:`${q}`}^x at x = ${x}.`,ans,[[a*base*x,'That treats the exponent as ordinary multiplication rather than repeated multiplication.'],[a,'That leaves out the repeated growth or decay factor.']],`Applying the factor ${x} times gives f(${x}) = ${ans}.`,0,decay?{kind:'exp-decay',a,den:q,steps:x}:{kind:'exp-eval',a,b:q,v:x});
-  return mcq(r,EXP,`Is f(x) = ${a} * ${decay?`(1/${q})`:`${q}`}^x exponential growth or decay?`,[decay?'decay':'growth',`The base is ${decay?'between 0 and 1':'greater than 1'}, so each step ${decay?'shrinks':'grows'} the quantity.`],[[decay?'growth':'decay','That reverses the effect of the exponential base.'],['linear','A constant multiplicative factor defines exponential, not linear, change.'],['constant','The output changes whenever x changes because the base is not 1.']]);
+  if(surface==='numeric')return num(EXP,`Evaluate f(x) = ${a} · ${decay?`(1/${q})`:`${q}`}^x at x = ${x}.`,ans,[[a*base*x,'That treats the exponent as ordinary multiplication rather than repeated multiplication.'],[a,'That leaves out the repeated growth or decay factor.']],`Applying the factor ${x} times gives f(${x}) = ${ans}.`,0,decay?{kind:'exp-decay',a,den:q,steps:x}:{kind:'exp-eval',a,b:q,v:x});
+  return mcq(r,EXP,`Is f(x) = ${a} · ${decay?`(1/${q})`:`${q}`}^x exponential growth or decay?`,[decay?'decay':'growth',`The base is ${decay?'between 0 and 1':'greater than 1'}, so each step ${decay?'shrinks':'grows'} the quantity.`],[[decay?'growth':'decay','That reverses the effect of the exponential base.'],['linear','A constant multiplicative factor defines exponential, not linear, change.'],['constant','The output changes whenever x changes because the base is not 1.']]);
  }
  if(concept==='exp-match-base'){
   const base=pick(r,2,5),x=pick(r,2,maxByBand(b,4,5,6)),value=base**x;
@@ -62,7 +62,7 @@ function exponential(r:Rand,b:Band,form:string):Variant{
   return mcq(r,EXP,`A quantity ${growth?'grows':'decreases'} ${rate}% each step. What is the exponential factor?`,[String(factor),`Convert ${rate}% to ${rate/100} and ${growth?'add it to':'subtract it from'} 1, giving ${factor}.`],[[String(rate/100),'That is the rate alone, not the full multiplier applied to the previous amount.'],[String(growth?1-rate/100:1+rate/100),'That uses the factor for the opposite direction of change.'],[String(rate),'A percent must be converted to a decimal before it can be used as a factor.']]);
  }
  const a=pick(r,2,6),ratio=choose(r,[2,3] as const),x=pick(r,3,5),ans=a*ratio**x;
- if(surface==='numeric')return num(EXP,`For the exponential f(x) = ${a} * ${ratio}^x, find f(${x}).`,ans,[[a*ratio*x,'That multiplies by the exponent instead of using repeated multiplication.'],[ratio**x,'That drops the starting coefficient.']],`Substitution gives ${a} * ${ratio}^${x} = ${ans}.`,0,{kind:'exp-eval',a,b:ratio,v:x});
+ if(surface==='numeric')return num(EXP,`For the exponential f(x) = ${a} · ${ratio}^x, find f(${x}).`,ans,[[a*ratio*x,'That multiplies by the exponent instead of using repeated multiplication.'],[ratio**x,'That drops the starting coefficient.']],`Substitution gives ${a} · ${ratio}^${x} = ${ans}.`,0,{kind:'exp-eval',a,b:ratio,v:x});
  const seqType=r()<0.5?'arithmetic':'geometric',start=pick(r,2,6),change=pick(r,2,4),seq=seqType==='arithmetic'?[start,start+change,start+2*change,start+3*change]:[start,start*change,start*change**2,start*change**3];return mcq(r,EXP,`Classify the sequence ${seq.join(', ')}.`,[seqType,`The sequence has a constant ${seqType==='arithmetic'?'difference':'ratio'}, so it is ${seqType}.`],[[seqType==='arithmetic'?'geometric':'arithmetic','That checks the wrong kind of repeated change.'],['constant','The terms change from one position to the next.'],['neither','A consistent difference or ratio is visible in every step.']]);
 }
 
@@ -71,12 +71,12 @@ function polynomials(r:Rand,b:Band,form:string):Variant{
  const [concept,surface]=form.split('__');
  if(concept==='exponent-power'){
   const m=pick(r,2,4),n=pick(r,2,4),c=pick(r,2,4);
-  if(surface==='numeric')return num(POLY,`Simplify (x^${m})^${n} to x^k. What is k?`,m*n,[[m+n,'That adds the exponents; a power of a power multiplies them.'],[m**n,'That raises the exponent itself instead of multiplying the two exponents.']],`A power of a power multiplies exponents: ${m} * ${n} = ${m*n}.`);
+  if(surface==='numeric')return num(POLY,`Simplify (x^${m})^${n} to x^k. What is k?`,m*n,[[m+n,'That adds the exponents; a power of a power multiplies them.'],[m**n,'That raises the exponent itself instead of multiplying the two exponents.']],`A power of a power multiplies exponents: ${m} · ${n} = ${m*n}.`);
   const correct=`${c**n}x^${m*n}`;return mcq(r,POLY,`Simplify (${c}x^${m})^${n}.`,[correct,`Raise the coefficient and multiply the exponents, giving ${correct}.`],[[`${c*n}x^${m*n}`,'The coefficient must be raised to the outside power, not multiplied by it.'],[`${c**n}x^${m+n}`,'A power of a power multiplies exponents rather than adding them.'],[`${c}x^${m*n}`,'The coefficient is also inside the parentheses and must be raised.']]);
  }
  if(concept==='exponent-zero-negative'){
   const p=pick(r,3,7),q=pick(r,1,p-1),ans=p-q;
-  if(surface==='numeric')return num(POLY,`Simplify x^${p} * x^(-${q}) to x^k. What is k?`,ans,[[p+q,'The negative exponent contributes subtraction, not addition of its magnitude.'],[p*q,'Multiplying powers adds signed exponents; it does not multiply them.']],`Add the signed exponents: ${p} + (-${q}) = ${ans}.`);
+  if(surface==='numeric')return num(POLY,`Simplify x^${p} · x^(-${q}) to x^k. What is k?`,ans,[[p+q,'The negative exponent contributes subtraction, not addition of its magnitude.'],[p*q,'Multiplying powers adds signed exponents; it does not multiply them.']],`Add the signed exponents: ${p} + (-${q}) = ${ans}.`);
   const base=pick(r,2,6),e=pick(r,2,4),den=base**e;return mcq(r,POLY,`What is ${base}^(-${e})?`,[`1/${den}`,`A negative exponent takes the reciprocal: ${base}^(-${e}) = 1/${base}^${e} = 1/${den}.`],[[String(-den),'The exponent is negative, but the value is a positive reciprocal.'],[`1/${base*e}`,'The denominator uses a power, not base times exponent.'],[String(den),'That drops the reciprocal required by the negative exponent.']]);
  }
  if(concept==='factor-difference-squares'){
@@ -96,7 +96,7 @@ function polynomials(r:Rand,b:Band,form:string):Variant{
  }
  if(concept==='poly-mul-binomial'){
   const a=pick(r,1,3),b1=pick(r,1,6),c=pick(r,1,3),d=pick(r,1,6),A=a*c,B=a*d+b1*c,C=b1*d;
-  if(surface==='numeric')return num(POLY,`Multiply (${xTerm(a)} + ${b1})(${xTerm(c)} + ${d}). What is the constant term?`,C,[[b1+d,'That adds the constants rather than multiplying them.'],[B,'That is the middle-term coefficient, not the constant term.']],`The constant term is ${b1} * ${d} = ${C}.`);
+  if(surface==='numeric')return num(POLY,`Multiply (${xTerm(a)} + ${b1})(${xTerm(c)} + ${d}). What is the constant term?`,C,[[b1+d,'That adds the constants rather than multiplying them.'],[B,'That is the middle-term coefficient, not the constant term.']],`The constant term is ${b1} · ${d} = ${C}.`);
   const correct=`${xTerm(A,2)} + ${B}x + ${C}`;return mcq(r,POLY,`Multiply (${xTerm(a)} + ${b1})(${xTerm(c)} + ${d}).`,[correct,`All four partial products combine to ${correct}.`],[[`${xTerm(A,2)} + ${a*d}x + ${C}`,'That omits one of the two middle partial products.'],[`${xTerm(a+c,2)} + ${b1+d}`,'Coefficients and constants cannot be combined before distributing.'],[`${xTerm(A,2)} + ${B}x + ${b1+d}`,'The constant term comes from multiplication, not addition.']]);
  }
  const a=pick(r,2,8),kind=r()<0.5?'square':'difference';
@@ -108,10 +108,10 @@ const FS='a1-functions-sequences';
 function functionsSequences(r:Rand,b:Band,form:string):Variant{
  const [concept,surface]=form.split('__');
  if(concept==='fn-arith-rule'){
-  const a=pick(r,1,8),d=pick(r,2,maxByBand(b,5,8,12)),n=pick(r,5,10),ans=a+(n-1)*d;return num(FS,`An arithmetic sequence has a1 = ${a} and common difference ${d}. What is a${n}?`,ans,[[a+n*d,'That uses n jumps; from the first term to the nth term there are n - 1 jumps.'],[n*d,'That omits the starting term.']],`a${n} = ${a} + (${n} - 1) * ${d} = ${ans}.`);
+  const a=pick(r,1,8),d=pick(r,2,maxByBand(b,5,8,12)),n=pick(r,5,10),ans=a+(n-1)*d;return num(FS,`An arithmetic sequence has a1 = ${a} and common difference ${d}. What is a${n}?`,ans,[[a+n*d,'That uses n jumps; from the first term to the nth term there are n - 1 jumps.'],[n*d,'That omits the starting term.']],`a${n} = ${a} + (${n} - 1) · ${d} = ${ans}.`);
  }
  if(concept==='fn-choose-formula'||concept==='fn-geo-nth'||concept==='fn-geo-rule'){
-  const a=pick(r,1,5),q=pick(r,2,4),n=pick(r,4,7),ans=a*q**(n-1);return num(FS,`A geometric sequence has a1 = ${a} and common ratio ${q}. What is a${n}?`,ans,[[a*q*n,'That multiplies by the ratio only once and then by the term number.'],[a*q**n,'That uses one too many ratio factors.']],`a${n} = ${a} * ${q}^(${n}-1) = ${ans}.`);
+  const a=pick(r,1,5),q=pick(r,2,4),n=pick(r,4,7),ans=a*q**(n-1);return num(FS,`A geometric sequence has a1 = ${a} and common ratio ${q}. What is a${n}?`,ans,[[a*q*n,'That multiplies by the ratio only once and then by the term number.'],[a*q**n,'That uses one too many ratio factors.']],`a${n} = ${a} · ${q}^(${n}-1) = ${ans}.`);
  }
  if(concept==='fn-classify'){
   const type=choose(r,['arithmetic','geometric','neither'] as const),a=pick(r,2,6),d=pick(r,2,4);const seq=type==='arithmetic'?[a,a+d,a+2*d,a+3*d]:type==='geometric'?[a,a*d,a*d*d,a*d*d*d]:[a,a+d,a+3*d,a+6*d];return mcq(r,FS,`Classify the sequence ${seq.join(', ')}.`,[type,`The term-to-term changes match the definition of a ${type} sequence.`],[[type==='arithmetic'?'geometric':'arithmetic','That checks the wrong invariant: compare differences and ratios across every adjacent pair.'],['constant','The terms do not stay fixed.'],[type==='neither'?'geometric':'neither','A consistent structure is visible when the appropriate change is checked.']]);
@@ -125,7 +125,7 @@ function functionsSequences(r:Rand,b:Band,form:string):Variant{
   const repeatedX=r()<0.5;const pairsText=repeatedX?'(1, 2), (1, 5), (3, 7)':'(1, 2), (2, 2), (3, 7)';return mcq(r,FS,`Do the pairs ${pairsText} define a function?`,[repeatedX?'No':'Yes',repeatedX?'Input 1 is paired with two different outputs, so the relation is not a function.':'Each input appears with exactly one output, so the relation is a function.'],[[repeatedX?'Yes':'No','Repeated output values are allowed; only repeated inputs with different outputs violate the definition.'],['Only if every output is different','A function may send several inputs to the same output.'],['There is not enough information','The listed ordered pairs are enough to inspect every input-output assignment.']]);
  }
  if(concept==='fn-growth-apply'){
-  const a=pick(r,2,6),q=pick(r,2,4),days=pick(r,2,5),ans=a*q**days;return num(FS,`A population starts at ${a} and multiplies by ${q} each day. What is the population after ${days} days?`,ans,[[a*q*days,'That treats repeated multiplication as one multiplication followed by ordinary scaling.'],[a*q**(days-1),'That applies the growth factor one day too few.']],`After ${days} daily multiplications, the population is ${a} * ${q}^${days} = ${ans}.`);
+  const a=pick(r,2,6),q=pick(r,2,4),days=pick(r,2,5),ans=a*q**days;return num(FS,`A population starts at ${a} and multiplies by ${q} each day. What is the population after ${days} days?`,ans,[[a*q*days,'That treats repeated multiplication as one multiplication followed by ordinary scaling.'],[a*q**(days-1),'That applies the growth factor one day too few.']],`After ${days} daily multiplications, the population is ${a} · ${q}^${days} = ${ans}.`);
  }
  throw new Error(`unsupported Algebra I functions form ${form}`);
 }
@@ -134,7 +134,7 @@ const LF='a1-linear-functions';
 function linearFunctions(r:Rand,b:Band,form:string):Variant{
  const [concept,surface]=form.split('__');
  if(concept==='form-conversion'){
-  const m=pick(r,-5,5)||2,x1=pick(r,-4,4),y1=pick(r,-8,8),intercept=y1-m*x1;return num(LF,`Convert y - (${y1}) = ${m}(x - (${x1})) to y = mx + b. What is b?`,intercept,[[y1+m*x1,'That adds mx1 instead of subtracting it when solving for b.'],[y1,'That leaves the point value unchanged and ignores the horizontal shift.']],`Using b = y1 - m*x1 gives ${y1} - ${m}*${x1} = ${intercept}.`,0,{kind:'lf-point-slope-b',y:y1,m,x:x1});
+  const m=pick(r,-5,5)||2,x1=pick(r,-4,4),y1=pick(r,-8,8),intercept=y1-m*x1;return num(LF,`Convert y - (${y1}) = ${m}(x - (${x1})) to y = mx + b. What is b?`,intercept,[[y1+m*x1,'That adds mx1 instead of subtracting it when solving for b.'],[y1,'That leaves the point value unchanged and ignores the horizontal shift.']],`Using b = y1 - m · x1 gives ${y1} - ${m} · ${x1} = ${intercept}.`,0,{kind:'lf-point-slope-b',y:y1,m,x:x1});
  }
  if(concept==='intercepts'){
   const m=pick(r,-5,5)||3,c=pick(r,-8,8);
@@ -143,7 +143,7 @@ function linearFunctions(r:Rand,b:Band,form:string):Variant{
  }
  if(concept==='line-from-point-slope'){
   const m=pick(r,-4,4)||2,x=pick(r,-4,4),y=pick(r,-6,8),c=y-m*x;
-  if(surface==='numeric')return num(LF,`A line through (${x}, ${y}) has slope ${m}. In y = ${m}x + b, find b.`,c,[[y+m*x,'That moves mx in the wrong direction when isolating b.'],[y,'That ignores the x-coordinate contribution.']],`Substitute the point: ${y} = ${m}*${x} + b, so b = ${c}.`,0,{kind:'lf-point-slope-b',y,m,x});
+  if(surface==='numeric')return num(LF,`A line through (${x}, ${y}) has slope ${m}. In y = ${m}x + b, find b.`,c,[[y+m*x,'That moves mx in the wrong direction when isolating b.'],[y,'That ignores the x-coordinate contribution.']],`Substitute the point: ${y} = ${m} · ${x} + b, so b = ${c}.`,0,{kind:'lf-point-slope-b',y,m,x});
   const correct=linear(m,c);return mcq(r,LF,`Which equation is the line through (${x}, ${y}) with slope ${m}?`,[correct,`Substituting the point into ${correct} confirms the line and its slope.`],[[linear(-m,c),'That reverses the slope while keeping the same intercept.'],[linear(m,y),'The point’s y-coordinate is not automatically the y-intercept.'],[linear(m,-c),'The intercept sign is reversed.']]);
  }
  if(concept==='line-from-two-points'){
@@ -152,7 +152,7 @@ function linearFunctions(r:Rand,b:Band,form:string):Variant{
  if(concept==='parallel-perpendicular'){
   const m=choose(r,[-4,-3,-2,2,3,4] as const),x=pick(r,-3,3),y=pick(r,-6,8);
   if(surface==='numeric'){const c=y-m*x;return num(LF,`Find b for the line y = ${m}x + b through (${x}, ${y}), parallel to a line of slope ${m}.`,c,[[y+m*x,'That moves mx in the wrong direction.'],[y,'That ignores the point’s x-coordinate.']],`Parallel lines keep slope ${m}; substitution gives b = ${c}.`,0,{kind:'lf-point-slope-b',y,m,x})}
-  return mcq(r,LF,`Which slope is perpendicular to a line with slope ${m}?`,[String(-1/m),`Perpendicular slopes are negative reciprocals, so ${m} * ${-1/m} = -1.`],[[String(1/m),'This takes the reciprocal but does not reverse the sign.'],[String(-m),'This changes the sign but does not take the reciprocal.'],[String(m),'Equal slopes describe parallel lines, not perpendicular lines.']]);
+  return mcq(r,LF,`Which slope is perpendicular to a line with slope ${m}?`,[String(-1/m),`Perpendicular slopes are negative reciprocals, so ${m} · ${-1/m} = -1.`],[[String(1/m),'This takes the reciprocal but does not reverse the sign.'],[String(-m),'This changes the sign but does not take the reciprocal.'],[String(m),'Equal slopes describe parallel lines, not perpendicular lines.']]);
  }
  if(concept==='point-slope-read'){
   const m=pick(r,-4,4)||2,x=pick(r,-5,5),y=pick(r,-7,7);
@@ -169,7 +169,7 @@ function linearFunctions(r:Rand,b:Band,form:string):Variant{
  }
  if(concept==='slope-intercept-read'){
   const m=pick(r,-5,5)||2,c=pick(r,-8,8),x=pick(r,-3,4),y=m*x+c;
-  if(surface==='numeric')return num(LF,`For y = ${m}x ${signed(c)}, find y when x = ${x}.`,y,[[m+c,'That evaluates at x = 1 rather than the given input.'],[x+c,'That adds the input without multiplying by the slope.']],`Substitution gives y = ${m}*${x} ${signed(c)} = ${y}.`,0,{kind:'lf-evaluate',m,c,x});
+  if(surface==='numeric')return num(LF,`For y = ${m}x ${signed(c)}, find y when x = ${x}.`,y,[[m+c,'That evaluates at x = 1 rather than the given input.'],[x+c,'That adds the input without multiplying by the slope.']],`Substitution gives y = ${m} · ${x} ${signed(c)} = ${y}.`,0,{kind:'lf-evaluate',m,c,x});
   return mcq(r,LF,`In y = ${m}x ${signed(c)}, what is the y-intercept?`,[String(c),'The constant term is the y-value when x = 0.'],[[String(m),'That is the slope coefficient.'],[String(-c),'The intercept keeps its displayed sign.'],[String(m+c),'That is the output at x = 1.']]);
  }
  if(concept==='slope-sign'){
@@ -230,21 +230,21 @@ function radicals(r:Rand,b:Band,form:string):Variant{
   const [a,c,h]=choose(r,triples);return num(RAD,concept==='rad-distance'?`Find the distance from (0, 0) to (${a}, ${c}).`:`A right triangle has legs ${a} and ${c}. Find the hypotenuse.`,h,[[a+c,'That adds leg lengths rather than using the Pythagorean relationship.'],[a*a+c*c,'That is c^2 before taking the square root.']],`The squared distance is ${a*a}+${c*c}=${h*h}, so the distance is ${h}.`,0,{kind:'pythagorean-triple',a,c,h,mode:concept==='rad-distance'?'distance':'hypotenuse'});
  }
  if(concept==='rad-distribute'){
-  const n=pick(r,2,15);return num(RAD,`Evaluate sqrt(${n}) * sqrt(${n}).`,n,[[n*n,'That squares the radicand instead of recognizing that the roots multiply back to the radicand.'],[2*n,'That doubles the radicand.']],`A positive square root multiplied by itself returns the radicand ${n}.`,0,{kind:'radical-product',c1:1,r1:n,c2:1,r2:n,target:1});
+  const n=pick(r,2,15);return num(RAD,`Evaluate sqrt(${n}) · sqrt(${n}).`,n,[[n*n,'That squares the radicand instead of recognizing that the roots multiply back to the radicand.'],[2*n,'That doubles the radicand.']],`A positive square root multiplied by itself returns the radicand ${n}.`,0,{kind:'radical-product',c1:1,r1:n,c2:1,r2:n,target:1});
  }
  if(concept==='rad-fully-simplified'||concept==='rad-simplify-factor'){
   const k=pick(r,2,9),d=choose(r,[2,3,5,6,7] as const),rad=k*k*d;
-  if(surface==='numeric')return num(RAD,`Simplify sqrt(${rad}) = a*sqrt(${d}). Find a.`,k,[[k*k,'That uses the perfect-square factor rather than its square root.'],[d,'That reports the remaining radicand.']],`sqrt(${rad}) = sqrt(${k*k}*${d}) = ${k}*sqrt(${d}).`,0,{kind:'radical-simplify',coef:1,radicand:rad,target:d});
+  if(surface==='numeric')return num(RAD,`Simplify sqrt(${rad}) = a · sqrt(${d}). Find a.`,k,[[k*k,'That uses the perfect-square factor rather than its square root.'],[d,'That reports the remaining radicand.']],`sqrt(${rad}) = sqrt(${k*k} · ${d}) = ${k} · sqrt(${d}).`,0,{kind:'radical-simplify',coef:1,radicand:rad,target:d});
   return mcq(r,RAD,`Which is the fully simplified form of sqrt(${rad})?`,[`${k}sqrt(${d})`,`Extracting the factor ${k*k} gives coefficient ${k} and remaining radicand ${d}.`],[`${k*k}sqrt(${d})`,'The extracted coefficient is the square root of the perfect-square factor.'],[`${k}sqrt(${k*d})`,'The remaining radicand has not been divided by the full square factor.'],[`sqrt(${k*d})`,'This drops a factor and changes the value.']);
  }
  if(concept==='rad-like-terms'){
-  const a=pick(r,4,12),c=pick(r,1,a-1),d=choose(r,[2,3,5,7] as const);return num(RAD,`${a}sqrt(${d}) - ${c}sqrt(${d}) = k*sqrt(${d}). Find k.`,a-c,[[a+c,'The coefficients should be subtracted, not added.'],[a-c+d,'The radicand is not combined with the coefficient.']],`Like radicals combine by subtracting coefficients: ${a}-${c}=${a-c}.`,0,{kind:'radical-combine',c1:a,r1:d,c2:c,r2:d,target:d,operation:'subtract'});
+  const a=pick(r,4,12),c=pick(r,1,a-1),d=choose(r,[2,3,5,7] as const);return num(RAD,`${a}sqrt(${d}) - ${c}sqrt(${d}) = k · sqrt(${d}). Find k.`,a-c,[[a+c,'The coefficients should be subtracted, not added.'],[a-c+d,'The radicand is not combined with the coefficient.']],`Like radicals combine by subtracting coefficients: ${a}-${c}=${a-c}.`,0,{kind:'radical-combine',c1:a,r1:d,c2:c,r2:d,target:d,operation:'subtract'});
  }
  if(concept==='rad-mn-exp'){
   const q=choose(r,[2,3,4] as const),root=pick(r,2,5),p=pick(r,2,4),base=root**q,ans=root**p;return num(RAD,`Evaluate ${base}^(${p}/${q}).`,ans,[[base**p,'That applies the numerator power without taking the qth root.'],[root*q,'That multiplies the root by the denominator instead of raising it to p.']],`Take the ${rootWord(q)} root first to get ${root}, then raise to ${p}: ${ans}.`,0,{kind:'rational-exponent',base,rootIndex:q,exponent:p});
  }
  if(concept==='rad-multiply'){
-  const a=pick(r,2,8),b2=pick(r,2,8),n=a*b2;return num(RAD,`Evaluate sqrt(${a}) * sqrt(${a*b2*b2}).`,a*b2,[[a*a*b2*b2,'That multiplies radicands but does not take the square root.'],[a+b2,'That adds factors instead of multiplying radicals.']],`The product is sqrt(${a*a*b2*b2}) = ${a*b2}.`,0,{kind:'radical-product',c1:1,r1:a,c2:1,r2:a*b2*b2,target:1});
+  const a=pick(r,2,8),b2=pick(r,2,8),n=a*b2;return num(RAD,`Evaluate sqrt(${a}) · sqrt(${a*b2*b2}).`,a*b2,[[a*a*b2*b2,'That multiplies radicands but does not take the square root.'],[a+b2,'That adds factors instead of multiplying radicals.']],`The product is sqrt(${a*a*b2*b2}) = ${a*b2}.`,0,{kind:'radical-product',c1:1,r1:a,c2:1,r2:a*b2*b2,target:1});
  }
  if(concept==='rad-perfect-square'){
   const k=pick(r,2,maxByBand(b,12,18,25));return num(RAD,`What is sqrt(${k*k})?`,k,[[k*k,'That repeats the radicand instead of taking its square root.'],[2*k,'That doubles the root.']],`${k}^2 = ${k*k}, so the principal square root is ${k}.`,0,{kind:'radical-simplify',coef:1,radicand:k*k,target:1});
@@ -279,7 +279,7 @@ function solvingEquations(r:Rand,b:Band,form:string):Variant{
  if(concept==='distribute-solve'){
   const x=pick(r,2,12),a=pick(r,2,6),d=pick(r,1,7),c=a*(x+d);
   if(surface==='numeric')return num(SE,`Solve ${a}(x + ${d}) = ${c}.`,x,[[c/a,'That divides but stops before subtracting the number inside the parentheses.'],[c-a*d,'That distributes but does not divide by the x-coefficient.']],`Divide by ${a} to get x + ${d} = ${c/a}, then subtract ${d}: x = ${x}.`);
-  return mcq(r,SE,`Which is the correct expansion of ${a}(x + ${d})?`,[`${a}x + ${a*d}`,'The outside factor multiplies both terms inside the parentheses.'],[`${a}x + ${d}`,'The constant inside also must be multiplied by the outside factor.'],[`${a+d}x`,'Addition inside cannot be combined with an outside coefficient this way.'],[`${a}x * ${a*d}`,'Distribution produces a sum of partial products, not their product.']);
+  return mcq(r,SE,`Which is the correct expansion of ${a}(x + ${d})?`,[`${a}x + ${a*d}`,'The outside factor multiplies both terms inside the parentheses.'],[`${a}x + ${d}`,'The constant inside also must be multiplied by the outside factor.'],[`${a+d}x`,'Addition inside cannot be combined with an outside coefficient this way.'],[`${a}x · ${a*d}`,'Distribution produces a sum of partial products, not their product.']);
  }
  if(concept==='flip-rule'){
   const a=pick(r,2,6),bound=pick(r,-6,8),rhs=-a*bound;
@@ -308,7 +308,7 @@ function solvingEquations(r:Rand,b:Band,form:string):Variant{
  }
  if(concept==='multi-literal'){
   const C=choose(r,[5,10,15,20,25,30,35,40,45,100] as const),F=9*C/5+32;
-  if(surface==='numeric')return num(SE,`Using F = 9C/5 + 32, find F when C = ${C}.`,F,[[9*(C/5+32),'That applies the factor 9 to the added 32 as well.'],[(9*C)/(5+32),'That combines the denominator with an added constant.']],`Substitute C = ${C}: F = 9*${C}/5 + 32 = ${F}.`);
+  if(surface==='numeric')return num(SE,`Using F = 9C/5 + 32, find F when C = ${C}.`,F,[[9*(C/5+32),'That applies the factor 9 to the added 32 as well.'],[(9*C)/(5+32),'That combines the denominator with an added constant.']],`Substitute C = ${C}: F = 9 · ${C}/5 + 32 = ${F}.`);
   return mcq(r,SE,'Solve 2x + a = c for x.',['x = (c - a)/2','Subtract a, then divide the complete difference by 2.'],['x = c - a/2','The subtraction must be completed before division.'],['x = (c + a)/2','The term a moves by subtraction, not addition.'],['x = 2(c - a)','Multiplying by 2 does not isolate x.']);
  }
  if(concept==='solve-inequality'){

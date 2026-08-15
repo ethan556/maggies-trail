@@ -24,13 +24,13 @@ function solvePromptRaw(form,input){
  const {prompt:raw,extra,options}=parseInput(input),prompt=norm(raw),p=clean(raw);const [concept,surface]=form.split('__');
  // Exponential functions
  if(concept==='exp-compare'){
-  const m=p.match(/x = (-?\d+).*f\(x\) = (\d+) \* ([\d.]+)\^x.*g\(x\) = (\d+) \* ([\d.]+)\^x/);if(surface==='numeric'){const z=nums(p);return z[0]*z[1]**z[2]}const x=+m[1],fv=+m[2]*(+m[3])**x,gv=+m[4]*(+m[5])**x;return chooseOption(options,fv===gv?'They are equal':fv>gv?'f(x)':'g(x)');
+  const m=p.match(/x = (-?\d+).*f\(x\) = (\d+) [*·] ([\d.]+)\^x.*g\(x\) = (\d+) [*·] ([\d.]+)\^x/);if(surface==='numeric'){const z=nums(p);return z[0]*z[1]**z[2]}const x=+m[1],fv=+m[2]*(+m[3])**x,gv=+m[4]*(+m[5])**x;return chooseOption(options,fv===gv?'They are equal':fv>gv?'f(x)':'g(x)');
  }
- if(concept==='exp-graph-read'){const m=p.match(/f\(x\) = (\d+) \* ([\d.]+)\^x/),a=+m[1],base=+m[2];if(surface==='numeric')return a;return chooseOption(options,`${base>1?'increasing exponential growth':'decreasing exponential decay'} with y-intercept ${a}`)}
- if(concept==='exp-growth-decay'){const m=p.match(/f\(x\) = (\d+) \* (?:\(1\/(\d+)\)|(\d+))\^x(?: at x = (\d+))?/),a=+m[1],base=m[2]?1/+m[2]:+m[3];if(surface==='numeric')return round(a*base**(+m[4]));return chooseOption(options,base>1?'growth':'decay')}
+ if(concept==='exp-graph-read'){const m=p.match(/f\(x\) = (\d+) [*·] ([\d.]+)\^x/),a=+m[1],base=+m[2];if(surface==='numeric')return a;return chooseOption(options,`${base>1?'increasing exponential growth':'decreasing exponential decay'} with y-intercept ${a}`)}
+ if(concept==='exp-growth-decay'){const m=p.match(/f\(x\) = (\d+) [*·] (?:\(1\/(\d+)\)|(\d+))\^x(?: at x = (\d+))?/),a=+m[1],base=m[2]?1/+m[2]:+m[3];if(surface==='numeric')return round(a*base**(+m[4]));return chooseOption(options,base>1?'growth':'decay')}
  if(concept==='exp-match-base'){const [base,value]=nums(p);let e=0,v=1;while(v<value&&e<20){v*=base;e++}return surface==='numeric'?e:chooseOption(options,String(e))}
  if(concept==='exp-percent'){const z=nums(p),growth=/grows/.test(p),rate=surface==='mcq'?z[0]:z[1],factor=1+(growth?1:-1)*rate/100;if(surface==='mcq')return chooseOption(options,String(factor));const start=z[0],steps=z[2];return round(start*factor**steps)}
- if(concept==='exp-vs-linear'){if(surface==='numeric'){const m=p.match(/f\(x\) = (\d+) \* (\d+)\^x, find f\((\d+)\)/);return +m[1]*(+m[2])**(+m[3])}const seq=nums(p);const ds=seq.slice(1).map((v,i)=>v-seq[i]),rs=seq.slice(1).map((v,i)=>v/seq[i]);const ans=ds.every(v=>v===ds[0])?'arithmetic':rs.every(v=>v===rs[0])?'geometric':'neither';return chooseOption(options,ans)}
+ if(concept==='exp-vs-linear'){if(surface==='numeric'){const m=p.match(/f\(x\) = (\d+) [*·] (\d+)\^x, find f\((\d+)\)/);return +m[1]*(+m[2])**(+m[3])}const seq=nums(p);const ds=seq.slice(1).map((v,i)=>v-seq[i]),rs=seq.slice(1).map((v,i)=>v/seq[i]);const ans=ds.every(v=>v===ds[0])?'arithmetic':rs.every(v=>v===rs[0])?'geometric':'neither';return chooseOption(options,ans)}
  // Polynomials and exponents
  if(concept==='exponent-power'){const z=nums(p);if(surface==='numeric')return z[0]*z[1];const [c,m,n]=z;return chooseOption(options,`${c**n}x^${m*n}`)}
  if(concept==='exponent-zero-negative'){const z=nums(p);if(surface==='numeric')return z[0]+z[1];return chooseOption(options,`1/${z[0]**Math.abs(z[1])}`)}

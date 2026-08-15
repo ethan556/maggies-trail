@@ -46,7 +46,7 @@ export interface Variant {
    * defect source in the conversion programme (S154 measured 87 generator tags with 10–22 forms
    * each; a mis-scoped capture silently produced ten wrong answers in S153). The generator holds
    * the exact values already, so carrying them forward removes the parsing step entirely and
-   * lets `upgrade*Variant` build a Lab spec directly.
+   * lets `upgrade · Variant` build a Lab spec directly.
    *
    * Purely additive: it does not affect `widget` or `answer`, so seeded output, the freshness
    * gate, and every existing surface are byte-identical whether or not a generator supplies it. */
@@ -11635,7 +11635,7 @@ const GENERATORS: VariantGen[] = [
       const rhs = a * b ** k;
       return { ...num(
         "exp-solve",
-        `Solve ${a} * ${b}^x = ${rhs}.`,
+        `Solve ${a} · ${b}^x = ${rhs}.`,
         k,
         0,
         [
@@ -11908,7 +11908,7 @@ const GENERATORS: VariantGen[] = [
         );
         return { ...num(
           "exp-function",
-          `For f(x) = ${a} * ${b}^x, what is the initial value f(0)?`,
+          `For f(x) = ${a} · ${b}^x, what is the initial value f(0)?`,
           a,
           0,
           [
@@ -11937,7 +11937,7 @@ const GENERATORS: VariantGen[] = [
         const ans = C * b ** v;
         return { ...num(
           "exp-function",
-          `${story}: ${L}(x) = ${C} * ${b}^x. What is ${L}(${v})?`,
+          `${story}: ${L}(x) = ${C} · ${b}^x. What is ${L}(${v})?`,
           ans,
           0,
           [
@@ -11955,7 +11955,7 @@ const GENERATORS: VariantGen[] = [
         );
         return { ...num(
           "exp-function",
-          `For A(x) = ${C} * ${b}^x, what is the starting amount A(0)?`,
+          `For A(x) = ${C} · ${b}^x, what is the starting amount A(0)?`,
           C,
           0,
           [
@@ -11984,7 +11984,7 @@ const GENERATORS: VariantGen[] = [
           const ans = C / 16;
           return { ...num(
             "exp-function",
-            `A material decays to a quarter each step: Q(x) = ${C} * (1/4)^x. What is Q(2)?`,
+            `A material decays to a quarter each step: Q(x) = ${C} · (1/4)^x. What is Q(2)?`,
             ans,
             0,
             [
@@ -11998,7 +11998,7 @@ const GENERATORS: VariantGen[] = [
         const ans = C / 8;
         return { ...num(
           "exp-function",
-          `${story}: ${L}(x) = ${C} * (1/2)^x. What is ${L}(3)?`,
+          `${story}: ${L}(x) = ${C} · (1/2)^x. What is ${L}(3)?`,
           ans,
           0,
           [
@@ -12012,7 +12012,7 @@ const GENERATORS: VariantGen[] = [
         const C = [320, 640, 960, 1280, 2400][pick(rand, 0, 4)];
         return { ...num(
           "exp-function",
-          `For A(x) = ${C} * (1/2)^x, what is the starting amount A(0)?`,
+          `For A(x) = ${C} · (1/2)^x, what is the starting amount A(0)?`,
           C,
           0,
           [
@@ -12090,7 +12090,7 @@ const GENERATORS: VariantGen[] = [
       const ans = a * b ** v;
       return { ...num(
         "exp-function",
-        `For f(x) = ${a} * ${b}^x, what is f(${v})?`,
+        `For f(x) = ${a} · ${b}^x, what is f(${v})?`,
         ans,
         0,
         [
@@ -35636,7 +35636,12 @@ const GENERATORS: VariantGen[] = [
         const startBoundary = b - 2;
         return {
           tag: "g7-tse-inequality-build",
-          answer: `${less ? (inclusive ? "<=" : "<") : (inclusive ? ">=" : ">")}${b}`,
+                      /* S242 / GRB-01. `<=` and `>=` are machine notation; the learner reads `≤` and `≥`.
+             * These strings become draggable token LABELS and the graded answer, so all three sites
+             * move together — a label of `≤` against an answer of `<=` would grade a correct build
+             * wrong. The relation island in authoredMath typesets both spellings, so the change is
+             * visible in the token chip as well as in the prompt. */
+            answer: `${less ? (inclusive ? "\u2264" : "<") : (inclusive ? "\u2265" : ">")}${b}`,
           widget: {
             type: "numberLineRay",
             prompt: `Draw x ${sym} ${b}. Set the circle at the right number, make it the right KIND of circle, and point the ray the right way.`,
@@ -35671,8 +35676,8 @@ const GENERATORS: VariantGen[] = [
         const b = pick(rand, -6, band === "support" ? 6 : 12);
         const closed = rand() < 0.5;
         const right = rand() < 0.5;
-        const rel = right ? (closed ? ">=" : ">") : (closed ? "<=" : "<");
-        const wrongRel = right ? (closed ? ">" : ">=") : (closed ? "<" : "<=");
+        const rel = right ? (closed ? "\u2265" : ">") : (closed ? "\u2264" : "<");
+        const wrongRel = right ? (closed ? ">" : "\u2265") : (closed ? "<" : "\u2264");
         return buildExpr(
           "g7-tse-inequality-build",
           `A number line shows ${closed ? "a CLOSED" : "an OPEN"} circle at ${b} with the arrow pointing ${right ? "RIGHT" : "LEFT"}. Which inequality does this graph?`,
@@ -35722,13 +35727,17 @@ const GENERATORS: VariantGen[] = [
         "tseIneqNegA", "tseIneqNegB", "tseIneqNegC", "tseIneqNegD",
         "tseIneqRealNegA", "tseIneqRealNegB", "tseIneqShipping",
       ].includes(form);
-      const relationByForm: Record<string, "<" | ">" | "<=" | ">="> = {
-        tseIneqPosA: "<", tseIneqPosB: ">=", tseIneqPosC: "<", tseIneqPosD: ">",
-        tseIneqNegA: "<", tseIneqNegB: ">=", tseIneqNegC: "<=", tseIneqNegD: "<=",
-        tseIneqRealNegA: ">", tseIneqRealPos: ">=", tseIneqRealNegB: ">", tseIneqShipping: "<=",
+      /* S242 / GRB-01: the relation table is the SOURCE of every prompt, token label and answer in
+     * this generator, so converting it here converts all three at once. `<=`/`>=` are machine
+     * notation; the learner reads `\u2264`/`\u2265`, which authoredMath already typesets as an
+     * always-on relation island. */
+    const relationByForm: Record<string, "<" | ">" | "\u2264" | "\u2265"> = {
+        tseIneqPosA: "<", tseIneqPosB: "\u2265", tseIneqPosC: "<", tseIneqPosD: ">",
+        tseIneqNegA: "<", tseIneqNegB: "\u2265", tseIneqNegC: "\u2264", tseIneqNegD: "\u2264",
+        tseIneqRealNegA: ">", tseIneqRealPos: "\u2265", tseIneqRealNegB: ">", tseIneqShipping: "\u2264",
       };
       const rel = relationByForm[form] ?? "<";
-      const flip: Record<string, "<" | ">" | "<=" | ">="> = { "<": ">", ">": "<", "<=": ">=", ">=": "<=" };
+      const flip: Record<string, "<" | ">" | "\u2264" | "\u2265"> = { "<": ">", ">": "<", "\u2264": "\u2265", "\u2265": "\u2264" };
       const aMag = pick(rand, 2, support ? 5 : stretch ? 10 : 8);
       const a = negative ? -aMag : aMag;
       const wantsNegativeBoundary = ["tseIneqNegA", "tseIneqRealNegA", "tseIneqRealNegB", "tseIneqShipping"].includes(form);
@@ -39613,7 +39622,7 @@ function proportionalUpgradeConfig(tag: string, form: VariantForm, legacy: Varia
   return null;
 }
 
-/** Reads the legacy source fields the S144–S151 `upgrade*Variant` helpers consume.
+/** Reads the legacy source fields the S144–S151 `upgrade · Variant` helpers consume.
  *
  * Those helpers are only ever invoked with a legacy `numeric`, `mcq`, or `placeCompare`
  * variant — the generators they wrap emit nothing else — but they were reading

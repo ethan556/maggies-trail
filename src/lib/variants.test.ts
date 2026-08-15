@@ -1781,10 +1781,12 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     return { leftX: 1, leftUnits: 0, rightUnits: x };
   },
   "g7-tse-inequality-build": (p) => {
-    const m = p.match(/(-?\d+)x ([+-]) (\d+) (<=|>=|<|>) (-?\d+)/)!;
+    const m = p.match(/(-?\d+)x ([+-]) (\d+) (<=|>=|≤|≥|<|>) (-?\d+)/)!;
     const a = Number(m[1]), b = (m[2] === "+" ? 1 : -1) * Number(m[3]), rel = m[4], c = Number(m[5]);
     const boundary = (c - b) / a;
-    const flip: Record<string, string> = { "<": ">", ">": "<", "<=": ">=", ">=": "<=" };
+    // S242 / GRB-01: the generator emits ≤/≥ now, so the flip table has to know both spellings —
+    // an unmapped key would return undefined and the route would silently compare against nothing.
+    const flip: Record<string, string> = { "<": ">", ">": "<", "<=": ">=", ">=": "<=", "\u2264": "\u2265", "\u2265": "\u2264" };
     return ["x", a < 0 ? flip[rel] : rel, String(boundary)];
   },
 
@@ -2724,21 +2726,21 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   // Exponentials verified by REPEATED MULTIPLICATION — b^v built one factor at a time, never **.
   "exp-function": (p) => {
     const pw = (b: number, v: number) => { let t = 1; for (let i = 0; i < v; i++) t *= b; return t; };
-    let m = p.match(/f\(x\) = (\d+) \* (\d+)\^x, what is the initial value f\(0\)/);
+    let m = p.match(/f\(x\) = (\d+) [*·] (\d+)\^x, what is the initial value f\(0\)/);
     if (m) return Number(m[1]);
-    m = p.match(/([A-Z])\(x\) = (\d+) \* \(1\/(\d+)\)\^x, what is the starting amount/);
+    m = p.match(/([A-Z])\(x\) = (\d+) [*·] \(1\/(\d+)\)\^x, what is the starting amount/);
     if (m) return Number(m[2]);
-    m = p.match(/([A-Z])\(x\) = (\d+) \* (\d+)\^x, what is the starting amount/);
+    m = p.match(/([A-Z])\(x\) = (\d+) [*·] (\d+)\^x, what is the starting amount/);
     if (m) return Number(m[2]);
-    m = p.match(/([A-Z])\(x\) = (\d+) \* \(1\/(\d+)\)\^x\. What is [A-Z]\((\d+)\)/);
+    m = p.match(/([A-Z])\(x\) = (\d+) [*·] \(1\/(\d+)\)\^x\. What is [A-Z]\((\d+)\)/);
     if (m) {
       let t = Number(m[2]);
       for (let i = 0; i < Number(m[4]); i++) t /= Number(m[3]);
       return t;
     }
-    m = p.match(/([A-Z])\(x\) = (\d+) \* (\d+)\^x\. What is [A-Z]\((\d+)\)/);
+    m = p.match(/([A-Z])\(x\) = (\d+) [*·] (\d+)\^x\. What is [A-Z]\((\d+)\)/);
     if (m) return Number(m[2]) * pw(Number(m[3]), Number(m[4]));
-    m = p.match(/(\d+) \* (\d+)\^x\. How many are there after (\d+) hours/);
+    m = p.match(/(\d+) [*·] (\d+)\^x\. How many are there after (\d+) hours/);
     if (m) return Number(m[1]) * pw(Number(m[2]), Number(m[3]));
     m = p.match(/In the sequence (\d+), (\d+), (\d+), (\d+), what is the constant ratio/);
     if (m) {
@@ -2755,7 +2757,7 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
       if (t[3] / t[2] !== r) throw new Error("ratio not constant");
       return t[3] * r;
     }
-    m = p.match(/f\(x\) = (\d+) \* (\d+)\^x, what is f\((\d+)\)/)!;
+    m = p.match(/f\(x\) = (\d+) [*·] (\d+)\^x, what is f\((\d+)\)/)!;
     return Number(m[1]) * pw(Number(m[2]), Number(m[3]));
   },
   // Equation solving verified by SEARCH: try every exponent from −8 to 8, build a·b^x by repeated
@@ -2769,7 +2771,7 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     let a = 1;
     let b: number;
     let target: number;
-    let m = p.match(/Solve (\d+) \* (\d+)\^x = (\d+)\./);
+    let m = p.match(/Solve (\d+) [*·] (\d+)\^x = (\d+)\./);
     if (m) {
       [a, b, target] = [Number(m[1]), Number(m[2]), Number(m[3])];
     } else if ((m = p.match(/Solve \(1\/(\d+)\)\^x = (\d+)\./))) {
@@ -9747,7 +9749,10 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   },
   "g7-tse-inequality-build@graphToInequality": (p) => {
     const m = p.match(/(CLOSED|OPEN) circle at (-?\d+) with the arrow pointing (RIGHT|LEFT)/)!;
-    const rel = m[3] === "RIGHT" ? (m[1] === "CLOSED" ? ">=" : ">") : (m[1] === "CLOSED" ? "<=" : "<");
+    // S242 / GRB-01: the generator emits the typeset relations, so the route derives them too —
+    // it reads the CIRCLE and the ARROW off the prompt, which is a different method from the
+    // generator's relation table, and that independence is the point.
+    const rel = m[3] === "RIGHT" ? (m[1] === "CLOSED" ? "\u2265" : ">") : (m[1] === "CLOSED" ? "\u2264" : "<");
     return ["x", rel, m[2]];
   },
   "g7-tse-inequality-build@testPoint": (p) => {
