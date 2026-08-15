@@ -138,7 +138,7 @@ const ROWS: Row[] = [
     course: "exponential-functions", lesson: "exp-04-02",
     inserted: "i3b", serves: "k2", engine: "expLogExplore",
     servedKind: "check", servedType: "mcq",
-    servedPrompt: "Which grows faster: f(x) = 5 * 2^x or g(x) = 1 * 4^x?",
+    servedPrompt: "Which grows faster: f(x) = 5 · 2^x or g(x) = 1 · 4^x?",
     servedAnswer: "a|g (base 4)",
     servedWrongPaths: [
       "b|f (base 2)|f starts higher (5 vs 1), but g's base 4 makes it grow faster.",
