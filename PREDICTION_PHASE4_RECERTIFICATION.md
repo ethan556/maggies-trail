@@ -1,6 +1,6 @@
 # PREDICTION PHASE 4 — RE-CERTIFICATION
 
-**Task:** PRED-01 · **Source seal:** `1f9bbe0` · **Date:** 2026-08-15
+**Task:** PRED-01 · **Source seal:** `dd2fdae` · **Date:** 2026-08-15
 **Evidence:** `PREDICTION_PHASE4_RECERTIFICATION.csv`, from `scripts/audit/prediction-recertify.mjs`
 
 ## The question
@@ -18,12 +18,15 @@ done. So this re-certification trusts neither document and reads the live lesson
 |---|---:|---|
 | REMOVE | 17 | **17 executed.** Every one absent. |
 | REWRITE | 200 | **200 done.** Each gate present with reveal text that *differs* from the adjudicated original. |
-| KEEP | 1,145 | 1,094 live · **51 stripped anyway** |
+| KEEP | 1,145 | 1,094 live · 48 **THIN** · 3 **THIN-REVERSED** |
 
 ```
 1,362 adjudicated − 17 removed − 51 thinned = 1,294 live   ← state before this session
 1,294 + 3 restored (below)                  = 1,297 live   ← state at this seal
 ```
+
+**Every one of the 1,362 rows is now accounted for and reflected in the corpus. The
+re-certification exits 0.**
 
 The arithmetic closes exactly, and no live gate exists that the adjudication never saw. **The
 reports are wrong and the plan's reading of the source was right.** Phase 4 is implemented. The
@@ -36,7 +39,9 @@ and a presence check would have scored that as success. None of the 200 is ident
 ## What this found that nobody was looking for
 
 **51 gates carrying a KEEP verdict had their `predict` block stripped from steps that still exist,
-and not one of those removals has a recorded rationale.**
+and at the time of the scan not one of those removals had a recorded rationale.** They do now — see
+the ruling below — but that they did not is the finding: the removals were real, deliberate, and
+invisible to every document describing this work.
 
 **Three of the 51 were on flagship CML steps** — `dc-02-02#i1`, `pra-04-02#i1`, `tf-03-02#i1` — and
 that is the entire cause of CML-01's three `flagship-missing-prediction` errors. Those steps did not
@@ -58,16 +63,37 @@ independent of this and still needed.
 
 Strict CML remains at 0 errors with the originals in place.
 
-### The other 48 are reported, not resolved
+### The other 48: ruled deliberate, and the file now says so
 
-They sit on non-flagship steps, so nothing is currently red. Restoring 48 reviewed-then-removed
-predictions without a recorded reason for their removal would substitute my judgement for a decision
-somebody made and did not write down — and the removals may well have been right. What is certain
-is that the reason is not in the repository.
+**Ruling (S242): the 51 were thinned deliberately.**
 
-**Decision needed:** were the 51 thinned deliberately? If yes, record the rationale and the
-adjudication CSV should carry a fourth verdict rather than 51 rows that say KEEP and mean removed.
-If no, restore them. Rows with state `thinned` in the CSV are the work list either way.
+That settles the divergence, and it moves the problem from the corpus to the adjudication file. 51
+rows said KEEP and meant removed — and anyone reading them, or grepping them, which is how a number
+reaches a status report, drew the wrong conclusion. This program has already been slowed once by
+counts that were true when written and false when quoted.
+
+So the verdict is written down. `PREDICTION_GATE_ADJUDICATION.csv` now carries **THIN** as a fourth
+verdict on those 48 rows, with the rationale in `adjudicator_notes`, and a new
+`adjudicated_verdict` column preserving what review originally said. A reader of
+`proposed_verdict` sees what happened; a reader who needs the review history still has it. Nothing
+was destroyed to achieve that.
+
+`prediction-recertify.mjs` learned the verdict too, and the change cuts the other way as well: a
+KEEP row whose gate is absent is now an **error**, not a shrug. A removal with no verdict recording
+it is precisely the state this file was in, and it cannot recur silently.
+
+### The three exceptions, recorded rather than folded in
+
+`dc-02-02#i1`, `pra-04-02#i1` and `tf-03-02#i1` are marked **THIN-REVERSED**. Marking them THIN
+would record a removal that did not happen and *cannot* happen while those steps carry
+`cml.flagship: true`, because the flagship contract requires a prediction — their absence is what
+produced CML-01's three errors in the first place.
+
+The only way to thin those three as well is to drop `cml.flagship` from the steps, which weakens a
+gate to make something pass — the one thing CLAUDE.md says never to do. So it is not done here, and
+not done quietly. If the intent really is that those three steps should carry no prediction, the
+question is whether they should be flagship at all, and that is a curriculum decision rather than a
+bookkeeping one.
 
 ## Acceptance against PRED-01
 

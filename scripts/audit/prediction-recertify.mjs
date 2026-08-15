@@ -18,9 +18,16 @@
  *   2. REWRITTEN — every REWRITE verdict's gate is present AND its reveal text differs from the
  *      adjudicated text. Present-but-identical is a rewrite that did not happen, and is the failure
  *      mode a naive "is it still there?" check would score as success.
- *   3. THINNED — KEEP rows absent from the live corpus, which are the further removals the plan
- *      describes. Counted, not assumed.
- *   4. NEW — live gates the adjudication never saw, which are gates added since.
+ *   3. THINNED — `THIN` rows absent from the live corpus. This verdict did not exist when the file
+ *      was written: 51 rows said KEEP and meant removed, which is how a status report ends up
+ *      quoting 51 gates that are not there. The S242 ruling is that the thinning was deliberate, so
+ *      `THIN` was added as a fourth verdict and the original review decision preserved alongside it
+ *      in `adjudicated_verdict`. A KEEP row that is absent is now an ERROR rather than a shrug —
+ *      a removal with no verdict recording it is exactly the state this file was in.
+ *   4. REVERSED — `THIN-REVERSED`, the three thinned gates on flagship CML steps. Their removal
+ *      broke the flagship contract, which is what produced CML-01's errors, so they are restored
+ *      and must be PRESENT.
+ *   5. NEW — live gates the adjudication never saw, which are gates added since.
  *
  * Usage: node scripts/audit/prediction-recertify.mjs [--write]
  *   --write emits PREDICTION_PHASE4_RECERTIFICATION.csv and .md.
@@ -89,7 +96,8 @@ const adjudication = parseCsv(readFileSync(join(ROOT, "PREDICTION_GATE_ADJUDICAT
 
 /* ---- the comparison ---- */
 const results = [];
-const counts = { REMOVE: { closed: 0, open: 0 }, REWRITE: { closed: 0, open: 0, missing: 0 }, KEEP: { present: 0, thinned: 0 } };
+const counts = { REMOVE: { closed: 0, open: 0 }, REWRITE: { closed: 0, open: 0, missing: 0 },
+  KEEP: { present: 0, thinned: 0 }, THIN: { closed: 0, open: 0 }, REVERSED: { closed: 0, open: 0 } };
 
 for (const row of adjudication) {
   const key = `${row.lesson_id}#${row.step_id}`;
@@ -104,9 +112,18 @@ for (const row of adjudication) {
     else if (now.reveal.trim() !== row.predict_reveal.trim()) {
       state = "closed"; detail = "reveal differs from the adjudicated text"; counts.REWRITE.closed++;
     } else { state = "OPEN"; detail = "reveal is byte-identical to the adjudicated text — the rewrite did not happen"; counts.REWRITE.open++; }
+  } else if (verdict === "THIN") {
+    // S242 ruling: thinned deliberately. A THIN row is CLOSED when the gate is absent — the same
+    // shape as REMOVE, recorded separately because the decision was made after adjudication rather
+    // than during it, and that distinction is the reason the file misled anyone in the first place.
+    if (!now) { state = "closed"; detail = "thinned deliberately (S242 ruling)"; counts.THIN.closed++; }
+    else { state = "OPEN"; detail = "marked THIN but the gate is still live"; counts.THIN.open++; }
+  } else if (verdict === "THIN-REVERSED") {
+    if (now) { state = "closed"; detail = "thinning reversed: the step is cml.flagship and its contract requires a prediction"; counts.REVERSED.closed++; }
+    else { state = "OPEN"; detail = "THIN-REVERSED but the gate is absent — the flagship contract is broken"; counts.REVERSED.open++; }
   } else {
     if (now) { state = "present"; detail = "KEEP, still live"; counts.KEEP.present++; }
-    else { state = "thinned"; detail = "KEEP verdict but the gate was later removed"; counts.KEEP.thinned++; }
+    else { state = "OPEN"; detail = "KEEP verdict but the gate is gone and no THIN verdict records why"; counts.KEEP.thinned++; }
   }
   results.push({ key, lesson: row.lesson_id, step: row.step_id, course: row.course_id, grade: row.grade, verdict, state, detail });
 }
@@ -123,9 +140,11 @@ console.log(`  REMOVE  closed ${counts.REMOVE.closed}/${counts.REMOVE.closed + c
 console.log(`  REWRITE closed ${counts.REWRITE.closed}/${counts.REWRITE.closed + counts.REWRITE.open + counts.REWRITE.missing}`
   + (counts.REWRITE.open ? ` — ${counts.REWRITE.open} still byte-identical` : "")
   + (counts.REWRITE.missing ? ` — ${counts.REWRITE.missing} gone entirely` : ""));
-console.log(`  KEEP    live ${counts.KEEP.present}, thinned ${counts.KEEP.thinned}`);
+console.log(`  KEEP    live ${counts.KEEP.present}${counts.KEEP.thinned ? `, ${counts.KEEP.thinned} GONE WITH NO THIN VERDICT` : ""}`);
+console.log(`  THIN    closed ${counts.THIN.closed}/${counts.THIN.closed + counts.THIN.open} (deliberate, S242 ruling)`);
+console.log(`  THIN-REVERSED closed ${counts.REVERSED.closed}/${counts.REVERSED.closed + counts.REVERSED.open} (flagship steps, restored)`);
 console.log(`  gates added since adjudication: ${added.length}${added.length ? ` (${added.slice(0, 4).join(", ")}${added.length > 4 ? ", …" : ""})` : ""}`);
-console.log(`  arithmetic: ${adjudication.length} adjudicated − ${counts.REMOVE.closed} removed − ${counts.KEEP.thinned} thinned + ${added.length} added = ${adjudication.length - counts.REMOVE.closed - counts.KEEP.thinned + added.length} (live: ${live.size})`);
+console.log(`  arithmetic: ${adjudication.length} adjudicated − ${counts.REMOVE.closed} removed − ${counts.THIN.closed} thinned − ${counts.KEEP.thinned} unexplained + ${added.length} added = ${adjudication.length - counts.REMOVE.closed - counts.THIN.closed - counts.KEEP.thinned + added.length} (live: ${live.size})`);
 console.log(open.length ? `  ${open.length} ROW(S) STILL OPEN` : "  every adjudicated verdict is reflected in the live corpus");
 
 if (WRITE) {
