@@ -113,7 +113,44 @@ const CONDITIONAL_TABLE_METRIC: Record<string, string> = {
   relativeCol: "relative frequency within the column",
 };
 
-export function describeWidgetState(spec: TWidget, value: unknown): string | null {
+/* S242 / ENG-01. THE ACCESSIBLE DESCRIPTION IS A SEPARATE PATH TO THE ANSWER, AND IT LEAKED.
+ *
+ * The staged-reveal gate landed at the four visual/AT surfaces in `widgets.tsx` and the render test
+ * still found "combine and round to 2 decimal places: 31.25" on screen — from HERE. This panel
+ * narrates every opened stage verbatim, so a screen-reader user was handed the graded answer while
+ * a sighted user was not. That is an answer leak and an accessibility-equity defect in one, and no
+ * amount of source reading found it; rendering the widget did.
+ *
+ * `tone` is a render-time concept and this is a pure function, so it arrives as an argument. It
+ * DEFAULTS TO WITHHOLDING: a caller that forgets to pass it gets the safe behaviour, and the failure
+ * mode of the default is a description that says less, never one that says the answer.
+ */
+export function describeWidgetState(spec: TWidget, value: unknown, tone?: string): string | null {
+  /** Mirrors `stageBody` in widgets.tsx: an opened stage whose value is the answer is held. */
+  const stageText = (
+    stage: { value: unknown },
+    truth: { answerNumber?: number; answerClaim?: string; answerRelation?: string }
+  ): string => {
+    if (tone === "info") return String(stage.value);
+    const raw = stage.value;
+    if (typeof raw === "number") {
+      if (typeof truth.answerNumber === "number" && Math.abs(raw - truth.answerNumber) <= 1e-9) return "yours to work out";
+      return String(raw);
+    }
+    const text = String(raw ?? "");
+    if (typeof truth.answerNumber === "number") {
+      // Linear rightmost-number scan; see the note in widgets.tsx on why the lookahead was removed.
+      const numbers = text.match(/-?\d+(?:\.\d+)?/g);
+      const last = numbers?.[numbers.length - 1];
+      if (last !== undefined && Math.abs(Number(last) - truth.answerNumber) <= 1e-9) return "yours to work out";
+    }
+    if (truth.answerClaim && text.includes(truth.answerClaim)) return "yours to work out";
+    if (truth.answerRelation) {
+      const symbol = truth.answerRelation === "lt" ? "<" : truth.answerRelation === "gt" ? ">" : "=";
+      if (text.includes(symbol)) return "yours to work out";
+    }
+    return text;
+  };
   switch (spec.type) {
     case "numeric": {
       // A plain numeric entry narrates itself — one labelled text field — so this stays null
@@ -569,7 +606,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
       const truth=geometricConstraintTruth(spec),valid=new Set(geometricConstraintExplorationKeys(spec));
       const opened=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];
-      const openedSet=new Set(opened);const stages=truth.stages.map(stage=>`${stage.label}: ${openedSet.has(stage.key)?stage.value:"not inspected"}`).join("; ");
+      const openedSet=new Set(opened);const stages=truth.stages.map(stage=>`${stage.label}: ${openedSet.has(stage.key)?stageText(stage,truth):"not inspected"}`).join("; ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):spec.answerMode==="choice"?(typeof v.choiceId==="string"?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected."):"Exploration mode.";
       return `${sentence(stages)}. ${answer}`;
     }
@@ -577,7 +614,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown;relation?:unknown}:{};
       const truth=exactNumberTruth(spec),valid=new Set(exactNumberExplorationKeys(spec));
       const revealed=Array.isArray(v.revealed)?new Set(v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item))):new Set<string>();
-      const stages=truth.stages.map(stage=>`${stage.label}: ${revealed.has(stage.key)?stage.value:"not inspected"}`).join("; ");
+      const stages=truth.stages.map(stage=>`${stage.label}: ${revealed.has(stage.key)?stageText(stage,truth):"not inspected"}`).join("; ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}.`:"No numeric answer entered."):spec.answerMode==="choice"?(typeof v.choiceId==="string"?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected."):spec.answerMode==="relation"?(v.relation?`Selected relation ${v.relation}.`:"No relation selected."):"Exploration mode.";
       return `${sentence(stages)}. ${answer}`;
     }
@@ -587,7 +624,7 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       const revealed=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];
       const truth=affineRelationshipTruth(spec);
       const lineSummary=spec.lines.map(line=>`${line.label}: ${line.sourceText}`).join("; ");
-      const opened=truth.stages.filter(stage=>revealed.includes(stage.key)).map(stage=>`${stage.label}: ${stage.value}`).join("; ")||"no derived stages opened";
+      const opened=truth.stages.filter(stage=>revealed.includes(stage.key)).map(stage=>`${stage.label}: ${stageText(stage,truth)}`).join("; ")||"no derived stages opened";
       const answer=spec.answerMode==="numeric"&&typeof v.numeric==="number"?` Entered ${v.numeric}.`:spec.answerMode==="choice"&&typeof v.choiceId==="string"?` Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:spec.answerMode==="point"&&Array.isArray(v.point)?` Entered point (${v.point[0]}, ${v.point[1]}).`:"";
       // S237b. Opened with the engine's own name — an authoring label, and the one thing on this
       // panel that is not mathematics. The lines it describes are what the screen actually shows.

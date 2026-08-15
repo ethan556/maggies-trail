@@ -8228,7 +8228,7 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
               return <button key={key} type="button" disabled={disabled} onClick={()=>reveal(key)}
                 aria-label={`Reveal proportional stage ${index+1}: ${stage.label}`}
                 className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">
-                {open ? `${stage.label}: ${fmt(stage.value)}` : `Build stage ${index+1}: ${stage.label}`}
+                {open ? (tone!=="info"&&stageRevealsAnswer(stage.value,truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index+1}: ${stage.label}`}
               </button>;
             })}
           </div>
@@ -8295,7 +8295,7 @@ function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WPr
       {spec.task==="placeExponent"&&<p className="mt-3 rounded-card bg-ink/[0.04] p-3 text-center font-extrabold">Locate the {placeValueExponentLabel(spec.targetExponent??0)} place on the base-ten ladder.</p>}
     </section>
     <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label={isExponentChain?"Inspect the exponent contributions":"Build the place-value reasoning chain"}>
-      {truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key);const stageTitle=isExponentChain?(index===0?"First factor group":`After group ${index+1}`):stage.label;return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-label={`Inspect stage ${index+1}: ${stageTitle}`} className="pressable min-h-12 rounded-card border-2 border-leaf/35 px-4 py-3 text-left text-sm font-extrabold text-leaf-ink disabled:opacity-45"><span className="block text-xs uppercase tracking-wide text-ink/60">{stageTitle}</span>{open?<span className="mt-1 block text-base tabular-nums">{stage.value}</span>:<span className="mt-1 block">Inspect this stage</span>}</button>})}
+      {truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key);const stageTitle=isExponentChain?(index===0?"First factor group":`After group ${index+1}`):stage.label;return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-label={`Inspect stage ${index+1}: ${stageTitle}`} className="pressable min-h-12 rounded-card border-2 border-leaf/35 px-4 py-3 text-left text-sm font-extrabold text-leaf-ink disabled:opacity-45"><span className="block text-xs uppercase tracking-wide text-ink/60">{stageTitle}</span>{open?<span className="mt-1 block text-base tabular-nums">{stageBody(true,stage,truth,tone,"",undefined)}</span>:<span className="mt-1 block">Inspect this stage</span>}</button>})}
     </div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, isExponentChain?"exponent stage":"base-ten stage", "inspected")}</p>
     {spec.answerMode==="numeric"?<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={(e)=>onChange({...v,numeric:e.target.value===""?"":Number(e.target.value)})} aria-label={isExponentChain?"Enter exponent answer":`Enter place-value answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>:
@@ -8360,7 +8360,7 @@ function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.
   const distinctXs=[...new Set(spec.sets.flatMap(set=>set.points.map(point=>point.x)))].sort((a,b)=>a-b);
   const keptXs:number[]=[];{let lastX1=-Infinity;for(const xv of distinctXs){const w=String(xv).length*11*0.72;const x0=sx(xv)-w/2;if(x0>=lastX1+4){keptXs.push(xv);lastX1=x0+w}}}
   return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><circle key={`${set.id}-${point.id}`} cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/>))}{keptXs.map(xv=><text key={xv} x={sx(xv)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{xv}</text>)}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
-function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this point-set state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
+function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this point-set state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
 type GeometricConstraintState={revealed?:string[];numeric?:number|"";choiceId?:string};
@@ -8376,7 +8376,7 @@ function GeometricConstraintDiagram({spec}: {spec:TGeometricConstraintLab}){
 }
 function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TGeometricConstraintLab>){
   const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;const allowed=new Set(geometricConstraintExplorationKeys(spec));const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];const truth=geometricConstraintTruth(spec);const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"toward",state:{key}});onChange({...v,revealed:[...revealed,key]})};const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this geometric constraint."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "geometric state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this geometric constraint.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "geometric state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
 }
 
 /** exactNumberLab — one exact ordered-number workbench. Every task keeps its own learner action,
@@ -8394,7 +8394,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p></section>
-    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{open?(authored?.body??stage.value):"Closed — activate to derive this exact state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this exact state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "exact state", "inspected")}</p>
     {/* S205K — the magnitude rail: exactNumberLab's manipulation surface for numeric mode.
       * The candidate answer becomes a thing the learner DRAGS along a number line where the
@@ -8410,7 +8410,13 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
       * answer. The only read of truth.answerNumber feeds the same invisible toward/away telemetry
       * the typed input has always emitted. */}
     {spec.answerMode==="numeric"&&(()=>{
-      const landmarks=truth.stages.filter(st=>revealed.includes(st.key)).map(st=>{const m=String(st.value).match(/(-?\d+(?:\.\d+)?)(?!.*-?\d)/);return m?{n:Number(m[1])}:null}).filter((x):x is {n:number}=>x!==null);
+      /* S242 / ENG-01. The rail's landmarks come from REVEALED stages, and the code below used to
+       * carry a self-audit saying it "cannot show the learner anything they have not already
+       * derived". That was true and was exactly the problem: what a learner had derived by tapping
+       * the terminal stage WAS the answer, so the rail planted a labelled tick on it and the drag
+       * became a matching exercise. A stage whose value is withheld must not leak through the
+       * landmark it would otherwise contribute. */
+      const landmarks=truth.stages.filter(st=>revealed.includes(st.key)&&!(tone!=="info"&&stageRevealsAnswer(st.value,truth))).map(st=>{const m=String(st.value).match(/(-?\d+(?:\.\d+)?)(?!.*-?\d)/);return m?{n:Number(m[1])}:null}).filter((x):x is {n:number}=>x!==null);
       const cand=typeof v.numeric==="number"?v.numeric:0;
       const lo0=Math.min(0,cand,...landmarks.map(l=>l.n)), hi0=Math.max(0,cand,...landmarks.map(l=>l.n));
       const pad=Math.max((hi0-lo0)*0.25,5);
@@ -8556,7 +8562,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
         })()}
       <AxisCaptions w={W} h={H} /></svg>
     </section>
-    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${stage.label}: ${stage.value}`:`Open affine stage ${index+1}: ${stage.label}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70">{open?(authored?.body??stage.value):"Closed — activate to derive this state."}</span>{open&&authored&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open affine stage ${index+1}: ${stage.label}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70">{stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "affine stage", "inspected")}</p>
     {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter affine answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none dark:bg-ink/10"/></label>}
     {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the affine conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:affineRelationshipChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
@@ -8619,15 +8625,15 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
         const open = revealed.includes(stage.key);
         const authored = spec.authoredStages[index];
         return <button key={stage.key} type="button" disabled={disabled} onClick={() => reveal(stage.key)}
-          aria-label={open ? `${stage.label}: ${stage.value}` : `Open quotient stage ${index + 1}: ${stage.label}`}
+          aria-label={open ? `${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}` : `Open quotient stage ${index + 1}: ${stage.label}`}
           aria-expanded={open}
           className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open ? "border-leaf/45 bg-leaf/8" : "border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}>
           <span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index + 1}</span>
           <span className="mt-1 block font-extrabold">{stage.label}</span>
           <span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">
-            {open ? (authored?.body ?? stage.value) : "Closed — activate to derive this state."}
+            {stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body)}
           </span>
-          {open && authored && <span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}
+          {open && authored && !(tone!=="info"&&stageRevealsAnswer(stage.value,truth)) && <span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}
         </button>;
       })}
     </div>
@@ -18255,6 +18261,87 @@ function explorationProgress(done: number, needed: number, noun: string, verbPas
   return `${done} of ${needed} ${noun}${plural} ${verbPast}.${left > 0 ? ` ${left} more to go.` : ""}`;
 }
 
+/* ── S242 / ENG-01 — A DERIVATION STAGE MAY NOT PRINT THE ANSWER BEFORE THE VERDICT ──────────────
+ *
+ * THE DEFECT. Seven engines share a staged-reveal architecture: a `*Truth()` function builds an
+ * ordered list of derivation stages, the widget renders each as a button, and tapping one prints
+ * `stage.value`. For a large family of tasks the TERMINAL stage's value IS the graded answer —
+ * `{key:"approx:compute", label:"combine and round to 2 decimal places", value:"31.25"}` where that
+ * number is assigned to `answerNumber` on the next line. `ENG01_REVERSIBLE_PLAY_ASSESSMENT.md`
+ * measures 648 instances and 544 GRADED across the family.
+ *
+ * Worse than optional: `canCheck` refuses to enable the Check button until `requiredExplorations`
+ * stages are open, and 28 `approximationEvaluate` steps name `approx:compute` in
+ * `requiredStageKeys` — so on those the app WILL NOT LET THE LEARNER ANSWER until they have opened
+ * the panel that prints the answer. That is not a leak, it is a compulsion.
+ *
+ * THE FIX USES THE PLATFORM'S OWN CONVENTION RATHER THAN INVENTING ONE. `tone === "info"` is the
+ * post-verdict gate already guarding the GhostChip that shows the correct answer, at 154 sites. An
+ * answer-bearing stage is exactly the same kind of thing, so it gets exactly the same gate: its
+ * LABEL still opens (the method — "combine and round to 2 decimal places" — is the teaching), and
+ * its VALUE waits until the verdict, where it explains instead of deciding.
+ *
+ * DETECTION IS AT THE RENDER BOUNDARY, NOT AT THE ~60 STAGE CONSTRUCTIONS. Editing every
+ * `stages.push` across seven engines and dozens of task cases is precisely the broad mechanical
+ * edit that has gone wrong repeatedly in this repository. Asking "does this string display the
+ * graded answer?" where the answer is already in scope is one predicate, applied seven times, and
+ * it covers any task added later for free.
+ *
+ * It asks about the RIGHTMOST number, because a derivation stage reads `a op b = result` and it is
+ * the result that gives the game away. `${position} − 1 = ${position-1}` is untouched unless that
+ * difference really is the answer — in which case the stage really does print it, whatever the
+ * author intended, and withholding it is correct.
+ */
+function stageRevealsAnswer(
+  value: unknown,
+  truth: { answerNumber?: number; answerClaim?: string; answerRelation?: string }
+): boolean {
+  if (typeof value === "number") return typeof truth.answerNumber === "number" && Math.abs(value - truth.answerNumber) <= 1e-9;
+  const text = String(value ?? "");
+  if (!text) return false;
+  if (typeof truth.answerNumber === "number") {
+    /* The rightmost number, found by a LINEAR scan. The first cut used a trailing negative
+     * lookahead — `/(-?\d+(?:\.\d+)?)(?!.*\d)/` — which backtracks across the remainder of the
+     * string at every candidate position. It is called once per stage per render, and it slowed
+     * rendering enough that 11,511 lazy KaTeX imports outlived their test environment and vitest
+     * reported an `EnvironmentTeardownError` storm on a shard where every test still passed. A
+     * predicate on a hot render path has to be cheap. */
+    const numbers = text.match(/-?\d+(?:\.\d+)?/g);
+    const last = numbers?.[numbers.length - 1];
+    if (last !== undefined && Math.abs(Number(last) - truth.answerNumber) <= 1e-9) return true;
+  }
+  // A claim is an identifier the grader compares verbatim, so a stage containing it hands over the
+  // graded conclusion whether or not a number is involved.
+  if (truth.answerClaim && text.includes(truth.answerClaim)) return true;
+  // `compare:exact` prints the relation the learner is being asked to choose.
+  if (truth.answerRelation) {
+    const symbol = truth.answerRelation === "lt" ? "<" : truth.answerRelation === "gt" ? ">" : "=";
+    if (text.includes(symbol)) return true;
+  }
+  return false;
+}
+
+/** What an answer-bearing stage shows while the learner is still working. */
+const STAGE_HELD = "Open — this is the step to work out yourself.";
+
+/**
+ * The body text for one derivation stage, and the single place the gate is applied.
+ * `authored` bodies are gated too: an authored body on an answer-bearing stage is still authored
+ * ABOUT the answer, and `quotientReasoningLab` additionally printed the raw value underneath one.
+ */
+function stageBody(
+  open: boolean,
+  stage: { value: unknown },
+  truth: { answerNumber?: number; answerClaim?: string; answerRelation?: string },
+  tone: string | undefined,
+  closedText: string,
+  authoredBody?: string
+): string {
+  if (!open) return closedText;
+  if (tone !== "info" && stageRevealsAnswer(stage.value, truth)) return STAGE_HELD;
+  return authoredBody ?? String(stage.value);
+}
+
 /**
  * S237. Names what a coordinate plane's axes MEASURE.
  *
@@ -18936,7 +19023,7 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
 
 export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
   const { tone = "neutral", ...rest } = props;
-  const described = describeWidgetState(rest.spec, rest.value);
+  const described = describeWidgetState(rest.spec, rest.value, tone);
   // "Last change" (s44 accessibility panel): keep the PREVIOUS description so a
   // non-visual learner can compare before/after their own action. Deliberately
   // rendered inside the on-demand <details> — not aria-live — preserving the
