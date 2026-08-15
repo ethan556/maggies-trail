@@ -49,14 +49,14 @@ describe("exp-function: every form upgrades and self-derives across many draws (
         const P = v.widget.prompt as string;
         let redo: number | undefined;
         let m: RegExpMatchArray | null;
-        if ((m = P.match(/^For f\(x\) = (\d+) \* \d+\^x, what is the initial value f\(0\)\?$/))) redo = +m[1];
-        else if ((m = P.match(/^For A\(x\) = (\d+) \* \d+\^x, what is the starting amount A\(0\)\?$/))) redo = +m[1];
-        else if ((m = P.match(/^For A\(x\) = (\d+) \* \(1\/2\)\^x, what is the starting amount A\(0\)\?$/))) redo = +m[1];
-        else if ((m = P.match(/\(x\) = (\d+) \* (\d+)\^x\. What is [A-Z]\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo *= +m[2]; }
-        else if ((m = P.match(/\(x\) = (\d+) \* \(1\/(\d+)\)\^x\. What is [A-Z]\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo /= +m[2]; }
+        if ((m = P.match(/^For f\(x\) = (\d+) [*·] \d+\^x, what is the initial value f\(0\)\?$/))) redo = +m[1];
+        else if ((m = P.match(/^For A\(x\) = (\d+) [*·] \d+\^x, what is the starting amount A\(0\)\?$/))) redo = +m[1];
+        else if ((m = P.match(/^For A\(x\) = (\d+) [*·] \(1\/2\)\^x, what is the starting amount A\(0\)\?$/))) redo = +m[1];
+        else if ((m = P.match(/\(x\) = (\d+) [*·] (\d+)\^x\. What is [A-Z]\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo *= +m[2]; }
+        else if ((m = P.match(/\(x\) = (\d+) [*·] \(1\/(\d+)\)\^x\. What is [A-Z]\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo /= +m[2]; }
         else if ((m = P.match(/^In the sequence (\d+), (\d+), (\d+), (\d+), what is the constant ratio\?$/))) { const r = +m[2] / +m[1]; if (+m[3] / +m[2] !== r || +m[4] / +m[3] !== r) throw new Error("not geometric"); redo = r; }
         else if ((m = P.match(/^The sequence (\d+), (\d+), (\d+), (\d+) continues\. What is the next term\?$/))) { const r = +m[2] / +m[1]; if (+m[3] / +m[2] !== r || +m[4] / +m[3] !== r) throw new Error("not geometric"); redo = +m[4] * r; }
-        else if ((m = P.match(/^For f\(x\) = (\d+) \* (\d+)\^x, what is f\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo *= +m[2]; }
+        else if ((m = P.match(/^For f\(x\) = (\d+) [*·] (\d+)\^x, what is f\((\d+)\)\?$/))) { redo = +m[1]; for (let i = 0; i < +m[3]; i++) redo *= +m[2]; }
         if (redo === undefined) throw new Error(`unparsed prompt for ${form}: ${P}`);
         expect(redo, `prompt-recompute ${form} seed ${seed}`).toBe(Number(v.answer));
         checked += 1;

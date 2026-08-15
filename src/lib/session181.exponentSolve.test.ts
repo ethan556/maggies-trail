@@ -116,7 +116,7 @@ describe("exponentSolve: generators upgrade and self-derive across many draws (S
     let m: RegExpMatchArray | null;
     if ((m = p.match(/^Solve (\d+)\^x = 1\/(\d+)\.$/))) return -powerIndex(+m[1], +m[2]);
     if ((m = p.match(/^Solve \(1\/(\d+)\)\^x = (\d+)\.$/))) return -powerIndex(+m[1], +m[2]);
-    if ((m = p.match(/^Solve (\d+) \* (\d+)\^x = (\d+)\.$/))) {
+    if ((m = p.match(/^Solve (\d+) [*·] (\d+)\^x = (\d+)\.$/))) {
       const isolated = +m[3] / +m[1];
       if (!Number.isInteger(isolated)) throw new Error(`coefficient does not divide: ${p}`);
       return powerIndex(+m[2], isolated);

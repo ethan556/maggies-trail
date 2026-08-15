@@ -76,7 +76,7 @@ The strict whole-corpus text scan found **53** candidates where a graded answer 
 - g2g-03-03/k3 [mcq] — A line plot shows stacks of 2, 4, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?
 - dr-01-01/ch1 [numeric] — Read a slope off a graph you cannot see. For f(x) = x², find f′(−4).
 - dr-01-03/k3 [mcq] — Local straightness. You magnify a graph at a point and it becomes indistinguishable from a straight line. What have you shown?
-- exp-04-01/i3 [numeric] — Read the start. The graph of f(x) = 7 * 2^x has what y-intercept?
+- exp-04-01/i3 [numeric] — Read the start. The graph of f(x) = 7 · 2^x has what y-intercept?
 - ee-05-02/k2 [buildExpression] — Read a graph. A number line shows a CLOSED circle at 4 with the arrow pointing RIGHT. Which inequality does this graph?
 - ee-05-02/k3 [mcq] — Test a point against a graph. The graph shows x < 0 (open circle at 0, arrow left). Does x = -3 satisfy it?
 - fg-02-03/k1 [numeric] — Read initial value from a table. A table shows x: 0, 1, 2 with y: 7, 10, 13. What is the initial value?
