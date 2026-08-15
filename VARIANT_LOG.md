@@ -4134,3 +4134,94 @@ Final state, all nine graded bands: **0 uncovered domains.**
 | 6 | 5 | none |
 | 7 | 5 | none |
 | 8 | 6 | none |
+
+### Session 242, part 6 — the eight live graph defects
+
+**D-07 CLOSED.** `as100-01-02` i2 said "start at 6, hop 6 (the double), then 1 more — two hops
+total" while its spec was `start:6, hop:1, hops:7`, so the picture drew seven identical unit hops:
+counting on by ones, the exact strategy the near-doubles lesson exists to move learners off. The
+answer (13) was never wrong — the *picture* was, and it contradicted the sentence above it.
+
+`NumberLineHopSpec` computes `landing = start ± hop·hops` from one uniform hop size, so "one hop of
+6 then one of 1" is **structurally undrawable**: this had to be resolved in prose or not at all. It
+now uses the pre-applied-double pattern already shipped in its sibling `g1p-02-02` — "6 + 6 lands on
+12, so count on 1 more from 12", `start:12, hop:1, hops:1`, min/max 10–15. Landing stays 13, the
+near-doubles strategy stays, and the drawing finally shows the one hop the prompt names. The
+`commonLandings` feedback was updated with it — the old "That's 8 hops" would have been false under
+the new framing.
+
+*Recorded because CLAUDE.md rule 1 forbids changing authored prose:* that rule governs the variant
+workstream ("you add ONE `variant` key... never touch anything else"). This is defect repair under
+an explicit instruction, and the change is minimal and precedented. Flagged here for ratification
+rather than treated as routine.
+
+**D-08 CLOSED — and it was 9 specs, not 8, one of which was correct.** `dd-02-02` e1 also carries
+`axisLabel: "minutes read"`, and there it is **right**: `axisLabel` captions the CATEGORY axis
+(drawn at `x=W/2, y=H-2`), and that step's categories genuinely are minute bins 0–9, 10–19… A code
+comment at `widgets.tsx:12343` already treats that pairing as intended. It is almost certainly the
+source the other eight were copied from. Left untouched. The other eight now read `length in cm`
+(g2g-01-02), `day` (g2g-02-01), `vehicle` (g2g-02-03) and `trip spot` (g2g-03-03).
+
+**D-18 CLOSED for 5 of 8 forms; the other 3 are blocked by a renderer cap, not by the generator.**
+`ddDotTotal`, `ddDotDataSet`, `ddDotMissingValue`, `ddDotMoreThan` and `ddShapeSymmetric` now attach
+`plotData` **120/120** each. `ddDotMissingValue` had no counts at all — the empty position IS its
+question, so every other value now carries at least one dot and that one carries zero.
+
+The other three cannot draw, and the reason is worth recording because it looks like a generator bug
+and is not. A first attempt listed only the occupied positions and **broke GG-15**, which requires
+uniform steps because the renderer lays columns out as `repeat(values.length, 1fr)` — an uneven
+lattice would draw a nine-wide outlier gap at the same width as a one-step gap, which is precisely
+the lie these questions teach learners to catch. Filling the lattice uniformly instead is correct
+but produces 9–19 columns against **`MAX_PLOT_COLUMNS = 8`** (`schema.ts:78`). So for
+`ddShapeOutlier`, `ddShapeClusterCount` and `ddShapeFullStory` the figure is unreachable under the
+current widget contract, and a misleading figure is worse than an honest sentence. Both constraints
+are now recorded at the call sites. Raising the cap is a renderer decision, not a generator one.
+
+**D-19 CLOSED as not-a-defect, by ruling.** The sweep flagged four `g8-bv-scatter-basics` forms for
+describing a scatter and drawing none, but the prompts do not support that on two of them:
+`bvScatterCount` asks "22 cyclists — how many dots should appear?" (nothing specific to draw) and
+`bvScatterPurpose` is conceptual. The remaining two ask what the coordinate (2, 6) *represents*
+given the axis names — plotting that dot on labelled axes would show the answer. `plotData` is 1-D
+and cannot carry a scatter anyway, and switching widget type would make `variantForStep` decline on
+its surface guard, so the "fix" would remove the refresh entirely. Ruled closed 2026-08-15.
+
+**D-20 CLOSED by ruling — bars start at zero.** `BarBuilderSpec` has no start-heights field, so the
+four uneven bars the prompt named could never be drawn. Rather than grow the schema, the step now
+describes what the widget does: "Four friends have 20 cookies between them. Build each bar to the
+level where all four are equal — that level IS the mean." The starting dataset (3, 4, 6, 7 — 20 in
+all) moves into the body, so the mean is still derived from real numbers rather than asserted, and
+the success feedback shows 20 ÷ 4 = 5.
+
+**D-23 CLOSED.** `HopLandingW` emitted `role="group" aria-label="Number line"` — a static name that
+says the same thing before and after the learner acts, on the surface whose entire content is the
+hops (and `role="group"` is wrong anyway: the SVG has no focusable children to group). It now
+emits `role="img"` with a state sentence, matching its own sibling `HopSizeW`, and reports start,
+hop count, hop size, direction and landing. Numbers go through the same `hopLabel`/`denom`
+formatter the ruler uses, so a rational lattice narrates "1 1/2" and not a raw count of halves.
+Off-lattice taps are described as a single jump rather than a false hop count.
+
+**D-24 CLOSED.** `describeWidgetState` returned **null** for `feasibleRegionExplore` and
+`parametricTrace`, so "Describe this model" said nothing at all on two of the newest interactive
+surfaces while 88 other cases narrate. Both now do the arithmetic a sighted learner reads off the
+axes: the fence's x with the region's boundaries and its top-right corner; the parameter t with the
+plotted point, the target point, and which way t must move. Slope prose was fixed while writing it —
+`y = -1x + 6` is wrong when spoken, so a unit slope drops its coefficient and the sign is a real
+minus.
+
+**D-14 CLOSED — and the obvious fix for one sub-defect was wrong.** Ticks: the axis printed three
+bare numerals with no tick strokes; they now mark the line. Readouts: the rows showed a bare key and
+no number, so the five values the learner was setting appeared in NO visible text anywhere — each
+slider now carries one. Parity: the four `boxPlot` entries in `KNOWN_UNREVIEWED` were **burned, not
+waived** — removed and re-run to confirm the ratchet reports no new violations, which is the only
+evidence distinguishing a burned baseline from a forgotten one.
+
+The aria sub-defect is the interesting one. The image label used private vocabulary ("low,
+lower-mid, mid, upper-mid, high") while the sliders said "minimum, first quartile Q1, median…", so
+unifying them looked obviously right — and **broke `widgets.aria.test.tsx`**, which requires an
+image label to stay distinguishable from every control label so a screen reader announcing "median"
+cannot leave the listener unsure whether they are on the figure or a slider. The original divergence
+was satisfying that gate, badly. The real answer is that the two labels have different jobs: the
+sliders are named for the STATISTIC each sets, the image should describe the SHAPE drawn. The image
+label now speaks box-plot geometry — "The box runs 3 to 10, its centre line at 7, with whiskers
+reaching 0 and 14" — reporting the same five numbers in standard vocabulary while reusing none of
+the control names.

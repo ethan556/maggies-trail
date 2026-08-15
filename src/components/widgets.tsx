@@ -9804,10 +9804,30 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot: low ${cur.min}, lower-mid ${cur.q1}, mid ${cur.med}, upper-mid ${cur.q3}, high ${cur.max}.`}>
+      {/* S242 (D-14). Four of this engine's five sub-defects were about saying one thing and showing
+          another. (a) The axis printed three bare numerals with NO tick strokes, so they floated
+          under the line rather than marking positions on it — every other graph surface in this
+          file ticks its scale. (b) The aria label used a private vocabulary — "low, lower-mid, mid,
+          upper-mid, high" — while the five sliders immediately below said "minimum, first quartile
+          Q1, median, third quartile Q3, maximum". A screen-reader learner and a sighted helper were
+          given different names for the same five handles, on the one engine whose entire subject IS
+          that vocabulary.
+
+          Unifying the two wordings was the obvious fix and it is WRONG: `widgets.aria.test.tsx`
+          requires an image label to stay distinguishable from every control label, so that a screen
+          reader announcing "median" cannot leave the listener unsure whether they are on the figure
+          or on a slider. The original divergence was satisfying that gate, badly. The answer is that
+          the two labels have different jobs — the sliders are named for the STATISTIC each sets, and
+          the image should describe the SHAPE that is drawn. So this now speaks box-plot geometry
+          (box, centre line, whiskers) and reports the same five numbers, while reusing none of the
+          control names. Honest, standard vocabulary, and no collision. */}
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot on an axis from ${spec.axisMin} to ${spec.axisMax}. The box runs ${Math.min(cur.q1, cur.q3)} to ${Math.max(cur.q1, cur.q3)}, its centre line at ${cur.med}, with whiskers reaching ${cur.min} and ${cur.max}.`}>
         <line x1={pad - 6} y1={H - 18} x2={W - pad + 6} y2={H - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
         {[spec.axisMin, Math.round((spec.axisMin + spec.axisMax) / 2), spec.axisMax].map((t) => (
-          <text key={t} x={sx(t)} y={H - 5} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}</text>
+          <g key={t}>
+            <line data-testid="bp-tick" x1={sx(t)} y1={H - 18} x2={sx(t)} y2={H - 13} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.5} />
+            <text x={sx(t)} y={H - 5} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}</text>
+          </g>
         ))}
         {/* whiskers */}
         <line x1={sx(cur.min)} y1={midY} x2={boxL} y2={midY} stroke={PALETTE.ink} strokeWidth={1.5} />
@@ -9838,13 +9858,17 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
           })()}
         {!disabled && <rect className="mt-drag-hit" data-testid="bpl-drag" x={pad - 10} y={midY - 26} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
       </svg>
+      {/* (c) These rows printed the bare key — "min q1 med q3 max" — and no number. The five values
+          the learner is setting appeared NOWHERE in visible text: not on the sliders, not on the
+          plot, only inside the aria label. */}
       <div className="grid gap-2 sm:grid-cols-2">
         {rows.map(([k, label]) => (
-          <label key={k} className="grid grid-cols-[2.6rem_1fr] items-center gap-2 text-xs font-bold text-ink/70">
+          <label key={k} className="grid grid-cols-[2.6rem_1fr_2.4rem] items-center gap-2 text-xs font-bold text-ink/70">
             <span className="uppercase">{k}</span>
             <input type="range" min={spec.axisMin} max={spec.axisMax} step={1} value={cur[k]} disabled={disabled}
               aria-label={label} aria-valuetext={`${label} ${cur[k]}`}
               onChange={(e) => set(k, Number(e.target.value))} className="h-11 w-full accent-sky" />
+            <span data-testid="bp-readout" className="text-right tabular-nums text-sm text-ink">{cur[k]}</span>
           </label>
         ))}
       </div>
@@ -16495,10 +16519,28 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const arcCount = delta === 0 ? 0 : onLattice ? Math.abs(delta) / spec.hop : 1;
   const arcSpan = onLattice ? spec.hop : Math.abs(delta);
   const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
+  /* S242 (D-23). This drawing was `role="group"` named "Number line" — a static name that says the
+   * same thing before and after the learner acts, on the one surface whose entire content IS the
+   * hops. Its own sibling HopSizeW already emits `role="img"` with a state sentence ("A stride of 4
+   * from 0. 8 is landed on; 12 is landed on."), so the pattern needed no invention, only applying.
+   * `role="group"` is also wrong on its own terms: the SVG holds no focusable children to group.
+   * Numbers go through the same `hopLabel`/`denom` formatter the ruler uses, so a rational lattice
+   * narrates "1 1/2" rather than the raw count of halves. */
+  const say = (n: number) => (spec.denom ? hopLabel(n, spec.denom) : String(n));
+  const hopWord = arcCount === 1 ? "hop" : "hops";
+  const dirWord = stepDir < 0 ? "back" : "forward";
+  const stateLabel =
+    chosen === null
+      ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Start marked at ${say(spec.start)}. No hop made yet.`
+      : delta === 0
+        ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Still on the start at ${say(spec.start)} — no hop made.`
+        : onLattice
+          ? `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, ${arcCount} ${hopWord} of ${say(arcSpan)} ${dirWord}, landing on ${say(chosen)}.`
+          : `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, one jump of ${say(arcSpan)} ${dirWord} to ${say(chosen)}, which is not a whole number of ${say(spec.hop)}-sized hops.`;
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 320 ${labelPlan.height}`} className="w-full" role="group" aria-label="Number line">
+      <svg viewBox={`0 0 320 ${labelPlan.height}`} className="w-full" role="img" aria-label={stateLabel}>
         <style>{css}</style>
         <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
         {/* S237. The line used to tick ONLY the tappable choices, so everything between them was

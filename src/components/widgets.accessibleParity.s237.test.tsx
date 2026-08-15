@@ -170,10 +170,12 @@ function flatten(root: HTMLElement): string {
  * finding. The 11 that remain were re-measured against the corrected tokenizer and all still fire.
  */
 const KNOWN_UNREVIEWED = new Set<string>([
-  "boxPlot|15",
-  "boxPlot|5",
-  "boxPlot|70",
-  "boxPlot|90",
+  /* S242 (D-14). The four boxPlot entries were burned here, not waived. They fired because the
+     engine's five values existed only inside its aria label — no visible text anywhere carried
+     them — so the accessible name asserted numbers the sighted surface never showed. The engine
+     now renders a readout per slider, and these stop firing on their own. Confirmed by deleting
+     them and re-running: the ratchet reports no NEW violations, which is the only evidence that
+     distinguishes a burned baseline from a forgotten one. */
   "extraneousRootLab|2",
   "moneyBoard|2",
   "moneyBoard|5",

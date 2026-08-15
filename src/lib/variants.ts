@@ -31999,17 +31999,39 @@ const GENERATORS: VariantGen[] = [
         const step = support ? 5 : pick(rand, 2, 6);
         const values = [start, start + step, start + 2 * step, start + 3 * step];
         const shownPlot = (counts: number[]) => values.map((v, i) => `${v} (${counts[i]} dot${counts[i] === 1 ? "" : "s"})`).join(", ");
+        /* S242 (D-18). Every one of these eight forms DESCRIBES a dot plot in prose — "A dot plot
+         * shows 15 (3 dots), 20 (5 dots)…" — and none of them drew one. Their six sibling forms in
+         * this same generator (totalCount, halfMarks, fractionMode, fractionTotal, atOrAbove,
+         * quarterNumerator) all attach `plotData` and render 120/120; these eight attached it
+         * 0/120, so a learner refreshing dd-02-01 or dd-02-03 was asked to read a figure that was
+         * never on screen. The generated state already held everything the figure needs; it simply
+         * was not passed on. `withPlot` closes that, and `tally` derives values+counts for the
+         * three forms that carry a raw data list rather than parallel arrays. */
+        const withPlot = <T extends Variant>(built: T, vals: readonly number[], cts: readonly number[]): T =>
+          ({ ...built, widget: { ...(built.widget as Extract<TWidget, { plotData?: unknown }>), plotData: { values: [...vals], counts: [...cts] } } }) as T;
+        /* The lattice must be UNIFORM, not just the values that happen to occur. GG-15
+         * (`widgetIntegrity.graphs.s241.test.ts`) requires equal gaps because the renderer lays
+         * columns out as `repeat(values.length, 1fr)` — so listing only the occupied positions
+         * would draw a nine-wide outlier gap at the same width as a one-step gap, which is exactly
+         * the lie these outlier and gap forms are teaching learners to spot. Empty positions carry
+         * count 0 and render as the gap they are. */
+        const tally = (data: readonly number[], stepBy = 1) => {
+          const lo = Math.min(...data), hi = Math.max(...data);
+          const vals: number[] = [];
+          for (let v = lo; v <= hi; v += stepBy) vals.push(v);
+          return { vals, cts: vals.map((v) => data.filter((d) => d === v).length) };
+        };
         if (form === "ddDotTotal") {
           const counts = draw(rand, (r) => values.map(() => pick(r, 1, band === "stretch" ? 7 : 5)), (cs) => {
             const total = cs.reduce((a, b) => a + b, 0), max = Math.max(...cs);
             return new Set([total, max, cs.length]).size === 3;
           });
           const answer = counts.reduce((a, b) => a + b, 0);
-          return num("line-plot", `A dot plot shows ${shownPlot(counts)}. How many observations are shown in all?`, answer, 0,
+          return withPlot(num("line-plot", `A dot plot shows ${shownPlot(counts)}. How many observations are shown in all?`, answer, 0,
             [
               [Math.max(...counts), `${Math.max(...counts)} is only the tallest stack. The total includes dots above every value.`],
               [counts.length, `${counts.length} counts the labeled values, not the individual observations represented by the dots.`],
-            ], `Add all frequencies: ${counts.join(" + ")} = ${answer} observations.`);
+            ], `Add all frequencies: ${counts.join(" + ")} = ${answer} observations.`), values, counts);
         }
         if (form === "ddDotDataSet") {
           const rawCounts: number[] = values.map(() => pick(rand, 1, support ? 3 : 5));
@@ -32019,21 +32041,25 @@ const GENERATORS: VariantGen[] = [
             : rawCounts;
           const expanded: number[] = [];
           counts.forEach((n, i) => { for (let k = 0; k < n; k++) expanded.push(values[i]); });
-          return mcq(rand, "line-plot", `A dot plot shows ${shownPlot(counts)}. Which data set does it represent?`,
+          return withPlot(mcq(rand, "line-plot", `A dot plot shows ${shownPlot(counts)}. Which data set does it represent?`,
             [expanded.join(", "), `Correct — each dot becomes one repeated copy of the value beneath its stack.`],
             [
               [values.join(", "), `This lists each labeled value once and ignores repeated dots, so it loses the frequencies.`],
               [counts.join(", "), `These are the stack heights, not the measured data values along the horizontal axis.`],
-            ]);
+            ]), values, counts);
         }
         if (form === "ddDotMissingValue") {
-          const gap = values[pick(rand, 1, 2)];
-          return mcq(rand, "line-plot", `A dot plot of quiz scores has no dots above ${gap}. What does that mean?`,
+          const gapIndex = pick(rand, 1, 2);
+          const gap = values[gapIndex];
+          /* The empty position IS the question, so it has to be visible: every other value carries
+           * at least one dot and this one carries none. Before S242 no counts existed at all. */
+          const counts = values.map((_, i) => (i === gapIndex ? 0 : pick(rand, 1, support ? 3 : 5)));
+          return withPlot(mcq(rand, "line-plot", `A dot plot of quiz scores has no dots above ${gap}. What does that mean?`,
             [`No observation in the data set equals ${gap}`, `Correct — an empty position means the frequency of that displayed value is zero.`],
             [
               [`The value ${gap} was impossible`, `A zero frequency says only that it did not occur in this sample, not that it can never occur.`],
               ["The dot plot must contain an error", `Empty positions are legitimate evidence that no observation took that value.`],
-            ]);
+            ]), values, counts);
         }
         if (form === "ddDotMoreThan") {
           const item = draw(rand, (r) => {
@@ -32042,25 +32068,33 @@ const GENERATORS: VariantGen[] = [
             const at = counts[threshold], total = counts.reduce((a, b) => a + b, 0);
             return { counts, threshold, answer, at, total };
           }, (x) => new Set([x.answer, x.at, x.total]).size === 3);
-          return num("line-plot", `A dot plot shows ${shownPlot(item.counts)}. How many observations are greater than ${values[item.threshold]}?`, item.answer, 0,
+          return withPlot(num("line-plot", `A dot plot shows ${shownPlot(item.counts)}. How many observations are greater than ${values[item.threshold]}?`, item.answer, 0,
             [
               [item.at, `${item.at} counts the stack equal to ${values[item.threshold]}. The question asks for values strictly greater.`],
               [item.total, `${item.total} counts every observation, including those at or below ${values[item.threshold]}.`],
-            ], `Add the stacks above ${values.slice(item.threshold + 1).join(" and ")}: ${item.counts.slice(item.threshold + 1).join(" + ")} = ${item.answer}.`);
+            ], `Add the stacks above ${values.slice(item.threshold + 1).join(" and ")}: ${item.counts.slice(item.threshold + 1).join(" + ")} = ${item.answer}.`), values, item.counts);
         }
         if (form === "ddShapeSymmetric") {
           const center = pickBandInt(rand, band, [3, 6], [5, 12], [10, 20]);
           const data = [center - 2, center - 1, center - 1, center, center, center, center + 1, center + 1, center + 2];
-          return mcq(rand, "line-plot", `The data ${data.join(", ")} peaks at ${center} and mirrors on both sides. What is its shape?`,
+          const t = tally(data);
+          return withPlot(mcq(rand, "line-plot", `The data ${data.join(", ")} peaks at ${center} and mirrors on both sides. What is its shape?`,
             ["Roughly symmetric around the peak", `Correct — matching frequencies occur at equal distances below and above ${center}.`],
             [
               ["Skewed because the values increase from left to right", `Every ordered data set increases numerically; skew depends on unequal tails, not reading direction.`],
               ["The data has no distribution shape", `The balanced stacks form a clear single-peaked symmetric pattern.`],
-            ]);
+            ]), t.vals, t.cts);
         }
         if (form === "ddShapeOutlier") {
           const base = pick(rand, 0, support ? 2 : 5), out = base + pick(rand, 9, band === "stretch" ? 18 : 13);
           const data = [base, base, base, base + 1, base + 1, base + 2, base + 3, out];
+          /* NOT drawn, deliberately. A uniform lattice from ${base} to ${out} is 10-19 columns and
+           * `MAX_PLOT_COLUMNS` is 8 (schema.ts:78); listing only the occupied positions instead
+           * would draw the outlier's gap at the same width as a one-step gap, which GG-15 forbids
+           * precisely because that is the lie this question teaches learners to catch. So the
+           * figure is unreachable for this form under the current widget contract, and a
+           * misleading figure is worse than an honest sentence. Raising MAX_PLOT_COLUMNS is a
+           * renderer decision, not a generator one. */
           return mcq(rand, "line-plot", `In the data ${data.join(", ")}, what role does ${out} play?`,
             [`It is an outlier, isolated beyond a gap from the cluster`, `Correct — the other values cluster from ${base} to ${base + 3}, while ${out} sits far away.`],
             [
@@ -32080,9 +32114,13 @@ const GENERATORS: VariantGen[] = [
               [item.total, `${item.total} counts the entire distribution, including the higher value and the outlier.`],
               [item.tallest, `${item.tallest} is only the height of the tallest single stack. The cluster uses two stacks.`],
             ], `The low cluster contains ${item.c1} + ${item.c2} = ${item.answer} observations.`);
+            // Not drawn: start .. out is nine positions of `step`, one over MAX_PLOT_COLUMNS (8).
         }
         const base = pick(rand, 0, support ? 2 : 4), out = base + pick(rand, 8, band === "stretch" ? 16 : 12);
         const data = [base, base, base, base + 1, base + 1, base + 2, out];
+        /* Not drawn, same reason as ddShapeOutlier: ${base}..${out} is 9-17 uniform columns
+         * against MAX_PLOT_COLUMNS = 8, and an uneven lattice would misdraw the very gap the
+         * question is about. */
         return mcq(rand, "line-plot", `The data are ${data.join(", ")}. Which description tells the full story?`,
           [`Clustered at ${base}–${base + 1}, followed by a gap and an outlier at ${out}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated.`],
           [

@@ -1374,7 +1374,7 @@ DAG: expressions-equations → solving-equations → {linear-functions → syste
 
 # REGISTRY — AUTO-GENERATED FROM DISK (source of truth: `curriculum-manifest.json`)
 
-> 129 courses · 1701 lessons · 100% concept-figure coverage · contentVersion `a01d31a9f5d3` · corpus `a01d31a9f5d3ff48…` · generated 2026-08-15
+> 129 courses · 1701 lessons · 100% concept-figure coverage · contentVersion `58e71e9b6102` · corpus `58e71e9b6102c604…` · generated 2026-08-15
 > This block is the registration source of truth. Prose sections above are planning history.
 
 ## Adding & Taking Away (`add-subtract-10-k`, Kindergarten) — 20 lessons

@@ -869,6 +869,52 @@ export function describeWidgetState(spec: TWidget, value: unknown): string | nul
       }
       return `z is plotted at ${z}: ${fmt(v.re)} along the real axis, ${fmt(v.im)} up the imaginary axis. The target point is ${fmt(spec.targetRe)} ${spec.targetIm < 0 ? "−" : "+"} ${fmt(Math.abs(spec.targetIm))}i.`;
     }
+    /* S242 (D-24). Both engines returned null here, so "Describe this model" said nothing at all on
+     * two of the newest interactive surfaces (both added in S240). A learner who cannot see the
+     * canvas got the generic action list and no state whatsoever, while every comparable engine —
+     * argandExplore above, graphStoryLab, coordinateProofLab — narrates position and target. The
+     * value each stores is a single number, so the description has to do the arithmetic the sighted
+     * learner reads off the axes: where the fence or the point actually IS, and where it needs to
+     * get to. */
+    case "feasibleRegionExplore": {
+      const fence = typeof value === "number" ? value : spec.verticalStart;
+      const slantAtFence = spec.slantM * fence + spec.slantB;
+      const cornerY = Math.max(0, Math.min(spec.yMax, slantAtFence));
+      const name = spec.fenceLabel ?? "fence";
+      const rel =
+        fence === spec.verticalTarget
+          ? "which is the target position"
+          : `the target is at x = ${fmt(spec.verticalTarget)}, ${fence < spec.verticalTarget ? "further right" : "further left"}`;
+      // Spoken aloud, "y = -1x + 6" is wrong prose for a screen reader and for a learner. A unit
+      // slope drops its coefficient, and the sign is a real minus, not a hyphen.
+      const slope =
+        spec.slantM === 1 ? "x" : spec.slantM === -1 ? "−x" : `${fmt(spec.slantM).replace("-", "−")}x`;
+      return (
+        `The ${name} stands at x = ${fmt(fence)}, ${rel}. The feasible region is everything at or below the line ` +
+        `y = ${slope} + ${fmt(spec.slantB)} and at or left of the ${name}, within x from 0 to ${fmt(spec.xMax)} ` +
+        `and y from 0 to ${fmt(spec.yMax)}. At the ${name} the slanted boundary sits at y = ${fmt(cornerY)}, ` +
+        `so the region's top-right corner is (${fmt(fence)}, ${fmt(cornerY)}).`
+      );
+    }
+    case "parametricTrace": {
+      const t = typeof value === "number" ? value : spec.tStart;
+      const x = spec.mode === "line" ? t + spec.lineX0 : Math.cos(t);
+      const y = spec.mode === "line" ? spec.lineYK * t : Math.sin(t);
+      const targetX = spec.mode === "line" ? spec.targetT + spec.lineX0 : Math.cos(spec.targetT);
+      const targetY = spec.mode === "line" ? spec.lineYK * spec.targetT : Math.sin(spec.targetT);
+      const onTarget = Math.abs(t - spec.targetT) <= spec.tTolerance;
+      const path =
+        spec.mode === "line"
+          ? `The path is the line x = t + ${fmt(spec.lineX0)}, y = ${fmt(spec.lineYK)}t`
+          : "The path is the unit circle x = cos t, y = sin t";
+      return (
+        `${path}, traced for t from ${fmt(spec.tMin)} to ${fmt(spec.tMax)}. ` +
+        `t is at ${fmt(t)}, putting the point at (${fmt(x)}, ${fmt(y)}). ` +
+        (onTarget
+          ? `That is on the target, which is t = ${fmt(spec.targetT)} at (${fmt(targetX)}, ${fmt(targetY)}).`
+          : `The target is t = ${fmt(spec.targetT)} at (${fmt(targetX)}, ${fmt(targetY)}), so t must ${t < spec.targetT ? "increase" : "decrease"}.`)
+      );
+    }
     case "sequenceBuild": {
       if (spec.task === "dial") return null;
       const state = value && typeof value === "object" && !Array.isArray(value) ? value as { explored?: string[]; numeric?: number | ""; choiceId?: string } : {};

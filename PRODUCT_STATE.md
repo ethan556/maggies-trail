@@ -4,8 +4,8 @@ Regenerate with `node scripts/gen-product-state.mjs`. Every count below is deriv
 from disk (the curriculum manifest, the schema registry, and a content walk) so the
 rest of the docs can cite this file instead of re-counting. Commit `not-recorded-in-source-archive`.
 
-Authored corpus SHA-256: `a01d31a9f5d3ff48cc7a1d9b55a08a129a19e16774de309a6d412d3957ce6c8a`  
-State generated: `2026-08-15T03:08:42.313Z`
+Authored corpus SHA-256: `58e71e9b6102c60420a1faf0b5d674251fa21db81802f455a30523b1da9f696d`  
+State generated: `2026-08-15T04:43:19.572Z`
 
 ## Catalogue
 
