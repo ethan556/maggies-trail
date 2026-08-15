@@ -267,10 +267,22 @@ body {
    tracking distorts mathematical reading. Both boot pre-paint. */
 [data-text-scale="lg"] { font-size: 107.5%; }
 [data-text-scale="xl"] { font-size: 115%; }
-[data-reading-space="open"] :is(p, li, dd, figcaption):not(.stage *) {
+/* S242 / ACC-01. THE EXCLUSION WAS SCOPED TO THE WRONG THING.
+   The reasoning above is right — added tracking distorts equations, tabular numerals and SVG text —
+   but `:not(.stage *)` applies it to the entire widget subtree, and `WidgetRenderer` wraps EVERY
+   widget in `className="stage lesson-stage …"`. So the one paragraph a learner most needs to read,
+   the QUESTION itself (`<p class="text-lg font-bold"><MathProse …/></p>`), was the only prose in the
+   app the dyslexia measure could not touch — across all 11,957 authored widget instances.
+   The prose rule is now unscoped and the protection is stated where it actually applies: inside
+   rendered mathematics, SVG, and tabular figures. Same intent, correct boundary. */
+[data-reading-space="open"] :is(p, li, dd, figcaption) {
   letter-spacing: 0.012em;
   word-spacing: 0.08em;
   line-height: 1.72;
+}
+[data-reading-space="open"] :is(.katex, .katex *, svg, svg *, .tabular-nums, .tabular-nums *) {
+  letter-spacing: normal;
+  word-spacing: normal;
 }
 
 .pressable { transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out); }
