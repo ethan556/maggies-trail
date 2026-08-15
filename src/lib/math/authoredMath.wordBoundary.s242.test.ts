@@ -140,6 +140,17 @@ describe("S242 — inequality relations are always-on islands", () => {
     }
   });
 
+  it("≠ is a relation on the same terms as ≤ and ≥", () => {
+    // MATH-01 found 285 rows of "6 ≠ 4" and "−6 ≠ 6" sitting in body type beside typeset islands.
+    // The argument that admitted the digraphs applies unchanged: ≠ does not occur in English, so it
+    // is its own evidence that the surrounding text is mathematics, and it is safe always-on where
+    // a bare `=` is not.
+    expect(islands("Equal distance would need equal magnitudes: 6 ≠ 4.", false)).toContain("6 ≠ 4");
+    expect(islands("−6 ≠ 6, so they differ.", false)).toContain("−6 ≠ 6");
+    // And a FALSE not-equal claim is refused exactly like a false equation.
+    expect(islands("A learner writes 6 ≠ 6 here.", true)).toEqual([]);
+  });
+
   it("a false inequality is refused, exactly like false arithmetic", () => {
     expect(islands("9 <= 2", true)).toEqual([]);
     expect(islands("5 >= 5", true)).toContain("5 >= 5");

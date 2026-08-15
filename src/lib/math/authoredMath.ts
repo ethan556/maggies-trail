@@ -293,7 +293,11 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * 3-5" still cannot match, because it carries no relation at all. */
     const operand = String.raw`(?:[-−]\s*)?${term}(?:\s*[-−+]\s*${term})*`;
     const relations: Match[] = [];
-    collect(text, new RegExp(`${operand}\\s*(?:<=|>=|≤|≥)\\s*${operand}`, "g"), relations);
+    /* S242 (MATH-01). `≠` joins the digraphs on the same argument that admitted them: it does not
+     * occur in English at all, so it is its own evidence that the surrounding text is mathematics,
+     * and the false-claim evaluator below already knows how to judge it. 285 rows of the symbolic
+     * display index were "6 ≠ 4" and "−6 ≠ 6" sitting in body type beside typeset islands. */
+    collect(text, new RegExp(`${operand}\\s*(?:<=|>=|≤|≥|≠)\\s*${operand}`, "g"), relations);
     for (const candidate of relations) {
       if (!isFalseNumericClaim(candidate.source)) candidates.push(candidate);
     }
