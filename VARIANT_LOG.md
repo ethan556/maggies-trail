@@ -4443,3 +4443,71 @@ Verified it fails closed: dropping `/review`'s budget to 100 kB exits 1 with the
 
 Gates: typecheck 0 · full suite **13,802 passed / 0 failed across 389 files** · content 1840/1840 ·
 pedagogy 1711/1711 · registration OK.
+
+---
+
+## S242 (Cowork) — V3 program, waves 0 / 0R
+
+Executing `MAGGIES_TRAIL_PEDAGOGICAL_PERCEPTUAL_EXCELLENCE_PROGRAM_V3_FINAL.md` §14 in order.
+No `variant` keys were added this session; the work was truth, gates and generated-side quality.
+
+**Gate corrections made, each stricter or equally strict, never looser:**
+
+1. `scripts/cml-lint.mjs` read `process.argv[2]` as its root, so `--strict` was consumed as a path
+   and the documented invocation scanned zero files while printing "0 error(s), 0 warning(s)". Flags
+   are stripped before the positional root; a missing content root exits 2.
+2. The same lint truncated at 250 issues in file order, hiding errors behind warnings. Errors now
+   print in full and first. This is why the plan's warning split (228 + 21) was wrong: it was read
+   off the cap. True figures at the seal were 292 and 39.
+3. `DIRECT` was a hand-retyped list holding 87 of the 112 engines scoring `manip >= 2` and none of
+   the 11 scoring 1 — its intended rule was plainly `manip >= 2`. It is now DERIVED from
+   `scripts/engine-capabilities.json`, the authority `engine-registration-contract.mjs` already
+   names. Strictly a superset: 25 more engines owe the thirteen flagship contracts (stricter), and
+   `prediction-not-causal` stops firing where the manipulation was the step itself (292 -> 161).
+   `DIRECT_AT_S242` freezes the old membership; a capability edit that demotes one exits 2.
+4. Warnings are now ratcheted against `CML_WAIVERS.json`: an unwaived code is allowed zero, a waived
+   code at most its recorded count, and a waiver stops working on its expiry. Verified in both
+   directions.
+
+**Authored content changed — flagged for pedagogy review:**
+
+- Three `predict` blocks added (`dc-02-02#3`, `pra-04-02#1`, `tf-03-02#1`). Each carried all
+  thirteen other flagship contracts and no prediction. Every option is drawn from the step's own
+  declared `cml.misconceptions` and every reveal from its declared `cml.invariants`;
+  `scripts/session/s242-cml01-predictions.mjs` recomputes each quoted number and refuses to write if
+  one is wrong. One revert removes all three.
+
+**Authored content error found AND fixed (a summary contradicting its own grader):**
+
+- `pra-04-02#1` `successFeedback` opened "− + + +". `signChartSigns` returns "+ − + +" and
+  substitution agrees (p(−4)=+2304, p(−1)=−18, p(1)=+4, p(3)=+162). A learner who set the signs
+  correctly was congratulated with a different answer — and "− + + +" is exactly the pattern the
+  step's own misconception produces. Four symbols changed; the reasoning sentence after them was
+  already right and is untouched. Corpus sweep of all 11 signChart strings stating a full sign
+  pattern found this one mismatch.
+
+**Tokenizer defects found by GENERATING, not by reading source (four, all fixed):**
+
+- exponent class held ASCII `-` but not U+2212, so `3^−4` rendered a literal caret;
+- `\bsqrt` has no boundary after a digit, so `4sqrt(3)` matched nothing and stayed raw;
+- the first cut of that fix ate the preceding space, emitting the island `" sqrt(4)"`;
+- the fraction island stopped at the denominator, orphaning `^3` in `1/6^3`.
+
+Reverted deliberately: a number-with-power branch on the arithmetic atom. It would have absorbed
+`3 * 4^(4-1)`, but it also tore `a4 = 3 * ...` into `a` plus an island and broke two fixtures. That
+leak is `GRB-01` in `GENERATOR_REBUILD_LEDGER.md` and belongs in the generator.
+
+**Generated-side sweep (new): 102,251 problems, 2,672 (generator, form) pairs, 0 throws.** Zero
+distractor defects, zero interaction-sync defects, zero edge-case failures, zero generators emitting
+one widget forever. The findings are all in dimensions the variant gate has never checked — see
+`GENERATOR_PEDAGOGY_BASELINE.md`.
+
+**Corrections to my own work, recorded because they are the useful part:** the first detector set
+produced 1,616 language findings that became 48 once each pattern was narrowed against its own
+results (`null` was flagging statistics vocabulary; the ordinal rule flagged "12th"). The first
+duplication framing reported 1,580 "avoidable repeats" against an anti-repeat mechanism that does
+not exist in this repository at all.
+
+Gates at seal `12a0c16`: typecheck clean · vitest 13,808 passed / 4 skipped across 4 shards ·
+schema 1840/1840 · pedagogy 1711/1711 · cml strict 0 errors, 200 warnings within ceilings ·
+registration consistent · native 3 archive-only findings as documented · npm audit 0 vulnerabilities.
