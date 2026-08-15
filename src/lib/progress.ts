@@ -98,6 +98,12 @@ export interface Profile {
    * unchanged. Distinct from `review` (which is per lessonId:stepId and never shared across
    * lessons) and from `mastery` (per conceptTag — the SKILL, not the atomic fact). */
   factItems?: Record<string, import("./factFluency").FactItemState>;
+  /** S242 / GEN-04: step key → fingerprints of the last 10 generated widgets served, oldest first.
+   * The anti-repeat window. Consulted by `drawFreshVariant` so a pool of 400 cannot hand a learner
+   * the same problem twice in a row, and merged as a UNION at sync — a problem either device showed
+   * is one the learner has seen. Optional and additive: absent until a learner is served their
+   * first generated variant, and old profiles parse unchanged. */
+  recentVariants?: import("./antiRepeat").RecentDraws;
 }
 
 export function emptyProfile(): Profile {

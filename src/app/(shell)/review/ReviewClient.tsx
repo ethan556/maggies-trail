@@ -8,7 +8,7 @@ import { awardNewBadges, type BadgeDef } from "@/lib/achievements";
 import { applyXp, bump, progressStore } from "@/lib/progress";
 import { applyResult } from "@/lib/mastery";
 import { applyFactResult, dueFacts, factDrillFor, factReviewKey, weakestFacts } from "@/lib/factFluency";
-import { variantForStep } from "@/lib/variants";
+import { drawFreshVariant, rememberDraw } from "@/lib/antiRepeat";
 import type { TWidget } from "@/lib/schema";
 
 type LoadState =
@@ -112,6 +112,13 @@ export default function ReviewClient() {
         // the same concept tests whether you understand the idea — which is what the review queue is
         // actually for. Where a generator exists, the numbers are regenerated; the misconception
         // traps come with them. Seeded on (key, box, date), so the sitting is still reproducible.
+        /* S242 / GEN-04. The anti-repeat window. Review is the surface where a repeat does the most
+         * damage to the measurement: the whole argument for regenerating a review item is that
+         * recalling THIS question is not evidence of understanding the idea, and serving the same
+         * generated question again reintroduces exactly the problem the regeneration was for.
+         * The seed already varies by (key, box, date), but a box that comes due twice on the same
+         * date — or a pool small enough to collide — could still repeat. */
+        let served = p.recentVariants ?? {};
         const items = data.items.map((it) => {
           const ri = batch.find((b) => b.key === it.key);
           // S242. `ri` is still required — the seed needs its key and box — but the
@@ -119,9 +126,18 @@ export default function ReviewClient() {
           // dropped every step whose declaration resolves while its tag does not. `it` now carries
           // `variant` from the API, so variantForStep can take its documented declaration branch.
           if (!ri) return it;
-          const v = variantForStep({ ...it, conceptTag: ri.conceptTag }, `${ri.key}:${ri.box}:${today}`);
-          return v ? { ...it, widget: v.widget, fresh: true } : it;
+          const drawn = drawFreshVariant(
+            { ...it, conceptTag: ri.conceptTag },
+            `${ri.key}:${ri.box}:${today}`,
+            "core",
+            served,
+            ri.key
+          );
+          if (!drawn) return it;
+          served = rememberDraw(served, ri.key, drawn.fingerprint);
+          return { ...it, widget: drawn.variant.widget, fresh: true };
         });
+        progressStore.save({ ...progressStore.load(), recentVariants: served });
         setState({
           at: "quiz",
           servables: [...items, ...factServables],

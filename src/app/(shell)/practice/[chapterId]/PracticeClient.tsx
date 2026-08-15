@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { seededShuffle } from "@/lib/prng";
-import { variantForStep } from "@/lib/variants";
+import { drawFreshVariant, rememberDraw } from "@/lib/antiRepeat";
 import { recommendBand } from "@/lib/difficulty";
 import QuizShell, { type QuizSummary, type Servable } from "@/components/QuizShell";
 import { localDateStr, onMiss, xpFor } from "@/lib/engine";
@@ -68,8 +68,16 @@ export default function PracticeClient({
     // support surface, streaking-proficient ones get stretch (difficulty.ts —
     // pure and re-derivable from the profile, so a round is still reproducible
     // from (chapter, date, round, profile)). Authored fallbacks stay authored.
-    const mastery = progressStore.load().mastery ?? {};
+    const profile = progressStore.load();
+    const mastery = profile.mastery ?? {};
     const today = localDateStr(new Date());
+    /* S242 / GEN-04. The anti-repeat window, read once for the whole round and written back once at
+     * the end. Practice is where a repeat is most damaging and most likely: the round seed already
+     * varies by (chapter, date, round), but nothing stopped two rounds from resampling the same
+     * problem out of a pool of hundreds. `served` accumulates within the round as well as across
+     * rounds, so a chapter that draws the same conceptTag twice in one sitting cannot repeat
+     * either. */
+    let served = profile.recentVariants ?? {};
     const picked = pick(pool, 5, roundSeed).map((item) => {
       // S242. This used to short-circuit on `hasVariants(item.conceptTag)`, which consults only the
       // generator tags and the alias table — never the step's own declaration. That made the cheap
@@ -77,9 +85,14 @@ export default function PracticeClient({
       // 1,504 conceptTags that resolve by declaration but not by tag. variantForStep already
       // returns null when it cannot build, so it is the correct and only gate.
       const band = recommendBand(mastery[item.conceptTag], today);
-      const v = variantForStep(item, `${roundSeed}:${item.key}`, band);
-      return v ? { ...item, widget: v.widget, fresh: true } : item;
+      const drawn = drawFreshVariant(item, `${roundSeed}:${item.key}`, band, served, item.key);
+      if (!drawn) return item;
+      // Recorded here rather than at answer time because the item IS shown the moment the round
+      // starts — every picked item goes on screen together.
+      served = rememberDraw(served, item.key, drawn.fingerprint);
+      return { ...item, widget: drawn.variant.widget, fresh: true };
     });
+    progressStore.save({ ...profile, recentVariants: served });
     setRound((r) => r + 1);
     setItems(picked);
     setStage({ at: "quiz", items: picked });

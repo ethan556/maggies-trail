@@ -25,6 +25,7 @@ import type { Profile } from "./progress";
 import type { ReviewItem } from "./engine";
 import type { SkillState } from "./mastery";
 import type { FactItemState } from "./factFluency";
+import { mergeRecentDraws, MAX_TRACKED_STEPS, REPEAT_WINDOW } from "./antiRepeat";
 
 /** Sync metadata carried on a Profile. Absent on profiles created before sync existed. */
 export interface SyncMeta {
@@ -94,6 +95,19 @@ export function isSyncedProfile(value: unknown): value is SyncedProfile {
       if (skill.signals !== undefined) {
         if (!boundedRecord(skill.signals, 100) || Object.values(skill.signals).some((n) => !finiteNonNegative(n))) return false;
       }
+    }
+  }
+
+  /* S242 / GEN-04. Bounded on BOTH axes at the runtime boundary, because this field grows with use
+   * rather than being written once: a hostile or corrupted document could otherwise arrive with a
+   * million step keys or a million fingerprints under one, and the merge would faithfully persist
+   * it. The bounds are the module's own constants, so widening one there cannot silently outgrow
+   * the guard here. */
+  if (value.recentVariants !== undefined) {
+    if (!boundedRecord(value.recentVariants, MAX_TRACKED_STEPS)) return false;
+    for (const window of Object.values(value.recentVariants)) {
+      if (!strings(window, REPEAT_WINDOW)) return false;
+      if (window.some((fingerprint) => !shortString(fingerprint, 32))) return false;
     }
   }
 
@@ -333,6 +347,18 @@ export function mergeProfiles(a: SyncedProfile, b: SyncedProfile): SyncedProfile
     review: mergeReview(a, b),
     league: mergeLeague(a, b),
     ...((a.factItems || b.factItems) ? { factItems: mergeFactItems(a, b) } : {}),
+    /* S242 / GEN-04. The anti-repeat window merges as a UNION, not last-write-wins: a problem
+     * either device served is one the learner has SEEN, and letting the fresher document win would
+     * silently un-see everything the other device showed — the precise repeat the window exists to
+     * prevent. `mergeRecentDraws` is commutative up to the window trim, like every rule here. */
+    ...((a.recentVariants || b.recentVariants)
+      ? {
+          recentVariants: mergeRecentDraws(
+            lwwWinner(a, b) === "a" ? a.recentVariants : b.recentVariants,
+            lwwWinner(a, b) === "a" ? b.recentVariants : a.recentVariants
+          )
+        }
+      : {}),
     activeLessons: activeLessons && Object.keys(activeLessons).length ? activeLessons : undefined,
 
     // ---- last-write-wins (a genuine "latest intent") ----
