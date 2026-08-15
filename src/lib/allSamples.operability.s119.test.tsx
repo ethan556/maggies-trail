@@ -126,12 +126,33 @@ describe("ADVERSARIAL — touch targets meet the 44px minimum contract", () => {
     if (m && Number(m[1]) >= 11) return true; // Tailwind spacing: 11 = 44px
     return /min-h-\[(4[4-9]|[5-9]\d|\d{3,})px\]|min-h-full|min-h-screen/.test(cls);
   };
+  /* S242 — the third sizing route, added under the ratified E5-EX1 exception.
+   *
+   * A button that is `aspect-square` (or any explicit aspect ratio) with `w-full` has its HEIGHT
+   * DEFINED BY ITS WIDTH. It is therefore not the failure this test exists to catch — it cannot
+   * collapse to text height, which is the whole risk in "bare text with no height class". The S241
+   * plotPoint rebuild (D-04) made every cell exactly this shape so the cells, both label bands and
+   * the connect overlay finally share one track source.
+   *
+   * This is deliberately NOT a widening of `wrapsContent` to include `span`. That would have been
+   * looser: any bare-text button wrapping a span would start passing. Aspect ratio is a real
+   * sizing declaration; wrapping a span is not.
+   *
+   * WHAT THIS DOES AND DOES NOT CONCEDE. It concedes that such a button is *sized*. It does not
+   * concede that it is sized to 44px — jsdom has no layout engine and could never have proved
+   * that either way, for any button in this file. The measured consequence is recorded where it
+   * belongs, in GRAPH_FIGURE_STANDARD.md E5-EX1: at `cols: 8` on a ~334px stage the cell is
+   * ~38.8px, which is unreachable-by-arithmetic territory (8 × 44 = 352 > 334), is non-overlapping,
+   * and clears WCAG 2.2 AA. The 38px floor and the no-overlap rule are enforced at the pixel level
+   * by the e2e stage-role sweep, not here. Keeping that split honest is the point: this file
+   * asserts a contract it can actually see. */
+  const sizedByAspectRatio = (cls: string) => /(?:^|\s)aspect-(square|video|\[[^\]]+\])(?:\s|$)/.test(cls);
   it.each(ALL.map((r) => [label(r), r] as const))("%s sizes its buttons", (_l, r) => {
     const c = mountSpec(r.spec);
     for (const el of c.querySelectorAll("button")) {
       const cls = el.getAttribute("class") ?? "";
       const wrapsContent = el.querySelector("svg, img, div") !== null;
-      const ok = heightClass(cls) || wrapsContent;
+      const ok = heightClass(cls) || wrapsContent || sizedByAspectRatio(cls);
       expect(ok, `${label(r)}: bare-text button with no min-height — "${cls.slice(0, 70)}"`).toBe(true);
     }
   });

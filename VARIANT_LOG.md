@@ -3919,3 +3919,78 @@ vocabulary so the next session can close them one at a time with evidence.
 | `generator-guard check` | 29/29 byte-identical |
 
 Full-suite state is unchanged from part 1 and still carries the one pre-existing plotPoint failure.
+
+### Session 242, part 3 — E5-EX1 ratified, UX-01 closed, and the full suite green
+
+**The plotPoint touch-target failure is resolved by ruling, not by patching.** The product owner
+ratified the tradeoff on 2026-08-15 after the arithmetic was put in front of them: a 390px phone
+gives the stage ~334px, and eight columns at a true 44px need 352px of cells, so **44px at
+`cols: 8` is arithmetically unreachable** — deleting the y-label band entirely still leaves 334px.
+The only literal satisfactions of E5 were fewer columns (changes the mathematics of 17 authored
+tasks, some of which genuinely plot x = 8) or horizontal scrolling (a scroll gesture on the one
+surface whose task is "tap the right cell", and mobile-scroll is itself a tracked defect class).
+Both were considered and rejected.
+
+Recorded as **`GRAPH_FIGURE_STANDARD.md` E5-EX1** and cross-referenced from
+`PREMIUM_EXPERIENCE_CONTRACT.md` rule 7. The exception is scoped so it cannot quietly widen:
+aspect-ratio-sized grid cells under a capped track, on stages too narrow for the full pitch, floor
+**38px**, and **the non-overlapping half of E5 is never waived**. ~38.8px is a strict improvement on
+the ~35px *overlapping* targets D-04 was raised against, and clears WCAG 2.2 AA SC 2.5.8 (24×24); it
+falls short only of WCAG 2.1 AAA and of this repo's own stricter ambition. D-04 is now **CLOSED**.
+
+`allSamples.operability.s119.test.tsx` encodes the exception as a third sizing route:
+`sizedByAspectRatio`. Deliberately NOT done: widening `wrapsContent` from `svg, img, div` to include
+`span`, which is what the failing button happens to wrap — that would have been genuinely looser,
+letting any bare-text button pass by wrapping a span. Aspect ratio is a sizing declaration; wrapping
+a span is not. Verified the predicate stays strict: plotPoint cell passes, `aspect-video` and
+`aspect-[4/3]` pass, bare-text and bare-text-flex buttons still fail, and the near-miss
+`aspect-squarish` fails. 942/942.
+
+**UX-01 closed.** `trailsForGrade(3)` returned `[]` deliberately — "Grade 3 uses the placement quiz"
+— while `OnboardingFlow` offered "Start at my grade level" at every grade. The two statements were
+each defensible and nothing asserted they agreed, so a learner entering the most common elementary
+grade and skipping placement got a heading with nothing beneath it. Every other grade returns 2–27
+choices; grade 3 returned 0.
+
+`G3_TRAILS` now offers five. The selection rule is the one the other grades already use, not a new
+judgement: broad domain entry points, with narrow fluency/extension courses left to placement and
+the trail map. Grade 2 offers 4 of its 11 courses on exactly that basis. Applied to Grade 3's ten
+courses this keeps multiplication-division, fractions, place-value, measurement-data and
+shapes-space, and omits add-subtract-1000-g3, division-fluency-g3, fractions-deeper-g3,
+mult-fluency-g3 and word-problems-g3 — all still fully reachable by placement. **Whether these are
+the pedagogically ideal five is a curriculum judgement and is flagged for review, not claimed.**
+
+The `gradetrail` stage also keeps a fallback for an empty list even though it is now unreachable:
+the dead stage came from the flow trusting a list it never checked, and that is cheap to repeat the
+next time a grade is added.
+
+`onboarding.branches.s242.test.ts` enumerates the offered space exhaustively — 14 grades × 3 goals ×
+2 placement routes = **84 routes**, plus per-grade trail integrity — rather than sampling, because
+84 is small enough to enumerate and there is then no seed to get lucky on. It asserts the
+recommendation names a lesson that is really on disk **and is the course's first lesson**, because
+`recommendGradeTrail` falls back to `G1_TRAILS[0]` on an unknown id and so can never throw: a "did
+it return something?" test would have passed against the broken tree. Verified it catches the real
+defect — against pre-fix `onboarding.ts` it fails 5 tests, all grade-3 skip-placement. 101/101 after.
+
+**PRODUCT_STATE finally carries a real test count.** With the suite green the group protocol could
+run to completion, and it records only on success: **13,749 tests across 386 files**, provenance
+"group-protocol run recorded in session S242 on this exact corpus". That replaces Session 218's
+carried-forward 12,925/322, which had been stuck because `run-test-groups.mjs:110` refuses to write
+while any test fails — so the single plotPoint failure really had been holding product-state truth
+shut, exactly as part 2 predicted.
+
+**Gate results for part 3 — the first fully green sequence this session.**
+
+| Gate | Result |
+|---|---|
+| `npm run typecheck` | EXIT 0 |
+| full suite (group protocol, 4 groups) | **13,749 passed across 386 files, 0 failed** |
+| `npm run validate:content` | 1840/1840 clean |
+| `npm run lint:pedagogy` | 1711/1711 clean |
+| `npm run validate:native` | EXIT 1 on `node_modules` alone — the archive-only check. No real findings. |
+| `node scripts/check-registration.mjs` | EXIT 0 |
+| `npm run build` | EXIT 0, 0 tracked files changed |
+| `generator-guard check` | 29/29 byte-identical |
+| `npm audit` | 0 vulnerabilities |
+
+**This batch landed green.**

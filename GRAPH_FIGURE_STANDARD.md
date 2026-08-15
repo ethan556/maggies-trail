@@ -232,6 +232,39 @@ Motivation: plotPoint cols=8 compresses `1fr` tracks to ~35px under fixed 44px b
 touch hits on the exact surface whose task is "tap the right cell" (D-04); drag pucks r=16–18 fall
 under 44px at mobile scale (polish, `widgets.tsx:2951` et al.).
 
+**E5-EX1 — the one ratified exception: a dense cell grid on a narrow stage may fall to ≥ 38px
+provided every target is unambiguous.** Ruled 2026-08-15 (S242) by the product owner, on the
+arithmetic below. This is an exception to E5's threshold, not a repeal of it: E5 continues to
+apply in full everywhere else, and the *non-overlapping* half of E5 is never waived.
+
+*Why the threshold is unreachable here.* A 390px phone gives the lesson stage ~334px, of which the
+y-label band takes ~24px. Eight columns at a true 44px need 352px of cells alone. `8 × 44 = 352 >
+334`, so **44px at `cols: 8` on a 390px stage is arithmetically impossible** — no layout tightening
+reaches it, because even deleting the y-band entirely leaves 334px. The only ways to satisfy E5
+literally are to carry fewer columns or to scroll the grid horizontally. Fewer columns changes the
+mathematics of 17 authored tasks (some genuinely plot x = 8). Horizontal scrolling puts a scroll
+gesture on the one surface whose entire task is "tap the right cell", and mobile-scroll is itself a
+tracked defect class. Both were considered and rejected in favour of stating the limit honestly.
+
+*What is accepted, and what is not.* At `cols: 8` on a ~334px stage the cell measures **~38.8px**,
+and the 4px separation is padding INSIDE the button, so the tappable area equals the pitch exactly:
+no dead gutters and **no overlap** — every tap lands on the cell under the finger. That is a
+strict improvement on the ~35px *overlapping* targets D-04 was raised against, where a target's
+edges belonged to its neighbour. ~38.8px also clears WCAG 2.2 AA SC 2.5.8 (24×24 minimum); it falls
+short only of WCAG 2.1 AAA SC 2.5.5 and of this repo's own stricter 44px ambition.
+
+*Scope, stated so it cannot quietly widen.* The exception covers **grid-cell buttons sized by
+aspect ratio from a capped track** (`w-full aspect-square` under `minmax(0, 44px)`), on stages too
+narrow for the full pitch. It reaches 17 of 66 authored plotPoint specs and ~11% of sampled
+generated plotPoint states, all at `cols: 8`, all at ≈390px; at ≤ 7 columns, and on any wider
+stage, the full 44px is still met and still required. It does **not** license a sub-44px target
+anywhere else, and it does **not** license overlap. Floor: **38px**. Below that, or at any overlap,
+this is a defect again.
+
+*Gate.* `src/lib/allSamples.operability.s119.test.tsx` encodes this exception narrowly: a button
+counts as height-declaring if it carries an explicit ≥44px height utility, wraps substantive
+content, **or** is sized by aspect ratio. A bare-text button with none of those still fails.
+
 **E6. Dependent geometry uses one source of truth**: overlays must not hardcode cell pitch the
 layout can compress (plotPoint `connectTargets` uses `const CELL = 48` and misses its own cells at
 390px — D-04, `widgets.tsx:15193`); label rows must use the same tracks as the grid

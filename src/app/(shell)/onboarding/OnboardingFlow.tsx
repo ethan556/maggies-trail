@@ -321,6 +321,37 @@ export default function OnboardingFlow() {
 
   if (stage.at === "gradetrail") {
     const trails = trailsForGrade(stage.grade);
+    /* S242 (UX-01). This stage used to map straight over `trails`. For Grade 3 that array was
+     * empty by design — "Grade 3 uses the placement quiz" — but the previous stage offered
+     * "Start at my grade level" for EVERY grade, so a Grade 3 learner arrived here and got a
+     * heading with nothing beneath it and no way forward. `G3_TRAILS` now exists, so this branch
+     * is unreachable; it stays because the dead stage came from the flow trusting a list it never
+     * checked, and that mistake is cheap to make again the next time a grade is added.
+     * `onboarding.branches.s242.test.ts` asserts no grade reaches it. */
+    if (trails.length === 0) {
+      return (
+        <div className="step-in">
+          <StepDots current={2} />
+          <h1 className="text-2xl font-extrabold">Let&rsquo;s find your starting spot</h1>
+          <p className="mt-1 text-ink/70 dark:text-paper/70">
+            The quickest way into {gradeLabel(stage.grade)} is the short diagnostic — it picks a
+            starting lesson from what it sees you do.
+          </p>
+          <div className="mt-5 grid gap-3">
+            <Link
+              href={`/placement?grade=${stage.grade}&goal=${encodeURIComponent(stage.goal)}`}
+              className="group lift pressable flex min-h-11 w-full items-center gap-3 rounded-card border-2 border-sky/35 bg-sky/5 px-4 py-4 text-left shadow-e1 transition-colors hover:border-sky"
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block font-extrabold">Take the 12-item diagnostic</span>
+                <span className="mt-0.5 block text-sm text-content-2">Domain-balanced and easy to retake later.</span>
+              </span>
+              <AppIcon name="icon-701" size={18} className="shrink-0 text-sky-ink" />
+            </Link>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="step-in">
         <StepDots current={2} />

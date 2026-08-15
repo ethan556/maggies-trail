@@ -197,6 +197,55 @@ export const G2_TRAILS: GradeTrail[] = [
   }
 ];
 
+/* S242 (UX-01). Grade 3 was the one grade with no direct-pick trails, and the onboarding flow
+ * offered it the "Start at my grade level" route anyway — which set stage `gradetrail`, mapped over
+ * an empty array, and rendered a heading with nothing under it. A first-run learner picking the
+ * single most common elementary grade reached a screen with no way forward.
+ *
+ * The selection rule here is the one the other grades already use, not a new judgement: offer the
+ * BROAD DOMAIN ENTRY POINTS and leave the narrow fluency/extension courses to placement and the
+ * trail map. Grade 2 offers 4 of its 11 courses on exactly that basis (place value, add/subtract,
+ * measurement/money/time, shapes/shares — not fluency-20-g2, four-addends-g2, number-line-g2,
+ * arrays-even-odd-g2, length-problems-g2, data-line-plots-g2). Applying it to Grade 3's ten courses
+ * keeps these five and omits add-subtract-1000-g3, division-fluency-g3, fractions-deeper-g3,
+ * mult-fluency-g3 and word-problems-g3, all of which remain fully reachable by placement.
+ *
+ * Multiplication/division and fractions lead because they are the two ideas Grade 3 exists to
+ * introduce; the remaining three carry the other domains so no strand is unreachable from a
+ * direct pick. Every `lessonId` below is the course's first lesson, verified against the manifest. */
+export const G3_TRAILS: GradeTrail[] = [
+  {
+    id: "multiplication-division",
+    title: "Multiplication & Division Foundations",
+    tagline: "Equal groups, arrays and area — and division as the same picture read the other way round.",
+    lessonId: "mult-01-01"
+  },
+  {
+    id: "fractions",
+    title: "Fractions from Scratch",
+    tagline: "A fraction as a number on the line, not a piece of pie — naming, comparing and finding equal shares.",
+    lessonId: "fr-01-01"
+  },
+  {
+    id: "place-value",
+    title: "Place Value & Big Numbers",
+    tagline: "Rounding, comparing and adding past a thousand, with the place chart doing the explaining.",
+    lessonId: "pv-01-01"
+  },
+  {
+    id: "measurement-data",
+    title: "Measurement, Time & Data",
+    tagline: "Time to the minute, mass and volume, and picture graphs that answer a question worth asking.",
+    lessonId: "md-01-01"
+  },
+  {
+    id: "shapes-space",
+    title: "Shapes & Space",
+    tagline: "Sorting shapes by what they actually share, and splitting them into equal parts.",
+    lessonId: "geo-01-01"
+  }
+];
+
 export const G4_TRAILS: GradeTrail[] = [
   {
     id: "multiply-bigger",
@@ -618,11 +667,14 @@ export const CALC_TRAILS: GradeTrail[] = [
   }
 ];
 
-/** Returns the direct-pick trails for a grade (Grade 3 uses the placement quiz, so []). */
+/** Returns the direct-pick trails for a grade. Every grade 0-13 returns a non-empty list; the
+ * onboarding flow offers a direct-pick route for all of them, so an empty list here is a dead
+ * stage (S242/UX-01 — Grade 3 was exactly that). `onboarding.branches.s242.test.ts` asserts it. */
 export function trailsForGrade(grade: GradeLevel): GradeTrail[] {
   if (grade === 0) return K_TRAILS;
   if (grade === 1) return G1_TRAILS;
   if (grade === 2) return G2_TRAILS;
+  if (grade === 3) return G3_TRAILS;
   if (grade === 4) return G4_TRAILS;
   if (grade === 5) return G5_TRAILS;
   if (grade === 6) return G6_TRAILS;
@@ -635,7 +687,7 @@ export function trailsForGrade(grade: GradeLevel): GradeTrail[] {
 }
 
 export function recommendGradeTrail(trailId: string): Recommendation {
-  const all = [...K_TRAILS, ...G1_TRAILS, ...G2_TRAILS, ...G4_TRAILS, ...G5_TRAILS, ...G6_TRAILS, ...G7_TRAILS, ...G8_TRAILS, ...HS_TRAILS, ...PC_TRAILS, ...CALC_TRAILS];
+  const all = [...K_TRAILS, ...G1_TRAILS, ...G2_TRAILS, ...G3_TRAILS, ...G4_TRAILS, ...G5_TRAILS, ...G6_TRAILS, ...G7_TRAILS, ...G8_TRAILS, ...HS_TRAILS, ...PC_TRAILS, ...CALC_TRAILS];
   // Fallback stays the G1 root (not the array head): K is opt-in via grade 0, and an
   // unrecognized id during G4 onboarding should land on foundational G1, not kindergarten.
   const trail = all.find((t) => t.id === trailId) ?? G1_TRAILS[0];

@@ -5,7 +5,7 @@ from disk (the curriculum manifest, the schema registry, and a content walk) so 
 rest of the docs can cite this file instead of re-counting. Commit `not-recorded-in-source-archive`.
 
 Authored corpus SHA-256: `a01d31a9f5d3ff48cc7a1d9b55a08a129a19e16774de309a6d412d3957ce6c8a`  
-State generated: `2026-08-15T00:49:53.864Z`
+State generated: `2026-08-15T01:40:20.946Z`
 
 ## Catalogue
 
@@ -63,8 +63,8 @@ K–8: Tier A 822, Tier B 252.
 
 | metric | value |
 | --- | --- |
-| Unit/integration tests | 12925 across 322 files |
-| — count source | last certified exact-lock run (Session 218; carried forward, not rerun in this checkout) |
+| Unit/integration tests | 13749 across 386 files |
+| — count source | group-protocol run recorded in session S242 on this exact corpus |
 | Browser test declarations in current tree | 39 |
 | Last certified Playwright executions | 115 (Session 218; not rerun on current tree) |
 | Bundle size | not measured |
