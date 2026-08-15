@@ -3994,3 +3994,95 @@ shut, exactly as part 2 predicted.
 | `npm audit` | 0 vulnerabilities |
 
 **This batch landed green.**
+
+### Session 242, part 4 — the four remaining workstreams
+
+**Graph defect ledger: 25 of 25 now carry a verified status — 17 CLOSED, 8 LIVE, 0 unverified.**
+Every one of D-07..D-25 was settled by executing the generator or rendering the widget and doing
+arithmetic on the emitted geometry, never from a commit message or an adjacent comment (both proved
+unreliable on this tree). Nothing needed pixels: the overlap and clipping claims were settled by
+rendering the SVG server-side and comparing coordinates.
+
+Closed: D-09 (dot piles rescale — 250 polls → 200 dots, 0 clipped), D-10 and D-11 (axes, ticks and
+seated corner labels; 0 of 15 texts outside the viewBox), D-12 (multiply-mode rescale now announces
+itself: numerals ±5 → ±13 → ±25), D-13 (all four full-stage hit-rects gone — largest is now 8.7% of
+stage), D-15 (0 coincident and 0 overlapping dot pairs), D-16 (7 lines, one per unit — the "each
+line = 1" title is finally true of the geometry), D-17, D-21, D-22 (0 of 16 rects outside the
+viewBox at d=−5), D-25 (all four sub-claims; 50 of 71 plotPoint specs draw the origin and the other
+15 numeric bands print it in their own labels).
+
+Still live, in priority order: **D-07** (H — as100-01-02 draws 7 unit hops against a prompt saying
+"two hops"; the picture contradicts the strategy the step teaches, one-line fix), **D-08** (H — 8
+specs still labelled "minutes read" on vehicle and vote charts, 4 live and 4 latent, 8 string
+edits), **D-14** (M — all five sub-defects confirmed on boxPlot; the widest entry open), **D-18** (M
+— 8 of 16 line-plot forms attach plotData 0/120 while their sibling forms manage 120/120), **D-19**
+(M — scatter forms say "a dot is at (6,4)" and emit no plot 0/120; note its `pr-graph-rate-g7`
+half is latent, unreached by any authored step), **D-20** (M — BarBuilderSpec has no start-heights
+field, so "Four friends have 3, 4, 6 and 7 cookies" renders as `[0,0,0,0]`; needs a schema decision,
+not a content edit), **D-23** and **D-24** (L — accessibility narration).
+
+**MATH-01 completed. The index roughly doubles: 16,405 rows, up from 7,815.** All four known gaps
+closed, and the "60 missing lessons" hypothesis was refuted rather than assumed — the old scan did
+open all 1,701 files and did descend into remedials. Those 60 lessons tear ONLY at the right edge,
+so a left-edge-only detector emitted nothing for them. Gaps 2 and 3 were one root cause.
+
+| pattern | V2 | old |
+|---|---:|---:|
+| WORD_TEARING | **11,834** (7,281 left + 4,553 right) | 6,664 (right: 5) |
+| RAW_PI | 1,870 | 13 — the old 13 were all `pi` inside *piece*/*Picture*, 100% false |
+| RAW_FRACTION | 1,188 | 875 |
+| RAW_SQRT | **879** | 0 — never detected |
+| RAW_DERIVATIVE | 364 | 20 |
+| RAW_CARET | 188 | 183 |
+| RAW_INEQUALITY | 70 | 58 |
+| RAW_INTEGRAL | 12 | 2 |
+| **total** | **16,405** | 7,815 |
+
+127,472 strings scanned across all 1,701 lessons. False-positive rate hand-judged on 90 rows: 0% for
+word-tearing (both edges), caret, sqrt and inequality; ~10% derivative and ~8% integral (prose ABOUT
+notation, correctly left as prose); ~30% pi (bare symbol mentions); ≈4–5% weighted.
+
+**The 4,028 question, answered in two halves rather than blended**, because whether display-mode
+preference counts as a defect is an open ARCH-02 policy question and the caller deserves both
+numbers: **868 strings genuinely fail to render as mathematics at all** (525 reach the tokenizer and
+produce zero islands; 343 are learner-visible but never wrapped in MathProse) — the old verdict said
+263, so it was 3.3× low. **3,560 are display-mode preference only** — they render fine inline. A
+further 175 rows (`cml.misconceptions[]`, `narration`, `approxFormula.op`) are shown to nobody and
+should leave the audit entirely. Total open under the verdict's own logic is 4,428, inside its
+4,300–4,600 band but composed differently.
+
+**Load-bearing side finding: `includeArithmetic: true` destroys radical rendering.**
+`"a = sqrt(25) so the leg is 5."` with the flag off yields the island `sqrt(25)`; with it on, the
+arithmetic scanner starts earlier, wins the overlap, and yields `a = s` — leaving `qrt(25)` as
+prose. 875 of the 879 RAW_SQRT rows sit on `includeArithmetic=true` surfaces. **Any plan to widen
+`includeArithmetic` would multiply this**, so that decision should not be taken before the
+word-boundary fix lands.
+
+**The 200 stale prediction rows are retired, at the cause rather than the symptom.**
+`consolidate-pending-workload-s236.mjs` was reading `PREDICTION_GATE_AUDIT.csv` — the PRE-adjudication
+baseline, which `PREMIUM_EXPERIENCE_CONTRACT.md` rule 5 states outright is "superseded, retained only
+as a historical artifact" — and queuing all 200 of its `decision === "REMOVE"` rows. The ruled file
+is `PREDICTION_GATE_ADJUDICATION.csv` (REMOVE 17 / REWRITE 200 / KEEP 1145). Worse, the count came
+from a CSV rather than from the corpus, so it could not fall as the work landed.
+
+Measured on this seal: all 17 REMOVE gates **absent** from source, all 200 REWRITE gates **present**,
+51 KEEP rows additionally thinned, 1,362 − 17 − 51 = **1,294** live gates. The purge is complete.
+The consolidator now reads the ruled file and emits a row only for a REMOVE-verdict gate that is
+STILL PRESENT in `content/courses`, so the number is self-correcting in both directions: 0 today,
+and it returns if a purged gate is ever reintroduced. Queue: **11,487 → 11,287**, with every other
+workstream byte-preserved.
+
+**Grade 3 trail selection: verified, not merely asserted — keep as chosen.** Checked against
+`content/standards/course-crosswalk.json`. The five map one-to-one onto the five CCSS Grade 3
+domains (multiplication-division 3.OA, place-value 3.NBT, fractions 3.NF, measurement-data 3.MD,
+shapes-space 3.G): complete coverage, no domain twice. The five omitted courses carry **no CCSS
+domain code at all** — they are absent from the crosswalk, which is that file's way of saying they
+are fluency and extension courses, not domain entry points. Nothing is reachable only by an omitted
+course. That places Grade 3 in the same tier as G2, G6 and G7, the three grades whose offers are
+exactly one-per-domain.
+
+**Finding for a later session, surfaced by that check: G4 is thin.** It offers 2 trails covering
+only 4.NBT, leaving 4.OA, 4.NF, 4.MD and 4.G with no direct pick at all. G1, G5 and G8 each offer a
+domain twice while leaving another uncovered. None is a dead end — every grade returns a non-empty
+list, so `onboarding.branches.s242.test.ts` passes — but "not a dead end" is a weaker property than
+"covers its grade".

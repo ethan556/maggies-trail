@@ -145,8 +145,49 @@ for (const row of readObjects("MCQ_DISTRACTOR_AUDIT.csv")) {
 }
 
 index = 0;
-for (const row of readObjects("PREDICTION_GATE_AUDIT.csv")) {
-  if (row.decision !== "REMOVE") continue;
+/* S242 — read the RULED file, and check the gate is still there before queuing work on it.
+ *
+ * This block used to read `PREDICTION_GATE_AUDIT.csv` and queue every `decision === "REMOVE"` row,
+ * which produced a fixed 200. Two things were wrong with that. First, that file is the
+ * PRE-adjudication baseline; `PREMIUM_EXPERIENCE_CONTRACT.md` rule 5 says outright that it "is
+ * superseded — retained only as a historical artifact", and the ruled verdicts live in
+ * `PREDICTION_GATE_ADJUDICATION.csv` (REMOVE 17 / REWRITE 200 / KEEP 1145, not REMOVE 200).
+ * Second, and worse, the count was derived from a CSV rather than from the corpus, so it could not
+ * fall as the work landed. WS-E Phase 4 shipped: measured on this seal, all 17 REMOVE gates are
+ * absent from source, all 200 REWRITE gates are present with changed reveals, 51 KEEP rows were
+ * additionally thinned, and 1,362 − 17 − 51 = 1,294 live gates remain. The queue still advertised
+ * 200 rows of finished work.
+ *
+ * Now a row is emitted only for a gate the adjudication ruled REMOVE that is STILL PRESENT in
+ * `content/courses`. That makes the number self-correcting in both directions: it reaches 0 when
+ * the purge is complete, and it comes back if a removed gate is ever reintroduced. */
+const livePredictionGates = new Set();
+{
+  const coursesDir = path.join(root, "content", "courses");
+  const walk = (node, lessonId) => {
+    if (Array.isArray(node)) {
+      for (const v of node) walk(v, lessonId);
+    } else if (node && typeof node === "object") {
+      if (node.predict && typeof node.predict === "object" && "outcomeId" in node.predict) {
+        livePredictionGates.add(`${lessonId}::${node.id}`);
+      }
+      for (const v of Object.values(node)) walk(v, lessonId);
+    }
+  };
+  for (const course of fs.readdirSync(coursesDir)) {
+    const dir = path.join(coursesDir, course, "lessons");
+    if (!fs.existsSync(dir)) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith(".json")) continue;
+      const lesson = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
+      walk(lesson, lesson.id);
+    }
+  }
+}
+
+for (const row of readObjects("PREDICTION_GATE_ADJUDICATION.csv")) {
+  if (row.proposed_verdict !== "REMOVE") continue;
+  if (!livePredictionGates.has(`${row.lesson_id}::${row.step_id}`)) continue; // already purged
   index += 1;
   add({
     work_id: `PRED-${String(index).padStart(4, "0")}`,
@@ -161,7 +202,9 @@ for (const row of readObjects("PREDICTION_GATE_AUDIT.csv")) {
     frequency: 1,
     visibility: 4,
     strategic_importance: 4,
-    mismatch_evidence: `${row.reason}: ${row.prompt}`,
+    // The ruled file names these columns differently from the superseded audit
+    // (`predict_prompt` / `adjudicator_notes`, not `prompt` / `reason`).
+    mismatch_evidence: `${row.adjudicator_notes || row.old_reason}: ${row.predict_prompt}`,
     next_action: "Remove the duplicated/non-causal prediction gate or redesign it as a genuine ungraded prediction-to-action-to-reveal loop."
   });
 }

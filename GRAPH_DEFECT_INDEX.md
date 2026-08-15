@@ -16,7 +16,7 @@ more audits found the same underlying issue, one entry lists all source findings
 
 Totals as first written: **25 defects · 16 gate gaps** (+ 13 polish, appendix).
 
-**Status as of S242 (2026-08-15, seal 2d5f39f): 6 CLOSED, 19 UNVERIFIED, 0 confirmed live.**
+**Status as of S242 (2026-08-15): 17 CLOSED, 8 LIVE, 0 unverified.** All 25 were checked by executing the generator or rendering the widget and inspecting the emitted geometry — never from a commit message or a nearby comment. The 8 live: **D-07, D-08** (H, content fixes), **D-14** (M, five sub-defects on one engine — the widest still open), **D-18, D-19** (M, generator describe-not-draw), **D-20** (M, needs a schema decision), **D-23, D-24** (L, accessibility narration).
 
 > **S242 — why this block exists.** This index was written at `73c62c7` (2026-08-14 16:20) with no
 > status field: every entry is phrased in the present tense, so the file asserts 25 live defects
@@ -24,10 +24,17 @@ Totals as first written: **25 defects · 16 gate gaps** (+ 13 polish, appendix).
 > several of them, and nothing here changed. A reader on 2026-08-15 still saw "25 defects · wrong
 > today". A defect ledger without a status column is a ledger that can only ever grow.
 >
-> Each entry below now carries a **Status:** line. Six were verified against the sealed tree by
-> execution, not by reading the commit message; the evidence is recorded inline. The remaining 19
-> are marked `UNVERIFIED` — that is an honest absence of evidence, **not** a claim they are fixed
-> and **not** a claim they are live. Do not cite "19 open defects" either; cite "19 unverified".
+> Each entry below now carries a **Status:** line, and as of 2026-08-15 all 25 have been checked.
+> Every verdict comes from executing the generator or rendering the widget and inspecting the
+> emitted spec or geometry — never from a commit message or an adjacent comment, both of which
+> proved unreliable here. The evidence and the command are recorded inline on each entry, so a
+> later reader can re-derive the verdict rather than trust it.
+>
+> Two precision notes worth carrying: **D-19** has a served half (`g8-bv-scatter-basics` mcq forms,
+> declared on bv-01-01) and a **latent** half (`pr-graph-rate-g7@default`, which no authored step
+> reaches) — fixing the generator closes both, but only one is currently reaching learners. And
+> **D-10/D-11**'s own text folds in a describeState sub-clause that is tracked as **D-24** and is
+> still live, even though their axis defects are closed.
 >
 > Status vocabulary: `CLOSED` (repair verified on this seal, with the check that proved it) ·
 > `CLOSED-FOLLOW-ON` (repaired, but the repair introduced something new that is now tracked) ·
@@ -77,115 +84,115 @@ Totals as first written: **25 defects · 16 gate gaps** (+ 13 polish, appendix).
 - Surface: numberLineHop · `content/courses/add-subtract-100/lessons/as100-01-02.json` i2; arc logic `widgets.tsx:15963–15968`.
 - Evidence (DS-D5): spec `{start:6, hop:1, hops:7}` → "the make-a-double strategy the step exists to teach (one hop of 6, one hop of 1) is unrepresentable … the rendered picture (7 equal unit hops) actively contradicts 'two hops total'."
 - Rule: C8, D2. Fix scope: content fix (pre-apply the double, as sibling g1p-02-02 does) + PG-10.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). as100-01-02 i2 spec is unchanged on disk (`{min:0,max:15,start:6,hop:1,hops:7}`) against a prompt reading "hop 6 (the double), then 1 more — two hops total". Rendered `HopLandingW`: **7** `nlh-arc` groups, each spanning exactly 1.00 unit. The picture contradicts the strategy the step teaches. One-line content fix (`hop:6, hops:1`, or the pre-applied-double pattern its sibling g1p-02-02 uses).
 
 ### D-08 · H — barBuilder renders axisLabel "minutes read" on charts of vehicles and votes
 - Surface: barBuilder bar mode · `widgets.tsx:12103–12105`; `content/courses/data-line-plots-g2/lessons/g2g-02-03.json`, `g2g-03-03.json` (live); `g2g-01-02.json`, `g2g-02-01.json` (same wrong string, latent — tally/pictograph branch skips axisLabel).
 - Evidence (ST-D1): "the g2g course carries a copy-pasted `\"minutes read\"` on every barBuilder step, including vehicle counts and field-trip votes" — a live mislabeled variable on a G2 chart whose lesson point is "what does this graph count?".
 - Rule: A11. Fix scope: content fix (4 specs) + PG-10 axisLabel↔prompt lint.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). Corpus scan finds **8** specs still carrying `axisLabel: "minutes read"` on non-reading data — 4 `display:"bar"` (g2g-02-03 i1/i2 Vans/Bikes/Cars; g2g-03-03 i1/i2 trip votes), 2 tally, 2 pictograph. Rendered: the label **is drawn** for both bar-mode lessons and suppressed for tally/pictograph by an early return, so 4 are live and 4 latent. 8 string edits.
 
 ### D-09 · H — sampleSim and shuffleTest dot piles silently clip off the top under dense data
 - Surface: sampleSim `widgets.tsx:2179`, shuffleTest `:2367`, shared `dotColumns` `:2108` (no height cap); retention `.slice(0,200)` `:2143` / `.slice(0,300)` `:2336`.
 - Evidence (AX-D3, ST-D3, ST-D4): `cy = AXIS − 4 − k·5` with no cap on k → "stacks past ~22 dots … draw above the viewBox and vanish. The learner's 'chance alone could do this' judgement is made against a truncated null distribution"; "the aria/readout keeps counting ('200 polls') while the picture stops growing."
 - Rule: B3. Fix scope: engine fix (cap/rescale row pitch at retention cap) + PG-07 stack-cap assert.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). `dotPileGeometry(cols, headroom)` (widgets.tsx ~:2196) rescales pitch and radius. Driven in jsdom: sampleSim at 250 polls → 200 dots, **0 clipped**, crown y=14.00 = PILE_TOP; shuffleTest at 400 shuffles → 300 dots, **0 clipped**, crown y=12.00.
 
 ### D-10 · H — parametricTrace draws a coordinate readout with no coordinate system at all
 - Surface: parametricTrace · `widgets.tsx:3618` (svg body :3721–3745).
 - Evidence (AX-D1): "the SVG contains only the curve, the traced portion, arrows, ghost, and handle — there is no axis line, no tick, no gridline, no origin mark" while the readout prints `t ≈ … → (x, y)` and the aria says `point (x, y)`. "In line mode the learner is told x = t + lineX0 but cannot see where x = 0 is." Also no `describeWidgetState` case (IA-F5) and a full-stage `touch-action:none` hit-rect (see D-14).
 - Rule: A3, A2, E8. Fix scope: engine fix (axes/origin + AxisCaptions enrollment + describeState case) + PG-09.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered: `<g data-testid="ptr-axes">` with 8 lines, an origin dot, tick numerals (line mode `2,4,2.5,5,0`; circle mode `-1,1,-1,1,0`) and x/y axis captions. Note its describeState sub-clause is tracked separately as D-24 and remains LIVE.
 
 ### D-11 · H — feasibleRegionExplore: axes unnamed, zero ticks; corner labels clip off-canvas
 - Surface: feasibleRegionExplore · `widgets.tsx:13640` (axes :13686–13687, corner labels :13699).
 - Evidence (AX-D2): "only two bare axis segments are drawn … No `<AxisCaptions>`, no tick marks, no tick values"; a corner label at x = xMax "extends past the 300-unit viewBox and is clipped." "This is exactly the learner-reported defect class S237 was built to close; this engine postdates the sweep." Also no describeState case (IA-F5).
 - Rule: A2, A7, B2, E8. Fix scope: engine fix + axisCaptions enrollment + PG-09/PG-05.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered the authored spec plus edge cases (fence at xMax for xMax ∈ {6,8,10}): x/y tick strokes and numerals `0,2,4,6`, axis captions present, and **0 of 14–15 text elements** fall outside the 300×300 viewBox — corner labels are seated via `s238Seat` against `s238Walls`.
 
 ### D-12 · H — argandExplore multiply mode rescales the grid mid-drag with no tick numbers to reveal it
 - Surface: argandExplore · `widgets.tsx:3002–3005` (dynamic G), `:3033–3038` (unlabeled lattice).
 - Evidence (AX-D4): "dragging z outward can grow |z·w| past gridMax and shrink every grid unit live … the rescale is invisible: the same arrow length means different |z| from frame to frame." Axis names real/imaginary exist but are asserted by no gate.
 - Rule: A9, A2. Fix scope: engine fix (stable scale or printed extents) + caption pin + PG-09.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). The dynamic `G` remains but the printed-extents fix landed: rendered multiply mode at z=(1,1)/(3,2)/(5,5), axis numerals move **±5 → ±13 → ±25**, so the rescale announces itself in the numbers. `place` mode stays ±5.
 
 ### D-13 · M — Full-stage `touch-action: none` hit-rects make four graphs scroll-dead zones at 390px
 - Surface: feasibleRegionExplore `widgets.tsx:13710`, parametricTrace `:3743`, distanceGrid `:1566`, rotationLab `:11662` (whole-SVG `mt-drag-hit` rects).
 - Evidence (IA-F3): violates `useSvgDrag.ts:10–12`'s own contract ("`touch-action: none` on the HANDLE ONLY — the page … still scrolls natively"); "a large mid-lesson region where a scroll gesture is swallowed." Compliant peers confine hit bands (boxPlot :9478, percentBar :6368, numberLinePlace :12654).
 - Rule: E4. Fix scope: scope hit-rects to handles/bands (4 engines) + PG-11 geometry gate.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered all four engines: feasibleRegionExplore hit area is `rect 32×244` (**8.7%** of stage), parametricTrace `circle r=20` (**1.9%**), distanceGrid `circle r=20`, rotationLab `circle r=20` (or the image polygon in symmetryOrder). No whole-SVG rects remain on any of the four.
 
 ### D-14 · M — boxPlot: 3 floating axis numerals, zero tick strokes, no visible handle readouts, unburned parity baseline, nonstandard aria vocabulary
 - Surface: boxPlot · `widgets.tsx:9447–9450` (axis), `:9484–9489` (sliders), `:9446` (aria).
 - Evidence (AX-G2, ST-G2, IA-F4, ST-P4): dm-01-01 asks for 78/82/85/88/92 "on an axis labelled only 60 · 80 · 100, no ticks, exact-match grading … a sighted learner must land five handles on unmarked integers by pixel estimation; the only numeric feedback is for screen-reader users." Four `boxPlot|*` entries sit in accessibleParity's `KNOWN_UNREVIEWED` baseline (test :173–176); aria speaks "low, lower-mid, mid, upper-mid, high" while the sliders teach Q1/median/Q3. Inventory: "weakest of the stats trio."
 - Rule: A7, C2, E7. Fix scope: engine fix (ticks + visible readouts + vocabulary) + baseline burn-down + PG-05/PG-06/PG-12.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). **All five sub-defects confirmed** on dm-01-01's spec (axis 60–100, targets 78/82/85/88/92). Rendered SVG texts are exactly `["60","80","100"]`; 6 `<line>` elements total (axis + 2 whiskers + 2 caps + median) = **zero tick strokes**; the only visible text outside the SVG is the bare word row `min q1 med q3 max` with **no numbers**; SVG aria reads "low 78, lower-mid 82…" while the slider labels read "minimum / first quartile Q1 / median…"; and `KNOWN_UNREVIEWED` still holds `boxPlot|5,15,70,90`. This is the widest entry still open.
 
 ### D-15 · M — sp7-dotplot-overlap figure: group B's dots fully occlude group A's at shared coordinates
 - Surface: figure `sp7-dotplot-overlap` · `src/components/figures.tsx:2102–2103`.
 - Evidence (ST-G6): at shared x positions 70/90/110/130 "the tangerine B dots land on exactly the same (cx, cy) as sky A dots and fully occlude them. A learner counting sky dots reads wrong frequencies; the 'heavy overlap' the title narrates is drawn as data loss."
 - Rule: A14. Fix scope: figure fix (dodge/hollow marks) + PG-09 mark-occlusion check.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered sp7-dotplot-overlap and compared every A×B dot pair: **0 coincident, 0 overlapping**, minimum same-row gap 7.20 against combined radii 5.6. Both fixes are live — dodge=3.6 and hollow B marks (`fill="#ffffff"` with tangerine stroke).
 
 ### D-16 · M — SingleScaleGraph figure claims "each line = 1" while drawing zero gridlines and labelling by 2s
 - Surface: figure `single-scale-graph` · `figures.tsx:11187–11199`.
 - Evidence (ST-G7): `<title>` says "each gridline is worth exactly one" and the caption reads "each line = 1", "but the SVG draws only the two axis strokes — no horizontal gridlines — and the y labels step 0/2/4/6."
 - Rule: C1/A4 (figure claims vs geometry). Fix scope: figure fix + PG-09 title-claim lint.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered: **7 horizontal lines** (6 gridlines + axis) and texts `0..6` — one gridline per unit, one label per gridline. The title claim "each line = 1" is now true of the geometry.
 
 ### D-17 · M — Canonical statistical figures missing axis furniture: HistogramScores has no frequency axis; scatter figures have unnamed, tickless axes
 - Surface: figures · HistogramScores `figures.tsx:5574`; ScatterAssociation `:7693`; ScatterBestFit `:7719`.
 - Evidence (AX-G4): "no y-axis line, no frequency ticks or axis title; counts printed atop bars instead"; scatters draw "bare 50%-opacity segments; no variable names, no ticks, no origin label" — and these are "the lesson's canonical depiction of the display type."
 - Rule: C1, C4, A1 (figures analogue). Fix scope: figure fixes + PG-09 figures axis-semantics gate.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered all three: `histogram-scores` gains a `"how many scores"` axis with ticks 0–4; `scatter-association` names y/x on each of 3 panels and prints the origin; `scatter-best-fit` ticks x at 2,4,6,8 and y at 0,4,8.
 
 ### D-18 · M — Eight line-plot dd* generator forms describe a dot plot but attach no plotData
 - Surface: variant `line-plot` forms ddDotTotal/ddDotDataSet/ddDotMissingValue/ddDotMoreThan/ddShape* · `variants.ts:31989–32100`.
 - Evidence (DS-G2): "A dot plot shows ${shownPlot(counts)}…" emitted as bare numeric — "the refresh serves describe-not-draw items (the pre-S125 anti-pattern) alongside sibling items that draw" (sibling forms of the same generator attach plotData).
 - Rule: D3. Fix scope: generator fix (attach plotData) + PG-02 presence assert.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). Swept all 16 `line-plot` forms × 40 seeds × 3 bands. Six sibling forms (totalCount, halfMarks, fractionMode, fractionTotal, atOrAbove, quarterNumerator) attach plotData **120/120**. The eight dd\* forms — ddDotTotal, ddDotDataSet, ddDotMissingValue, ddDotMoreThan, ddShapeSymmetric, ddShapeOutlier, ddShapeClusterCount, ddShapeFullStory — attach it **0/120**, e.g. "A dot plot shows 7 (2 dots), 12 (3 dots)…" served as a bare numeric. All eight are declared on live steps (dd-02-01 and dd-02-03, k1/k2/k3/ch1).
 
 ### D-19 · M — "The graphed point…" / "on a scatter plot… a dot is at" served with no graph
 - Surface: `pr-graph-rate-g7` default `variants.ts:34803`, graphStoryRead numeric fallback `:34791`, `g8-bv-scatter-basics` mcq forms; authored `bv-01-01.json` k1 ("a dot sits at across-position 4, up-position 7" — `figure: null`).
 - Evidence (DS-G3): "no plot, plotData, or figure accompanies these; in practice/review only the widget renders." (The upgradePointSetVariant-wrapped path was executed and is in sync; the naked path remains reachable and is what bv-01-01 k1–k3 refresh to.)
 - Rule: D3. Fix scope: route through pointSet wrapper or attach figure/plotData + PG-02.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). 120 samples/form. `g8-bv-scatter-basics` at bvScatterPair/bvScatterCount/bvScatterPurpose/default → mcq, **0/120** carry any plot, plotData or targets, while the prompt says "a dot is at (6, 4)"; bv-01-01 k1/k2/k3 declare exactly those mcq forms with `figure: null`, and `Variant` has no figure field, so the refresh cannot supply one. `pr-graph-rate-g7@default` behaves the same but is **latent** — all 8 authored steps declare a non-default form, so nothing reaches it. The wrapped path (graphStoryRead/graphRateRead → pointSetReasoningLab) is genuinely in sync.
 
 ### D-20 · M — dd-03-01 "Level the bars": the stated dataset (3, 4, 6, 7) is never drawn — bars always start at 0
 - Surface: barBuilder · `content/courses/data-distributions/lessons/dd-03-01.json` i1; `widgets.tsx:11949`; `schema.ts:1739` (no start-heights field).
 - Evidence (DS-G1): "The learner never sees 3/4/6/7; the 'fair-share leveling' action is a from-scratch build of 5,5,5,5. The mean-as-leveling concept survives only in the feedback text."
 - Rule: D1, D2, C3. Fix scope: schema + engine start-heights support, or reword step + PG-10.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). Prompt unchanged on disk ("Four friends have 3, 4, 6 and 7 cookies. Level the bars…", `target:[5,5,5,5]`). `BarBuilderSpec` exposes `type, categories, target, maxVal, step, histogram, display, icon, axisLabel, successFeedback, partialFeedback` — **there is no start-heights field**, so the stated dataset cannot be drawn. Rendered bar heights are `[0,0,0,0]`. Needs a schema decision, not just a content edit.
 
 ### D-21 · M — shuffleTest axis: a single "0" tick on a silently self-rescaling scale
 - Surface: shuffleTest · `widgets.tsx:2339–2358`.
 - Evidence (AX-G6, ST-P5): `lim = max(|observed|·1.35, max|null|, 0.5)` — "±lim are never printed, and each new extreme draw re-maps every existing dot to new positions with no visible cue"; "two visually identical piles denote different spreads."
 - Rule: A9. Fix scope: engine fix (print ±lim endpoints) + PG-07.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered `<g data-testid="sht-axis">`: five numerals `-5.4 · -2.7 · 0 · 2.7 · 5.4` for the authored spec. A constructed growing-`lim` case (groupA=groupB, observed 0) moves the numerals **±0.5 → ±8** after the first shuffle, so the rescale is visible in the numbers.
 
 ### D-22 · M — sequenceBuild dial: negative partial sums render clipped/degenerate while the control invites them
 - Surface: sequenceBuild (SequenceDialW) · `widgets.tsx:3985`, `:4019–4020`, slider `min=-5` `:4039`.
 - Evidence (ST-G5): "the clamps flatten every negative bar to a 1px sliver at a wrong position or clip it off-canvas entirely. The strip goes visually inert exactly when the learner explores the negative half of the control."
 - Rule: B4. Fix scope: engine fix (zero-baseline negative bars or clamp domain) + PG-07.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). Rendered arithmetic mode at d = 2, 0, −1, −2, −5. At d=−5 (sums 3,1,−6,−18,−35,−57,−84,−116): **16 rects, 0 outside the 0–130 viewBox**, heights ∝ |sum| drawn from the zero line, and the `0` baseline label appears whenever `base < 0`. The only 1px bars are sums of exactly 0 or ±1.
 
 ### D-23 · L — HopLandingW's drawing is `role="group"` named "Number line", stateless
 - Surface: numberLineHop landing mode · `widgets.tsx:15975` (vs the gold standard in its own sibling HopSizeW `:15799–15800`).
 - Evidence (IA-F6): "announced as the two words 'Number line' … A screen-reader learner … never gets the picture's content: where the start is, how many hop arcs are drawn, which direction they run" — and counting hops "is the entire job of a number line at this grade" (engine's own S237 comment).
 - Rule: E9. Fix scope: engine fix (role="img" + stateful label) + PG-12.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). Rendered both modes side by side: HopLandingW emits `<svg role="group" aria-label="Number line">` — a static name with no state — while its sibling HopSizeW emits `role="img"` with "A stride of 4 from 0. 8 is landed on; 12 is landed on."
 
 ### D-24 · L — feasibleRegionExplore and parametricTrace have no "Describe this model" narration
 - Surface: `src/lib/describeState.ts` — no `case "feasibleRegionExplore"`, no `case "parametricTrace"` (fall to `default: return null`, :1127–1128); no `WIDGET_ACTIONS` entries.
 - Evidence (IA-F5): the a11yAudit.s44 contract says every dense kind narrates via describeWidgetState; "the persistent, re-readable … panel that every peer lab offers screen-reader users is absent for exactly these two" — the same two engines that escaped S237.
 - Rule: E8. Fix scope: two describeState cases + PG-12 per-kind enrollment gate.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **LIVE** (S242, verified by execution). `describeWidgetState(spec, value)` returns **null** for both feasibleRegionExplore and parametricTrace on their authored specs, and `actionsFor()` falls through to the generic `ACTION_DEFAULT`. describeState.ts has 88 cases and neither engine has one. Validated against an enrolled peer: argandExplore returns "z is at 2 + 3i on the complex plane…".
 
 ### D-25 · L — Systemic tick-value sparsity on value-graded planes: scatterFit, slopeField, pointSetReasoningLab, plotPoint origin
 - Surface: scatterFit `widgets.tsx:9116–9117` (gridlines at opacity 0.06, zero numerals under a numeric `y = mx + b` readout), slopeField `:5639–5650`, PointSetDiagram `:8037` (named axes, zero ticks/gridlines, names unpinned), plotPoint no origin/0 (`:15192`).
 - Evidence (AX-G3, ST-G8, AX-G8, AX-G7): "the learner tunes m and b as printed numbers against a plane where no number appears; intercept b is unverifiable against the picture"; "no gate anywhere asserts a numeric tick, and most engines print none" — coordinateProofLab is the sole full-tick engine.
 - Rule: A7, A8. Fix scope: per-engine sparse tick/endpoint labels (design pass) + PG-05/PG-09.
-- Status: **UNVERIFIED** (S242) — no closure evidence gathered on this seal. Neither fixed nor confirmed live.
+- Status: **CLOSED** (S242, verified by execution). All four sub-claims. scatterFit draws `sf-ticks` with numerals and x/y captions; slopeField draws `sfd-ticks`; PointSetDiagram draws tick strokes, numerals and an origin `0`; plotPoint renders `data-testid="pp-origin"`. Corpus-wide, of 71 authored plotPoint specs **50 draw the origin marker** and the other 15 numeric-band specs already print 0 or a negative in their own labels (6 categorical bands correctly abstain).
 
 ---
 

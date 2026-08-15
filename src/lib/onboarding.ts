@@ -212,7 +212,17 @@ export const G2_TRAILS: GradeTrail[] = [
  *
  * Multiplication/division and fractions lead because they are the two ideas Grade 3 exists to
  * introduce; the remaining three carry the other domains so no strand is unreachable from a
- * direct pick. Every `lessonId` below is the course's first lesson, verified against the manifest. */
+ * direct pick. Every `lessonId` below is the course's first lesson, verified against the manifest.
+ *
+ * VERIFIED against `content/standards/course-crosswalk.json`, not just asserted. These five map
+ * one-to-one onto the five CCSS Grade 3 domains — multiplication-division 3.OA, place-value 3.NBT,
+ * fractions 3.NF, measurement-data 3.MD, shapes-space 3.G — with complete coverage and no domain
+ * offered twice. The five omitted courses carry NO CCSS domain code at all (they are absent from
+ * the crosswalk), which is the crosswalk's own way of saying they are fluency and extension
+ * courses rather than domain entry points: nothing is reachable only by an omitted course. That
+ * puts Grade 3 in the same tier as G2, G6 and G7, the three grades whose offers are exactly
+ * one-per-domain. (For contrast, G4 offers 2 trails covering only 4.NBT, leaving 4.OA, 4.NF, 4.MD
+ * and 4.G with no direct pick at all — a real gap, but a different grade's problem.) */
 export const G3_TRAILS: GradeTrail[] = [
   {
     id: "multiplication-division",

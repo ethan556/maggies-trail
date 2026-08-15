@@ -1,10 +1,10 @@
 # Consolidated pending workload — S236
 
-Generated from current source on 2026-08-11.
+Generated from current source on 2026-08-15.
 
-- Total open rows: **11,487**
+- Total open rows: **11,287**
 - P0 rows: **977**
-- P1 rows: **10,507**
+- P1 rows: **10,307**
 - P2 rows: **3**
 
 ## Workstreams
@@ -14,7 +14,6 @@ Generated from current source on 2026-08-11.
 | MATH_TYPESETTING | 9,579 |
 | ILLUSTRATION_REPLACEMENT | 1,078 |
 | MCQ_DISTRACTOR_REVIEW | 572 |
-| PREDICTION_GATE_REVIEW | 200 |
 | CLOSURE_LEDGER | 27 |
 | ENGINE_REVERSIBLE_PLAY | 17 |
 | PREMIUM_REBUILD_WAVE | 8 |
