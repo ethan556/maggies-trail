@@ -12362,7 +12362,7 @@ const GENERATORS: VariantGen[] = [
         const ans = -a - b;
         return num(
           "power-ten-exponent",
-          `10${sup(-a)} \u00f7 10${sup(b)} = 10^____ (just the exponent)`,
+          `10${sup(-a)} \u00f7 10${sup(b)} = 10^x. What is x?`,
           ans,
           0,
           [
@@ -12384,7 +12384,7 @@ const GENERATORS: VariantGen[] = [
         const ans = -(a + b);
         return num(
           "power-ten-exponent",
-          `10${sup(-a)} \u00d7 10${sup(-b)} = 10^____ (just the exponent)`,
+          `10${sup(-a)} \u00d7 10${sup(-b)} = 10^x. What is x?`,
           ans,
           0,
           [
@@ -12412,7 +12412,7 @@ const GENERATORS: VariantGen[] = [
         const ans = a - b + c;
         return num(
           "power-ten-exponent",
-          `10${sup(a)} \u00d7 10${sup(-b)} \u00f7 10${sup(-c)} = 10^____ (just the exponent)`,
+          `10${sup(a)} \u00d7 10${sup(-b)} \u00f7 10${sup(-c)} = 10^x. What is x?`,
           ans,
           0,
           [
@@ -12440,7 +12440,7 @@ const GENERATORS: VariantGen[] = [
       const ans = a - b;
       return num(
         "power-ten-exponent",
-        `10${sup(a)} \u00f7 10${sup(b)} = 10^____ (just the exponent)`,
+        `10${sup(a)} \u00f7 10${sup(b)} = 10^x. What is x?`,
         ans,
         0,
         [

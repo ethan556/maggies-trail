@@ -270,8 +270,11 @@ describe("S242 — power shapes that used to orphan their exponent", () => {
   it("allows one level of nesting inside a parenthesised exponent", () => {
     // "2^(3 + (−1))" previously matched no exponent and rendered as literal "2^()" — a caret and
     // an empty pair of brackets, which is worse than leaving the whole thing alone.
+    // S242 (later): the arithmetic run now carries powers, so the whole equation is ONE island
+    // rather than three. That is the better outcome — the contract is that no caret survives into
+    // the prose, which is asserted below and is what the learner actually experiences.
     const found = islands("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.");
-    expect(found).toContain("2^(3 + (−1))");
+    expect(found.join(" ")).toContain("2^(3 + (−1))");
     expect(prose("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.")).not.toContain("^(");
     expect(prose("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.")).not.toContain("2^()");
   });
@@ -287,7 +290,7 @@ describe("S242 / GEN-01 — two leaks the generated-side sweep found that no sou
     // The exponent class was [A-Za-z0-9?π∞+-]: ASCII hyphen, no U+2212. Generators write the
     // typographic minus, so "1/81 = 3^−4" matched no exponent and the learner read a literal caret
     // on an exponent lesson — 12 occurrences, all on `exp-solve`, whose subject IS negative powers.
-    expect(islands("1/81 = 3^−4, so x = −4.")).toContain("3^−4");
+    expect(islands("1/81 = 3^−4, so x = −4.").join(" ")).toContain("3^−4");
     expect(prose("1/81 = 3^−4, so x = −4.")).not.toContain("^");
     expect(islands("(1/2)^−4 = 2^4 = 16, so x = −4, not 2.")).toContain("(1/2)^−4");
     // The ASCII form must keep working — this widened the class, it did not swap it.
@@ -317,7 +320,7 @@ describe("S242 / GEN-01 — two leaks the generated-side sweep found that no sou
     // "^3" was left in the prose — a typeset one-sixth followed by a literal caret and a 3, on the
     // negative-exponent lesson whose whole content is 6^(-3) = 1/6^3.
     const text = "A negative exponent takes the reciprocal: 6^(-3) = 1/6^3 = 1/216.";
-    expect(islands(text)).toContain("1/6^3");
+    expect(islands(text).join(" ")).toContain("1/6^3");
     expect(prose(text)).not.toContain("^");
     // A bare fraction is unchanged — the power is optional, not required.
     expect(islands("Compare 3/4 and 2/3.")).toEqual(["3/4", "2/3"]);

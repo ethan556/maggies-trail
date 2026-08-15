@@ -249,9 +249,20 @@ function auditCanonicalForm(v: Variant): Finding[] {
     const g = gcd(a.num, a.den);
     if (g > 1) found.push({ severity: "low", code: "unreduced-answer-fraction", where: "answer", detail: `${a.num}/${a.den} reduces by ${g} — check whether the lesson wants place-value form` });
   }
+  /* S242 (user ruling): "exact is always preferable UNLESS the numeric answer is required for a
+   * specific pedagogic concept mastery." Some items are ABOUT the decimal expansion, and reporting
+   * those was the detector's error, not the content's:
+   *   · "5/11 as a decimal is exactly: 0.454545…" — the repeat is the whole lesson;
+   *   · "Which power of ten equals 0.0000001?" — the decimal IS the question;
+   *   · "π ≈ 3.141593 > 333/106 ≈ 3.141509" — you cannot compare them without expanding.
+   * So a long decimal counts as invented rounding only where the item is NOT about decimal
+   * expansion. The exception is deliberately narrow: it needs the item to say so. */
+  const promptText = String((v.widget as Record<string, unknown>).prompt ?? "");
+  const decimalIsTheConcept = /\bdecimal\b|\brepeat|\bexpansion|\bterminat|\bapproximat|≈|\bpower of ten\b|\birrational\b|\bround/i.test(promptText);
   for (const { path, text } of strings(v.widget)) {
     if (/\b\d+\.0\b/.test(text)) found.push({ severity: "low", code: "integer-with-trailing-zero", where: path, detail: text.slice(0, 120) });
-    if (/\.\d{6,}/.test(text)) found.push({ severity: "high", code: "float-artifact-in-prose", where: path, detail: text.slice(0, 160) });
+    if (/\.\d{6,}/.test(text) && !decimalIsTheConcept)
+      found.push({ severity: "high", code: "float-artifact-in-prose", where: path, detail: text.slice(0, 160) });
   }
   return found;
 }
@@ -536,7 +547,7 @@ if (!SUMMARY_ONLY) {
     ...qualityBody.map(csv)
   ].join("\n") + "\n");
   writeFileSync(join(OUT, "GENERATOR_DUPLICATION_AUDIT.csv"), [
-    `# sourceSeal=${seal} window=${REPEAT_WINDOW} — a windowDuplicate is the same widget twice inside ${REPEAT_WINDOW} consecutive draws. distinctWidgets IS A LOWER BOUND: it cannot exceed `samples`, so a pair reporting 28 distinct in 30 draws has a pool of AT LEAST 28 and possibly far more. Only pairs that saturated well below their sample count (the pool-below-window rows) measure a true ceiling.`,
+    `# sourceSeal=${seal} window=${REPEAT_WINDOW} — a windowDuplicate is the same widget twice inside ${REPEAT_WINDOW} consecutive draws. distinctWidgets IS A LOWER BOUND: it cannot exceed the sample count, so a pair reporting 28 distinct in 30 draws has a pool of AT LEAST 28 and possibly far more. Only pairs that saturated well below their sample count (the pool-below-window rows) measure a true ceiling.`,
     csv(["generator", "form", "widgetType", "verdict", "samples", "distinctWidgets", "windowDuplicates", "globalDuplicates", "globalDuplicateRate", "window"]),
     ...dupBody.map(csv)
   ].join("\n") + "\n");
