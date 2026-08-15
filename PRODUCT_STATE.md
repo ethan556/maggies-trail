@@ -4,8 +4,8 @@ Regenerate with `node scripts/gen-product-state.mjs`. Every count below is deriv
 from disk (the curriculum manifest, the schema registry, and a content walk) so the
 rest of the docs can cite this file instead of re-counting. Commit `not-recorded-in-source-archive`.
 
-Authored corpus SHA-256: `bdfbe3fe78922454f48cdf2e11e7210862b7d09abbaf7e81e606e4288023be61`  
-State generated: `2026-08-13T04:50:04.445Z`
+Authored corpus SHA-256: `a01d31a9f5d3ff48cc7a1d9b55a08a129a19e16774de309a6d412d3957ce6c8a`  
+State generated: `2026-08-15T00:49:53.864Z`
 
 ## Catalogue
 
@@ -67,7 +67,7 @@ K–8: Tier A 822, Tier B 252.
 | — count source | last certified exact-lock run (Session 218; carried forward, not rerun in this checkout) |
 | Browser test declarations in current tree | 39 |
 | Last certified Playwright executions | 115 (Session 218; not rerun on current tree) |
-| Bundle size | 6.95 MB static JS |
+| Bundle size | not measured |
 | Build time | not measured on current verified tree |
 | Accessibility | current-tree browser execution not available in this checkout; last certified Playwright baseline is Session 218, while source-level harness contracts cover the current tree |
 | Deployment | Next.js app; learner core is local-first; accounts and sync require a writable single-node SQLite volume; no hosted deployment configured |

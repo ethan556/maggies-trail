@@ -3858,3 +3858,64 @@ differently-named generator (`sp-03-01` declares `prob-fraction/spinner`, receiv
 
 **This batch did not land green.** One test fails, it is pre-existing, it is diagnosed, and it is
 not mine to ratify. Everything else is green.
+
+### Session 242, part 2 — the remaining mechanical guardrails
+
+**SEC-01 closed.** `nanoid` 3.3.17 → 3.3.18 via a new `overrides` entry (GHSA-2v37-7h3g-55p8, custom
+generators loop indefinitely at size zero). It is purely transitive through `postcss@8.5.26`, which
+requires `^3.3.17`, so `^3.3.18` satisfies it without leaving the 3.x line; nothing in `src/` or
+`scripts/` imports nanoid directly. `npm audit` now reports **0 vulnerabilities**. Build EXIT 0 and
+byte-pure afterwards.
+
+**The corpus-hash "P0 evidence failure" was one stale file.** `npm run gen:manifest` then
+`npm run gen:state`. The manifest had been generated at `c058a2b` (Aug 13); lessons changed at
+`ad83214` (Aug 14). `gen-product-state.mjs:31` had been refusing to run ever since — correctly.
+Manifest and live authored corpus now both read `a01d31a9f5d3ff48`, and PRODUCT_STATE.json is
+regenerated against S241 content for the first time.
+
+**PRODUCT_STATE's test count is still Session 218's, and that is correct behaviour.** It reports
+12,925 tests / 322 files, labelled "carried forward, not rerun in this checkout". The true current
+figure measured this session is **13,648 tests across 384 files**. It cannot be recorded, because
+`run-test-groups.mjs:110` refuses to write `reports/session-test-result.json` when any test fails —
+and `allSamples.operability.s119` (group `rest-a`) fails. So the single pre-existing plotPoint
+touch-target failure is what blocks PRODUCT_STATE from ever carrying current test numbers. That
+raises its priority: it is not merely a red gate, it is the gate holding product-state truth shut.
+`--record-only` would route around that refusal and was deliberately not used.
+
+**Generator seal re-recorded.** 7 of 29 inputs had drifted since 2026-08-07. `variants.test.ts` was
+re-run standalone first — **3,995/3,995 passed** — and that verdict is what the new baseline cites,
+rather than a commit message. `generator-guard check` is now green on all 29.
+
+**GRAPH_DEFECT_INDEX.md now has a status column.** It was written with none, so it asserted 25 live
+defects in the present tense forever and could not record its own repairs — `ad83214` fixed several
+three hours after `73c62c7` created it, and the file never changed. All 25 entries now carry a
+Status line. Six were verified on this seal by execution, not by reading commit messages:
+
+| ID | Verdict | How it was checked |
+|---|---|---|
+| D-01 | CLOSED | 80 samples × {default, fixMistake} of `nl-unit` all emit `fractionDen` |
+| D-02 | CLOSED | 40 samples of `equivalent-fractions/findMark` all emit `fractionDen` |
+| D-03 | CLOSED | 60 seeds × 3 bands of `g8-bv-scatter-basics`: max `cols` = 8, at the schema cap |
+| D-04 | CLOSED-FOLLOW-ON | the three cited constructs survive only in the historical comment at `widgets.tsx:15641-15650`; g5e-03-02 fixed on disk. Its rework is what introduced the sub-44px cell above. |
+| D-05 | CLOSED | all 66 authored `plotPoint` specs carry both `xLabels` and `yLabels`; 0 unlabelled |
+| D-06 | CLOSED | `dm-03-01` i2 now reads "how many 10 mg units is it?" against `answer: 15` |
+
+The other 19 are marked **UNVERIFIED** — an honest absence of evidence. They are not claimed fixed
+and not claimed live. Do not cite "19 open defects"; cite "19 unverified". The header records the
+vocabulary so the next session can close them one at a time with evidence.
+
+**Gate results for part 2.**
+
+| Gate | Result |
+|---|---|
+| `npm audit` | 0 vulnerabilities (was 1 high) |
+| `npm run typecheck` | EXIT 0 |
+| `npm run validate:content` | 1840/1840 clean |
+| `npm run lint:pedagogy` | 1711/1711 clean |
+| `npm run validate:native` | EXIT 1 on `node_modules` + `tsconfig.tsbuildinfo` only — the archive-only checks. No real findings. |
+| `node scripts/check-registration.mjs` | EXIT 0 |
+| `npm run build` | EXIT 0, 0 tracked files changed |
+| `variants.delivery.s242.test.ts` | 9/9 |
+| `generator-guard check` | 29/29 byte-identical |
+
+Full-suite state is unchanged from part 1 and still carries the one pre-existing plotPoint failure.
