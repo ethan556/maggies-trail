@@ -86,7 +86,15 @@ describe("WS-G calculus shorthand — integrals", () => {
       ["(1/2)∫₁² u³ du", "(\\frac{1}{2})\\int_{1}^{2} u^{3}\\,du"],
       ["∫½r²dθ", "\\int \\frac{1}{2}r^{2}\\,dθ"],
       // pc-01-02: only the differential that CLOSES the integrand is spaced.
-      ["∫ √((dx/dt)² + (dy/dt)²) dt", "\\int \\sqrt{(dx/dt)^{2} + (dy/dt)^{2}}\\,dt"],
+      /* S242 / MPB-05, ruled 2026-08-15. This fixture asserted the slash form — `(dx/dt)^{2}` —
+       * because before the ruling nothing recognised Leibniz notation and the arc-length integrand
+       * reached the screen with its derivatives in body type. The ruling is that they stack, so the
+       * expectation is updated rather than the behaviour: it now demands MORE of the output (a
+       * fraction, and parentheses sized to it), not less. */
+      [
+        "∫ √((dx/dt)² + (dy/dt)²) dt",
+        "\\int \\sqrt{\\left(\\frac{dx}{dt}\\right)^{2} + \\left(\\frac{dy}{dt}\\right)^{2}}\\,dt"
+      ],
       // in-04-01: substitution rewrites the bounds as `x=a`, using real Unicode subscripts.
       ["∫ₓ₌ₐ^(x=b)", "\\int_{x=a}^{x=b}"],
       ["∫ᵤ₌ᵤ₍ₐ₎^(u=u(b))", "\\int_{u=u(a)}^{u=u(b)}"]

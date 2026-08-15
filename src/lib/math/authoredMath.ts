@@ -93,8 +93,43 @@ const NAME = `[A-Za-zπθ]′?(?![A-Za-z])`;
 const FUNCTION = `(?:${FUNCTION_NAMES})(?![A-Za-z])(?:${GAP}*(?:${PAREN}|${BARS}|${NAME}${SCRIPTS}))?`;
 /** `dx`, `dt`, `du`, `dy`, `dθ` — the only two-letter runs the corpus's integrands contain. */
 const DIFFERENTIAL = String.raw`d[A-Za-zθ](?![A-Za-z])`;
+
+/* ── Leibniz derivative notation ─────────────────────────────────────────────
+ *
+ * S242 / MPB-05, ruled 2026-08-15: `dy/dx` is STACKED as a true fraction everywhere, not left as
+ * a slash. 231 index rows are this shape and none of them formed an island of any kind — `dy` is
+ * two letters, so the single-letter atom declines it, and the numeric-fraction island requires
+ * digits. The notation therefore reached the screen in the UI's body font on 190 widget strings
+ * and 41 lesson-prose strings, visually unlike every other variable in the app.
+ *
+ * ADMITTED ALWAYS-ON, on the licence already ratified for `≤`, `±` and π: the shape does not occur
+ * in English. That claim was tested against the corpus rather than assumed, and the test found
+ * four false positives, each of which set one of the constraints below:
+ *
+ *   · `compare a/b and c/d by checking a×d…` → matched `d c/d b` across three words.
+ *     ⇒ NO whitespace anywhere inside the notation.
+ *   · `Inverse top-left = d/det = 3/6` → the matrix inverse, not a derivative.
+ *     ⇒ the denominator variable is ONE letter with a non-letter after it, so `det` is refused.
+ *   · `contentLocatorRule: "grade/domain/cluster"` → matched `de/do`.
+ *     ⇒ the leading `d` needs a non-alphanumeric before it, so `grade` cannot supply it.
+ *   · `dr/dc steppedReveal cluster` in a session-tag file → a real derivative SHAPE that is not a
+ *     derivative. Nothing in the notation distinguishes it; it is excluded by not being
+ *     learner-visible content, and it is recorded here so the next reader does not "fix" it.
+ *
+ * The order marker is admitted on both sides so `d²y/dx²` stacks as one object rather than
+ * tearing into a superscript and a fraction.
+ */
+const D_OPERATOR = "[d∂]";
+const DERIVATIVE_ORDER = String.raw`(?:[²³]|\^\{?[23]\}?)`;
+/** `dy/dx`, `d²y/dx²`, `d/dx`, `∂z/∂x` — the operator form omits the numerator variable. */
+const DERIVATIVE_OP =
+  String.raw`(?<![A-Za-z0-9])${D_OPERATOR}${DERIVATIVE_ORDER}?(?:[A-Za-zθ](?![A-Za-z]))?` +
+  String.raw`\/${D_OPERATOR}[A-Za-zθ]${DERIVATIVE_ORDER}?(?![A-Za-z])`;
 const NUMBER = String.raw`\d+(?:\.\d+)?%?`;
-const ATOM_BODY = `(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NAME}|${NUMBER})`;
+/* DERIVATIVE_OP precedes DIFFERENTIAL in both alternations below, and the order is load-bearing:
+ * `dy` matches DIFFERENTIAL, so listed second the derivative never gets a turn and `dy/dx` tears
+ * into an atom, an operator and another atom — three islands where the notation is one object. */
+const ATOM_BODY = `(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NAME}|${NUMBER})`;
 const ATOM = `(?:√${GAP}*)?${ATOM_BODY}${SCRIPTS}`;
 /**
  * Juxtaposition across a space is how `x³ dx`, `½ r² dθ` and `cos x` are written — but it is
@@ -102,7 +137,7 @@ const ATOM = `(?:√${GAP}*)?${ATOM_BODY}${SCRIPTS}`;
  * follow an operator (`x · e^(x²)`), yet may never be picked up by juxtaposition alone; without
  * that restriction "∫ f dx I think" would swallow the `I`.
  */
-const JUXTAPOSED = `(?:√${GAP}*)?(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NUMBER}|${NAME}${POWER}|${NAME}${SUB_CHARS})${SCRIPTS}`;
+const JUXTAPOSED = `(?:√${GAP}*)?(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NUMBER}|${NAME}${POWER}|${NAME}${SUB_CHARS})${SCRIPTS}`;
 const OPERATOR = String.raw`[-+−×÷·*/=<>≤≥≠≈]`;
 const RUN = `${ATOM}(?:${GAP}*${OPERATOR}${GAP}*${ATOM}|${ATOM}|${GAP}+${JUXTAPOSED})*`;
 /** `lim(x→4⁻) = 4 − 1 = 3` and `∫₁⁴ = ∫₁³ + ∫₃⁴`: the operator may lead, the result is the body. */
@@ -200,6 +235,24 @@ export function powerShorthandToTex(source: string): string {
   const tex = subscriptToTex(superscriptToTex(source).replaceAll("<=", "≤").replaceAll(">=", "≥"))
     .replace(/\^\(((?:[^()]|\([^()]*\))*)\)/g, "^{$1}")
     .replace(/\^([A-Za-z0-9?π∞+−-]+)/g, "^{$1}")
+    /* S242 / MPB-05 — LEIBNIZ NOTATION IS STACKED. Placed after the `^{…}` normalisation above so
+     * that `d²y/dx²` has already become `d^{2}y/dx^{2}` and the order marker can be carried into
+     * the right half of the fraction rather than left dangling outside it. The `\\` in the
+     * lookbehind keeps this off a command this chain has already emitted — without it the `d` of
+     * `\cdot` would be a numerator. */
+    .replace(
+      /(?<![A-Za-z0-9\\])([d∂])((?:\^\{[^{}]*\})?)([A-Za-zθ](?![A-Za-z]))?\/([d∂])([A-Za-zθ])((?:\^\{[^{}]*\})?)(?![A-Za-z])/g,
+      (_m, dTop: string, order: string, top: string | undefined, dBottom: string, bottom: string, bottomOrder: string) =>
+        `\\frac{${dTop}${order}${top ?? ""}}{${dBottom}${bottom}${bottomOrder}}`
+    )
+    /* S242 / MPB-05. A STACKED FRACTION NEEDS PARENTHESES THAT GROW WITH IT. The two shapes this
+     * ruling makes common are the chain rule, `(dy/du)·(du/dx)`, and parametric arc length,
+     * `√((dx/dt)² + (dy/dt)²)` — in both the authored parentheses are around a fraction that is now
+     * two lines tall, and KaTeX sets a plain `(` at base height, so the bracket reads as belonging
+     * to the numerator alone. Restricted to groups with NO nested parenthesis, which makes the
+     * `\left`/`\right` pair balanced by construction: an unbalanced one is a KaTeX parse error, and
+     * this function has no way to report one. */
+    .replace(/\((?![^()]*\()([^()]*\\frac[^()]*)\)/g, "\\left($1\\right)")
     .replace(/(?<![A-Za-z])sqrt\s*\(((?:[^()]|\([^()]*\))*)\)/gi, "\\sqrt{$1}")
     .replace(/√\(((?:[^()]|\([^()]*\))*)\)/g, "\\sqrt{$1}")
     .replace(/√\|([^|]+)\|/g, "\\sqrt{\\lvert $1\\rvert}")
@@ -285,6 +338,32 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   collect(text, /±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))/g, candidates);
   collect(text, /(?<![\w.])\d+(?:\.\d+)?π(?:\([^()\n]{1,20}\))?|π\([^()\n]{1,20}\)/g, candidates);
 
+  /* S242 / MPB-05 — LEIBNIZ NOTATION IS AN ALWAYS-ON ISLAND, AND THE OPERATOR FORM CARRIES ITS
+   * ARGUMENT.
+   *
+   * Always-on for the same reason as `±` and π: 190 of the 231 rows sit on widget spec strings,
+   * which `widgets.tsx` renders with arithmetic OFF, so the atom widening below cannot reach them.
+   * The constraints that make `dy/dx` safe without an arithmetic context are argued at
+   * DERIVATIVE_OP.
+   *
+   * The trailing group is what makes `d/dx[x² + 7]` one object instead of a stacked fraction
+   * standing next to an orphaned bracket. It is filtered by `hasProseWord` on the same argument the
+   * integral island uses — the corpus writes word placeholders inside these brackets
+   * (`d/dx[position]`), and typesetting one renders it as a product of italic letters. */
+  {
+    /* Both extents are offered and the existing longest-first resolution chooses between them: the
+     * argument-carrying island wins where it is clean, and where `hasProseWord` rejects it the bare
+     * operator is still there to be accepted, so `d/dx[position]` stacks the operator and leaves
+     * the word alone rather than losing both. The bare operator needs no prose filter of its own —
+     * `WORDS` wants three letters and the notation never has two in a row. */
+    collect(text, new RegExp(DERIVATIVE_OP, "g"), candidates);
+    const withArgument: Match[] = [];
+    collect(text, new RegExp(`${DERIVATIVE_OP}(?:${GAP}*(?:${BRACKET}|${PAREN})${SCRIPTS})?`, "g"), withArgument);
+    for (const candidate of withArgument) {
+      if (!hasProseWord(candidate.source)) candidates.push(candidate);
+    }
+  }
+
   /* S242 — INEQUALITY RELATIONS ARE ALWAYS-ON ISLANDS, and they carry their operands' signs.
    *
    * Two residues from the first pass at ASCII inequalities, fixed together because they have one
@@ -325,7 +404,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_RELATION_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
     const ABSOLUTE = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const term = String.raw`(?:${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
+    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -398,7 +477,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
     const ABSOLUTE_ATOM = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const atom = String.raw`(?:${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
+    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
