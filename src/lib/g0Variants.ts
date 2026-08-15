@@ -864,7 +864,7 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
     return koaNum(`${a} + ${b} = ?`, total,
       [[total - 1, `That stops one short. Count on ${b} from ${a} and land on ${total}.`],
        [Math.abs(a - b), `That finds the difference instead of the total.`]],
-      `Correct — ${a} + ${b} = ${total}.`, koaFam(a, b));
+      `Correct — ${a} + ${b} = ${total}: count on ${b} from ${a}.`, koaFam(a, b));
   },
   KoaDiffs5Numeric: (r) => {
     const total = kpick(r, 2, 5), away = kpick(r, 1, total - 1);
@@ -912,7 +912,7 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
     return koaNum(`Answer fast: ${a} + ${b} = ?`, total,
       [[total - 1, `That stops one count short of ${total}.`],
        [Math.abs(a - b), `That finds the difference between ${a} and ${b} instead of their total.`]],
-      `Correct — ${a} + ${b} = ${total}.`, koaFam(a, b));
+      `Correct — ${a} + ${b} = ${total}: count on ${b} from ${a}.`, koaFam(a, b));
   },
 };
 

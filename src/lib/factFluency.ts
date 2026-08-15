@@ -225,7 +225,7 @@ export function factDrillFor(family: string, seed: number): {
         type: "numeric", prompt: `${a} × ${b} = ?`, answer: product, tolerance: 0, unit: "",
         commonErrors: traps,
         fallbackFeedback: `Skip-count by ${b}, ${a} times — or step from a nearby fact you already know.`,
-        successFeedback: `Correct — ${a} × ${b} = ${product}.`
+        successFeedback: `Correct — ${a} × ${b} = ${product}: ${a} groups of ${b}.`
       },
       hints: [`Think in equal groups.`, `Skip-count by ${b}.`, `${a} × ${b} = ${product}.`],
       explanationVariants: [
@@ -291,7 +291,7 @@ function sumDrillFor(family: string, seed: number): {
         // (family "0+0" would otherwise emit -1), and a trap equal to the answer is not a trap.
         commonErrors: traps.filter((t) => t.value !== result && t.value >= 0),
         fallbackFeedback: `Start at the bigger number and count on — or make ten first, then add what is left.`,
-        successFeedback: `Correct — ${a} + ${b} = ${result}.`
+        successFeedback: `Correct — ${a} + ${b} = ${result}: count on ${b} from ${a}.`
       },
       hints: [`Start from the bigger number.`, `Make ten, then add the rest.`, `${a} + ${b} = ${result}.`],
       explanationVariants: [
