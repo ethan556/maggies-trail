@@ -107,6 +107,53 @@ describe("ARCH-01 — legitimate mathematics still typesets", () => {
   });
 });
 
+describe("S242 — inequality relations are always-on islands", () => {
+  /* The relation island exists because 37 authored strings leaked at a 100% rate: 26 sat on
+   * surfaces that pass `includeArithmetic: false` (option labels, widget prompts) where the
+   * arithmetic run is never consulted, and 11 carried negative operands the atom refuses to start
+   * on. `<=` and `>=` do not occur in English and `≤`/`≥` occur nowhere else, so the relation is
+   * its own evidence of mathematics — which is what makes it safe always-on where a bare `=` is
+   * not, and what licenses the ASCII hyphen inside its operands. */
+  const shouldRender: Array<[string, boolean, string]> = [
+    ["x >= 3", false, "x >= 3"],
+    ["x <= 3", false, "x <= 3"],
+    ["Solve: 2x + 4 >= 10", false, "2x + 4 >= 10"],
+    ["Solve: -7x - 8 <= -43", false, "-7x - 8 <= -43"],
+    ["Add 4 (-6x>=-24), divide by -6 and FLIP: x<=4.", true, "-6x>=-24"],
+    ["Subtract 6 (-2x<=-18), divide by -2 and FLIP: x>=9.", true, "-2x<=-18"]
+  ];
+
+  it.each(shouldRender)("%s", (text, arith, expected) => {
+    expect(islands(text, arith)).toContain(expected);
+  });
+
+  it("captures the WHOLE left operand, not just its last term", () => {
+    // Matching one term produced `4 >= 10` from "2x + 4 >= 10" — a false claim, which the guard
+    // then correctly refused, so the inequality silently stayed raw. A subtle failure: the bug
+    // and its own safety net cancelled into "nothing renders".
+    expect(islands("Solve: 2x + 4 >= 10", false)).not.toContain("4 >= 10");
+  });
+
+  it("does not swallow the space before an unsigned operand", () => {
+    for (const island of islands("divide by -6 and FLIP: x<=4.", true)) {
+      expect(island).toBe(island.trim());
+    }
+  });
+
+  it("a false inequality is refused, exactly like false arithmetic", () => {
+    expect(islands("9 <= 2", true)).toEqual([]);
+    expect(islands("5 >= 5", true)).toContain("5 >= 5");
+  });
+
+  it("hyphen ranges are still safe — the relation is what licenses the hyphen", () => {
+    // S237 kept the ASCII hyphen out of the arithmetic operator class because "Ages 3-5" was being
+    // typeset as arithmetic. That protection must survive: these carry no relation, so no island.
+    expect(islands("Ages 3-5 are welcome.", false)).toEqual([]);
+    expect(islands("Pages 10-12 tonight.", false)).toEqual([]);
+    expect(islands("The score was 7-2 at half time.", false)).toEqual([]);
+  });
+});
+
 describe("ARCH-01 — the S237 false-statement guard still holds", () => {
   // These are worse than a torn word: polished KaTeX asserting something untrue. The boundary
   // change must not reopen them.

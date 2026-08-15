@@ -4298,3 +4298,69 @@ generated-render sweep both pass, and D-18 is fully closed rather than 5-of-8.
 | `node scripts/check-registration.mjs` | EXIT 0 |
 | `npm run build` | EXIT 0, 0 tracked files changed |
 | `generator-guard check` | 29/29, re-sealed |
+
+### Session 242, part 8 — inequalities closed, SEC-02 landed
+
+**ASCII inequalities: 58 → 0.** Three separate defects, one symptom.
+
+1. **The operator class tried `<` and `>` before `<=` and `>=`.** For "x >= 6" the scanner matched
+   `>` alone, looked for an atom, found `=`, and abandoned the run — which is why 75 authored
+   strings carrying ASCII inequalities leaked at a **100% rate** while every other operator in that
+   class typeset fine.
+2. **`isFalseNumericClaim` matched ONE relation character**, so a raw `>=` was judged as `>` and
+   "5 >= 5" would have been called false and refused. Both this and the renderer now normalise the
+   ASCII pair to the Unicode relation up front, so the rest of the file keeps one canonical form to
+   reason about rather than a second spelling in every branch.
+3. **The relation was only reachable through the arithmetic run**, which left two residues the
+   first pass could not fix — and both are now closed by making the relation an ALWAYS-ON island:
+   - **26 rows sat on `includeArithmetic: false` surfaces** (option labels, widget prompts). Those
+     surfaces are cautious for good reason: the arithmetic scanner guesses at expressions from a
+     bare `=` or `+`. **A relation is not a guess.** `<=`/`>=` do not occur in English and `≤`/`≥`
+     occur nowhere else, so the digraph is its own evidence that the text is mathematics.
+   - **11 rows carried negative operands** ("-6x>=-24"). The atom refuses a leading ASCII hyphen
+     because S237 found the scanner typesetting "Ages 3-5" as arithmetic — but that reasoning is
+     about the hyphen as a binary operator *guessed at with no evidence*. Inside a relation island
+     the `<=` is the evidence, so the sign, and the internal hyphen, are unambiguous.
+
+Two bugs were found while building it, both worth recording because each hid itself:
+- The operand initially matched a single term, so "2x + 4 >= 10" captured `4 >= 10` — a **false
+  claim**, which the guard then correctly refused, so the inequality silently stayed raw. The bug
+  and its own safety net cancelled into "nothing renders".
+- `[-−]?\s*` let a missing sign swallow the preceding space into the island. Now `(?:[-−]\s*)?`,
+  so the sign binds tight.
+
+"Ages 3-5", "Pages 10-12" and "7-2 at half time" are all asserted to stay prose — the S237
+protection survives, because none of them carries a relation.
+
+**The presentation index now stands at 113 rows, from 7,815 at the start of the session.** What
+remains: RAW_CARET 77, RAW_DERIVATIVE 20, RAW_PI 14, RAW_INTEGRAL 2 — and the derivative and
+integral rows are ~90% prose *about* notation ("dy/dx looks like a fraction"), correctly left alone.
+
+**SEC-02 landed.** The audit found no app-defined CSP, HSTS, nosniff, referrer or permissions
+policy. All are now set in `next.config.mjs` rather than middleware — middleware runs per request
+and would force every currently-static route to render dynamically, trading a real performance
+property for a header that does not need one.
+
+`script-src` uses **SHA-256 hashes, not `'unsafe-inline'`**, for the two pre-hydration scripts
+(`themeInit`, `motionInit`). Nonces cannot work here for the same reason middleware cannot — a
+nonce must vary per response, defeating static prerendering. `style-src` keeps `'unsafe-inline'`
+and that is stated plainly rather than hidden: KaTeX writes inline style attributes and 54
+components emit scoped `<style>` blocks.
+
+**The test is the load-bearing part.** Hashes fail *silently*: edit either script by one character
+and the browser refuses to run it — the theme flashes light-then-dark on every load, a learner who
+set reduce-motion gets animations anyway, and nothing in the suite, the type checker or the build
+says a word. Every symptom is a first-paint visual regression, the one class no automated gate here
+watches. `securityHeaders.s242.test.ts` recomputes both hashes from the real strings (importing
+`motionInit`, which is assembled from `storageKeys` at module scope, rather than re-reading its
+template source) and fails if the CSP does not carry them. **Verified it fires**: a one-character
+edit to `motionInit` turns the suite red with a message naming the consequence. It also fails if a
+third inline script appears, and if `script-src` ever falls back to `'unsafe-inline'`.
+
+`frame-ancestors 'none'` and `X-Frame-Options: DENY` are deliberate even with LTI on the roadmap —
+an LTI launch that needs framing should relax this for its own route explicitly, not inherit a
+permissive default site-wide.
+
+**Gates.** typecheck 0 · full suite **13,793 passed / 0 failed across 388 files** · content
+1840/1840 · pedagogy 1711/1711 · registration OK · native clean but for `node_modules` · build
+EXIT 0 and byte-pure · generator-guard 29/29.

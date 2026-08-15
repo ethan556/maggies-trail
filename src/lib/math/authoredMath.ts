@@ -193,7 +193,11 @@ function calculusShorthandToTex(source: string): string {
 
 /** Convert the corpus's explicit, author-friendly shorthand to TeX. */
 export function powerShorthandToTex(source: string): string {
-  const tex = subscriptToTex(superscriptToTex(source))
+  /* S242. Authors write both `≤` and `<=`. Normalising the ASCII pair to the Unicode relation here
+   * — rather than adding a second spelling to the symbol table, the false-claim evaluator and every
+   * future branch — means the rest of this file keeps one canonical form to reason about. Done
+   * first so the `≤`/`≥` entries below pick them up. */
+  const tex = subscriptToTex(superscriptToTex(source).replaceAll("<=", "≤").replaceAll(">=", "≥"))
     .replace(/\^\(((?:[^()]|\([^()]*\))*)\)/g, "^{$1}")
     .replace(/\^([A-Za-z0-9?π+-]+)/g, "^{$1}")
     .replace(/\bsqrt\s*\(((?:[^()]|\([^()]*\))*)\)/gi, "\\sqrt{$1}")
@@ -252,6 +256,47 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
   collect(text, /(?<![\w/])\d+\s*\/\s*\d+(?![\w/])/g, candidates);
 
+  /* S242 — INEQUALITY RELATIONS ARE ALWAYS-ON ISLANDS, and they carry their operands' signs.
+   *
+   * Two residues from the first pass at ASCII inequalities, fixed together because they have one
+   * cause: the relation was only reachable through the arithmetic run, and that run is the most
+   * conservative pattern in this file.
+   *
+   *   · 26 rows sat on surfaces that pass `includeArithmetic: false` — option labels, widget
+   *     prompts. "x >= 3" as an answer choice simply never became mathematics. Those surfaces are
+   *     cautious for good reason: the arithmetic scanner guesses at expressions from bare `=` and
+   *     `+`, which is speculative in prose. A RELATION is not a guess. `<=` and `>=` do not occur
+   *     in English, and `≤`/`≥` occur nowhere else at all, so the digraph is its own evidence that
+   *     the surrounding text is mathematics. That makes it safe always-on where a bare `=` is not.
+   *
+   *   · 11 rows carried negative operands — "-6x>=-24", "Add 4 (-6x>=-24), divide by -6 and FLIP".
+   *     The atom deliberately refuses a leading ASCII hyphen, because S237 found the scanner
+   *     crossing hyphens and typesetting "Ages 3-5" as arithmetic. That reasoning is about the
+   *     hyphen as a binary OPERATOR between two atoms. Here it is a SIGN on an operand, and the
+   *     relation on the other side of it removes the ambiguity that made the general case unsafe.
+   *
+   * Both operands still respect the ARCH-01 word boundaries, so this cannot reintroduce tearing,
+   * and false claims are refused below exactly as they are for the arithmetic run — "9 <= 2" must
+   * not be typeset into polished KaTeX any more than "2 + 2 = 5" may be. */
+  {
+    const term = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
+    /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
+     * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
+     * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
+     * `[-−]?\s*`) so a missing sign cannot swallow the preceding space into the island. The
+     * internal operator admits the ASCII hyphen HERE and nowhere else. S237 excluded it from the
+     * general arithmetic class because the scanner was typesetting "Ages 3-5" as arithmetic — but
+     * that danger comes from guessing at an expression with no evidence it is one. Inside a
+     * relation island the `<=` is that evidence, and "Solve: -7x - 8 <= -43" is unambiguous. "Ages
+     * 3-5" still cannot match, because it carries no relation at all. */
+    const operand = String.raw`(?:[-−]\s*)?${term}(?:\s*[-−+]\s*${term})*`;
+    const relations: Match[] = [];
+    collect(text, new RegExp(`${operand}\\s*(?:<=|>=|≤|≥)\\s*${operand}`, "g"), relations);
+    for (const candidate of relations) {
+      if (!isFalseNumericClaim(candidate.source)) candidates.push(candidate);
+    }
+  }
+
   if (includeArithmetic) {
     /* S242 (ARCH-01, ruled 2026-08-15) — THE SINGLE-LETTER ATOM NEEDS WORD BOUNDARIES.
      *
@@ -274,7 +319,11 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * still typeset unchanged, because a parenthesised group, a number and a multi-digit
      * coefficient are all still atoms. Fixtures in `authoredMath.wordBoundary.s242.test.ts`. */
     const atom = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
-    const operator = String.raw`(?:=|≤|≥|≠|<|>|\+|−|×|÷|·|\*)`;
+    /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
+     * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
+     * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
+     * operator in this class typeset fine. */
+    const operator = String.raw`(?:<=|>=|=|≤|≥|≠|<|>|\+|−|×|÷|·|\*)`;
     /* S242 (ARCH-01). The arithmetic run is collected into its OWN array. The S237 boundary guard
      * below judges "is this candidate the tail of a longer expression the scanner cut into?" —
      * a question that is only meaningful about candidates the ARITHMETIC scanner produced. It used
@@ -352,6 +401,9 @@ function pushText(parts: AuthoredMathPart[], text: string): void {
  */
 function isFalseNumericClaim(source: string): boolean {
   if (/[A-Za-z]/.test(source)) return false;
+  // S242: same normalisation as the renderer. This matches ONE relation character, so a raw `>=`
+  // would be judged as `>` — and "5 >= 5" would be called false.
+  source = source.replaceAll("<=", "≤").replaceAll(">=", "≥");
   const relation = source.match(/[=≤≥≠<>]/);
   if (!relation) return false;
   const [left, right] = source.split(/[=≤≥≠<>]/);
