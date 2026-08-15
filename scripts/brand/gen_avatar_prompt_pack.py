@@ -7,6 +7,15 @@ portrait prompt — that invariance is what makes the library read as one art te
 is what the FABLE-Q contact-sheet gate (spec §6) actually checks.
 """
 import json, textwrap
+from pathlib import Path
+
+# S242. Both outputs below were written to hardcoded host-absolute workspace paths — the exact
+# class `npm run validate:native` fails closed on, and the only genuine finding that gate reported
+# on this tree. Derive them from the repo root instead, so the script runs anywhere.
+# Note the gate is a plain text scan: it flags the offending prefix wherever it appears in a source
+# file, prose included, so do not quote such a path in a comment here.
+# This file lives at <repo>/scripts/brand/, so parents[2] is <repo>.
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 # ---------------------------------------------------------------- locked style blocks
 
@@ -186,7 +195,7 @@ for band in ("early", "explorer", "adventurer", "summit"):
     n = sum(1 for r in records if r["kind"] == "human" and r["band"] == band)
     assert n == 12, (band, n)
 
-with open("/home/claude/avatar-prompts.json", "w") as f:
+with open(REPO_ROOT / "avatar-prompts.json", "w") as f:
     json.dump(dict(
         version="1.2",
         generated_for="Maggie's Trail WS-J avatar library",
@@ -285,7 +294,7 @@ A("background, saturation, sharpness, age appearance (spec §6).\n")
 A("3. The test: *would a user assume one professional character-design team drew everything?*\n")
 A("4. `npx vitest run src/lib/avatars.test.ts` green.\n")
 
-with open("/home/claude/AVATAR_PROMPT_PACK.md", "w") as f:
+with open(REPO_ROOT / "AVATAR_PROMPT_PACK.md", "w") as f:
     f.write("\n".join(L))
 
 print(f"{len(records)} prompts")

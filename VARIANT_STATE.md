@@ -3,16 +3,32 @@
 Rewrite this file at the end of every session. Keep it short; the running ledger lives in
 `VARIANT_LOG.md`.
 
-## Coverage (measured 2026-07-23)
+## Coverage (re-measured 2026-08-15, S242, seal 2d5f39f)
 
-practice-eligible **4,471** | REFRESHED **4,471 (100%)** | remaining **0**
+`VARIANT_GENERATORS.length` is **442**. The repository contains **5,897 declarations** across
+**429** distinct generators; 13 generators are reached by tag/alias only.
 
-Session 97 completes the final 27 runtime gaps in `conditional-probability`. The six-course
-statistics/probability domain rises from **333/360 to 360/360**, and the repository reaches complete
-runtime refresh coverage.
+**DELIVERED on Practice/Review: 6,027 of 6,762 pool-eligible items (89.1%).**
 
-`VARIANT_GENERATORS.length` is **434**. The repository contains **4,268 declarations**. Runtime
-resolution, not declaration count alone, remains the coverage authority.
+The figures above replace the long-standing 434 / 4,268 / 4,471 line, which was accurate at
+Sessions 97–100 and was copied forward unre-run for five weeks. Specifically:
+
+- **434 → 442.** Eight generators were added after S100. Verified by executing
+  `VARIANT_GENERATORS.length`, not by parsing.
+- **4,268 → 5,897.** Same counting rule (`scripts/verify-global-routes-session98.cjs:19`),
+  re-run against the live corpus.
+- **"practice-eligible 4,471 | REFRESHED 4,471 (100%)" was never a variant statistic.** 4,471 was
+  the S83–S90 *total assessment* denominator. The corresponding number today is 6,762
+  pool-eligible practice items, of which 6,027 refresh.
+
+**Runtime resolution, not declaration count, remains the coverage authority — and S242 found that
+the two had silently diverged.** Until S242, Practice and Review discarded `step.variant` in their
+pool builders and pre-filtered on `hasVariants(conceptTag)` before the resolver ran, so only
+**419 of 6,762 items (6.2%)** actually refreshed and **457 of 526 chapters had none at all**. The
+generators, seeds and determinism proof were correct throughout; only the wiring was not. The
+ratchet in `src/lib/variants.delivery.s242.test.ts` now fails closed if that regresses.
+
+Mastery Studio was never affected — it passes the real `TStep`.
 
 ## Completed sequence
 

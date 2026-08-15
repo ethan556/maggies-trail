@@ -8,7 +8,7 @@ import { awardNewBadges, type BadgeDef } from "@/lib/achievements";
 import { applyXp, bump, progressStore } from "@/lib/progress";
 import { applyResult } from "@/lib/mastery";
 import { applyFactResult, dueFacts, factDrillFor, factReviewKey, weakestFacts } from "@/lib/factFluency";
-import { hasVariants, variantForStep } from "@/lib/variants";
+import { variantForStep } from "@/lib/variants";
 import type { TWidget } from "@/lib/schema";
 
 type LoadState =
@@ -114,7 +114,11 @@ export default function ReviewClient() {
         // traps come with them. Seeded on (key, box, date), so the sitting is still reproducible.
         const items = data.items.map((it) => {
           const ri = batch.find((b) => b.key === it.key);
-          if (!ri || !hasVariants(ri.conceptTag)) return it;
+          // S242. `ri` is still required — the seed needs its key and box — but the
+          // `hasVariants(ri.conceptTag)` half was a pre-filter that outranked the resolver and
+          // dropped every step whose declaration resolves while its tag does not. `it` now carries
+          // `variant` from the API, so variantForStep can take its documented declaration branch.
+          if (!ri) return it;
           const v = variantForStep({ ...it, conceptTag: ri.conceptTag }, `${ri.key}:${ri.box}:${today}`);
           return v ? { ...it, widget: v.widget, fresh: true } : it;
         });

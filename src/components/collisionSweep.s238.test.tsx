@@ -60,7 +60,10 @@ describe.skipIf(!process.env.COLLISION_SWEEP)("S238 corpus collision sweep", () 
     rows.push("# per-engine totals (colliding pairs across all specs x 3 tones)");
     for (const [eng, n] of [...perEngine.entries()].sort((a, b) => b[1] - a[1])) rows.push(`# ${eng},${n}`);
     rows.push(`# specs swept: ${specs}; renders failed: ${rendersFailed}; unmodellable texts: ${skippedTexts}`);
-    writeFileSync(join(process.cwd(), "COWORK_CACHE", "label-collision-remainder-s238.csv"), rows.join("\n") + "\n");
+    // S242. Tracked artifact — regenerate deliberately, not as a side effect of every test run.
+    if (process.env.UPDATE_COLLISION_REMAINDER === "1") {
+      writeFileSync(join(process.cwd(), "COWORK_CACHE", "label-collision-remainder-s238.csv"), rows.join("\n") + "\n");
+    }
     expect(specs).toBeGreaterThan(1000);
   }, 1_800_000);
 });

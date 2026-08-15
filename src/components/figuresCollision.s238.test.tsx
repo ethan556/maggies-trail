@@ -79,7 +79,10 @@ describe.skipIf(!process.env.FIGURE_SWEEP)("S238 figures.tsx collision sweep", (
     rows.push("# worst figures (colliding pairs, weight by the uses column when fixing)");
     for (const f of perFigure.sort((a, b) => b.pairs - a.pairs).slice(0, 30)) rows.push(`# ${f.id},${f.pairs}`);
     rows.push(`# figures: ${figures}; with collisions: ${dirtyFigures}; total pairs: ${totalPairs}; skipped texts: ${totalSkipped}; renders failed: ${rendersFailed}`);
-    writeFileSync(join(process.cwd(), "COWORK_CACHE", "figure-collision-remainder-s238.csv"), rows.join("\n") + "\n");
+    // S242. Tracked artifact — regenerate deliberately, not as a side effect of every test run.
+    if (process.env.UPDATE_COLLISION_REMAINDER === "1") {
+      writeFileSync(join(process.cwd(), "COWORK_CACHE", "figure-collision-remainder-s238.csv"), rows.join("\n") + "\n");
+    }
     expect(figures).toBeGreaterThan(1000);
   }, 600_000);
 });

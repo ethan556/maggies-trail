@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { seededShuffle } from "@/lib/prng";
-import { hasVariants, variantForStep } from "@/lib/variants";
+import { variantForStep } from "@/lib/variants";
 import { recommendBand } from "@/lib/difficulty";
 import QuizShell, { type QuizSummary, type Servable } from "@/components/QuizShell";
 import { localDateStr, onMiss, xpFor } from "@/lib/engine";
@@ -15,6 +15,8 @@ export interface PracticeItem extends Servable {
   conceptTag: string;
   lessonId: string;
   stepId: string;
+  /** the authored step's own generator declaration, if it carries one */
+  variant?: { gen: string; form?: string };
   /** true when this round's numbers were generated fresh rather than replayed from the lesson */
   fresh?: boolean;
 }
@@ -69,7 +71,11 @@ export default function PracticeClient({
     const mastery = progressStore.load().mastery ?? {};
     const today = localDateStr(new Date());
     const picked = pick(pool, 5, roundSeed).map((item) => {
-      if (!hasVariants(item.conceptTag)) return item;
+      // S242. This used to short-circuit on `hasVariants(item.conceptTag)`, which consults only the
+      // generator tags and the alias table — never the step's own declaration. That made the cheap
+      // pre-filter authoritative over the resolver, and it discarded 5,431 declaring steps across
+      // 1,504 conceptTags that resolve by declaration but not by tag. variantForStep already
+      // returns null when it cannot build, so it is the correct and only gate.
       const band = recommendBand(mastery[item.conceptTag], today);
       const v = variantForStep(item, `${roundSeed}:${item.key}`, band);
       return v ? { ...item, widget: v.widget, fresh: true } : item;

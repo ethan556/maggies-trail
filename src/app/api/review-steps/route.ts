@@ -34,6 +34,10 @@ export async function POST(req: Request) {
     explanationVariants?: string[];
     hints?: string[];
     context: string;
+    /** S242. The step's own generator declaration, forwarded so the review queue can serve a fresh
+     * variant of the IDEA rather than replaying the remembered item. Omitting it here silently
+     * demoted every declared step to the tag/alias path. */
+    variant?: { gen: string; form?: string };
   }> = [];
 
   for (const [lessonId, stepIds] of byLesson) {
@@ -58,7 +62,8 @@ export async function POST(req: Request) {
         widget: step.widget,
         explanationVariants: step.explanationVariants,
         hints: step.hints,
-        context: title
+        context: title,
+        variant: step.variant
       });
     }
   }

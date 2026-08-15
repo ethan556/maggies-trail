@@ -175,7 +175,11 @@ describe("adversarial illustration and accompanying-text audit", () => {
     }
     rows.sort((a, b) => a.source.localeCompare(b.source) || a.step_path.localeCompare(b.step_path));
     const columns: Array<keyof Row> = ["source", "lesson_id", "step_path", "figure_id", "render_decision", "adversarial_decision", "risk_reasons", "binding_key", "illustration_description", "accompanying_text"];
-    writeFileSync(join(ROOT, "FIGURE_TEXT_ADVERSARIAL_AUDIT.csv"), `${columns.join(",")}\n${rows.map((row) => columns.map((column) => csv(row[column])).join(",")).join("\n")}\n`, "utf8");
+    // S242. Same treatment as the queue write below: a test run regenerates a tracked audit
+    // artifact only when asked to. The assertions still run every time.
+    if (process.env.UPDATE_FIGURE_TEXT_AUDIT === "1") {
+      writeFileSync(join(ROOT, "FIGURE_TEXT_ADVERSARIAL_AUDIT.csv"), `${columns.join(",")}\n${rows.map((row) => columns.map((column) => csv(row[column])).join(",")).join("\n")}\n`, "utf8");
+    }
 
     // Hidden content is containment, not completion. Keep every suppressed placement in a
     // durable, individually addressable replacement queue until an aligned visual is authored.
@@ -215,11 +219,27 @@ describe("adversarial illustration and accompanying-text audit", () => {
       next_action: "Create or select a concept-specific illustration, then verify visible copy and accessible description before restoring it.",
     }));
     const pendingColumns: Array<keyof PendingIllustrationRow> = ["work_id", "priority", "priority_score", "workstream", "status", "source", "lesson_id", "step_path", "current_figure_id", "learner_harm", "frequency", "visibility", "strategic_importance", "mismatch_evidence", "next_action"];
-    writeFileSync(
-      join(ROOT, "PREMIUM_PENDING_WORKLOAD_QUEUE.csv"),
-      `${pendingColumns.join(",")}\n${pendingRows.map((row) => pendingColumns.map((column) => csv(row[column])).join(",")).join("\n")}\n`,
-      "utf8",
-    );
+    // S242. This write used to be unguarded, and it is the whole of "Trap K". It emits ONLY this
+    // audit's 1,078 ILLUSTRATION_REPLACEMENT rows, under the identical 15-column header, over a
+    // consolidated ledger that carries 11,487 rows across nine workstreams — so `npx vitest run`
+    // silently deleted 10,409 rows of tracked source-of-truth data, and the run REPORTED PASS.
+    // The file still parsed and still looked like the queue, which is why it survived so long; it
+    // was caught only because someone diffed the tree afterwards. It also silently reverted
+    // CLOSURE_LEDGER item CL-P1-061, whose entire subject is consolidating those nine workstreams.
+    //
+    // Gated behind an env flag, exactly as the blocklist write below already was. This does NOT
+    // weaken the gate: the assertions at the end of this test — 3,816 rows, 1,078 suppressed,
+    // 1,078 pending, every pending row OPEN_REPLACEMENT_REQUIRED — are what enforce the contract,
+    // and they still run on every invocation. Changing what a test WRITES is not changing what it
+    // ASSERTS. Regenerate deliberately with:
+    //     UPDATE_PENDING_WORKLOAD_QUEUE=1 npx vitest run src/components/figureTextAdversarialAudit.test.tsx
+    if (process.env.UPDATE_PENDING_WORKLOAD_QUEUE === "1") {
+      writeFileSync(
+        join(ROOT, "PREMIUM_PENDING_WORKLOAD_QUEUE.csv"),
+        `${pendingColumns.join(",")}\n${pendingRows.map((row) => pendingColumns.map((column) => csv(row[column])).join(",")).join("\n")}\n`,
+        "utf8",
+      );
+    }
 
     const reviewRows = rows.filter((row) => row.adversarial_decision === "REVIEW");
     if (process.env.UPDATE_FIGURE_TEXT_BLOCKLIST === "1") {

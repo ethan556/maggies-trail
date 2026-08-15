@@ -3786,3 +3786,75 @@ The defect predates Session 101: the lint is tsx-backed and had not executed sin
 - Every seeded draw carries the fixed stage outcome sets, the complete ordered sample-space contract, and exact authored choices.
 - Count forms grade the product of stage sizes; probability forms grade favourable-over-total by rational equivalence. The two claims are never conflated.
 - Support/core/stretch seed sweeps reject duplicate outcomes, invalid favourable indices, ambiguous accepted choices, totals above 120, and fallback to answer-only surfaces.
+
+## Session 242 — the declarations were never reaching the learner
+
+No generator was written this session and no lesson content was touched. The work was delivery.
+
+**What was wrong.** `variantForStep` documents that a step's own `variant` declaration outranks its
+conceptTag alias — "the only way a manipulative item living inside a numeric tag can be refreshed at
+all". That branch was unreachable from both learner practice surfaces, for two compounding reasons:
+
+- `practice/[chapterId]/page.tsx` and `api/review-steps/route.ts` each build their item by
+  enumerating fields into an object literal. Both enumerated `conceptTag` and omitted `variant`.
+- `PracticeClient` and `ReviewClient` guarded the resolver with `hasVariants(conceptTag)`, which
+  consults only the 442 generator tags and the 55-key alias table and never looks at `step.variant`.
+  So even a forwarded declaration was skipped whenever its tag did not independently resolve —
+  5,431 declaring steps across 1,504 distinct conceptTags.
+
+**Measured, seal 2d5f39f, all 129 courses.** 419 of 6,762 pool-eligible practice items refreshed
+(6.2%); 457 of 526 chapters had no refreshable practice at all. After: 6,027 of 6,762 (89.1%) and
+33 chapters. Delta +5,608.
+
+**Gate catches.** None — and that is the finding. The generators, the 400-seed determinism proof and
+every resolver test passed for the entire period the bug was live, because the resolver was never
+the broken part. The defect lived in two object literals and two guards. `variants.delivery.s242.test.ts`
+therefore asserts the WIRING as well as the behaviour: its four source-shaped assertions fail
+against pre-fix source and pass after, while its five behavioural assertions pass both ways. This is
+the S241 avatar lesson again — `avatars.test.ts` passed 27/27 while zero avatars shipped.
+
+**Reading catches.** Of the 227 items Practice did refresh, the declared *form* was never consulted:
+the alias path reads gen and form from the alias table, not from the step. Six items resolve to a
+differently-named generator (`sp-03-01` declares `prob-fraction/spinner`, receives
+`probability-fraction`). Left for an ARCH-03 ruling rather than silently changed.
+
+**Rejections.** None this session — no generator was authored.
+
+**Authored content errors found and NOT fixed.**
+- `allSamples.operability.s119.test.tsx` "sample #112 (plotPoint) sizes its buttons" fails at HEAD
+  and is NOT caused by this batch — verified by stashing the batch and re-running against pristine
+  `0002d51`. Introduced by `ad83214` (S241), whose plotPoint grid rebuild made the cell button
+  `aspect-square w-full min-w-0 p-0.5` with no height class. Two separate things are tangled: the
+  test's `wrapsContent` heuristic recognises `svg, img, div` but not the `span` chip this button
+  wraps; and S241's own comment documents an accepted sub-44px cell (~39px at 8 columns on a 390px
+  stage). Ratifying an accessibility tradeoff is not a wiring decision, so it is reported, not
+  patched.
+- `CLAUDE.md`'s stated gate expectations are stale: `validate:content` is 1840/1840 (not 1223/1223)
+  and `lint:pedagogy` is 1711/1711 (not 1139/1139).
+
+**Also closed this session, because both blocked the mandatory gate sequence itself.**
+- Trap K. `figureTextAdversarialAudit.test.tsx:218` rewrote `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`
+  from 11,487 rows to 1,078 on every full run, while reporting PASS — silently reverting
+  CLOSURE_LEDGER item CL-P1-061. Gated behind `UPDATE_PENDING_WORKLOAD_QUEUE=1`, matching the
+  blocklist write already guarded in the same file. Same treatment for
+  `FIGURE_TEXT_ADVERSARIAL_AUDIT.csv` and the two S238 collision remainders. No assertion was
+  touched or relaxed; changing what a test writes is not changing what it asserts. Proof: a full
+  13,648-test 4-shard run now leaves both ledgers byte-identical.
+- `scripts/brand/gen_avatar_prompt_pack.py` wrote to host-absolute workspace paths, the only
+  genuine `validate:native` finding on this tree, introduced by the S241 handover commit itself.
+  Now derived from the repo root.
+
+**Gate results, stated exactly.**
+
+| Gate | Result |
+|---|---|
+| `npm run typecheck` | EXIT 0 |
+| `npx vitest run` (4 shards) | 13,643 passed, **1 failed**, 4 skipped of 13,648 — the pre-existing S241 plotPoint failure above |
+| `npm run validate:content` | 1840/1840 clean |
+| `npm run lint:pedagogy` | 1711/1711 clean |
+| `npm run validate:native` | EXIT 1 on `node_modules` + `tsconfig.tsbuildinfo` only — the archive-only checks CLAUDE.md calls expected in a working checkout. No real findings. |
+| `node scripts/check-registration.mjs` | EXIT 0 |
+| `npm run build` | EXIT 0, and byte-pure: 0 tracked files changed |
+
+**This batch did not land green.** One test fails, it is pre-existing, it is diagnosed, and it is
+not mine to ratify. Everything else is green.

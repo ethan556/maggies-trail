@@ -44,6 +44,12 @@ export default async function PracticePage({
           hints: s.hints,
           context: lesson.title,
           conceptTag: s.conceptTag,
+          // S242. The step's own generator declaration must travel with the item. variantForStep
+          // documents that a declaration outranks its tag's alias — "the only way a manipulative
+          // item living inside a numeric tag can be refreshed at all" — but that branch was
+          // unreachable from here, because this literal enumerates fields and simply omitted it.
+          // 5,835 declaring steps reached the practice pool with their declaration dropped.
+          variant: s.variant,
           lessonId: lesson.id,
           stepId: s.id
         });
