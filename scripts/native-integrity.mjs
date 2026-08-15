@@ -100,7 +100,13 @@ for (const path of source) {
 
 // 3. Build a static route set and reject broken literal internal links/assets.
 const appRoot = join(root, "src", "app");
-const routePages = walk(appRoot, (p) => /(?:^|\/)page\.tsx$/.test(p));
+/* S242 / TOOL-01 — `walk` returns paths built with `join`, so on Windows they are separated by
+ * backslashes and this filter's `(?:^|\/)` never matched: `routePages` came back EMPTY, the static
+ * route set held only "/", and every internal link in the app was reported as pointing at a missing
+ * route. That is the 48 phantom findings. Normalise the separator before any regex that assumes a
+ * POSIX path — the regexes are the portable part; the paths are not. */
+const posix = (p) => p.split(sep).join("/");
+const routePages = walk(appRoot, (p) => /(?:^|\/)page\.tsx$/.test(posix(p)));
 const staticRoutes = new Set();
 for (const page of routePages) {
   const bits = relative(appRoot, page).split(sep).slice(0, -1).filter((b) => !/^\(.+\)$/.test(b));

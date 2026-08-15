@@ -4390,3 +4390,30 @@ and the derivative/integral rows are ~90% prose *about* notation.
 
 Gates: typecheck 0 · full suite **13,796 passed / 0 failed across 388 files** · content 1840/1840 ·
 pedagogy 1711/1711 · registration OK · build EXIT 0 and byte-pure.
+
+### Session 242, part 10 — TOOL-01 cross-platform verifier portability
+
+Two gates reported fiction on Windows, both because a `join()`-built path carries the platform
+separator and the code consuming it assumed POSIX.
+
+- **`native-integrity.mjs`** filtered route pages with `/(?:^|\/)page\.tsx$/` against those paths.
+  On Windows they are `src\app\page.tsx`, `(?:^|\/)` never matched, `routePages` came back **empty**,
+  and the static route set held only `/`. Every internal link in the app then reported as a missing
+  route — the 48 phantom findings. That is worse than a false alarm: a gate that fails 48 times on
+  a clean tree is a gate people stop reading.
+- **`generator-guard.mjs`** keyed its baseline by `relative(root, p)`, giving `src\lib\variants.ts`
+  against a baseline written `src/lib/variants.ts`. Every key mismatched, so all 29 inputs read as
+  simultaneously removed AND added — a diff that cannot be real — forcing the 287-second sweep to
+  re-run on every Windows invocation.
+
+Both now normalise to one canonical separator before any regex or key comparison.
+
+**The test exercises the rule, not the scripts.** CI here is Linux, so running the two gates would
+pass with or without the fix and prove nothing — which is precisely how this survived. It asserts
+against literal Windows-shaped strings instead, and pins the defect: the raw filter finds **0** page
+files in a Windows path list, the normalised filter finds **2**. It also checks the on-disk baseline
+carries no backslash keys, since a baseline recorded on Windows before this fix would have silently
+disagreed with every Linux run after it.
+
+Gates: typecheck 0 · full suite **13,802 passed / 0 failed across 389 files** · content 1840/1840 ·
+pedagogy 1711/1711 · registration OK · build EXIT 0 and byte-pure.

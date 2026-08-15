@@ -25,7 +25,7 @@
 //   node scripts/session/generator-guard.mjs record --verdict "11126 tests, 76 sqlite-baseline failures"
 //   node scripts/session/generator-guard.mjs check
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
-import { join, resolve, dirname, relative } from "node:path";
+import { join, resolve, dirname, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 
@@ -55,8 +55,12 @@ function inputFiles() {
 const sha = (p) => createHash("sha256").update(readFileSync(p)).digest("hex");
 
 const files = inputFiles();
+/* S242 / TOOL-01 — the baseline is keyed by path, and `relative()` returns `src\\lib\\variants.ts`
+ * on Windows against a baseline written as `src/lib/variants.ts`. Every key then mismatched, so the
+ * guard reported all 29 inputs as simultaneously removed and added — a diff that is never real and
+ * that forces the 287s sweep to re-run on every Windows invocation. One canonical separator. */
 const current = {};
-for (const p of files) current[relative(root, p)] = sha(p);
+for (const p of files) current[relative(root, p).split(sep).join("/")] = sha(p);
 
 if (cmd === "record") {
   const vIdx = process.argv.indexOf("--verdict");
