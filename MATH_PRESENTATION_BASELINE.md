@@ -28,68 +28,65 @@ Two further corrections to the measure, both of which changed the numbers by mor
 
 ## The nine indexes
 
-| Index | Rows | Authored | Generated |
-|---|---:|---:|---:|
-| `MATH_SYMBOLIC_DISPLAY_INDEX.csv` | 2,826 | 1,979 | 847 |
-| `MATH_MACHINE_EXPRESSION_LEAK_INDEX.csv` | 256 | 178 | 78 |
-| `MATH_DERIVATIVE_NOTATION_INDEX.csv` | 231 | 147 | 84 |
-| `MATH_CANONICAL_FORM_INDEX.csv` | 55 | 38 | 17 |
-| `MATH_DECIMAL_FRACTION_POLICY_INDEX.csv` | 40 | 17 | 23 |
-| `MATH_INTEGRAL_NOTATION_INDEX.csv` | 26 | 13 | 13 |
-| `MATH_FRACTION_DISPLAY_INDEX.csv` | 12 | 12 | 0 |
-| `MATH_UNIT_NOTATION_INDEX.csv` | 9 | 5 | 4 |
-| `MATH_CONSTANT_ORDER_INDEX.csv` | 0 | 0 | 0 |
+| Index | Rows | Authored | Generated | At MATH-01 |
+|---|---:|---:|---:|---:|
+| `MATH_SYMBOLIC_DISPLAY_INDEX.csv` | **823** | 524 | 299 | 2,826 |
+| `MATH_DERIVATIVE_NOTATION_INDEX.csv` | 231 | 147 | 84 | 231 |
+| `MATH_MACHINE_EXPRESSION_LEAK_INDEX.csv` | 136 | 76 | 60 | 256 |
+| `MATH_CANONICAL_FORM_INDEX.csv` | 55 | 38 | 17 | 55 |
+| `MATH_DECIMAL_FRACTION_POLICY_INDEX.csv` | 40 | 17 | 23 | 40 |
+| `MATH_INTEGRAL_NOTATION_INDEX.csv` | 26 | 13 | 13 | 26 |
+| `MATH_FRACTION_DISPLAY_INDEX.csv` | 12 | 12 | 0 | 12 |
+| `MATH_UNIT_NOTATION_INDEX.csv` | 9 | 5 | 4 | 9 |
+| `MATH_CONSTANT_ORDER_INDEX.csv` | 0 | 0 | 0 | 0 |
+
+## MATH-03: what closed, and the two things that made it work
+
+**Symbolic display 2,826 → 823.** Four fixes, and the two that mattered were not the ones the
+packets predicted.
+
+**`≈` was not an operator at all.** The dominant π residue was `113.1 ≈ 36π`, and the run never
+formed — not because π was unrecognised, but because `≈` was absent from the operator class. Like
+`≤` and `≠` it does not occur in English, so it is its own evidence of mathematics. The false-claim
+evaluator ignores it deliberately: `3.14159 ≈ π` is not an equation to be checked.
+
+**The atom only reaches half the app.** Widening the arithmetic atom fixed lesson prose and moved
+the totals very little, because 1,602 of the then-remaining 1,849 rows sat on WIDGET spec strings —
+and `widgets.tsx` renders 159 of its 160 call sites with `includeArithmetic: false`, so the
+arithmetic run is never consulted there. `±4` and `36π` were promoted to always-on islands on
+exactly the licence already ratified for `≤`/`≥`/`≠`: these characters do not occur in English.
+Both are admitted only with evidence — `±` needs a value bound to it, π needs a coefficient or a
+juxtaposed group — so "The ± in the formula" and "multiplying by π" stay prose.
+
+Also landed: **absolute-value bars as an operand** (MPB-04, ~200 rows), with the content restricted
+to a signed value so conditional probability `P(A | B)` cannot be misread as an absolute value; and
+**π on either side of a slash** (409 rows), which radian lessons are made of.
+
+**The detector was narrowed twice more, and the second round is the easy one to miss.** Requiring
+"an operand beside the symbol" with optional whitespace still caught prose, because English puts
+words beside symbols constantly — "multiplying by π, what does", "A θ-degree sector", "with θ in
+radians". A letter adjacent to a Greek symbol only means juxtaposition when there is NO space
+between them: `rθ` and `πr²` are products, `by π` is a sentence. Digits and brackets keep their
+optional whitespace, and so do relations. That narrowing alone moved 2,417 → 1,849, and every row
+it removed was a false positive rather than a fix.
 
 Rows are deduplicated by (source, owner, unit, field, shape) with one representative seed, because
 a generator emits the same shape at every seed and twelve identical rows is noise. Pre-dedup totals
 are in the run output.
 
-## The residue has four causes, not 2,826
+## Packet status
 
-`MATH_SYMBOLIC_DISPLAY_INDEX.csv` dominates the total, and reading it shows it is almost entirely
-one shape: **an expression whose operand vocabulary the tokenizer's atom does not include.**
+| Packet | Shape | Rows at MATH-01 | State |
+|---|---|---:|---|
+| MPB-01 | π as an operand, `≈` as an operator, π in a slash | 1,450 | **closed** — 251 remain, all juxtaposition |
+| MPB-02 | Greek variables as atoms | 486 | **partial** — 120 remain, all juxtaposition |
+| MPB-03 | `±` binds to its operand | 460 | **closed** — 57 remain |
+| MPB-04 | absolute-value bars as an operand | ~200 | **closed** |
+| MPB-05 | derivative notation | 231 | open — needs a representation ruling first |
+| MPB-06 | `*` and `<=` in generated strings | 256 | open — generator repair, see GRB-01 |
 
-| Symbol | Rows | Example residue | Why it fails |
-|---|---:|---|---|
-| `π` | 1,450 | `44 ≈ 2π(7) is the circumference` | π is not an atom, so the run stops before it |
-| `θ` | 486 | `an arc of θ degrees` | same, for Greek variables |
-| `±` | 460 | `the cases are x − 1 = ±4` | `±` is in no operator or sign class |
-| `≥` `≤` residue | ~200 | `Which is equivalent to \|x\| ≥ 2?` | absolute-value bars are not an operand |
-
-**Closed at this seal:** `≠` joined the relation island on exactly the argument that admitted `≤`
-and `≥` — it does not occur in English, so it is its own evidence of mathematics, and the
-false-claim evaluator already knew how to judge it. 285 rows; `6 ≠ 6` is still refused.
-
-**Not closed, deliberately.** π, θ, ± and the absolute-value bars each widen the atom, and widening
-the atom has now regressed twice in this session: a number-with-power branch tore `a4 = 3 * …` into
-`a` plus an island, and a `\d*\s*` prefix on the radical ate the space in front of it. Each is a
-one-line change with a corpus-wide blast radius, and each needs its own fixture set before it
-lands. Packets **MPB-01** through **MPB-04** below.
-
-## Packets
-
-### MPB-01 — π as an operand · 1,450 rows
-
-Add `π` (and its coefficient form, `2π`) to the arithmetic atom and to the relation operand.
-**Hazard:** π appears in prose as a word — "the number π is about 3.14" — and must not pull the
-surrounding sentence into an island. Fixture the prose case first, then the expression case.
-
-### MPB-02 — Greek variables as atoms · 486 rows
-
-`θ`, and by extension α, β, λ, μ, σ where the corpus uses them as variables. Same shape as MPB-01,
-same hazard, lower reach — do it in the same pass to share the fixtures.
-
-### MPB-03 — `±` as a sign · 460 rows
-
-`±` binds to an operand exactly as a leading minus does. The relation island's `(?:[-−]\s*)?`
-prefix is the model. **Hazard:** `±` also appears as a standalone symbol being *taught* ("the ±
-sign means both cases"), which must stay prose.
-
-### MPB-04 — absolute-value bars as an operand · ~200 rows
-
-`|x|` and `|−6|` are already an always-on island shape (`BARS`) in the calculus operator block but
-are not part of the arithmetic term, so `|x| ≥ 2` cannot form a relation. Lowest reach of the four,
-and the least ambiguous, so it is the safest one to do first as a rehearsal for the others.
+Also closed earlier in MATH-01: `≠` joined the relation island on the argument that admitted `≤`
+and `≥`, and `6 ≠ 6` is still refused as a false claim.
 
 ### MPB-05 — derivative notation · 231 rows
 
@@ -117,3 +114,30 @@ this is a product decision, not a tokenizer one.
 - **Single-letter units.** `s`, `m`, `g`, `h`, `L`, `in` were dropped from the unit index because
   they cannot be told from ordinary English: the first cut read "100s" — the plural of a hundred —
   as a hundred seconds, 453 times.
+
+## What is left, and why each is a decision rather than an oversight
+
+| Shape | Rows |
+|---|---:|
+| expression with π left untokenized | 251 |
+| expression with θ left untokenized | 120 |
+| expression with ≥ left untokenized | 96 |
+| expression with ≤ left untokenized | 95 |
+| expression with ≠ left untokenized | 67 |
+| expression with ± left untokenized | 57 |
+| expression with √ left untokenized | 54 |
+| expression with Δ left untokenized | 48 |
+
+The π residue (251 rows) splits as:
+
+- **juxtaposed with a variable** — 202
+- **other** — 45
+- **inside parentheses** — 4
+
+The remaining π and θ work is JUXTAPOSITION — `πr²`, `2πr`, `rθ` — where no operator separates the
+factors. Every fix in this session widened a set: a character class, an operator class, an atom
+alternation. Juxtaposition is not a wider set, it is a new rule about adjacency, and adjacency is
+exactly where this tokenizer has been most dangerous: three attempts at it this session tore
+`a4 = 3 * 4^(4-1)` into `a` plus an island, ate the space in front of a radical, and broke two
+fixtures. It needs its own packet, its own fixture set, and a full generated-render sweep before
+and after — not a fourth attempt at the end of a long session.

@@ -102,13 +102,32 @@ const INDEXES: Index[] = [
   {
     file: "MATH_SYMBOLIC_DISPLAY_INDEX.csv",
     what: "A symbol that is part of an EXPRESSION which failed to tokenize — not a symbol used as a word.",
-    /* The first cut flagged any bare Greek or relational symbol and produced 3,740 rows, almost all
-     * of them correct prose: "The number pi (about 3.14)" names the constant, and a lone symbol in a
-     * sentence renders perfectly well as Unicode. What is actually wrong is a symbol with an OPERAND
-     * beside it — "2π(7)", "6 ≠ 4" — because that is an expression the tokenizer declined, and it
-     * will be set in body type next to islands that were accepted. */
+    /* TWO ROUNDS OF NARROWING, both recorded because the second is easy to miss.
+     *
+     * Round one: the check flagged any bare Greek or relational symbol and produced 3,740 rows,
+     * almost all correct prose. "The number pi (about 3.14)" NAMES the constant, and a lone symbol
+     * in a sentence renders perfectly well as Unicode. What is actually wrong is a symbol with an
+     * OPERAND beside it — "2π(7)", "6 ≠ 4" — because that is an expression the tokenizer declined.
+     *
+     * Round two: requiring "an operand beside it" with optional whitespace still caught prose,
+     * because English puts words beside symbols all the time — "multiplying by π, what does",
+     * "A θ-degree sector", "with θ in radians". A LETTER adjacent to a Greek symbol only means
+     * juxtaposition when there is NO SPACE between them: `rθ` and `πr²` are products, `by π` is a
+     * sentence. Digits and brackets are different — "2 π" and "π (7)" are expressions whether or not
+     * the author typed a space — so those keep their optional whitespace. Relational symbols keep it
+     * too, since a relation is always mathematics.
+     */
     test: (r) => {
-      const m = r.match(/(?:[\dA-Za-z)]\s*[≤≥≠±∞∑∫√]|[≤≥≠±∞∑∫√]\s*[\dA-Za-z(]|[\dA-Za-z)]\s*[πθαβγλμσΔΩ]|[πθαβγλμσΔΩ]\s*[\d(])/);
+      const GREEK = "πθαβγλμσΔΩ";
+      const RELATION = "≤≥≠±∞∑∫√";
+      const m = r.match(new RegExp(
+        // a relation with an operand on either side — spacing is irrelevant
+        `(?:[\\dA-Za-z)]\\s*[${RELATION}]|[${RELATION}]\\s*[\\dA-Za-z(])`
+        // a Greek letter against a digit or bracket — spacing is irrelevant
+        + `|(?:[\\d)]\\s*[${GREEK}]|[${GREEK}]\\s*[\\d(])`
+        // a Greek letter against a LETTER — only with no space, or it is just prose
+        + `|(?:[A-Za-z][${GREEK}]|[${GREEK}][A-Za-z])`
+      ));
       return m ? `expression with ${m[0].replace(/[\dA-Za-z()\s]/g, "")} left untokenized` : null;
     }
   },

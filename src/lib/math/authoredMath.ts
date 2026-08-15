@@ -256,7 +256,28 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   collect(text, /(?:[A-Za-z0-9?]+|\([^()\n]+\))\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+)/g, candidates);
   collect(text, /(?:(?<![A-Za-z0-9])\d+\s*)?(?<![A-Za-z])sqrt\s*\([^()\n]+\)/gi, candidates);
   collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
-  collect(text, /(?<![\w/])\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?(?![\w/])/g, candidates);
+  /* S242 / MATH-03 (MPB-01). Either side of the slash may carry π. "π/2", "3π/2" and "2π/3" are
+  // single quantities and were the second-largest π residue (409 rows) — the fraction island
+  // required digits on both sides, so it declined them and the whole thing stayed prose on radian
+  // lessons whose subject is exactly those values. */
+  collect(text, /(?<![\w/])(?:\d+(?:\.\d+)?π?|π)\s*\/\s*(?:\d+(?:\.\d+)?π?|π)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?(?![\w/])/g, candidates);
+
+  /* S242 / MATH-03 (MPB-01/03) — A SIGNED VALUE AND A π QUANTITY ARE ALWAYS-ON ISLANDS.
+   *
+   * The atom widening below only reaches surfaces that pass `includeArithmetic: true` — lesson
+   * prose, hints, step feedback. But 1,602 of the 1,849 remaining symbolic-display rows sit on
+   * WIDGET spec strings, which `widgets.tsx` renders with arithmetic OFF at 159 of its 160 call
+   * sites. On those surfaces the arithmetic run is never consulted, so "x − 1 = ±4" and "36π" stayed
+   * raw no matter how good the atom got. This is the same shape as the ASCII-inequality residue
+   * earlier in S242, and it takes the same remedy for the same reason.
+   *
+   * The licence is that neither character occurs in English. `±` appears only as the symbol itself,
+   * and it is admitted here only with a value bound to it, so "The ± in the formula" stays prose.
+   * π is admitted only with a COEFFICIENT or a juxtaposed group — "36π", "2π(7)" — so a bare π used
+   * as a word ("multiplying by π") is left alone rather than being lifted out of its sentence.
+   * Cautious in the same direction as the relation island: evidence, not inference. */
+  collect(text, /±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))/g, candidates);
+  collect(text, /(?<![\w.])\d+(?:\.\d+)?π(?:\([^()\n]{1,20}\))?|π\([^()\n]{1,20}\)/g, candidates);
 
   /* S242 — INEQUALITY RELATIONS ARE ALWAYS-ON ISLANDS, and they carry their operands' signs.
    *
@@ -281,7 +302,24 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
    * and false claims are refused below exactly as they are for the arithmetic run — "9 <= 2" must
    * not be typeset into polished KaTeX any more than "2 + 2 = 5" may be. */
   {
-    const term = String.raw`(?:\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
+    /* S242 / MATH-03 (MPB-04). ABSOLUTE-VALUE BARS ARE AN OPERAND.
+     *
+     * "Which is equivalent to |x| ≥ 2?" produced no island: the relation needs an operand on both
+     * sides and `|x|` was not one, so the whole inequality sat in body type next to typeset
+     * neighbours. ~200 rows of the symbolic display index are this shape.
+     *
+     * THE CONTENT IS RESTRICTED TO A VALUE, not to "anything between two bars", and the corpus is
+     * why. The pipe is ALSO conditional-probability notation here — `P(A | B)`, `P(king | face)`.
+     * A permissive `\|[^|\n]+\|` would match from one conditional's bar to the next one's across
+     * intervening prose. Requiring the content to be a signed value, optionally combined by
+     * arithmetic operators, cannot do that: 558 of the 731 bar-carrying strings match, yielding 95
+     * distinct tokens — |x|, |−6|, |x − 2|, |x − h| — and every conditional-probability string is
+     * refused. The one `P(...)` string that does match carries `|A|` as set cardinality, which is
+     * mathematics and should typeset. */
+    const PI_RELATION_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
+    const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
+    const ABSOLUTE = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
+    const term = String.raw`(?:${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -328,12 +366,44 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * "3e^(x²)" matched just `3` and orphaned the exponent — the run emitted `f = 3` and left
      * `e^(x²)` in the prose. A bare digit still reaches the number branch, since the variable
      * branch requires a letter. */
-    const atom = String.raw`(?:\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
+    /* S242 / MATH-03 (MPB-04). The same absolute-value operand, for the arithmetic run — "|−6| = 6
+     * and |4| = 4" is an equation, not a relation, so the always-on relation island cannot reach it.
+     * The false-claim guard is unaffected: its evaluator refuses any source that is not a closed
+     * numeric expression, and bars are not, so it returns "not false" and the island stands. */
+    /* S242 / MATH-03 (MPB-03). `±` BINDS TO ITS OPERAND.
+     *
+     * "the cases are x − 1 = ±4" and "()² = 4 gives = ±2" left the sign and its value in body type:
+     * ~460 rows. The atom deliberately refuses a leading ASCII hyphen — S237 found the scanner
+     * typesetting "Ages 3-5" as arithmetic — but that reasoning is about a character English also
+     * uses. `±` is not one: it does not occur in English at all, which is the same argument that
+     * admitted `≤`, `≥` and `≠` as always-on evidence of mathematics.
+     *
+     * It binds to a VALUE, not to whatever follows. 622 of the 719 `±` strings in the corpus have a
+     * number or a single variable immediately after; the other 97 are the symbol used as a word —
+     * "The ± in the formula flips only the imaginary sign" — or standing alone as a token label, and
+     * those must stay prose. Requiring a value keeps them there.
+     */
+    /* S242 / MATH-03 (MPB-01/02). π CARRIES ITS COEFFICIENT, AND ITS GROUP.
+     * "36π", "4.5π", "9π" and "2π(7)" are single quantities, so they are one atom: a coefficient, the
+     * constant, and optionally the bracketed factor juxtaposed after it. Without the group the run
+     * stopped at "2π" and left "(7)" in the prose of a circumference explanation.
+     * π used as a WORD is untouched — "use π ≈ 3.14159", "Before multiplying by π" — because an atom
+     * only becomes an island inside a run, and prose supplies no operator on both sides. */
+    const PI_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
+    const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
+    const ABSOLUTE_ATOM = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
+    const atom = String.raw`(?:${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
      * operator in this class typeset fine. */
-    const operator = String.raw`(?:<=|>=|=|≤|≥|≠|<|>|\+|−|×|÷|·|\*)`;
+    /* S242 / MATH-03 (MPB-01). `≈` IS AN OPERATOR. It was the missing half of the π problem: the
+     * dominant residue shape is "113.1 ≈ 36π", and the run never formed because `≈` was not in this
+     * class at all — not because π was unrecognised. Like `≤` and `≠`, it does not occur in English,
+     * so it is its own evidence that the surrounding text is mathematics. The false-claim evaluator
+     * ignores it deliberately: its relation set is `[=≤≥≠<>]`, so an approximation is never judged
+     * true or false, which is correct — 3.14159 ≈ π is not an equation to be checked. */
+    const operator = String.raw`(?:<=|>=|=|≤|≥|≠|≈|<|>|\+|−|×|÷|·|\*)`;
     /* S242 (ARCH-01). The arithmetic run is collected into its OWN array. The S237 boundary guard
      * below judges "is this candidate the tail of a longer expression the scanner cut into?" —
      * a question that is only meaningful about candidates the ARITHMETIC scanner produced. It used

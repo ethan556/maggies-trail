@@ -165,6 +165,93 @@ describe("S242 — inequality relations are always-on islands", () => {
   });
 });
 
+describe("S242 / MATH-03 (MPB-04) — absolute-value bars are an operand", () => {
+  /* "Which is equivalent to |x| ≥ 2?" produced no island at all: a relation needs an operand on
+   * both sides and `|x|` was not one, so the inequality sat in body type beside typeset
+   * neighbours. ~200 rows of the symbolic-display index are this shape. */
+
+  it("carries a relation", () => {
+    expect(islands("Which is equivalent to |x| ≥ 2?", false)).toContain("|x| ≥ 2");
+    expect(islands("That is the inside band, the solution of |x| ≤ 2.", false)).toContain("|x| ≤ 2");
+  });
+
+  it("carries an equation on an arithmetic surface", () => {
+    // Not reachable through the relation island: `=` is not one of its operators.
+    expect(islands("|−6| = 6 and |4| = 4, and 6 > 4.")).toContain("|−6| = 6");
+    expect(islands("So close — but |0| = 0, so 0 IS an output.")).toContain("|0| = 0");
+  });
+
+  it("admits an expression inside the bars, not only a single value", () => {
+    expect(islands("Solve |x − 2| ≥ 5", false)).toContain("|x − 2| ≥ 5");
+  });
+
+  it("REFUSES conditional-probability notation, which uses the same character", () => {
+    /* This is the reason the bar content is restricted to a value rather than to "anything between
+     * two bars". `P(A | B)` is conditional probability and `P(king | face) = …` puts two bars in one
+     * sentence — a permissive `\|[^|\n]+\|` would match from the first to the second, across the
+     * prose between them, and typeset it as an absolute value. */
+    expect(islands("Conditioning: P(A | B)", false)).toEqual([]);
+    expect(islands("P(A | B) = P(A ∩ B) / P(B).", false)).toEqual([]);
+    // An absolute-value misreading is an island that OPENS with a bar. That is what this asserts.
+    //
+    // It deliberately does NOT assert that no island contains a bar at all, because one does:
+    // with arithmetic on, "P(king | face) = …" yields `(king | face) = P`. That is the PAREN-ATOM
+    // tearing a function application in half — `\([^()\n]{1,40}\)` has matched a bracketed group
+    // since long before this packet, and the same shape torn `f(x) = 4 * 2^x` into `f` plus an
+    // island. Verified identical before and after MPB-04. Writing the stronger assertion here would
+    // quietly bind this packet to a defect it did not cause and is not fixing; the defect is
+    // tracked separately, and when it closes this fixture can be tightened in the same commit.
+    for (const island of islands("P(king | face) = P(king and face)/P(face) = 1/3.", true))
+      expect(island, "a conditional probability was read as an absolute value").not.toMatch(/^\s*\|/);
+  });
+});
+
+describe("S242 / MATH-03 (MPB-03) — ± binds to its operand", () => {
+  it("renders the two-case shape", () => {
+    expect(islands("That treats the center as −1. So the cases are x − 1 = ±4.")).toContain("x − 1 = ±4");
+  });
+
+  it("leaves ± alone when it is being used as a word", () => {
+    /* 622 of the corpus's 719 `±` strings put a value straight after it; the other 97 use the symbol
+     * as a noun — "The ± in the formula flips only the imaginary sign" — or stand it alone as a
+     * token label. Requiring a value is what keeps those in prose. */
+    expect(islands("The ± in the formula flips only the imaginary sign.")).toEqual([]);
+    expect(islands("±")).toEqual([]);
+  });
+});
+
+describe("S242 / MATH-03 (MPB-01) — π carries its coefficient, its group and its slash", () => {
+  it("≈ is an operator, which was the missing half of the problem", () => {
+    // The dominant residue was "113.1 ≈ 36π": the run never formed because `≈` was absent from the
+    // operator class, not because π was unrecognised.
+    expect(islands("113.1 ≈ 36π is the WHOLE circle's area — the sector claims a quarter: 9π ≈ 28.27."))
+      .toEqual(["113.1 ≈ 36π", "9π ≈ 28.27"]);
+    expect(islands("14.14 ≈ 4.5π halves the slice.")).toContain("14.14 ≈ 4.5π");
+  });
+
+  it("keeps a juxtaposed bracketed factor with its constant", () => {
+    // Without the group the run stopped at "2π" and left "(7)" in the prose of a circumference line.
+    expect(islands("44 ≈ 2π(7) is the circumference.")).toContain("44 ≈ 2π(7)");
+  });
+
+  it("admits π on either side of a slash", () => {
+    // 409 rows: the fraction island required digits on both sides, so radian values — the subject of
+    // the lessons they appear in — stayed prose.
+    expect(islands("The peak sits at π/2.", false)).toContain("π/2");
+    expect(islands("Between 3π/2 and 2π the sine is negative.", false)).toContain("3π/2");
+    expect(islands("A quarter turn is 2π/4 = π/2 radians.", false)).toEqual(["2π/4", "π/2"]);
+  });
+
+  it("does not disturb ordinary fractions or hyphen ranges", () => {
+    expect(islands("Compare 3/4 and 2/3.", false)).toEqual(["3/4", "2/3"]);
+    expect(islands("Pages 10-12 tonight.", false)).toEqual([]);
+  });
+
+  it("leaves π alone when it is being used as a word", () => {
+    expect(islands("A circle has radius 4. Before multiplying by π, what does it give?")).toEqual([]);
+  });
+});
+
 describe("S242 — power shapes that used to orphan their exponent", () => {
   it("admits math symbols in the exponent", () => {
     // The exponent class was [A-Za-z0-9?+-], so "1^∞" matched no exponent and the whole thing
