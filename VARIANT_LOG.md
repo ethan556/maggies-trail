@@ -4364,3 +4364,29 @@ permissive default site-wide.
 **Gates.** typecheck 0 · full suite **13,793 passed / 0 failed across 388 files** · content
 1840/1840 · pedagogy 1711/1711 · registration OK · native clean but for `node_modules` · build
 EXIT 0 and byte-pure · generator-guard 29/29.
+
+### Session 242, part 9 — raw carets 77 → 49
+
+Four separate causes, all in the power-island patterns:
+
+1. **Exponent class excluded math symbols.** `[A-Za-z0-9?+-]` meant `1^∞` matched no exponent —
+   on a L'Hôpital lesson whose subject *is* the indeterminate forms. Added `π` and `∞`.
+2. **The bare-number alternative was tried before the variable-with-power.** `3e^(x²)` matched just
+   `3`, so the run emitted `f = 3` and orphaned `e^(x²)` into the prose. Reordered; a bare digit
+   still reaches the number branch because the variable branch requires a letter.
+3. **Parenthesised exponents allowed no nesting.** `2^(3 + (−1))` matched no exponent at all and
+   rendered as a literal `2^()` — a caret and an empty bracket pair, worse than leaving it alone.
+   Now admits one level, matching what `powerShorthandToTex` already accepted.
+4. Same nesting fix applied to the atom's own exponent suffix (3 sites).
+
+**49 remain**, and they are not one class: 5 are the `1/2^3` precedence case (the fraction island
+starts earlier than the power and wins the overlap), and the rest are deep-nesting calculus prose
+like `(1/2)((2x+1)³)^(−1/2) · 3(2x+1)²` that needs more than one nesting level. Stopped here —
+past this point the pattern complexity outgrows the benefit, and a real parser is the answer rather
+than a longer regex.
+
+Index now **99 rows** (from 7,815 at session start): carets 49, derivative 20, pi 14, integral 2 —
+and the derivative/integral rows are ~90% prose *about* notation.
+
+Gates: typecheck 0 · full suite **13,796 passed / 0 failed across 388 files** · content 1840/1840 ·
+pedagogy 1711/1711 · registration OK · build EXIT 0 and byte-pure.

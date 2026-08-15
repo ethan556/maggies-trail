@@ -154,6 +154,31 @@ describe("S242 — inequality relations are always-on islands", () => {
   });
 });
 
+describe("S242 — power shapes that used to orphan their exponent", () => {
+  it("admits math symbols in the exponent", () => {
+    // The exponent class was [A-Za-z0-9?+-], so "1^∞" matched no exponent and the whole thing
+    // stayed prose — on a L'Hôpital lesson whose subject IS the indeterminate forms.
+    expect(islands("1^∞ yields to logarithms")).toContain("1^∞");
+  });
+
+  it("prefers a variable-with-power over the bare number before it", () => {
+    // Listed after the number branch, "3e^(x²)" matched just `3`: the run emitted `f = 3` and left
+    // `e^(x²)` in the prose.
+    expect(islands("f = 3e^(x²)")).toContain("f = 3e^(x²)");
+    // A bare digit must still reach the number branch.
+    expect(islands("Solve x + 3 = 10")).toContain("x + 3 = 10");
+  });
+
+  it("allows one level of nesting inside a parenthesised exponent", () => {
+    // "2^(3 + (−1))" previously matched no exponent and rendered as literal "2^()" — a caret and
+    // an empty pair of brackets, which is worse than leaving the whole thing alone.
+    const found = islands("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.");
+    expect(found).toContain("2^(3 + (−1))");
+    expect(prose("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.")).not.toContain("^(");
+    expect(prose("2^3 · 2^-1 = 2^(3 + (−1)) = 2^2.")).not.toContain("2^()");
+  });
+});
+
 describe("ARCH-01 — the S237 false-statement guard still holds", () => {
   // These are worse than a torn word: polished KaTeX asserting something untrue. The boundary
   // change must not reopen them.

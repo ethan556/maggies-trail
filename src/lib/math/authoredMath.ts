@@ -250,8 +250,10 @@ function calculusMatches(text: string): Match[] {
 function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   const candidates: Match[] = [];
 
-  collect(text, /\([^()\n]*\^[^()\n]*\)(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?/g, candidates);
-  collect(text, /(?:[A-Za-z0-9?]+|\([^()\n]+\))\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+)/g, candidates);
+  collect(text, /\([^()\n]*\^[^()\n]*\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+-]+))?/g, candidates);
+  // S242: the exponent admits ONE level of nesting, as powerShorthandToTex already does. Without
+  // it "2^(3 + (−1))" matched no exponent at all and left "2^()" sitting in the prose.
+  collect(text, /(?:[A-Za-z0-9?]+|\([^()\n]+\))\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+-]+)/g, candidates);
   collect(text, /\bsqrt\s*\([^()\n]+\)/gi, candidates);
   collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
   collect(text, /(?<![\w/])\d+\s*\/\s*\d+(?![\w/])/g, candidates);
@@ -279,7 +281,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
    * and false claims are refused below exactly as they are for the arithmetic run — "9 <= 2" must
    * not be typeset into polished KaTeX any more than "2 + 2 = 5" may be. */
   {
-    const term = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
+    const term = String.raw`(?:\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -318,7 +320,11 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * of islands lost that were not tears is empty. `(x) = x^2`, `x + 3 = 10` and `2x + 4` all
      * still typeset unchanged, because a parenthesised group, a number and a multi-digit
      * coefficient are all still atoms. Fixtures in `authoredMath.wordBoundary.s242.test.ts`. */
-    const atom = String.raw`(?:\d+\s*\/\s*\d+|\d+(?:\.\d+)?%?|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\([^()\n]*\)|[A-Za-z0-9?+-]+))?|\([^()\n]{1,40}\))`;
+    /* S242. The variable-with-power alternative is tried BEFORE the bare number. Listed after it,
+     * "3e^(x²)" matched just `3` and orphaned the exponent — the run emitted `f = 3` and left
+     * `e^(x²)` in the prose. A bare digit still reaches the number branch, since the variable
+     * branch requires a letter. */
+    const atom = String.raw`(?:\d+\s*\/\s*\d+|(?<![A-Za-z])\d*[A-Za-z](?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+-]+))?|\d+(?:\.\d+)?%?|\([^()\n]{1,40}\))`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
