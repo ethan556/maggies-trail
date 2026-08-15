@@ -34181,7 +34181,7 @@ const GENERATORS: VariantGen[] = [
           [
             [`π × ${diameter} is larger because ${diameter} is larger than ${radius}`, `This compares raw inputs while ignoring the factor 2 in the radius formula. Both expressions equal ${diameter}π.`],
             [`The formulas agree only when radius and diameter are equal`, `Radius and diameter are never equal for a positive circle. They agree because diameter is twice the radius.`],
-            [`The value of π changes between the two formulas`, `Pi is the same constant in both formulas. The equality comes entirely from ${diameter} = 2 × ${radius}.`],
+            [`The value of π changes between the two formulas`, `π is the same constant in both formulas. The equality comes entirely from ${diameter} = 2 × ${radius}.`],
           ]
         );
       }

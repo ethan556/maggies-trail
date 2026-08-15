@@ -178,7 +178,47 @@ function trig(r:Rand,b:Band,form:string):Variant{const [c,s]=form.split('__');
  if(c==='tf-ratios'){if(s==='dragBucket')return bucket(r,TF,'Sort each side description relative to angle θ.',[['Opposite',['Across from θ','Does not touch θ']],['Adjacent',['Touches θ but is not the hypotenuse','Forms θ with the hypotenuse']],['Hypotenuse',['Opposite the right angle','Longest side']]],'Side names depend on the marked angle and the right angle.');const triples=choose(r,[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[9,40,41],[20,21,29],[12,35,37]] as const),opp=triples[0],adj=triples[1],hyp=triples[2];return num(TF,`In a ${opp}-${adj}-${hyp} right triangle, θ is opposite ${opp}. If cosθ=n/${hyp}, find n.`,adj,[[opp,'This is the opposite side used by sine.'],[hyp,'The hypotenuse is already the denominator.']],`Cosine is adjacent over hypotenuse, so n=${adj}.`)}
  if(c==='tf-reference'){const q=choose(r,[2,3,4] as const),ref=choose(r,[30,45,60] as const),angle=q===2?180-ref:q===3?180+ref:360-ref;return num(TF,`Find the reference angle of ${angle}°.`,ref,[[angle-ref,'This gives an axis angle rather than the acute reference angle.'],[180-ref,'This rule works only in Quadrant II.']],`The acute angle to the nearest x-axis is ${ref}°.`)}
  if(c==='tf-solve-sides'){const hyp=choose(r,[8,10,12,14] as const),angle=choose(r,[30,45,60] as const),ans=hyp*Math.sin(angle*Math.PI/180);return num(TF,`A ramp of length ${hyp} meets the ground at ${angle}°. Find its vertical rise.`,ans,[[hyp*Math.cos(angle*Math.PI/180),'This finds the horizontal run.'],[hyp*Math.tan(angle*Math.PI/180),'Tangent uses the adjacent side rather than the hypotenuse.']],`The rise is opposite the angle, so use ${hyp}sin${angle}°.` ,0.01)}
- if(c==='tf-transform'){const B=choose(r,[0.25,0.5,2,3,4,5,6,8] as const),period=2*Math.PI/Math.abs(B);return num(TF,`Find the period of y=cos(${B}x).`,period,[[2*Math.PI*B,'The frequency factor divides the parent period.'],[Math.PI/Math.abs(B),'This gives half the full cycle.']],`Period=2π/|B|=${fmt(period)}.`,0.01)}
+ if(c==='tf-transform'||c==='tf-transform-period'){
+    /* S242 (user ruling): "Exact answer with pi is always preferable, unless the numeric answer is
+     * required for a specific pedagogic concept mastery."
+     *
+     * This form asked "Find the period of y=cos(8x)" and graded a NUMERIC 0.7853981634 — while its
+     * own success line read "Period=2π/|B|", computing the exact form and discarding it. π/4 IS the
+     * period. A numeric box cannot hold π/4, so a learner who knew the answer had to convert it to a
+     * decimal to be marked right, and `tolerance: 0.01` decided how many digits of an irrational
+     * number count as knowing. Nothing about rounding is the concept here — the lesson is about how
+     * B rescales the parent period — so the ruling says exact, and the surface has to follow.
+     *
+     * The split, and why there are two forms rather than one:
+     *   · `tf-transform-period__mcq` asks for the PERIOD, where the answer is irrational. An mcq can
+     *     carry π/4; a numeric box cannot. Both authored misconceptions carry over exactly —
+     *     multiplying by the frequency instead of dividing (2πB), and halving the cycle (π/B) — plus
+     *     forgetting B (2π).
+     *   · `tf-transform__numeric` asks the INVERSE — given the period, find b — where the answer is
+     *     an integer and therefore already exact. That is also the question the authored step that
+     *     declares it actually asks ("y = sin(bx) has period 2π/3. What is b?"), so the numeric
+     *     surface is kept for the case where a numeric answer is genuinely the right instrument. */
+    const gcd=(a:number,b:number):number=>b?gcd(b,a%b):Math.abs(a);
+    /** An exact multiple of π in proper form: "8π", "π", "2π/3", "π/4" — never "1π" or "1π/2". */
+    const piLabel=(n:number,d:number):string=>{const g=gcd(n,d)||1;const p=n/g,q=d/g;
+      return q===1?(p===1?'π':`${p}π`):(p===1?`π/${q}`:`${p}π/${q}`)};
+    if(c==='tf-transform-period'){
+      const B=choose(r,[0.25,0.5,2,3,4,5,6,8] as const);
+      const [bn,bd]=B===0.25?[1,4]:B===0.5?[1,2]:[B,1];
+      return mcq(r,TF,`Find the period of y = cos(${B}x).`,
+        [piLabel(2*bd,bn),`Period = 2π/|B|, so dividing 2π by ${B} gives ${piLabel(2*bd,bn)}.`],
+        [[piLabel(2*bn,bd),'That multiplied by the frequency factor instead of dividing by it. A larger B fits MORE cycles into the same span, so the period gets SHORTER.'],
+         [piLabel(bd,bn),'That is half a cycle. The period is the whole cycle, so it is 2π/|B|, not π/|B|.'],
+         ['2π','That is the parent period of cos x. B rescales it, so 2π holds only when B = 1.']])}
+    /* The inverse question: the period is given exactly, and b is an integer.
+     * TWO DIMENSIONS, not one wider axis — CLAUDE.md's rule for freshness failures. Six values of B
+     * gave only five distinct problems in twelve seeds. The second dimension is the function itself,
+     * which the corpus already varies between sin and cos, so it costs no new curriculum. */
+    const B=choose(r,[2,3,4,5,6,8] as const),fn=choose(r,['sin','cos'] as const);
+    return num(TF,`y = ${fn}(bx) has period ${piLabel(2,B)}. What is b?`,B,
+      [[2*B,`${2*B} doubles it — check the product: b · period = ${2*B} · ${piLabel(2,B)} = ${piLabel(4,1)} ≠ 2π. Only b = ${B} closes it.`],
+       [1,'b = 1 leaves the parent period 2π unchanged, but this wave completes its cycle sooner than that.']],
+      `b = 2π ÷ ${piLabel(2,B)} = ${B}.`)}
  if(c==='tf-unit-circle'){const angle=choose(r,[0,90,180,270,360,450,540,630] as const),cos=Math.cos(angle*Math.PI/180),sin=Math.sin(angle*Math.PI/180);if(s==='numeric')return num(TF,`Find cos ${angle}°.`,round(cos),[[round(sin),'This uses the y-coordinate instead of the x-coordinate.'],[-round(cos),'This reverses the unit-circle x-coordinate sign.']],`Cosine is the x-coordinate, ${round(cos)}.`);return mcq(r,TF,'In which quadrant are both sine and cosine negative?',['Quadrant III','Both x- and y-coordinates are negative there.'],[['Quadrant I','Both are positive.'],['Quadrant II','Sine is positive and cosine negative.'],['Quadrant IV','Cosine is positive and sine negative.']]);}
  if(c==='tf-wave-read'){const A=pick(r,2,7),k=pick(r,-4,4);return num(TF,`Find the maximum value of y=${A}sin x ${sign(k)}.`,k+A,[[k-A,'That is the minimum.'],[A,'This omits the vertical shift.']],`The maximum occurs when sinx=1, giving ${k+A}.`)}
  throw new Error(`unsupported ${TF} ${form}`)}
@@ -192,7 +232,7 @@ const FORMS:Record<string,string[]>={
  [RF]: ["rf-divide__buildExpression","rf-divide__mcq","rf-equations__buildExpression","rf-equations__mcq","rf-equations__numeric","rf-excluded__mcq","rf-excluded__numeric","rf-ha__mcq","rf-ha__numeric","rf-holes__mcq","rf-lcd__buildExpression","rf-like-denoms__buildExpression","rf-like-denoms__numeric","rf-mixed__buildExpression","rf-mixed__mcq","rf-multiply__buildExpression","rf-multiply__mcq","rf-opposite__buildExpression","rf-opposite__mcq","rf-reciprocal__mcq","rf-simplify__buildExpression","rf-simplify__mcq","rf-simplify__numeric","rf-unlike__buildExpression","rf-variation__mcq","rf-variation__numeric","rf-work__mcq","rf-work__numeric"],
  [SR]: ["sr-arith-apply__dragOrder","sr-arith-apply__numeric","sr-convert__mcq","sr-convert__numeric","sr-geo-apply__dragBucket","sr-geo-apply__numeric","sr-geo-derive__numeric","sr-inf-apply__numeric","sr-inf-converge__mcq","sr-inf-sum__numeric","sr-sigma-read__matchPairs","sr-sigma-read__numeric","sr-sigma-write__mcq","sr-sigma-write__numeric"],
  [SI]: ["si-bias-vs-variability__mcq","si-bias__dragBucket","si-bias__mcq","si-causation__dragBucket","si-causation__mcq","si-ci-meaning__matchPairs","si-ci-meaning__mcq","si-claim-capstone__dragBucket","si-claim-capstone__mcq","si-claim-design__matchPairs","si-claim-design__mcq","si-claim-overreach__mcq","si-claim-overreach__numeric","si-experiment-design__mcq","si-margin__dragBucket","si-margin__mcq","si-margin__numeric","si-null-model__dragOrder","si-null-model__mcq","si-parameter-statistic__matchPairs","si-parameter-statistic__mcq","si-pvalue-idea__mcq","si-pvalue-idea__numeric","si-read-poll__dragBucket","si-read-poll__dragOrder","si-read-poll__mcq","si-sampling-dist__mcq","si-sampling-dist__numeric","si-sampling-variability__mcq","si-significance-limits__dragBucket","si-significance-limits__mcq","si-standard-error__mcq","si-standard-error__numeric","si-study-type__matchPairs","si-study-type__mcq"],
- [TF]: ["tf-amp-period__numeric","tf-arc-length__numeric","tf-exact-values__numeric","tf-identity__mcq","tf-identity__numeric","tf-inverse__numeric","tf-model__mcq","tf-model__numeric","tf-ratios__dragBucket","tf-ratios__numeric","tf-reference__numeric","tf-solve-sides__numeric","tf-transform__numeric","tf-unit-circle__mcq","tf-unit-circle__numeric","tf-wave-read__numeric"],
+ [TF]: ["tf-amp-period__numeric","tf-arc-length__numeric","tf-exact-values__numeric","tf-identity__mcq","tf-identity__numeric","tf-inverse__numeric","tf-model__mcq","tf-model__numeric","tf-ratios__dragBucket","tf-ratios__numeric","tf-reference__numeric","tf-solve-sides__numeric","tf-transform__numeric","tf-transform-period__mcq","tf-unit-circle__mcq","tf-unit-circle__numeric","tf-wave-read__numeric"],
 };
 const HANDLERS:Record<string,(r:Rand,b:Band,f:string)=>Variant>={[CN]:complex,[FT]:transformations,[LG]:logarithms,[PF]:polynomials,[RE]:radicals,[RF]:rationals,[SR]:series,[SI]:statistics,[TF]:trig};
 export const ALGEBRA2_GENERATORS:VariantGen[]=Object.keys(FORMS).map(tag=>({tag,label:`Algebra II reusable variants: ${tag}`,forms:FORMS[tag] as never[],declarationOnly:true,gen:(r,b='core',f='default')=>HANDLERS[tag](r,b,f)}));

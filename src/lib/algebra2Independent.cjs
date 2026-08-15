@@ -128,7 +128,29 @@ function solveRaw(form,input){const {prompt:p,visible:v,options}=split(input),q=
  if(concept==='tf-ratios'){if(surface==='dragBucket'){const out={};for(const i of v.items)out[i.label]=/Across|Does not touch/.test(i.label)?'Opposite':/right angle|Longest/.test(i.label)?'Hypotenuse':'Adjacent';return out}const m=q.match(/In a (\d+)-(\d+)-(\d+)/),opp=+m[1],adj=+m[2];return adj;}
  if(concept==='tf-reference'){const a=z[0]%360;return a<=90?a:a<180?180-a:a<270?a-180:360-a;}
  if(concept==='tf-solve-sides'){const m=q.match(/length (\d+).*at (\d+)/),h=+m[1],ang=+m[2];return h*Math.sin(ang*Math.PI/180);}
- if(concept==='tf-transform'){const m=q.match(/cos\(([\d.]+)x\)/),B=+m[1];return 2*Math.PI/Math.abs(B);}
+ if(concept==='tf-transform-period'){
+   /* S242. The generator BUILDS a symbolic label from integer arithmetic. This route goes the other
+    * way: it EVALUATES each printed option numerically and takes the one nearest the period computed
+    * with floating-point trigonometry. Two different methods, so agreeing means something. */
+   const m=q.match(/cos\(([\d.]+)x\)/),B=Math.abs(+m[1]),period=2*Math.PI/B;
+   const value=l=>{const f=String(l).replace(/\s+/g,'').replace(/pi/g,'π').match(/^(-?\d*(?:\.\d+)?)π(?:\/(\d+))?$/);
+     if(!f)return NaN;const n=f[1]===''||f[1]==='+'?1:f[1]==='-'?-1:+f[1];return n*Math.PI/(f[2]?+f[2]:1)};
+   let best=null,gap=Infinity;
+   for(const l of options){const d=Math.abs(value(l)-period);if(d<gap){gap=d;best=l}}
+   if(best===null||gap>1e-9)throw new Error(`no option equals the period ${period} in ${options.join(' | ')}`);
+   return best;}
+ if(concept==='tf-transform'){
+   /* The inverse question: "y = sin(bx) has period 2π/K. What is b?" The generator divides; this
+    * route SEARCHES — it walks candidate b values and keeps the one whose period matches the printed
+    * one, which is the definition rather than the formula. */
+   // The gate normalises π to "pi" before handing the prompt over, so both spellings must match.
+   const P='(?:π|pi)';
+   const m=q.match(new RegExp('period\\s+(?:(\\d+)'+P+'\\/(\\d+)|'+P+'\\/(\\d+)|(\\d+)'+P+'|'+P+')'));
+   if(!m)throw new Error(`no period in prompt: ${q}`);
+   const num=m[1]?+m[1]:m[3]?1:m[4]?+m[4]:1, den=m[2]?+m[2]:m[3]?+m[3]:1;
+   const period=num*Math.PI/den;
+   for(let b=1;b<=40;b++)if(Math.abs(b*period-2*Math.PI)<1e-9)return b;
+   throw new Error(`no integer b closes 2π for period ${period}`);}
  if(concept==='tf-unit-circle'){if(surface==='mcq')return opt(options,'Quadrant III');const ang=z[0];return round(Math.cos(ang*Math.PI/180));}
  if(concept==='tf-wave-read'){const m=q.match(/y=(\d+)sin x ([+-]) (\d+)/),A=+m[1],k=(m[2]==='-'?-1:1)*+m[3];return k+A;}
  throw new Error(`unsupported independent form ${form}: ${p}`);

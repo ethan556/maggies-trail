@@ -107,6 +107,14 @@ function considerLabel(label: unknown, meta: Omit<Row, "value" | "exact">, promp
 
 function scanWidget(widget: Record<string, any>, meta: Omit<Row, "value" | "exact" | "field">) {
   if (!widget || typeof widget !== "object") return;
+  /* THE SECOND FILTER, added after reading the first ten authored hits: the ITEM must mention π
+   * somewhere — prompt, feedback, anywhere. Circle vocabulary alone was not enough. "5.5 halves —
+   * the theorem copies, full strength: 11" is a tangent-segment length on a circle question, and
+   * 5.5 sits 0.002 from 7π/4 by coincidence; "21.21 is 15 ÷ cos 45°" is a hypotenuse. Neither item
+   * involves π at all, so neither decimal can be standing in for it. An item that never writes π is
+   * not withholding an exact π form. */
+  const whole = JSON.stringify(widget);
+  if (!whole.includes("π")) return;
   const prompt = [widget.prompt, widget.ask, widget.question].filter(Boolean).join(" ");
   consider(widget.answer, { ...meta, field: "widget.answer" }, prompt);
   for (const key of ["answerValue", "targetValue", "expected"]) consider(widget[key], { ...meta, field: `widget.${key}` }, prompt);
