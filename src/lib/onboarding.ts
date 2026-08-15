@@ -256,6 +256,21 @@ export const G3_TRAILS: GradeTrail[] = [
   }
 ];
 
+/* S242. Grade 4 offered two trails and BOTH were 4.NBT — multiply-bigger and place-value-million —
+ * so a learner picking directly could reach one domain and only one. 4.NF, 4.G and 4.MD each had a
+ * course sitting in the catalogue with no way to pick it. That is not a dead end (the picker was
+ * never empty, so the S242 branch test passed) but "not a dead end" is a weaker property than
+ * "covers its grade", and the gap was invisible until the offers were checked against
+ * `content/standards/course-crosswalk.json`.
+ *
+ * The three additions below are the only grade-4 courses carrying those codes: fractions-add
+ * (4.NF), lines-angles (4.G), measure-convert (4.MD). Grade 4 has exactly five courses in the
+ * crosswalk, so this offers all five. 4.NBT remains offered twice, deliberately — multiply-bigger
+ * and place-value-million are genuinely different entry points, and dropping one would remove a
+ * shipped choice for no coverage gain. Duplication is fine; an uncovered domain is not, and that is
+ * the distinction `onboarding.branches.s242.test.ts` now enforces.
+ *
+ * NOTE 4.OA is not a gap: no course in the crosswalk carries it at any grade. */
 export const G4_TRAILS: GradeTrail[] = [
   {
     id: "multiply-bigger",
@@ -268,6 +283,24 @@ export const G4_TRAILS: GradeTrail[] = [
     title: "Place Value to a Million",
     tagline: "Climb the ×10 ladder — reading, rounding, and comparing big numbers.",
     lessonId: "pv2-01-01"
+  },
+  {
+    id: "fractions-add",
+    title: "Fractions That Add Up",
+    tagline: "Equivalence earns its rule — then like denominators add, mixed numbers behave, and a fraction meets a whole number.",
+    lessonId: "fa-01-01"
+  },
+  {
+    id: "measure-convert",
+    title: "Measure & Convert",
+    tagline: "Units that trade places, area and perimeter formulas, and angles that open in degrees and add.",
+    lessonId: "mc-01-01"
+  },
+  {
+    id: "lines-angles",
+    title: "Lines & Angles",
+    tagline: "Points, rays and right angles — sorting shapes by the angles they carry, and finding the lines they fold along.",
+    lessonId: "la-01-01"
   }
 ];
 

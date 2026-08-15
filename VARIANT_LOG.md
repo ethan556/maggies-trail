@@ -4086,3 +4086,51 @@ only 4.NBT, leaving 4.OA, 4.NF, 4.MD and 4.G with no direct pick at all. G1, G5 
 domain twice while leaving another uncovered. None is a dead end — every grade returns a non-empty
 list, so `onboarding.branches.s242.test.ts` passes — but "not a dead end" is a weaker property than
 "covers its grade".
+
+### Session 242, part 5 — from "not a dead end" to "covers its grade"
+
+**A correction to part 4 first.** Part 4 recorded that "G1, G5 and G8 each offer a domain twice
+while leaving another uncovered". Checked properly against the crosswalk, **that is wrong**: those
+three do offer a domain twice, but their uncovered-domain list is empty. Every domain their
+catalogue carries is reachable. The duplication is a legitimate editorial choice — two genuinely
+different entry points into one domain — not a defect. Recorded here rather than quietly dropped,
+because the claim shipped in a commit message.
+
+**One grade had a real gap, and it was worse than described.** Grade 4 offered two trails and
+**both were 4.NBT** (multiply-bigger and place-value-million), so a direct-pick learner could reach
+one domain of four. `fractions-add` (4.NF), `lines-angles` (4.G) and `measure-convert` (4.MD) sat in
+the catalogue with no way to pick them. All three are now offered; Grade 4 goes from 2 trails to 5,
+which is every grade-4 course in the crosswalk.
+
+4.NBT is still offered twice, deliberately. multiply-bigger and place-value-million are genuinely
+different entry points, and removing one would delete a shipped choice for no coverage gain.
+**Duplication is fine; an uncovered domain is not** — that is the distinction the test now draws.
+
+**Also corrected: 4.OA was never a gap.** Part 4 listed it among Grade 4's uncovered domains. No
+course in the crosswalk carries 4.OA at any grade, so there is nothing to offer.
+
+**The branch test is upgraded from a dead-end check to a coverage check.** The original assertion —
+every grade returns a non-empty list — was the right gate for the Grade 3 defect, but it is weaker
+than it looks and it hid the Grade 4 gap for as long as it existed: the picker was never empty, so
+it passed throughout. The coverage assertion is derived from `course-crosswalk.json` rather than
+from a list written in the test, so it cannot drift from the catalogue — add a course carrying a new
+domain code and the test starts demanding a trail for it. A third assertion catches the way that
+check could be defeated silently: a trail whose course is absent from the crosswalk would satisfy
+coverage by contributing nothing to either side of it.
+
+Verified the new assertions catch the real defect: against pre-fix `onboarding.ts` they fail exactly
+2 tests, both Grade 4 coverage. 112/112 after.
+
+Final state, all nine graded bands: **0 uncovered domains.**
+
+| grade | trails | uncovered |
+|---|---:|---|
+| K | 2 | none |
+| 1 | 4 | none |
+| 2 | 4 | none |
+| 3 | 5 | none |
+| 4 | **5** (was 2) | none |
+| 5 | 5 | none |
+| 6 | 5 | none |
+| 7 | 5 | none |
+| 8 | 6 | none |

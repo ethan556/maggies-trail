@@ -46,6 +46,37 @@ const GOALS: Goal[] = ["school", "catchup", "ahead"];
 const manifest = JSON.parse(readFileSync(join(ROOT, "content", "curriculum-manifest.json"), "utf8"));
 const courseBySlug = new Map<string, any>(manifest.courses.map((c: any) => [c.slug, c]));
 
+/* S242, second pass — from "not a dead end" to "covers its grade".
+ *
+ * The first version of this file asserted only that every grade returns a non-empty list. That is
+ * the property the Grade 3 defect violated, so it was the right thing to gate — but it is weaker
+ * than it looks, and it hid a second defect for as long as it existed. Grade 4 offered two trails
+ * and BOTH were 4.NBT, so a direct-pick learner could reach one domain of four; fractions-add,
+ * lines-angles and measure-convert sat in the catalogue with no way to pick them. The picker was
+ * never empty, so the dead-end assertion passed the whole time.
+ *
+ * The coverage assertion below is derived from `content/standards/course-crosswalk.json` rather
+ * than from a list written here, so it cannot drift from the catalogue: add a course carrying a new
+ * domain code and this test starts demanding a trail for it. Duplication is deliberately allowed —
+ * grades 1, 4, 5 and 8 each offer one domain twice via genuinely different entry points, and that
+ * is a legitimate editorial choice. An UNCOVERED domain is not. */
+const crosswalk = JSON.parse(readFileSync(join(ROOT, "content", "standards", "course-crosswalk.json"), "utf8"));
+const ccssCodesFor = (courseId: string): string[] => {
+  const course = crosswalk.courses.find((c: any) => c.courseId === courseId);
+  if (!course) return [];
+  return [...new Set<string>((course.frameworkRefs ?? [])
+    .filter((r: any) => r.framework === "CCSS-MATH")
+    .map((r: any) => r.code as string))];
+};
+const domainsAvailableAt = (grade: GradeLevel): string[] => {
+  const out = new Set<string>();
+  for (const c of crosswalk.courses) {
+    if (c.gradeLevel !== grade) continue;
+    for (const code of ccssCodesFor(c.courseId)) out.add(code);
+  }
+  return [...out].sort();
+};
+
 describe("S242/UX-01 — no offered grade is a dead end", () => {
   it("every grade offers at least one direct-pick trail", () => {
     const empty = GRADES.filter((g) => trailsForGrade(g).length === 0);
@@ -57,6 +88,42 @@ describe("S242/UX-01 — no offered grade is a dead end", () => {
     expect(trails.length).toBeGreaterThan(0);
     // Distinct courses, not the same course listed five times.
     expect(new Set(trails.map((t) => t.id)).size).toBe(trails.length);
+  });
+});
+
+describe("S242 — every grade covers its own CCSS domains", () => {
+  // Only the graded band K-8 carries per-grade CCSS domain codes in the crosswalk; the HS trails
+  // (grades 9-13) are course-scoped and are covered by the completeness sweep below instead.
+  const GRADED: GradeLevel[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+  it.each(GRADED)("grade %i offers every domain its catalogue carries", (grade) => {
+    const offered = new Set<string>();
+    for (const t of trailsForGrade(grade)) for (const code of ccssCodesFor(t.id)) offered.add(code);
+    const uncovered = domainsAvailableAt(grade).filter((d) => !offered.has(d));
+    expect(
+      uncovered,
+      `grade ${grade} has courses for ${uncovered.join(", ")} that no direct-pick trail reaches`
+    ).toEqual([]);
+  });
+
+  it("grade 4 specifically — it offered 4.NBT twice and nothing else", () => {
+    const offered = new Set<string>();
+    for (const t of trailsForGrade(4)) for (const code of ccssCodesFor(t.id)) offered.add(code);
+    for (const domain of ["4.NBT", "4.NF", "4.G", "4.MD"]) {
+      expect(offered.has(domain), `grade 4 no longer offers ${domain}`).toBe(true);
+    }
+  });
+
+  it("every offered trail carries a CCSS domain code in the graded band", () => {
+    // A trail whose course is absent from the crosswalk would silently satisfy the coverage
+    // assertion above by contributing nothing to either side of it.
+    const uncoded: string[] = [];
+    for (const grade of GRADED) {
+      for (const t of trailsForGrade(grade)) {
+        if (ccssCodesFor(t.id).length === 0) uncoded.push(`grade ${grade}: ${t.id}`);
+      }
+    }
+    expect(uncoded).toEqual([]);
   });
 });
 
