@@ -4,6 +4,42 @@
 **Status: this e2e gate is RED, deliberately. The batch below did not land clean and I am not
 claiming it did.**
 
+---
+
+## CORRECTION (same day, after running the axe suite)
+
+**One claim in the section below was wrong, and I had not verified it before writing it.**
+
+I wrote: *"an axe sweep of a page with no content finds zero violations and passes"*, and built the
+framing *"two green gates, one on each side of the gap"* on top of it. Both are false.
+
+I ran `e2e/a11y.spec.ts` against the same server. **All 50 assertions fail** — 24 routes × 2 themes,
+every one — because axe's own structural rules fire on an empty document:
+
+```
+document-title        serious
+landmark-one-main     moderate
+page-has-heading-one  moderate
+```
+
+So the a11y gate is not blind to this. It catches it loudly, and it would have caught it the moment
+anyone ran it.
+
+**The real account is a process one, not a coverage one.** The CSP landed in `4047d6e`
+("S242: ASCII inequalities 58 → 0, and SEC-02 security headers", 2026-08-15) with
+`securityHeaders.s242.test.ts` as its gate. `headers()` has no environment guard, so `npm run dev`
+serves the same policy the e2e suite would meet — which means **`npm run test:e2e` has not been run
+since the CSP was added**. The gate exists. It was not run.
+
+What my hydration spec adds over axe is the *cause*: it asserts the absence of a CSP console error,
+so the failure reads as "the policy is blocking scripts the app needs" rather than as three
+structural violations a reader has to work backwards from.
+
+Everything else below stands: the defect is real, severe, and unresolved, and the fix is still a
+decision for the owner.
+
+---
+
 ## What I set out to do
 
 `ACC01_ACCESSIBILITY_MATRIX.md` §8 items 2 and 4 name what a source-only audit could not settle: no
@@ -61,12 +97,33 @@ aren't. It also says, in its own header:
 > needs a running server and belongs in the e2e layer; this file proves the configuration is
 > **correct and internally consistent**.
 
-Correct and internally consistent, and the app is blank. The e2e layer then never asserted that a
-page becomes interactive — **and an axe sweep of a page with no content finds zero violations and
-passes**. Two green gates, one on each side of the gap.
+Correct and internally consistent, and the app is blank.
+
+~~The e2e layer then never asserted that a page becomes interactive — and an axe sweep of a page with
+no content finds zero violations and passes. Two green gates, one on each side of the gap.~~
+**Struck: see the CORRECTION above. The axe suite fails all 50 assertions on this page.** The e2e
+layer is not blind to the defect; it simply has not been run since the CSP landed.
 
 The earlier `smoke.spec.ts` failures in this container (2 of 3, on `page.goto` timeouts) are the same
 symptom read as flakiness.
+
+## The blast radius, measured
+
+`npm run test:e2e` has not been run since the CSP landed, so I ran it — the whole `chromium`
+project, against the production build:
+
+> **104 failed, 13 passed.**
+
+And the thirteen are the tell. Twelve are **my own reflow assertions**, passing vacuously on the
+empty page. The thirteenth is `daily API rejects impossible dates`, which never needed the browser
+to render anything.
+
+**Every browser assertion in this repository that requires the page to exist is currently failing.**
+Not one is a real pass.
+
+That is the number to weigh the CSP decision against: it is not one blocked feature, it is the whole
+browser-verified layer of the test suite — axe across 24 routes in both themes, the viewport specs,
+forced-colors, label collision, stage roles, world surfaces.
 
 ## What I did not do, and why
 
@@ -96,5 +153,8 @@ framework emits.
 ## Gate results, stated plainly
 
 `npm run typecheck` clean · `npx eslint e2e/s242-reflow.spec.ts` clean · the vitest suite is
-untouched by this packet (no `src/` change) · **`npx playwright test e2e/s242-reflow.spec.ts` — 12
-passed, 3 failed.** The three failures are the finding.
+untouched by this packet (no `src/` change).
+
+**`npx playwright test --project=chromium` — 13 passed, 104 FAILED**, and twelve of the thirteen
+passes are vacuous. The browser layer of this repository is red end to end until the CSP admits what
+Next.js emits.
