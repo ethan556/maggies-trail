@@ -57,7 +57,18 @@ const startedAt = Date.now();
 let pairIndex = 0;
 
 for (const generator of VARIANT_GENERATORS) {
-  const forms: readonly string[] = (generator as { forms?: readonly string[] }).forms ?? ["default"];
+  /* S242 / GRB-04. `"default"` IS ALWAYS PROBED, EVEN WHEN THE GENERATOR DECLARES A FORMS LIST.
+   *
+   * Both audits used to walk `generator.forms ?? ["default"]`, so a generator that declares any
+   * form never had its DEFAULT branch measured — and **370 authored steps across 260 generators
+   * declare a `gen` with no `form`**, which is exactly the branch that was going unwatched.
+   * `compare-groups` and `compare-numerals` proved it matters: their default branches carried the
+   * same fixed-correct-side bug as their named siblings, and only a source read found it.
+   *
+   * A generator that ignores an unrecognised form simply repeats one of its named branches here,
+   * which costs a duplicate row and hides nothing. */
+  const declared: readonly string[] = (generator as { forms?: readonly string[] }).forms ?? [];
+  const forms: readonly string[] = declared.includes("default") ? declared : [...declared, "default"];
   for (const form of forms) {
     /* The widget type must be discovered, not assumed: `variantForStep` refuses a variant whose
      * type does not match the step's declared surface, so a step built with the wrong type

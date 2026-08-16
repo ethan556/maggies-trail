@@ -122,9 +122,20 @@ declared, `validate:content` passes, typecheck passes, and the string is discard
 | `numeric` | `missFeedback` ×5 |
 | `scatterFit` | `fallbackFeedback` ×1 |
 
-The `numeric` and `scatterFit` cases are harmless duplicates — each also authors the live key with
-the same content. The `numberLineHop` pairs are not: 248 distinct authored diagnostics, written for
-real steps, that reach nobody.
+**Every non-`numberLineHop` row was then opened, because the `numberLineHop` pair turned out to be
+hiding a live bug and the same could have been true elsewhere. None of them is.**
+
+- `numeric` ×5, `scatterFit` ×1 — harmless duplicates; each also authors the live key with the same
+  content (`"Add a whole ten: 37 → 47."` beside `fallbackFeedback: "37 + 10 = 47 — the 7 stays."`).
+- `mcq` ×17 — dead but not a hole. `mcq` grades by option and shows `option.feedback`; the correct
+  option already affirms. What is lost is a richer synthesis line (*"The bell centers on the truth.
+  That's why one decent sample is* evidence*…"*) that the learner never reaches.
+- `triangleSolve` ×5 — all five author `angleStep: 1`, and **the widget's dial is already
+  `step={1}`** in both the SAS/SSS branch (`widgets.tsx:4508`) and the ratios branch (`4668`). Every
+  target (30°, 37°, 27°) is on that lattice. The key requests behaviour the engine already has.
+
+The `numberLineHop` pairs are the exception: 248 distinct authored diagnostics, written for real
+steps, that reach nobody — and, underneath them, this.
 
 ### 2. One feedback string, pasted onto 36 problems it is false of
 

@@ -2294,6 +2294,42 @@ const tapDiagram = (
   };
 };
 
+/** S242 / GRB-04. WHICH SIDE IS RIGHT MUST NOT BE THE SAME SIDE EVERY TIME.
+ *
+ * `tapDiagram` lays its hotspots out by ARRAY INDEX — `g0` at 25% of the canvas, `g1` at 75% — and
+ * nothing shuffles them, because the positions are the picture. So a two-group comparison that
+ * always builds `[bigger, smaller]` puts the correct tap on the left forever.
+ *
+ * `GENERATOR_ANSWER_ENTROPY.csv` found three K–2 forms doing exactly that — `compare-groups|more`,
+ * `compare-groups|pairUp` and `compare-numerals|greater`, 62 distinct prompts between them and the
+ * answer `["g0"]` in every single draw. A pre-reader taps the left picture and is graded correct
+ * every time, which is the opposite of what a comparison item is for. The freshness audit could
+ * not see it: the prompts really are all different.
+ *
+ * The gate written from that finding — `variants.tapSide.s242.test.ts` — then caught a fourth that
+ * NEITHER audit could reach: `shape-identify|default`, which appended its target after three
+ * distractors, so the rightmost of four pictures was always right. Both audits walk
+ * `generator.forms`, and a declared forms list never includes `"default"`.
+ *
+ * Rotating the array moves the id AND the x-position together, so nothing else has to change —
+ * every count, name and diagnosis stays attached to its own group. The three-group siblings
+ * (`mostOfThree`, `greatestOfThree`) never had the bug: they place the winner by
+ * `counts.indexOf(most)`, which already varies. */
+/** "a 4-way cut" but "an 8-way cut" — the article follows how the NUMBER IS SPOKEN, which is
+ * English and therefore stored rather than derived. Reading the output caught `a 11-way cut`. */
+const article = (n: number) => ([8, 11, 18].includes(n) || (n >= 80 && n <= 89) ? "an" : "a");
+
+const varyPosition = (
+  rand: () => number,
+  groups: Array<[label: string, icon: string, count: number, correct: boolean, feedback?: string]>
+) => {
+  // A ROTATION, not a shuffle. It moves the correct index uniformly while keeping the distractors
+  // in the order they were written, so a hand-authored reading order survives. At two groups a
+  // rotation by one is a swap, which is all the comparison forms need.
+  const by = pick(rand, 0, groups.length - 1);
+  return by === 0 ? groups : [...groups.slice(by), ...groups.slice(0, by)];
+};
+
 /** A generated MATCH-THE-PAIRS.
  *
  * `rows` are given in CORRECT pairing order for readability; the right column is then shuffled on
@@ -4243,7 +4279,8 @@ const GENERATORS: VariantGen[] = [
       return tapDiagram(
         "shape-identify",
         `A shape has ${target.sides} straight sides, like ${target.simile}. What is it?`,
-        groups,
+        // The target used to be appended LAST every time, so the rightmost picture was always right.
+        varyPosition(rand, groups),
         "Count the sides and corners of each shape, then tap the one the question describes.",
         `Yes \u2014 ${target.root}: ${target.sides} sides and ${target.sides} corners.`
       );
@@ -4292,7 +4329,7 @@ const GENERATORS: VariantGen[] = [
         return tapDiagram(
           "compare-numerals",
           `Which is greater: ${loN} or ${hi}? Tap the group that shows it.`,
-          [
+          varyPosition(rand, [
             [`Group of ${count(hi, "dot")}`, DOT, hi, true],
             [
               `Group of ${count(loN, "dot")}`,
@@ -4301,7 +4338,7 @@ const GENERATORS: VariantGen[] = [
               false,
               `${loN} comes FIRST when counting \u2014 ${hi} comes later, so ${hi} is greater.`,
             ],
-          ],
+          ]),
           `Counting order tells you: ${loN} comes before ${hi}, so ${hi} is greater.`,
           `Yes \u2014 ${hi} comes later when counting, so ${hi} is greater.`
         );
@@ -4310,7 +4347,7 @@ const GENERATORS: VariantGen[] = [
       return tapDiagram(
         "compare-numerals",
         `Which number is less: ${hi} or ${loN}? Tap the group that shows it.`,
-        [
+        varyPosition(rand, [
           [
             `Group of ${count(hi, "dot")}`,
             DOT,
@@ -4319,7 +4356,7 @@ const GENERATORS: VariantGen[] = [
             `${hi} comes LATER \u2014 that makes it greater, not less. ${loN} is the smaller one.`,
           ],
           [`Group of ${count(loN, "dot")}`, DOT, loN, true],
-        ],
+        ]),
         `Only one can be less \u2014 the earlier one when counting, which is ${loN}.`,
         `Yes \u2014 ${loN} comes earlier when counting, so ${loN} is less.`
       );
@@ -4407,7 +4444,7 @@ const GENERATORS: VariantGen[] = [
         return tapDiagram(
           "compare-groups",
           `${hi} ${aName}, ${loN} ${bName}. Every ${singularA} wants a ${singularB}. Are there more ${aName} or more ${bName}? Tap the group with more.`,
-          [
+          varyPosition(rand, [
             [`${hi} ${aName}`, aIcon, hi, true],
             [
               `${loN} ${bName}`,
@@ -4416,7 +4453,7 @@ const GENERATORS: VariantGen[] = [
               false,
               `Pair them up: ${gap} ${gap === 1 ? singularA : aName} ${gap === 1 ? "is" : "are"} LEFT OVER, so ${aName} are more.`,
             ],
-          ],
+          ]),
           `${gap} ${gap === 1 ? singularA : aName} ${gap === 1 ? "has" : "have"} no ${singularB} \u2014 that makes ${aName} more.`,
           `Yes \u2014 ${gap} ${gap === 1 ? singularA : aName} ${gap === 1 ? "has" : "have"} no ${singularB}, so ${aName} are more.`
         );
@@ -4425,7 +4462,7 @@ const GENERATORS: VariantGen[] = [
         return tapDiagram(
           "compare-groups",
           `${hi} ${aName}, ${loN} ${bName}. Which is more? Tap the group with more.`,
-          [
+          varyPosition(rand, [
             [`${hi} ${aName}`, aIcon, hi, true],
             [
               `${loN} ${bName}`,
@@ -4434,7 +4471,7 @@ const GENERATORS: VariantGen[] = [
               false,
               `${bName[0].toUpperCase() + bName.slice(1)} run out first \u2014 ${aName.toUpperCase()} are more (${hi} vs ${loN}).`,
             ],
-          ],
+          ]),
           `Pair them up: ${gap} ${gap === 1 ? singularA : aName} ${gap === 1 ? "has" : "have"} no ${singularB}, so the groups are NOT equal.`,
           `Yes \u2014 ${gap} ${gap === 1 ? singularA : aName} ${gap === 1 ? "is" : "are"} left without a ${singularB}, so ${aName} are more.`
         );
@@ -4443,7 +4480,7 @@ const GENERATORS: VariantGen[] = [
       return tapDiagram(
         "compare-groups",
         `There are ${hi} ${aName} and ${loN} ${bName}. Which is fewer? Tap the group with fewer.`,
-        [
+        varyPosition(rand, [
           [
             `${hi} ${aName}`,
             aIcon,
@@ -4452,7 +4489,7 @@ const GENERATORS: VariantGen[] = [
             `${aName[0].toUpperCase() + aName.slice(1)} are MORE (${hi}). ${bName[0].toUpperCase() + bName.slice(1)} (${loN}) are fewer.`,
           ],
           [`${loN} ${bName}`, bIcon, loN, true],
-        ],
+        ]),
         `Pair them: ${gap} ${gap === 1 ? singularA : aName} miss a ${singularB}, so ${bName} are fewer.`,
         `Yes \u2014 ${loN} ${bName} is not as many as ${hi} ${aName}.`
       );
@@ -30363,17 +30400,26 @@ const GENERATORS: VariantGen[] = [
         ({ den, small, big }) => big <= den && big > small && FRACTION_NAME[den] !== undefined
       );
       const food = FOODS[fi];
+      /* S242 / GRB-04. THE LARGER FRACTION WAS ALWAYS THE RIGHT-HAND BAR, so the answer was
+       * "right" on all 24 measured draws and a learner could tap right forever without comparing
+       * anything (`GENERATOR_ANSWER_ENTROPY.csv`). The prompt follows the bars, so the pair still
+       * reads in the order it is drawn, and the wrong-side diagnosis moves to the side that is
+       * actually wrong. */
+      const bigLeft = pick(rand, 0, 1) === 1;
+      const side: "left" | "right" = bigLeft ? "left" : "right";
+      const [first, second] = bigLeft ? [big, small] : [small, big];
+      const missed = `Both fractions use ${FRACTION_NAME[den].one}-size pieces. With the piece sizes matching, the bigger COUNT wins — and ${big} beats ${small}.`;
       return {
         tag: "compare-same-denom",
-        answer: "right" as const,
+        answer: side,
         widget: {
           type: "fractionCompare" as const,
-          prompt: `Which is more of the same ${food}: ${small}/${den} or ${big}/${den}?`,
-          left: { num: small, den },
-          right: { num: big, den },
-          answer: "right" as const,
+          prompt: `Which is more of the same ${food}: ${first}/${den} or ${second}/${den}?`,
+          left: { num: first, den },
+          right: { num: second, den },
+          answer: side,
           showTicks: true,
-          leftFeedback: `Both fractions use ${FRACTION_NAME[den].one}-size pieces. With the piece sizes matching, the bigger COUNT wins — and ${big} beats ${small}.`,
+          ...(bigLeft ? { rightFeedback: missed } : { leftFeedback: missed }),
           equalFeedback: `The bottoms match, but the tops do not — taking ${small} of these pieces and taking ${big} of them are different amounts.`,
           successFeedback: `Same ${FRACTION_NAME[den].one}-size pieces, so counting settles it: ${big}/${den} is the larger share.`,
         },
@@ -30466,19 +30512,31 @@ const GENERATORS: VariantGen[] = [
           ({ top, small, big }) => top < small && big > small + 3 && FRACTION_NAME[big] !== undefined
         );
         const [A, B] = [NAMES[a], NAMES[b]];
+        /* S242 / GRB-04. The winner was always the left bar. Here the NAMES move with the bars, so
+         * the story is told in display order and A is whoever the left pizza belongs to — the
+         * alternative, naming them in a fixed order while the bars swap, would put the sentence and
+         * the picture in different orders. */
+        const fatLeft = pick(rand, 0, 1) === 1;
+        const side: "left" | "right" = fatLeft ? "left" : "right";
+        const [firstName, firstDen, secondName, secondDen] = fatLeft ? [A, small, B, big] : [B, big, A, small];
+        /* A ALWAYS HOLDS THE SMALL DENOMINATOR, so A always wins whichever side the bars land on.
+         * Reading the printed output caught this: a first pass tied the winner to the swap and
+         * announced "Jo wins" on a draw the widget graded for Kai. */
+        const winner = A;
+        const missed = `The reflex, one last time: the ${big} cut that pizza into ${big} thin slices, so ${top} of them come to less than ${top} of the fatter ones.`;
         return {
           tag: "compare-same-num",
-          answer: "left" as const,
+          answer: side,
           widget: {
             type: "fractionCompare" as const,
-            prompt: `Two same-size pizzas. ${A} takes ${top} slices of the one cut into ${small}; ${B} takes ${top} slices of the one cut into ${big}. Who has more pizza?`,
-            left: { num: top, den: small },
-            right: { num: top, den: big },
-            answer: "left" as const,
+            prompt: `Two same-size pizzas. ${firstName} takes ${top} slices of the one cut into ${firstDen}; ${secondName} takes ${top} slices of the one cut into ${secondDen}. Who has more pizza?`,
+            left: { num: top, den: firstDen },
+            right: { num: top, den: secondDen },
+            answer: side,
             showTicks: true,
-            rightFeedback: `The reflex, one last time: the ${big} cut that pizza into ${big} thin slices, so ${top} of them come to less than ${top} of the fatter ones.`,
+            ...(fatLeft ? { rightFeedback: missed } : { leftFeedback: missed }),
             equalFeedback: `The counts match; the slices do not. A slice's size comes from how many the pizza was cut into.`,
-            successFeedback: `${A} wins: ${top} slices of a ${small}-way cut are fatter than ${top} slices of a ${big}-way cut.`,
+            successFeedback: `${winner} wins: ${top} slices of ${article(small)} ${small}-way cut are fatter than ${top} slices of ${article(big)} ${big}-way cut.`,
           },
         };
       }
@@ -30497,17 +30555,23 @@ const GENERATORS: VariantGen[] = [
           top < small && big > small + 1 && FRACTION_NAME[small] !== undefined && FRACTION_NAME[big] !== undefined
       );
       const food = FOODS[fi];
+      // S242 / GRB-04. The same fix as its `compare-same-denom` sibling, mirrored: the
+      // fatter-piece fraction was always the LEFT bar, so "left" was right on every draw.
+      const fatLeft = pick(rand, 0, 1) === 1;
+      const side: "left" | "right" = fatLeft ? "left" : "right";
+      const [firstDen, secondDen] = fatLeft ? [small, big] : [big, small];
+      const missed = `The big-number reflex: the ${big} means a ${big}-way cut, which makes SMALLER pieces. ${top} of them come to less than ${top} ${FRACTION_NAME[small].many}.`;
       return {
         tag: "compare-same-num",
-        answer: "left" as const,
+        answer: side,
         widget: {
           type: "fractionCompare" as const,
-          prompt: `Which is more of the same ${food}: ${top}/${small} or ${top}/${big}?`,
-          left: { num: top, den: small },
-          right: { num: top, den: big },
-          answer: "left" as const,
+          prompt: `Which is more of the same ${food}: ${top}/${firstDen} or ${top}/${secondDen}?`,
+          left: { num: top, den: firstDen },
+          right: { num: top, den: secondDen },
+          answer: side,
           showTicks: true,
-          rightFeedback: `The big-number reflex: the ${big} means a ${big}-way cut, which makes SMALLER pieces. ${top} of them come to less than ${top} ${FRACTION_NAME[small].many}.`,
+          ...(fatLeft ? { rightFeedback: missed } : { leftFeedback: missed }),
           equalFeedback: `Only the COUNTS match. The piece sizes do not — a ${FRACTION_NAME[big].one} is thinner than a ${FRACTION_NAME[small].one}.`,
           successFeedback: `Same count, fatter pieces: ${top}/${small} is the larger share.`,
         },
