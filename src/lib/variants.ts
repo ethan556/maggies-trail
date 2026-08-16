@@ -12987,19 +12987,39 @@ const GENERATORS: VariantGen[] = [
         );
       }
       if (form === "lnChain") {
-        const a = [1, 2, 3, 7][pick(rand, 0, band === "support" ? 1 : 3)];
-        const u = a * a + 1;
-        const ans = (2 * a) / u;
+        /* S242 / GRB-04. THE INNER FUNCTION WAS FROZEN AT x\u00b2 + 1 \u2014 only the evaluation point moved,
+         * so the entire form was four problems and no anti-repeat queue could keep it fresh. The
+         * chain rule on ln is ABOUT the inner function; that is the dimension the topic was
+         * missing, and a wider evaluation range would not have supplied it.
+         *
+         * Every (m, a, c) below is chosen so u = a\u1d50 + c has only 2s and 5s in it, which is what
+         * makes u\u2032/u AND the 1/u trap terminate \u2014 the form's "as a decimal" phrasing requires both.
+         * Stored as a table rather than searched at runtime, because the arithmetic that qualifies
+         * a triple is not the arithmetic the item teaches. */
+        const INNER: Array<[number, number, number]> = [
+          // m, a, c        u = a\u1d50 + c
+          [2, 1, 1], [2, 1, 3], [2, 1, 4], [2, 1, 7], [2, 1, 9], [2, 2, 1],
+          [2, 2, 4], [2, 2, 6], [2, 2, 16], [2, 3, 1], [2, 3, 11], [2, 3, 16],
+          [2, 4, 4], [2, 4, 9], [2, 5, 15], [2, 6, 4], [2, 6, 14], [2, 7, 1],
+          [3, 1, 1], [3, 1, 3], [3, 1, 4], [3, 1, 9], [3, 2, 2], [3, 2, 12],
+        ];
+        // Support stays on squares with small constants; stretch is where the cube appears.
+        const [m, a, c] = INNER[pick(rand, 0, band === "support" ? 11 : band === "core" ? 17 : INNER.length - 1)];
+        const u = a ** m + c;
+        const up = m * a ** (m - 1);
+        const ans = up / u;
+        const inner = `x${m === 2 ? "\u00b2" : "\u00b3"} + ${c}`;
+        const dInner = m === 2 ? "2x" : "3x\u00b2";
         return num(
           "deriv-explog",
-          `f(x) = ln(x\u00b2 + 1). Find f\u2032(${a})${Number.isInteger(ans) ? "" : ", as a decimal"}.`,
+          `f(x) = ln(${inner}). Find f\u2032(${a})${Number.isInteger(ans) ? "" : ", as a decimal"}.`,
           ans,
           0,
           [
-            [1 / u, `That is 1/(x\u00b2+1) at x = ${a} \u2014 you forgot the inner derivative 2x on top. The rule is u\u2032/u.`],
-            [2 * a, `That is the inner derivative 2x at x = ${a}. It still has to be divided by u = x\u00b2 + 1 = ${u}.`],
+            [1 / u, `That is 1/(${inner}) at x = ${a} \u2014 you forgot the inner derivative ${dInner} on top. The rule is u\u2032/u.`],
+            [up, `That is the inner derivative ${dInner} at x = ${a}. It still has to be divided by u = ${inner} = ${u}.`],
           ],
-          `f\u2032 = 2x/(x\u00b2 + 1), which at ${a} is ${2 * a}/${u} = ${ans}.`
+          `f\u2032 = ${dInner}/(${inner}), which at ${a} is ${up}/${u} = ${ans}.`
         );
       }
       // default: the slope of ln x at a point where 1/a terminates.
@@ -13271,18 +13291,32 @@ const GENERATORS: VariantGen[] = [
       }
 
       if (form === "doubling") {
-        const D = pick(rand, 6, band === "support" ? 7 : 9);
-        const S = 2 ** D - 1;
+        /* S242 / GRB-04. THE STARTING AMOUNT WAS FROZEN AT $1, so the form was four problems: a
+         * geometric sum has two parameters and this one showed the learner exactly one of them.
+         * r stays 2 \u2014 the form is called "doubling" \u2014 and a\u2081 becomes the second dimension.
+         *
+         * The second trap's fact SURVIVES the generalisation rather than being weakened by it:
+         * a\u2081\u00b72^D is what day D+1 alone would pay, and a\u2081\u00b72^D \u2212 a\u2081 = a\u2081(2^D \u2212 1) is exactly the
+         * total. At a\u2081 = 1 that is the old "one short of the next power"; at a\u2081 = 5 it is one
+         * first payment short, which is the same sentence written honestly. */
+        const a1 = [1, 2, 3, 5][pick(rand, 0, band === "support" ? 2 : 3)];
+        const D = band === "support" ? pick(rand, 5, 8) : pick(rand, 6, 9);
+        const S = a1 * (2 ** D - 1);
+        const last = a1 * 2 ** (D - 1);
+        const over = a1 * 2 ** D;
+        // Never print a coefficient of 1. `1(2^8 \u2212 1)` is not how anyone writes this, and deriving
+        // it from a\u2081 without this guard is the notational twin of the "1 units up" class.
+        const closed = a1 === 1 ? `2^${D} \u2212 1` : `${a1}(2^${D} \u2212 1)`;
         return num(
           "geo-series",
-          `You get $1 on day 1, and each day the amount doubles. How much IN TOTAL over ${D} days?`,
+          `You get $${a1} on day 1, and each day the amount doubles. How much IN TOTAL over ${D} days?`,
           S,
           0,
           [
-            [2 ** (D - 1), `$${2 ** (D - 1)} is day ${D}'s payment alone \u2014 \u201cin total\u201d sums all ${D} days: 2${"\u2077" /* superscript placeholder replaced below */} \u2212 1 = ${S}.`.replace("2\u2077", `2^${D}`)],
-            [2 ** D, `${2 ** D} is 2^${D} itself \u2014 but the total of doublings from 1 always lands ONE short of the next power: 2^${D} \u2212 1 = ${S}.`],
+            [last, `$${last} is day ${D}'s payment alone \u2014 \u201cin total\u201d sums all ${D} days: ${closed} = ${S}.`],
+            [over, `$${over} is what day ${D + 1} alone would pay. The total over days 1\u2013${D} always lands exactly one first payment short of it: ${over} \u2212 ${a1} = ${S}.`],
           ],
-          `1 + 2 + 4 + \u22ef doubling for ${D} days totals 2^${D} \u2212 1 = ${S}.`
+          `${a1} + ${2 * a1} + ${4 * a1} + \u22ef doubling for ${D} days totals ${closed} = ${S}.`
         );
       }
 
@@ -21082,9 +21116,20 @@ const GENERATORS: VariantGen[] = [
         );
       }
       if (form === "ratio") {
-        // The parts must divide 360 exactly, so the per-part measure is a whole number.
+        /* S242 / GRB-04. Two things kept this form at four problems. Of the eight authored triples
+         * only four survived the distinctness guard below (the other four put ONE ratio part on top
+         * of the smallest arc — 1 : 2 : 3 makes both 60°, so a trap graded correct); and the
+         * QUESTION was frozen on "LARGEST", so the same four items came round forever.
+         *
+         * Both are fixed by the topic's own dimensions rather than by a wider axis: more triples
+         * that actually pass the guard, and WHICH ARC IS ASKED FOR. A learner who can pick out the
+         * biggest pile has not shown they can find the middle one, and the traps rotate with the
+         * target instead of being reused. 14 × 3 = 42 problems.
+         *
+         * The parts must divide 360 exactly, so the per-part measure is a whole number. */
         const SETS: Array<[number, number, number]> = [
-          [2, 3, 4], [1, 2, 3], [1, 3, 5], [2, 3, 5], [1, 2, 5], [3, 4, 5], [1, 4, 5], [2, 4, 6],
+          [2, 3, 4], [2, 3, 5], [2, 3, 7], [2, 4, 6], [2, 5, 8], [2, 6, 7], [3, 4, 5],
+          [3, 4, 8], [3, 5, 7], [3, 7, 8], [4, 5, 6], [4, 6, 8], [5, 6, 7], [5, 7, 8],
         ];
         const { p, q, r } = draw(
           rand,
@@ -21103,18 +21148,28 @@ const GENERATORS: VariantGen[] = [
         );
         const total = p + q + r;
         const per = 360 / total;
-        const big = r * per;
+        const parts = [p, q, r];
+        const NAMES = ["SMALLEST", "MIDDLE", "LARGEST"];
+        const t = pick(rand, 0, 2);
+        const want = parts[t] * per;
+        /* Guarded above: per, p·per, q·per and r·per are four distinct values, so whichever arc is
+         * asked for, the three traps below are distinct from the answer and from each other. */
+        const traps: Array<[number, string]> = [
+          [per, `${per}° is ONE ratio part (360/${total}) — the ${NAMES[t]} arc claims ${parts[t]} parts: ${want}°.`],
+        ];
+        for (let i = 0; i < 3; i++)
+          if (i !== t)
+            traps.push([
+              parts[i] * per,
+              `${parts[i] * per}° is the ${NAMES[i]} arc (${parts[i]} parts). The ${NAMES[t]} one takes ${parts[t]}: ${parts[t]} × ${per} = ${want}°.`,
+            ]);
         return num(
           "arc-measure",
-          `Three points cut a circle into arcs in the ratio ${p} : ${q} : ${r}. Find the LARGEST arc's measure.`,
-          big,
+          `Three points cut a circle into arcs in the ratio ${p} : ${q} : ${r}. Find the ${NAMES[t]} arc's measure.`,
+          want,
           0,
-          [
-            [per, `${per}° is ONE ratio part (360/${total}) — the largest arc claims ${r} parts: ${big}°.`],
-            [p * per, `${p * per}° is the SMALLEST arc (${p} parts). The largest takes ${r}: ${big}°.`],
-            [q * per, `${q * per}° is the MIDDLE arc (${q} parts). The largest claims ${r}: ${r} × ${per} = ${big}°.`],
-          ],
-          `360/(${p}+${q}+${r}) = ${per}° per part; largest = ${r} × ${per} = ${big}°.`
+          traps,
+          `360/(${p}+${q}+${r}) = ${per}° per part; ${NAMES[t].toLowerCase()} = ${parts[t]} × ${per} = ${want}°.`
         );
       }
       // default: the major arc left by a central angle.

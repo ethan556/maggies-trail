@@ -356,7 +356,13 @@ describe("WS-G calculus shorthand over the authored Calc band", () => {
       }
     }
     expect(lossy.slice(0, 5)).toEqual([]);
-  });
+    /* S242. BUDGET ONLY — the assertion above is untouched. This walks the whole Calc band twice,
+     * once per option set, and measures 4,939 ms on an idle machine against vitest's 5,000 ms
+     * default: it fails as a TIMEOUT under any concurrent load, which is how it went red in a
+     * sharded run while passing in isolation. A test that flips on machine load teaches nothing
+     * except to distrust the suite. Verified not to be a regression by stashing the session's
+     * changes and reproducing on a clean tree. */
+  }, 30_000);
 
   it("NON-REGRESSION: the calculus patterns never fire on a row without a calculus operator", () => {
     // The highest-risk population for a false positive is prose sitting in the SAME lessons as
@@ -370,5 +376,7 @@ describe("WS-G calculus shorthand over the authored Calc band", () => {
       }
     }
     expect(fired.slice(0, 10)).toEqual([]);
-  });
+    // S242. Budget only, same reason as the lossless walk above: 4,669 ms idle against a 5,000 ms
+    // default. Nothing about what it checks has changed.
+  }, 30_000);
 });

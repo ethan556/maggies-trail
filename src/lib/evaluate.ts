@@ -2107,10 +2107,25 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       if (right === spec.items.length)
         return { correct: true, feedback: spec.successFeedback, score: 1 };
       const wrong = spec.items.find((i) => placed[i.id] && placed[i.id] !== i.bucketId);
-      const detail = `${right} of ${spec.items.length} sorted right so far. `;
+      /* S242 / ENG-01 R3. A RUNNING COUNT USED TO LEAD THIS STRING —
+       * `${right} of ${spec.items.length} sorted right so far. ` — and what it was worth was
+       * measured, not argued. With four items and two buckets it split the sixteen possible
+       * sortings into TEN feedback classes instead of four, which takes a learner who knows no
+       * mathematics at all from a 12.5% chance of passing a graded step inside the two-attempt
+       * bound to 68.8% (`reports/eng/ENG01_R3_FISHING_ORACLE.csv`). On the 145 `interactive`
+       * placements, where attempts are unbounded, it is the hill-climb itself: swap one item,
+       * re-check, keep the swap if the number rose — §3.4 of the ENG-01 assessment.
+       *
+       * It is removed rather than softened because it is the one part of this string carrying NO
+       * diagnosis. `wrong.feedback` names the misplaced item and says why it belongs elsewhere,
+       * which is the pedagogy and stays; the count only scored the guess. The platform already
+       * draws this exact line — `plotPoint` computes a partial score and deliberately keeps it out
+       * of its feedback string — and `score` below still carries the number, for a surface that
+       * wants to show progress AFTER the verdict under the same post-verdict rule `tone === "info"`
+       * enforces everywhere else. */
       return {
         correct: false,
-        feedback: detail + (wrong ? wrong.feedback : spec.missFeedback),
+        feedback: wrong ? wrong.feedback : spec.missFeedback,
         score
       };
     }

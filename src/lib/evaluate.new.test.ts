@@ -576,13 +576,24 @@ describe("evaluate — new widget wrong paths stay diagnostic", () => {
     expect(r2.feedback).toContain("Start at the smallest");
   });
 
-  it("dragBucket: misplaced item surfaces ITS diagnosis plus a running score", () => {
+  /* S242 / ENG-01 R3. THIS ASSERTION WAS CORRECTED, NOT RELAXED, AND THE OLD LINE IS QUOTED SO THE
+   * change is legible: it required `feedback` to contain `"2 of 3 sorted right"`, pinning a running
+   * score into the string. Measurement (`scripts/audit/fishing-oracle.mts`) showed that count was
+   * an oracle — on the corpus's commonest shape it took a learner who knows no mathematics from a
+   * 12.5% chance of passing a graded step inside the two-attempt bound to 68.8%, and it powered the
+   * hill-climb on 145 unbounded interactive placements.
+   *
+   * The count now lives only in `score`, which this still asserts — the information is not
+   * destroyed, it is kept out of active-work feedback the way `plotPoint` already keeps its own.
+   * The replacement is STRICTER: it keeps the diagnosis requirement and adds a prohibition. */
+  it("dragBucket: a misplaced item surfaces ITS diagnosis, and no running score", () => {
     const s = byType("dragBucket");
     const r = evaluate(s, { s1: "add", s2: "add", s3: "mul" });
     expect(r.correct).toBe(false);
     expect(r.score).toBeCloseTo(2 / 3);
-    expect(r.feedback).toContain("2 of 3 sorted right");
     expect(r.feedback).toContain("equal groups call for multiplying");
+    expect(r.feedback).not.toContain("2 of 3 sorted right");
+    expect(r.feedback).not.toMatch(/\bof\s+\d+\s+sorted\b/i);
   });
 
   it("matchPairs: anticipated wrong link diagnoses the groups-first mixup", () => {

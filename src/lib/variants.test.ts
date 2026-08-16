@@ -2946,8 +2946,16 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     const rd = (x: number) => Math.round(x * 10000) / 10000;
     let m = p.match(/f\(x\) = e\^\((\d+)x\)\. Find f\u2032\(0\)/);
     if (m) return Math.round(dd((x) => Math.exp(Number(m![1]) * x), 0));
-    m = p.match(/f\(x\) = ln\(x\u00b2 \+ 1\)\. Find f\u2032\((\d+)\)/);
-    if (m) return rd(dd((x) => Math.log(x * x + 1), Number(m[1])));
+    /* S242 / GRB-04. This used to hardcode `ln(x\u00b2 + 1)`, which is exactly the frozen dimension the
+     * generator widened. Reading the exponent and the constant off the printed prompt makes the
+     * route MORE independent, not less: it differentiates whatever function the learner is shown,
+     * numerically, and never touches the u\u2032/u rule the item is testing. */
+    m = p.match(/f\(x\) = ln\(x([\u00b2\u00b3]) \+ (\d+)\)\. Find f\u2032\((\d+)\)/);
+    if (m) {
+      const power = m[1] === "\u00b2" ? 2 : 3;
+      const konst = Number(m[2]);
+      return rd(dd((x) => Math.log(x ** power + konst), Number(m[3])));
+    }
     m = p.match(/f\(x\) = ln x\. Find f\u2032\((\d+)\)/)!;
     return rd(dd((x) => Math.log(x), Number(m[1])));
   },
@@ -2993,11 +3001,13 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
      * does. It sums what a learner can see. */
     let m = p.match(/Evaluate ((?:\d+ \+ )+\d+) with the formula/);
     if (m) return m[1].split(" + ").reduce((sum, term) => sum + Number(term), 0);
-    m = p.match(/doubles\. How much IN TOTAL over (\d+) days/);
+    /* The starting payment used to be hardcoded to 1 here because the generator froze it there.
+     * It is read from the prompt now; the accumulation is still a literal day-by-day loop. */
+    m = p.match(/You get \$(\d+) on day 1, and each day the amount doubles\. How much IN TOTAL over (\d+) days/);
     if (m) {
-      let pay = 1;
+      let pay = Number(m[1]);
       let S = 0;
-      for (let i = 0; i < Number(m[1]); i++) { S += pay; pay *= 2; }
+      for (let i = 0; i < Number(m[2]); i++) { S += pay; pay *= 2; }
       return S;
     }
     m = p.match(/^0\.(\d)/);
@@ -4629,11 +4639,14 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   "arc-measure@ratio": (p) => {
     const mm = p.match(/ratio (\d+) : (\d+) : (\d+)/)!;
     const parts = mm.slice(1).map(Number);
-    // Deal 360 degrees out one part at a time, then read off the biggest pile.
+    // Deal 360 degrees out one part at a time, then read off the pile the prompt asks for. The
+    // rank comes from a SORT of the finished piles, not from an assumption that the printed ratio
+    // is already ascending.
     const total = parts.reduce((s, x) => s + x, 0);
     const piles = parts.map(() => 0);
     for (let d = 0; d < 360; d++) piles[d % total < parts[0] ? 0 : d % total < parts[0] + parts[1] ? 1 : 2] += 1;
-    return Math.max(...piles);
+    const rank = /SMALLEST/.test(p) ? 0 : /MIDDLE/.test(p) ? 1 : 2;
+    return piles.sort((a, b) => a - b)[rank];
   },
   // Inscribed angles: halve or double by SEARCH, never by the arithmetic operator itself.
   "inscribed-angle": (p) => {
