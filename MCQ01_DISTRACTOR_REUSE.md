@@ -84,10 +84,16 @@ It is not a distractor problem at all. It is measured here because it was found 
 
 ## The queue, ordered
 
-1. **75 within-lesson duplicates.** Smallest, worst, and unambiguous — the second copy either gets a
-   different item or a `variant` declaration. Note that ADAPT-01's refresh does **not** rescue these:
-   the first walk is deliberately pinned to the authored numbers, which is exactly the walk where the
-   duplicate is met twice.
+1. ~~**75 within-lesson duplicates.**~~ **8 closed, 67 open.** The first-walk pin was the reason
+   these survived, and it now carries one exception: prose can only be anchored to ONE occurrence of
+   an item, and it is the first — so the first copy keeps its authored numbers and **every later
+   copy is regenerated, on every walk including the first**. Measured end to end: duplicate
+   occurrences on a first walk **75 → 67**.
+
+   The remaining 67 have a `conceptTag` but no generator serves it, so nothing can regenerate them.
+   Each closes automatically the moment one does. Both numbers are ratcheted in
+   `src/lib/content.duplicateItems.s242.test.ts` as exact equalities, so a new copy-paste is a test
+   failure and a genuine improvement forces this ledger to be updated.
 2. **151 filler shapes / 588 slots.** Ranked by reuse count, so the 22-use shape is one edit
    affecting 22 items. Batchable by shape rather than by lesson, which is what makes it tractable.
 3. **507 prose-vs-prose.** Still open, still authoring, and now with a sequence: an item whose only

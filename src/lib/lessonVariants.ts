@@ -104,21 +104,54 @@ export function refreshLessonSteps(lesson: TLesson, profile: Profile, today: str
    *
    * The gate found this, not a review: the scripted walk in LessonPlayer.play.test.tsx encoded real
    * knowledge about how this content is written, and it was right. */
-  if (runIndex === 0) return { steps: [...lesson.steps], served: profile.recentVariants ?? {}, refreshed: 0, bands: {} };
   const mastery = profile.mastery ?? {};
   let served: RecentDraws = profile.recentVariants ?? {};
   const bands: Record<string, string> = {};
   let refreshed = 0;
 
+  /* ── THE ONE EXCEPTION TO THE FIRST-WALK RULE: A REPEAT OF AN ITEM ALREADY ASKED ──────────────
+   *
+   * `MCQ01_DISTRACTOR_REUSE.md` measured 75 lessons that ask the SAME QUESTION TWICE — identical
+   * prompt, identical options, usually `k1` and again at `k3`. A learner answers it, then meets it
+   * again in the same sitting, and two independent "correct" attempts are recorded against one
+   * remembered item. That is the mastery-as-memory failure this whole program exists to remove,
+   * reintroduced by copy-paste, and pinning the first walk to the authored numbers is exactly what
+   * leaves it in place — the first walk is the walk where the duplicate is met twice.
+   *
+   * The rule above stands, and this does not weaken it. Its reason is that the lesson's PROSE is
+   * written around the authored numbers — but prose can only be anchored to ONE occurrence, and it
+   * is the first. The second copy is not what any sentence in the lesson refers to; it is a
+   * duplicate. So the first occurrence keeps its authored numbers and every later occurrence is
+   * refreshed, on every walk including the first.
+   *
+   * This closes 8 of the 75 today, and each of the remaining 67 the moment a generator serves its
+   * conceptTag. The other 67 are listed in that document and need authoring, not this. */
+  const seenItem = new Set<string>();
+  const isRepeat = new Map<string, boolean>();
+  for (const step of lesson.steps) {
+    const widget = step.widget as { type?: string; prompt?: string; options?: Array<{ label?: string }> } | undefined;
+    if (!widget?.prompt) continue;
+    const identity = `${widget.type} ${widget.prompt.trim()} ${(widget.options ?? []).map((o) => String(o.label ?? "").trim()).sort().join("")}`;
+    isRepeat.set(String(step.id), seenItem.has(identity));
+    seenItem.add(identity);
+  }
+
+  const firstWalk = runIndex === 0;
+  if (firstWalk && ![...isRepeat.values()].some(Boolean)) {
+    return { steps: [...lesson.steps], served, refreshed: 0, bands: {} };
+  }
+
   const steps = lesson.steps.map((step) => {
     if (!step.widget) return step;
+    // On the first walk ONLY the repeats move; everything else stays exactly as authored.
+    if (firstWalk && !isRepeat.get(String(step.id))) return step;
     /* THE BAND IS PER STEP, NOT PER LESSON. A lesson crosses several conceptTags and a learner is
      * rarely equally fragile across all of them; picking one band for the whole lesson would serve
      * a stretch surface on the tag they are weakest at. `recommendBand` is pure and re-derivable
      * from the profile, so a run stays reproducible. */
     const band = recommendBand(mastery[step.conceptTag ?? ""], today);
     const key = `${lesson.id}:${step.id}`;
-    const drawn = drawFreshVariant(step, `${key}:${runIndex}`, band, {}, key);
+    const drawn = drawFreshVariant(step, `${key}:${runIndex}${isRepeat.get(String(step.id)) ? ":repeat" : ""}`, band, {}, key);
     if (!drawn) return step;
     bands[String(step.id)] = band;
     served = rememberDraw(served, key, drawn.fingerprint);
