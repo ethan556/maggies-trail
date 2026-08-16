@@ -22,42 +22,56 @@ of them:
 eight items without understanding a single thing about sampling. That is a clue leak, it is larger
 than any length ratio, and no tell in the leakage index measures it.
 
-## Measured across the whole authored corpus
+## Measured across the whole authored corpus — and then substantially corrected
 
-2,563 authored MCQ items, 9,464 options.
+2,563 authored MCQ items, 9,464 options. The first measurement:
 
 | | |
 |---|---:|
-| Distractor shapes reused 3+ times and **never correct** | **151** |
-| Option slots filled by one of them | **588** (6.2% of all options) |
-| Of those shapes, spanning more than one course | 38 |
+| Distractor shapes reused 3+ times and **never correct** | 151 |
+| Option slots filled by one of them | 588 (6.2% of all options) |
 
-A "shape" is the label with numbers, punctuation and function words stripped and the rest stemmed
-and sorted, so *"The sample is too small to conclude anything"* and *"The polls were too small"*
-count as one — a learner does not memorise the wording, they memorise that one option always says
-the study was too small and is always wrong.
+**That number overstates the defect by roughly half, and reading the rows is what showed it.**
 
-**Never-correct is the load-bearing condition.** A shape that is *sometimes* the answer is a
-recurring idea and eliminating it would be a mistake; a shape that is never the answer is a slot the
-author reached for when they needed a fourth option.
+### First correction: most of the "reuse" is the same QUESTION reused
 
-The most reused:
+| | |
+|---|---:|
+| Of the 588 slots, sitting on an item that is **duplicated elsewhere** | **322 (55%)** |
+| Of the 151 shapes, occurring on **one distinct item only** | **55** |
+| Shapes spanning 3+ **distinct** items — the only genuine candidates | **67**, over **306 slots** |
 
-| Uses | Scope | Example |
-|---:|---|---|
-| 22 | across courses | `You cannot tell` |
-| 11 | across courses | `they're the same size` |
-| 10 | across courses | `they're equal` |
-| 9 | across courses | `Nothing — shapes cannot be joined` |
-| 7 | one course | `Because tens look nicer than ones` |
-| 7 | across courses | `Nothing can be concluded` |
+`"The estimate cannot help with decimals"` looked like a five-use filler. It is one item —
+*"A student computes 3.6 × 4 and gets 1.44"* — placed in five different lessons. The distractor
+repeats because the whole question repeats. A detector counting option labels cannot tell those
+apart, and this one did not.
 
-Hand-checked: the `cannot tell` / `nothing can be concluded` family is used **29 times and is
-correct 0 times**.
+### Second correction: the residue is mostly legitimate
 
-**This is the authored twin of the generator padding helpers GEN-03 disarmed**, and it takes the
-same repair: write a wrong reason that belongs to *this* item, or accept fewer options. Rule 7
-applies to authored content too — three real distractors beat four with a filler.
+24 of the 67 candidate shapes read by hand. Roughly **4 look like filler (~17%)**; the rest are real,
+consistently-diagnosed misconceptions that simply never happen to be the key:
+
+- `"You cannot tell"` — 22 uses, and the reason it is never correct is that these Kindergarten
+  lessons **teach that you always can**. Its feedback is *"You can always tell — pair the groups one
+  to one and look at which side has leftovers."* That is a misconception probe, not a slot-filler,
+  and removing it would remove the thing the lesson is arguing against.
+- `"they're the same size"` (11×, g3f fractions), `"Arrays only work for even totals"`,
+  `"Because t² is always positive"`, `"Only a ruler could tell"`, `"both are equally reliable"` —
+  all real errors a learner makes.
+
+Genuine filler does exist and reads differently — it is a **strawman the feedback itself dismisses**:
+
+> `"The estimate cannot help with decimals"` → *"Estimating is most valuable with decimals."*
+> `"You cannot estimate a fraction division"` → *"You can: ask how many of the piece fit in one whole."*
+
+### What the claim should have been
+
+**Reuse plus never-correct is not evidence of filler.** The `si-*` family that prompted this — six
+wordings of *"the sample is too small"*, never the answer — is real, but it does not generalise to
+151 shapes. The defensible residue is small, and it needs a read per shape rather than a patch.
+
+**The finding that survives is the one underneath: item duplication.** 162 items over 377
+placements, and the 588 slots are largely its shadow.
 
 ## And the thing the hand-check found, which is worse
 

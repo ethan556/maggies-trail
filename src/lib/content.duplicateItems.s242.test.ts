@@ -32,6 +32,21 @@ const ROOT = process.cwd();
 const BASELINE_DUPLICATE_GROUPS = 75;
 const BASELINE_UNDIFFERENTIABLE = 67;
 
+/* CROSS-LESSON DUPLICATION IS THE LARGER HALF AND WAS NOT RATCHETED.
+ *
+ * The within-lesson case is the worst — same sitting, two attempts on one remembered item — but it
+ * is a subset. 162 distinct items appear more than once across 377 placements, and the same
+ * question asked in lesson A and again in lesson B is still one item counted twice by the mastery
+ * model. It also turned out to be the cause of a SECOND finding: 55% of the "reused filler
+ * distractor" slots in MCQ01_DISTRACTOR_REUSE.md sit on a duplicated item, so the distractor
+ * repeats only because the whole question does.
+ *
+ * The lesson refresh cannot help here: two lessons each meeting the item once are each on their
+ * own first walk, and the first walk is authored by design. This is authoring work, and pinning it
+ * is what stops it growing while that work is queued. */
+const BASELINE_DUPLICATED_ITEMS = 162;
+const BASELINE_DUPLICATE_PLACEMENTS = 377;
+
 function walk(dir: string, out: string[] = []): string[] {
   if (!existsSync(dir)) return out;
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -72,6 +87,35 @@ function duplicateGroups(): Occurrence[][] {
   }
   return groups;
 }
+
+/** Every authored mcq item, keyed by identity, wherever it appears. */
+function placementsByItem(): Map<string, string[]> {
+  const byItem = new Map<string, string[]>();
+  for (const file of walk(join(ROOT, "content", "courses"))) {
+    let json: { lesson?: { id?: string; steps?: unknown[] }; id?: string; steps?: unknown[] };
+    try { json = JSON.parse(readFileSync(file, "utf8")); } catch { continue; }
+    const lesson = json.lesson ?? json;
+    if (!lesson?.id || !Array.isArray(lesson.steps)) continue;
+    for (const [index, raw] of lesson.steps.entries()) {
+      const step = raw as { id?: string; widget?: Record<string, unknown> };
+      const identity = step.widget ? itemIdentity(step.widget as never) : null;
+      if (!identity) continue;
+      if (!byItem.has(identity)) byItem.set(identity, []);
+      byItem.get(identity)!.push(`${lesson.id}#${step.id ?? index}`);
+    }
+  }
+  return byItem;
+}
+
+describe("MCQ-01 — duplicate items across the corpus", () => {
+  it("does not grow", () => {
+    const byItem = placementsByItem();
+    const duplicated = [...byItem.values()].filter((where) => where.length > 1);
+    const placements = duplicated.reduce((n, where) => n + where.length, 0);
+    expect(duplicated.length, "distinct items appearing more than once").toBe(BASELINE_DUPLICATED_ITEMS);
+    expect(placements, "placements those duplicated items occupy").toBe(BASELINE_DUPLICATE_PLACEMENTS);
+  });
+});
 
 describe("MCQ-01 — within-lesson duplicate items", () => {
   const groups = duplicateGroups();
