@@ -2984,8 +2984,15 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     return S;
   },
   "geo-series": (p) => {
-    let m = p.match(/Evaluate 1 \+ (\d+) \+ (\d+) \+ (\d+) with the formula/);
-    if (m) return 1 + Number(m[1]) + Number(m[2]) + Number(m[3]);
+    /* S242 / GRB-04. The `powers` form used to print exactly four terms and this route hardcoded
+     * four captures. Widening the generator's TERM COUNT — the dimension that took its pool from 4
+     * problems to 12 — broke that regex immediately, which is the dual route working as designed.
+     *
+     * Reading whatever addends are printed makes the route MORE independent, not less: it no longer
+     * assumes a length, and it never reconstructs the series from r and n the way the generator
+     * does. It sums what a learner can see. */
+    let m = p.match(/Evaluate ((?:\d+ \+ )+\d+) with the formula/);
+    if (m) return m[1].split(" + ").reduce((sum, term) => sum + Number(term), 0);
     m = p.match(/doubles\. How much IN TOTAL over (\d+) days/);
     if (m) {
       let pay = 1;

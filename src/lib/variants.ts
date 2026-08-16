@@ -13144,34 +13144,59 @@ const GENERATORS: VariantGen[] = [
     // and evaluating only the top term as if Σ meant "plug in the last k".
     gen: (rand, band = "core", form = "default") => {
       if (form === "sigmaPow") {
-        const m = pick(rand, 3, band === "support" ? 4 : band === "stretch" ? 7 : 6);
-        const S = 2 ** (m + 1) - 1;
+        /* S242 / GRB-04. THE LOWER BOUND IS THE MISSING DIMENSION. This form drew k = 0 to m with
+         * only m varying, giving a pool of four problems — below the anti-repeat window, so a
+         * learner practising ten times had to see a repeat. CLAUDE.md's remedy for a constrained
+         * pool is a new DIMENSION rather than a wider axis, and sigma notation's own subject is the
+         * BOUNDS: a sum that does not start at zero is the more interesting case, not a harder one.
+         * The independent route already parses both bounds from the printed prompt and walks the
+         * terms one at a time, so it validates the widened draws with no change. */
+        const lo = pick(rand, 0, 2);
+        const span = pick(rand, 2, band === "support" ? 3 : band === "stretch" ? 5 : 4);
+        const hi = lo + span;
+        const S = 2 ** (hi + 1) - 2 ** lo;
+        const dropped = S - 2 ** lo;
         return num(
           "sigma-eval",
-          `Evaluate \u03a3 from k = 0 to ${m} of 2\u1d4f.`,
+          `Evaluate \u03a3 from k = ${lo} to ${hi} of 2\u1d4f.`,
           S,
           0,
           [
-            [S - 1, `${S - 1} is the sum without 2\u2070 \u2014 the k = 0 term went missing. 2\u2070 = 1 is a full member of the sum: ${S - 1} + 1 = ${S}.`],
-            [2 ** m, `${2 ** m} is only the last term, 2^${m}. The counter visits 0 through ${m}: ${S}.`],
+            // Both traps stay literally true of the drawn bounds (rule 5), and span >= 2 keeps them
+            // distinct from the answer and from each other: they coincide only when hi = lo + 1.
+            [dropped, `${dropped} is the sum without 2^${lo} \u2014 the k = ${lo} term went missing. 2^${lo} = ${2 ** lo} is a full member of the sum: ${dropped} + ${2 ** lo} = ${S}.`],
+            [2 ** hi, `${2 ** hi} is only the last term, 2^${hi}. The counter visits ${lo} through ${hi}: ${S}.`],
           ],
-          `The counter runs k = 0, 1, \u2026, ${m}, so add every power: 1 + 2 + 4 + \u22ef + ${2 ** m} = ${S}.`
+          `The counter runs k = ${lo}, ${lo + 1}, \u2026, ${hi}, so add every power: ${2 ** lo} + ${2 ** (lo + 1)} + \u22ef + ${2 ** hi} = ${S}.`
         );
       }
       if (form === "sigmaSq") {
-        const m = pick(rand, 4, band === "support" ? 5 : 7);
+        // Same widening, same reason — see sigmaPow above.
+        const lo = pick(rand, 1, 3);
+        const span = pick(rand, 2, band === "support" ? 3 : band === "stretch" ? 5 : 4);
+        const hi = lo + span;
         let S = 0;
-        for (let k = 2; k <= m; k++) S += k * k;
+        for (let k = lo; k <= hi; k++) S += k * k;
+        let counters = 0;
+        for (let k = lo; k <= hi; k++) counters += k;
+        /* THE OFF-BY-ONE-BELOW TRAP CANNOT BE USED AT lo = 1, because (lo - 1)^2 is 0 and the trap
+         * would grade EQUAL to the answer — rule 4's "a trap that can grade correct is a bug". At
+         * lo = 1 the misconception that IS available is adding the counters instead of squaring
+         * them, which is distinct from the answer and from the last-term trap for every span >= 2. */
+        const below = (lo - 1) * (lo - 1);
+        const firstTrap: [number, string] = lo > 1
+          ? [S + below, `${S + below} includes ${lo - 1}\u00b2 \u2014 but the counter starts at ${lo}, so ${lo - 1} never plays: ${S}.`]
+          : [counters, `${counters} adds the counter values ${lo} through ${hi} without squaring them. Each term is k\u00b2, not k: ${S}.`];
         return num(
           "sigma-eval",
-          `Evaluate \u03a3 from k = 2 to ${m} of k\u00b2.`,
+          `Evaluate \u03a3 from k = ${lo} to ${hi} of k\u00b2.`,
           S,
           0,
           [
-            [S + 1, `${S + 1} includes 1\u00b2 \u2014 but the counter starts at 2, so 1 never plays: ${S}.`],
-            [m * m, `${m * m} is only the last term, ${m}\u00b2. All the counter values contribute: ${S}.`],
+            firstTrap,
+            [hi * hi, `${hi * hi} is only the last term, ${hi}\u00b2. All the counter values contribute: ${S}.`],
           ],
-          `Square each counter value from 2 to ${m} and add: 4 + 9 + \u22ef + ${m * m} = ${S}.`
+          `Square each counter value from ${lo} to ${hi} and add: ${lo * lo} + ${(lo + 1) * (lo + 1)} + \u22ef + ${hi * hi} = ${S}.`
         );
       }
       // default: Σ k over a small window that does not start at 1.
@@ -13219,18 +13244,29 @@ const GENERATORS: VariantGen[] = [
       };
 
       if (form === "powers") {
+        /* S242 / GRB-04. THE TERM COUNT IS THE MISSING DIMENSION. This form always drew exactly FOUR
+         * terms starting at 1, so only the ratio varied and the pool held four problems — below the
+         * anti-repeat window. n is the more important variable pedagogically: the exponent in
+         * (r^n - 1)/(r - 1) is the thing learners miscount, and a series that is always four terms
+         * long never exercises it. Widening the ratio instead would have been the wider-axis move
+         * CLAUDE.md warns against, and it pushes the sums out of arithmetic range fast. */
         const r = pick(rand, 3, band === "support" ? 4 : 6);
-        const S = 1 + r + r * r + r * r * r;
+        const n = pick(rand, 3, band === "support" ? 4 : 5);
+        const terms = Array.from({ length: n }, (_, i) => r ** i);
+        const S = terms.reduce((a, b) => a + b, 0);
+        const last = terms[n - 1];
         return num(
           "geo-series",
-          `Evaluate 1 + ${r} + ${r * r} + ${r * r * r} with the formula.`,
+          `Evaluate ${terms.join(" + ")} with the formula.`,
           S,
           0,
           [
-            [S - 1, `${S - 1} is ${r} + ${r * r} + ${r * r * r} \u2014 the first term went missing. The 1 = ${r}\u2070 is a full member: ${S - 1} + 1 = ${S}.`],
-            [r * r * r, `${r * r * r} is just the last term. The formula gathers all four: (${r}\u2074 \u2212 1)/${r - 1} = ${S}.`],
+            // Both traps remain true of the drawn series, and n >= 3 keeps them apart: dropping the
+            // first term can equal the last only when the middle terms sum to zero.
+            [S - 1, `${S - 1} is ${terms.slice(1).join(" + ")} \u2014 the first term went missing. The 1 = ${r}\u2070 is a full member: ${S - 1} + 1 = ${S}.`],
+            [last, `${last} is just the last term. The formula gathers all ${n}: (${r}^${n} \u2212 1)/${r - 1} = ${S}.`],
           ],
-          `Four terms of ratio ${r}: (${r}\u2074 \u2212 1)/(${r} \u2212 1) = ${S}.`
+          `${n} terms of ratio ${r}: (${r}^${n} \u2212 1)/(${r} \u2212 1) = ${S}.`
         );
       }
 

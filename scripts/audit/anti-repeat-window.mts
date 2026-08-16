@@ -124,12 +124,21 @@ for (const generator of VARIANT_GENERATORS) {
      * `marginal` is now reported as its own population rather than folded into either neighbour.
      *
      * A leak is now what it should always have been: a repeat the queue served WITHOUT saying so. */
+    /* S242 / GRB-04. ZERO POST-QUEUE DUPLICATES IS THE STRONGEST EVIDENCE THERE IS, and it must be
+     * read before the pool estimate.
+     *
+     * `distinctWidgets` counts distinct widgets in DRAWS random draws, so it is a lower bound that
+     * systematically understates any pool near the window: 20 draws from a pool of 12 are expected
+     * to reveal about 9.9 of them. Three pairs widened from 4 problems to 12 therefore kept the
+     * `exhausted` label — while their in-window duplicates fell from 10 to 0, 2 and 3. The label was
+     * wrong, not the content, and the ordering below is the fix: a pair the queue serves without a
+     * single repeat is CLEAN whatever a sampled estimate of its pool says. */
     const announced = exhaustedDraws >= after;
     const verdict =
       after > 0 && !announced ? "leaking"
+      : after === 0 ? "clean"
       : distinct <= REPEAT_WINDOW ? "exhausted"
-      : after > 0 ? "marginal"
-      : "clean";
+      : "marginal";
     rows.push({
       generator: generator.tag, form, widgetType, verdict,
       draws: withQueue.length, distinct, before: windowDuplicates(withoutQueue), after, exhaustedDraws, redraws
