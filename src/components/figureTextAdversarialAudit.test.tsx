@@ -261,7 +261,17 @@ describe("adversarial illustration and accompanying-text audit", () => {
      * signal there was. The key is deleted rather than replaced — no figure is strictly better than
      * a wrong one, and the lesson's own c1 already carries the right figure for it.
      * This assertion stays an EXACT equality, so the next census change must be argued too. */
-    expect(rows).toHaveLength(3815);
+    /* S242 / VIS-04: 3,815 → 3,814. The SECOND true positive from the topic-drift audit, removed
+     * for the same reason as the first. `kc-03-03` is the Kindergarten lesson "Count by Tens"; its
+     * c1 step reads "Count by tens: 10, 20, 30, 40 … all the way to 100" and carried `tens-arcs`,
+     * which draws "skip-counting by ten FROM TWENTY-THREE: 23, 33, 43, 53". That is a different
+     * concept — skip-counting can start anywhere — and it contradicts the sentence beside it.
+     *
+     * VIS-03's digit scan could not see this one because the figure's title spells its numbers as
+     * WORDS. The key is deleted rather than replaced: c2, two steps later, already carries
+     * `kc-by-tens` ("groups of ten make ten, twenty, thirty, forty"), and choosing a replacement
+     * for c1 would be an authoring judgment this change does not need to make. */
+    expect(rows).toHaveLength(3814);
     expect(FIGURE_TEXT_MISMATCH_BLOCKLIST).toHaveProperty("size", 136);
     expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1078);
     expect(pendingRows).toHaveLength(1078);
