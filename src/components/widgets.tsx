@@ -1956,6 +1956,22 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
 
 /* ---------------- TrialProbabilityLab (fixed evidence ↔ exact probability claim) ---------------- */
 
+/* S242 / ACC-01 §5(f) × ENG-01 R2. THE CORRECTNESS COLOUR IS NOW POST-VERDICT HERE AND IN
+ * `DistributionCompareLabW` and `FractionGridW`.
+ *
+ * §6 of the accessibility matrix is what decides the shape of this fix. Colour-only correctness
+ * cues are a WCAG 1.4.1 (Level A) failure AND an ENG-01 R2 pre-commit signal, and the two remedies
+ * point in opposite directions: adding a glyph or a text channel makes the answer leak LOUDER and
+ * puts it in the accessible name, while gating on `tone === "info"` makes the 1.4.1 problem vanish
+ * — post-verdict the banner already states the outcome in words. So the pedagogy fix is the
+ * accessibility fix, and doing them the other way round would ship an answer leak in the name of
+ * access.
+ *
+ * These three were chosen by reading, not by the detector. Each one's condition is the grader's own
+ * test — `accepted` is literally `trialProbabilityEquivalent(spec, selected)`, `selectedCorrect` is
+ * `|selected − answer| <= tolerance`, `atTarget` matches every field of the fractionGrid spec — and
+ * each engine carries GRADED placements: 7, 12 and 4 respectively, 23 in all. The other flagged
+ * sites are recorded in `ACC01_COLOUR_ONLY_CUE.md` with the reason each was left alone. */
 function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<TTrialProbabilityLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const accepted = selected ? trialProbabilityEquivalent(spec, selected) : false;
@@ -2031,8 +2047,8 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
           )}
           {claim !== null && (
             <g data-testid="tpl-learner-claim">
-              <circle cx={xFor(claim)} cy={62} r={8} fill={accepted ? PALETTE.leaf : PALETTE.sky} stroke={PALETTE.ink} strokeWidth={2} />
-              <text x={xFor(claim)} y={44} textAnchor="middle" fontSize={11} fontWeight={800} fill={accepted ? PALETTE.leaf : PALETTE.sky}>your claim {fmt(claim)}</text>
+              <circle cx={xFor(claim)} cy={62} r={8} fill={accepted && tone === "info" ? PALETTE.leaf : PALETTE.sky} stroke={PALETTE.ink} strokeWidth={2} />
+              <text x={xFor(claim)} y={44} textAnchor="middle" fontSize={11} fontWeight={800} fill={accepted && tone === "info" ? PALETTE.leaf : PALETTE.sky}>your claim {fmt(claim)}</text>
             </g>
           )}
           {tone === "info" && !accepted && (
@@ -10015,7 +10031,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
           {spec.mode === "measure" && answer !== null && (
             <>
               <rect x={tapeX} y={tapeY} width={tapeW} height={14} rx={7} fill="none" stroke={PALETTE.ink} strokeWidth={2} strokeDasharray="6 4" />
-              {selectedMeasure !== null && selectedMeasure >= 0 && <rect x={tapeX} y={tapeY} width={selectedW} height={14} rx={7} fill={selectedCorrect ? PALETTE.leaf : PALETTE.sky} opacity={0.75} data-testid="dcl-measure-tape" />}
+              {selectedMeasure !== null && selectedMeasure >= 0 && <rect x={tapeX} y={tapeY} width={selectedW} height={14} rx={7} fill={selectedCorrect && tone === "info" ? PALETTE.leaf : PALETTE.sky} opacity={0.75} data-testid="dcl-measure-tape" />}
               {selectedMeasure !== null && selectedMeasure < 0 && <rect x={tapeX-selectedW} y={tapeY} width={selectedW} height={14} rx={7} fill={PALETTE.berry} opacity={0.75} data-testid="dcl-negative-tape" />}
               <text x={tapeX+tapeW/2} y={222} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.ink}>dashed target = mean gap; solid tape = your variability-widths</text>
               {tone === "info" && !selectedCorrect && <text data-testid="dcl-reveal-ghost" x={tapeX+tapeW} y={188} textAnchor="end" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>target {fmt(answer)} units</text>}
@@ -17983,7 +17999,7 @@ function FractionGridW({ spec, value, onChange, disabled, tone, onEvent }: WProp
         <rect x={pad} y={pad} width={cw * shadeC} height={W - 2 * pad} fill={PALETTE.tangerine} fillOpacity={0.28} />
         {/* the overlap — the product, emphasized */}
         {shadeR > 0 && shadeC > 0 && (
-          <rect x={pad} y={pad} width={cw * shadeC} height={rh * shadeR} fill={atTarget ? PALETTE.leaf : PALETTE.sky} fillOpacity={0.45} data-testid="fg-overlap" data-at-target={atTarget || undefined} />
+          <rect x={pad} y={pad} width={cw * shadeC} height={rh * shadeR} fill={atTarget && tone === "info" ? PALETTE.leaf : PALETTE.sky} fillOpacity={0.45} data-testid="fg-overlap" data-at-target={atTarget || undefined} />
         )}
         {Array.from({ length: rows - 1 }, (_, i) => (
           <line key={`r${i}`} x1={pad} y1={pad + rh * (i + 1)} x2={W - pad} y2={pad + rh * (i + 1)} stroke={PALETTE.ink} strokeWidth={1.2} />

@@ -205,14 +205,33 @@ describe("fractionGrid", () => {
     expect(widgetIntegrityErrors(bad)[0]).toMatch(/equals the correct build/);
   });
 
-  it("renders; the overlap turns leaf exactly at the target build", () => {
+  /* S242 / ACC-01 §5(f) × ENG-01 R2. CORRECTED, NOT RELAXED. This mounted with no tone — active
+   * work — and required the overlap to be leaf at the target build, which pinned a correctness
+   * signal arriving before Check. Colour was the only channel carrying it (WCAG 1.4.1, Level A)
+   * and it reached 4 graded placements.
+   *
+   * The replacement is stricter: it keeps the "leaf exactly at the target build" requirement, moves
+   * it behind `tone === "info"`, and adds the prohibition that was the defect. `data-at-target` is
+   * unchanged and still checked — it is neither visible nor announced, so it leaks to no learner
+   * and remains the honest hook for asserting the build itself. */
+  it("renders; the overlap turns leaf at the target build once the verdict is in", () => {
+    const right = { rows: 3, shadeR: 2, cols: 5, shadeC: 4 };
+    const { container } = render(
+      <WidgetRenderer spec={grid()} value={right} onChange={() => {}} disabled={false} seed="t" tone="info" />
+    );
+    const overlap = container.querySelector('[data-testid="fg-overlap"]');
+    expect(overlap?.getAttribute("data-at-target")).toBe("true");
+    expect(overlap?.getAttribute("fill")).toBe("#2FA36B");
+  });
+
+  it("withholds the leaf overlap while the learner is still working", () => {
     const right = { rows: 3, shadeR: 2, cols: 5, shadeC: 4 };
     const { container } = render(
       <WidgetRenderer spec={grid()} value={right} onChange={() => {}} disabled={false} seed="t" />
     );
     const overlap = container.querySelector('[data-testid="fg-overlap"]');
     expect(overlap?.getAttribute("data-at-target")).toBe("true");
-    expect(overlap?.getAttribute("fill")).toBe("#2FA36B");
+    expect(overlap?.getAttribute("fill")).not.toBe("#2FA36B");
   });
 });
 
