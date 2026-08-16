@@ -477,9 +477,18 @@ export function AppIcon({
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
+/* S242 / ACC-01. `focus-visible:outline-none` used to sit here with NO replacement indicator, and
+ * its specificity (0,2,0) beat the global `:focus-visible` rule (0,1,0) — so every `<Button>` and
+ * `<ButtonLink>` in the app had no visible focus ring at all. A clean WCAG 2.4.7 (Level AA)
+ * failure, one token wide, recorded in `reports/acc/ACC01_ACCESSIBILITY_MATRIX.md` row d1.
+ *
+ * The fix is to delete the token rather than to add a parallel Tailwind ring: the app already HAS a
+ * designed focus indicator, and a second one would drift from it. The reason this token was
+ * plausibly added — the global rule forced `border-radius: 4px` onto the focused element, squaring
+ * off a `rounded-card` button — is fixed at its source in `globals.css`. */
 const BTN_BASE =
   "pressable inline-flex items-center justify-center gap-2 rounded-card font-bold " +
-  "focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45 " +
+  "disabled:cursor-not-allowed disabled:opacity-45 " +
   "disabled:shadow-none";
 
 const BTN_VARIANT: Record<ButtonVariant, string> = {

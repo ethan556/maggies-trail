@@ -533,7 +533,10 @@ export function NumberLineRayW({ spec, value, onChange, disabled, tone, onEvent,
             aria-label={relation.constantSlot.meaning}
             onChange={(e) => typeConstant(e.target.value)}
             onBlur={() => setConstantDraft(null)}
-            className="h-11 w-20 bg-transparent text-center text-xl font-black tabular-nums outline-none disabled:opacity-60"
+            /* S242 / ACC-01. `outline-none` with no replacement: this input was keyboard-reachable
+               and gave no sign of it. It sits on a transparent background inside a label, so the
+               app's ring pattern reads better here than a border change. */
+            className="h-11 w-20 rounded-card bg-transparent text-center text-xl font-black tabular-nums outline-none transition-shadow focus:ring-2 focus:ring-sky/25 disabled:opacity-60"
           />
         </label>
 
