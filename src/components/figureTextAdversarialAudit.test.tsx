@@ -253,7 +253,15 @@ describe("adversarial illustration and accompanying-text audit", () => {
 
     expect(descriptions.size).toBe(1871);
     expect([...descriptions.values()].every(Boolean)).toBe(true);
-    expect(rows).toHaveLength(3816);
+    /* S242 / VIS-04: 3,816 → 3,815. One placement was REMOVED, not reclassified —
+     * `ia-01-01#c2`, the lesson "Area Between Two Curves", was carrying `dr-flat-not-turning`:
+     * "The cubic has a flat tangent at the origin but does not turn there." A derivative figure on
+     * an integration step. Neither the figure nor the prose names a number, so the numeric audit
+     * (VIS-03) was structurally blind to it; the two share no subject vocabulary, which was the only
+     * signal there was. The key is deleted rather than replaced — no figure is strictly better than
+     * a wrong one, and the lesson's own c1 already carries the right figure for it.
+     * This assertion stays an EXACT equality, so the next census change must be argued too. */
+    expect(rows).toHaveLength(3815);
     expect(FIGURE_TEXT_MISMATCH_BLOCKLIST).toHaveProperty("size", 136);
     expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1078);
     expect(pendingRows).toHaveLength(1078);
