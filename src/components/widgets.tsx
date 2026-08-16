@@ -3514,9 +3514,9 @@ function CircleRadiusScaleW({ spec, value, onChange, disabled, tone }: WProps<TC
         </text>
       </svg>
       <div className="grid grid-cols-3 gap-2">
-        <LabReadout label="diameter 2r" value={`${t.diameter}`} tone={spec.askQuantity === "diameter" && hit ? "good" : "neutral"} />
-        <LabReadout label="circumference 2πr" value={`${t.circumferenceCoef}\u03c0`} tone={spec.askQuantity === "circumference" && hit ? "good" : "neutral"} />
-        <LabReadout label="area πr²" value={`${t.areaCoef}\u03c0`} tone={spec.askQuantity === "area" && hit ? "good" : "neutral"} />
+        <LabReadout label="diameter 2r" value={`${t.diameter}`} tone={spec.askQuantity === "diameter" && hit ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="circumference 2πr" value={`${t.circumferenceCoef}\u03c0`} tone={spec.askQuantity === "circumference" && hit ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="area πr²" value={`${t.areaCoef}\u03c0`} tone={spec.askQuantity === "area" && hit ? "good" : "neutral"} stage={tone} signalsCorrect />
       </div>
       <p className="text-center text-sm font-bold text-ink/70" aria-live="polite">
         {spec.askQuantity} reads {asked}{spec.askQuantity === "diameter" ? "" : "\u03c0"}
@@ -7078,7 +7078,7 @@ function RoundSolidBuilderW({ spec, value, onChange, disabled, tone, onEvent }: 
       )}
       <div className="grid grid-cols-2 gap-2">
         <LabReadout label="formula" value={spec.solid === "cylinder" ? "\u03c0r\u00b2h" : spec.solid === "cone" ? "\u03c0r\u00b2h \u00f7 3" : "4\u03c0r\u00b3 \u00f7 3"} />
-        <LabReadout label="volume" value={coefText} tone={hit ? "good" : "neutral"} />
+        <LabReadout label="volume" value={coefText} tone={hit ? "good" : "neutral"} stage={tone} signalsCorrect />
       </div>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>radius</span>
@@ -11761,9 +11761,8 @@ function BinomialAreaLabW({ spec, value, onChange, onEvent, disabled, tone }: WP
         <LabReadout
           label="x term (the sum)"
           value={`${qX * st.a} + ${pX * st.b} = ${mine.middle}`}
-          tone={mine.middle === truth.middle ? "good" : "neutral"}
-        />
-        <LabReadout label="constant" value={`${mine.constant}`} tone={mine.constant === truth.constant ? "good" : "neutral"} />
+          tone={mine.middle === truth.middle ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="constant" value={`${mine.constant}`} tone={mine.constant === truth.constant ? "good" : "neutral"} stage={tone} signalsCorrect />
       </div>
       <p className="text-center text-lg font-black tabular-nums" aria-live="polite">
         {expansion}
@@ -14323,7 +14322,7 @@ function QuadraticRootsW({ spec, value, onChange, disabled, tone, onEvent }: WPr
       </p>
       <div className="grid grid-cols-2 gap-2">
         <LabReadout label="discriminant b² − 4ac" value={`${disc}`} tone={disc === 0 ? "warn" : "neutral"} />
-        <LabReadout label="real solutions" value={disc > 0 ? "2" : "1 (repeated)"} tone={hit ? "good" : "neutral"} />
+        <LabReadout label="real solutions" value={disc > 0 ? "2" : "1 (repeated)"} tone={hit ? "good" : "neutral"} stage={tone} signalsCorrect />
       </div>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>first root</span>
@@ -16413,8 +16412,8 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
         )}
       </svg>
       <div className="grid grid-cols-2 gap-2">
-        <LabReadout label="stride" value={`${h}`} tone={allHit ? "good" : "neutral"} />
-        <LabReadout label="marks hit" value={`${targets.filter(hits).length} of ${targets.length}`} tone={allHit ? "good" : "warn"} />
+        <LabReadout label="stride" value={`${h}`} tone={allHit ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="marks hit" value={`${targets.filter(hits).length} of ${targets.length}`} tone={allHit ? "good" : "warn"} stage={tone} signalsCorrect />
       </div>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>hop size</span>
@@ -18373,9 +18372,52 @@ function AxisCaptions({ w, h, x = "x", y = "y" }: { w: number; h: number; x?: st
   );
 }
 
-function LabReadout({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "good" | "warn" }) {
-  const cls = tone === "good" ? "border-leaf/35 bg-leaf/10 text-leaf-ink" : tone === "warn" ? "border-berry/35 bg-berry/10 text-berry-ink" : "border-ink/10 bg-white/80 text-ink";
-  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`}><div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65">{label}</div><div className="text-base font-black tabular-nums">{value}</div></div>;
+/* S242 / ACC-01 + ENG-01 R2 — LabReadout carried its state in COLOUR ALONE.
+ *
+ * `ACC01_ACCESSIBILITY_MATRIX.md` measured 53 call sites passing a conditional `tone`, and this
+ * component rendered it as a border and a background and nothing else: no glyph, no text, no ARIA.
+ * A learner who cannot separate leaf from berry — or who is listening rather than looking — got
+ * none of the information the tone carries. WCAG 2.1 SC 1.4.1, one component wide, reach 678
+ * instances.
+ *
+ * THE TWO BACKLOGS ARE THE SAME SITES. `ENG01_REVERSIBLE_PLAY_ASSESSMENT.md` flags many of these
+ * same readouts as R2 — a "good" tone that appears the instant learner state matches the target,
+ * before Check, so the widget reports correctness the learner was supposed to commit to. The
+ * accessibility fix and the pedagogy fix pull the same lever from opposite ends: adding a text
+ * channel makes the leak LOUDER, and gating the signal makes the contrast problem vanish. Working
+ * them separately would have meant doing this twice and getting it wrong once.
+ *
+ * `signalsCorrect` is the call site's declaration that its tone is a CORRECTNESS comparison rather
+ * than task progress — `unitRuler`'s "all placements made" is progress and stays visible; a readout
+ * that turns green because the learner's value equals the target is a verdict and waits for one.
+ * The component cannot tell those apart, so it does not guess: the default is the safe reading. */
+function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = false }: {
+  label: string; value: string; tone?: "neutral" | "good" | "warn";
+  /** The step's own tone. `"info"` is the platform's post-verdict gate, as used for GhostChip. */
+  stage?: StageTone;
+  /** True when `tone` is derived from a comparison with the answer or target state. */
+  signalsCorrect?: boolean;
+}) {
+  const shown = signalsCorrect && stage !== "info" ? "neutral" : tone;
+  const cls = shown === "good" ? "border-leaf/35 bg-leaf/10 text-leaf-ink" : shown === "warn" ? "border-berry/35 bg-berry/10 text-berry-ink" : "border-ink/10 bg-white/80 text-ink";
+  // The second channel. A mark and a word, both inside the accessible name, so the state survives
+  // greyscale, low vision, and a screen reader alike.
+  const mark = shown === "good" ? "✓" : shown === "warn" ? "!" : "";
+  const spoken = shown === "good" ? "on target" : shown === "warn" ? "needs attention" : "";
+  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={`${label}: ${value}${spoken ? `, ${spoken}` : ""}`}>
+    <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65">{label}</div>
+    {/* THE VALUE KEEPS ITS OWN ELEMENT. Prefixing the mark into the same text node made the value
+      * read as "✓ -14", and two tests that assert on the exact readout — one of them named "keeps
+      * reversal visible as a signed consequence rather than color alone", which is this same
+      * concern from the other direction — stopped finding it. Anything reading the number, test or
+      * assistive tech, should still get the number. The mark is aria-hidden because the state is
+      * already spoken in the container's accessible name; announcing it twice is worse than not
+      * announcing it at all. */}
+    <div className="text-base font-black tabular-nums">
+      {mark && <span aria-hidden="true">{mark} </span>}
+      <span>{value}</span>
+    </div>
+  </div>;
 }
 
 function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TLineRelationLab>) {
@@ -18431,7 +18473,7 @@ function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
       )}
       {!disabled && <rect className="mt-drag-hit" data-testid="lrl-drag" x={0} y={0} width={W} height={H} aria-hidden="true" {...drag.handleProps} />}
     </svg>
-    <div className="grid grid-cols-2 gap-2"><LabReadout label="relation" value={relation} tone={good?'good':relation==='intersecting'?'warn':'neutral'}/><LabReadout label="angle" value={`${diff}°`} tone={diff===0||diff===90?'good':'neutral'}/></div>
+    <div className="grid grid-cols-2 gap-2"><LabReadout label="relation" value={relation} tone={good?'good':relation==='intersecting'?'warn':'neutral'} stage={tone} signalsCorrect /><LabReadout label="angle" value={`${diff}°`} tone={diff===0||diff===90?'good':'neutral'} stage={tone} signalsCorrect /></div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "move", "made")}</p>
     <label className="grid gap-1 text-sm font-bold"><span>Rotate the active line</span><input aria-label="active line angle" type="range" min="0" max="175" step={spec.angleStep} value={angle} disabled={disabled} onChange={e=>set({angle:Number(e.target.value)})} className="h-11 w-full accent-sky"/></label>
     <label className="grid gap-1 text-sm font-bold"><span>Translate it without rotating</span><input aria-label="active line offset" type="range" min="-5" max="5" step="1" value={offset} disabled={disabled} onChange={e=>set({offset:Number(e.target.value)})} className="h-11 w-full accent-sky"/></label>
@@ -18439,7 +18481,7 @@ function LineRelationLabW({ spec, value, onChange, disabled, onEvent, tone }: WP
 }
 
 
-function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent}:WProps<TTriangleConstraintLab>){
+function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TTriangleConstraintLab>){
   type Criterion=TtriangleCriterion;
   const v=value&&typeof value==='object'?value as {criterion:Criterion;angle:number;flipped:boolean;moves:number}:null;
   const criterion=v?.criterion??spec.startCriterion,angle=v?.angle??spec.angleStart,flipped=v?.flipped??false,moves=v?.moves??0;
@@ -18484,7 +18526,7 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent}:WProps<TT
       <text x="190" y="215" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{criterion}: {unique?'0 degrees of freedom':'1 unresolved choice'}</text>
       {!disabled&&<rect className="mt-drag-hit" data-testid="tcl-drag" x={0} y={0} width={380} height={200} aria-hidden="true" {...drag.handleProps}/>}
     </svg>
-    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'}/><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'}/></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'}/><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'}/><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
+    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
     <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">{criteria.map(c=><button key={c} type="button" disabled={disabled} aria-pressed={criterion===c} onClick={()=>set({criterion:c,flipped:false})} className={`min-h-11 rounded-xl border-2 font-extrabold ${criterion===c?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{c}</button>)}</div>
     <label className="grid gap-1 text-sm font-bold"><span>Change the included/given angle</span><input aria-label="triangle constraint angle" type="range" min="20" max="140" step={spec.angleStep} value={angle} disabled={disabled} onChange={e=>set({angle:Number(e.target.value)})} className="h-11 w-full accent-sky"/></label>
     <button type="button" disabled={disabled} onClick={()=>set({flipped:!flipped})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${ambiguous?'border-tangerine bg-tangerine/10':'border-leaf bg-leaf/10'}`}>{candidateCount===0?'No triangle satisfies these SSA givens':ambiguous?(flipped?'Hide the second valid triangle':'Reveal the second valid triangle'):'Try to make a different triangle — it collapses onto the first'}</button>
@@ -18496,7 +18538,7 @@ type TtriangleCriterion='SSS'|'SAS'|'ASA'|'AAS'|'HL'|'SSA';
 function coordSlope(a:[number,number],b:[number,number]){const dx=b[0]-a[0],dy=b[1]-a[1];return Math.abs(dx)<1e-9?'vertical':(dy/dx).toFixed(2)}
 function coordDist(a:[number,number],b:[number,number]){return Math.hypot(b[0]-a[0],b[1]-a[1])}
 function coordMid(a:[number,number],b:[number,number]){return [(a[0]+b[0])/2,(a[1]+b[1])/2] as [number,number]}
-function CoordinateProofLabW({spec,value,onChange,disabled,onEvent}:WProps<TCoordinateProofLab>){
+function CoordinateProofLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TCoordinateProofLab>){
   const v=value&&typeof value==='object'?value as {x:number;y:number;moves:number;evidence:string[]}:null;const x=v?.x??spec.start[0],y=v?.y??spec.start[1],moves=v?.moves??0,evidence=v?.evidence??[];const D:[number,number]=[x,y],A=spec.fixed[0],B=spec.fixed[1],C=spec.fixed[2];
   useEffect(()=>{if(!v)onChange({x,y,moves:0,evidence:[]});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const setPoint=(nx:number,ny:number)=>{const before=Math.hypot(x-spec.target[0],y-spec.target[1]),after=Math.hypot(nx-spec.target[0],ny-spec.target[1]);onEvent?.({control:'vertex-D',dir:after<before?'toward':after>before?'away':'neutral'});onChange({x:nx,y:ny,moves:moves+1,evidence})};
@@ -18519,17 +18561,17 @@ function CoordinateProofLabW({spec,value,onChange,disabled,onEvent}:WProps<TCoor
     {[A,B,C,D].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===3?9:6} fill={i===3?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+10} y={Y(p[1])-8} fontWeight="900" fontSize="12">{'ABCD'[i]}({p[0]},{p[1]})</text></g>)}
   <AxisCaptions w={W} h={H} />
   {!disabled&&<rect className="mt-drag-hit" data-testid="cpl-drag" x={0} y={0} width={W} height={H-16} aria-hidden="true" {...drag.handleProps}/>}</svg>
-  <div className="grid grid-cols-3 gap-2"><LabReadout label="claim" value={spec.targetClaim} tone={atTarget&&allEvidence?'good':'neutral'}/><LabReadout label="vertex D" value={`(${x}, ${y})`} tone={atTarget?'good':'neutral'}/><LabReadout label="proof moves" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
+  <div className="grid grid-cols-3 gap-2"><LabReadout label="claim" value={spec.targetClaim} tone={atTarget&&allEvidence?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="vertex D" value={`(${x}, ${y})`} tone={atTarget?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="proof moves" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
   <div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-sm font-bold"><span>D x-coordinate</span><input aria-label="D x-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={x} disabled={disabled} onChange={e=>setPoint(Number(e.target.value),y)} className="h-11 w-full accent-sky"/></label><label className="grid gap-1 text-sm font-bold"><span>D y-coordinate</span><input aria-label="D y-coordinate" type="range" min={spec.gridMin} max={spec.gridMax} step="1" value={y} disabled={disabled} onChange={e=>setPoint(x,Number(e.target.value))} className="h-11 w-full accent-sky"/></label></div>
   <div className="grid grid-cols-3 gap-2">{(['slopes','midpoints','distances'] as const).map(k=><button key={k} type="button" disabled={disabled} aria-pressed={evidence.includes(k)} onClick={()=>toggle(k)} className={`min-h-12 rounded-xl border-2 text-sm font-extrabold ${evidence.includes(k)?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>Inspect {k}</button>)}</div>
   {evidence.includes('slopes')&&<div className="grid grid-cols-2 gap-2"><LabReadout label="AB / CD slopes" value={`${mAB} / ${mCD}`} tone={mAB===mCD?'good':'warn'}/><LabReadout label="BC / AD slopes" value={`${mBC} / ${mAD}`} tone={mBC===mAD?'good':'warn'}/></div>}
-  {evidence.includes('midpoints')&&<div className="grid grid-cols-2 gap-2"><LabReadout label="midpoint AC" value={`(${midAC[0]}, ${midAC[1]})`} tone={midAC[0]===midBD[0]&&midAC[1]===midBD[1]?'good':'neutral'}/><LabReadout label="midpoint BD" value={`(${midBD[0]}, ${midBD[1]})`} tone={midAC[0]===midBD[0]&&midAC[1]===midBD[1]?'good':'warn'}/></div>}
+  {evidence.includes('midpoints')&&<div className="grid grid-cols-2 gap-2"><LabReadout label="midpoint AC" value={`(${midAC[0]}, ${midAC[1]})`} tone={midAC[0]===midBD[0]&&midAC[1]===midBD[1]?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="midpoint BD" value={`(${midBD[0]}, ${midBD[1]})`} tone={midAC[0]===midBD[0]&&midAC[1]===midBD[1]?'good':'warn'} stage={tone} signalsCorrect /></div>}
   {evidence.includes('distances')&&<div className="grid grid-cols-2 gap-2"><LabReadout label="AB / CD lengths" value={`${dAB.toFixed(2)} / ${dCD.toFixed(2)}`} tone={Math.abs(dAB-dCD)<1e-9?'good':'warn'}/><LabReadout label="BC / AD lengths" value={`${dBC.toFixed(2)} / ${dAD.toFixed(2)}`} tone={Math.abs(dBC-dAD)<1e-9?'good':'warn'}/></div>}
   </div>;
 }
 
 function solidSectionArea(spec:TSolidSliceLab,f:number){if(spec.solid==='cylinder'||spec.solid==='prism')return spec.baseArea??Math.PI*spec.radius*spec.radius;if(spec.solid==='cone')return Math.PI*spec.radius*spec.radius*(1-f)*(1-f);const y=-spec.radius+2*spec.radius*f;return Math.PI*Math.max(0,spec.radius*spec.radius-y*y)}
-function SolidSliceLabW({spec,value,onChange,disabled,onEvent}:WProps<TSolidSliceLab>){
+function SolidSliceLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TSolidSliceLab>){
   const v=value&&typeof value==='object'?value as {fraction:number;moves:number;compare:boolean}:null,fraction=v?.fraction??spec.startFraction,moves=v?.moves??0,compare=v?.compare??false;useEffect(()=>{if(!v)onChange({fraction,moves:0,compare:false});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const setFraction=(nf:number)=>{const d=moveRelation(fraction,nf,spec.targetFraction);if(d)onEvent?.({control:'section-height',dir:d});onChange({fraction:nf,moves:moves+1,compare})};const setCompare=()=>{onEvent?.({control:'comparison-solid',dir:'toward'});onChange({fraction,moves:moves+1,compare:!compare})};
   const area=solidSectionArea(spec,fraction),base=spec.baseArea??Math.PI*spec.radius*spec.radius,ratio=base?area/base:0,y=205-fraction*150,rx=78*(spec.solid==='cone'?(1-fraction):spec.solid==='sphere'?Math.sqrt(Math.max(0,1-Math.pow(2*fraction-1,2))):1),atTarget=Math.abs(fraction-spec.targetFraction)<=spec.tolerance,done=atTarget&&moves>=spec.requiredMoves&&(!spec.comparisonRequired||compare);
@@ -18543,7 +18585,7 @@ function SolidSliceLabW({spec,value,onChange,disabled,onEvent}:WProps<TSolidSlic
     <ellipse cx="150" cy={y} rx={Math.max(2,rx)} ry={Math.max(2,rx*.28)} fill={PALETTE.tangerine} fillOpacity=".32" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="150" y="238" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>section = {(ratio*100).toFixed(0)}% of base area</text>
     {!disabled&&<rect className="mt-drag-hit" data-testid="ssl-drag" x={0} y={12} width={300} height={216} aria-hidden="true" {...drag.handleProps}/>}
   </svg>{compare&&<div className="rounded-2xl border border-leaf/25 bg-leaf/5 p-4"><div className="flex h-full min-h-48 flex-col items-center justify-center gap-3"><div className="h-24 w-36 border-4 border-leaf bg-leaf/10"><div className="relative top-1/2 border-t-4 border-dashed border-tangerine"/></div><p className="text-center font-extrabold">Equal-area comparison prism</p><p className="text-center text-sm font-bold text-ink/70">At the same height its section is {base.toFixed(2)} square units.</p></div></div>}</div>
-  <div className="grid grid-cols-2 gap-2"><LabReadout label="slice height" value={`${(fraction*100).toFixed(0)}%`} tone={atTarget?'good':'neutral'}/><LabReadout label="section area" value={area.toFixed(2)} tone={spec.solid==='cylinder'||spec.solid==='prism'?'good':'neutral'}/></div>
+  <div className="grid grid-cols-2 gap-2"><LabReadout label="slice height" value={`${(fraction*100).toFixed(0)}%`} tone={atTarget?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="section area" value={area.toFixed(2)} tone={spec.solid==='cylinder'||spec.solid==='prism'?'good':'neutral'}/></div>
   <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "move", "made")}</p>
   <label className="grid gap-1 text-sm font-bold"><span>Move the section plane through the solid</span><input aria-label="section height" type="range" min="0" max="1" step={spec.fractionStep} value={fraction} disabled={disabled} onChange={e=>setFraction(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
   <button type="button" disabled={disabled} aria-pressed={compare} onClick={setCompare} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${compare?'border-leaf bg-leaf/10':'border-ink/15 bg-white'}`}>{compare?'Comparison solid visible':'Add an equal-base-area comparison solid'}</button>
@@ -18554,7 +18596,7 @@ function triAngles(a:[number,number],b:[number,number],c:[number,number]){
   const angle=(p:[number,number],q:[number,number],r:[number,number])=>{const u=[q[0]-p[0],q[1]-p[1]],v=[r[0]-p[0],r[1]-p[1]];const d=u[0]*v[0]+u[1]*v[1],m=Math.hypot(...u)*Math.hypot(...v);return Math.acos(Math.max(-1,Math.min(1,d/m)))*180/Math.PI};
   const A=angle(a,b,c),B=angle(b,a,c);return [A,B,180-A-B] as const;
 }
-function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTriangleAngleLab>){
+function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent,tone }:WProps<TTriangleAngleLab>){
   const v=value&&typeof value==='object'?value as {x:number;y:number;moves:number}:null;const x=v?.x??spec.startC[0],y=v?.y??spec.startC[1],moves=v?.moves??0;
   useEffect(()=>{if(!v)onChange({x,y,moves:0});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const set=(nx:number,ny:number)=>{const safeY=Math.max(2,ny);const before=triAngles(spec.fixedA,spec.fixedB,[x,y])[0],after=triAngles(spec.fixedA,spec.fixedB,[nx,safeY])[0];const dir=moveRelation(before,after,spec.targetAngleA);if(dir)onEvent?.({control:'vertex',dir,kind:'efficient'});onChange({x:nx,y:safeY,moves:moves+1})};
@@ -18564,7 +18606,7 @@ function TriangleAngleLabW({ spec,value,onChange,disabled,onEvent }:WProps<TTria
     <polygon points={[spec.fixedA,spec.fixedB,C].map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')} fill={PALETTE.sky} fillOpacity=".14" stroke={PALETTE.sky} strokeWidth="4"/>
     {[spec.fixedA,spec.fixedB,C].map((p,i)=><g key={i}><circle cx={X(p[0])} cy={Y(p[1])} r={i===2?9:6} fill={i===2?PALETTE.tangerine:PALETTE.ink}/><text x={X(p[0])+(i===2?10:-20)} y={Y(p[1])-10} fontSize="12" fontWeight="900" fill={i===2?PALETTE.tangerine:PALETTE.ink}>{angs[i].toFixed(0)}°</text></g>)}
     {!disabled&&<circle className="mt-drag-hit" cx={X(x)} cy={Y(y)} r="24" {...drag.handleProps}/>}<text x="170" y="22" textAnchor="middle" fontWeight="900" fill={PALETTE.leaf}>A + B + C = {sum.toFixed(0)}°</text>
-  </svg><div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-sm font-bold"><span>Vertex C across</span><input aria-label="Vertex C across" type="range" min="0" max={G} step="0.25" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value),y)} className="h-11 w-full accent-sky"/></label><label className="grid gap-1 text-sm font-bold"><span>Vertex C height</span><input aria-label="Vertex C height" type="range" min="2" max={G} step="0.25" value={y} disabled={disabled} onChange={e=>set(x,Number(e.target.value))} className="h-11 w-full accent-sky"/></label></div><div className="grid grid-cols-3 gap-2">{angs.map((a,i)=><LabReadout key={i} label={`angle ${'ABC'[i]}`} value={`${a.toFixed(1)}°`} tone={i===0&&Math.abs(a-spec.targetAngleA)<=spec.tolerance?'good':'neutral'}/>)}</div><div className="grid grid-cols-1 gap-2"><LabReadout label="angle sum" value={`${sum.toFixed(1)}°`} tone="good"/></div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "reshape", "made")}</p></div>;
+  </svg><div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-sm font-bold"><span>Vertex C across</span><input aria-label="Vertex C across" type="range" min="0" max={G} step="0.25" value={x} disabled={disabled} onChange={e=>set(Number(e.target.value),y)} className="h-11 w-full accent-sky"/></label><label className="grid gap-1 text-sm font-bold"><span>Vertex C height</span><input aria-label="Vertex C height" type="range" min="2" max={G} step="0.25" value={y} disabled={disabled} onChange={e=>set(x,Number(e.target.value))} className="h-11 w-full accent-sky"/></label></div><div className="grid grid-cols-3 gap-2">{angs.map((a,i)=><LabReadout key={i} label={`angle ${'ABC'[i]}`} value={`${a.toFixed(1)}°`} tone={i===0&&Math.abs(a-spec.targetAngleA)<=spec.tolerance?'good':'neutral'} stage={tone} signalsCorrect />)}</div><div className="grid grid-cols-1 gap-2"><LabReadout label="angle sum" value={`${sum.toFixed(1)}°`} tone="good"/></div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(moves, spec.requiredMoves, "reshape", "made")}</p></div>;
 }
 
 function scannerCount(kind: TVerticalLineScanner['relation'], x:number){if(kind==='circle')return Math.abs(x)<4?2:Math.abs(x)===4?1:0;if(kind==='sideways')return x>=0&&x<=4?2:0;if(kind==='discreteNonFunction')return Math.abs(x-1)<.26?2:Math.abs(x-3)<.26?1:0;if(kind==='discreteFunction')return [ -3,-1,1,3].some(v=>Math.abs(x-v)<.26)?1:0;return 1;}
@@ -18583,7 +18625,7 @@ function VerticalLineScannerW({spec,value,onChange,disabled,onEvent}:WProps<TVer
   <AxisCaptions w={W} h={H} />
   {!disabled&&<rect className="mt-drag-hit" data-testid="vls-drag" x={0} y={0} width={W} height={H-18} aria-hidden="true" {...drag.handleProps}/>}</svg><label className="grid gap-1 text-sm font-bold"><span>Sweep the vertical scanner</span><input type="range" min={spec.xMin} max={spec.xMax} step={spec.scanStep} value={x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }}/></label><div className="grid grid-cols-3 gap-2"><LabReadout label="current hits" value={String(c)} tone={c>1?'warn':'neutral'}/><LabReadout label="maximum seen" value={String(max)} tone={max>1?'warn':'good'}/><LabReadout label="sweeps" value={`${sweeps}/${spec.requiredSweeps}`} tone={sweeps>=spec.requiredSweeps?'good':'neutral'}/></div><div className="grid grid-cols-2 gap-2">{(['function','not-function'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>onChange({x,maxIntersections:max,sweeps,verdict:k})} className={`min-h-12 rounded-xl border-2 font-extrabold ${verdict===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k==='function'?'Function':'Not a function'}</button>)}</div></div>}
 
-function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplingBiasLab>){
+function SamplingBiasLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TSamplingBiasLab>){
   const v=value&&typeof value==='object'?value as {method:'convenience'|'random'|'stratified';size:number;draws:number}:null;
   const method=v?.method??'convenience',size=v?.size??spec.sizeStart,draws=v?.draws??0;
   useEffect(()=>{if(!v)onChange({method,size,draws:0});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
@@ -18604,7 +18646,7 @@ function SamplingBiasLabW({spec,value,onChange,disabled,onEvent}:WProps<TSamplin
     specs × both tones = 14 of the S237-measured colliding pairs, all this one defect).
     Same rule as HopLandingW: a scale label yields where another label names its spot. */}
     {[0,25,75,100].map(n=><text key={n} x={20+n*3.6} y="101" textAnchor="middle" fontSize="9" fill={PALETTE.ink}>{n}</text>)}{estimates.map((n,i)=><circle key={i} cx={20+n*3.6} cy={70-(i%4)*15} r="6" fill={Math.abs(n-50)>12?PALETTE.berry:PALETTE.sky} fillOpacity=".85"><title>{`sample ${i+1}: ${n.toFixed(1)}%`}</title></circle>)}</svg><p className="mt-1 text-sm font-bold text-ink/70">Bias moves the center. Sample size changes the spread. Repetition reveals both.</p></div>
-    <button type="button" disabled={disabled} onClick={draw} className="min-h-12 rounded-xl bg-cta px-4 font-extrabold text-white">Draw sample {draws+1}</button><div className="grid grid-cols-3 gap-2"><LabReadout label="population" value={spec.populationLabel}/><LabReadout label="draws" value={`${draws}/${spec.requiredDraws}`} tone={draws>=spec.requiredDraws?'good':'neutral'}/><LabReadout label="design" value={method} tone={method===spec.targetMethod?'good':method==='convenience'?'warn':'neutral'}/></div></div>}
+    <button type="button" disabled={disabled} onClick={draw} className="min-h-12 rounded-xl bg-cta px-4 font-extrabold text-white">Draw sample {draws+1}</button><div className="grid grid-cols-3 gap-2"><LabReadout label="population" value={spec.populationLabel}/><LabReadout label="draws" value={`${draws}/${spec.requiredDraws}`} tone={draws>=spec.requiredDraws?'good':'neutral'}/><LabReadout label="design" value={method} tone={method===spec.targetMethod?'good':method==='convenience'?'warn':'neutral'} stage={tone} signalsCorrect /></div></div>}
 
 function shapePoints(sides:number,right:number,equal:number,parallel:number){if(sides===3)return [[50,180],[150,35],[260,180]];if(sides===4){if(right===4&&equal===4)return [[70,45],[235,45],[235,195],[70,195]];if(right===4)return [[50,65],[270,65],[270,185],[50,185]];if(equal===4)return [[160,35],[275,120],[160,205],[45,120]];if(parallel===1)return [[85,55],[235,55],[280,190],[40,190]];return [[45,70],[260,45],[285,185],[75,205]]}const cx=160,cy=125,r=95;return Array.from({length:sides},(_,i)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/sides),cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/sides)])}
 
@@ -18707,7 +18749,7 @@ function ConditionalTableConditionW({ spec, value, onChange, disabled, onEvent, 
         <tr><th>Total</th><td className="font-black tabular-nums">{spec.counts[0]+spec.counts[2]}</td><td className="font-black tabular-nums">{spec.counts[1]+spec.counts[3]}</td><td className="font-black tabular-nums">{spec.counts.reduce((a,b)=>a+b,0)}</td></tr></tbody>
       </table>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="condition / denominator" value={`${conditionLabel(st.condition)} = ${denominator}`} tone={st.condition===spec.targetCondition?'good':'neutral'}/><LabReadout label="selected intersection" value={st.cell?`${cellLabel(st.cell)} = ${count(st.cell)}`:'choose a cell'} tone={st.cell===spec.targetCell?'good':'neutral'}/><LabReadout label="conditional probability" value={currentP===null||numerator===null?'—':fractionWithDecimal(numerator, denominator)}/></div>
+    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="condition / denominator" value={`${conditionLabel(st.condition)} = ${denominator}`} tone={st.condition===spec.targetCondition?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="selected intersection" value={st.cell?`${cellLabel(st.cell)} = ${count(st.cell)}`:'choose a cell'} tone={st.cell===spec.targetCell?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="conditional probability" value={currentP===null||numerator===null?'—':fractionWithDecimal(numerator, denominator)}/></div>
     {st.cell && reverseCondition && <p className="rounded-xl border border-tangerine/25 bg-tangerine/5 p-3 text-sm font-bold">Same intersection, reversed condition: {reverseDen? fractionWithDecimal(count(st.cell), reverseDen) : 'undefined'}. The numerator can stay fixed while the denominator changes.</p>}
     <p className="text-center text-xs font-extrabold uppercase tracking-wide text-ink/70">{explorationProgress(st.switches, spec.requiredSwitches, "condition change", "made")}</p>
     {/* Reveal ghost: the asked-for conditional, assembled — mirrors evaluate
@@ -18821,7 +18863,7 @@ function ConicLocusLabW({ spec, value, onChange, disabled, onEvent, tone }: WPro
         );
       })()}
     </svg>
-    <div className="grid grid-cols-3 gap-2"><LabReadout label="family" value={family} tone={eTenths===spec.targetEccentricityTenths?'good':'neutral'}/><LabReadout label="eccentricity" value={e.toFixed(1)} tone={e===1?'good':'neutral'}/><LabReadout label="samples" value={`${samples}/${spec.requiredSamples}`} tone={samples>=spec.requiredSamples?'good':'neutral'}/></div>
+    <div className="grid grid-cols-3 gap-2"><LabReadout label="family" value={family} tone={eTenths===spec.targetEccentricityTenths?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="eccentricity" value={e.toFixed(1)} tone={e===1?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="samples" value={`${samples}/${spec.requiredSamples}`} tone={samples>=spec.requiredSamples?'good':'neutral'}/></div>
     <label className="grid gap-1 text-sm font-bold"><span>Change the focus-to-directrix ratio</span><input aria-label="conic eccentricity" type="range" min="0" max="18" step="1" value={eTenths} disabled={disabled} onChange={event=>setE(Number(event.target.value))} className="h-11 w-full accent-sky"/></label>
     <div className="grid grid-cols-4 gap-2 text-center text-xs font-extrabold"><span className="rounded-lg bg-ink/5 p-2">e = 0<br/>circle</span><span className="rounded-lg bg-ink/5 p-2">0 &lt; e &lt; 1<br/>ellipse</span><span className="rounded-lg bg-leaf/10 p-2">e = 1<br/>parabola</span><span className="rounded-lg bg-ink/5 p-2">e &gt; 1<br/>hyperbola</span></div>
   </div>;
@@ -18844,7 +18886,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
         <rect x={55+f*65} y={45+g*65} width={Math.max(2,df*65)} height={Math.max(2,dg*65)} fill={PALETTE.berry} fillOpacity=".55" stroke={PALETTE.berry} strokeWidth="2"/>
         <text x="152" y="112" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>f·g</text><text x="335" y="112" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.leaf}>g·Δf</text><text x="152" y="227" textAnchor="middle" fontSize="11" fontWeight="900" fill={PALETTE.tangerine}>f·Δg</text><text x="342" y="227" textAnchor="middle" fontSize="10" fontWeight="900" fill={PALETTE.berry}>Δf·Δg</text>
       </svg>
-      <div className="grid grid-cols-3 gap-2"><LabReadout label="h" value={h.toFixed(2)} tone={h<=spec.targetH?'good':'neutral'}/><LabReadout label="corner ÷ h" value={(fp*gp*h).toFixed(2)} tone={h<=spec.targetH?'good':'warn'}/><LabReadout label="Δ(fg) ÷ h" value={quotient.toFixed(2)}/></div>
+      <div className="grid grid-cols-3 gap-2"><LabReadout label="h" value={h.toFixed(2)} tone={h<=spec.targetH?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="corner ÷ h" value={(fp*gp*h).toFixed(2)} tone={h<=spec.targetH?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="Δ(fg) ÷ h" value={quotient.toFixed(2)}/></div>
       <label className="grid gap-1 text-sm font-bold"><span>Shrink the input change h and watch the corner term vanish</span><input aria-label="product rule h" type="range" min="0.05" max="1" step="0.05" value={h} disabled={disabled} onChange={e=>set({h:Number(e.target.value)},'h',spec.targetH)} className="h-11 w-full accent-sky"/></label>
       <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">As h → 0, the corner contributes nothing after division by h, leaving (fg)′ = f′g + fg′.</p>
       {/* Reveal ghost (product mode): the h the question asks the learner to
@@ -18865,7 +18907,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
         <div className="grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr]"><div className="rounded-xl border-2 border-sky/35 bg-sky/10 p-3 text-center"><div className="text-xs font-extrabold uppercase">first: u'v</div><div className="mt-1 text-2xl font-black tabular-nums">{up} × {v} = {first}</div></div><div className="grid place-items-center text-3xl font-black text-berry" aria-label="minus">−</div><div className="rounded-xl border-2 border-tangerine/35 bg-tangerine/10 p-3 text-center"><div className="text-xs font-extrabold uppercase">second: uv'</div><div className="mt-1 text-2xl font-black tabular-nums">{u} × {vp} = {second}</div></div></div>
         <div className="mx-auto mt-3 max-w-sm text-center"><div className="border-b-2 border-ink px-4 pb-2 text-2xl font-black tabular-nums">{first} − {second} = {numerator}</div><div className="px-4 pt-2 text-2xl font-black tabular-nums">v² = {v}² = {denominator}</div></div>
       </div>
-      <div className="grid grid-cols-3 gap-2"><LabReadout label="ordered numerator" value={String(numerator)} tone={numerator<0?'warn':'neutral'}/><LabReadout label="v²" value={String(denominator)}/><LabReadout label="quotient rate" value={Number(result.toFixed(4)).toString()} tone={solved?'good':'neutral'}/></div>
+      <div className="grid grid-cols-3 gap-2"><LabReadout label="ordered numerator" value={String(numerator)} tone={numerator<0?'warn':'neutral'}/><LabReadout label="v²" value={String(denominator)}/><LabReadout label="quotient rate" value={Number(result.toFixed(4)).toString()} tone={solved?'good':'neutral'} stage={tone} signalsCorrect /></div>
       <label className="grid gap-1 text-sm font-bold"><span>Change the top rate u'</span><input aria-label="quotient numerator derivative rate" type="range" min="1" max="6" step="1" value={up} disabled={disabled} onChange={e=>set({innerRate:Number(e.target.value)},'inner-rate',spec.targetInnerRate)} className="h-11 w-full accent-sky"/></label>
       <label className="grid gap-1 text-sm font-bold"><span>Change the bottom rate v'</span><input aria-label="quotient denominator derivative rate" type="range" min="1" max="6" step="1" value={vp} disabled={disabled} onChange={e=>set({outerRate:Number(e.target.value)},'outer-rate',spec.targetOuterRate)} className="h-11 w-full accent-tangerine"/></label>
       <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The order is structural: top-rate × bottom minus top × bottom-rate, all over the unchanged bottom squared.</p>
@@ -18893,7 +18935,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
           <MathDisplay tex={`=${antiCoefficientTex}u^{${power+1}}+C`} />
         </section>
       </div>
-      <div className="grid grid-cols-3 gap-2"><LabReadout label="factor by x" value={String(coefficient)} tone={coefficient===spec.targetInnerRate?'good':'neutral'}/><LabReadout label="power" value={String(power)} tone={power===spec.targetOuterRate?'good':'neutral'}/><LabReadout label="x left over" value="none" tone="good"/></div>
+      <div className="grid grid-cols-3 gap-2"><LabReadout label="factor by x" value={String(coefficient)} tone={coefficient===spec.targetInnerRate?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="power" value={String(power)} tone={power===spec.targetOuterRate?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="x left over" value="none" tone="good"/></div>
       <label className="grid gap-1 text-sm font-bold"><span>Change the factor beside x dx</span><input aria-label="substitution derivative factor" type="range" min="1" max="6" step="1" value={coefficient} disabled={disabled}
         onInput={e=>set({innerRate:Number(e.currentTarget.value)},'inner-rate',spec.targetInnerRate)}
         onKeyDown={e=>{if(!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"].includes(e.key))return;e.preventDefault();const next=e.key==="Home"?1:e.key==="End"?6:Math.max(1,Math.min(6,coefficient+(["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));set({innerRate:next},'inner-rate',spec.targetInnerRate);}}
@@ -18909,7 +18951,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
   const product=st.innerRate*st.outerRate;
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 rounded-2xl border border-ink/10 bg-white p-4 text-center"><div className="rounded-xl bg-ink/5 p-4 font-black">x</div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-sky/10 p-4"><div className="text-xs font-extrabold uppercase">inner u(x)</div><div className="text-2xl font-black">du/dx = {st.innerRate}</div></div><span className="justify-self-center text-2xl rotate-90 sm:rotate-0">→</span><div className="rounded-xl bg-tangerine/10 p-4"><div className="text-xs font-extrabold uppercase">outer f(u)</div><div className="text-2xl font-black">df/du = {st.outerRate}</div></div></div>
-    <div className="grid grid-cols-3 gap-2"><LabReadout label="inner rate" value={String(st.innerRate)} tone={st.innerRate===spec.targetInnerRate?'good':'neutral'}/><LabReadout label="outer rate" value={String(st.outerRate)} tone={st.outerRate===spec.targetOuterRate?'good':'neutral'}/><LabReadout label="total rate" value={String(product)} tone={st.innerRate===spec.targetInnerRate&&st.outerRate===spec.targetOuterRate?'good':'neutral'}/></div>
+    <div className="grid grid-cols-3 gap-2"><LabReadout label="inner rate" value={String(st.innerRate)} tone={st.innerRate===spec.targetInnerRate?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="outer rate" value={String(st.outerRate)} tone={st.outerRate===spec.targetOuterRate?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="total rate" value={String(product)} tone={st.innerRate===spec.targetInnerRate&&st.outerRate===spec.targetOuterRate?'good':'neutral'} stage={tone} signalsCorrect /></div>
     <label className="grid gap-1 text-sm font-bold"><span>Change du/dx</span><input aria-label="inner derivative rate" type="range" min="1" max="6" step="1" value={st.innerRate} disabled={disabled} onChange={e=>set({innerRate:Number(e.target.value)},'inner-rate',spec.targetInnerRate)} className="h-11 w-full accent-sky"/></label>
     <label className="grid gap-1 text-sm font-bold"><span>Change df/du</span><input aria-label="outer derivative rate" type="range" min="1" max="6" step="1" value={st.outerRate} disabled={disabled} onChange={e=>set({outerRate:Number(e.target.value)},'outer-rate',spec.targetOuterRate)} className="h-11 w-full accent-sky"/></label>
     <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The nested machine transmits change multiplicatively: df/dx = (df/du)(du/dx).</p>
@@ -18976,7 +19018,7 @@ function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }:
       {!disabled&&<rect className="mt-drag-hit" data-testid="rrg-drag" x={20} y={10} width={260} height={230} aria-hidden="true" {...drag.handleProps}/>}
     </svg>
     <div className="grid grid-cols-3 gap-2">
-      <LabReadout label="r" value={String(r)} tone={st.x===spec.targetX?"good":"neutral"}/>
+      <LabReadout label="r" value={String(r)} tone={st.x===spec.targetX?"good":"neutral"} stage={tone} signalsCorrect />
       <LabReadout label={sizeLabel} value={sizeText}/>
       <LabReadout label={rateLabel} value={`${sphere?`4π·${r}²·${rate}`:`2π·${r}·${rate}`} = ${rateText}`} tone="warn"/>
     </div>
@@ -19016,7 +19058,7 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
         </g>
       );
     })()}<AxisCaptions w={390} h={250} /></svg>
-    <div className="grid grid-cols-3 gap-2"><LabReadout label="x" value={x.toFixed(1)} tone={st.x===spec.targetX?'good':'neutral'}/><LabReadout label="y" value={y.toFixed(2)}/><LabReadout label={spec.framing==="slope"?"dy/dx":"dy/dt"} value={verticalRate.toFixed(2)} tone="warn"/></div>
+    <div className="grid grid-cols-3 gap-2"><LabReadout label="x" value={x.toFixed(1)} tone={st.x===spec.targetX?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="y" value={y.toFixed(2)}/><LabReadout label={spec.framing==="slope"?"dy/dx":"dy/dt"} value={verticalRate.toFixed(2)} tone="warn"/></div>
     <label className="grid gap-1 text-sm font-bold"><span>{spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"}</span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
     <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."}</p></div>;
 }
