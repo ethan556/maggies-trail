@@ -36,7 +36,16 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, render } from "@testing-library/react";
 import { WidgetRenderer } from "./widgets";
-import { WidgetSpec, exactNumberTruth, exactNumberExplorationKeys, type TWidget } from "@/lib/schema";
+import {
+  WidgetSpec, type TWidget,
+  exactNumberTruth, exactNumberExplorationKeys,
+  proportionalReasoningTruth, proportionalReasoningExplorationKeys,
+  placeValueTransformTruth, placeValueTransformExplorationKeys,
+  pointSetReasoningTruth, pointSetReasoningExplorationKeys,
+  geometricConstraintTruth, geometricConstraintExplorationKeys,
+  affineRelationshipTruth, affineRelationshipExplorationKeys,
+  quotientReasoningTruth, quotientReasoningExplorationKeys,
+} from "@/lib/schema";
 import { VARIANT_GENERATORS, variantForGenForm } from "@/lib/variants";
 import { PALETTE } from "@/lib/palette";
 import type { Band } from "@/lib/difficulty";
@@ -44,6 +53,19 @@ import type { Band } from "@/lib/difficulty";
 afterEach(cleanup);
 
 const BANDS: Band[] = ["support", "core", "stretch"];
+
+/** The staged-reveal family ENG-01 §3.1 names, each paired with the two exports that make its
+ * stages inspectable. Every one builds an ordered derivation and gates the Check button on having
+ * opened it, which is precisely why a terminal stage carrying the answer was R1's worst finding. */
+const STAGED: Record<string, { truth: (s: unknown) => unknown; keys: (s: unknown) => string[] }> = {
+  exactNumberLab: { truth: (s) => exactNumberTruth(s as never), keys: (s) => exactNumberExplorationKeys(s as never) },
+  proportionalReasoningLab: { truth: (s) => proportionalReasoningTruth(s as never), keys: (s) => proportionalReasoningExplorationKeys(s as never) },
+  placeValueTransformLab: { truth: (s) => placeValueTransformTruth(s as never), keys: (s) => placeValueTransformExplorationKeys(s as never) },
+  pointSetReasoningLab: { truth: (s) => pointSetReasoningTruth(s as never), keys: (s) => pointSetReasoningExplorationKeys(s as never) },
+  geometricConstraintLab: { truth: (s) => geometricConstraintTruth(s as never), keys: (s) => geometricConstraintExplorationKeys(s as never) },
+  affineRelationshipLab: { truth: (s) => affineRelationshipTruth(s as never), keys: (s) => affineRelationshipExplorationKeys(s as never) },
+  quotientReasoningLab: { truth: (s) => quotientReasoningTruth(s as never), keys: (s) => quotientReasoningExplorationKeys(s as never) },
+};
 interface Case { pair: string; band: Band; spec: TWidget; answer: unknown }
 
 /** Both audits used to walk `generator.forms` alone, which never reaches a generator's DEFAULT
@@ -123,13 +145,15 @@ for (const c of cases) {
    * defect ENG-01 §3.1 documented verbatim — `stages.push({key:"approx:compute", value: fmt(rounded)})`
    * with `rounded` assigned to `answerNumber` on the next line — and it is decidable.
    *
-   * SCOPE, STATED: `exactNumberLab` only — 338 of the 494 staged-reveal declarations, and the engine
-   * ENG-01 called the worst (358 authored instances, 345 graded). Its six siblings export the same
-   * shape of truth function and are the obvious next step. */
-  if (type === "exactNumberLab") {
+   * SCOPE: THE WHOLE STAGED-REVEAL FAMILY. This began at `exactNumberLab` — the engine ENG-01
+   * called the worst, 358 authored instances and 345 graded — and now covers all seven, because
+   * each exports a truth function and an exploration-key list of the same shape and the family is
+   * only closed when every member is checked. */
+  const staged = STAGED[type];
+  if (staged) {
     type Truth = { stages: Array<{ key: string; value?: string }>; answerNumber?: number };
     let truth: Truth | null = null;
-    try { truth = exactNumberTruth(c.spec as never) as unknown as Truth; } catch { truth = null; }
+    try { truth = staged.truth(c.spec) as unknown as Truth; } catch { truth = null; }
     const answerNumber = truth?.answerNumber;
     /* THE STAGE VALUE MUST **BE** THE ANSWER, NOT MERELY CONTAIN IT.
      *
@@ -144,7 +168,7 @@ for (const c of cases) {
       (st) => typeof answerNumber === "number" && typeof st.value === "string" && st.value.trim() === String(answerNumber)
     );
     if (revealing.length) {
-      const open = { revealed: exactNumberExplorationKeys(c.spec as never) };
+      const open = { revealed: staged.keys(c.spec) };
       /* THE ASSERTION IS DIFFERENTIAL, AND THAT IS THE WHOLE POINT.
        *
        * Searching the pre-verdict render for the answer cannot work, and the probe that settled it
@@ -208,8 +232,11 @@ describe("S242 — generated widgets keep the session's contracts", () => {
   });
 
   it("R1 — the sweep actually found answer-revealing stages to check", () => {
-    // Selecting by equality is strict, and a strict filter that matches nothing proves nothing.
-    expect(revealingStages).toBeGreaterThan(20);
+    /* Selecting by equality is strict, and a strict filter that matches nothing proves nothing.
+     * 628 at seal 32a67d8 across all seven engines — up from the exactNumberLab-only sweep, which
+     * is the point of widening the family. A floor rather than an exact pin: generators legitimately
+     * change how many stages they build, and only a COLLAPSE would mean the sweep stopped looking. */
+    expect(revealingStages).toBeGreaterThan(400);
   });
 
   it("R1 — every answer-revealing stage is withheld until the verdict, and arrives with it", () => {
