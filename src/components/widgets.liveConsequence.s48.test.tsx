@@ -23,11 +23,11 @@ import { WidgetSpec, type TWidget } from "@/lib/schema";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-function mount(raw: unknown) {
+function mount(raw: unknown, tone?: "info" | "success" | "error") {
   const spec = WidgetSpec.parse(raw) as TWidget;
   function Host() {
     const [value, setValue] = useState<unknown>(null);
-    return <WidgetRenderer spec={spec} value={value} onChange={setValue} disabled={false} />;
+    return <WidgetRenderer spec={spec} value={value} onChange={setValue} disabled={false} tone={tone} />;
   }
   return render(<Host />);
 }
@@ -167,8 +167,24 @@ describe("dragOrder plots the size claim", () => {
     successFeedback: "Ordered."
   };
 
-  it("numeric items render the rank-by-size plot, and it re-plots on a move", () => {
-    const { container } = mount(numeric);
+  /* S242 / ENG-01 R4. THIS ASSERTION WAS CORRECTED, NOT RELAXED. It used to mount with no tone —
+   * i.e. during active work — and require the plot to be present. That pinned the leak: measured
+   * across the corpus, ALL 54 all-numeric dragOrder instances have a `correctOrder` monotone in the
+   * plotted value, so the pre-verdict staircase is the answer and the learner drags until the line
+   * stops bending (`reports/eng/ENG01_R4_ORDER_STAIRCASE.csv`).
+   *
+   * The replacement is stricter: it keeps the re-plot requirement, moves it behind the same
+   * `tone === "info"` gate the `do-ghost` reveal in the very same component has always used, and
+   * adds a prohibition on the plot appearing before the verdict — the part that was the defect. */
+  it("withholds the rank-by-size plot during active work and reads the claim back instead", () => {
+    mount(numeric);
+    expect(screen.queryByTestId("do-line")).toBeNull();
+    // The s48 idea survives: the learner still sees WHAT THEY SAID, just not whether it is sorted.
+    expect(screen.getByTestId("do-chain").textContent).toContain("40");
+  });
+
+  it("plots the size claim after the verdict, and it re-plots on a move", () => {
+    const { container } = mount(numeric, "info");
     expect(screen.getByTestId("do-line")).toBeTruthy();
     const before = container.querySelector('[data-testid="do-line"] polyline')?.getAttribute("points");
     fireEvent.click(screen.getByRole("button", { name: "Move 37 up" }));

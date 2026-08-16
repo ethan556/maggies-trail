@@ -15173,7 +15173,31 @@ function DragOrderW({ spec, value, onChange, disabled, tone }: WProps<TDragOrder
           each slot's value drawn rank-by-size, so a correct size order reads as
           a clean staircase and a misplaced value as a visible zigzag. For
           non-numeric sequences the claim is read back as a chain. */}
-      {allNumeric ? (
+      {/* S242 / ENG-01 R4. THE PLOT IS NOW POST-VERDICT. It used to render during active work, and
+        * what that was worth is measured in `reports/eng/ENG01_R4_ORDER_STAIRCASE.csv`: on ALL 54
+        * all-numeric instances in the corpus the authored `correctOrder` is monotone in the plotted
+        * value, so a correct arrangement is a rising staircase and any error a visible zigzag. The
+        * learner drags until the line stops bending, and the comparison the item exists to grade
+        * never happens.
+        *
+        * `parseOrderVal` reads fractions as well as integers and decimals, which makes the sharpest
+        * cases the ones the plot most obviously answers: `ns-05-03#ch1` arranges −1.5, 1/4, −3, 0, 2
+        * from smallest to largest, and `dg4-03-04#k2` orders 0.09, 0.35, 0.4, 0.5 — an item authored
+        * to catch "0.09 > 0.4 because 9 > 4", a misconception the plot silently corrects before the
+        * learner can hold it.
+        *
+        * Moving it behind `tone === "info"` is the platform's own convention, not a new one: the
+        * `do-ghost` position reveal twenty lines below has always been gated this way, and 154 sites
+        * in this file do the same. The s48 "live consequence" idea survives intact — during active
+        * work the chain readout reads the claim BACK ("your order: 0.09 → 0.35 → …") without
+        * sorting it, which is what the learner said rather than whether it was right; after the
+        * verdict the staircase is exactly the explanation they need.
+        *
+        * The sibling half of R4 is NOT a defect and was left alone: `estimateSlider`'s discrete mode
+        * draws `actual {target}` on its ruler, but all three authored instances state the target in
+        * the prompt itself ("A book is about 9 inches long. Which is the best estimate?"), so the
+        * ruler repeats what the learner has already been told. */}
+      {allNumeric && tone === "info" ? (
         <svg
           data-testid="do-line"
           viewBox="0 0 320 96"
