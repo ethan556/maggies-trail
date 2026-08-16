@@ -24,6 +24,7 @@ import { applyResult, recordSignal } from "@/lib/mastery";
 import { applyFactResult } from "@/lib/factFluency";
 import { type ProcessSignal } from "@/lib/processEvents";
 import { decideResponse, type AdaptiveResponse } from "@/lib/adaptivePolicy";
+import { refreshLessonSteps } from "@/lib/lessonVariants";
 export type Phase = "work" | "retry" | "correct" | "revealed" | "done";
 
 interface PlayerState {
@@ -230,6 +231,12 @@ export const usePlayer = create<PlayerState>((set, get) => {
       completedAt: p.lessons[st.lesson.id]?.completedAt ?? localDateStr(new Date())
     };
     recordPredictionOutcome(p, st.lesson.id, st.predictions, today);
+    /* S242 / ADAPT-01. The freshness axis for the lesson path. `lessons[id].completed` is a boolean
+     * and has never carried a replay count, so the tally lives in `counters` — which already exists
+     * for this and merges by MAX, the right rule for a walk count that can only go up. Incrementing
+     * here, at completion, is what makes a replay a genuinely new set of problems while keeping the
+     * CURRENT walk byte-identical across a resume. */
+    bump(p, `walk:${st.lesson.id}`);
     if (new Date().getHours() >= 21) bump(p, "nightOwl");
     awardNewBadges(p);
     if (!p.activity.active.includes(today)) p.activity.active.push(today);
@@ -263,6 +270,19 @@ export const usePlayer = create<PlayerState>((set, get) => {
     ...freshStepState(),
 
     load: (l) => {
+      /* S242 / ADAPT-01. The lesson path consults the learner for the first time. Until this line
+       * `playerStore` wrote mastery and never read it, and every one of 1,701 lessons was served
+       * exactly as authored to every learner forever. `refreshLessonSteps` picks a band per step
+       * from the mastery model and regenerates the numbers where a generator exists; it is pure and
+       * seeded on (lesson, step, completed-walk count), so a RESUME is byte-identical and a REPLAY
+       * is a genuinely new set of problems. */
+      const profile = progressStore.load();
+      const refreshed = refreshLessonSteps(l, profile);
+      if (refreshed.refreshed > 0) progressStore.save({ ...profile, recentVariants: refreshed.served });
+      /* The queue is built from the REFRESHED steps in every branch below, including the resumed
+       * one: `restoreQueue` rebuilds from the lesson it is handed, so passing the authored lesson
+       * there would show generated numbers on the first visit and authored ones after a refresh. */
+      const lessonForRun = { ...l, steps: refreshed.steps };
       // A refresh, back-swipe, or crash mid-lesson must not discard the walk:
       // if a snapshot for this lesson restores cleanly, resume exactly where
       // the learner left off (queue including injected remedials, XP, history).
@@ -272,10 +292,10 @@ export const usePlayer = create<PlayerState>((set, get) => {
       const done = !!progressStore.load().lessons?.[l.id]?.completed;
       if (done) clearLessonState(l.id);
       const snap = done ? null : loadLessonState(l.id);
-      const queue = snap ? restoreQueue(l, snap) : null;
+      const queue = snap ? restoreQueue(lessonForRun, snap) : null;
       if (snap && queue) {
         set({
-          lesson: l,
+          lesson: lessonForRun,
           queue,
           i: snap.i,
           phase: "work",
@@ -293,8 +313,8 @@ export const usePlayer = create<PlayerState>((set, get) => {
         return;
       }
       set({
-        lesson: l,
-        queue: l.steps,
+        lesson: lessonForRun,
+        queue: lessonForRun.steps,
         i: 0,
         phase: "work",
         lastAdvanceAt: 0,
