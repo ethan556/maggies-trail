@@ -107,3 +107,71 @@ exhausted pairs, 63 → 1 machine-operator rows, 40 → 23 language rows, 81 →
 "158 lessons of re-sequencing" → 18, and now 1,078 → 91 and 671 → 36. **The rate is not incidental.**
 A count survives by being quoted, and quoting is cheaper than measuring — including for me, three
 paragraphs after I had said so about somebody else's numbers.
+
+---
+
+## Postscript — I made the same mistake again, one turn later
+
+Having corrected 1,078 → 91 figures, I wrote: *"Highest-leverage thing left on the board is now
+unambiguous: `count-on-hops`, 793 placements, one figure."* That was another leverage claim made
+without opening the figure. Opened now.
+
+**`CountOnHops` draws a fixed number line: start at 4, three orange hops, land on 7, caption
+"4 + 3 = 7".** The plan was obvious — parameterise it from the prose beside it, and 793 placements
+come back. So I measured how many of the 793 name a sum a count-on hop could draw:
+
+```
+withheld count-on-hops placements     793
+  drawable as a count-on hop           20
+  no `a + b` in the body anywhere      765
+  hop count outside 1–6                 8
+```
+
+**Twenty.** And reading those twenty finishes it:
+
+| lesson | prose | what it is actually about |
+|---|---|---|
+| `koa-01-05` | "The equals sign says both sides name the same amount: 3 + 2 and 5 are the same number." | the equals sign |
+| `g1a-01-04` | "Two tens plus three tens is five tens — the same relationship as 2 + 3 = 5, scaled by ten." | place-value scaling |
+| `g2a-03-01` | "3 rows of 4 becomes 4 + 4 + 4" | arrays and repeated addition |
+| `g1e-01-02` | "5 + 2 = 7 is true; 5 + 2 = 8 is false" | the truth of an equation |
+
+Not one is about counting on. My parser found "3 + 2" and would have drawn three hops beside a
+sentence about equality.
+
+Then the shape of the whole thing:
+
+```
+796 placements · 793 withheld · 3 render
+397 distinct lessons · 33 courses · every single one on a `c#` concept step
+top courses: add-subtract-10-k, decimal-fluency-g5, mult-div-fluency-g4,
+             unlike-fractions-g5, shapes-build-k, number-writing-k
+```
+
+**A 0–10 count-on number line is declared on concept steps in Grade 5 decimal fluency, Grade 5
+unlike fractions, and Kindergarten shape building.** It was used as a decorative default. Three of
+its 796 placements are genuine.
+
+### What that changes
+
+1. **This is not a figure repair.** No parameterisation makes a count-on hop belong beside "the
+   equals sign says both sides name the same amount". The figure is fine; the *declarations* are
+   wrong.
+2. **The guard is already the correct behaviour.** Those 793 steps render nothing today, and
+   nothing is the right answer — a wrong figure is worse than no figure. So for the learner this
+   is already safe. "Hidden ≠ repaired" is a good general rule and it is **wrong here**: hidden is
+   the repair. What remains is content debt, not a learner-visible defect.
+3. **The real remaining work is figure SELECTION across 397 lessons** — does this concept step want
+   an illustration, and which one — which is authoring judgement per step and cannot be batched by
+   a script.
+
+### The honest tally on myself
+
+Two turns, two leverage claims, both made by reading a count instead of the thing it counted:
+
+- "1,078 illustrations, a scale no session completes" → 91 figures.
+- "793 placements, one figure, unambiguous" → 793 wrong declarations the runtime already neutralises.
+
+The first was too pessimistic, the second too optimistic, and both came from the same habit. The
+correction that actually generalises is not any of these numbers — it is that **a count is not
+evidence about the work until someone opens one of the things being counted.**
