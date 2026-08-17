@@ -81,3 +81,40 @@ The runtime declaration count is unchanged; seven existing `prob-fraction` decla
 ## Session 133 update
 
 The runtime declaration count is unchanged. Four existing compound-event declarations now resolve to `compoundEventLab`, preserving their authored form IDs while making stage factors, complete sample spaces, and count/probability truth visible. Variant coverage remains complete; the Session-133 seed sweep enforces surface continuity and the 120-outcome rendering ceiling.
+
+
+## Session 242 update (2026-08-17)
+
+Declaration count moves 5,897 → **5,895**: two `mbPrimeCompositeNumeric` declarations withdrawn as
+rule-7 rejections (below). No declarations added — this session repaired existing generators
+against the S242 register rather than extending coverage.
+
+**Permanent rejections (running list — additions this session):**
+
+- `g4p-02-01/k2`, `g4p-02-02/k2` — "What is the smallest prime number?" is a single-fact item; a
+  generator would emit an identical widget forever. The form they declared
+  (`mbPrimeCompositeNumeric`) generated an unrelated question whose answer coincided at 2, which
+  three checks each pinned as truth. Withdrawn 2026-08-17; see VARIANT_LOG S242.
+- Standing earlier rejections remain as recorded in VARIANT_LOG (single-fact items, closed fact
+  sets). GRB-04's exhausted audit now also carries 17 `cosmetic-only` pairs — many prompts, ONE
+  answer — where widening is the anti-pattern; they are recorded in
+  `reports/generator-audit/GENERATOR_EXHAUSTED_BY_SUBJECT.csv` and must not be "fixed" by adding
+  nouns.
+
+**Next 3 targets by leverage, with the reason:**
+
+1. **The 256 under-parameterised GRB-04 pairs**, batch of 5–10 families by
+   `scripts/audit/exhausted-leverage.mts` harm order (declarations × window shortfall) —
+   `g1-shapes-measure` (6 thin forms, 40 declarations) and `g2-shapes-shares` head the family
+   list. Anti-repeat (GEN-04) is live, so pool width is now the binding constraint.
+2. **The 143 CML prediction-not-causal lessons with no manipulative step anywhere**
+   (`reports/CML01_BURNDOWN.csv`) — the waivers expire 2026-11-13 and these need an interactive
+   surface BUILT, not re-sequenced. Highest calendar risk in the whole register.
+3. **The 14 remaining `cosmetic-only` pairs not yet repaired** — same defect class as
+   `compareNegativeFractions`/`trailingMatchCount` (many prompts, one answer): each needs the
+   missing mathematical dimension, or a rule-7 rejection if none exists.
+
+**Gate results at close (all green):** 4 vitest shards 5642/4354/2461/1473 (+1 skipped) ·
+variants gate 3996/3996 · schema 1840/1840 · pedagogy 1711/1711 · registration consistent ·
+native 4 archive-only · build EXIT:0 · generated sweep 102,281 samples, 0 throws ·
+GENERATOR_MATH_PRESENTATION_AUDIT 0 rows · generated MCQ hard leaks 0.

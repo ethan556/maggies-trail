@@ -254,6 +254,13 @@ function auditMathPresentation(v: Variant): Finding[] {
     /* Markdown emphasis is prose formatting and must not read as multiplication (ARCH-01 §3).
      * DOUBLED PAIRS FIRST: stripping `*…*` from `**bold**` leaves the outer asterisks behind. */
     const text = raw.replace(/\*\*([^*\n]{1,80})\*\*/g, "$1").replace(/\*([^*\n]{1,80})\*/g, "$1");
+    /* S242 / GRB-01, closing its last row. `evalOrder` carries the exponent operator as the spec
+     * token "^" — the evaluator keys on it — but since S242 the chip RENDERS as xʸ (widgets.tsx,
+     * the operator button), so the caret no longer reaches the learner. This audit measures what
+     * the learner reads, so that one exact shape is excepted: the single-character token "^" on an
+     * evalOrder widget, nothing wider. A caret inside a prompt, a feedback string, or any other
+     * widget type still reports. */
+    if (text === "^" && (v.widget as { type?: string }).type === "evalOrder" && /tokens\[\d+\]$/.test(path)) continue;
     if (!/[\^*/]|sqrt|pi\b|Math\.|<=|>=/i.test(text)) continue; // cheap gate: most strings are prose
     const on = residue(text, true), off = residue(text, false);
     for (const [code, pattern] of PATTERNS) {

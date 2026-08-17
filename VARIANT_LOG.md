@@ -4538,3 +4538,66 @@ The remainder, one each: `dm-02-02/ch1`, `dd-04-03/ch1`, `fr-04-01/k3`, `fna-01-
 a unit, a numeral — so the key stops being identifiable without the mathematics. Rewording by
 length alone is explicitly excluded by the programme plan. The ten GENERATED siblings of these are
 generator repairs and are listed in `S242_THREE_NUMBERS_I_ASSERTED.md`.
+
+
+## S242 (2026-08-17, seal 27893a3 + this commit) — generator repairs across GRB-04, GRB-01/02/03 and MCQ-01
+
+**Steps added: 0. Declarations withdrawn: 2. Generators repaired: 12 forms across 11 families.**
+No new coverage was attempted; every change repaired an existing generator against the register.
+
+### Generators repaired, with the defect each had
+
+- `polygon-angles` — NICE gained the triangle and square; `exteriorFromInterior` freed from the
+  shared n-draw (7 → 65 problems). Adding n = 4 surfaced two trap-grades-correct bugs
+  (`exteriorSum`, `regularInterior`), both guarded. Prose gate caught "1 triangles" → `fans()`.
+- `negative-intro|compareNegativeFractions` — answered `gt` on every seed (pairs always printed
+  smaller-magnitude first). Order is now drawn; 5 prompts/1 answer → 18/2.
+- `decimal-representation|trailingMatchCount` — answered 2 on all nine seeds; how many of the
+  three match is now drawn (9/1 → 54/2). Its INDEPENDENT route was literally `return 2` and now
+  counts by comparison against the printed values.
+- `g4-multiply|mbPrimeCompositeNumeric` — generated a question none of its three declaring steps
+  ask, with answer 2 forever; now generates the mb-02-03 shape (count primes in a range, 16/5).
+  Route sieves; suite assertion un-pinned from the coincidence.
+- `a1-polynomials|poly-special-products__numeric` — `5 * (-5)` → `5 · (−5)` (the one real GRB-01
+  operator; 13 others were markdown emphasis, and the sweep now strips `**bold**` then `*italic*`).
+- `a2-radicals|re-both-sides__mcq` — √34 printed as 5.830952 with no stated convention (GRB-02,
+  ruled by ARCH-02 §5); right side now drawn whole. First cut produced √(x²−0) — caught by reading.
+- MCQ-01 generated leaks, all ten repaired: `faLikeDenomWordMcq`, `rnsCloserInteger`,
+  `rnsCompareRootDecimal`, `compareSpeeds`, `ddHistDisplayChoice`, `rnsClassifyPickRational`
+  (key now arrives in the distractors' costumes: √64, repeating decimals, 22/7 — and its route now
+  classifies mathematically instead of encoding the leak), `cn-complex-plane__mcq` (re drawn
+  distinct from ±im; sign-flip distractor), `tg-arccos__mcq`, `ti-pythagorean__mcq` (gained "0",
+  squares cannot cancel), `ti-tan-cofunction__mcq`. Dual routes and the precalculus answer map
+  updated in the same commits.
+- `grouping-first|powerMulEval` — the evalOrder "^" TOKEN rendered as a literal caret chip and the
+  status line printed "2 × 2 ^ 2". Chip now renders xʸ; status line renders a true superscript;
+  screen-reader path unchanged ("to the power of"). Verified by screenshot on the production build
+  after one vacuous-blank capture was rejected.
+
+### Permanent rejections recorded this session (rule 7)
+
+- `g4p-02-01/k2` and `g4p-02-02/k2` — "What is the smallest prime number?" is a single-fact item.
+  Their `mbPrimeCompositeNumeric` declarations are WITHDRAWN, not served by a question they do not
+  ask. These two join the standing rejection list in VARIANT_STATE.md.
+
+### Gate catches and reading catches, so the counts stay honest
+
+Gate: two polygon trap collisions at n = 4; the NaN from "a regular triangle" (dual route working);
+five failures after the MCQ label repairs (routes hardcoding old phrasing — updated, none relaxed;
+two made stricter). Reading: "1 triangles"; √(x²−0)=8; the evalOrder status line; the blank
+screenshot rejected as a vacuous measurement.
+
+### Authored-content errors found and NOT fixed (rule 1 — for a human)
+
+25 authored MCQ items whose key is identifiable by shape (lone-justification,
+only-option-with-a-unit, only-numeric-option, absolutes-in-distractors-only), clustered to ~17
+distinct reads. Listed earlier in this file under "S242 — authored MCQ leakage referred to a
+human"; evidence `reports/mcq/MCQ_LEAKAGE_INDEX.csv` at seal c567f0a.
+
+### Register state after this session
+
+GRB-00..04 closed (GRB-04 reclassified: 12 closed-fact-set, 17 cosmetic-only, 256
+under-parameterised backlog). GENERATOR_MATH_PRESENTATION_AUDIT: 0 rows. MCQ generated hard
+leaks: 0. Gates at close: 4 shards green (5642/4354/2461/1473 +1 skipped), variants gate
+3996/3996, schema 1840/1840, pedagogy 1711/1711, registration consistent, build EXIT:0,
+sweep 102,281 samples / 0 throws.

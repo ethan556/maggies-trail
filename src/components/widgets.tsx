@@ -9140,7 +9140,18 @@ function EvalOrderW({ spec, value, onChange, disabled, tone }: WProps<TEvalOrder
                   : "border-ink/15 text-ink/35"
               }`}
             >
-              {t}
+              {/* S242 / GRB-01, the last row of the index. The spec token stays "^" — the evaluator
+                * keys on it — but the CHIP was printing the caret to the learner, and the caret is
+                * banned on learner surfaces system-wide. Calculator convention for the power key is
+                * xʸ, which names the operation without inventing an infix symbol typeset math does
+                * not have. The screen reader already says "to the power of". */}
+              {t === "^" ? (
+                <span aria-hidden="true">
+                  x<sup className="text-[0.7em]">y</sup>
+                </span>
+              ) : (
+                t
+              )}
             </button>
           ) : (
             <span
@@ -9155,7 +9166,25 @@ function EvalOrderW({ spec, value, onChange, disabled, tone }: WProps<TEvalOrder
         )}
       </div>
       <p className="text-center text-sm font-semibold text-ink/70" aria-live="polite" data-testid="eo-read">
-        {done ? `Fully collapsed: ${tokens[0]}` : `${reading} — tap an operator to work it out.`}
+        {/* S242 / GRB-01. The chip stopped printing the caret, and then READING THE SCREENSHOT
+          * caught this line still saying "2 × 2 ^ 2" underneath it — composed from live tokens at
+          * render time, where no spec audit can see it. The exponent renders as a true superscript
+          * here: "^" is dropped and the token that follows it is raised. The aria-label above keeps
+          * the plain `reading` string, where a screen reader voices each token. */}
+        {done ? (
+          `Fully collapsed: ${tokens[0]}`
+        ) : (
+          <>
+            {tokens.map((t, i) =>
+              t === "^" ? null : tokens[i - 1] === "^" ? (
+                <sup key={i} className="text-[0.75em]">{t}</sup>
+              ) : (
+                <span key={i}>{i > 0 ? " " : ""}{t}</span>
+              )
+            )}
+            {" — tap an operator to work it out."}
+          </>
+        )}
       </p>
       {/* Reveal ghost: the number the expression truly collapses to — mirrors
           evaluate (single token equal to spec.target). Only the destination is
