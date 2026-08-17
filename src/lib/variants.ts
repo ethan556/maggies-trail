@@ -3365,8 +3365,10 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
     return mcq(rand, "g6-data-literacy", `A study has ${n} measurements spread from ${lo} to ${hi}. Which display is usually more useful?`,
       ["A histogram — grouped intervals summarize many spread-out values", `Correct — bins show the overall frequency pattern without requiring ${n} separate marks.`],
       [
-        ["A dot plot — one dot is always clearer for every value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
-        ["No display — a raw list always shows patterns best", `A raw list preserves values but hides the distribution's shape and concentration.`],
+        // S242 / MCQ-01: "always" appeared only in the two distractors, and an absolute in a wrong
+        // option is one of the oldest tells in multiple choice. Both are stated plainly now.
+        ["A dot plot — one dot for every value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
+        ["No display — the raw list of values", `A raw list preserves values but hides the distribution's shape and concentration.`],
       ]);
   }
   const width = support ? 5 : pick(rand, 4, 8);
@@ -22802,14 +22804,17 @@ const GENERATORS: VariantGen[] = [
           rand,
           "rate-interpret",
           `${A} walks ${d1} km in ${t1} hours. ${B} walks ${d2} km in ${t2} hours. Whose average speed is greater?`,
+          /* S242 / MCQ-01. The key was `Dai's (7 km/h vs 6 km/h)` — the only option carrying a unit,
+           * and the only one carrying the comparison already done. Both names are bare now; the
+           * arithmetic lives in the feedback, where it is read AFTER committing. */
           [
-            `${firstWins ? A : B}'s (${firstWins ? s1 : s2} km/h vs ${firstWins ? s2 : s1} km/h)`,
-            `Right — divide each distance by its OWN time: ${d1}/${t1} = ${s1} and ${d2}/${t2} = ${s2}.`,
+            `${firstWins ? A : B}'s`,
+            `Right — divide each distance by its OWN time: ${d1}/${t1} = ${s1} km/h and ${d2}/${t2} = ${s2} km/h.`,
           ],
           [
             [
-              `${firstWins ? B : A}'s, because of the distance walked`,
-              `Total distance is not a rate. ${d1 > d2 ? A : B} covered more ground but also took ${d1 > d2 ? t1 : t2} hours over it — divide before comparing.`,
+              `${firstWins ? B : A}'s`,
+              `Total distance is not a rate. ${d1 > d2 ? A : B} covered more ground but also took ${d1 > d2 ? t1 : t2} hours over it — divide before comparing: ${s1} km/h against ${s2} km/h.`,
             ],
             [
               `They're equal`,
@@ -37358,13 +37363,29 @@ const GENERATORS: VariantGen[] = [
         );
       }
 
-      const rationalDecimals = ["0.625", "−1.75", "2.125", "0.36", "4.04"] as const;
+      /* S242 / MCQ-01. The key was drawn from plain terminating decimals — `0.36` against √149, e
+       * and 0.121221222…. The only option written as an ordinary numeral was always the answer, so
+       * a learner who has never met irrationality scores by SHAPE (`only-numeric-option`). The key
+       * now comes in the same costumes as the distractors: a root that happens to be a perfect
+       * square, a repeating decimal with a stated repetend, or a fraction of two integers. Deciding
+       * now requires the classification the step exists to teach — is 64 a perfect square, does a
+       * repeating block make a ratio — instead of spotting the odd one out.
+       *
+       * Feedback is per-form (rule 5: it must be literally true of the drawn problem). */
       const growing = [
         "0.121221222… (the run lengths keep changing)",
         "0.313311333… (the run lengths keep changing)",
         "0.242244222… (the run lengths keep changing)",
       ] as const;
-      const rational = rationalDecimals[pick(rand, 0, rationalDecimals.length - 1)];
+      const rationalInCostume: ReadonlyArray<readonly [string, string]> = [
+        ["√64", "Right — 64 is a perfect square, so √64 = 8, a whole number."],
+        ["√121", "Right — 121 is a perfect square, so √121 = 11, a whole number."],
+        ["√225", "Right — 225 is a perfect square, so √225 = 15, a whole number."],
+        ["0.363636… (36 repeats)", "Right — one fixed block repeats forever, and any repeating decimal is a ratio of integers: 36/99."],
+        ["0.727272… (72 repeats)", "Right — one fixed block repeats forever, and any repeating decimal is a ratio of integers: 72/99."],
+        ["22/7", "Right — 22/7 is one integer over another, which is the definition of rational (it is close to π, but π is not a fraction)."],
+      ];
+      const [rational, why] = rationalInCostume[pick(rand, 0, rationalInCostume.length - 1)];
       const irrN = nonSquare();
       const con = ["π", "e"][pick(rand, 0, 1)];
       const grow = growing[pick(rand, 0, growing.length - 1)];
@@ -37372,7 +37393,7 @@ const GENERATORS: VariantGen[] = [
         rand,
         "g8-rns-root-classify",
         "Which of these numbers is rational?",
-        [rational, `Right — ${rational} terminates, so it can be written as a fraction with a power of ten in the denominator.`],
+        [rational, why],
         [
           [rootLabel(irrN), `${irrN} is not a perfect square, so √${irrN} is irrational.`],
           [con, `${con} has a nonterminating, nonrepeating decimal expansion.`],
@@ -37492,10 +37513,12 @@ const GENERATORS: VariantGen[] = [
           rand,
           "g8-rns-root-estimate",
           `√${n} is closer to which whole number?`,
-          [`${correct}, because √${n} ≈ ${root.toFixed(3)}`, `Right — its distance to ${correct} is about ${dCorrect}, smaller than the distance ${dOther} to ${other}.`],
+          // S242 / MCQ-01: the key was the only option carrying `because √n ≈ …`. Both whole-number
+          // options are now bare numerals; the reasoning stays in the feedback.
+          [String(correct), `Right — its distance to ${correct} is about ${dCorrect}, smaller than the distance ${dOther} to ${other}.`],
           [
             [String(other), `√${n} ≈ ${root.toFixed(3)}, which is closer to ${correct} than to ${other}.`],
-            [`${k + 0.5}, the exact midpoint`, `${k + 0.5} is not a whole number, and √${n} is not exactly at that midpoint.`],
+            [String(k + 0.5), `${k + 0.5} is not a whole number, and √${n} is not exactly at that midpoint.`],
             ["They are equally close", `The distances are about ${dCorrect} and ${dOther}, so the two whole numbers are not equally close.`],
           ]
         );
@@ -37552,7 +37575,10 @@ const GENERATORS: VariantGen[] = [
         const [n, decimal] = cases[pick(rand, 0, cases.length - 1)];
         const root = Math.sqrt(n);
         const rootWins = root > decimal;
-        const correctLabel = rootWins ? `√${n}, since √${n} ≈ ${root.toFixed(3)} > ${decimal}` : `${decimal}, since ${decimal} > √${n} ≈ ${root.toFixed(3)}`;
+        /* S242 / MCQ-01. The key used to carry `since √n ≈ … > d` while its opposite was bare, so the
+           longer option was always right. Both are now the value alone; the comparison is in the
+           feedback, which is where it belongs. */
+        const correctLabel = rootWins ? `√${n}` : String(decimal);
         return mcq(
           rand,
           "g8-rns-compare-estimate",

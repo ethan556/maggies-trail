@@ -5090,8 +5090,10 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     const A = m[1], d1 = Number(m[2]), t1 = Number(m[3]);
     const B = m[4], d2 = Number(m[5]), t2 = Number(m[6]);
     // Cross-multiply rather than divide: d1/t1 > d2/t2 exactly when d1·t2 > d2·t1.
+    /* S242 / MCQ-01. The label used to be `Dai's (7 km/h vs 6 km/h)` — the only option with a unit,
+     * which was the leak. Labels are bare possessives now, so the match is exact. */
     const winner = d1 * t2 > d2 * t1 ? A : B;
-    for (const label of labelsRaw.split(";;")) if (label.startsWith(`${winner}'s (`)) return label;
+    for (const label of labelsRaw.split(";;")) if (label === `${winner}'s`) return label;
     throw new Error("no matching option");
   },
   "rate-interpret@temperature": (p) => {
@@ -8963,8 +8965,21 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     if (question.startsWith("Which list contains only irrational"))
       return labels.find((label) => label.split(", ").every((x) => g8SquareRootIfExact(Number(x.slice(1))) === null))!;
     if (question.startsWith("Is ")) return labels.find((label) => label.startsWith("Irrational"))!;
-    if (question === "Which of these numbers is rational?")
-      return labels.find((label) => !label.startsWith("√") && label !== "π" && label !== "e" && !label.includes("…"))!;
+    if (question === "Which of these numbers is rational?") {
+      /* S242 / MCQ-01. The old rule — "the label that is not a root, not a constant, not a growing
+       * decimal" — was the LEAK ITSELF, encoded as a derivation: it found the answer by shape. The
+       * key now arrives in the same costumes as the distractors, so this route must classify every
+       * label mathematically: a root is rational iff its radicand is a perfect square, a decimal
+       * with a stated repetend is a ratio by construction, a fraction of integers is rational by
+       * definition, and π/e and changing-run decimals are not. */
+      return labels.find((label) => {
+        const root = label.match(/^√(\d+)$/);
+        if (root) return g8SquareRootIfExact(Number(root[1])) !== null;
+        if (/^\d+\/\d+$/.test(label)) return true;
+        if (/repeats\)$/.test(label)) return true;
+        return false;
+      })!;
+    }
     const root = question.match(/(?:^√|Classify √)(\d+)(?: is:| as rational or irrational:)/);
     if (root) {
       const exact = g8SquareRootIfExact(Number(root[1]));
@@ -8987,8 +9002,13 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     const [question, labelsRaw = ""] = p.split("||");
     const n = Number(question.match(/√(\d+)/)![1]);
     if (labelsRaw !== "") {
+      /* S242 / MCQ-01. The key used to read `13, because √n ≈ …` — the only option with a reason,
+       * which is the lone-justification leak the repair removed. Labels are bare numerals now, so
+       * the match is EXACT: `startsWith("13,")` would also have matched a hypothetical "13.5", and
+       * equality cannot. The route still finds the nearest whole number by rounding the root it
+       * computes itself, never by reading the generator's arithmetic. */
       const nearest = Math.round(Math.sqrt(n));
-      return labelsRaw.split(";;").find((label) => label.startsWith(`${nearest},`))!;
+      return labelsRaw.split(";;").find((label) => label === String(nearest))!;
     }
     return question.includes("one decimal place") ? Math.round(Math.sqrt(n) * 10) / 10 : Math.floor(Math.sqrt(n));
   },
@@ -8999,8 +9019,13 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     const labels = labelsRaw.split(";;");
     let m = question.match(/Which is greater: √(\d+) or ([\d.]+)/);
     if (m) {
-      const wanted = Math.sqrt(Number(m[1])) > Number(m[2]) ? `√${m[1]},` : `${m[2]},`;
-      return labels.find((label) => label.startsWith(wanted))!;
+      /* S242 / MCQ-01. The key used to be `√20, since √20 ≈ 4.472 > 4.5` — the only option carrying
+       * a justification, which is the exact leak the repair removed. Labels are bare values now, so
+       * the match is EXACT rather than prefix: `startsWith("√20,")` has nothing to match and a
+       * prefix match on the bare label would be looser, not stricter. The route still derives which
+       * value wins by squaring — the method under test remains uninverted. */
+      const wanted = Math.sqrt(Number(m[1])) > Number(m[2]) ? `√${m[1]}` : m[2];
+      return labels.find((label) => label === wanted)!;
     }
     m = question.match(/Which is greater: (\d+)\/(\d+) or π/);
     if (m) {

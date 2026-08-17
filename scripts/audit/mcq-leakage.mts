@@ -111,7 +111,15 @@ function leaks(item: Item): Leak[] {
   // U+2212 is the corpus's minus sign. The first cut used ASCII only, so "−5" read as non-numeric
   // and every signed distractor made its positive answer look like "the only number".
   const isNumeric = (l: string) => /^[-−]?[\d.,/\s]+$/.test(l.trim());
-  if (isNumeric(answer) && !wrong.some((o) => isNumeric(o.label)))
+  /* S242 / MCQ-01, read against `rnsCompareRootDecimal` after its repair. The item asks "Which is
+   * greater: √20 or 4.5?" with bare labels. On the seeds where the decimal wins, this tell fired —
+   * `4.5` is the only string parsing as a number. But the learner's actual choice is between TWO
+   * VALUES, √20 and 4.5, and which form wins varies seed to seed, so the shape carries no signal
+   * about correctness. The tell's own concept is odd-one-out of FORM, and a root, a π-multiple or
+   * a fraction IS a value form — an option like √20 makes a numeral key not-odd. `valueLike`
+   * widens what counts as a value; it does not loosen the tell where all distractors are prose. */
+  const valueLike = (l: string) => isNumeric(l) || /^[-−]?(?:√\d+|\d*π(?:\/\d+)?|\d+\/\d+|e)$/.test(l.trim());
+  if (isNumeric(answer) && !wrong.some((o) => valueLike(o.label)))
     found.push({ code: "only-numeric-option", detail: answer.slice(0, 40) });
   /* Units must be UNAMBIGUOUS. The first cut matched "1s" as one second — it is a plural — and
    * "0.95 in magnitude" as inches. Single-letter and English-word units now require a space before

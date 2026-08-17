@@ -396,7 +396,11 @@ const fractionHandlers: Record<string, FormHandler> = {
   faLikeDenomWordMcq: (rand, band) => {
     const den = bandInt(rand, band, [5, 9], [8, 12], [10, 16]);
     return mcq(rand, "g4-fractions", `When adding ${pick(rand, 1, den - 2)}/${den} and ${pick(rand, 1, den - 2)}/${den}, what happens to the denominator?`,
-      [`It stays ${den} because the part size does not change.`, `Correct — the denominator names the size of each equal part, and those parts stay the same size.`],
+      /* S242 / MCQ-01. `It stays 8 because the part size does not change.` was the only option with a
+         reason attached, so it was identifiable without adding anything. The reason already appears in
+         the feedback, which is where the learner reads it after committing; every label now has the
+         same shape — a bare claim about the denominator. */
+      [`It stays ${den}.`, `Correct — the denominator names the size of each equal part, and those parts stay the same size.`],
       [[`It becomes ${den * 2}.`, `Adding denominators would pretend the pieces became smaller even though the same whole and same partition are used.`],
        [`It becomes 1.`, `The denominator becomes 1 only when the total makes an exact whole, not as a general addition rule.`],
        [`It is replaced by the larger numerator.`, `The denominator records part size, so it is not chosen from either numerator.`]]);
