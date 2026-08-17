@@ -3141,7 +3141,12 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   // boundary turn by turn — the definitions, not the closed formulas the generator uses.
   "polygon-angles": (p) => {
     const nFrom = (name: string) => {
-      const M: Record<string, number> = { pentagon: 5, hexagon: 6, octagon: 8, nonagon: 9, decagon: 10 };
+      /* S242 / GRB-04. CORRECTED, NOT RELAXED — and it is the dual route doing its job. Adding the
+       * triangle and the square to the generator's polygon list made `regularInterior` print
+       * "a regular triangle" and "a regular quadrilateral", names this map did not know, so the
+       * route returned NaN and the gate went red. The route now knows two more polygon names; it
+       * checks exactly what it checked before, on a wider corpus. */
+      const M: Record<string, number> = { triangle: 3, quadrilateral: 4, pentagon: 5, hexagon: 6, octagon: 8, nonagon: 9, decagon: 10 };
       return M[name] ?? Number(name.replace("-gon", ""));
     };
     let m = p.match(/sum of a ([\w-]+) \((\d+) sides\)/);

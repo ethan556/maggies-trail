@@ -13928,8 +13928,13 @@ const GENERATORS: VariantGen[] = [
     // Sides are drawn, not the answer, so every result stays a whole number of degrees and a whole
     // number of sides — a polygon cannot have 7.5 sides, and an item that implies it teaches nothing.
     gen: (rand, band = "core", form = "default") => {
-      // Divisors of 360 only, so a regular polygon's exterior angle is a whole number of degrees.
-      const NICE = [5, 6, 8, 9, 10, 12, 15, 18, 20, 24] as const;
+      /* Divisors of 360 only, so a regular polygon's exterior angle is a whole number of degrees.
+       *
+       * S242 / GRB-04. THE TRIANGLE AND THE SQUARE WERE MISSING — the two polygons the chapter
+       * spends most of its time on, and both have whole-number exterior angles (120° and 90°).
+       * `sidesFromInterior`'s guard rejects n = 3 on its own terms (its "interior ÷ exterior" trap
+       * is 0.5 there, which prints a half-side), and `draw` resamples; every other form gains them. */
+      const NICE = [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24] as const;
       const hiIdx = band === "support" ? 4 : band === "stretch" ? NICE.length - 1 : 6;
       const { n } = draw(
         rand,
@@ -13942,6 +13947,17 @@ const GENERATORS: VariantGen[] = [
             // equal to n would be graded correct.
             return Number.isInteger(i / e) && i / e !== n && 180 / e !== n && i / e !== 180 / e;
           }
+          /* S242 / GRB-04. THE QUADRILATERAL IS THE ONE POLYGON WHOSE INTERIOR SUM IS ALSO 360,
+           * so on `exteriorSum` — whose answer is always 360 — the "(n − 2) × 180 is the INTERIOR
+           * sum" trap grades CORRECT at n = 4. Adding the square to NICE surfaced it on the first
+           * gate run, which is rule 4 working: a trap that can grade correct is a bug, not a near
+           * miss. Every other form keeps the square. */
+          if (form === "exteriorSum") return (n - 2) * 180 !== 360 && n * 180 !== 360;
+          /* And the square collides a SECOND time, on a different form: at n = 4 each interior
+           * angle is 90° and so is each exterior, so `regularInterior`'s "that is the exterior"
+           * trap grades correct too. Two distinct collisions from one added value — the geometry
+           * special-value hazard CLAUDE.md warns about, arriving on cue. */
+          if (form === "regularInterior") return 180 - 360 / n !== 360 / n && (n - 2) * 180 !== 180 - 360 / n;
           if (form !== "exteriorFromInterior") return true;
           // "Halved the interior" is a real misconception and a real trap — but at n = 6 half the
           // interior (120/2) IS the exterior angle, so the trap would be marked CORRECT. And a
@@ -13953,10 +13969,16 @@ const GENERATORS: VariantGen[] = [
       const ext = 360 / n;
       const int = 180 - ext;
       const NAME: Record<number, string> = {
+        3: "triangle", 4: "quadrilateral",
         5: "pentagon", 6: "hexagon", 8: "octagon", 9: "nonagon", 10: "decagon", 12: "12-gon",
         15: "15-gon", 18: "18-gon", 20: "20-gon", 24: "24-gon",
       };
       const name = NAME[n];
+      /* S242 / GRB-04. "1 TRIANGLES" — caught by the prose gate the moment the triangle joined the
+       * polygon list, because n − 2 is 1 there and the count was pluralised by template. This is the
+       * derived-English-morphology class the working notes list ("3th", "1 units up"), and the fix is
+       * the one they prescribe: store both forms, never derive them. */
+      const fans = (k: number) => `${k} ${k === 1 ? "triangle" : "triangles"}`;
 
       if (form === "sidesFromSum") {
         return {...num(
@@ -13974,7 +13996,7 @@ const GENERATORS: VariantGen[] = [
               `${n - 1} adds only 1 to the triangle count. The formula is n \u2212 2 triangles, so reverse it with + 2: n = ${n}.`,
             ],
           ],
-          `${sum} \u00f7 180 = ${n - 2} triangles, and the fan skips 2 vertices, so n = ${n}.`
+          `${sum} \u00f7 180 = ${fans(n - 2)}, and the fan skips 2 vertices, so n = ${n}.`
         ), params:{kind:"polygon-sides-from-sum",sum} as Record<string,number|string>};
       }
       if (form === "exteriorSum") {
@@ -13994,20 +14016,36 @@ const GENERATORS: VariantGen[] = [
         ), params:{kind:"polygon-exterior-sum",n} as Record<string,number|string>};
       }
       if (form === "exteriorFromInterior") {
+        /* S242 / GRB-04. THIS FORM DOES NOT NEED A POLYGON, AND THAT IS WHY IT ONLY HAD SEVEN
+         * PROBLEMS. It asks for the SUPPLEMENT of one vertex angle — "A vertex has interior angle
+         * 108°. Its exterior angle?" — and it was drawing that angle from the family's shared `n`,
+         * i.e. 180 − 360/n, which pins it to the seven values the divisor lattice allows. That
+         * lattice is real for the `sidesFrom*` forms, where n IS the answer. Here it was inherited
+         * constraint, and it cost this form ninety per cent of its range.
+         *
+         * The angle is drawn directly now. It stays EVEN so the "halved the interior" trap prints a
+         * whole number, and 120 is excluded because there half the interior IS the exterior and the
+         * trap would grade correct — the same collision the shared guard existed to prevent, kept. */
+        const vertexInt = draw(
+          rand,
+          (r) => (band === "support" ? 10 * pick(r, 4, 17) : 2 * pick(r, 20, 85)),
+          (v) => v !== 120
+        );
+        const vertexExt = 180 - vertexInt;
         return {...num(
           "polygon-angles",
-          `A vertex has interior angle ${int}\u00b0. Its exterior angle?`,
-          ext,
+          `A vertex has interior angle ${vertexInt}\u00b0. Its exterior angle?`,
+          vertexExt,
           0,
           [
             [
-              360 - int,
-              `${360 - int} = 360 \u2212 ${int} subtracts from the wrong total \u2014 the pair shares a straight LINE (180\u00b0), not a full turn: ${ext}\u00b0.`,
+              360 - vertexInt,
+              `${360 - vertexInt} = 360 \u2212 ${vertexInt} subtracts from the wrong total \u2014 the pair shares a straight LINE (180\u00b0), not a full turn: ${vertexExt}\u00b0.`,
             ],
-            [int / 2, `${int / 2} halves the interior \u2014 there is no halving here. Supplement: 180 \u2212 ${int} = ${ext}\u00b0.`],
+            [vertexInt / 2, `${vertexInt / 2} halves the interior \u2014 there is no halving here. Supplement: 180 \u2212 ${vertexInt} = ${vertexExt}\u00b0.`],
           ],
-          `Interior and exterior sit on a straight line: 180 \u2212 ${int} = ${ext}\u00b0.`
-        ), params:{kind:"polygon-exterior-from-interior",interior:int} as Record<string,number|string>};
+          `Interior and exterior sit on a straight line: 180 \u2212 ${vertexInt} = ${vertexExt}\u00b0.`
+        ), params:{kind:"polygon-exterior-from-interior",interior:vertexInt} as Record<string,number|string>};
       }
       if (form === "sidesFromExterior") {
         return {...num(
@@ -14080,7 +14118,7 @@ const GENERATORS: VariantGen[] = [
             `${(n - 1) * 180} = ${n - 1} \u00d7 180 subtracts only 1. Both neighbours of the fan vertex drop out: (${n} \u2212 2) \u00d7 180 = ${sum}.`,
           ],
         ],
-        `Fan the ${name} into ${n - 2} triangles: (${n} \u2212 2) \u00d7 180 = ${sum}\u00b0.`
+        `Fan the ${name} into ${fans(n - 2)}: (${n} \u2212 2) \u00d7 180 = ${sum}\u00b0.`
       ), params:{kind:"polygon-sum",n} as Record<string,number|string>};
     },
   },
