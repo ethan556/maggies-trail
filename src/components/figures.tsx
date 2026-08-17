@@ -18009,9 +18009,22 @@ function FnVerticalLineTest() {
     <svg viewBox="0 0 200 110" role="img" className="mx-auto w-full max-w-xs">
       <title>The vertical line test checks this on a graph: if any vertical line hits the curve twice, it is not a function.</title>
       <line x1={20} y1={95} x2={185} y2={95} stroke={INK} strokeWidth={1.2} />
-      <path d="M 40 90 Q 100 20 160 90" fill="none" stroke={SKY} strokeWidth={2} />
+      {/* S242 / VIS-00 — THIS FIGURE ILLUSTRATED THE VERTICAL LINE TEST WITH A CURVE THAT PASSES IT.
+        *
+        * Found by reading, not by the control-point gate, which cannot see this class. The curve was
+        * `M 40 90 Q 100 20 160 90` — a parabola opening DOWNWARD, which is a function: every
+        * vertical line meets it exactly once. At x = 130 it is at a single point, y = 63.75. Yet the
+        * figure drew a dashed vertical there, put two dots at y = 44 and y = 83 where the curve is
+        * not, and captioned it "hits twice → not a function". A learner meeting the vertical line
+        * test for the first time was shown a passing graph labelled as failing.
+        *
+        * A SIDEWAYS parabola is the shape that actually fails, so that is what it draws now:
+        * `M 170 25 Q 20 60 170 95` opens right with its vertex at (95, 60). Solving x(t) = 130 gives
+        * t = 0.1584 and t = 0.8416, so the vertical genuinely crosses at y ≈ 36.1 and y ≈ 83.9 —
+        * which is where the two dots are. */}
+      <path d="M 170 25 Q 20 60 170 95" fill="none" stroke={SKY} strokeWidth={2} />
       <line x1={130} y1={20} x2={130} y2={100} stroke={BERRY} strokeWidth={1.6} strokeDasharray="4 3" />
-      <circle cx={130} cy={44} r={3.5} fill={BERRY} /><circle cx={130} cy={83} r={3.5} fill={BERRY} />
+      <circle cx={130} cy={36.1} r={3.5} fill={BERRY} /><circle cx={130} cy={83.9} r={3.5} fill={BERRY} />
       <text x={100} y={108} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>hits twice → not a function</text>
     </svg>
   );
@@ -21558,8 +21571,14 @@ function TgReadLandmarks() {
     <svg viewBox="0 0 240 110" role="img" className="mx-auto w-full max-w-xs">
       <title>Reading a graph, use the landmarks: the peak and trough give amplitude and midline, the repeat gives the period.</title>
       <line x1={15} y1={60} x2={225} y2={60} stroke={TANGERINE} strokeWidth={1.2} strokeDasharray="4 3" />
+      {/* S242 / VIS-00 — THE PEAK AND TROUGH DOTS SAT ON THE CONTROL POINTS, NOT THE CURVE.
+        * They were (55, 22) and (125, 98), i.e. the Q controls (55, 20) and (125, 100). A quadratic
+        * Bézier never reaches its control point: the first arc peaks at ¼·60 + ½·20 + ¼·60 = 40 and
+        * the second troughs at ¼·60 + ½·100 + ¼·60 = 80, so both markers floated 18px clear of the
+        * wave whose landmarks they were labelling. The x coordinates were already right — at t = ½
+        * the curve is at x = 55 and x = 125 — so only the heights move. */}
       <path d="M 20 60 Q 55 20 90 60 Q 125 100 160 60 Q 195 20 225 45" fill="none" stroke={SKY} strokeWidth={2} />
-      <circle cx={55} cy={22} r={3.5} fill={LEAF} /><circle cx={125} cy={98} r={3.5} fill={BERRY} />
+      <circle cx={55} cy={40} r={3.5} fill={LEAF} /><circle cx={125} cy={80} r={3.5} fill={BERRY} />
       <text x={120} y={104} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>peak, trough, repeat</text>
     </svg>
   );
@@ -21570,7 +21589,10 @@ function TgFivePoints() {
       <title>To sketch cleanly, plot the five key points across one period: start, peak, mid, trough, end.</title>
       <line x1={15} y1={60} x2={225} y2={60} stroke={INK} strokeWidth={1.1} />
       <path d="M 20 60 Q 55 20 90 60 Q 125 100 160 60" fill="none" stroke={SKY} strokeWidth={2} />
-      {[[20,60],[55,22],[90,60],[125,98],[160,60]].map(([x,y],i)=>(<circle key={i} cx={x} cy={y} r={3.5} fill={TANGERINE} />))}
+      {/* Same control-point slip as `TgReadLandmarks` above, on the same wave: the peak and trough
+        * were listed as (55, 22) and (125, 98) — the Q controls — when the curve reaches 40 and 80.
+        * The other three of the five key points were already on it. */}
+      {[[20,60],[55,40],[90,60],[125,80],[160,60]].map(([x,y],i)=>(<circle key={i} cx={x} cy={y} r={3.5} fill={TANGERINE} />))}
       <text x={120} y={104} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>5 key points / period</text>
     </svg>
   );
