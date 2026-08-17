@@ -81,7 +81,7 @@ const PAREN = String.raw`\((?:[^()\n]|\([^()\n]*\))*\)`;
 const BRACKET = String.raw`\[(?:[^[\]\n]|\[[^[\]\n]*\])*\]`;
 const BARS = String.raw`\|[^|\n]+\|`;
 /** A caret power, a brace power (`∫₀^{2π}` is authored that way), or a Unicode superscript run. */
-const POWER = `(?:${SUP_CHARS}|\\^\\{[^{}\\n]*\\}|\\^${PAREN}|\\^[A-Za-z0-9?π∞+−-]+)`;
+const POWER = `(?:${SUP_CHARS}|\\^\\{[^{}\\n]*\\}|\\^${PAREN}|\\^(?:[?]|[A-Za-z0-9π∞+−-]+))`;
 const SCRIPTS = `(?:${SUB_CHARS})?(?:${POWER})?`;
 /** `∫` plus its bounds — an atom in its own right, so `∫₀² + ∫₂⁵ = ∫₀⁵` is one island. */
 const INTEGRAL_OP = `∫(?:${SUB_CHARS})?(?:${POWER})?(?![${STRAY_SCRIPT}])`;
@@ -234,7 +234,7 @@ export function powerShorthandToTex(source: string): string {
    * first so the `≤`/`≥` entries below pick them up. */
   const tex = subscriptToTex(superscriptToTex(source).replaceAll("<=", "≤").replaceAll(">=", "≥"))
     .replace(/\^\(((?:[^()]|\([^()]*\))*)\)/g, "^{$1}")
-    .replace(/\^([A-Za-z0-9?π∞+−-]+)/g, "^{$1}")
+    .replace(/\^((?:[?]|[A-Za-z0-9π∞+−-]+))/g, "^{$1}")
     /* S242 / MPB-05 — LEIBNIZ NOTATION IS STACKED. Placed after the `^{…}` normalisation above so
      * that `d²y/dx²` has already become `d^{2}y/dx^{2}` and the order marker can be carried into
      * the right half of the fraction rather than left dangling outside it. The `\\` in the
@@ -303,7 +303,7 @@ function calculusMatches(text: string): Match[] {
 function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   const candidates: Match[] = [];
 
-  collect(text, /\([^()\n]*\^[^()\n]*\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?/g, candidates);
+  collect(text, /\([^()\n]*\^[^()\n]*\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?/g, candidates);
   // S242: the exponent admits ONE level of nesting, as powerShorthandToTex already does. Without
   // it "2^(3 + (−1))" matched no exponent at all and left "2^()" sitting in the prose.
   /* S242 / MATH-03. THE BASE ADMITS ONE LEVEL OF NESTING, exactly as the exponent already does.
@@ -312,14 +312,14 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   // bracketed base with a signed or fractional inner term is the ordinary shape rather than an edge
   // case. The asymmetry was accidental: the exponent was widened in this session and the base was
   // not. */
-  collect(text, new RegExp(`(?:[A-Za-z0-9?]+|\\((?:[^()\\n]|\\([^()\\n]*\\))*\\))\\^(?:\\((?:[^()\\n]|\\([^()\\n]*\\))*\\)|[A-Za-z0-9?π∞+−-]+)`, "g"), candidates);
+  collect(text, new RegExp(`(?:[A-Za-z0-9?]+|\\((?:[^()\\n]|\\([^()\\n]*\\))*\\))\\^(?:\\((?:[^()\\n]|\\([^()\\n]*\\))*\\)|(?:[?]|[A-Za-z0-9π∞+−-]+))`, "g"), candidates);
   collect(text, /(?:(?<![A-Za-z0-9])\d+\s*)?(?<![A-Za-z])sqrt\s*\([^()\n]+\)/gi, candidates);
   collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
   /* S242 / MATH-03 (MPB-01). Either side of the slash may carry π. "π/2", "3π/2" and "2π/3" are
   // single quantities and were the second-largest π residue (409 rows) — the fraction island
   // required digits on both sides, so it declined them and the whole thing stayed prose on radian
   // lessons whose subject is exactly those values. */
-  collect(text, /(?<![\w/])(?:\d+(?:\.\d+)?π?|π)\s*\/\s*(?:\d+(?:\.\d+)?π?|π)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?(?![\w/])/g, candidates);
+  collect(text, /(?<![\w/])(?:\d+(?:\.\d+)?π?|π)\s*\/\s*(?:\d+(?:\.\d+)?π?|π)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?(?![\w/])/g, candidates);
 
   /* S242 / MATH-03 (MPB-01/03) — A SIGNED VALUE AND A π QUANTITY ARE ALWAYS-ON ISLANDS.
    *
@@ -404,7 +404,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_RELATION_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
     const ABSOLUTE = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
+    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -477,7 +477,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
     const ABSOLUTE_ATOM = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|[A-Za-z0-9?π∞+−-]+))?|\([^()\n]{1,40}\))`;
+    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other

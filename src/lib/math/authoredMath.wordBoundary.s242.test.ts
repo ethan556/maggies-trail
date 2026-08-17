@@ -292,7 +292,15 @@ describe("S242 / GEN-01 — two leaks the generated-side sweep found that no sou
     // on an exponent lesson — 12 occurrences, all on `exp-solve`, whose subject IS negative powers.
     expect(islands("1/81 = 3^−4, so x = −4.").join(" ")).toContain("3^−4");
     expect(prose("1/81 = 3^−4, so x = −4.")).not.toContain("^");
-    expect(islands("(1/2)^−4 = 2^4 = 16, so x = −4, not 2.")).toContain("(1/2)^−4");
+    /* S242 — CORRECTED, AND STRICTER. This asserted exact array membership of `(1/2)^−4`, which
+     * only held because a parenthesised base could not carry an exponent: the island ENDED at the
+     * `)`, so the fragment happened to be its own entry. Fixing that defect — `(1/2)^x` used to
+     * leave a literal `^x` on screen — makes the whole equation one island, which is what an
+     * equation should be. So the assertion now checks what it was always trying to check: the
+     * fragment is INSIDE an island, and no caret survives into the prose. The second half is a
+     * check the original did not make. */
+    expect(islands("(1/2)^−4 = 2^4 = 16, so x = −4, not 2.").join(" ")).toContain("(1/2)^−4");
+    expect(prose("(1/2)^−4 = 2^4 = 16, so x = −4, not 2.")).not.toContain("^");
     // The ASCII form must keep working — this widened the class, it did not swap it.
     expect(islands("2^-1 is one half.")).toContain("2^-1");
   });
