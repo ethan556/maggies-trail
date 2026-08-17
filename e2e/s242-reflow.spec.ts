@@ -33,20 +33,59 @@ const ROUTES = ["/", "/dashboard", "/courses", "/learn/as100-01-01", "/review", 
 /** 320 is 1.4.10's number. 640×… at deviceScaleFactor 2 is how a browser implements 200% zoom. */
 const NARROW = { width: 320, height: 720 };
 
+/**
+ * THE FIRST REAL RUN OF THIS FUNCTION CORRECTED IT. Everything below the `getBoundingClientRect`
+ * line was written while the page was blank — the CSP blocked hydration, `body *` returned 14
+ * script elements, and a layout with no boxes cannot overflow. The moment the app hydrated, six of
+ * these tests failed, and all six named the same two elements:
+ *
+ *     span.trail-atmosphere__ridge--far   right=358 > 320
+ *     span.trail-atmosphere__ridge--near  right=346 > 320
+ *
+ * Those are the decorative ridge silhouettes in `TrailAtmosphere`. Their container is
+ * `position: fixed; inset: 0; OVERFLOW: HIDDEN; pointer-events: none` and carries
+ * `aria-hidden="true"`; the ridges are placed at `right: -8vw` deliberately, to bleed off the edge.
+ * The browser paints nothing past 320 and the page does not scroll — the `scrollWidth` assertion,
+ * which is 1.4.10's actual mechanism, passed on every one of the six.
+ *
+ * `getBoundingClientRect` reports an element's UNCLIPPED border box. It does not know about an
+ * ancestor's `overflow: hidden`. So the walk was reporting geometry the learner cannot see, cannot
+ * reach and cannot scroll to, and calling it a reflow failure. That is a measurement defect, and it
+ * is the same one this session has hit repeatedly: the detector is wrong before the content is.
+ *
+ * The fix computes the VISIBLE rectangle — the intersection with every clipping ancestor — which is
+ * what "spills past the right edge" was always meant to mean. It is not a relaxation: an element
+ * genuinely overflowing an unclipped ancestor still reports, and an element inside a clipping
+ * ancestor that ITSELF overflows still reports, because the ancestor's own rect is intersected too.
+ * Only `overflow-x: hidden` and `clip` are treated as clipping. `auto`/`scroll` are NOT, because
+ * there the content IS reachable — by a horizontal scroll, which is the thing 1.4.10 forbids.
+ */
 async function overflow(page: Page) {
   return page.evaluate(() => {
     const doc = document.documentElement;
     const limit = doc.clientWidth;
     const spillers: string[] = [];
+
+    /** The element's painted extent: its own box, clipped by every `overflow: hidden` ancestor. */
+    const visibleRight = (el: Element): number => {
+      let right = el.getBoundingClientRect().right;
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const ov = getComputedStyle(p).overflowX;
+        if (ov === "hidden" || ov === "clip") right = Math.min(right, p.getBoundingClientRect().right);
+      }
+      return right;
+    };
+
     for (const el of Array.from(document.querySelectorAll("body *"))) {
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
       const style = getComputedStyle(el);
       if (style.visibility === "hidden" || style.display === "none") continue;
       // 1px of slack: sub-pixel layout rounding is not a reflow failure.
-      if (r.right > limit + 1) {
+      const right = visibleRight(el);
+      if (right > limit + 1) {
         const id = `${el.tagName.toLowerCase()}${el.className && typeof el.className === "string" ? "." + el.className.split(/\s+/).slice(0, 2).join(".") : ""}`;
-        spillers.push(`${id} right=${Math.round(r.right)} > ${limit}`);
+        spillers.push(`${id} right=${Math.round(right)} > ${limit}`);
       }
     }
     return {
@@ -101,7 +140,13 @@ test.describe("S242 — 1.4.10 at 320px with the largest text scale", () => {
 
 
 /**
- * S242 / SEC-02 — THE PAGE MUST ACTUALLY HYDRATE, AND TODAY IT DOES NOT.
+ * S242 / SEC-02 — THE PAGE MUST ACTUALLY HYDRATE. IT NOW DOES; THIS IS WHAT MADE IT NOT.
+ *
+ * RESOLVED 2026-08-17 by `src/middleware.ts`: the policy moved from static SHA-256 hashes in
+ * `next.config.mjs` to a per-request nonce, which is the only mechanism that can cover a payload
+ * generated per response. The account below is left standing because it is the diagnosis, and
+ * because the assertions under it are the ones that would catch a repeat. `e2e/s242-csp.spec.ts`
+ * now carries the fuller version — every script nonced, one CSP header, no console violation.
  *
  * THIS IS THE FINDING OF THE PACKET, AND IT WAS FOUND BY THE GUARD RATHER THAN BY THE ASSERTION.
  *
@@ -130,11 +175,12 @@ test.describe("S242 — 1.4.10 at 320px with the largest text scale", () => {
  * response. That needs a running server and belongs in the e2e layer."* The e2e layer never asserted
  * that a page becomes interactive, so an axe sweep of a blank page finds zero violations and passes.
  *
- * THE FIX IS A DECISION, NOT AN EDIT, and is deliberately not made here: a CSP is a security
- * control. The three routes are a per-request nonce (which the config rejects on purpose, because it
- * forces every static route dynamic), `'unsafe-inline'` on `script-src` (which gives up the property
- * the hashes were bought with), or serving the strict policy only on routes that do not stream.
- * This spec states the requirement; the owner picks the route.
+ * THE FIX WAS A DECISION, NOT AN EDIT, and was deliberately left to the owner: a CSP is a security
+ * control. The three routes were a per-request nonce (which the config rejected on purpose, because
+ * it forces every static route dynamic), `'unsafe-inline'` on `script-src` (which gives up the
+ * property the hashes were bought with), or serving the strict policy only on routes that do not
+ * stream. THE NONCE WAS CHOSEN. Its cost is stated and measured in `src/middleware.ts`: the build
+ * went from 21 static routes to 1, and all 21 were client-rendered shells.
  */
 test.describe("S242 — the app hydrates", () => {
   for (const route of ["/", "/dashboard", "/learn/as100-01-01"]) {

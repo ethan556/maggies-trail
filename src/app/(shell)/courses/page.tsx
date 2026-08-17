@@ -23,7 +23,7 @@ export default async function CoursesPage() {
       <TrailAtmosphere />
       <div className="relative z-[1]">
       <h1 className="text-3xl font-extrabold tracking-tight">Courses</h1>
-      <p className="mt-1 text-content-2">Every trail on the map — walk them in any order.</p>
+      <p className="mt-1 text-body-lg text-content-2">Every trail on the map — walk them in any order.</p>
       <div className="mt-5">
         <CatalogClient courses={courses} upcoming={upcoming} />
       </div>

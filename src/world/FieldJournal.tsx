@@ -23,7 +23,7 @@ export function FieldJournal({ sections }: { sections: NotebookSection[] }) {
   if (withCards.length === 0) {
     return (
       <Surface border className="rounded-card p-6 text-center">
-        <p className="text-content-2">{WORLD_STATES.emptyJournal}</p>
+        <p className="text-body-lg text-content-2">{WORLD_STATES.emptyJournal}</p>
       </Surface>
     );
   }

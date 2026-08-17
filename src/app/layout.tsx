@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 import { motionInit } from "@/lib/motionBootstrap";
 
@@ -76,12 +77,29 @@ export const metadata: Metadata = {
 /** Applies the saved theme before first paint (no flash). */
 const themeInit = `(function(){try{var t=localStorage.getItem("numera:theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})();`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+/**
+ * S242 / SEC-02 — the per-request CSP nonce, minted in `src/middleware.ts` and forwarded on the
+ * `x-nonce` request header. Next.js stamps its own script tags (the streaming runtime and the RSC
+ * payload chunks) from the `Content-Security-Policy` request header the middleware also sets; the
+ * two scripts BELOW are written by this repo, so they have to be stamped here.
+ *
+ * Reading `headers()` opts every route into dynamic rendering. That is the accepted, stated cost of
+ * the nonce — see the header comment in `src/middleware.ts`. It is also not optional: a statically
+ * prerendered page carries script tags baked at build time, which by definition cannot hold a nonce
+ * minted per request, so under a nonce policy those pages would be blocked exactly as they were
+ * under the hashed one.
+ *
+ * `?? undefined` rather than `?? ""`: an empty `nonce` attribute matches nothing, so a missing
+ * header would fail as a silent block. Omitting the attribute fails the same way but leaves the
+ * rendered HTML honest about what happened.
+ */
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-        <script dangerouslySetInnerHTML={{ __html: motionInit }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: motionInit }} />
       </head>
       <body>{children}</body>
     </html>

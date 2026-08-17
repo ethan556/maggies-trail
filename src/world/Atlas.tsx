@@ -157,7 +157,7 @@ export function Atlas({
   return (
     <div>
       <h1 className="text-3xl font-extrabold tracking-tight">Learner Atlas</h1>
-      <p className="mt-1 text-content-2">
+      <p className="mt-1 text-body-lg text-content-2">
         Fourteen regions, one per grade band. Search every course and waypoint without entering a region first.
       </p>
 

@@ -6,6 +6,14 @@ claiming it did.**
 
 ---
 
+## RESOLVED 2026-08-17 — see `SEC02_CSP_NONCE.md`
+
+The route chosen was **a per-request nonce in `src/middleware.ts`**. The browser layer went from
+**13 passing / 104 failing to 125 passing / 0 failing**. Everything below is the diagnosis and is
+left as written; it is not current state.
+
+---
+
 ## CORRECTION (same day, after running the axe suite)
 
 **One claim in the section below was wrong, and I had not verified it before writing it.**

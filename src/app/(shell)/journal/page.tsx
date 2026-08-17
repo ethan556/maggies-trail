@@ -11,7 +11,7 @@ export default function JournalPage() {
   return (
     <WorldShell manifest={manifest} today={localDateStr(new Date())}>
       <h1 className="text-3xl font-extrabold tracking-tight">Field Journal</h1>
-      <p className="mt-1 text-content-2">
+      <p className="mt-1 text-body-lg text-content-2">
         What you&apos;ve established, trail by trail — with the route state of each idea.
       </p>
       <div className="mt-5">

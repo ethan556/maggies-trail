@@ -163,7 +163,7 @@ export default function OnboardingFlow() {
       <div className="step-in">
         <StepDots current={1} />
         <h1 className="text-2xl font-extrabold">Whose trail is this?</h1>
-        <p className="mt-1 text-content-2">
+        <p className="mt-1 text-body-lg text-content-2">
           Add your first name and the whole app becomes <strong>your</strong> trail — or keep
           walking Maggie's.
         </p>
@@ -239,7 +239,7 @@ export default function OnboardingFlow() {
       <div className="step-in">
         <StepDots current={1} />
         <h1 className="text-2xl font-extrabold">Choose your avatar</h1>
-        <p className="mt-1 text-content-2">Pick one that feels right. You can change it anytime.</p>
+        <p className="mt-1 text-body-lg text-content-2">Pick one that feels right. You can change it anytime.</p>
         <div className="mt-4">
           <AvatarPicker
             grade={stage.grade}

@@ -16,51 +16,33 @@ const nextConfig = {
   },
   /* S242 / SEC-02 — application security headers.
    *
-   * The audit found NO app-defined CSP, HSTS, nosniff, referrer or permissions policy. These are
-   * set here rather than in middleware deliberately: middleware runs per request and would force
-   * every currently-static route to render dynamically, trading a real performance property for a
-   * header that does not need one.
+   * The audit found NO app-defined CSP, HSTS, nosniff, referrer or permissions policy.
    *
-   * WHY script-src USES HASHES, NOT 'unsafe-inline'. Two inline scripts run before hydration —
-   * `themeInit` and `motionInit` — to apply theme and motion preferences before first paint. Both
-   * are fixed strings, so they can be hashed, and hashing keeps the strongest half of the CSP
-   * intact. The obvious alternative, nonces, cannot work here for the same reason middleware
-   * cannot: a nonce must be per-response, which defeats static prerendering.
+   * THE CONTENT-SECURITY-POLICY IS NO LONGER HERE. It lives in `src/middleware.ts`, because it
+   * needs a per-request nonce. This file used to allow inline scripts by SHA-256 hash and to argue,
+   * at length and wrongly, that a nonce "cannot work here" — the reasoning being that a nonce must
+   * vary per response and so defeats static prerendering. That trade was real; what the argument
+   * missed is that hashes never covered the scripts that matter. Next.js emits fifteen inline
+   * scripts per page and thirteen of them — React's streaming runtime and the RSC payload — vary
+   * with the page, so no static hash can name them. Every one was blocked and the app did not
+   * hydrate. `src/middleware.ts` carries the full account and the measured cost.
    *
-   * The hazard with hashes is that they go stale SILENTLY — edit either script and the browser
-   * blocks it, the theme flashes on load, motion preferences are ignored, and no test notices.
-   * `securityHeaders.s242.test.ts` recomputes both hashes from the real strings and fails if they
-   * are not present here, which is what makes this approach safe to maintain.
+   * DO NOT ADD A CSP BACK TO THIS FILE. Two Content-Security-Policy headers on one response are
+   * enforced as an INTERSECTION: a static policy here would block the nonced scripts the middleware
+   * allows, and the symptom would be indistinguishable from the bug that motivated the move.
    *
-   * style-src keeps 'unsafe-inline'. KaTeX injects inline style attributes on the elements it
-   * renders, and 54 components emit scoped <style> blocks. Hashing those is impractical and they
-   * are not an XSS vector in the way scripts are. Stated plainly rather than hidden.
+   * The headers below have no per-request component, so they stay where they are — one place, one
+   * static configuration, applied to every response including the static assets that middleware
+   * deliberately does not match.
    *
-   * frame-ancestors 'none' and X-Frame-Options DENY are deliberate even though LTI is on the
-   * roadmap: an LTI launch that needs framing should relax this for its own route explicitly,
-   * not inherit a permissive default site-wide. */
+   * frame-ancestors 'none' (in the middleware policy) and X-Frame-Options DENY are deliberate even
+   * though LTI is on the roadmap: an LTI launch that needs framing should relax this for its own
+   * route explicitly, not inherit a permissive default site-wide. */
   async headers() {
-    const csp = [
-      "default-src 'self'",
-      "base-uri 'self'",
-      "object-src 'none'",
-      "frame-ancestors 'none'",
-      "form-action 'self'",
-      "script-src 'self' 'sha256-9r4UfGgqRerDqRDrvS/DWWD2MbCUsyFX9AYHKwqN3Uo=' 'sha256-7Yd61OcsE9cwiYSFkCqnJtwprYj5mKqZSeK1dt5Rtxo='",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
-      "font-src 'self' data:",
-      "connect-src 'self'",
-      "manifest-src 'self'",
-      "media-src 'self'",
-      "worker-src 'self' blob:",
-      "upgrade-insecure-requests"
-    ].join("; ");
     return [
       {
         source: "/:path*",
         headers: [
-          { key: "Content-Security-Policy", value: csp },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },

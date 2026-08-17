@@ -110,10 +110,20 @@ for (const width of WIDTHS) {
     await page.waitForLoadState("networkidle");
     await commitPredictionIfPending(page);
 
-    const line = page.locator('svg[aria-label="Number line"]');
+    /* PREFIX MATCH, and the reason matters. This spec was written on 2026-08-12 against
+     * `aria-label="Number line"`. On 2026-08-15 the graph-defect wave replaced that with a
+     * descriptive, STATEFUL label — "Number line from 0 to 60. Start marked at 0. No hop made
+     * yet." — which is a real improvement for a screen-reader user and which an exact-match
+     * selector cannot survive. Nothing caught the break because the CSP had the whole browser
+     * layer dark for three days; this spec was silently unrunnable, not passing.
+     *
+     * So the selector matches the stem the label is guaranteed to open with, rather than a full
+     * string that is designed to change as the learner hops. It is no looser about what it then
+     * measures: the same element, the same boxes, the same overlap arithmetic. */
+    const line = page.locator('svg[aria-label^="Number line"]');
     await expect(line).toBeVisible();
 
-    const boxes = await labelBoxes(page, 'svg[aria-label="Number line"] text');
+    const boxes = await labelBoxes(page, 'svg[aria-label^="Number line"] text');
     // eslint-disable-next-line no-console
     console.log(`[${width}] number line: ${boxes.length} labels — ${boxes.map((b) => b.text).join(" ")}`);
 
