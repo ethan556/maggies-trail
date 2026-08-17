@@ -4511,3 +4511,30 @@ not exist in this repository at all.
 Gates at seal `12a0c16`: typecheck clean · vitest 13,808 passed / 4 skipped across 4 shards ·
 schema 1840/1840 · pedagogy 1711/1711 · cml strict 0 errors, 200 warnings within ceilings ·
 registration consistent · native 3 archive-only findings as documented · npm audit 0 vulnerabilities.
+
+
+## S242 — authored MCQ leakage referred to a human (CLAUDE.md rule 1)
+
+Twenty-six authored multiple-choice items let a test-wise learner pick the key by its SHAPE rather
+than by the mathematics. Option labels are authored prose, so these are recorded rather than edited.
+Evidence: `reports/mcq/MCQ_LEAKAGE_INDEX.csv`, tells `lone-justification`,
+`only-option-with-a-unit`, `only-numeric-option`, `absolutes-in-distractors-only`.
+
+Four of them are one item placed three times and two items placed twice, so the reading is smaller
+than the count:
+
+- `g2p-01-03/k3`, `g2p-03-04/k1`, `g2p-03-04/k3` — "Two trail legs of 32 m and 25 m give a computed
+  total of 30 m." One option carries both the only justification AND the only unit.
+- `g5u-01-05/k2`, `g5u-02-01/k3` — "When you add 5/12 + 5/12 (6/12 + 5/12), what happens to the
+  denominator?" Only the key explains itself.
+- `g5u-03-02/k1`, `g5u-03-02/k3` — "A student computes 1/2 + 1/3 and gets 5/6. Is that reasonable?"
+- `kcw-02-02/k1`, `kcw-02-04/k3` — "What do the numerals 13 through 19 all share?"
+
+The remainder, one each: `dm-02-02/ch1`, `dd-04-03/ch1`, `fr-04-01/k3`, `fna-01-03/k3`,
+`ft-03-03/i1`, `khm-02-04/k1`, `lg-04-03/k3`, `g5l-01-01/k1`, `mc-03-02/k3`, `rns-02-02/ch1`,
+`rns-03-01/k3`, `tg-04-02/k1`, `ti-02-02/k3`, `ti-03-02/k3`.
+
+**Not a rewrite list.** The repair is to give every distractor the same form as the key — a reason,
+a unit, a numeral — so the key stops being identifiable without the mathematics. Rewording by
+length alone is explicitly excluded by the programme plan. The ten GENERATED siblings of these are
+generator repairs and are listed in `S242_THREE_NUMBERS_I_ASSERTED.md`.

@@ -175,3 +175,55 @@ Two turns, two leverage claims, both made by reading a count instead of the thin
 The first was too pessimistic, the second too optimistic, and both came from the same habit. The
 correction that actually generalises is not any of these numbers — it is that **a count is not
 evidence about the work until someone opens one of the things being counted.**
+
+---
+
+## The 36, split by who is allowed to fix them
+
+With `count-on-hops` retired as a repair target, the 36 exploitable MCQ leaks are the top
+completable item left. Splitting them by source decides who may touch them:
+
+```
+36 hard leaks   ·   26 AUTHORED   ·   10 GENERATED
+```
+
+**The 26 authored ones are not mine.** CLAUDE.md rule 1 is the oldest rule in the repository:
+*"Never change authored lesson prose… If you find a genuine content error, record it in
+`VARIANT_LOG.md` for a human and move on."* An MCQ option label is authored prose. They are
+recorded there, not edited here — and a session that quietly rewrote 26 of them would be breaking
+the rule that has governed this whole workstream in order to close a number.
+
+They cluster, which makes the human's job smaller than 26:
+
+| cluster | lessons | tell |
+|---|---|---|
+| "Two trail legs of 32 m and 25 m give a computed total of 30 m" | `g2p-01-03`, `g2p-03-04` (×2 steps) | the same item, three placements, both `lone-justification` and `only-option-with-a-unit` |
+| "When you add 5/12 + 5/12, what happens to the denominator?" | `g5u-01-05`, `g5u-02-01` | `lone-justification` |
+| "A student computes 1/2 + 1/3 and gets 5/6. Is that reasonable?" | `g5u-03-02` (×2 steps) | `lone-justification` |
+| "What do the numerals 13 through 19 all share?" | `kcw-02-02`, `kcw-02-04` | `only-option-with-a-unit` |
+
+**The 10 generated ones are fixable at the generator**, which is where the root-cause multiplier
+applies — one repair, every seed:
+
+```
+g6-data-literacy|ddHistDisplayChoice                    absolutes-in-distractors-only
+rate-interpret|compareSpeeds                            only-option-with-a-unit
+g8-rns-root-classify|rnsClassifyPickRational            only-numeric-option
+g8-rns-root-estimate|rnsCloserInteger                   lone-justification
+g8-rns-compare-estimate|rnsCompareRootDecimal           lone-justification
+g4-fractions|faLikeDenomWordMcq                         lone-justification
+a2-complex|cn-complex-plane__mcq                        only-numeric-option
+g12-trig-graphs-inverses|…tg-arccos__mcq                lone-justification
+g12-trig-identities-equations|…ti-pythagorean__mcq      only-numeric-option
+g12-trig-identities-equations|…ti-tan-cofunction__mcq   lone-justification
+```
+
+`rnsClassifyPickRational` is the clearest of them: *"Which of these is rational?"* against √12, π
+and a non-repeating decimal — the only option written as a plain decimal is the answer, so a
+learner who has never met irrationality scores by shape.
+
+**Ten generator repairs is the next batch, and it is a batch — not a session's leftovers.** Each
+needs its distractors re-derived so the correct option is not identifiable by form, then the
+variant gate, then the output read. That is the working rhythm this repo mandates, and starting it
+with the context left in this session would produce exactly the unread output CLAUDE.md warns
+about: *"An honest 12 with every trap read is worth more than 40 unread."*
