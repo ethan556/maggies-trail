@@ -15,45 +15,21 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Step through it.",
+   "body": "Grow the power one factor at a time.",
       "conceptTag": "evaluate-powers",
-      "widget": {
-        "type": "exactNumberLab",
-        "prompt": "Evaluate 2^4 (2 × 2 × 2 × 2).",
-        "task": "powerEvaluate",
-        "values": [
-          {
-            "id": "left",
-            "label": "2^4",
-            "kind": "power",
-            "base": 2,
-            "exponent": 4
-          }
-        ],
-        "requiredExplorations": 2,
-        "requiredStageKeys": [
-          "power:left:expand",
-          "power:left:value"
-        ],
-        "answerUnit": "",
-        "tolerance": 0,
-        "choices": [],
-        "numericErrors": [
-          {
-            "value": 8,
-            "feedback": "8 is 2^3 (only three 2s). 2^4 has FOUR 2s: 2 × 2 × 2 × 2 = 16."
-          },
-          {
-            "value": 6,
-            "feedback": "6 multiplies 2 × 4 (base × exponent). Multiply four 2s together instead: 16."
-          }
-        ],
-        "authoredStages": [],
-        "explorationFeedback": "Inspect every required exact-number state before checking.",
-        "fallbackFeedback": "2 × 2 × 2 × 2 = 16.",
-        "answerMode": "numeric",
-        "successFeedback": "2 × 2 × 2 × 2 = 16."
-      },
+   "widget": {
+    "type": "sequenceBuild",
+    "prompt": "Set the multiplier so the sequence grows 1, 2, 4, 8, 16. Four multiplications by 2 land on 2^4.",
+    "mode": "geometricTerm",
+    "first": 1,
+    "atPosition": 5,
+    "targetTerm": 16,
+    "rMax": 4,
+    "start": 1,
+    "successFeedback": "The repeated multiplier is 2, and the four growth steps are 1 → 2 → 4 → 8 → 16. Therefore 2^4 = 16.",
+    "lowFeedback": "The multiplier is too small. Each step must double the previous value.",
+    "highFeedback": "The multiplier is too large. The power uses a factor of 2 at every step."
+   },
       "predict": {
         "prompt": "2⁴ — will it come out equal to 2 × 4?",
         "options": [

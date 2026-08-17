@@ -27,13 +27,13 @@ describe("FamilyClient child-row avatar — real manifest, everything disabled t
     expect(row.querySelector("img")?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
-  it("still falls back to the placeholder for a chosen-but-disabled real manifest id", async () => {
+  it("shows the child's chosen released avatar", async () => {
     const p = progressStore.load();
     p.avatarId = "avatar-001";
     progressStore.save(p);
     render(<FamilyClient skills={{}} courses={[]} tagGrades={{}} />);
     const name = await screen.findByText("Learner 1");
     const row = name.closest("li")!;
-    expect(row.querySelector("img")?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+    expect(row.querySelector("img")?.getAttribute("src")).toBe("/avatars/avatar-001-256.webp");
   });
 });

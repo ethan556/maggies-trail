@@ -122,66 +122,39 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Sort the strangers: which keep the 6, which erase it?",
+      "body": "Move from zero groups of 6 to one group of 6.",
       "conceptTag": "identity-zero",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort each expression into the answer it equals.",
-        "buckets": [
-          {
-            "id": "six",
-            "label": "Equals 6",
-            "icon": "6️⃣"
-          },
-          {
-            "id": "zero",
-            "label": "Equals 0",
-            "icon": "0️⃣"
-          }
-        ],
-        "items": [
-          {
-            "id": "e1",
-            "label": "6 × 1",
-            "bucketId": "six",
-            "feedback": "6 × 1 is one group of 6 — times one keeps the number, so it equals 6, not 0."
-          },
-          {
-            "id": "e2",
-            "label": "6 × 0",
-            "bucketId": "zero",
-            "feedback": "6 × 0 is six empty groups — nothing six times is still nothing. It lands in the 0 bucket."
-          },
-          {
-            "id": "e3",
-            "label": "0 × 6",
-            "bucketId": "zero",
-            "feedback": "The flip doesn't rescue it: zero groups of 6 holds nothing at all. Any fact with a ×0 in it equals 0."
-          },
-          {
-            "id": "e4",
-            "label": "6 ÷ 1",
-            "bucketId": "six",
-            "feedback": "Sharing 6 with just one person hands them everything — ÷1 keeps the number, so this equals 6."
-          }
-        ],
-        "missFeedback": "Test each one: does it keep the 6 (×1, ÷1) or empty it (any ×0)?",
-        "successFeedback": "Sorted! ×1 and ÷1 keep the number; a zero factor empties everything — in either order."
+        "type": "slider",
+        "prompt": "Start with 0 groups of 6, then slide to make 1 group of 6. Watch the total change from 0 to 6.",
+        "min": 0,
+        "max": 1,
+        "step": 1,
+        "start": 0,
+        "target": 1,
+        "visual": "groups",
+        "groupSize": 6,
+        "groupLayout": "row",
+        "itemEmoji": "●",
+        "unitLabel": "groups",
+        "lowFeedback": "At 0 groups, there are no dots: 6 × 0 = 0. Move to 1 group.",
+        "highFeedback": "Use exactly 1 group of 6.",
+        "successFeedback": "One group has 6 dots, while zero groups has none. So 1 × 6 = 6 and 0 × 6 = 0."
       },
       "predict": {
-        "prompt": "6 × 0 and 6 × 1 — will these two land in the same bucket?",
+        "prompt": "Do 0 groups of 6 and 1 group of 6 have the same total?",
         "options": [
           {
             "id": "no",
-            "label": "No — one keeps the 6, the other erases it"
+            "label": "No — the totals are 0 and 6"
           },
           {
             "id": "yes",
-            "label": "Yes — both leave the 6 alone"
+            "label": "Yes — both totals are 6"
           }
         ],
         "outcomeId": "no",
-        "reveal": "×1 hands back exactly what it was given — one group of 6 is 6. ×0 makes ZERO groups of 6: nothing at all. The two strangers look like neighbors but do opposite jobs: one is the identity, the other the annihilator."
+        "reveal": "Zero groups contain no dots, so 0 × 6 = 0. One group contains 6 dots, so 1 × 6 = 6. The totals are different."
       }
     },
     {

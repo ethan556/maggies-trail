@@ -20,7 +20,7 @@ const counts = { json: 0, source: 0, imports: 0, links: 0, assets: 0, buttons: 0
 const walk = (dir, accept = () => true) => {
   const out = [];
   for (const name of readdirSync(dir)) {
-    if (["node_modules", ".next", ".git", "coverage", "test-results", "playwright-report", ".cowork-cache"].includes(name)) continue;
+    if (["node_modules", ".next", ".git", "coverage", "test-results", "playwright-report", ".cowork-cache", ".chatgpt-work-cache"].includes(name)) continue;
     const path = join(dir, name);
     const st = statSync(path);
     if (st.isDirectory()) out.push(...walk(path, accept));
@@ -34,7 +34,7 @@ const report = (path, message) => failures.push(`${relative(root, path)}: ${mess
 // 0. Source releases must not contain dependency trees, compiler caches, or
 // generated build/test output. These files are host-specific and can hide stale
 // code or make a clean install behave differently from the audited tree.
-for (const name of ["node_modules", ".next", ".cml-build", "coverage", "test-results", "playwright-report", ".turbo", ".cowork-cache"]) {
+for (const name of ["node_modules", ".next", ".cml-build", "coverage", "test-results", "playwright-report", ".turbo", ".cowork-cache", ".chatgpt-work-cache"]) {
   const path = join(root, name);
   if (existsSync(path)) report(path, "generated dependency/build artifact must be excluded from source releases");
 }

@@ -252,42 +252,37 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Build the pipeline yourself.",
+   "body": "Complete the pipeline by drawing one value for every team member.",
    "conceptTag": "question-capstone",
    "hints": [
-    "Statistical question about a group + concrete measurement.",
-    "One value per team member: 12 values.",
-    "Check each option against BOTH requirements."
+    "The question asks every player for one count: goals scored this season.",
+    "Use the recorded frequencies to build the stacks.",
+    "The five stack heights must add to 12 players."
    ],
    "explanationVariants": [
-    "\"How many goals has each of the 12 players scored this season?\" is statistical (varies by player), concrete (a count), and yields exactly 12 values.",
-    "The correct plan surveys the whole group with one measurable question."
+    "The stack heights 1, 3, 4, 2, and 2 add to 12, so every player contributes exactly one goal-count value.",
+    "The finished plot connects the statistical question, the 12 observed values, and the pattern in their variation."
    ],
    "widget": {
-    "type": "mcq",
-    "prompt": "You want a 12-value data set about a 12-player team. Which plan delivers it?",
-    "options": [
-     {
-      "id": "a",
-      "label": "Ask each player how many goals they scored this season",
-      "correct": true,
-      "feedback": "Right — statistical (goal counts vary), measurable (a count), and one value per player: 12 values."
-     },
-     {
-      "id": "b",
-      "label": "Ask the captain how many goals THE TEAM scored",
-      "feedback": "That's ONE value (the team total), not 12 — a single-answer question, not a survey of the group."
-     },
-     {
-      "id": "c",
-      "label": "Ask each player whether soccer is fun",
-      "feedback": "Yes/no opinions aren't the numeric measurement you planned, and \"fun\" isn't a concrete quantity. Ask a countable question per player."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "g6-data-literacy",
-    "form": "ddSurveyPlan"
+    "type": "dotPlot",
+    "prompt": "All 12 players answered, 'How many goals did you score this season?' Build the data: 1 player scored 0, 3 scored 1, 4 scored 2, 2 scored 3, and 2 scored 4.",
+    "values": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "target": [
+     1,
+     3,
+     4,
+     2,
+     2
+    ],
+    "maxPerValue": 5,
+    "successFeedback": "The plot contains 1 + 3 + 4 + 2 + 2 = 12 dots — one observed value per player. Now the spread is visible as the final pattern in the question-to-data pipeline.",
+    "partialFeedback": "Some stacks do not match the recorded responses. Recount each goal value; the finished plot must contain exactly 12 dots."
    }
   },
   {

@@ -251,7 +251,7 @@ describe("adversarial illustration and accompanying-text audit", () => {
       );
     }
 
-    expect(descriptions.size).toBe(1871);
+    expect(descriptions.size).toBe(1884);
     expect([...descriptions.values()].every(Boolean)).toBe(true);
     /* S242 / VIS-04: 3,816 → 3,815. One placement was REMOVED, not reclassified —
      * `ia-01-01#c2`, the lesson "Area Between Two Curves", was carrying `dr-flat-not-turning`:
@@ -271,10 +271,15 @@ describe("adversarial illustration and accompanying-text audit", () => {
      * WORDS. The key is deleted rather than replaced: c2, two steps later, already carries
      * `kc-by-tens` ("groups of ten make ten, twenty, thirty, forty"), and choosing a replacement
      * for c1 would be an authoring judgment this change does not need to make. */
-    expect(rows).toHaveLength(3814);
+    /* S244 / visual-first: 3,814 -> 3,825. Correct replacements now restore both S242 removals,
+     * the kindergarten remedial shares its aligned tens figure, and eight Grade 2 checks render
+     * the candidate number lines their stems ask learners to inspect. */
+    expect(rows).toHaveLength(3825);
     expect(FIGURE_TEXT_MISMATCH_BLOCKLIST).toHaveProperty("size", 136);
-    expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1078);
-    expect(pendingRows).toHaveLength(1078);
+    /* S245 visual-first joining canary: ten add-subtract-10-k concept placements now use five
+     * truthful representations instead of the unrelated fixed 4 + 3 number-line exemplar. */
+    expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1068);
+    expect(pendingRows).toHaveLength(1068);
     expect(pendingRows.every((row) => row.status === "OPEN_REPLACEMENT_REQUIRED")).toBe(true);
     const adversariallyBlocked = rows.filter((row) => FIGURE_TEXT_MISMATCH_BLOCKLIST.has(row.binding_key));
     expect(adversariallyBlocked).toHaveLength(136);

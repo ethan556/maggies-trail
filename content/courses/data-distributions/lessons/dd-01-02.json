@@ -15,25 +15,33 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Count the data.",
+      "body": "Put every response on the plot, including zero.",
       "conceptTag": "data-collection",
       "widget": {
-        "type": "numeric",
-        "prompt": "The pet survey collected answers 0, 1, 1, 2, 3. How many data values is that?",
-        "answer": 5,
-        "tolerance": 0,
-        "unit": "values",
-        "commonErrors": [
-          {
-            "value": 4,
-            "feedback": "4 counts only the DISTINCT numbers (0,1,2,3). The two students who both said \"1\" are separate data values: 5 total."
-          },
-          {
-            "value": 7,
-            "feedback": "7 ADDS the answers (0+1+1+2+3). Counting data values counts the ANSWERS themselves: 5 students, 5 values."
-          }
+        "type": "dotPlot",
+        "prompt": "The pet survey responses are 0, 1, 1, 2, 3. Mark the stack above 0 pets to count how many students answered zero.",
+        "values": [
+          0,
+          1,
+          2,
+          3
         ],
-        "fallbackFeedback": "Five students answered, so the data set has 5 values — repeats count separately."
+        "target": [
+          1,
+          2,
+          1,
+          1
+        ],
+        "given": [
+          1,
+          2,
+          1,
+          1
+        ],
+        "askIndex": 0,
+        "maxPerValue": 3,
+        "successFeedback": "One student answered 0 pets. The dot at zero is a real response, so it belongs in the data set.",
+        "partialFeedback": "Mark only the dots stacked above 0. The other stacks represent different survey answers."
       },
       "predict": {
         "prompt": "One survey answer was '0 pets'. Does that zero count as a data value?",

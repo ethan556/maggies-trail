@@ -134,23 +134,21 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A squaring rule.",
+      "body": "Send an input through a squaring rule.",
       "widget": {
-        "type": "numeric",
-        "prompt": "For g(x) = x^2 + 1, what is g(3)?",
-        "answer": 10,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 9,
-            "feedback": "That's just 3². Add the 1: 9 + 1 = 10."
-          },
-          {
-            "value": 16,
-            "feedback": "Square only x, then add 1: 3² + 1 = 10, not (3 + 1)² = 16."
-          }
-        ],
-        "fallbackFeedback": "g(3) = 3² + 1 = 9 + 1 = 10."
+        "type": "functionMachine",
+        "a": 1,
+        "b": 1,
+        "square": true,
+        "inputMin": 0,
+        "inputMax": 5,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 10,
+        "prompt": "The machine squares the input, then adds 1. Set the input that makes the output 10.",
+        "successFeedback": "Input 3 becomes 3^2 + 1 = 9 + 1 = 10. The diagram keeps the square and the added 1 as separate steps.",
+        "lowFeedback": "The output is below 10. Increase the input and watch the square change before the machine adds 1.",
+        "highFeedback": "The output is above 10. Decrease the input; only the input is squared, then 1 is added."
       }
     },
     {

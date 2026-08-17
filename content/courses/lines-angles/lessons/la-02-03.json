@@ -15,53 +15,20 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Classify a rectangle's sides.",
+   "body": "Build the 90° meeting made by two neighboring rectangle sides.",
    "conceptTag": "parallel-perpendicular-identify",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "In a rectangle, match each pair of sides to their relationship.",
-    "left": [
-     {
-      "id": "p1",
-      "label": "Top side and bottom side"
-     },
-     {
-      "id": "p2",
-      "label": "Top side and left side"
-     },
-     {
-      "id": "p3",
-      "label": "Left side and right side"
-     }
-    ],
-    "right": [
-     {
-      "id": "r1",
-      "label": "Parallel"
-     },
-     {
-      "id": "r2",
-      "label": "Perpendicular"
-     },
-     {
-      "id": "r3",
-      "label": "Parallel"
-     }
-    ],
-    "pairs": {
-     "p1": "r1",
-     "p2": "r2",
-     "p3": "r3"
-    },
-    "pairErrors": [
-     {
-      "left": "p2",
-      "right": "r1",
-      "feedback": "The top and left sides are ADJACENT, meeting at a 90° corner — perpendicular, not parallel."
-     }
-    ],
-    "missFeedback": "Opposite sides never meet (parallel); adjacent sides meet at a corner (perpendicular).",
-    "successFeedback": "Top-bottom and left-right are parallel (opposite sides); top-left is perpendicular (adjacent sides, a 90° corner)."
+    "type": "lineRelationLab",
+    "prompt": "Rotate the blue side until it meets the dark side at a right angle, like adjacent sides of a rectangle.",
+    "targetRelation": "perpendicular",
+    "baseAngle": 0,
+    "angleStart": 30,
+    "offsetStart": -2,
+    "angleStep": 5,
+    "requiredMoves": 3,
+    "successFeedback": "The sides meet at 90°, so they are perpendicular. Opposite rectangle sides are the parallel pairs.",
+    "angleFeedback": "The sides meet, but not at a square corner yet. Rotate to 90°.",
+    "distanceFeedback": "Use both controls and confirm that moving a line does not change its 90° direction."
    },
    "predict": {
     "prompt": "In a rectangle, the two sides that MEET at a corner — parallel or perpendicular?",

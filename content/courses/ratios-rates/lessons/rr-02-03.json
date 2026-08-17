@@ -15,25 +15,31 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "One question, your pick of tool.",
+      "body": "Use a ratio table and scale both quantities together.",
       "conceptTag": "scale-tool-choice",
       "widget": {
-        "type": "numeric",
-        "prompt": "Juice mix uses 2 cups of concentrate for every 5 cups of water. With 8 cups of concentrate, how much water?",
-        "answer": 20,
-        "tolerance": 0,
-        "unit": "cups",
-        "commonErrors": [
-          {
-            "value": 11,
-            "feedback": "11 keeps the 3-gap between 2 and 5 stretched onto 8 — the additive trap in a new outfit. The multiplier is ×4 (2 → 8), so water is 5 × 4 = 20."
-          },
-          {
-            "value": 16,
-            "feedback": "16 scales the CONCENTRATE number again (8 × 2). Water starts at 5 and takes the ×4: 20 cups."
-          }
+        "type": "ratioTable",
+        "prompt": "The mix uses 2 cups of concentrate for every 5 cups of water. Complete the row for 8 cups of concentrate.",
+        "colA": "concentrate (cups)",
+        "colB": "water (cups)",
+        "rows": [
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            10
+          ]
         ],
-        "fallbackFeedback": "8 = 2 × 4, so water = 5 × 4 = 20 cups."
+        "askA": 8,
+        "targetB": 20,
+        "bMax": 30,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "20 cups. Concentrate grew by ×4, and water grew by the same ×4, so the recipe relationship stayed unchanged.",
+        "lowFeedback": "Too little water. Follow the multiplier from 2 cups of concentrate to 8, then apply it to 5 cups of water.",
+        "highFeedback": "Too much water. Both columns must use the same scale factor."
       },
       "hints": [
         "Find the multiplier from the concentrate.",

@@ -15,55 +15,46 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Name the direction.",
+      "body": "Fit a line through a loose upward band and use the whole cloud, not one dot, to read its direction.",
       "widget": {
-        "type": "mcq",
-        "prompt": "On a scatter plot, the dots rise from the lower-left to the upper-right. What association is this?",
-        "options": [
-          {
-            "id": "a",
-            "label": "Positive",
-            "correct": true,
-            "feedback": "Right — rising-to-the-right dots show a positive association."
-          },
-          {
-            "id": "b",
-            "label": "Negative",
-            "correct": false,
-            "feedback": "Negative dots FALL to the right — these RISE, so it's positive."
-          },
-          {
-            "id": "c",
-            "label": "No association",
-            "correct": false,
-            "feedback": "There's a clear upward direction, so it's a positive association, not none."
-          },
-          {
-            "id": "d",
-            "label": "Can't tell",
-            "correct": false,
-            "feedback": "The dots clearly rise to the right — that's a positive association."
-          }
-        ]
+        "type": "scatterFit",
+        "prompt": "Adjust the line until it follows the upward trend while balancing the gaps above and below it.",
+        "points": [[1, 3], [2, 4], [3, 6], [4, 7], [5, 9], [6, 10]],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 0,
+        "yMax": 12,
+        "mMin": -2,
+        "mMax": 3,
+        "mStep": 0.5,
+        "bMin": 0,
+        "bMax": 8,
+        "bStep": 1,
+        "mStart": -1,
+        "bStart": 8,
+        "tolerance": 0.35,
+        "successFeedback": "The fitted line rises from left to right. The points do not need to sit exactly on it for the association to be positive.",
+        "slopeFeedback": "The line's tilt misses the cloud's overall rise. Adjust the slope before moving the line up or down.",
+        "offsetFeedback": "The upward tilt is right, but the line sits too high or too low. Balance the gaps with the intercept."
       },
       "predict": {
-        "prompt": "Can a scatter plot show a real association even when the dots DON'T form a perfect line?",
+        "prompt": "Can a scatter plot show an association when the dots do not form a perfect line?",
         "options": [
           {
             "id": "yes",
-            "label": "Yes — a loose band still tells a story"
+            "label": "Yes; a loose band can still show a trend"
           },
           {
             "id": "no",
-            "label": "No — association needs a perfect line"
+            "label": "No; every point must lie on one line"
           },
           {
             "id": "ten",
-            "label": "Only with at least ten dots"
+            "label": "Only when there are at least ten points"
           }
         ],
         "outcomeId": "yes",
-        "reveal": "Association is about the overall drift, not perfection — dots can scatter around a trend and still rise together convincingly."
+        "reveal": "Association describes the overall direction of the cloud. Points may sit above and below a trend line while still rising together overall."
       }
     },
     {

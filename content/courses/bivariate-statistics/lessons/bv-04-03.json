@@ -230,30 +230,57 @@
       "kind": "check",
       "body": "Compute a rate to compare.",
       "conceptTag": "bv-categorical-association",
-      "variant": {
-        "gen": "g8-bv-categorical-association",
-        "form": "bvCatGroup"
-      },
       "explanationVariants": [
         "Of 20 adults, 15 prefer cats: 15 ÷ 20 = 75%, versus 10 ÷ 30 ≈ 33% of children — a big gap.",
         "Adults: 75% cats; children: 33% cats — very different, so associated."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Of the 20 adults, 15 prefer cats. What percent of adults prefer cats? (Compare to children later.)",
-        "answer": 75,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "conditionalTableLab",
+        "mode": "read",
+        "prompt": "Use the adult row as the comparison group. What percent of adults prefer cats?",
+        "rowLabels": [
+          "children",
+          "adults"
+        ],
+        "colLabels": [
+          "prefer dogs",
+          "prefer cats"
+        ],
+        "counts": [
+          20,
+          10,
+          5,
+          15
+        ],
+        "targetCondition": "row1",
+        "targetCell": "r1c1",
+        "startCondition": "col1",
+        "requiredSwitches": 1,
+        "readMetric": "relativeRow",
+        "answerChoices": [
           {
-            "value": 30,
-            "feedback": "That divides by 50 — 'of adults' means divide by 20: 15 ÷ 20 = 75%."
+            "id": "adult-row",
+            "label": "75%",
+            "value": 75,
+            "feedback": "Yes. The highlighted cell is 15 and the adult-row total is 20, so 15 ÷ 20 = 75%."
           },
           {
+            "id": "whole-table",
+            "label": "30%",
+            "value": 30,
+            "feedback": "30% uses all 50 people as the denominator. The question says 'of adults,' so use the adult-row total, 20."
+          },
+          {
+            "id": "cell-count",
+            "label": "15 people",
             "value": 15,
-            "feedback": "That's the count — divide by the 20 adults: 15 ÷ 20 = 75%."
+            "feedback": "15 is the cell count. A relative frequency compares that count with the 20 adults: 15 ÷ 20 = 75%."
           }
         ],
-        "fallbackFeedback": "15 ÷ 20 = 75% of adults prefer cats (vs about 33% of children — a real gap)."
+        "successFeedback": "The table shows 15 of 20 adults in the cat column: 15 ÷ 20 = 75%. The children are at 10 of 30, about 33%, so the row rates differ sharply.",
+        "explorationFeedback": "Switch to the row named by 'of adults' before choosing a rate.",
+        "conditionFeedback": "Use the adult row as the denominator; a column or the whole table answers a different question.",
+        "cellFeedback": "Use the adult-and-cat intersection as the numerator."
       }
     },
     {

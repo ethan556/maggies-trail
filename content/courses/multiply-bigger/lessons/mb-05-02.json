@@ -15,39 +15,27 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Order the steps.",
+   "body": "Collapse a two-step story in the order the events happen.",
    "conceptTag": "multi-step",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "A gardener plants 5 rows of 12 tomato plants. A rabbit eats 7 of them. Then she plants 2 more rows of 9 plants. Put the steps in order to find how many plants she has now.",
-    "items": [
+    "type": "evalOrder",
+    "prompt": "Five rows hold 6 carrots each. A rabbit eats 7 carrots. Evaluate 5 × 6 − 7.",
+    "tokens": [
+     "5",
+     "×",
+     "6",
+     "−",
+     "7"
+    ],
+    "target": 23,
+    "commonResults": [
      {
-      "id": "s3",
-      "label": "Add 18 — that's 2 × 9 — for the newly planted rows (71 plants)"
-     },
-     {
-      "id": "s1",
-      "label": "Multiply 5 × 12 for the initial total (60 plants)"
-     },
-     {
-      "id": "s2",
-      "label": "Subtract 7 for the plants the rabbit ate (53 plants)"
+      "value": -5,
+      "feedback": "That subtracts 7 from one row before making all five rows. First find the total in the rows."
      }
     ],
-    "correctOrder": [
-     "s1",
-     "s2",
-     "s3"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "s3",
-      "second": "s2",
-      "feedback": "The rabbit ate plants BEFORE the new rows went in — subtract the eaten plants first, then add the new rows."
-     }
-    ],
-    "missFeedback": "Follow the story's own order: find the start, then apply each change as it happens.",
-    "successFeedback": "60, then 53 after the rabbit, then 71 after planting more — each step builds on the one before it."
+    "fallbackFeedback": "First find 5 × 6 = 30 carrots. Then subtract the 7 that the rabbit eats.",
+    "successFeedback": "There are 30 carrots before the rabbit eats. Subtracting 7 from the running total leaves 23."
    },
    "predict": {
     "prompt": "'A rabbit eats 7' — does that happen to the number of ROWS, or to the running TOTAL?",

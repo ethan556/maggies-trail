@@ -15,29 +15,21 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Straight translation.",
+      "body": "Move an input through the translated rule.",
       "conceptTag": "write-expr",
       "widget": {
-        "type": "mcq",
-        "prompt": "Which expression means \"7 more than n\"?",
-        "options": [
-          {
-            "id": "a",
-            "label": "n + 7",
-            "correct": true,
-            "feedback": "Right — \"more than\" adds 7 onto n: n + 7."
-          },
-          {
-            "id": "b",
-            "label": "7n",
-            "feedback": "7n means 7 TIMES n. \"More than\" signals addition: n + 7."
-          },
-          {
-            "id": "c",
-            "label": "n − 7",
-            "feedback": "n − 7 takes 7 away, but \"more than\" ADDS: n + 7."
-          }
-        ]
+        "type": "functionMachine",
+        "prompt": "The phrase '7 more than n' becomes the rule output = n + 7. Set n to 3 and watch the rule produce 10.",
+        "a": 1,
+        "b": 7,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 10,
+        "successFeedback": "Input 3 passes through +7 and becomes 10. 'More than' adds a fixed amount, so the expression is n + 7, not 7n.",
+        "lowFeedback": "The output is below 10. Increase n while the machine keeps the +7 operation fixed.",
+        "highFeedback": "The output is above 10. Decrease n; the rule adds exactly 7 each time."
       },
       "hints": [
         "What operation does \"more than\" signal?",

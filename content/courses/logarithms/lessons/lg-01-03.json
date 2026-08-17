@@ -181,45 +181,23 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Behavior at the wall.",
+      "body": "Trace a logarithm as it dives beside its wall.",
       "conceptTag": "lg-graph",
       "explanationVariants": [
-        "log₂(1/16) = −4, log₂(1/1024) = −10: tiny inputs give huge NEGATIVE outputs — the graph dives down the wall.",
-        "Approaching 0 from the right, the log plunges toward −∞."
+        "At base 2, the point (1/4, −2) shows how reciprocal inputs create negative logarithms.",
+        "Following the curve toward x = 0 reveals outputs falling without bound: log₂ x approaches −∞."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "As x approaches 0 from the right, what does log₂ x do?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "plunges toward −∞",
-            "correct": true,
-            "feedback": "Right — log₂(1/1024) = −10 already; smaller inputs dive further."
-          },
-          {
-            "id": "o2",
-            "label": "rises toward +∞",
-            "correct": false,
-            "feedback": "Tiny inputs are DEEP reciprocals of the base: their exponents are hugely NEGATIVE."
-          },
-          {
-            "id": "o3",
-            "label": "approaches 0",
-            "correct": false,
-            "feedback": "The output 0 happens at x = 1 — near the wall the outputs run away, not settle."
-          },
-          {
-            "id": "o4",
-            "label": "approaches log₂ 0",
-            "correct": false,
-            "feedback": "log₂ 0 doesn't exist — no exponent makes 2^y equal 0; the graph dives instead."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "a2-logarithms",
-        "form": "lg-graph__mcq"
+        "type": "expLogExplore",
+        "mode": "logarithm",
+        "x": 0.25,
+        "targetBase": 2,
+        "startBase": 4,
+        "showMirror": true,
+        "prompt": "Set the base so the logarithm passes through (1/4, −2). Then trace the curve toward its wall at x = 0.",
+        "successFeedback": "Base 2 gives log₂(1/4) = −2 because 2^(−2) = 1/4. Even smaller positive inputs need more negative exponents, so the curve plunges toward −∞ beside x = 0.",
+        "lowFeedback": "The base is below 2. Raise it to 2 and compare the logarithm with its exponential mirror.",
+        "highFeedback": "The base is above 2. Lower it to 2 so the point at x = 1/4 reaches y = −2."
       }
     },
     {

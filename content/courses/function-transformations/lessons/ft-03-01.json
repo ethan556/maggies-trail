@@ -100,45 +100,35 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Picture the flipped V.",
+      "body": "Reflect the V and inspect what changes.",
       "conceptTag": "ft-reflect",
       "explanationVariants": [
-        "−|x| negates every output of the V, so the graph opens downward from the origin — an upside-down V.",
-        "Each point (x, |x|) drops to (x, −|x|): the corner stays at (0,0) but the arms now point down."
+        "Reflecting y = |x| across the x-axis keeps every x-coordinate and negates every y-coordinate.",
+        "The corner stays at (0, 0), while the two arms point down: y = −|x|."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "What does the graph of y = −|x| look like?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "an upside-down V, opening downward",
-            "correct": true,
-            "feedback": "Right — the front minus flips every output below the axis."
-          },
-          {
-            "id": "o2",
-            "label": "a V opening upward, shifted down",
-            "correct": false,
-            "feedback": "A shift would come from subtracting a number, like |x| − 3. A minus in FRONT flips, it doesn't slide."
-          },
-          {
-            "id": "o3",
-            "label": "a V opening upward, moved left",
-            "correct": false,
-            "feedback": "Sideways moves live INSIDE the bars, like |x + 3|. This minus is outside — it flips the graph over the x-axis."
-          },
-          {
-            "id": "o4",
-            "label": "the same V as y = |x|",
-            "correct": false,
-            "feedback": "|x| is symmetric over the y-axis, so f(−x) would look unchanged — but this minus is in FRONT, negating outputs: the V flips upside down."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "reflect-fn",
-        "form": "shapeDescribe"
+        "type": "transformExplore",
+        "shape": [
+          [-2, 2],
+          [0, 0],
+          [2, 2]
+        ],
+        "target": [
+          [-2, -2],
+          [0, 0],
+          [2, -2]
+        ],
+        "gridMin": -4,
+        "gridMax": 4,
+        "dxMin": -3,
+        "dxMax": 3,
+        "dyMin": -3,
+        "dyMax": 3,
+        "allowReflect": true,
+        "prompt": "Reflect y = |x| onto the dashed target for y = −|x|. Do not shift its corner away from the origin.",
+        "successFeedback": "The x-axis reflection sends (−2, 2), (0, 0), (2, 2) to (−2, −2), (0, 0), (2, −2). The V now opens downward.",
+        "offsetFeedback": "The reflected V has the right orientation but its corner moved. Return the corner to (0, 0); a reflection is not a shift.",
+        "reflectFeedback": "Turn on the x-axis reflection. A minus in front of |x| negates each output while keeping each input fixed."
       }
     },
     {

@@ -511,9 +511,17 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       // the trap diagnoses a specific build, not its value class.
       const trap = spec.commonFractions.find((t) => t.num === v.n && t.den === v.d);
       if (trap) return { correct: false, feedback: trap.feedback };
+      const directionFeedback = (feedback: string, relation: "shorter" | "longer") => {
+        // A legacy authored family copied "target half" into bars whose targets
+        // are not 1/2. Never let stale prose contradict the engine's target.
+        if (/\bhalf\b/i.test(feedback) && spec.targetNum * 2 !== spec.targetDen) {
+          return `Your shaded bar is ${relation} than the target ${fractionText(spec.targetNum, spec.targetDen)}. Adjust the shaded amount, then compare the two bars again.`;
+        }
+        return feedback;
+      };
       return lhs < rhs
-        ? { correct: false, feedback: spec.lowFeedback }
-        : { correct: false, feedback: spec.highFeedback };
+        ? { correct: false, feedback: directionFeedback(spec.lowFeedback, "shorter") }
+        : { correct: false, feedback: directionFeedback(spec.highFeedback, "longer") };
     }
     case "quadraticExplore": {
       if (spec.form === "roots") {
@@ -1522,7 +1530,7 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       const truth=geometricConstraintTruth(spec);
       if(spec.answerMode==="explore")return{correct:true,feedback:spec.successFeedback};
       if(spec.answerMode==="numeric"){
-        if(typeof v.numeric!=="number"||Number.isNaN(v.numeric))return{correct:false,feedback:spec.fallbackFeedback};
+        if(typeof v.numeric!=="number"||!Number.isFinite(v.numeric))return{correct:false,feedback:spec.fallbackFeedback};
         if(typeof truth.answerNumber==="number"&&Math.abs(v.numeric-truth.answerNumber)<=spec.tolerance)return{correct:true,feedback:spec.successFeedback};
         const named=spec.numericErrors.find(entry=>Math.abs(entry.value-(v.numeric as number))<=spec.tolerance);return{correct:false,feedback:named?.feedback??spec.fallbackFeedback};
       }
@@ -2285,8 +2293,8 @@ export function canCheck(spec: TWidget, value: unknown): boolean {
       if(!value||typeof value!=="object")return false;const v=value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown};
       const valid=new Set(geometricConstraintExplorationKeys(spec));if(!Array.isArray(v.revealed))return false;const set=new Set(v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)));
       const ready=set.size>=spec.requiredExplorations&&spec.requiredStageKeys.every(key=>set.has(key));if(!ready)return false;
-      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric);
-      if(spec.answerMode==="choice")return typeof v.choiceId==="string"&&v.choiceId.length>0;
+      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&Number.isFinite(v.numeric);
+      if(spec.answerMode==="choice")return typeof v.choiceId==="string"&&spec.choices.some(choice=>choice.id===v.choiceId);
       return true;
     }
     case "exactNumberLab": {
@@ -3031,7 +3039,7 @@ export function learnerAnswerText(spec: TWidget, value: unknown): string | null 
     case "pointSetReasoningLab": {if(!value||typeof value!=="object")return null;const v=value as {numeric?:unknown;choiceId?:unknown};if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;if(spec.answerMode==="choice")return typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId)?.label??null:null;return null}
     case "geometricConstraintLab": {
       if(!value||typeof value!=="object")return null;const v=value as {numeric?:unknown;choiceId?:unknown};
-      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;
+      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&Number.isFinite(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;
       if(spec.answerMode==="choice")return typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId)?.label??null:null;
       return null;
     }
@@ -3142,6 +3150,10 @@ export function learnerAnswerText(spec: TWidget, value: unknown): string | null 
       return `${lb}${v.join(", ")}${rb}`;
     }
     case "compositeAreaLab": {
+      if (typeof value !== "string") return null;
+      return spec.choices.find((choice) => choice.id === value)?.label ?? null;
+    }
+    case "scaledCircleLab": {
       if (typeof value !== "string") return null;
       return spec.choices.find((choice) => choice.id === value)?.label ?? null;
     }

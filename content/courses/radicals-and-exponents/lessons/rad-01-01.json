@@ -119,38 +119,39 @@
   {
    "id": "i3",
    "kind": "interactive",
-   "body": "Find the square factor.",
+   "body": "Use the number line to isolate the greatest square factor.",
    "widget": {
-    "type": "numeric",
-    "prompt": "What is the largest perfect-square factor of 20?",
-    "answer": 4,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 5,
-      "feedback": "5 divides 20 but isn't a perfect square. The largest perfect-square factor is 4."
-     },
-     {
-      "value": 20,
-      "feedback": "20 isn't a perfect square. Its largest perfect-square factor is 4."
-     }
-    ],
-    "fallbackFeedback": "20 = 4 · 5, and 4 is a perfect square."
+    "type": "slider",
+    "prompt": "Move the marker to the largest perfect-square factor of 20. Check 1, 4, 9, and 16 against 20.",
+    "min": 1,
+    "max": 20,
+    "step": 1,
+    "start": 1,
+    "target": 4,
+    "visual": "numberline",
+    "unitLabel": "factor",
+    "lowFeedback": "1 is a square factor, but it is not the largest one. A greater square divides 20 exactly.",
+    "highFeedback": "Neither 9 nor 16 divides 20. Move back to the greatest square that is also a factor.",
+    "successFeedback": "4 is both a perfect square and a factor: 20 = 4 × 5, so √20 = 2√5."
    },
    "predict": {
-    "prompt": "Is 20 itself a perfect square?",
+    "prompt": "Before moving the marker, is 20 itself a perfect square?",
     "options": [
      {
       "id": "no",
-      "label": "No — it falls between two squares"
+      "label": "No — 20 lies between 16 and 25"
      },
      {
       "id": "yes",
-      "label": "Yes — 4 × 5 counts"
+      "label": "Yes — writing 20 as 4 × 5 is enough"
+     },
+     {
+      "id": "even",
+      "label": "Yes — every even number is a square"
      }
     ],
     "outcomeId": "no",
-    "reveal": "20 sits strictly between 4² = 16 and 5² = 25, so √20 is not whole. But a perfect square hides INSIDE it — 20 = 4 × 5 — and pulling that 4 out through the root is exactly where √20 = 2√5 will come from."
+    "reveal": "20 lies between 4² = 16 and 5² = 25, so it is not a square. The marker still finds 4 as its largest square factor: 20 = 4 × 5, so √20 = 2√5."
    }
   },
   {

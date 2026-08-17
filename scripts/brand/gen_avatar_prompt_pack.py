@@ -6,7 +6,7 @@ One render-ready prompt per avatar id. The style block is byte-identical across 
 portrait prompt — that invariance is what makes the library read as one art team, and it
 is what the FABLE-Q contact-sheet gate (spec §6) actually checks.
 """
-import json, textwrap
+import json, re, textwrap
 from pathlib import Path
 
 # S242. Both outputs below were written to hardcoded host-absolute workspace paths — the exact
@@ -24,11 +24,12 @@ STYLE_PORTRAIT = (
     "rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, "
     "not glossy 3D render. "
     "Head-and-shoulders, portrait orientation, subject centred and facing the viewer. "
-    "Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50% of "
-    "frame height. Both shoulders visible, cropped at a consistent point below the collarbone — "
-    "not at the neck, not at the elbows. "
-    "Uniform empty margin on all four sides between the subject's outer silhouette (hair included) "
-    "and the canvas edge; nothing touches or bleeds past the edge. "
+    "Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from crown "
+    "to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately "
+    "narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete "
+    "outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area: "
+    "maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on "
+    "every other edge; nothing touches, crops, or bleeds past the canvas. "
     "Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, "
     "no scenery, no drop shadow, no implied surface. "
     "Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. "
@@ -84,6 +85,37 @@ BANDS = {
     ),
 }
 
+# Production-only visual direction, never a runtime identity label. Each age band carries exactly
+# three portraits in each of four broad painterly tone families, so image generation cannot fall
+# back to a single default appearance. The app persists only avatar id; accessibility labels stay
+# neutral ("Avatar N"), and no race, ethnicity, nationality or gender is inferred from a tone.
+SKIN_TONES = {
+    "avatar-001": "deep warm brown", "avatar-002": "light warm beige",
+    "avatar-003": "medium warm brown", "avatar-004": "light warm beige",
+    "avatar-005": "medium warm brown", "avatar-006": "deep warm brown",
+    "avatar-007": "light warm beige", "avatar-008": "golden tan",
+    "avatar-009": "deep warm brown", "avatar-010": "medium warm brown",
+    "avatar-011": "golden tan", "avatar-012": "golden tan",
+    "avatar-101": "deep warm brown", "avatar-102": "light warm beige",
+    "avatar-103": "medium warm brown", "avatar-104": "golden tan",
+    "avatar-105": "deep warm brown", "avatar-106": "medium warm brown",
+    "avatar-107": "golden tan", "avatar-108": "deep warm brown",
+    "avatar-109": "light warm beige", "avatar-110": "light warm beige",
+    "avatar-111": "golden tan", "avatar-112": "medium warm brown",
+    "avatar-201": "deep warm brown", "avatar-202": "light warm beige",
+    "avatar-203": "golden tan", "avatar-204": "medium warm brown",
+    "avatar-205": "deep warm brown", "avatar-206": "medium warm brown",
+    "avatar-207": "golden tan", "avatar-208": "light warm beige",
+    "avatar-209": "medium warm brown", "avatar-210": "light warm beige",
+    "avatar-211": "deep warm brown", "avatar-212": "golden tan",
+    "avatar-301": "deep warm brown", "avatar-302": "medium warm brown",
+    "avatar-303": "light warm beige", "avatar-304": "golden tan",
+    "avatar-305": "medium warm brown", "avatar-306": "light warm beige",
+    "avatar-307": "deep warm brown", "avatar-308": "golden tan",
+    "avatar-309": "medium warm brown", "avatar-310": "deep warm brown",
+    "avatar-311": "golden tan", "avatar-312": "light warm beige",
+}
+
 # ---------------------------------------------------------------- concept data (from the ledger)
 
 PORTRAITS = [
@@ -118,7 +150,7 @@ PORTRAITS = [
     ("avatar-202", "adventurer", "board 1:2 (C02)", "Tousled wavy golden-brown hair; freckles; cream drawstring hoodie under a blue denim jacket"),
     ("avatar-203", "adventurer", "board 1:3 (C03)", "Short tousled black hair with a fringe; dark navy zip jacket over a black hoodie with a light tee beneath"),
     ("avatar-204", "adventurer", "board 1:4 (C04)", "Very long wavy dark hair; teardrop turquoise earrings and a small pendant necklace; patterned rust-red top"),
-    ("avatar-205", "adventurer", "net-new", "Short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee"),
+    ("avatar-205", "adventurer", "net-new", "Short natural coils with a subtle side part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee"),
     ("avatar-206", "adventurer", "net-new", "Two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket"),
     ("avatar-207", "adventurer", "net-new", "Loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top"),
     ("avatar-208", "adventurer", "net-new", "Chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee"),
@@ -162,14 +194,16 @@ records = []
 
 for aid, band, source, traits in PORTRAITS:
     b = BANDS[band]
+    skin_tone = SKIN_TONES[aid]
     prompt = (
-        f"Portrait of {b['age']}. {traits}. "
+        f"Portrait of {b['age']}. Skin tone: {skin_tone}, rendered with natural warmth and "
+        f"individualized facial geometry. {traits}. "
         f"{b['note']} "
         f"{STYLE_PORTRAIT} {CANVAS}"
     )
     records.append(dict(
         id=aid, kind="human", band=band, block=b["block"], grades=b["grades"],
-        concept_source=source, traits=traits,
+        concept_source=source, traits=traits, skin_tone_art_direction=skin_tone,
         prompt=" ".join(prompt.split()),
         negative_prompt=NEGATIVE,
         files=[f"/public/avatars/{aid}-256.webp", f"/public/avatars/{aid}-512.webp"],
@@ -194,10 +228,12 @@ assert sum(1 for r in records if r["kind"] == "symbol") == 12
 for band in ("early", "explorer", "adventurer", "summit"):
     n = sum(1 for r in records if r["kind"] == "human" and r["band"] == band)
     assert n == 12, (band, n)
+    tones = [r["skin_tone_art_direction"] for r in records if r["kind"] == "human" and r["band"] == band]
+    assert sorted(tones.count(tone) for tone in set(tones)) == [3, 3, 3, 3], (band, tones)
 
-with open(REPO_ROOT / "avatar-prompts.json", "w") as f:
+with open(REPO_ROOT / "avatar-prompts.json", "w", encoding="utf-8", newline="\n") as f:
     json.dump(dict(
-        version="1.2",
+        version="1.4",
         generated_for="Maggie's Trail WS-J avatar library",
         spec="AVATAR_ART_PRODUCTION_SPEC.md",
         ledger="AVATAR_CONCEPT_LEDGER.md",
@@ -222,11 +258,16 @@ A("the FABLE-Q contact-sheet gate (spec §6) instead of 60 individually-nice-but
 A("**The one thing that must not be edited per-avatar:** the style block. It is byte-identical in ")
 A("all 48 portrait prompts, and separately byte-identical in all 12 symbol prompts. That invariance ")
 A("*is* the consistency mechanism. Vary only the trait sentence and the band's age clause.\n")
-A("**One number is provisional.** Spec §1 says the eye line gets locked from the first production ")
-A("re-render and FABLE-A owns the final value. This pack carries **57%** as a working figure so the ")
-A("prompts are runnable today. Render one anchor first, measure it, and if FABLE-A sets a different ")
-A("number, change it in `build_prompt_pack.py`'s `STYLE_PORTRAIT` and regenerate — never by hand in ")
-A("60 places.\n")
+A("**Framing is locked from the normalized S244 canary.** Every portrait uses eye line 55–58% ")
+A("(target 57%), crown-to-chin height 48–52% (target 50%), a complete narrow-shoulder silhouette ")
+A("inside the centred 75% width safe area, and at least 5% clean canvas below the bust. Change ")
+A("these values only in `scripts/brand/gen_avatar_prompt_pack.py`'s `STYLE_PORTRAIT`, then regenerate ")
+A("the JSON and Markdown together — never edit 48 portrait prompts by hand.\n")
+A("**Representation is deliberate without becoming identity metadata.** Each age band has three ")
+A("portraits in each of four broad painterly skin-tone directions. Those directions exist only in ")
+A("this production pack to prevent model-default bias; the runtime stores only avatar id, the UI ")
+A("never names an identity category, and accessibility labels remain neutral. Hair, clothing, ")
+A("expression and facial geometry still vary independently so no tone is paired with a stereotype.\n")
 A("**Still governed by spec §8.** No file lands at `avatar-<NNN>-<SIZE>.webp` until the art is ")
 A("genuinely final, and no manifest entry flips `enabled: true` until both files are on disk — ")
 A("`src/lib/avatars.test.ts` enforces the second half of that mechanically.\n")
@@ -264,6 +305,7 @@ for band, title in (("early", "Early — K–2, grade ids 0–2, block 001–012
     for r in rows:
         A(f"### `{r['id']}` — {r['concept_source']}\n")
         A(f"**Traits.** {r['traits']}\n")
+        A(f"**Production-only tone direction.** {r['skin_tone_art_direction']} (never a runtime label)\n")
         A("**Prompt.**\n")
         A("```")
         A(textwrap.fill(r["prompt"], 96))
@@ -294,8 +336,12 @@ A("background, saturation, sharpness, age appearance (spec §6).\n")
 A("3. The test: *would a user assume one professional character-design team drew everything?*\n")
 A("4. `npx vitest run src/lib/avatars.test.ts` green.\n")
 
-with open(REPO_ROOT / "AVATAR_PROMPT_PACK.md", "w") as f:
-    f.write("\n".join(L))
+markdown = "\n".join(L)
+# Some prose fragments intentionally end in a space before the next wrapped line. Preserve the
+# Markdown line structure while ensuring the generated artifact is clean under `git diff --check`.
+markdown = re.sub(r"[ \t]+(?=\n|$)", "", markdown)
+with open(REPO_ROOT / "AVATAR_PROMPT_PACK.md", "w", encoding="utf-8", newline="\n") as f:
+    f.write(markdown)
 
 print(f"{len(records)} prompts")
 print("portraits:", sum(1 for r in records if r["kind"] == "human"))

@@ -15,35 +15,23 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Test the illegal shortcut, once, so it dies properly.",
+      "body": "Trace the derivative of a product that simplifies to a familiar curve.",
       "conceptTag": "dr-product-rule",
       "explanationVariants": [
-        "x² · x³ = x⁵, whose derivative is 5x⁴ — at x = 2 that is 80. The shortcut f′g′ = 2x · 3x² = 6x³ gives 48. Two different functions.",
-        "The product rule gives 2x·x³ + x²·3x² = 2x⁴ + 3x⁴ = 5x⁴ ✓, agreeing with the direct route."
+        "x · x² = x³, so its derivative is 3x². At x = 2 the live derivative reads 12.",
+        "The product rule agrees: 1·x² + x·2x = x² + 2x² = 3x², while the illegal shortcut 1·2x would give only 4 at x = 2."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "f(x) = x² · x³. Compute f′(2) HONESTLY (simplify to x⁵ if you like).",
-        "answer": 80,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 48,
-            "feedback": "That is f′·g′ = 2x · 3x² = 6x³ at x = 2 — the shortcut, and it is wrong. The true derivative is 5x⁴ = 80. Two tiny growths on two sides, not one."
-          },
-          {
-            "value": 32,
-            "feedback": "That is f(2) = 2⁵ = 32, the height."
-          },
-          {
-            "value": 40,
-            "feedback": "Close to the shape of the answer but not it: x⁵ differentiates to 5x⁴, which at 2 is 5 × 16 = 80."
-          }
-        ],
-        "fallbackFeedback": "x²·x³ = x⁵ → 5x⁴ → 80. The shortcut f′g′ would say 48, and it is simply a different function."
-      },
-      "variant": {
-        "gen": "deriv-product"
+        "type": "derivativeTrace",
+        "fn": "cubic",
+        "mode": "point",
+        "targetX": 2,
+        "targetSlope": 0,
+        "start": -2,
+        "prompt": "Treat f(x) = x · x² as the cubic x³. Slide to x = 2 and compare the live f′ value with both product-rule terms.",
+        "successFeedback": "At x = 2, f′ = 12. The two product-rule contributions are 1·4 = 4 and 2·4 = 8; together they make 12. Multiplying the derivatives would keep only 4.",
+        "lowFeedback": "Move right toward x = 2. Watch how the derivative trace records the cubic's changing steepness.",
+        "highFeedback": "Move back to x = 2 so the live derivative can be compared term by term with the product rule."
       }
     },
     {
@@ -255,7 +243,7 @@
       "takeaways": [
         "(uv)′ = u′v + uv′ — each factor takes a turn changing while the other holds still.",
         "The tiny corner du·dv dies in the limit: it is a product of two small things.",
-        "f′g′ is not a rule. Test it on x²·x³ and watch it give 48 where the truth is 80."
+        "f′g′ is not a rule. For x·x² at x = 2 it gives 4, while the two product-rule terms give 4 + 8 = 12."
       ],
       "teaser": "Next: the same argument, upside down — the quotient rule."
     }

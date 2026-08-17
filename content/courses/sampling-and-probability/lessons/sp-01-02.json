@@ -141,28 +141,22 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Compare estimates from repeated sampling.",
+      "body": "Watch equal-size random samples vary.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Three random samples of 30 students each estimate a school's pizza-preference rate at 55%, 58%, and 52%. What does this spread suggest?",
-        "options": [
-          {
-            "id": "a",
-            "label": "The true rate is likely near 55%, with some normal sample-to-sample variation",
-            "correct": true,
-            "feedback": "Yes — the estimates cluster closely, suggesting normal variation around a true value near 55%."
-          },
-          {
-            "id": "b",
-            "label": "The samples were all done wrong",
-            "feedback": "Small differences between random samples are expected, not a sign of error."
-          },
-          {
-            "id": "c",
-            "label": "The true rate could be anywhere from 0% to 100%",
-            "feedback": "The estimates cluster tightly together — that narrows things down a lot, not to \"anywhere.\""
-          }
-        ]
+        "type": "sampleSim",
+        "prompt": "Run repeated random samples from a population where 55% prefer pizza. Compare how the pile changes from n = 30 to n = 120.",
+        "populationP": 0.55,
+        "sizes": [
+          30,
+          60,
+          120
+        ],
+        "targetSize": 120,
+        "requiredDraws": 12,
+        "seed": 71,
+        "successFeedback": "At n = 120 the estimates cluster more tightly around 55%. Larger random samples reduce sampling variability.",
+        "wrongSizeFeedback": "This sample size still produces a wider pile. Increase n and compare the spread.",
+        "moreDrawsFeedback": "Run more samples before judging the spread; a handful of dots is not a distribution."
       }
     },
     {

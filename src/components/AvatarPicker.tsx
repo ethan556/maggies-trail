@@ -11,11 +11,9 @@
  * decides what "immediately" means (onboarding persists straight to the profile store; the
  * profile page does the same) — this component only ever reports the choice via `onChange`.
  *
- * Every slot in the active band renders, enabled or not: a disabled slot shows the honest
- * placeholder silhouette and is excluded from the tab order (native `disabled`), so sighted and
- * keyboard/AT users see the same shape of the collection — today, every slot, because nothing in
- * the manifest is enabled yet. That is correct and is NOT special-cased away; the grid simply
- * lights up tile by tile as real art ships and `enabled` flips.
+ * Only approved, enabled art is selectable. Concept-only slots never become repeated placeholder
+ * choices: an unreleased collection gets one honest empty state. The 60-item core and the separate
+ * mathematics-symbol extension each release all-or-none, enforced by their asset contracts.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -23,33 +21,42 @@ import {
   getAvatar,
   getAvatarsForAgeBand,
   gradeToAgeBand,
-  type AgeBand,
-  type AvatarDefinition
+  type AgeBand
 } from "@/lib/avatars";
+import {
+  getEnabledMathSymbolAvatars,
+  getMathSymbolAvatar,
+  MATH_SYMBOL_AVATARS
+} from "@/lib/mathSymbolAvatars";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
 import { AppIcon } from "@/components/ui";
 
 const BANDS: AgeBand[] = ["early", "explorer", "adventurer", "summit"];
+type AvatarCollection = AgeBand | "math-symbols";
 const BAND_LABEL: Record<AgeBand, string> = {
   early: "Early (K–2)",
   explorer: "Explorer (3–5)",
   adventurer: "Adventurer (6–8)",
   summit: "Summit (9–13)"
 };
+const COLLECTION_LABEL: Record<AvatarCollection, string> = {
+  ...BAND_LABEL,
+  "math-symbols": "Math symbols"
+};
 
-/** A stable, non-identifying label for a manifest slot — "Avatar 7", never a trait description
- *  (OPTIMIZATION_PLAN_V3.md:150 / AVATAR_ART_PRODUCTION_SPEC.md §7). Position within the FULL
- *  manifest, not within whichever band happens to be showing, so one avatar keeps one number
- *  everywhere the picker ever shows it. */
-const AVATAR_NUMBER = new Map(AVATARS.map((a, i) => [a.id, i + 1]));
+/** A stable, non-identifying label for a human portrait — "Avatar 7", never a trait description.
+ * Mathematics symbols use their exact semantic name because "Avatar 61" is not equivalent access
+ * to a visible π. Position within the FULL manifest remains stable for visual ordering. */
+const AVATAR_NUMBER = new Map([...AVATARS, ...MATH_SYMBOL_AVATARS].map((a, i) => [a.id, i + 1]));
 
-/** Every manifest slot for a band, enabled or not, in display order — deliberately NOT
- *  `getAvatarsForAgeBand` (which filters to enabled-only and is `[]` for every band today). The
- *  picker needs the full shape of the collection so unavailable slots still render as honest
- *  placeholders instead of vanishing the grid entirely; `getAvatarsForAgeBand` is used below only
- *  to caption a band that currently has nothing enabled. */
-function slotsForBand(band: AgeBand): AvatarDefinition[] {
-  return AVATARS.filter((a) => a.ageBand === band).sort((a, b) => a.order - b.order);
+export function avatarPickerAccessibleLabel(
+  avatar: { id: string; semanticName?: string },
+  number: number,
+  isSelected: boolean
+): string {
+  const baseLabel =
+    typeof avatar.semanticName === "string" ? avatar.semanticName : `Avatar ${number}`;
+  return isSelected ? `${baseLabel} selected` : baseLabel;
 }
 
 export interface AvatarPickerProps {
@@ -64,21 +71,33 @@ export interface AvatarPickerProps {
 }
 
 export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
-  const selectedBand = value ? getAvatar(value)?.ageBand : undefined;
-  const [activeBand, setActiveBand] = useState<AgeBand>(
-    () => selectedBand ?? (grade !== undefined ? gradeToAgeBand(grade) : "explorer")
+  const selectedAvatar = value ? getAvatar(value) : undefined;
+  const selectedMathAvatar = value ? getMathSymbolAvatar(value) : undefined;
+  const selectedCollection: AvatarCollection | undefined =
+    selectedMathAvatar?.collection ?? selectedAvatar?.ageBand;
+  const [activeCollection, setActiveCollection] = useState<AvatarCollection>(
+    () => selectedCollection ?? (grade !== undefined ? gradeToAgeBand(grade) : "explorer")
   );
   const [seeAll, setSeeAll] = useState(false);
 
-  const tiles = useMemo(() => slotsForBand(activeBand), [activeBand]);
-  const enabledTiles = useMemo(() => tiles.filter((t) => t.enabled), [tiles]);
-  const enabledInBandCount = getAvatarsForAgeBand(activeBand).length;
+  const enabledTiles = useMemo(
+    () =>
+      activeCollection === "math-symbols"
+        ? getEnabledMathSymbolAvatars()
+        : getAvatarsForAgeBand(activeCollection),
+    [activeCollection]
+  );
+  const availableCollections = useMemo(
+    () => [
+      ...BANDS.filter((band) => getAvatarsForAgeBand(band).length > 0),
+      ...(getEnabledMathSymbolAvatars().length > 0 ? (["math-symbols"] as const) : [])
+    ],
+    []
+  );
 
   // Roving tabindex: exactly one tile is ever a tab stop — the selected one if it's in the
-  // current band and enabled, else the first enabled tile, else none (today, every band, since
-  // nothing is enabled anywhere yet — the grid is then honestly un-tabbable, matching what a
-  // sighted user sees: nothing to choose). Arrow keys walk the flat sequence of enabled tiles
-  // rather than true 2D geometry: the grid's column count changes at every breakpoint
+  // current band and enabled, else the first enabled tile, else none. Arrow keys walk the flat
+  // sequence of enabled tiles rather than true 2D geometry: the grid's column count changes at every breakpoint
   // (3/4/5 — see the className below), so up/down math keyed to a fixed column count would
   // desync from what's actually on screen; a flat previous/next sequence stays correct at every
   // width and keeps every enabled tile reachable.
@@ -90,7 +109,7 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
     // Re-seed only when the visible band's tile set changes — re-running on every `value` change
     // would yank focus back whenever the caller's controlled value updates for any reason.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeBand]);
+  }, [activeCollection]);
 
   const tileRefs = useRef(new Map<string, HTMLButtonElement>());
 
@@ -113,8 +132,10 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-muted">{BAND_LABEL[activeBand]}</p>
-        {!seeAll && (
+        <p className="text-xs font-extrabold uppercase tracking-wide text-muted">
+          {COLLECTION_LABEL[activeCollection]}
+        </p>
+        {!seeAll && availableCollections.length > 0 && (
           <button
             type="button"
             onClick={() => setSeeAll(true)}
@@ -127,19 +148,19 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
 
       {seeAll && (
         <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Avatar collections">
-          {BANDS.map((b) => (
+          {availableCollections.map((collection) => (
             <button
-              key={b}
+              key={collection}
               type="button"
-              aria-pressed={activeBand === b}
-              onClick={() => setActiveBand(b)}
+              aria-pressed={activeCollection === collection}
+              onClick={() => setActiveCollection(collection)}
               className={`pressable min-h-11 rounded-pill border-2 px-4 text-sm font-bold transition-colors ${
-                activeBand === b
+                activeCollection === collection
                   ? "border-ink bg-ink text-paper dark:border-paper dark:bg-paper dark:text-ink"
                   : "border-ink/15 text-content-2 hover:border-ink/40 dark:border-paper/20"
               }`}
             >
-              {BAND_LABEL[b]}
+              {COLLECTION_LABEL[collection]}
             </button>
           ))}
         </div>
@@ -150,10 +171,10 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
         aria-label="Choose your avatar"
         className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5"
       >
-        {tiles.map((avatar) => {
-          const isSelected = avatar.enabled && avatar.id === value;
+        {enabledTiles.map((avatar) => {
+          const isSelected = avatar.id === value;
           const number = AVATAR_NUMBER.get(avatar.id) ?? avatar.order;
-          const label = isSelected ? `Avatar ${number} selected` : `Avatar ${number}`;
+          const label = avatarPickerAccessibleLabel(avatar, number, isSelected);
           return (
             <button
               key={avatar.id}
@@ -162,18 +183,15 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
                 if (el) tileRefs.current.set(avatar.id, el);
                 else tileRefs.current.delete(avatar.id);
               }}
-              disabled={!avatar.enabled}
               role="radio"
               aria-checked={isSelected}
               aria-label={label}
-              tabIndex={avatar.enabled && avatar.id === focusedId ? 0 : -1}
+              tabIndex={avatar.id === focusedId ? 0 : -1}
               onClick={() => {
-                if (!avatar.enabled) return;
                 setFocusedId(avatar.id);
                 onChange(avatar.id);
               }}
               onKeyDown={(e) => {
-                if (!avatar.enabled) return;
                 if (e.key === "ArrowRight" || e.key === "ArrowDown") {
                   e.preventDefault();
                   moveFocus(avatar.id, 1);
@@ -188,13 +206,13 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
                   jumpFocus("last");
                 }
               }}
-              className={`pressable relative aspect-square overflow-hidden rounded-full transition-transform motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-70 ${
+              className={`pressable relative aspect-square overflow-hidden rounded-full transition-transform motion-reduce:transition-none ${
                 isSelected
                   ? "scale-[1.03] ring-4 ring-ink ring-offset-2 ring-offset-paper dark:ring-offset-night"
                   : "ring-2 ring-transparent enabled:hover:ring-ink/25"
               }`}
             >
-              <AvatarDisplay avatarId={avatar.enabled ? avatar.id : undefined} size={256} fill />
+              <AvatarDisplay avatarId={avatar.id} size={256} placement="picker" fill />
               {isSelected && (
                 <span
                   aria-hidden
@@ -208,11 +226,13 @@ export function AvatarPicker({ value, onChange, grade }: AvatarPickerProps) {
         })}
       </div>
 
-      {enabledInBandCount === 0 && (
-        <p className="mt-3 text-xs text-muted">
-          New portraits for this collection are on the way — every option above is a placeholder
-          for now.
-        </p>
+      {enabledTiles.length === 0 && (
+        <div className="mt-3 rounded-card border border-ink/10 bg-surface-soft px-4 py-4 dark:border-paper/12">
+          <p className="text-sm font-bold text-content-2">
+            Premium portraits for this collection are still being prepared.
+          </p>
+          <p className="mt-1 text-xs text-muted">Placeholder portraits are never shown as choices.</p>
+        </div>
       )}
     </div>
   );

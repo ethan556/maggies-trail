@@ -15,82 +15,21 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Explode a number yourself — every piece carries its spot's worth.",
+      "body": "Build 375 with base-ten pieces and watch the tens value grow.",
       "conceptTag": "expanded-form",
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Break 375 into its worth-pieces. Build the expanded form, biggest piece first.",
-        "tokens": [
-          {
-            "id": "t300",
-            "label": "300"
-          },
-          {
-            "id": "tp1",
-            "label": "+"
-          },
-          {
-            "id": "t70",
-            "label": "70"
-          },
-          {
-            "id": "tp2",
-            "label": "+"
-          },
-          {
-            "id": "t5",
-            "label": "5"
-          },
-          {
-            "id": "t7",
-            "label": "7"
-          },
-          {
-            "id": "t30",
-            "label": "30"
-          }
-        ],
-        "correct": [
-          "t300",
-          "tp1",
-          "t70",
-          "tp2",
-          "t5"
-        ],
-        "acceptAlso": [
-          [
-            "t300",
-            "tp2",
-            "t70",
-            "tp1",
-            "t5"
-          ]
-        ],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t300",
-              "tp1",
-              "t7",
-              "tp2",
-              "t5"
-            ],
-            "feedback": "The 7 parks in the TENS spot of 375 — its piece is worth 70, not 7. Worth-pieces carry their spot."
-          },
-          {
-            "sequence": [
-              "t300",
-              "tp1",
-              "t30",
-              "tp2",
-              "t5"
-            ],
-            "feedback": "30 would come from a 3 in the tens spot — but 375's tens digit is 7. Its middle piece is 70."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "Read the spots of 375: 3 hundreds (300), 7 tens (70), 5 ones (5) — joined with +.",
-        "successFeedback": "375 = 300 + 70 + 5. Exploded, and nothing lost."
+        "type": "placeValue",
+        "prompt": "The hundreds and ones are ready. Add tens until the blocks show 375.",
+        "target": 375,
+        "maxHundreds": 3,
+        "maxTens": 9,
+        "maxOnes": 9,
+        "hStart": 3,
+        "tStart": 0,
+        "oStart": 5,
+        "lowFeedback": "The build is below 375. The middle digit needs 7 tens, not 7 ones.",
+        "highFeedback": "The build is above 375. Keep 3 hundreds and 5 ones, then check the tens.",
+        "successFeedback": "The model shows 3 hundreds, 7 tens, and 5 ones: 300 + 70 + 5 = 375."
       },
       "predict": {
         "prompt": "In 375's expanded form, the middle digit 7 shows up as…",

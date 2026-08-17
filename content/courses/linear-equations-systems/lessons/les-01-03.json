@@ -15,42 +15,44 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Distribute and solve.",
+      "body": "Open the rectangle so the factor reaches both terms inside the parentheses.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve for x: 3(x + 4) = 27",
-        "answer": 5,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 5.67,
-            "feedback": "That divided 27 by 3 before distributing incorrectly — distribute first: 3x+12=27, then 3x=15, so x=5."
-          },
-          {
-            "value": 9,
-            "feedback": "That subtracted 4 from 27 first without distributing — expand to 3x+12=27, then x=5."
-          }
-        ],
-        "fallbackFeedback": "Distribute: 3x + 12 = 27. Subtract 12: 3x = 15. Divide by 3: x = 5."
+        "type": "algebraTiles",
+        "prompt": "Open the 3-by-(x + 4) rectangle into x-tiles and unit tiles before solving 3(x + 4) = 27.",
+        "targetX": 3,
+        "targetConst": 12,
+        "maxTiles": 16,
+        "xStart": 0,
+        "constStart": 0,
+        "area": {
+          "width": [0, 3],
+          "height": [1, 4],
+          "mode": "distribute"
+        },
+        "successFeedback": "The rectangle opens to 3x + 12. Now 3x + 12 = 27, so subtracting 12 and dividing by 3 gives x = 5.",
+        "xFeedback": "Three copies of x are needed because the outer factor 3 multiplies the x-term.",
+        "constFeedback": "The factor 3 also multiplies 4, so the model needs 12 unit tiles.",
+        "partialProductFeedback": "The factor reached only part of the parentheses. It must multiply both x and 4.",
+        "unopenedFrameFeedback": "Open the rectangle first so its two partial products become visible before you check."
       },
       "predict": {
-        "prompt": "In 3(x + 4), does the 3 multiply ONLY the x, or the 4 as well?",
+        "prompt": "In 3(x + 4), which parts inside the parentheses are multiplied by 3?",
         "options": [
           {
             "id": "both",
-            "label": "Both — everything inside"
+            "label": "Both x and 4"
           },
           {
             "id": "x",
-            "label": "Only the x"
+            "label": "Only x, not 4"
           },
           {
             "id": "four",
-            "label": "Only the 4"
+            "label": "Only 4, not x"
           }
         ],
         "outcomeId": "both",
-        "reveal": "The parentheses bundle x and 4 into one package — the 3 copies the WHOLE package. Skipping the 4 is the single most common distribution slip."
+        "reveal": "The factor 3 makes three copies of the entire quantity x + 4. The area model therefore contains 3x and 12 unit tiles."
       }
     },
     {

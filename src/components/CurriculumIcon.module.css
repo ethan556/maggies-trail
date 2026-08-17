@@ -1,0 +1,124 @@
+.frame {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgb(13 27 42 / 0.12);
+  border-radius: 28%;
+  background: #f7f3ec;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.86),
+    inset 0 -1px 0 rgb(13 27 42 / 0.08),
+    0 4px 12px rgb(13 27 42 / 0.13);
+  isolation: isolate;
+}
+
+.frame::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
+  content: "";
+  pointer-events: none;
+}
+
+.image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0d1b2a;
+  background:
+    radial-gradient(circle at 28% 20%, rgb(255 255 255 / 0.96) 0 10%, transparent 42%),
+    radial-gradient(circle at 72% 78%, rgb(240 138 36 / 0.32), transparent 48%),
+    linear-gradient(145deg, #fffdf8 0%, #f7f3ec 48%, #e5d9c8 100%);
+}
+
+.fallback::before {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgb(13 27 42 / 0.08);
+  border-radius: 24%;
+  background: linear-gradient(145deg, rgb(255 255 255 / 0.44), rgb(13 27 42 / 0.02));
+  content: "";
+}
+
+.glyph,
+.gradeLabel {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.8)) drop-shadow(0 3px 3px rgb(13 27 42 / 0.14));
+}
+
+.gradeLabel {
+  max-width: 86%;
+  overflow: hidden;
+  color: #0d1b2a;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+:global(.dark) .frame {
+  border-color: rgb(247 243 236 / 0.2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    inset 0 -1px 0 rgb(0 0 0 / 0.3),
+    0 4px 14px rgb(0 0 0 / 0.3);
+}
+
+:global(.dark) .fallback {
+  color: #f7f3ec;
+  background:
+    radial-gradient(circle at 28% 20%, rgb(66 99 130 / 0.72) 0 8%, transparent 43%),
+    radial-gradient(circle at 72% 78%, rgb(240 138 36 / 0.36), transparent 48%),
+    linear-gradient(145deg, #19334d 0%, #0d1b2a 54%, #07111b 100%);
+}
+
+:global(.dark) .fallback::before {
+  border-color: rgb(247 243 236 / 0.12);
+  background: linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(0 0 0 / 0.08));
+}
+
+:global(.dark) .gradeLabel {
+  color: #f7f3ec;
+}
+
+@media (forced-colors: active) {
+  .frame,
+  .fallback {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    color: CanvasText;
+    forced-color-adjust: auto;
+  }
+
+  .frame::after,
+  .fallback::before {
+    display: none;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .gradeLabel {
+    color: CanvasText;
+    filter: none;
+  }
+}

@@ -52,36 +52,29 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Measure, then classify.",
+      "body": "Move along side AC and use its run-rise triangle as evidence.",
       "conceptTag": "cx-dist-apps",
       "explanationVariants": [
         "AC = √(9 + 25) = √34 and BC = √(9 + 25) = √34 — two equal sides against AB = 6: isosceles.",
         "Both slanted sides measure √34 ≈ 5.83; enter 5.83."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A(0, 0), B(6, 0), C(3, 5). Compute side AC (2 decimals) — then notice BC matches it.",
-        "answer": 5.83,
-        "tolerance": 0.05,
-        "commonErrors": [
-          {
-            "value": 8,
-            "feedback": "8 = 3 + 5 adds C's coordinates — the distance squares them: √(9 + 25) = √34 ≈ 5.83."
-          },
-          {
-            "value": 34,
-            "feedback": "34 is AC² — root it: ≈ 5.83."
-          },
-          {
-            "value": 4,
-            "feedback": "4 ≈ √(25 − 9) subtracts squares — the distance formula ADDS them: √34 ≈ 5.83."
-          }
+        "type": "distanceGrid",
+        "prompt": "A is fixed at (0, 0). Move the point to C(3, 5), then read side AC from the live run-rise triangle.",
+        "anchor": [
+          0,
+          0
         ],
-        "fallbackFeedback": "AC = √((3−0)² + (5−0)²) = √34 ≈ 5.83 = BC: isosceles, proved by measurement."
-      },
-      "variant": {
-        "gen": "g10-coordinate-proofs",
-        "form": "cx-dist-apps__numeric"
+        "targetPoint": [
+          3,
+          5
+        ],
+        "gridMin": 0,
+        "gridMax": 6,
+        "startX": 0,
+        "startY": 0,
+        "successFeedback": "AC has run 3 and rise 5, so AC = √(3² + 5²) = √34 ≈ 5.83. From B(6, 0) to C the run has the same magnitude, 3, and the same rise, 5, so BC = √34 too: the triangle is isosceles.",
+        "wrongPointFeedback": "Move to C(3, 5). The horizontal and vertical gaps are the two legs that determine AC."
       }
     },
     {

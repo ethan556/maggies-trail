@@ -15,53 +15,25 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Match question to move.",
+      "body": "Build two bars so the comparison is visible.",
       "conceptTag": "graph-questions",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Connect each graph question to what you do.",
-        "left": [
-          {
-            "id": "q1",
-            "label": "\"How many MORE cats than dogs?\""
-          },
-          {
-            "id": "q2",
-            "label": "\"How many pets in ALL?\""
-          },
-          {
-            "id": "q3",
-            "label": "\"Which pet is the FEWEST?\""
-          }
+        "type": "barBuilder",
+        "prompt": "Build the graph: Dogs 8, Fish 3. Then compare the two bar tops to see how many more dogs there are.",
+        "categories": [
+          "Dogs",
+          "Fish"
         ],
-        "right": [
-          {
-            "id": "add",
-            "label": "Add every bar"
-          },
-          {
-            "id": "shortest",
-            "label": "Find the shortest bar"
-          },
-          {
-            "id": "sub",
-            "label": "Subtract the two bars"
-          }
+        "target": [
+          8,
+          3
         ],
-        "pairs": {
-          "q1": "sub",
-          "q2": "add",
-          "q3": "shortest"
-        },
-        "pairErrors": [
-          {
-            "left": "q1",
-            "right": "add",
-            "feedback": "'How many MORE' compares two bars — that's subtraction (the gap), not adding them together."
-          }
-        ],
-        "missFeedback": "More/fewer than → subtract; in all → add; most/fewest → find the tallest/shortest bar.",
-        "successFeedback": "More → subtract, in all → add, fewest → shortest bar. Question words point to the move."
+        "maxVal": 10,
+        "step": 1,
+        "display": "bar",
+        "axisLabel": "pets",
+        "partialFeedback": "Check each bar against the data: Dogs reaches 8 and Fish reaches 3. You need both bars to see the gap.",
+        "successFeedback": "Both bars are visible. The gap is 8 − 3 = 5, so comparison questions use two bars."
       },
       "predict": {
         "prompt": "'How many MORE does A have than B?' — do you read one bar, or compare two?",

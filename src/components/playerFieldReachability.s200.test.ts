@@ -68,7 +68,8 @@ const CONSUMERS: Record<string, Partial<Record<Kind, string>>> = {
   figure: {
     // Pre-S200 fix of the same class: availability + FIGURE_IDS membership, not kind.
     concept: "LessonPlayer figure block (FIGURE_IDS-gated)",
-    interactive: "LessonPlayer figure block (FIGURE_IDS-gated)"
+    interactive: "LessonPlayer figure block (FIGURE_IDS-gated)",
+    check: "LessonPlayer figure block (FIGURE_IDS-gated)"
   },
   predict: { interactive: "LessonPlayer prediction block + seededShuffle" },
   takeaways: { recap: "LessonPlayer recap block" },
@@ -139,13 +140,15 @@ describe("authored step fields are reachable", () => {
   it("pins the three known stranding repairs at corpus level", () => {
     // If any of these pairs disappears from the corpus the pin is stale, not passing by luck.
     expect(pairs.get("hints::interactive")?.count).toBe(118);
-    expect(pairs.get("explanationVariants::interactive")?.count).toBe(118);
+    expect(pairs.get("explanationVariants::interactive")?.count).toBe(120);
     expect(pairs.get("figure::interactive")?.count).toBe(2);
+    expect(pairs.get("figure::check")?.count).toBe(6);
 
     // And each is declared reachable rather than merely tolerated.
     expect(CONSUMERS.hints.interactive).toMatch(/availability-gated/);
     expect(CONSUMERS.explanationVariants.interactive).toMatch(/availability-gated/);
     expect(CONSUMERS.figure.interactive).toMatch(/FIGURE_IDS-gated/);
+    expect(CONSUMERS.figure.check).toMatch(/FIGURE_IDS-gated/);
   });
 
   it("does not declare consumers for pairs the corpus never authors", () => {

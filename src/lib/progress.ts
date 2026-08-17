@@ -43,6 +43,8 @@ export interface Profile {
    * absent = no selection yet — resolves to the generated-initials/placeholder fallback, never
    * an error state */
   avatarId?: string;
+  /** Small non-destructive avatar adornments. Skin and hair remain part of reviewed full portraits. */
+  avatarCustomization?: import("./avatars").AvatarCustomization;
   /** lessons-per-day target; absent = 1 */
   dailyGoal?: number;
   /** completions per local date, for the daily-goal ring */

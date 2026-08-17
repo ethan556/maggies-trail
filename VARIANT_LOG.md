@@ -4716,3 +4716,57 @@ The exact supplied Vercel deployment remained behind Vercel authentication, and 
 could not resolve the project. The canonical public deployment was reviewed for the original
 defects, and the changed routes were verified locally against the production build. No exact-preview
 or production deployment claim is made.
+
+## Session 246 — Grade 10 conditional-probability numeric assurance
+
+- Repaired all eight numeric forms under `g10-conditional-probability`: overlap count, joint,
+  marginal, complement, conditional, reversal, union, and independence/exclusivity.
+- The overlap form now has ten coherent states spanning union and intersection unknowns. The seven
+  remaining forms use eight bounded table/event states apiece, with varied quantities, answers,
+  contexts, and applicable reasoning jobs.
+- Independent routes now recompute answers from printed quantities for every repaired form. They do
+  not read generator state or trust the keyed answer.
+- Misconception values are independently distinct from the answer and one another. Numeric prompts
+  explicitly state the rounding convention when a non-terminating decimal can occur.
+- No lesson declaration or authored lesson prose changed.
+
+Gate catches and evidence:
+
+- The original resolver failure moved from `cpr-01-03/k2` to `cpr-02-02/k1`, then to
+  `cpr-02-02/k2`; each exposed the next static numeric form. Repairing the family moved the
+  frontier entirely out of conditional probability to `co-01-01/k1` in Grade 12 conics.
+- Focused S246 properties and the conditional portion of the real resolver pass.
+- Full generator regression: **4,001/4,001 PASS**.
+- Typecheck: PASS. Schema: **1,840/1,840**. Pedagogy: **1,711/1,711**.
+- The normal tsx CLI again failed before project code with `uv_os_get_passwd ENOMEM`; schema and
+  pedagogy passed through the established in-process TypeScript route.
+
+Next: repair `g12-conic-sections@conic-sections__co-parabola-def__numeric` without weakening the
+freshness gate, then continue resolver-led family assurance.
+
+## Session 246 continuation — Grade 12 conic numeric assurance
+
+- `co-parabola-def` now emits eight exact focus/directrix/on-curve states spanning horizontal and
+  vertical parabolas. Its independent route derives the perpendicular distance from the printed
+  directrix and point coordinates.
+- `co-hyp-ecc` now emits eight horizontal/vertical hyperbolas built from exact Pythagorean
+  `(a,b,c)` states. It rounds `c/a` only under the prompt’s explicit two-decimal instruction.
+- Focused properties, schema parsing, deterministic replay, independent answers, and trap
+  distinctness pass. Full generator regression plus S246 tests: **4,004/4,004 PASS**.
+- The resolver frontier moved out of conics to `cp-02-01/k2` in `g10-constructions-proof`.
+- No lesson declaration or authored prose changed.
+
+## Session 246 continuation — Grade 10 constructions/proof numeric assurance
+
+- Repaired all ten numeric forms under `g10-constructions-proof`, covering 14 live consumers.
+- Replaced fixed or two/three-row pools with genuine mathematical state variation across
+  perpendiculars, parallels, regular polygons, proof/counterexample tasks, converses, transversal
+  angle relationships, and vertical-angle transfer.
+- Removed the learner-facing route to the stale perpendicular feedback that incorrectly invoked
+  Thales' theorem. Every new fallback and misconception explanation now names the governing
+  construction relationship.
+- Independent prompt parsers recompute every generated answer without sharing case tables.
+- Focused family assurance passes; full S246 generator regression is **4,012/4,012**; typecheck,
+  schema **1,840/1,840**, pedagogy **1,711/1,711**, and strict CML **0/0** pass.
+- The real resolver now advances to `cx-01-03/k2` in the separate `g10-coordinate-proofs` family.
+- No lesson declaration or authored lesson prose changed.

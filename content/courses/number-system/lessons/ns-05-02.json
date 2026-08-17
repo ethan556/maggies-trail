@@ -15,21 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Greater by position.",
+      "body": "Compare position and distance on the same line.",
       "conceptTag": "abs-compare",
       "widget": {
-        "type": "rationalCompare",
-        "prompt": "Which number is GREATER: -2 or -8?",
-        "left": {
-          "value": "-2"
-        },
-        "right": {
-          "value": "-8"
-        },
-        "answer": "gt",
-        "ltFeedback": "-8 is farther from zero, but that makes it SMALLER, not greater — it's deeper into the negatives. -2 is greater.",
-        "eqFeedback": "They're different points: -2 sits right of -8, so -2 is greater.",
-        "successFeedback": "Right — -2 is farther right on the line (closer to zero), so it's the greater number."
+        "type": "numberLinePlace",
+        "prompt": "The marker starts at -8. Drag it to the greater number in the pair -8 and -2; watch both position and distance from zero.",
+        "min": -10,
+        "max": 1,
+        "step": 1,
+        "tickStep": 1,
+        "target": -2,
+        "start": -8,
+        "showDistanceFromZero": true,
+        "commonPlacements": [
+          {
+            "value": -8,
+            "feedback": "-8 has the larger distance from zero, but it is farther left. Greater numbers lie to the right."
+          }
+        ],
+        "successFeedback": "-2 is to the right of -8, so it is greater, even though its distance from zero is smaller.",
+        "lowFeedback": "This point is left of -2, so it is smaller. Position decides which number is greater.",
+        "highFeedback": "This point is right of -2, but it is not one of the two numbers being compared."
       },
       "hints": [
         "Greater = farther right on the line.",
@@ -151,7 +157,7 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Mixed signs this time.",
+      "body": "Use the distance readout, not the sign, to choose the farther point.",
       "conceptTag": "abs-compare",
       "predict": {
         "prompt": "-4 and 3. One of them is the GREATER number; one is FARTHER from zero. Is it the same one?",
@@ -173,26 +179,24 @@
         "reveal": "Different numbers answer the two questions. 3 sits to the RIGHT of -4, so 3 is greater. But -4 sits four steps from zero and 3 sits three, so -4 is farther. Order and distance are separate facts about the same pair."
       },
       "widget": {
-        "type": "absValueLine",
-        "prompt": "Which is farther from zero: -4 or 3?",
-        "items": [
+        "type": "numberLinePlace",
+        "prompt": "The marker starts at 3. Move it to whichever point is farther from zero: 3 or -4.",
+        "min": -6,
+        "max": 5,
+        "step": 1,
+        "tickStep": 1,
+        "target": -4,
+        "start": 3,
+        "showDistanceFromZero": true,
+        "commonPlacements": [
           {
-            "id": "a",
-            "value": -4,
-            "label": "-4"
-          },
-          {
-            "id": "b",
             "value": 3,
-            "label": "3",
-            "feedback": "3 is the GREATER number, but distance ignores sign: |-4| = 4 > |3| = 3, so -4 is farther."
+            "feedback": "At 3, the distance readout is 3. The point -4 is four steps from zero, so it is farther."
           }
         ],
-        "answerId": "a",
-        "equalLabel": "Same distance",
-        "equalFeedback": "|-4| = 4 and |3| = 3 differ. -4 is farther from zero.",
-        "missFeedback": "Distance from zero ignores the sign — compare the two bracket lengths.",
-        "successFeedback": "Right — |-4| = 4 beats |3| = 3, so -4 is farther from zero, even though -4 < 3 in value."
+        "successFeedback": "At -4, the position is -4 and the distance is 4. That distance is larger than the distance 3 at +3.",
+        "lowFeedback": "This point is even farther left than -4, but it is not one of the two choices.",
+        "highFeedback": "Compare the two stated points only. The point with distance 4 is -4."
       },
       "hints": [
         "Compare distances, not positions.",

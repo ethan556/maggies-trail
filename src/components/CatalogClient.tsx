@@ -1,7 +1,8 @@
 "use client";
 
-import { AppIcon } from "@/components/ui";
-import { courseIcon } from "@/lib/personalize";
+import { CurriculumIcon } from "@/components/CurriculumIcon";
+import { gradeIllustrationId } from "@/lib/curriculumIcons";
+import { courseSubjectId } from "@/lib/personalize";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { gradeBandLabel } from "@/lib/copy";
@@ -48,12 +49,7 @@ function CourseCard({ c, showBand = false }: { c: CatalogCourseProps; showBand?:
     >
       <div className="flex items-center justify-between gap-2">
         <h3 className="flex min-w-0 items-center gap-2.5 text-lg font-extrabold tracking-tight">
-          <span
-            aria-hidden
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-pill bg-sky/10 text-sky-ink transition-colors group-hover:bg-cta group-hover:text-white"
-          >
-            <AppIcon name={courseIcon(c.title)} size={17} />
-          </span>
+          <CurriculumIcon id={courseSubjectId(c.title)} size={42} />
           <span className="truncate">{c.title}</span>
         </h3>
         {showBand && (
@@ -221,6 +217,7 @@ export default function CatalogClient({
                       href={`/learn/${l.id}`}
                       className="flex min-h-11 items-center justify-between gap-3 px-4 py-2 hover:bg-sky/5"
                     >
+                      <CurriculumIcon id={courseSubjectId(l.courseTitle)} size={32} />
                       <span className="flex-1 font-bold">{l.title}</span>
                       <span className="whitespace-nowrap rounded-pill bg-ink/6 px-2 py-0.5 text-[11px] font-bold text-muted dark:bg-paper/10">
                         {gradeBandLabel(l.gradeLevel)}
@@ -237,7 +234,8 @@ export default function CatalogClient({
         <div className="mt-6 space-y-8">
           {visibleGrades.map((g) => (
               <section key={g} aria-label={`${gradeBandLabel(g)} math`}>
-                <h2 className="text-xs font-extrabold uppercase tracking-wider text-muted">
+                <h2 className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-muted">
+                  <CurriculumIcon id={gradeIllustrationId(g)} size={32} />
                   {`Math · ${gradeBandLabel(g)}`}
                 </h2>
                 <div className="mt-2 grid gap-3 sm:grid-cols-2">

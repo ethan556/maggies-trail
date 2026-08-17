@@ -206,27 +206,28 @@ describe("getAvatar / isValidAvatarId", () => {
 });
 
 describe("getAvatarSrc", () => {
-  it("never returns a path for a disabled or unknown id", () => {
-    expect(getAvatarSrc("avatar-001", 256)).toBeUndefined();
-    expect(getAvatarSrc("avatar-001", 512)).toBeUndefined();
+  it("returns reviewed paths and refuses unknown ids", () => {
+    expect(getAvatarSrc("avatar-001", 256)).toBe("/avatars/avatar-001-256.webp");
+    expect(getAvatarSrc("avatar-001", 512)).toBe("/avatars/avatar-001-512.webp");
     expect(getAvatarSrc("avatar-999", 256)).toBeUndefined();
     // Same rule for the 44 net-new expansion entries — disabled is disabled, regardless of age.
-    expect(getAvatarSrc("avatar-312", 512)).toBeUndefined();
-    expect(getAvatarSrc("avatar-412", 256)).toBeUndefined();
+    expect(getAvatarSrc("avatar-312", 512)).toBe("/avatars/avatar-312-512.webp");
+    expect(getAvatarSrc("avatar-412", 256)).toBe("/avatars/avatar-412-256.webp");
   });
 });
 
 describe("getAvatarsForAgeBand / getDefaultAvatarForGrade", () => {
-  it("every band returns empty today — honest reflection of zero enabled entries", () => {
+  it("returns the complete reviewed 15-item collection for every band", () => {
     for (const band of ["early", "explorer", "adventurer", "summit"] as const) {
-      expect(getAvatarsForAgeBand(band)).toEqual([]);
+      expect(getAvatarsForAgeBand(band)).toHaveLength(15);
     }
   });
 
-  it("getDefaultAvatarForGrade is undefined everywhere today", () => {
-    for (const grade of [0, 2, 3, 5, 6, 8, 9, 13]) {
-      expect(getDefaultAvatarForGrade(grade)).toBeUndefined();
-    }
+  it("selects a stable age-appropriate reviewed default", () => {
+    expect(getDefaultAvatarForGrade(0)?.id).toBe("avatar-001");
+    expect(getDefaultAvatarForGrade(3)?.id).toBe("avatar-101");
+    expect(getDefaultAvatarForGrade(6)?.id).toBe("avatar-201");
+    expect(getDefaultAvatarForGrade(9)?.id).toBe("avatar-301");
   });
 });
 
@@ -248,8 +249,8 @@ describe("honesty gate — enabled art must be real (see AVATAR_ART_PRODUCTION_S
     for (const id of ENABLED_AVATAR_IDS) expect(getAvatar(id), id).toBeDefined();
   });
 
-  it("the release allowlist stays closed until a coherent canary passes", () => {
-    expect(ENABLED_AVATAR_IDS).toEqual([]);
+  it("releases the independently approved library atomically", () => {
+    expect(ENABLED_AVATAR_IDS).toHaveLength(60);
     expect(AVATARS.filter((a) => a.enabled).map((a) => a.id)).toEqual(ENABLED_AVATAR_IDS);
   });
 

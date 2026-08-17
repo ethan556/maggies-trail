@@ -77,6 +77,66 @@
    "figure": "pv1000-order-list"
   },
   {
+   "id": "i2a",
+   "kind": "interactive",
+   "body": "Inspect one pair before sorting the whole set.",
+   "conceptTag": "pv1000-order-mixed",
+   "widget": {
+    "type": "placeValueTransformLab",
+    "task": "decidingPlace",
+    "answerMode": "choice",
+    "prompt": "Line up 267 and 627. Inspect the first place that decides their order.",
+    "values": [
+     267,
+     627
+    ],
+    "choices": [
+     {
+      "id": "hundreds",
+      "label": "Hundreds place",
+      "claim": "place:2",
+      "feedback": "Yes. The hundreds are 2 and 6, so 267 must come before 627."
+     },
+     {
+      "id": "tens",
+      "label": "Tens place",
+      "claim": "place:1",
+      "feedback": "Start with the hundreds, where 2 and 6 already differ."
+     },
+     {
+      "id": "ones",
+      "label": "Ones place",
+      "claim": "place:0",
+      "feedback": "The ones do not speak first. Compare the hundreds before moving right."
+     }
+    ],
+    "requiredExplorations": 1,
+    "successFeedback": "The hundreds decide: 2 hundreds is less than 6 hundreds, so 267 comes before 627.",
+    "explorationFeedback": "Open the hundreds stage before choosing the deciding place.",
+    "fallbackFeedback": "Compare from left to right. The first difference is 2 hundreds versus 6 hundreds.",
+    "tolerance": 0
+   },
+   "predict": {
+    "prompt": "267 and 627 use the same digits in different places. Which place should you compare first?",
+    "options": [
+     {
+      "id": "hundreds",
+      "label": "Hundreds"
+     },
+     {
+      "id": "tens",
+      "label": "Tens"
+     },
+     {
+      "id": "ones",
+      "label": "Ones"
+     }
+    ],
+    "outcomeId": "hundreds",
+    "reveal": "The aligned chart opens at the hundreds: 2 hundreds versus 6 hundreds. That first difference puts 267 before 627."
+   }
+  },
+  {
    "id": "i2",
    "kind": "interactive",
    "body": "Order a whole set at once — same digits, different spots.",
@@ -126,25 +186,6 @@
     ],
     "missFeedback": "Sort by hundreds first (the 2-hundreds pair before the 6-hundreds pair), then let tens order each pair: 267, 276, 627, 672.",
     "successFeedback": "267 < 276 < 627 < 672 — hundreds split the pairs, tens ordered within. Same digits, four different sizes."
-   },
-   "predict": {
-    "prompt": "All four numbers use only the digits 2, 6, and 7. What will decide their order?",
-    "options": [
-     {
-      "id": "hundreds",
-      "label": "The hundreds spot — the biggest spot speaks first"
-     },
-     {
-      "id": "digits",
-      "label": "The biggest digit anywhere in the number"
-     },
-     {
-      "id": "ones",
-      "label": "The ones spot — start where adding starts"
-     }
-    ],
-    "outcomeId": "hundreds",
-    "reveal": "Place beats digit size: 276 sits below 627 even though both use the very same digits, because 2 hundreds can't touch 6 hundreds. Only when hundreds tie do the tens get a vote — comparison scans left to right, the opposite end from addition."
    }
   },
   {

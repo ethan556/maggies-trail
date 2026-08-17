@@ -15,54 +15,46 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Same numbers, three different mysteries.",
+      "body": "Deal the pens fairly to expose the missing group size.",
    "conceptTag": "unknown-position",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each story to the slot it leaves empty.",
-    "left": [
-     {
-      "id": "l1",
-      "label": "3 boxes, 5 pens in each. How many pens?"
-     },
-     {
-      "id": "l2",
-      "label": "15 pens split evenly into 3 boxes. How many in each?"
-     },
-     {
-      "id": "l3",
-      "label": "15 pens, packed 5 to a box. How many boxes?"
-     }
-    ],
-    "right": [
-     {
-      "id": "r1",
-      "label": "The group size is unknown"
-     },
-     {
-      "id": "r2",
-      "label": "The group count is unknown"
-     },
-     {
-      "id": "r3",
-      "label": "The total is unknown"
-     }
-    ],
-    "pairs": {
-     "l1": "r3",
-     "l2": "r1",
-     "l3": "r2"
-    },
-    "pairErrors": [
-     {
-      "left": "l2",
-      "right": "r2",
-      "feedback": "\"How many in each?\" asks about the size INSIDE one box — the 3 boxes are already counted. The group count isn't the mystery here."
-     }
-    ],
-    "missFeedback": "Read each question's last line: \"how many pens?\" wants the total, \"how many in each?\" wants the size, \"how many boxes?\" wants the count.",
-    "successFeedback": "Three stories, one fact family, three different empty slots."
-   },
+        "type": "plotPoint",
+        "prompt": "Deal 15 pens equally into 3 boxes. Give each box one pen per round until all 15 are placed.",
+        "cols": 3,
+        "rows": 5,
+        "xLabels": [
+          "Box 1",
+          "Box 2",
+          "Box 3"
+        ],
+        "yLabels": [
+          "Round 1",
+          "Round 2",
+          "Round 3",
+          "Round 4",
+          "Round 5"
+        ],
+        "targets": [
+          { "x": 1, "y": 1 },
+          { "x": 2, "y": 1 },
+          { "x": 3, "y": 1 },
+          { "x": 1, "y": 2 },
+          { "x": 2, "y": 2 },
+          { "x": 3, "y": 2 },
+          { "x": 1, "y": 3 },
+          { "x": 2, "y": 3 },
+          { "x": 3, "y": 3 },
+          { "x": 1, "y": 4 },
+          { "x": 2, "y": 4 },
+          { "x": 3, "y": 4 },
+          { "x": 1, "y": 5 },
+          { "x": 2, "y": 5 },
+          { "x": 3, "y": 5 }
+        ],
+        "pointErrors": [],
+        "missFeedback": "Deal in full rounds so every box gets the same number of pens.",
+        "successFeedback": "Five full rounds place all 15 pens. The missing number is the group size: 5 pens in each box."
+      },
    "predict": {
     "prompt": "'15 pens split evenly into 3 boxes' — which number is the story missing?",
     "options": [

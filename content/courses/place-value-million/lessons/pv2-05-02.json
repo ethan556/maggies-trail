@@ -15,44 +15,43 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Order from least to greatest.",
+   "body": "Align two large numbers before deciding which comes first.",
    "conceptTag": "order-big-numbers",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "Put these four numbers in order, least to greatest.",
-    "items": [
+    "type": "placeValueTransformLab",
+    "task": "compare",
+    "answerMode": "choice",
+    "prompt": "Which is greater: 987,654 or 1,000,000?",
+    "values": [
+     987654,
+     1000000
+    ],
+    "choices": [
      {
-      "id": "n450000",
-      "label": "450,000"
+      "id": "million",
+      "label": "1,000,000",
+      "claim": "relation:lt",
+      "feedback": "One million has seven digits; 987,654 has six. The seven-digit number is greater."
      },
      {
-      "id": "n6000",
-      "label": "6,000"
+      "id": "nine",
+      "label": "987,654",
+      "claim": "misconception:leading-nine",
+      "feedback": "The leading 9 looks large only after alignment. A seven-digit number is greater than any six-digit number."
      },
      {
-      "id": "n45300",
-      "label": "45,300"
-     },
-     {
-      "id": "n45000",
-      "label": "45,000"
+      "id": "equal",
+      "label": "They are equal",
+      "claim": "misconception:equal",
+      "feedback": "The numbers have different digit counts, so they cannot be equal."
      }
     ],
-    "correctOrder": [
-     "n6000",
-     "n45000",
-     "n45300",
-     "n450000"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "n45300",
-      "second": "n45000",
-      "feedback": "45,000 and 45,300 share the same 5 digits — compare place by place: the hundreds digit (0 vs 3) shows 45,000 is smaller."
-     }
-    ],
-    "missFeedback": "Sort by digit count first (4, 5, 5, 6 digits); then break the tie between the two 5-digit numbers.",
-    "successFeedback": "6,000 (4 digits) is smallest; 450,000 (6 digits) is largest; 45,000 and 45,300 tie on digit count, broken by the hundreds place."
+    "numericErrors": [],
+    "requiredExplorations": 1,
+    "successFeedback": "1,000,000 is greater because it has one more place. Check digit count before comparing leading digits.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "Use the aligned place-value model and the highlighted place.",
+    "tolerance": 0
    },
    "predict": {
     "prompt": "Comparing two big numbers — what do you check FIRST: digit COUNT or leading digits?",

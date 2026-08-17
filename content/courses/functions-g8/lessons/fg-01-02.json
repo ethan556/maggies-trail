@@ -13,58 +13,42 @@
    "figure": "mapping-diagram"
   },
   {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Check a list of pairs.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "Is this a function? (1, 5), (2, 7), (3, 9)",
-    "options": [
-     {
-      "id": "a",
-      "label": "Yes — each input appears once with one output",
-      "correct": true,
-      "feedback": "Right — inputs 1, 2, 3 each have exactly one output."
-     },
-     {
-      "id": "b",
-      "label": "No — the outputs are all different",
-      "correct": false,
-      "feedback": "Different outputs are expected and fine — what matters is each INPUT having one output, which holds here."
-     },
-     {
-      "id": "c",
-      "label": "No — the numbers increase",
-      "correct": false,
-      "feedback": "Increasing values don't affect whether it's a function — each input still maps to one output."
-     },
-     {
-      "id": "d",
-      "label": "Only if you add more pairs",
-      "correct": false,
-      "feedback": "It's already a function as written — every input has exactly one output."
-     }
-    ]
-   },
-   "predict": {
-    "prompt": "What would BREAK a function — one input reused with different outputs, or one output reused by different inputs?",
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sweep one input at a time and count how many outputs it reaches.",
+      "widget": {
+        "type": "verticalLineScanner",
+        "prompt": "Sweep across the discrete relation. Find the repeated input that reaches two different outputs, then decide whether the relation is a function.",
+        "relation": "discreteNonFunction",
+        "targetVerdict": "not-function",
+        "xMin": -5,
+        "xMax": 5,
+        "scanStart": -5,
+        "scanStep": 0.5,
+        "requiredSweeps": 8,
+        "successFeedback": "Not a function. At least one input lines up with two outputs, so the one-output promise is broken.",
+        "moreSweepFeedback": "Sweep farther across the inputs. One repeated input with two output points is enough to disprove the function claim.",
+        "verdictFeedback": "Count outputs while the scanner fixes one input. Any count above one means the relation is not a function."
+      },
+      "predict": {
+        "prompt": "Which situation breaks the definition of a function?",
     "options": [
      {
       "id": "input",
-      "label": "One input with different outputs"
+            "label": "One input paired with different outputs"
      },
      {
       "id": "output",
-      "label": "One output from different inputs"
+            "label": "Different inputs sharing one output"
      },
      {
       "id": "either",
-      "label": "Either one breaks it"
+            "label": "Either situation breaks it"
      }
     ],
     "outcomeId": "input",
-    "reveal": "A function promises each input exactly one answer — inputs may never contradict themselves. Outputs are free to repeat all they like."
-   }
+        "reveal": "A function assigns exactly one output to each input. Several inputs may share an output, but one input cannot point to two different outputs."
+      }
   },
   {
    "id": "c2",

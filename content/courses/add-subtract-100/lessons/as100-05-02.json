@@ -17,45 +17,36 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Try two evens.",
+      "body": "Pair the combined counters.",
    "conceptTag": "parity-sum",
    "widget": {
-    "type": "numeric",
-    "prompt": "8 + 6 = ? (both even)",
-    "answer": 14,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 13,
-      "feedback": "Recount: 8 + 6 = 14 — and 14 is even, as two evens should make."
-     },
-     {
-      "value": 15,
-      "feedback": "Recount: 8 + 6 = 14, an even number."
-     }
-    ],
-    "fallbackFeedback": "8 + 6 = 14, which is even.",
-    "missFeedback": "8 + 6 = 14 — even, as expected.",
-    "successFeedback": "14 — even, just like every even + even!"
+        "type": "oddEvenPairs",
+        "prompt": "8 counters join 6 counters, making 14. Pair all 14 counters, then choose odd or even.",
+        "n": 14,
+        "mode": "pair",
+        "answer": "even",
+        "oddFeedback": "All 14 counters pair up. With no counter left over, the sum is even.",
+        "unfinishedFeedback": "Finish making pairs before you decide. The leftover, if there is one, tells you the parity.",
+        "successFeedback": "Seven complete pairs and no leftover show that 8 + 6 is even."
    },
    "predict": {
-    "prompt": "8 and 6 are both EVEN. Before adding: will their sum be even or odd?",
+        "prompt": "When the 14 counters from 8 + 6 are paired, what do you expect to be left over?",
     "options": [
      {
-      "id": "even",
-      "label": "Even"
+            "id": "none",
+            "label": "No counters"
      },
      {
-      "id": "odd",
-      "label": "Odd"
+            "id": "one",
+            "label": "1 counter"
      },
      {
-      "id": "either",
-      "label": "Could be either"
+            "id": "two",
+            "label": "2 counters"
      }
     ],
-    "outcomeId": "even",
-    "reveal": "Two even numbers are each made of pairs — stacking pairs on pairs leaves nothing sticking out. Even plus even lands even, every time."
+        "outcomeId": "none",
+        "reveal": "The counters make seven complete pairs with none left over. That visible pairing is why even + even is even."
    }
   },
   {

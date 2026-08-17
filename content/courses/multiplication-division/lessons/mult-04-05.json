@@ -60,25 +60,6 @@
         ],
         "missFeedback": "Size test each claim: division answers shrink below the pile; multiplication answers grow well past one group.",
         "successFeedback": "Busted on size alone — no arithmetic needed. That's the sense-check working."
-      },
-      "predict": {
-        "prompt": "24 ÷ 4 = 96 — before any math: can splitting 24 into groups give MORE than 24?",
-        "options": [
-          {
-            "id": "no",
-            "label": "No — sharing can't grow the pile"
-          },
-          {
-            "id": "some",
-            "label": "Yes, sometimes"
-          },
-          {
-            "id": "big",
-            "label": "Only with big divisors"
-          }
-        ],
-        "outcomeId": "no",
-        "reveal": "Splitting 24 among 4 groups leaves each group with less than the whole pile — 96 is four times too big (it's 24 × 4, the multiplication in disguise). A size check catches the flip before any computing starts."
       }
     },
     {
@@ -173,6 +154,25 @@
       "kind": "interactive",
       "body": "Train your size sense on a bigger pile.",
       "conceptTag": "reasonableness",
+      "predict": {
+        "prompt": "Before you move the slider, where should an estimate for 18 boxes of 10 crayons land?",
+        "options": [
+          {
+            "id": "hundreds",
+            "label": "Near 180 crayons"
+          },
+          {
+            "id": "tens",
+            "label": "Near 28 crayons"
+          },
+          {
+            "id": "thousands",
+            "label": "Near 1,800 crayons"
+          }
+        ],
+        "outcomeId": "hundreds",
+        "reveal": "The slider settles near 180 because 18 groups of 10 make 18 tens. The model shows why 28 is addition-sized and 1,800 is ten times too large."
+      },
       "widget": {
         "type": "estimateSlider",
         "prompt": "An art room has 18 boxes with 10 crayons in each. Slide to estimate the total crayons.",

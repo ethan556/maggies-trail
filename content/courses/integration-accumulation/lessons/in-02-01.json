@@ -222,41 +222,28 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Accumulate a triangle.",
+      "body": "Sweep the area between two accumulation checkpoints.",
       "conceptTag": "in-accumulation",
       "hints": [
         "A(x) = ∫₀ˣ 2t dt is the area of a triangle with base x and height f(x) = 2x.",
-        "So A(x) = (1/2)(x)(2x) = x².",
-        "Now evaluate A(5) − A(3)."
+        "At x = 2, the readout is A(2) = 4. At x = 3, it is A(3) = 9.",
+        "Subtract the earlier accumulation from the later one: 9 − 4."
       ],
       "explanationVariants": [
-        "A(x) = x², so A(5) − A(3) = 25 − 9 = 16.",
-        "And notice what that difference IS: the area from 3 to 5, computed by subtracting two accumulations. That subtraction is about to become the most useful trick in calculus."
+        "The live area curve shows A(2) = 4 and A(3) = 9, so the added area is 9 − 4 = 5.",
+        "The sweep from x = 2 to x = 3 isolates exactly the area represented by A(3) − A(2)."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A(x) = ∫₀ˣ 2t dt. Find A(5) − A(3).",
-        "answer": 16,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 2,
-            "feedback": "That is 5 − 3. You must accumulate FIRST: A(5) = 25 and A(3) = 9, so the difference is 16."
-          },
-          {
-            "value": 34,
-            "feedback": "That is A(5) + A(3). The area from 3 to 5 is the bigger accumulation MINUS the smaller."
-          },
-          {
-            "value": 25,
-            "feedback": "That is A(5) alone. Subtract A(3) = 9 to isolate the strip between 3 and 5."
-          }
-        ],
-        "fallbackFeedback": "A(x) = x², so A(5) − A(3) = 25 − 9 = 16 — which is precisely the area from 3 to 5."
-      },
-      "variant": {
-        "gen": "g13-integration-accumulation",
-        "form": "integration-accumulation__in-accumulation__numeric"
+        "type": "accumulateArea",
+        "fn": "line",
+        "mode": "point",
+        "targetArea": 0,
+        "targetX": 3,
+        "start": 2,
+        "prompt": "For f(t) = 2t, begin at x = 2 and sweep to x = 3. Compare the two A(x) readouts to find A(3) − A(2).",
+        "successFeedback": "A(2) = 4 and A(3) = 9, so the new shaded area is 9 − 4 = 5. The difference of accumulations is the area between the checkpoints.",
+        "lowFeedback": "Keep sweeping toward x = 3. Track how much the A(x) readout grows after the starting value 4.",
+        "highFeedback": "You have swept beyond x = 3. Return to the marked checkpoint before comparing A(3) with A(2)."
       }
     },
     {

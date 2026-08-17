@@ -134,56 +134,76 @@
     "reusable": false,
     "missFeedback": "Start from the postulate: piece + piece = whole, then substitute the three given values.",
     "successFeedback": "(2x + 3) + (3x − 7) = 41 — geometry chose the equation; algebra takes it from here."
-   },
-   "predict": {
-    "prompt": "B sits between A and C. Which relationship MUST hold?",
-    "options": [
-     {
-      "id": "add",
-      "label": "AB + BC = AC — the parts fill the whole"
-     },
-     {
-      "id": "equal",
-      "label": "AB = BC"
-     },
-     {
-      "id": "mult",
-      "label": "AB × BC = AC"
-     }
-    ],
-    "outcomeId": "add",
-    "reveal": "Betweenness is additive: walking A to B and then B to C covers exactly A to C. So (2x + 3) + (3x − 7) = 41, which is 5x − 4 = 41 — geometry hands algebra the equation, and x = 9 falls out."
    }
   },
   {
    "id": "k1",
-   "kind": "check",
-   "body": "Solve it.",
+   "kind": "interactive",
+   "body": "Preserve the equation while isolating x.",
    "conceptTag": "gf-algebra-measures",
    "explanationVariants": [
     "(2x + 3) + (3x − 7) = 41 → 5x − 4 = 41 → 5x = 45 → x = 9.",
     "Combine like terms: 5x and (3 − 7) = −4. Add 4 to both sides, then divide by 5."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "AB = 2x + 3, BC = 3x − 7, AC = 41, with B between A and C. Solve for x.",
-    "answer": 9,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "equationOutcomeLab",
+    "mode": "transform",
+    "answerMode": "sequence",
+    "prompt": "The segment parts combine to 5x − 4 = 41. Apply the two equality-preserving steps that isolate x.",
+    "leftDisplay": "5x − 4",
+    "rightDisplay": "41",
+    "leftCoeff": 5,
+    "leftConstant": -4,
+    "rightCoeff": 0,
+    "rightConstant": 41,
+    "relation": "eq",
+    "variable": "x",
+    "choices": [],
+    "operations": [
      {
-      "value": 10,
-      "feedback": "x = 10 comes from 2x + 3 = 3x − 7 — the pieces set EQUAL. That's a midpoint setup; \"between\" adds them to 41 instead."
+      "id": "add-four",
+      "label": "add 4 to both sides → 5x = 45",
+      "kind": "addConstant",
+      "value": 4,
+      "feedback": "Remove the −4 first by adding 4 to both sides."
      },
      {
-      "value": 7.4,
-      "feedback": "7.4 comes from 5x + 4 = 41 — the −7 flipped sign while combining. 3 + (−7) = −4, so it's 5x − 4 = 41."
+      "id": "divide-five",
+      "label": "divide both sides by 5 → x = 9",
+      "kind": "scale",
+      "value": 0.2,
+      "feedback": "First clear the −4; then divide the remaining 5x = 45 by 5."
      }
     ],
-    "fallbackFeedback": "Combine to 5x − 4 = 41, so x = 9."
+    "correctOrder": [
+     "add-four",
+     "divide-five"
+    ],
+    "requiredMoves": 2,
+    "numericErrors": [],
+    "tolerance": 0,
+    "explorationFeedback": "Apply the same legal operation to both sides and inspect the updated equation.",
+    "fallbackFeedback": "Add 4 to both sides, then divide both sides by 5.",
+    "successFeedback": "5x − 4 = 41 becomes 5x = 45 and then x = 9. The two segment lengths are 21 and 20, which rebuild AC = 41."
    },
-   "variant": {
-    "gen": "g10-geometry-foundations",
-    "form": "gf-algebra-measures__numeric"
+   "predict": {
+    "prompt": "Before moving a step, which first operation keeps 5x − 4 = 41 equivalent?",
+    "options": [
+     {
+      "id": "add-four",
+      "label": "Add 4 to both sides"
+     },
+     {
+      "id": "subtract-four",
+      "label": "Subtract 4 from both sides"
+     },
+     {
+      "id": "divide-five",
+      "label": "Divide every term by 5 first"
+     }
+    ],
+    "outcomeId": "add-four",
+    "reveal": "Adding 4 to both sides removes the −4 without changing the solution set: 5x = 45. Dividing both sides by 5 then gives x = 9."
    }
   },
   {

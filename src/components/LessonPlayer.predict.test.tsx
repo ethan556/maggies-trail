@@ -175,11 +175,11 @@ describe("flagship conversion integration (fa-01-01, fraction equivalence)", () 
     expect(screen.getByText(/that trade IS equivalence/)).toBeTruthy();
   });
 
-  it("tranche-4 engine swap: pv1000-03-03 predict gates the dragOrder, ordering 267/276/627/672 completes it", async () => {
+  it("S244 causal host: pv1000-03-03 predicts, inspects, then identifies the deciding hundreds place", async () => {
     const flagship = Lesson.parse(
       (await import("../../content/courses/place-value-1000/lessons/pv1000-03-03.json")).default
     );
-    const i = flagship.steps.findIndex((s) => s.id === "i2");
+    const i = flagship.steps.findIndex((s) => s.id === "i2a");
     expect(i).toBeGreaterThan(0);
     window.localStorage.setItem(
       `numera:lesson:v1:c1:${flagship.id}`,
@@ -198,16 +198,15 @@ describe("flagship conversion integration (fa-01-01, fraction equivalence)", () 
     // The predict gate is up; the manipulative is mounted but inert (out of
     // the a11y tree, present in the DOM) — WS-E Phase 3.
     expect(screen.getByText(/Make a prediction first/)).toBeTruthy();
-    expect(screen.queryByRole("button", { name: /Move 267/ })).toBeNull();
-    expect(screen.getByRole("button", { name: "Move 267 up", hidden: true })).toBeTruthy();
-    fireEvent.click(screen.getByRole("radio", { name: /The hundreds spot/ }));
-    // Presentation order is 627, 267, 672, 276 → sort ascending with arrow buttons.
-    fireEvent.click(screen.getByRole("button", { name: "Move 267 up" })); // 267,627,672,276
-    fireEvent.click(screen.getByRole("button", { name: "Move 276 up" })); // 267,627,276,672
-    fireEvent.click(screen.getByRole("button", { name: "Move 276 up" })); // 267,276,627,672
+    expect(screen.queryByRole("button", { name: /Inspect stage 1:/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /Inspect stage 1:/, hidden: true })).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: /^Hundreds$/ }));
+    // Reveal the aligned hundreds stage, then make the evidence-backed place claim.
+    fireEvent.click(screen.getByRole("button", { name: /Inspect stage 1:/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Hundreds place" }));
     fireEvent.click(btn(/^Check$/));
     expect(screen.getByText(/Your prediction held/)).toBeTruthy();
-    expect(screen.getByText(/hundreds split the pairs/)).toBeTruthy();
+    expect(screen.getByText(/aligned chart opens at the hundreds/)).toBeTruthy();
   });
 });
 

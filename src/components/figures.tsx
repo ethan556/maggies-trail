@@ -1,4 +1,11 @@
 import type { JSX } from "react";
+import {
+  KoaActOutAJoin,
+  KoaAdditionSentence,
+  KoaAddWithDrawing,
+  KoaAddWithFingers,
+  KoaJoinTwoGroups,
+} from "./figures/koaJoinFigures";
 /**
  * Named concept figures — small inline SVGs rendered above concept-step bodies.
  * Design rules (DESIGN.md): ink/paper/sky/tangerine/leaf tokens only; borders over
@@ -4850,6 +4857,180 @@ function AngleTypes() {
 
 
 /** mult-01-04's exact picture: three hops of 4 along a 0–12 number line, landing on 4, 8, 12. */
+type G2CandidateLinePanel = {
+  caption: string;
+  marks: number[];
+  jumps?: Array<{ from: number; to: number; label: string }>;
+  gap?: [number, number];
+  note?: string;
+};
+
+/**
+ * Four honest number-line candidates for the Grade 2 representation checks.
+ * Every panel shares one scale, so distance remains mathematical evidence rather
+ * than decoration. The lettered panels keep shuffled MCQ options concise.
+ */
+function G2CandidateNumberLines(
+  props:
+    | { kind: "add"; start: number; amount: 20 }
+    | { kind: "gap"; high: number; low: number },
+) {
+  const isAdd = props.kind === "add";
+  const answer = isAdd ? props.start + props.amount : props.high - props.low;
+  const panels: G2CandidateLinePanel[] = isAdd
+    ? [
+        {
+          caption: `start ${props.start} • +10 • +10`,
+          marks: [props.start, props.start + 10, answer],
+          jumps: [
+            { from: props.start, to: props.start + 10, label: "+10" },
+            { from: props.start + 10, to: answer, label: "+10" },
+          ],
+        },
+        {
+          caption: `start ${props.amount} • +${props.start}`,
+          marks: [props.amount, answer],
+          jumps: [{ from: props.amount, to: answer, label: `+${props.start}` }],
+        },
+        {
+          caption: `start ${props.start} • −10 • −10`,
+          marks: [props.start - props.amount, props.start - 10, props.start],
+          jumps: [
+            { from: props.start, to: props.start - 10, label: "−10" },
+            { from: props.start - 10, to: props.start - props.amount, label: "−10" },
+          ],
+        },
+        {
+          caption: "two marks • no jumps",
+          marks: [props.amount, props.start],
+        },
+      ]
+    : [
+        {
+          caption: "count the gap",
+          marks: [props.low, props.high],
+          gap: [props.low, props.high],
+        },
+        {
+          caption: `start ${props.high} • +${props.low}`,
+          marks: [props.high, props.high + props.low],
+          jumps: [{ from: props.high, to: props.high + props.low, label: `+${props.low}` }],
+        },
+        {
+          caption: "one mark only",
+          marks: [answer],
+        },
+        {
+          caption: "add the endpoint labels",
+          marks: [props.low, props.high],
+          note: `${props.low} + ${props.high}`,
+        },
+      ];
+  const maxValue = isAdd ? answer : props.high + props.low;
+  const panelWidth = 198;
+  const panelHeight = 116;
+  const lineWidth = 150;
+  const lineY = 70;
+  const xFor = (panelX: number, value: number) => panelX + 28 + (value / maxValue) * lineWidth;
+  const letters = ["A", "B", "C", "D"];
+  const title = isAdd
+    ? `Four number-line drawings labeled A through D. Drawing A starts at ${props.start} and makes two forward hops of ten to ${answer}. Drawing B starts at ${props.amount} and makes one forward hop of ${props.start} to ${answer}. Drawing C starts at ${props.start} and makes two backward hops of ten to ${props.start - props.amount}. Drawing D marks ${props.amount} and ${props.start} with no jumps.`
+    : `Four number-line drawings labeled A through D. Drawing A marks ${props.low} and ${props.high} and highlights the gap between them. Drawing B starts at ${props.high} and jumps forward ${props.low}. Drawing C shows only one mark at ${answer}. Drawing D marks ${props.low} and ${props.high} but adds the endpoint labels.`;
+
+  return (
+    <svg viewBox="0 0 420 250" role="img" className="mx-auto w-full max-w-lg">
+      <title>{title}</title>
+      {panels.map((panel, index) => {
+        const panelX = index % 2 === 0 ? 8 : 214;
+        const panelY = index < 2 ? 7 : 127;
+        const y = panelY + lineY;
+        const marks = [...new Set(panel.marks)].sort((a, b) => a - b);
+        return (
+          <g key={letters[index]}>
+            <rect x={panelX} y={panelY} width={panelWidth} height={panelHeight} rx={12} fill="white" stroke={INK} strokeWidth={1.2} opacity={0.98} />
+            <circle cx={panelX + 17} cy={panelY + 17} r={11} fill={INK} />
+            <text x={panelX + 17} y={panelY + 21} textAnchor="middle" fontSize={11} fontWeight={900} fill="white">
+              {letters[index]}
+            </text>
+            {panel.note && (
+              <text x={panelX + 112} y={panelY + 28} textAnchor="middle" fontSize={11} fontWeight={900} fill={BERRY}>
+                {panel.note}
+              </text>
+            )}
+            {panel.gap && (
+              <line
+                x1={xFor(panelX, panel.gap[0])}
+                y1={y}
+                x2={xFor(panelX, panel.gap[1])}
+                y2={y}
+                stroke={LEAF}
+                strokeWidth={8}
+                strokeLinecap="round"
+                opacity={0.28}
+              />
+            )}
+            <line x1={panelX + 28} y1={y} x2={panelX + 178} y2={y} stroke={INK} strokeWidth={1.8} />
+            <line x1={panelX + 28} y1={y - 4} x2={panelX + 28} y2={y + 4} stroke={INK} strokeWidth={1.2} />
+            <text x={panelX + 28} y={y + 17} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+              0
+            </text>
+            {marks.map((value) => (
+              <g key={value}>
+                <line x1={xFor(panelX, value)} y1={y - 6} x2={xFor(panelX, value)} y2={y + 6} stroke={INK} strokeWidth={1.6} />
+                <circle cx={xFor(panelX, value)} cy={y} r={3.4} fill={panel.gap ? LEAF : SKY} />
+                <text x={xFor(panelX, value)} y={y + 18} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+                  {value}
+                </text>
+              </g>
+            ))}
+            {panel.jumps?.map((jump, jumpIndex) => {
+              const fromX = xFor(panelX, jump.from);
+              const toX = xFor(panelX, jump.to);
+              const direction = toX > fromX ? 1 : -1;
+              const midX = (fromX + toX) / 2;
+              const arcTop = panelY + 38 - jumpIndex * 2;
+              return (
+                <g key={`${jump.from}-${jump.to}`}>
+                  <path d={`M ${fromX} ${y - 5} Q ${midX} ${arcTop} ${toX} ${y - 5}`} fill="none" stroke={TANGERINE} strokeWidth={2.2} strokeLinecap="round" />
+                  <polygon
+                    points={`${toX},${y - 5} ${toX - direction * 7},${y - 9} ${toX - direction * 7},${y - 1}`}
+                    fill={TANGERINE}
+                  />
+                  <text x={midX} y={arcTop - 3} textAnchor="middle" fontSize={10} fontWeight={900} fill={TANGERINE}>
+                    {jump.label}
+                  </text>
+                </g>
+              );
+            })}
+            <text x={panelX + panelWidth / 2} y={panelY + 108} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+              {panel.caption}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function G2Add33Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={33} amount={20} />;
+}
+function G2Add44Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={44} amount={20} />;
+}
+function G2Add45Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={45} amount={20} />;
+}
+function G2Gap54Minus34Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={54} low={34} />;
+}
+function G2Gap53Minus33Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={53} low={33} />;
+}
+function G2Gap43Minus33Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={43} low={33} />;
+}
+
 function NumberLineJumps() {
   const ox = 24, oy = 78, u = 22; // 0..12 across
   const X = (n: number) => ox + n * u;
@@ -13299,6 +13480,50 @@ function KcByTens() {
       <title>Counting by tens: groups of ten make ten, twenty, thirty, forty.</title>
       {[10,20,30,40].map((n,i)=>(<g key={i}><rect x={16+i*62} y={20} width={48} height={30} rx={6} fill={SKY} opacity={0.2} stroke={SKY} strokeWidth={2} /><text x={40+i*62} y={41} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>{n}</text></g>))}
       <text x={130} y={78} textAnchor="middle" fontSize={12} fontWeight={700} fill={TANGERINE}>10, 20, 30, 40</text>
+    </svg>
+  );
+}
+
+/** Kindergarten skip-counting as ten equal spatial moves, not a row of numeral cards. */
+function KcTenHopsTo100() {
+  const X = (n: number) => 20 + n * 2.76;
+  const landings = Array.from({ length: 11 }, (_, index) => index * 10);
+  return (
+    <svg viewBox="0 0 320 122" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        A number line from zero to one hundred with ten equal hops of ten. The hops land on ten,
+        twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, then one hundred.
+      </title>
+      <text x={160} y={14} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>
+        every giant hop adds 10
+      </text>
+      <line x1={X(0) - 7} y1={82} x2={X(100) + 7} y2={82} stroke={INK} strokeWidth={2} />
+      {landings.map((n) => (
+        <g key={n}>
+          <line x1={X(n)} y1={76} x2={X(n)} y2={88} stroke={INK} strokeWidth={n === 0 || n === 100 ? 2.5 : 1.5} />
+          <circle cx={X(n)} cy={82} r={n === 0 || n === 100 ? 5 : 3.5} fill={n === 100 ? LEAF : n === 0 ? INK : SKY} />
+          <text x={X(n)} y={104} textAnchor="middle" fontSize={10} fontWeight={n === 0 || n === 100 ? 900 : 700} fill={INK}>
+            {n}
+          </text>
+        </g>
+      ))}
+      {landings.slice(0, -1).map((from, index) => {
+        const to = from + 10;
+        const lift = index % 2 === 0 ? 34 : 42;
+        return (
+          <path
+            key={from}
+            d={`M ${X(from) + 3} 76 Q ${(X(from) + X(to)) / 2} ${lift} ${X(to) - 3} 76`}
+            fill="none"
+            stroke={index % 2 === 0 ? TANGERINE : SKY}
+            strokeWidth={2.2}
+            strokeLinecap="round"
+          />
+        );
+      })}
+      <text x={160} y={119} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>
+        ten ten-hops reach 100
+      </text>
     </svg>
   );
 }
@@ -25105,6 +25330,45 @@ function IaStripToDisc() {
   );
 }
 
+/** Area between crossing curves: the subtraction order changes exactly at the crossing. */
+function IaTopBottomSwap() {
+  return (
+    <svg viewBox="0 0 300 178" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        Two curves cross in the middle of a region. On the left the blue curve is above the orange
+        curve, while on the right the orange curve is above the blue curve. A dashed line through
+        the crossing marks where the integral must split so each strip remains top minus bottom.
+      </title>
+      <text x={150} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>
+        when the curves cross, TOP and BOTTOM swap
+      </text>
+      <path d="M 24 42 Q 87 63 150 88 Q 87 113 24 136 Z" fill={SKY} fillOpacity={0.12} />
+      <path d="M 150 88 Q 213 113 276 136 L 276 42 Q 213 63 150 88 Z" fill={TANGERINE} fillOpacity={0.12} />
+      <path d="M 24 42 Q 150 88 276 136" fill="none" stroke={SKY} strokeWidth={3} />
+      <path d="M 24 136 Q 150 88 276 42" fill="none" stroke={TANGERINE} strokeWidth={3} />
+      <line x1={150} y1={25} x2={150} y2={148} stroke={BERRY} strokeWidth={1.6} strokeDasharray="5 4" />
+      <circle cx={150} cy={88} r={4.5} fill={BERRY} />
+      <text x={150} y={165} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>
+        split at the crossing
+      </text>
+      <line x1={77} y1={61} x2={77} y2={117} stroke={LEAF} strokeWidth={5} strokeLinecap="round" />
+      <line x1={223} y1={61} x2={223} y2={117} stroke={LEAF} strokeWidth={5} strokeLinecap="round" />
+      <text x={75} y={31} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>
+        blue − orange
+      </text>
+      <text x={225} y={31} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>
+        orange − blue
+      </text>
+      <text x={75} y={153} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+        top − bottom
+      </text>
+      <text x={225} y={153} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+        top − bottom
+      </text>
+    </svg>
+  );
+}
+
 function PcPolarWedge() {
   const CX = 92, CY = 128, R = 82;
   const t0 = 0.62, t1 = 0.92;
@@ -27830,6 +28094,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "ca-mvt-parallel": CaMvtParallel,
   "dc-speeding-up-signs": DcSpeedingUpSigns,
   "ia-strip-to-disc": IaStripToDisc,
+  "ia-top-bottom-swap": IaTopBottomSwap,
   "pc-polar-wedge": PcPolarWedge,
   "sc-taylor-hug-peel": ScTaylorHugPeel,
   "de-slope-field-threads": DeSlopeFieldThreads,
@@ -28885,6 +29150,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "kc-teen-14": KcTeen14,
   "kc-to-20": KcTo20,
   "kc-by-tens": KcByTens,
+  "kc-ten-hops-to-100": KcTenHopsTo100,
   "kc-add-on": KcAddOn,
   "kc-take-away": KcTakeAway,
   "kc-break-apart": KcBreakApart,
@@ -28945,6 +29211,11 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "fna-cubic-behavior": FnaCubicBehavior,
   "fna-piecewise": FnaPiecewise,
   "ten-frame-make-ten": TenFrameMakeTen,
+  "koa-join-two-groups": KoaJoinTwoGroups,
+  "koa-add-with-fingers": KoaAddWithFingers,
+  "koa-add-with-drawing": KoaAddWithDrawing,
+  "koa-act-out-a-join": KoaActOutAJoin,
+  "koa-addition-sentence": KoaAdditionSentence,
   "count-on-hops": CountOnHops,
   "count-on-small": CountOnSmall,
   "bigger-first": BiggerFirst,
@@ -29361,6 +29632,12 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "frac-compare-same-numer": FracCompareSameNumer,
   "frac-compare-wholes": FracCompareWholes,
   "angle-types": AngleTypes,
+  "g2l-choice-add-33-20": G2Add33Plus20Candidates,
+  "g2l-choice-add-44-20": G2Add44Plus20Candidates,
+  "g2l-choice-add-45-20": G2Add45Plus20Candidates,
+  "g2l-choice-gap-54-34": G2Gap54Minus34Candidates,
+  "g2l-choice-gap-53-33": G2Gap53Minus33Candidates,
+  "g2l-choice-gap-43-33": G2Gap43Minus33Candidates,
   "number-line-jumps": NumberLineJumps,
   "place-value-ladder": PlaceValueLadder,
   "times-as-many": TimesAsMany,

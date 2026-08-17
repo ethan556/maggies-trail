@@ -35,7 +35,7 @@ import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
 import { MathDisplay, MathProse } from "@/components/math/MathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
-import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
+import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleMeasurementText, scaledCircleScaleUnitSpoken, scaledCircleScaleUnitText, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyChoiceEvidence, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
   rotationLabMapsOntoSelf,
   numericPreviewParts,
@@ -1695,16 +1695,44 @@ function TreeDiagramW({ spec, value, onChange, disabled, tone }: WProps<TTreeDia
 
 /* ---------------- ScaledCircleLab (plan scale ↔ real radius ↔ circle formula) ---------------- */
 
-function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TScaledCircleLab>) {
+function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TScaledCircleLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const correct = spec.choices.find((choice) => scaledCircleChoiceCorrect(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const target = scaledCircleTarget(spec);
+  const showTarget = tone === "info";
+  const hasScaleChain = spec.drawingRadius !== undefined && spec.scale !== undefined;
+  const hideRealRadius = !showTarget && (hasScaleChain || spec.ask === "realRadius");
   const askLabel = spec.ask === "realRadius" ? "real radius" : spec.ask === "circumferenceCoef" ? "coefficient in C = ?π" : "coefficient in A = ?π";
-  const formula = spec.ask === "realRadius"
-    ? `${spec.drawingRadius} × ${spec.scale} = ${spec.realRadius}`
-    : spec.ask === "circumferenceCoef"
-      ? `2 × ${spec.realRadius} = ${target}`
-      : `${spec.realRadius} × ${spec.realRadius} = ${target}`;
+  const drawingRadiusText = spec.drawingRadius === undefined ? "" : scaledCircleMeasurementText(spec.drawingRadius, spec.drawingUnit);
+  const drawingRadiusSpoken = spec.drawingRadius === undefined ? "" : scaledCircleMeasurementSpoken(spec.drawingRadius, spec.drawingUnit);
+  const scaleUnitText = scaledCircleScaleUnitText(spec.drawingUnit, spec.realUnit);
+  const scaleUnitSpoken = scaledCircleScaleUnitSpoken(spec.drawingUnit, spec.realUnit, spec.scale);
+  const answerPower = spec.ask === "areaCoef" ? 2 : 1;
+  const hiddenAnswerText = scaledCircleMeasurementText("?", spec.realUnit, answerPower);
+  const targetText = scaledCircleMeasurementText(target, spec.realUnit, answerPower);
+  const scaleFormula = hasScaleChain
+    ? `${drawingRadiusText} × ${spec.scale}${scaleUnitText} = ${showTarget ? scaledCircleMeasurementText(spec.realRadius, spec.realUnit) : scaledCircleMeasurementText("?", spec.realUnit)}`
+    : null;
+  const radiusTerm = hasScaleChain && !showTarget ? "real radius" : scaledCircleMeasurementText(spec.realRadius, spec.realUnit);
+  const circleFormula = spec.ask === "circumferenceCoef"
+    ? `2 × ${radiusTerm} = ${showTarget ? targetText : hiddenAnswerText}`
+    : spec.ask === "areaCoef"
+      ? `${radiusTerm} × ${radiusTerm} = ${showTarget ? targetText : hiddenAnswerText}`
+      : scaleFormula ?? `drawing radius × scale = ${showTarget ? target : "?"}`;
+  const realRadiusText = hideRealRadius
+    ? scaledCircleMeasurementText("?", spec.realUnit)
+    : scaledCircleMeasurementText(spec.realRadius, spec.realUnit);
+  const realCircleDescription = hideRealRadius
+    ? hasScaleChain
+      ? spec.ask === "realRadius"
+        ? "Real circle. Its radius is the value to calculate from the drawing radius and scale."
+        : `Real circle. Calculate its radius from the drawing radius and scale before finding the ${askLabel}.`
+      : "Real circle. Its radius is the value to calculate."
+    : `Real circle radius ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}.`;
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
@@ -1713,38 +1741,42 @@ function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WP
         {spec.drawingRadius !== undefined && spec.scale !== undefined ? <>
           <section className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center">
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Drawing</p>
-            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Drawing circle radius ${spec.drawingRadius} centimeters.`}>
+            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Drawing circle radius ${drawingRadiusSpoken}.`}>
               <circle cx="70" cy="55" r="38" fill={PALETTE.sky} fillOpacity={0.12} stroke={PALETTE.sky} strokeWidth={3}/>
               <line x1="70" y1="55" x2="108" y2="55" stroke={PALETTE.sky} strokeWidth={3}/>
               <circle cx="70" cy="55" r="4" fill={PALETTE.ink}/>
-              <text x="89" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.drawingRadius} cm</text>
+              <text x="89" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{drawingRadiusText}</text>
             </svg>
           </section>
-          <div className="rounded-full border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center font-black text-tangerine-ink" aria-label={`multiply by scale ${spec.scale}`}>× {spec.scale}<span aria-hidden="true"> →</span></div>
+          <div className="rounded-full border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center font-black text-tangerine-ink" aria-label={`multiply by scale ${spec.scale}${scaleUnitSpoken}`}>× {spec.scale}{scaleUnitText}<span aria-hidden="true"> →</span></div>
           <section className="rounded-xl border border-leaf/30 bg-leaf/5 p-3 text-center">
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Real circle</p>
-            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Real circle radius ${spec.realRadius} meters.`}>
+            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={realCircleDescription}>
               <circle cx="70" cy="55" r="43" fill={PALETTE.leaf} fillOpacity={0.12} stroke={PALETTE.leaf} strokeWidth={3}/>
               <line x1="70" y1="55" x2="113" y2="55" stroke={PALETTE.leaf} strokeWidth={3}/>
               <circle cx="70" cy="55" r="4" fill={PALETTE.ink}/>
-              <text x="91" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.realRadius} m</text>
+              <text x="91" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{realRadiusText}</text>
             </svg>
           </section>
         </> : <section className="sm:col-span-3 rounded-xl border border-leaf/30 bg-leaf/5 p-3 text-center">
-          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Given real circle</p>
-          <svg viewBox="0 0 170 110" className="mx-auto w-full max-w-[180px]" role="img" aria-label={`Circle radius ${spec.realRadius} meters.`}>
+          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">{spec.ask === "realRadius" ? "Real circle" : "Given real circle"}</p>
+          <svg viewBox="0 0 170 110" className="mx-auto w-full max-w-[180px]" role="img" aria-label={spec.ask === "realRadius" ? realCircleDescription : `Circle radius ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}.`}>
             <circle cx="85" cy="55" r="43" fill={PALETTE.leaf} fillOpacity={0.12} stroke={PALETTE.leaf} strokeWidth={3}/>
             <line x1="85" y1="55" x2="128" y2="55" stroke={PALETTE.leaf} strokeWidth={3}/>
-            <circle cx="85" cy="55" r="4" fill={PALETTE.ink}/><text x="106" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.realRadius} m</text>
+            <circle cx="85" cy="55" r="4" fill={PALETTE.ink}/><text x="106" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{realRadiusText}</text>
           </svg>
         </section>}
       </div>
-      <div className="rounded-xl border-2 border-ink/10 bg-paper p-3 text-center">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">{askLabel}</p>
-        <p className="mt-1 text-xl font-black tabular-nums text-ink">{formula}</p>
+      <div className="rounded-xl border-2 border-ink/10 bg-paper p-3 text-center" data-testid="scl-derivation" data-result-visible={showTarget ? "true" : "false"}>
+        {hasScaleChain && spec.ask !== "realRadius" && <>
+          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">First, find the real radius</p>
+          <p className="mt-1 text-xl font-black tabular-nums text-ink">{scaleFormula}</p>
+        </>}
+        <p className={`${hasScaleChain && spec.ask !== "realRadius" ? "mt-3 " : ""}text-xs font-extrabold uppercase tracking-wide text-ink/60`}>{askLabel}</p>
+        <p className="mt-1 text-xl font-black tabular-nums text-ink">{circleFormula}</p>
       </div>
-      <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "circle-claim", dir: scaledCircleChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, ask: spec.ask } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
+      <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the circle claim">
+        {orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "circle-claim", dir: "neutral", state: { choice: choice.id, ask: spec.ask } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
       </div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No circle claim selected."}</p>
       {tone === "info" && selected && !scaledCircleChoiceCorrect(spec, selected) && <GhostChip testid="scl-ghost">correct claim: {correct.label}</GhostChip>}
@@ -1754,7 +1786,7 @@ function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WP
 
 /* ---------------- TriangleClosureLab (hinge span ↔ strict triangle inequality) ---------------- */
 
-function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TTriangleClosureLab>) {
+function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TTriangleClosureLab>) {
   const state = value && typeof value === "object" ? value as { angle?: number; moves?: number; choice?: string } : {};
   const angle = typeof state.angle === "number" ? state.angle : spec.angleStart;
   const moves = state.moves ?? 0;
@@ -1764,14 +1796,18 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
   const span = triangleClosureSpan(a, b, angle);
   const forms = triangleClosureForms(spec.sides);
   const targetAngle = triangleClosureTargetAngle(spec.sides);
+  const settled = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const closesHere = forms && Math.abs(span - c) < 0.35;
   const flatHere = !forms && Math.abs(a + b - c) < 1e-9 && angle === 180;
   const cx=145, cy=130, scale=Math.min(75/Math.max(a,b,c), 9);
   const ax=cx-a*scale, ay=cy;
   const rad=angle*Math.PI/180, bx=cx+b*scale*Math.cos(rad), by=cy-b*scale*Math.sin(rad);
   const move = (next:number) => {
-    const before=Math.abs(span-c), after=Math.abs(triangleClosureSpan(a,b,next)-c);
-    onEvent?.({ control: "hinge-angle", dir: after < before ? "toward" : after > before ? "away" : "neutral", state:{angle:next,moves:moves+1} });
+    onEvent?.({ control: "hinge-angle", dir: "neutral", state:{angle:next,moves:moves+1} });
     onChange({ angle: next, moves: moves+1, choice: state.choice });
   };
   const optionClass = (active:boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
@@ -1790,7 +1826,7 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
       <svg ref={svgRef} viewBox="0 0 290 165" className="mx-auto w-full max-w-md" role="img" aria-label={`Beams ${a}, ${b}, and ${c}. Frame currently opened to ${angle} degrees. Endpoint span ${span.toFixed(1)}.`}>
         <line x1={ax} y1={ay} x2={cx} y2={cy} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
         <line x1={cx} y1={cy} x2={bx} y2={by} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
-        <line x1={ax} y1={ay} x2={bx} y2={by} stroke={closesHere ? PALETTE.leaf : flatHere ? PALETTE.berry : PALETTE.tangerine} strokeWidth={4} strokeDasharray="7 5"/>
+        <line x1={ax} y1={ay} x2={bx} y2={by} stroke={settled ? (closesHere ? PALETTE.leaf : flatHere ? PALETTE.berry : PALETTE.tangerine) : PALETTE.tangerine} strokeWidth={4} strokeDasharray="7 5"/>
         <circle cx={cx} cy={cy} r={7} fill={PALETTE.ink}/>
         <text x={(ax+cx)/2} y={cy+18} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{a}</text>
         <text x={(cx+bx)/2+6} y={(cy+by)/2-5} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{b}</text>
@@ -1806,20 +1842,20 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
       <div className="grid gap-1 text-center">
         <p className="text-sm font-bold text-ink/60">endpoint span</p>
         <p className="text-2xl font-black tabular-nums">{span.toFixed(1)} <span className="text-base text-ink/55">vs {c}</span></p>
-        <p className={`font-extrabold ${closesHere ? "text-leaf-ink" : flatHere ? "text-berry" : "text-tangerine-ink"}`}>{closesHere ? "✓ closes with area" : flatHere ? "✕ flat line — not a triangle" : span < c ? "gap remains" : "span passes the target"}</p>
+        <p className={`font-extrabold ${settled ? (closesHere ? "text-leaf-ink" : flatHere ? "text-berry" : "text-tangerine-ink") : "text-ink/70"}`}>{settled && closesHere ? "✓ closes with area" : settled && flatHere ? "✕ flat line — not a triangle" : span < c ? "gap remains" : span > c ? "span passes the comparison beam" : "endpoints meet"}</p>
       </div>
     </div>
     <label className="grid gap-1 text-sm font-bold text-ink/70"><span>hinge angle: <span className="tabular-nums text-ink">{angle}°</span> · moves {moves}/{spec.requiredMoves}</span><input type="range" min={0} max={180} step={spec.angleStep} value={angle} disabled={disabled} aria-label="hinge angle" aria-valuetext={`${angle} degrees, endpoint span ${span.toFixed(1)}`} onChange={(e)=>move(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <div className="grid gap-2 sm:grid-cols-2">{spec.choices.map(choice=><button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id===choice.id)} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"frame-claim",dir:triangleClosureChoiceCorrect(spec,choice)?"toward":"away",state:{choice:choice.id,angle,moves}});onChange({angle,moves,choice:choice.id});}}><MathProse text={choice.label} /></button>)}</div>
+    <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map(choice=><button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id===choice.id)} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"frame-claim",dir:"neutral",state:{choice:choice.id,angle,moves}});onChange({angle,moves,choice:choice.id});}}><MathProse text={choice.label} /></button>)}</div>
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No frame claim selected."}</p>
-    {targetAngle !== null && <p className="text-center text-xs font-bold text-ink/55">A non-flat closure exists near {targetAngle.toFixed(1)}°.</p>}
+    {settled && targetAngle !== null && <p className="text-center text-xs font-bold text-ink/55">A non-flat closure exists near {targetAngle.toFixed(1)}°.</p>}
     {tone === "info" && selected && !triangleClosureChoiceCorrect(spec,selected) && <GhostChip testid="tcl-ghost">correct claim: {correct.label}</GhostChip>}
   </div>;
 }
 
 /* ---------------- CompoundEventLab (stage product ↔ sample space ↔ exact claim) ---------------- */
 
-function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TCompoundEventLab>) {
+function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TCompoundEventLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const total = compoundEventTotal(spec);
   const favourable = compoundEventFavourable(spec);
@@ -1836,6 +1872,14 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
     return rows;
   }, [spec]);
   const correct = spec.choices.find((choice) => compoundEventChoiceCorrect(spec, choice))!;
+  // Stage outcomes and sample-space cells are the givens. Their counts, product and exact
+  // probability are derived answers, so keep those values out of visual and spoken pre-check
+  // surfaces. A retry remains a real second attempt; a correct or revealed answer may explain it.
+  const showDerived = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   const probabilityText = `${favFactors.join(" × ")} / ${factors.join(" × ")} = ${favourable}/${total}`;
   return (
@@ -1858,7 +1902,14 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
         </div>
         <div className="rounded-xl border border-ink/10 bg-paper p-2">
           <p className="text-sm font-extrabold text-ink/70">Complete ordered sample space</p>
-          <div className="mt-2 grid gap-1" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${total > 48 ? 34 : 48}px, 1fr))` }} role="img" aria-label={`${total} ordered outcomes${spec.mode === "probability" ? `, ${favourable} favourable` : ""}.`}>
+          <div
+            className="mt-2 grid gap-1"
+            style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${total > 48 ? 34 : 48}px, 1fr))` }}
+            role="img"
+            aria-label={showDerived
+              ? `${total} ordered outcomes${spec.mode === "probability" ? `, ${favourable} favourable` : ""}.`
+              : `Ordered sample space. ${spec.mode === "probability" ? "Favourable combinations are marked for you to count." : "Count the combinations to find its size."}`}
+          >
             {combinations.map((combo, index) => (
               <span key={index} className={`flex min-h-9 items-center justify-center rounded-md border px-1 text-center text-[10px] font-extrabold sm:text-xs ${combo.favourable && spec.mode === "probability" ? "border-leaf bg-leaf/15 text-leaf-ink" : "border-ink/15 bg-white text-ink/65"}`}>
                 <span aria-hidden="true" className="mr-1">{combo.favourable && spec.mode === "probability" ? "✓" : "○"}</span>{combo.labels.join("·")}
@@ -1866,21 +1917,19 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
             ))}
           </div>
         </div>
-        {/* S237 NOTE — NOT CHANGED, needs a curriculum ruling. This panel prints the graded
-            answer during active work: count mode shows "6 x 5 = 30" beside a prompt asking "How
-            many total outfits?" with 30 among the choices (sp-04-03). Gating it behind
-            tone === "info" was tried and REVERTED, because two existing gates
-            (widgets.compoundEvent.s133.test.tsx) deliberately pin this readout as visible, and
-            weakening them to fit is exactly what the closure rules forbid. Tracked in
-            ANSWER_ON_SCREEN_AUDIT_S237.md. */}
-        <div className="grid gap-1 rounded-xl border-2 border-ink/10 bg-white p-3 text-center">
+        <div className="grid gap-1 rounded-xl border-2 border-ink/10 bg-white p-3 text-center" data-testid="cel-derived-readout" data-revealed={showDerived || undefined}>
           <p className="text-sm font-bold text-ink/60">Sample-space size</p>
-          <p className="text-xl font-black tabular-nums text-ink">{factors.join(" × ")} = {total}</p>
-          {spec.mode === "probability" && <><p className="mt-1 text-sm font-bold text-ink/60">Favourable outcomes / all outcomes</p><p className="text-xl font-black tabular-nums text-leaf-ink">{probabilityText}</p></>}
+          <p className="text-xl font-black tabular-nums text-ink">{factors.join(" × ")} = {showDerived ? total : "?"}</p>
+          {spec.mode === "probability" && <>
+            <p className="mt-1 text-sm font-bold text-ink/60">Favourable outcomes / all outcomes</p>
+            <p className={`text-xl font-black tabular-nums ${showDerived ? "text-leaf-ink" : "text-ink/70"}`}>
+              {showDerived ? probabilityText : "Count the marked combinations, then compare with all combinations."}
+            </p>
+          </>}
         </div>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "claim", dir: compoundEventChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, mode: spec.mode } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
+        {orderedChoices.map((choice) => <button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "claim", dir: "neutral", state: { choice: choice.id, mode: spec.mode } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
       </div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No claim selected."}</p>
       {tone === "info" && selected && !compoundEventChoiceCorrect(spec, selected) && <GhostChip testid="cel-ghost">correct claim: {correct.label}</GhostChip>}
@@ -4369,7 +4418,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
   const termColor = (spec.task ?? "").startsWith("geometric") ? "border-tangerine/50 bg-tangerine/10 text-tangerine-ink" : "border-sky/45 bg-sky/10 text-sky-ink";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label={`Sequence workbench. ${truth.terms.length} visible terms. ${explored.length} exact states inspected.`}>
+    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label="Sequence workbench for inspecting the term pattern and exact states.">
       {truth.terms.length > 0 && <div className="grid gap-2">
         <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">term structure</p>
         <div className="flex flex-wrap items-center gap-2" role="list" aria-label="sequence terms">
@@ -6836,7 +6885,7 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
   );
 }
 
-function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSignedFractionLab>) {
+function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TSignedFractionLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const truth = signedFractionTruth(spec);
   const correct = spec.choices.find((choice) => signedFractionChoiceCorrect(spec, choice))!;
@@ -6850,11 +6899,16 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
     </section>
   );
   const usesKeptDivisor = selected?.path === "keptDivisor";
-  const rightUsed = spec.operation === "divide" && !usesKeptDivisor ? { ...spec.right, num: spec.right.den, den: spec.right.num } : spec.right;
+  const rightUsed = spec.operation === "divide" ? { ...spec.right, num: spec.right.den, den: spec.right.num } : spec.right;
   const numeratorWork = `${spec.left.num} × ${rightUsed.num}`;
   const denominatorWork = `${spec.left.den} × ${rightUsed.den}`;
   const expectedSign = truth.sign < 0 ? "negative" : "positive";
   const chosenSign = selected ? (selected.sign < 0 ? "negative" : "positive") : "not chosen";
+  const settled = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
@@ -6868,32 +6922,32 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
         <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="font-extrabold">Sign channel</p>
-            <p className="text-sm font-bold">{spec.left.sign === spec.right.sign ? "same signs" : "different signs"} → <span className="text-leaf-ink">{expectedSign}</span></p>
+            <p className="text-sm font-bold">{spec.left.sign === spec.right.sign ? "same signs" : "different signs"} → <span className={settled ? "text-leaf-ink" : "text-ink/60"}>{settled ? expectedSign : "work out the result sign"}</span></p>
           </div>
-          {selected && <p className={`rounded-lg border-2 px-3 py-2 text-sm font-bold ${chosenSign === expectedSign ? "border-leaf bg-leaf/10 text-leaf-ink" : "border-berry bg-berry/10 text-berry-ink"}`}>Your claim uses a {chosenSign} sign.</p>}
+          {selected && <p className={`rounded-lg border-2 px-3 py-2 text-sm font-bold ${settled ? (chosenSign === expectedSign ? "border-leaf bg-leaf/10 text-leaf-ink" : "border-berry bg-berry/10 text-berry-ink") : "border-ink/15 bg-white text-ink/70"}`}>Your claim uses a {chosenSign} sign.</p>}
         </section>
         {spec.operation === "divide" && (
-          <section className={`rounded-xl border-2 p-3 ${usesKeptDivisor ? "border-berry bg-berry/10" : "border-leaf/50 bg-leaf/10"}`}>
+          <section className={`rounded-xl border-2 p-3 ${settled && usesKeptDivisor ? "border-berry bg-berry/10" : settled ? "border-leaf/50 bg-leaf/10" : "border-ink/15 bg-paper"}`}>
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Division transform</p>
-            <p className="mt-1 text-lg font-black tabular-nums">{frac(spec.right)} <span aria-hidden="true">→</span> {usesKeptDivisor ? <span className="text-berry-ink">kept unchanged</span> : <span className="text-leaf-ink">reciprocal {frac({ ...spec.right, num: spec.right.den, den: spec.right.num })}</span>}</p>
+            <p className="mt-1 text-lg font-black tabular-nums">{frac(spec.right)} <span aria-hidden="true">→</span> <span className={settled ? "text-leaf-ink" : "text-ink"}>reciprocal {frac({ ...spec.right, num: spec.right.den, den: spec.right.num })}</span></p>
           </section>
         )}
-        <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3" role="img" aria-label={`Numerators ${numeratorWork}; denominators ${denominatorWork}; expected ${expectedSign} result. ${selected ? `Selected ${selected.label}.` : "No claim selected."}`}>
+        <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3" role="img" aria-label={`Numerators ${numeratorWork}; denominators ${denominatorWork}. ${settled ? `The result sign is ${expectedSign}. ` : "Work out the result sign. "}${selected ? `Selected ${selected.label}.` : "No claim selected."}`}>
           <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Magnitude channel</p>
           <div className="mx-auto grid min-w-44 text-center text-xl font-black tabular-nums">
             <span className="border-b-2 border-ink px-3 pb-1">{numeratorWork}</span>
             <span className="px-3 pt-1">{denominatorWork}</span>
           </div>
-          {selected?.path === "unreduced" && <p className="rounded-lg border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center text-sm font-bold text-tangerine-ink">Equivalent magnitude, but not lowest terms: {selected.label} → {correct.label}</p>}
-          {selected?.path === "magnitudeError" && <p className="rounded-lg border-2 border-dashed border-berry bg-berry/10 px-3 py-2 text-center text-sm font-bold text-berry-ink">This magnitude does not follow the shown numerator/denominator products.</p>}
+          {settled && selected?.path === "unreduced" && <p className="rounded-lg border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center text-sm font-bold text-tangerine-ink">Equivalent magnitude, but not lowest terms: {selected.label} → {correct.label}</p>}
+          {settled && selected?.path === "magnitudeError" && <p className="rounded-lg border-2 border-dashed border-berry bg-berry/10 px-3 py-2 text-center text-sm font-bold text-berry-ink">This magnitude does not follow the shown numerator/denominator products.</p>}
         </section>
         <p className="rounded-xl border border-sky/25 bg-sky/5 p-3 text-center text-xl font-black tabular-nums" aria-live="polite">Your exact claim: {selected?.label ?? "choose below"}</p>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => (
-          <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
+        {orderedChoices.map((choice) => (
+          <button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
             onClick={() => {
-              onEvent?.({ control: "signed-fraction-claim", dir: signedFractionChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, path: choice.path, operation: spec.operation } });
+              onEvent?.({ control: "signed-fraction-claim", dir: "neutral", state: { choice: choice.id, path: choice.path, operation: spec.operation } });
               onChange(choice.id);
             }}><MathProse text={choice.label} /></button>
         ))}
@@ -7884,7 +7938,7 @@ function stInitFor(spec: TSlopeTriangle, run: number, rise: number): TriangleCan
   };
 }
 
-function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlopeTriangle>) {
+function SlopeTriangleW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSlopeTriangle>) {
   const v: STVal =
     value && typeof value === "object" && typeof (value as STVal).run === "number"
       ? (value as STVal)
@@ -7934,6 +7988,11 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
       if (!coalesced) gestureRun.current = { key: gestureKey, from: before };
     }
     stage(equationMorphPlan(tx), sentence);
+    onEvent?.({
+      control: "slope-triangle-legs",
+      dir: "neutral",
+      state: { run: leRatToNumber(after.run), rise: leRatToNumber(after.rise) }
+    });
     onChange({ run: leRatToNumber(after.run), rise: leRatToNumber(after.rise) });
   };
 
@@ -7944,6 +8003,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
     const state = graph.undo();
     if (!state) return;
     stage(reverse ?? (NO_MORPH as MorphPlan<TriangleTarget>), "Stepped back to the triangle before that move.");
+    onEvent?.({ control: "slope-triangle-undo", dir: "neutral", state: { run: leRatToNumber(state.canonical.run), rise: leRatToNumber(state.canonical.rise) } });
     onChange({ run: leRatToNumber(state.canonical.run), rise: leRatToNumber(state.canonical.rise) });
   };
 
@@ -8001,6 +8061,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   // The readout is the model's own naming of the state, including the two boundary states.
   const slopeText = slope.kind === "slope" ? slope.ratioText : slope.text;
   const hits = verdict.passes;
+  const settled = tone === "success" || tone === "info";
   const atStart = legValue.run === spec.runStart && legValue.rise === spec.riseStart;
 
   // S238 — NO TWO LABELS MAY OVERLAP, for any learner-reachable triangle. 25 of the
@@ -8078,7 +8139,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
     <div className="grid gap-3" ref={rootRef}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img"
-        aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}, and its line ${hits ? "passes through" : "misses"} B.`}>
+        aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}.${settled ? ` Its line ${hits ? "passes through" : "misses"} B.` : " Compare its tip with point B."}`}>
         {ticks.map((g) => (
           <g key={g}>
             <line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity={g === 0 ? 0.3 : 0.07} />
@@ -8129,8 +8190,8 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
       )}</svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         slope = rise {"÷"} run = {slopeText}
-        <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${hits ? "bg-leaf/15 text-leaf-ink" : "bg-ink/8 text-ink/70"}`}>
-          {hits ? "✓ passes through B" : "misses B"}
+        <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${settled && hits ? "bg-leaf/15 text-leaf-ink" : settled ? "bg-berry/10 text-berry-ink" : "bg-ink/8 text-ink/70"}`}>
+          {settled ? (hits ? "✓ passes through B" : "misses B") : "compare the tip with B"}
         </span>
       </p>
       {/* What the last move did, plus any clamp — visually hidden, so an authored lesson looks
@@ -8380,19 +8441,100 @@ function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPoint
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
 type GeometricConstraintState={revealed?:string[];numeric?:number|"";choiceId?:string};
-function GeometricConstraintDiagram({spec}: {spec:TGeometricConstraintLab}){
+function GeometricConstraintDiagram({spec,tone,revealed=[]}: {spec:TGeometricConstraintLab;tone?:StageTone;revealed?:readonly string[]}){
   const W=440,H=250;
-  if(spec.task==="coordinateProof"&&spec.coordinateProof){const m=spec.coordinateProof,points=m.points;const xs=points.map(p=>p.x),ys=points.map(p=>p.y),minX=Math.min(-1,...xs),maxX=Math.max(1,...xs),minY=Math.min(-1,...ys),maxY=Math.max(1,...ys),pad=30,sx=(x:number)=>pad+(x-minX)/(maxX-minX||1)*(W-2*pad),sy=(y:number)=>H-pad-(y-minY)/(maxY-minY||1)*(H-2*pad);const byId=new Map(points.map(p=>[p.id,p]));return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate proof model ${m.kind}. ${points.map(p=>`${p.label} at ${p.x}, ${p.y}`).join(". ")}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/><line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="2" opacity=".65"/><line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke={PALETTE.tangerine} strokeWidth="2" opacity=".65"/>{m.segments?.map(([aId,bId],index)=>{const a=byId.get(aId),b=byId.get(bId);return a&&b?<line key={`${aId}-${bId}`} x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={index%2?PALETTE.berry:PALETTE.leaf} strokeWidth="4" strokeDasharray={index%2?"8 5":undefined}/>:null})}{m.segment&&(()=>{const a=byId.get(m.segment.a),b=byId.get(m.segment.b);return a&&b?<line x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>:null})()}{["triangleCertificate","symmetricPlacement","boxAdvantage","shoelaceArea","radicalPerimeter"].includes(m.kind)&&points.length>=3&&<polygon points={points.map(p=>`${sx(p.x)},${sy(p.y)}`).join(" ")} fill={PALETTE.leaf} fillOpacity=".10" stroke={PALETTE.berry} strokeWidth="4"/>}{m.circle&&<circle cx={sx(m.circle.h)} cy={sy(m.circle.k)} r={Math.abs(sx(m.circle.h+m.circle.r)-sx(m.circle.h))} fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/>}{m.line&&<line x1={sx(minX)} y1={sy(m.line.m*minX+m.line.b)} x2={sx(maxX)} y2={sy(m.line.m*maxX+m.line.b)} stroke={PALETTE.berry} strokeWidth="4"/>}{points.map(p=><g key={p.id}><circle cx={sx(p.x)} cy={sy(p.y)} r="7" fill={PALETTE.tangerine} stroke="white" strokeWidth="2"/><text x={sx(p.x)+9} y={sy(p.y)-9} fontSize="12" fontWeight="900">{p.label} ({p.x}, {p.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.sky}>horizontal differences</text><text x="15" y="125" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.tangerine} transform="rotate(-90 15 125)">vertical differences</text></svg>}
-  if(spec.task==="perimeterMissing"&&spec.perimeter){const m=spec.perimeter;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`${m.shape} perimeter model with total ${m.perimeter}, known sides ${m.knownSides.join(", ")}, and ${m.unknownMultiplicity} equal unknown side${m.unknownMultiplicity===1?"":"s"}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{m.shape==="triangle"?<polygon points="220,30 70,210 370,210" fill="none" stroke="currentColor" strokeWidth="5"/>:<rect x="90" y="45" width="260" height="160" rx="5" fill="none" stroke="currentColor" strokeWidth="5"/>}<text x="220" y="235" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text>{m.knownSides.map((side,index)=><text key={index} x={m.shape==="triangle"?[135,305,220][index%3]:[220,365,220,75][index%4]} y={m.shape==="triangle"?[115,115,200][index%3]:[38,130,225,130][index%4]} textAnchor="middle" fontSize="15" fontWeight="900">{side}</text>)}<text x="220" y="130" textAnchor="middle" fontSize="24" fontWeight="900">?</text></svg>}
-  if(spec.task==="coordinateArea"&&spec.coordinate){const pieces=spec.coordinate.pieces;const minX=Math.min(...pieces.map(p=>p.x)),maxX=Math.max(...pieces.map(p=>p.x+p.width)),minY=Math.min(...pieces.map(p=>p.y)),maxY=Math.max(...pieces.map(p=>p.y+p.height));const sx=(x:number)=>35+(x-minX)/(maxX-minX||1)*360,sy=(y:number)=>215-(y-minY)/(maxY-minY||1)*175;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate area model with ${pieces.length} labelled piece${pieces.length===1?"":"s"}; attached pieces add and notches subtract.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{Array.from({length:7},(_,i)=><line key={`v${i}`} x1={35+i*60} y1="25" x2={35+i*60} y2="215" stroke="currentColor" opacity=".08"/>)}{Array.from({length:5},(_,i)=><line key={`h${i}`} x1="35" y1={35+i*45} x2="395" y2={35+i*45} stroke="currentColor" opacity=".08"/>)}{pieces.map(piece=>piece.kind==="rectangle"?<g key={piece.id}><rect x={sx(piece.x)} y={sy(piece.y+piece.height)} width={Math.abs(sx(piece.x+piece.width)-sx(piece.x))} height={Math.abs(sy(piece.y)-sy(piece.y+piece.height))} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={(sx(piece.x)+sx(piece.x+piece.width))/2} y={(sy(piece.y)+sy(piece.y+piece.height))/2} textAnchor="middle" fontSize="13" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>:<g key={piece.id}><polygon points={`${sx(piece.x)},${sy(piece.y)} ${sx(piece.x+piece.width)},${sy(piece.y)} ${sx(piece.x)},${sy(piece.y+piece.height)}`} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={sx(piece.x+piece.width*.28)} y={sy(piece.y+piece.height*.28)} fontSize="12" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>)}</svg>}
-  if(spec.task==="scaledArea"&&spec.scale){const m=spec.scale,dw=m.drawingWidth??Math.sqrt(m.drawingArea??1),dh=m.drawingHeight??Math.sqrt(m.drawingArea??1);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Area dilation model. Drawing dimensions ${dw} by ${dh}; each length scales by ${m.lengthScale}, so area scales by ${m.lengthScale} squared.`}><rect x="45" y="75" width="110" height="80" fill="none" stroke="currentColor" strokeWidth="4"/><text x="100" y="180" textAnchor="middle" fontSize="13" fontWeight="900">drawing {geometricConstraintTruth(spec).stages.find(s=>s.key==="scale:drawing-area")?.value??"1 square unit"}</text><path d="M175 115 H255" stroke="currentColor" strokeWidth="3" markerEnd="url(#gcl-arrow)"/><defs><marker id="gcl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><text x="215" y="100" textAnchor="middle" fontSize="14" fontWeight="900">× {m.lengthScale} each way</text><rect x="280" y="45" width="120" height="140" fill="none" stroke="currentColor" strokeWidth="5"/><text x="340" y="210" textAnchor="middle" fontSize="13" fontWeight="900">area factor {m.lengthScale}²</text></svg>}
-  if(spec.task==="angleCrossing"&&spec.angle){const a=spec.angle;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Two lines cross. One angle and its vertical partner are ${a.knownAngle} degrees; adjacent angles are ${180-a.knownAngle} degrees.`}><line x1="55" y1="215" x2="385" y2="35" stroke="currentColor" strokeWidth="5"/><line x1="55" y1="35" x2="385" y2="215" stroke="currentColor" strokeWidth="5"/><circle cx="220" cy="125" r="5" fill="currentColor"/><text x="220" y="70" textAnchor="middle" fontSize="18" fontWeight="900">{a.knownAngle}°</text><text x="220" y="200" textAnchor="middle" fontSize="18" fontWeight="900">vertical = {a.knownAngle}°</text><text x="340" y="130" textAnchor="middle" fontSize="15" fontWeight="900">adjacent = {180-a.knownAngle}°</text></svg>}
-  if(spec.task==="aaSimilarity"&&spec.aa){const a=spec.aa;const complete=(xs:readonly number[])=>xs.length===2?[...xs,180-xs[0]-xs[1]]:[...xs];const A=complete(a.anglesA),B=complete(a.anglesB);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Paired triangles. Triangle A angles ${A.join(", ")} degrees. Triangle B angles ${B.join(", ")} degrees.`}><polygon points="45,205 180,205 100,55" fill="none" stroke="currentColor" strokeWidth="5"/><polygon points="245,205 405,205 335,70" fill="none" stroke="currentColor" strokeWidth="5" strokeDasharray="10 5"/><text x="110" y="235" textAnchor="middle" fontSize="14" fontWeight="900">A: {A.join("°, ")}°</text><text x="325" y="235" textAnchor="middle" fontSize="14" fontWeight="900">B: {B.join("°, ")}°</text></svg>}
-  const p=spec.pythagorean;const areaA=p?.legAreaA??((p?.legA??3)**2),areaB=p?.legAreaB??((p?.legB??4)**2);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Right triangle with square areas ${areaA} and ${areaB} on the legs; the hypotenuse square has their combined area.`}><polygon points="120,200 120,70 300,200" fill="none" stroke="currentColor" strokeWidth="5"/><rect x="35" y="70" width="80" height="130" fill="none" stroke="currentColor" strokeWidth="3"/><rect x="120" y="202" width="180" height="38" fill="none" stroke="currentColor" strokeWidth="3"/><text x="75" y="140" textAnchor="middle" fontSize="16" fontWeight="900">area {areaA}</text><text x="210" y="228" textAnchor="middle" fontSize="16" fontWeight="900">area {areaB}</text><text x="260" y="105" textAnchor="middle" fontSize="15" fontWeight="900">hypotenuse square = {areaA+areaB}</text><path d="M120 184 h16 v16" fill="none" stroke="currentColor" strokeWidth="3"/></svg>;
+  const showDerived=tone==="info",opened=new Set(revealed),exploring=spec.answerMode==="explore";
+  if(spec.task==="coordinateProof"&&spec.coordinateProof){
+    const m=spec.coordinateProof,points=m.points;
+    const kindLabel:{[K in typeof m.kind]:string}={segmentPartition:"segment partition",lineRelation:"line relation",vectorRotation:"vector rotation",triangleCertificate:"triangle certificate",symmetricPlacement:"symmetric placement",radicalPerimeter:"exact-radical perimeter",boxAdvantage:"bounding-box area",shoelaceArea:"shoelace area",circleLineIntersection:"circle and line intersection",segmentLength:"segment length"};
+    if(m.kind==="radicalPerimeter"&&m.sideRadicands?.length){
+      const labels=m.sideRadicands.map(value=>`√${value}`);
+      return <svg data-testid="gcl-coordinate-proof" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Square perimeter model with side measures ${labels.join(", ")}. The exact perimeter remains to simplify.`}><rect x="105" y="30" width="230" height="190" fill={PALETTE.leaf} fillOpacity=".08" stroke={PALETTE.berry} strokeWidth="5"/><text x="220" y="24" textAnchor="middle" fontSize="15" fontWeight="900">{labels[0]}</text><text x="350" y="128" textAnchor="middle" fontSize="15" fontWeight="900">{labels[1]??labels[0]}</text><text x="220" y="242" textAnchor="middle" fontSize="15" fontWeight="900">{labels[2]??labels[0]}</text><text x="90" y="128" textAnchor="middle" fontSize="15" fontWeight="900">{labels[3]??labels[0]}</text></svg>;
+    }
+    const sourceXs=points.map(point=>point.x),sourceYs=points.map(point=>point.y);
+    if(m.circle){sourceXs.push(m.circle.h-m.circle.r,m.circle.h+m.circle.r);sourceYs.push(m.circle.k-m.circle.r,m.circle.k+m.circle.r)}
+    const minX=Math.min(-1,...sourceXs),maxX=Math.max(1,...sourceXs);
+    if(m.line)sourceYs.push(m.line.m*minX+m.line.b,m.line.m*maxX+m.line.b);
+    const minY=Math.min(-1,...sourceYs),maxY=Math.max(1,...sourceYs),pad=30,plotW=W-2*pad,plotH=H-2*pad,unit=Math.min(plotW/(maxX-minX||1),plotH/(maxY-minY||1)),x0=pad+(plotW-(maxX-minX)*unit)/2,y0=pad+(plotH-(maxY-minY)*unit)/2;
+    const sx=(x:number)=>x0+(x-minX)*unit,sy=(y:number)=>y0+(maxY-y)*unit,byId=new Map(points.map(point=>[point.id,point]));
+    const vectorOrigin=m.kind==="vectorRotation"?points.find(point=>point.x===0&&point.y===0)??points[0]:undefined,vectorEnd=vectorOrigin&&m.vector?points.find(point=>point.x===vectorOrigin.x+m.vector![0]&&point.y===vectorOrigin.y+m.vector![1]):undefined;
+    const visiblePoints=m.kind==="vectorRotation"&&!showDerived?points.filter(point=>point.id===vectorOrigin?.id||point.id===vectorEnd?.id):points;
+    const sourceDescription=[
+      visiblePoints.length?`Points ${visiblePoints.map(point=>`${point.label} at ${point.x}, ${point.y}`).join("; ")}`:"",
+      m.span?`given segment ${m.span.a} to ${m.span.b}`:"",
+      m.segment?`given partition ${m.segment.a} through ${m.segment.p} to ${m.segment.b}`:"",
+      m.vector?`given displacement (${m.vector[0]}, ${m.vector[1]})`:"",
+      m.circle?`circle centre (${m.circle.h}, ${m.circle.k}) and radius ${m.circle.r}`:"",
+      m.line?`line y = ${m.line.m}x + ${m.line.b}`:"",
+    ].filter(Boolean).join(". ");
+    const span=m.span?{a:byId.get(m.span.a),b:byId.get(m.span.b)}:undefined;
+    return <svg data-testid="gcl-coordinate-proof" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate proof model for ${kindLabel[m.kind]}. ${sourceDescription}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/><line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="2" opacity=".65"/><line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke={PALETTE.tangerine} strokeWidth="2" opacity=".65"/>{m.segments?.map(([aId,bId],index)=>{const a=byId.get(aId),b=byId.get(bId);return a&&b?<line key={`${aId}-${bId}`} x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={index%2?PALETTE.berry:PALETTE.leaf} strokeWidth="4" strokeDasharray={index%2?"8 5":undefined}/>:null})}{m.segment&&(()=>{const a=byId.get(m.segment.a),b=byId.get(m.segment.b);return a&&b?<line x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>:null})()}{span?.a&&span.b&&<line data-testid="gcl-span" x1={sx(span.a.x)} y1={sy(span.a.y)} x2={sx(span.b.x)} y2={sy(span.b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>}{m.kind==="vectorRotation"&&vectorOrigin&&visiblePoints.filter(point=>point.id!==vectorOrigin.id).map((point,index)=><line data-testid="gcl-vector" key={point.id} x1={sx(vectorOrigin.x)} y1={sy(vectorOrigin.y)} x2={sx(point.x)} y2={sy(point.y)} stroke={index?PALETTE.berry:PALETTE.leaf} strokeWidth="5"/>)}{["triangleCertificate","symmetricPlacement","boxAdvantage","shoelaceArea"].includes(m.kind)&&points.length>=3&&<polygon points={points.map(point=>`${sx(point.x)},${sy(point.y)}`).join(" ")} fill={PALETTE.leaf} fillOpacity=".10" stroke={PALETTE.berry} strokeWidth="4"/>}{m.kind==="boxAdvantage"&&showDerived&&points.length>=3&&<rect data-testid="gcl-bounding-box" x={sx(Math.min(...points.map(point=>point.x)))} y={sy(Math.max(...points.map(point=>point.y)))} width={Math.abs(sx(Math.max(...points.map(point=>point.x)))-sx(Math.min(...points.map(point=>point.x))))} height={Math.abs(sy(Math.min(...points.map(point=>point.y)))-sy(Math.max(...points.map(point=>point.y))))} fill="none" stroke={PALETTE.tangerine} strokeWidth="3" strokeDasharray="8 5"/>}{m.circle&&<circle data-testid="gcl-circle" cx={sx(m.circle.h)} cy={sy(m.circle.k)} r={Math.abs(sx(m.circle.h+m.circle.r)-sx(m.circle.h))} fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/>}{m.line&&<line data-testid="gcl-line" x1={sx(minX)} y1={sy(m.line.m*minX+m.line.b)} x2={sx(maxX)} y2={sy(m.line.m*maxX+m.line.b)} stroke={PALETTE.berry} strokeWidth="4"/>}{visiblePoints.map(point=><g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y)} r="7" fill={PALETTE.tangerine} stroke="white" strokeWidth="2"/><text x={sx(point.x)+9} y={sy(point.y)-9} fontSize="12" fontWeight="900">{point.label} ({point.x}, {point.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.sky}>horizontal differences</text><text x="15" y="125" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.tangerine} transform="rotate(-90 15 125)">vertical differences</text></svg>;
+  }
+  if(spec.task==="perimeterMissing"&&spec.perimeter){
+    const m=spec.perimeter;
+    if(m.shape==="triangle"){
+      const labels=[...m.knownSides,...Array.from({length:m.unknownMultiplicity},()=>"?")].slice(0,3);
+      return <svg data-testid="gcl-perimeter" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Triangle perimeter model with total ${m.perimeter}, known sides ${m.knownSides.join(", ")}, and ${m.unknownMultiplicity} equal unknown side${m.unknownMultiplicity===1?"":"s"}.`}><polygon points="220,30 70,210 370,210" fill="none" stroke="currentColor" strokeWidth="5"/>{labels.map((label,index)=><text key={index} x={[135,305,220][index]!} y={[115,115,200][index]!} textAnchor="middle" fontSize="16" fontWeight="900">{label}</text>)}<text x="220" y="242" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text></svg>;
+    }
+    const labels=m.unknownMultiplicity===2&&m.knownSides.length>=2?[String(m.knownSides[0]),"?",String(m.knownSides[1]),"?"]:Array.from({length:4},(_,index)=>m.knownSides[index]===undefined?"?":String(m.knownSides[index]));
+    return <svg data-testid="gcl-perimeter" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`${m.shape} perimeter model with total ${m.perimeter}. Opposite known sides ${m.knownSides.join(" and ")||"none"}; ${m.unknownMultiplicity} equal unknown sides are marked with question marks.`}><rect x="90" y="45" width="260" height="160" rx="5" fill="none" stroke="currentColor" strokeWidth="5"/>{labels.map((label,index)=><text key={index} x={[220,365,220,75][index]!} y={[38,130,225,130][index]!} textAnchor="middle" fontSize="16" fontWeight="900">{label}</text>)}<text x="220" y="135" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text></svg>;
+  }
+  if(spec.task==="coordinateArea"&&spec.coordinate){const pieces=spec.coordinate.pieces;const minX=Math.min(...pieces.flatMap(piece=>[piece.x,piece.x+piece.width])),maxX=Math.max(...pieces.flatMap(piece=>[piece.x,piece.x+piece.width])),minY=Math.min(...pieces.flatMap(piece=>[piece.y,piece.y+piece.height])),maxY=Math.max(...pieces.flatMap(piece=>[piece.y,piece.y+piece.height]));const sx=(x:number)=>35+(x-minX)/(maxX-minX||1)*360,sy=(y:number)=>215-(y-minY)/(maxY-minY||1)*175,pieceSummary=pieces.map(piece=>`${piece.operation} ${piece.label}, ${piece.kind==="rightTriangle"?"right triangle":"rectangle"}, from (${piece.x}, ${piece.y}) to (${piece.x+piece.width}, ${piece.y+piece.height})`).join(". ");return <svg data-testid="gcl-coordinate-area" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate area model. ${pieceSummary}. Areas remain to calculate.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{Array.from({length:7},(_,i)=><line key={`v${i}`} x1={35+i*60} y1="25" x2={35+i*60} y2="215" stroke="currentColor" opacity=".08"/>)}{Array.from({length:5},(_,i)=><line key={`h${i}`} x1="35" y1={35+i*45} x2="395" y2={35+i*45} stroke="currentColor" opacity=".08"/>)}{pieces.map(piece=>piece.kind==="rectangle"?<g key={piece.id}><rect x={sx(piece.x)} y={sy(piece.y+piece.height)} width={Math.abs(sx(piece.x+piece.width)-sx(piece.x))} height={Math.abs(sy(piece.y)-sy(piece.y+piece.height))} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={(sx(piece.x)+sx(piece.x+piece.width))/2} y={(sy(piece.y)+sy(piece.y+piece.height))/2} textAnchor="middle" fontSize="13" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>:<g key={piece.id}><polygon points={`${sx(piece.x)},${sy(piece.y)} ${sx(piece.x+piece.width)},${sy(piece.y)} ${sx(piece.x)},${sy(piece.y+piece.height)}`} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={sx(piece.x+piece.width*.28)} y={sy(piece.y+piece.height*.28)} fontSize="12" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>)}<text x="35" y="235" textAnchor="middle" fontSize="11" fontWeight="800">x {minX}</text><text x="395" y="235" textAnchor="middle" fontSize="11" fontWeight="800">x {maxX}</text><text x="18" y="215" textAnchor="middle" fontSize="11" fontWeight="800">y {minY}</text><text x="18" y="40" textAnchor="middle" fontSize="11" fontWeight="800">y {maxY}</text></svg>}
+  if(spec.task==="scaledArea"&&spec.scale){
+    const m=spec.scale,drawingArea=m.drawingArea??((m.drawingWidth??1)*(m.drawingHeight??1)),factor=m.lengthScale*m.lengthScale,realArea=drawingArea*factor;
+    const drawingGiven=m.drawingWidth!==undefined&&m.drawingHeight!==undefined?`${m.drawingWidth} by ${m.drawingHeight}`:`area ${drawingArea}`;
+    const showFactor=showDerived||(exploring&&opened.has("scale:area-factor")),showReal=showDerived||(exploring&&opened.has("scale:real-area"));
+    const result=`area factor ${showFactor?factor:"left to calculate"}; real area ${showReal?realArea:"left to calculate"}`;
+    return <svg data-testid="gcl-diagram" data-derived-visible={showReal?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Area dilation model. Drawing ${drawingGiven}; each length uses scale factor ${m.lengthScale}. ${result}.`}><rect x="45" y="75" width="110" height="80" fill="none" stroke="currentColor" strokeWidth="4"/><text x="100" y="180" textAnchor="middle" fontSize="13" fontWeight="900">drawing {drawingGiven}</text><path d="M175 115 H255" stroke="currentColor" strokeWidth="3" markerEnd="url(#gcl-arrow)"/><defs><marker id="gcl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><text x="215" y="100" textAnchor="middle" fontSize="14" fontWeight="900">lengths × {m.lengthScale}</text><rect x="280" y="45" width="120" height="140" fill="none" stroke="currentColor" strokeWidth="5"/><text x="340" y="210" textAnchor="middle" fontSize="13" fontWeight="900">{showReal?`factor ${factor}; area ${realArea}`:showFactor?`factor ${factor}; area ?`:"real area ?"}</text></svg>;
+  }
+  if(spec.task==="angleCrossing"&&spec.angle){
+    const a=spec.angle,adjacent=180-a.knownAngle;
+    const showVertical=showDerived||(exploring&&opened.has("angle:vertical")),showAdjacent=showDerived||(exploring&&opened.has("angle:adjacent"));
+    return <svg data-testid="gcl-diagram" data-derived-visible={showVertical&&showAdjacent?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Two lines cross. One marked angle is ${a.knownAngle} degrees. The vertical angle is ${showVertical?`${a.knownAngle} degrees`:"left to determine"}; adjacent angles are ${showAdjacent?`${adjacent} degrees`:"left to determine"}.`}><line x1="55" y1="215" x2="385" y2="35" stroke="currentColor" strokeWidth="5"/><line x1="55" y1="35" x2="385" y2="215" stroke="currentColor" strokeWidth="5"/><circle cx="220" cy="125" r="5" fill="currentColor"/><text x="220" y="70" textAnchor="middle" fontSize="18" fontWeight="900">{a.knownAngle}°</text><text x="220" y="200" textAnchor="middle" fontSize="18" fontWeight="900">vertical = {showVertical?`${a.knownAngle}°`:"?"}</text><text x="340" y="130" textAnchor="middle" fontSize="15" fontWeight="900">adjacent = {showAdjacent?`${adjacent}°`:"?"}</text></svg>;
+  }
+  if(spec.task==="aaSimilarity"&&spec.aa){
+    const a=spec.aa,complete=(xs:readonly number[])=>xs.length===2?[...xs,180-xs[0]-xs[1]]:[...xs],showA=showDerived||(exploring&&opened.has("aa:complete-a")),showB=showDerived||(exploring&&opened.has("aa:complete-b")),shown=(xs:readonly number[],show:boolean)=>show?complete(xs).map(String):[...xs.map(String),...(xs.length===2?["?"]:[])],A=shown(a.anglesA,showA),B=shown(a.anglesB,showB);
+    return <svg data-testid="gcl-diagram" data-derived-visible={showA&&showB?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Paired triangles. Triangle A angles ${A.join(", ")} degrees. Triangle B angles ${B.join(", ")} degrees.${showA&&showB?" Completed angles are revealed.":" Missing angles and the similarity conclusion remain to determine."}`}><polygon points="45,205 180,205 100,55" fill="none" stroke="currentColor" strokeWidth="5"/><polygon points="245,205 405,205 335,70" fill="none" stroke="currentColor" strokeWidth="5" strokeDasharray="10 5"/><text x="110" y="235" textAnchor="middle" fontSize="14" fontWeight="900">A: {A.join("°, ")}°</text><text x="325" y="235" textAnchor="middle" fontSize="14" fontWeight="900">B: {B.join("°, ")}°</text></svg>;
+  }
+  const p=spec.pythagorean!;
+  const truth=geometricConstraintTruth(spec),areaA=p.legAreaA??(p.legA!==undefined?p.legA*p.legA:undefined),areaB=p.legAreaB??(p.legB!==undefined?p.legB*p.legB:undefined);
+  const givenA=p.legAreaA!==undefined?`square area ${p.legAreaA}`:p.legA!==undefined?`leg length ${p.legA}`:"unknown leg";
+  const givenB=p.legAreaB!==undefined?`square area ${p.legAreaB}`:p.legB!==undefined?`leg length ${p.legB}`:"unknown leg";
+  const showLegSquares=showDerived||(exploring&&opened.has("pyth:leg-squares")),targetStage=p.target==="length"||p.target==="legLength"?"pyth:square-root":p.target==="cSquared"?"pyth:identity":"pyth:identity",showTarget=showDerived||(exploring&&opened.has(targetStage));
+  const shownA=showLegSquares&&areaA!==undefined?`area ${areaA}`:p.legAreaA!==undefined?`area ${p.legAreaA}`:p.legA!==undefined?`side ${p.legA}`:"?";
+  const shownB=showLegSquares&&areaB!==undefined?`area ${areaB}`:p.legAreaB!==undefined?`area ${p.legAreaB}`:p.legB!==undefined?`side ${p.legB}`:"?";
+  const targetText=showTarget?(p.target==="legLength"?`missing leg = ${truth.answerNumber}`:p.target==="length"?`hypotenuse = ${truth.answerNumber}`:p.target==="cSquared"?`hypotenuse square = ${truth.answerNumber}`:p.target==="areaMeaning"?"squared terms are square areas":"hypotenuse is opposite the right angle"):(p.hypotenuse!==undefined?`hypotenuse ${p.hypotenuse}; target ?`:"target ?");
+  return <svg data-testid="gcl-diagram" data-derived-visible={showTarget?"true":"false"} viewBox={`0 0 ${W} 310`} className="h-auto w-full" role="img" aria-label={`Right triangle with two square tiles on its legs, not to scale. Given ${givenA}; ${givenB}${p.hypotenuse!==undefined?`; hypotenuse length ${p.hypotenuse}`:""}. ${showTarget?`Revealed result: ${targetText}.`:"Derived square areas and the target remain to calculate."}`}><polygon points="155,145 155,45 295,145" fill="none" stroke="currentColor" strokeWidth="5"/><rect data-testid="gcl-leg-square-a" x="55" y="45" width="100" height="100" fill={PALETTE.sky} fillOpacity=".08" stroke="currentColor" strokeWidth="3"/><rect data-testid="gcl-leg-square-b" x="155" y="145" width="140" height="140" fill={PALETTE.leaf} fillOpacity=".08" stroke="currentColor" strokeWidth="3"/><text x="105" y="100" textAnchor="middle" fontSize="16" fontWeight="900">{shownA}</text><text x="225" y="220" textAnchor="middle" fontSize="16" fontWeight="900">{shownB}</text><text x="315" y="75" textAnchor="middle" fontSize="14" fontWeight="900">{targetText}</text><path d="M155 129 h16 v16" fill="none" stroke="currentColor" strokeWidth="3"/><text x="375" y="298" textAnchor="middle" fontSize="11" fontWeight="800">not to scale</text></svg>;
 }
-function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TGeometricConstraintLab>){
-  const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;const allowed=new Set(geometricConstraintExplorationKeys(spec));const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];const truth=geometricConstraintTruth(spec);const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"toward",state:{key}});onChange({...v,revealed:[...revealed,key]})};const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this geometric constraint.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "geometric state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
+const GEOMETRIC_CONSTRAINT_HELD="Open — finish this conclusion yourself, then check your answer.";
+function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TGeometricConstraintLab>){
+  const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;
+  const allowed=new Set(geometricConstraintExplorationKeys(spec));
+  const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
+  const truth=geometricConstraintTruth(spec);
+  const answerStageKeys=new Set(geometricConstraintAnswerStageKeys(spec));
+  const orderedChoices=useMemo(
+    ()=>seededShuffle(spec.choices,seed??spec.choices.map(choice=>choice.id).join("|")),
+    [seed,spec.choices]
+  );
+  const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"neutral",state:{key}});onChange({...v,revealed:[...revealed,key]})};
+  const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));
+  const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
+  return <div className="grid gap-4">
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+    <section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec} tone={tone} revealed={revealed}/></section>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{
+      const open=revealed.includes(stage.key),authored=spec.authoredStages[index],held=spec.answerMode!=="explore"&&tone!=="info"&&(answerStageKeys.has(stage.key)||stageRevealsAnswer(stage.value,truth));
+      const title=held?"Complete the conclusion":authored?.title??stage.label;
+      const body=!open?"Closed — activate to inspect this geometric constraint.":held?GEOMETRIC_CONSTRAINT_HELD:authored?.body??stage.value;
+      return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${title}: ${body}`:`Open geometric constraint stage ${index+1}: ${title}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{title}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{body}</span>{open&&authored&&!held&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>;
+    })}</div>
+    <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length,spec.requiredExplorations,"geometric state","inspected")}</p>
+    {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value,next=raw===""?"":Number(raw);if(typeof next==="number")onEvent?.({control:"numeric",dir:"neutral",state:{value:next}});onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
+    {spec.answerMode==="choice"&&<><div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:"neutral",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div><p className="sr-only" aria-live="polite">{v.choiceId?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No geometry conclusion selected."}</p></>}
+    {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}
+    {tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}
+  </div>;
 }
 
 /** exactNumberLab — one exact ordered-number workbench. Every task keeps its own learner action,
@@ -18583,7 +18725,8 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent,tone}:WPro
   useEffect(()=>{if(!v)onChange({criterion,angle,flipped:false,moves:0});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const rad=angle*Math.PI/180,a=spec.sideA,b=spec.sideB,ssaRatio=b*Math.sin(rad)/a,clamped=Math.min(1,Math.max(-1,ssaRatio)),B1=Math.asin(clamped),B2=Math.PI-B1,C1=Math.PI-rad-B1,C2=Math.PI-rad-B2;
   const candidateCount=criterion==='SSA'?(ssaRatio>1+1e-9?0:C2>1e-9?2:1):1,ambiguous=candidateCount===2,unique=candidateCount===1;
-  const set=(n:Partial<{criterion:Criterion;angle:number;flipped:boolean;constraintBroken:boolean}>)=>{const nc=n.criterion??criterion,na=n.angle??angle,nf=n.flipped??flipped;if(nc!==criterion)onEvent?.({control:'criterion',dir:nc===spec.targetCriterion?'toward':'away'});if(na!==angle){const d=moveRelation(angle,na,spec.targetAngle);if(d)onEvent?.({control:'angle',dir:d});}if(nf!==flipped)onEvent?.({control:'candidate',dir:ambiguous?'toward':'neutral'});onChange({criterion:nc,angle:na,flipped:nf,moves:moves+1,constraintBroken:n.constraintBroken??broken})};
+  const settled=tone==='success'||tone==='info';
+  const set=(n:Partial<{criterion:Criterion;angle:number;flipped:boolean;constraintBroken:boolean}>)=>{const nc=n.criterion??criterion,na=n.angle??angle,nf=n.flipped??flipped;if(nc!==criterion)onEvent?.({control:'criterion',dir:'neutral',state:{criterion:nc}});if(na!==angle)onEvent?.({control:'angle',dir:'neutral',state:{angle:na}});if(nf!==flipped)onEvent?.({control:'candidate',dir:'neutral',state:{visible:nf?1:0}});if(n.constraintBroken!==undefined&&n.constraintBroken!==broken)onEvent?.({control:'constraint-lock',dir:'neutral',state:{broken:n.constraintBroken?1:0}});onChange({criterion:nc,angle:na,flipped:nf,moves:moves+1,constraintBroken:n.constraintBroken??broken})};
   const scale=18,c1=Math.max(2,a*Math.sin(C1)/Math.max(.08,Math.sin(rad))),c2=Math.max(2,a*Math.sin(Math.max(.01,C2))/Math.max(.08,Math.sin(rad)));
   const Ax=45,Ay=185,Cx=Ax+b*scale*Math.cos(rad),Cy=Ay-b*scale*Math.sin(rad),B1x=Ax+c1*scale,B2x=Ax+c2*scale;
   const secondX=ambiguous?B2x:B1x;
@@ -18601,19 +18744,19 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent,tone}:WPro
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg ref={svgRef} viewBox="0 0 380 230" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${criterion} givens leave ${candidateCount===0?'no triangle':candidateCount===1?'one unique triangle':'two noncongruent triangles'} at angle ${angle} degrees.`}>
       <path d={`M ${Ax} ${Ay} L ${B1x} ${Ay} L ${Cx} ${Cy} Z`} fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="5" strokeLinejoin="round"/>
-      <path d={`M ${Ax} ${Ay} L ${secondX} ${Ay} L ${Cx} ${Cy} Z`} fill="none" stroke={ambiguous?PALETTE.tangerine:PALETTE.leaf} strokeWidth="4" strokeDasharray={ambiguous?'9 6':'none'} strokeLinejoin="round" opacity={flipped||!ambiguous?1:.38}/>
+      <path d={`M ${Ax} ${Ay} L ${secondX} ${Ay} L ${Cx} ${Cy} Z`} fill="none" stroke={ambiguous?PALETTE.tangerine:settled?PALETTE.leaf:PALETTE.sky} strokeWidth="4" strokeDasharray={ambiguous?'9 6':'none'} strokeLinejoin="round" opacity={flipped||!ambiguous?1:.38}/>
       <path d={`M ${Ax+26} ${Ay} A 26 26 0 0 0 ${Ax+26*Math.cos(rad)} ${Ay-26*Math.sin(rad)}`} fill="none" stroke={PALETTE.ink} strokeWidth="2"/>
       <text x={Ax+32} y={Ay-12} fontSize="12" fontWeight="900" fill={PALETTE.ink}>{angle}°</text>
-      <text x="190" y="24" textAnchor="middle" fontWeight="900" fill={unique?PALETTE.leaf:PALETTE.tangerine}>{candidateCount===0?'givens are inconsistent':unique?'constraints lock one triangle':'ambiguous case: two triangles fit'}</text>
-      {model.midsegment&&(()=>{const P=(p:[number,number]):[number,number]=>[Ax+p[0]*scale,Ay-p[1]*scale];const f=P(model.midsegment.from),t=P(model.midsegment.to);const mA=P(model.vertices[1]),mB=P(model.vertices[2]);return <g data-testid="tcl-midsegment"><line x1={f[0]} y1={f[1]} x2={t[0]} y2={t[1]} stroke={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry} strokeWidth="4"/><circle cx={f[0]} cy={f[1]} r="4" fill={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry}/><circle cx={t[0]} cy={t[1]} r="4" fill={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry}/><line x1={mA[0]} y1={mA[1]} x2={mB[0]} y2={mB[1]} stroke={PALETTE.ink} strokeOpacity=".35" strokeWidth="2" strokeDasharray="4 3"/></g>})()}
+      <text x="190" y="24" textAnchor="middle" fontWeight="900" fill={settled&&unique?PALETTE.leaf:PALETTE.tangerine}>{candidateCount===0?'givens are inconsistent':unique?'constraints lock one triangle':'ambiguous case: two triangles fit'}</text>
+      {model.midsegment&&(()=>{const P=(p:[number,number]):[number,number]=>[Ax+p[0]*scale,Ay-p[1]*scale];const f=P(model.midsegment.from),t=P(model.midsegment.to);const mA=P(model.vertices[1]),mB=P(model.vertices[2]);const midColor=settled?(model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry):model.midsegment.isMidpoints?PALETTE.sky:PALETTE.tangerine;return <g data-testid="tcl-midsegment"><line x1={f[0]} y1={f[1]} x2={t[0]} y2={t[1]} stroke={midColor} strokeWidth="4"/><circle cx={f[0]} cy={f[1]} r="4" fill={midColor}/><circle cx={t[0]} cy={t[1]} r="4" fill={midColor}/><line x1={mA[0]} y1={mA[1]} x2={mB[0]} y2={mB[1]} stroke={PALETTE.ink} strokeOpacity=".35" strokeWidth="2" strokeDasharray="4 3"/></g>})()}
       <text x="190" y="215" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{criterion}: {unique?'0 degrees of freedom':'1 unresolved choice'}</text>
       {!disabled&&<rect className="mt-drag-hit" data-testid="tcl-drag" x={0} y={0} width={380} height={200} aria-hidden="true" {...drag.handleProps}/>}
     </svg>
-    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
+    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${settled?(locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'):locked?'border-sky bg-sky/10 text-sky-ink':'border-tangerine bg-tangerine/10 text-tangerine-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
     <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">{criteria.map(c=><button key={c} type="button" disabled={disabled} aria-pressed={criterion===c} onClick={()=>set({criterion:c,flipped:false})} className={`min-h-11 rounded-xl border-2 font-extrabold ${criterion===c?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{c}</button>)}</div>
     <label className="grid gap-1 text-sm font-bold"><span>Change the included/given angle</span><input aria-label="triangle constraint angle" type="range" min="20" max="140" step={spec.angleStep} value={angle} disabled={disabled} onChange={e=>set({angle:Number(e.target.value)})} className="h-11 w-full accent-sky"/></label>
-    <button type="button" disabled={disabled} onClick={()=>set({flipped:!flipped})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${ambiguous?'border-tangerine bg-tangerine/10':'border-leaf bg-leaf/10'}`}>{candidateCount===0?'No triangle satisfies these SSA givens':ambiguous?(flipped?'Hide the second valid triangle':'Reveal the second valid triangle'):'Try to make a different triangle — it collapses onto the first'}</button>
-    {targetReady&&<p className="rounded-xl border border-leaf/30 bg-leaf/10 p-3 text-sm font-bold text-leaf-ink">The chosen givens leave no geometric freedom: a congruence criterion is a uniqueness guarantee.</p>}
+    <button type="button" disabled={disabled} onClick={()=>set({flipped:!flipped})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${ambiguous?'border-tangerine bg-tangerine/10':settled?'border-leaf bg-leaf/10':'border-sky bg-sky/10'}`}>{candidateCount===0?'No triangle satisfies these SSA givens':ambiguous?(flipped?'Hide the second valid triangle':'Reveal the second valid triangle'):'Try to make a different triangle — it collapses onto the first'}</button>
+    {settled&&targetReady&&<p className="rounded-xl border border-leaf/30 bg-leaf/10 p-3 text-sm font-bold text-leaf-ink">The chosen givens leave no geometric freedom: a congruence criterion is a uniqueness guarantee.</p>}
   </div>;
 }
 type TtriangleCriterion='SSS'|'SAS'|'ASA'|'AAS'|'HL'|'SSA';
@@ -18733,14 +18876,16 @@ function SamplingBiasLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TSa
 
 function shapePoints(sides:number,right:number,equal:number,parallel:number){if(sides===3)return [[50,180],[150,35],[260,180]];if(sides===4){if(right===4&&equal===4)return [[70,45],[235,45],[235,195],[70,195]];if(right===4)return [[50,65],[270,65],[270,185],[50,185]];if(equal===4)return [[160,35],[275,120],[160,205],[45,120]];if(parallel===1)return [[85,55],[235,55],[280,190],[40,190]];return [[45,70],[260,45],[285,185],[75,205]]}const cx=160,cy=125,r=95;return Array.from({length:sides},(_,i)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/sides),cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/sides)])}
 
-function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TShapeHierarchyLab>){
+function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone,seed}:WProps<TShapeHierarchyLab>){
   const selectedId=typeof value==="string"?value:null;
   const selected=spec.choices.find((choice)=>choice.id===selectedId)??null;
   const correct=spec.choices.find((choice)=>shapeHierarchyChoiceCorrect(spec,choice))!;
-  const choose=(id:string)=>{const choice=spec.choices.find((candidate)=>candidate.id===id);if(!choice)return;onEvent?.({control:"shape-claim",dir:shapeHierarchyChoiceCorrect(spec,choice)?"toward":"away",kind:"efficient",state:{claim:choice.claim}});onChange(id)};
+  const showEvidence=tone==="success"||tone==="info";
+  const orderedChoices=useMemo(()=>seededShuffle(spec.choices,seed??spec.choices.map((choice)=>choice.id).join("|")),[seed,spec.choices]);
+  const choose=(id:string)=>{const choice=spec.choices.find((candidate)=>candidate.id===id);if(!choice)return;onEvent?.({control:"shape-claim",dir:"neutral",kind:"efficient",state:{claim:choice.claim}});onChange(id)};
   const highlighted=new Set(selected?.highlightNodeIds??[]);
-  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block"><MathProse text={choice.label} /></span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{EVIDENCE_KIND[choice.evidenceKind] ?? choice.evidenceKind}</span></button>)}</div>;
-  const evidence=selected?<div data-testid="sh-evidence" className={`rounded-2xl border-2 p-4 ${shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{EVIDENCE_KIND[selected.evidenceKind] ?? selected.evidenceKind} evidence</div><p className="font-bold">{selected.evidenceText}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to open the evidence it would need.</div>;
+  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{orderedChoices.map((choice)=><button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block"><MathProse text={choice.label} /></span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{EVIDENCE_KIND[choice.evidenceKind] ?? choice.evidenceKind}</span></button>)}</div>;
+  const evidence=selected?<div data-testid="sh-evidence" data-revealed={showEvidence||undefined} className={`rounded-2xl border-2 p-4 ${showEvidence?(shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"):"border-ink/15 bg-white"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{EVIDENCE_KIND[selected.evidenceKind] ?? selected.evidenceKind} evidence</div><p className="font-bold">{showEvidence?shapeHierarchyChoiceEvidence(spec,selected):"Build your claim from the fixed givens, then check it."}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to show the kind of evidence it needs.</div>;
   const reveal=tone==="info"&&selectedId!==correct.id?<GhostChip testid="shlab-ghost">Evidence-backed answer: {correct.label}</GhostChip>:null;
   if(spec.mode==="triangle"){
     const sides=spec.triangleSides,angles=spec.triangleAngles;
@@ -18763,7 +18908,7 @@ function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<T
     const claim=selected?.claim??null;
     const verdict=claim?.startsWith("always")?"always":claim?.startsWith("sometimes")?"sometimes":claim?.startsWith("never")?"never":claim;
     const relationDiagram=verdict?<svg viewBox="0 0 420 210" className="w-full" role="img" aria-label={`Selected verdict ${claim} for ${spec.subjectLabel} compared with ${spec.predicateLabel}.`}>{verdict==="always"?<><circle cx="215" cy="105" r="86" fill={PALETTE.tangerine} fillOpacity=".08" stroke={PALETTE.tangerine} strokeWidth="4"/><circle cx="215" cy="105" r="45" fill={PALETTE.sky} fillOpacity=".18" stroke={PALETTE.sky} strokeWidth="4"/><text x="215" y="101" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.subjectLabel}</text><text x="215" y="183" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.predicateLabel}</text></>:verdict==="sometimes"?<><circle cx="170" cy="105" r="72" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="250" cy="105" r="72" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="125" y="108" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="108" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="210" y="198" textAnchor="middle" fontSize="12" fontWeight="900">overlap needs an example AND a counterexample</text></>:<><circle cx="125" cy="105" r="62" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="295" cy="105" r="62" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><line x1="205" y1="35" x2="205" y2="175" stroke={PALETTE.berry} strokeWidth="5" strokeDasharray="10 7"/><text x="125" y="109" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="109" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="205" y="198" textAnchor="middle" fontSize="12" fontWeight="900">a blocker keeps the families apart</text></>}</svg>:<div className="grid min-h-52 place-items-center rounded-2xl border border-dashed border-ink/25 bg-white p-6 text-center font-bold text-ink/60">Choose always, sometimes, or never to build the corresponding relationship model.</div>;
-    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3"><LabReadout label="example" value={spec.witness??"not required"}/><LabReadout label="counterexample" value={spec.counterexample??"not required"}/><LabReadout label="blocker" value={spec.blocker??"not required"}/></div>{evidence}{reveal}</div>;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3" data-testid="sh-verdict-evidence"><LabReadout label="example" value={showEvidence?(spec.witness??"not required"):"test the claim with a fitting example"}/><LabReadout label="counterexample" value={showEvidence?(spec.counterexample??"not required"):"look for an example that breaks the claim"}/><LabReadout label="blocker" value={showEvidence?(spec.blocker??"not required"):"look for a rule that keeps the groups apart"}/></div>{evidence}{reveal}</div>;
   }
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="grid gap-2 rounded-2xl border border-ink/10 bg-white p-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">{spec.nodes.map((node,index)=><Fragment key={node.id}><div className={`rounded-xl border-2 p-3 text-center ${highlighted.has(node.id)?"border-sky bg-sky/10":"border-ink/15"}`}><div className="font-black">{node.label}</div><div className="mt-1 text-xs font-bold text-ink/65">{node.attributes.join(" · ")||"family node"}</div></div>{index<spec.nodes.length-1&&<div className="grid place-items-center text-2xl font-black text-tangerine" aria-hidden="true">↓</div>}</Fragment>)}</div>{spec.propertyLabel&&<div className="rounded-xl border-2 border-dashed border-tangerine/60 bg-tangerine/5 p-3 text-center font-extrabold">property riding the path: {spec.propertyLabel}</div>}{choiceButtons}{evidence}{reveal}</div>;
 }
@@ -18867,6 +19012,7 @@ function ConditionalTableReadW({ spec, value, onChange, disabled, onEvent, tone 
   const grand = spec.counts.reduce((a,b)=>a+b,0);
   const isRelative = metric.startsWith("relative");
   const isDenominatorCell = (r:number,c:number) => metric === "relativeWhole" || (metric === "relativeRow" && r === row) || (metric === "relativeCol" && c === col);
+  const isAdditiveCell = (r:number,c:number) => metric === "grandTotal" || (metric === "rowTotal" && r === row) || (metric === "colTotal" && c === col);
   const choose = (id: string) => {
     const candidate = spec.answerChoices.find((choice) => choice.id === id);
     if (!candidate) return;
@@ -18874,17 +19020,41 @@ function ConditionalTableReadW({ spec, value, onChange, disabled, onEvent, tone 
     onChange(id);
   };
   const metricLabel = metric === "cell" ? "cell count" : metric === "rowTotal" ? "row total" : metric === "colTotal" ? "column total" : metric === "grandTotal" ? "grand total" : metric === "relativeWhole" ? "percent of everyone" : metric === "relativeRow" ? `percent of ${spec.rowLabels[row]}` : `percent of ${spec.colLabels[col]}`;
+  const targetIntersection = `${spec.rowLabels[row]} and ${spec.colLabels[col]}`;
+  const tablePath = metric === "cell" ? `${targetIntersection} cell`
+    : metric === "rowTotal" ? `${spec.rowLabels[row]} row`
+      : metric === "colTotal" ? `${spec.colLabels[col]} column`
+        : metric === "grandTotal" ? "all four cells"
+          : metric === "relativeWhole" ? `${targetIntersection} out of everyone`
+            : metric === "relativeRow" ? `${targetIntersection} out of the ${spec.rowLabels[row]} row`
+              : `${targetIntersection} out of the ${spec.colLabels[col]} column`;
+  const calculation = metric === "cell" ? "read the intersection"
+    : metric === "rowTotal" ? "add across the row"
+      : metric === "colTotal" ? "add down the column"
+        : metric === "grandTotal" ? "add all four counts"
+          : metric === "relativeWhole" ? "target cell ÷ whole-table total × 100"
+            : metric === "relativeRow" ? "target cell ÷ row total × 100"
+              : "target cell ÷ column total × 100";
+  // The table's four interior counts are the givens. Every margin is derived from them, and for
+  // seven authored count questions one of those margins IS the graded answer. Keep the relational
+  // path visible before Check, but reveal computed margins and the substituted calculation only in
+  // the explicit reveal phase. A wrong attempt therefore remains a reasoning opportunity.
+  const showDerived = tone === "info";
+  const totalCell = (total: number, label: string, className = "", key?: string|number) => <td key={key} className={`rounded-xl px-3 py-4 font-black tabular-nums ${className}`}>
+    {showDerived ? <span>{total}</span> : <><span aria-hidden="true">?</span><span className="sr-only">{label}; work it out from the given counts</span></>}
+  </td>;
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="overflow-x-auto rounded-2xl border border-ink/15 bg-white p-3">
       <table className="w-full border-separate border-spacing-2 text-center text-sm">
-        <thead><tr><th></th>{spec.colLabels.map((label,c)=><th key={label} className={`rounded-lg px-2 py-2 ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>)}<th>Total</th></tr></thead>
-        <tbody>{spec.rowLabels.map((label,r)=><tr key={label}><th className={`rounded-lg px-2 py-2 ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>{[0,1].map(c=>{const exact=r===row&&c===col;const denom=isRelative&&isDenominatorCell(r,c);return <td key={c} className={`rounded-xl border-2 px-3 py-4 text-lg font-black tabular-nums ${exact?"border-tangerine bg-tangerine/15":denom?"border-dashed border-sky bg-sky/10":"border-ink/10"}`}><span>{cellCount(r,c)}</span>{exact&&<span className="sr-only"> target intersection</span>}{denom&&!exact&&<span className="sr-only"> denominator group</span>}</td>})}<td className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":""}`}>{rowTotal(r)}</td></tr>)}
-        <tr><th>Total</th>{[0,1].map(c=><td key={c} className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":""}`}>{colTotal(c)}</td>)}<td className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="grandTotal"?"border-2 border-tangerine bg-tangerine/10":metric==="relativeWhole"?"border-2 border-dashed border-sky bg-sky/10":""}`}>{grand}</td></tr></tbody>
+        <caption className="sr-only">{showDerived ? "Two-way table of given counts with the computed totals revealed." : "Two-way table of given counts. Totals stay yours to calculate until the answer is revealed."}</caption>
+        <thead><tr><th scope="col"></th>{spec.colLabels.map((label,c)=><th scope="col" key={label} className={`rounded-lg px-2 py-2 ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>)}<th scope="col">Total</th></tr></thead>
+        <tbody>{spec.rowLabels.map((label,r)=><tr key={label}><th scope="row" className={`rounded-lg px-2 py-2 ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>{[0,1].map(c=>{const exact=r===row&&c===col;const denom=isRelative&&isDenominatorCell(r,c);const additive=isAdditiveCell(r,c);const targetsCell=(metric==="cell"||isRelative)&&exact;return <td key={c} className={`rounded-xl border-2 px-3 py-4 text-lg font-black tabular-nums ${targetsCell?"border-tangerine bg-tangerine/15":additive?"border-tangerine/60 bg-tangerine/10":denom?"border-dashed border-sky bg-sky/10":"border-ink/10"}`}><span>{cellCount(r,c)}</span>{targetsCell&&<span className="sr-only"> target intersection</span>}{additive&&<span className="sr-only"> included in the total to calculate</span>}{denom&&!exact&&<span className="sr-only"> included in the reference group</span>}</td>})}{totalCell(rowTotal(r),`${label} row total`,metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"")}</tr>)}
+        <tr><th scope="row">Total</th>{[0,1].map(c=>totalCell(colTotal(c),`${spec.colLabels[c]} column total`,metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"",c))}{totalCell(grand,"grand total",metric==="grandTotal"?"border-2 border-tangerine bg-tangerine/10":metric==="relativeWhole"?"border-2 border-dashed border-sky bg-sky/10":"")}</tr></tbody>
       </table>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="asked relationship" value={metricLabel}/><LabReadout label="numerator / count" value={String(truth.numerator)} tone="warn"/><LabReadout label={isRelative?"denominator":"derived value"} value={isRelative?String(truth.denominator):String(truth.value)} tone="good"/></div>
-    {isRelative && <p className="rounded-xl border border-sky/25 bg-sky/5 p-3 text-center text-sm font-bold"><span className="text-tangerine-ink">◆ numerator {truth.numerator}</span> ÷ <span className="text-sky-ink">▧ denominator {truth.denominator}</span> × 100</p>}
+    <div className="grid gap-2 sm:grid-cols-3" data-testid="ct-read-relationship"><LabReadout label="asked relationship" value={metricLabel}/><LabReadout label="table path" value={tablePath}/><LabReadout label="calculation to make" value={calculation}/></div>
+    {showDerived && <p data-testid="ct-read-answer" className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-center text-sm font-bold">{isRelative ? <><span className="text-tangerine-ink">numerator {truth.numerator}</span> ÷ <span className="text-sky-ink">denominator {truth.denominator}</span> × 100 = <span className="font-black">{truth.value}%</span></> : <>The {metricLabel} is <span className="font-black">{truth.value}</span>.</>}</p>}
     <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the table claim">{spec.answerChoices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={choiceId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-12 rounded-xl border-2 px-3 text-sm font-extrabold ${choiceId===choice.id?"border-sky bg-sky/10":"border-ink/15 bg-white"}`}><MathProse text={choice.label} /></button>)}</div>
     {tone === "info" && choiceId && Math.abs((spec.answerChoices.find(c=>c.id===choiceId)?.value ?? NaN)-truth.value)>1e-9 && <p data-testid="ct-read-ghost" aria-hidden="true" className="mx-auto rounded-xl border-2 border-dashed border-tangerine/70 bg-tangerine/5 px-4 py-2 text-center text-sm font-extrabold text-tangerine-ink">target: {spec.answerChoices.find(c=>Math.abs(c.value-truth.value)<1e-9)?.label}</p>}
   </div>;

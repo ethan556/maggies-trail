@@ -49,10 +49,8 @@ afterEach(cleanup);
 const noSolution = authored("equationOutcomeLab", (n) => Array.isArray(n.choices) && n.choices.length > 0);
 
 describe("S237 graded answers are held until a verdict", () => {
-  // compoundEventLab was investigated and deliberately NOT gated. Its help text states that "the
-  // product of stage choices and the favourable-over-total probability remain separately visible",
-  // and it renders the full ordered sample space, so the readout is intentional structure rather
-  // than an oversight. Two existing gates pin it visible. Recorded in ANSWER_ON_SCREEN_AUDIT_S237.md.
+  // compoundEventLab was subsequently closed as a P0 canary: the outcome cells remain available
+  // to count, while the computed total and probability now wait for a settled/revealed answer.
 
   it("equationOutcomeLab does not announce the outcome while the learner is classifying", () => {
     render(<WidgetRenderer spec={noSolution} {...active} />);

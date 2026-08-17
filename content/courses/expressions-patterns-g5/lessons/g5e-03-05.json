@@ -156,11 +156,11 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a new pair of step sizes to test the same reasoning.",
       "conceptTag": "g5e-explain",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Build 'add 3' four times, then compare with 'add 6' reaching 6, 12, 18, 24.",
+        "prompt": "Build 'add 4' four times, then compare with 'add 12' reaching 12, 24, 36, 48.",
         "categories": [
           "A1",
           "A2",
@@ -168,15 +168,15 @@
           "A4"
         ],
         "target": [
-          3,
-          6,
-          9,
-          12
+          4,
+          8,
+          12,
+          16
         ],
-        "maxVal": 15,
+        "maxVal": 20,
         "step": 1,
-        "successFeedback": "3, 6, 9, 12 against 6, 12, 18, 24 — doubled at every step, because each B step covers two A steps.",
-        "partialFeedback": "Each term rises by 3: build 3, then 6, then 9, then 12.",
+        "successFeedback": "4, 8, 12, 16 pairs with 12, 24, 36, 48 — tripled at every step.",
+        "partialFeedback": "Build the add-4 sequence first: 4, 8, 12, 16.",
         "display": "bar",
         "histogram": false
       },
@@ -214,31 +214,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Rule A adds 3 each step from 0; rule B adds 6 each step from 0. How do their terms relate?",
+        "prompt": "Rule A adds 4 each step from 0; rule B adds 12 each step from 0. What must stay true?",
         "options": [
           {
             "id": "o0",
-            "label": "Every B term is twice the matching A term",
+            "label": "Every B term is three times the matching A term",
             "correct": true,
-            "feedback": "Correct — B steps twice as far each time from the same start, so the pairing is a doubling throughout."
+            "feedback": "Correct — each B step is three A steps, and the shared start keeps that factor true."
           },
           {
             "id": "o1",
-            "label": "B is always 3 more than A",
+            "label": "Every B term is 8 more than the matching A term",
             "correct": false,
-            "feedback": "That holds at the first step only; by the third the gap has grown to 9."
+            "feedback": "The first gap is 8, but the gap grows as both rules continue."
           },
           {
             "id": "o2",
-            "label": "They are the same sequence",
+            "label": "Every B term is four times the matching A term",
             "correct": false,
-            "feedback": "They share a starting point but separate immediately: 3 against 6, then 6 against 12."
+            "feedback": "Twelve is three times 4, so a factor of 4 does not match the step sizes."
           },
           {
             "id": "o3",
-            "label": "There is no relationship",
+            "label": "The relationship changes with the step number",
             "correct": false,
-            "feedback": "There is a precise one — matching terms sit in a constant 1-to-2 ratio."
+            "feedback": "The same factor of 3 links every pair because both rules begin at 0."
           }
         ]
       },
@@ -341,31 +341,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Why does \"add 6\" always give terms twice those of \"add 3\" from the same start?",
+        "prompt": "Rule A starts at 1 and adds 3; rule B starts at 1 and adds 6. Is every B term twice the matching A term?",
         "options": [
           {
             "id": "o0",
-            "label": "Because each step of B covers two of A's steps, and both start at 0",
+            "label": "No; the shared start of 1 is not doubled",
             "correct": true,
-            "feedback": "Correct — the doubling is built into the step sizes, so it holds at every term rather than by coincidence."
+            "feedback": "Correct — the first pair is 4 and 7, and 7 is not twice 4; the nonzero start breaks the doubling."
           },
           {
             "id": "o1",
-            "label": "Because 6 is 3 more than 3",
+            "label": "Yes; 6 is twice 3, so the terms must double",
             "correct": false,
-            "feedback": "That is an additive comparison; the relationship between the sequences is multiplicative."
+            "feedback": "Comparing only the step sizes ignores the shared starting value of 1."
           },
           {
             "id": "o2",
-            "label": "Because both are even numbers",
+            "label": "Yes; both rules begin at the same number",
             "correct": false,
-            "feedback": "Parity is irrelevant — \"add 5\" and \"add 10\" would double too."
+            "feedback": "A shared nonzero start actually prevents every output from being a doubled pair."
           },
           {
             "id": "o3",
-            "label": "It only looks that way for the first few terms",
+            "label": "No; rule B is always exactly 3 more than rule A",
             "correct": false,
-            "feedback": "It holds forever, because the step sizes stand in a fixed 1-to-2 ratio."
+            "feedback": "The first gap is 3, but the gap grows by 3 on each later step."
           }
         ]
       },
@@ -429,31 +429,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Why does \"add 6\" always give terms twice those of \"add 3\" from the same start?",
+          "prompt": "Why does 'add 8' give terms twice those of 'add 4' when both start at 0?",
           "options": [
             {
               "id": "o0",
-              "label": "Because each step of B covers two of A's steps, and both start at 0",
+              "label": "Each add-8 step is two add-4 steps, with no starting offset",
               "correct": true,
-              "feedback": "Correct — the doubling is built into the step sizes, so it holds at every term rather than by coincidence."
+              "feedback": "Correct — the step sizes have a 2-to-1 relationship and the zero start adds no extra amount."
             },
             {
               "id": "o1",
-              "label": "Because 6 is 3 more than 3",
+              "label": "Eight is four more than four at every step",
               "correct": false,
-              "feedback": "That is an additive comparison; the relationship between the sequences is multiplicative."
+              "feedback": "That compares the step sizes by a gap but does not explain why every term is doubled."
             },
             {
               "id": "o2",
-              "label": "Because both are even numbers",
+              "label": "Both step sizes happen to be even numbers",
               "correct": false,
-              "feedback": "Parity is irrelevant — \"add 5\" and \"add 10\" would double too."
+              "feedback": "Evenness does not create the relationship; the exact factor of 2 does."
             },
             {
               "id": "o3",
-              "label": "It only looks that way for the first few terms",
+              "label": "The relationship works only for the first two terms",
               "correct": false,
-              "feedback": "It holds forever, because the step sizes stand in a fixed 1-to-2 ratio."
+              "feedback": "The same step-size factor and zero start make it hold for every term."
             }
           ]
         }

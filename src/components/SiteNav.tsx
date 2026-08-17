@@ -61,10 +61,16 @@ function useDueCount() {
  *  client-side navigation, so — mirroring useDueCount just above — it re-reads on focus/
  *  visibility rather than only on mount, catching an avatar changed on /profile or a switched
  *  active child on /family without requiring a full page reload. */
-function useAvatarId() {
-  const [avatarId, setAvatarId] = useState<string | undefined>(undefined);
+function useAvatarIdentity() {
+  const [identity, setIdentity] = useState(() => {
+    const profile = progressStore.load();
+    return { avatarId: profile.avatarId, customization: profile.avatarCustomization };
+  });
   useEffect(() => {
-    const read = () => setAvatarId(progressStore.load().avatarId);
+    const read = () => {
+      const profile = progressStore.load();
+      setIdentity({ avatarId: profile.avatarId, customization: profile.avatarCustomization });
+    };
     read();
     window.addEventListener("focus", read);
     document.addEventListener("visibilitychange", read);
@@ -73,7 +79,7 @@ function useAvatarId() {
       document.removeEventListener("visibilitychange", read);
     };
   }, []);
-  return avatarId;
+  return identity;
 }
 
 function useIsActive() {
@@ -123,7 +129,7 @@ function DueBadge({ due, active }: { due: number; active: boolean }) {
 function AccountMenu() {
   const [open, setOpen] = useState(false);
   const isActive = useIsActive();
-  const avatarId = useAvatarId();
+  const { avatarId, customization } = useAvatarIdentity();
   const ref = useRef<HTMLDivElement>(null);
   const anySecondaryActive = SECONDARY.some((l) => isActive(l.href));
 
@@ -155,7 +161,10 @@ function AccountMenu() {
       >
         <AvatarDisplay
           avatarId={avatarId}
+          customization={customization}
           size={256}
+          placement="navigation"
+          displaySize={24}
           className="h-6 w-6 shrink-0 rounded-full ring-1 ring-ink/15 dark:ring-paper/20"
         />
         <span>Account</span>

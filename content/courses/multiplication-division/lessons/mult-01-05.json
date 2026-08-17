@@ -15,28 +15,25 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Watch the flip happen one step at a time.",
+      "body": "Build an array that still works when it turns.",
    "conceptTag": "commutativity",
    "widget": {
-    "type": "steppedReveal",
-    "prompt": "Why does turning an array sideways never change the total?",
-    "panels": [
-     {
-      "title": "Build it",
-      "body": "Lay out 2 rows with 5 dots in each row. Count them: 2 × 5 = 10 dots."
-     },
-     {
-      "title": "Turn it",
-      "body": "Rotate the whole card a quarter turn. The same dots now sit in 5 rows with 2 in each row — that's 5 × 2."
-     },
-     {
-      "title": "Nothing changed",
-      "body": "You never added or removed a single dot. So 2 × 5 and 5 × 2 must both equal 10. Flipping the numbers just turns the picture."
-     }
-    ],
-    "continueFeedback": "Keep going — the flip finishes in the next panel.",
-    "successFeedback": "That's the whole trick: turning the array swaps the numbers but keeps every dot."
-   },
+        "type": "areaModel",
+        "prompt": "Build a 2-by-5 array. The same 10 squares can also be read as 5 by 2 when the array turns.",
+        "targetArea": 10,
+        "wMax": 5,
+        "hMax": 5,
+        "wStart": 2,
+        "hStart": 4,
+        "requireFactors": {
+          "w": 2,
+          "h": 5
+        },
+        "factorFeedback": "The area is 10, but use side lengths 2 and 5 so the turn shows 2 × 5 and 5 × 2.",
+        "lowFeedback": "The array has fewer than 10 squares. Make one side 2 and the other 5.",
+        "highFeedback": "The array has more than 10 squares. Make one side 2 and the other 5.",
+        "successFeedback": "The 2-by-5 and 5-by-2 views contain the same 10 squares. Turning the array changes the viewpoint, not the total."
+      },
    "predict": {
     "prompt": "Turn a 2 × 5 array on its side and it reads 5 × 2. Does the dot count change?",
     "options": [

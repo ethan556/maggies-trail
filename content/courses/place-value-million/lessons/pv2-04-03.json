@@ -40,25 +40,6 @@
         ],
         "continueFeedback": "Keep tracing the chain past each zero.",
         "successFeedback": "40,052 − 18,675 = 21,377 — the break reached past two zeros, turning both into 9s along the way."
-      },
-      "predict": {
-        "prompt": "Borrowing when the very next column holds a ZERO — does the borrow just stop there?",
-        "options": [
-          {
-            "id": "chain",
-            "label": "No — it chains left until a nonzero digit"
-          },
-          {
-            "id": "stop",
-            "label": "Yes — you can't borrow from 0"
-          },
-          {
-            "id": "right",
-            "label": "Borrow from the right instead"
-          }
-        ],
-        "outcomeId": "chain",
-        "reveal": "A zero has nothing to lend, so it borrows too — the request relays leftward until someone can pay, and the zeros become nines along the way."
       }
     },
     {
@@ -188,6 +169,25 @@
       "kind": "interactive",
       "body": "Run the chain yourself.",
       "conceptTag": "subtract-across-zeros",
+      "predict": {
+        "prompt": "Before you work the columns in 6,002 - 1,348, how far left must the first borrow travel?",
+        "options": [
+          {
+            "id": "thousands",
+            "label": "All the way to the 6 thousands"
+          },
+          {
+            "id": "tens",
+            "label": "Only as far as the 0 tens"
+          },
+          {
+            "id": "hundreds",
+            "label": "Only as far as the 0 hundreds"
+          }
+        ],
+        "outcomeId": "thousands",
+        "reveal": "The column model confirms that both zero columns have nothing to lend, so the chain reaches the 6 thousands. On the way back, each zero receives ten and passes one on."
+      },
       "widget": {
         "type": "columnCalc",
         "prompt": "Work 6,002 − 1,348 one column at a time. The ones are short, and the two columns to their left are both zeros — reach past them.",

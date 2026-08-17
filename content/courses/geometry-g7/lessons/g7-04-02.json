@@ -15,55 +15,42 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Slice a cylinder.",
+      "body": "Sweep a flat cut through a cylinder and watch the cross-section stay circular.",
       "widget": {
-        "type": "mcq",
-        "prompt": "A cylinder is sliced parallel to its base. What shape is the cross-section?",
-        "options": [
-          {
-            "id": "a",
-            "label": "A circle",
-            "correct": true,
-            "feedback": "Right — every across-slice of a cylinder matches its circular base."
-          },
-          {
-            "id": "b",
-            "label": "A rectangle",
-            "correct": false,
-            "feedback": "The rectangle comes from a DOWNWARD slice — parallel to the base gives a circle."
-          },
-          {
-            "id": "c",
-            "label": "A triangle",
-            "correct": false,
-            "feedback": "Nothing about a cylinder is pointed — an across-slice shows a circle."
-          },
-          {
-            "id": "d",
-            "label": "An oval",
-            "correct": false,
-            "feedback": "Parallel to the base the cut is a perfect circle — ovals come from tilted cuts."
-          }
-        ]
+        "type": "solidSliceLab",
+        "prompt": "Move a cut parallel to the circular base from low to high on the cylinder. Stop halfway after comparing several heights.",
+        "solid": "cylinder",
+        "radius": 4,
+        "height": 8,
+        "targetFraction": 0.5,
+        "startFraction": 0.1,
+        "fractionStep": 0.1,
+        "tolerance": 0.05,
+        "comparisonRequired": false,
+        "requiredMoves": 4,
+        "successFeedback": "Every parallel cut is a circle with the same radius as the base. Height changes the cut's position, not its shape or area.",
+        "positionFeedback": "Keep sweeping the cut toward halfway and compare the circular section at several heights.",
+        "comparisonFeedback": "This cylinder needs no comparison solid; compare the cut at different heights instead.",
+        "invariantFeedback": "Try more heights first. The key evidence is that every base-parallel section remains the same circle."
       },
       "predict": {
-        "prompt": "Slicing a solid PARALLEL to its base — will the cross-section copy the base's shape?",
+        "prompt": "As a base-parallel cut moves up a cylinder, what happens to its cross-section?",
         "options": [
           {
             "id": "yes",
-            "label": "Yes — the base's shape"
+            "label": "It stays a circle like the base"
           },
           {
             "id": "rect",
-            "label": "No — slices are always rectangles"
+            "label": "It changes into a rectangle"
           },
           {
             "id": "depends",
-            "label": "Depends how high you slice"
+            "label": "Its shape changes at each height"
           }
         ],
         "outcomeId": "yes",
-        "reveal": "A parallel slice meets the solid exactly the way the base does — same outline at every height. Tilt the cut and the story changes."
+        "reveal": "A cut parallel to a cylinder's base keeps the base's circular outline at every height. A tilted or vertical cut would produce a different shape."
       }
     },
     {

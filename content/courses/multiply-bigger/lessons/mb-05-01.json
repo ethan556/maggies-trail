@@ -15,51 +15,50 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Additive or multiplicative?",
+   "body": "Grow the pattern by a fixed multiplication and inspect each term.",
    "conceptTag": "patterns",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each pattern by its rule.",
-    "buckets": [
+    "type": "sequenceBuild",
+    "prompt": "Inspect 3, 6, 12, 24. Select the rule that creates every next term.",
+    "mode": "geometric",
+    "task": "ruleType",
+    "answerMode": "choice",
+    "first": 3,
+    "ratio": 2,
+    "count": 4,
+    "choices": [
+     {
+      "id": "double",
+      "label": "Multiply by 2",
+      "claim": "recursive:multiply:2",
+      "feedback": "Each term is twice the one before it."
+     },
      {
       "id": "add",
-      "label": "Add/Subtract same amount",
-      "icon": "➕"
+      "label": "Add 3",
+      "claim": "recursive:add:3",
+      "feedback": "Adding 3 gives 3, 6, 9, 12, not the shown pattern."
      },
      {
-      "id": "mult",
-      "label": "Multiply/Divide same amount",
-      "icon": "✖️"
+      "id": "mixed",
+      "label": "Change the rule each time",
+      "claim": "misconception:mixed",
+      "feedback": "One rule, multiply by 2, fits every step."
      }
     ],
-    "items": [
-     {
-      "id": "p1",
-      "label": "5, 10, 15, 20",
-      "bucketId": "add",
-      "feedback": "Each term adds 5 — an additive rule."
-     },
-     {
-      "id": "p2",
-      "label": "3, 6, 12, 24",
-      "bucketId": "mult",
-      "feedback": "Each term is 2 times the last — a multiplicative rule."
-     },
-     {
-      "id": "p3",
-      "label": "50, 45, 40, 35",
-      "bucketId": "add",
-      "feedback": "Each term subtracts 5 — still additive (subtracting is just adding a negative amount)."
-     },
-     {
-      "id": "p4",
-      "label": "1, 5, 25, 125",
-      "bucketId": "mult",
-      "feedback": "Each term is 5 times the last — a multiplicative rule."
-     }
+    "numericErrors": [],
+    "authoredStages": [],
+    "requiredStageKeys": [
+     "pattern:first",
+     "pattern:change"
     ],
-    "missFeedback": "Check the gap between terms: a steady add/subtract is additive; a steady multiply/divide is multiplicative.",
-    "successFeedback": "5,10,15,20 and 50,45,40,35 both add or subtract a fixed amount; 3,6,12,24 and 1,5,25,125 both multiply by a fixed amount."
+    "requiredExplorations": 2,
+    "tolerance": 0,
+    "fallbackFeedback": "Compare each term with the one before it. The factor stays 2.",
+    "explorationFeedback": "Inspect the first term and the common change before checking.",
+    "successFeedback": "The rule is multiply by 2: each bar is twice the previous bar.",
+    "lowFeedback": "The selected growth is too small.",
+    "highFeedback": "The selected growth is too large."
    },
    "predict": {
     "prompt": "The pattern 3, 6, 12, 24 — is its rule ADD 3 or DOUBLE?",

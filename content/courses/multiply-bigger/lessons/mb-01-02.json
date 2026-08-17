@@ -15,68 +15,46 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Build the equation.",
+   "body": "Scale one sapling height into five equal copies.",
    "conceptTag": "comparison-equations",
    "widget": {
-    "type": "buildExpression",
-    "prompt": "Build the equation for: 'The oak (40 ft) is 5 times as tall as the sapling (s).'",
-    "tokens": [
+    "type": "proportionalReasoningLab",
+    "task": "scaleRatio",
+    "answerMode": "numeric",
+    "prompt": "One sapling is 8 feet tall. Scale from 1 sapling to 5 equal sapling-heights to model a 40-foot oak.",
+    "xLabel": "equal copies",
+    "yLabel": "feet",
+    "series": [
      {
-      "id": "t40",
-      "label": "40"
-     },
-     {
-      "id": "teq",
-      "label": "="
-     },
-     {
-      "id": "t5",
-      "label": "5"
-     },
-     {
-      "id": "tx",
-      "label": "×"
-     },
-     {
-      "id": "ts",
-      "label": "s"
-     },
-     {
-      "id": "tp",
-      "label": "+"
+      "id": "trail",
+      "label": "height comparison",
+      "pairs": [
+       [
+        1,
+        8
+       ]
+      ]
      }
     ],
-    "correct": [
-     "t40",
-     "teq",
-     "t5",
-     "tx",
-     "ts"
-    ],
-    "acceptAlso": [
-     [
-      "t40",
-      "teq",
-      "ts",
-      "tx",
-      "t5"
-     ]
-    ],
-    "commonBuilds": [
+    "targetSeriesId": "trail",
+    "targetInput": 5,
+    "answerUnit": "feet",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
      {
-      "sequence": [
-       "t40",
-       "teq",
-       "t5",
-       "tp",
-       "ts"
-      ],
-      "feedback": "40 = 5 + s says the oak is 5 feet MORE — a different story. 'Times as tall' copies: 40 = 5 × s."
+      "value": 13,
+      "feedback": "13 adds 5 to 8. 'Five times as tall' means five complete copies of 8."
+     },
+     {
+      "value": 200,
+      "feedback": "200 multiplies the already-scaled 40 by 5 again. Scale 8 by 5 once."
      }
     ],
-    "reusable": false,
-    "missFeedback": "Bigger = copy-count × smaller: the oak's 40 equals 5 copies of the sapling.",
-    "successFeedback": "40 = 5 × s — five sapling-copies stack to the oak. (So s = 40 ÷ 5 = 8 ft.)"
+    "requiredExplorations": 2,
+    "successFeedback": "Five equal copies of 8 feet make 40 feet, so 40 = 5 × 8.",
+    "explorationFeedback": "Inspect both the starting pair and the scaled pair before checking.",
+    "fallbackFeedback": "Scale both coordinates from 1 copy to 5 copies: multiply 8 by 5."
    },
    "predict": {
     "prompt": "'The oak (40 ft) is 5 times as tall as the sapling s.' Which equation matches?",

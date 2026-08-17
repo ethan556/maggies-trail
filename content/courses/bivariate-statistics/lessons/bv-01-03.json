@@ -15,55 +15,46 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Spot the outlier.",
+      "body": "Fit the main rising band while one point remains visibly far from it.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Most dots on a scatter plot lie along a rising band, but one dot sits far above and to the left, alone. What is that dot?",
-        "options": [
-          {
-            "id": "a",
-            "label": "An outlier",
-            "correct": true,
-            "feedback": "Right — a lone dot far from the pattern is an outlier."
-          },
-          {
-            "id": "b",
-            "label": "A cluster",
-            "correct": false,
-            "feedback": "A cluster is a GROUP of bunched dots — this is a single lone dot, an outlier."
-          },
-          {
-            "id": "c",
-            "label": "The line of best fit",
-            "correct": false,
-            "feedback": "That's a single data point far from the rest — an outlier, not a line."
-          },
-          {
-            "id": "d",
-            "label": "A negative association",
-            "correct": false,
-            "feedback": "One stray dot doesn't set the direction — it's an outlier from the main pattern."
-          }
-        ]
+        "type": "scatterFit",
+        "prompt": "Fit the overall trend of the seven points. Notice what the one high point does to the residual gaps.",
+        "points": [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [3, 8]],
+        "xMin": 0,
+        "xMax": 7,
+        "yMin": 0,
+        "yMax": 10,
+        "mMin": -1,
+        "mMax": 2,
+        "mStep": 0.5,
+        "bMin": 0,
+        "bMax": 5,
+        "bStep": 1,
+        "mStart": -0.5,
+        "bStart": 5,
+        "tolerance": 2.2,
+        "successFeedback": "The fitted line still rises with the main band. The lone high point is an outlier: important to investigate, but not enough to erase the overall pattern.",
+        "slopeFeedback": "Follow the six-point rising band first. One unusual point should not make the fitted line ignore the rest of the data.",
+        "offsetFeedback": "The direction is plausible, but the line is not centered on the main band. Adjust its vertical position."
       },
       "predict": {
-        "prompt": "One dot sits far off the rising band. Does that single dot erase the overall pattern?",
+        "prompt": "One point sits far from a rising band. Does that point erase the overall pattern?",
         "options": [
           {
             "id": "no",
-            "label": "No — the pattern stands; the dot is unusual"
+            "label": "No; the band remains and the point is unusual"
           },
           {
             "id": "yes",
-            "label": "Yes — no pattern anymore"
+            "label": "Yes; one outlier removes the whole pattern"
           },
           {
             "id": "error",
-            "label": "The dot must be a mistake"
+            "label": "The point must be a recording mistake"
           }
         ],
         "outcomeId": "no",
-        "reveal": "A lone far-off point is an outlier — worth investigating, but the band of dots still carries the relationship. One stranger doesn't dissolve a crowd."
+        "reveal": "A point far from the main band is an outlier. It deserves attention, but the direction of the larger group still provides evidence of an association."
       }
     },
     {

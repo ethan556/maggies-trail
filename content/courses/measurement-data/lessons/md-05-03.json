@@ -15,72 +15,70 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Same fence, count the inside.",
+      "body": "Compare the inside space of two rectangles with the same fence.",
       "conceptTag": "area-vs-perimeter",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Both rectangles below have a perimeter of 12. Match each to its AREA.",
-        "left": [
+        "type": "compositeAreaLab",
+        "prompt": "A 3-by-3 pen and a 1-by-5 pen each use 12 meters of fence. Use the shown rectangles to find how much more area the square pen has.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "id": "r15",
-            "label": "1 by 5 (skinny)"
+            "id": "square",
+            "label": "3 by 3 pen",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 3
           },
           {
-            "id": "r33",
-            "label": "3 by 3 (square)"
-          },
-          {
-            "id": "r24",
-            "label": "2 by 4 (in between)"
+            "id": "skinny",
+            "label": "1 by 5 pen",
+            "shape": "rectangle",
+            "operation": "subtract",
+            "width": 1,
+            "height": 5
           }
         ],
-        "right": [
-          {
-            "id": "a9",
-            "label": "9 square units"
-          },
-          {
-            "id": "a5",
-            "label": "5 square units"
-          },
-          {
-            "id": "a8",
-            "label": "8 square units"
-          }
-        ],
-        "pairs": {
-          "r15": "a5",
-          "r33": "a9",
-          "r24": "a8"
+        "target": {
+          "kind": "total"
         },
-        "pairErrors": [
+        "choices": [
           {
-            "left": "r15",
-            "right": "a9",
-            "feedback": "9 belongs to the 3-by-3 square. The skinny 1-by-5 has area 1 × 5 = 5 — same fence, far less inside."
+            "id": "difference",
+            "label": "4 square meters",
+            "value": 4,
+            "feedback": "Yes. The areas are 9 and 5, so the difference is 4 square meters."
+          },
+          {
+            "id": "perimeter",
+            "label": "12 square meters",
+            "value": 12,
+            "feedback": "12 is the shared perimeter, not an area. Use length × width for each rectangle."
+          },
+          {
+            "id": "sum",
+            "label": "14 square meters",
+            "value": 14,
+            "feedback": "14 adds the two areas. The question asks how much more, so find 9 − 5."
           }
         ],
-        "missFeedback": "All three share perimeter 12, but area is length × width: 1×5=5, 2×4=8, 3×3=9.",
-        "successFeedback": "Same fence of 12, three different insides: 5, 8, 9. The squarer the shape, the more it holds."
+        "fallbackFeedback": "The square pen has area 9, and the skinny pen has area 5. Compare them with 9 − 5.",
+        "successFeedback": "The same 12-meter fence makes areas of 9 and 5 square meters. Same perimeter does not force the same area."
       },
       "predict": {
-        "prompt": "Two rectangles share the same perimeter of 12. Must they also share the same AREA?",
+        "prompt": "Two rectangles have the same perimeter of 12 units. Must their areas be equal?",
         "options": [
           {
             "id": "no",
-            "label": "No — same fence, different yards"
+            "label": "No — their areas can be different"
           },
           {
             "id": "yes",
-            "label": "Yes — perimeter fixes area"
-          },
-          {
-            "id": "square",
-            "label": "Only if one is a square"
+            "label": "Yes — their areas must be equal"
           }
         ],
         "outcomeId": "no",
-        "reveal": "A fence of 12 can wrap a skinny 1-by-5 or a plump 3-by-3 — five squares versus nine. Perimeter and area answer different questions and move independently."
+        "reveal": "A 1-by-5 rectangle and a 3-by-3 rectangle both have perimeter 12, but their areas are 5 and 9 square units."
       }
     },
     {

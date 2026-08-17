@@ -292,23 +292,24 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "The equidistant center.",
+      "body": "Measure from the rectangle's centre to a corner.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Same 9-by-12 rectangle. How far is the diagonals' intersection point from each corner?",
-        "answer": 7.5,
-        "tolerance": 0.01,
-        "commonErrors": [
-          {
-            "value": 15,
-            "feedback": "15 is the FULL diagonal. The intersection bisects it, so each corner sits half that away: 7.5."
-          },
-          {
-            "value": 5.25,
-            "feedback": "5.25 = 10.5/2 halves the wrong number (the side average). Half the true diagonal: 15/2 = 7.5."
-          }
+        "type": "distanceGrid",
+        "anchor": [
+          0,
+          0
         ],
-        "fallbackFeedback": "Half of the 15 diagonal: 7.5 — the same for all four corners, since the diagonals are congruent AND bisect each other."
+        "targetPoint": [
+          3,
+          4
+        ],
+        "gridMin": 0,
+        "gridMax": 8,
+        "startX": 1,
+        "startY": 1,
+        "prompt": "The diagonals meet at the origin. Place a corner 3 units right and 4 units up, then read its distance from the centre.",
+        "successFeedback": "The centre-to-corner distance is 5. A rectangle's congruent diagonals are bisected, so every corner is the same distance from their intersection.",
+        "wrongPointFeedback": "Use the diagonal half as a right triangle: 3 units across and 4 units up."
       }
     },
     {

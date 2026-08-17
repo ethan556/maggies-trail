@@ -11,34 +11,6 @@ type VariantGen = {
 type Rand = () => number;
 type TemplateBank = Record<string, Record<string, any[]>>;
 
-const REASONING_MARK = "\n\nReasoning check:";
-const PROMPT_EXTENSIONS: Record<Band, readonly string[]> = {
-  support: [
-    "Identify the representation and the governing relationship before calculating.",
-    "Mark the known quantities, then choose the operation or theorem that connects them.",
-    "Use the visible structure one step at a time and check the units.",
-    "Name what stays fixed before changing or computing anything.",
-    "Translate the graph, table, or expression into one precise relationship first.",
-    "Sketch or annotate the situation before entering the result.",
-  ],
-  core: [
-    "Justify the relationship before entering the result.",
-    "Connect the visual, numerical, and symbolic representations.",
-    "State the invariant or definition that makes the method valid.",
-    "Check the result against the domain, sign, orientation, and units.",
-    "Use a second representation to verify the conclusion.",
-    "Distinguish a pattern you notice from a relationship you can defend.",
-  ],
-  stretch: [
-    "Give a definition-level justification and audit every hidden assumption.",
-    "Test the conclusion against a boundary case or counterexample.",
-    "Verify the result by an independent representation or reverse operation.",
-    "Explain why the method still works after the parameters are changed.",
-    "Check both the numerical result and the logical conditions that permit it.",
-    "Generalize the relationship before committing to the specific answer.",
-  ],
-};
-
 const pick = <T>(rand: Rand, xs: readonly T[]): T => xs[Math.floor(rand() * xs.length)]!;
 const shuffle = <T>(rand: Rand, xs: readonly T[]): T[] => {
   const out = [...xs];
@@ -77,10 +49,6 @@ function normalizeStrings(value: any, key = ""): any {
     for (const [childKey, child] of Object.entries(value)) value[childKey] = normalizeStrings(child, childKey);
   }
   return value;
-}
-
-function freshPrompt(base: string, rand: Rand, band: Band): string {
-  return `${polishText(base.trim())}${REASONING_MARK} ${pick(rand, PROMPT_EXTENSIONS[band])}`;
 }
 
 function normalizeNumeric(widget: any): void {
@@ -180,12 +148,14 @@ export function generatorsFromAuthoredBank(bank: TemplateBank, labelPrefix: stri
     tag,
     label: `${labelPrefix}: ${tag}`,
     forms: Object.keys(forms) as never[],
-    gen: (rand, band = "core", requestedForm = "default") => {
+    gen: (rand, _band = "core", requestedForm = "default") => {
       const form = requestedForm === "default" ? Object.keys(forms)[0]! : requestedForm;
       const pool = forms[form];
       if (!pool?.length) throw new Error(`Unsupported authored-template form ${tag}@${requestedForm}`);
       const widget = normalizeStrings(clone(pick(rand, pool)));
-      widget.prompt = freshPrompt(String(widget.prompt), rand, band);
+      // These surfaces do not collect written reasoning. Keep the task aligned
+      // with the value, option, point, ordering, or expression learners can submit.
+      widget.prompt = polishText(String(widget.prompt).trim());
       if (widget.type === "numeric") normalizeNumeric(widget);
       diversify(widget, rand);
       const answer = answerFor(widget);

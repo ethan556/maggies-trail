@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 const root = process.cwd();
 const queuePath = path.join(root, "PREMIUM_PENDING_WORKLOAD_QUEUE.csv");
@@ -60,7 +61,12 @@ function parseCsv(text) {
 }
 
 function readObjects(file) {
-  const rows = parseCsv(fs.readFileSync(path.join(root, file), "utf8"));
+  const text = fs
+    .readFileSync(path.join(root, file), "utf8")
+    .split(/\r?\n/)
+    .filter((line) => !line.startsWith("#"))
+    .join("\n");
+  const rows = parseCsv(text);
   const [header = [], ...body] = rows;
   return body.map((values) => Object.fromEntries(header.map((name, index) => [name, values[index] ?? ""])));
 }
@@ -93,54 +99,118 @@ function add(row) {
   queue.set(row.work_id, Object.fromEntries(headers.map((header) => [header, String(row[header] ?? "")] )));
 }
 
-for (const row of readObjects("PREMIUM_PENDING_WORKLOAD_QUEUE.csv")) {
-  if (row.workstream === "ILLUSTRATION_REPLACEMENT") add(row);
-}
-
-let index = 0;
-for (const row of readObjects("MATH_TYPESETTING_AUDIT.csv")) {
-  if (row.ascii_notation_risk !== "yes") continue;
-  index += 1;
-  const visibility = row.classification === "A" ? 5 : row.classification === "B" ? 4 : 3;
+for (const row of readObjects("reports/vis/VIS01_PLACEMENTS.csv")) {
+  if (row.cause === "RENDERS") continue;
   add({
-    work_id: `TEX-${String(index).padStart(5, "0")}`,
-    priority: "P1",
-    priority_score: 3 * visibility * 5,
-    workstream: "MATH_TYPESETTING",
-    status: "OPEN_CONVERSION_REVIEW",
-    source: row.source,
+    work_id: `VIS-${cleanId(`${row.lesson_id}-${row.step_id}-${row.figure}`)}`,
+    priority: "P0",
+    priority_score: 500,
+    workstream: "ILLUSTRATION_REPLACEMENT",
+    status: "OPEN_VISUAL_DISPOSITION_AND_REPLACEMENT",
+    source: row.file,
     lesson_id: row.lesson_id,
-    step_path: row.json_path,
-    learner_harm: 3,
+    step_path: row.path,
+    current_figure_id: row.figure,
+    learner_harm: 5,
     frequency: 1,
-    visibility,
+    visibility: 5,
     strategic_importance: 5,
-    mismatch_evidence: `ASCII_NOTATION_RISK:${row.action}:${row.text}`,
-    next_action: row.action === "DISPLAY_MATH"
-      ? "Convert the learner-visible expression through the canonical KaTeX/MathML display path and verify screen-reader parity."
-      : "Convert the learner-visible expression through the canonical inline KaTeX/MathML path and verify surrounding prose remains natural."
+    mismatch_evidence: `${row.cause}: ${row.body}`,
+    next_action: "Classify the visual as required, preferred, fading scaffold, or unnecessary; replace any required withheld exemplar with a synchronized, accessible representation."
   });
 }
 
+function currentLessons() {
+  const records = [];
+  const coursesRoot = path.join(root, "content", "courses");
+  for (const course of fs.readdirSync(coursesRoot, { withFileTypes: true })) {
+    if (!course.isDirectory()) continue;
+    const lessonsDir = path.join(coursesRoot, course.name, "lessons");
+    if (!fs.existsSync(lessonsDir)) continue;
+    for (const file of fs.readdirSync(lessonsDir).filter((name) => name.endsWith(".json")).sort()) {
+      const absolute = path.join(lessonsDir, file);
+      const lesson = JSON.parse(fs.readFileSync(absolute, "utf8"));
+      records.push({
+        courseId: course.name,
+        lesson,
+        lessonId: lesson.id ?? file.replace(/\.json$/, ""),
+        source: path.relative(root, absolute).replaceAll(path.sep, "/")
+      });
+    }
+  }
+  return records.sort((a, b) => a.lessonId.localeCompare(b.lessonId));
+}
+
+function stable(value) {
+  if (Array.isArray(value)) return `[${value.map(stable).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stable(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+let index = 0;
+const mathPresentationIndexes = [
+  "MATH_MACHINE_EXPRESSION_LEAK_INDEX.csv",
+  "MATH_SYMBOLIC_DISPLAY_INDEX.csv",
+  "MATH_FRACTION_DISPLAY_INDEX.csv",
+  "MATH_CANONICAL_FORM_INDEX.csv",
+  "MATH_CONSTANT_ORDER_INDEX.csv",
+  "MATH_DERIVATIVE_NOTATION_INDEX.csv",
+  "MATH_INTEGRAL_NOTATION_INDEX.csv",
+  "MATH_UNIT_NOTATION_INDEX.csv",
+  "MATH_DECIMAL_FRACTION_POLICY_INDEX.csv"
+];
+for (const file of mathPresentationIndexes) {
+  for (const row of readObjects(`reports/math-presentation/${file}`)) {
+    index += 1;
+    const critical = file === "MATH_MACHINE_EXPRESSION_LEAK_INDEX.csv";
+    add({
+      work_id: `MATH-${String(index).padStart(5, "0")}`,
+      priority: critical ? "P0" : "P1",
+      priority_score: critical ? 500 : 360,
+      workstream: "MATH_PRESENTATION_RESIDUE",
+      status: "OPEN_RENDERED_BOUNDARY_REVIEW",
+      source: row.source === "authored" ? sourceForLesson(row.owner) : `generator:${row.owner}`,
+      lesson_id: row.source === "authored" ? row.owner : "",
+      step_path: `${row.unit}.${row.field}`,
+      learner_harm: critical ? 5 : 3,
+      frequency: 1,
+      visibility: 5,
+      strategic_importance: 5,
+      mismatch_evidence: `${file}:${row.shape}:${row.residue || row.text}`,
+      next_action: "Review the learner-visible residue at the real renderer boundary; repair the shared parser or structured semantic source, then verify visual and screen-reader output."
+    });
+  }
+}
+
+const liveMcqGroups = new Map();
+for (const row of readObjects("reports/mcq/MCQ_LEAKAGE_INDEX.csv")) {
+  const key = [row.source, row.owner, row.unit, row.path].join("::");
+  const group = liveMcqGroups.get(key) ?? { ...row, tells: [] };
+  group.tells.push(`${row.tell}:${row.detail}`);
+  liveMcqGroups.set(key, group);
+}
 index = 0;
-for (const row of readObjects("MCQ_DISTRACTOR_AUDIT.csv")) {
-  if (row.decision !== "REMEDIATE") continue;
+for (const row of [...liveMcqGroups.values()].sort((a, b) =>
+  [a.source, a.owner, a.unit, a.path].join("::").localeCompare([b.source, b.owner, b.unit, b.path].join("::"))
+)) {
   index += 1;
   add({
-    work_id: `MCQ-${String(index).padStart(4, "0")}`,
+    work_id: `CHOICE-${String(index).padStart(4, "0")}`,
     priority: "P1",
-    priority_score: 320,
-    workstream: "MCQ_DISTRACTOR_REVIEW",
-    status: "OPEN_HUMAN_REVIEW",
-    source: row.source,
-    lesson_id: row.lesson_id,
-    step_path: `${row.remedial === "yes" ? "remedial" : "steps"}.${row.step_id}`,
+    priority_score: 400,
+    workstream: "CHOICE_SURFACE_INTEGRITY",
+    status: "OPEN_STEM_OPTION_AND_VISUAL_REVIEW",
+    source: row.source === "authored" ? row.path : `generator:${row.owner}`,
+    lesson_id: row.source === "authored" ? row.owner : "",
+    step_path: row.unit,
     learner_harm: 4,
     frequency: 1,
-    visibility: 4,
+    visibility: 5,
     strategic_importance: 5,
-    mismatch_evidence: `BLIND_GUESS_${row.blind_guess_test}:longest=${row.longest_option_leak}:punctuation=${row.punctuation_leak}:unmapped=${row.unmapped_distractors}: ${row.prompt}`,
-    next_action: "Human-review the option set; remove keyed-label leakage while preserving the mathematical judgment, misconception distractors, correct marker, and feedback."
+    mismatch_evidence: `${row.tells.join(" | ")}: ${row.prompt}`,
+    next_action: "Review the complete semantic item; keep one defensible answer, misconception-based parallel options, no writing clue, and a synchronized visual whenever the representation carries the mathematics."
   });
 }
 
@@ -250,6 +320,144 @@ for (const row of readObjects("PREMIUM_INTERACTION_PRIORITY.csv")) {
   });
 }
 
+// V4 extends the existing queue with complete lesson-level dispositions rather than creating a
+// competing tracker. These rows are intentionally open until a calibrated semantic review closes
+// them with evidence from the same candidate build.
+const lessons = currentLessons();
+const curriculumSeal = createHash("sha256")
+  .update(lessons.map(({ source }) => `${source}\0${fs.readFileSync(path.join(root, source), "utf8")}\0`).join(""))
+  .digest("hex");
+for (const record of lessons) {
+  const { lesson, lessonId, source } = record;
+  add({
+    work_id: `LESSON-${lessonId}`,
+    priority: "P1",
+    priority_score: 300,
+    workstream: "LESSON_COMPLETE_DISPOSITION",
+    status: "OPEN_KEEP_REVISE_ESCALATE_DISPOSITION",
+    source,
+    lesson_id: lessonId,
+    step_path: "lesson",
+    learner_harm: 3,
+    frequency: 1,
+    visibility: 5,
+    strategic_importance: 5,
+    mismatch_evidence: "V4 requires one evidence-backed KEEP, REVISE, or ESCALATE disposition per lesson.",
+    next_action: "Review the complete lesson interaction, question-job progression, feedback truth, visual purpose, language fit, challenge demand, and deployment evidence."
+  });
+  add({
+    work_id: `VISUAL-DISPOSITION-${lessonId}`,
+    priority: "P1",
+    priority_score: 320,
+    workstream: "VISUAL_FIRST_REPRESENTATION",
+    status: "OPEN_VISUAL_REQUIRED_PREFERRED_SUFFICIENT_DECISION",
+    source,
+    lesson_id: lessonId,
+    step_path: "lesson",
+    learner_harm: 3,
+    frequency: 1,
+    visibility: 5,
+    strategic_importance: 5,
+    mismatch_evidence: "No calibrated lesson-level V4 visual-opportunity disposition is recorded.",
+    next_action: "Classify the lesson and each concept/question medium; prove every required visual is meaningful, synchronized, visible, and accessibly equivalent."
+  });
+  add({
+    work_id: `LANGUAGE-${lessonId}`,
+    priority: "P1",
+    priority_score: 300,
+    workstream: "GRADE_LANGUAGE_REVIEW",
+    status: "OPEN_GRADE_BAND_LANGUAGE_REVIEW",
+    source,
+    lesson_id: lessonId,
+    step_path: "lesson",
+    learner_harm: 3,
+    frequency: 1,
+    visibility: 5,
+    strategic_importance: 4,
+    mismatch_evidence: "V4 language review is not yet attached across prompts, options, hints, feedback, narration, and generated surfaces.",
+    next_action: "Review clarity, naturalness, sentence and clause load, referents, vocabulary introduction, and read-aloud fit for the intended grade without diluting mathematics."
+  });
+
+  const widgets = (lesson.steps ?? []).filter((step) => step?.widget).map((step) => ({
+    id: step.id ?? "",
+    signature: stable(step.widget),
+    prompt: String(step.widget?.prompt ?? "").trim()
+  }));
+  const repeatedWidgets = [...new Set(widgets.filter((item, i) =>
+    widgets.findIndex((candidate) => candidate.signature === item.signature) !== i
+  ).map((item) => item.id))];
+  const repeatedPrompts = [...new Set(widgets.filter((item, i) => item.prompt &&
+    widgets.findIndex((candidate) => candidate.prompt === item.prompt) !== i
+  ).map((item) => item.id))];
+  const normalized = widgets.map((item) => ({
+    ...item,
+    template: item.prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ")
+  }));
+  const repeatedTemplates = [...new Set(normalized.filter((item, i) => item.template &&
+    normalized.findIndex((candidate) => candidate.template === item.template) !== i
+  ).map((item) => item.id))];
+  if (repeatedWidgets.length || repeatedPrompts.length || repeatedTemplates.length) {
+    add({
+      work_id: `PROGRESSION-${lessonId}`,
+      priority: repeatedWidgets.length || repeatedPrompts.length ? "P0" : "P1",
+      priority_score: repeatedWidgets.length || repeatedPrompts.length ? 450 : 330,
+      workstream: "LESSON_PROGRESSION_AND_DUPLICATION",
+      status: "OPEN_REPEAT_PURPOSE_OR_REDESIGN",
+      source,
+      lesson_id: lessonId,
+      step_path: [...new Set([...repeatedWidgets, ...repeatedPrompts, ...repeatedTemplates])].join(" "),
+      learner_harm: repeatedWidgets.length || repeatedPrompts.length ? 4 : 3,
+      frequency: 1,
+      visibility: 5,
+      strategic_importance: 5,
+      mismatch_evidence: `duplicate-widgets=[${repeatedWidgets.join(",")}]; exact-prompts=[${repeatedPrompts.join(",")}]; number-normalized-prompts=[${repeatedTemplates.join(",")}]`,
+      next_action: "Assign question jobs and approve a fluency/retrieval rationale or replace the repeat with a different action, representation, misconception, constraint, or transfer demand."
+    });
+  }
+}
+
+for (const row of readObjects("EXCELLENCE_BACKLOG_S126.csv")) {
+  add({
+    work_id: `EXCELLENCE-${row.lessonId}`,
+    priority: "P0",
+    priority_score: 470,
+    workstream: "QUESTION_DIVERSITY_AND_TRANSFER",
+    status: "OPEN_REPRESENTATION_NOVELTY",
+    source: row.sourcePath,
+    lesson_id: row.lessonId,
+    step_path: "assessed sequence",
+    learner_harm: 4,
+    frequency: 1,
+    visibility: 5,
+    strategic_importance: 5,
+    mismatch_evidence: `${row.candidateDisposition}: ${row.classificationScoreGaps}`,
+    next_action: row.candidateEngineOrExtension
+  });
+}
+
+const standards = JSON.parse(
+  fs.readFileSync(path.join(root, "content", "standards", "evidence-dossiers.json"), "utf8")
+).dossiers;
+for (const dossier of standards) {
+  if (dossier.review?.status === "approved" || dossier.review?.status === "rejected") continue;
+  add({
+    work_id: `STANDARD-${dossier.edgeId}`,
+    priority: "P1",
+    priority_score: 340,
+    workstream: "STANDARDS_VERIFICATION",
+    status: "OPEN_EXACT_BENCHMARK_AND_EVIDENCE_REVIEW",
+    source: `content/standards/evidence-dossiers.json#${dossier.edgeId}`,
+    lesson_id: (dossier.evidenceSummary?.lessonIds ?? []).join(" "),
+    step_path: dossier.objectiveId,
+    learner_harm: 3,
+    frequency: 1,
+    visibility: 4,
+    strategic_importance: 5,
+    mismatch_evidence: `${dossier.candidateCode}: ${dossier.sourceTextStatus}; ${dossier.claimLimit}`,
+    next_action: "Verify official wording and full intent, then approve, reject, or mark partial with concept teaching and independent learner evidence tied to the exact source."
+  });
+}
+
 const ledgerLines = fs.readFileSync(path.join(root, "CLOSURE_LEDGER.md"), "utf8").split(/\r?\n/);
 const latestLedgerRows = new Map();
 for (const line of ledgerLines) {
@@ -280,30 +488,29 @@ for (const [id, cells] of latestLedgerRows) {
   });
 }
 
-const waves = [
-  ["C", "MCQ distractor remediation", "Continue the 572-row human-review queue by learner harm and repeated-family leverage."],
-  ["D", "Prediction rationalization", "Disposition the 200 non-causal or duplicated prediction gates."],
-  ["E", "Visual rebuild and scaling", "Create concept-accurate replacements for every withheld illustration and repair remaining responsive figure defects."],
-  ["F", "Direct manipulation", "Remediate the prioritized lessons and engine families where manipulation remains answer-only or one-way."],
-  ["G", "Engine polish", "Finish touch, keyboard, state-description, error-model and reversible-play gaps by engine priority."],
-  ["H", "Grade-aware maturity", "Verify that instructions, density and scaffolding match each learner grade band."],
-  ["I", "Responsive, accessibility and performance hardening", "Run real-device, assistive-technology, zoom, motion and performance gates."],
-  ["J", "Final comparison and closure", "Repeat the premium comparison matrix, resolve remaining reopen conditions and seal the final release artifact."]
+const phases = [
+  ["0", "Evidence and deployment parity", "Freeze the candidate, deploy it, and bind browser evidence to the exact commit and content hashes."],
+  ["1", "Complete curriculum disposition", "Close every lesson, visual, language, repetition, question-job, and standards disposition with calibrated evidence."],
+  ["2", "Semantic correctness", "Prove target, model, evaluator, feedback, reveal, accessible description, title and objective agreement by high-risk family."],
+  ["3", "Visual-first and question-diversity canaries", "Pass bounded representative lesson and generator canaries before scaling each family contract."],
+  ["4", "Presentation and bounded queue closure", "Close live renderer residues, choice clues, withheld illustrations, interactions, language and standards in root-cause batches."],
+  ["5", "Generator and family assurance", "Run risk-based properties, unseen seeds, collision checks, qualitative review and transitive consumer reopening."],
+  ["6", "Cross-band journeys and release", "Verify representative deployed journeys, accessibility, responsive states, exact standards evidence and production parity."]
 ];
-for (const [wave, title, nextAction] of waves) {
+for (const [phase, title, nextAction] of phases) {
   add({
-    work_id: `PLAN-WAVE-${wave}`,
-    priority: wave === "C" || wave === "E" || wave === "F" ? "P0" : "P1",
-    priority_score: wave === "C" || wave === "E" || wave === "F" ? 500 : 350,
-    workstream: "PREMIUM_REBUILD_WAVE",
-    status: "OPEN_PROGRAM_WAVE",
-    source: "PREMIUM_REBUILD_PLAN.md",
-    step_path: `Wave ${wave}: ${title}`,
-    learner_harm: wave === "C" || wave === "E" || wave === "F" ? 5 : 4,
+    work_id: `V4-PHASE-${phase}`,
+    priority: phase === "0" || phase === "2" || phase === "3" ? "P0" : "P1",
+    priority_score: phase === "0" || phase === "2" || phase === "3" ? 500 : 350,
+    workstream: "V4_PROGRAMME_PHASE",
+    status: "OPEN_PROGRAMME_PHASE",
+    source: "MAGGIE’S TRAIL — MATHS CONTENT EXCELLENCE PROGRAM V4",
+    step_path: `Phase ${phase}: ${title}`,
+    learner_harm: phase === "0" || phase === "2" || phase === "3" ? 5 : 4,
     frequency: 1,
     visibility: 5,
     strategic_importance: 5,
-    mismatch_evidence: "Program-level completion gate; detailed child rows are included in this queue where a deterministic inventory exists.",
+    mismatch_evidence: "V4 programme-level closure gate; detailed child rows are in this same queue.",
     next_action: nextAction
   });
 }
@@ -320,9 +527,10 @@ fs.writeFileSync(queuePath, `${headers.join(",")}\n${rows.map((row) => headers.m
 const counts = new Map();
 for (const row of rows) counts.set(row.workstream, (counts.get(row.workstream) ?? 0) + 1);
 const summary = [
-  "# Consolidated pending workload — S236",
+  "# Maggie's Trail V4 consolidated pending workload — live derived view",
   "",
   `Generated from current source on ${new Date().toISOString().slice(0, 10)}.`,
+  `Curriculum source seal: \`${curriculumSeal}\`.`,
   "",
   `- Total open rows: **${rows.length.toLocaleString("en-US")}**`,
   `- P0 rows: **${rows.filter((row) => row.priority === "P0").length.toLocaleString("en-US")}**`,

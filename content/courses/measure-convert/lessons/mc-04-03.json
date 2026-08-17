@@ -15,40 +15,52 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Find the missing angle around a point.",
+   "body": "Turn past a straight angle to create a reflex angle.",
    "conceptTag": "benchmark-angles",
    "widget": {
-    "type": "numeric",
-    "prompt": "Angles all the way around a point add up to 360°. Two known angles are 200° and 90°. What is the third?",
-    "answer": 70,
-    "tolerance": 0,
-    "unit": "degrees",
-    "commonErrors": [
+    "type": "rotationLab",
+    "prompt": "Turn the point counterclockwise through 270°. Watch the turn pass 180° before it stops.",
+    "mode": "coordinateRule",
+    "targetAngle": 270,
+    "angleStart": 0,
+    "angleStep": 45,
+    "point": [
+     3,
+     1
+    ],
+    "centre": [
+     0,
+     0
+    ],
+    "gridMax": 5,
+    "commonTurns": [
      {
-      "value": 110,
-      "feedback": "110 subtracts from 180, but a FULL TURN around a point totals 360°, not 180: 360−(200+90)=70."
+      "angle": 180,
+      "feedback": "180° is a straight angle. Keep turning another quarter-turn to reach 270°."
      },
      {
-      "value": 290,
-      "feedback": "290 is just the sum of the two knowns (200+90), not the missing angle yet. Subtract that from 360: 70."
+      "angle": 90,
+      "feedback": "90° is only one quarter-turn. A reflex angle must pass 180°."
      }
     ],
-    "fallbackFeedback": "Add the two known angles, then subtract that total from 360."
+    "successFeedback": "270° is three quarter-turns. It is greater than 180°, so it is a reflex angle.",
+    "lowFeedback": "The turn has not reached 270° yet. Keep moving counterclockwise.",
+    "highFeedback": "The turn has passed 270°. Move back one step."
    },
    "predict": {
     "prompt": "Can a single angle around a point measure MORE than 180°?",
     "options": [
      {
       "id": "yes",
-      "label": "Yes — angles can bend past a straight line"
+      "label": "Yes — more than 180°"
      },
      {
       "id": "no",
-      "label": "No — 180° is the ceiling"
+      "label": "No — at most 180°"
      },
      {
       "id": "neg",
-      "label": "Only as a negative angle"
+      "label": "Only with a negative angle"
      }
     ],
     "outcomeId": "yes",

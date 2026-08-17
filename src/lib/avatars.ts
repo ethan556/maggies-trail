@@ -41,6 +41,11 @@
  * (`OPTIMIZATION_PLAN_V3.md:146`).
  */
 
+import {
+  getMathSymbolAvatar,
+  type MathSymbolAvatarDefinition
+} from "./mathSymbolAvatars";
+
 /** The four age-aware collections, preserving the concept boards' maturity range. */
 export type AgeBand = "early" | "explorer" | "adventurer" | "summit";
 
@@ -77,6 +82,33 @@ export interface AvatarDefinition {
 /** `256` = grid/picker size, `512` = profile size (`OPTIMIZATION_PLAN_V3.md:151`). */
 export type AvatarSize = 256 | 512;
 
+export type AvatarGlasses = "none" | "round" | "rectangular";
+export type AvatarAccent = "none" | "navy" | "orange" | "teal" | "violet";
+export type AvatarBadge = "none" | "trail" | "star" | "pi";
+
+/** Restrained, reversible adornments only. Portrait pixels, skin and hair are never recolored. */
+export interface AvatarCustomization {
+  glasses: AvatarGlasses;
+  accent: AvatarAccent;
+  badge: AvatarBadge;
+}
+
+export const DEFAULT_AVATAR_CUSTOMIZATION: AvatarCustomization = {
+  glasses: "none",
+  accent: "none",
+  badge: "none"
+};
+
+export function isAvatarCustomization(value: unknown): value is AvatarCustomization {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const candidate = value as Record<string, unknown>;
+  return (
+    ["none", "round", "rectangular"].includes(String(candidate.glasses)) &&
+    ["none", "navy", "orange", "teal", "violet"].includes(String(candidate.accent)) &&
+    ["none", "trail", "star", "pi"].includes(String(candidate.badge))
+  );
+}
+
 const AVATAR_DIR = "/avatars";
 
 /** The single place an id becomes a file path. Every AvatarDefinition below is built through this
@@ -88,7 +120,18 @@ function avatarSrc(id: string, size: AvatarSize): string {
 /** Release allowlist. Keep candidates out until their independent source, contact-sheet review,
  *  and both production exports pass. The asset validator enforces exact file parity, so adding an
  *  id here without its approved 256/512 pair fails closed. */
-export const ENABLED_AVATAR_IDS: readonly string[] = [];
+export const ENABLED_AVATAR_IDS: readonly string[] = [
+  "avatar-001", "avatar-002", "avatar-003", "avatar-004", "avatar-005", "avatar-006",
+  "avatar-007", "avatar-008", "avatar-009", "avatar-010", "avatar-011", "avatar-012",
+  "avatar-101", "avatar-102", "avatar-103", "avatar-104", "avatar-105", "avatar-106",
+  "avatar-107", "avatar-108", "avatar-109", "avatar-110", "avatar-111", "avatar-112",
+  "avatar-201", "avatar-202", "avatar-203", "avatar-204", "avatar-205", "avatar-206",
+  "avatar-207", "avatar-208", "avatar-209", "avatar-210", "avatar-211", "avatar-212",
+  "avatar-301", "avatar-302", "avatar-303", "avatar-304", "avatar-305", "avatar-306",
+  "avatar-307", "avatar-308", "avatar-309", "avatar-310", "avatar-311", "avatar-312",
+  "avatar-401", "avatar-402", "avatar-403", "avatar-404", "avatar-405", "avatar-406",
+  "avatar-407", "avatar-408", "avatar-409", "avatar-410", "avatar-411", "avatar-412",
+];
 const ENABLED_AVATAR_ID_SET = new Set(ENABLED_AVATAR_IDS);
 
 /** Every declared avatar begins concept-only. Shipping is a separate, reviewable allowlist edit,
@@ -189,7 +232,7 @@ export const AVATARS: AvatarDefinition[] = [
   // C04: very long wavy dark hair; turquoise earrings + pendant; patterned rust-red top
   defineAvatar("avatar-204", "adventurer", "human", 4),
   // ---- adventurer expansion — net-new, no board source (P2) ----
-  // short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee
+  // short natural coils with a subtle side part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee
   defineAvatar("avatar-205", "adventurer", "human", 5),
   // two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket
   defineAvatar("avatar-206", "adventurer", "human", 6),
@@ -247,27 +290,27 @@ export const AVATARS: AvatarDefinition[] = [
   // that `ageBand`, per the manifest-shape test. ----
   // Maggie mark medallion — the twin-peaks-and-trail icon as a dimensional badge, deep navy on warm ivory with a summit-orange star accent [ageBand: adventurer]
   defineAvatar("avatar-401", "adventurer", "symbol", 13),
-  // compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks [ageBand: summit]
+  // function summit — a rising curve cresting into a peak, with one orange point at the crest [ageBand: summit]
   defineAvatar("avatar-402", "summit", "symbol", 13),
-  // summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc [ageBand: early]
+  // first step — one navy boot print with a short dotted orange path continuing ahead [ageBand: early]
   defineAvatar("avatar-403", "early", "symbol", 13),
-  // owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze [ageBand: early]
+  // counting cairn — three balanced trail stones, with the topmost stone orange [ageBand: early]
   defineAvatar("avatar-404", "early", "symbol", 14),
-  // fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze [ageBand: early]
+  // shape sprout — a seedling whose two leaves are a triangle and a circle [ageBand: early]
   defineAvatar("avatar-405", "early", "symbol", 15),
-  // constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines [ageBand: summit]
+  // proof lantern — a navy lantern casting a widening cone of orange light [ageBand: summit]
   defineAvatar("avatar-406", "summit", "symbol", 14),
-  // topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory [ageBand: summit]
+  // infinity trail — one winding path looping into a continuous figure eight [ageBand: summit]
   defineAvatar("avatar-407", "summit", "symbol", 15),
-  // trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc [ageBand: explorer]
+  // fraction bridge — evenly spaced planks read as equal parts of one span [ageBand: explorer]
   defineAvatar("avatar-408", "explorer", "symbol", 13),
-  // compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy [ageBand: explorer]
+  // pattern peak — repeating ridgeline peaks step upward in a steady rhythm [ageBand: explorer]
   defineAvatar("avatar-409", "explorer", "symbol", 14),
-  // mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile [ageBand: adventurer]
+  // data ridge — a mountain profile doubles as a rising bar sequence [ageBand: adventurer]
   defineAvatar("avatar-410", "adventurer", "symbol", 14),
-  // acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark [ageBand: explorer]
+  // coordinate compass — crossed axes, an upper-right needle and an orange origin [ageBand: explorer]
   defineAvatar("avatar-411", "explorer", "symbol", 15),
-  // lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph [ageBand: adventurer]
+  // algebra knot — two trail ropes form one clean symmetric continuous loop [ageBand: adventurer]
   defineAvatar("avatar-412", "adventurer", "symbol", 15)
 ];
 
@@ -292,8 +335,8 @@ export function gradeToAgeBand(grade: number): AgeBand {
 /** Look up a manifest entry by id, enabled or not. Returns `undefined` for an unknown id. Use this
  *  for inspection/admin purposes; use `isValidAvatarId`/`getAvatarSrc` on any path that renders to
  *  a learner, since those two gate on `enabled` and this one deliberately does not. */
-export function getAvatar(id: string): AvatarDefinition | undefined {
-  return AVATARS.find((a) => a.id === id);
+export function getAvatar(id: string): AvatarDefinition | MathSymbolAvatarDefinition | undefined {
+  return AVATARS.find((a) => a.id === id) ?? getMathSymbolAvatar(id);
 }
 
 /** True only for an id that names a manifest entry AND is `enabled`. This is the gate every
@@ -301,7 +344,7 @@ export function getAvatar(id: string): AvatarDefinition | undefined {
  *  pulled after a QA rejection) fails validation exactly like an id that never existed, so a
  *  caller's fallback logic doesn't need two separate cases. */
 export function isValidAvatarId(id: string): boolean {
-  return AVATARS.some((a) => a.id === id && a.enabled);
+  return Boolean(getAvatar(id)?.enabled);
 }
 
 /** Resolve an id + size to an image path — but only if that id is currently valid

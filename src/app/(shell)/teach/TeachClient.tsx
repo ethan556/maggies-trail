@@ -18,6 +18,7 @@ import { readChildProfile } from "@/lib/roster";
 import { isLocalDateString, localDateStr } from "@/lib/engine";
 import type { ManifestCourse } from "@/lib/family";
 import type { Actor } from "@/lib/permissions";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 import {
   assignmentCsv,
   assignmentProgress,
@@ -401,7 +402,18 @@ export default function TeachClient({
                   <tbody>
                     {summary.map((r) => (
                       <tr key={r.name} className="border-t border-ink/8 dark:border-paper/10">
-                        <td className="py-1.5 pr-2 font-bold">{r.name}</td>
+                        <td className="py-1.5 pr-2 font-bold">
+                          <span className="flex items-center gap-2">
+                            <AvatarDisplay
+                              avatarId={r.avatarId}
+                              size={256}
+                              placement="dense-list"
+                              displaySize={32}
+                              className="h-8 w-8 shrink-0 rounded-full ring-1 ring-ink/10 dark:ring-paper/15"
+                            />
+                            {r.name}
+                          </span>
+                        </td>
                         <td className="py-1.5 pr-2 tabular-nums">{r.activeDays14}</td>
                         <td className="py-1.5 pr-2 tabular-nums">{r.lessonsDone}</td>
                         <td className={`py-1.5 pr-2 font-bold ${r.reviewOnTrack ? "text-leaf-ink" : "text-tangerine-ink"}`}>{r.reviewOnTrack ? "on track" : "overdue"}</td>

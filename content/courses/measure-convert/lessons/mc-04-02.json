@@ -15,25 +15,18 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Find the missing angle on a line.",
+   "body": "Build the missing part of a straight angle.",
    "conceptTag": "missing-angle",
    "widget": {
-    "type": "numeric",
-    "prompt": "Two angles sit on a straight line. One is 65°. What is the other?",
-    "answer": 115,
-    "tolerance": 0,
-    "unit": "degrees",
-    "commonErrors": [
-     {
-      "value": 65,
-      "feedback": "65 just repeats the known angle. The two angles together must reach 180°: 180−65=115."
-     },
-     {
-      "value": 25,
-      "feedback": "25 subtracts from 90 instead of 180. Angles on a LINE total 180°: 180−65=115."
-     }
-    ],
-    "fallbackFeedback": "Subtract the known angle from 180."
+    "type": "angleMeasure",
+    "prompt": "One part of a straight angle is 120°. Open the missing part to complete 180°.",
+    "targetAngle": 60,
+    "angleStart": 20,
+    "angleStep": 5,
+    "commonAngles": [],
+    "successFeedback": "The missing angle is 60° because 120° + 60° = 180°.",
+    "lowFeedback": "The two parts still total less than 180°. Open the missing part farther.",
+    "highFeedback": "The two parts now total more than 180°. Narrow the missing part."
    },
    "predict": {
     "prompt": "Two angles together make a straight line. What must they total?",

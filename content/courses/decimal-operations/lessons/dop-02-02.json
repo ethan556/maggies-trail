@@ -43,57 +43,31 @@
       "explanationVariants": [
         "24 splits: write 4, carry 2.",
         "The carry is the tens part of the ones-product."
-      ],
-      "predict": {
-        "prompt": "8 × 3 = 24 in the ones column. Where does the 2 of 24 go?",
-        "options": [
-          {
-            "id": "carry",
-            "label": "Carried to the tens — it IS 2 tens"
-          },
-          {
-            "id": "beside",
-            "label": "Written beside the 4 in the ones"
-          },
-          {
-            "id": "drop",
-            "label": "Dropped — only the ones digit survives"
-          }
-        ],
-        "outcomeId": "carry",
-        "reveal": "24 ones is 2 tens and 4 ones. The 4 stays home in the ones column; the 2 is two TENS, so it moves to the tens column as a carry. Writing '24' inside one column would scramble the place values the algorithm depends on."
-      }
+      ]
     },
     {
       "id": "k1",
       "kind": "check",
-      "body": "Finish 28 × 3.",
+      "body": "Finish 28 × 3 by moving the carry into the tens column.",
       "conceptTag": "standard-algorithm",
-      "variant": {
-        "gen": "partial-products",
-        "form": "carryContinue"
-      },
       "explanationVariants": [
         "Tens: 2 × 3 = 6, plus the carried 2 = 8; with the written 4, that's 84.",
         "6 (tens product) + 2 (carry) = 8 tens, and the 4 ones → 84."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Continuing 28 × 3: you wrote 4 and carried 2. Now 2 × 3 = 6, plus the carried 2. What is the full product?",
-        "answer": 84,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "columnCalc",
+        "op": "multiply",
+        "a": 28,
+        "b": 3,
+        "prompt": "Work 28 × 3 from right to left. When 8 × 3 makes 24, tap the carry so its 2 tens join the next column.",
+        "commonResults": [
           {
             "value": 64,
-            "feedback": "64 forgets to add the carried 2 (just 6 tens and 4). With the carry: 6 + 2 = 8 tens, so 84."
-          },
-          {
-            "value": 24,
-            "feedback": "24 is only the ones step (8 × 3). The tens column still adds on: 2 × 3 = 6, plus the carried 2 = 8 tens — giving 84."
+            "feedback": "64 leaves the carry stranded. The 2 from 24 is two tens, so it must join 2 × 3 = 6 tens to make 8 tens."
           }
         ],
-        "fallbackFeedback": "Tens: 2 × 3 = 6, plus carried 2 = 8; with the 4 ones, that's 84."
+        "fallbackFeedback": "Resolve the ones first, then move the waiting carry into the tens before finishing that column.",
+        "successFeedback": "84. The ones column made 24: 4 ones stayed and 2 tens moved left. Then 6 tens + 2 carried tens made 8 tens."
       }
     },
     {

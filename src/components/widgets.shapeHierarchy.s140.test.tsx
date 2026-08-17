@@ -36,20 +36,21 @@ describe("Session 140 shapeHierarchyLab interaction", () => {
     expect(screen.getAllByText("counterexample").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("makes an always misconception visible as a failed counterexample test", () => {
+  it("builds the learner's always model without judging it before Check", () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole("button", { name: /Always/ }));
     expect(screen.getByRole("img", { name: /Selected verdict always/ })).toBeTruthy();
-    expect(screen.getByText("The 5-by-2 rectangle defeats always.")).toBeTruthy();
+    expect(screen.getByText("Build your claim from the fixed givens, then check it.")).toBeTruthy();
+    expect(screen.queryByText("The 5-by-2 rectangle defeats always.")).toBeNull();
   });
 
-  it("emits exact away and toward process signals", () => {
+  it("keeps exact stable claim IDs while process direction stays neutral", () => {
     const onEvent = vi.fn();
     render(<Harness onEvent={onEvent} />);
     fireEvent.click(screen.getByRole("button", { name: /Always/ }));
     fireEvent.click(screen.getByRole("button", { name: /Sometimes/ }));
-    expect(onEvent).toHaveBeenNthCalledWith(1, expect.objectContaining({ control: "shape-claim", dir: "away", state: { claim: "always" } }));
-    expect(onEvent).toHaveBeenNthCalledWith(2, expect.objectContaining({ control: "shape-claim", dir: "toward", state: { claim: "sometimes" } }));
+    expect(onEvent).toHaveBeenNthCalledWith(1, expect.objectContaining({ control: "shape-claim", dir: "neutral", state: { claim: "always" } }));
+    expect(onEvent).toHaveBeenNthCalledWith(2, expect.objectContaining({ control: "shape-claim", dir: "neutral", state: { claim: "sometimes" } }));
   });
 
   it("preserves the learner claim on reveal and adds a separate answer ghost", () => {

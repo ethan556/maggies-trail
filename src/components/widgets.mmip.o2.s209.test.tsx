@@ -89,13 +89,12 @@ describe("slopeTriangle: classic rendering discipline", () => {
     const { container } = mount(SLOPED);
     expect([runOut(), riseOut()]).toEqual(["1", "0"]);
     expect(readout()).toContain("slope = rise ÷ run = 0 ÷ 1");
-    expect(readout()).toContain("misses B");
+    expect(readout()).toContain("compare the tip with B");
     expect(screen.queryByTestId("st-undo")).toBeNull();
     expect(screen.getByTestId("st-status").textContent).toBe("");
     expect(container.querySelectorAll("[data-morph-motion]")).toHaveLength(0);
     expect(screen.getByRole("img").getAttribute("aria-label")).toBe(
-      "A grid with point A at 2, 1 and point B at 6, 9. The built triangle has run 1 and rise 0, and its line passes through B."
-        .replace("passes through", "misses")
+      "A grid with point A at 2, 1 and point B at 6, 9. The built triangle has run 1 and rise 0. Compare its tip with point B."
     );
     // run 1 / rise 0 through A(2,1) is the flat line y = 1, drawn edge to edge on a ±10 grid.
     const x = stX(10), y = stY(10);
@@ -112,7 +111,7 @@ describe("slopeTriangle: classic rendering discipline", () => {
 
 describe("THE VERTICAL-LINE DECISION, at the surface", () => {
   it("lets a learner reach run 0 and NAMES the undefined slope", () => {
-    const { container, holder } = mount(VERTICAL);
+    const { container, holder } = mount(VERTICAL, { tone: "info" });
     setLeg(/Set rise \(up\)/, 3);
     press(/Decrease run \(across\)/); // 1 → 0
     expect(holder.v).toEqual({ run: 0, rise: 3 });
@@ -145,7 +144,7 @@ describe("THE VERTICAL-LINE DECISION, at the surface", () => {
     expect(holder.v).toEqual({ run: 0, rise: 0 });
     expect(readout()).toContain("slope = rise ÷ run = no triangle");
     expect(drawnLine(container)).toBeNull();
-    expect(readout()).toContain("misses B");
+    expect(readout()).toContain("compare the tip with B");
     // The old verdict was `run === 0 ? bx === ax : …`, which on THIS problem is true — so the
     // phantom line claimed to pass through B while the grader rejected the empty triangle.
     expect(VERTICAL.type === "slopeTriangle" && VERTICAL.bx === VERTICAL.ax).toBe(true);
@@ -167,7 +166,7 @@ describe("slopeTriangle: the picture and the grader tell one story", () => {
     expect(-14 + (-9 / -7) * (7 - -14) === 13).toBe(false); // the old float route
     expect(-7 * (13 - -14) === -9 * (7 - -14)).toBe(true); // the exact route, the grader's own rule
 
-    const { holder } = mount(FLOAT_TRAP);
+    const { holder } = mount(FLOAT_TRAP, { tone: "info" });
     setLeg(/Set run \(across\)/, -7);
     setLeg(/Set rise \(up\)/, -9);
     expect(holder.v).toEqual({ run: -7, rise: -9 });
@@ -178,7 +177,7 @@ describe("slopeTriangle: the picture and the grader tell one story", () => {
   it("accepts every equivalent triangle, which is the lesson", () => {
     for (const [run, rise] of [[1, 2], [2, 4], [4, 8], [-1, -2]] as const) {
       cleanup();
-      const { holder } = mount(SLOPED);
+      const { holder } = mount(SLOPED, { tone: "info" });
       setLeg(/Set run \(across\)/, run);
       setLeg(/Set rise \(up\)/, rise);
       expect([run, rise, readout().includes("✓ passes through B")]).toEqual([run, rise, true]);

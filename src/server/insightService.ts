@@ -77,22 +77,48 @@ function activeDays14Of(db: DB, learnerId: string, todayIso: string): number {
   return row.n;
 }
 
-function evidenceForLearners(db: DB, learners: Array<{ id: string; name: string }>, todayIso: string): LearnerEvidence[] {
-  return learners.map((l) => ({
-    learnerId: l.id,
-    name: l.name,
-    mastery: skillStatesOf(db, l.id),
-    activeDays14: activeDays14Of(db, l.id, todayIso)
-  }));
+function avatarIdFromProfile(raw: string | null): string | undefined {
+  if (!raw) return undefined;
+  try {
+    const value = JSON.parse(raw) as { avatarId?: unknown };
+    return typeof value.avatarId === "string" && /^avatar-\d{3}$/.test(value.avatarId)
+      ? value.avatarId
+      : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
-function activeStudentsOf(db: DB, classroomId: string): Array<{ id: string; name: string }> {
+function evidenceForLearners(
+  db: DB,
+  learners: Array<{ id: string; name: string; profileData: string | null }>,
+  todayIso: string
+): LearnerEvidence[] {
+  return learners.map((l) => {
+    const avatarId = avatarIdFromProfile(l.profileData);
+    return {
+      learnerId: l.id,
+      name: l.name,
+      ...(avatarId ? { avatarId } : {}),
+      mastery: skillStatesOf(db, l.id),
+      activeDays14: activeDays14Of(db, l.id, todayIso)
+    };
+  });
+}
+
+function activeStudentsOf(
+  db: DB,
+  classroomId: string
+): Array<{ id: string; name: string; profileData: string | null }> {
   return db
     .prepare(
-      `SELECT l.id, l.name FROM enrollments e JOIN learners l ON l.id = e.learner_id
+      `SELECT l.id, l.name, p.data AS profileData
+       FROM enrollments e
+       JOIN learners l ON l.id = e.learner_id
+       LEFT JOIN profiles p ON p.learner_id = l.id
        WHERE e.classroom_id = ? AND e.role = 'student' AND e.status = 'active' ORDER BY l.name, l.id`
     )
-    .all(classroomId) as Array<{ id: string; name: string }>;
+    .all(classroomId) as Array<{ id: string; name: string; profileData: string | null }>;
 }
 
 // ── Class tier dashboard ────────────────────────────────────────────────────

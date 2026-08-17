@@ -3,22 +3,28 @@
 Generated from `AVATAR_CONCEPT_LEDGER.md` trait lines + `AVATAR_ART_PRODUCTION_SPEC.md` §1–§4.
 Machine-readable twin: `avatar-prompts.json`.
 
-**What this is.** One prompt per manifest id, so whoever renders the library — an image model, 
-a Weave workflow, or a commissioned illustrator working from a brief — produces art that passes 
+**What this is.** One prompt per manifest id, so whoever renders the library — an image model,
+a Weave workflow, or a commissioned illustrator working from a brief — produces art that passes
 the FABLE-Q contact-sheet gate (spec §6) instead of 60 individually-nice-but-mismatched pictures.
 
-**The one thing that must not be edited per-avatar:** the style block. It is byte-identical in 
-all 48 portrait prompts, and separately byte-identical in all 12 symbol prompts. That invariance 
+**The one thing that must not be edited per-avatar:** the style block. It is byte-identical in
+all 48 portrait prompts, and separately byte-identical in all 12 symbol prompts. That invariance
 *is* the consistency mechanism. Vary only the trait sentence and the band's age clause.
 
-**One number is provisional.** Spec §1 says the eye line gets locked from the first production 
-re-render and FABLE-A owns the final value. This pack carries **57%** as a working figure so the 
-prompts are runnable today. Render one anchor first, measure it, and if FABLE-A sets a different 
-number, change it in `build_prompt_pack.py`'s `STYLE_PORTRAIT` and regenerate — never by hand in 
-60 places.
+**Framing is locked from the normalized S244 canary.** Every portrait uses eye line 55–58%
+(target 57%), crown-to-chin height 48–52% (target 50%), a complete narrow-shoulder silhouette
+inside the centred 75% width safe area, and at least 5% clean canvas below the bust. Change
+these values only in `scripts/brand/gen_avatar_prompt_pack.py`'s `STYLE_PORTRAIT`, then regenerate
+the JSON and Markdown together — never edit 48 portrait prompts by hand.
 
-**Still governed by spec §8.** No file lands at `avatar-<NNN>-<SIZE>.webp` until the art is 
-genuinely final, and no manifest entry flips `enabled: true` until both files are on disk — 
+**Representation is deliberate without becoming identity metadata.** Each age band has three
+portraits in each of four broad painterly skin-tone directions. Those directions exist only in
+this production pack to prevent model-default bias; the runtime stores only avatar id, the UI
+never names an identity category, and accessibility labels remain neutral. Hair, clothing,
+expression and facial geometry still vary independently so no tone is paired with a stereotype.
+
+**Still governed by spec §8.** No file lands at `avatar-<NNN>-<SIZE>.webp` until the art is
+genuinely final, and no manifest entry flips `enabled: true` until both files are on disk —
 `src/lib/avatars.test.ts` enforces the second half of that mechanically.
 
 ---
@@ -29,14 +35,15 @@ genuinely final, and no manifest entry flips `enabled: true` until both files ar
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library.
 ```
 
 ## Locked style block — symbols (12)
@@ -61,13 +68,13 @@ type, multiple subjects, collage, contact sheet, hands, full body, photorealisti
 plastic render, flat vector, harsh rim light, colour cast
 ```
 
-The first six negatives exist because every one of the 16 board-anchored concepts sits inside 
-drawn phone-frame chrome (ledger finding 5). That chrome is the single most likely thing to 
+The first six negatives exist because every one of the 16 board-anchored concepts sits inside
+drawn phone-frame chrome (ledger finding 5). That chrome is the single most likely thing to
 reappear in a render that was shown the boards as a style reference.
 
 ## Canvas & export
 
-Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256. Export exactly two WebP files per id — `-256.webp` (picker grid) and `-512.webp` 
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256. Export exactly two WebP files per id — `-256.webp` (picker grid) and `-512.webp`
 (profile). No other sizes or formats ship (spec §4).
 
 ---
@@ -80,284 +87,337 @@ Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 
 
 **Traits.** Two high puff buns with braided sections and gold bead accents; broad open smile; yellow tee under light-blue denim overalls
 
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Two high puff buns with braided sections
-and gold bead accents; broad open smile; yellow tee under light-blue denim overalls. Keep
-genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age
-up for polish. Dimensional stylized-illustration portrait with real shading and volume — soft
-painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
-photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
-```
-
-### `avatar-002` — board 2:2 (C06)
-
-**Traits.** Straight black hair with a fringe; round dark-rimmed glasses; royal-blue hoodie
+**Production-only tone direction.** deep warm brown (never a runtime label)
 
 **Prompt.**
 
 ```
-Portrait of a young child, roughly 5 to 8 years old. Straight black hair with a fringe; round
-dark-rimmed glasses; royal-blue hoodie. Keep genuinely young-child proportions — rounder face,
-larger eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
-portrait with real shading and volume — soft painterly rendering, visible form modelling on the
-face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
-```
-
-### `avatar-003` — board 2:3 (C07)
-
-**Traits.** Dark wavy high ponytail with a yellow scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Dark wavy high ponytail with a yellow
-scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket. Keep
-genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age
-up for polish. Dimensional stylized-illustration portrait with real shading and volume — soft
-painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
-photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
-```
-
-### `avatar-004` — board 2:4 (C08)
-
-**Traits.** Loose curly mid-brown hair; freckles; big smile; green-and-cream raglan tee
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Loose curly mid-brown hair; freckles; big
-smile; green-and-cream raglan tee. Keep genuinely young-child proportions — rounder face, larger
-eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
-portrait with real shading and volume — soft painterly rendering, visible form modelling on the
-face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
-```
-
-### `avatar-005` — board 3:1 (C09)
-
-**Traits.** Teal/sea-green head covering that drapes over the shoulders; cream top with delicate floral embroidery; gentle smile
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Teal/sea-green head covering that drapes
-over the shoulders; cream top with delicate floral embroidery; gentle smile. Keep genuinely
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: deep warm brown, rendered with
+natural warmth and individualized facial geometry. Two high puff buns with braided sections and
+gold bead accents; broad open smile; yellow tee under light-blue denim overalls. Keep genuinely
 young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age up for
 polish. Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
-```
-
-### `avatar-006` — board 3:2 (C10)
-
-**Traits.** Short tightly-coiled dark hair; wide grin; golden-yellow drawstring hoodie
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Short tightly-coiled dark hair; wide grin;
-golden-yellow drawstring hoodie. Keep genuinely young-child proportions — rounder face, larger
-eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
-portrait with real shading and volume — soft painterly rendering, visible form modelling on the
-face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
-```
-
-### `avatar-007` — board 3:3 (C11)
-
-**Traits.** Shoulder-length coppery-red hair; freckles across the nose and cheeks; sage-green tee under blue denim overalls
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Shoulder-length coppery-red hair; freckles
-across the nose and cheeks; sage-green tee under blue denim overalls. Keep genuinely young-child
-proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish.
-Dimensional stylized-illustration portrait with real shading and volume — soft painterly
-rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
-glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
-```
-
-### `avatar-008` — board 3:4 (C12)
-
-**Traits.** Short straight black hair with a side-swept fringe; royal-blue zip jacket over a striped tee
-
-**Prompt.**
-
-```
-Portrait of a young child, roughly 5 to 8 years old. Short straight black hair with a side-swept
-fringe; royal-blue zip jacket over a striped tee. Keep genuinely young-child proportions —
-rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional
-stylized-illustration portrait with real shading and volume — soft painterly rendering, visible
-form modelling on the face and clothing. Not flat vector, not photoreal, not glossy 3D render.
-Head-and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line at 57%
-of frame height measured from the top. Head height (crown to chin) 50% of frame height. Both
-shoulders visible, cropped at a consistent point below the collarbone — not at the neck, not at
-the elbows. Uniform empty margin on all four sides between the subject's outer silhouette (hair
-included) and the canvas edge; nothing touches or bleeds past the edge. Background is one single
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
 flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
 no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
 hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
-### `avatar-009` — net-new
+### `avatar-002` — board 2:2 (C06)
 
-**Traits.** Curly afro-textured hair shaped into a rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream colour-blocked tee
+**Traits.** Straight black hair with a fringe; round dark-rimmed glasses; royal-blue hoodie
+
+**Production-only tone direction.** light warm beige (never a runtime label)
 
 **Prompt.**
 
 ```
-Portrait of a young child, roughly 5 to 8 years old. Curly afro-textured hair shaped into a
-rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream colour-blocked
-tee. Keep genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw.
-Do not age up for polish. Dimensional stylized-illustration portrait with real shading and
-volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
-vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
-centred and facing the viewer. Eye line at 57% of frame height measured from the top. Head
-height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: light warm beige, rendered with
+natural warmth and individualized facial geometry. Straight black hair with a fringe; round
+dark-rimmed glasses; royal-blue hoodie. Keep genuinely young-child proportions — rounder face,
+larger eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
+portrait with real shading and volume — soft painterly rendering, visible form modelling on the
+face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
+```
+
+### `avatar-003` — board 2:3 (C07)
+
+**Traits.** Dark wavy high ponytail with a yellow scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket
+
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: medium warm brown, rendered with
+natural warmth and individualized facial geometry. Dark wavy high ponytail with a yellow
+scrunchie; small gold stud earrings; purple tunic-style top with an embroidered placket. Keep
+genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age
+up for polish. Dimensional stylized-illustration portrait with real shading and volume — soft
+painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
+photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+```
+
+### `avatar-004` — board 2:4 (C08)
+
+**Traits.** Loose curly mid-brown hair; freckles; big smile; green-and-cream raglan tee
+
+**Production-only tone direction.** light warm beige (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: light warm beige, rendered with
+natural warmth and individualized facial geometry. Loose curly mid-brown hair; freckles; big
+smile; green-and-cream raglan tee. Keep genuinely young-child proportions — rounder face, larger
+eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
+portrait with real shading and volume — soft painterly rendering, visible form modelling on the
+face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
+```
+
+### `avatar-005` — board 3:1 (C09)
+
+**Traits.** Teal/sea-green head covering that drapes over the shoulders; cream top with delicate floral embroidery; gentle smile
+
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: medium warm brown, rendered with
+natural warmth and individualized facial geometry. Teal/sea-green head covering that drapes over
+the shoulders; cream top with delicate floral embroidery; gentle smile. Keep genuinely young-
+child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish.
+Dimensional stylized-illustration portrait with real shading and volume — soft painterly
+rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
+glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+```
+
+### `avatar-006` — board 3:2 (C10)
+
+**Traits.** Short tightly-coiled dark hair; wide grin; golden-yellow drawstring hoodie
+
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: deep warm brown, rendered with
+natural warmth and individualized facial geometry. Short tightly-coiled dark hair; wide grin;
+golden-yellow drawstring hoodie. Keep genuinely young-child proportions — rounder face, larger
+eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional stylized-illustration
+portrait with real shading and volume — soft painterly rendering, visible form modelling on the
+face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
+```
+
+### `avatar-007` — board 3:3 (C11)
+
+**Traits.** Shoulder-length coppery-red hair; freckles across the nose and cheeks; sage-green tee under blue denim overalls
+
+**Production-only tone direction.** light warm beige (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: light warm beige, rendered with
+natural warmth and individualized facial geometry. Shoulder-length coppery-red hair; freckles
+across the nose and cheeks; sage-green tee under blue denim overalls. Keep genuinely young-child
+proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish.
+Dimensional stylized-illustration portrait with real shading and volume — soft painterly
+rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
+glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+```
+
+### `avatar-008` — board 3:4 (C12)
+
+**Traits.** Short straight black hair with a side-swept fringe; royal-blue zip jacket over a striped tee
+
+**Production-only tone direction.** golden tan (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Short straight black hair with a side-swept
+fringe; royal-blue zip jacket over a striped tee. Keep genuinely young-child proportions —
+rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish. Dimensional
+stylized-illustration portrait with real shading and volume — soft painterly rendering, visible
+form modelling on the face and clothing. Not flat vector, not photoreal, not glossy 3D render.
+Head-and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line 55–58%
+of frame height measured from the top, targeting 57%. Head height from crown to chin 48–52% of
+frame height, targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the
+collarbone — not at the neck, not at the elbows. Keep the complete outer silhouette, including
+hair and shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave
+at least 5% clean canvas below the bust and empty margin on every other edge; nothing touches,
+crops, or bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no
 gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
 light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
 saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
 fidelity to downsample cleanly to 512 and 256.
 ```
 
-### `avatar-010` — net-new
+### `avatar-009` — net-new
 
-**Traits.** Two short braided pigtails finished with small colourful beads; easy smile; rust-red overalls over a cream long-sleeve top
+**Traits.** Curly afro-textured hair shaped into a rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream colour-blocked tee
+
+**Production-only tone direction.** deep warm brown (never a runtime label)
 
 **Prompt.**
 
 ```
-Portrait of a young child, roughly 5 to 8 years old. Two short braided pigtails finished with
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: deep warm brown, rendered with
+natural warmth and individualized facial geometry. Curly afro-textured hair shaped into a
+rounded puff with a thin striped headband; wide gap-toothed grin; teal-and-cream colour-blocked
+tee. Keep genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw.
+Do not age up for polish. Dimensional stylized-illustration portrait with real shading and
+volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
+vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
+Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
+scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
+left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
+whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
+512 and 256.
+```
+
+### `avatar-010` — net-new
+
+**Traits.** Two short braided pigtails finished with small colourful beads; easy smile; rust-red overalls over a cream long-sleeve top
+
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: medium warm brown, rendered with
+natural warmth and individualized facial geometry. Two short braided pigtails finished with
 small colourful beads; easy smile; rust-red overalls over a cream long-sleeve top. Keep
 genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age
 up for polish. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-011` — net-new
 
 **Traits.** Chin-length straight hair held back with a wide fabric headband; round dark-rimmed glasses; golden-yellow cardigan over a cream tee
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a young child, roughly 5 to 8 years old. Chin-length straight hair held back with a
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Chin-length straight hair held back with a
 wide fabric headband; round dark-rimmed glasses; golden-yellow cardigan over a cream tee. Keep
 genuinely young-child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age
 up for polish. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-012` — net-new
 
 **Traits.** Short loose curls with a single flower hair clip; freckles across the cheeks; sage-green tunic top with rust trim
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a young child, roughly 5 to 8 years old. Short loose curls with a single flower hair
+Portrait of a young child, roughly 5 to 8 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Short loose curls with a single flower hair
 clip; freckles across the cheeks; sage-green tunic top with rust trim. Keep genuinely young-
 child proportions — rounder face, larger eye-to-face ratio, soft jaw. Do not age up for polish.
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ## Explorer — grades 3–5, block 101–112
@@ -368,284 +428,337 @@ whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsam
 
 **Traits.** Short twists/coils on top with faded sides; bright smile; royal-blue track jacket with double white shoulder stripes and a white zip
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Short twists/coils on top with
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Short twists/coils on top with
 faded sides; bright smile; royal-blue track jacket with double white shoulder stripes and a
 white zip. Slightly longer face and narrower proportions than the early band, still clearly pre-
 adolescent. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-102` — board 4:2 (C14)
 
 **Traits.** Straight black chin-length bob with a centre part; small stud earrings; lilac cardigan over a cream collared shirt
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Straight black chin-length bob
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Straight black chin-length bob
 with a centre part; small stud earrings; lilac cardigan over a cream collared shirt. Slightly
 longer face and narrower proportions than the early band, still clearly pre-adolescent.
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-103` — board 4:3 (C15)
 
 **Traits.** Short wavy black hair; soft smile; forest-green crewneck over a cream tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Short wavy black hair; soft
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Short wavy black hair; soft
 smile; forest-green crewneck over a cream tee. Slightly longer face and narrower proportions
 than the early band, still clearly pre-adolescent. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-104` — board 4:4 (C16)
 
 **Traits.** Long wavy brown hair; small gold hoop earrings; blue denim jacket over a cream top
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Long wavy brown hair; small
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: golden tan,
+rendered with natural warmth and individualized facial geometry. Long wavy brown hair; small
 gold hoop earrings; blue denim jacket over a cream top. Slightly longer face and narrower
 proportions than the early band, still clearly pre-adolescent. Dimensional stylized-illustration
 portrait with real shading and volume — soft painterly rendering, visible form modelling on the
 face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-105` — net-new
 
 **Traits.** Curly afro-textured hair in a rounded high puff with a thin patterned headband; easy grin; royal-blue zip-up hoodie over a cream striped tee
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Curly afro-textured hair in a
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Curly afro-textured hair in a
 rounded high puff with a thin patterned headband; easy grin; royal-blue zip-up hoodie over a
 cream striped tee. Slightly longer face and narrower proportions than the early band, still
 clearly pre-adolescent. Dimensional stylized-illustration portrait with real shading and volume
 — soft painterly rendering, visible form modelling on the face and clothing. Not flat vector,
 not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred
-and facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown
-to chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%.
+Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in
+a deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-106` — net-new
 
 **Traits.** Two neat box braids gathered into low pigtails; round wire-rimmed glasses; golden-yellow raglan tee under an open chambray shirt
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Two neat box braids gathered
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Two neat box braids gathered
 into low pigtails; round wire-rimmed glasses; golden-yellow raglan tee under an open chambray
 shirt. Slightly longer face and narrower proportions than the early band, still clearly pre-
 adolescent. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-107` — net-new
 
 **Traits.** Patterned teal-and-cream head wrap framing the face with loose strands at the temples; small gold stud earrings; sage-green quarter-zip pullover over a cream tee
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Patterned teal-and-cream head
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: golden tan,
+rendered with natural warmth and individualized facial geometry. Patterned teal-and-cream head
 wrap framing the face with loose strands at the temples; small gold stud earrings; sage-green
 quarter-zip pullover over a cream tee. Slightly longer face and narrower proportions than the
 early band, still clearly pre-adolescent. Dimensional stylized-illustration portrait with real
 shading and volume — soft painterly rendering, visible form modelling on the face and clothing.
 Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation,
-subject centred and facing the viewer. Eye line at 57% of frame height measured from the top.
-Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
+subject centred and facing the viewer. Eye line 55–58% of frame height measured from the top,
+targeting 57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both
+shoulders visible in a deliberately narrow bust crop below the collarbone — not at the neck, not
+at the elbows. Keep the complete outer silhouette, including hair and shoulders, inside the
+centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below
+the bust and empty margin on every other edge; nothing touches, crops, or bleeds past the
+canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no
+props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front and
+slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across
+the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly
+to 512 and 256.
 ```
 
 ### `avatar-108` — net-new
 
 **Traits.** Short tightly-coiled hair cut close with a sharp side part; confident grin; teal track jacket with cream trim over a cream tee
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Short tightly-coiled hair cut
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Short tightly-coiled hair cut
 close with a sharp side part; confident grin; teal track jacket with cream trim over a cream
 tee. Slightly longer face and narrower proportions than the early band, still clearly pre-
 adolescent. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-109` — net-new
 
 **Traits.** Straight waist-length hair in a high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Straight waist-length hair in
-a high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee.
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Straight waist-length hair in a
+high ponytail wrapped with a bright scrunchie; freckles; lilac zip hoodie over a cream tee.
 Slightly longer face and narrower proportions than the early band, still clearly pre-adolescent.
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-110` — net-new
 
 **Traits.** Short wavy hair with a deep side part; thin round glasses; rust bomber-style jacket over a cream tee
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Short wavy hair with a deep
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Short wavy hair with a deep
 side part; thin round glasses; rust bomber-style jacket over a cream tee. Slightly longer face
 and narrower proportions than the early band, still clearly pre-adolescent. Dimensional
 stylized-illustration portrait with real shading and volume — soft painterly rendering, visible
 form modelling on the face and clothing. Not flat vector, not photoreal, not glossy 3D render.
-Head-and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line at 57%
-of frame height measured from the top. Head height (crown to chin) 50% of frame height. Both
-shoulders visible, cropped at a consistent point below the collarbone — not at the neck, not at
-the elbows. Uniform empty margin on all four sides between the subject's outer silhouette (hair
-included) and the canvas edge; nothing touches or bleeds past the edge. Background is one single
-flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
-no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
-hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+Head-and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line 55–58%
+of frame height measured from the top, targeting 57%. Head height from crown to chin 48–52% of
+frame height, targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the
+collarbone — not at the neck, not at the elbows. Keep the complete outer silhouette, including
+hair and shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave
+at least 5% clean canvas below the bust and empty margin on every other edge; nothing touches,
+crops, or bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no
+gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
+light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
+saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
+fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-111` — net-new
 
 **Traits.** Chin-length curly bob; small silver hoop earrings; forest-green cardigan over a cream striped tee
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Chin-length curly bob; small
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: golden tan,
+rendered with natural warmth and individualized facial geometry. Chin-length curly bob; small
 silver hoop earrings; forest-green cardigan over a cream striped tee. Slightly longer face and
 narrower proportions than the early band, still clearly pre-adolescent. Dimensional stylized-
 illustration portrait with real shading and volume — soft painterly rendering, visible form
 modelling on the face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-
-and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line at 57% of
-frame height measured from the top. Head height (crown to chin) 50% of frame height. Both
-shoulders visible, cropped at a consistent point below the collarbone — not at the neck, not at
-the elbows. Uniform empty margin on all four sides between the subject's outer silhouette (hair
-included) and the canvas edge; nothing touches or bleeds past the edge. Background is one single
-flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
-no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
-hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+and-shoulders, portrait orientation, subject centred and facing the viewer. Eye line 55–58% of
+frame height measured from the top, targeting 57%. Head height from crown to chin 48–52% of
+frame height, targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the
+collarbone — not at the neck, not at the elbows. Keep the complete outer silhouette, including
+hair and shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave
+at least 5% clean canvas below the bust and empty margin on every other edge; nothing touches,
+crops, or bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no
+gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
+light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
+saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
+fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-112` — net-new
 
 **Traits.** Short natural coils with a faded side part and a single thin braid accent; warm smile; denim jacket over a golden-yellow tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an upper-elementary child, roughly 9 to 11 years old. Short natural coils with a
+Portrait of an upper-elementary child, roughly 9 to 11 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Short natural coils with a
 faded side part and a single thin braid accent; warm smile; denim jacket over a golden-yellow
 tee. Slightly longer face and narrower proportions than the early band, still clearly pre-
 adolescent. Dimensional stylized-illustration portrait with real shading and volume — soft
 painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ## Adventurer — grades 6–8, block 201–212
@@ -656,276 +769,336 @@ cleanly to 512 and 256.
 
 **Traits.** Long thin box braids past the shoulders; small gold hoop earrings and a fine pendant necklace; dark-green ribbed top
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Long thin box braids past the
-shoulders; small gold hoop earrings and a fine pendant necklace; dark-green ribbed top. Middle-
-school proportions — the maturity level of sample board 1. Dimensional stylized-illustration
-portrait with real shading and volume — soft painterly rendering, visible form modelling on the
-face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: deep warm brown, rendered
+with natural warmth and individualized facial geometry. Long thin box braids past the shoulders;
+small gold hoop earrings and a fine pendant necklace; dark-green ribbed top. Middle-school
+proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
+with real shading and volume — soft painterly rendering, visible form modelling on the face and
+clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-202` — board 1:2 (C02)
 
 **Traits.** Tousled wavy golden-brown hair; freckles; cream drawstring hoodie under a blue denim jacket
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Tousled wavy golden-brown hair;
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: light warm beige, rendered
+with natural warmth and individualized facial geometry. Tousled wavy golden-brown hair;
 freckles; cream drawstring hoodie under a blue denim jacket. Middle-school proportions — the
 maturity level of sample board 1. Dimensional stylized-illustration portrait with real shading
 and volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
 vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
-centred and facing the viewer. Eye line at 57% of frame height measured from the top. Head
-height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
+Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
+scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
+left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
+whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
+512 and 256.
 ```
 
 ### `avatar-203` — board 1:3 (C03)
 
 **Traits.** Short tousled black hair with a fringe; dark navy zip jacket over a black hoodie with a light tee beneath
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Short tousled black hair with a
-fringe; dark navy zip jacket over a black hoodie with a light tee beneath. Middle-school
-proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
-with real shading and volume — soft painterly rendering, visible form modelling on the face and
-clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Short tousled black hair with a fringe; dark
+navy zip jacket over a black hoodie with a light tee beneath. Middle-school proportions — the
+maturity level of sample board 1. Dimensional stylized-illustration portrait with real shading
+and volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
+vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
+Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
+scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
+left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
+whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
+512 and 256.
 ```
 
 ### `avatar-204` — board 1:4 (C04)
 
 **Traits.** Very long wavy dark hair; teardrop turquoise earrings and a small pendant necklace; patterned rust-red top
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Very long wavy dark hair; teardrop
-turquoise earrings and a small pendant necklace; patterned rust-red top. Middle-school
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Very long wavy dark hair;
+teardrop turquoise earrings and a small pendant necklace; patterned rust-red top. Middle-school
 proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-205` — net-new
 
-**Traits.** Short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee
+**Traits.** Short natural coils with a subtle side part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee
+
+**Production-only tone direction.** deep warm brown (never a runtime label)
 
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Short natural coils cut close with a
-defined part; confident grin; teal zip-up jacket over a cream tee. Middle-school proportions —
-the maturity level of sample board 1. Dimensional stylized-illustration portrait with real
-shading and volume — soft painterly rendering, visible form modelling on the face and clothing.
-Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation,
-subject centred and facing the viewer. Eye line at 57% of frame height measured from the top.
-Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: deep warm brown, rendered
+with natural warmth and individualized facial geometry. Short natural coils with a subtle side
+part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee. Middle-school
+proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
+with real shading and volume — soft painterly rendering, visible form modelling on the face and
+clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-206` — net-new
 
 **Traits.** Two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Two thin braided pigtails past the
-shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket. Middle-
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Two thin braided pigtails past
+the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket. Middle-
 school proportions — the maturity level of sample board 1. Dimensional stylized-illustration
 portrait with real shading and volume — soft painterly rendering, visible form modelling on the
 face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-207` — net-new
 
 **Traits.** Loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Loose corkscrew curls pulled half-up
-with a small clip; freckles; rust hoodie over a cream long-sleeve top. Middle-school proportions
-— the maturity level of sample board 1. Dimensional stylized-illustration portrait with real
-shading and volume — soft painterly rendering, visible form modelling on the face and clothing.
-Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation,
-subject centred and facing the viewer. Eye line at 57% of frame height measured from the top.
-Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Loose corkscrew curls pulled half-up with a
+small clip; freckles; rust hoodie over a cream long-sleeve top. Middle-school proportions — the
+maturity level of sample board 1. Dimensional stylized-illustration portrait with real shading
+and volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
+vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
+Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
+scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
+left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
+whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
+512 and 256.
 ```
 
 ### `avatar-208` — net-new
 
 **Traits.** Chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Chin-length straight bob with blunt
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: light warm beige, rendered
+with natural warmth and individualized facial geometry. Chin-length straight bob with blunt
 bangs; small silver stud earrings; golden-yellow crewneck over a cream tee. Middle-school
 proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-209` — net-new
 
 **Traits.** Long single braid resting over one shoulder; wide open smile; royal-blue track jacket over a cream striped tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Long single braid resting over one
-shoulder; wide open smile; royal-blue track jacket over a cream striped tee. Middle-school
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Long single braid resting over
+one shoulder; wide open smile; royal-blue track jacket over a cream striped tee. Middle-school
 proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-210` — net-new
 
 **Traits.** Short wavy hair with a tousled side part; relaxed half-smile; forest-green hoodie under a light denim jacket
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Short wavy hair with a tousled side
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: light warm beige, rendered
+with natural warmth and individualized facial geometry. Short wavy hair with a tousled side
 part; relaxed half-smile; forest-green hoodie under a light denim jacket. Middle-school
 proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-211` — net-new
 
 **Traits.** Shoulder-length twists with a faded undercut at the sides; small hoop earrings; denim zip jacket over a teal tee
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Shoulder-length twists with a faded
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: deep warm brown, rendered
+with natural warmth and individualized facial geometry. Shoulder-length twists with a faded
 undercut at the sides; small hoop earrings; denim zip jacket over a teal tee. Middle-school
 proportions — the maturity level of sample board 1. Dimensional stylized-illustration portrait
 with real shading and volume — soft painterly rendering, visible form modelling on the face and
 clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait
-orientation, subject centred and facing the viewer. Eye line at 57% of frame height measured
-from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped
-at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform empty
-margin on all four sides between the subject's outer silhouette (hair included) and the canvas
-edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory tone
-#F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied surface.
-Soft, even key light from the front and slightly left, gentle falloff, no hard rim light. Warm
-but restrained saturation, matched across the whole library. Square canvas, 1024x1024 minimum,
-high enough fidelity to downsample cleanly to 512 and 256.
+orientation, subject centred and facing the viewer. Eye line 55–58% of frame height measured
+from the top, targeting 57%. Head height from crown to chin 48–52% of frame height, targeting
+50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone — not at the
+neck, not at the elbows. Keep the complete outer silhouette, including hair and shoulders,
+inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean
+canvas below the bust and empty margin on every other edge; nothing touches, crops, or bleeds
+past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-212` — net-new
 
 **Traits.** Long wavy hair swept into a high half-up twist; turquoise stud earrings; lilac hoodie over a cream tee
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of an early teenager, roughly 12 to 14 years old. Long wavy hair swept into a high
-half-up twist; turquoise stud earrings; lilac hoodie over a cream tee. Middle-school proportions
-— the maturity level of sample board 1. Dimensional stylized-illustration portrait with real
-shading and volume — soft painterly rendering, visible form modelling on the face and clothing.
-Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation,
-subject centred and facing the viewer. Eye line at 57% of frame height measured from the top.
-Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
+Portrait of an early teenager, roughly 12 to 14 years old. Skin tone: golden tan, rendered with
+natural warmth and individualized facial geometry. Long wavy hair swept into a high half-up
+twist; turquoise stud earrings; lilac hoodie over a cream tee. Middle-school proportions — the
+maturity level of sample board 1. Dimensional stylized-illustration portrait with real shading
+and volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
+vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
+Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
+scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
+left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
+whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
+512 and 256.
 ```
 
 ## Summit — grades 9–13, block 301–312
@@ -938,295 +1111,316 @@ fidelity to downsample cleanly to 512 and 256.
 
 **Traits.** Short tapered coils with a subtle side part; quiet half-smile; charcoal quarter-zip pullover over a light-grey tee
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Short tapered coils with a subtle
-side part; quiet half-smile; charcoal quarter-zip pullover over a light-grey tee. Genuinely
-older proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the
-ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary
-character. Dimensional stylized-illustration portrait with real shading and volume — soft
-painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Short tapered coils with a
+subtle side part; quiet half-smile; charcoal quarter-zip pullover over a light-grey tee.
+Genuinely older proportions, styling and bearing — board 1's most mature concept is the FLOOR,
+not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
+elementary character. Dimensional stylized-illustration portrait with real shading and volume —
+soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-302` — net-new (P0)
 
 **Traits.** Shoulder-length locs tied back in a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Shoulder-length locs tied back in
-a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee.
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Shoulder-length locs tied back
+in a low ponytail; small silver stud earrings; olive canvas jacket over a plain cream tee.
 Genuinely older proportions, styling and bearing — board 1's most mature concept is the FLOOR,
 not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
 elementary character. Dimensional stylized-illustration portrait with real shading and volume —
 soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-303` — net-new (P0)
 
 **Traits.** Straight dark hair in a low bun with loose face-framing strands; thin wire-rimmed glasses; navy button-up shirt with the sleeves rolled
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Straight dark hair in a low bun
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Straight dark hair in a low bun
 with loose face-framing strands; thin wire-rimmed glasses; navy button-up shirt with the sleeves
 rolled. Genuinely older proportions, styling and bearing — board 1's most mature concept is the
 FLOOR, not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
 elementary character. Dimensional stylized-illustration portrait with real shading and volume —
 soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-304` — net-new (P0)
 
 **Traits.** Short undercut with longer curls left on top; confident closed-mouth smile; rust bomber jacket over a charcoal tee
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Short undercut with longer curls
-left on top; confident closed-mouth smile; rust bomber jacket over a charcoal tee. Genuinely
-older proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the
-ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary
-character. Dimensional stylized-illustration portrait with real shading and volume — soft
-painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
-photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: golden tan, rendered
+with natural warmth and individualized facial geometry. Short undercut with longer curls left on
+top; confident closed-mouth smile; rust bomber jacket over a charcoal tee. Genuinely older
+proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the ceiling.
+Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary character.
+Dimensional stylized-illustration portrait with real shading and volume — soft painterly
+rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
+glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-305` — net-new (P0)
 
 **Traits.** Long single braid over one shoulder with a few loose flyaway strands; freckles; forest-green flannel shirt over a cream tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Long single braid over one
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Long single braid over one
 shoulder with a few loose flyaway strands; freckles; forest-green flannel shirt over a cream
 tee. Genuinely older proportions, styling and bearing — board 1's most mature concept is the
 FLOOR, not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
 elementary character. Dimensional stylized-illustration portrait with real shading and volume —
 soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-306` — net-new (P0)
 
 **Traits.** Loose shoulder-length wavy hair with a centre part; small hoop earrings; cream cardigan over a rust top
 
+**Production-only tone direction.** light warm beige (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Loose shoulder-length wavy hair
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Loose shoulder-length wavy hair
 with a centre part; small hoop earrings; cream cardigan over a rust top. Genuinely older
 proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the ceiling.
 Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary character.
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-307` — net-new (P0)
 
 **Traits.** Short locs cropped close to the head; faint, self-possessed smile; denim trucker jacket over a cream tee
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Short locs cropped close to the
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Short locs cropped close to the
 head; faint, self-possessed smile; denim trucker jacket over a cream tee. Genuinely older
 proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the ceiling.
 Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary character.
 Dimensional stylized-illustration portrait with real shading and volume — soft painterly
 rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
 glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
-Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
-scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
-left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
-whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to
-512 and 256.
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-308` — net-new (P0)
 
 **Traits.** Long straight hair with a deep side part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck
 
+**Production-only tone direction.** golden tan (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Long straight hair with a deep
-side part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck.
-Genuinely older proportions, styling and bearing — board 1's most mature concept is the FLOOR,
-not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
-elementary character. Dimensional stylized-illustration portrait with real shading and volume —
-soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: golden tan, rendered
+with natural warmth and individualized facial geometry. Long straight hair with a deep side
+part; round tortoiseshell-style glasses; sage-green cardigan over a cream turtleneck. Genuinely
+older proportions, styling and bearing — board 1's most mature concept is the FLOOR, not the
+ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged elementary
+character. Dimensional stylized-illustration portrait with real shading and volume — soft
+painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-309` — net-new (P0)
 
 **Traits.** Twin long braids past the chest tied off with simple dark cord; steady, self-possessed expression; teal flannel shirt with the sleeves rolled, over a cream tee
 
+**Production-only tone direction.** medium warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Twin long braids past the chest
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: medium warm brown,
+rendered with natural warmth and individualized facial geometry. Twin long braids past the chest
 tied off with simple dark cord; steady, self-possessed expression; teal flannel shirt with the
 sleeves rolled, over a cream tee. Genuinely older proportions, styling and bearing — board 1's
 most mature concept is the FLOOR, not the ceiling. Self-possessed or quiet expression, not
 beaming. This is NOT an enlarged elementary character. Dimensional stylized-illustration
 portrait with real shading and volume — soft painterly rendering, visible form modelling on the
 face and clothing. Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders,
-portrait orientation, subject centred and facing the viewer. Eye line at 57% of frame height
-measured from the top. Head height (crown to chin) 50% of frame height. Both shoulders visible,
-cropped at a consistent point below the collarbone — not at the neck, not at the elbows. Uniform
-empty margin on all four sides between the subject's outer silhouette (hair included) and the
-canvas edge; nothing touches or bleeds past the edge. Background is one single flat warm-ivory
-tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow, no implied
-surface. Soft, even key light from the front and slightly left, gentle falloff, no hard rim
-light. Warm but restrained saturation, matched across the whole library. Square canvas,
-1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+portrait orientation, subject centred and facing the viewer. Eye line 55–58% of frame height
+measured from the top, targeting 57%. Head height from crown to chin 48–52% of frame height,
+targeting 50%. Both shoulders visible in a deliberately narrow bust crop below the collarbone —
+not at the neck, not at the elbows. Keep the complete outer silhouette, including hair and
+shoulders, inside the centred x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least
+5% clean canvas below the bust and empty margin on every other edge; nothing touches, crops, or
+bleeds past the canvas. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no
+vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key light from
+the front and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation,
+matched across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to
+downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-310` — net-new (P0)
 
 **Traits.** Short cropped locs with a faded undercut; relaxed half-smile; golden-yellow crewneck sweater over a collared cream shirt
 
+**Production-only tone direction.** deep warm brown (never a runtime label)
+
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Short cropped locs with a faded
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: deep warm brown,
+rendered with natural warmth and individualized facial geometry. Short cropped locs with a faded
 undercut; relaxed half-smile; golden-yellow crewneck sweater over a collared cream shirt.
 Genuinely older proportions, styling and bearing — board 1's most mature concept is the FLOOR,
 not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an enlarged
 elementary character. Dimensional stylized-illustration portrait with real shading and volume —
 soft painterly rendering, visible form modelling on the face and clothing. Not flat vector, not
 photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and
-facing the viewer. Eye line at 57% of frame height measured from the top. Head height (crown to
-chin) 50% of frame height. Both shoulders visible, cropped at a consistent point below the
-collarbone — not at the neck, not at the elbows. Uniform empty margin on all four sides between
-the subject's outer silhouette (hair included) and the canvas edge; nothing touches or bleeds
-past the edge. Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette,
-no props, no scenery, no drop shadow, no implied surface. Soft, even key light from the front
-and slightly left, gentle falloff, no hard rim light. Warm but restrained saturation, matched
-across the whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsample
-cleanly to 512 and 256.
+facing the viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head
+height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a
+deliberately narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep
+the complete outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5%
+safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty
+margin on every other edge; nothing touches, crops, or bleeds past the canvas. Background is one
+single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop
+shadow, no implied surface. Soft, even key light from the front and slightly left, gentle
+falloff, no hard rim light. Warm but restrained saturation, matched across the whole library.
+Square canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
 ```
 
 ### `avatar-311` — net-new (P0)
 
 **Traits.** Loose waves pulled into a low ponytail beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under a rust cardigan
 
-**Prompt.**
-
-```
-Portrait of a high-school student, roughly 15 to 18 years old. Loose waves pulled into a low
-ponytail beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under
-a rust cardigan. Genuinely older proportions, styling and bearing — board 1's most mature
-concept is the FLOOR, not the ceiling. Self-possessed or quiet expression, not beaming. This is
-NOT an enlarged elementary character. Dimensional stylized-illustration portrait with real
-shading and volume — soft painterly rendering, visible form modelling on the face and clothing.
-Not flat vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation,
-subject centred and facing the viewer. Eye line at 57% of frame height measured from the top.
-Head height (crown to chin) 50% of frame height. Both shoulders visible, cropped at a consistent
-point below the collarbone — not at the neck, not at the elbows. Uniform empty margin on all
-four sides between the subject's outer silhouette (hair included) and the canvas edge; nothing
-touches or bleeds past the edge. Background is one single flat warm-ivory tone #F7F3EC — no
-gradient, no vignette, no props, no scenery, no drop shadow, no implied surface. Soft, even key
-light from the front and slightly left, gentle falloff, no hard rim light. Warm but restrained
-saturation, matched across the whole library. Square canvas, 1024x1024 minimum, high enough
-fidelity to downsample cleanly to 512 and 256.
-```
-
-### `avatar-312` — net-new (P0)
-
-**Traits.** Short tousled wavy hair; thin rectangular glasses; charcoal bomber jacket over an olive tee
+**Production-only tone direction.** golden tan (never a runtime label)
 
 **Prompt.**
 
 ```
-Portrait of a high-school student, roughly 15 to 18 years old. Short tousled wavy hair; thin
-rectangular glasses; charcoal bomber jacket over an olive tee. Genuinely older proportions,
-styling and bearing — board 1's most mature concept is the FLOOR, not the ceiling. Self-
-possessed or quiet expression, not beaming. This is NOT an enlarged elementary character.
-Dimensional stylized-illustration portrait with real shading and volume — soft painterly
-rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
-glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
-viewer. Eye line at 57% of frame height measured from the top. Head height (crown to chin) 50%
-of frame height. Both shoulders visible, cropped at a consistent point below the collarbone —
-not at the neck, not at the elbows. Uniform empty margin on all four sides between the subject's
-outer silhouette (hair included) and the canvas edge; nothing touches or bleeds past the edge.
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: golden tan, rendered
+with natural warmth and individualized facial geometry. Loose waves pulled into a low ponytail
+beneath a teal-patterned head wrap; calm, warm expression; cream button-up shirt under a rust
+cardigan. Genuinely older proportions, styling and bearing — board 1's most mature concept is
+the FLOOR, not the ceiling. Self-possessed or quiet expression, not beaming. This is NOT an
+enlarged elementary character. Dimensional stylized-illustration portrait with real shading and
+volume — soft painterly rendering, visible form modelling on the face and clothing. Not flat
+vector, not photoreal, not glossy 3D render. Head-and-shoulders, portrait orientation, subject
+centred and facing the viewer. Eye line 55–58% of frame height measured from the top, targeting
+57%. Head height from crown to chin 48–52% of frame height, targeting 50%. Both shoulders
+visible in a deliberately narrow bust crop below the collarbone — not at the neck, not at the
+elbows. Keep the complete outer silhouette, including hair and shoulders, inside the centred
+x=12.5–87.5% safe area: maximum 75% canvas width. Leave at least 5% clean canvas below the bust
+and empty margin on every other edge; nothing touches, crops, or bleeds past the canvas.
 Background is one single flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no
 scenery, no drop shadow, no implied surface. Soft, even key light from the front and slightly
 left, gentle falloff, no hard rim light. Warm but restrained saturation, matched across the
@@ -1234,9 +1428,38 @@ whole library. Square canvas, 1024x1024 minimum, high enough fidelity to downsam
 512 and 256.
 ```
 
+### `avatar-312` — net-new (P0)
+
+**Traits.** Short tousled wavy hair; thin rectangular glasses; charcoal bomber jacket over an olive tee
+
+**Production-only tone direction.** light warm beige (never a runtime label)
+
+**Prompt.**
+
+```
+Portrait of a high-school student, roughly 15 to 18 years old. Skin tone: light warm beige,
+rendered with natural warmth and individualized facial geometry. Short tousled wavy hair; thin
+rectangular glasses; charcoal bomber jacket over an olive tee. Genuinely older proportions,
+styling and bearing — board 1's most mature concept is the FLOOR, not the ceiling. Self-
+possessed or quiet expression, not beaming. This is NOT an enlarged elementary character.
+Dimensional stylized-illustration portrait with real shading and volume — soft painterly
+rendering, visible form modelling on the face and clothing. Not flat vector, not photoreal, not
+glossy 3D render. Head-and-shoulders, portrait orientation, subject centred and facing the
+viewer. Eye line 55–58% of frame height measured from the top, targeting 57%. Head height from
+crown to chin 48–52% of frame height, targeting 50%. Both shoulders visible in a deliberately
+narrow bust crop below the collarbone — not at the neck, not at the elbows. Keep the complete
+outer silhouette, including hair and shoulders, inside the centred x=12.5–87.5% safe area:
+maximum 75% canvas width. Leave at least 5% clean canvas below the bust and empty margin on
+every other edge; nothing touches, crops, or bleeds past the canvas. Background is one single
+flat warm-ivory tone #F7F3EC — no gradient, no vignette, no props, no scenery, no drop shadow,
+no implied surface. Soft, even key light from the front and slightly left, gentle falloff, no
+hard rim light. Warm but restrained saturation, matched across the whole library. Square canvas,
+1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and 256.
+```
+
 ## Symbols — block 401–412, band assigned by tonal fit
 
-*Not portraits. `ageBand` here governs which collection surfaces the symbol by default, never 
+*Not portraits. `ageBand` here governs which collection surfaces the symbol by default, never
 who may pick it — the plan's "See all avatars" reach makes every symbol selectable at any grade.*
 
 ### `avatar-401` — band `adventurer`
@@ -1473,17 +1696,17 @@ canvas, 1024x1024 minimum, high enough fidelity to downsample cleanly to 512 and
 
 ## Accessibility labels
 
-Spec §7: the UI never names ethnicity, and never makes an inferred identity claim. Each label is 
-either `Avatar N` / `Avatar N selected`, or a concise non-sensitive descriptor in the same 
-register as the trait column — "Avatar with braids and a green top". The `a11y_label` field in 
-`avatar-prompts.json` is deliberately `null`: labels get written once the art exists and can be 
+Spec §7: the UI never names ethnicity, and never makes an inferred identity claim. Each label is
+either `Avatar N` / `Avatar N selected`, or a concise non-sensitive descriptor in the same
+register as the trait column — "Avatar with braids and a green top". The `a11y_label` field in
+`avatar-prompts.json` is deliberately `null`: labels get written once the art exists and can be
 described from the actual pixels, not predicted from the prompt.
 
 ## Checklist before any `enabled: true`
 
 1. Both `-256.webp` and `-512.webp` exist at the spec §5 path.
 
-2. Contact-sheet review against the whole enabled library — head scale, eye line, lighting, 
+2. Contact-sheet review against the whole enabled library — head scale, eye line, lighting,
 background, saturation, sharpness, age appearance (spec §6).
 
 3. The test: *would a user assume one professional character-design team drew everything?*

@@ -102,37 +102,23 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Ellipse ratio < 1.",
+      "body": "Build an ellipse by holding the focus-directrix ratio below 1.",
       "conceptTag": "co-focus-directrix",
       "explanationVariants": [
         "For an ellipse the focus is CLOSER than the directrix, so the ratio (distance to focus)/(distance to directrix) is less than 1 — matching e < 1.",
         "Points hug the focus more tightly than the directrix: ratio < 1."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "For an ellipse (e < 1), the distance to the focus compared to the distance to the directrix is:",
-        "options": [
-          {
-            "id": "o1",
-            "label": "smaller (ratio < 1)",
-            "correct": true,
-            "feedback": "Right — the focus is nearer, so the ratio is below 1, i.e. e < 1."
-          },
-          {
-            "id": "o2",
-            "label": "larger (ratio > 1)",
-            "feedback": "Ratio > 1 is a hyperbola. An ellipse has ratio < 1."
-          },
-          {
-            "id": "o3",
-            "label": "always equal",
-            "feedback": "Equal (ratio 1) is the parabola. An ellipse has ratio < 1."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "ecc-classify",
-        "form": "ratioCompare"
+        "type": "conicLocusLab",
+        "prompt": "Sample both sides of the parabola boundary, then set the focus-directrix ratio to e = 0.8 and inspect the bounded locus.",
+        "targetEccentricityTenths": 8,
+        "startEccentricityTenths": 14,
+        "focusDistance": 2,
+        "requiredSamples": 3,
+        "successFeedback": "At e = 0.8 the focal distance is 0.8 of the directrix distance, so the ratio is below 1 and the locus closes into an ellipse.",
+        "explorationFeedback": "Sample at least three ratios, including values on both sides of e = 1, before settling on 0.8.",
+        "lowFeedback": "This ratio is below 0.8. It still makes an ellipse, but the task asks for the specific ratio e = 0.8.",
+        "highFeedback": "This ratio is above 0.8. At and above 1 the locus reaches the parabola or hyperbola families; return to 0.8."
       }
     },
     {

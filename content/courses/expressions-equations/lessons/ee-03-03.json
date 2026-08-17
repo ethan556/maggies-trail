@@ -15,25 +15,28 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Check a promised pair.",
+      "body": "Run the grouped rule in two visible stages.",
       "conceptTag": "test-equivalence",
       "widget": {
-        "type": "numeric",
-        "prompt": "4(n + 1) and 4n + 4 are claimed equivalent. Evaluate BOTH at n = 7 — what shared value do you get?",
-        "answer": 32,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
-          {
-            "value": 29,
-            "feedback": "29 comes from the broken expansion 4n + 1 (the 4 missed the 1). Both correct forms give 4 × 8 = 32 and 28 + 4 = 32."
-          },
-          {
-            "value": 11,
-            "feedback": "11 adds 4 + 7 somewhere. Substitute properly: 4(7 + 1) = 32 and 4 × 7 + 4 = 32."
-          }
-        ],
-        "fallbackFeedback": "4(7 + 1) = 32 and 4 × 7 + 4 = 32 — same value, as equivalence promises."
+        "type": "functionMachine",
+        "prompt": "Set n to 7. The first stage adds 1; the second multiplies by 4. Watch 4(n + 1) produce the same 32 as 4n + 4.",
+        "a": 1,
+        "b": 1,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 32,
+        "stage2": {
+          "a": 4,
+          "b": 0,
+          "square": false
+        },
+        "square": false,
+        "join": "compose",
+        "successFeedback": "At n = 7, the stages show 7 → 8 → 32. Distributing the ×4 gives 4n + 4, so both forms follow the same rule.",
+        "lowFeedback": "The output is below 32. Increase n and watch both stages: add 1, then multiply the entire result by 4.",
+        "highFeedback": "The output is above 32. Decrease n; the ×4 applies after the +1 stage."
       },
       "predict": {
         "prompt": "If two expressions are TRULY equivalent, at how many values of n must they agree?",

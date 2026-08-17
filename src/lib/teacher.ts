@@ -295,6 +295,7 @@ export function classSummary(
   today: string
 ): Array<{
   name: string;
+  avatarId?: string;
   activeDays14: number;
   lessonsDone: number;
   reviewOnTrack: boolean;
@@ -312,6 +313,7 @@ export function classSummary(
     ).length;
     return {
       name: m.name,
+      ...(m.profile.avatarId ? { avatarId: m.profile.avatarId } : {}),
       activeDays14,
       lessonsDone: Object.values(m.profile.lessons).filter((l) => l.completed).length,
       reviewOnTrack: reviewCompletion(m.profile, today).onTrack,

@@ -22,38 +22,106 @@ interface Match {
 }
 
 const SUPERSCRIPT: Record<string, string> = {
-  "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
-  "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9",
-  "⁺": "+", "⁻": "-", "⁼": "=", "⁽": "(", "⁾": ")",
+  "⁰": "0",
+  "¹": "1",
+  "²": "2",
+  "³": "3",
+  "⁴": "4",
+  "⁵": "5",
+  "⁶": "6",
+  "⁷": "7",
+  "⁸": "8",
+  "⁹": "9",
+  "⁺": "+",
+  "⁻": "-",
+  "⁼": "=",
+  "⁽": "(",
+  "⁾": ")",
   // WS-G. The Calc band writes eˣ, xⁿ, 2ᵏ, Σ1/nᵖ and — load-bearing for §2.2 — carries an
   // integral's upper bound as a superscript letter (∫ₐᵇ, ∫₀ˣ). Only GENUINE Unicode
   // superscripts are listed; see STRAY_SCRIPT for what happens to the improvised ones.
-  "ᵃ": "a", "ᵇ": "b", "ᶜ": "c", "ᵈ": "d", "ᵉ": "e", "ᶠ": "f", "ᵍ": "g", "ʰ": "h",
-  "ⁱ": "i", "ʲ": "j", "ᵏ": "k", "ˡ": "l", "ᵐ": "m", "ⁿ": "n", "ᵒ": "o", "ᵖ": "p",
-  "ʳ": "r", "ˢ": "s", "ᵗ": "t", "ᵘ": "u", "ᵛ": "v", "ʷ": "w", "ˣ": "x", "ʸ": "y", "ᶻ": "z"
+  ᵃ: "a",
+  ᵇ: "b",
+  ᶜ: "c",
+  ᵈ: "d",
+  ᵉ: "e",
+  ᶠ: "f",
+  ᵍ: "g",
+  ʰ: "h",
+  ⁱ: "i",
+  ʲ: "j",
+  ᵏ: "k",
+  ˡ: "l",
+  ᵐ: "m",
+  ⁿ: "n",
+  ᵒ: "o",
+  ᵖ: "p",
+  ʳ: "r",
+  ˢ: "s",
+  ᵗ: "t",
+  ᵘ: "u",
+  ᵛ: "v",
+  ʷ: "w",
+  ˣ: "x",
+  ʸ: "y",
+  ᶻ: "z",
 };
 
 /** The subscript mirror. Lower bounds (∫₀, ∫ₐ, Σ) and indices (xᵢ, xᵢ₊₁) live here. */
 const SUBSCRIPT: Record<string, string> = {
-  "₀": "0", "₁": "1", "₂": "2", "₃": "3", "₄": "4",
-  "₅": "5", "₆": "6", "₇": "7", "₈": "8", "₉": "9",
-  "₊": "+", "₋": "-", "₌": "=", "₍": "(", "₎": ")",
-  "ₐ": "a", "ₑ": "e", "ₕ": "h", "ᵢ": "i", "ⱼ": "j", "ₖ": "k", "ₗ": "l", "ₘ": "m",
-  "ₙ": "n", "ₒ": "o", "ₚ": "p", "ᵣ": "r", "ₛ": "s", "ₜ": "t", "ᵤ": "u", "ᵥ": "v", "ₓ": "x"
+  "₀": "0",
+  "₁": "1",
+  "₂": "2",
+  "₃": "3",
+  "₄": "4",
+  "₅": "5",
+  "₆": "6",
+  "₇": "7",
+  "₈": "8",
+  "₉": "9",
+  "₊": "+",
+  "₋": "-",
+  "₌": "=",
+  "₍": "(",
+  "₎": ")",
+  ₐ: "a",
+  ₑ: "e",
+  ₕ: "h",
+  ᵢ: "i",
+  ⱼ: "j",
+  ₖ: "k",
+  ₗ: "l",
+  ₘ: "m",
+  ₙ: "n",
+  ₒ: "o",
+  ₚ: "p",
+  ᵣ: "r",
+  ₛ: "s",
+  ₜ: "t",
+  ᵤ: "u",
+  ᵥ: "v",
+  ₓ: "x",
 };
 
-const SUPERSCRIPT_RUN = new RegExp(`[${Object.keys(SUPERSCRIPT).join("")}]+`, "g");
+const SUPERSCRIPT_RUN = new RegExp(
+  `[${Object.keys(SUPERSCRIPT).join("")}]+`,
+  "g",
+);
 const SUBSCRIPT_RUN = new RegExp(`[${Object.keys(SUBSCRIPT).join("")}]+`, "g");
 
 function superscriptToTex(source: string): string {
-  return source.replace(SUPERSCRIPT_RUN, (run) =>
-    `^{${Array.from(run, (character) => SUPERSCRIPT[character] ?? character).join("")}}`
+  return source.replace(
+    SUPERSCRIPT_RUN,
+    (run) =>
+      `^{${Array.from(run, (character) => SUPERSCRIPT[character] ?? character).join("")}}`,
   );
 }
 
 function subscriptToTex(source: string): string {
-  return source.replace(SUBSCRIPT_RUN, (run) =>
-    `_{${Array.from(run, (character) => SUBSCRIPT[character] ?? character).join("")}}`
+  return source.replace(
+    SUBSCRIPT_RUN,
+    (run) =>
+      `_{${Array.from(run, (character) => SUBSCRIPT[character] ?? character).join("")}}`,
   );
 }
 
@@ -71,10 +139,17 @@ function subscriptToTex(source: string): string {
  */
 
 /** Everything that LOOKS like a script. Bounds consume the supported ones; a leftover is fatal. */
-const STRAY_SCRIPT = "\\u00B2\\u00B3\\u00B9\\u2070-\\u209C\\u02B0-\\u02FF\\u1D2C-\\u1DBF\\uA700-\\uA707\\u2C7C";
+const STRAY_SCRIPT =
+  "\\u00B2\\u00B3\\u00B9\\u2070-\\u209C\\u02B0-\\u02FF\\u1D2C-\\u1DBF\\uA700-\\uA707\\u2C7C";
 
 const SUP_CHARS = `[${Object.keys(SUPERSCRIPT).join("")}]+`;
 const SUB_CHARS = `[${Object.keys(SUBSCRIPT).join("")}]+`;
+/* Two legacy glyphs occur only as lower bounds in one authored integral-properties lesson.
+ * Unicode has no Latin subscript b or c, so the source used modifier beta (ᵦ) and a tone letter
+ * (꜀). They are admitted ONLY immediately after ∫ and normalised below; they never become general
+ * subscript letters or arithmetic atoms. */
+const LEGACY_INTEGRAL_SUB_CHARS = "[ᵦ꜀]";
+const INTEGRAL_SUB_CHARS = `(?:${SUB_CHARS}|${LEGACY_INTEGRAL_SUB_CHARS})`;
 /** A space or tab — never a newline: an island that spanned lines would eat the authored break. */
 const GAP = "[ \\t]";
 const PAREN = String.raw`\((?:[^()\n]|\([^()\n]*\))*\)`;
@@ -84,15 +159,36 @@ const BARS = String.raw`\|[^|\n]+\|`;
 const POWER = `(?:${SUP_CHARS}|\\^\\{[^{}\\n]*\\}|\\^${PAREN}|\\^(?:[?]|[A-Za-z0-9π∞+−-]+))`;
 const SCRIPTS = `(?:${SUB_CHARS})?(?:${POWER})?`;
 /** `∫` plus its bounds — an atom in its own right, so `∫₀² + ∫₂⁵ = ∫₀⁵` is one island. */
-const INTEGRAL_OP = `∫(?:${SUB_CHARS})?(?:${POWER})?(?![${STRAY_SCRIPT}])`;
+const INTEGRAL_OP = `∫(?:${INTEGRAL_SUB_CHARS})?(?:${POWER})?(?![${STRAY_SCRIPT}])`;
 /** Function names that become a TeX command verbatim. `sqrt`/`lim` have their own rules below. */
-const TEX_FUNCTIONS = "arcsin|arccos|arctan|sinh|cosh|tanh|sin|cos|tan|sec|csc|cot|log|ln|exp";
+const TEX_FUNCTIONS =
+  "arcsin|arccos|arctan|sinh|cosh|tanh|sin|cos|tan|sec|csc|cot|log|ln|exp";
 const FUNCTION_NAMES = `${TEX_FUNCTIONS}|sqrt|lim`;
-const NAME = `[A-Za-zπθ]′?(?![A-Za-z])`;
+/* π is a constant, not a Latin word character. Keeping it outside the word-boundary branch lets
+ * an integral claim ordinary juxtaposition such as `∫πf² dx` without weakening the protection
+ * that stops a single ASCII letter being torn out of prose. */
+const NAME = `(?:[A-Za-zθ]′?(?![A-Za-z])|π)`;
 /** A named function carries its argument, so `cos x dx` does not need bare-letter juxtaposition. */
 const FUNCTION = `(?:${FUNCTION_NAMES})(?![A-Za-z])(?:${GAP}*(?:${PAREN}|${BARS}|${NAME}${SCRIPTS}))?`;
 /** `dx`, `dt`, `du`, `dy`, `dθ` — the only two-letter runs the corpus's integrands contain. */
 const DIFFERENTIAL = String.raw`d[A-Za-zθ](?![A-Za-z])`;
+
+/* S245 / MATH_FRACTION_DISPLAY_INDEX. These are the radical-bearing rational forms authored by
+ * the curriculum (`5√5/5`, `6/√3`, `4/(2√2)`). A bare numeric fraction already has a deliberately
+ * conservative path below; requiring √ on at least one side keeps URLs, dates and prose slashes
+ * outside this always-on island while allowing the whole mathematical quantity to render as one
+ * accessible stacked fraction instead of three disconnected islands. */
+const RADICAL_SOURCE = String.raw`√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)`;
+const RADICAL_NUMBER = String.raw`\d+(?:\.\d+)?`;
+const RADICAL_FACTOR = String.raw`(?:${RADICAL_NUMBER})?${RADICAL_SOURCE}`;
+const RADICAL_FRACTION_TERM = String.raw`(?:\(${RADICAL_FACTOR}\)|${RADICAL_FACTOR}|${RADICAL_NUMBER})`;
+const RADICAL_FRACTION = String.raw`(?<![\w/])(${RADICAL_FRACTION_TERM})\s*\/\s*(${RADICAL_FRACTION_TERM})(?![\w/])`;
+
+function radicalFractionToTex(numerator: string, denominator: string): string {
+  const unwrap = (term: string): string =>
+    term.startsWith("(") && term.endsWith(")") ? term.slice(1, -1) : term;
+  return `\\frac{${unwrap(numerator)}}{${unwrap(denominator)}}`;
+}
 
 /* ── Leibniz derivative notation ─────────────────────────────────────────────
  *
@@ -126,10 +222,12 @@ const DERIVATIVE_OP =
   String.raw`(?<![A-Za-z0-9])${D_OPERATOR}${DERIVATIVE_ORDER}?(?:[A-Za-zθ](?![A-Za-z]))?` +
   String.raw`\/${D_OPERATOR}[A-Za-zθ]${DERIVATIVE_ORDER}?(?![A-Za-z])`;
 const NUMBER = String.raw`\d+(?:\.\d+)?%?`;
+const FRACTION_FACTOR = String.raw`(?:\d+(?:\.\d+)?π?|π|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:${POWER})?`;
+const PI_FRACTION = String.raw`${FRACTION_FACTOR}\s*\/\s*${FRACTION_FACTOR}`;
 /* DERIVATIVE_OP precedes DIFFERENTIAL in both alternations below, and the order is load-bearing:
  * `dy` matches DIFFERENTIAL, so listed second the derivative never gets a turn and `dy/dx` tears
  * into an atom, an operator and another atom — three islands where the notation is one object. */
-const ATOM_BODY = `(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NAME}|${NUMBER})`;
+const ATOM_BODY = `(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|${PI_FRACTION}|½|${NAME}|${NUMBER})`;
 const ATOM = `(?:√${GAP}*)?${ATOM_BODY}${SCRIPTS}`;
 /**
  * Juxtaposition across a space is how `x³ dx`, `½ r² dθ` and `cos x` are written — but it is
@@ -137,7 +235,7 @@ const ATOM = `(?:√${GAP}*)?${ATOM_BODY}${SCRIPTS}`;
  * follow an operator (`x · e^(x²)`), yet may never be picked up by juxtaposition alone; without
  * that restriction "∫ f dx I think" would swallow the `I`.
  */
-const JUXTAPOSED = `(?:√${GAP}*)?(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|½|${NUMBER}|${NAME}${POWER}|${NAME}${SUB_CHARS})${SCRIPTS}`;
+const JUXTAPOSED = `(?:√${GAP}*)?(?:${PAREN}|${BRACKET}|${BARS}|${FUNCTION}|${DERIVATIVE_OP}|${DIFFERENTIAL}|${INTEGRAL_OP}|${PI_FRACTION}|½|${NUMBER}|${NAME}${POWER}|${NAME}${SUB_CHARS})${SCRIPTS}`;
 const OPERATOR = String.raw`[-+−×÷·*/=<>≤≥≠≈]`;
 const RUN = `${ATOM}(?:${GAP}*${OPERATOR}${GAP}*${ATOM}|${ATOM}|${GAP}+${JUXTAPOSED})*`;
 /** `lim(x→4⁻) = 4 − 1 = 3` and `∫₁⁴ = ∫₁³ + ∫₃⁴`: the operator may lead, the result is the body. */
@@ -146,13 +244,23 @@ const BODY = `(?:${GAP}*${OPERATOR})?${GAP}*${RUN}`;
 const COEFFICIENT = String.raw`(?:½|π|\([^()\s\n]{1,14}\))`;
 
 const INTEGRAL_ISLAND = `${COEFFICIENT}?${INTEGRAL_OP}(?:${BODY})?`;
+/* The Calc corpus uses four deliberate language placeholders inside displayed integral notation.
+ * They are not products of italic letters: the renderer must preserve them as words. This closed
+ * vocabulary is explicit evidence, not a general licence to turn prose after ∫ into mathematics. */
+const TEXTUAL_INTEGRAND = String.raw`(?:\((?:rate|top${GAP}*[-−]${GAP}*bottom|something${GAP}+in${GAP}+u)\)|speed)`;
+const TEXTUAL_INTEGRAL_ISLAND = new RegExp(
+  `${COEFFICIENT}?${INTEGRAL_OP}${GAP}*${TEXTUAL_INTEGRAND}${GAP}*${DIFFERENTIAL}`,
+  "g",
+);
 const SUMMATION_ISLAND =
   `[Σ∑](?:${GAP}*${RUN})?` +
   `(?:${GAP}*(?:from|for)${GAP}+[A-Za-z]${GAP}*=${GAP}*[A-Za-z0-9]+(?:${GAP}+to${GAP}+[A-Za-z0-9]+)?)?` +
   `(?:${GAP}*of${GAP}+${RUN})?`;
 const LIMIT_ISLAND = `\\blim(?![A-Za-z])(?:${GAP}*\\(${GAP}*[A-Za-z]${GAP}*→[^()\\n]{1,16}\\))?(?:${BODY})?`;
 
-const CALCULUS_ISLANDS = [INTEGRAL_ISLAND, SUMMATION_ISLAND, LIMIT_ISLAND].map((island) => new RegExp(island, "g"));
+const CALCULUS_ISLANDS = [INTEGRAL_ISLAND, SUMMATION_ISLAND, LIMIT_ISLAND].map(
+  (island) => new RegExp(island, "g"),
+);
 /** Cheap gate: the overwhelming majority of the corpus contains no calculus operator at all. */
 const CALCULUS_OPERATOR = /[∫Σ∑]|\blim\b/;
 /** The operator alone carries no mathematics: "The ∫ is a stretched S for 'sum'" is prose. */
@@ -160,7 +268,8 @@ const BARE_OPERATOR = /^(?:∫|[Σ∑]|lim)$/;
 const WORDS = /[A-Za-z]{3,}/g;
 const FUNCTION_WORDS = new Set(FUNCTION_NAMES.split("|"));
 /** The summation's own authored scaffolding, which SUMMATION_ISLAND consumes rather than typesets. */
-const SUM_SCAFFOLD = /\b(?:from|for)[ \t]+[A-Za-z][ \t]*=[ \t]*[A-Za-z0-9]+(?:[ \t]+to[ \t]+[A-Za-z0-9]+)?(?:[ \t]+of\b)?/g;
+const SUM_SCAFFOLD =
+  /\b(?:from|for)[ \t]+[A-Za-z][ \t]*=[ \t]*[A-Za-z0-9]+(?:[ \t]+to[ \t]+[A-Za-z0-9]+)?(?:[ \t]+of\b)?/g;
 
 /**
  * An island containing an English word is not an island. The corpus deliberately writes
@@ -190,13 +299,32 @@ function calculusShorthandToTex(source: string): string {
   // `cos x` set as three italic letters is c·o·s, not a cosine. The rewrite is scoped to these
   // islands because they are the only place in the corpus a function name is authored as a word.
   let tex = source
-    .replace(new RegExp(`(?<!\\\\)\\b(${TEX_FUNCTIONS})(?![A-Za-z])`, "g"), "\\$1")
+    .replace(
+      new RegExp(`(?<!\\\\)\\b(${TEX_FUNCTIONS})(?![A-Za-z])`, "g"),
+      "\\$1",
+    )
     .replaceAll("½", "\\frac{1}{2}");
+
+  /* Source-compatible repairs for the two bounded legacy glyphs and the four sanctioned textual
+   * integrands. \text keeps the visible words and accessible MathML truthful instead of silently
+   * pretending that `speed` means s·p·e·e·d. */
+  tex = tex
+    .replace(/∫ᵦ/g, "∫_{b}")
+    .replace(/∫꜀/g, "∫_{c}")
+    .replace(/\(rate\)/g, "\\left(\\text{rate}\\right)")
+    .replace(
+      /\(top\s*-\s*bottom\)/g,
+      "\\left(\\text{top} - \\text{bottom}\\right)",
+    )
+    .replace(/\(something\s+in\s+u\)/g, "\\left(\\text{something in }u\\right)")
+    .replace(/\bspeed\b/g, "\\text{speed}");
 
   const summation = tex.match(SUMMATION_BOUNDS);
   if (summation) {
     const [, before, index, lower, upper, after] = summation;
-    const bounds = upper ? `_{${index}=${lower}}^{${upper}}` : `_{${index}=${lower}}`;
+    const bounds = upper
+      ? `_{${index}=${lower}}^{${upper}}`
+      : `_{${index}=${lower}}`;
     const body = (after ?? before ?? "").trim();
     tex = `\\sum${bounds}${body ? ` ${body}` : ""}`;
   } else {
@@ -208,10 +336,14 @@ function calculusShorthandToTex(source: string): string {
   // `lim(x→0⁺)` reached here as `lim(x\to 0^{+})`: the arrow and the sign are ordinary operator
   // rewrites, so all that is left is to move the parenthesised approach under the operator.
   // The `(?<!\\)` keeps the second pass off the `\lim` this one just produced.
-  tex = tex.replace(/\blim(?![A-Za-z])\s*\(\s*([^()\n]*?\\to[^()\n]*?)\s*\)/g, (_match, approach: string) =>
-    `\\lim_{${approach.replace(/\s*\\to\s*/, " \\to ").trim()}}`
+  tex = tex.replace(
+    /\blim(?![A-Za-z])\s*\(\s*([^()\n]*?\\to[^()\n]*?)\s*\)/g,
+    (_match, approach: string) =>
+      `\\lim_{${approach.replace(/\s*\\to\s*/, " \\to ").trim()}}`,
   );
-  tex = tex.replace(/(?<!\\)\blim(?![A-Za-z])\s*/g, "\\lim ").replace(/\\lim (?=[_^])/g, "\\lim");
+  tex = tex
+    .replace(/(?<!\\)\blim(?![A-Za-z])\s*/g, "\\lim ")
+    .replace(/\\lim (?=[_^])/g, "\\lim");
 
   if (tex.includes("∫")) {
     tex = tex.replace(/∫\s*/g, "\\int ").replace(/\\int (?=[_^])/g, "\\int");
@@ -232,7 +364,9 @@ export function powerShorthandToTex(source: string): string {
    * — rather than adding a second spelling to the symbol table, the false-claim evaluator and every
    * future branch — means the rest of this file keeps one canonical form to reason about. Done
    * first so the `≤`/`≥` entries below pick them up. */
-  const tex = subscriptToTex(superscriptToTex(source).replaceAll("<=", "≤").replaceAll(">=", "≥"))
+  const tex = subscriptToTex(
+    superscriptToTex(source).replaceAll("<=", "≤").replaceAll(">=", "≥"),
+  )
     .replace(/\^\(((?:[^()]|\([^()]*\))*)\)/g, "^{$1}")
     .replace(/\^((?:[?]|[A-Za-z0-9π∞+−-]+))/g, "^{$1}")
     /* S242 / MPB-05 — LEIBNIZ NOTATION IS STACKED. Placed after the `^{…}` normalisation above so
@@ -242,8 +376,23 @@ export function powerShorthandToTex(source: string): string {
      * `\cdot` would be a numerator. */
     .replace(
       /(?<![A-Za-z0-9\\])([d∂])((?:\^\{[^{}]*\})?)([A-Za-zθ](?![A-Za-z]))?\/([d∂])([A-Za-zθ])((?:\^\{[^{}]*\})?)(?![A-Za-z])/g,
-      (_m, dTop: string, order: string, top: string | undefined, dBottom: string, bottom: string, bottomOrder: string) =>
-        `\\frac{${dTop}${order}${top ?? ""}}{${dBottom}${bottom}${bottomOrder}}`
+      (
+        _m,
+        dTop: string,
+        order: string,
+        top: string | undefined,
+        dBottom: string,
+        bottom: string,
+        bottomOrder: string,
+      ) =>
+        `\\frac{${dTop}${order}${top ?? ""}}{${dBottom}${bottom}${bottomOrder}}`,
+    )
+    .replace(
+      new RegExp(RADICAL_FRACTION, "g"),
+      (match, numerator: string, denominator: string) =>
+        numerator.includes("√") || denominator.includes("√")
+          ? radicalFractionToTex(numerator, denominator)
+          : match,
     )
     /* S242 / MPB-05. A STACKED FRACTION NEEDS PARENTHESES THAT GROW WITH IT. The two shapes this
      * ruling makes common are the chain rule, `(dy/du)·(du/dx)`, and parametric arc length,
@@ -257,6 +406,13 @@ export function powerShorthandToTex(source: string): string {
     .replace(/√\(((?:[^()]|\([^()]*\))*)\)/g, "\\sqrt{$1}")
     .replace(/√\|([^|]+)\|/g, "\\sqrt{\\lvert $1\\rvert}")
     .replace(/√([A-Za-z0-9]+)/g, "\\sqrt{$1}")
+    .replace(
+      /(?<![\w/])((?:(?:\d+(?:\.\d+)?)?π|\d+(?:\.\d+)?|[A-Za-z])(?:\^\{[^{}\n]*\})?)\s*\/\s*((?:(?:\d+(?:\.\d+)?)?π|\d+(?:\.\d+)?|[A-Za-z])(?:\^\{[^{}\n]*\})?)(?![\w/])/g,
+      (match, numerator: string, denominator: string) =>
+        /[∫Σ∑]|\blim\b/.test(source)
+          ? match
+          : `\\frac{${numerator}}{${denominator}}`,
+    )
     .replace(/(?<![\w/])(\d+)\s*\/\s*(\d+)(?![\w/])/g, "\\frac{$1}{$2}")
     .replaceAll("·", "\\cdot ")
     .replaceAll("×", "\\times ")
@@ -277,7 +433,11 @@ function collect(source: string, pattern: RegExp, matches: Match[]): void {
   pattern.lastIndex = 0;
   for (const match of source.matchAll(pattern)) {
     if (match.index === undefined || !match[0]) continue;
-    matches.push({ start: match.index, end: match.index + match[0].length, source: match[0] });
+    matches.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      source: match[0],
+    });
   }
 }
 
@@ -286,7 +446,63 @@ function calculusMatches(text: string): Match[] {
   if (!CALCULUS_OPERATOR.test(text)) return [];
   const found: Match[] = [];
   for (const island of CALCULUS_ISLANDS) collect(text, island, found);
-  return found.filter((match) => !BARE_OPERATOR.test(match.source.trim()) && !hasProseWord(match.source));
+  const accepted: Match[] = [];
+  const entireTrimmed = text.trim();
+
+  for (const match of found) {
+    const trimmed = match.source.trim();
+    if (BARE_OPERATOR.test(trimmed)) {
+      // A standalone widget label is notation; the same symbol inside a sentence remains prose.
+      if (trimmed === entireTrimmed) accepted.push(match);
+      continue;
+    }
+    if (!hasProseWord(match.source)) {
+      accepted.push(match);
+      continue;
+    }
+    if (!match.source.includes("∫")) continue;
+
+    /* A parenthetical usage note can be greedily offered as one more juxtaposed group after the
+     * closing differential: `∫… dx (for x ≠ 0)`. Keep the mathematically complete prefix and leave
+     * the prose note outside. The last differential is intentional because an arc-length
+     * integrand may contain dx/dt before its closing dt. */
+    const differentials = [
+      ...match.source.matchAll(new RegExp(DIFFERENTIAL, "g")),
+    ];
+    const closing = differentials.at(-1);
+    if (closing?.index !== undefined) {
+      const end = closing.index + closing[0].length;
+      const prefix = match.source.slice(0, end);
+      if (!hasProseWord(prefix)) {
+        accepted.push({
+          start: match.start,
+          end: match.start + end,
+          source: prefix,
+        });
+        continue;
+      }
+    }
+
+    /* Bound-only properties can be followed by a prose gloss without a differential:
+     * `∫ᵦᵃ f (running backwards ...)`. A parenthesis containing a real word is the first certain
+     * prose boundary. Keep the clean prefix, but never promote a now-bare operator; the standalone
+     * label rule above is the only licence for that. */
+    const proseTail = match.source.search(/[ \t]+\((?=[^()\n]*[A-Za-z]{3,})/);
+    if (proseTail > 0) {
+      const prefix = match.source.slice(0, proseTail).trimEnd();
+      if (!BARE_OPERATOR.test(prefix.trim()) && !hasProseWord(prefix)) {
+        accepted.push({
+          start: match.start,
+          end: match.start + prefix.length,
+          source: prefix,
+        });
+      }
+    }
+  }
+
+  // Closed-vocabulary text integrands are intentionally accepted despite containing words.
+  collect(text, TEXTUAL_INTEGRAL_ISLAND, accepted);
+  return accepted;
 }
 
 /**
@@ -303,7 +519,11 @@ function calculusMatches(text: string): Match[] {
 function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   const candidates: Match[] = [];
 
-  collect(text, /\([^()\n]*\^[^()\n]*\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?/g, candidates);
+  collect(
+    text,
+    /\([^()\n]*\^[^()\n]*\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?/g,
+    candidates,
+  );
   // S242: the exponent admits ONE level of nesting, as powerShorthandToTex already does. Without
   // it "2^(3 + (−1))" matched no exponent at all and left "2^()" sitting in the prose.
   /* S242 / MATH-03. THE BASE ADMITS ONE LEVEL OF NESTING, exactly as the exponent already does.
@@ -312,14 +532,36 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   // bracketed base with a signed or fractional inner term is the ordinary shape rather than an edge
   // case. The asymmetry was accidental: the exponent was widened in this session and the base was
   // not. */
-  collect(text, new RegExp(`(?:[A-Za-z0-9?]+|\\((?:[^()\\n]|\\([^()\\n]*\\))*\\))\\^(?:\\((?:[^()\\n]|\\([^()\\n]*\\))*\\)|(?:[?]|[A-Za-z0-9π∞+−-]+))`, "g"), candidates);
-  collect(text, /(?:(?<![A-Za-z0-9])\d+\s*)?(?<![A-Za-z])sqrt\s*\([^()\n]+\)/gi, candidates);
+  collect(
+    text,
+    new RegExp(
+      `(?:[A-Za-z0-9?]+|\\((?:[^()\\n]|\\([^()\\n]*\\))*\\))\\^(?:\\((?:[^()\\n]|\\([^()\\n]*\\))*\\)|(?:[?]|[A-Za-z0-9π∞+−-]+))`,
+      "g",
+    ),
+    candidates,
+  );
+  collect(
+    text,
+    /(?:(?<![A-Za-z0-9])\d+\s*)?(?<![A-Za-z])sqrt\s*\([^()\n]+\)/gi,
+    candidates,
+  );
   collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
+  {
+    const radicalFractions: Match[] = [];
+    collect(text, new RegExp(RADICAL_FRACTION, "g"), radicalFractions);
+    for (const candidate of radicalFractions) {
+      if (candidate.source.includes("√")) candidates.push(candidate);
+    }
+  }
   /* S242 / MATH-03 (MPB-01). Either side of the slash may carry π. "π/2", "3π/2" and "2π/3" are
   // single quantities and were the second-largest π residue (409 rows) — the fraction island
   // required digits on both sides, so it declined them and the whole thing stayed prose on radian
   // lessons whose subject is exactly those values. */
-  collect(text, /(?<![\w/])(?:\d+(?:\.\d+)?π?|π)\s*\/\s*(?:\d+(?:\.\d+)?π?|π)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?(?![\w/])/g, candidates);
+  collect(
+    text,
+    /(?<![\w/])(?:\d+(?:\.\d+)?π?|π)\s*\/\s*(?:\d+(?:\.\d+)?π?|π)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?(?![\w/])/g,
+    candidates,
+  );
 
   /* S242 / MATH-03 (MPB-01/03) — A SIGNED VALUE AND A π QUANTITY ARE ALWAYS-ON ISLANDS.
    *
@@ -335,8 +577,16 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
    * π is admitted only with a COEFFICIENT or a juxtaposed group — "36π", "2π(7)" — so a bare π used
    * as a word ("multiplying by π") is left alone rather than being lifted out of its sentence.
    * Cautious in the same direction as the relation island: evidence, not inference. */
-  collect(text, /±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))/g, candidates);
-  collect(text, /(?<![\w.])\d+(?:\.\d+)?π(?:\([^()\n]{1,20}\))?|π\([^()\n]{1,20}\)/g, candidates);
+  collect(
+    text,
+    /±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?/g,
+    candidates,
+  );
+  collect(
+    text,
+    /(?<![\w.])\d+(?:\.\d+)?π(?:\([^()\n]{1,20}\))?|π\([^()\n]{1,20}\)/g,
+    candidates,
+  );
 
   /* S242 / MPB-05 — LEIBNIZ NOTATION IS AN ALWAYS-ON ISLAND, AND THE OPERATOR FORM CARRIES ITS
    * ARGUMENT.
@@ -358,7 +608,14 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * `WORDS` wants three letters and the notation never has two in a row. */
     collect(text, new RegExp(DERIVATIVE_OP, "g"), candidates);
     const withArgument: Match[] = [];
-    collect(text, new RegExp(`${DERIVATIVE_OP}(?:${GAP}*(?:${BRACKET}|${PAREN})${SCRIPTS})?`, "g"), withArgument);
+    collect(
+      text,
+      new RegExp(
+        `${DERIVATIVE_OP}(?:${GAP}*(?:${BRACKET}|${PAREN})${SCRIPTS})?`,
+        "g",
+      ),
+      withArgument,
+    );
     for (const candidate of withArgument) {
       if (!hasProseWord(candidate.source)) candidates.push(candidate);
     }
@@ -402,9 +659,9 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * refused. The one `P(...)` string that does match carries `|A|` as set cardinality, which is
      * mathematics and should typeset. */
     const PI_RELATION_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
-    const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
+    const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:${POWER})?`;
     const ABSOLUTE = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
+    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -420,7 +677,11 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * occur in English at all, so it is its own evidence that the surrounding text is mathematics,
      * and the false-claim evaluator below already knows how to judge it. 285 rows of the symbolic
      * display index were "6 ≠ 4" and "−6 ≠ 6" sitting in body type beside typeset islands. */
-    collect(text, new RegExp(`${operand}\\s*(?:<=|>=|≤|≥|≠)\\s*${operand}`, "g"), relations);
+    collect(
+      text,
+      new RegExp(`${operand}\\s*(?:<=|>=|≤|≥|≠)\\s*${operand}`, "g"),
+      relations,
+    );
     for (const candidate of relations) {
       if (!isFalseNumericClaim(candidate.source)) candidates.push(candidate);
     }
@@ -475,9 +736,9 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * π used as a WORD is untouched — "use π ≈ 3.14159", "Before multiplying by π" — because an atom
      * only becomes an island inside a run, and prose supplies no operator on both sides. */
     const PI_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
-    const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))`;
+    const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:${POWER})?`;
     const ABSOLUTE_ATOM = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
+    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
@@ -498,7 +759,11 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
      * exists, and the guard threw it away because `=` sat in front of it. A power, a radical or a
      * fraction after an equals sign is the single most ordinary shape in this corpus. */
     const arithmetic: Match[] = [];
-    collect(text, new RegExp(`${atom}(?:\\s*${operator}\\s*${atom})+`, "g"), arithmetic);
+    collect(
+      text,
+      new RegExp(`${atom}(?:\\s*${operator}\\s*${atom})+`, "g"),
+      arithmetic,
+    );
     // S237. The operator class above deliberately omits the ASCII hyphen, so the scanner cannot
     // cross one — it restarts AFTER it and emits the tail as if it were a whole expression.
     // "x^2 - x - 6 = 0" produced the island "6 = 0"; "x^2 - 2x - 8 = 0" produced "8 = 0";
@@ -514,7 +779,10 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     // where the audit already counts them.
     for (let i = arithmetic.length - 1; i >= 0; i--) {
       const before = text.slice(0, arithmetic[i].start).replace(/\s+$/, "");
-      if (/[-−+×÷*/^=<>≤≥≠·.)]$/.test(before) || isFalseNumericClaim(arithmetic[i].source)) {
+      if (
+        /[-−+×÷*/^=<>≤≥≠·.)]$/.test(before) ||
+        isFalseNumericClaim(arithmetic[i].source)
+      ) {
         arithmetic.splice(i, 1);
       }
     }
@@ -532,10 +800,19 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   // to the left, at "g = (1/3)", and beating the integral leaves "l" torn out of "lim" and "x"
   // out of "dx". An explicit operator symbol is the strongest evidence of authored mathematics
   // in this corpus, so it outranks a guess assembled from single letters and equals signs.
-  const byStartThenLongest = (a: Match, b: Match) => a.start - b.start || (b.end - b.start) - (a.end - a.start);
+  const byStartThenLongest = (a: Match, b: Match) =>
+    a.start - b.start || b.end - b.start - (a.end - a.start);
   const accepted: Match[] = [];
-  for (const candidate of [...calculusMatches(text).sort(byStartThenLongest), ...candidates.sort(byStartThenLongest)]) {
-    if (accepted.some((match) => candidate.start < match.end && candidate.end > match.start)) continue;
+  for (const candidate of [
+    ...calculusMatches(text).sort(byStartThenLongest),
+    ...candidates.sort(byStartThenLongest),
+  ]) {
+    if (
+      accepted.some(
+        (match) => candidate.start < match.end && candidate.end > match.start,
+      )
+    )
+      continue;
     accepted.push(candidate);
   }
   return accepted.sort((a, b) => a.start - b.start);
@@ -572,20 +849,32 @@ function isFalseNumericClaim(source: string): boolean {
   const relation = source.match(/[=≤≥≠<>]/);
   if (!relation) return false;
   const [left, right] = source.split(/[=≤≥≠<>]/);
-  if (right === undefined || source.split(/[=≤≥≠<>]/).length !== 2) return false;
+  if (right === undefined || source.split(/[=≤≥≠<>]/).length !== 2)
+    return false;
   const evaluate = (side: string): number | null => {
-    const tokens = side.replace(/[×·]/g, "*").replace(/÷/g, "/").replace(/[−–]/g, "-").trim();
+    const tokens = side
+      .replace(/[×·]/g, "*")
+      .replace(/÷/g, "/")
+      .replace(/[−–]/g, "-")
+      .trim();
     if (!/^[\d\s+\-*/.()%]+$/.test(tokens) || !/\d/.test(tokens)) return null;
     // Shunting-yard over a closed numeric expression: no identifiers, no calls, nothing to inject.
     const out: number[] = [];
     const ops: string[] = [];
-    const precedence: Record<string, number> = { "+": 1, "-": 1, "*": 2, "/": 2 };
+    const precedence: Record<string, number> = {
+      "+": 1,
+      "-": 1,
+      "*": 2,
+      "/": 2,
+    };
     const apply = () => {
       const op = ops.pop();
       const b = out.pop();
       const a = out.pop();
       if (op === undefined || a === undefined || b === undefined) return false;
-      out.push(op === "+" ? a + b : op === "-" ? a - b : op === "*" ? a * b : a / b);
+      out.push(
+        op === "+" ? a + b : op === "-" ? a - b : op === "*" ? a * b : a / b,
+      );
       return true;
     };
     const lexed = tokens.match(/\d+(?:\.\d+)?|[+\-*/()]/g) ?? [];
@@ -594,7 +883,12 @@ function isFalseNumericClaim(source: string): boolean {
       // Unary minus: "(-10/2)" and a leading "-5" are ordinary in this corpus, and treating them
       // as binary left the evaluator unable to decide — which silently let a false claim through.
       const previous = index === 0 ? undefined : lexed[index - 1];
-      if (token === "-" && (previous === undefined || previous === "(" || "+-*/".includes(previous))) {
+      if (
+        token === "-" &&
+        (previous === undefined ||
+          previous === "(" ||
+          "+-*/".includes(previous))
+      ) {
         out.push(0);
         ops.push("-");
         continue;
@@ -605,7 +899,11 @@ function isFalseNumericClaim(source: string): boolean {
         while (ops.length && ops.at(-1) !== "(") if (!apply()) return null;
         ops.pop();
       } else {
-        while (ops.length && precedence[ops.at(-1) as string] >= precedence[token]) if (!apply()) return null;
+        while (
+          ops.length &&
+          precedence[ops.at(-1) as string] >= precedence[token]
+        )
+          if (!apply()) return null;
         ops.push(token);
       }
     }
@@ -616,14 +914,25 @@ function isFalseNumericClaim(source: string): boolean {
   const b = evaluate(right);
   if (a === null || b === null) return false;
   const symbol = relation[0];
-  const holds = symbol === "=" ? Math.abs(a - b) < 1e-9
-    : symbol === "≠" ? Math.abs(a - b) >= 1e-9
-      : symbol === "<" ? a < b : symbol === ">" ? a > b
-        : symbol === "≤" ? a <= b : a >= b;
+  const holds =
+    symbol === "="
+      ? Math.abs(a - b) < 1e-9
+      : symbol === "≠"
+        ? Math.abs(a - b) >= 1e-9
+        : symbol === "<"
+          ? a < b
+          : symbol === ">"
+            ? a > b
+            : symbol === "≤"
+              ? a <= b
+              : a >= b;
   return !holds;
 }
 
-export function authoredMathParts(text: string, options: { includeArithmetic?: boolean } = {}): AuthoredMathPart[] {
+export function authoredMathParts(
+  text: string,
+  options: { includeArithmetic?: boolean } = {},
+): AuthoredMathPart[] {
   const matches = mathMatches(text, options.includeArithmetic ?? false);
   if (!matches.length) return [{ text }];
 
@@ -631,7 +940,11 @@ export function authoredMathParts(text: string, options: { includeArithmetic?: b
   let cursor = 0;
   for (const match of matches) {
     pushText(parts, text.slice(cursor, match.start));
-    parts.push({ text: "", source: match.source, tex: powerShorthandToTex(match.source) });
+    parts.push({
+      text: "",
+      source: match.source,
+      tex: powerShorthandToTex(match.source),
+    });
     cursor = match.end;
   }
   pushText(parts, text.slice(cursor));

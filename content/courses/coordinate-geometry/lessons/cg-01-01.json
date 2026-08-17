@@ -266,7 +266,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Two points, one x.",
+      "body": "Plot two points with one shared x-coordinate.",
       "conceptTag": "coord-read",
       "hints": [
         "Compare the pairs slot by slot.",
@@ -278,30 +278,55 @@
         "Equal x-coordinates put P and Q on the same vertical line."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Point P is at (3, 6) and point Q is at (3, 1). What is true about P and Q?",
-        "options": [
+        "type": "plotPoint",
+        "cols": 8,
+        "rows": 8,
+        "xLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "yLabels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "targets": [
           {
-            "id": "a",
-            "label": "They line up vertically — same distance right, different heights",
-            "correct": true,
-            "feedback": "Right — both sit 3 right, so P is directly above Q."
+            "x": 3,
+            "y": 6
           },
           {
-            "id": "b",
-            "label": "They line up horizontally — same height, different distances right",
-            "feedback": "Their heights are 6 and 1 — different. It's the right-distance (3) they share, so the line-up is vertical."
-          },
-          {
-            "id": "c",
-            "label": "They are the same point",
-            "feedback": "Same x, but the y-coordinates differ (6 vs 1) — two different points, stacked vertically."
+            "x": 3,
+            "y": 1
           }
-        ]
-      },
-      "variant": {
-        "gen": "coordinate-plot",
-        "form": "cgVerticalAlignment"
+        ],
+        "connectTargets": true,
+        "pointErrors": [
+          {
+            "x": 6,
+            "y": 3,
+            "feedback": "That swaps P's coordinates. P is 3 right and 6 up, so x must stay 3."
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "feedback": "That swaps Q's coordinates. Q is 3 right and 1 up, so x must stay 3."
+          }
+        ],
+        "prompt": "Plot P(3, 6) and Q(3, 1). The grid will connect them after both addresses are correct.",
+        "missFeedback": "Keep the first coordinate fixed at 3 for both points, then use heights 6 and 1.",
+        "successFeedback": "Both points sit 3 units right, so the connecting segment is vertical. Their equal x-coordinates make the alignment visible."
       }
     },
     {

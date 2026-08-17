@@ -15,42 +15,42 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Multiply to a whole number.",
+   "body": "Build the radicand product as a rectangle, then take its square root.",
    "widget": {
-    "type": "numeric",
-    "prompt": "√2 · √8 = ?",
-    "answer": 4,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 10,
-      "feedback": "Multiply the radicands, don't add them: √(2 · 8) = √16 = 4."
-     },
-     {
-      "value": 16,
-      "feedback": "√16 isn't 16 — take the root: √16 = 4."
-     }
-    ],
-    "fallbackFeedback": "√2 · √8 = √16 = 4."
+    "type": "areaModel",
+    "prompt": "Build a 2-by-8 rectangle to multiply the radicands in √2 · √8. Then read the square root of its 16 unit squares.",
+    "targetArea": 16,
+    "wMax": 8,
+    "hMax": 8,
+    "wStart": 2,
+    "hStart": 2,
+    "requireFactors": {
+     "w": 2,
+     "h": 8
+    },
+    "factorFeedback": "The area is 16, but the sides must show the original radicands 2 and 8. Build 2 × 8, not a different factor pair.",
+    "successFeedback": "The 2-by-8 rectangle has area 16. Therefore √2 · √8 = √16 = 4.",
+    "lowFeedback": "The rectangle has fewer than 16 squares. Keep one side at 2 and extend the other side to 8.",
+    "highFeedback": "The rectangle has more than 16 squares. Return to the exact radicand product 2 × 8."
    },
    "predict": {
-    "prompt": "√2 · √8 — two irrational numbers. Their product will be…",
+    "prompt": "Before building the rectangle, what kind of number is √2 · √8?",
     "options": [
      {
       "id": "whole",
-      "label": "A whole number — the radicands merge"
+      "label": "A whole number — 2 × 8 makes 16"
      },
      {
       "id": "irr",
-      "label": "Irrational — irrationals stay irrational"
+      "label": "An irrational number — radicals never simplify"
      },
      {
       "id": "sixteen",
-      "label": "Exactly 16"
+      "label": "Exactly 16 — stop before taking the root"
      }
     ],
     "outcomeId": "whole",
-    "reveal": "The product rule merges the insides: √2 · √8 = √16 = 4 — the root of the product, not the product itself. Two irrationals can land square on a whole number whenever their radicands multiply to a perfect square."
+    "reveal": "The rectangle makes the product radicand visible: 2 × 8 = 16. Taking the remaining square root gives √16 = 4, so two irrational factors can produce a whole number."
    }
   },
   {

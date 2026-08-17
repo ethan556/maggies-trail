@@ -2,6 +2,7 @@ import { COPY } from "@/lib/copy";
 import { progressStore } from "@/lib/progress";
 import { getRoster } from "@/lib/roster";
 import type { IconName } from "@/components/ui";
+import type { SubjectIllustrationId } from "@/lib/curriculumIcons";
 
 /* ------------------------------------------------------------ Trail name -- */
 
@@ -63,23 +64,27 @@ export function resolveTrailName(): string {
  * the general (e.g. "triangle" lands shapes before "trig" lands functionCurve;
  * "lines & angles" lands angle before geometry lands shapes).
  */
-const ICON_RULES: Array<[RegExp, IconName]> = [
-  [/\bangle|lines & angles/i, "icon-908"],
-  [/triangle|shape|polygon|quadrilateral|geometry|similar|congruen|circle theorems|construct|coordinate proofs|solid|transformation/i, "icon-907"],
-  [/probab|sampling|chance|dice/i, "icon-912"],
-  [/statist|data|distribution|bivariate|inference/i, "icon-805"],
-  [/fraction|ratio|rate|proportion|percent|equal shares/i, "icon-904"],
-  [/clock|time\b/i, "icon-906"],
-  [/measure|measurement|volume|length|convert/i, "icon-905"],
-  [/calculus|derivative|integral|limit/i, "icon-911"],
-  [/function|quadratic|polynomial|exponential|logarithm|sequence|series|trig|conic|vector|matri|polar|parametric|graph/i, "icon-910"],
-  [/equation|expression|inequal|system|algebra|balance/i, "icon-909"],
-  [/count|place value|number|tens|million|120|1,000|decimal|integer|exponent|root|scientific|array|odd/i, "icon-902"],
-  [/word problem|story problem|multi-step/i, "icon-903"],
-  [/add|subtract|multipl|divi|operation|fluency/i, "icon-903"],
+const ICON_RULES: Array<{
+  match: RegExp;
+  icon: IconName;
+  subject: SubjectIllustrationId;
+}> = [
+  { match: /\bangle|lines & angles/i, icon: "icon-908", subject: "subject-angles-construction" },
+  { match: /triangle|shape|polygon|quadrilateral|geometry|similar|congruen|circle theorems|construct|coordinate proofs|solid|transformation/i, icon: "icon-907", subject: "subject-geometry-shapes" },
+  { match: /probab|sampling|chance|dice/i, icon: "icon-912", subject: "subject-probability-chance" },
+  { match: /statist|data|distribution|bivariate|inference/i, icon: "icon-805", subject: "subject-statistics-data" },
+  { match: /fraction|ratio|rate|proportion|percent|equal shares/i, icon: "icon-904", subject: "subject-fractions-ratios" },
+  { match: /clock|time\b/i, icon: "icon-906", subject: "subject-time" },
+  { match: /measure|measurement|volume|length|convert/i, icon: "icon-905", subject: "subject-measurement" },
+  { match: /calculus|derivative|integral|limit/i, icon: "icon-911", subject: "subject-calculus-change" },
+  { match: /function|quadratic|polynomial|exponential|logarithm|sequence|series|trig|conic|vector|matri|polar|parametric|graph/i, icon: "icon-910", subject: "subject-functions-graphs" },
+  { match: /equation|expression|inequal|system|algebra|balance/i, icon: "icon-909", subject: "subject-algebra-equations" },
+  { match: /count|place value|number|tens|million|120|1,000|decimal|integer|exponent|root|scientific|array|odd/i, icon: "icon-902", subject: "subject-number-place-value" },
+  { match: /word problem|story problem|multi-step/i, icon: "icon-903", subject: "subject-operations" },
+  { match: /add|subtract|multipl|divi|operation|fluency/i, icon: "icon-903", subject: "subject-operations" },
   // S198 Batch G kindergarten titles; exact-anchored so no earlier routing changes
-  [/^how many\?$|^comparing$/i, "icon-902"],
-  [/^measuring & sorting$/i, "icon-905"],
+  { match: /^how many\?$|^comparing$/i, icon: "icon-902", subject: "subject-number-place-value" },
+  { match: /^measuring & sorting$/i, icon: "icon-905", subject: "subject-measurement" },
 ];
 
 /**
@@ -87,6 +92,15 @@ const ICON_RULES: Array<[RegExp, IconName]> = [
  * anything the rules miss falls back to the brand's route mark.
  */
 export function courseIcon(title: string): IconName {
-  for (const [re, icon] of ICON_RULES) if (re.test(title)) return icon;
+  for (const rule of ICON_RULES) if (rule.match.test(title)) return rule.icon;
   return "icon-807";
+}
+
+/** Stable semantic art family for a course title. Shares the exact ordered rules above, so the
+ * legacy 24px AppIcon fallback and the premium painterly tile can never tell different stories. */
+export function courseSubjectId(title: string): SubjectIllustrationId {
+  for (const rule of ICON_RULES) if (rule.match.test(title)) return rule.subject;
+  // The shipped catalog is guarded as total in personalize.test.ts. The route-like default makes
+  // an unexpected title visibly generic without fabricating a mathematical domain.
+  return "subject-number-place-value";
 }

@@ -205,36 +205,22 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Included or not?",
+      "body": "Test where the angle must sit.",
       "widget": {
-        "type": "mcq",
-        "prompt": "For SAS, where must the angle be?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "between the two sides being used",
-            "correct": true,
-            "feedback": "The included angle sits at the vertex where the two chosen sides meet — that's what locks the third side."
-          },
-          {
-            "id": "o2",
-            "label": "opposite one of the two sides",
-            "correct": false,
-            "feedback": "An angle opposite a side gives the SSA arrangement, which does NOT guarantee congruence. SAS needs the angle BETWEEN the sides."
-          },
-          {
-            "id": "o3",
-            "label": "anywhere in the triangle",
-            "correct": false,
-            "feedback": "Position matters entirely: only the INCLUDED angle (between the two sides) makes SAS work."
-          },
-          {
-            "id": "o4",
-            "label": "at the largest vertex",
-            "correct": false,
-            "feedback": "Size of the vertex is irrelevant — what matters is that the angle is INCLUDED between the two sides."
-          }
-        ]
+        "type": "triangleConstraintLab",
+        "prompt": "Choose the criterion that locks two sides of lengths 5 and 8 with the included angle 70°. Test whether a second triangle can survive.",
+        "targetCriterion": "SAS",
+        "startCriterion": "SSA",
+        "sideA": 5,
+        "sideB": 8,
+        "targetAngle": 70,
+        "angleStart": 35,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "successFeedback": "SAS with the included 70° angle fixes one triangle. No second noncongruent construction remains.",
+        "criterionFeedback": "SSA can still branch. The equal angle must sit between the two known sides.",
+        "angleFeedback": "SAS is selected; now set the included angle to 70°.",
+        "evidenceFeedback": "Test multiple criteria and the second-candidate control before deciding."
       }
     },
     {

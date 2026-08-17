@@ -15,44 +15,46 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Unfold the power.",
+   "body": "Build the cube that gives the word cubed its meaning.",
    "conceptTag": "exponents",
    "widget": {
-    "type": "numeric",
-    "prompt": "What does 2^3 equal? (2 × 2 × 2)",
-    "answer": 8,
-    "tolerance": 0,
-    "unit": "",
-    "commonErrors": [
+    "type": "volumeBuilder",
+    "prompt": "Build a cube with length 2, width 2, and height 2. The number of unit cubes is the value of 2^3.",
+    "targetVolume": 8,
+    "lMax": 2,
+    "wMax": 2,
+    "hMax": 2,
+    "lStart": 1,
+    "wStart": 1,
+    "hStart": 1,
+    "commonBuilds": [
      {
-      "value": 6,
-      "feedback": "6 multiplies the base by the exponent (2 × 3). An exponent means multiply the base BY ITSELF that many times: 2 × 2 × 2 = 8."
-     },
-     {
-      "value": 5,
-      "feedback": "5 adds 2 + 3. The exponent tells you how many 2s to MULTIPLY: 2 × 2 × 2 = 8."
+      "volume": 4,
+      "feedback": "Four cubes make one 2-by-2 layer. A 2-by-2-by-2 cube needs two such layers."
      }
     ],
-    "fallbackFeedback": "2^3 = 2 × 2 × 2 = 8."
+    "successFeedback": "The 2-by-2-by-2 cube contains 8 unit cubes, so 2^3 = 8.",
+    "lowFeedback": "The solid is not yet 2 units in every direction. Complete the cube and watch the unit-cube count grow.",
+    "highFeedback": "A 2-by-2-by-2 cube contains exactly 8 unit cubes."
    },
    "predict": {
-    "prompt": "Which is bigger: 2³ or 3²?",
+    "prompt": "A 2-by-2 base holds 4 unit cubes in one layer. How many cubes will TWO layers hold?",
     "options": [
      {
-      "id": "threesq",
-      "label": "3²"
+      "id": "eight",
+      "label": "8 cubes"
      },
      {
-      "id": "twocubed",
-      "label": "2³"
+      "id": "six",
+      "label": "6 cubes"
      },
      {
-      "id": "equal",
-      "label": "They're equal"
+      "id": "four",
+      "label": "4 cubes"
      }
     ],
-    "outcomeId": "threesq",
-    "reveal": "2³ stacks three twos to 8; 3² stacks two threes to 9. Swapping base and exponent changes the number — the two roles are not interchangeable."
+    "outcomeId": "eight",
+    "reveal": "One 2-by-2 layer has 4 cubes. Two layers make 4 × 2 = 8, so the model shows 2³ = 2 × 2 × 2 = 8."
    }
   },
   {

@@ -17,77 +17,48 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each row's start to its end.",
+   "body": "Trace one full row.",
    "conceptTag": "chart-rows",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Each row of ten runs from a start number to an end number. Match them.",
-    "left": [
+    "type": "numberLineHop",
+    "prompt": "The row starts at 21. Hop across the other nine numbers to its end.",
+    "min": 20,
+    "max": 31,
+    "start": 21,
+    "hop": 1,
+    "hops": 9,
+    "direction": "forward",
+    "commonLandings": [
      {
-      "id": "s1",
-      "label": "starts at 1"
+      "value": 29,
+      "feedback": "That stops one number early. The row includes 21 and nine more numbers."
      },
      {
-      "id": "s11",
-      "label": "starts at 11"
-     },
-     {
-      "id": "s21",
-      "label": "starts at 21"
+      "value": 31,
+      "feedback": "31 starts the next row. Stop at the end of 21–30."
      }
     ],
-    "right": [
-     {
-      "id": "e10",
-      "label": "ends at 10"
-     },
-     {
-      "id": "e20",
-      "label": "ends at 20"
-     },
-     {
-      "id": "e30",
-      "label": "ends at 30"
-     }
-    ],
-    "pairs": {
-     "s1": "e10",
-     "s11": "e20",
-     "s21": "e30"
-    },
-    "pairErrors": [
-     {
-      "left": "s11",
-      "right": "e10",
-      "feedback": "The row from 11 counts up ten: 11 to 20, not 10."
-     },
-     {
-      "left": "s21",
-      "right": "e20",
-      "feedback": "The row from 21 ends at 30 — ten numbers: 21, 22, … 30."
-     }
-    ],
-    "missFeedback": "Each row has 10 numbers, so it ends 9 more than its start.",
-    "successFeedback": "1–10, 11–20, 21–30 — every row is a ten!"
+    "missFeedback": "Start at 21 and make all nine one-step hops. The row ends at 30.",
+    "successFeedback": "The row ends at 30. A full row of ten finishes on a number ending in 0."
    },
    "predict": {
-    "prompt": "Every row of ten ends on what kind of number?",
+    "prompt": "The row starts at 21. Where will its tenth number be?",
     "options": [
      {
-      "id": "tens",
-      "label": "A tens number, like 20 or 30"
+      "id": "thirty",
+      "label": "30"
      },
      {
-      "id": "nine",
-      "label": "A nine number, like 29"
+      "id": "twenty-nine",
+      "label": "29"
      },
      {
-      "id": "any",
-      "label": "It can end anywhere"
+      "id": "thirty-one",
+      "label": "31"
      }
     ],
-    "outcomeId": "tens",
-    "reveal": "A row finishes where its ten completes — on the round tens number. The next row starts fresh right after it."
+    "outcomeId": "thirty",
+    "reveal": "Nine hops after 21 land on 30, the tenth number in the row. The next row begins at 31."
    }
   },
   {

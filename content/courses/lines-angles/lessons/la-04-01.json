@@ -15,51 +15,77 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Does the fold match?",
+   "body": "Test a fold by comparing the two halves it creates.",
    "conceptTag": "symmetry-concept",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each fold: do the two halves match exactly, or not?",
-    "buckets": [
+    "type": "shapeHierarchyLab",
+    "prompt": "A fold line makes the left and right halves land exactly on each other. What is true of this fold?",
+    "mode": "verdict",
+    "nodes": [
      {
-      "id": "yes",
-      "label": "Halves match",
-      "icon": "✅"
+      "id": "fold",
+      "label": "Fold line",
+      "attributes": [
+       "through the center"
+      ]
      },
      {
-      "id": "no",
-      "label": "Halves don't match",
-      "icon": "🚫"
+      "id": "halves",
+      "label": "Two halves",
+      "attributes": [
+       "same outline",
+       "same size"
+      ]
      }
     ],
-    "items": [
+    "edges": [
+     [
+      "fold",
+      "halves"
+     ]
+    ],
+    "relation": "subset",
+    "subjectLabel": "a perfect-match fold",
+    "predicateLabel": "a line of symmetry",
+    "witness": "Folding the shape makes every point on one half meet its partner on the other half.",
+    "choices": [
      {
-      "id": "e1",
-      "label": "A square, folded straight down the middle",
-      "bucketId": "yes",
-      "feedback": "Both halves are identical rectangles — a perfect match."
+      "id": "always",
+      "label": "Always a symmetry line",
+      "claim": "always",
+      "feedback": "A perfect-match fold is exactly the definition of a line of symmetry.",
+      "evidenceKind": "example",
+      "evidenceText": "The two highlighted halves coincide.",
+      "highlightNodeIds": [
+       "fold",
+       "halves"
+      ]
      },
      {
-      "id": "e2",
-      "label": "A scalene triangle (no two sides equal), folded any way",
-      "bucketId": "no",
-      "feedback": "With no matching sides, no fold lines up the two halves."
+      "id": "sometimes",
+      "label": "Sometimes a symmetry line",
+      "claim": "sometimes",
+      "feedback": "If the halves match exactly, the fold qualifies every time.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "There is no unmatched part in the stated fold.",
+      "highlightNodeIds": [
+       "halves"
+      ]
      },
      {
-      "id": "e3",
-      "label": "A rectangle, folded straight down the middle",
-      "bucketId": "yes",
-      "feedback": "Both halves are identical smaller rectangles — a match."
-     },
-     {
-      "id": "e4",
-      "label": "A shape with one pointy corner and one rounded corner, folded down the middle",
-      "bucketId": "no",
-      "feedback": "A pointy corner can't match a rounded one — the halves don't line up."
+      "id": "never",
+      "label": "Never a symmetry line",
+      "claim": "never",
+      "feedback": "This reverses the definition: exact matching is the evidence for symmetry.",
+      "evidenceKind": "blocker",
+      "evidenceText": "The matching halves rule out 'never'.",
+      "highlightNodeIds": [
+       "fold"
+      ]
      }
     ],
-    "missFeedback": "Picture folding the shape exactly on that line — do the two halves land on top of each other perfectly?",
-    "successFeedback": "The square and rectangle fold into matching halves; the scalene triangle and mismatched-corner shape don't."
+    "fallbackFeedback": "A line of symmetry is a fold line that makes the two halves match exactly.",
+    "successFeedback": "The fold is a line of symmetry because the two halves coincide exactly."
    },
    "predict": {
     "prompt": "A fold line counts as a line of SYMMETRY when the two halves…?",

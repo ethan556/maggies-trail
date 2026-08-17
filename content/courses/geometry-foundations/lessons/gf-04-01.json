@@ -163,32 +163,31 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Translate, then half-turn.",
+      "body": "Carry the translated point through a half-turn.",
       "conceptTag": "gf-composition",
       "explanationVariants": [
-        "Step 1: (7, 2) → (4, 2). Step 2, the 180° flips both signs: (−4, −2). The x-coordinate is −4.",
-        "Chain the rules: x goes 7 → 7 − 3 = 4 → −4 under the sign flip."
+        "The translation first sends (7, 2) to (4, 2). The rotation diagram then sends it to (−4, −2).",
+        "The half-turn makes the full composition visible: translate first, then flip both coordinates."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Take (7, 2). Apply (x, y) → (x − 3, y), then rotate the result 180° about the origin. What is the final x-coordinate?",
-        "answer": -4,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "rotationLab",
+        "mode": "coordinateRule",
+        "point": [4, 2],
+        "centre": [0, 0],
+        "targetAngle": 180,
+        "angleStart": 0,
+        "angleStep": 90,
+        "gridMax": 6,
+        "commonTurns": [
           {
-            "value": 4,
-            "feedback": "4 is the x after the translation only — the half turn hasn't fired yet. 180° flips the sign: −4."
-          },
-          {
-            "value": -10,
-            "feedback": "−10 comes from rotating FIRST ((7,2) → (−7,−2)) and translating after (−7 − 3 = −10). The given order is translate, THEN rotate: −4."
+            "angle": 90,
+            "feedback": "That is only a quarter-turn. Continue to 180° so (4, 2) reaches (−4, −2)."
           }
         ],
-        "fallbackFeedback": "7 − 3 = 4, then the 180° negates it: −4."
-      },
-      "variant": {
-        "gen": "g10-geometry-foundations",
-        "form": "gf-composition__numeric"
+        "prompt": "First translate (7, 2) three units left to (4, 2), as shown. Now rotate that point 180° about the origin.",
+        "successFeedback": "The half-turn sends (4, 2) to (−4, −2). The final x-coordinate is −4, and the path confirms that translation happened before rotation.",
+        "lowFeedback": "The point has not completed the half-turn. Continue counterclockwise to 180°.",
+        "highFeedback": "You have turned past the half-turn. Return to 180°."
       }
     },
     {

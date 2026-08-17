@@ -119,31 +119,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Rules A (add 2 from 0) and B (add 4 from 0) give ordered pairs. What is the third pair?",
+        "prompt": "Rules A (add 3 from 0) and B (add 6 from 0) give ordered pairs. What is their second pair?",
         "options": [
           {
             "id": "o0",
-            "label": "(6, 12), taking the third term of each",
+            "label": "(6, 12), taking the second term of each",
             "correct": true,
-            "feedback": "Correct — A reaches 6 and B reaches 12 at step three, and the pair records both at once."
+            "feedback": "Correct — at step two, rule A reaches 6 and rule B reaches 12."
           },
           {
             "id": "o1",
-            "label": "(2, 4), the first terms",
+            "label": "(3, 6), taking the first term of each",
             "correct": false,
-            "feedback": "Those are the first pair; the third step has been taken twice more."
+            "feedback": "That is the first pair; both rules need one more step."
           },
           {
             "id": "o2",
-            "label": "(3, 3), the step number twice",
+            "label": "(2, 2), using the step number twice",
             "correct": false,
-            "feedback": "An ordered pair holds the two RULES' outputs, not the step number."
+            "feedback": "The coordinates record rule outputs, not the number of the step."
           },
           {
             "id": "o3",
-            "label": "(12, 6), B then A",
+            "label": "(12, 6), placing rule B before rule A",
             "correct": false,
-            "feedback": "The order matters: A's term goes first, so the pair is (6, 12)."
+            "feedback": "The order matters: rule A is the first coordinate and rule B is second."
           }
         ]
       },
@@ -185,11 +185,11 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Plot a new pair of rules while keeping the coordinate order clear.",
       "conceptTag": "g5e-ordered-pairs",
       "widget": {
         "type": "plotPoint",
-        "prompt": "Rules A (add 2 from 0) and B (add 4 from 0). Plot the first two ordered pairs.",
+        "prompt": "Rules A (add 1 from 0) and B (add 3 from 0). Plot their first two ordered pairs.",
         "cols": 8,
         "rows": 8,
         "xLabels": [
@@ -213,29 +213,15 @@
           "8"
         ],
         "targets": [
-          {
-            "x": 2,
-            "y": 4
-          },
-          {
-            "x": 4,
-            "y": 8
-          }
+          { "x": 1, "y": 3 },
+          { "x": 2, "y": 6 }
         ],
         "pointErrors": [
-          {
-            "x": 4,
-            "y": 2,
-            "feedback": "That plotted (4, 2), swapping the pair. A's term goes across, B's term goes up."
-          },
-          {
-            "x": 2,
-            "y": 2,
-            "feedback": "That used A's term for both coordinates; B advances twice as fast."
-          }
+          { "x": 3, "y": 1, "feedback": "That swaps the first pair. Rule A goes across; rule B goes up." },
+          { "x": 2, "y": 3, "feedback": "At step two, rule B has reached 6, not 3." }
         ],
-        "missFeedback": "Plot A's term along the bottom and B's term up the side, one point per step.",
-        "successFeedback": "The pairs (2, 4) and (4, 8) both sit on the same straight path — B is always double A.",
+        "missFeedback": "Put rule A's term first and rule B's term second: (1, 3), then (2, 6).",
+        "successFeedback": "The points (1, 3) and (2, 6) keep A first and B second; B is three times A.",
         "connectTargets": true
       },
       "cml": {
@@ -399,7 +385,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 24 ÷ 4 — recovering the rule's factor from the ordered pair (4, 24).",
+        "prompt": "Compute 24 ÷ 4 to recover the rule's factor for the graph point (4, 24).",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -480,31 +466,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Rules A (add 2 from 0) and B (add 4 from 0) give ordered pairs. What is the third pair?",
+          "prompt": "Rules A (add 1 from 0) and B (add 3 from 0) give ordered pairs. What is the second pair?",
           "options": [
             {
               "id": "o0",
-              "label": "(6, 12), taking the third term of each",
+              "label": "(2, 6), taking the second term of each",
               "correct": true,
-              "feedback": "Correct — A reaches 6 and B reaches 12 at step three, and the pair records both at once."
+              "feedback": "Correct — after two steps, A is 2 and B is 6."
             },
             {
               "id": "o1",
-              "label": "(2, 4), the first terms",
+              "label": "(1, 3), taking the first term of each",
               "correct": false,
-              "feedback": "Those are the first pair; the third step has been taken twice more."
+              "feedback": "That is the first pair, not the second pair."
             },
             {
               "id": "o2",
-              "label": "(3, 3), the step number twice",
+              "label": "(2, 3), using one rule's first term",
               "correct": false,
-              "feedback": "An ordered pair holds the two RULES' outputs, not the step number."
+              "feedback": "At step two, rule B has reached 6 rather than staying at 3."
             },
             {
               "id": "o3",
-              "label": "(12, 6), B then A",
+              "label": "(6, 2), placing rule B before rule A",
               "correct": false,
-              "feedback": "The order matters: A's term goes first, so the pair is (6, 12)."
+              "feedback": "Rule A must be written first, so the coordinate order is reversed here."
             }
           ]
         }

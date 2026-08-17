@@ -15,55 +15,56 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Convert a large number.",
+      "body": "Separate a large number into a coefficient and its place-value exponent.",
       "widget": {
-        "type": "mcq",
-        "prompt": "320,000,000 in scientific notation is:",
-        "options": [
+        "type": "placeValueTransformLab",
+        "task": "scientificForm",
+        "answerMode": "choice",
+        "prompt": "Explore the coefficient and place exponent for 320,000,000, then choose its scientific notation.",
+        "values": [320000000],
+        "choices": [
           {
             "id": "a",
             "label": "3.2 × 10⁸",
-            "correct": true,
-            "feedback": "Right — moving the decimal 8 places left lands on 3.2."
+            "claim": "scientific:3.2:8",
+            "feedback": "Correct. The coefficient is 3.2 and the decimal moved eight places, so the exponent is 8."
           },
           {
             "id": "b",
             "label": "32 × 10⁷",
-            "correct": false,
-            "feedback": "The coefficient must be 1 ≤ a < 10 — 32 is too big; 3.2 × 10⁸ is standard form."
+            "claim": "scientific:32:7",
+            "feedback": "That value is equivalent, but 32 is not a valid scientific-notation coefficient because it is not less than 10."
           },
           {
             "id": "c",
             "label": "3.2 × 10⁷",
-            "correct": false,
-            "feedback": "Count again — 320,000,000 has the decimal moving 8 places, not 7."
-          },
-          {
-            "id": "d",
-            "label": "3.2 × 10⁹",
-            "correct": false,
-            "feedback": "That's one power too many — 320,000,000 needs exactly 8 places."
+            "claim": "scientific:3.2:7",
+            "feedback": "The coefficient is valid, but the decimal moved eight places rather than seven."
           }
-        ]
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "320,000,000 = 3.2 × 10⁸. The coefficient is between 1 and 10, and the exponent records eight place moves.",
+        "explorationFeedback": "Inspect both the coefficient and exponent stages before selecting an answer.",
+        "fallbackFeedback": "Place one nonzero digit before the decimal, then count how many places the decimal moved."
       },
       "predict": {
-        "prompt": "In proper scientific notation, the front number must be at least 1 and less than what?",
+        "prompt": "In scientific notation, the coefficient is at least 1 and less than which number?",
         "options": [
           {
             "id": "ten",
-            "label": "10"
+            "label": "Less than 10"
           },
           {
             "id": "hundred",
-            "label": "100"
+            "label": "Less than 100"
           },
           {
             "id": "any",
-            "label": "There's no limit"
+            "label": "There is no upper limit"
           }
         ],
         "outcomeId": "ten",
-        "reveal": "One digit before the point — at least 1, under 10 — so every size difference lives in the power of ten. Allow front numbers up to 100 and the same value wears two coats — 42 × 10³ and 4.2 × 10⁴ — and magnitudes stop being comparable at a glance. That's the whole convention."
+        "reveal": "A scientific-notation coefficient has exactly one nonzero digit before the decimal, so it is at least 1 and less than 10. The exponent then carries the place-value shift."
       }
     },
     {

@@ -15,83 +15,56 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Build the split.",
+   "body": "Build the quotient from complete groups and the leftover state.",
    "conceptTag": "divide-big",
    "widget": {
-    "type": "buildExpression",
-    "prompt": "Break 84 ÷ 4 into two easier divisions. Build: 80 ÷ 4 + 4 ÷ 4.",
-    "tokens": [
+    "type": "quotientReasoningLab",
+    "task": "integerQuotient",
+    "answerMode": "numeric",
+    "prompt": "Split 84 into groups of 4. How many complete groups are there?",
+    "dividend": {
+     "num": 84,
+     "den": 1
+    },
+    "divisor": {
+     "num": 4,
+     "den": 1
+    },
+    "candidates": [],
+    "requiredExplorations": 3,
+    "answerUnit": "groups",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "t80",
-      "label": "80"
+      "value": 20,
+      "feedback": "Twenty groups account for 80. The remaining 4 makes one more complete group."
      },
      {
-      "id": "td1",
-      "label": "÷ 4"
-     },
-     {
-      "id": "tp",
-      "label": "+"
-     },
-     {
-      "id": "t4",
-      "label": "4"
-     },
-     {
-      "id": "td2",
-      "label": "÷ 4"
-     },
-     {
-      "id": "t84",
-      "label": "÷ 84"
+      "value": 24,
+      "feedback": "Twenty-four comes from reversing the last two digits, not from grouping 84 by 4."
      }
     ],
-    "correct": [
-     "t80",
-     "td1",
-     "tp",
-     "t4",
-     "td2"
-    ],
-    "acceptAlso": [
-     [
-      "t4",
-      "td2",
-      "tp",
-      "t80",
-      "td1"
-     ]
-    ],
-    "commonBuilds": [
-     {
-      "sequence": [
-       "t80",
-       "td1",
-       "tp",
-       "t4",
-       "t84"
-      ],
-      "feedback": "The second piece should divide the LEFTOVER 4 by 4, not by 84 — 84 was already split into 80 and 4."
-     }
-    ],
-    "reusable": false,
-    "missFeedback": "Split 84 into 80 and 4, then divide each piece by 4 separately.",
-    "successFeedback": "80 ÷ 4 + 4 ÷ 4 = 20 + 1 = 21 — the same split trick, run backward."
+    "fractionErrors": [],
+    "authoredStages": [],
+    "successFeedback": "There are 21 groups. The friendly split shows 80 ÷ 4 = 20 and 4 ÷ 4 = 1.",
+    "explorationFeedback": "Open each quotient state so the groups, product, and remainder stay connected.",
+    "fallbackFeedback": "Use 80 + 4: divide each part by 4, then combine 20 + 1."
    },
    "predict": {
-    "prompt": "Splitting 84 ÷ 4 into 80 ÷ 4 + 4 ÷ 4 — why split at 80?",
+    "prompt": "Why split 84 into 80 + 4 before dividing by 4?",
     "options": [
      {
       "id": "friendly",
-      "label": "Because 80 ÷ 4 is instant — the split is chosen for friendliness"
+      "label": "80 and 4 both divide by 4"
      },
      {
       "id": "only",
-      "label": "Because only 80 + 4 makes the math come out right"
+      "label": "Only 80 + 4 is allowed"
      },
      {
       "id": "tens",
-      "label": "Because 4 can only divide tens"
+      "label": "4 divides only tens"
      }
     ],
     "outcomeId": "friendly",

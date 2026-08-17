@@ -15,70 +15,43 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Predict each product's parity — no multiplying allowed.",
+      "body": "Build the product as an array and inspect its pairs.",
       "conceptTag": "parity",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort the facts by the parity their product MUST have.",
-        "buckets": [
-          {
-            "id": "even",
-            "label": "Even product",
-            "icon": "🤝"
-          },
-          {
-            "id": "odd",
-            "label": "Odd product",
-            "icon": "🧍"
-          }
-        ],
-        "items": [
-          {
-            "id": "f1",
-            "label": "4 × 7",
-            "bucketId": "even",
-            "feedback": "The 4 is even — an even factor pairs the whole product (it's 28)."
-          },
-          {
-            "id": "f2",
-            "label": "3 × 5",
-            "bucketId": "odd",
-            "feedback": "Both factors odd — the only recipe for an odd product (it's 15)."
-          },
-          {
-            "id": "f3",
-            "label": "6 × 6",
-            "bucketId": "even",
-            "feedback": "Even times even — doubly paired (36). Any even factor is enough."
-          },
-          {
-            "id": "f4",
-            "label": "9 × 3",
-            "bucketId": "odd",
-            "feedback": "Odd × odd — no even factor anywhere to pair things up, so the product stays odd (27)."
-          }
-        ],
-        "missFeedback": "Scan for an even factor: found one → even product. Both factors odd → odd product. That's the whole rule.",
-        "successFeedback": "Called before computing! One even factor forces even; only odd × odd stays odd."
+        "type": "areaModel",
+        "prompt": "Build a 4-by-7 array. Use the 4-square rows to see whether every square can be paired.",
+        "targetArea": 28,
+        "wMax": 7,
+        "hMax": 7,
+        "wStart": 4,
+        "hStart": 5,
+        "requireFactors": {
+          "w": 4,
+          "h": 7
+        },
+        "factorFeedback": "Use side lengths 4 and 7 so the array shows the even factor in every row or column.",
+        "lowFeedback": "The array has fewer than 28 squares. Build 4 rows of 7 or 7 rows of 4.",
+        "highFeedback": "The array has more than 28 squares. Build 4 rows of 7 or 7 rows of 4.",
+        "successFeedback": "The 28 squares pair with no leftovers. One factor is even, so the whole product is even."
       },
       "predict": {
-        "prompt": "4 × 7 is on one card. Without multiplying, its product must be…",
+        "prompt": "Without finding the exact product, will 4 × 7 be even or odd?",
         "options": [
           {
             "id": "even",
-            "label": "Even — one even factor forces it"
+            "label": "Even — groups of 4 can be paired"
           },
           {
             "id": "odd",
-            "label": "Odd — the odd factor decides"
+            "label": "Odd — the factor 7 is odd"
           },
           {
             "id": "unknown",
-            "label": "Impossible to tell without computing"
+            "label": "It cannot be known from the factors"
           }
         ],
         "outcomeId": "even",
-        "reveal": "4 × 7 is seven groups of an EVEN number — every group is made of pairs, and stacking groups keeps every pair intact. One even factor makes the whole product even, and that single rule sorts every card without any arithmetic."
+        "reveal": "Four can be split into pairs with no leftovers. Seven groups of those pairs still have no leftovers, so the product is even."
       }
     },
     {

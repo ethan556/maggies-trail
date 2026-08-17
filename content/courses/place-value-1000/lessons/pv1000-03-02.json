@@ -11,9 +11,69 @@
       "kind": "concept",
       "figure": "place-by-place-compare",
       "body": "Compare 3-digit numbers by walking the spots left to right: hundreds first. The first spot where they differ decides everything — 275 and 312: 2 < 3, so 275 < 312."
-    },
-    {
-      "id": "i1",
+  },
+  {
+   "id": "i1a",
+   "kind": "interactive",
+   "body": "Open the first place that differs.",
+   "conceptTag": "pv1000-compare",
+   "widget": {
+    "type": "placeValueTransformLab",
+    "task": "decidingPlace",
+    "answerMode": "choice",
+    "prompt": "Line up 275 and 312. Inspect the first place that decides which number is greater.",
+    "values": [
+     275,
+     312
+    ],
+    "choices": [
+     {
+      "id": "hundreds",
+      "label": "Hundreds place",
+      "claim": "place:2",
+      "feedback": "Yes. The hundreds are 2 and 3, so the comparison is decided right away."
+     },
+     {
+      "id": "tens",
+      "label": "Tens place",
+      "claim": "place:1",
+      "feedback": "The hundreds already differ, so there is no need to use the tens."
+     },
+     {
+      "id": "ones",
+      "label": "Ones place",
+      "claim": "place:0",
+      "feedback": "Start at the greatest place. The hundreds decide before the ones are reached."
+     }
+    ],
+    "requiredExplorations": 1,
+    "successFeedback": "The hundreds place decides: 3 hundreds is more than 2 hundreds, so 312 is greater.",
+    "explorationFeedback": "Open the hundreds stage before choosing the deciding place.",
+    "fallbackFeedback": "Compare from left to right. The hundreds differ first: 2 hundreds and 3 hundreds.",
+    "tolerance": 0
+   },
+   "predict": {
+    "prompt": "275 and 312 differ in the first digit. Which place do you expect to decide the comparison?",
+    "options": [
+     {
+      "id": "hundreds",
+      "label": "Hundreds"
+     },
+     {
+      "id": "tens",
+      "label": "Tens"
+     },
+     {
+      "id": "ones",
+      "label": "Ones"
+     }
+    ],
+    "outcomeId": "hundreds",
+    "reveal": "The aligned place chart opens at the hundreds: 2 hundreds versus 3 hundreds. That first difference makes 312 greater."
+   }
+  },
+  {
+   "id": "i1",
       "kind": "interactive",
       "body": "Compare two numbers.",
       "widget": {
@@ -26,26 +86,7 @@
         "gtFeedback": "Check the hundreds digit first: 2 is less than 3, so 275 < 312, not >.",
         "eqFeedback": "These numbers aren't equal — the hundreds digits already differ: 2 vs 3.",
         "successFeedback": "Yes — the hundreds digits differ first: 2 < 3, so 275 < 312."
-      },
-      "predict": {
-        "prompt": "275 or 312 — before the blocks appear, which comparison do you expect to win?",
-        "options": [
-          {
-            "id": "hundreds",
-            "label": "312 — its hundreds digit is bigger"
-          },
-          {
-            "id": "digits",
-            "label": "275 — its digits 7 and 5 are bigger"
-          },
-          {
-            "id": "equal",
-            "label": "They'll come out equal"
-          }
-        ],
-        "outcomeId": "hundreds",
-        "reveal": "The blocks settle it: 312's three flats beat 275's two, and no pile of rods and cubes can make that up. The HIGHEST place decides first."
-      }
+   }
     },
     {
       "id": "k1",

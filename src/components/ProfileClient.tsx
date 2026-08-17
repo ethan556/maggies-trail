@@ -10,6 +10,13 @@ import { trailNameFrom } from "@/lib/personalize";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { AppIcon } from "@/components/ui";
+import {
+  DEFAULT_AVATAR_CUSTOMIZATION,
+  type AvatarAccent,
+  type AvatarBadge,
+  type AvatarCustomization,
+  type AvatarGlasses
+} from "@/lib/avatars";
 
 export interface ProfileCourse {
   slug: string;
@@ -217,6 +224,41 @@ function PrefToggle({ label, desc, on, onToggle }: { label: string; desc: string
   );
 }
 
+function CustomizationChoices<T extends string>({
+  label,
+  value,
+  options,
+  onChange
+}: {
+  label: string;
+  value: T;
+  options: Array<readonly [T, string]>;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <fieldset className="mt-3">
+      <legend className="text-xs font-extrabold text-content-2">{label}</legend>
+      <div className="mt-1.5 flex flex-wrap gap-2">
+        {options.map(([option, optionLabel]) => (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={value === option}
+            onClick={() => onChange(option)}
+            className={`pressable min-h-11 rounded-pill border-2 px-3 text-sm font-bold ${
+              value === option
+                ? "border-ink bg-ink text-paper dark:border-paper dark:bg-paper dark:text-ink"
+                : "border-ink/15 text-content-2 hover:border-ink/40 dark:border-paper/20"
+            }`}
+          >
+            {optionLabel}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 export default function ProfileClient({ courses }: { courses: ProfileCourse[] }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
@@ -229,6 +271,18 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
   }, []);
   if (!profile) return <p className="text-ink/70 dark:text-paper/70">Loading your trail log…</p>;
 
+  const customization = profile.avatarCustomization ?? DEFAULT_AVATAR_CUSTOMIZATION;
+  const saveCustomization = (patch: Partial<AvatarCustomization>) => {
+    const stored = progressStore.load();
+    stored.avatarCustomization = {
+      ...DEFAULT_AVATAR_CUSTOMIZATION,
+      ...stored.avatarCustomization,
+      ...patch
+    };
+    progressStore.save(stored);
+    setProfile(stored);
+  };
+
   const today = localDateStr(new Date());
   const streak = computeStreak(profile.activity, today).streak;
   const done = new Set(Object.keys(profile.lessons).filter((id) => profile.lessons[id].completed));
@@ -238,7 +292,10 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
       <section className="flex flex-wrap items-center gap-4 rounded-card border border-ink/10 bg-surface p-4 shadow-e1 dark:border-paper/12">
         <AvatarDisplay
           avatarId={profile.avatarId}
+          customization={profile.avatarCustomization}
           size={512}
+          placement="profile"
+          displaySize={80}
           className="h-20 w-20 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
         />
         <div className="min-w-0 flex-1">
@@ -273,6 +330,40 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
               }}
             />
           </div>
+          {profile.avatarId && (
+            <div className="mt-5 border-t border-ink/10 pt-4 dark:border-paper/12">
+              <h3 className="text-sm font-extrabold">Customize</h3>
+              <p className="mt-1 max-w-2xl text-xs text-content-2">
+                Keep it simple: add glasses, a subtle frame, or one small Trail badge. Choose a
+                different complete portrait for another hair or skin appearance so the premium
+                painterly artwork stays natural and consistent.
+              </p>
+              <CustomizationChoices<AvatarGlasses>
+                label="Glasses"
+                value={customization.glasses}
+                options={[["none", "None"], ["round", "Round"], ["rectangular", "Rectangle"]]}
+                onChange={(glasses) => saveCustomization({ glasses })}
+              />
+              <CustomizationChoices<AvatarAccent>
+                label="Frame"
+                value={customization.accent}
+                options={[
+                  ["none", "None"],
+                  ["navy", "Navy"],
+                  ["orange", "Orange"],
+                  ["teal", "Teal"],
+                  ["violet", "Violet"]
+                ]}
+                onChange={(accent) => saveCustomization({ accent })}
+              />
+              <CustomizationChoices<AvatarBadge>
+                label="Badge"
+                value={customization.badge}
+                options={[["none", "None"], ["trail", "Trail"], ["star", "Star"], ["pi", "Pi"]]}
+                onChange={(badge) => saveCustomization({ badge })}
+              />
+            </div>
+          )}
         </section>
       )}
 

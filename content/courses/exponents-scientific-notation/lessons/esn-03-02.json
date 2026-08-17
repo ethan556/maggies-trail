@@ -15,55 +15,56 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Convert a small decimal.",
+      "body": "Track a small decimal's coefficient and negative place-value exponent.",
       "widget": {
-        "type": "mcq",
-        "prompt": "0.0056 in scientific notation is:",
-        "options": [
+        "type": "placeValueTransformLab",
+        "task": "scientificForm",
+        "answerMode": "choice",
+        "prompt": "Explore the coefficient and place exponent for 0.0056, then choose its scientific notation.",
+        "values": [0.0056],
+        "choices": [
           {
             "id": "a",
             "label": "5.6 × 10⁻³",
-            "correct": true,
-            "feedback": "Right — moving the decimal 3 places right lands on 5.6."
+            "claim": "scientific:5.6:-3",
+            "feedback": "Correct. The coefficient is 5.6, and the negative exponent records three places toward thousandths."
           },
           {
             "id": "b",
             "label": "5.6 × 10³",
-            "correct": false,
-            "feedback": "The exponent should be NEGATIVE for a number smaller than 1 — 5.6 × 10⁻³ is correct."
+            "claim": "scientific:5.6:3",
+            "feedback": "A positive exponent would make 5.6 much larger than 1. This small decimal needs exponent −3."
           },
           {
             "id": "c",
-            "label": "56 × 10⁻⁴",
-            "correct": false,
-            "feedback": "The coefficient must be 1 ≤ a < 10 — 56 is too big; 5.6 × 10⁻³ is standard form."
-          },
-          {
-            "id": "d",
             "label": "5.6 × 10⁻²",
-            "correct": false,
-            "feedback": "Count again — 0.0056 needs the decimal to move 3 places, not 2."
+            "claim": "scientific:5.6:-2",
+            "feedback": "That places 5.6 in the hundredths, giving 0.056. The original value is in the thousandths."
           }
-        ]
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "0.0056 = 5.6 × 10⁻³. A negative exponent places the value below 1 by shifting three places.",
+        "explorationFeedback": "Inspect both the coefficient and exponent stages before selecting an answer.",
+        "fallbackFeedback": "Move the decimal to make a coefficient between 1 and 10, then count three places back to the original value."
       },
       "predict": {
-        "prompt": "0.0056 is smaller than 1. In scientific notation, will its power of ten be positive or negative?",
+        "prompt": "Because 0.0056 is less than 1, what sign should its power-of-ten exponent have?",
         "options": [
           {
             "id": "negative",
-            "label": "Negative"
+            "label": "A negative exponent"
           },
           {
             "id": "positive",
-            "label": "Positive"
+            "label": "A positive exponent"
           },
           {
             "id": "zero",
-            "label": "Zero"
+            "label": "An exponent of zero"
           }
         ],
         "outcomeId": "negative",
-        "reveal": "Numbers below 1 are built by dividing by tens — each division is a step DOWN, and negative exponents count those steps."
+        "reveal": "Negative exponents represent repeated division by 10. That moves 5.6 down three place-value positions to 0.0056."
       }
     },
     {

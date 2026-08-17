@@ -121,9 +121,17 @@ function escapeHtml(s) {
 
 async function chromiumExecutable() {
   // Same resolution order as scripts/session/closure-visual-matrix-s220.cjs, plus the browser
-  // path this container ships. Never runs `playwright install`.
+  // path this container ships. On Windows, @sparticuz can unpack an extensionless Linux binary
+  // into %TEMP%; prefer an installed Chrome/Edge executable before that fallback. Never runs
+  // `playwright install`.
   if (process.env.PW_CHROMIUM_EXE) return process.env.PW_CHROMIUM_EXE;
-  for (const candidate of ["/tmp/chromium", "/opt/pw-browsers/chromium"]) {
+  const candidates = process.platform === "win32"
+    ? [
+        join(process.env.ProgramFiles ?? "C:\\Program Files", "Google", "Chrome", "Application", "chrome.exe"),
+        join(process.env["ProgramFiles(x86)"] ?? "C:\\Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe")
+      ]
+    : ["/tmp/chromium", "/opt/pw-browsers/chromium"];
+  for (const candidate of candidates) {
     if (existsSync(candidate)) return candidate;
   }
   try {

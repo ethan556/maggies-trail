@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { TLesson } from "@/lib/schema";
 import { canCheck, correctAnswerText, learnerAnswerText } from "@/lib/evaluate";
@@ -26,6 +25,7 @@ import { sameCMLValue, usePlayer } from "./playerStore";
 import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailDots } from "./playerChrome";
 import { MathProse } from "@/components/math/MathText";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
+import { LessonCompletionIdentity } from "@/components/LessonCompletionIdentity";
 
 
 export interface NextLesson {
@@ -366,7 +366,10 @@ export default function LessonPlayer({
         <SummitRoute walked={st.queue.length} />
         <div className="summit-in relative flex flex-col items-center gap-3">
           <SparkBurst className="left-1/2 top-6" />
-          <Image src="/brand/maggies-mark.svg" alt="" width={64} height={64} unoptimized priority aria-hidden="true" />
+          <LessonCompletionIdentity
+            avatarId={prof.avatarId}
+            customization={prof.avatarCustomization}
+          />
           <h1 className="text-3xl font-extrabold tracking-tight">{COPY.lessonDone}</h1>
           <p className="text-sm font-semibold text-ink/70 dark:text-paper/70">{st.lesson.title}</p>
           {trailContext && (

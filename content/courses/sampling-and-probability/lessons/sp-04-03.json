@@ -15,32 +15,34 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Count outcomes for a real situation.",
+      "body": "Count a three-stage sample space.",
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "A restaurant has 6 shirts and 5 pants for staff uniforms. How many total outfits are possible?",
+        "prompt": "A café lunch has one sandwich, one side, and one drink. There are 3 sandwiches, 2 sides, and 2 drinks. How many lunches are possible?",
         "mode": "count",
         "stages": [
           {
-            "label": "Shirts",
+            "label": "Sandwich",
             "outcomes": [
-              "S1",
-              "S2",
-              "S3",
-              "S4",
-              "S5",
-              "S6"
+              "Veggie",
+              "Chicken",
+              "Bean"
             ],
             "favourable": []
           },
           {
-            "label": "Pants",
+            "label": "Side",
             "outcomes": [
-              "P1",
-              "P2",
-              "P3",
-              "P4",
-              "P5"
+              "Fruit",
+              "Salad"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Drink",
+            "outcomes": [
+              "Water",
+              "Milk"
             ],
             "favourable": []
           }
@@ -48,53 +50,56 @@
         "choices": [
           {
             "id": "correct",
-            "label": "30",
-            "count": 30,
-            "feedback": "Yes — 6 × 5 = 30 outfits."
+            "label": "12",
+            "count": 12,
+            "feedback": "Yes — 3 × 2 × 2 = 12 different lunches."
           },
           {
             "id": "trap-1",
-            "label": "11",
-            "count": 11,
-            "feedback": "That adds 6+5 instead of multiplying. Total outfits = 6 × 5 = 30."
+            "label": "7",
+            "count": 7,
+            "feedback": "That adds 3 + 2 + 2. Each sandwich can pair with every side and drink, so multiply: 3 × 2 × 2 = 12."
           },
           {
             "id": "trap-2",
             "label": "6",
             "count": 6,
-            "feedback": "That's just the shirts. Multiply by the 5 pants too: 6 × 5 = 30."
+            "feedback": "That counts each sandwich-side pair but leaves out the 2 drink choices. Multiply 6 × 2 = 12."
           }
         ],
-        "fallbackFeedback": "6 shirts × 5 pants = 30 outfits.",
-        "successFeedback": "Yes — 6 × 5 = 30 outfits."
+        "fallbackFeedback": "Multiply the choices at all three stages: 3 × 2 × 2 = 12 lunches.",
+        "successFeedback": "Yes — 3 × 2 × 2 = 12 different lunches."
       }
     },
     {
       "id": "k1",
       "kind": "check",
-      "body": "A compound-event probability in a game context.",
+      "body": "Find a compound probability from two different chance devices.",
       "conceptTag": "sp-realworld-prob",
       "explanationVariants": [
-        "P(heads)=1/2, P(even)=1/2; multiply: 1/4.",
-        "For independent events, multiply the individual probabilities."
+        "The spinner lands on blue or green with probability 2/4, and a number cube shows more than 4 with probability 2/6. Multiply to get 1/6.",
+        "For independent events, multiply the probability from each stage: 1/2 × 1/3 = 1/6."
       ],
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "What is the probability of flipping heads and rolling an even number?",
+        "prompt": "A spinner has four equal sections: blue, green, red, and gold. What is the probability of spinning blue or green and then rolling a number greater than 4?",
         "mode": "probability",
         "stages": [
           {
-            "label": "Coin",
+            "label": "Spinner",
             "outcomes": [
-              "H",
-              "T"
+              "Blue",
+              "Green",
+              "Red",
+              "Gold"
             ],
             "favourable": [
-              0
+              0,
+              1
             ]
           },
           {
-            "label": "Die",
+            "label": "Number cube",
             "outcomes": [
               "1",
               "2",
@@ -104,8 +109,7 @@
               "6"
             ],
             "favourable": [
-              1,
-              3,
+              4,
               5
             ]
           }
@@ -113,28 +117,28 @@
         "choices": [
           {
             "id": "a",
-            "label": "1/4",
+            "label": "1/6",
             "num": 1,
-            "den": 4,
-            "feedback": "Yes — 1/2 × 1/2 = 1/4."
+            "den": 6,
+            "feedback": "Yes — 2/4 × 2/6 = 1/2 × 1/3 = 1/6."
           },
           {
             "id": "b",
             "label": "1/2",
             "num": 1,
             "den": 2,
-            "feedback": "That's just one event. Multiply both: 1/4."
+            "feedback": "That's the spinner probability only. The number cube must also be greater than 4: 1/2 × 1/3 = 1/6."
           },
           {
             "id": "c",
-            "label": "1/12",
+            "label": "1/3",
             "num": 1,
-            "den": 12,
-            "feedback": "Multiply the probabilities directly: 1/4."
+            "den": 3,
+            "feedback": "That's the number-cube probability only. The spinner must also be blue or green: 1/2 × 1/3 = 1/6."
           }
         ],
-        "fallbackFeedback": "Yes — 1/2 × 1/2 = 1/4.",
-        "successFeedback": "Yes — 1/2 × 1/2 = 1/4."
+        "fallbackFeedback": "Multiply the two stage probabilities: 2/4 × 2/6 = 1/6.",
+        "successFeedback": "Yes — 2/4 × 2/6 = 1/2 × 1/3 = 1/6."
       },
       "variant": {
         "gen": "g7-sp-compound-model",
@@ -150,10 +154,10 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count outcomes for a game with repeated flips.",
+      "body": "Connect repeated trials to exponential growth in the sample space.",
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "Flipping a coin 4 times: how many total outcomes are there?",
+        "prompt": "A fair coin is flipped four times. How many ordered H/T sequences are possible?",
         "mode": "count",
         "stages": [
           {
@@ -206,7 +210,7 @@
             "id": "trap-2",
             "label": "4",
             "count": 4,
-            "feedback": "That's just the number of flips. Multiply the 2 outcomes for each flip: 2×2×2×2=16."
+            "feedback": "That counts the four flips, not their sequences. Each flip has 2 outcomes, so 2 × 2 × 2 × 2 = 16."
           }
         ],
         "fallbackFeedback": "2 × 2 × 2 × 2 = 16 total outcomes.",
@@ -222,14 +226,14 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Another compound-event probability, dice game.",
+      "body": "Find the probability that the same condition holds on two independent number cubes.",
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "What is the probability of rolling a number greater than 4 on both dice?",
+        "prompt": "Two fair number cubes are rolled. What is the probability that both numbers are greater than 4?",
         "mode": "probability",
         "stages": [
           {
-            "label": "Die 1",
+            "label": "Number cube 1",
             "outcomes": [
               "1",
               "2",
@@ -244,7 +248,7 @@
             ]
           },
           {
-            "label": "Die 2",
+            "label": "Number cube 2",
             "outcomes": [
               "1",
               "2",
@@ -265,7 +269,7 @@
             "label": "1/9",
             "num": 1,
             "den": 9,
-            "feedback": "Yes — 1/3 × 1/3 = 1/9."
+            "feedback": "Yes — each number cube has probability 1/3, so 1/3 × 1/3 = 1/9."
           },
           {
             "id": "b",
@@ -276,10 +280,10 @@
           },
           {
             "id": "c",
-            "label": "2/6",
+            "label": "2/3",
             "num": 2,
-            "den": 6,
-            "feedback": "That's the same as 1/3, still one die. Multiply for both dice: 1/9."
+            "den": 3,
+            "feedback": "That adds 1/3 + 1/3. For both independent conditions to happen, multiply: 1/3 × 1/3 = 1/9."
           }
         ],
         "fallbackFeedback": "Yes — 1/3 × 1/3 = 1/9.",
@@ -289,35 +293,41 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Count outcomes for another real combination.",
+      "body": "Count a three-stage planning choice.",
       "conceptTag": "sp-realworld-prob",
       "explanationVariants": [
-        "5×4=20.",
-        "Multiply the choices at each stage."
+        "Multiply all three stages: 4 × 3 × 2 = 24 plans.",
+        "Each trail can pair with every snack and every badge."
       ],
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
+        "prompt": "A trail day offers 4 routes, 3 snacks, and 2 summit badges. If a student chooses one of each, how many plans are possible?",
         "mode": "count",
         "stages": [
           {
-            "label": "Shirts",
+            "label": "Route",
             "outcomes": [
-              "S1",
-              "S2",
-              "S3",
-              "S4",
-              "S5"
+              "Ridge",
+              "Lake",
+              "Forest",
+              "Canyon"
             ],
             "favourable": []
           },
           {
-            "label": "Pants",
+            "label": "Snack",
             "outcomes": [
-              "P1",
-              "P2",
-              "P3",
-              "P4"
+              "Fruit",
+              "Crackers",
+              "Trail mix"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Badge",
+            "outcomes": [
+              "Star",
+              "Compass"
             ],
             "favourable": []
           }
@@ -325,25 +335,25 @@
         "choices": [
           {
             "id": "correct",
-            "label": "20",
-            "count": 20,
-            "feedback": "Yes — 5 × 4 = 20 outfits."
+            "label": "24",
+            "count": 24,
+            "feedback": "Yes — 4 × 3 × 2 = 24 different plans."
           },
           {
             "id": "trap-1",
             "label": "9",
             "count": 9,
-            "feedback": "That adds instead of multiplying. 5 × 4 = 20."
+            "feedback": "That adds 4 + 3 + 2. A complete plan combines one choice from every stage, so multiply to get 24."
           },
           {
             "id": "trap-2",
-            "label": "5",
-            "count": 5,
-            "feedback": "Multiply by the 4 pants too: 5 × 4 = 20."
+            "label": "12",
+            "count": 12,
+            "feedback": "That counts route-snack pairs but leaves out the 2 badge choices. Multiply 12 × 2 = 24."
           }
         ],
-        "fallbackFeedback": "20.",
-        "successFeedback": "Yes — 5 × 4 = 20 outfits."
+        "fallbackFeedback": "Multiply the choices at all three stages: 4 × 3 × 2 = 24.",
+        "successFeedback": "Yes — 4 × 3 × 2 = 24 different plans."
       },
       "variant": {
         "gen": "g7-sp-counting-principle",
@@ -353,34 +363,42 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Count outcomes for a bigger game.",
+      "body": "Count codes built from unequal stage sizes.",
       "conceptTag": "sp-realworld-prob",
       "explanationVariants": [
-        "2×6=12.",
-        "Multiply the choices at each stage."
+        "Multiply all three stages: 2 × 5 × 3 = 30 codes.",
+        "Each letter can pair with every digit and every symbol."
       ],
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
+        "prompt": "A locker code uses one letter (A or B), one digit (1–5), and one symbol (star, triangle, or circle). How many codes are possible?",
         "mode": "count",
         "stages": [
           {
-            "label": "Coin",
+            "label": "Letter",
             "outcomes": [
-              "H",
-              "T"
+              "A",
+              "B"
             ],
             "favourable": []
           },
           {
-            "label": "Die",
+            "label": "Digit",
             "outcomes": [
               "1",
               "2",
               "3",
               "4",
-              "5",
-              "6"
+              "5"
+            ],
+            "favourable": []
+          },
+          {
+            "label": "Symbol",
+            "outcomes": [
+              "Star",
+              "Triangle",
+              "Circle"
             ],
             "favourable": []
           }
@@ -388,25 +406,25 @@
         "choices": [
           {
             "id": "correct",
-            "label": "12",
-            "count": 12,
-            "feedback": "Yes — 2 × 6 = 12 ordered outcomes."
+            "label": "30",
+            "count": 30,
+            "feedback": "Yes — 2 × 5 × 3 = 30 different codes."
           },
           {
             "id": "trap-1",
-            "label": "8",
-            "count": 8,
-            "feedback": "Adding gives 2 + 6 = 8. But every coin side pairs with every die face, so multiply: 2 × 6 = 12."
+            "label": "10",
+            "count": 10,
+            "feedback": "That counts letter-digit pairs but leaves out the 3 symbols. Multiply 10 × 3 = 30."
           },
           {
             "id": "trap-2",
-            "label": "6",
-            "count": 6,
-            "feedback": "Multiply by the coin's 2 too: 12."
+            "label": "15",
+            "count": 15,
+            "feedback": "That counts digit-symbol pairs but leaves out the 2 letters. Multiply 15 × 2 = 30."
           }
         ],
-        "fallbackFeedback": "12.",
-        "successFeedback": "Yes — 2 × 6 = 12 ordered outcomes."
+        "fallbackFeedback": "Multiply the choices at all three stages: 2 × 5 × 3 = 30.",
+        "successFeedback": "Yes — 2 × 5 × 3 = 30 different codes."
       },
       "variant": {
         "gen": "g7-sp-counting-principle",
@@ -416,29 +434,33 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A full mixed challenge, real-world framing.",
+      "body": "Transfer the compound-event rule across three independent stages.",
       "conceptTag": "sp-realworld-prob",
       "explanationVariants": [
-        "P(heads)=1/2, P(even)=1/2; multiply: 1/4.",
-        "For independent events, multiply the individual probabilities."
+        "Blue or green is 2/5, even is 3/6, and heads is 1/2. Multiply and simplify: 2/5 × 3/6 × 1/2 = 1/10.",
+        "A three-stage AND event needs all three factors; omitting any stage makes the probability too large."
       ],
       "widget": {
         "type": "compoundEventLab",
-        "prompt": "A carnival game asks players to flip a coin and roll a die, winning if they get heads and an even number. What is the probability of winning?",
+        "prompt": "To win a trail game, a player must spin blue or green on a five-color spinner, roll an even number, and flip heads. What is the probability of winning?",
         "mode": "probability",
         "stages": [
           {
-            "label": "Coin",
+            "label": "Spinner",
             "outcomes": [
-              "H",
-              "T"
+              "Blue",
+              "Green",
+              "Red",
+              "Gold",
+              "Purple"
             ],
             "favourable": [
-              0
+              0,
+              1
             ]
           },
           {
-            "label": "Die",
+            "label": "Number cube",
             "outcomes": [
               "1",
               "2",
@@ -452,38 +474,48 @@
               3,
               5
             ]
+          },
+          {
+            "label": "Coin",
+            "outcomes": [
+              "H",
+              "T"
+            ],
+            "favourable": [
+              0
+            ]
           }
         ],
         "choices": [
           {
             "id": "a",
-            "label": "1/4",
+            "label": "1/10",
             "num": 1,
-            "den": 4,
-            "feedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4."
+            "den": 10,
+            "feedback": "Yes — 2/5 × 3/6 × 1/2 = 2/5 × 1/2 × 1/2 = 1/10."
           },
           {
             "id": "b",
-            "label": "1/2",
+            "label": "1/4",
             "num": 1,
-            "den": 2,
-            "feedback": "That's just one event. Multiply both probabilities: 1/4."
+            "den": 4,
+            "feedback": "That multiplies the number-cube and coin stages but leaves out the spinner. Include 2/5: 1/4 × 2/5 = 1/10."
           },
           {
             "id": "c",
-            "label": "1/12",
+            "label": "1/5",
             "num": 1,
-            "den": 12,
-            "feedback": "That's the chance of one specific outcome, not all the winning ones. Multiply the probabilities: 1/4."
+            "den": 5,
+            "feedback": "That multiplies the spinner and number-cube stages but leaves out the coin. Include 1/2: 1/5 × 1/2 = 1/10."
           }
         ],
-        "fallbackFeedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4.",
-        "successFeedback": "Yes — P(heads)=1/2, P(even)=1/2; multiply: 1/2 × 1/2 = 1/4."
+        "fallbackFeedback": "Multiply all three independent probabilities: 2/5 × 3/6 × 1/2 = 1/10.",
+        "successFeedback": "Yes — all three stages are required, and their product is 1/10."
       },
       "hints": [
-        "This is a compound event: heads AND even.",
-        "P(heads) = 1/2, P(even) = 1/2.",
-        "Multiply: 1/2 × 1/2 = 1/4."
+        "This is a three-part AND event, so every stage matters.",
+        "Use 2/5 for blue or green, 3/6 for even, and 1/2 for heads.",
+        "Multiply all three factors, then simplify."
       ],
       "variant": {
         "gen": "g7-sp-compound-model",
@@ -508,7 +540,7 @@
       "concept": {
         "id": "rem-srp-c",
         "kind": "concept",
-        "body": "Real probability problems combine the counting principle (multiply choices for the sample space) and the compound-event rule (multiply probabilities for independent events)."
+          "body": "For a two-stage choice, pair every option in the first stage with every option in the second. Multiplication counts all of those pairs."
       },
       "check": {
         "id": "rem-srp-k",
@@ -516,34 +548,28 @@
         "body": "",
         "conceptTag": "sp-realworld-prob",
         "explanationVariants": [
-          "6×5=30.",
-          "Multiply the choices at each stage."
+          "Each of 3 paths can pair with either badge, so 3 × 2 = 6.",
+          "Multiply the choices at the two stages."
         ],
         "widget": {
           "type": "compoundEventLab",
-          "prompt": "A restaurant has 6 shirts and 5 pants for staff uniforms. How many total outfits are possible?",
+          "prompt": "A hiker can choose 1 of 3 paths and 1 of 2 badges. How many path-and-badge pairs are possible?",
           "mode": "count",
           "stages": [
             {
-              "label": "Shirts",
+              "label": "Path",
               "outcomes": [
-                "S1",
-                "S2",
-                "S3",
-                "S4",
-                "S5",
-                "S6"
+                "Creek",
+                "Hill",
+                "Woods"
               ],
               "favourable": []
             },
             {
-              "label": "Pants",
+              "label": "Badge",
               "outcomes": [
-                "P1",
-                "P2",
-                "P3",
-                "P4",
-                "P5"
+                "Star",
+                "Compass"
               ],
               "favourable": []
             }
@@ -551,25 +577,25 @@
           "choices": [
             {
               "id": "correct",
-              "label": "30",
-              "count": 30,
-              "feedback": "Yes — 6 × 5 = 30 outfits."
+              "label": "6",
+              "count": 6,
+              "feedback": "Yes — each of 3 paths pairs with 2 badges, so 3 × 2 = 6."
             },
             {
               "id": "trap-1",
-              "label": "11",
-              "count": 11,
-              "feedback": "Adding gives 6 + 5 = 11. Every shirt pairs with every pair of pants, so multiply: 6 × 5 = 30."
+              "label": "5",
+              "count": 5,
+              "feedback": "That adds 3 + 2. Pair every path with every badge instead: 3 × 2 = 6."
             },
             {
               "id": "trap-2",
-              "label": "6",
-              "count": 6,
-              "feedback": "Multiply by the 5 pants too: 30."
+              "label": "3",
+              "count": 3,
+              "feedback": "That counts only the paths. Each path has 2 badge choices, so multiply by 2."
             }
           ],
-          "fallbackFeedback": "30.",
-          "successFeedback": "Yes — 6 × 5 = 30 outfits."
+          "fallbackFeedback": "Pair each path with both badges: 3 × 2 = 6.",
+          "successFeedback": "Yes — 3 × 2 = 6 path-and-badge pairs."
         }
       }
     }

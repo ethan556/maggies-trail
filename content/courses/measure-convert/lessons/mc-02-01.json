@@ -15,53 +15,24 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match rectangle to area.",
+   "body": "Build a 3-by-8 rectangle and watch its covered area stay 24 when turned.",
    "conceptTag": "area-formula",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each rectangle's dimensions to its area.",
-    "left": [
-     {
-      "id": "e1",
-      "label": "8 × 6"
-     },
-     {
-      "id": "e2",
-      "label": "12 × 7"
-     },
-     {
-      "id": "e3",
-      "label": "15 × 9"
-     }
-    ],
-    "right": [
-     {
-      "id": "r1",
-      "label": "48"
-     },
-     {
-      "id": "r2",
-      "label": "84"
-     },
-     {
-      "id": "r3",
-      "label": "135"
-     }
-    ],
-    "pairs": {
-     "e1": "r1",
-     "e2": "r2",
-     "e3": "r3"
+    "type": "areaModel",
+    "prompt": "Build a rectangle with 3 rows and 8 columns. The turned 8-by-3 rectangle must cover the same 24 squares.",
+    "targetArea": 24,
+    "wMax": 10,
+    "hMax": 10,
+    "wStart": 4,
+    "hStart": 4,
+    "requireFactors": {
+     "w": 3,
+     "h": 8
     },
-    "pairErrors": [
-     {
-      "left": "e2",
-      "right": "r3",
-      "feedback": "135 belongs to 15×9. For 12×7: 12×7=84."
-     }
-    ],
-    "missFeedback": "Multiply length by width to find the area.",
-    "successFeedback": "8×6=48, 12×7=84, 15×9=135 — the formula replaces counting every square."
+    "factorFeedback": "The area is 24, but use the named 3-by-8 arrangement so the rotation comparison is visible.",
+    "successFeedback": "Three rows of eight cover 24 squares. Turning the rectangle gives eight rows of three and still covers 24.",
+    "lowFeedback": "The rectangle covers fewer than 24 squares. Increase a side.",
+    "highFeedback": "The rectangle covers more than 24 squares. Reduce a side."
    },
    "predict": {
     "prompt": "A 3-by-8 rectangle and an 8-by-3 rectangle — same area?",

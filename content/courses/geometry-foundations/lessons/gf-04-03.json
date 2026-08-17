@@ -69,25 +69,6 @@
           }
         ],
         "fallbackFeedback": "Four matching positions in a full turn: 360 ÷ 4 = 90°."
-      },
-      "predict": {
-        "prompt": "A square is about to be turned. How many different turns UNDER 360° land it back on itself?",
-        "options": [
-          {
-            "id": "three",
-            "label": "Three — at 90°, 180°, and 270°"
-          },
-          {
-            "id": "one",
-            "label": "One — only the 180° half turn"
-          },
-          {
-            "id": "all",
-            "label": "Every turn works — it's symmetric"
-          }
-        ],
-        "outcomeId": "three",
-        "reveal": "Four identical corners give a match every 360° ÷ 4 = 90°: the square re-lands at 90°, 180°, and 270°. The SMALLEST of those, 90°, is the one that names its rotational symmetry — and it's the answer you're about to enter."
       }
     },
     {
@@ -203,6 +184,25 @@
       "id": "i3",
       "kind": "interactive",
       "body": "Confirm the half turn.",
+      "predict": {
+        "prompt": "Before you turn the parallelogram, which smallest rotation should land it exactly on itself?",
+        "options": [
+          {
+            "id": "half-turn",
+            "label": "180°"
+          },
+          {
+            "id": "quarter-turn",
+            "label": "90°"
+          },
+          {
+            "id": "full-turn",
+            "label": "360°"
+          }
+        ],
+        "outcomeId": "half-turn",
+        "reveal": "The rotation model first matches at 180°. A quarter turn misses because adjacent sides have different lengths, while 360° is a full turn and does not count as rotational symmetry."
+      },
       "widget": {
         "type": "rotationLab",
         "mode": "symmetryOrder",

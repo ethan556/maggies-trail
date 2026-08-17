@@ -192,29 +192,27 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Ratios shrink, too.",
+      "body": "Scale both parts in the live table.",
       "conceptTag": "equivalent-ratios",
       "widget": {
-        "type": "mcq",
-        "prompt": "A ratio table shows 4 : 10 in one row and 2 : 5 in the next. What happened between the rows?",
-        "options": [
-          {
-            "id": "a",
-            "label": "Both parts were divided by 2 — the ratios are equivalent",
-            "correct": true,
-            "feedback": "Right — dividing both parts by the same number is scaling down; 4 : 10 and 2 : 5 name the same relationship."
-          },
-          {
-            "id": "b",
-            "label": "The ratio got smaller",
-            "feedback": "The NUMBERS got smaller; the RELATIONSHIP didn't budge. Both rows say the same 'for every'."
-          },
-          {
-            "id": "c",
-            "label": "It's a mistake — the parts of a ratio must grow",
-            "feedback": "Ratios scale in both directions — dividing both parts by the same number is just as legal as multiplying."
-          }
-        ]
+        "type": "ratioTable",
+        "colA": "first quantity",
+        "colB": "second quantity",
+        "rows": [
+          [
+            4,
+            10
+          ]
+        ],
+        "askA": 2,
+        "targetB": 5,
+        "bMax": 15,
+        "bStep": 1,
+        "bStart": 0,
+        "prompt": "Complete the table so 4 : 10 and 2 : ? describe the same relationship.",
+        "successFeedback": "2 : 5 is the same ratio as 4 : 10 because both quantities were divided by 2.",
+        "lowFeedback": "The second quantity is too small. Scale both parts by the same factor.",
+        "highFeedback": "The second quantity is too large. Halving 10 gives 5."
       },
       "hints": [
         "Compare each part across the rows.",

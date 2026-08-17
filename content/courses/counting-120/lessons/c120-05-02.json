@@ -17,45 +17,48 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Ten more.",
+   "body": "Make a jump of ten.",
    "conceptTag": "ten-more-less",
    "widget": {
-    "type": "numeric",
-    "prompt": "What is ten more than 45?",
-    "answer": 55,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "numberLineHop",
+    "prompt": "Start at 45. Make one hop of 10 forward.",
+    "min": 35,
+    "max": 65,
+    "start": 45,
+    "hop": 10,
+    "hops": 1,
+    "direction": "forward",
+    "commonLandings": [
      {
       "value": 46,
-      "feedback": "That added ONE. Ten more changes the tens: 45 → 55."
+      "feedback": "46 is one more, not ten more. Make a jump of 10."
      },
      {
       "value": 35,
-      "feedback": "That went ten LESS. Ten more counts up: 45 → 55."
+      "feedback": "35 is ten less. The arrow needs to go forward for ten more."
      }
     ],
-    "fallbackFeedback": "Ten more than 45 is 55 — the 5 stays.",
     "missFeedback": "Add a whole ten: 45 → 55.",
     "successFeedback": "55 — the ones stayed 5!"
    },
    "predict": {
-    "prompt": "Ten more than 45 — which digit will change?",
+    "prompt": "Where will a forward jump of 10 from 45 land?",
     "options": [
      {
-      "id": "tens",
-      "label": "The tens digit"
+      "id": "fifty-five",
+      "label": "55"
      },
      {
-      "id": "ones",
-      "label": "The ones digit"
+      "id": "forty-six",
+      "label": "46"
      },
      {
-      "id": "both",
-      "label": "Both digits"
+      "id": "thirty-five",
+      "label": "35"
      }
     ],
-    "outcomeId": "tens",
-    "reveal": "Ten more is one whole row down — the tens digit climbs by one while the ones digit doesn't budge. The one exception is a full tens digit: ten more than 90 rolls the 9 over and makes 100, ten tens bundled into a hundred."
+    "outcomeId": "fifty-five",
+    "reveal": "The 10-jump lands on 55. The tens digit grows by one while the ones digit stays 5."
    }
   },
   {

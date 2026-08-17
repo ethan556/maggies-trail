@@ -15,72 +15,92 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Why isn't it a triangle?",
+      "body": "Use the closed-shape rule to test a near-miss.",
       "conceptTag": "non-examples",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Each shape is NOT a triangle. Match each misfit to the exact rule it breaks.",
-        "left": [
+        "type": "shapeHierarchyLab",
+        "prompt": "An open figure made from three straight segments is a triangle. Is this always, sometimes, or never true?",
+        "mode": "verdict",
+        "nodes": [
           {
-            "id": "open",
-            "label": "Three lines with a gap (not joined)"
+            "id": "open-three",
+            "label": "open three-segment figure",
+            "attributes": [
+              "3 straight segments",
+              "1 gap"
+            ]
           },
           {
-            "id": "four",
-            "label": "A four-sided figure"
-          },
-          {
-            "id": "curved",
-            "label": "Two straight sides and one curved side"
+            "id": "triangle",
+            "label": "triangle",
+            "attributes": [
+              "3 straight sides",
+              "closed"
+            ]
           }
         ],
-        "right": [
+        "edges": [],
+        "relation": "disjoint",
+        "subjectLabel": "open three-segment figure",
+        "predicateLabel": "triangle",
+        "blocker": "A triangle must be closed, but the open figure has a gap.",
+        "choices": [
           {
-            "id": "rclosed",
-            "label": "Breaks 'must be closed'"
+            "id": "never",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "Yes. The gap breaks the closed-shape rule every time.",
+            "evidenceKind": "blocker",
+            "evidenceText": "A triangle must be closed; this figure is open.",
+            "highlightNodeIds": [
+              "open-three",
+              "triangle"
+            ]
           },
           {
-            "id": "rstraight",
-            "label": "Breaks 'all sides straight'"
+            "id": "sometimes",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "As long as the gap remains, the figure cannot be a triangle. There is no valid example.",
+            "evidenceKind": "blocker",
+            "evidenceText": "The open corner blocks triangle membership.",
+            "highlightNodeIds": [
+              "open-three"
+            ]
           },
           {
-            "id": "rthree",
-            "label": "Breaks 'exactly 3 sides'"
+            "id": "always",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "Three segments are not enough. A triangle's sides must join to make a closed figure.",
+            "evidenceKind": "blocker",
+            "evidenceText": "The gap breaks the triangle definition.",
+            "highlightNodeIds": [
+              "triangle"
+            ]
           }
         ],
-        "pairs": {
-          "open": "rclosed",
-          "four": "rthree",
-          "curved": "rstraight"
-        },
-        "pairErrors": [
-          {
-            "left": "open",
-            "right": "rthree",
-            "feedback": "The open figure still has three lines — it doesn't break the count. What it breaks is 'must be closed': there's a gap."
-          }
-        ],
-        "missFeedback": "For each misfit, ask which single rule fails: the count (3 sides), straightness, or closed.",
-        "successFeedback": "Gap → not closed; four sides → wrong count; a curve → not all straight. Each misfit fingers one rule."
+        "fallbackFeedback": "Check the whole definition: three straight sides and a fully closed shape.",
+        "successFeedback": "Never. The open corner is a blocker, so the figure is not a triangle until the gap closes."
       },
       "predict": {
-        "prompt": "A shape with three sides but one OPEN corner — is it a triangle?",
+        "prompt": "An open figure made from three straight segments is a triangle. Is this always, sometimes, or never true?",
         "options": [
           {
-            "id": "no",
-            "label": "No — a triangle must close"
+            "id": "never",
+            "label": "Never"
           },
           {
-            "id": "yes",
-            "label": "Yes — three sides is enough"
+            "id": "sometimes",
+            "label": "Sometimes"
           },
           {
-            "id": "equal",
-            "label": "Only if the sides are equal"
+            "id": "always",
+            "label": "Always"
           }
         ],
-        "outcomeId": "no",
-        "reveal": "Triangle membership takes the whole checklist: three sides, all straight, fully closed. One open corner fails it — near-misses teach the definition better than perfect examples do."
+        "outcomeId": "never",
+        "reveal": "A triangle must be closed. The gap blocks the definition every time, even when the figure has three straight segments."
       }
     },
     {

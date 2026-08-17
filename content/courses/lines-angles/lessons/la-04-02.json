@@ -15,68 +15,95 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match the shape to its symmetry count.",
+   "body": "Compare side counts and symmetry-line counts for regular shapes.",
    "conceptTag": "symmetry-finding",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each regular shape to its number of symmetry lines.",
-    "left": [
+    "type": "shapeHierarchyLab",
+    "prompt": "Inspect the three regular shapes. Which rule matches every row?",
+    "mode": "hierarchy",
+    "nodes": [
      {
-      "id": "s1",
-      "label": "Equilateral triangle"
+      "id": "triangle",
+      "label": "Regular triangle",
+      "attributes": [
+       "3 sides",
+       "3 symmetry lines"
+      ]
      },
      {
-      "id": "s2",
-      "label": "Square"
+      "id": "square",
+      "label": "Square",
+      "attributes": [
+       "4 sides",
+       "4 symmetry lines"
+      ]
      },
      {
-      "id": "s3",
-      "label": "Regular pentagon"
+      "id": "pentagon",
+      "label": "Regular pentagon",
+      "attributes": [
+       "5 sides",
+       "5 symmetry lines"
+      ]
      }
     ],
-    "right": [
+    "edges": [],
+    "answerClaim": "same-count",
+    "propertyLabel": "regular-shape symmetry",
+    "choices": [
      {
-      "id": "n1",
-      "label": "3"
+      "id": "same",
+      "label": "Lines equal sides",
+      "claim": "same-count",
+      "feedback": "Each displayed regular shape has one symmetry line for each side.",
+      "evidenceKind": "path",
+      "evidenceText": "3=3, 4=4, and 5=5.",
+      "highlightNodeIds": [
+       "triangle",
+       "square",
+       "pentagon"
+      ]
      },
      {
-      "id": "n2",
-      "label": "4"
+      "id": "fewer",
+      "label": "Lines are always fewer",
+      "claim": "fewer",
+      "feedback": "The rows show equal counts, not fewer symmetry lines.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "The square has 4 sides and 4 lines.",
+      "highlightNodeIds": [
+       "square"
+      ]
      },
      {
-      "id": "n3",
-      "label": "5"
+      "id": "more",
+      "label": "Lines are always more",
+      "claim": "more",
+      "feedback": "The rows show equal counts, not extra symmetry lines.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "The triangle has 3 sides and 3 lines.",
+      "highlightNodeIds": [
+       "triangle"
+      ]
      }
     ],
-    "pairs": {
-     "s1": "n1",
-     "s2": "n2",
-     "s3": "n3"
-    },
-    "pairErrors": [
-     {
-      "left": "s2",
-      "right": "n3",
-      "feedback": "5 belongs to the regular pentagon. A square has 4 sides, so it has 4 symmetry lines."
-     }
-    ],
-    "missFeedback": "Count the sides of each regular shape — that's also its symmetry-line count.",
-    "successFeedback": "3, 4, and 5 — the symmetry count always matches the side count for a regular shape."
+    "fallbackFeedback": "Compare each pair of counts: 3 and 3, 4 and 4, 5 and 5.",
+    "successFeedback": "For these regular polygons, the symmetry-line count matches the side count."
    },
    "predict": {
     "prompt": "For a REGULAR shape, how does its number of symmetry lines compare to its number of sides?",
     "options": [
      {
       "id": "equal",
-      "label": "They're equal"
+      "label": "Same number"
      },
      {
       "id": "fewer",
-      "label": "Always fewer lines than sides"
+      "label": "Fewer lines"
      },
      {
       "id": "more",
-      "label": "Always more lines than sides"
+      "label": "More lines"
      }
     ],
     "outcomeId": "equal",

@@ -15,51 +15,43 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Correct commas, or not?",
+   "body": "Align two six-digit numbers and find the first place that differs.",
    "conceptTag": "comma-periods",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each comma placement: correct, or not?",
-    "buckets": [
+    "type": "placeValueTransformLab",
+    "task": "decidingPlace",
+    "answerMode": "choice",
+    "prompt": "Compare 325,600 and 325,060. Which place is the first one that differs?",
+    "values": [
+     325600,
+     325060
+    ],
+    "choices": [
      {
-      "id": "correct",
-      "label": "Correct commas",
-      "icon": "✅"
+      "id": "hundreds",
+      "label": "Hundreds",
+      "claim": "place:2",
+      "feedback": "The hundred-thousands, ten-thousands, and thousands digits match. The hundreds digits are 6 and 0."
      },
      {
-      "id": "wrong",
-      "label": "Incorrect commas",
-      "icon": "🚫"
+      "id": "thousands",
+      "label": "Thousands",
+      "claim": "misconception:thousands",
+      "feedback": "Both numbers have 5 in the thousands place, so that place does not decide."
+     },
+     {
+      "id": "tens",
+      "label": "Tens",
+      "claim": "misconception:tens",
+      "feedback": "The numbers already differ at the hundreds place, before the tens place is checked."
      }
     ],
-    "items": [
-     {
-      "id": "c1i",
-      "label": "425,301",
-      "bucketId": "correct",
-      "feedback": "Grouped in 3s from the right: 301, then 425 left over."
-     },
-     {
-      "id": "c2i",
-      "label": "4253,01",
-      "bucketId": "wrong",
-      "feedback": "The last group has only 2 digits — grouping from the right must leave exactly 3 in the last group: 425,301."
-     },
-     {
-      "id": "c3i",
-      "label": "80,306",
-      "bucketId": "correct",
-      "feedback": "Grouped in 3s from the right: 306, then 80 left over."
-     },
-     {
-      "id": "c4i",
-      "label": "8,0306",
-      "bucketId": "wrong",
-      "feedback": "The last group has 4 digits — too many. Grouped correctly from the right, it's 80,306."
-     }
-    ],
-    "missFeedback": "Count from the RIGHT in groups of 3 — the last group must be exactly 3 digits.",
-    "successFeedback": "425,301 and 80,306 both group correctly; the others leave the wrong number of digits after the comma."
+    "numericErrors": [],
+    "requiredExplorations": 4,
+    "successFeedback": "The first difference is in the hundreds place. Grouping digits in threes keeps every place aligned.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "Use the aligned place-value model and the highlighted place.",
+    "tolerance": 0
    },
    "predict": {
     "prompt": "Commas in big numbers are placed by counting groups of how many digits from the RIGHT?",

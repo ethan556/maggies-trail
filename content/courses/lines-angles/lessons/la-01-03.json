@@ -15,53 +15,30 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Read the figure's pieces.",
+   "body": "Move vertex C and keep your eye on angle BAC at A.",
    "conceptTag": "reading-figures",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "A figure has point A, ray AB, ray AC, and angle BAC. Match each label to what it is.",
-    "left": [
-     {
-      "id": "p1",
-      "label": "Point A"
-     },
-     {
-      "id": "p2",
-      "label": "Ray AB"
-     },
-     {
-      "id": "p3",
-      "label": "Angle BAC"
-     }
+    "type": "triangleAngleLab",
+    "prompt": "Drag C until angle BAC at vertex A is about 45°. The middle letter A names the corner.",
+    "fixedA": [
+     1,
+     1
     ],
-    "right": [
-     {
-      "id": "r1",
-      "label": "An exact location, no length"
-     },
-     {
-      "id": "r2",
-      "label": "Starts at A, extends through B forever"
-     },
-     {
-      "id": "r3",
-      "label": "Two rays meeting at vertex A"
-     }
+    "fixedB": [
+     7,
+     1
     ],
-    "pairs": {
-     "p1": "r1",
-     "p2": "r2",
-     "p3": "r3"
-    },
-    "pairErrors": [
-     {
-      "left": "p2",
-      "right": "r3",
-      "feedback": "That description fits angle BAC, not ray AB. A ray starts at one point and extends forever through another."
-     }
+    "startC": [
+     3,
+     6
     ],
-    "missFeedback": "Match each term to its definition: point (a spot), ray (one endpoint, one direction), angle (two rays at a vertex).",
-    "successFeedback": "Point A is a location, ray AB extends from A through B, and angle BAC is the two rays meeting at A."
+    "targetAngleA": 45,
+    "tolerance": 3,
+    "gridMax": 8,
+    "requiredMoves": 3,
+    "successFeedback": "Angle BAC is at A: the middle letter is the shared endpoint of rays AB and AC.",
+    "targetFeedback": "Move C until the live measure at A is close to 45°.",
+    "invariantFeedback": "Try several positions first. The angle named BAC always has its vertex at the middle letter, A."
    },
    "predict": {
     "prompt": "In the angle named 'BAC', which letter sits at the corner?",

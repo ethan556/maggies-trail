@@ -143,23 +143,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count the tens.",
+      "body": "Build the tens instead of entering a count.",
       "widget": {
-        "type": "numeric",
-        "prompt": "How many tens make 40?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "baseTenCompose",
+        "prompt": "Build 40 in standard form with tens rods and ones cubes.",
+        "target": 40,
+        "requireStandard": true,
+        "maxTens": 4,
+        "maxOnes": 20,
+        "commonBuilds": [
           {
-            "value": 40,
-            "feedback": "40 is the number of ones. It takes 4 groups of ten to make 40, so 4 tens."
+            "tens": 4,
+            "ones": 4,
+            "feedback": "Four rods and four cubes make 44. Forty has no extra ones."
           },
           {
-            "value": 14,
-            "feedback": "40 splits into 4 groups of ten, so 4 tens."
+            "tens": 0,
+            "ones": 4,
+            "feedback": "Four cubes make 4. Forty needs four groups of ten."
           }
         ],
-        "fallbackFeedback": "40 = 4 groups of ten, so 4 tens."
+        "missFeedback": "Use four tens rods and no ones cubes.",
+        "successFeedback": "Four tens and zero ones make 40."
       }
     },
     {

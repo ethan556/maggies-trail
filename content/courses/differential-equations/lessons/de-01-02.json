@@ -220,7 +220,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Read the long run off the field.",
+      "body": "Start above the ceiling and trace the long run directly.",
       "conceptTag": "de-equilibrium",
       "hints": [
         "Do not solve anything. Ask only: what do the segments do near this starting value?",
@@ -232,29 +232,14 @@
         "That last point is worth keeping: two solution curves can never cross, because a single starting point has only one instruction to follow."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A population obeying dP/dt = 1.8P(1 − P/4) starts at P = 6. What does it settle on in the long run?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 6,
-            "feedback": "It does not stay put — 6 is above the ceiling, so the field points DOWNWARD there and the population falls."
-          },
-          {
-            "value": 0,
-            "feedback": "It does not crash to zero. The field pushes it down only as far as the equilibrium at 4, where every segment is flat."
-          },
-          {
-            "value": 2,
-            "feedback": "That is where growth is fastest, not where it ends up. The population settles at the ceiling, 4."
-          }
-        ],
-        "fallbackFeedback": "Above the ceiling the field points down, and the curve settles onto y = 4 — which it can never cross, because y = 4 is itself a solution."
-      },
-      "variant": {
-        "gen": "g13-differential-equations",
-        "form": "differential-equations__de-equilibrium__numeric"
+        "type": "slopeField",
+        "equation": "logistic",
+        "targetY0": 6,
+        "startY0": 2,
+        "prompt": "Move the initial population to P(0) = 6. Follow the solution through the logistic slope field and read the level it approaches.",
+        "successFeedback": "Starting at 6, the field points downward and the solution settles onto P = 4. It cannot cross the equilibrium curve because the field gives only one direction at each point.",
+        "lowFeedback": "The starting population is below 6. Move it above the ceiling so the field's downward pull becomes visible.",
+        "highFeedback": "The starting population is above 6. Bring it to exactly 6, then trace how the curve approaches 4."
       }
     },
     {

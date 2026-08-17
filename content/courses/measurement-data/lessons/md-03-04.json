@@ -15,53 +15,25 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Read the stacks.",
+      "body": "Build the line plot one measurement at a time.",
       "conceptTag": "line-plot",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "A line plot of pencil lengths (in inches). Match each mark to how many X's sit above it: at 2 there are 3 X's, at 2½ there are 1, at 3 there are 4.",
-        "left": [
-          {
-            "id": "m2",
-            "label": "Above the 2 mark"
-          },
-          {
-            "id": "m25",
-            "label": "Above the 2½ mark"
-          },
-          {
-            "id": "m3",
-            "label": "Above the 3 mark"
-          }
+        "type": "dotPlot",
+        "prompt": "Build the pencil-length plot: three pencils are 2 inches, one is 2½ inches, and four are 3 inches.",
+        "values": [
+          4,
+          5,
+          6
         ],
-        "right": [
-          {
-            "id": "x4",
-            "label": "4 pencils"
-          },
-          {
-            "id": "x3",
-            "label": "3 pencils"
-          },
-          {
-            "id": "x1",
-            "label": "1 pencil"
-          }
+        "target": [
+          3,
+          1,
+          4
         ],
-        "pairs": {
-          "m2": "x3",
-          "m25": "x1",
-          "m3": "x4"
-        },
-        "pairErrors": [
-          {
-            "left": "m2",
-            "right": "x4",
-            "feedback": "The 2 mark has 3 X's stacked, not 4. Count the X's in that column."
-          }
-        ],
-        "missFeedback": "Each X is one pencil — count the X's stacked above each mark.",
-        "successFeedback": "2 → 3 pencils, 2½ → 1, 3 → 4. Each X is one measurement landing on that length."
+        "maxPerValue": 4,
+        "denominator": 2,
+        "partialFeedback": "Each pencil adds one X above its measured length. Check all three stacks.",
+        "successFeedback": "The plot has 3 X's at 2, 1 X at 2½, and 4 X's at 3. Every X stands for one pencil."
       },
       "predict": {
         "prompt": "On a line plot of pencil lengths, what does each X stand for?",

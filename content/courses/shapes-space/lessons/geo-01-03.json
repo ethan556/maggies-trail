@@ -15,46 +15,96 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Does the square pass the rectangle test?",
+      "body": "Use one rectangle that is a square and one that is not to test whether the reverse is always true.",
       "conceptTag": "shape-hierarchy",
       "widget": {
-        "type": "steppedReveal",
-        "prompt": "Walk a square up to the rectangle club's door.",
-        "panels": [
+        "type": "shapeHierarchyLab",
+        "prompt": "A rectangle is a square. Is this always, sometimes, or never true?",
+        "mode": "verdict",
+        "nodes": [
           {
-            "title": "The rectangle's one rule",
-            "body": "To enter the rectangle club, a shape needs four straight sides and four square corners. That's the whole entry test."
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "4 right angles"
+            ]
           },
           {
-            "title": "Check the square against it",
-            "body": "A square has four straight sides ✓ and four square corners ✓. It passes every part of the rectangle test."
-          },
-          {
-            "title": "So the square gets in",
-            "body": "The square meets the rectangle's rule, so it IS a rectangle — just a special one that ALSO has four equal sides. Extra rules don't lock it out; they make it stricter."
+            "id": "square",
+            "label": "square",
+            "attributes": [
+              "rectangle + 4 equal sides"
+            ]
           }
         ],
-        "continueFeedback": "Keep going — see whether the square clears the door.",
-        "successFeedback": "A square passes the rectangle test, so every square is a rectangle. The equal-sides rule is a bonus, not a barrier."
+        "edges": [
+          [
+            "rectangle",
+            "square"
+          ]
+        ],
+        "relation": "overlap",
+        "subjectLabel": "rectangle",
+        "predicateLabel": "square",
+        "witness": "A 4-by-4 rectangle is a square.",
+        "counterexample": "A 6-by-3 rectangle is not a square.",
+        "choices": [
+          {
+            "id": "sometimes",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "Yes. A 4-by-4 rectangle is a square, but a 6-by-3 rectangle is not.",
+            "evidenceKind": "example",
+            "evidenceText": "A 4-by-4 rectangle fits. A 6-by-3 rectangle does not.",
+            "highlightNodeIds": [
+              "rectangle",
+              "square"
+            ]
+          },
+          {
+            "id": "always",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "A 6-by-3 rectangle has right angles but unequal sides, so the reverse is not always true.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "A 6-by-3 rectangle does not have four equal sides.",
+            "highlightNodeIds": [
+              "rectangle"
+            ]
+          },
+          {
+            "id": "never",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "A 4-by-4 rectangle is a square, so 'never' cannot be true.",
+            "evidenceKind": "example",
+            "evidenceText": "A 4-by-4 rectangle meets the square rule.",
+            "highlightNodeIds": [
+              "square"
+            ]
+          }
+        ],
+        "fallbackFeedback": "Look for one rectangle that is a square and one rectangle that is not.",
+        "successFeedback": "Sometimes. Squares are rectangles, but only rectangles with four equal sides are squares."
       },
       "predict": {
-        "prompt": "Every square is a rectangle. Is every RECTANGLE also a square?",
+        "prompt": "A rectangle is a square. Is this always, sometimes, or never true?",
         "options": [
           {
-            "id": "no",
-            "label": "No — the arrow runs one way"
+            "id": "sometimes",
+            "label": "Sometimes"
           },
           {
-            "id": "yes",
-            "label": "Yes — the club goes both ways"
+            "id": "always",
+            "label": "Always"
           },
           {
-            "id": "neither",
-            "label": "Neither is really the other"
+            "id": "never",
+            "label": "Never"
           }
         ],
-        "outcomeId": "no",
-        "reveal": "The square's club has a stricter door — all sides equal — and most rectangles can't pass it. Membership flows up the hierarchy, never automatically back down."
+        "outcomeId": "sometimes",
+        "reveal": "A 4-by-4 rectangle is a square, but a 6-by-3 rectangle is not. The reverse is true for some rectangles, so the answer is sometimes."
       }
     },
     {

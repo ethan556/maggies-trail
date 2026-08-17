@@ -15,25 +15,26 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Confirm the twin centers.",
+      "body": "Draw the center and spread together.",
       "conceptTag": "spread-compare",
       "widget": {
-        "type": "numeric",
-        "prompt": "Class B's data is 1, 2, 6, 8, 12, 13. Verify its MEDIAN.",
-        "answer": 7,
-        "tolerance": 0,
-        "unit": "hours",
-        "commonErrors": [
-          {
-            "value": 6,
-            "feedback": "6 is only one of the two central values. Six values → average the middle pair: (6 + 8) ÷ 2 = 7."
-          },
-          {
-            "value": 42,
-            "feedback": "42 is the SUM of the data. The median is the middle of the sorted list: (6 + 8) ÷ 2 = 7."
-          }
-        ],
-        "fallbackFeedback": "Already sorted; even count; middle pair 6 and 8; median = (6 + 8) ÷ 2 = 7 — identical to Class A's."
+        "type": "boxPlot",
+        "prompt": "Class B is 1, 2, 6, 8, 12, 13. Set its five-number summary. Put the median halfway between the middle values 6 and 8.",
+        "axisMin": 0,
+        "axisMax": 14,
+        "targetMin": 1,
+        "targetQ1": 2,
+        "targetMed": 7,
+        "targetQ3": 12,
+        "targetMax": 13,
+        "startMin": 0,
+        "startQ1": 3,
+        "startMed": 6,
+        "startQ3": 10,
+        "startMax": 14,
+        "successFeedback": "The median is 7, halfway between 6 and 8. The wide box from Q1 = 2 to Q3 = 12 also makes Class B's larger spread visible.",
+        "orderFeedback": "Keep the five markers in order: minimum, Q1, median, Q3, maximum.",
+        "valueFeedback": "Use the sorted data and the halves of three: minimum 1, Q1 2, median 7, Q3 12, maximum 13."
       },
       "predict": {
         "prompt": "This data set has SIX values. Will its median be one of the listed numbers, or sit between two of them?",

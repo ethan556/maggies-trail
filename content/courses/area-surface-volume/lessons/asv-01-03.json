@@ -18,22 +18,44 @@
       "body": "Same numbers, triangle version.",
       "conceptTag": "area-formula-choice",
       "widget": {
-        "type": "numeric",
-        "prompt": "A TRIANGLE has base 9 and height 4. What is its area?",
-        "answer": 18,
-        "tolerance": 0,
-        "unit": "square units",
-        "commonErrors": [
+        "type": "compositeAreaLab",
+        "prompt": "Use the triangle piece to choose its area. Its base is 9 units and its perpendicular height is 4 units.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "value": 36,
-            "feedback": "36 is the PARALLELOGRAM's area with these same numbers. A triangle halves it: 1/2 × 9 × 4 = 18."
-          },
-          {
-            "value": 13,
-            "feedback": "13 adds 9 + 4. Triangle area multiplies then halves: 1/2 × 9 × 4 = 18."
+            "id": "triangle",
+            "label": "triangle: base 9, height 4",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 9,
+            "height": 4
           }
         ],
-        "fallbackFeedback": "1/2 × 9 × 4 = 18."
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "triangle-area",
+            "label": "18 square units",
+            "value": 18,
+            "feedback": "Yes. The triangle occupies half of the 9-by-4 rectangle: 1/2 × 9 × 4 = 18."
+          },
+          {
+            "id": "full-rectangle",
+            "label": "36 square units",
+            "value": 36,
+            "feedback": "36 is the full 9-by-4 rectangle around the triangle. The triangle takes half of that area."
+          },
+          {
+            "id": "add-sides",
+            "label": "13 square units",
+            "value": 13,
+            "feedback": "13 adds the measurements. Area counts square units, so multiply base by height and then halve."
+          }
+        ],
+        "fallbackFeedback": "The surrounding rectangle has area 9 × 4 = 36. The triangle is half, so its area is 18 square units.",
+        "successFeedback": "18 square units. The picture makes the factor of one-half visible: two matching triangles fill the 9-by-4 rectangle."
       },
       "predict": {
         "prompt": "For a TRIANGLE, what does base × height alone give you?",

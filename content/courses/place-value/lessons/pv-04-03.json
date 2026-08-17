@@ -15,51 +15,23 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "First move: which way is the story pointing?",
+      "body": "Build the equal-groups story on two linked number lines.",
       "conceptTag": "tens-problems",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort each story by the operation it needs.",
-        "buckets": [
-          {
-            "id": "mul",
-            "label": "4 × 20 (build the total)",
-            "icon": "🧱"
-          },
-          {
-            "id": "div",
-            "label": "80 ÷ 4 (split the total)",
-            "icon": "🔪"
-          }
-        ],
-        "items": [
-          {
-            "id": "s1",
-            "label": "4 packs of 20 stickers — how many stickers?",
-            "bucketId": "mul",
-            "feedback": "The total is the mystery, built from 4 equal groups of 2 tens: 4 × 20 = 80."
-          },
-          {
-            "id": "s2",
-            "label": "80 stickers shared equally into 4 albums",
-            "bucketId": "div",
-            "feedback": "The total (80) is known and gets split — 80 ÷ 4 = 20 per album."
-          },
-          {
-            "id": "s3",
-            "label": "4 shelves with 20 books on each",
-            "bucketId": "mul",
-            "feedback": "Equal groups building an unknown total: 4 × 2 tens = 8 tens = 80 books."
-          },
-          {
-            "id": "s4",
-            "label": "80 chairs set out in 4 equal rows",
-            "bucketId": "div",
-            "feedback": "The 80 is given and gets split into rows: 80 ÷ 4 = 20 chairs per row."
-          }
-        ],
-        "missFeedback": "Find each story's total: unknown and being built → ×; known and being split → ÷. (The word-problem compass still works with tens.)",
-        "successFeedback": "Same numbers, opposite directions — the compass from the multiplication course points true with tens aboard."
+        "type": "doubleNumberLine",
+        "prompt": "Each shelf holds 20 books. Set the book total at shelf 4.",
+        "topLabel": "Books",
+        "bottomLabel": "Shelves",
+        "topPerStep": 20,
+        "bottomPerStep": 1,
+        "steps": 4,
+        "askAtStep": 4,
+        "targetTop": 80,
+        "topMax": 100,
+        "topStep": 20,
+        "lowFeedback": "The total is too small. Count four jumps of 20: 20, 40, 60, 80.",
+        "highFeedback": "The total is too large. Stop at the fourth shelf.",
+        "successFeedback": "Four equal groups of 20 line up with 80 books. The story builds the total with 4 × 20."
       },
       "predict": {
         "prompt": "'4 shelves with 20 books each — how many books in all?' Which operation builds the answer?",

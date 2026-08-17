@@ -15,57 +15,38 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Order the steps.",
+      "body": "Gather the variable terms, then finish the equivalent balance one move at a time.",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Solve 5x + 2 = 3x + 10. Drag the steps into order.",
-        "items": [
-          {
-            "id": "s2",
-            "label": "Subtract 2 from both sides: 2x = 8"
-          },
-          {
-            "id": "s3",
-            "label": "Divide both sides by 2: x = 4"
-          },
-          {
-            "id": "s1",
-            "label": "Subtract 3x from both sides: 2x + 2 = 10"
-          }
-        ],
-        "correctOrder": [
-          "s1",
-          "s2",
-          "s3"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "s2",
-            "second": "s1",
-            "feedback": "Collect the x-terms FIRST — subtract 3x before touching the constants."
-          }
-        ],
-        "missFeedback": "Collect x-terms first, then the constants, then divide.",
-        "successFeedback": "Right — 3x off both sides, then solve 2x + 2 = 10 to get x = 4."
+        "type": "solveBalance",
+        "prompt": "Subtract 3x from both sides of 5x + 2 = 3x + 10. The balance is now 2x + 2 = 10. Remove equal units, then split into two equal groups.",
+        "a": 2,
+        "b": 2,
+        "c": 10,
+        "relation": "eq",
+        "successFeedback": "The balance ends at x = 4. Subtracting 3x first gathered the variables without changing which value makes both sides equal.",
+        "unbalancedFeedback": "The pans no longer match. Every removal or split must affect both sides equally.",
+        "notIsolatedFeedback": "The balance is still true, but x is not alone yet. Remove the two units, then split the remaining tiles equally.",
+        "missFeedback": "Return to 2x + 2 = 10. Remove 2 from both sides, then divide both sides into two groups.",
+        "unexpandedFeedback": "The equation is already expanded. Work with the equal tile groups on both pans."
       },
       "predict": {
-        "prompt": "Solving 5x + 2 = 3x + 10 — what's the first USEFUL move?",
+        "prompt": "For 5x + 2 = 3x + 10, which first move gathers the x-terms on one side?",
         "options": [
           {
             "id": "gather",
-            "label": "Gather the x-terms on one side"
+            "label": "Subtract 3x from both sides"
           },
           {
             "id": "divide",
-            "label": "Divide everything right away"
+            "label": "Divide both sides by 5 immediately"
           },
           {
             "id": "answer",
-            "label": "Guess x and check"
+            "label": "Change only the left side"
           }
         ],
         "outcomeId": "gather",
-        "reveal": "With x's living on both sides, nothing simplifies until they're collected — subtract 3x and the equation finally has one unknown territory. Divide everything by 5 first and you trade clean terms for fractions — x + 2/5 = 3x/5 + 2 — with x still stranded on both sides."
+        "reveal": "Subtracting 3x from both sides preserves the balance and changes the equation to 2x + 2 = 10. The variables are now gathered on one side for the remaining steps."
       }
     },
     {

@@ -6,7 +6,7 @@ import {
   systemsPointOn,
   type SystemsPairValue
 } from "./mmip/systemsPairAdapter";
-import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, quotientRationalDisplay, graphStoryTruth } from "./schema";
+import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleScaleUnitSpoken, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, quotientRationalDisplay, graphStoryTruth, shapeHierarchyChoiceEvidence } from "./schema";
 import {
   binomialExpand,
   rootsFormCoefs,
@@ -240,11 +240,25 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
     }
     case "scaledCircleLab": {
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
-      const scale = spec.drawingRadius !== undefined && spec.scale !== undefined
-        ? `A drawing radius of ${spec.drawingRadius} scales by ${spec.scale} to real radius ${spec.realRadius}. `
-        : `The real radius is ${spec.realRadius}. `;
+      const hasScaleChain = spec.drawingRadius !== undefined && spec.scale !== undefined;
+      const given = hasScaleChain
+        ? `The drawing radius is ${scaledCircleMeasurementSpoken(spec.drawingRadius!, spec.drawingUnit)}, and the scale multiplier is ${spec.scale}${scaledCircleScaleUnitSpoken(spec.drawingUnit, spec.realUnit, spec.scale)}. `
+        : `The given real radius is ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}. `;
       const ask = spec.ask === "realRadius" ? "real radius" : spec.ask === "circumferenceCoef" ? "circumference coefficient of pi" : "area coefficient of pi";
-      return `${scale}The target ${ask} is ${scaledCircleTarget(spec)}. ${picked ? `Selected ${picked.label}${scaledCircleChoiceCorrect(spec, picked) ? ", matching the model." : ", not matching the model."}` : "No circle claim selected."}`;
+      const relationship = spec.ask === "realRadius" ? "multiply the drawing radius by the scale"
+        : spec.ask === "circumferenceCoef"
+          ? hasScaleChain ? "first multiply the drawing radius by the scale to find the real radius, then double that real radius" : "use 2 times the given radius"
+          : hasScaleChain ? "first multiply the drawing radius by the scale to find the real radius, then multiply that real radius by itself" : "multiply the given radius by itself";
+      const answerPower = spec.ask === "areaCoef" ? 2 : 1;
+      const result = tone === "info"
+        ? `${hasScaleChain && spec.ask !== "realRadius" ? ` The revealed real radius is ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}.` : ""} The revealed ${ask} is ${scaledCircleMeasurementSpoken(scaledCircleTarget(spec), spec.realUnit, answerPower)}.`
+        : ` The ${ask} is left for you to calculate.`;
+      const selection = picked
+        ? tone === "info"
+          ? ` Selected ${picked.label}${scaledCircleChoiceCorrect(spec, picked) ? ", matching the model." : ", not matching the model."}`
+          : ` Selected ${picked.label}.`
+        : " No circle claim selected.";
+      return `${given}To find the ${ask}, ${relationship}.${result}${selection}`;
     }
     case "percentChangeLab": {
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
@@ -289,9 +303,12 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
     }
     case "signedFractionLab": {
       const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
+      const settled = tone === "success" || tone === "info";
+      const selection = selected ? `Selected ${selected.label}.` : "No exact claim selected.";
+      if (!settled) return `Signed fraction ${spec.operation}. The operand signs and magnitudes are shown; work out the result sign and magnitude. ${selection}`;
       const truth = signedFractionTruth(spec);
       const sign = truth.sign < 0 ? "negative" : "positive";
-      return `Signed fraction ${spec.operation}. The derived result has ${sign} sign and magnitude ${truth.num}/${truth.den}. ${selected ? `Selected ${selected.label}.` : "No exact claim selected."}`;
+      return `Signed fraction ${spec.operation}. The derived result has ${sign} sign and magnitude ${truth.num}/${truth.den}. ${selection}`;
     }
     case "triangleClosureLab": {
       const state = value && typeof value === "object" ? value as { angle?: number; moves?: number; choice?: string } : {};
@@ -299,17 +316,26 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       const [a, b, c] = [...spec.sides].sort((x, y) => x - y);
       const span = triangleClosureSpan(a, b, angle);
       const picked = state.choice ? spec.choices.find((choice) => choice.id === state.choice) : undefined;
-      return `Two hinged beams are ${a} and ${b}; the comparison beam is ${c}. At ${angle} degrees their endpoint span is ${fmt(span)}. The side lengths ${triangleClosureForms(spec.sides) ? "can" : "cannot"} form a triangle. ${picked ? `Selected ${picked.label}${triangleClosureChoiceCorrect(spec, picked) ? ", matching the side-length test." : ", not matching the side-length test."}` : "No frame claim selected."}`;
+      const base = `Two hinged beams are ${a} and ${b}; the comparison beam is ${c}. At ${angle} degrees their endpoint span is ${fmt(span)}.`;
+      if (tone !== "success" && tone !== "info") return `${base} ${picked ? `Selected ${picked.label}.` : "No frame claim selected."}`;
+      return `${base} The side lengths ${triangleClosureForms(spec.sides) ? "can" : "cannot"} form a triangle. ${picked ? `Selected ${picked.label}${triangleClosureChoiceCorrect(spec, picked) ? ", matching the side-length test." : ", not matching the side-length test."}` : "No frame claim selected."}`;
     }
     case "compoundEventLab": {
       const total = compoundEventTotal(spec);
       const favourable = compoundEventFavourable(spec);
       const factors = spec.stages.map((stage) => stage.outcomes.length).join(" times ");
       const picked = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
-      const base = spec.mode === "count"
-        ? `${spec.stages.length} stages have ${factors} choices, making ${total} ordered outcomes.`
-        : `${spec.stages.length} stages make ${total} ordered outcomes; ${favourable} satisfy every favourable condition.`;
-      return picked ? `${base} Selected claim: ${picked.label}${compoundEventChoiceCorrect(spec, picked) ? ", which matches the model." : ", which does not match the model."}` : `${base} No claim selected.`;
+      const showDerived = tone === "success" || tone === "info";
+      const stageFacts = spec.stages.map((stage) => `${stage.label}: ${stage.outcomes.join(", ")}`).join("; ");
+      const base = showDerived
+        ? spec.mode === "count"
+          ? `${spec.stages.length} stages have ${factors} choices, making ${total} ordered outcomes.`
+          : `${spec.stages.length} stages make ${total} ordered outcomes; ${favourable} satisfy every favourable condition.`
+        : `${spec.stages.length} stages list these given outcomes: ${stageFacts}. The ordered combinations are shown for you to count${spec.mode === "probability" ? "; favourable combinations are marked" : ""}.`;
+      if (!picked) return `${base} No claim selected.`;
+      return showDerived
+        ? `${base} Selected claim: ${picked.label}${compoundEventChoiceCorrect(spec, picked) ? ", which matches the model." : ", which does not match the model."}`
+        : `${base} Selected claim: ${picked.label}. Its correctness is not shown before Check.`;
     }
     case "compositeAreaLab": {
       const target = compositeAreaTarget(spec);
@@ -365,11 +391,13 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
     }
     case "slopeTriangle": {
       const v = (value as { run: number; rise: number } | null) ?? null;
-      const t = { run: spec.bx - spec.ax, rise: spec.by - spec.ay };
-      const base = `Point A is at (${spec.ax}, ${spec.ay}) and point B at (${spec.bx}, ${spec.by}); from A to B the line travels ${Math.abs(t.run)} ${t.run < 0 ? "left" : "right"} and ${Math.abs(t.rise)} ${t.rise < 0 ? "down" : "up"}.`;
+      const base = `Point A is at (${spec.ax}, ${spec.ay}) and point B at (${spec.bx}, ${spec.by}).`;
       if (!v) return `${base} No triangle is built yet.`;
+      const tip = { x: spec.ax + v.run, y: spec.ay + v.rise };
+      if (tone !== "success" && tone !== "info") return `${base} The built triangle has run ${v.run} and rise ${v.rise}, ending at (${tip.x}, ${tip.y}); compare that tip with point B.`;
+      const t = { run: spec.bx - spec.ax, rise: spec.by - spec.ay };
       const passes = v.run === 0 ? spec.bx === spec.ax : spec.ay + (v.rise / v.run) * (spec.bx - spec.ax) === spec.by;
-      return `${base} The built triangle has run ${v.run} and rise ${v.rise}, so its line ${passes ? "passes through B" : "misses B"}.`;
+      return `${base} From A to B the line travels ${Math.abs(t.run)} ${t.run < 0 ? "left" : "right"} and ${Math.abs(t.rise)} ${t.rise < 0 ? "down" : "up"}. The built triangle has run ${v.run} and rise ${v.rise}, so its line ${passes ? "passes through B" : "misses B"}.`;
     }
     case "graphRead": {
       const v = (value as { picked?: number } | null) ?? null;
@@ -564,7 +592,8 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       const choiceId=typeof value==="string"?value:null;
       const choice=spec.choices.find((candidate)=>candidate.id===choiceId);
       const mode=spec.mode==="triangle"?`Triangle givens ${spec.triangleSides?.join("-") ?? ""}${spec.triangleAngles?`, angles ${spec.triangleAngles.join("-")}`:""} decide whether the requested angle, side, or inclusion label follows`:spec.mode==="verdict"?`Testing whether ${spec.subjectLabel} is always, sometimes, or never a ${spec.predicateLabel}, using the family definitions shown`:`Tracing the inheritance path ${spec.nodes.map((node)=>node.label).join(" to ")} to see which property must carry forward`;
-      return `${mode}. ${choice?`Selected claim: ${choice.label}. Evidence shown: ${choice.evidenceText}`:"No claim selected yet."}`;
+      const showEvidence=tone==="success"||tone==="info";
+      return `${mode}. ${choice?(showEvidence?`Selected claim: ${choice.label}. Evidence shown: ${shapeHierarchyChoiceEvidence(spec,choice)}`:`Selected claim: ${choice.label}. The ${choice.evidenceKind} evidence is held until the answer is settled.`):"No claim selected yet."}`;
     }
     case "shapeFamilyBuilder": {
       const v=(value as {sides:number;rightAngles:number;equalSides:number;parallelPairs:number}|null) ?? {sides:spec.startSides,rightAngles:0,equalSides:0,parallelPairs:0};
@@ -606,9 +635,38 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
       const truth=geometricConstraintTruth(spec),valid=new Set(geometricConstraintExplorationKeys(spec));
       const opened=Array.isArray(v.revealed)?v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)):[];
-      const openedSet=new Set(opened);const stages=truth.stages.map(stage=>`${stage.label}: ${openedSet.has(stage.key)?stageText(stage,truth):"not inspected"}`).join("; ");
-      const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):spec.answerMode==="choice"?(typeof v.choiceId==="string"?`Selected ${spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected."):"Exploration mode.";
-      return `${sentence(stages)}. ${answer}`;
+      const openedSet=new Set(opened),answerStages=new Set(geometricConstraintAnswerStageKeys(spec));
+      const stages=truth.stages.map(stage=>{
+        const value=spec.answerMode==="explore"?String(stage.value):stageText(stage,truth),held=spec.answerMode!=="explore"&&tone!=="info"&&(answerStages.has(stage.key)||value==="yours to work out");
+        if(!openedSet.has(stage.key))return `${held?"complete the conclusion":stage.label}: not inspected`;
+        if(held)return "complete the conclusion: opened; finish this conclusion yourself, then check your answer";
+        return `${stage.label}: ${value}`;
+      }).join("; ");
+      const selected=typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId):undefined;
+      const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):spec.answerMode==="choice"?(selected?`Selected ${selected.label}${tone==="info"?(geometricConstraintChoiceCorrect(spec,selected)?", matching the geometry.":", not matching the geometry."):"."}`:"No conclusion selected."):"Exploration mode.";
+      const proof=spec.coordinateProof,proofKind=proof?({segmentPartition:"segment partition",lineRelation:"line relation",vectorRotation:"vector rotation",triangleCertificate:"triangle certificate",symmetricPlacement:"symmetric placement",radicalPerimeter:"exact-radical perimeter",boxAdvantage:"bounding-box area",shoelaceArea:"shoelace area",circleLineIntersection:"circle and line intersection",segmentLength:"segment length"} as const)[proof.kind]:"coordinate proof";
+      const proofOrigin=proof?.kind==="vectorRotation"?proof.points.find(point=>point.x===0&&point.y===0)??proof.points[0]:undefined,proofVectorEnd=proofOrigin&&proof?.vector?proof.points.find(point=>point.x===proofOrigin.x+proof.vector![0]&&point.y===proofOrigin.y+proof.vector![1]):undefined;
+      const proofPoints=proof?.kind==="vectorRotation"&&tone!=="info"?proof.points.filter(point=>point.id===proofOrigin?.id||point.id===proofVectorEnd?.id):proof?.points??[];
+      const proofSource=proof?[proofPoints.length?`points ${proofPoints.map(point=>`${point.label} at (${point.x}, ${point.y})`).join("; ")}`:"",proof.span?`segment ${proof.span.a} to ${proof.span.b}`:"",proof.segment?`partition ${proof.segment.a} through ${proof.segment.p} to ${proof.segment.b}`:"",proof.vector?`displacement (${proof.vector[0]}, ${proof.vector[1]})`:"",proof.sideRadicands?.length?`side measures ${proof.sideRadicands.map(value=>`square root of ${value}`).join(", ")}`:"",proof.circle?`circle centre (${proof.circle.h}, ${proof.circle.k}) with radius ${proof.circle.r}`:"",proof.line?`line y equals ${proof.line.m} x plus ${proof.line.b}`:""].filter(Boolean).join(". "):"";
+      const source=spec.task==="perimeterMissing"&&spec.perimeter
+        ? `The ${spec.perimeter.shape} has perimeter ${spec.perimeter.perimeter}; known side lengths ${spec.perimeter.knownSides.join(", ")}; and ${spec.perimeter.unknownMultiplicity} equal unknown side${spec.perimeter.unknownMultiplicity===1?"":"s"}.`
+        : spec.task==="coordinateArea"&&spec.coordinate
+          ? `The coordinate-area model gives ${spec.coordinate.pieces.map(piece=>`${piece.label}, a ${piece.kind==="rightTriangle"?"right triangle":"rectangle"} starting at (${piece.x}, ${piece.y})${piece.operation==="subtract"?" to subtract":" to add"}`).join("; ")}.`
+          : spec.task==="scaledArea"&&spec.scale
+            ? `The drawing gives ${spec.scale.drawingWidth!==undefined&&spec.scale.drawingHeight!==undefined?`dimensions ${spec.scale.drawingWidth} by ${spec.scale.drawingHeight}`:`area ${spec.scale.drawingArea}`} and length scale factor ${spec.scale.lengthScale}. ${tone==="info"?"The area factor and resulting area are revealed in the opened stages.":"The area factor and resulting area remain to calculate."}`
+            : spec.task==="angleCrossing"&&spec.angle
+              ? `Two lines cross, with one marked angle of ${spec.angle.knownAngle} degrees. ${tone==="info"?"The other angle measures are revealed in the opened stages.":"The vertical and adjacent angles remain to determine."}`
+              : spec.task==="aaSimilarity"&&spec.aa
+                ? `Triangle A gives angles ${spec.aa.anglesA.join(", ")} degrees; triangle B gives angles ${spec.aa.anglesB.join(", ")} degrees. ${tone==="info"?"Completed angles and the conclusion are revealed in the opened stages.":"Any missing angles and the similarity conclusion remain to determine."}`
+                : spec.task==="pythagoreanArea"&&spec.pythagorean
+                  ? `A right-triangle square model gives ${spec.pythagorean.legAreaA!==undefined?`first leg-square area ${spec.pythagorean.legAreaA}`:`first leg length ${spec.pythagorean.legA??"unknown"}`} and ${spec.pythagorean.legAreaB!==undefined?`second leg-square area ${spec.pythagorean.legAreaB}`:`second leg length ${spec.pythagorean.legB??"unknown"}`}${spec.pythagorean.hypotenuse!==undefined?`, with hypotenuse length ${spec.pythagorean.hypotenuse}`:""}. ${tone==="info"?"The derived square-area result is revealed in the opened stages.":"Derived square areas and the target remain to calculate."}`
+                  : `The coordinate model for ${proofKind} gives ${proofSource}.`;
+      const revealedAnswer=tone==="info"
+        ? spec.answerMode==="numeric"?` Revealed correct result: ${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}.`
+          : spec.answerMode==="choice"?` Revealed correct conclusion: ${spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice))?.label??truth.answerClaim}.`
+            : ""
+        : "";
+      return `${source} ${sentence(stages)}. ${answer}${revealedAnswer}`;
     }
     case "exactNumberLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown;relation?:unknown}:{};
@@ -667,7 +725,22 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
         const choiceId=typeof value === "string" ? value : "";
         const choice=spec.answerChoices.find((candidate)=>candidate.id===choiceId);
         const truth=conditionalTableReadTruth(spec.counts,spec.readMetric,spec.targetCell);
-        return `The two-way table has row labels ${spec.rowLabels.join(" and ")} and column labels ${spec.colLabels.join(" and ")}. The target ${CONDITIONAL_TABLE_METRIC[spec.readMetric] ?? spec.readMetric} uses ${truth.numerator}${spec.readMetric.startsWith("relative")?` out of ${truth.denominator}`:""}. ${choice?`Selected claim: ${choice.label}.`:"No claim selected yet."}`;
+        const row=Number(spec.targetCell[1]), col=Number(spec.targetCell[3]);
+        const intersection=`${spec.rowLabels[row]} and ${spec.colLabels[col]}`;
+        const relationship=spec.readMetric==="cell"?`read the ${intersection} cell`
+          : spec.readMetric==="rowTotal"?`add across the ${spec.rowLabels[row]} row`
+            : spec.readMetric==="colTotal"?`add down the ${spec.colLabels[col]} column`
+              : spec.readMetric==="grandTotal"?"add all four cells"
+                : spec.readMetric==="relativeWhole"?`compare the ${intersection} cell with the whole table`
+                  : spec.readMetric==="relativeRow"?`compare the ${intersection} cell with the ${spec.rowLabels[row]} row`
+                    : `compare the ${intersection} cell with the ${spec.colLabels[col]} column`;
+        const counts=`${spec.rowLabels[0]} and ${spec.colLabels[0]} ${spec.counts[0]}, ${spec.rowLabels[0]} and ${spec.colLabels[1]} ${spec.counts[1]}, ${spec.rowLabels[1]} and ${spec.colLabels[0]} ${spec.counts[2]}, and ${spec.rowLabels[1]} and ${spec.colLabels[1]} ${spec.counts[3]}`;
+        const reveal=tone==="info"
+          ? spec.readMetric.startsWith("relative")
+            ? ` The revealed calculation uses ${truth.numerator} out of ${truth.denominator}, which is ${truth.value} percent.`
+            : ` The revealed ${CONDITIONAL_TABLE_METRIC[spec.readMetric] ?? spec.readMetric} is ${truth.value}.`
+          : " The totals and result are left for you to calculate.";
+        return `The two-way table gives these four counts: ${counts}. The question asks for the ${CONDITIONAL_TABLE_METRIC[spec.readMetric] ?? spec.readMetric}: ${relationship}.${reveal} ${choice?`Selected claim: ${choice.label}.`:"No claim selected yet."}`;
       }
       const v=(value as {condition?:string;cell?:string|null;switches?:number}|null) ?? {};
       const condition=v.condition ?? spec.startCondition, cell=v.cell ?? "none", switches=v.switches ?? 0;
@@ -1244,7 +1317,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   covariationScrubber: "One labelled slider changes the shared input while the context, table, graph, and equation update together.",
   samplingBiasLab: "Choose a sampling method with buttons, set sample size with a slider, and press Draw sample repeatedly.",
   shapeFamilyBuilder: "Four labelled sliders set sides, right angles, equal sides, and parallel pairs; the preview updates live.",
-  shapeHierarchyLab: "Inspect the fixed family map or triangle givens, then Tab to an exact claim and press Enter or Space. Selecting a claim opens the evidence it would need — a chain of properties, an example, a counterexample, a blocking property, or a classification; the chosen claim remains visible on reveal.",
+  shapeHierarchyLab: "Inspect the fixed family map or triangle givens, then Tab to an exact claim and press Enter or Space. Selecting a claim builds its relationship model and names the kind of evidence to test; exact evidence waits until the answer is settled, and the chosen claim remains visible on reveal.",
   unitRuler: "Buttons align zero, place the next unit, select unit size, and test exact, gap, or overlap spacing.",
   estimateSlider: "Continuous mode uses one labelled slider. Exact-comparison mode uses candidate buttons; selecting one draws its distance from the stated actual value.",
   scaledCircleLab: "Inspect the fixed drawing-to-real scale chain and circle formula card, then Tab to one exact claim button and press Enter or Space. Your chosen claim remains visible on reveal.",
@@ -1253,7 +1326,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   signedFractionLab: "Inspect the fixed operand signs and fraction magnitudes. In division, verify the divisor becomes its reciprocal. Then Tab to one exact result claim and press Enter or Space; the selected path remains visible on reveal.",
   triangleClosureLab: "Use Left and Right Arrow on the hinge-angle slider at least twice, watching the endpoint span compare with the third beam. Then Tab to a frame claim and press Enter or Space.",
   trialProbabilityLab: "Choose one exact fraction button. The evidence strip and claim marker project your fraction onto the same total, so numerator, denominator, complement, and theoretical-versus-experimental differences stay visible.",
-  compoundEventLab: "Tab to the claim buttons and press Enter or Space to select exactly one count or probability claim. The stage cards and the full ordered sample space stay fixed while you choose, so the product of stage choices and the favourable-over-total probability remain separately visible.",
+  compoundEventLab: "Tab to the claim buttons and press Enter or Space to select exactly one count or probability claim. The stage cards and full ordered sample space stay fixed while you choose. Count their cells or marked combinations; the computed total and probability appear after the answer is settled.",
   compositeAreaLab: "Inspect the fixed geometric pieces, then Tab to the exact area-claim buttons and press Enter or Space. Added pieces use plus badges; cut-away pieces use minus badges and dashed berry patterns. Your selected claim stays visible on reveal.",
   proportionalReasoningLab: "Use native buttons to normalize each row or build each multiplicative stage, then enter a value or select one exact claim. Each conclusion appears only once you have inspected the rows it depends on. A shown answer appears as a separate faded copy, so what you entered stays as you left it.",
   placeValueTransformLab: "Read the aligned base-ten source, then Tab through the derived-stage buttons and press Enter or Space to inspect the required digit, rounding, scaling, or exponent steps. Enter a value or choose one exact claim. A shown answer appears as a separate faded copy, so the value you typed stays as you left it.",

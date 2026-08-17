@@ -132,23 +132,18 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A bigger same-sign sum.",
+      "body": "Combine two larger negative groups.",
       "widget": {
-        "type": "numeric",
-        "prompt": "-7 + (-9) = ?",
-        "answer": -16,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 16,
-            "feedback": "Both numbers are negative, so the sum stays negative: -7 + (-9) = -16."
-          },
-          {
-            "value": -2,
-            "feedback": "That subtracts instead of adding magnitudes. Add 7+9=16, keep the sign: -16."
-          }
-        ],
-        "fallbackFeedback": "Add the magnitudes 7+9=16, keep the shared negative sign: -16."
+        "type": "integerChips",
+        "target": -16,
+        "maxPos": 10,
+        "maxNeg": 20,
+        "posStart": 0,
+        "negStart": 0,
+        "prompt": "Build −7 + (−9) with negative chips.",
+        "successFeedback": "−16. The two negative groups combine into one larger negative amount.",
+        "lowFeedback": "The total is below −16. Remove negative chips.",
+        "highFeedback": "The total is above −16. Add more negative chips; same-sign negatives combine."
       }
     },
     {

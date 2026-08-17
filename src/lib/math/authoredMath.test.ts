@@ -227,14 +227,10 @@ describe("WS-G calculus shorthand — limits", () => {
 
 describe("WS-G calculus shorthand — what it refuses", () => {
   it("leaves an operator whose operand is an English word entirely as prose", () => {
-    // ia-01-01, pc-01-02, in-01-03, sr-02-03. The corpus deliberately puts word-placeholders in
-    // the operator's own brackets. Typesetting them would set `top` as t·o·p in math italic, so
-    // the whole island is dropped and the characters stay exactly as authored.
+    // Arbitrary prose remains refused. Four corpus-proven instructional placeholders are handled
+    // by the closed-vocabulary S245 integral path and render through \text instead of italics.
     for (const text of [
-      "**Area = ∫ₐᵇ (top − bottom) dx**",
-      "So arc length is ∫ speed dt, the total distance.",
-      "∫ (rate) dt = the total change",
-      "and the whole integral collapses into ∫ (something in u) du",
+      "The model writes ∫ total distance dt.",
       "How many terms does Σ from k = 3 to 11 of (anything) have?"
     ]) {
       expect(authoredMathParts(text).filter((part) => part.tex), text).toEqual([]);
@@ -259,14 +255,17 @@ describe("WS-G calculus shorthand — what it refuses", () => {
     }
   });
 
-  it("refuses bounds written with an improvised script character", () => {
-    // in-01-03 authors ∫ᵦᵃ with U+1D66 (subscript GREEK BETA) and ∫꜀ᵇ with U+A700 (a Chinese
-    // tone mark) because Unicode has no subscript b or c. Decoding a guess would be inventing
-    // content; emitting a bare `\int` would tear the bounds off the operator. So neither
-    // converts, and the authoring defect stays visible for a human to fix.
+  it("normalises the two corpus-proven legacy lower-bound glyphs only after an integral", () => {
+    // in-01-03 is the sole corpus source of modifier beta and the tone letter. Unicode has no
+    // Latin subscript b or c; inside this exact integral-bound position the adjoining equations
+    // prove the intended bound, so the renderer repairs them without admitting general aliases.
     const parts = authoredMathParts("∫ₐᵇ f = −∫ᵦᵃ f (running backwards flips the sign)");
-    expect(parts.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f"]);
-    expect(parts.at(-1)?.text).toContain("∫ᵦᵃ");
+    expect(parts.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f", "∫ᵦᵃ f"]);
+    expect(parts.filter((part) => part.tex).map((part) => part.tex)).toEqual([
+      "\\int_{a}^{b} f",
+      "\\int_{b}^{a} f"
+    ]);
+    expect(powerShorthandToTex("∫꜀ᵇ f")).toBe("\\int_{c}^{b} f");
   });
 
   it("never lets an island cross a newline", () => {

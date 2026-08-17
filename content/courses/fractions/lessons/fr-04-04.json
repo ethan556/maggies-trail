@@ -15,70 +15,51 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Referee duty: which matchups are legal?",
+      "body": "Compare equal fractions taken from different-size wholes.",
       "conceptTag": "same-whole",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort each matchup: fair comparison, or meaningless?",
-        "buckets": [
-          {
-            "id": "fair",
-            "label": "Fair — wholes match",
-            "icon": "✅"
-          },
-          {
-            "id": "meaningless",
-            "label": "Meaningless — wholes differ",
-            "icon": "🚫"
-          }
-        ],
+        "type": "lengthCompare",
+        "prompt": "A small cookie is 8 cm wide, so half is 4 cm. A large cake is 20 cm wide, so half is 10 cm. Which half is a larger amount?",
+        "mode": "pick",
+        "unitLabel": "cm",
+        "orientation": "h",
         "items": [
           {
-            "id": "m1",
-            "label": "3/8 vs 5/8 of the same cake",
-            "bucketId": "fair",
-            "feedback": "One cake, one whole — a legal fight (5/8 wins it, same pieces, more of them)."
+            "id": "cookie",
+            "label": "Half of the 8 cm cookie",
+            "length": 4,
+            "startOffset": 0,
+            "feedback": "The cookie half is 4 cm. The cake half reaches 10 cm, so it is larger."
           },
           {
-            "id": "m2",
-            "label": "1/2 of a small cup vs 1/3 of a big jug",
-            "bucketId": "meaningless",
-            "feedback": "Cup and jug are different wholes — the jug's third could drown the cup's half. So you cannot tell which is bigger."
-          },
-          {
-            "id": "m3",
-            "label": "2/6 vs 2/3 of two same-size ribbons",
-            "bucketId": "fair",
-            "feedback": "Same-size ribbons count as matching wholes — legal (and 2/3 wins: same tops, bigger pieces)."
-          },
-          {
-            "id": "m4",
-            "label": "3/4 of my sticker vs 3/4 of your poster",
-            "bucketId": "meaningless",
-            "feedback": "Same NAME, different amounts — three-quarters of a poster dwarfs three-quarters of a sticker. Matching fractions still need matching wholes."
+            "id": "cake",
+            "label": "Half of the 20 cm cake",
+            "length": 10,
+            "startOffset": 0
           }
         ],
-        "missFeedback": "Check the WHOLES first: same object or same-size objects → fair; different sizes → you cannot tell.",
-        "successFeedback": "The cake and the twin ribbons are legal fights; the cup-vs-jug and sticker-vs-poster matchups are meaningless — mismatched wholes."
+        "answerId": "cake",
+        "missFeedback": "Compare the shown lengths: 4 cm and 10 cm. The larger whole makes the larger half.",
+        "successFeedback": "The cake half is 10 cm, while the cookie half is 4 cm. The fraction names match, but the amounts do not because the wholes differ."
       },
       "predict": {
-        "prompt": "Half of a small cookie versus half of a big cake — the same amount?",
+        "prompt": "Are half of a small cookie and half of a large cake the same amount?",
         "options": [
           {
             "id": "no",
-            "label": "No — halves inherit their wholes"
+            "label": "No — the cake half is larger"
           },
           {
             "id": "yes",
-            "label": "Yes — a half is a half"
+            "label": "Yes — both shares are one half"
           },
           {
             "id": "cookie",
-            "label": "The cookie half is more"
+            "label": "No — the cookie half is larger"
           }
         ],
         "outcomeId": "no",
-        "reveal": "A fraction is a share OF something — big whole, big half. Comparing fractions only means anything when the wholes match."
+        "reveal": "Both shares are one half, but the cake is the larger whole, so its half is the larger amount. Fraction names alone compare amounts only when the wholes match."
       }
     },
     {

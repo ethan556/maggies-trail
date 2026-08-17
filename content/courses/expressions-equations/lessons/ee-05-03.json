@@ -15,26 +15,22 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Fill in the table.",
+      "body": "Move hours first and watch pay respond.",
    "conceptTag": "dependent-independent",
-   "widget": {
-    "type": "numeric",
-    "prompt": "Pay = 8h. If h = 2 hours, what is the pay?",
-    "answer": 16,
-    "tolerance": 0,
-    "unit": "dollars",
-    "commonErrors": [
-     {
-      "value": 10,
-      "feedback": "10 ADDS 8 and 2. The rule MULTIPLIES: 8 × 2 = 16."
-     },
-     {
-      "value": 82,
-      "feedback": "82 glues the digits together. Pay = 8 × h = 8 × 2 = 16."
-     }
-    ],
-    "fallbackFeedback": "8 × 2 = 16 dollars."
-   },
+      "widget": {
+        "type": "functionMachine",
+        "prompt": "The rule is pay = 8h. Move the input to 2 hours and watch the pay output change to $16.",
+        "a": 8,
+        "b": 0,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 16,
+        "successFeedback": "When hours moves to 2, pay responds by moving to 16. Hours is the independent input; pay is the dependent output.",
+        "lowFeedback": "The pay output is below $16. Increase the hours input and watch pay follow the rule 8h.",
+        "highFeedback": "The pay output is above $16. Decrease the hours input; pay follows whatever hours you choose."
+      },
    "predict": {
     "prompt": "In pay = 8h, which variable depends on the other?",
     "options": [

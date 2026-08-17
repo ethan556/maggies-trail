@@ -17,68 +17,76 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Find the middle number.",
+      "body": "Show the first change on a number line.",
       "conceptTag": "two-step",
       "widget": {
-        "type": "numeric",
-        "prompt": "First step: 18 birds + 24 more. How many after the birds arrive?",
-        "answer": 42,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "numberLineHop",
+        "prompt": "18 birds are here. Then 24 more land. Hop to the middle count.",
+        "min": 0,
+        "max": 50,
+        "start": 18,
+        "hop": 24,
+        "hops": 1,
+        "direction": "forward",
+        "commonLandings": [
           {
             "value": 6,
-            "feedback": "That subtracted. MORE birds come, so add: 18 + 24 = 42."
+            "feedback": "6 comes from subtracting. More birds land, so the jump goes forward."
           },
           {
             "value": 32,
-            "feedback": "Check the regroup: 8 + 4 = 12 ones, carry the ten. 18 + 24 = 42."
+            "feedback": "32 is ten short. Add all 24 birds to the starting 18."
           }
         ],
         "missFeedback": "18 + 24 = 42 — that's the middle total, before any leave.",
-        "successFeedback": "42 birds after they arrive — now the second step.",
-        "fallbackFeedback": "18 + 24 = 42."
+        "successFeedback": "The first jump lands on 42. That middle count starts the second step."
       },
       "predict": {
-        "prompt": "A two-step story: birds arrive, then some fly off. Can you find the FINAL count without doing the first step first?",
+        "prompt": "18 birds are here and 24 more land. What number must the second step start from?",
         "options": [
           {
-            "id": "no",
-            "label": "No — step two needs step one's result"
+            "id": "forty-two",
+            "label": "42"
           },
           {
-            "id": "yes",
-            "label": "Yes — do either step first"
+            "id": "twenty-seven",
+            "label": "27"
           },
           {
-            "id": "once",
-            "label": "Just add everything at once"
+            "id": "six",
+            "label": "6"
           }
         ],
-        "outcomeId": "no",
-        "reveal": "The second step acts on what the first step LEAVES — its answer is the second step's starting number. Two-step stories chain, they don't shuffle."
+        "outcomeId": "forty-two",
+        "reveal": "The first hop lands on 42. A two-step story chains its steps, so 42 becomes the next starting number."
       }
     },
     {
       "id": "i1b",
       "kind": "interactive",
-      "body": "Now finish what the first step started.",
+      "body": "Show the second change on the same path.",
       "conceptTag": "two-step",
       "widget": {
-        "type": "numeric",
-        "prompt": "You found 42 birds after the first two groups arrived (18 + 24). Now 15 fly off. How many are left?",
-        "answer": 27,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 57,
-            "feedback": "57 adds the 15 instead of taking them away — the birds FLEW OFF, so subtract: 42 − 15 = 27."
-          },
+        "type": "numberLineHop",
+        "prompt": "Start at the middle count, 42. Now 15 birds fly off. Hop back to the final count.",
+        "min": 10,
+        "max": 45,
+        "start": 42,
+        "hop": 15,
+        "hops": 1,
+        "direction": "back",
+        "commonLandings": [
           {
             "value": 15,
-            "feedback": "15 is how many flew away, not how many are left — subtract that from the 42 you already found: 42 − 15 = 27."
+            "feedback": "15 is how many flew away, not how many remain. Start at 42 and move back 15."
+          },
+          {
+            "value": 32,
+            "feedback": "That moved back only 10. Move back all 15 birds."
           }
         ],
-        "fallbackFeedback": "You already have the middle number, 42. Subtract the 15 that flew off: 42 − 15 = 27."
+        "missFeedback": "Start at 42 and move back 15 to land on 27.",
+        "successFeedback": "The second hop lands on 27. The full path is 18 → 42 → 27."
       },
       "explanationVariants": [
         "42 birds, minus the 15 that fly off: 42 − 15 = 27.",
@@ -96,7 +104,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "18 birds, then 24 more arrive, then 15 fly off. How many now?",
+        "prompt": "There are 18 birds. Then 24 more arrive, and 15 fly away. How many birds remain?",
         "answer": 27,
         "tolerance": 0,
         "commonErrors": [
@@ -195,7 +203,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "35 marbles, win 20, then lose 12. How many now?",
+        "prompt": "Nia has 35 marbles. She wins 20 more, then loses 12. How many marbles does she have now?",
         "answer": 43,
         "tolerance": 0,
         "commonErrors": [
@@ -230,7 +238,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "46 fish, 17 more added, then 23 scooped out. What do you do FIRST?",
+        "prompt": "An aquarium has 46 fish. Workers add 17 fish, then move 23 fish to another tank. What should you do first?",
         "options": [
           {
             "id": "a",
@@ -270,7 +278,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "46 fish, 17 more added, then 23 scooped out. How many now?",
+        "prompt": "An aquarium has 46 fish. Workers add 17 fish, then move 23 fish to another tank. How many fish remain?",
         "answer": 40,
         "tolerance": 0,
         "commonErrors": [
@@ -326,7 +334,7 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "10 apples, 5 more, then 3 eaten. How many now?",
+          "prompt": "A bowl has 10 apples. Five more are added, then 3 are eaten. How many apples remain?",
           "answer": 12,
           "tolerance": 0,
           "commonErrors": [

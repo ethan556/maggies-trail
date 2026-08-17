@@ -37,13 +37,9 @@ const mcq = (
 ): Variant => {
   const seen = new Set<string>([correct[0]]);
   const unique = wrong.filter(([label]) => !seen.has(label) && seen.add(label));
-  for (const fallback of [
-    ["A different choice", "That choice does not match the counting, shape, position, or comparison shown in the question."],
-    ["There is not enough information", "The picture words and quantities provide enough information to decide the answer."],
-  ] as Array<[string, string]>) {
-    if (unique.length >= 3) break;
-    if (!seen.has(fallback[0])) { seen.add(fallback[0]); unique.push(fallback); }
-  }
+  // Do not pad a choice set with generic filler. Two or three meaningful,
+  // misconception-derived distractors are stronger than a fourth non-answer.
+  if (unique.length < 1) throw new Error(`MCQ ${tag} needs at least one genuine distractor`);
   const options = shuffled(rand, [
     { label: correct[0], feedback: correct[1], correct: true },
     ...unique.slice(0, 3).map(([label, feedback]) => ({ label, feedback, correct: false })),

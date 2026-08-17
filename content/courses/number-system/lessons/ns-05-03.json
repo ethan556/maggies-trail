@@ -15,22 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Place a fraction and a decimal.",
+      "body": "Put both forms on one fraction line.",
       "conceptTag": "order-rationals",
       "widget": {
-        "type": "rationalCompare",
-        "prompt": "Which is greater: 3/4 or 0.5?",
-        "left": {
-          "num": 3,
-          "den": 4
-        },
-        "right": {
-          "value": "0.5"
-        },
-        "answer": "gt",
-        "ltFeedback": "0.5 = 1/2, but 3/4 = 0.75 is bigger. Putting both as decimals makes it clear: 0.75 > 0.5.",
-        "eqFeedback": "3/4 = 0.75 and 0.5 are different points. 0.75 > 0.5, so 3/4 is greater.",
-        "successFeedback": "Right — 3/4 = 0.75, which is greater than 0.5. Convert to the same form to compare."
+        "type": "numberLinePlace",
+        "prompt": "On a line divided into fourths, 0.5 is 2/4. Place the marker at the greater value: 3/4.",
+        "min": 0,
+        "max": 4,
+        "step": 1,
+        "tickStep": 1,
+        "target": 3,
+        "start": 2,
+        "fractionDen": 4,
+        "commonPlacements": [
+          {
+            "value": 2,
+            "feedback": "The second mark is 2/4 = 1/2 = 0.5. Move one fourth to the right to reach 3/4."
+          }
+        ],
+        "successFeedback": "3/4 lies to the right of 2/4, which is 0.5. Different written forms can name points on the same number line.",
+        "lowFeedback": "This point is below both 0.5 and 3/4. Translate 0.5 to 2/4, then move right one fourth.",
+        "highFeedback": "This point is greater than 3/4. Stop at the third of the four equal marks."
       },
       "hints": [
         "Put both in the same form.",
@@ -139,7 +144,7 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Order a mixed set.",
+      "body": "Locate the leftmost value in a mixed set.",
       "conceptTag": "order-rationals",
       "predict": {
         "prompt": "0.75, -2, 1.5, -1/2 — a decimal, a negative integer, another decimal and a negative fraction. What decides the order?",
@@ -161,41 +166,31 @@
         "reveal": "Position, and nothing else. A number's form is just how it is written down; -1/2 and -0.5 are the same point. Put each one where it falls on the line and the order reads off left to right."
       },
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Arrange from SMALLEST to largest: 0.75, -2, 1.5, -1/2.",
-        "items": [
+        "type": "numberLinePlace",
+        "prompt": "Among 0.75, -2, 1.5, and -1/2, place the marker at the smallest value—the point farthest left.",
+        "min": -3,
+        "max": 2,
+        "step": 0.25,
+        "tickStep": 0.5,
+        "target": -2,
+        "start": 1.5,
+        "commonPlacements": [
           {
-            "id": "p75",
-            "label": "0.75"
+            "value": -0.5,
+            "feedback": "-0.5 is -1/2. It lies left of the positive values but still right of -2."
           },
           {
-            "id": "n2",
-            "label": "-2"
+            "value": 0.75,
+            "feedback": "0.75 is positive, so both negative values lie to its left."
           },
           {
-            "id": "p15",
-            "label": "1.5"
-          },
-          {
-            "id": "nh",
-            "label": "-1/2"
+            "value": 1.5,
+            "feedback": "1.5 is the greatest value in this set, not the smallest."
           }
         ],
-        "correctOrder": [
-          "n2",
-          "nh",
-          "p75",
-          "p15"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "nh",
-            "second": "n2",
-            "feedback": "-1/2 (-0.5) isn't smaller than -2 — -2 is farther left. -2 comes first."
-          }
-        ],
-        "missFeedback": "Convert to decimals: -2, -0.5, 0.75, 1.5. Smallest (most negative) first: -2, then -1/2, then 0.75, then 1.5.",
-        "successFeedback": "Ordered — as decimals -2, -0.5, 0.75, 1.5 line up left to right."
+        "successFeedback": "-2 is farthest left. Continuing right gives -1/2, 0.75, and 1.5, regardless of how each number is written.",
+        "lowFeedback": "This point is smaller than every stated value. Choose one of the four values in the set.",
+        "highFeedback": "The smallest stated value is farther left. Convert -1/2 to -0.5 if that helps compare positions."
       }
     },
     {

@@ -1,7 +1,7 @@
 /**
  * S242 / VIS-05 — EVERY FIGURE MUST RENDER.
  *
- * `figures.tsx` is 29,656 lines and 1,871 hand-written inline-SVG components, and until this file
+ * `figures.tsx` contains 1,879 hand-written inline-SVG components, and until this file
  * **nothing in the repository exercised any of them at runtime.** Typecheck proves they compile;
  * the content gates prove the ids are registered and placed. Neither calls one.
  *
@@ -11,7 +11,7 @@
  * learner meets it.
  *
  * The check is cheap because these components are pure: no props, no state, no data. Rendering all
- * 1,871 to static markup takes seconds and is the only thing standing between a broken figure and
+ * 1,879 to static markup takes seconds and is the only thing standing between a broken figure and
  * production.
  *
  * WHY IT ALSO ASSERTS A TITLE. `<title>` is the figure's accessible name — the entire content a

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 import { motionInit } from "@/lib/motionBootstrap";
@@ -28,6 +28,12 @@ const OG_IMAGE = {
   alt: "Maggie's Trail — Visual K–12 math you can touch",
   type: "image/png"
 } as const;
+
+/** Browser/PWA chrome follows the identity mark's Deep Navy rather than the instructional sky
+ * accent. This mirrors `manifest.webmanifest` and avoids a blue shell around a navy app icon. */
+export const viewport: Viewport = {
+  themeColor: "#0D1B2A"
+};
 
 export const metadata: Metadata = {
   title: APP_TITLE,

@@ -15,42 +15,51 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Evaluate a cube root.",
+      "body": "Complete a cube with volume 64 and read the missing edge length.",
       "widget": {
-        "type": "numeric",
-        "prompt": "∛64 = ?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "volumeBuilder",
+        "prompt": "The cube is 4 units wide and 4 units high. Extend its remaining edge until the volume is 64 cubic units.",
+        "targetVolume": 64,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 4,
+        "hStart": 4,
+        "lockW": true,
+        "lockH": true,
+        "commonBuilds": [
           {
-            "value": 21.3,
-            "feedback": "That divides 64 by 3 — a cube root isn't division by 3. 4³ = 64, so ∛64 = 4."
+            "volume": 32,
+            "feedback": "A 2 × 4 × 4 prism has volume 32, so its three edges are not all 4 yet."
           },
           {
-            "value": 8,
-            "feedback": "8³ = 512, way more than 64 — check 4³ instead: 4×4×4=64."
+            "volume": 48,
+            "feedback": "A 3 × 4 × 4 prism has volume 48. Extend the remaining edge one more unit."
           }
         ],
-        "fallbackFeedback": "4³ = 64, so ∛64 = 4."
+        "successFeedback": "The edges are 4, 4, and 4, so the cube holds 4 × 4 × 4 = 64 unit cubes. Therefore ∛64 = 4.",
+        "lowFeedback": "The volume is below 64. Extend the free edge while the other two edges stay at 4.",
+        "highFeedback": "The volume is above 64. Shorten the free edge until all three edge lengths are 4."
       },
       "predict": {
-        "prompt": "Does ∛64 ask 'what number multiplied by itself three times gives 64' — or '64 divided by 3'?",
+        "prompt": "What does ∛64 ask you to find?",
         "options": [
           {
             "id": "cube",
-            "label": "What number, used three times, builds 64"
+            "label": "An edge used three times to make a volume of 64"
           },
           {
             "id": "divide",
-            "label": "64 divided by 3"
+            "label": "The result of dividing 64 by 3"
           },
           {
             "id": "triple",
-            "label": "64 minus itself three times"
+            "label": "The result of subtracting 3 from 64"
           }
         ],
         "outcomeId": "cube",
-        "reveal": "The cube root unbuilds a cube — it hunts the edge whose triple product is 64: 4 × 4 × 4 = 64, so ∛64 = 4. Division by 3 answers a completely different question — 64 ÷ 3 is about 21.3, and 21.3 cubed lands nowhere near 64."
+        "reveal": "A cube root finds the edge length of a cube with the given volume. Since 4 × 4 × 4 = 64, the cube's edge and ∛64 are both 4."
       }
     },
     {

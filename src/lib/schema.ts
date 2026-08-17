@@ -2691,11 +2691,16 @@ export const TrialProbabilityLabSpec = z.object({
  * not — they extract one circle's own formula component, before π. Note also that `choices` has NO
  * `correct` boolean (unlike most mcq-shaped widgets): correctness is computed by matching
  * `choice.value` against that target, so a hand-set `correct: true` is silently ignored. */
+export const ScaledCircleUnitSpec = z.enum(["unitless", "mm", "cm", "m", "km", "in", "ft", "yd"]);
+
 export const ScaledCircleLabSpec = z.object({
   type: z.literal("scaledCircleLab"),
   prompt: z.string().min(1),
   drawingRadius: z.number().positive().optional(),
   scale: z.number().positive().optional(),
+  /** `unitless` is an intentional neutral quantity, not an omitted metre default. */
+  drawingUnit: ScaledCircleUnitSpec.default("unitless"),
+  realUnit: ScaledCircleUnitSpec.default("unitless"),
   realRadius: z.number().positive(),
   ask: z.enum(["realRadius", "circumferenceCoef", "areaCoef"]),
   choices: z.array(z.object({
@@ -2704,6 +2709,42 @@ export const ScaledCircleLabSpec = z.object({
   fallbackFeedback: z.string().min(1),
   successFeedback: z.string().min(1)
 });
+
+type ScaledCircleUnit = z.infer<typeof ScaledCircleUnitSpec>;
+const SCALED_CIRCLE_UNIT_NAME: Record<Exclude<ScaledCircleUnit, "unitless">, { singular: string; plural: string }> = {
+  mm: { singular: "millimeter", plural: "millimeters" },
+  cm: { singular: "centimeter", plural: "centimeters" },
+  m: { singular: "meter", plural: "meters" },
+  km: { singular: "kilometer", plural: "kilometers" },
+  in: { singular: "inch", plural: "inches" },
+  ft: { singular: "foot", plural: "feet" },
+  yd: { singular: "yard", plural: "yards" },
+};
+
+export function scaledCircleMeasurementText(value: number | "?", unit: ScaledCircleUnit, power: 1 | 2 = 1): string {
+  if (unit === "unitless") return String(value);
+  return `${value} ${unit}${power === 2 ? "²" : ""}`;
+}
+
+export function scaledCircleMeasurementSpoken(value: number | "unknown", unit: ScaledCircleUnit, power: 1 | 2 = 1): string {
+  if (unit === "unitless") return String(value);
+  const singular = value === 1;
+  const names = SCALED_CIRCLE_UNIT_NAME[unit];
+  const noun = singular ? names.singular : names.plural;
+  return `${value} ${power === 2 ? "square " : ""}${noun}`;
+}
+
+export function scaledCircleScaleUnitText(drawingUnit: ScaledCircleUnit, realUnit: ScaledCircleUnit): string {
+  if (drawingUnit === "unitless" || realUnit === "unitless") return "";
+  return ` ${realUnit}/${drawingUnit}`;
+}
+
+export function scaledCircleScaleUnitSpoken(drawingUnit: ScaledCircleUnit, realUnit: ScaledCircleUnit, scale = 1): string {
+  if (drawingUnit === "unitless" || realUnit === "unitless") return "";
+  const realNames = SCALED_CIRCLE_UNIT_NAME[realUnit];
+  const realName = scale === 1 ? realNames.singular : realNames.plural;
+  return ` ${realName} per ${SCALED_CIRCLE_UNIT_NAME[drawingUnit].singular}`;
+}
 
 export function scaledCircleTarget(spec: { realRadius: number; ask: "realRadius" | "circumferenceCoef" | "areaCoef" }): number {
   if (spec.ask === "realRadius") return spec.realRadius;
@@ -4610,6 +4651,32 @@ export function shapeHierarchyChoiceCorrect(
   return sameStringSet(choice.claim.split("+").filter(Boolean), shapeHierarchyTriangleLabels(spec));
 }
 
+/** Truth-derived reveal copy for triangle classification. A generic "contradicts the claim"
+ * sentence is false when a dual or inclusive choice contains one supported label but omits
+ * another, so the same classification truth used by the evaluator supplies the explanation. */
+export function shapeHierarchyChoiceEvidence(
+  spec: {
+    mode: "hierarchy" | "triangle" | "verdict";
+    triangleSides?: readonly [number, number, number];
+    triangleAngles?: readonly [number, number, number];
+    triangleQuestion?: "side" | "angle" | "sideInclusive" | "dual";
+  },
+  choice: { claim: string; evidenceText: string }
+): string {
+  if (spec.mode !== "triangle") return choice.evidenceText;
+  const expected = shapeHierarchyTriangleLabels(spec);
+  const selected = choice.claim.split("+").filter(Boolean);
+  const missing = expected.filter((label) => !selected.includes(label));
+  const unsupported = selected.filter((label) => !expected.includes(label));
+  const supportedText = expected.join(" and ") || "no classification label";
+  if (missing.length === 0 && unsupported.length === 0) return `The fixed givens support ${supportedText}.`;
+  const differences = [
+    unsupported.length ? `includes ${unsupported.join(" and ")}, which the givens do not support` : "",
+    missing.length ? `leaves out ${missing.join(" and ")}` : "",
+  ].filter(Boolean).join(", and ");
+  return `The fixed givens support ${supportedText}. This claim ${differences}.`;
+}
+
 /** unitRuler — align zero, choose a unit, and iterate equal units with no gaps or overlaps. */
 export const UnitRulerSpec = z.object({
   type: z.literal("unitRuler"),
@@ -5305,6 +5372,65 @@ export function geometricConstraintTruth(spec:GeometricConstraintTruthInput):{an
     }
   }
   return{answerNumber,answerClaim,stages,pieceAreas};
+}
+/**
+ * The stage keys that would disclose this widget's graded result or conclusion.
+ *
+ * This is deliberately semantic rather than a text search. Several geometry stages express an
+ * answer without repeating the grader's internal claim id, and `proof:partition-ratio` ends in the
+ * *second* part of a ratio even though the first part is what the learner enters. Keeping the map
+ * beside the truth engine gives the visual renderer and the screen-reader description one shared
+ * contract. Exploration-only lessons return no held keys because opening the derivation is their
+ * learner action; there is no separate answer to pre-empt.
+ */
+export function geometricConstraintAnswerStageKeys(
+  spec:GeometricConstraintTruthInput & {answerMode:GeometricConstraintAnswerMode}
+):string[]{
+  if(spec.answerMode==="explore")return[];
+  switch(spec.task){
+    case "perimeterMissing":
+      return[spec.perimeter?.unknownMultiplicity&&spec.perimeter.unknownMultiplicity>1?"perimeter:split":"perimeter:remaining"];
+    case "coordinateArea":{
+      const model=spec.coordinate;
+      if(!model)return[];
+      if(model.target==="total")return["coordinate:combine"];
+      const id=model.targetPieceId??model.pieces[0]?.id;
+      return id?[`coordinate:${id}:area`]:[];
+    }
+    case "scaledArea":
+      if(spec.scale?.target==="unitArea")return["scale:area-factor"];
+      if(spec.scale?.target==="error")return["scale:area-factor","scale:real-area"];
+      return["scale:real-area"];
+    case "angleCrossing":
+      if(spec.angle?.target==="vertical")return["angle:vertical"];
+      if(spec.angle?.target==="adjacent")return["angle:adjacent"];
+      if(spec.angle?.target==="whyVertical")return["angle:vertical","angle:adjacent"];
+      return[];
+    case "aaSimilarity":
+      if(spec.aa?.target==="third")return["aa:complete-a"];
+      if(spec.aa?.target==="similarity")return["aa:compare"];
+      return["aa:scale-target"];
+    case "pythagoreanArea":
+      if(spec.pythagorean?.target==="cSquared")return["pyth:sum","pyth:identity"];
+      if(spec.pythagorean?.target==="length"||spec.pythagorean?.target==="legLength")return["pyth:square-root"];
+      if(spec.pythagorean?.target==="areaMeaning")return["pyth:leg-squares","pyth:sum","pyth:identity"];
+      return["pyth:identity"];
+    case "coordinateProof":{
+      switch(spec.coordinateProof?.kind){
+        case "segmentPartition":return["proof:partition-ratio"];
+        case "vectorRotation":return["proof:rotate","proof:dot"];
+        case "triangleCertificate":return["proof:converse","proof:slope-option"];
+        case "symmetricPlacement":return["proof:symmetry-axis","proof:equal-slants"];
+        case "radicalPerimeter":return["proof:radical-combine"];
+        case "boxAdvantage":return["proof:corner-legs"];
+        case "shoelaceArea":return["proof:shoelace-half"];
+        case "circleLineIntersection":return["proof:roots"];
+        case "segmentLength":return["proof:span-root"];
+        case "lineRelation":
+        default:return[];
+      }
+    }
+  }
 }
 export function geometricConstraintExplorationKeys(spec:GeometricConstraintTruthInput):string[]{return geometricConstraintTruth(spec).stages.map(stage=>stage.key)}
 export function geometricConstraintChoiceCorrect(spec:GeometricConstraintTruthInput,choice:{claim?:string;numberValue?:number}):boolean{const truth=geometricConstraintTruth(spec);if(typeof choice.numberValue==="number"&&typeof truth.answerNumber==="number")return Math.abs(choice.numberValue-truth.answerNumber)<=1e-9;return Boolean(choice.claim&&choice.claim===truth.answerClaim)}
@@ -6974,6 +7100,13 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
     case "scaledCircleLab": {
       if ((spec.drawingRadius === undefined) !== (spec.scale === undefined))
         errs.push("scaledCircleLab: drawingRadius and scale must be supplied together");
+      const hasDrawing = spec.drawingRadius !== undefined && spec.scale !== undefined;
+      if (!hasDrawing && spec.drawingUnit !== "unitless")
+        errs.push("scaledCircleLab: drawingUnit requires drawingRadius and scale givens");
+      if (hasDrawing && ((spec.drawingUnit === "unitless") !== (spec.realUnit === "unitless")))
+        errs.push("scaledCircleLab: a dimensional scale chain requires both drawingUnit and realUnit");
+      if (spec.ask === "realRadius" && (spec.drawingRadius === undefined || spec.scale === undefined))
+        errs.push("scaledCircleLab: realRadius questions require drawingRadius and scale givens");
       if (spec.drawingRadius !== undefined && spec.scale !== undefined && Math.abs(spec.drawingRadius * spec.scale - spec.realRadius) > 1e-9)
         errs.push(`scaledCircleLab: ${spec.drawingRadius} × ${spec.scale} does not equal realRadius ${spec.realRadius}`);
       const correct = spec.choices.filter((choice) => scaledCircleChoiceCorrect(spec, choice));
@@ -7269,8 +7402,11 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
       if(spec.coordinate){const ids=spec.coordinate.pieces.map(piece=>piece.id),labels=spec.coordinate.pieces.map(piece=>piece.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: coordinate piece ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: coordinate piece labels must be unique");for(const piece of spec.coordinate.pieces){if(piece.width===0||piece.height===0)errs.push(`geometricConstraintLab: coordinate piece ${piece.id} must have nonzero dimensions`);if(piece.points){const xs=piece.points.map(point=>point[0]),ys=piece.points.map(point=>point[1]),w=Math.max(...xs)-Math.min(...xs),h=Math.max(...ys)-Math.min(...ys);if(Math.abs(Math.abs(piece.width)-w)>1e-9||Math.abs(Math.abs(piece.height)-h)>1e-9)errs.push(`geometricConstraintLab: coordinate piece ${piece.id} dimensions disagree with its points`)}}}
       if(spec.coordinateProof){const ids=spec.coordinateProof.points.map(point=>point.id),labels=spec.coordinateProof.points.map(point=>point.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: coordinate proof point ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: coordinate proof point labels must be unique");}
       if(spec.perimeter&&spec.perimeter.knownSides.reduce((sum,value)=>sum+value,0)>=spec.perimeter.perimeter)errs.push("geometricConstraintLab: known perimeter sides must leave positive boundary");
-      if(spec.aa){for(const [name,angles] of [["A",spec.aa.anglesA],["B",spec.aa.anglesB]] as const){if(angles.reduce((sum,value)=>sum+value,0)>=180)errs.push(`geometricConstraintLab: triangle ${name} angles must leave a positive third angle`)}}
+      if(spec.scale){const hasArea=spec.scale.drawingArea!==undefined,hasWidth=spec.scale.drawingWidth!==undefined,hasHeight=spec.scale.drawingHeight!==undefined;if(!hasArea&&!hasWidth&&!hasHeight)errs.push("geometricConstraintLab: scaled area requires drawingArea or both drawing dimensions");if(hasWidth!==hasHeight)errs.push("geometricConstraintLab: scaled area drawing width and height must be supplied together");if(hasArea&&hasWidth&&hasHeight&&Math.abs(spec.scale.drawingArea!-spec.scale.drawingWidth!*spec.scale.drawingHeight!)>1e-9)errs.push("geometricConstraintLab: scaled area givens disagree")}
+      if(spec.angle){const hasFactor=spec.angle.algebraFactor!==undefined,hasValue=spec.angle.algebraValue!==undefined;if(hasFactor!==hasValue)errs.push("geometricConstraintLab: algebra factor and value must be supplied together");if(hasFactor&&hasValue&&Math.abs(spec.angle.algebraFactor!*spec.angle.algebraValue!-spec.angle.knownAngle)>1e-9)errs.push("geometricConstraintLab: algebraic angle givens disagree with the known angle")}
+      if(spec.aa){for(const [name,angles] of [["A",spec.aa.anglesA],["B",spec.aa.anglesB]] as const){const sum=angles.reduce((total,value)=>total+value,0);if(angles.length===2&&sum>=180)errs.push(`geometricConstraintLab: triangle ${name} angles must leave a positive third angle`);if(angles.length===3&&Math.abs(sum-180)>1e-9)errs.push(`geometricConstraintLab: triangle ${name} angles must total 180 degrees`)}if(spec.aa.target==="third"&&spec.aa.anglesA.length!==2)errs.push("geometricConstraintLab: third-angle target requires exactly two given angles in triangle A")}
       if(spec.pythagorean){const a=spec.pythagorean.legAreaA??(spec.pythagorean.legA?spec.pythagorean.legA**2:undefined),b=spec.pythagorean.legAreaB??(spec.pythagorean.legB?spec.pythagorean.legB**2:undefined);
+      if(spec.pythagorean.legA!==undefined&&spec.pythagorean.legAreaA!==undefined&&Math.abs(spec.pythagorean.legA**2-spec.pythagorean.legAreaA)>1e-9)errs.push("geometricConstraintLab: first leg length and square area disagree");if(spec.pythagorean.legB!==undefined&&spec.pythagorean.legAreaB!==undefined&&Math.abs(spec.pythagorean.legB**2-spec.pythagorean.legAreaB)>1e-9)errs.push("geometricConstraintLab: second leg length and square area disagree");
       if(spec.pythagorean.target==="legLength"){if(a===undefined||spec.pythagorean.hypotenuse===undefined)errs.push("geometricConstraintLab: legLength requires one known leg and the hypotenuse");else if(spec.pythagorean.hypotenuse**2-a<=0)errs.push("geometricConstraintLab: legLength requires hypotenuse longer than the known leg");}
       else{if(a===undefined||b===undefined)errs.push("geometricConstraintLab: Pythagorean model requires two leg lengths or square areas");}if(spec.pythagorean.target==="length"&&a!==undefined&&b!==undefined&&Math.abs(Math.sqrt(a+b)-Math.round(Math.sqrt(a+b)))>1e-9)errs.push("geometricConstraintLab: authored exact-length task requires a square hypotenuse area")}
       const ids=spec.choices.map(choice=>choice.id),labels=spec.choices.map(choice=>choice.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: choice ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: choice labels must be unique");

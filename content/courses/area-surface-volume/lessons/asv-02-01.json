@@ -18,22 +18,52 @@
       "body": "Split and add.",
       "conceptTag": "decompose-lshape",
       "widget": {
-        "type": "numeric",
-        "prompt": "An L-shape splits into a 6×4 rectangle and a 3×2 rectangle. What is the total area?",
-        "answer": 30,
-        "tolerance": 0,
-        "unit": "square units",
-        "commonErrors": [
+        "type": "compositeAreaLab",
+        "prompt": "The cut line splits the L-shape into a 6-by-4 rectangle and a 3-by-2 rectangle. Choose the area of the complete L-shape.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "value": 24,
-            "feedback": "24 is only the BIGGER piece (6×4), leaving out the 3×2 piece entirely. Add both: 24 + 6 = 30."
+            "id": "large-rectangle",
+            "label": "large rectangle",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 6,
+            "height": 4
           },
           {
-            "value": 144,
-            "feedback": "144 multiplies the two pieces together instead of adding them. Combining pieces of one shape means ADDING: 24 + 6 = 30."
+            "id": "small-rectangle",
+            "label": "small rectangle",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 2
           }
         ],
-        "fallbackFeedback": "6×4 = 24, and 3×2 = 6; total = 24 + 6 = 30."
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "both-pieces",
+            "label": "30 square units",
+            "value": 30,
+            "feedback": "Correct. The two non-overlapping pieces cover 24 + 6 = 30 square units."
+          },
+          {
+            "id": "large-only",
+            "label": "24 square units",
+            "value": 24,
+            "feedback": "24 counts only the larger rectangle. The 3-by-2 piece adds 6 more square units."
+          },
+          {
+            "id": "multiply-areas",
+            "label": "144 square units",
+            "value": 144,
+            "feedback": "The pieces sit beside one another, so their areas add. Multiplying the two areas does not describe this shape."
+          }
+        ],
+        "fallbackFeedback": "Find each visible piece: 6 × 4 = 24 and 3 × 2 = 6. Then add 24 + 6 = 30.",
+        "successFeedback": "30 square units. The cut exposes two rectangles, so an L-shape needs no new formula."
       },
       "predict": {
         "prompt": "An L-shape has no formula of its own. Can its area still be found exactly?",

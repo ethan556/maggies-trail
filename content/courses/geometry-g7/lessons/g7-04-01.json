@@ -15,55 +15,55 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Test three sides.",
+      "body": "Move the two shorter beams and watch whether their tips can meet across the longest beam.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Can the lengths 5, 5, and 9 form a triangle?",
-        "options": [
+        "type": "triangleClosureLab",
+        "prompt": "Try to close a triangle with side lengths 5, 5, and 9. Move the hinged beams before choosing a claim.",
+        "sides": [5, 5, 9],
+        "angleStart": 30,
+        "angleStep": 5,
+        "requiredMoves": 3,
+        "choices": [
           {
             "id": "a",
-            "label": "Yes — 5 + 5 = 10, which beats 9",
-            "correct": true,
-            "feedback": "Right — the two shorter sides (5 + 5 = 10) beat the longest (9), so the triangle closes."
+            "label": "It forms: 5 + 5 is greater than 9",
+            "verdict": "forms",
+            "feedback": "Exactly. The two shorter beams reach past the 9-unit beam's endpoint, so their tips can meet."
           },
           {
             "id": "b",
-            "label": "No — 5 + 9 is too big",
-            "correct": false,
-            "feedback": "You compare the two SHORTER sides to the longest: 5 + 5 = 10 > 9, so yes."
+            "label": "It fails: equal short sides cannot close",
+            "verdict": "does-not-form",
+            "feedback": "Equal side lengths are allowed. Here 5 + 5 = 10 is greater than 9, so the beams close."
           },
           {
             "id": "c",
-            "label": "No — the sides aren't all different",
-            "correct": false,
-            "feedback": "Repeated sides are fine — the test is 5 + 5 > 9, which passes."
-          },
-          {
-            "id": "d",
-            "label": "Only if it's a right triangle",
-            "correct": false,
-            "feedback": "The triangle inequality doesn't care about angles: 5 + 5 > 9, so it forms."
+            "label": "It fails: the longest side must be 5",
+            "verdict": "does-not-form",
+            "feedback": "The longest side may be 9 because the shorter pair totals 10, which reaches beyond it."
           }
-        ]
+        ],
+        "fallbackFeedback": "Move the beams again, then compare the two shorter lengths with the longest length.",
+        "successFeedback": "The tips meet. Since 5 + 5 = 10 is greater than 9, these three lengths form a triangle."
       },
       "predict": {
-        "prompt": "For three lengths to close into a triangle, the two SHORTER ones together must…?",
+        "prompt": "Before moving the beams, what must the two shorter lengths do together?",
         "options": [
           {
             "id": "beat",
-            "label": "Beat the longest one"
+            "label": "Reach farther than the longest"
           },
           {
             "id": "equal",
-            "label": "Equal the longest one"
+            "label": "Reach exactly as far as the longest"
           },
           {
             "id": "any",
-            "label": "Nothing — any three lengths close"
+            "label": "Nothing; any three lengths close"
           }
         ],
         "outcomeId": "beat",
-        "reveal": "The two short sides must reach past the long side's far end, or the shape gapes open. Exactly equal just collapses flat — strictly longer, or no triangle."
+        "reveal": "The two shorter beams must reach past the longest beam's endpoint. If they only reach exactly as far, the shape lies flat instead of closing."
       }
     },
     {

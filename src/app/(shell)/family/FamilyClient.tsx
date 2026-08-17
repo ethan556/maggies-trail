@@ -78,8 +78,11 @@ export default function FamilyClient({
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   <AvatarDisplay
                     avatarId={childProfile.avatarId}
+                    customization={childProfile.avatarCustomization}
                     size={256}
-                    className="h-10 w-10 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
+                    placement="dense-list"
+                    displaySize={36}
+                    className="h-9 w-9 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
                   />
                   {editing === c.id ? (
                     <input

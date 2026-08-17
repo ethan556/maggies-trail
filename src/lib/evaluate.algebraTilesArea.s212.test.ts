@@ -48,17 +48,18 @@ function authored(): Array<{ file: string; where: string; raw: Record<string, un
   return out;
 }
 
-describe("the 27 authored specs are graded by the code they were always graded by", () => {
+describe("classic authored specs are graded by the code they were always graded by", () => {
   it("no verdict moves, over every state a learner can reach", () => {
     const specs = authored();
-    expect(specs.length).toBe(27);
+    expect(specs.length).toBe(28);
     const diffs: string[] = [];
     let checked = 0;
     // S215: one authored lesson opts into area mode and is graded by the NEW block by design. The
     // old-path claim is about the 26 that did not, and it is unchanged for every one of them.
     const classic = specs.filter(({ raw }) => !("area" in raw));
     expect(classic.length).toBe(26);
-    expect(specs.filter(({ raw }) => "area" in raw).map((a) => `${a.file}${a.where}`)).toEqual([
+    expect(specs.filter(({ raw }) => "area" in raw).map((a) => `${a.file.replace(/\\/g, "/")}${a.where}`).sort()).toEqual([
+      "content/courses/linear-equations-systems/lessons/les-01-03.json.steps[1].widget",
       "content/courses/two-step-equations/lessons/tse-01-01.json.steps[1].widget",
     ]);
     for (const { file, where, raw } of classic) {
@@ -171,7 +172,9 @@ describe("mutation check: the partial-product mapping is load-bearing", () => {
 
 describe("the authored strings are true of the states that show them (S215b)", () => {
   const raw = (() => {
-    const hit = authored().find(({ raw }) => "area" in raw);
+    const hit = authored().find(({ file, raw }) =>
+      file.replace(/\\/g, "/").endsWith("content/courses/two-step-equations/lessons/tse-01-01.json") && "area" in raw
+    );
     if (!hit) throw new Error("no authored area spec");
     return hit.raw as Record<string, string>;
   })();

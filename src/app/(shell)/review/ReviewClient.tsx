@@ -11,6 +11,7 @@ import { applyResult } from "@/lib/mastery";
 import { applyFactResult, dueFacts, factDrillFor, factReviewKey, weakestFacts } from "@/lib/factFluency";
 import { drawFreshVariant, rememberDraw } from "@/lib/antiRepeat";
 import type { TWidget } from "@/lib/schema";
+import { CompletionIdentity } from "@/components/CompletionIdentity";
 
 type LoadState =
   | { at: "loading" }
@@ -209,7 +210,10 @@ export default function ReviewClient() {
   if (state.at === "empty")
     return (
       <div className="rounded-card border border-ink/10 bg-surface p-5 shadow-e1 dark:border-paper/12">
-        <h2 className="text-lg font-extrabold">Nothing due today 🎉</h2>
+        <h2 className="flex items-center gap-2 text-lg font-extrabold">
+          <AppIcon name="icon-801" size={20} className="text-tangerine-ink" />
+          Nothing due today
+        </h2>
         <p className="mt-2 text-sm text-ink/70 dark:text-paper/70">
           {state.upcoming > 0
             ? `${state.upcoming} ${state.upcoming === 1 ? "item is" : "items are"} scheduled for later${state.nextDue ? ` — the next lands ${state.nextDue}` : ""}. Checks you miss come back on a 1 / 3 / 7 / 21-day trail until you beat them four times.`
@@ -257,6 +261,10 @@ export default function ReviewClient() {
 
   return (
     <div className="summit-in rounded-card border border-leaf/50 bg-leaf/5 p-5 shadow-e1">
+      <CompletionIdentity
+        avatarId={progressStore.load().avatarId}
+        customization={progressStore.load().avatarCustomization}
+      />
       <h2 className="text-lg font-extrabold">Review walked!</h2>
       {state.badges.map((b) => (
         <p key={b.id} className="status-pop mt-2 rounded-card border border-tangerine/60 bg-tangerine/10 px-3 py-2 text-sm font-extrabold">

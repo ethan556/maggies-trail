@@ -15,53 +15,43 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match number to reading.",
+   "body": "Use the comma to locate the thousands place before reading aloud.",
    "conceptTag": "reading-big-numbers",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each number to how it's read aloud.",
-    "left": [
+    "type": "placeValueTransformLab",
+    "task": "placeExponent",
+    "answerMode": "choice",
+    "prompt": "In 708,042, which place sits immediately to the left of the comma?",
+    "values": [
+     708042
+    ],
+    "targetExponent": 3,
+    "choices": [
      {
-      "id": "n142000",
-      "label": "142,000"
+      "id": "thousands",
+      "label": "Thousands",
+      "claim": "place-exponent:3",
+      "feedback": "The digit just left of the comma is in the thousands place."
      },
      {
-      "id": "n63500",
-      "label": "63,500"
+      "id": "hundreds",
+      "label": "Hundreds",
+      "claim": "misconception:hundreds",
+      "feedback": "Hundreds is inside the final three-digit chunk, to the right of the comma."
      },
      {
-      "id": "n7200",
-      "label": "7,200"
+      "id": "ten-thousands",
+      "label": "Ten-thousands",
+      "claim": "misconception:ten-thousands",
+      "feedback": "Ten-thousands is one place farther left."
      }
     ],
-    "right": [
-     {
-      "id": "w142",
-      "label": "one hundred forty-two thousand"
-     },
-     {
-      "id": "w63500",
-      "label": "sixty-three thousand, five hundred"
-     },
-     {
-      "id": "w7200",
-      "label": "seven thousand, two hundred"
-     }
-    ],
-    "pairs": {
-     "n142000": "w142",
-     "n63500": "w63500",
-     "n7200": "w7200"
-    },
-    "pairErrors": [
-     {
-      "left": "n7200",
-      "right": "w63500",
-      "feedback": "That reading (sixty-three thousand, five hundred) is far bigger than 7,200 — 7,200 reads as 'seven thousand, two hundred.'"
-     }
-    ],
-    "missFeedback": "Read the digits before the comma, say 'thousand,' then read the last three digits.",
-    "successFeedback": "142,000 / 63,500 / 7,200 — each read straight from its digits."
+    "numericErrors": [],
+    "requiredExplorations": 1,
+    "successFeedback": "The comma marks the end of the thousands chunk, so the number is read as seven hundred eight thousand, forty-two.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "Use the aligned place-value model and the highlighted place.",
+    "tolerance": 0
    },
    "predict": {
     "prompt": "Reading a big number aloud — what does the comma tell you to SAY?",

@@ -11,6 +11,7 @@ import { localDateStr, onMiss, xpFor } from "@/lib/engine";
 import { awardNewBadges, type BadgeDef } from "@/lib/achievements";
 import { applyXp, bump, progressStore } from "@/lib/progress";
 import { applyResult } from "@/lib/mastery";
+import { CompletionIdentity } from "@/components/CompletionIdentity";
 
 export interface PracticeItem extends Servable {
   conceptTag: string;
@@ -180,6 +181,10 @@ export default function PracticeClient({
     <div
       className={`rounded-card border-2 p-5 ${perfect ? "border-leaf bg-leaf/5" : "border-ink/10 bg-white dark:border-paper/10 dark:bg-dusk"}`}
     >
+      <CompletionIdentity
+        avatarId={progressStore.load().avatarId}
+        customization={progressStore.load().avatarCustomization}
+      />
       <h2 className="text-lg font-extrabold">
         {mode === "testout"
           ? passed

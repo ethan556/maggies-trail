@@ -32,13 +32,14 @@ function Harness({ tone = "neutral" }: { tone?: StageTone }) {
 afterEach(cleanup);
 
 describe("compoundEventLab visual interaction", () => {
-  it("renders every stage and the complete ordered sample space", () => {
+  it("renders every stage and the complete ordered sample space without announcing derived counts", () => {
     render(<Harness />);
     expect(screen.getByText("Stage 1")).toBeTruthy();
     expect(screen.getByText("Stage 2")).toBeTruthy();
-    expect(screen.getByRole("img", { name: /12 ordered outcomes, 3 favourable/i })).toBeTruthy();
-    expect(screen.getByText("2 × 6 = 12")).toBeTruthy();
-    expect(screen.getByText("1 × 3 / 2 × 6 = 3/12")).toBeTruthy();
+    expect(screen.getByRole("img", { name: /favourable combinations are marked for you to count/i })).toBeTruthy();
+    expect(screen.getByText("2 × 6 = ?")).toBeTruthy();
+    expect(screen.getByText(/count the marked combinations/i)).toBeTruthy();
+    expect(screen.getByTestId("cel-derived-readout").getAttribute("data-revealed")).toBeNull();
   });
 
   it("uses keyboard-native 44px exact claim controls", () => {
@@ -63,5 +64,8 @@ describe("compoundEventLab visual interaction", () => {
     fireEvent.click(wrong);
     expect(wrong.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getByTestId("cel-ghost").textContent).toContain("correct claim: 1/4");
+    expect(screen.getByRole("img", { name: /12 ordered outcomes, 3 favourable/i })).toBeTruthy();
+    expect(screen.getByText("2 × 6 = 12")).toBeTruthy();
+    expect(screen.getByText("1 × 3 / 2 × 6 = 3/12")).toBeTruthy();
   });
 });

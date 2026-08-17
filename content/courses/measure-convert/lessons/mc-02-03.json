@@ -15,51 +15,24 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Area or perimeter?",
+   "body": "Cover a floor with unit squares to model area.",
    "conceptTag": "area-perimeter-word-problems",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each phrase by which formula it calls for.",
-    "buckets": [
-     {
-      "id": "area",
-      "label": "Area",
-      "icon": "🟩"
-     },
-     {
-      "id": "perimeter",
-      "label": "Perimeter",
-      "icon": "🔲"
-     }
-    ],
-    "items": [
-     {
-      "id": "s1",
-      "label": "Tiling a kitchen floor",
-      "bucketId": "area",
-      "feedback": "Tiling covers the surface — area."
-     },
-     {
-      "id": "s2",
-      "label": "Fencing a garden",
-      "bucketId": "perimeter",
-      "feedback": "Fencing traces the boundary — perimeter."
-     },
-     {
-      "id": "s3",
-      "label": "Painting a wall",
-      "bucketId": "area",
-      "feedback": "Painting covers the surface — area."
-     },
-     {
-      "id": "s4",
-      "label": "Framing a picture",
-      "bucketId": "perimeter",
-      "feedback": "Framing goes around the edge — perimeter."
-     }
-    ],
-    "missFeedback": "Ask: does this cover a surface, or trace an edge?",
-    "successFeedback": "Tiling and painting cover surfaces (area); fencing and framing trace edges (perimeter)."
+    "type": "areaModel",
+    "prompt": "A small floor is 6 units by 4 units. Build the rectangle to show how many unit squares cover it.",
+    "targetArea": 24,
+    "wMax": 8,
+    "hMax": 8,
+    "wStart": 2,
+    "hStart": 4,
+    "requireFactors": {
+     "w": 6,
+     "h": 4
+    },
+    "factorFeedback": "Use the stated 6-by-4 floor. Another factor pair would cover 24 squares but would not match this floor.",
+    "successFeedback": "The 6-by-4 floor is covered by 24 unit squares. Covering a surface asks for area.",
+    "lowFeedback": "The model does not cover all 24 unit squares yet.",
+    "highFeedback": "The model covers more than the 6-by-4 floor."
    },
    "predict": {
     "prompt": "Perimeter questions are about going AROUND something. Area questions are about…?",

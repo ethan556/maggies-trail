@@ -40,7 +40,7 @@ import { globSync } from "node:fs";
 import { WidgetSpec } from "./schema";
 
 /** Measured at seal 6cfba1f, 2026-08-16. Lower it when inert prose is removed or wired up; never raise it. */
-const DROPPED_KEY_BASELINE = 152;
+const DROPPED_KEY_BASELINE = 148;
 
 interface Lesson { steps?: Array<{ id?: string; widget?: Record<string, unknown> }> }
 

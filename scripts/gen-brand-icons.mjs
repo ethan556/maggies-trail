@@ -78,6 +78,7 @@ function readSource() {
   if (![vbX, vbY, vbW, vbH].every(Number.isFinite)) throw new Error(`${SOURCE}: unparseable viewBox "${viewBox}"`);
 
   const inner = svg.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>[\s\S]*$/, "").trim();
+  const defs = /<defs\b[\s\S]*?<\/defs>/.exec(inner)?.[0] ?? "";
   const paths = [...inner.matchAll(/<path\b[^>]*\/>/g)].map((m) => m[0]);
   if (paths.length === 0) throw new Error(`${SOURCE}: no <path> elements found`);
 
@@ -89,11 +90,11 @@ function readSource() {
   // Guard the "drop the rect, keep the paths" assumption: if the mark ever grows an element type
   // this script does not understand, stop instead of emitting a silently incomplete derivative.
   const tags = new Set([...inner.matchAll(/<([a-zA-Z][\w:-]*)/g)].map((m) => m[1]));
-  const known = new Set(["rect", "path", "title", "desc"]);
+  const known = new Set(["rect", "path", "title", "desc", "defs", "linearGradient", "radialGradient", "stop"]);
   for (const tag of tags) if (!known.has(tag)) throw new Error(`${SOURCE}: unsupported element <${tag}> — update this script deliberately`);
 
   const fills = [...svg.matchAll(/fill="(#[0-9A-Fa-f]{6})"/g)].map((m) => m[1].toUpperCase());
-  return { svg, inner, paths, rect, background, viewBox: { x: vbX, y: vbY, w: vbW, h: vbH }, fills: [...new Set(fills)] };
+  return { svg, inner, defs, paths, rect, background, viewBox: { x: vbX, y: vbY, w: vbW, h: vbH }, fills: [...new Set(fills)] };
 }
 
 const sizedSvgOpen = (size, viewBox) =>
@@ -110,7 +111,7 @@ const flattenSvg = (src, size) =>
   `${src.inner}</svg>`;
 
 /** Content-only (rounded rect dropped) — used to measure the mark's true ink bounds. */
-const contentSvg = (src, size) => `${sizedSvgOpen(size, src.viewBox)}${src.paths.join("")}</svg>`;
+const contentSvg = (src, size) => `${sizedSvgOpen(size, src.viewBox)}${src.defs}${src.paths.join("")}</svg>`;
 
 /**
  * Maskable: the mark's own paths, scaled so their bounding circle fits Android's inner-80% safe
@@ -127,7 +128,7 @@ function maskableSvg(src, size, bbox) {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">` +
     `<rect width="${size}" height="${size}" fill="${src.background}"/>` +
-    `<g transform="translate(${tx.toFixed(4)} ${ty.toFixed(4)}) scale(${scale.toFixed(6)})">${src.paths.join("")}</g>` +
+    `${src.defs}<g transform="translate(${tx.toFixed(4)} ${ty.toFixed(4)}) scale(${scale.toFixed(6)})">${src.paths.join("")}</g>` +
     `</svg>`;
   return { svg, scale, contentRadiusPx: contentRadius * scale, safeRadiusPx };
 }

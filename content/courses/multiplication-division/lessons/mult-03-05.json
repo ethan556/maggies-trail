@@ -15,28 +15,56 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Watch a hard fact fall apart into two easy ones.",
+      "body": "Cut one array into two easier rectangles.",
    "conceptTag": "distributive",
    "widget": {
-    "type": "steppedReveal",
-    "prompt": "Split 8 × 7 into pieces you already own.",
-    "panels": [
-     {
-      "title": "Cut the 7",
-      "body": "Split 7 into 5 + 2 — a fives piece and a doubles piece, both friendly."
-     },
-     {
-      "title": "Two small arrays",
-      "body": "8 × 5 = 40 (a fives fact) and 8 × 2 = 16 (a double). The 8 stays in BOTH pieces."
-     },
-     {
-      "title": "Rejoin",
-      "body": "40 + 16 = 56, so 8 × 7 = 56. The array was only cut in two — no squares were lost, so the pieces must add back to the whole."
-     }
-    ],
-    "continueFeedback": "Keep going — the pieces come back together in the last panel.",
-    "successFeedback": "Cut, solve twice, rejoin: 8 × 7 = 40 + 16 = 56."
-   },
+        "type": "compositeAreaLab",
+        "prompt": "Split the 8-by-7 array into an 8-by-5 rectangle and an 8-by-2 rectangle. Use the shown pieces to choose the whole product.",
+        "scene": "piece-ledger",
+        "pieces": [
+          {
+            "id": "fives",
+            "label": "8 by 5 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 8,
+            "height": 5
+          },
+          {
+            "id": "doubles",
+            "label": "8 by 2 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 8,
+            "height": 2
+          }
+        ],
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "whole",
+            "label": "56 squares",
+            "value": 56,
+            "feedback": "Yes. The two pieces cover 40 + 16 = 56 squares."
+          },
+          {
+            "id": "first",
+            "label": "40 squares",
+            "value": 40,
+            "feedback": "That counts only the 8-by-5 piece. Add the 8-by-2 piece too."
+          },
+          {
+            "id": "factors",
+            "label": "15 squares",
+            "value": 15,
+            "feedback": "Adding the factors does not count the squares. Find each rectangle's area, then add."
+          }
+        ],
+        "fallbackFeedback": "The pieces contain 8 × 5 = 40 and 8 × 2 = 16 squares. Add them.",
+        "successFeedback": "The pieces rebuild all 56 squares. Splitting 8 × 7 into 8 × 5 + 8 × 2 changes the work, not the answer."
+      },
    "predict": {
     "prompt": "8 × 7 split into 8 × 5 + 8 × 2 — does splitting change the answer?",
     "options": [

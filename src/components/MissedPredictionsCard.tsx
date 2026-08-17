@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { progressStore } from "@/lib/progress";
 import { predictionReviews, type PredictionReview } from "@/lib/predictionReview";
 import { localDateStr } from "@/lib/engine";
+import { AppIcon } from "@/components/ui";
 
 /**
  * "What surprised you" — the back half of the prediction loop. Lists lessons
@@ -46,8 +47,9 @@ export default function MissedPredictionsCard() {
       aria-labelledby="missed-predictions-heading"
       className="rounded-card border-2 border-tangerine/40 bg-tangerine/5 p-5 dark:border-tangerine/30 dark:bg-dusk"
     >
-      <h2 id="missed-predictions-heading" className="text-lg font-extrabold">
-        🔮 What surprised you
+      <h2 id="missed-predictions-heading" className="flex items-center gap-2 text-lg font-extrabold">
+        <AppIcon name="icon-801" size={20} className="text-tangerine-ink" />
+        What surprised you
       </h2>
       <p className="mt-1 text-sm text-ink/70 dark:text-paper/70">
         These lessons had a prediction the math disagreed with. A next-day revisit checks whether the

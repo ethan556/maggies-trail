@@ -15,45 +15,28 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "A plan has an order — build it before you compute.",
+      "body": "Collapse the story expression in the order the events happen.",
    "conceptTag": "two-step",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "Ella buys 3 packs of 4 pencils, then gives 5 pencils away. Put the solution plan in order.",
-    "items": [
-     {
-      "id": "p3",
-      "label": "Give away: 12 − 5 = 7"
-     },
-     {
-      "id": "p1",
-      "label": "Read the story: 3 packs of 4, then 5 leave"
-     },
-     {
-      "id": "p4",
-      "label": "Answer: Ella keeps 7 pencils"
-     },
-     {
-      "id": "p2",
-      "label": "Count all pencils: 3 × 4 = 12"
-     }
-    ],
-    "correctOrder": [
-     "p1",
-     "p2",
-     "p3",
-     "p4"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "p3",
-      "second": "p2",
-      "feedback": "The give-away landed before the counting — but you can't give pencils from a pile you haven't counted. Find the total first."
-     }
-    ],
-    "missFeedback": "Every plan runs: read → find the first pile (multiply the packs) → change it (give some away) → answer.",
-    "successFeedback": "Read, build the pile, change the pile, answer. Step one always feeds step two."
-   },
+        "type": "evalOrder",
+        "prompt": "Ella has 3 packs of 4 pencils and gives away 5. Tap the operation that must happen first in 3 × 4 − 5.",
+        "tokens": [
+          "3",
+          "×",
+          "4",
+          "−",
+          "5"
+        ],
+        "target": 7,
+        "commonResults": [
+          {
+            "value": -3,
+            "feedback": "That subtracts 5 from one pack before counting all 3 packs. Build the 12-pencil pile first."
+          }
+        ],
+        "fallbackFeedback": "First find 3 × 4 = 12. Then take away 5.",
+        "successFeedback": "The expression becomes 12 − 5, then 7. Multiplication builds the pile before subtraction changes it."
+      },
    "predict": {
     "prompt": "Ella buys 3 packs of 4 pencils, then gives 5 away. Which operation comes FIRST?",
     "options": [

@@ -15,30 +15,21 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Test a candidate.",
+      "body": "Move x until both sides balance.",
    "conceptTag": "equation-meaning",
-   "widget": {
-    "type": "mcq",
-    "prompt": "Is x = 4 a solution of x + 3 = 7?",
-    "options": [
-     {
-      "id": "a",
-      "label": "Yes — 4 + 3 = 7 is true",
-      "correct": true,
-      "feedback": "Right — substituting 4 gives 4 + 3 = 7, which matches. 4 is the solution."
-     },
-     {
-      "id": "b",
-      "label": "No — 4 + 3 doesn't equal 7",
-      "feedback": "Check the arithmetic: 4 + 3 = 7. That's exactly what the equation claims, so yes, it works."
-     },
-     {
-      "id": "c",
-      "label": "Can't tell without more information",
-      "feedback": "You can always tell — just substitute and check. 4 + 3 = 7 is true, so x = 4 IS a solution."
-     }
-    ]
-   },
+      "widget": {
+        "type": "balanceScale",
+        "prompt": "The left pan represents x + 3 and the right pan represents 7. Move x until the scale balances.",
+        "a": 1,
+        "b": 3,
+        "c": 7,
+        "xMin": 0,
+        "xMax": 10,
+        "xStart": 1,
+        "successFeedback": "At x = 4, the left side is 4 + 3 = 7, exactly matching the right side. That is why 4 is the solution.",
+        "lowFeedback": "The left pan is too light. Increase x until x + 3 matches 7.",
+        "highFeedback": "The left pan is too heavy. Decrease x until x + 3 matches 7."
+      },
    "hints": [
     "Substitute 4 for x.",
     "4 + 3 = ?",

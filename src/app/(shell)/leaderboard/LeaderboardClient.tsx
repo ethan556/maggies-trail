@@ -98,7 +98,10 @@ export default function LeaderboardClient() {
                 {r.isUser ? (
                   <AvatarDisplay
                     avatarId={profile.avatarId}
+                    customization={profile.avatarCustomization}
                     size={256}
+                    placement="dense-list"
+                    displaySize={28}
                     className="h-7 w-7 shrink-0 rounded-full ring-2 ring-sky/40"
                   />
                 ) : (

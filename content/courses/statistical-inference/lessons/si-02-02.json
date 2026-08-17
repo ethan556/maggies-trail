@@ -100,45 +100,27 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "What changed, and what did not?",
+      "body": "Test the sample-size claim with a new population.",
       "conceptTag": "si-sampling-dist",
       "explanationVariants": [
         "The centre stayed on 60% at every sample size. Only the width changed — bigger samples make a tighter pile.",
         "Sample size buys precision, never accuracy. The pile was already aimed at the truth."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Going from n = 10 to n = 160, what happened to the pile?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "It stayed centred on 60% and got much narrower.",
-            "correct": true,
-            "feedback": "Right — and that is the whole payoff of a bigger sample. It does not aim better; it shakes less."
-          },
-          {
-            "id": "o2",
-            "label": "It moved closer to 60%.",
-            "correct": false,
-            "feedback": "It was already centred on 60% at n = 10 — the dots just sprayed further from it. The centre had nowhere to move to."
-          },
-          {
-            "id": "o3",
-            "label": "It got narrower and also more biased.",
-            "correct": false,
-            "feedback": "Nothing about the method changed, so no bias was introduced. Only the spread moved."
-          },
-          {
-            "id": "o4",
-            "label": "It got narrower, so individual polls are now guaranteed to be right.",
-            "correct": false,
-            "feedback": "Narrower means most polls land close, not that any of them is exact. Even at n = 160 you saw dots several points from 60%."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "a2-statistics",
-        "form": "si-sampling-dist__mcq"
+        "type": "sampleSim",
+        "prompt": "Simulate polls when the true support is 45%. Choose the sample size whose estimates form the tightest pile, then run 16 polls.",
+        "populationP": 0.45,
+        "sizes": [
+          20,
+          80,
+          320
+        ],
+        "targetSize": 320,
+        "requiredDraws": 16,
+        "seed": 83,
+        "successFeedback": "n = 320 produces the tightest sampling distribution. The centre stays near 45%; increasing n reduces the spread.",
+        "wrongSizeFeedback": "The pile is wider at this sample size. Increase n and compare the same population again.",
+        "moreDrawsFeedback": "Run all 16 polls so the pile's width is visible."
       }
     },
     {

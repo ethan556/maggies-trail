@@ -15,68 +15,42 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Sort each story by its ending.",
+   "body": "Let the story decide what the remainder means.",
    "conceptTag": "interpret-remainders",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each story by how its remainder should be handled.",
-    "buckets": [
+    "type": "quotientReasoningLab",
+    "task": "remainderContext",
+    "answerMode": "numeric",
+    "prompt": "Twenty-seven students ride in cars that hold 4 each. How many cars are needed so everyone rides?",
+    "dividend": {
+     "num": 27,
+     "den": 1
+    },
+    "divisor": {
+     "num": 4,
+     "den": 1
+    },
+    "contextPolicy": "roundUp",
+    "candidates": [],
+    "requiredExplorations": 4,
+    "answerUnit": "cars",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "up",
-      "label": "Round UP",
-      "icon": "⬆️"
+      "value": 6,
+      "feedback": "Six cars carry only 24 students. The 3 students left over still need a car."
      },
      {
-      "id": "down",
-      "label": "Round DOWN",
-      "icon": "⬇️"
-     },
-     {
-      "id": "frac",
-      "label": "Split as a fraction",
-      "icon": "🍕"
+      "value": 3,
+      "feedback": "Three is the remainder, not the number of cars. Add one car for those students."
      }
     ],
-    "items": [
-     {
-      "id": "s1",
-      "label": "51 kids, 8 per van — how many vans are needed?",
-      "bucketId": "up",
-      "feedback": "51 ÷ 8 = 6 remainder 3 — the 3 leftover kids still need a whole extra van: 7 vans."
-     },
-     {
-      "id": "s2",
-      "label": "43 books, 6 per box — how many boxes are needed?",
-      "bucketId": "up",
-      "feedback": "43 ÷ 6 = 7 remainder 1 — that one leftover book still needs a box: 8 boxes."
-     },
-     {
-      "id": "s3",
-      "label": "38 kids, teams of 5 — how many FULL teams can be made?",
-      "bucketId": "down",
-      "feedback": "38 ÷ 5 = 7 remainder 3 — the 3 leftover kids can't form a full team, so just 7 teams."
-     },
-     {
-      "id": "s4",
-      "label": "50 eggs, dozens of 12 — how many FULL dozens?",
-      "bucketId": "down",
-      "feedback": "50 ÷ 12 = 4 remainder 2 — the 2 leftover eggs don't make a dozen, so just 4 dozens."
-     },
-     {
-      "id": "s5",
-      "label": "9 sandwiches shared equally among 4 friends",
-      "bucketId": "frac",
-      "feedback": "9 ÷ 4 = 2 remainder 1 — sandwiches can be cut, so each friend gets 2 whole plus 1/4 more."
-     },
-     {
-      "id": "s6",
-      "label": "7 chocolate bars shared equally between 2 friends",
-      "bucketId": "frac",
-      "feedback": "7 ÷ 2 = 3 remainder 1 — bars can be cut, so each friend gets 3 whole plus 1/2 more."
-     }
-    ],
-    "missFeedback": "Ask: does the leftover need a whole extra container (up), get dropped as too few for a group (down), or get physically cut (fraction)?",
-    "successFeedback": "Needing enough containers rounds up; counting only complete groups rounds down; cuttable shares become fractions."
+    "fractionErrors": [],
+    "authoredStages": [],
+    "successFeedback": "Six full cars leave 3 students, so a seventh car is needed.",
+    "explorationFeedback": "Open each quotient state so the groups, product, and remainder stay connected.",
+    "fallbackFeedback": "27 ÷ 4 is 6 remainder 3. Because every student must ride, round the car count up to 7."
    },
    "predict": {
     "prompt": "27 kids, and each car holds 4. Does the remainder mean you SKIP a car or ADD one?",

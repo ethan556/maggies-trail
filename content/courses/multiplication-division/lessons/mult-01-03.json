@@ -15,44 +15,29 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Counting by 2s climbs by the **same hop** every time.",
+      "body": "Make equal hops and watch the skip-counting pattern grow.",
       "conceptTag": "skip-counting",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "These numbers come from counting by 2s, but they got scrambled. Put them in counting order, smallest first.",
-        "items": [
+        "type": "numberLineHop",
+        "prompt": "Start at 0 and make four hops of 2. Follow the landings: 2, 4, 6, 8.",
+        "min": 0,
+        "max": 10,
+        "start": 0,
+        "hop": 2,
+        "hops": 4,
+        "direction": "forward",
+        "commonLandings": [
           {
-            "id": "n6",
-            "label": "6"
+            "value": 6,
+            "feedback": "That is the third landing. Make all four equal hops to reach 8."
           },
           {
-            "id": "n2",
-            "label": "2"
-          },
-          {
-            "id": "n8",
-            "label": "8"
-          },
-          {
-            "id": "n4",
-            "label": "4"
+            "value": 4,
+            "feedback": "That is only two hops. Keep adding 2 for two more hops."
           }
         ],
-        "correctOrder": [
-          "n2",
-          "n4",
-          "n6",
-          "n8"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "n8",
-            "second": "n6",
-            "feedback": "8 landed before 6 — but counting by 2s only climbs. Each next number must be exactly 2 more."
-          }
-        ],
-        "missFeedback": "Start at 2 and add 2 each hop: 2, then 4, then 6, then 8.",
-        "successFeedback": "2 → 4 → 6 → 8. Same-size hops, every time."
+        "missFeedback": "Each hop adds 2. Count four landings: 2, 4, 6, 8.",
+        "successFeedback": "The equal hops land at 2, 4, 6, and 8. Skip counting by 2 means add 2 each time."
       },
       "predict": {
         "prompt": "Counting by 2s — each next number is…",

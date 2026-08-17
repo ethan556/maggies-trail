@@ -100,32 +100,21 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "An anchor between the walls.",
+      "body": "Make tan 45° visible as a ratio of equal coordinates.",
       "conceptTag": "tg-tan-shape",
       "explanationVariants": [
         "tan(π/4) = sin(π/4)/cos(π/4) = 1 — the two exact values are equal, so their ratio is 1.",
         "At π/4 the unit-circle point has equal coordinates (√2/2, √2/2): tangent, their ratio, is 1."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "What is tan(π/4)?",
-        "answer": 1,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 0.71,
-            "feedback": "0.71 ≈ √2/2 is sin(π/4) alone. Tangent DIVIDES: (√2/2)/(√2/2) = 1."
-          },
-          {
-            "value": 0.5,
-            "feedback": "0.5 is sin(π/6). At π/4, sine and cosine are equal, so the ratio is exactly 1."
-          }
-        ],
-        "fallbackFeedback": "tan(π/4) = (√2/2)/(√2/2) = 1."
-      },
-      "variant": {
-        "gen": "g12-trig-graphs-inverses",
-        "form": "trig-graphs-inverses__tg-tan-shape__numeric"
+        "type": "unitCircleExplore",
+        "targetAngle": 45,
+        "angleStart": 0,
+        "angleStep": 15,
+        "prompt": "Rotate to 45° and watch when the sine and cosine coordinates become equal.",
+        "successFeedback": "At 45°, sine and cosine are equal, so tan θ = sin θ / cos θ = 1.",
+        "lowFeedback": "Keep rotating until the horizontal and vertical coordinates match.",
+        "highFeedback": "You have passed the equal-coordinate point. Rotate back toward 45°."
       }
     },
     {

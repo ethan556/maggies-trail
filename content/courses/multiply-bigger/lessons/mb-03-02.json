@@ -15,68 +15,55 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Build the split.",
+   "body": "Split one large rectangle into tens and ones without losing a group.",
    "conceptTag": "area-model-1digit",
    "widget": {
-    "type": "buildExpression",
-    "prompt": "Break 6 × 34 into two easier products. Build: 6 × 30 + 6 × 4.",
-    "tokens": [
+    "type": "compositeAreaLab",
+    "prompt": "Split 6 × 34 into a 6-by-30 rectangle and a 6-by-4 rectangle. Choose the total area.",
+    "scene": "piece-ledger",
+    "pieces": [
      {
-      "id": "t6a",
-      "label": "6"
+      "id": "tens",
+      "label": "6 by 30 piece",
+      "shape": "rectangle",
+      "operation": "add",
+      "width": 6,
+      "height": 30
      },
      {
-      "id": "t30",
-      "label": "× 30"
-     },
-     {
-      "id": "tp",
-      "label": "+"
-     },
-     {
-      "id": "t6b",
-      "label": "6"
-     },
-     {
-      "id": "t4",
-      "label": "× 4"
-     },
-     {
-      "id": "t34",
-      "label": "× 34"
+      "id": "ones",
+      "label": "6 by 4 piece",
+      "shape": "rectangle",
+      "operation": "add",
+      "width": 6,
+      "height": 4
      }
     ],
-    "correct": [
-     "t6a",
-     "t30",
-     "tp",
-     "t6b",
-     "t4"
-    ],
-    "acceptAlso": [
-     [
-      "t6b",
-      "t4",
-      "tp",
-      "t6a",
-      "t30"
-     ]
-    ],
-    "commonBuilds": [
+    "target": {
+     "kind": "total"
+    },
+    "choices": [
      {
-      "sequence": [
-       "t6a",
-       "t30",
-       "tp",
-       "t6b",
-       "t34"
-      ],
-      "feedback": "The second piece should be 6 × 4, not 6 × 34 — you already pulled the 30 out, so only the 4 ones are left."
+      "id": "whole",
+      "label": "204 squares",
+      "value": 204,
+      "feedback": "Both pieces together cover 180 + 24 = 204 squares."
+     },
+     {
+      "id": "tens-only",
+      "label": "180 squares",
+      "value": 180,
+      "feedback": "That counts only 6 × 30. Add the 6 × 4 piece too."
+     },
+     {
+      "id": "one-six",
+      "label": "198 squares",
+      "value": 198,
+      "feedback": "That keeps the 6 on only one piece. Both 30 and 4 need six rows."
      }
     ],
-    "reusable": false,
-    "missFeedback": "Split 34 into 30 and 4, and multiply 6 by each part: 6 × 30 + 6 × 4.",
-    "successFeedback": "6 × 30 + 6 × 4 — two rectangles from one. Now 180 + 24 = 204."
+    "fallbackFeedback": "Find both areas, 6 × 30 and 6 × 4, then add them.",
+    "successFeedback": "The pieces rebuild 6 × 34: 180 + 24 = 204. Both pieces keep the factor 6."
    },
    "predict": {
     "prompt": "Breaking 6 × 34 into 6 × 30 + 6 × 4: why must BOTH pieces keep the 6?",

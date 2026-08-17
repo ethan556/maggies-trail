@@ -155,9 +155,9 @@ describe("a classic spec is untouched", () => {
         }
       }
     }
-    expect(found.length).toBe(6);
+    expect(found.length).toBe(7);
     expect([...new Set(optedIn)]).toEqual(OPTED_IN);
-    expect(found.length - optedIn.length).toBe(5);
+    expect(found.length - optedIn.length).toBe(6);
   });
 });
 

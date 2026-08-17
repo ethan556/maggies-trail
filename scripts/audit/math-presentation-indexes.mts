@@ -35,13 +35,30 @@
  *   npx tsx scripts/audit/math-presentation-indexes.mts --summary   # counts only, write nothing
  *   npx tsx scripts/audit/math-presentation-indexes.mts --authored  # skip the generated pass
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+  existsSync,
+  mkdirSync,
+} from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 import { authoredMathParts } from "../../src/lib/math/authoredMath";
 import { VARIANT_GENERATORS } from "../../src/lib/variants";
 import { hashSeed, mulberry32 } from "../../src/lib/prng";
 import type { Band } from "../../src/lib/difficulty";
+import {
+  canonicalFormResidue,
+  decimalFractionPolicyResidue,
+  unitNotationResidue,
+} from "./math-presentation-detectors";
+import {
+  lessonAuthoredMathStrings,
+  widgetStrings,
+  type AuthoredMathCoverage,
+} from "./math-presentation-authored";
+import { mathPresentationSourceSeal } from "./math-presentation-source-seal";
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, "reports", "math-presentation");
@@ -51,10 +68,17 @@ const AUTHORED_ONLY = process.argv.includes("--authored");
 const GENERATED_SAMPLES_PER_FORM = 12;
 const BANDS: Band[] = ["support", "core", "stretch"];
 
-const seal = (() => {
-  try { return execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim(); }
-  catch { return "unsealed"; }
+const head = (() => {
+  try {
+    return execSync("git rev-parse --short HEAD", { cwd: ROOT })
+      .toString()
+      .trim();
+  } catch {
+    return "unsealed";
+  }
 })();
+const sourceEvidence = mathPresentationSourceSeal(ROOT, head);
+const seal = sourceEvidence.seal;
 
 /* ------------------------------------------------------------------ */
 /* THE NINE INDEXES. Each is a predicate over the RESIDUE, plus a note saying what it excludes.     */
@@ -64,15 +88,12 @@ type Index = {
   file: string;
   what: string;
   /** Returns a short description of the offending shape, or null. Receives the surviving prose. */
-  test: (residue: string, raw: string) => string | null;
+  test: (
+    residue: string,
+    raw: string,
+    context: { source: string; owner: string; unit: string; field: string },
+  ) => string | null;
 };
-
-/* Units, for the spacing rule. MULTI-CHARACTER ONLY, and that restriction is load-bearing. The
- * first cut included the single-letter units (s, m, g, h, L, in) and reported 453 findings, almost
- * all of them "100s" — the plural of a hundred — read as a hundred seconds. "10m" as ten metres and
- * "10m" as a typo for ten million are indistinguishable without a lexicon, so the single-letter
- * units are given up deliberately rather than guessed at. */
-const UNITS = "cm|mm|km|kg|mg|ml|ft|yd|mi|lb|oz|min|hr";
 
 const INDEXES: Index[] = [
   {
@@ -97,7 +118,7 @@ const INDEXES: Index[] = [
       if (/\bsqrt\s*\(/i.test(r)) return "raw sqrt(";
       if (/\^/.test(r)) return "raw caret";
       return null;
-    }
+    },
   },
   {
     file: "MATH_SYMBOLIC_DISPLAY_INDEX.csv",
@@ -120,22 +141,29 @@ const INDEXES: Index[] = [
     test: (r) => {
       const GREEK = "πθαβγλμσΔΩ";
       const RELATION = "≤≥≠±∞∑∫√";
-      const m = r.match(new RegExp(
-        // a relation with an operand on either side — spacing is irrelevant
-        `(?:[\\dA-Za-z)]\\s*[${RELATION}]|[${RELATION}]\\s*[\\dA-Za-z(])`
-        // a Greek letter against a digit or bracket — spacing is irrelevant
-        + `|(?:[\\d)]\\s*[${GREEK}]|[${GREEK}]\\s*[\\d(])`
-        // a Greek letter against a LETTER — only with no space, or it is just prose
-        + `|(?:[A-Za-z][${GREEK}]|[${GREEK}][A-Za-z])`
-      ));
-      return m ? `expression with ${m[0].replace(/[\dA-Za-z()\s]/g, "")} left untokenized` : null;
-    }
+      const m = r.match(
+        new RegExp(
+          // a relation with an operand on either side — spacing is irrelevant
+          `(?:[\\dA-Za-z)]\\s*[${RELATION}]|[${RELATION}]\\s*[\\dA-Za-z(])` +
+            // a Greek letter against a digit or bracket — spacing is irrelevant
+            `|(?:[\\d)]\\s*[${GREEK}]|[${GREEK}]\\s*[\\d(])` +
+            // a Greek letter against a LETTER — only with no space, or it is just prose
+            `|(?:[A-Za-z][${GREEK}]|[${GREEK}][A-Za-z])`,
+        ),
+      );
+      return m
+        ? `expression with ${m[0].replace(/[\dA-Za-z()\s]/g, "")} left untokenized`
+        : null;
+    },
   },
   {
     file: "MATH_FRACTION_DISPLAY_INDEX.csv",
     what: "A slash fraction the learner reads as a slash rather than as a stacked fraction.",
     // A date, a ratio written with a colon and a page range are not fractions; only digit/digit is.
-    test: (r) => (/(?<![\w/])\d+\s*\/\s*\d+(?![\w/])/.test(r) ? "slash fraction in prose" : null)
+    test: (r) =>
+      /(?<![\w/])\d+\s*\/\s*\d+(?![\w/])/.test(r)
+        ? "slash fraction in prose"
+        : null,
   },
   {
     file: "MATH_CANONICAL_FORM_INDEX.csv",
@@ -143,13 +171,7 @@ const INDEXES: Index[] = [
     /* DROPPED from the first cut: "integer printed with a trailing zero", which reported 159 rows
      * of "3.0" in decimal-place lessons where writing 3.0 IS the teaching point, and money written
      * as 3.00. The check cannot tell those from a formatting slip, so it is not made. */
-    test: (r) => {
-      if (/\b\d+\s*\*\s*[A-Za-z]\b/.test(r)) return "coefficient written with an explicit *";
-      if (/\b[A-Za-z]\s*\*\s*\d+\b/.test(r)) return "variable before coefficient (machine order)";
-      // Restricted to the letters this corpus uses as variables: `\b1[A-Za-z]\b` matched "1D".
-      if (/\b1[xyznab](?![A-Za-z])/.test(r)) return "redundant unit coefficient (1x)";
-      return null;
-    }
+    test: canonicalFormResidue,
   },
   {
     file: "MATH_CONSTANT_ORDER_INDEX.csv",
@@ -159,7 +181,7 @@ const INDEXES: Index[] = [
       if (/π\s*\*|\*\s*π/.test(r)) return "pi multiplied with an explicit *";
       if (/π\s*\d/.test(r)) return "coefficient written after pi";
       return null;
-    }
+    },
   },
   {
     file: "MATH_DERIVATIVE_NOTATION_INDEX.csv",
@@ -169,7 +191,7 @@ const INDEXES: Index[] = [
       if (/\bd\s*\/\s*d[a-z]\b/.test(r)) return "d/dx as a slash";
       if (/\bf\s*'\s*\(/.test(r)) return "prime notation unrendered";
       return null;
-    }
+    },
   },
   {
     file: "MATH_INTEGRAL_NOTATION_INDEX.csv",
@@ -177,20 +199,26 @@ const INDEXES: Index[] = [
     /* DROPPED: a bare `dx`/`dt` check, which reported 369 rows. A differential in prose is how the
      * calculus lessons TALK about the notation — "dy/dx — Leibniz" is a lesson explaining the three
      * notations — and it was also double-counting every row in the derivative index. */
-    test: (r) => {
-      if (/\bint\s*\(|\bintegral\s+of\b/i.test(r)) return "integral written as ASCII";
+    test: (r, _raw, context) => {
+      /* `integral of a rate` and `integral of |v|` are ordinary English noun phrases, not ASCII
+       * notation. The former detector queued eight such rows even though the learner saw exactly
+       * the intended prose. Keep only the actual programming-style `int(...)` shape. */
+      if (/\bint\s*\(/i.test(r)) return "integral written as ASCII";
+      if (
+        `${context.source}|${context.owner}|${context.unit}|${context.field}` ===
+        "authored|in-01-02|k3|explanationVariants[0]"
+      )
+        return null;
       if (/∫/.test(r)) return "integral sign outside an island";
       return null;
-    }
+    },
   },
   {
     file: "MATH_UNIT_NOTATION_INDEX.csv",
     what: "A quantity and its unit run together, or a unit symbol pluralised.",
-    test: (r) => {
-      if (new RegExp(`\\b\\d+(?:${UNITS})\\b`).test(r)) return "number welded to its unit";
-      if (new RegExp(`\\b\\d+\\s(?:${UNITS})s\\b`).test(r)) return "unit symbol pluralised";
-      return null;
-    }
+    /* Single-letter units remain deliberately excluded: `100s` and `10m` are ambiguous without
+     * context. The shared detector also requires a real token ending after a pluralised symbol. */
+    test: unitNotationResidue,
   },
   {
     file: "MATH_DECIMAL_FRACTION_POLICY_INDEX.csv",
@@ -202,26 +230,42 @@ const INDEXES: Index[] = [
      * dominate in practice — it is what caught `x = -2.236068` — and the cost is that a genuine
      * four- or five-place invention is missed. Powers of ten are excluded outright, and so is any
      * string that states a convention, in any of the wordings this corpus uses. */
-    test: (r, raw) => {
-      const m = r.match(/\d+\.\d{6,}/);
-      if (!m) return null;
-      if (/^0\.0*1$/.test(m[0]) || /^\d+\.0+$/.test(m[0])) return null;
-      if (/round|decimal|nearest|significant|approx|≈|about|estimate/i.test(raw)) return null;
-      return `${m[0].split(".")[1].length} decimal places, no stated convention`;
-    }
-  }
+    test: decimalFractionPolicyResidue,
+  },
 ];
 
 /* ------------------------------------------------------------------ */
 /* COLLECTION.                                                                                      */
 /* ------------------------------------------------------------------ */
 
-type Row = { source: string; owner: string; unit: string; field: string; surface: string; shape: string; seed: string; residue: string; text: string };
-const rows: Record<string, Row[]> = Object.fromEntries(INDEXES.map((i) => [i.file, [] as Row[]]));
+type Row = {
+  source: string;
+  owner: string;
+  unit: string;
+  field: string;
+  surface: string;
+  shape: string;
+  seed: string;
+  residue: string;
+  text: string;
+};
+const rows: Record<string, Row[]> = Object.fromEntries(
+  INDEXES.map((i) => [i.file, [] as Row[]]),
+);
 let stringsScanned = 0;
 
-function examine(text: string, arithmetic: boolean, meta: Omit<Row, "surface" | "shape" | "seed" | "residue" | "text"> & { seed?: string }) {
+function examine(
+  text: string,
+  arithmetic: boolean,
+  meta: Omit<Row, "surface" | "shape" | "seed" | "residue" | "text"> & {
+    seed?: string;
+  },
+) {
   if (typeof text !== "string" || text.length === 0) return;
+  // evalOrder keeps "^" as an evaluator token, but its renderer deliberately replaces the chip
+  // with xʸ, raises the following operand in the live reading, and gives it the accessible name
+  // "to the power of". It is not learner-visible raw syntax and must not be queued as one.
+  if (text === "^" && /widget\.tokens\[\d+\]$/.test(meta.field)) return;
   stringsScanned++;
   /* `Rich` and `MathProse` both split on `**` and consume it, so bold markers never reach the
    * screen and must not reach the residue either — leaving them in reported 197 rows of markdown
@@ -230,36 +274,28 @@ function examine(text: string, arithmetic: boolean, meta: Omit<Row, "surface" | 
    * purpose and is reported under its own shape. */
   // Bold markers, then italic RUNS, exactly as MathProse resolves them — including the rule that
   // keeps "5 * 3^x" out of it. An asterisk surviving both is one the learner really sees.
-  const rendered = text.split("**").join("")
-    .replace(/(?<![A-Za-z0-9])\*(?![\s*])([^*\n]*?)(?<![\s*])\*(?![A-Za-z0-9])/g, "$1");
+  const rendered = text
+    .split("**")
+    .join("")
+    .replace(
+      /(?<![A-Za-z0-9])\*(?![\s*])([^*\n]*?)(?<![\s*])\*(?![A-Za-z0-9])/g,
+      "$1",
+    );
   const residue = authoredMathParts(rendered, { includeArithmetic: arithmetic })
     .map((p) => (p.source === undefined ? p.text : ""))
     .join("");
   for (const index of INDEXES) {
-    const shape = index.test(residue, text);
+    const shape = index.test(residue, text, meta);
     if (!shape) continue;
     rows[index.file].push({
       ...meta,
       surface: arithmetic ? "arithmetic-on" : "arithmetic-off",
       shape,
       seed: meta.seed ?? "",
-      residue: residue.replace(/\s+/g, " ").slice(0, 160),
-      text: text.replace(/\s+/g, " ").slice(0, 220)
+      residue: residue.replace(/\s+/g, " ").slice(0, 160).trimEnd(),
+      text: text.replace(/\s+/g, " ").slice(0, 220).trimEnd(),
     });
   }
-}
-
-/** Widget spec strings, which `widgets.tsx` renders with arithmetic OFF. */
-const ID_KEYS = new Set(["id", "type", "form", "kind", "gen", "tag", "variant", "delimiter", "mode", "shape", "orientation"]);
-function widgetStrings(node: unknown, path: string, out: Array<{ path: string; text: string }> = []) {
-  if (typeof node === "string") {
-    const leaf = path.split(".").pop() ?? "";
-    if (!ID_KEYS.has(leaf) && !/(^|[a-z])Id$|Ids$/.test(leaf)) out.push({ path, text: node });
-    return out;
-  }
-  if (Array.isArray(node)) { node.forEach((v, i) => widgetStrings(v, `${path}[${i}]`, out)); return out; }
-  if (node && typeof node === "object") for (const [k, v] of Object.entries(node)) widgetStrings(v, path ? `${path}.${k}` : k, out);
-  return out;
 }
 
 /* ---- AUTHORED ---- */
@@ -272,29 +308,43 @@ function walk(dir: string): string[] {
   });
 }
 
+const authoredCoverage: AuthoredMathCoverage = {
+  mainSteps: 0,
+  remedialSteps: 0,
+  explanationVariants: 0,
+  mainExplanationVariants: 0,
+  remedialExplanationVariants: 0,
+  takeaways: 0,
+  teasers: 0,
+  narrations: 0,
+  mainNarrations: 0,
+  remedialNarrations: 0,
+  strings: 0,
+};
 for (const file of walk(join(ROOT, "content"))) {
-  let json: Record<string, any>;
-  try { json = JSON.parse(readFileSync(file, "utf8")); } catch { continue; }
-  const lesson = json.lesson ?? json;
-  const steps = Array.isArray(lesson.steps) ? lesson.steps : [];
-  if (!steps.length) continue;
+  let json: Record<string, unknown>;
+  try {
+    json = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
+  } catch {
+    continue;
+  }
+  const candidate = json.lesson ?? json;
+  if (!candidate || typeof candidate !== "object") continue;
+  const lesson = candidate as Record<string, unknown>;
   const lessonId = String(lesson.id ?? file);
-  for (const [i, step] of steps.entries()) {
-    const unit = `${step.id ?? i}`;
-    // Lesson prose, hints and step feedback render with arithmetic ON (QuizShell, LessonPlayer).
-    for (const field of ["body", "feedback", "successFeedback", "explanation"])
-      examine(step[field], true, { source: "authored", owner: lessonId, unit, field });
-    for (const [h, hint] of (step.hints ?? []).entries())
-      examine(hint, true, { source: "authored", owner: lessonId, unit, field: `hints[${h}]` });
-    if (step.predict) {
-      examine(step.predict.prompt, true, { source: "authored", owner: lessonId, unit, field: "predict.prompt" });
-      examine(step.predict.reveal, true, { source: "authored", owner: lessonId, unit, field: "predict.reveal" });
-      for (const [o, option] of (step.predict.options ?? []).entries())
-        examine(option.label, true, { source: "authored", owner: lessonId, unit, field: `predict.options[${o}].label` });
-    }
-    // Widget spec strings render with arithmetic OFF.
-    for (const { path, text } of widgetStrings(step.widget, "widget"))
-      examine(text, false, { source: "authored", owner: lessonId, unit, field: path });
+  const collected = lessonAuthoredMathStrings(lesson);
+  for (const key of Object.keys(authoredCoverage) as Array<
+    keyof AuthoredMathCoverage
+  >) {
+    authoredCoverage[key] += collected.coverage[key];
+  }
+  for (const item of collected.strings) {
+    examine(item.text, item.arithmetic, {
+      source: "authored",
+      owner: lessonId,
+      unit: item.unit,
+      field: item.field,
+    });
   }
 }
 
@@ -307,9 +357,23 @@ if (!AUTHORED_ONLY) {
         const band = BANDS[i % BANDS.length];
         const seed = `${generator.tag}|${form}|${band}|${i}`;
         let widget;
-        try { widget = generator.gen(mulberry32(hashSeed(seed)), band, form as never).widget; } catch { continue; }
+        try {
+          widget = generator.gen(
+            mulberry32(hashSeed(seed)),
+            band,
+            form as never,
+          ).widget;
+        } catch {
+          continue;
+        }
         for (const { path, text } of widgetStrings(widget, "widget"))
-          examine(text, false, { source: "generated", owner: generator.tag, unit: String(form), field: path, seed });
+          examine(text, false, {
+            source: "generated",
+            owner: generator.tag,
+            unit: String(form),
+            field: path,
+            seed,
+          });
       }
     }
   }
@@ -319,12 +383,28 @@ if (!AUTHORED_ONLY) {
 /* OUTPUT.                                                                                          */
 /* ------------------------------------------------------------------ */
 
-const csv = (cells: string[]) => cells.map((c) => (/[",\n]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c)).join(",");
-const HEADER = ["source", "owner", "unit", "field", "surface", "shape", "seed", "residue", "text"];
+const csv = (cells: string[]) =>
+  cells
+    .map((c) => (/[",\n]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c))
+    .join(",");
+const HEADER = [
+  "source",
+  "owner",
+  "unit",
+  "field",
+  "surface",
+  "shape",
+  "seed",
+  "residue",
+  "text",
+];
 
 if (!SUMMARY_ONLY) mkdirSync(OUT, { recursive: true });
 console.log(`math-presentation-indexes @ ${seal}`);
-console.log(`  ${stringsScanned} learner-visible strings measured (authored${AUTHORED_ONLY ? "" : " + generated"})`);
+console.log(
+  `  ${stringsScanned} learner-visible strings measured (authored${AUTHORED_ONLY ? "" : " + generated"})`,
+);
+console.log(`  authoredCoverage=${JSON.stringify(authoredCoverage)}`);
 for (const index of INDEXES) {
   const body = rows[index.file];
   // Deduplicate: one generator emits the same shape at every seed, and 12 identical rows is noise.
@@ -336,16 +416,37 @@ for (const index of INDEXES) {
     return true;
   });
   const authored = unique.filter((r) => r.source === "authored").length;
-  console.log(`  ${String(unique.length).padStart(5)}  ${index.file}  (${authored} authored, ${unique.length - authored} generated, ${body.length} before dedup)`);
+  console.log(
+    `  ${String(unique.length).padStart(5)}  ${index.file}  (${authored} authored, ${unique.length - authored} generated, ${body.length} before dedup)`,
+  );
   if (SUMMARY_ONLY) continue;
-  writeFileSync(join(OUT, index.file), [
-    `# sourceSeal=${seal} generatedBy=scripts/audit/math-presentation-indexes.mts`,
-    `# ${index.what}`,
-    "# Measured as the PROSE RESIDUE after authoredMathParts removes every island — what the learner reads, not what the author wrote.",
-    "# Surface is derived from the call sites: widget spec strings render with arithmetic OFF, lesson body/hints/feedback with arithmetic ON.",
-    "# One row per (source, owner, unit, field, shape); a generator emitting the same shape at every seed appears once, with one representative seed.",
-    csv(HEADER),
-    ...unique.map((r) => csv([r.source, r.owner, r.unit, r.field, r.surface, r.shape, r.seed, r.residue, r.text]))
-  ].join("\n") + "\n");
+  writeFileSync(
+    join(OUT, index.file),
+    [
+      `# sourceSeal=${seal} generatedBy=scripts/audit/math-presentation-indexes.mts`,
+      `# sourceInputSha256=${sourceEvidence.inputSha256} sourceInputFiles=${sourceEvidence.inputFiles}`,
+      `# authoredCoverage=${Object.entries(authoredCoverage)
+        .map(([key, value]) => `${key}:${value}`)
+        .join(",")}`,
+      `# ${index.what}`,
+      "# Measured as the PROSE RESIDUE after authoredMathParts removes every island — what the learner reads, not what the author wrote.",
+      "# Surface is derived from the call sites: widget spec strings render with arithmetic OFF, lesson body/hints/feedback with arithmetic ON.",
+      "# One row per (source, owner, unit, field, shape); a generator emitting the same shape at every seed appears once, with one representative seed.",
+      csv(HEADER),
+      ...unique.map((r) =>
+        csv([
+          r.source,
+          r.owner,
+          r.unit,
+          r.field,
+          r.surface,
+          r.shape,
+          r.seed,
+          r.residue,
+          r.text,
+        ]),
+      ),
+    ].join("\n") + "\n",
+  );
 }
 if (!SUMMARY_ONLY) console.log(`  written to ${OUT}`);

@@ -7,18 +7,22 @@ import { localDateStr, xpFor } from "@/lib/engine";
 import { awardNewBadges } from "@/lib/achievements";
 import { applyXp, progressStore } from "@/lib/progress";
 import type { TDailyCategory, TDailyProblem } from "@/lib/schema";
+import { CompletionIdentity } from "@/components/CompletionIdentity";
+import { CurriculumIcon } from "@/components/CurriculumIcon";
+import { AppIcon } from "@/components/ui";
+import type { SubjectIllustrationId } from "@/lib/curriculumIcons";
 
-const CATEGORY_META: Record<TDailyCategory, { label: string; icon: string }> = {
-  multiplication: { label: "Multiplication & Division", icon: "✖️" },
-  "place-value": { label: "Place Value", icon: "🔢" },
-  fractions: { label: "Fractions", icon: "🍰" },
-  measurement: { label: "Measurement & Data", icon: "📏" },
-  geometry: { label: "Shapes & Space", icon: "🔷" },
-  "multiply-bigger": { label: "Multiply Bigger", icon: "🧮" },
-  millions: { label: "Place Value to a Million", icon: "💯" },
-  "fraction-ops": { label: "Fractions That Add Up", icon: "➗" },
-  "measure-convert": { label: "Measure & Convert", icon: "📐" },
-  "lines-angles": { label: "Lines & Angles", icon: "📏" }
+const CATEGORY_META: Record<TDailyCategory, { label: string; icon: SubjectIllustrationId }> = {
+  multiplication: { label: "Multiplication & Division", icon: "subject-operations" },
+  "place-value": { label: "Place Value", icon: "subject-number-place-value" },
+  fractions: { label: "Fractions", icon: "subject-fractions-ratios" },
+  measurement: { label: "Measurement & Data", icon: "subject-measurement" },
+  geometry: { label: "Shapes & Space", icon: "subject-geometry-shapes" },
+  "multiply-bigger": { label: "Multiply Bigger", icon: "subject-operations" },
+  millions: { label: "Place Value to a Million", icon: "subject-number-place-value" },
+  "fraction-ops": { label: "Fractions That Add Up", icon: "subject-fractions-ratios" },
+  "measure-convert": { label: "Measure & Convert", icon: "subject-measurement" },
+  "lines-angles": { label: "Lines & Angles", icon: "subject-angles-construction" }
 };
 
 type Grade = 3 | 4;
@@ -162,10 +166,23 @@ export default function DailyClient() {
           </button>
         ))}
       </div>
-      <p className="mt-3 text-sm font-bold text-ink/70 dark:text-paper/70">
-        Day {data.day} of the rotation · {answered}/{available} answered today
-        {answered > 0 && " · streak fed 🔥"}
-      </p>
+      <div className="mt-3 flex items-center gap-3">
+        {answered > 0 && (
+          <CompletionIdentity
+            avatarId={progressStore.load().avatarId}
+            customization={progressStore.load().avatarCustomization}
+            variant="compact"
+          />
+        )}
+        <p className="text-sm font-bold text-ink/70 dark:text-paper/70">
+          Day {data.day} of the rotation · {answered}/{available} answered today
+          {answered > 0 && (
+            <span className="ml-1 inline-flex items-center gap-1 text-tangerine-ink">
+              · streak fed <AppIcon name="icon-802" size={14} />
+            </span>
+          )}
+        </p>
+      </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {data.categories.length === 0 && (
           <p className="col-span-full rounded-card border border-dashed border-ink/15 bg-surface-2 p-4 text-sm font-bold text-muted dark:border-paper/15">
@@ -181,9 +198,7 @@ export default function DailyClient() {
                 key={category}
                 className="rounded-card border border-dashed border-ink/15 bg-surface-2 p-4 dark:border-paper/15"
               >
-                <p className="text-2xl" aria-hidden>
-                  {meta.icon}
-                </p>
+                <CurriculumIcon id={meta.icon} size={36} />
                 <h2 className="mt-1 font-extrabold text-ink/70 dark:text-paper/70">{meta.label}</h2>
                 <p className="mt-1 text-xs font-bold text-tangerine-ink">
                   Challenges arrive with this course
@@ -204,14 +219,12 @@ export default function DailyClient() {
                   : "lift pressable border-ink/10 bg-surface shadow-e1 hover:border-sky dark:border-paper/12"
               }`}
             >
-              <p className="text-2xl" aria-hidden>
-                {meta.icon}
-              </p>
+              <CurriculumIcon id={meta.icon} size={36} />
               <div className="mt-1 flex items-center justify-between gap-2">
                 <h2 className="font-extrabold">{meta.label}</h2>
                 {done && (
-                  <span className="rounded-full bg-cta-good px-2 py-0.5 text-xs font-extrabold text-white">
-                    ✓ done
+                  <span className="inline-flex items-center gap-1 rounded-full bg-cta-good px-2 py-0.5 text-xs font-extrabold text-white">
+                    <AppIcon name="icon-704" size={12} /> done
                   </span>
                 )}
               </div>

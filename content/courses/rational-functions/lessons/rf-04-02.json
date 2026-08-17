@@ -148,36 +148,20 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "0/0 is the hole's signature.",
+      "body": "Inspect the cancelled factor at its missing point.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Substituting x = 2 into the ORIGINAL g gives 0/0. What does that signal?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "a common factor — likely a hole, so simplify and re-evaluate",
-            "correct": true,
-            "feedback": "Right — 0/0 means top AND bottom share the zero; cancellation reveals the hole's height."
-          },
-          {
-            "id": "o2",
-            "label": "a vertical asymptote",
-            "correct": false,
-            "feedback": "An asymptote's signature is (nonzero)/0 — the top staying alive while the bottom dies."
-          },
-          {
-            "id": "o3",
-            "label": "the function equals 0 there",
-            "correct": false,
-            "feedback": "0/0 is UNDEFINED, not 0 — the point is missing, with a well-defined height nearby."
-          },
-          {
-            "id": "o4",
-            "label": "an arithmetic mistake",
-            "correct": false,
-            "feedback": "The computation is fine — 0/0 is real information: a shared factor to cancel."
-          }
-        ]
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 0.16666666666666666,
+        "rightValue": 0.16666666666666666,
+        "fAtA": null,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "For (x − 2)/((x − 2)(x + 4)), zoom at x = 2 and decide whether the cancelled factor leaves a hole or an asymptote.",
+        "successFeedback": "Both sides settle at 1/6 while the point at x = 2 stays missing. Cancellation leaves a removable hole, not a vertical asymptote.",
+        "moreZoomFeedback": "Zoom further so the two sides' common approach to 1/6 is visible.",
+        "wrongVerdictFeedback": "The values do not grow without bound. They approach 1/6 from both sides, so the limit exists."
       }
     },
     {

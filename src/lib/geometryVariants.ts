@@ -14,40 +14,6 @@ type Rand = () => number;
 type TemplateBank = Record<string, Record<string, any[]>>;
 const BANK = templates as TemplateBank;
 
-const REASONING_MARK = "\n\nReasoning check:";
-const PROMPT_EXTENSIONS: Record<Band, readonly string[]> = {
-  support: [
-    "Use the labeled relationship before calculating.",
-    "Mark the given quantities, then choose the governing theorem.",
-    "Name the invariant first; then compute.",
-    "Sketch the relationship and track the units.",
-    "Identify what is fixed before using the numbers.",
-    "Write the relevant equality before entering the result.",
-    "Trace the diagram information one fact at a time.",
-    "Check whether the relationship is equal, proportional, or supplementary.",
-  ],
-  core: [
-    "Justify the relationship before entering the result.",
-    "Connect the diagram, theorem, and calculation.",
-    "State the invariant that makes the calculation valid.",
-    "Use only the information guaranteed by the geometry.",
-    "Check the result against the figure's constraints.",
-    "Translate the labeled structure into an equation first.",
-    "Verify the answer with a second geometric relationship.",
-    "Distinguish a measured appearance from a proven fact.",
-  ],
-  stretch: [
-    "Give a theorem-level justification, not an appearance-based guess.",
-    "Audit every assumption before committing to the result.",
-    "Use the most general invariant that proves the relationship.",
-    "Check whether a converse is actually available before using it.",
-    "Confirm that the result survives a deformation of the figure.",
-    "Reconstruct the result from definitions rather than pattern matching.",
-    "Verify both the numerical result and the logical dependency.",
-    "Test the conclusion against a possible counterexample.",
-  ],
-};
-
 const pick = <T>(rand: Rand, xs: readonly T[]): T => xs[Math.floor(rand() * xs.length)]!;
 const shuffle = <T>(rand: Rand, xs: readonly T[]): T[] => {
   const out = [...xs];
@@ -58,6 +24,695 @@ const shuffle = <T>(rand: Rand, xs: readonly T[]): T[] => {
   return out;
 };
 const deepClone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+
+/* S245 / Phase 5. `cr-thales__numeric` previously had one pool row whose answer was always 90, so
+ * every seed rebuilt the identical item. These cases keep one stable question job: use Thales to
+ * set the inscribed angle equal to 90°, then solve the displayed linear equation. Varying both the
+ * coefficient and constant changes the actual mathematics and answer, not merely point names. */
+const THALES_LINEAR_CASES = [
+  { coefficient: 2, constant: 10, solution: 40 },
+  { coefficient: 3, constant: 18, solution: 24 },
+  { coefficient: 4, constant: 10, solution: 20 },
+  { coefficient: 5, constant: 15, solution: 15 },
+  { coefficient: 6, constant: 18, solution: 12 },
+  { coefficient: 7, constant: 20, solution: 10 },
+  { coefficient: 8, constant: 18, solution: 9 },
+  { coefficient: 9, constant: 18, solution: 8 },
+  { coefficient: 10, constant: 20, solution: 7 },
+  { coefficient: 12, constant: 18, solution: 6 },
+] as const;
+
+function thalesLinearWidget(rand: Rand): any {
+  const chosen = pick(rand, THALES_LINEAR_CASES);
+  const { coefficient, constant, solution } = chosen;
+  if (coefficient * solution + constant !== 90) {
+    throw new Error("Invalid cr-thales linear case: the inscribed angle must equal 90°");
+  }
+  return {
+    type: "numeric",
+    prompt: `AB is a diameter of a circle and C lies on the circle. If ∠ACB = (${coefficient}x + ${constant})°, find x.`,
+    answer: solution,
+    tolerance: 0.01,
+    commonErrors: [
+      {
+        value: 90,
+        feedback: "90° is the angle measure from Thales' theorem; the question asks for x in the angle expression.",
+      },
+      {
+        value: 90 - constant,
+        feedback: `After subtracting ${constant}, divide by the coefficient ${coefficient}; stopping early gives ${90 - constant}, not x.`,
+      },
+    ],
+    fallbackFeedback: `Thales gives ∠ACB = 90°, so ${coefficient}x + ${constant} = 90 and x = ${solution}.`,
+    successFeedback: `Thales makes the angle over diameter AB exactly 90°; solving ${coefficient}x + ${constant} = 90 gives x = ${solution}.`,
+  };
+}
+
+const CHORD_ARC_MEASURES = [30, 40, 55, 65, 70, 75, 85, 100, 110, 135] as const;
+function chordArcWidget(rand: Rand): any {
+  const measure = pick(rand, CHORD_ARC_MEASURES);
+  return {
+    type: "numeric",
+    prompt: `In one circle, chord AB cuts a ${measure}° arc. Congruent chord CD cuts an arc of how many degrees?`,
+    answer: measure,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: measure * 2, feedback: "Doubling belongs to a central-versus-inscribed angle comparison; congruent chords copy their arc measures directly." },
+      { value: measure / 2, feedback: "Halving belongs to an inscribed angle; congruent chords in one circle intercept congruent arcs." },
+    ],
+    fallbackFeedback: `Congruent chords intercept congruent arcs, so CD also cuts a ${measure}° arc.`,
+    successFeedback: `The chord-arc correspondence copies the ${measure}° measure to the congruent chord CD.`,
+  };
+}
+
+const CYCLIC_GIVEN_ANGLES = [62, 68, 74, 82, 95, 103, 112, 119, 126, 137] as const;
+function cyclicQuadrilateralWidget(rand: Rand): any {
+  const given = pick(rand, CYCLIC_GIVEN_ANGLES);
+  const opposite = 180 - given;
+  return {
+    type: "numeric",
+    prompt: `Cyclic quadrilateral ABCD has ∠A = ${given}°. Find the opposite angle ∠C.`,
+    answer: opposite,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: given, feedback: "That copies the given angle; opposite angles in a cyclic quadrilateral are supplementary." },
+      { value: 360 - given, feedback: "Using 360° treats one angle as the rest of the whole quadrilateral; the opposite pair totals 180°." },
+    ],
+    fallbackFeedback: `Opposite angles in a cyclic quadrilateral sum to 180°, so ∠C = 180° − ${given}° = ${opposite}°.`,
+    successFeedback: `The cyclic-opposite-angle invariant gives ∠C = ${opposite}°.`,
+  };
+}
+
+const SECTOR_ANGLE_CASES = [
+  { radius: 6, areaPi: 4, angle: 40 },
+  { radius: 6, areaPi: 6, angle: 60 },
+  { radius: 6, areaPi: 8, angle: 80 },
+  { radius: 6, areaPi: 10, angle: 100 },
+  { radius: 6, areaPi: 12, angle: 120 },
+  { radius: 6, areaPi: 15, angle: 150 },
+  { radius: 9, areaPi: 9, angle: 40 },
+  { radius: 9, areaPi: 18, angle: 80 },
+  { radius: 9, areaPi: 27, angle: 120 },
+  { radius: 9, areaPi: 36, angle: 160 },
+] as const;
+function sectorAreaWidget(rand: Rand): any {
+  const { radius, areaPi, angle } = pick(rand, SECTOR_ANGLE_CASES);
+  return {
+    type: "numeric",
+    prompt: `A sector of a radius-${radius} circle has area ${areaPi}π. Find its central angle in degrees.`,
+    answer: angle,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: areaPi, feedback: "That reports the coefficient of π in the area, not the sector's degree measure." },
+      { value: angle / 2, feedback: "The area fraction already matches the angle fraction; an extra halving changes the sector." },
+    ],
+    fallbackFeedback: `The whole-circle area is ${radius * radius}π, so the sector is ${areaPi}/${radius * radius} of 360° = ${angle}°.`,
+    successFeedback: `Matching the area fraction to the angle fraction gives ${angle}°.`,
+  };
+}
+
+const TANGENT_CHORD_ARCS = [60, 72, 84, 96, 110, 124, 140, 156, 180, 220] as const;
+function tangentChordWidget(rand: Rand): any {
+  const arc = pick(rand, TANGENT_CHORD_ARCS);
+  const angle = arc / 2;
+  return {
+    type: "numeric",
+    prompt: `A tangent and chord meet at the point of tangency and intercept a ${arc}° arc. Find the tangent-chord angle.`,
+    answer: angle,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: arc, feedback: "That is the intercepted arc; a tangent-chord angle is half its intercepted arc." },
+      { value: arc / 4, feedback: "That halves twice; the tangent-chord theorem requires one halving." },
+    ],
+    fallbackFeedback: `The tangent-chord angle is half the intercepted arc: ${arc}° ÷ 2 = ${angle}°.`,
+    successFeedback: `Half of the ${arc}° intercepted arc is ${angle}°.`,
+  };
+}
+
+function tangentPerpendicularWidget(rand: Rand): any {
+  const chosen = pick(rand, THALES_LINEAR_CASES);
+  const { coefficient, constant, solution } = chosen;
+  return {
+    type: "numeric",
+    prompt: `Line ℓ is tangent to a circle at T, and OT is a radius. If the angle between ℓ and OT is (${coefficient}x + ${constant})°, find x.`,
+    answer: solution,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: 90, feedback: "90° is the radius-tangent angle; solve the displayed expression to find x." },
+      { value: 90 - constant, feedback: `After subtracting ${constant}, division by ${coefficient} is still required.` },
+    ],
+    fallbackFeedback: `A radius is perpendicular to a tangent at the contact point, so ${coefficient}x + ${constant} = 90 and x = ${solution}.`,
+    successFeedback: `The radius-tangent angle is 90°, and the equation gives x = ${solution}.`,
+  };
+}
+
+const EXTERNAL_SECANT_ANGLES = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75] as const;
+function externalSecantAngleWidget(rand: Rand): any {
+  const answer = pick(rand, EXTERNAL_SECANT_ANGLES);
+  const near = 20;
+  const far = near + 2 * answer;
+  return {
+    type: "exactNumberLab",
+    prompt: `Two secants from an external point intercept a far arc of ${far}° and a near arc of ${near}°. Find the external angle.`,
+    task: "approximationEvaluate",
+    values: [],
+    approxConstants: [
+      { id: "far", label: "far arc", value: far },
+      { id: "near", label: "near arc", value: near },
+    ],
+    approxFormula: {
+      op: "divide",
+      left: {
+        op: "subtract",
+        left: { op: "const", id: "far" },
+        right: { op: "const", id: "near" },
+      },
+      right: { op: "lit", value: 2 },
+    },
+    approxRound: 0,
+    answerMode: "numeric",
+    tolerance: 0.01,
+    numericErrors: [
+      { value: far - near, feedback: "That subtracts the arcs but omits the required halving." },
+      { value: (far + near) / 2, feedback: "Half the sum is the inside-intersection rule; an outside vertex uses half the difference." },
+    ],
+    choices: [],
+    authoredStages: [],
+    requiredStageKeys: [],
+    requiredExplorations: 1,
+    explorationFeedback: "Inspect the far and near arcs before applying the outside-angle theorem.",
+    fallbackFeedback: `An external secant angle is half the arc difference: (${far} − ${near}) ÷ 2 = ${answer}°.`,
+    successFeedback: `Half the difference of the ${far}° and ${near}° arcs is ${answer}°.`,
+  };
+}
+
+const INTERSECTING_CHORD_CASES = [
+  { a: 3, b: 4, c: 2, answer: 6 },
+  { a: 4, b: 6, c: 3, answer: 8 },
+  { a: 5, b: 6, c: 3, answer: 10 },
+  { a: 6, b: 8, c: 4, answer: 12 },
+  { a: 7, b: 8, c: 4, answer: 14 },
+  { a: 5, b: 9, c: 3, answer: 15 },
+  { a: 8, b: 8, c: 4, answer: 16 },
+  { a: 6, b: 9, c: 3, answer: 18 },
+  { a: 8, b: 10, c: 4, answer: 20 },
+  { a: 8, b: 12, c: 4, answer: 24 },
+] as const;
+function intersectingChordsWidget(rand: Rand): any {
+  const { a, b, c, answer } = pick(rand, INTERSECTING_CHORD_CASES);
+  return {
+    type: "exactNumberLab",
+    prompt: `Two chords cross inside a circle. One chord is split into ${a} and ${b}; the other into ${c} and x. Find x.`,
+    task: "approximationEvaluate",
+    values: [],
+    approxConstants: [
+      { id: "a", label: "first piece", value: a },
+      { id: "b", label: "second piece", value: b },
+      { id: "c", label: "known piece of other chord", value: c },
+    ],
+    approxFormula: {
+      op: "divide",
+      left: { op: "multiply", left: { op: "const", id: "a" }, right: { op: "const", id: "b" } },
+      right: { op: "const", id: "c" },
+    },
+    approxRound: 0,
+    answerMode: "numeric",
+    tolerance: 0.01,
+    numericErrors: [
+      { value: a + b - c, feedback: "That combines lengths additively; intersecting chords equate the products of their segment pairs." },
+      { value: a * b, feedback: "That is the common product, but x is the missing factor after division by the known partner segment." },
+    ],
+    choices: [],
+    authoredStages: [],
+    requiredStageKeys: [],
+    requiredExplorations: 1,
+    explorationFeedback: "Inspect both segment pairs before applying the intersecting-chords product.",
+    fallbackFeedback: `Intersecting chords give ${a}·${b} = ${c}x, so x = ${answer}.`,
+    successFeedback: `The equal-products invariant gives x = (${a}·${b})/${c} = ${answer}.`,
+  };
+}
+
+const TANGENT_RIGHT_TRIANGLES = [
+  { distance: 5, radius: 3, tangent: 4 },
+  { distance: 10, radius: 6, tangent: 8 },
+  { distance: 13, radius: 5, tangent: 12 },
+  { distance: 13, radius: 12, tangent: 5 },
+  { distance: 15, radius: 9, tangent: 12 },
+  { distance: 17, radius: 8, tangent: 15 },
+  { distance: 17, radius: 15, tangent: 8 },
+  { distance: 25, radius: 7, tangent: 24 },
+  { distance: 25, radius: 15, tangent: 20 },
+  { distance: 29, radius: 20, tangent: 21 },
+] as const;
+function tangentLengthWidget(rand: Rand): any {
+  const { distance, radius, tangent } = pick(rand, TANGENT_RIGHT_TRIANGLES);
+  return {
+    type: "exactNumberLab",
+    prompt: `Point P is ${distance} units from a circle's center O. The radius to tangency point T is ${radius}. Find tangent length PT.`,
+    task: "approximationEvaluate",
+    values: [],
+    approxConstants: [
+      { id: "d", label: "center-to-point distance", value: distance },
+      { id: "r", label: "radius", value: radius },
+    ],
+    approxFormula: {
+      op: "sqrt",
+      arg: {
+        op: "subtract",
+        left: { op: "multiply", left: { op: "const", id: "d" }, right: { op: "const", id: "d" } },
+        right: { op: "multiply", left: { op: "const", id: "r" }, right: { op: "const", id: "r" } },
+      },
+    },
+    approxRound: 0,
+    answerMode: "numeric",
+    tolerance: 0.01,
+    numericErrors: [
+      { value: distance - radius, feedback: "Subtracting the side lengths ignores the right triangle formed by radius OT and tangent PT." },
+      { value: distance + radius, feedback: "Adding the lengths does not satisfy the Pythagorean relationship in triangle OPT." },
+    ],
+    choices: [],
+    authoredStages: [],
+    requiredStageKeys: [],
+    requiredExplorations: 1,
+    explorationFeedback: "Inspect the radius-tangent right angle before calculating the missing leg.",
+    fallbackFeedback: `OT is perpendicular to PT, so PT = √(${distance}² − ${radius}²) = ${tangent}.`,
+    successFeedback: `The radius-tangent right triangle gives PT = ${tangent}.`,
+  };
+}
+
+const TANGENT_SEGMENT_LENGTHS = [6, 8, 9, 11, 12, 14, 15, 18, 20, 24] as const;
+function equalTangentsWidget(rand: Rand): any {
+  const length = pick(rand, TANGENT_SEGMENT_LENGTHS);
+  return {
+    type: "numeric",
+    prompt: `Two tangent segments are drawn from external point P to the same circle. One has length ${length}. Find the other tangent length.`,
+    answer: length,
+    tolerance: 0.01,
+    commonErrors: [
+      { value: length * 2, feedback: "That totals the two segments; the theorem says each individual tangent segment has the given length." },
+      { value: length / 2, feedback: "That splits the given segment; tangents from one external point are congruent, not halves." },
+    ],
+    fallbackFeedback: `Tangent segments from the same external point are congruent, so the other length is ${length}.`,
+    successFeedback: `The equal-tangents theorem gives the second segment length as ${length}.`,
+  };
+}
+
+const CIRCLE_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
+  "cr-thales__numeric": thalesLinearWidget,
+  "cr-chord-arc__numeric": chordArcWidget,
+  "cr-cyclic-quad__numeric": cyclicQuadrilateralWidget,
+  "cr-sector-area__numeric": sectorAreaWidget,
+  "cr-tangent-chord__numeric": tangentChordWidget,
+  "cr-tangent-perp__numeric": tangentPerpendicularWidget,
+  "cr-secant-angles__numeric": externalSecantAngleWidget,
+  "cr-power-point__numeric": intersectingChordsWidget,
+  "cr-tangent-apps__numeric": tangentLengthWidget,
+  "cr-two-tangent__numeric": equalTangentsWidget,
+};
+
+/* S246 / Phase 5. The authored `cp-perp-at-point__numeric` pool repeated one
+ * fixed 180 / 2 question for every seed, and its generated feedback had also
+ * drifted into an unrelated Thales explanation. These cases keep the
+ * perpendicular-at-a-point invariant (the constructed angle is 90 degrees)
+ * while varying the mathematics learners must do with that invariant. */
+const PERPENDICULAR_AT_POINT_CASES = [
+  { job: "equation", coefficient: 2, constant: 10, answer: 40 },
+  { job: "equation", coefficient: 3, constant: 18, answer: 24 },
+  { job: "equation", coefficient: 4, constant: 10, answer: 20 },
+  { job: "equation", coefficient: 5, constant: 15, answer: 15 },
+  { job: "equation", coefficient: 6, constant: 18, answer: 12 },
+  { job: "partition", given: 17, answer: 73 },
+  { job: "partition", given: 28, answer: 62 },
+  { job: "partition", given: 34, answer: 56 },
+  { job: "partition", given: 41, answer: 49 },
+  { job: "partition", given: 63, answer: 27 },
+] as const;
+
+function perpendicularAtPointWidget(rand: Rand): any {
+  const chosen = pick(rand, PERPENDICULAR_AT_POINT_CASES);
+  if (chosen.job === "equation") {
+    const { coefficient, constant, answer } = chosen;
+    if (coefficient * answer + constant !== 90) {
+      throw new Error("Invalid perpendicular-at-point equation case: the angle must equal 90 degrees");
+    }
+    return {
+      type: "numeric",
+      prompt: `A perpendicular raised at P makes a 90° angle with line ℓ. One angle is labelled (${coefficient}x + ${constant})°. Find x.`,
+      answer,
+      tolerance: 0,
+      commonErrors: [
+        {
+          value: 90,
+          feedback: "90° is the angle made by the perpendicular; the question asks for x in the angle expression.",
+        },
+        {
+          value: 90 - constant,
+          feedback: `After subtracting ${constant}, divide by ${coefficient} to isolate x.`,
+        },
+      ],
+      fallbackFeedback: `A perpendicular makes a 90° angle, so ${coefficient}x + ${constant} = 90 and x = ${answer}.`,
+      successFeedback: `The construction fixes the angle at 90°; solving ${coefficient}x + ${constant} = 90 gives x = ${answer}.`,
+    };
+  }
+
+  const { given, answer } = chosen;
+  if (given + answer !== 90) {
+    throw new Error("Invalid perpendicular-at-point partition case: the two parts must total 90 degrees");
+  }
+  return {
+    type: "numeric",
+    prompt: `A perpendicular at P makes a 90° angle. A ray inside that angle splits it into two parts. One part is ${given}°. How many degrees is the other part?`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      {
+        value: given,
+        feedback: "That copies the given part. The two parts together must fill the 90° angle.",
+      },
+      {
+        value: 90,
+        feedback: "90° is the whole angle made by the perpendicular. Subtract the known part to find the other part.",
+      },
+    ],
+    fallbackFeedback: `The perpendicular makes 90°, so the missing part is 90° − ${given}° = ${answer}°.` ,
+    successFeedback: `The two parts fill the right angle: ${given}° + ${answer}° = 90°.` ,
+  };
+}
+
+const PERPENDICULAR_FROM_POINT_CASES = [
+  { orientation: "horizontal", line: -2, pointX: -6, pointY: 5, answer: -6 },
+  { orientation: "horizontal", line: 1, pointX: -4, pointY: 7, answer: -4 },
+  { orientation: "horizontal", line: -3, pointX: -1, pointY: 4, answer: -1 },
+  { orientation: "horizontal", line: 0, pointX: 2, pointY: 6, answer: 2 },
+  { orientation: "horizontal", line: 2, pointX: 5, pointY: 9, answer: 5 },
+  { orientation: "vertical", line: 3, pointX: -4, pointY: -5, answer: -5 },
+  { orientation: "vertical", line: -1, pointX: 6, pointY: -2, answer: -2 },
+  { orientation: "vertical", line: 4, pointX: -3, pointY: 1, answer: 1 },
+  { orientation: "vertical", line: -2, pointX: 5, pointY: 4, answer: 4 },
+  { orientation: "vertical", line: 1, pointX: -5, pointY: 7, answer: 7 },
+] as const;
+
+function perpendicularFromPointWidget(rand: Rand): any {
+  const chosen = pick(rand, PERPENDICULAR_FROM_POINT_CASES);
+  const { orientation, line, pointX, pointY, answer } = chosen;
+  if (orientation === "horizontal") {
+    if (answer !== pointX) throw new Error("A perpendicular to a horizontal line must preserve x");
+    return {
+      type: "numeric",
+      prompt: `Line ℓ is horizontal: y = ${line}. Point P is (${pointX}, ${pointY}). A perpendicular from P meets ℓ at F. What is the x-coordinate of F?`,
+      answer,
+      tolerance: 0,
+      commonErrors: [
+        { value: pointY, feedback: `${pointY} is P's y-coordinate. A vertical drop preserves the x-coordinate ${pointX}.` },
+        { value: line, feedback: `${line} is the line's y-coordinate. The question asks for the foot's x-coordinate.` },
+      ],
+      fallbackFeedback: `A perpendicular to a horizontal line is vertical, so F keeps P's x-coordinate: x = ${answer}.`,
+      successFeedback: `The vertical drop from P preserves x, so the foot is (${answer}, ${line}).`,
+    };
+  }
+
+  if (answer !== pointY) throw new Error("A perpendicular to a vertical line must preserve y");
+  return {
+    type: "numeric",
+    prompt: `Line ℓ is vertical: x = ${line}. Point P is (${pointX}, ${pointY}). A perpendicular from P meets ℓ at F. What is the y-coordinate of F?`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: pointX, feedback: `${pointX} is P's x-coordinate. A horizontal path to the vertical line preserves y = ${pointY}.` },
+      { value: line, feedback: `${line} is the line's x-coordinate. The question asks for the foot's y-coordinate.` },
+    ],
+    fallbackFeedback: `A perpendicular to a vertical line is horizontal, so F keeps P's y-coordinate: y = ${answer}.`,
+    successFeedback: `The horizontal path from P preserves y, so the foot is (${line}, ${answer}).`,
+  };
+}
+
+const CO_INTERIOR_GIVEN_ANGLES = [32, 38, 47, 55, 63, 71, 82, 104, 119, 137] as const;
+
+function parallelThroughPointWidget(rand: Rand): any {
+  const given = pick(rand, CO_INTERIOR_GIVEN_ANGLES);
+  const answer = 180 - given;
+  return {
+    type: "numeric",
+    prompt: `A transversal crosses two parallel lines. One interior angle is ${given}°. Find its co-interior (same-side interior) partner.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      {
+        value: given,
+        feedback: "Equal measures belong to corresponding or alternate interior angles. Co-interior angles are supplementary.",
+      },
+      {
+        value: 360 - given,
+        feedback: "A full turn is not needed. Co-interior angles fill a straight angle, so their sum is 180°.",
+      },
+    ],
+    fallbackFeedback: `Co-interior angles between parallel lines are supplementary: 180° − ${given}° = ${answer}°.` ,
+    successFeedback: `${given}° + ${answer}° = 180°, so the co-interior relationship is satisfied.` ,
+  };
+}
+
+const HEXAGON_ANGLE_CASES = [
+  { angleType: "central", target: 60, coefficient: 2, constant: 10, answer: 25 },
+  { angleType: "central", target: 60, coefficient: 3, constant: 15, answer: 15 },
+  { angleType: "central", target: 60, coefficient: 4, constant: 12, answer: 12 },
+  { angleType: "central", target: 60, coefficient: 5, constant: 10, answer: 10 },
+  { angleType: "central", target: 60, coefficient: 6, constant: 6, answer: 9 },
+  { angleType: "interior", target: 120, coefficient: 2, constant: 20, answer: 50 },
+  { angleType: "interior", target: 120, coefficient: 3, constant: 30, answer: 30 },
+  { angleType: "interior", target: 120, coefficient: 4, constant: 40, answer: 20 },
+  { angleType: "interior", target: 120, coefficient: 5, constant: 30, answer: 18 },
+  { angleType: "interior", target: 120, coefficient: 6, constant: 24, answer: 16 },
+] as const;
+
+function regularHexagonWidget(rand: Rand): any {
+  const chosen = pick(rand, HEXAGON_ANGLE_CASES);
+  const { angleType, target, coefficient, constant, answer } = chosen;
+  if (coefficient * answer + constant !== target) {
+    throw new Error("Invalid regular-hexagon angle equation");
+  }
+  return {
+    type: "numeric",
+    prompt: `A regular hexagon has ${angleType} angles of ${target}°. One ${angleType} angle is labelled (${coefficient}x + ${constant})°. Find x.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      {
+        value: target,
+        feedback: `${target}° is the ${angleType} angle measure; the question asks for x in the expression.`,
+      },
+      {
+        value: target - constant,
+        feedback: `After subtracting ${constant}, divide by ${coefficient} to isolate x.`,
+      },
+    ],
+    fallbackFeedback: `For a regular hexagon, the ${angleType} angle is ${target}°, so ${coefficient}x + ${constant} = ${target} and x = ${answer}.`,
+    successFeedback: `The hexagon fixes this ${angleType} angle at ${target}°; solving the equation gives x = ${answer}.`,
+  };
+}
+
+const INSCRIBED_POLYGON_ANGLE_CASES = [
+  { polygon: "square", target: 90, coefficient: 2, constant: 10, answer: 40 },
+  { polygon: "square", target: 90, coefficient: 3, constant: 18, answer: 24 },
+  { polygon: "square", target: 90, coefficient: 4, constant: 10, answer: 20 },
+  { polygon: "square", target: 90, coefficient: 5, constant: 15, answer: 15 },
+  { polygon: "square", target: 90, coefficient: 6, constant: 18, answer: 12 },
+  { polygon: "equilateral triangle", target: 120, coefficient: 2, constant: 20, answer: 50 },
+  { polygon: "equilateral triangle", target: 120, coefficient: 3, constant: 30, answer: 30 },
+  { polygon: "equilateral triangle", target: 120, coefficient: 4, constant: 28, answer: 23 },
+  { polygon: "equilateral triangle", target: 120, coefficient: 5, constant: 30, answer: 18 },
+  { polygon: "equilateral triangle", target: 120, coefficient: 6, constant: 24, answer: 16 },
+] as const;
+
+function squareTriangleWidget(rand: Rand): any {
+  const chosen = pick(rand, INSCRIBED_POLYGON_ANGLE_CASES);
+  const { polygon, target, coefficient, constant, answer } = chosen;
+  if (coefficient * answer + constant !== target) throw new Error("Invalid inscribed-polygon angle equation");
+  return {
+    type: "numeric",
+    prompt: `The vertices of an inscribed ${polygon} divide the circle equally, so each central angle is ${target}°. If one is labelled (${coefficient}x + ${constant})°, find x.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: target, feedback: `${target}° is the central angle measure; solve the labelled expression to find x.` },
+      { value: target - constant, feedback: `After subtracting ${constant}, divide by ${coefficient}.` },
+    ],
+    fallbackFeedback: `${coefficient}x + ${constant} = ${target}, so x = ${answer}.`,
+    successFeedback: `Equal circle divisions fix the central angle at ${target}°; the equation gives x = ${answer}.`,
+  };
+}
+
+const COUNTEREXAMPLE_LISTS = [
+  [2, 4, 7, 8],
+  [2, 3, 5, 8],
+  [1, 2, 3, 4, 5, 6],
+  [1, 3, 5, 7, 8],
+  [10, 12, 14, 21],
+  [6, 9, 12, 15, 18],
+  [11, 13, 16, 18, 20],
+  [22, 24, 27, 31, 34, 36],
+  [40, 41, 42, 43, 44, 45],
+  [51, 52, 53, 55, 58, 60],
+] as const;
+
+function conjectureCounterexampleWidget(rand: Rand): any {
+  const values = pick(rand, COUNTEREXAMPLE_LISTS);
+  const answer = values.filter((value) => value % 2 !== 0).length;
+  return {
+    type: "numeric",
+    prompt: `Conjecture: “Every integer in this list is even.” In the list [${values.join(", ")}], how many displayed values are counterexamples?`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: 0, feedback: "Any odd value is a counterexample to the claim that every listed integer is even." },
+      { value: values.length, feedback: "Count only the odd values that contradict the conjecture, not every value in the list." },
+    ],
+    fallbackFeedback: `The odd values are the counterexamples, and there are ${answer}.`,
+    successFeedback: `${answer} displayed value${answer === 1 ? "" : "s"} contradict${answer === 1 ? "s" : ""} the universal claim.`,
+  };
+}
+
+const CO_INTERIOR_EQUATION_CASES = [
+  { a: 2, b: 10, c: 3, d: 0, answer: 34 },
+  { a: 2, b: 7, c: 4, d: 5, answer: 28 },
+  { a: 3, b: 4, c: 5, d: 8, answer: 21 },
+  { a: 4, b: 10, c: 5, d: 8, answer: 18 },
+  { a: 3, b: 9, c: 6, d: 0, answer: 19 },
+  { a: 2, b: 6, c: 5, d: 6, answer: 24 },
+  { a: 4, b: 12, c: 6, d: 8, answer: 16 },
+  { a: 5, b: 5, c: 6, d: 10, answer: 15 },
+  { a: 3, b: 4, c: 7, d: 6, answer: 17 },
+  { a: 4, b: 12, c: 7, d: 14, answer: 14 },
+] as const;
+
+function converseCoInteriorWidget(rand: Rand): any {
+  const { a, b, c, d, answer } = pick(rand, CO_INTERIOR_EQUATION_CASES);
+  if ((a + c) * answer + b + d !== 180) throw new Error("Invalid co-interior converse equation");
+  return {
+    type: "numeric",
+    prompt: `Two lines are cut by a transversal. Co-interior angles are (${a}x + ${b})° and (${c}x + ${d})°. Find x so the converse proves the lines parallel.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: b + d, feedback: "That combines only the constants. Set the full angle sum equal to 180°." },
+      { value: 180 - b - d, feedback: `After subtracting the constants, divide by ${a + c}.` },
+    ],
+    fallbackFeedback: `The converse needs supplementary angles: (${a}x + ${b}) + (${c}x + ${d}) = 180, so x = ${answer}.`,
+    successFeedback: `At x = ${answer}, the two co-interior angles sum to 180°, proving the lines parallel.`,
+  };
+}
+
+const ALTERNATE_INTERIOR_EQUATION_CASES = [
+  { a: 2, b: 15, c: 4, d: 25, x: 20 },
+  { a: 2, b: 10, c: 3, d: 8, x: 18 },
+  { a: 3, b: 12, c: 5, d: 16, x: 14 },
+  { a: 4, b: 6, c: 6, d: 18, x: 12 },
+  { a: 2, b: 20, c: 5, d: 10, x: 10 },
+  { a: 5, b: 5, c: 7, d: 15, x: 10 },
+  { a: 3, b: 9, c: 6, d: 18, x: 9 },
+  { a: 4, b: 12, c: 8, d: 20, x: 8 },
+  { a: 5, b: 10, c: 10, d: 20, x: 6 },
+  { a: 6, b: 6, c: 9, d: 15, x: 7 },
+] as const;
+
+function provingTransversalWidget(rand: Rand): any {
+  const { a, b, c, d, x } = pick(rand, ALTERNATE_INTERIOR_EQUATION_CASES);
+  const answer = a * x + b;
+  if (answer !== c * x - d) throw new Error("Invalid alternate-interior equation");
+  return {
+    type: "numeric",
+    prompt: `Across parallel lines, alternate interior angles are (${a}x + ${b})° and (${c}x − ${d})°. Find the measure of either angle.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: x, feedback: `${x} is the value of x. Substitute it to find the requested angle measure.` },
+      { value: 180 - answer, feedback: "That is the supplement. Alternate interior angles across parallel lines are equal." },
+    ],
+    fallbackFeedback: `Set the angles equal to get x = ${x}; substituting gives ${answer}° for either angle.`,
+    successFeedback: `The alternate interior angles match at ${answer}°.`,
+  };
+}
+
+const TRANSVERSAL_RELATION_CASES = [
+  { relation: "corresponding", given: 28, answer: 28 },
+  { relation: "corresponding", given: 42, answer: 42 },
+  { relation: "corresponding", given: 57, answer: 57 },
+  { relation: "corresponding", given: 73, answer: 73 },
+  { relation: "corresponding", given: 116, answer: 116 },
+  { relation: "co-interior", given: 31, answer: 149 },
+  { relation: "co-interior", given: 49, answer: 131 },
+  { relation: "co-interior", given: 64, answer: 116 },
+  { relation: "co-interior", given: 108, answer: 72 },
+  { relation: "co-interior", given: 137, answer: 43 },
+] as const;
+
+function transversalFamilyWidget(rand: Rand): any {
+  const { relation, given, answer } = pick(rand, TRANSVERSAL_RELATION_CASES);
+  const equal = relation === "corresponding";
+  return {
+    type: "numeric",
+    prompt: `A transversal crosses parallel lines. One angle is ${given}°. Find its ${relation} partner.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: equal ? 180 - given : given, feedback: equal ? "That is the supplement; corresponding angles are equal." : "That copies the given angle; co-interior angles are supplementary." },
+      { value: 360 - given, feedback: "A full turn is not the relevant relationship for this angle pair." },
+    ],
+    fallbackFeedback: equal
+      ? `Corresponding angles are equal, so the partner is ${answer}°.`
+      : `Co-interior angles sum to 180°, so the partner is ${answer}°.` ,
+    successFeedback: equal
+      ? `The corresponding angle is also ${answer}°.`
+      : `${given}° + ${answer}° = 180°.` ,
+  };
+}
+
+function verticalAnglesWidget(rand: Rand): any {
+  const equationJob = rand() < 0.5;
+  if (equationJob) {
+    const chosen = pick(rand, ALTERNATE_INTERIOR_EQUATION_CASES.slice(0, 5));
+    const { a, b, c, d, x } = chosen;
+    return {
+      type: "numeric",
+      prompt: `Two vertical angles are labelled (${a}x + ${b})° and (${c}x − ${d})°. Find x.`,
+      answer: x,
+      tolerance: 0,
+      commonErrors: [
+        { value: a * x + b, feedback: "That is the angle measure after substitution; the question asks for x." },
+        { value: 180 - (a * x + b), feedback: "That uses a supplementary relationship. Vertical angles are equal." },
+      ],
+      fallbackFeedback: `Vertical angles are equal, so ${a}x + ${b} = ${c}x − ${d} and x = ${x}.`,
+      successFeedback: `The two expressions are equal at x = ${x}.`,
+    };
+  }
+  const chosen = pick(rand, CO_INTERIOR_EQUATION_CASES.slice(0, 5));
+  const { a, b, c, d, answer: x } = chosen;
+  const angle = a * x + b;
+  return {
+    type: "numeric",
+    prompt: `Two adjacent angles form a linear pair: (${a}x + ${b})° and (${c}x + ${d})°. Find the angle vertical to the first angle.`,
+    answer: angle,
+    tolerance: 0,
+    commonErrors: [
+      { value: x, feedback: "That is x. Substitute it into the first expression to find the requested angle." },
+      { value: 180 - angle, feedback: "That is the adjacent angle. The vertical angle equals the first angle." },
+    ],
+    fallbackFeedback: `The linear pair gives x = ${x}; the first and its vertical angle measure ${angle}°.` ,
+    successFeedback: `After solving the linear pair, the vertical angle matches the first at ${angle}°.` ,
+  };
+}
+
+const CONSTRUCTION_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
+  "cp-perp-at-point__numeric": perpendicularAtPointWidget,
+  "cp-perp-from-point__numeric": perpendicularFromPointWidget,
+  "cp-parallel-through-point__numeric": parallelThroughPointWidget,
+  "cp-hexagon__numeric": regularHexagonWidget,
+  "cp-square-triangle__numeric": squareTriangleWidget,
+  "cp-conjecture-proof__numeric": conjectureCounterexampleWidget,
+  "cp-converses__numeric": converseCoInteriorWidget,
+  "cp-proving-transversal__numeric": provingTransversalWidget,
+  "cp-transversal-family__numeric": transversalFamilyWidget,
+  "cp-vertical-angles__numeric": verticalAnglesWidget,
+};
 
 function cleanTypography(text: string): string {
   return text
@@ -78,10 +733,6 @@ function feedback(text: unknown, fallback: string): string {
   }
   if (out.length < 25) out = `${out} Recheck the labeled geometric relationship.`;
   return out;
-}
-
-function freshPrompt(base: string, rand: Rand, band: Band): string {
-  return `${cleanTypography(base.trim())}${REASONING_MARK} ${pick(rand, PROMPT_EXTENSIONS[band])}`;
 }
 
 function normalizeNumeric(widget: any): any {
@@ -136,14 +787,21 @@ function normalizeMcq(widget: any, rand: Rand): any {
   return w;
 }
 
-function buildVariant(tag: string, rand: Rand, band: Band, requestedForm: string): Variant {
+function buildVariant(tag: string, rand: Rand, _band: Band, requestedForm: string): Variant {
   const forms = BANK[tag];
   if (!forms) throw new Error(`Unknown Geometry generator ${tag}`);
   const form = requestedForm === "default" ? Object.keys(forms)[0]! : requestedForm;
   const pool = forms[form];
   if (!pool?.length) throw new Error(`Unsupported Geometry form ${tag}@${requestedForm}`);
-  const widget = deepClone(pick(rand, pool));
-  widget.prompt = freshPrompt(String(widget.prompt), rand, band);
+  const customBuilder = tag === "g10-circle-theorems"
+    ? CIRCLE_FORM_BUILDERS[form]
+    : tag === "g10-constructions-proof"
+      ? CONSTRUCTION_FORM_BUILDERS[form]
+      : undefined;
+  const widget = customBuilder ? customBuilder(rand) : deepClone(pick(rand, pool));
+  // This bank has no free-response reasoning surface, so the prompt must not
+  // request a justification the learner has nowhere to enter.
+  widget.prompt = cleanTypography(String(widget.prompt).trim());
   if (widget.type === "numeric") {
     normalizeNumeric(widget);
     return { tag, widget, answer: widget.answer };
