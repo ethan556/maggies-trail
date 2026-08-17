@@ -129,7 +129,10 @@ const BAD_ORDINAL = new RegExp(
 
 function auditLanguage(v: Variant): Finding[] {
   const found: Finding[] = [];
-  for (const { path, text } of strings(v.widget)) {
+  for (const { path, text: raw } of strings(v.widget)) {
+    /* Markdown emphasis is prose formatting and must not read as multiplication (ARCH-01 §3).
+     * DOUBLED PAIRS FIRST: stripping `*…*` from `**bold**` leaves the outer asterisks behind. */
+    const text = raw.replace(/\*\*([^*\n]{1,80})\*\*/g, "$1").replace(/\*([^*\n]{1,80})\*/g, "$1");
     const leaf = path.split(".").pop() ?? "";
     const add = (severity: Finding["severity"], code: string, detail: string) =>
       found.push({ severity, code, where: path, detail });
@@ -227,21 +230,30 @@ function auditMathPresentation(v: Variant): Finding[] {
      * character-level ban was not only 13:1 false, it contradicted a decision already made. The test
      * is a value on both sides, with paired emphasis removed first so `*any*` cannot supply one.
      *
-     * THAT NARROWING IS NOT LANDED, AND THIS COMMENT IS THE HONEST RECORD OF WHY. Stripping the
-     * pairs before the test raised the count from 13 to 23 rather than lowering it: the pattern
-     * runs on the RESIDUE after math islands are removed, and removing an island can delete one
-     * asterisk of a pair — `Find *P(a heart or a king)* as a decimal` loses its middle — so the
-     * pairing this repair depends on is already broken by the time the rule sees the text. The
-     * fix belongs upstream of the residue, not here, and it is left undone rather than left
-     * half-done. The 13 rows are known-false and documented in ARCH_01_02_RULING.md §3; the ONE
-     * real operator (`5 * (-5)` in a1-polynomials) is repaired at its generator. */
-    ["asterisk-multiplication", /(?<!\*)\*(?!\*)/],
+     * THE FIRST ATTEMPT AT THIS RAISED THE COUNT FROM 13 TO 23, and the reason was worth finding
+     * rather than guessing at. Instrumenting the rule on `g10-conditional-probability` printed the
+     * actual matches, and every one looked like this:
+     *
+     *     raw       "…how many of the 16 outcomes show **at least one head**?"
+     *     stripped  "…how many of the 16 outcomes show *at least one head*?"
+     *
+     * The corpus writes **bold**, not *emphasis*. A single-pair strip consumes the INNER asterisks
+     * of a doubled pair and leaves the outer ones behind, manufacturing exactly the single-asterisk
+     * shape the operator test is looking for. The old rule never saw them because `(?<!\*)\*(?!\*)`
+     * skipped doubled asterisks outright — so the 13 it did report are single-asterisk emphasis and
+     * the doubled ones were invisible to both rules.
+     *
+     * Doubled pairs are therefore stripped FIRST, then single ones. */
+    ["asterisk-multiplication", /[\w)\]]\s*\*\s*[\w(\[]/],
     ["javascript-expression", /\bMath\.[a-z]/i],
     ["stacked-slash-fraction", /\d+\/\d+\s*\/\s*\d+/],
     ["exponential-notation-leak", /\d[eE][+-]\d\d\b/],
     ["machine-inequality", /<=|>=/]
   ];
-  for (const { path, text } of strings(v.widget)) {
+  for (const { path, text: raw } of strings(v.widget)) {
+    /* Markdown emphasis is prose formatting and must not read as multiplication (ARCH-01 §3).
+     * DOUBLED PAIRS FIRST: stripping `*…*` from `**bold**` leaves the outer asterisks behind. */
+    const text = raw.replace(/\*\*([^*\n]{1,80})\*\*/g, "$1").replace(/\*([^*\n]{1,80})\*/g, "$1");
     if (!/[\^*/]|sqrt|pi\b|Math\.|<=|>=/i.test(text)) continue; // cheap gate: most strings are prose
     const on = residue(text, true), off = residue(text, false);
     for (const [code, pattern] of PATTERNS) {
@@ -294,7 +306,10 @@ function auditCanonicalForm(v: Variant): Finding[] {
    * expansion. The exception is deliberately narrow: it needs the item to say so. */
   const promptText = String((v.widget as Record<string, unknown>).prompt ?? "");
   const decimalIsTheConcept = /\bdecimal\b|\brepeat|\bexpansion|\bterminat|\bapproximat|≈|\bpower of ten\b|\birrational\b|\bround/i.test(promptText);
-  for (const { path, text } of strings(v.widget)) {
+  for (const { path, text: raw } of strings(v.widget)) {
+    /* Markdown emphasis is prose formatting and must not read as multiplication (ARCH-01 §3).
+     * DOUBLED PAIRS FIRST: stripping `*…*` from `**bold**` leaves the outer asterisks behind. */
+    const text = raw.replace(/\*\*([^*\n]{1,80})\*\*/g, "$1").replace(/\*([^*\n]{1,80})\*/g, "$1");
     if (/\b\d+\.0\b/.test(text)) found.push({ severity: "low", code: "integer-with-trailing-zero", where: path, detail: text.slice(0, 120) });
     if (/\.\d{6,}/.test(text) && !decimalIsTheConcept)
       found.push({ severity: "high", code: "float-artifact-in-prose", where: path, detail: text.slice(0, 160) });
