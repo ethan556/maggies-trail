@@ -3620,7 +3620,18 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     if (/How do 0\.\d, 0\.\d0, and 0\.\d00 compare/.test(prompt)) return "All three are equal";
     m = prompt.match(/Are 0\.(\d) and 0\.0\1 equal/);
     if (m) return `No — 0.0${m[1]} is ten times smaller`;
-    if (/how many equal 0\.\d/.test(prompt)) return 2;
+    /* S242 / GRB-04. THIS ROUTE USED TO BE `return 2`, and that is the shape of the defect it was
+     * supposed to be independent of: the generator's answer was a constant, so a route returning
+     * the same constant agreed with it forever while deriving nothing. Both sides have now been
+     * corrected — the generator draws how many of the three actually match, and this route READS
+     * THE THREE PRINTED VALUES and counts by arithmetic. The generator counts by construction
+     * (it decides `matches`, then builds a list to fit); this counts by comparison. Two genuinely
+     * different methods, which is what the INDEPENDENT map is for. */
+    m = prompt.match(/Of these three — (.+?) — how many equal 0\.(\d)\?/);
+    if (m) {
+      const target = Number(`0.${m[2]}`);
+      return m[1].split(",").map((s) => Number(s.trim())).filter((v) => Math.abs(v - target) < 1e-12).length;
+    }
     throw new Error(`unparsed decimal representation prompt: ${prompt}`);
   },
   // Divide numerically and recover the coprime pair by search — never the cross-products.

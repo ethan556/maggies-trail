@@ -49,19 +49,40 @@ const shapeOf = (prompt: string) => prompt.replace(/-?\d+(?:\.\d+)?/g, "§");
 const numbersIn = (prompt: string) => [...prompt.matchAll(/-?\d+(?:\.\d+)?/g)].map((m) => Number(m[0]));
 
 interface Row {
-  generator: string; form: string; verdict: string; prompts: number;
+  generator: string; form: string; verdict: string; prompts: number; answers: number;
   shapes: number; varyingSlots: number; run: string; example: string;
+}
+
+/**
+ * The answer a widget keys, when it keys one readably. Value widgets carry `answer`; choice widgets
+ * mark a correct option. A widget that does neither returns null, and a pair with any unreadable
+ * answer is never classified by answer cardinality — an unreadable answer must not be allowed to
+ * look like a repeated one.
+ */
+function answerOf(widget: unknown): string | null {
+  const w = widget as { answer?: unknown; options?: Array<{ label?: unknown; correct?: boolean }> } | undefined;
+  if (w?.answer !== undefined && w.answer !== null) return String(w.answer);
+  const correct = (w?.options ?? []).filter((o) => o.correct).map((o) => String(o.label ?? ""));
+  return correct.length ? correct.sort().join(" / ") : null;
 }
 
 const rows: Row[] = [];
 for (const pair of exhausted) {
   const prompts = new Set<string>();
+  const answers = new Set<string>();
+  let answersReadable = true;
   for (let i = 0; i < 40; i++) {
     for (const band of BANDS) {
       let v;
       try { v = variantForGenForm(pair.generator, pair.form, `${pair.generator}|${pair.form}|${band}|${i}`, band); } catch { continue; }
       const p = (v?.widget as { prompt?: string } | undefined)?.prompt;
-      if (typeof p === "string") prompts.add(p);
+      if (typeof p !== "string") continue;
+      if (!prompts.has(p)) {
+        const a = answerOf(v?.widget);
+        if (a === null) answersReadable = false;
+        else answers.add(a);
+      }
+      prompts.add(p);
     }
   }
   if (prompts.size < 2) continue;
@@ -93,33 +114,64 @@ for (const pair of exhausted) {
     contiguous = wholeSet && values.every((v, i) => Number.isInteger(v) && (i === 0 || v === values[i - 1] + 1));
     run = `${values[0]}..${values[values.length - 1]}`;
   }
+  /* ── THE THIRD POPULATION, AND READING THE TOP OF THE RANKED LIST IS WHAT FOUND IT ────────────
+   *
+   * `g1-shapes-measure|Smg1HalvesNumeric` sat in the backlog as six prompts short of the window.
+   * Printed with its answers, it is this:
+   *
+   *     [2]  If a cracker is split into halves, how many equal parts are there?
+   *     [2]  If a ribbon is split into halves, how many equal parts are there?
+   *     [2]  If a pizza  is split into halves, how many equal parts are there?      … six in all
+   *
+   * SIX PROMPTS, ONE ANSWER. The object noun is a costume; the mathematics never moves. Widening it
+   * to twenty nouns would take the pool count from 6 to 20 and change what the learner does by
+   * nothing, which is exactly what the plan means by "numerical variation alone can masquerade as
+   * curriculum variety" and what ARCH-04 exists to forbid. It is also CLAUDE.md rule 7 — one problem
+   * exists, so the honest move is to reject, not to dress it up to raise a count.
+   *
+   * A pool is COSMETIC-ONLY when every prompt keys the same answer. That is not the same as narrow:
+   * `Smg1ShapeSidesNumeric` has eight prompts and three answers (0, 3, 4 — circle, triangle,
+   * square/rectangle × sides/corners) and is a real if small vocabulary drill.
+   *
+   * Answer cardinality is only consulted when EVERY prompt's answer could actually be read. A drag
+   * or sort widget keys neither `answer` nor a correct option, and an unreadable answer must never
+   * be allowed to look like a repeated one. */
+  const cosmetic = answersReadable && answers.size === 1 && prompts.size > 1;
   rows.push({
     generator: pair.generator, form: pair.form,
-    verdict: contiguous ? "closed-fact-set" : "under-parameterised",
-    prompts: prompts.size, shapes: shapes.size, varyingSlots: varying, run,
+    verdict: contiguous ? "closed-fact-set" : cosmetic ? "cosmetic-only" : "under-parameterised",
+    prompts: prompts.size, answers: answersReadable ? answers.size : -1,
+    shapes: shapes.size, varyingSlots: varying, run,
     example: list[0].replace(/[",\n]/g, " ").slice(0, 88),
   });
 }
 
 const closed = rows.filter((r) => r.verdict === "closed-fact-set");
+const cosmetic = rows.filter((r) => r.verdict === "cosmetic-only");
 mkdirSync(OUT, { recursive: true });
 const out = join(OUT, "GENERATOR_EXHAUSTED_BY_SUBJECT.csv");
 writeFileSync(out, [
   `# sourceSeal=${seal} — S242/GRB-04. Splitting the exhausted pairs by WHY they are narrow.`,
   "# closed-fact-set = one sentence, one number moving, and the values form a contiguous run with",
   "# no gaps — the pool IS the subject (a times table, a counting range). Widening these is wrong.",
+  "# cosmetic-only = every prompt keys the SAME ANSWER — the variation is a noun, not mathematics.",
+  "# Widening these raises a count and changes nothing a learner does; see CLAUDE.md rule 7.",
   "# under-parameterised = everything else: the pool is narrow because a dimension is missing.",
-  "generator,form,verdict,distinctPrompts,shapes,varyingSlots,run,example",
+  "generator,form,verdict,distinctPrompts,distinctAnswers,shapes,varyingSlots,run,example",
   ...rows
     .sort((a, b) => (a.verdict < b.verdict ? -1 : a.verdict > b.verdict ? 1 : b.prompts - a.prompts))
-    .map((r) => [r.generator, r.form, r.verdict, r.prompts, r.shapes, r.varyingSlots, r.run, r.example].join(","))
+    .map((r) => [r.generator, r.form, r.verdict, r.prompts, r.answers, r.shapes, r.varyingSlots, r.run, r.example].join(","))
 ].join("\n") + "\n");
 
 console.log(`exhausted-by-subject @ ${seal}`);
 console.log(`  ${exhausted.length} exhausted pairs in the audit; ${rows.length} produced two or more prompts`);
 console.log(`    closed-fact-set      ${closed.length}   ← the pool IS the subject; widening would be wrong`);
-console.log(`    under-parameterised  ${rows.length - closed.length}   ← the real backlog`);
+console.log(`    cosmetic-only        ${cosmetic.length}   ← N prompts, ONE answer; widening is the anti-pattern`);
+console.log(`    under-parameterised  ${rows.length - closed.length - cosmetic.length}   ← the real backlog`);
 console.log("\n── closed-fact-set, widest first ──");
 for (const r of closed.sort((a, b) => b.prompts - a.prompts).slice(0, 25))
   console.log(`  ${r.generator}|${r.form}  ${r.prompts} prompts, one slot over ${r.run}\n      ${r.example}`);
+console.log("\n── cosmetic-only, widest first (every one of these keys a single answer) ──");
+for (const r of cosmetic.sort((a, b) => b.prompts - a.prompts))
+  console.log(`  ${r.generator}|${r.form}  ${r.prompts} prompts, 1 answer\n      ${r.example}`);
 console.log(`\n  wrote ${relative(ROOT, out)}`);

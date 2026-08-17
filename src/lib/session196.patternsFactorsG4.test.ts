@@ -147,7 +147,13 @@ describe("S196 patterns-factors-g4 — routes re-derived, widget contracts held"
         expect(s.hints).toHaveLength(3);
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
-        if (w.type === "numeric") {
+        /* S242 / GRB-04. A step with no `variant` has no independent route to re-derive, and two
+         * steps here deliberately have none now: `g4p-02-01/k2` and `g4p-02-02/k2` both ask "What
+         * is the smallest prime number?", which is a single-fact item (rule 7). They had been
+         * declaring `mbPrimeCompositeNumeric`, a form that generated an unrelated question and
+         * agreed only because both answers happened to be 2. Skipping an undeclared step is not a
+         * relaxation — every step that DOES declare a form is still re-derived below. */
+        if (w.type === "numeric" && s.variant) {
           const derived = solveG4(s.variant.form, { prompt: w.prompt, options: [] });
           expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
@@ -155,7 +161,11 @@ describe("S196 patterns-factors-g4 — routes re-derived, widget contracts held"
           const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
           const f = s.variant.form as string;
           if (f === "mbFactorsNumeric") expect(n[1] / n[0]).toBe(w.answer);
-          if (f === "mbPrimeCompositeNumeric") expect(w.answer).toBe(2);
+          /* S242 / GRB-04. `toBe(2)` was true only because the generator drew nothing but primes
+           * and the two authored steps here happen to answer 2 as well, so this assertion agreed
+           * with a coincidence rather than with the mathematics. Those two steps are single-fact
+           * items (rule 7) and no longer declare a variant, so nothing in THIS lesson pair reaches
+           * the form; the shape it now generates is asserted in `solveG4` and in the variant gate. */
           if (f === "mbPatternsNumeric") expect(n[n.length - 1] * (n[1] / n[0])).toBe(w.answer);
           if (f === "mbTimesAsManyNumeric") expect(n[0] * n[1]).toBe(w.answer);
 

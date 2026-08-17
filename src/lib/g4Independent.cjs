@@ -99,7 +99,19 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'mbFactorsNumeric': return ns[1]/ns[0];
   case 'mbMultiplesMcq': {const n=ns[0];return option(w,x=>/^\d+$/.test(x)&&+x%n===0);}
   case 'mbPrimeCompositeMcq': {const n=ns[0],prime=n>1&&Array.from({length:n-2},(_,i)=>i+2).every(d=>n%d);return exact(w,prime?'Prime':'Composite');}
-  case 'mbPrimeCompositeNumeric': return 2;
+  /* S242 / GRB-04. This used to be `return 2`, which is what an independent route looks like when
+   * the generator's answer is a constant: it agreed forever and derived nothing. The generator
+   * tests each value for a divisor; this SIEVES the range and counts what survives — a different
+   * method over the same fact, which is the whole point of the INDEPENDENT map. */
+  case 'mbPrimeCompositeNumeric': {
+    const lo = ns[0], hi = ns[1];
+    const sieve = new Array(hi + 1).fill(true);
+    sieve[0] = sieve[1] = false;
+    for (let p = 2; p * p <= hi; p++) if (sieve[p]) for (let m = p * p; m <= hi; m += p) sieve[m] = false;
+    let count = 0;
+    for (let v = lo; v <= hi; v++) if (sieve[v]) count++;
+    return count;
+  }
   case 'mbMultiplyTensMcq': return exact(w,'Because the factor is built from tens, so the basic fact is scaled by 10.');
   case 'mbMultiplyTensNumeric': return ns[0]*ns[1];
   case 'mbAreaModel1DigitMcq': {const [a,b]=ns,t=Math.floor(a/10)*10,o=a%10;return exact(w,`${t}×${b} and ${o}×${b}`);}

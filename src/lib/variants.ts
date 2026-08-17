@@ -10219,21 +10219,48 @@ const GENERATORS: VariantGen[] = [
         );
       }
       if (form === "compareNegativeFractions") {
+        /* S242 / GRB-04. THE ANSWER WAS ALWAYS `gt`, ON EVERY SEED, AND THAT IS A LEAK RATHER THAN
+         * a freshness problem. Every entry below is written (smaller magnitude, larger magnitude)
+         * and both were printed in that order, so five distinct-looking prompts graded the same
+         * option correct five times running. A learner who picks ">" without comparing anything
+         * scores full marks — on the one step whose whole purpose is deciding which of two
+         * negatives is greater.
+         *
+         * THE ORDER IS THE MISSING DIMENSION, and it is one the family already uses:
+         * `compareNegativeMixed` immediately below keys `lt`. Swapping which side carries the
+         * larger magnitude changes the answer without touching the mathematics, so the pool goes
+         * from 5 prompts / 1 answer to 10 prompts / 2 answers and the option stops being
+         * predictable. */
+        /* Nine pairs, not five: at five the two orders gave a pool of exactly 10, which only just
+         * reaches the anti-repeat window rather than clearing it. Every entry is (smaller
+         * magnitude, larger magnitude) and every denominator is one this course already uses. */
         const PAIRS: Array<[[number, number], [number, number]]> = [
           [[1, 2], [3, 4]], [[2, 3], [5, 6]], [[1, 3], [3, 5]], [[3, 8], [7, 8]], [[2, 5], [3, 4]],
+          [[1, 4], [2, 3]], [[3, 10], [4, 5]], [[5, 8], [7, 10]], [[1, 6], [5, 12]],
         ];
-        const [[a, b], [c, d]] = PAIRS[pick(rand, 0, band === "support" ? 2 : PAIRS.length - 1)];
+        const [small, large] = PAIRS[pick(rand, 0, band === "support" ? 2 : PAIRS.length - 1)];
+        const smallFirst = pick(rand, 0, 1) === 0;
+        const [[a, b], [c, d]] = smallFirst ? [small, large] : [large, small];
+        // Both feedback strings must be literally true of the drawn order (rule 5), so they are
+        // built from a/b and c/d as printed rather than from the table's canonical order.
+        const carried = `Correct relation feedback is carried by success; among negatives, the value closer to zero is greater.`;
         return rationalVariant(
           `Compare -${a}/${b} and -${c}/${d}. Which relation is true?`,
           { num: -a, den: b },
           { num: -c, den: d },
           {},
           {
-            lt: `The left fraction has the smaller magnitude, so its negative value is closer to zero and therefore greater.`,
-            eq: `The fractions have different magnitudes, so their negative values are not equal.`,
-            gt: `Correct relation feedback is carried by success; among negatives, the value closer to zero is greater.`,
+            lt: smallFirst
+              ? `${a}/${b} is the smaller magnitude, so -${a}/${b} sits closer to zero than -${c}/${d} and is therefore the greater value.`
+              : carried,
+            eq: `${a}/${b} and ${c}/${d} are different magnitudes, so their negatives cannot be equal.`,
+            gt: smallFirst
+              ? carried
+              : `${a}/${b} is the larger magnitude, so -${a}/${b} sits farther left than -${c}/${d} and is therefore the smaller value.`,
           },
-          `Right — ${a}/${b} is the smaller magnitude, so -${a}/${b} > -${c}/${d}.`
+          smallFirst
+            ? `Right — ${a}/${b} is the smaller magnitude, so -${a}/${b} > -${c}/${d}.`
+            : `Right — ${a}/${b} is the larger magnitude, so -${a}/${b} < -${c}/${d}.`
         );
       }
       if (form === "compareNegativeMixed") {
@@ -17498,17 +17525,39 @@ const GENERATORS: VariantGen[] = [
         );
       }
 
+      /* S242 / GRB-04. THE ANSWER WAS ALWAYS 2. The triple was hardcoded as
+       * `0.d0, 0.0d, 0.d00` — two trailing-zero forms and one leading-zero form — so all nine seeds
+       * (d = 1…9) asked a differently-numbered version of a question whose answer never moved. A
+       * learner types 2, and is right nine times without reading the three values.
+       *
+       * HOW MANY OF THE THREE MATCH is the missing dimension, and it is the dimension the question
+       * is actually about. Drawing it, plus which POSITION the odd values occupy, takes the pool
+       * from 9 prompts / 1 answer to 54 / 2 and makes the count something the learner has to
+       * establish rather than recall.
+       *
+       * `matches` stays in {1, 2} so both traps are always live and always distinct: "counted every
+       * form shown" is 3, and "counted the ones that do NOT match" is 3 − matches. At matches = 3
+       * the first trap would BE the answer, which rule 4 forbids, so that case is not drawn. */
       const d = pick(rand, 1, 9);
+      const matches = pick(rand, 1, 2);
+      const equivalents = [`0.${d}0`, `0.${d}00`];
+      const leadingZero = [`0.0${d}`, `0.00${d}`];
+      const shown = matches === 2 ? [...equivalents, leadingZero[0]] : [equivalents[0], ...leadingZero];
+      // Rotate so the odd values do not always sit in the same slot.
+      const spin = pick(rand, 0, 2);
+      const order = [shown[spin % 3], shown[(spin + 1) % 3], shown[(spin + 2) % 3]];
+      const matched = order.filter((v) => equivalents.includes(v));
+      const missed = order.filter((v) => leadingZero.includes(v));
       return num(
         "decimal-representation",
-        `Of these three — 0.${d}0, 0.0${d}, 0.${d}00 — how many equal 0.${d}?`,
-        2,
+        `Of these three — ${order.join(", ")} — how many equal 0.${d}?`,
+        matches,
         0,
         [
-          [3, `0.0${d} is the mismatch because the zero before ${d} moves it into hundredths. Only the two trailing-zero forms match.`],
-          [1, `Both 0.${d}0 and 0.${d}00 equal 0.${d}; right-end zeros do not change the value, so there are two matches.`],
+          [3, `${missed.join(" and ")} ${missed.length === 1 ? "does" : "do"} not match: a zero BEFORE the ${d} moves it out of tenths. Only ${matched.join(" and ")} keep${matched.length === 1 ? "s" : ""} the value.`],
+          [3 - matches, `That counts the values that do NOT equal 0.${d}. Zeros on the right end change nothing, so ${matched.join(" and ")} ${matched.length === 1 ? "is the match" : "are the matches"}.`],
         ],
-        `Count the trailing-zero equivalents and exclude the leading-zero value: exactly two match 0.${d}.`
+        `Right — ${matched.join(" and ")} keep${matched.length === 1 ? "s" : ""} the ${d} in tenths, and ${missed.join(" and ")} push${missed.length === 1 ? "es" : ""} it further right.`
       );
     },
   },

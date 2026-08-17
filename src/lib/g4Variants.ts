@@ -730,11 +730,54 @@ const multiplyHandlers: Record<string, FormHandler> = {
     return mcq(rand, "g4-multiply", `Classify ${n}.`, [right, `Correct — ${n} has ${isPrime(n) ? "exactly two positive factors" : "more than two positive factors"}.`],
       [[right === "Prime" ? "Composite" : "Prime", `Checking the full factor list gives the opposite classification.`], ["Neither", `Every whole number greater than 1 is either prime or composite.`], ["Even", `Even or odd is a different classification from prime or composite.`]]);
   },
+  /* S242 / GRB-04. THIS FORM WAS DECLARED ON THREE STEPS AND REPRODUCED NONE OF THEM.
+   *
+   * It emitted `${n} is prime. How many positive factors does it have?` over six primes — answer 2,
+   * on every seed. The three authored steps that declare it ask something else entirely:
+   *
+   *     mb-02-03/ch1    How many PRIME numbers are there from 2 to 10 (including 2 and 10)?   → 4
+   *     g4p-02-01/k2    What is the smallest prime number?                                    → 2
+   *     g4p-02-02/k2    What is the smallest prime number?                                    → 2
+   *
+   * It passed every gate because two of those answers are 2 and so was the generator's, forever.
+   * The independent route said `return 2`; the suite asserted `toBe(2)`; `variantForStep` only
+   * refuses a variant whose WIDGET TYPE differs. Three checks agreeing on a coincidence.
+   *
+   * CLAUDE.md's rhythm is that a generator must reproduce what the content actually does, including
+   * its exact question shape, so this now generates the mb-02-03 shape: count the primes in a drawn
+   * range. The two "smallest prime number" steps are single-fact items — rule 7 — and their
+   * declarations are withdrawn rather than served by a question they do not ask. */
   mbPrimeCompositeNumeric: (rand) => {
-    const n = choose(rand, [11, 13, 17, 19, 23, 29]);
-    return num("g4-multiply", `${n} is prime. How many positive factors does it have?`, 2,
-      [[1, `A prime number has both 1 and itself as factors, so it has more than one.`], [n, `The value of the prime is not the count of its positive factors.`]],
-      `List the positive divisors of a prime: 1 and the number itself.`);
+    const isPrime = (v: number) => v > 1 && !Array.from({ length: Math.max(0, v - 2) }, (_, i) => i + 2).some((d) => v % d === 0);
+    const primesIn = (a: number, b: number) => { let c = 0; for (let v = a; v <= b; v++) if (isPrime(v)) c++; return c; };
+    // 2…10 first because it is the authored range in `mb-02-03/ch1`; the rest keep the pool clear
+    // of the ten-draw anti-repeat window rather than merely level with it.
+    const RANGES: Array<[number, number]> = [[2, 10], [2, 15], [3, 20], [5, 20], [10, 30], [11, 25],
+      [2, 20], [6, 24], [12, 30], [20, 40], [2, 12], [4, 18], [8, 28], [14, 32], [15, 35], [24, 44]];
+    const [lo, hi] = RANGES[pick(rand, 0, RANGES.length - 1)];
+    const answer = primesIn(lo, hi);
+    const span = Array.from({ length: hi - lo + 1 }, (_, i) => lo + i);
+    const list = span.filter(isPrime).join(", ");
+    /* THE TRAPS ARE CHOSEN PER RANGE, NOT FILTERED FOR. The first cut excluded any range where a
+     * trap collided with the answer — and the range it excluded first was 2…10, which is the
+     * authored item this form exists to reproduce (`mb-02-03/ch1`). CLAUDE.md names that exact
+     * mistake: "a guard that rejects the content it is meant to reproduce is a bug". On 2…10 there
+     * are four odds and four primes, so "every odd is prime" IS the answer there and cannot be a
+     * trap — but "counted the composites instead" still can. So all three misconceptions are
+     * offered and the first two that are live and distinct are used. */
+    const odds = span.filter((v) => v % 2 === 1).length;
+    const inner = primesIn(lo + 1, hi - 1);
+    const composites = span.length - answer;
+    const candidates: Array<[number, string]> = [
+      [odds, `${odds} counts every ODD number from ${lo} to ${hi}. Odd is not the same as prime — 9, 15 and 21 are all odd and all composite. The primes here are ${list}.`],
+      [inner, `${inner} leaves out ${lo} and ${hi} themselves, but the question says to include both endpoints. The primes are ${list}.`],
+      [composites, `${composites} counts the numbers that are NOT prime. The question asks for the primes: ${list}.`],
+    ];
+    const traps: Array<[number, string]> = [];
+    for (const c of candidates) if (c[0] !== answer && !traps.some((t) => t[0] === c[0])) traps.push(c);
+    return num("g4-multiply", `How many PRIME numbers are there from ${lo} to ${hi} (including ${lo} and ${hi})?`, answer,
+      traps.slice(0, 2),
+      `Test each number from ${lo} to ${hi} for factors other than 1 and itself: ${list} — that is ${answer}.`);
   },
   mbMultiplyTensNumeric: (rand, band) => {
     const a = bandInt(rand, band, [2, 9], [4, 12], [7, 18]), tens = pick(rand, 2, 9) * 10, ans = a * tens;

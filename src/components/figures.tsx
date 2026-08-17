@@ -7091,7 +7091,20 @@ function DiscriminantCases() {
     <svg viewBox="0 0 360 150" role="img" className="mx-auto w-full max-w-sm">
       <title>Three parabolas over a horizontal x-axis: when the discriminant is positive the curve crosses the axis at two points (two roots); when it is zero the curve just touches the axis (one root); when it is negative the curve stays above the axis (no real roots).</title>
       <line x1={10} y1={95} x2={350} y2={95} stroke={INK} strokeWidth={1.3} />
-      <path d="M 30 55 Q 60 130 90 55" fill="none" stroke={INK} strokeWidth={2.2} />
+      {/* S242 — THE "TWO ROOTS" PARABOLA DID NOT REACH THE AXIS, LET ALONE CROSS IT.
+        *
+        * It was `Q 60 130 90 55`. A quadratic Bézier does not pass through its control point: its
+        * extreme sits at t = ½, which is ¼·55 + ½·130 + ¼·55 = 92.5 — ABOVE the axis at y = 95. So
+        * the panel captioned "D > 0: 2 roots" drew a curve with no real roots at all, with two root
+        * dots painted on the axis about 12px from the curve that was supposed to meet them. The
+        * D = 0 panel (extreme exactly 95, tangent) and the D < 0 panel (extreme 84, clear of the
+        * axis) were both already correct; only this one contradicted its own caption and title.
+        *
+        * The control point is now 161.7, chosen so the curve passes through the axis exactly at
+        * x = 45 and x = 75 — where the dots already were — and bottoms out at y ≈ 108.4, below the
+        * axis and clear of the label baseline at 124. Reported from a rendered screenshot of
+        * cn-04-02 step 1, which is the only way this class of defect is ever visible. */}
+      <path d="M 30 55 Q 60 161.7 90 55" fill="none" stroke={INK} strokeWidth={2.2} />
       <circle cx={45} cy={95} r={4} fill={LEAF} stroke={INK} strokeWidth={1.2} />
       <circle cx={75} cy={95} r={4} fill={LEAF} stroke={INK} strokeWidth={1.2} />
       <text x={60} y={124} textAnchor="middle" fontSize={11} fontWeight={700} fill={LEAF}>D &gt; 0: 2 roots</text>

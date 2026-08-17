@@ -1,290 +1,292 @@
-# sourceSeal=d07fe6a — S242/GRB-04. Splitting the exhausted pairs by WHY they are narrow.
+# sourceSeal=e88dcd0 — S242/GRB-04. Splitting the exhausted pairs by WHY they are narrow.
 # closed-fact-set = one sentence, one number moving, and the values form a contiguous run with
 # no gaps — the pool IS the subject (a times table, a counting range). Widening these is wrong.
+# cosmetic-only = every prompt keys the SAME ANSWER — the variation is a noun, not mathematics.
+# Widening these raises a count and changes nothing a learner does; see CLAUDE.md rule 7.
 # under-parameterised = everything else: the pool is narrow because a dimension is missing.
-generator,form,verdict,distinctPrompts,shapes,varyingSlots,run,example
-g3-mult-fluency,MultTable10Numeric,closed-fact-set,11,1,1,0..10,10 × 4 = ?
-read-clock,default,closed-fact-set,11,1,1,1..11,The MINUTE hand points at the number 3. How many minutes past the hour is it?
-time-set-clock,hour,closed-fact-set,11,1,1,1..11,Set the clock to show 11:00.
-g3-mult-fluency,MultTable4Numeric,closed-fact-set,11,1,1,0..10,4 × 9 = ?
-g3-mult-fluency,MultTable5Numeric,closed-fact-set,11,1,1,0..10,5 × 8 = ?
-g3-mult-fluency,MultTable8Numeric,closed-fact-set,11,1,1,0..10,8 × 1 = ?
-g3-mult-fluency,MultTable6Numeric,closed-fact-set,11,1,1,0..10,6 × 7 = ?
-g3-mult-fluency,MultTable9Numeric,closed-fact-set,11,1,1,0..10,9 × 4 = ?
-g2-fluency,FlTenPlusNumeric,closed-fact-set,10,1,1,1..10,10 + 5 = ?
-g2-fluency,FlFromTenNumeric,closed-fact-set,9,1,1,1..9,10 − 6 = ?
-g4-decimals,default,closed-fact-set,9,1,1,1..9,A unit square is split into 10 equal columns  and 4 of them are shaded. Write the shaded
-g4-decimals,dTenthsWriteNumeric,closed-fact-set,9,1,1,1..9,A unit square is split into 10 equal columns  and 1 of them are shaded. Write the shaded
-polygon-angles,exteriorFromInterior,under-parameterised,50,1,1,40..170,A vertex has interior angle 60°. Its exterior angle?
-trig-deriv,default,under-parameterised,18,1,1,2..20,f(x) = 5 sin x. Find f′(0).
-opt-setup,maxProduct,under-parameterised,17,1,1,6..40,Two numbers add to 12. What is their largest possible product?
-cn-solve-any,default,under-parameterised,16,1,2,-,Solve x² + 6x + 13 = 0 (hint: complete the square). For the root with POSITIVE imaginary
-a2-series,sr-inf-sum__numeric,under-parameterised,16,1,4,-,Find 6+1.5+0.375+… forever (common ratio 1/4).
-a1-quadratics,quad-diff-squares-solve__numeric,under-parameterised,14,1,1,4..225,Solve x^2 - 36 = 0. What is the larger solution?
-decimal-representation,rungCount,under-parameterised,14,4,1,-,How many thousandths make 1 hundredth?
-a1-quadratics,quad-square-root__numeric,under-parameterised,14,1,1,4..225,Solve x^2 - 25 = 0. What is the larger solution?
-inverse-deriv,default,under-parameterised,13,1,3,-,f(x) = x³  so f(2) = 8. Find (f⁻¹)′(8)  as a decimal to four places.
-negative-intro,doubleOpposite,under-parameterised,13,1,1,3..15,What is the opposite of the opposite of 3?
-polygon-angles,default,under-parameterised,12,8,-1,-,Interior angle sum of a pentagon (5 sides)  in degrees?
-polygon-angles,sidesFromSum,under-parameterised,12,1,1,180..3960,A polygon's interior angles sum to 540°. How many sides?
-polygon-angles,sidesFromExterior,under-parameterised,12,1,1,15..120,Each exterior angle of a regular polygon measures 45°. How many sides?
-sigma-eval,sigmaPow,under-parameterised,12,1,2,-,Evaluate Σ from k = 1 to 4 of 2ᵏ.
-trig-inside,sumSolutions,under-parameterised,12,2,2,-,Solve sin(2x) = √3/2 on [0  2π). What is the SUM of the solutions  to hundredths?
-geo-series,powers,under-parameterised,12,3,-1,-,Evaluate 1 + 3 + 9 + 27 with the formula.
-g8-esn-power-meaning,esnPowerNegativeDeep,under-parameterised,12,12,0,-,Evaluate 10⁻⁸ = ?
-variable-meaning,divide,under-parameterised,12,1,2,-,What is y ÷ 2 when y = 8?
-g7-vertical-angles,default,under-parameterised,12,1,1,25..85,Two lines cross. One angle is 45°. What is the angle next to it  sharing a side  in degr
-g1-data,GdTallyReadNumeric,under-parameterised,12,4,2,-,A tally row shows 3 crossed five-groups and 2 single marks. How many does it count?
-a2-radicals,re-convert__buildExpression,under-parameterised,12,1,2,-,Write x^(2/3) as a radical.
-variable-meaning,halfEval,under-parameterised,12,1,1,8..30,Write  half of y  as y ÷ 2  then evaluate it at y = 18.
-arith-series,default,under-parameterised,12,1,1,40..200,So what is 1 + 2 + 3 + ⋯ + 60?
-a2-logarithms,lg-expand-condense__numeric,under-parameterised,12,1,5,-,Evaluate 3log_3(3) + log_3(9).
-pq-kite,default,under-parameterised,12,1,1,8..30,A kite's cross diagonal (the one perpendicular to the symmetry axis) measures 14. The sy
-polygon-angles,exteriorSum,under-parameterised,11,1,1,3..24,Exterior angles of a 5-gon (one at each vertex): what do they sum to?
-a1-polynomials,factor-difference-squares__buildExpression,under-parameterised,11,1,1,4..144,Build the factorization of x^2 - 16.
-area-vs-perimeter,areaGap,under-parameterised,11,1,4,-,Two rectangular pens each have perimeter 14 m. Pen A is 1 m by 6 m; Pen B is 3 m by 4 m.
-radian-convert,radToDeg,under-parameterised,11,1,1,2..12,Convert 2 radians to degrees. (Round to tenths.)
-radian-convert,nFromDegrees,under-parameterised,11,1,2,-,135° = nπ/4. What is n?
-mass,kgToG,under-parameterised,11,1,1,2..12,How many grams are in 5 kilograms?
-g4-lines-angles,laSymmetryApplicationNumeric,under-parameterised,11,1,1,2..12,A half-design contains 2 shapes  none on the symmetry line. After reflecting every shape
-cn-i-def,default,under-parameterised,11,1,1,4..144,What is √(−9)?
-equiv-models,tradeInto,under-parameterised,11,7,3,-,You hold 2/3 of a bar and trade it into TWELFTHS (each third gets cut into 4 minis). How
-a2-radicals,re-models__numeric,under-parameterised,11,1,1,16..576,A model gives t=√h/4. Find t when h=36.
-a2-radicals,re-var-radicals__buildExpression,under-parameterised,11,1,1,4..144,Simplify √(100x²y) for x≥0.
-a2-radicals,re-products__buildExpression,under-parameterised,11,1,1,2..12,Expand (1+√7)².
-g2-measure-money-time,MmtBarGraphNumeric,under-parameterised,11,1,1,2..12,A bar reaches 2 on a graph where each gridline is worth 1. What value does the bar show?
-a2-radicals,re-products__numeric,under-parameterised,11,1,1,2..12,Evaluate (√9)².
-times-2,doubleIt,under-parameterised,10,1,1,3..12,12 × 2 = ?
-g3-mult-fluency,MultHardFactsNumeric,under-parameterised,10,1,2,-,7 × 9 = ?
-parabola-focal,focusPoint,under-parameterised,10,1,1,8..44,A dish is designed as x² = 16y. How far from the vertex is the focus?
-exp-function,initialValue,under-parameterised,10,1,2,-,For f(x) = 4 · 2^x  what is the initial value f(0)?
-implicit-diff,quadForm,under-parameterised,10,2,3,-,x² + xy + y² = 7. Find dy/dx at (1  2)  as a decimal.
-prob-fraction,default,under-parameterised,10,6,-1,-,When rolling a standard 6-sided die  what is the probability of rolling greater than 2? 
-lcm-pair,gcfPair,under-parameterised,10,1,2,-,Find the greatest common factor of 6 and 8.
-chord-dist,pipeDepth,under-parameterised,10,1,2,-,A horizontal pipe has a circular cross-section of radius 17 dm. Water fills it to a surf
-count-prob,atLeastOne,under-parameterised,10,1,2,-,From 7 red and 4 blue marbles  3 are taken at random. Find P(at least one blue)  to thre
-nl-beyond-one,jumpsToWhole,under-parameterised,10,4,1,-,Jumping in FOURTHS from 0  how many jumps land you exactly on 2?
-k0-add-subtract,KoaSums5Numeric,under-parameterised,10,1,2,-,1 + 4 = ?
-parabola-focal,default,under-parameterised,10,1,1,8..44,For the parabola x² = 24y  what is the focal length p?
-radian-convert,arcRadians,under-parameterised,10,1,1,2..11,An arc along a circle's rim measures exactly 5 radius-lengths. What central angle does i
-times-five-ten,clockMinutes,under-parameterised,10,1,1,2..11,The minute hand points straight at the 6. How many minutes past the hour is it?
-k0-add-subtract,KoaDiffs5Numeric,under-parameterised,10,1,2,-,4 − 1 = ?
-lcm-pair,default,under-parameterised,10,1,2,-,Find the LCM of 4 and 10.
-hyperbola-cab,slope,under-parameterised,10,1,2,-,For x²/25 − y²/16 = 1  what is the positive asymptote slope b/a? (Decimal.)
-box-surface-area,sameVolumeDifference,under-parameterised,10,1,4,-,Box A is 4×4×2; Box B is 8×2×2. They have the same volume. How much MORE surface area do
-g3-div-fluency,DivBy3Numeric,under-parameterised,10,1,1,3..30,27 ÷ 3 = ?
-parabola-focal,dishForm,under-parameterised,10,1,1,8..44,A parabolic dish is y = x²/16. How far above the vertex should the receiver sit?
-arith-series,findN,under-parameterised,10,1,4,-,Find 4 + 8 + 12 + ⋯ + 40.
-a1-solving-equations,multi-literal__numeric,under-parameterised,10,1,1,5..100,Using F = 9C/5 + 32  find F when C = 10.
-pq-para-angle,ratioPair,under-parameterised,10,1,2,-,Two consecutive angles of a parallelogram are in the ratio 3 : 7. Find the SMALLER angle
-opt-setup,domainBound,under-parameterised,10,1,1,6..24,A 10-inch square sheet  with squares of side x cut from the corners and the sides folded
-reflect-fn,default,under-parameterised,10,2,1,-,On the graph of y = −x³  what is y when x = 5?
-pythagorean,ladder,under-parameterised,10,1,2,-,A ladder leans against a wall. Its base is 9 feet from the wall and it reaches 12 feet u
-polygon-angles,regularInterior,under-parameterised,10,7,-1,-,Each interior angle of a regular hexagon  in degrees?
-box-surface-area,cubeSA,under-parameterised,10,1,1,2..12,Find the surface area of a cube with side 3.
-equiv-models,tradeEighths,under-parameterised,10,4,2,-,You hold 3/4 of a bar and trade it into EIGHTHS. How many eighths do you hold?
-exp-function,startAmount,under-parameterised,10,1,2,-,For A(x) = 500 · 3^x  what is the starting amount A(0)?
-lcm-pair,divides,under-parameterised,10,1,2,-,Find the LCM of 3 and 6.
-lcm-pair,buses,under-parameterised,10,1,2,-,One bus leaves every 6 minutes  another every 9 minutes. They just left together. In how
-g3-div-fluency,DivBy2Numeric,under-parameterised,10,1,1,2..20,18 ÷ 2 = ?
-pythagorean,default,under-parameterised,10,1,2,-,A right triangle has legs 6 and 8. What is the hypotenuse?
-deriv-product,default,under-parameterised,10,6,1,-,f(x) = x³ · x². Compute f′(2) HONESTLY (simplify to x⁵ if you like).
-g3-div-fluency,DivBy10Numeric,under-parameterised,10,1,1,10..100,90 ÷ 10 = ?
-g3-div-fluency,default,under-parameterised,10,1,1,2..20,10 ÷ 2 = ?
-exp-function,decayModel,under-parameterised,10,2,1,-,A car's value halves each period: V(x) = 320 · (1/2)^x. What is V(3)?
-a1-polynomials,factor-difference-squares__numeric,under-parameterised,10,1,2,-,Factor x^2 - 4 as (x + 2)(x - k). Find k.
-g0-counting,countTeenFrame,under-parameterised,9,1,1,11..19,A full group of 10 is already shown. Add the extra dots needed to make 11.
-thales-right-angle,hypotenuse,under-parameterised,9,1,2,-,A triangle inscribed on a diameter has legs 3 and 4. Find the DIAMETER.
-evt-candidates,candidateCount,under-parameterised,9,1,2,-,f(x) = x³ − 12x on [0  4]. How many candidates does the closed-interval method produce?
-evt-candidates,minValue,under-parameterised,9,1,2,-,f(x) = x³ − 12x on [0  4]. Find the MINIMUM value.
-round-half,tieTen,under-parameterised,9,1,1,15..95,Round 25 to the nearest ten.
-thales-right-angle,radiusFromLegs,under-parameterised,9,1,2,-,Triangle ABC is inscribed in a circle with a right angle at C  and legs AC = 9  BC = 12.
-nl-unit,howManyJumps,under-parameterised,9,1,1,4..12,On a 0→1 line cut into equal jumps  the FIRST mark is exactly 1/7. How many jumps make u
-a2-polynomials,pf-anatomy__numeric,under-parameterised,9,1,1,-11..-3,What is the maximum possible number of turning points of a degree-3 polynomial?
-a2-polynomials,pf-multiplicity__numeric,under-parameterised,9,1,2,-,What is the degree of f(x)=(x+1)^4(x−2)^1?
-metric-convert,rrTimeDivide,under-parameterised,9,1,1,120..600,There are 60 minutes in an hour. How many hours is 300 minutes?
-decimal-representation,trailingMatchCount,under-parameterised,9,1,4,-,Of these three — 0.60  0.06  0.600 — how many equal 0.6?
-a1-polynomials,exponent-power__numeric,under-parameterised,9,1,2,-,Simplify (x^4)^2 to x^k. What is k?
-a2-rationals,rf-mixed__buildExpression,under-parameterised,9,1,3,-,Simplify (x²−4)/x · x/(x+2) ÷ (x−2)/2.
-g1-data,GdTallySinglesNumeric,under-parameterised,9,1,1,7..19,19 students voted. After the crossed five-groups  how many SINGLE marks will the tally s
-g1-counting-120,TeensNumeric,under-parameterised,9,2,1,-,What numeral is 1 ten and 5 ones?
-g2-fluency,default,under-parameterised,9,1,2,-,6 + 6 = ?
-a2-trig,tf-exact-values__numeric,under-parameterised,9,3,1,-,Find tan 60° to hundredths.
-g1-tens-ones,TnoTenBundleNumeric,under-parameterised,9,2,1,-,How many ones are the same as 8 tens?
-g2-fluency,FlDoublesNumeric,under-parameterised,9,1,2,-,3 + 3 = ?
-a2-trig,tf-reference__numeric,under-parameterised,9,1,1,120..330,Find the reference angle of 150°.
-proportional-plot,default,under-parameterised,9,2,-1,-,For k = 2  plot the points (1  2) and (2  4).
-permutation-count,arrangeAll,under-parameterised,9,3,1,-,How many ways can 6 different trophies be arranged in a row?
-g1-add-subtract,TensPartnersNumeric,under-parameterised,9,1,2,-,8 + ? = 10. What makes ten with 8?
-k0-count-100,kTensNextHop,under-parameterised,9,1,1,10..90,Count by tens: what comes after 20? Hop one ten and tap where you land.
-metric-convert,rrHoursSeconds,under-parameterised,9,1,1,2..10,How many seconds are in 4 hours? Chain hours → minutes → seconds.
-conic-general,default,under-parameterised,9,1,1,8..40,For y² = 20x (form y² = 4px)  find p.
-second-deriv-eval,default,under-parameterised,9,1,2,-,f(x) = x³ − 27x has f″(x) = 6x. Evaluate f″ at the critical point x = 3.
-g4-decimals,dTenthToHundredthNumeric,under-parameterised,9,1,1,0.1..0.9,0.8 = ?/100. What numerator makes the fraction name the same amount?
-a2-logarithms,lg-product__numeric,under-parameterised,9,1,4,-,Evaluate log_5(5) + log_5(25).
-g3-mult-fluency,MultSquaresNumeric,under-parameterised,9,1,2,-,6 × 6 = ?
-polygon-angles,sidesFromInterior,under-parameterised,8,1,1,90..165,Each interior angle of a regular polygon is 135°. How many sides?
-ellipse-abc,findB,under-parameterised,8,1,2,-,An ellipse has a = 17 and c = 8. What is b?
-coord-perimeter,default,under-parameterised,8,1,3,-,Triangle (0  0)  (3  0)  (3  4). Perimeter = ?
-inverse-deriv,arctan,under-parameterised,8,1,1,-7..7,f(x) = arctan x. Find f′(1)  as a decimal.
-g1-shapes-measure,Smg12D3DNumeric,under-parameterised,8,8,0,-,How many curved surfaces does a cylinder have?
-ellipse-abc,eccentricity,under-parameterised,8,1,2,-,An ellipse has a = 13 and c = 5. Find its eccentricity to two decimals.
-g8-esn-context-compute,esnContextMultiply,under-parameterised,8,8,2,-,A factory makes 6 × 10² items  and each item requires 4 × 10³ microseconds. How many mic
-g1-shapes-measure,Smg1SolidPartsNumeric,under-parameterised,8,8,0,-,How many edges does a cylinder have?
-power-product,quotientEval,under-parameterised,8,1,2,-,Evaluate 2^5 / 2^2.
-rolle-c,default,under-parameterised,8,1,3,-,f(x) = x² − 2x on [0  2]. Note f(0) = f(2) = 0. Find the c that Rolle guarantees.
-opt-box,maxVolume,under-parameterised,8,1,1,12..54,A 12-inch square sheet folds into an open box this way. Find the maximum volume  in cubi
-round-half,tieHundred,under-parameterised,8,1,1,150..850,Round 650 to the nearest hundred.
-pr-constant-k-g7,rrPartWholeSum,under-parameterised,8,1,2,-,A team's wins-to-losses ratio is 3 : 4. How many games make one full cycle of that patte
-g4-place-million,pvCommaPeriodsNumeric,under-parameterised,8,2,1,-,A number's digits are grouped into 2 three-digit periods. How many commas separate those
-a2-trig,tf-identity__numeric,under-parameterised,8,1,1,0.28..0.96,sin θ=0.28 and θ is in Quadrant I. Find cos θ.
-reflect-compose,composeMatrix,under-parameterised,8,8,0,-,Reflect over y = x  then over the y-axis — one transformation right after the other. Bui
-critical-count,quartic,under-parameterised,8,1,1,4..32,f(x) = x⁴ − 4x³. How many DISTINCT critical points does it have?
-k0-count-100,kTensBackHop,under-parameterised,8,1,1,30..100,Count back by tens from 30. Hop one ten back and tap where you land.
-ladder-shift,divTenth,under-parameterised,8,1,1,0.2..0.9,0.4 ÷ 10 = ? (enter as a decimal)
-hyperbola-cab,findC,under-parameterised,8,1,4,-,For x²/64 − y²/36 = 1 (a = 8  b = 6)  find c using c² = a² + b².
-combination-count,default,under-parameterised,8,1,1,5..12,From 5 runners  how many different **teams of 3** (no order) can be chosen?
-a2-polynomials,pf-cubes__buildExpression,under-parameterised,8,1,1,8..729,Factor x³ + 125.
-a2-polynomials,pf-cubes__numeric,under-parameterised,8,1,1,8..729,Find the only real zero of x³ + 8=0.
-a2-radicals,re-plusminus__numeric,under-parameterised,8,1,2,-,Solve x^(2/3)=9. Give the positive solution.
-a2-rationals,rf-opposite__buildExpression,under-parameterised,8,1,2,-,Simplify (25−x²)/(x−5).
-decimal-representation,unitCount,under-parameterised,8,2,1,-,How many tenths make 2 wholes?
-critical-count,default,under-parameterised,8,1,1,3..192,f(x) = x³ − 27x. How many critical points does it have?
-evt-candidates,default,under-parameterised,8,1,2,-,f(x) = x³ − 12x on [0  4]. Find the MAXIMUM value.
-a2-logarithms,lg-scales__numeric,under-parameterised,8,1,1,2..9,A pH 8 units lower represents how many times greater hydrogen-ion concentration?
-base-ten-build,default,under-parameterised,8,1,1,12..19,What hides inside 16? Build it with tens and ones.
-ladder-shift,mulTwice,under-parameterised,8,1,1,0.02..0.09,0.04 × 10 × 10 = ?
-ladder-shift,default,under-parameterised,8,1,1,2..9,4 ÷ 10 = ? (enter as a decimal)
-repeat-decimal,default,under-parameterised,8,1,1,0.111..0.888,0.111… equals:
-opt-box,beatEndpoint,under-parameterised,8,1,3,-,V(2) = 128  V(0) = 0  V(6) = 0. By how much does the best box beat the best endpoint?
-trig-deriv,product,under-parameterised,8,1,1,2..9,f(x) = (x + 2)·sin x. Find f′(0).
-nl-partition,newMarks,under-parameterised,8,1,1,3..10,You want to cut the 0→1 trip into 9 equal jumps. How many NEW marks do you draw between 
-g7-scaled-area,unitAreaScale,under-parameterised,8,1,1,3..10,At the scale 1 cm = 3 m  how many square meters does each 1 cm² of drawing represent?
-g8-esn-context-compute,esnContextDivide,under-parameterised,8,8,2,-,A signal travels 6 × 10⁶ meters at 2 × 10³ meters per second. How many seconds does the 
-g2-fluency,FlNearDoublesNumeric,under-parameterised,8,1,2,-,4 + 5 = ?
-a2-polynomials,pf-turning__numeric,under-parameterised,8,1,1,2..9,A polynomial graph has exactly 2 turning points. What is the smallest possible degree?
-a2-radicals,re-extraneous__buildExpression,under-parameterised,8,1,3,-,Squaring √(x+42)=x gives candidates 7 and -6. Build the checked solution set.
-a2-radicals,re-plusminus__buildExpression,under-parameterised,8,1,2,-,Build the real solutions of x^(2/5)=25.
-a2-statistics,si-margin__numeric,under-parameterised,8,1,1,100..10000,For p-hat=0.5 and n=625  estimate the 2-SE margin of error in percentage points.
-exp-function,ratio,under-parameterised,8,1,4,-,In the sequence 2  6  18  54  what is the constant ratio?
-geo-series,repeatDecimal,under-parameterised,8,1,2,-,0.555… (repeating) equals 5/n. What is n?
-decimal-representation,moneyTenths,under-parameterised,8,1,1,2..9,A dime is one tenth of a dollar. Written as 0.?  what tenths digit represents 5 dimes?
-proportional-plot,cgPairNext,under-parameterised,8,1,4,-,Start at 0 and add 4 each time. The pattern is 0  4  8  12. What number comes next?
-quadrilaterals,cgEqualSidePerimeter,under-parameterised,8,1,1,5..12,A rhombus has four sides  each 12 units long. What is its perimeter?
-g8-esn-context-compute,esnContextMixed,under-parameterised,8,5,3,-,A shipping company moves 3 × 10³ containers  each holding 2 × 10² kilograms  then remove
-g1-shapes-measure,Smg1ShapeSidesNumeric,under-parameterised,8,8,0,-,How many corners does a square have?
-a1-radicals,rad-pythagorean-radical__numeric,under-parameterised,8,1,2,-,A right triangle has legs 3 and 3. What is c^2 before taking the square root?
-a1-radicals,rad-pythagorean__numeric,under-parameterised,8,1,2,-,A right triangle has legs 5 and 12. Find the hypotenuse.
-a2-statistics,si-claim-overreach__numeric,under-parameterised,8,1,2,-,In 20000 people  prevalence is 1%  sensitivity is 95%  and false-positive rate is 5%. Ho
-a2-statistics,si-standard-error__numeric,under-parameterised,8,1,1,100..10000,Estimate the standard error in percentage points for p=0.5 and n=2500.
-prob-fraction,trialTheoretical,under-parameterised,8,6,-1,-,A fair number cube is rolled. Which fraction is the probability of rolling greater than 
-ellipse-abc,default,under-parameterised,8,1,2,-,For an ellipse with a = 13 and b = 12  find c.
-coord-perimeter,rhombus,under-parameterised,8,1,1,5..41,A rhombus has all four sides equal to 10 (built from a right-triangle slant). Perimeter 
-a2-logarithms,lg-ln__numeric,under-parameterised,8,1,1,2..9,Evaluate e^(ln 2).
-deriv-explog,default,under-parameterised,8,1,1,2..25,f(x) = ln x. Find f′(5)  as a decimal.
-multiplication-rule,withoutReplacement,under-parameterised,8,8,0,-,Draw 2 cards without replacement. P(both spades) is exactly 1/n. Find **n**.
-pr-constant-k-g7,rrPartWholeBuild,under-parameterised,8,1,2,-,Paint is mixed with 3 parts blue for every 5 parts yellow. Build the ratio of blue to th
-a1-radicals,rad-distance__numeric,under-parameterised,8,1,2,-,Find the distance from (0  0) to (5  12).
-a2-radicals,re-extraneous__numeric,under-parameterised,8,1,1,6..90,Solve √(x+6)=x. Give the valid solution.
-a2-trig,tf-unit-circle__numeric,under-parameterised,8,1,1,0..630,Find cos 180°.
-exp-solve,negExponent,under-parameterised,8,1,2,-,Solve 2^x = 1/16.
-angle-equation,default,under-parameterised,8,2,1,-,Angles x and 2x sit together on a straight line. Solve for x (in degrees).
-double-double,timesEight,under-parameterised,7,1,1,3..9,9 × 8 = ?
-cn-square,completeConstant,under-parameterised,7,1,1,6..18,What constant completes the square: x² + 10x + ___?
-power-product,basicSquare,under-parameterised,7,1,3,-,What is 6^2 (6 × 6)?
-directrix-ecc,ratio,under-parameterised,7,1,5,-,Vertex (5  0)  focus (2  0)  directrix x = 12.5. The focal distance is 3 and the directr
-pct-of-number,rrFractionPercent,under-parameterised,7,1,2,-,Write 1/4 as a percent. Enter just the number.
-order-decimals,default,under-parameterised,7,1,3,-,Which is the LEAST: 0.3  0.23  or 0.32?
-pct-of-number,rrGridPercent,under-parameterised,7,1,2,-,On a 100-square grid  1/2 of the squares are shaded. What percent is shaded?
-mvt-c,cubicDecimal,under-parameterised,7,1,1,2..8,f(x) = x³ on [0  2]. Find the c the MVT guarantees  as a decimal to three places.
-g2-add-subtract-100,DoublesNumeric,under-parameterised,7,1,2,-,7 + 7 = ?
-cn-i-def,coefSquared,under-parameterised,7,1,1,3..9,What is (3i)²?
-ten-frame-fill,decompose,under-parameterised,7,1,3,-,6 crayons split between two boxes. One box has 2 — they are already in the frame. Add do
-ten-frame-fill,default,under-parameterised,7,1,1,2..8,4 dots are in the ten frame. Tap to add dots until the frame makes TEN.
-pq-rhombus,otherDiagonal,under-parameterised,7,1,2,-,A rhombus has side 13 and one diagonal of length 10. Find the OTHER diagonal.
-arith-series,multiples,under-parameterised,7,1,4,-,Find 4 + 8 + 12 + ⋯ + 40 (ten terms).
-directrix-ecc,hypEcc,under-parameterised,7,1,2,-,For a hyperbola with a = 3  c = 5  the focus-directrix ratio equals e. Find it to two de
-combination-count,handshakes,under-parameterised,7,1,1,6..12,9 people each shake hands once with every other person. How many handshakes happen?
-times-five-ten,timesFive,under-parameterised,7,1,1,3..9,4 × 5 = ?
-tens-problems,default,under-parameterised,7,1,1,3..9,A dime is worth 10 cents. How many cents are 5 dimes worth?
-a2-trig,tf-ratios__numeric,under-parameterised,7,1,5,-,In a 9-40-41 right triangle  θ is opposite 9. If cosθ=n/41  find n.
-root-solve,default,under-parameterised,7,1,1,36..144,Which values solve x² = 49?
-pq-rhombus,sideFromDiagonals,under-parameterised,7,1,2,-,A rhombus has diagonals 12 and 16. Find its side length.
-order-decimals,greatestOf3,under-parameterised,7,1,3,-,Which is the GREATEST: 0.06  0.6  or 0.16?
-power-product,default,under-parameterised,7,1,2,-,Evaluate 2^3 · 2^3.
-eval-expression,square,under-parameterised,7,1,1,3..9,Evaluate x² at x = 3.
-directrix-ecc,default,under-parameterised,7,1,2,-,An ellipse has a = 5 and e = 0.4. Its directrix is x = a/e. Find that value.
-implicit-diff,default,under-parameterised,7,1,5,-,The tangent to x² + y² = 225 at (9  12) has slope −3/4. Find its y-intercept  as a decim
-nl-unit,default,under-parameterised,7,1,2,-,On a 0→1 line split into 7 equal jumps  place the marker at 1/7.
-arith-series,paramsNegD,under-parameterised,7,1,2,-,a₁ = 8  d = −2  n = 8. Find S₈.
-k0-count-100,kDecadeCrossHop,under-parameterised,7,1,1,27..87,Start at 27 and count on 5. Tap where you land.
-unit-trading,hundredsToTens,under-parameterised,7,1,1,2..8,4 hundreds are traded entirely into tens. How many tens are made?
-a2-logarithms,lg-e__numeric,under-parameterised,7,1,1,2..8,Evaluate e^3 to three decimals.
-full-sketch,directionChanges,under-parameterised,6,1,1,4..24,f(x) = x⁴ − 4x³. How many times does the curve change DIRECTION?
-double-angle-solve,countSolutions,under-parameterised,6,4,-1,-,How many solutions does sin 2x = sin x have on [0  2π)?
-negative-intro,default,under-parameterised,6,1,1,120..300,A valley floor sits 200 feet below sea level. Writing sea level as 0  what number is the
-rolle-c,maxRoots,under-parameterised,6,1,1,2..7,f′ has exactly 3 zeros. What is the MAXIMUM number of roots f can have?
-g1-shapes-measure,Smg1HalvesNumeric,under-parameterised,6,6,0,-,If a cracker is split into halves  how many equal parts are there?
-radian-convert,turnFraction,under-parameterised,6,6,1,-,How many radians in a EIGHTH turn (45°)? (Round to hundredths.)
-fn-evaluate,squareOnly,under-parameterised,6,1,1,4..9,For f(x) = x^2  what is f(4)?
-geo-series,infBasic,under-parameterised,6,2,-1,-,Find 6 + 2 + 2/3 + ⋯ (forever).
-solve-trig-all,sumCos,under-parameterised,6,4,1,-,Solve cos x = √3/2 on [0  2π). What is the SUM of the solutions  to hundredths?
-angle-equation,linearPairLab,under-parameterised,6,2,1,-,Angles x and 3x sit together on a straight line. Solve for x (in degrees).
-solve-mult-div,solveDiv,under-parameterised,6,1,2,-,Solve x ÷ 2 = 8.
-common-denom,lcd,under-parameterised,6,1,4,-,What is the least common denominator for 2/3 and 4/5?
-exp-solve,reciprocalBase,under-parameterised,6,1,2,-,Solve (1/3)^x = 9.
-deriv-quotient,default,under-parameterised,6,2,1,-,f(x) = x²/(x + 1). Find f′(1)  as a decimal.
-sigma-eval,default,under-parameterised,6,1,2,-,Evaluate Σ from k = 3 to 6 of k.
-arith-series,odds,under-parameterised,6,1,2,-,Find the sum of the first 20 odd numbers: 1 + 3 + 5 + ⋯ + 39.
-double-angle-solve,sumSolutions,under-parameterised,6,4,-1,-,Solve sin 2x = sin x on [0  2π). What is the SUM of all four solutions  to hundredths?
-solve-trig-all,sumSin,under-parameterised,6,4,1,-,Solve 2 sin x + √3 = 0 on [0  2π). What is the SUM of the solutions  to hundredths?
-g7-sp-counting-principle,spCountFlips,under-parameterised,6,1,1,3..8,A fair coin is flipped 5 times. How many distinct ordered outcomes are possible?
-g1-counting-120,To120Numeric,under-parameterised,6,1,1,60..110,70 + 10 = ?
-g1-shapes-measure,Smg1FourthsNumeric,under-parameterised,6,6,0,-,If a ribbon is split into fourths  how many equal parts are there?
-g1-shapes-measure,Smg1HalvesFourthsNumeric,under-parameterised,6,6,0,-,For the same-size pizza  how many fourths make one half?
-g2-shapes-shares,Ssg2PyramidNumeric,under-parameterised,6,6,0,-,How many faces does a triangular pyramid have?
-g2-shapes-shares,Ssg2ShapeVocabNumeric,under-parameterised,6,6,0,-,How many sides does a triangle have?
-g2-shapes-shares,Ssg2ThirdsCountNumeric,under-parameterised,6,6,0,-,If the ribbon is split into thirds  how many equal parts are there?
-g4-multiply,mbPrimeCompositeNumeric,under-parameterised,6,1,1,11..29,13 is prime. How many positive factors does it have?
-exp-function,nextTerm,under-parameterised,6,1,4,-,The sequence 5  10  20  40 continues. What is the next term?
-grid-count,square,under-parameterised,6,1,2,-,A rectangle is partitioned into 5 rows and 5 columns of unit squares. How many unit squa
-cn-disc-repeat,forceC,under-parameterised,6,1,1,6..16,For what value of c does x² + 6x + c = 0 have exactly one repeated root?
-angle-equation,complement,under-parameterised,6,1,1,10..60,Solve x + (x + 50) = 90. What is x  in degrees?
-grid-count,squareRead,under-parameterised,6,1,2,-,A rectangle is partitioned into 6 rows and 6 columns of unit squares. How many unit squa
-ladder-shift,divThrice,under-parameterised,6,1,1,120..520,250 ÷ 10 ÷ 10 ÷ 10 = ? (enter as a decimal)
-deriv-quotient,simplifyFirst,under-parameterised,6,2,1,-,f(x) = (x³ + x²)/x  for x ≠ 0. Find f′(4).
-rolle-c,cubicRepeated,under-parameterised,6,1,2,-,f(x) = x³ − 3x² on [0  3]. Find the c strictly inside that Rolle guarantees.
-to-polar,radius,under-parameterised,6,1,2,-,For the point (8  15)  what is r?
-fraction-volume,bucketTrips,under-parameterised,6,1,4,-,A tank is 2½ × 4 × 2. A bucket carries 2½ cubic units per trip. How many trips fill the 
-g2-add-subtract-100,NearDoublesNumeric,under-parameterised,6,1,2,-,7 + 8 = ?
-g2-place-value-1000,Pv1000SkipHundredsNumeric,under-parameterised,6,1,3,-,Skip-count by 100s: 200  300  400  ___?
-deriv-explog,expChain,under-parameterised,6,1,1,2..7,f(x) = e^(2x). Find f′(0).
-conditional-prob,diceCondition,under-parameterised,6,1,1,5..10,Two dice are rolled and you are told the total is **more than 5**. Find P(the roll is a 
-exp-function,decayStart,under-parameterised,5,1,1,320..2400,For A(x) = 320 · (1/2)^x  what is the starting amount A(0)?
-geo-series,ballDown,under-parameterised,5,1,1,4..12,A ball drops from 4 m and rebounds to half its previous height  forever. What is the TOT
-coordinate-plot,cgOrigin,under-parameterised,5,5,0,-,A robot resets to the intersection of the x-axis and y-axis. Which ordered pair is that 
-trig-deriv,chain,under-parameterised,5,1,1,2..10,f(x) = sin 2x. Find f′(0).
-g4-lines-angles,laSymmetryFindingNumeric,under-parameterised,5,5,0,-,How many lines of symmetry does a isosceles triangle have?
-unit-size,extraSharer,under-parameterised,5,1,2,-,3 kids are about to share a 24 cm licorice rope equally — then one more kid joins BEFORE
-radian-convert,halfPiToDeg,under-parameterised,5,1,1,3..7,Convert 5π/2 to degrees.
-negative-intro,compareFractionDecimal,under-parameterised,5,1,3,-,Compare 2/5 and 0.6. Which relation is true?
-geo-series,infAlternating,under-parameterised,5,2,-1,-,Find 24 − 12 + 6 − 3 + ⋯ (forever).
-angle-sum,cgTriangleEqualAngle,under-parameterised,5,5,-1,-,Three congruent angles fill an equilateral triangle. What is each angle  in degrees?
-permutation-count,podium,under-parameterised,5,1,1,6..10,8 sprinters race for gold  silver and bronze. How many different podiums are possible?
-chord-perp,parallelChords,under-parameterised,5,1,3,-,A circle has radius 15. Two parallel chords of lengths 24 and 18 lie on the SAME side of
-chord-dist,howMuchLonger,under-parameterised,5,1,3,-,Radius 10. One chord sits 6 from the centre  another sits 8. How much LONGER is the clos
-root-solve,cubeNegative,under-parameterised,5,1,1,8..216,Which value solves x³ = −64?
-order-decimals,secondOf4,under-parameterised,5,1,4,-,In 0.5  0.45  0.501  0.51 ordered least to greatest  which comes SECOND?
-negative-intro,compareNegativeFractions,under-parameterised,5,1,4,-,Compare -2/3 and -5/6. Which relation is true?
-permutation-count,buildSeat,under-parameterised,5,1,1,5..9,Build the count for seating 3 of 9 people in 3 distinct chairs.
-g7-sp-counting-principle,spCountCoinDieA,under-parameterised,5,1,1,4..12,A coin is flipped and a fair 4-sided die is rolled. How many ordered outcomes are in the
-shape-identify,solid,under-parameterised,4,4,0,-,A beach ball — round all over  with no flat part anywhere. Which solid is it?
-root-solve,cube,under-parameterised,4,1,1,27..216,Which value solves x³ = 27?
-power-product,tenPower,under-parameterised,4,1,1,2..5,Evaluate 10^3.
-permutation-count,evenNumbers,under-parameterised,4,1,1,5..8,Using the digits 1 to 6 with no repeats  how many **three-digit even** numbers can be fo
-shape-identify,rollStack,under-parameterised,4,4,0,-,Which solid stacks into a tower but cannot roll? Tap it.
-angle-equation,lineThree,under-parameterised,4,1,1,30..120,Angles x  2x  and 90° together fill a straight line. Solve for x (in degrees).
-equiv-test,squareVsDouble,under-parameterised,4,1,1,3..6,x + x and x² both equal 4 at x = 2. Evaluate x + x at x = 4 to test whether they're trul
-g4-measure,mcDegreeMeasurementNumeric,under-parameterised,4,4,0,-,How many degrees are in a quarter turn?
-reflect-compose,basisColumn,under-parameterised,3,1,4,-,Using the combined matrix [[0  1]  [-1  0]]  where does ⟨1  0⟩ land?
-reflect-compose,reverseOrder,under-parameterised,2,2,2,-,A·B gave a 90° clockwise rotation. What does the reversed order B·A = [[0  -1]  [1  0]] 
+generator,form,verdict,distinctPrompts,distinctAnswers,shapes,varyingSlots,run,example
+g3-mult-fluency,MultTable10Numeric,closed-fact-set,11,11,1,1,0..10,10 × 4 = ?
+read-clock,default,closed-fact-set,11,11,1,1,1..11,The MINUTE hand points at the number 3. How many minutes past the hour is it?
+time-set-clock,hour,closed-fact-set,11,-1,1,1,1..11,Set the clock to show 11:00.
+g3-mult-fluency,MultTable4Numeric,closed-fact-set,11,11,1,1,0..10,4 × 9 = ?
+g3-mult-fluency,MultTable5Numeric,closed-fact-set,11,11,1,1,0..10,5 × 8 = ?
+g3-mult-fluency,MultTable8Numeric,closed-fact-set,11,11,1,1,0..10,8 × 1 = ?
+g3-mult-fluency,MultTable6Numeric,closed-fact-set,11,11,1,1,0..10,6 × 7 = ?
+g3-mult-fluency,MultTable9Numeric,closed-fact-set,11,11,1,1,0..10,9 × 4 = ?
+g2-fluency,FlTenPlusNumeric,closed-fact-set,10,10,1,1,1..10,10 + 5 = ?
+g2-fluency,FlFromTenNumeric,closed-fact-set,9,9,1,1,1..9,10 − 6 = ?
+g4-decimals,default,closed-fact-set,9,9,1,1,1..9,A unit square is split into 10 equal columns  and 4 of them are shaded. Write the shaded
+g4-decimals,dTenthsWriteNumeric,closed-fact-set,9,9,1,1,1..9,A unit square is split into 10 equal columns  and 1 of them are shaded. Write the shaded
+evt-candidates,candidateCount,cosmetic-only,9,1,1,2,-,f(x) = x³ − 12x on [0  4]. How many candidates does the closed-interval method produce?
+critical-count,quartic,cosmetic-only,8,1,1,1,4..32,f(x) = x⁴ − 4x³. How many DISTINCT critical points does it have?
+critical-count,default,cosmetic-only,8,1,1,1,3..192,f(x) = x³ − 27x. How many critical points does it have?
+geo-series,repeatDecimal,cosmetic-only,8,1,1,2,-,0.555… (repeating) equals 5/n. What is n?
+full-sketch,directionChanges,cosmetic-only,6,1,1,1,4..24,f(x) = x⁴ − 4x³. How many times does the curve change DIRECTION?
+double-angle-solve,countSolutions,cosmetic-only,6,1,4,-1,-,How many solutions does sin 2x = sin x have on [0  2π)?
+g1-shapes-measure,Smg1HalvesNumeric,cosmetic-only,6,1,6,0,-,If a cracker is split into halves  how many equal parts are there?
+solve-trig-all,sumCos,cosmetic-only,6,1,4,1,-,Solve cos x = √3/2 on [0  2π). What is the SUM of the solutions  to hundredths?
+double-angle-solve,sumSolutions,cosmetic-only,6,1,4,-1,-,Solve sin 2x = sin x on [0  2π). What is the SUM of all four solutions  to hundredths?
+g1-shapes-measure,Smg1FourthsNumeric,cosmetic-only,6,1,6,0,-,If a ribbon is split into fourths  how many equal parts are there?
+g1-shapes-measure,Smg1HalvesFourthsNumeric,cosmetic-only,6,1,6,0,-,For the same-size pizza  how many fourths make one half?
+g2-shapes-shares,Ssg2ThirdsCountNumeric,cosmetic-only,6,1,6,0,-,If the ribbon is split into thirds  how many equal parts are there?
+coordinate-plot,cgOrigin,cosmetic-only,5,1,5,0,-,A robot resets to the intersection of the x-axis and y-axis. Which ordered pair is that 
+angle-sum,cgTriangleEqualAngle,cosmetic-only,5,1,5,-1,-,Three congruent angles fill an equilateral triangle. What is each angle  in degrees?
+polygon-angles,exteriorFromInterior,under-parameterised,50,-1,1,1,40..170,A vertex has interior angle 60°. Its exterior angle?
+decimal-representation,trailingMatchCount,under-parameterised,46,2,1,4,-,Of these three — 0.60  0.600  0.06 — how many equal 0.6?
+trig-deriv,default,under-parameterised,18,18,1,1,2..20,f(x) = 5 sin x. Find f′(0).
+opt-setup,maxProduct,under-parameterised,17,17,1,1,6..40,Two numbers add to 12. What is their largest possible product?
+cn-solve-any,default,under-parameterised,16,4,1,2,-,Solve x² + 6x + 13 = 0 (hint: complete the square). For the root with POSITIVE imaginary
+a2-series,sr-inf-sum__numeric,under-parameterised,16,12,1,4,-,Find 6+1.5+0.375+… forever (common ratio 1/4).
+a1-quadratics,quad-diff-squares-solve__numeric,under-parameterised,14,14,1,1,4..225,Solve x^2 - 36 = 0. What is the larger solution?
+decimal-representation,rungCount,under-parameterised,14,7,4,1,-,How many thousandths make 1 hundredth?
+a1-quadratics,quad-square-root__numeric,under-parameterised,14,14,1,1,4..225,Solve x^2 - 25 = 0. What is the larger solution?
+inverse-deriv,default,under-parameterised,13,13,1,3,-,f(x) = x³  so f(2) = 8. Find (f⁻¹)′(8)  as a decimal to four places.
+negative-intro,doubleOpposite,under-parameterised,13,13,1,1,3..15,What is the opposite of the opposite of 3?
+polygon-angles,default,under-parameterised,12,-1,8,-1,-,Interior angle sum of a pentagon (5 sides)  in degrees?
+polygon-angles,sidesFromSum,under-parameterised,12,-1,1,1,180..3960,A polygon's interior angles sum to 540°. How many sides?
+polygon-angles,sidesFromExterior,under-parameterised,12,-1,1,1,15..120,Each exterior angle of a regular polygon measures 45°. How many sides?
+sigma-eval,sigmaPow,under-parameterised,12,12,1,2,-,Evaluate Σ from k = 1 to 4 of 2ᵏ.
+trig-inside,sumSolutions,under-parameterised,12,4,2,2,-,Solve sin(2x) = √3/2 on [0  2π). What is the SUM of the solutions  to hundredths?
+geo-series,powers,under-parameterised,12,12,3,-1,-,Evaluate 1 + 3 + 9 + 27 with the formula.
+g8-esn-power-meaning,esnPowerNegativeDeep,under-parameterised,12,12,12,0,-,Evaluate 10⁻⁸ = ?
+variable-meaning,divide,under-parameterised,12,4,1,2,-,What is y ÷ 2 when y = 8?
+g7-vertical-angles,default,under-parameterised,12,-1,1,1,25..85,Two lines cross. One angle is 45°. What is the angle next to it  sharing a side  in degr
+g1-data,GdTallyReadNumeric,under-parameterised,12,12,4,2,-,A tally row shows 3 crossed five-groups and 2 single marks. How many does it count?
+a2-radicals,re-convert__buildExpression,under-parameterised,12,-1,1,2,-,Write x^(2/3) as a radical.
+variable-meaning,halfEval,under-parameterised,12,12,1,1,8..30,Write  half of y  as y ÷ 2  then evaluate it at y = 18.
+arith-series,default,under-parameterised,12,12,1,1,40..200,So what is 1 + 2 + 3 + ⋯ + 60?
+a2-logarithms,lg-expand-condense__numeric,under-parameterised,12,-1,1,5,-,Evaluate 3log_3(3) + log_3(9).
+pq-kite,default,under-parameterised,12,12,1,1,8..30,A kite's cross diagonal (the one perpendicular to the symmetry axis) measures 14. The sy
+polygon-angles,exteriorSum,under-parameterised,11,-1,1,1,3..24,Exterior angles of a 5-gon (one at each vertex): what do they sum to?
+a1-polynomials,factor-difference-squares__buildExpression,under-parameterised,11,-1,1,1,4..144,Build the factorization of x^2 - 16.
+area-vs-perimeter,areaGap,under-parameterised,11,11,1,4,-,Two rectangular pens each have perimeter 14 m. Pen A is 1 m by 6 m; Pen B is 3 m by 4 m.
+radian-convert,radToDeg,under-parameterised,11,11,1,1,2..12,Convert 2 radians to degrees. (Round to tenths.)
+radian-convert,nFromDegrees,under-parameterised,11,6,1,2,-,135° = nπ/4. What is n?
+mass,kgToG,under-parameterised,11,11,1,1,2..12,How many grams are in 5 kilograms?
+g4-lines-angles,laSymmetryApplicationNumeric,under-parameterised,11,11,1,1,2..12,A half-design contains 2 shapes  none on the symmetry line. After reflecting every shape
+cn-i-def,default,under-parameterised,11,-1,1,1,4..144,What is √(−9)?
+equiv-models,tradeInto,under-parameterised,11,6,7,3,-,You hold 2/3 of a bar and trade it into TWELFTHS (each third gets cut into 4 minis). How
+a2-radicals,re-models__numeric,under-parameterised,11,-1,1,1,16..576,A model gives t=√h/4. Find t when h=36.
+a2-radicals,re-var-radicals__buildExpression,under-parameterised,11,-1,1,1,4..144,Simplify √(100x²y) for x≥0.
+a2-radicals,re-products__buildExpression,under-parameterised,11,-1,1,1,2..12,Expand (1+√7)².
+g2-measure-money-time,MmtBarGraphNumeric,under-parameterised,11,11,1,1,2..12,A bar reaches 2 on a graph where each gridline is worth 1. What value does the bar show?
+a2-radicals,re-products__numeric,under-parameterised,11,-1,1,1,2..12,Evaluate (√9)².
+negative-intro,compareNegativeFractions,under-parameterised,10,2,1,4,-,Compare -2/3 and -5/6. Which relation is true?
+g4-multiply,mbPrimeCompositeNumeric,under-parameterised,10,5,1,4,-,How many PRIME numbers are there from 3 to 20 (including 3 and 20)?
+times-2,doubleIt,under-parameterised,10,10,1,1,3..12,12 × 2 = ?
+g3-mult-fluency,MultHardFactsNumeric,under-parameterised,10,10,1,2,-,7 × 9 = ?
+parabola-focal,focusPoint,under-parameterised,10,10,1,1,8..44,A dish is designed as x² = 16y. How far from the vertex is the focus?
+exp-function,initialValue,under-parameterised,10,-1,1,2,-,For f(x) = 4 · 2^x  what is the initial value f(0)?
+implicit-diff,quadForm,under-parameterised,10,4,2,3,-,x² + xy + y² = 7. Find dy/dx at (1  2)  as a decimal.
+prob-fraction,default,under-parameterised,10,-1,6,-1,-,When rolling a standard 6-sided die  what is the probability of rolling greater than 2? 
+lcm-pair,gcfPair,under-parameterised,10,4,1,2,-,Find the greatest common factor of 6 and 8.
+chord-dist,pipeDepth,under-parameterised,10,9,1,2,-,A horizontal pipe has a circular cross-section of radius 17 dm. Water fills it to a surf
+count-prob,atLeastOne,under-parameterised,10,10,1,2,-,From 7 red and 4 blue marbles  3 are taken at random. Find P(at least one blue)  to thre
+nl-beyond-one,jumpsToWhole,under-parameterised,10,8,4,1,-,Jumping in FOURTHS from 0  how many jumps land you exactly on 2?
+k0-add-subtract,KoaSums5Numeric,under-parameterised,10,4,1,2,-,1 + 4 = ?
+parabola-focal,default,under-parameterised,10,10,1,1,8..44,For the parabola x² = 24y  what is the focal length p?
+radian-convert,arcRadians,under-parameterised,10,10,1,1,2..11,An arc along a circle's rim measures exactly 5 radius-lengths. What central angle does i
+times-five-ten,clockMinutes,under-parameterised,10,10,1,1,2..11,The minute hand points straight at the 6. How many minutes past the hour is it?
+k0-add-subtract,KoaDiffs5Numeric,under-parameterised,10,4,1,2,-,4 − 1 = ?
+lcm-pair,default,under-parameterised,10,8,1,2,-,Find the LCM of 4 and 10.
+hyperbola-cab,slope,under-parameterised,10,9,1,2,-,For x²/25 − y²/16 = 1  what is the positive asymptote slope b/a? (Decimal.)
+box-surface-area,sameVolumeDifference,under-parameterised,10,2,1,4,-,Box A is 4×4×2; Box B is 8×2×2. They have the same volume. How much MORE surface area do
+g3-div-fluency,DivBy3Numeric,under-parameterised,10,10,1,1,3..30,27 ÷ 3 = ?
+parabola-focal,dishForm,under-parameterised,10,10,1,1,8..44,A parabolic dish is y = x²/16. How far above the vertex should the receiver sit?
+arith-series,findN,under-parameterised,10,10,1,4,-,Find 4 + 8 + 12 + ⋯ + 40.
+a1-solving-equations,multi-literal__numeric,under-parameterised,10,10,1,1,5..100,Using F = 9C/5 + 32  find F when C = 10.
+pq-para-angle,ratioPair,under-parameterised,10,10,1,2,-,Two consecutive angles of a parallelogram are in the ratio 3 : 7. Find the SMALLER angle
+opt-setup,domainBound,under-parameterised,10,10,1,1,6..24,A 10-inch square sheet  with squares of side x cut from the corners and the sides folded
+reflect-fn,default,under-parameterised,10,10,2,1,-,On the graph of y = −x³  what is y when x = 5?
+pythagorean,ladder,under-parameterised,10,10,1,2,-,A ladder leans against a wall. Its base is 9 feet from the wall and it reaches 12 feet u
+polygon-angles,regularInterior,under-parameterised,10,-1,7,-1,-,Each interior angle of a regular hexagon  in degrees?
+box-surface-area,cubeSA,under-parameterised,10,10,1,1,2..12,Find the surface area of a cube with side 3.
+equiv-models,tradeEighths,under-parameterised,10,7,4,2,-,You hold 3/4 of a bar and trade it into EIGHTHS. How many eighths do you hold?
+exp-function,startAmount,under-parameterised,10,-1,1,2,-,For A(x) = 500 · 3^x  what is the starting amount A(0)?
+lcm-pair,divides,under-parameterised,10,9,1,2,-,Find the LCM of 3 and 6.
+lcm-pair,buses,under-parameterised,10,8,1,2,-,One bus leaves every 6 minutes  another every 9 minutes. They just left together. In how
+g3-div-fluency,DivBy2Numeric,under-parameterised,10,10,1,1,2..20,18 ÷ 2 = ?
+pythagorean,default,under-parameterised,10,10,1,2,-,A right triangle has legs 6 and 8. What is the hypotenuse?
+deriv-product,default,under-parameterised,10,7,6,1,-,f(x) = x³ · x². Compute f′(2) HONESTLY (simplify to x⁵ if you like).
+g3-div-fluency,DivBy10Numeric,under-parameterised,10,10,1,1,10..100,90 ÷ 10 = ?
+g3-div-fluency,default,under-parameterised,10,10,1,1,2..20,10 ÷ 2 = ?
+exp-function,decayModel,under-parameterised,10,-1,2,1,-,A car's value halves each period: V(x) = 320 · (1/2)^x. What is V(3)?
+a1-polynomials,factor-difference-squares__numeric,under-parameterised,10,10,1,2,-,Factor x^2 - 4 as (x + 2)(x - k). Find k.
+g0-counting,countTeenFrame,under-parameterised,9,-1,1,1,11..19,A full group of 10 is already shown. Add the extra dots needed to make 11.
+thales-right-angle,hypotenuse,under-parameterised,9,9,1,2,-,A triangle inscribed on a diameter has legs 3 and 4. Find the DIAMETER.
+evt-candidates,minValue,under-parameterised,9,9,1,2,-,f(x) = x³ − 12x on [0  4]. Find the MINIMUM value.
+round-half,tieTen,under-parameterised,9,-1,1,1,15..95,Round 25 to the nearest ten.
+thales-right-angle,radiusFromLegs,under-parameterised,9,9,1,2,-,Triangle ABC is inscribed in a circle with a right angle at C  and legs AC = 9  BC = 12.
+nl-unit,howManyJumps,under-parameterised,9,9,1,1,4..12,On a 0→1 line cut into equal jumps  the FIRST mark is exactly 1/7. How many jumps make u
+a2-polynomials,pf-anatomy__numeric,under-parameterised,9,-1,1,1,-11..-3,What is the maximum possible number of turning points of a degree-3 polynomial?
+a2-polynomials,pf-multiplicity__numeric,under-parameterised,9,5,1,2,-,What is the degree of f(x)=(x+1)^4(x−2)^1?
+metric-convert,rrTimeDivide,under-parameterised,9,9,1,1,120..600,There are 60 minutes in an hour. How many hours is 300 minutes?
+a1-polynomials,exponent-power__numeric,under-parameterised,9,6,1,2,-,Simplify (x^4)^2 to x^k. What is k?
+a2-rationals,rf-mixed__buildExpression,under-parameterised,9,-1,1,3,-,Simplify (x²−4)/x · x/(x+2) ÷ (x−2)/2.
+g1-data,GdTallySinglesNumeric,under-parameterised,9,4,1,1,7..19,19 students voted. After the crossed five-groups  how many SINGLE marks will the tally s
+g1-counting-120,TeensNumeric,under-parameterised,9,9,2,1,-,What numeral is 1 ten and 5 ones?
+g2-fluency,default,under-parameterised,9,9,1,2,-,6 + 6 = ?
+a2-trig,tf-exact-values__numeric,under-parameterised,9,6,3,1,-,Find tan 60° to hundredths.
+g1-tens-ones,TnoTenBundleNumeric,under-parameterised,9,9,2,1,-,How many ones are the same as 8 tens?
+g2-fluency,FlDoublesNumeric,under-parameterised,9,9,1,2,-,3 + 3 = ?
+a2-trig,tf-reference__numeric,under-parameterised,9,3,1,1,120..330,Find the reference angle of 150°.
+proportional-plot,default,under-parameterised,9,-1,2,-1,-,For k = 2  plot the points (1  2) and (2  4).
+permutation-count,arrangeAll,under-parameterised,9,3,3,1,-,How many ways can 6 different trophies be arranged in a row?
+g1-add-subtract,TensPartnersNumeric,under-parameterised,9,9,1,2,-,8 + ? = 10. What makes ten with 8?
+k0-count-100,kTensNextHop,under-parameterised,9,-1,1,1,10..90,Count by tens: what comes after 20? Hop one ten and tap where you land.
+metric-convert,rrHoursSeconds,under-parameterised,9,9,1,1,2..10,How many seconds are in 4 hours? Chain hours → minutes → seconds.
+conic-general,default,under-parameterised,9,9,1,1,8..40,For y² = 20x (form y² = 4px)  find p.
+second-deriv-eval,default,under-parameterised,9,9,1,2,-,f(x) = x³ − 27x has f″(x) = 6x. Evaluate f″ at the critical point x = 3.
+g4-decimals,dTenthToHundredthNumeric,under-parameterised,9,9,1,1,0.1..0.9,0.8 = ?/100. What numerator makes the fraction name the same amount?
+a2-logarithms,lg-product__numeric,under-parameterised,9,-1,1,4,-,Evaluate log_5(5) + log_5(25).
+g3-mult-fluency,MultSquaresNumeric,under-parameterised,9,9,1,2,-,6 × 6 = ?
+polygon-angles,sidesFromInterior,under-parameterised,8,-1,1,1,90..165,Each interior angle of a regular polygon is 135°. How many sides?
+ellipse-abc,findB,under-parameterised,8,7,1,2,-,An ellipse has a = 17 and c = 8. What is b?
+coord-perimeter,default,under-parameterised,8,8,1,3,-,Triangle (0  0)  (3  0)  (3  4). Perimeter = ?
+inverse-deriv,arctan,under-parameterised,8,4,1,1,-7..7,f(x) = arctan x. Find f′(1)  as a decimal.
+g1-shapes-measure,Smg12D3DNumeric,under-parameterised,8,4,8,0,-,How many curved surfaces does a cylinder have?
+ellipse-abc,eccentricity,under-parameterised,8,5,1,2,-,An ellipse has a = 13 and c = 5. Find its eccentricity to two decimals.
+g8-esn-context-compute,esnContextMultiply,under-parameterised,8,-1,8,2,-,A factory makes 6 × 10² items  and each item requires 4 × 10³ microseconds. How many mic
+g1-shapes-measure,Smg1SolidPartsNumeric,under-parameterised,8,5,8,0,-,How many edges does a cylinder have?
+power-product,quotientEval,under-parameterised,8,5,1,2,-,Evaluate 2^5 / 2^2.
+rolle-c,default,under-parameterised,8,8,1,3,-,f(x) = x² − 2x on [0  2]. Note f(0) = f(2) = 0. Find the c that Rolle guarantees.
+opt-box,maxVolume,under-parameterised,8,8,1,1,12..54,A 12-inch square sheet folds into an open box this way. Find the maximum volume  in cubi
+round-half,tieHundred,under-parameterised,8,-1,1,1,150..850,Round 650 to the nearest hundred.
+pr-constant-k-g7,rrPartWholeSum,under-parameterised,8,8,1,2,-,A team's wins-to-losses ratio is 3 : 4. How many games make one full cycle of that patte
+g4-place-million,pvCommaPeriodsNumeric,under-parameterised,8,4,2,1,-,A number's digits are grouped into 2 three-digit periods. How many commas separate those
+a2-trig,tf-identity__numeric,under-parameterised,8,8,1,1,0.28..0.96,sin θ=0.28 and θ is in Quadrant I. Find cos θ.
+reflect-compose,composeMatrix,under-parameterised,8,-1,8,0,-,Reflect over y = x  then over the y-axis — one transformation right after the other. Bui
+k0-count-100,kTensBackHop,under-parameterised,8,-1,1,1,30..100,Count back by tens from 30. Hop one ten back and tap where you land.
+ladder-shift,divTenth,under-parameterised,8,-1,1,1,0.2..0.9,0.4 ÷ 10 = ? (enter as a decimal)
+hyperbola-cab,findC,under-parameterised,8,5,1,4,-,For x²/64 − y²/36 = 1 (a = 8  b = 6)  find c using c² = a² + b².
+combination-count,default,under-parameterised,8,8,1,1,5..12,From 5 runners  how many different **teams of 3** (no order) can be chosen?
+a2-polynomials,pf-cubes__buildExpression,under-parameterised,8,-1,1,1,8..729,Factor x³ + 125.
+a2-polynomials,pf-cubes__numeric,under-parameterised,8,8,1,1,8..729,Find the only real zero of x³ + 8=0.
+a2-radicals,re-plusminus__numeric,under-parameterised,8,-1,1,2,-,Solve x^(2/3)=9. Give the positive solution.
+a2-rationals,rf-opposite__buildExpression,under-parameterised,8,-1,1,2,-,Simplify (25−x²)/(x−5).
+decimal-representation,unitCount,under-parameterised,8,8,2,1,-,How many tenths make 2 wholes?
+evt-candidates,default,under-parameterised,8,8,1,2,-,f(x) = x³ − 12x on [0  4]. Find the MAXIMUM value.
+a2-logarithms,lg-scales__numeric,under-parameterised,8,8,1,1,2..9,A pH 8 units lower represents how many times greater hydrogen-ion concentration?
+base-ten-build,default,under-parameterised,8,-1,1,1,12..19,What hides inside 16? Build it with tens and ones.
+ladder-shift,mulTwice,under-parameterised,8,-1,1,1,0.02..0.09,0.04 × 10 × 10 = ?
+ladder-shift,default,under-parameterised,8,-1,1,1,2..9,4 ÷ 10 = ? (enter as a decimal)
+repeat-decimal,default,under-parameterised,8,-1,1,1,0.111..0.888,0.111… equals:
+opt-box,beatEndpoint,under-parameterised,8,8,1,3,-,V(2) = 128  V(0) = 0  V(6) = 0. By how much does the best box beat the best endpoint?
+trig-deriv,product,under-parameterised,8,8,1,1,2..9,f(x) = (x + 2)·sin x. Find f′(0).
+nl-partition,newMarks,under-parameterised,8,8,1,1,3..10,You want to cut the 0→1 trip into 9 equal jumps. How many NEW marks do you draw between 
+g7-scaled-area,unitAreaScale,under-parameterised,8,-1,1,1,3..10,At the scale 1 cm = 3 m  how many square meters does each 1 cm² of drawing represent?
+g8-esn-context-compute,esnContextDivide,under-parameterised,8,-1,8,2,-,A signal travels 6 × 10⁶ meters at 2 × 10³ meters per second. How many seconds does the 
+g2-fluency,FlNearDoublesNumeric,under-parameterised,8,8,1,2,-,4 + 5 = ?
+a2-polynomials,pf-turning__numeric,under-parameterised,8,-1,1,1,2..9,A polynomial graph has exactly 2 turning points. What is the smallest possible degree?
+a2-radicals,re-extraneous__buildExpression,under-parameterised,8,-1,1,3,-,Squaring √(x+42)=x gives candidates 7 and -6. Build the checked solution set.
+a2-radicals,re-plusminus__buildExpression,under-parameterised,8,-1,1,2,-,Build the real solutions of x^(2/5)=25.
+a2-statistics,si-margin__numeric,under-parameterised,8,8,1,1,100..10000,For p-hat=0.5 and n=625  estimate the 2-SE margin of error in percentage points.
+exp-function,ratio,under-parameterised,8,-1,1,4,-,In the sequence 2  6  18  54  what is the constant ratio?
+decimal-representation,moneyTenths,under-parameterised,8,8,1,1,2..9,A dime is one tenth of a dollar. Written as 0.?  what tenths digit represents 5 dimes?
+proportional-plot,cgPairNext,under-parameterised,8,8,1,4,-,Start at 0 and add 4 each time. The pattern is 0  4  8  12. What number comes next?
+quadrilaterals,cgEqualSidePerimeter,under-parameterised,8,8,1,1,5..12,A rhombus has four sides  each 12 units long. What is its perimeter?
+g8-esn-context-compute,esnContextMixed,under-parameterised,8,-1,5,3,-,A shipping company moves 3 × 10³ containers  each holding 2 × 10² kilograms  then remove
+g1-shapes-measure,Smg1ShapeSidesNumeric,under-parameterised,8,3,8,0,-,How many corners does a square have?
+a1-radicals,rad-pythagorean-radical__numeric,under-parameterised,8,-1,1,2,-,A right triangle has legs 3 and 3. What is c^2 before taking the square root?
+a1-radicals,rad-pythagorean__numeric,under-parameterised,8,-1,1,2,-,A right triangle has legs 5 and 12. Find the hypotenuse.
+a2-statistics,si-claim-overreach__numeric,under-parameterised,8,-1,1,2,-,In 20000 people  prevalence is 1%  sensitivity is 95%  and false-positive rate is 5%. Ho
+a2-statistics,si-standard-error__numeric,under-parameterised,8,-1,1,1,100..10000,Estimate the standard error in percentage points for p=0.5 and n=2500.
+prob-fraction,trialTheoretical,under-parameterised,8,-1,6,-1,-,A fair number cube is rolled. Which fraction is the probability of rolling greater than 
+ellipse-abc,default,under-parameterised,8,8,1,2,-,For an ellipse with a = 13 and b = 12  find c.
+coord-perimeter,rhombus,under-parameterised,8,8,1,1,5..41,A rhombus has all four sides equal to 10 (built from a right-triangle slant). Perimeter 
+a2-logarithms,lg-ln__numeric,under-parameterised,8,-1,1,1,2..9,Evaluate e^(ln 2).
+deriv-explog,default,under-parameterised,8,8,1,1,2..25,f(x) = ln x. Find f′(5)  as a decimal.
+multiplication-rule,withoutReplacement,under-parameterised,8,3,8,0,-,Draw 2 cards without replacement. P(both spades) is exactly 1/n. Find **n**.
+pr-constant-k-g7,rrPartWholeBuild,under-parameterised,8,-1,1,2,-,Paint is mixed with 3 parts blue for every 5 parts yellow. Build the ratio of blue to th
+a1-radicals,rad-distance__numeric,under-parameterised,8,-1,1,2,-,Find the distance from (0  0) to (5  12).
+a2-radicals,re-extraneous__numeric,under-parameterised,8,-1,1,1,6..90,Solve √(x+6)=x. Give the valid solution.
+a2-trig,tf-unit-circle__numeric,under-parameterised,8,3,1,1,0..630,Find cos 180°.
+exp-solve,negExponent,under-parameterised,8,-1,1,2,-,Solve 2^x = 1/16.
+angle-equation,default,under-parameterised,8,4,2,1,-,Angles x and 2x sit together on a straight line. Solve for x (in degrees).
+double-double,timesEight,under-parameterised,7,7,1,1,3..9,9 × 8 = ?
+cn-square,completeConstant,under-parameterised,7,7,1,1,6..18,What constant completes the square: x² + 10x + ___?
+power-product,basicSquare,under-parameterised,7,7,1,3,-,What is 6^2 (6 × 6)?
+directrix-ecc,ratio,under-parameterised,7,4,1,5,-,Vertex (5  0)  focus (2  0)  directrix x = 12.5. The focal distance is 3 and the directr
+pct-of-number,rrFractionPercent,under-parameterised,7,7,1,2,-,Write 1/4 as a percent. Enter just the number.
+order-decimals,default,under-parameterised,7,7,1,3,-,Which is the LEAST: 0.3  0.23  or 0.32?
+pct-of-number,rrGridPercent,under-parameterised,7,7,1,2,-,On a 100-square grid  1/2 of the squares are shaded. What percent is shaded?
+mvt-c,cubicDecimal,under-parameterised,7,7,1,1,2..8,f(x) = x³ on [0  2]. Find the c the MVT guarantees  as a decimal to three places.
+g2-add-subtract-100,DoublesNumeric,under-parameterised,7,7,1,2,-,7 + 7 = ?
+cn-i-def,coefSquared,under-parameterised,7,-1,1,1,3..9,What is (3i)²?
+ten-frame-fill,decompose,under-parameterised,7,-1,1,3,-,6 crayons split between two boxes. One box has 2 — they are already in the frame. Add do
+ten-frame-fill,default,under-parameterised,7,-1,1,1,2..8,4 dots are in the ten frame. Tap to add dots until the frame makes TEN.
+pq-rhombus,otherDiagonal,under-parameterised,7,6,1,2,-,A rhombus has side 13 and one diagonal of length 10. Find the OTHER diagonal.
+arith-series,multiples,under-parameterised,7,7,1,4,-,Find 4 + 8 + 12 + ⋯ + 40 (ten terms).
+directrix-ecc,hypEcc,under-parameterised,7,7,1,2,-,For a hyperbola with a = 3  c = 5  the focus-directrix ratio equals e. Find it to two de
+combination-count,handshakes,under-parameterised,7,7,1,1,6..12,9 people each shake hands once with every other person. How many handshakes happen?
+times-five-ten,timesFive,under-parameterised,7,7,1,1,3..9,4 × 5 = ?
+tens-problems,default,under-parameterised,7,7,1,1,3..9,A dime is worth 10 cents. How many cents are 5 dimes worth?
+a2-trig,tf-ratios__numeric,under-parameterised,7,7,1,5,-,In a 9-40-41 right triangle  θ is opposite 9. If cosθ=n/41  find n.
+root-solve,default,under-parameterised,7,-1,1,1,36..144,Which values solve x² = 49?
+pq-rhombus,sideFromDiagonals,under-parameterised,7,7,1,2,-,A rhombus has diagonals 12 and 16. Find its side length.
+order-decimals,greatestOf3,under-parameterised,7,7,1,3,-,Which is the GREATEST: 0.06  0.6  or 0.16?
+power-product,default,under-parameterised,7,4,1,2,-,Evaluate 2^3 · 2^3.
+eval-expression,square,under-parameterised,7,7,1,1,3..9,Evaluate x² at x = 3.
+directrix-ecc,default,under-parameterised,7,5,1,2,-,An ellipse has a = 5 and e = 0.4. Its directrix is x = a/e. Find that value.
+implicit-diff,default,under-parameterised,7,7,1,5,-,The tangent to x² + y² = 225 at (9  12) has slope −3/4. Find its y-intercept  as a decim
+nl-unit,default,under-parameterised,7,-1,1,2,-,On a 0→1 line split into 7 equal jumps  place the marker at 1/7.
+arith-series,paramsNegD,under-parameterised,7,7,1,2,-,a₁ = 8  d = −2  n = 8. Find S₈.
+k0-count-100,kDecadeCrossHop,under-parameterised,7,-1,1,1,27..87,Start at 27 and count on 5. Tap where you land.
+unit-trading,hundredsToTens,under-parameterised,7,7,1,1,2..8,4 hundreds are traded entirely into tens. How many tens are made?
+a2-logarithms,lg-e__numeric,under-parameterised,7,7,1,1,2..8,Evaluate e^3 to three decimals.
+negative-intro,default,under-parameterised,6,6,1,1,120..300,A valley floor sits 200 feet below sea level. Writing sea level as 0  what number is the
+rolle-c,maxRoots,under-parameterised,6,6,1,1,2..7,f′ has exactly 3 zeros. What is the MAXIMUM number of roots f can have?
+radian-convert,turnFraction,under-parameterised,6,6,6,1,-,How many radians in a EIGHTH turn (45°)? (Round to hundredths.)
+fn-evaluate,squareOnly,under-parameterised,6,6,1,1,4..9,For f(x) = x^2  what is f(4)?
+geo-series,infBasic,under-parameterised,6,6,2,-1,-,Find 6 + 2 + 2/3 + ⋯ (forever).
+angle-equation,linearPairLab,under-parameterised,6,-1,2,1,-,Angles x and 3x sit together on a straight line. Solve for x (in degrees).
+solve-mult-div,solveDiv,under-parameterised,6,6,1,2,-,Solve x ÷ 2 = 8.
+common-denom,lcd,under-parameterised,6,5,1,4,-,What is the least common denominator for 2/3 and 4/5?
+exp-solve,reciprocalBase,under-parameterised,6,-1,1,2,-,Solve (1/3)^x = 9.
+deriv-quotient,default,under-parameterised,6,6,2,1,-,f(x) = x²/(x + 1). Find f′(1)  as a decimal.
+sigma-eval,default,under-parameterised,6,6,1,2,-,Evaluate Σ from k = 3 to 6 of k.
+arith-series,odds,under-parameterised,6,6,1,2,-,Find the sum of the first 20 odd numbers: 1 + 3 + 5 + ⋯ + 39.
+solve-trig-all,sumSin,under-parameterised,6,2,4,1,-,Solve 2 sin x + √3 = 0 on [0  2π). What is the SUM of the solutions  to hundredths?
+g7-sp-counting-principle,spCountFlips,under-parameterised,6,6,1,1,3..8,A fair coin is flipped 5 times. How many distinct ordered outcomes are possible?
+g1-counting-120,To120Numeric,under-parameterised,6,6,1,1,60..110,70 + 10 = ?
+g2-shapes-shares,Ssg2PyramidNumeric,under-parameterised,6,4,6,0,-,How many faces does a triangular pyramid have?
+g2-shapes-shares,Ssg2ShapeVocabNumeric,under-parameterised,6,6,6,0,-,How many sides does a triangle have?
+exp-function,nextTerm,under-parameterised,6,-1,1,4,-,The sequence 5  10  20  40 continues. What is the next term?
+grid-count,square,under-parameterised,6,6,1,2,-,A rectangle is partitioned into 5 rows and 5 columns of unit squares. How many unit squa
+cn-disc-repeat,forceC,under-parameterised,6,6,1,1,6..16,For what value of c does x² + 6x + c = 0 have exactly one repeated root?
+angle-equation,complement,under-parameterised,6,6,1,1,10..60,Solve x + (x + 50) = 90. What is x  in degrees?
+grid-count,squareRead,under-parameterised,6,-1,1,2,-,A rectangle is partitioned into 6 rows and 6 columns of unit squares. How many unit squa
+ladder-shift,divThrice,under-parameterised,6,-1,1,1,120..520,250 ÷ 10 ÷ 10 ÷ 10 = ? (enter as a decimal)
+deriv-quotient,simplifyFirst,under-parameterised,6,6,2,1,-,f(x) = (x³ + x²)/x  for x ≠ 0. Find f′(4).
+rolle-c,cubicRepeated,under-parameterised,6,6,1,2,-,f(x) = x³ − 3x² on [0  3]. Find the c strictly inside that Rolle guarantees.
+to-polar,radius,under-parameterised,6,6,1,2,-,For the point (8  15)  what is r?
+fraction-volume,bucketTrips,under-parameterised,6,5,1,4,-,A tank is 2½ × 4 × 2. A bucket carries 2½ cubic units per trip. How many trips fill the 
+g2-add-subtract-100,NearDoublesNumeric,under-parameterised,6,6,1,2,-,7 + 8 = ?
+g2-place-value-1000,Pv1000SkipHundredsNumeric,under-parameterised,6,6,1,3,-,Skip-count by 100s: 200  300  400  ___?
+deriv-explog,expChain,under-parameterised,6,6,1,1,2..7,f(x) = e^(2x). Find f′(0).
+conditional-prob,diceCondition,under-parameterised,6,4,1,1,5..10,Two dice are rolled and you are told the total is **more than 5**. Find P(the roll is a 
+exp-function,decayStart,under-parameterised,5,-1,1,1,320..2400,For A(x) = 320 · (1/2)^x  what is the starting amount A(0)?
+geo-series,ballDown,under-parameterised,5,5,1,1,4..12,A ball drops from 4 m and rebounds to half its previous height  forever. What is the TOT
+trig-deriv,chain,under-parameterised,5,5,1,1,2..10,f(x) = sin 2x. Find f′(0).
+g4-lines-angles,laSymmetryFindingNumeric,under-parameterised,5,5,5,0,-,How many lines of symmetry does a isosceles triangle have?
+unit-size,extraSharer,under-parameterised,5,5,1,2,-,3 kids are about to share a 24 cm licorice rope equally — then one more kid joins BEFORE
+radian-convert,halfPiToDeg,under-parameterised,5,5,1,1,3..7,Convert 5π/2 to degrees.
+negative-intro,compareFractionDecimal,under-parameterised,5,2,1,3,-,Compare 2/5 and 0.6. Which relation is true?
+geo-series,infAlternating,under-parameterised,5,5,2,-1,-,Find 24 − 12 + 6 − 3 + ⋯ (forever).
+permutation-count,podium,under-parameterised,5,5,1,1,6..10,8 sprinters race for gold  silver and bronze. How many different podiums are possible?
+chord-perp,parallelChords,under-parameterised,5,4,1,3,-,A circle has radius 15. Two parallel chords of lengths 24 and 18 lie on the SAME side of
+chord-dist,howMuchLonger,under-parameterised,5,4,1,3,-,Radius 10. One chord sits 6 from the centre  another sits 8. How much LONGER is the clos
+root-solve,cubeNegative,under-parameterised,5,-1,1,1,8..216,Which value solves x³ = −64?
+order-decimals,secondOf4,under-parameterised,5,5,1,4,-,In 0.5  0.45  0.501  0.51 ordered least to greatest  which comes SECOND?
+permutation-count,buildSeat,under-parameterised,5,-1,1,1,5..9,Build the count for seating 3 of 9 people in 3 distinct chairs.
+g7-sp-counting-principle,spCountCoinDieA,under-parameterised,5,5,1,1,4..12,A coin is flipped and a fair 4-sided die is rolled. How many ordered outcomes are in the
+shape-identify,solid,under-parameterised,4,-1,4,0,-,A beach ball — round all over  with no flat part anywhere. Which solid is it?
+root-solve,cube,under-parameterised,4,-1,1,1,27..216,Which value solves x³ = 27?
+power-product,tenPower,under-parameterised,4,4,1,1,2..5,Evaluate 10^3.
+permutation-count,evenNumbers,under-parameterised,4,4,1,1,5..8,Using the digits 1 to 6 with no repeats  how many **three-digit even** numbers can be fo
+shape-identify,rollStack,under-parameterised,4,-1,4,0,-,Which solid stacks into a tower but cannot roll? Tap it.
+angle-equation,lineThree,under-parameterised,4,4,1,1,30..120,Angles x  2x  and 90° together fill a straight line. Solve for x (in degrees).
+equiv-test,squareVsDouble,under-parameterised,4,4,1,1,3..6,x + x and x² both equal 4 at x = 2. Evaluate x + x at x = 4 to test whether they're trul
+g4-measure,mcDegreeMeasurementNumeric,under-parameterised,4,4,4,0,-,How many degrees are in a quarter turn?
+reflect-compose,basisColumn,under-parameterised,3,3,1,4,-,Using the combined matrix [[0  1]  [-1  0]]  where does ⟨1  0⟩ land?
+reflect-compose,reverseOrder,under-parameterised,2,2,2,2,-,A·B gave a 90° clockwise rotation. What does the reversed order B·A = [[0  -1]  [1  0]] 
