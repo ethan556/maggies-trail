@@ -169,7 +169,22 @@ function auditLanguage(v: Variant): Finding[] {
     // prose 75 times.
     if (/feedback$/i.test(leaf)) {
       if (/^\s*(No[,.\s]|Nope|Wrong|Incorrect|Not quite\b)/i.test(text)) add("medium", "negation-opener", text.slice(0, 160));
-      if (text.trim().length < 25) add("medium", "feedback-too-terse", JSON.stringify(text));
+      /* S242 / GRB-03 — THE LENGTH FLOOR IS A DISTRACTOR RULE AND WAS BEING APPLIED TO SUCCESS.
+       *
+       * All 16 rows this produced were `successFeedback`, and all 16 were K–3 fluency drills:
+       *
+       *     "Correct — 3 + 9 = 12."      "Correct — 9 × 9 = 81."     "Correct — 5 − 2 = 3."
+       *
+       * The floor exists to serve CLAUDE.md rule 3 — "every distractor is a computed real
+       * misconception whose feedback NAMES it" — and nothing under 25 characters can name a
+       * misconception. A success line has no misconception to name. Padding a Grade 2 speed drill's
+       * "Correct — 3 + 9 = 12." with framing words to clear an arbitrary floor makes the drill
+       * slower and the copy worse, which is the opposite of what the rule is for.
+       *
+       * Lines 284 and 296 below already scope the same floor correctly, to `!o.correct` options and
+       * to `commonErrors`. This one was the outlier. Narrowed, not removed: a terse DISTRACTOR
+       * feedback is still reported, and that is the population rule 3 is about. */
+      if (!/^success/i.test(leaf) && text.trim().length < 25) add("medium", "feedback-too-terse", JSON.stringify(text));
     }
   }
   return found;
@@ -200,6 +215,26 @@ function auditMathPresentation(v: Variant): Finding[] {
     ["raw-sqrt", /sqrt\s*\(/i],
     ["raw-caret", /\^/],
     ["machine-pi", /\*\s*pi\b|\bpi\s*\*/],
+    /* S242 / GRB-01 — AN ASTERISK IS BANNED AS AN OPERATOR, NOT AS A CHARACTER (ARCH-01 §3).
+     *
+     * This matched any lone `*` and reported 13 rows on `g10-conditional-probability` that are
+     * markdown emphasis, not multiplication:
+     *
+     *     "The event allows *any* of the four coins to be the head."
+     *     "HHT has at least one head *and* at least one tail"
+     *
+     * 13 of 14 flagged, and the standing product ruling is that those must RENDER as italics — so a
+     * character-level ban was not only 13:1 false, it contradicted a decision already made. The test
+     * is a value on both sides, with paired emphasis removed first so `*any*` cannot supply one.
+     *
+     * THAT NARROWING IS NOT LANDED, AND THIS COMMENT IS THE HONEST RECORD OF WHY. Stripping the
+     * pairs before the test raised the count from 13 to 23 rather than lowering it: the pattern
+     * runs on the RESIDUE after math islands are removed, and removing an island can delete one
+     * asterisk of a pair — `Find *P(a heart or a king)* as a decimal` loses its middle — so the
+     * pairing this repair depends on is already broken by the time the rule sees the text. The
+     * fix belongs upstream of the residue, not here, and it is left undone rather than left
+     * half-done. The 13 rows are known-false and documented in ARCH_01_02_RULING.md §3; the ONE
+     * real operator (`5 * (-5)` in a1-polynomials) is repaired at its generator. */
     ["asterisk-multiplication", /(?<!\*)\*(?!\*)/],
     ["javascript-expression", /\bMath\.[a-z]/i],
     ["stacked-slash-fraction", /\d+\/\d+\s*\/\s*\d+/],
