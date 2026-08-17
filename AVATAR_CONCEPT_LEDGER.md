@@ -16,7 +16,12 @@ source at all — nothing to crop even in principle — but the same non-negotia
 identically: concept-only prose here, zero pixels, `enabled: false`, until FABLE-Q-gated production
 art existed.
 
-**PRODUCTION STATUS — no production art. Concept-only, every entry `enabled: false`.**
+**PRODUCTION STATUS — S243 art-direction pre-canary, not released.** Independent renders for
+`avatar-001`, `avatar-101`, `avatar-201`, and `avatar-301` established the premium painterly
+direction, but independent review rejected their inconsistent head scale/eye line and the
+one-choice-per-band learner experience. Their candidate exports live under
+`reports/avatar-candidates/s243-precanary/`; the production allowlist remains empty until a
+coherent V4 canary batch passes. All 60 concepts remain disabled. No board crop ships.
 
 A code-authored set was rendered, exported, enabled and then WITHDRAWN on 2026-08-14 after review
 against the four WS-J concept boards. It was internally consistent — uniform eye line, head scale,

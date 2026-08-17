@@ -21,7 +21,7 @@ function numberOf(id: string): number {
   return AVATARS.findIndex((a) => a.id === id) + 1;
 }
 
-describe("AvatarPicker — real (unmodified) manifest, everything disabled today", () => {
+describe("AvatarPicker — real manifest, everything disabled today", () => {
   it("opens the grade-appropriate band and shows every slot, non-selectable", () => {
     const onChange = vi.fn();
     render(<AvatarPicker value={undefined} onChange={onChange} grade={0} />);

@@ -25,6 +25,21 @@ export interface UpcomingProps {
   gradeLevel: number;
 }
 
+const LEVELS = [
+  { id: "all", label: "All levels", min: 0, max: 13 },
+  { id: "early", label: "K-2", min: 0, max: 2 },
+  { id: "elementary", label: "Grades 3-5", min: 3, max: 5 },
+  { id: "middle", label: "Grades 6-8", min: 6, max: 8 },
+  { id: "foundations", label: "Algebra 1 & Geometry", min: 9, max: 10 },
+  { id: "advanced", label: "Algebra 2-Calculus", min: 11, max: 13 }
+] as const;
+
+type LevelId = (typeof LEVELS)[number]["id"];
+
+function gradeInLevel(grade: number, level: (typeof LEVELS)[number]): boolean {
+  return grade >= level.min && grade <= level.max;
+}
+
 function CourseCard({ c, showBand = false }: { c: CatalogCourseProps; showBand?: boolean }) {
   return (
     <Link
@@ -63,7 +78,9 @@ export default function CatalogClient({
   upcoming: UpcomingProps[];
 }) {
   const [q, setQ] = useState("");
+  const [level, setLevel] = useState<LevelId>("all");
   const query = q.trim().toLowerCase();
+  const selectedLevel = LEVELS.find((item) => item.id === level) ?? LEVELS[0];
 
   // The learner's grade band, so search can rank by relevance TO THIS LEARNER.
   // Without it, "fractions" returned Grade 1 hits first for a Grade 6 kid —
@@ -102,17 +119,25 @@ export default function CatalogClient({
     // exactly the old catalog order.
     const rank = (g: number) => (band === null ? 0 : Math.abs(g - band));
     const courseHits = courses
-      .filter((c) => c.title.toLowerCase().includes(query))
+      .filter((c) => gradeInLevel(c.gradeLevel, selectedLevel) && c.title.toLowerCase().includes(query))
       .sort((a, b) => rank(a.gradeLevel) - rank(b.gradeLevel) || a.gradeLevel - b.gradeLevel);
     const lessonHits = courses
       .flatMap((c) =>
-        c.lessons
+        gradeInLevel(c.gradeLevel, selectedLevel) ? c.lessons
           .filter((l) => l.title.toLowerCase().includes(query))
           .map((l) => ({ ...l, courseTitle: c.title, gradeLevel: c.gradeLevel }))
+          : []
       )
       .sort((a, b) => rank(a.gradeLevel) - rank(b.gradeLevel) || a.gradeLevel - b.gradeLevel);
     return { courseHits, lessonHits };
-  }, [query, courses, band]);
+  }, [query, courses, band, selectedLevel]);
+
+  const visibleGrades = useMemo(
+    () => Array.from(new Set([...courses.map((c) => c.gradeLevel), ...upcoming.map((u) => u.gradeLevel)]))
+      .filter((grade) => grade >= selectedLevel.min && grade <= selectedLevel.max)
+      .sort((a, b) => a - b),
+    [courses, upcoming, selectedLevel]
+  );
 
   return (
     <div>
@@ -128,6 +153,39 @@ export default function CatalogClient({
           className="mt-1 w-full rounded-card border border-ink/12 bg-surface px-4 py-3 text-base outline-none transition-colors focus:border-sky focus:ring-2 focus:ring-sky/25 dark:border-paper/15 dark:bg-dusk"
         />
       </label>
+
+      <div className="mt-4 rounded-card border border-ink/8 bg-surface-2 p-3 dark:border-paper/10">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p id="level-filter-label" className="text-sm font-extrabold text-content">
+            Browse by level
+          </p>
+          <Link href="/placement" className="inline-flex min-h-11 items-center px-2 text-sm font-bold text-sky-ink hover:underline">
+            Not sure? Find my level
+          </Link>
+        </div>
+        <div className="mt-1 flex gap-2 overflow-x-auto pb-1" role="group" aria-labelledby="level-filter-label">
+          {LEVELS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={level === item.id}
+              onClick={() => setLevel(item.id)}
+              className={`min-h-11 shrink-0 rounded-pill border px-3 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2 ${
+                level === item.id
+                  ? "border-sky bg-sky/12 text-sky-ink"
+                  : "border-ink/12 bg-surface text-content-2 hover:border-sky/60 hover:text-sky-ink dark:border-paper/15 dark:bg-dusk"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+        {!query && (
+          <p className="sr-only" aria-live="polite">
+            Showing {selectedLevel.label} courses.
+          </p>
+        )}
+      </div>
 
       {results ? (
         <div className="mt-6 space-y-6">
@@ -177,9 +235,7 @@ export default function CatalogClient({
         </div>
       ) : (
         <div className="mt-6 space-y-8">
-          {Array.from(new Set([...courses.map((c) => c.gradeLevel), ...upcoming.map((u) => u.gradeLevel)]))
-            .sort((a, b) => a - b)
-            .map((g) => (
+          {visibleGrades.map((g) => (
               <section key={g} aria-label={`${gradeBandLabel(g)} math`}>
                 <h2 className="text-xs font-extrabold uppercase tracking-wider text-muted">
                   {`Math · ${gradeBandLabel(g)}`}

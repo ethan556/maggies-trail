@@ -21,6 +21,7 @@
 import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { predictionEligibility } from "./audit/prediction-eligibility.mjs";
+import { contrastScore, transferScore } from "./audit/flagship-representation.mjs";
 
 const root = process.cwd();
 // TIER_CAPS: optional path to an alternate capability-ratings file. Added in S182 after the
@@ -231,12 +232,11 @@ function scoreLesson(course, l) {
   d.conseq = maxOf("conseq");
   // 4 revise: retry is universal player behaviour (2); stateful engines preserve work (3)
   d.revise = widgetSteps.length === 0 ? 0 : d.manip >= 2 ? 3 : 2;
-  // 5 contrast between cases
-  const byTag = {};
-  for (const s of assessed) if (s.conceptTag) byTag[s.conceptTag] = (byTag[s.conceptTag] ?? 0) + 1;
-  const maxSame = Math.max(0, ...Object.values(byTag));
+  // 5 contrast between genuinely different representations. Repeated attempts using the same
+  // generator/form are practice, not contrast, even when they share a conceptTag. An engine whose
+  // interaction itself compares cases still carries intrinsic contrast evidence.
   const hasCompare = widgetSteps.some((s) => COMPARE.has(s.widget.type));
-  d.contrast = maxSame >= 3 || hasCompare ? 3 : maxSame >= 2 ? 2 : assessed.length >= 2 ? 1 : 0;
+  d.contrast = contrastScore(assessed, hasCompare);
   // 6 invariant: success feedback everywhere it can exist + a naming step after interaction
   const firstW = steps.findIndex((s) => s.widget);
   const conceptAfter = firstW >= 0 && steps.slice(firstW + 1).some((s) => !s.widget && s.kind === "concept");
@@ -250,10 +250,11 @@ function scoreLesson(course, l) {
     else if (manipSeen && ENTRY.has(s.widget.type)) entryAfterManip = true;
   }
   d.formal = entryAfterManip ? 3 : widgetSteps.some((s) => ENTRY.has(s.widget.type)) ? 2 : widgetSteps.length ? 1 : 0;
-  // 8 transfer: a challenge, ideally on a different surface
+  // 8 transfer: a challenge must move the same idea onto a distinct representation. Merely being
+  // last, harder, or labelled `challenge` is not transfer evidence.
   const ch = steps.filter((s) => s.kind === "challenge" && s.widget);
-  const kTypes = new Set(steps.filter((s) => s.kind === "check" && s.widget).map((s) => s.widget.type));
-  d.transfer = ch.length === 0 ? 0 : ch.some((s) => !kTypes.has(s.widget.type)) ? 3 : 2;
+  const checks = steps.filter((s) => s.kind === "check" && s.widget);
+  d.transfer = transferScore(checks, ch);
   // 9 misconception sensitivity: mean distinct wrong paths per widget step
   // Sensitivity is about GRADED moments: average over assessed steps so a lesson
   // is not punished for also containing wrong-path-free exploration widgets.

@@ -15,7 +15,7 @@ import { isPremium } from "@/lib/entitlement";
 import { progressStore } from "@/lib/progress";
 import { AppIcon, LinkButton, ProgressBar, Surface } from "@/components/ui";
 import { useWorld } from "./WorldShell";
-import { MAINTENANCE_COPY, WORLD_STATES } from "./worldCopy";
+import { MAINTENANCE_COPY } from "./worldCopy";
 import { nextWaypoint, waypointHref } from "./worldNav";
 import type { WorldLandmark } from "./worldTypes";
 
@@ -87,6 +87,7 @@ export function Basecamp({
   return (
     <div>
       <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-sky-ink">{category} · Basecamp</p>
+      <p className="mt-2 text-sm font-bold text-content-2">Course overview</p>
       <h1 className="mt-1 flex items-center gap-3 text-3xl font-extrabold tracking-tight">
         <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-sky/10 text-sky-ink">
           <AppIcon name={courseIcon(trailName)} size={24} />
@@ -114,7 +115,7 @@ export function Basecamp({
               </div>
               {next ? (
                 <LinkButton href={waypointHref(next.lessonId)} size="md" iconRight="icon-701">
-                  {completedSet.size > 0 ? `Continue: ${waypoints[next.lessonId]?.title ?? "next waypoint"}` : "Begin expedition"}
+                  {completedSet.size > 0 ? `Continue: ${waypoints[next.lessonId]?.title ?? "next waypoint"}` : "Start course"}
                 </LinkButton>
               ) : firstWaypointId ? (
                 <LinkButton href={waypointHref(firstWaypointId)} size="md" className="!bg-leaf enabled:hover:!bg-leaf/90">
@@ -129,7 +130,10 @@ export function Basecamp({
 
       {prerequisites.length > 0 && (
         <section aria-labelledby="approach-heading" className="mt-5">
-          <h2 id="approach-heading" className="text-sm font-extrabold uppercase tracking-wide text-content-2">Approach trails</h2>
+          <h2 id="approach-heading" className="text-sm font-extrabold uppercase tracking-wide text-content-2">Recommended prerequisites (approach trails)</h2>
+          <p className="mt-1 max-w-2xl text-sm text-content-2">
+            These courses are recommended, not required. You can start this course now.
+          </p>
           <ul className="mt-2 flex flex-wrap gap-2">
             {prerequisites.map((prerequisite) => {
               const prerequisiteState = world.courses[prerequisite.courseId];
@@ -142,13 +146,14 @@ export function Basecamp({
                   >
                     <span aria-hidden>{walked ? "✓" : "→"}</span>
                     {prerequisite.trailName}
-                    <span className="sr-only">{walked ? " — walked" : " — not yet walked"}</span>
+                    <span className="rounded-pill bg-ink/6 px-2 py-0.5 text-xs text-content-2 dark:bg-paper/10">
+                      {walked ? "Started" : "Not started"}
+                    </span>
                   </Link>
                 </li>
               );
             })}
           </ul>
-          {course && !course.approachOpen && <p className="mt-2 text-sm text-content-2">{WORLD_STATES.approachClosed(trailName)}</p>}
         </section>
       )}
 

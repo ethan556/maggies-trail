@@ -16,25 +16,25 @@ function solvePrompt(form,input){
  switch(form){
  // ---- S189 k0-add-subtract: every answer recomputed from the PARSED PROMPT ----
  case'KoaJoinNumeric':{const m=prompt.match(/has (\d+) \w+\. Another group has (\d+)/);return +m[1]+ +m[2];}
- case'KoaFingersNumeric':{const m=prompt.match(/up (\d+) fingers on one hand and (\d+)/);return +m[1]+ +m[2];}
- case'KoaDrawingsNumeric':{const m=prompt.match(/Draw (\d+) circles\. Then draw (\d+)/);return +m[1]+ +m[2];}
- case'KoaActOutNumeric':{const m=prompt.match(/^(\d+) children are playing\. (\d+) more/);return +m[1]+ +m[2];}
- case'KoaTakeAwayNumeric':{const m=prompt.match(/are (\d+) cookies\. You eat (\d+)/);return +m[1]- +m[2];}
- case'KoaSubDrawingsNumeric':{const m=prompt.match(/Draw (\d+) circles, then cross out (\d+)/);return +m[1]- +m[2];}
- case'KoaSubActOutNumeric':{const m=prompt.match(/^(\d+) children are playing\. (\d+) go home/);return +m[1]- +m[2];}
- case'KoaHowManyLeftNumeric':{const m=prompt.match(/^(\d+) balloons.*until (\d+) have gone/);return +m[1]- +m[2];}
- case'KoaAddToStoryNumeric':{const m=prompt.match(/holds (\d+) \w+\. Someone puts in (\d+)/);return +m[1]+ +m[2];}
- case'KoaTakeFromStoryNumeric':{const m=prompt.match(/holds (\d+) \w+\. Someone takes out (\d+)/);return +m[1]- +m[2];}
+ case'KoaFingersNumeric': return ns[0]+ns[1];
+ case'KoaDrawingsNumeric': return ns[0]+ns[1];
+ case'KoaActOutNumeric': return ns[0]+ns[1];
+ case'KoaTakeAwayNumeric': return ns[0]-ns[1];
+ case'KoaSubDrawingsNumeric': return ns[0]-ns[1];
+ case'KoaSubActOutNumeric': return ns[0]-ns[1];
+ case'KoaHowManyLeftNumeric': return ns[0]-ns[1];
+ case'KoaAddToStoryNumeric': return ns[0]+ns[1];
+ case'KoaTakeFromStoryNumeric': return ns[0]-ns[1];
  case'KoaPutTogetherNumeric':{const m=prompt.match(/has (\d+) red grapes and (\d+) green/);return +m[1]+ +m[2];}
  case'KoaSums5Numeric':{const m=prompt.match(/^(\d+) \+ (\d+) = \?/);return +m[1]+ +m[2];}
  case'KoaDiffs5Numeric':{const m=prompt.match(/^(\d+) [−-] (\d+) = \?/);return +m[1]- +m[2];}
  case'KoaPlusMinusOneNumeric':{let m=prompt.match(/^(\d+) \+ 1 = \?/);if(m)return +m[1]+1;m=prompt.match(/^(\d+) [−-] 1 = \?/);return +m[1]-1;}
  case'KoaZeroFactNumeric':{const m=prompt.match(/^(\d+) [+−-] 0 = \?/);return +m[1];}
  case'KoaSpeedy5Numeric':{let m=prompt.match(/fast: (\d+) \+ (\d+) = \?/);if(m)return +m[1]+ +m[2];m=prompt.match(/fast: (\d+) [−-] (\d+) = \?/);return +m[1]- +m[2];}
- case'KoaWriteAddMcq':{const m=prompt.match(/^(\d+) birds.*?\. (\d+) more/);return exact(options,`${+m[1]} + ${+m[2]} = ${+m[1]+ +m[2]}`);}
- case'KoaWriteSubMcq':{const m=prompt.match(/^(\d+) frogs.*?\. (\d+) hop/);return exact(options,`${+m[1]} \u2212 ${+m[2]} = ${+m[1]- +m[2]}`);}
- case'KoaChooseOpMcq':{return exact(options,/more ducks swim over/.test(prompt)?'Add':'Subtract');}
- case'KoaModelStoryMcq':{const m=prompt.match(/^"(\d+) cats sit on a wall\. (\d+) jump down/);return exact(options,`${+m[1]} cats drawn, with ${+m[2]} crossed out`);}
+ case'KoaWriteAddMcq': return exact(options,`${ns[0]} + ${ns[1]} = ${ns[0]+ns[1]}`);
+ case'KoaWriteSubMcq': return exact(options,`${ns[0]} \u2212 ${ns[1]} = ${ns[0]-ns[1]}`);
+ case'KoaChooseOpMcq':{const add=/more ducks? swims? (?:into|over)/.test(prompt);const modern=options.includes('Add both groups')||options.includes('Subtract the leaving group');return exact(options,modern?(add?'Add both groups':'Subtract the leaving group'):(add?'Add':'Subtract'));}
+ case'KoaModelStoryMcq':{const cat=n=>`${n} ${n===1?'cat':'cats'}`,modern=options.includes(`${cat(ns[0])} drawn, with ${cat(ns[1])} crossed out`);return exact(options,modern?`${cat(ns[0])} drawn, with ${cat(ns[1])} crossed out`:`${ns[0]} cats drawn, with ${ns[1]} crossed out`);}
   // S183 k0-count-100: each route re-derives the answer from the PROMPT TEXT the learner reads,
   // never from the generator's internals. Sequence facts come from the printed numbers alone.
   case 'kSeqNextHop': case 'kSeqNextMcq': case 'kDecadeNextMcq': {const a=String(ns[0]+1);return form==='kSeqNextHop'?ns[0]+1:exact(options,a);}
@@ -46,7 +46,7 @@ function solvePrompt(form,input){
   case 'kTensBackHop': return ns[0]-10;
   case 'kCountBackHop': return ns[0]-ns[1];
   case 'kTensOrderDrag': case 'kSeqOrderDrag': return state.items.map(x=>x.label).sort((a,b)=>+a-+b);
-  case 'countAddMcq': {const values=prompt.includes('red counters')?ns.slice(0,3):ns.slice(0,2);return exact(options,String(values.reduce((a,b)=>a+b,0)));}
+  case 'countAddMcq': {const values=/red counters?/.test(prompt)?ns.slice(0,3):ns.slice(0,2);return exact(options,String(values.reduce((a,b)=>a+b,0)));}
   case 'countAddLine': case 'countTensLine': {if(state){const sign=state.direction==='back'?-1:1;return state.start+sign*state.hop*state.hops;}const start=ns[0],hops=/once/.test(prompt)?1:ns[1],hop=form==='countTensLine'?10:1;return start+hop*hops;}
   case 'countCompareEqualMcq': return exact(options,'They are equal');
   case 'countTensMcq': {if(prompt.startsWith('Starting at 0'))return exact(options,String(ns[2]/10));const seq=ns.slice(0,3).map(n=>n*10).join(', ');return exact(options,seq);}

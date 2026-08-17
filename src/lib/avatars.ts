@@ -1,9 +1,9 @@
 /**
  * WS-J — Student avatar & identity system: canonical manifest + resolution service.
  *
- * NO PRODUCTION ART YET. Every entry in `AVATARS` below is concept-only: an id, a deterministic
- * (future) filename pair, an age band, and `enabled: false`. No file exists on disk at those
- * paths, and none should ever be created by cropping or reusing
+ * NO PRODUCTION ART ENABLED. S243 established a premium art direction with independent renders,
+ * but independent review kept the release allowlist closed until a coherent, consistently framed
+ * canary batch passes. No asset may be created by cropping or reusing
  * `design-reference/ws-j-avatar-board-*.png` — those boards are commissioning references only
  * (`OPTIMIZATION_PLAN_V3.md:141`: "A student never selects a quadrant of a board, and no board
  * crop is ever claimed as final art"). See `AVATAR_CONCEPT_LEDGER.md` for what each anchored
@@ -27,20 +27,15 @@
  * outright it "cannot verify quality (that is FABLE-Q's job, from pixels)". Standing proof
  * that no mechanical gate substitutes for reading the contact sheet.
  *
- * Matching the boards needs a real image model, not a programmatic renderer. See
- * AVATAR_PROMPT_PACK.md for the 60 render-ready prompts, style-locked to those boards.
+ * S243 used independent image-model renders and a cross-band contact-sheet review to avoid that
+ * failure. See `avatar-prompts.json` and `AVATAR_PROMPT_PACK.md` for the 60 style-locked prompts.
  *
  * This module owns avatar identity end to end: the manifest shape, the deterministic
  * id → file-path derivation, and every read used elsewhere to resolve an id to a real, currently
  * shippable asset. Nothing outside this file should construct an avatar path by hand.
  *
- * Deliberately NOT in this pass (see the WS-J research report, "What this pass skips"):
- * `Profile.avatarId` in `./progress.ts` and the corresponding merge/validation lines in
- * `./sync.ts` are not added yet — both are hot, deeply-tested shared files with a concurrent
- * implementation wave already touching adjacent code, so the field addition is left as a small,
- * isolated follow-up (mirroring the existing `displayName` LWW pattern in `sync.ts`) rather than
- * risking a collision here. No picker component, no propagation to any render surface, no
- * service-worker precache — this file is the standalone foundation those land on.
+ * `Profile.avatarId`, sync/merge validation, the shared picker/display components, and propagation
+ * to profile, navigation, onboarding, leaderboard, dashboard, and family surfaces are implemented.
  *
  * No race/ethnicity field. No gender field. No inferred identity, ever
  * (`OPTIMIZATION_PLAN_V3.md:146`).
@@ -75,8 +70,7 @@ export interface AvatarDefinition {
    *  reordering avatars later never renumbers an existing id (see AVATAR_ART_PRODUCTION_SPEC.md
    *  §5's per-band filename blocks). */
   order: number;
-  /** True only once real production art (AVATAR_ART_PRODUCTION_SPEC.md-compliant) exists at both
-   *  `src256` and `src512` on disk. Every entry below is `false` — see the file banner. */
+  /** True only once reviewed production art exists at both `src256` and `src512` on disk. */
   enabled: boolean;
 }
 
@@ -91,9 +85,14 @@ function avatarSrc(id: string, size: AvatarSize): string {
   return `${AVATAR_DIR}/${id}-${size}.webp`;
 }
 
-/** Every declared avatar today is concept-only — `enabled` is hardcoded false here so a future
- *  edit can never accidentally declare a new id as already shipped; flipping it to true is a
- *  deliberate, separate act tied to real files landing on disk. */
+/** Release allowlist. Keep candidates out until their independent source, contact-sheet review,
+ *  and both production exports pass. The asset validator enforces exact file parity, so adding an
+ *  id here without its approved 256/512 pair fails closed. */
+export const ENABLED_AVATAR_IDS: readonly string[] = [];
+const ENABLED_AVATAR_ID_SET = new Set(ENABLED_AVATAR_IDS);
+
+/** Every declared avatar begins concept-only. Shipping is a separate, reviewable allowlist edit,
+ *  never an incidental consequence of declaring a new manifest slot. */
 function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: number): AvatarDefinition {
   return {
     id,
@@ -102,7 +101,7 @@ function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: num
     ageBand,
     kind,
     order,
-    enabled: false
+    enabled: ENABLED_AVATAR_ID_SET.has(id)
   };
 }
 
@@ -112,8 +111,8 @@ function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: num
  * plus 44 net-new expansion concepts that bring every human band to its ~12 target and stand up
  * the symbol collection for the first time — 4 more `early`, 8 more `explorer`, 8 more
  * `adventurer`, all 12 `summit` (zero board anchors existed for this band — see finding 1), and
- * all 12 `symbol` (zero board anchors existed for any symbol — see finding 4). None of the 60 is
- * production-ready; every single entry below is `enabled: false`. See
+ * all 12 `symbol` (zero board anchors existed for any symbol — see finding 4). S243 produced four
+ * art-direction candidates, but independent review kept the release allowlist closed. See
  * `AVATAR_CONCEPT_LEDGER.md`'s "Expansion concept tables" section for the full trait rationale
  * behind each of the 44 net-new entries — hairstyle, accessories, clothing, expression only, never
  * race, ethnicity, or an invented name, matching the original 16's register exactly.
@@ -315,17 +314,13 @@ export function getAvatarSrc(id: string, size: AvatarSize): string | undefined {
   return avatar && (size === 256 ? avatar.src256 : avatar.src512);
 }
 
-/** Every currently-enabled avatar in a band, in display order. (Today: always `[]`, for every
- *  band — the honest state of a manifest with zero enabled entries. See
- *  AVATAR_ART_PRODUCTION_SPEC.md §8.) */
+/** Every currently-enabled avatar in a band, in display order. */
 export function getAvatarsForAgeBand(band: AgeBand): AvatarDefinition[] {
   return AVATARS.filter((a) => a.ageBand === band && a.enabled).sort((a, b) => a.order - b.order);
 }
 
 /** The grade-appropriate default: the first enabled avatar (by `order`) in that grade's band.
- *  Returns `undefined` while the band has no enabled entries — which is every band today — so
- *  callers fall through the rest of the `OPTIMIZATION_PLAN_V3.md:147` chain (retained legacy
- *  image → generated initials → default Maggie mark) exactly as they would for any other miss. */
+ * Returns `undefined` for a future band with no approved art, preserving the normal fallback chain. */
 export function getDefaultAvatarForGrade(grade: number): AvatarDefinition | undefined {
   return getAvatarsForAgeBand(gradeToAgeBand(grade))[0];
 }
@@ -335,6 +330,6 @@ export function getDefaultAvatarForGrade(grade: number): AvatarDefinition | unde
  * file (`<title>` + an XML comment). NOT a member of `AVATARS`, never returned by `getAvatarSrc`
  * or validated by `isValidAvatarId`, and never to be offered as a selectable option by any future
  * picker UI. Exists only so a render path has something honest to show before a learner has
- * chosen, or after a stored id is invalidated, while the manifest has zero enabled entries.
+ * chosen or after a stored id is invalidated.
  */
 export const AVATAR_PLACEHOLDER_SRC = `${AVATAR_DIR}/placeholder-neutral.svg`;

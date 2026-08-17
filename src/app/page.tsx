@@ -195,8 +195,8 @@ export default async function Home() {
         </section>
 
         {/* Evidence, not invented social proof. Every number is derived from the live catalogue
-            (courseCount/lessonCount/gradeSpan, computed once above) and ProofStrip only decides
-            when to animate toward them, never what they are. */}
+            (courseCount/lessonCount/gradeSpan, computed once above) and rendered canonically in
+            the initial HTML. */}
         <ProofStrip courseCount={courseCount} lessonCount={lessonCount} gradeSpan={gradeSpan} />
 
         {/* Closing CTA — OPTIMIZATION_PLAN_V3.md WS-H moment 6's exact target line. */}

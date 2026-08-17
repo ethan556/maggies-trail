@@ -12,6 +12,10 @@ describe("achievements", () => {
     expect(new Set(BADGES.map((b) => b.id)).size).toBe(BADGES.length);
   });
 
+  it("uses only owned AppIcon identifiers, never platform emoji", () => {
+    for (const badge of BADGES) expect(badge.icon, badge.id).toMatch(/^icon-\d{3}$/);
+  });
+
   it("awards lesson-count and XP badges, exactly once", () => {
     const p = profile({ xp: 600, lessons: { a: { completed: true, bestXp: 65 } } });
     const first = awardNewBadges(p);

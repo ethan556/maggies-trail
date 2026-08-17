@@ -9,6 +9,9 @@ in per-band blocks (`001`–`012` early, `101`–`112` explorer, `201`–`212` a
 summit, `401`–`412` neutral/symbolic) — see `AVATAR_ART_PRODUCTION_SPEC.md` §5 for the full table
 and `src/lib/avatars.ts` for the manifest and the code that derives these paths from an id.
 
-The only file that exists in this directory today is `placeholder-neutral.svg`, an explicitly
-labeled dev-only fallback — see the comment inside that file. It is not, and must never become, a
-selectable avatar.
+S243 produced four independent art-direction candidates, but none is released here: independent
+review rejected inconsistent framing and the incomplete one-choice-per-band picker. Candidate
+exports are retained under `reports/avatar-candidates/s243-precanary/`. The production directory
+therefore still contains only `placeholder-neutral.svg`, an explicitly labeled fallback that must
+never become selectable. `scripts/brand/validate-avatar-assets.ts` fails closed on unapproved,
+orphaned, malformed, duplicate, or incomplete production assets.

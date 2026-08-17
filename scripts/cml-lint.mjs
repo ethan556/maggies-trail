@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // S242 / CML-01 — THE FLAG WAS BEING EATEN AS THE ROOT PATH.
 // `process.argv[2]` was read directly, so the documented invocation `node scripts/cml-lint.mjs
@@ -41,7 +42,7 @@ const RESPONSE_ONLY = new Set(['numeric', 'mcq', 'fractionEntry', 'pointEntry', 
 // A capability edit can no longer silently demote an engine either: DIRECT_AT_S242 below records
 // what was listed on the day this changed, and the lint fails if the derivation stops covering it.
 const capabilities = JSON.parse(
-  fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'engine-capabilities.json'), 'utf8')
+  fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'engine-capabilities.json'), 'utf8')
 ).types;
 const MANIP_FLOOR = 2;
 // `radicalCheck` scores manip 0 and was nonetheless listed. It is retained as a named exception
@@ -105,7 +106,7 @@ for (const file of walk(contentRoot)) {
   try { json = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { continue; }
   const steps = getSteps(json);
   if (!steps.length) continue;
-  const relative = path.relative(root, file);
+  const relative = path.relative(root, file).split(path.sep).join('/');
   const kinds = steps.map(widgetKind).filter(Boolean);
   const responseOnly = kinds.filter((kind) => RESPONSE_ONLY.has(kind)).length;
   const direct = kinds.filter((kind) => DIRECT.has(kind)).length;

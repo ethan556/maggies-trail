@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import QuizShell, { type QuizSummary, type Servable } from "@/components/QuizShell";
+import { AppIcon } from "@/components/ui";
 import { dueItems, localDateStr, onReviewResult, xpFor } from "@/lib/engine";
 import { awardNewBadges, type BadgeDef } from "@/lib/achievements";
 import { applyXp, bump, progressStore } from "@/lib/progress";
@@ -259,7 +260,8 @@ export default function ReviewClient() {
       <h2 className="text-lg font-extrabold">Review walked!</h2>
       {state.badges.map((b) => (
         <p key={b.id} className="status-pop mt-2 rounded-card border border-tangerine/60 bg-tangerine/10 px-3 py-2 text-sm font-extrabold">
-          {b.icon} Badge earned: {b.name} — <span className="font-normal">{b.desc}</span>
+          <AppIcon name={b.icon} size={18} className="mr-1 inline-block align-text-bottom" />
+          Badge earned: {b.name} — <span className="font-normal">{b.desc}</span>
         </p>
       ))}
       <p className="mt-2 text-sm">

@@ -9,6 +9,7 @@ import { progressStore, type Profile } from "@/lib/progress";
 import { trailNameFrom } from "@/lib/personalize";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
 import { AvatarPicker } from "@/components/AvatarPicker";
+import { AppIcon } from "@/components/ui";
 
 export interface ProfileCourse {
   slug: string;
@@ -363,6 +364,7 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
             return (
               <li
                 key={b.id}
+                aria-label={`${b.name}, ${earned ? "earned" : "locked"}`}
                 className={`rounded-card border-2 px-3 py-2 ${
                   earned
                     ? "border-tangerine/60 bg-tangerine/10"
@@ -370,10 +372,22 @@ export default function ProfileClient({ courses }: { courses: ProfileCourse[] })
                 }`}
                 title={b.desc}
               >
-                <p className="text-xl" aria-hidden>
-                  {earned ? b.icon : "🔒"}
-                </p>
+                <span
+                  aria-hidden
+                  data-achievement-icon={earned ? b.icon : "icon-705"}
+                  data-achievement-state={earned ? "earned" : "locked"}
+                  className={`mb-1 flex h-9 w-9 items-center justify-center rounded-full ${
+                    earned
+                      ? "bg-tangerine/15 text-tangerine-ink"
+                      : "bg-ink/8 text-ink/55 dark:bg-paper/10 dark:text-paper/60"
+                  }`}
+                >
+                  <AppIcon name={earned ? b.icon : "icon-705"} size={20} />
+                </span>
                 <p className="text-xs font-extrabold">{b.name}</p>
+                <p className="mt-0.5 text-[11px] font-bold uppercase tracking-wide text-ink/60 dark:text-paper/65">
+                  {earned ? "Earned" : "Locked"}
+                </p>
                 <p className="mt-0.5 text-[11px] leading-tight text-ink/70 dark:text-paper/70">{b.desc}</p>
               </li>
             );

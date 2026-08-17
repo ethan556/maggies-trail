@@ -11,7 +11,7 @@ import { AVATAR_PLACEHOLDER_SRC } from "@/lib/avatars";
 
 afterEach(cleanup);
 
-describe("AvatarDisplay — real (unmodified) manifest, everything disabled today", () => {
+describe("AvatarDisplay — real manifest, everything disabled today", () => {
   it("falls back to the placeholder when no avatarId is given", () => {
     render(<AvatarDisplay alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
@@ -23,7 +23,6 @@ describe("AvatarDisplay — real (unmodified) manifest, everything disabled toda
   });
 
   it("falls back to the placeholder for a real but disabled manifest id", () => {
-    // avatar-001 exists in the real manifest but, like every entry today, enabled: false.
     render(<AvatarDisplay avatarId="avatar-001" alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });

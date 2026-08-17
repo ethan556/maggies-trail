@@ -15,6 +15,7 @@ import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import process from "node:process";
 import { predictionEligibility } from "./prediction-eligibility.mjs";
+import { representationSignature } from "./flagship-representation.mjs";
 
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const CONTENT = join(ROOT, "content", "courses");
@@ -309,11 +310,80 @@ const liveIds = new Set(liveBacklog.map((row) => row.id));
 const policyIds = new Set(policy.map((row) => row.lessonId));
 const missingPolicy = [...liveIds].filter((id) => !policyIds.has(id)).sort();
 const stalePolicy = [...policyIds].filter((id) => !liveIds.has(id)).sort();
-if (missingPolicy.length || stalePolicy.length) {
-  fail(`policy/live backlog drift; missing policy=[${missingPolicy.join(", ")}], stale policy=[${stalePolicy.join(", ")}]`);
+
+function inferredIntent(lesson) {
+  const text = (lesson.steps ?? [])
+    .filter((step) => step.widget && (step.kind === "check" || step.kind === "challenge"))
+    .map(compactPrompt)
+    .join(" ");
+  if (/\b(sort|classify|identify|name the|which shape|which figure)\b/i.test(text)) return "classify";
+  if (/\b(compare|greater|less|same as|different from|which is (?:larger|smaller))\b/i.test(text)) return "compare";
+  if (/\b(explain|justify|why)\b/i.test(text)) return "justify";
+  if (/\b(build|draw|plot|place|arrange|show|make a model)\b/i.test(text)) return "construct";
+  if (/\b(read|count|shown|displayed)\b/i.test(text)) return "read";
+  return "compute";
 }
 
-const records = policy.map((review) => {
+function repetitionDisposition(tier) {
+  const source = byId.get(tier.id);
+  if (!source) fail(`${tier.id} cannot be classified because its lesson is missing`);
+  const assessed = (source.lesson.steps ?? []).filter(
+    (step) => step.widget && (step.kind === "check" || step.kind === "challenge")
+  );
+  const checks = assessed.filter((step) => step.kind === "check");
+  const challenges = assessed.filter((step) => step.kind === "challenge");
+  // Deliberately narrow: only reconcile debt newly made visible by the S243 representation-
+  // novelty scorer. A real assessed sequence must exist and transfer must be exactly zero.
+  // Any other future C/D regression remains missing policy and fails below.
+  if (tier.d.transfer !== 0 || checks.length === 0 || challenges.length === 0) return null;
+  const signatures = [...new Set(assessed.map(representationSignature))].sort();
+  const types = [...new Set(assessed.map((step) => step.widget.type))].sort();
+  const gaps = Object.entries(tier.d).filter(([, value]) => value <= 1).map(([name]) => name).sort();
+  const requiresMultipleEngines = tier.d.contrast === 0 || tier.d.manip <= 1;
+  const signatureEvidence = signatures.join(" + ");
+  const typeEvidence = types.join(" + ");
+  return {
+    lessonId: tier.id,
+    interactionIntent: inferredIntent(source.lesson),
+    representationRequired: "multiple",
+    representationPresent: "partial",
+    predictionEligibility: tier.predictionEligibility.status,
+    candidateDisposition: requiresMultipleEngines ? "multi-engine" : "extend",
+    candidateEngineOrExtension: requiresMultipleEngines
+      ? `Multi-representation sequence beyond ${signatureEvidence}; current assessed surfaces: ${typeEvidence}`
+      : `Novel challenge extension beyond ${signatureEvidence}; current assessed surfaces: ${typeEvidence}`,
+    fitAcceptanceContract:
+      `Current evidence: ${checks.length} checks, ${challenges.length} challenge(s), signatures [${signatureEvidence}], ` +
+      `gaps [${gaps.join(", ")}]. Transfer stays 0 unless the challenge prompt differs and its representation ` +
+      "signature is absent from every same-concept check; contrast requires at least two distinct forms. " +
+      "Preserve independent answer derivation and reachable misconception feedback.",
+    workstream: `S243-representation-novelty-${band(source.course.gradeLevel).replace(/[^A-Za-z0-9]/g, "-")}`,
+    honestRestingTier: "B",
+    reviewStatus: "classified",
+    classificationRule: "s243-representation-novelty",
+    classificationEvidence: {
+      checkSteps: checks.map((step) => step.id),
+      challengeSteps: challenges.map((step) => step.id),
+      signatures,
+      widgetTypes: types,
+      scoreGaps: gaps
+    }
+  };
+}
+
+const derivedPolicy = [];
+const unresolvedPolicy = [];
+for (const id of missingPolicy) {
+  const derived = repetitionDisposition(tierById.get(id));
+  if (derived) derivedPolicy.push(derived);
+  else unresolvedPolicy.push(id);
+}
+if (unresolvedPolicy.length || stalePolicy.length) {
+  fail(`policy/live backlog drift; missing policy=[${unresolvedPolicy.join(", ")}], stale policy=[${stalePolicy.join(", ")}]`);
+}
+const effectivePolicy = [...policy, ...derivedPolicy].sort((a, b) => a.lessonId.localeCompare(b.lessonId));
+
+const records = effectivePolicy.map((review) => {
   const source = byId.get(review.lessonId);
   const tier = tierById.get(review.lessonId);
   if (!source || !tier) fail(`${review.lessonId} is not resolvable on disk`);
@@ -352,6 +422,8 @@ const records = policy.map((review) => {
     remedialRisk: risk,
     verificationOwner: `${lesson.id}.s126-fit.test + independent answer derivation + non-target lesson hash proof`,
     workstream: review.workstream,
+    classificationRule: review.classificationRule ?? "reviewed-policy",
+    classificationEvidence: review.classificationEvidence ?? null,
     reviewStatus: review.reviewStatus
   };
 });
@@ -359,7 +431,11 @@ const records = policy.map((review) => {
 if (records.some((row) => row.reviewStatus !== "classified")) fail("one or more rows remain UNREVIEWED");
 
 const honestPredictionCeilings = tiers
-  .filter((row) => row.grade <= 8 && row.tier === "B" && row.d.prediction < 2 && row.d.manip >= 2 && row.d.conseq >= 2 && row.d.misconception >= 2 && row.total + 2 >= 30)
+  // Structural ceiling, not a score-only "one gate from A" queue. The stricter representation
+  // ruler can lower contrast/transfer without changing whether prediction itself is redundant or
+  // unsafe. Keep every otherwise strong Tier-B task whose authored action makes prediction unfit;
+  // do not erase that disposition merely because adding two points would no longer reach 30.
+  .filter((row) => row.grade <= 8 && row.tier === "B" && row.d.prediction < 2 && row.d.manip >= 2 && row.d.conseq >= 2 && row.d.misconception >= 2)
   .map((row) => {
     const source = byId.get(row.id);
     const result = predictionEligibility(source.lesson, caps);
@@ -374,6 +450,7 @@ const result = {
     "content/courses/**/lessons/*.json",
     "scripts/engine-capabilities.json",
     "scripts/flagship-tier.mjs",
+    "scripts/audit/flagship-representation.mjs",
     "scripts/audit/excellence-dispositions-s126.json"
   ],
   // Portable across sealed extraction directory names; this report is rooted at the repository itself.
@@ -383,11 +460,13 @@ const result = {
     strongCausalStep: "widget capability manip >= 2 and consequence >= 2",
     explorationStep: "a widget step whose authored kind is interactive",
     causalSpine: "a lesson has at least one exploration step served by a strong causal engine",
+    derivedRepresentationNoveltyClassification: "only a live K-8 C/D lesson with at least one check, at least one challenge, and evidence-based transfer score 0; all other missing policy remains a hard failure",
     honestRestingTier: "target experience tier after exact-fit work; B/C-intentional are valid when prediction or manipulation would duplicate/change the assessed action"
   },
   summary: {
     liveK8Backlog: liveBacklog.length,
     classified: records.length,
+    derivedClassifications: derivedPolicy.length,
     unreviewed: 0,
     dispositions: Object.fromEntries([...new Set(records.map((row) => row.candidateDisposition))].sort().map((value) => [value, records.filter((row) => row.candidateDisposition === value).length])),
     honestRestingTiers: Object.fromEntries([...new Set(records.map((row) => row.honestRestingTier))].sort().map((value) => [value, records.filter((row) => row.honestRestingTier === value).length])),
@@ -416,6 +495,9 @@ const csvFields = [
   "predictionEligibility",
   "candidateDisposition",
   "candidateEngineOrExtension",
+  "classificationRule",
+  "classificationSignatures",
+  "classificationScoreGaps",
   "honestRestingTier",
   "remedialRoutes",
   "currentWidgets",
@@ -428,6 +510,8 @@ const csvFields = [
 ];
 const csvRows = records.map((row) => ({
   ...row,
+  classificationSignatures: row.classificationEvidence?.signatures ?? [],
+  classificationScoreGaps: row.classificationEvidence?.scoreGaps ?? [],
   remedialRoutes: row.remedialRisk.routes,
   assessedClaimEvidence: row.assessedClaimEvidence.map((item) => `${item.stepId} ${item.prompt}`),
   misconceptionStatus: row.misconceptionReachability.status,
@@ -440,12 +524,13 @@ const countBy = (field) => [...new Set(records.map((row) => row[field]))].sort()
 const md = [];
 md.push("# EXCELLENCE_BACKLOG_S126 — generated truth and disposition ledger");
 md.push("");
-md.push("Regenerate with `npm run audit:excellence`. This report is generated from live lesson JSON, the live tier compiler, the engine capability table, and the reviewed Session-126 disposition policy. It is a work queue only where the disposition says work remains; an honest Tier B or C-intentional is not a defect.");
+md.push("Regenerate with `npm run audit:excellence`. This report is generated from live lesson JSON, the live tier compiler, the engine capability table, the reviewed Session-126 disposition policy, and the bounded S243 representation-novelty classifier. It is a work queue only where the disposition says work remains; an honest Tier B or C-intentional is not a defect.");
 md.push("");
 md.push("## Gate summary");
 md.push("");
 md.push(`- Live K–8 C/D queue: **${liveBacklog.length}**`);
 md.push(`- Classified: **${records.length}**`);
+md.push(`- Deterministically classified representation-novelty rows: **${derivedPolicy.length}**`);
 md.push("- UNREVIEWED: **0**");
 md.push(`- Representation absent: **${result.summary.representationMissing}**; partial: **${result.summary.representationPartial}**`);
 md.push(`- Honest prediction ceilings currently detected outside the C/D queue: **${honestPredictionCeilings.length}**`);
@@ -477,7 +562,7 @@ md.push("");
 if (!honestPredictionCeilings.length) md.push("- none");
 else for (const row of honestPredictionCeilings) md.push(`- **${row.lessonId}** (G${row.grade}, B${row.score}): ${row.status} — ${row.reason}`);
 md.push("");
-md.push("## Reviewed queue");
+md.push("## Classified queue");
 md.push("");
 md.push("| lesson | current | action | representation | prediction | target | candidate | remedial routes |");
 md.push("|---|---:|---|---|---|---|---|---:|");
@@ -487,7 +572,7 @@ for (const row of records) {
 md.push("");
 md.push("## Representation-presence audit");
 md.push("");
-md.push(`The strict whole-corpus text scan found **${result.undrawnRepresentationCandidates.length}** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the 64 reviewed rows above are authoritative for this phase.`);
+md.push(`The strict whole-corpus text scan found **${result.undrawnRepresentationCandidates.length}** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the classified rows above are authoritative for this phase.`);
 md.push("");
 for (const row of result.undrawnRepresentationCandidates.slice(0, 80)) md.push(`- ${row.lessonId}/${row.stepId} [${row.widgetType}] — ${row.evidence}`);
 md.push("");
@@ -500,6 +585,7 @@ writeFileSync(OUT_MD, md.join("\n") + "\n");
 
 console.log(
   `excellence-s126: ${records.length}/${liveBacklog.length} classified, 0 unreviewed | ` +
+    `derived representation novelty=${derivedPolicy.length} | ` +
     `dispositions ${JSON.stringify(result.summary.dispositions)} | ` +
     `representations no=${result.summary.representationMissing} partial=${result.summary.representationPartial} | ` +
     `honest prediction ceilings=${honestPredictionCeilings.length}`

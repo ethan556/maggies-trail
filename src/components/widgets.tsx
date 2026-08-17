@@ -9961,11 +9961,25 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
 /* ---------------- AreaModel (fixed grid counting OR width × height construction) ---------------- */
 
 /* ---------------- DistributionCompareLab (standardized gap ↔ visible overlap) ---------------- */
-function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TDistributionCompareLab>) {
+function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TDistributionCompareLab>) {
   const gap = distributionGapUnits(spec);
   const overlap = distributionOverlapFraction(gap);
   const selectedMeasure = spec.mode === "measure" && typeof value === "number" ? value : null;
   const selectedJudge = spec.mode === "judge" && typeof value === "string" ? value : null;
+  /* S243 choice-order canary. The authored corpus puts the supported conclusion first in all nine
+   * distributionCompareLab judge moments. Shuffle DISPLAY ORDER only, using stable option IDs and
+   * the question seed, so position cannot leak correctness while grading/feedback keep using IDs.
+   * Measure choices deliberately opt out: their numeric order is part of the ruler/measurement
+   * model, so changing it would damage a semantic/spatial sequence rather than remove a cue. */
+  const orderedJudgeOptions = useMemo(
+    () => spec.mode === "judge"
+      ? seededShuffle(
+          spec.judgeOptions,
+          `distributionCompareLab:judge:${seed ?? spec.judgeOptions.map((option) => option.id).join("|")}`
+        )
+      : [],
+    [seed, spec]
+  );
   const W = 520, H = 230, left = 34, right = W - 34, baseY = 150;
   const span = Math.max(7, gap + 6);
   const xMin = -span / 2, xMax = span / 2;
@@ -10079,7 +10093,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
         </div>
       ) : (
         <div className="grid gap-2" role="group" aria-label="Choose the conclusion supported by the overlap">
-          {spec.judgeOptions.map((option) => {
+          {orderedJudgeOptions.map((option) => {
             /* S218: the mcq option-surface grammar, previously absent from judge mode. At reveal
                (info) the correct option carries the dashed-tangerine ghost and a differing pick the
                berry "yours" contrast; at retry (error) the berry cue sits on the learner's own pick

@@ -2,10 +2,11 @@
 
 **Purpose.** The commissioning spec every final avatar portrait must be individually re-rendered
 to. Written from `OPTIMIZATION_PLAN_V3.md:141-143,150-151`. Nothing in this document describes
-work already done — see `AVATAR_CONCEPT_LEDGER.md` for what exists today (60 concept-only
-candidates — the original 16 board-anchored ones plus 44 net-new expansion concepts covering every
-band and the symbol collection — zero production renders) and the honest-placeholder policy at the
-end of this file for exactly what ships while that remains true.
+work already done — see `AVATAR_CONCEPT_LEDGER.md` for current production status. S243 produced
+four independent art-direction candidates (`001`, `101`, `201`, `301`), but independent review
+rejected their inconsistent framing and incomplete picker cohort. None is enabled or production
+art; all 60 concepts remain in the commissioning queue. The honest-placeholder policy at the end
+governs every disabled entry.
 
 **The non-negotiable this whole document serves:** *every shipped avatar is an independent
 production asset. A student never selects a quadrant of a board, and no board crop is ever claimed
@@ -100,11 +101,10 @@ choice, not a requirement: FABLE-A may compress any band down to ~8–10 without
 already-assigned id, because compression only ever drops *trailing* slots (e.g. skip `009`–`012`)
 — it never renumbers `001`–`008`.
 
-**This target is now met at the concept level** (`src/lib/avatars.ts` declares all 60 ids below,
-every one `enabled: false`; `AVATAR_CONCEPT_LEDGER.md` carries a trait description for each of the
-44 net-new ones) — §5a and §5b together are consequently a complete, current filename list for the
-whole manifest, not a mix of declared ids and aspirational ranges. None of this is production art;
-see §8.
+**This target is met at the concept level** (`src/lib/avatars.ts` declares all 60 ids below and
+`AVATAR_CONCEPT_LEDGER.md` carries a trait description for each of the 44 net-new ones). Four human
+pre-canary candidates exist outside `public/`, but none is production art or enabled. §5a and §5b
+remain the complete filename allocation, and §8 governs release.
 
 ### 5a. Explicit filenames — highest priority (P0 summit, P1 anchors)
 
@@ -213,11 +213,12 @@ repeated here since it has no bearing on the filename):
 Every id declared anywhere in `src/lib/avatars.ts` now has an explicit row in §5a or §5b — there is
 no longer an id in the manifest that is only described by a range.
 
-### 5c. The one file that exists today
+### 5c. Production directory status
 
-`/public/avatars/placeholder-neutral.svg` — a hand-drawn, visibly generic silhouette, explicitly
-labeled as a dev placeholder in its own `<title>` and an XML comment. It is not, and must never be
-presented as, a selectable avatar (§7).
+`/public/avatars/placeholder-neutral.svg` remains the only runtime asset — a hand-drawn, visibly
+generic silhouette, explicitly labeled as a dev placeholder in its own `<title>` and an XML
+comment. It is not, and must never be presented as, a selectable avatar (§7). S243 pre-canary
+renders are retained outside `public/` for art-direction review only.
 
 ## 6. Art-consistency QA — the FABLE-Q contact-sheet gate
 
@@ -263,9 +264,7 @@ This is the section that makes the rest of this document safe to leave half-exec
   files are real. `getAvatarsForAgeBand`, `isValidAvatarId`, and `getAvatarSrc` all treat a
   disabled entry as unusable, so a manifest ahead of the art can never leak into a real render.
 - `src/lib/avatars.test.ts` asserts, for every `enabled: true` entry, that both files exist on
-  disk. Today the manifest has zero enabled entries, so that assertion is vacuous — and stays that
-  way, structurally, until someone actually adds the files and flips the flag in the same change.
-- The **only** avatar-shaped asset that ships today is `/public/avatars/placeholder-neutral.svg` —
-  a neutral silhouette, explicitly labeled as a placeholder in-file, used only as a last-resort
-  visual fallback (e.g., before a learner has chosen, or for a since-invalidated stored id). It is
-  never offered as a pickable option in any future picker UI.
+  disk. S243 adds a stricter validator for format, dimensions, opacity, warm-ivory corners,
+  duplicate files, prompt/manifest parity, and enabled/file-pair parity.
+- `/public/avatars/placeholder-neutral.svg` remains a last-resort fallback before a learner chooses
+  or when a stored id is invalid. It is never offered as a pickable option.
