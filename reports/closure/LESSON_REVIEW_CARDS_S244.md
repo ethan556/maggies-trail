@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `c477b3b674aaa21681fb8fed869c7d6b87878347e3e9351b04dfd9f1afbe7fb1`
-- Queue-compatible lesson-only seal: `8b8bbacd4dc964b4871f4041e77e7c160f43f74b243cc04bb03967ebedfdd6f0`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `8b8bbacd4dc964b4871f4041e77e7c160f43f74b243cc04bb03967ebedfdd6f0`)
+- Review-basis seal (lessons plus course/grade metadata): `b0ed4f90c1f19edf549a5af041a3f5738bf6e78dda9408d8b22d84a56a396fe6`
+- Queue-compatible lesson-only seal: `bea42d6424fef94038441f5f88829734c199f533c00e6e8476c1bc7529f5333c`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `bea42d6424fef94038441f5f88829734c199f533c00e6e8476c1bc7529f5333c`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -20,10 +20,10 @@ These counts overlap and must not be summed as independent lesson defects.
 | Grade-band language fitness | 0 | 1,701 lessons |
 | Standards edge approval / rejection | 0 | 6,119 edges |
 | Candidate standards evidence-map coverage | 1,129 candidate-mapped | 572 lessons missing |
-| Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 136 clusters / 314 placements |
-| Broader progression / repetition queue | 0 semantic dispositions recorded here | 745 lessons |
+| Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 127 clusters / 290 placements |
+| Broader progression / repetition queue | 0 semantic dispositions recorded here | 731 lessons |
 
-Exact duplicate evidence includes **49** within-lesson groups across **192** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
+Exact duplicate evidence includes **49** within-lesson groups across **180** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
 
 Standards evidence remains candidate-only: **6,119** dossiers still need exact benchmark text and independent review; **0** are approved and **0** rejected.
 The **6,119** central standards edges appear as **6,301** lesson-card references because **162** edges are shared across lessons; cards reference that central authority rather than copying decisions.
