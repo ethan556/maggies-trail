@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { decisionStatusOf, normalizeStandardsDecisionStatus, validateStandardsDecision } from './decision-contract.mjs';
+import { candidateDossierHash, decisionStatusOf, normalizeStandardsDecisionStatus, validateStandardsDecision } from './decision-contract.mjs';
 
 const hash = (value) => crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex');
 
@@ -19,12 +19,12 @@ export function verifyStandardsDecisions(root = process.cwd()) {
     const { signature, ...unsigned } = decision;
     if (hash(JSON.stringify(unsigned)) !== signature) errors.push('decision signature mismatch');
     if (dossier) {
-      const { dossierHash, ...candidateCore } = dossier;
-      candidateCore.claimLimit = 'Planning/review only. Not a verified alignment or mastery claim.';
-      candidateCore.review = { status:'candidate', reviewer:null, reviewedAt:null, notes:null, officialTextSnapshot:null, officialSourceUrl:null, claimBoundary:null, approvedDepth:null };
-      const legacyCandidateCore = structuredClone(candidateCore);
+      const { dossierHash } = dossier;
+      const canonicalCandidateHash = candidateDossierHash(dossier);
+      const { dossierHash: _dossierHash, ...legacyCandidateCore } = structuredClone(dossier);
+      legacyCandidateCore.claimLimit = 'Planning/review only. Not a verified alignment or mastery claim.';
       legacyCandidateCore.review = { status:'ready-for-human-review', reviewer:null, reviewedAt:null, notes:null, officialTextSnapshot:null, approvedDepth:null };
-      if (decision.dossierHash !== dossierHash && decision.dossierHash !== hash(candidateCore) && decision.dossierHash !== hash(legacyCandidateCore)) errors.push('decision dossier hash is stale');
+      if (decision.dossierHash !== dossierHash && decision.dossierHash !== canonicalCandidateHash && decision.dossierHash !== hash(legacyCandidateCore)) errors.push('decision dossier hash is stale');
       if (normalizeStandardsDecisionStatus(dossier.review?.status) !== decisionStatusOf(decision)) errors.push('dossier review status disagrees with decision');
     }
     results.push({ edgeId:String(decision.edgeId), status:decisionStatusOf(decision), valid:errors.length===0, errors });

@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { normalizeStandardsDecisionStatus, validateStandardsDecision } from './standards/decision-contract.mjs';
+import { candidateDossierHash, normalizeStandardsDecisionStatus, validateStandardsDecision } from './standards/decision-contract.mjs';
 
 const root=process.cwd();
 const args=Object.fromEntries(process.argv.slice(2).map((arg)=>{const [k,...rest]=arg.replace(/^--/,'').split('=');return [k,rest.join('=')||true];}));
@@ -24,7 +24,7 @@ const decision={
   approvedDepth:args.depth?String(args.depth):null, officialTextSnapshot:args['official-text']?String(args['official-text']):null,
   officialSourceUrl:args['official-source-url']?String(args['official-source-url']):null,
   claimBoundary:args['claim-boundary']?String(args['claim-boundary']):null,
-  dossierHash:dossier.dossierHash
+  dossierHash:candidateDossierHash(dossier)
 };
 const validation=validateStandardsDecision(decision,{allowLegacy:false});
 if (validation.errors.length) throw new Error(validation.errors.join('; '));

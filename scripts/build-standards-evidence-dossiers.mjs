@@ -5,7 +5,6 @@ import crypto from 'node:crypto';
 import { decisionStatusOf } from './standards/decision-contract.mjs';
 
 const root = process.cwd();
-const standardsOnly = process.argv.includes('--standards-only');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const write = (p,v) => { const f=path.join(root,p); fs.mkdirSync(path.dirname(f),{recursive:true}); fs.writeFileSync(f,JSON.stringify(v,null,2)+'\n'); };
 const hash = (v) => crypto.createHash('sha256').update(typeof v === 'string' ? v : JSON.stringify(v)).digest('hex');
@@ -45,7 +44,7 @@ for (const objective of objectives) {
         'exposure',
         ...(s.kind==='interactive'?['construction']:[]),
         ...(['check','challenge'].includes(s.kind)?['independent-practice']:[]),
-        ...(s.kind==='challenge'?['transfer']:[])
+        ...(s.kind==='challenge' && objective.evidence?.transferred===true?['transfer']:[])
       ]
     }));
     const decision=decisionByEdge.get(edgeId) ?? null;
@@ -92,16 +91,42 @@ const counts={
   needsExactBenchmark:dossiers.filter((d)=>d.sourceTextStatus==='scope-locator-requires-exact-benchmark').length
 };
 write('content/standards/evidence-dossiers.json',{schemaVersion:2,generatedAt:'deterministic',statusContract:['candidate','partial','approved','rejected'],counts,dossiers});
-if (!standardsOnly) {
-  const metrics=read('content/mastery/infrastructure-metrics.json');
-  metrics.officialSourceRegistryCount=sourceRegistry.sources.length;
-  metrics.reviewReadyEdges=counts.candidate;
-  metrics.humanPartialEdges=counts.partial;
-  metrics.humanApprovedEdges=counts.approved;
-  metrics.humanRejectedEdges=counts.rejected;
-  metrics.edgesNeedingExactBenchmark=counts.needsExactBenchmark;
-  write('content/mastery/infrastructure-metrics.json',metrics);
-}
+const metrics=read('content/mastery/infrastructure-metrics.json');
+const lessonCount=read('content/standards/lesson-evidence-map.json').lessons.length;
+const frameworkCount=read('content/standards/frameworks.json').frameworks.length;
+const exactManipulationCount=objectives.filter((objective)=>objective.directManipulation?.coverage==='exact').length;
+const familyLabCount=objectives.filter((objective)=>objective.directManipulation?.coverage!=='none').length;
+const eightOfTenArcCount=objectives.filter((objective)=>objective.masteryArcScore>=8).length;
+const twentyPlusPracticeCount=objectives.filter((objective)=>objective.practiceStates>=20).length;
+const twentyPlusFamilyCount=objectives.filter((objective)=>objective.practiceStates>=20 && objective.directManipulation?.coverage!=='none').length;
+const runtimeArcCount=objectives.filter((objective)=>objective.arc && typeof objective.arc==='object').length;
+const percentage=(count,total)=>total ? +(count/total*100).toFixed(2) : 0;
+Object.assign(metrics,{
+  objectives:objectives.length,
+  lessons:lessonCount,
+  exactDirectManipulationObjectives:exactManipulationCount,
+  exactDirectManipulationPct:percentage(exactManipulationCount,objectives.length),
+  familyLabCoverageObjectives:familyLabCount,
+  familyLabCoveragePct:percentage(familyLabCount,objectives.length),
+  objectivesWithEightOfTenMasteryArcElements:eightOfTenArcCount,
+  objectivesWithTwentyPlusPracticeStates:twentyPlusPracticeCount,
+  frameworks:frameworkCount,
+  crosswalkEdges:counts.total,
+  verifiedFullIntentEdges:objectives.reduce((total,objective)=>total+(objective.frameworkRefs??[]).filter((ref)=>ref.status==='verified' && ref.depth==='full-intent').length,0),
+  provisionalEdges:objectives.reduce((total,objective)=>total+(objective.frameworkRefs??[]).filter((ref)=>ref.status==='provisional-crosswalk').length,0),
+  objectivesWithTwentyPlusFamilyStates:twentyPlusFamilyCount,
+  exactPracticeDepthPct:percentage(twentyPlusPracticeCount,objectives.length),
+  familyPracticeDepthPct:percentage(twentyPlusFamilyCount,objectives.length),
+  objectivesWithRuntimeMasteryArc:runtimeArcCount,
+  runtimeMasteryArcPct:percentage(runtimeArcCount,objectives.length),
+  officialSourceRegistryCount:sourceRegistry.sources.length,
+  reviewReadyEdges:counts.candidate,
+  humanPartialEdges:counts.partial,
+  humanApprovedEdges:counts.approved,
+  humanRejectedEdges:counts.rejected,
+  edgesNeedingExactBenchmark:counts.needsExactBenchmark
+});
+write('content/mastery/infrastructure-metrics.json',metrics);
 // Compatibility for the legacy console label only; persisted schema uses `candidate`.
 counts.ready=counts.candidate;
 console.log(`standards evidence dossiers: ${counts.total} edges · ${counts.ready} ready · ${counts.approved} approved · ${counts.rejected} rejected`);

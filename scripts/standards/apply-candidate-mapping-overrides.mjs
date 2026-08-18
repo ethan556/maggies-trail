@@ -11,10 +11,37 @@ function lessonEvidenceRoles(steps) {
   const roles = new Set(['exposed']);
   if (steps.some((step) => step.kind === 'interactive')) roles.add('constructed');
   if (steps.some((step) => ['check', 'challenge'].includes(step.kind))) roles.add('practiced');
-  if (steps.some((step) => step.kind === 'challenge')) roles.add('transferred');
-  if (steps.some((step) => step.variant && ['check', 'challenge'].includes(step.kind))) roles.add('retrievalReady');
-  if (roles.has('transferred') && new Set(steps.map((step) => step.widget?.type).filter(Boolean)).size > 1) roles.add('cumulative');
   return [...roles];
+}
+
+function deriveBoundedEvidence(steps) {
+  const assessedSteps = steps.filter((step) => ['check', 'challenge'].includes(step.kind));
+  const assessedWidgets = new Set(assessedSteps.map((step) => step.widget?.type).filter(Boolean));
+  const arc = {
+    prediction: steps.some((step) => Boolean(step.predict?.prompt && step.predict?.outcomeId && step.predict?.reveal)),
+    construction: steps.some((step) => step.kind === 'interactive'),
+    linkedConsequence: false,
+    explanation: assessedSteps.some((step) => Array.isArray(step.explanationVariants) && step.explanationVariants.length > 0),
+    nearMiss: false,
+    independentSymbolic: assessedSteps.some((step) => ['numeric', 'mcq'].includes(step.widget?.type)),
+    mixedPractice: assessedWidgets.size > 1,
+    delayedRetrieval: false,
+    unfamiliarTransfer: false,
+    cumulativeAssessment: false
+  };
+  return {
+    evidence: {
+      exposed: steps.length > 0,
+      constructed: arc.construction,
+      practiced: assessedSteps.length > 0,
+      transferred: false,
+      retrievalReady: false,
+      cumulative: false
+    },
+    arc,
+    practiceStates: assessedSteps.length,
+    masteryArcScore: Object.values(arc).filter(Boolean).length
+  };
 }
 
 export function applyCandidateMappingOverrides(root, documents) {
@@ -43,12 +70,14 @@ export function applyCandidateMappingOverrides(root, documents) {
     }
 
     for (const group of override.evidenceGroups) {
+      const sourceSteps = lessons.flatMap((lesson) => (lesson.steps ?? [])
+        .filter((step) => override.conceptTags.includes(step.conceptTag)));
       const scopedSteps = lessons.flatMap((lesson) => (lesson.steps ?? [])
         .filter((step) => override.conceptTags.includes(step.conceptTag))
         .map((step) => ({ lessonId: lesson.id, stepId: step.id, kind: step.kind, widget: step.widget?.type ?? null, variant: step.variant ?? null })));
       if (!scopedSteps.some((step) => ['check', 'challenge'].includes(step.kind))) throw new Error(`${group.objectiveId} lacks independent evidence`);
       const widgets = [...new Set(scopedSteps.map((step) => step.widget).filter(Boolean))];
-      const evidence = { exposed:true, constructed:true, practiced:true, transferred:true, retrievalReady:true, cumulative:true };
+      const derived = deriveBoundedEvidence(sourceSteps);
       const objective = {
         id:group.objectiveId, title:group.title, courseId:override.courseId, gradeLevel:override.gradeLevel,
         frameworkRefs:[{
@@ -58,9 +87,9 @@ export function applyCandidateMappingOverrides(root, documents) {
           mappingRationale:`Bounded Chapter 1 review against the full official ${group.code} expectation; evidence supports only the documented addition strand and must not be reported as full-intent alignment.`
         }],
         lessonIds:[...override.lessonIds], stepRefs:scopedSteps, widgets, representations:[...group.representations],
-        directManipulation:{coverage:'exact',sourceTag:override.conceptTags[0],sourceCourseId:override.courseId,lessonId:scopedSteps.find((step)=>step.kind==='interactive')?.lessonId,stepId:scopedSteps.find((step)=>step.kind==='interactive')?.stepId,engine:scopedSteps.find((step)=>step.kind==='interactive')?.widget},
-        evidence, arc:{prediction:false,construction:true,linkedConsequence:true,explanation:true,nearMiss:true,independentSymbolic:true,mixedPractice:true,delayedRetrieval:true,unfamiliarTransfer:true,cumulativeAssessment:true},
-        practiceStates:32, masteryArcScore:9,
+        directManipulation:{coverage:'none'},
+        evidence:derived.evidence, arc:derived.arc,
+        practiceStates:derived.practiceStates, masteryArcScore:derived.masteryArcScore,
         partialDecisionEvidence:{ officialTextSnapshot:group.officialTextSnapshot, officialUrl:group.officialUrl, approvedDepth:group.approvedDepth, claimBoundary:group.claimBoundary }
       };
       const existingObjective = objectives.findIndex((row) => row.id === group.objectiveId);
@@ -70,7 +99,7 @@ export function applyCandidateMappingOverrides(root, documents) {
 
     for (const lesson of lessons) {
       const taggedSteps = (lesson.steps ?? []).filter((step) => override.conceptTags.includes(step.conceptTag));
-      const row = { lessonId:lesson.id, courseId:override.courseId, title:lesson.title, gradeLevel:override.gradeLevel, conceptTags:[...new Set(taggedSteps.map((step)=>step.conceptTag))], maxDesignedLevel:5, evidenceRoles:lessonEvidenceRoles(taggedSteps) };
+      const row = { lessonId:lesson.id, courseId:override.courseId, title:lesson.title, gradeLevel:override.gradeLevel, conceptTags:[...new Set(taggedSteps.map((step)=>step.conceptTag))], maxDesignedLevel:3, evidenceRoles:lessonEvidenceRoles(taggedSteps) };
       const existing = lessonMap.findIndex((entry) => entry.lessonId === lesson.id);
       if (existing >= 0) lessonMap.splice(existing, 1, row); else lessonMap.push(row);
     }

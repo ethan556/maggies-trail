@@ -1,3 +1,5 @@
+import crypto from 'node:crypto';
+
 export const STANDARDS_DECISION_STATUSES = Object.freeze([
   'candidate',
   'partial',
@@ -19,6 +21,17 @@ export function normalizeStandardsDecisionStatus(value) {
 
 export function decisionStatusOf(record) {
   return normalizeStandardsDecisionStatus(record?.status ?? record?.decision);
+}
+
+export function candidateDossierCore(dossier) {
+  const { dossierHash: _dossierHash, ...candidateCore } = structuredClone(dossier);
+  candidateCore.claimLimit = 'Planning/review only. Not a verified alignment or mastery claim.';
+  candidateCore.review = { status:'candidate', reviewer:null, reviewedAt:null, notes:null, officialTextSnapshot:null, officialSourceUrl:null, claimBoundary:null, approvedDepth:null };
+  return candidateCore;
+}
+
+export function candidateDossierHash(dossier) {
+  return crypto.createHash('sha256').update(JSON.stringify(candidateDossierCore(dossier))).digest('hex');
 }
 
 export function isFinalStandardsDecision(status) {

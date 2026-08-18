@@ -26,6 +26,7 @@ export default async function StandardsPage() {
           ['Exact direct manipulation',`${metrics.exactDirectManipulationPct.toFixed(1)}%`],
           ['20+ exact states',`${metrics.exactPracticeDepthPct.toFixed(1)}%`],
           ['Review-ready standards edges',metrics.reviewReadyEdges.toLocaleString()],
+          ['Partial standards edges',metrics.humanPartialEdges.toLocaleString()],
           ['Official source registries',metrics.officialSourceRegistryCount.toLocaleString()]
         ].map(([label,value])=>(
           <div key={label} className="rounded-card border border-ink/10 bg-surface p-4 shadow-e1 dark:border-paper/12">
@@ -51,7 +52,7 @@ export default async function StandardsPage() {
       <section className="mt-8 rounded-card border border-amber/30 bg-amber/10 p-4">
         <h2 className="font-extrabold">Crosswalk verification state</h2>
         <p className="mt-1 text-sm text-ink/70 dark:text-paper/70">
-          {metrics.reviewReadyEdges.toLocaleString()} evidence dossiers are ready for human review; {metrics.humanApprovedEdges.toLocaleString()} are reviewer-approved and {metrics.humanRejectedEdges.toLocaleString()} are rejected. Every approval must preserve an official-text snapshot, reviewer identity, source locator, approved depth, evidence steps, and a dossier checksum. Scope-level placeholders cannot be approved as full intent.
+          {metrics.reviewReadyEdges.toLocaleString()} evidence dossiers remain candidates for human review; {metrics.humanPartialEdges.toLocaleString()} are partial and still open, {metrics.humanApprovedEdges.toLocaleString()} are reviewer-approved, and {metrics.humanRejectedEdges.toLocaleString()} are rejected. Every approval must preserve an official-text snapshot, reviewer identity, source locator, approved depth, evidence steps, and a dossier checksum. Scope-level placeholders cannot be approved as full intent.
         </p>
       </section>
 
