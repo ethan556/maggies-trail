@@ -1,7 +1,7 @@
 # Maggie's Trail V4 consolidated pending workload — live derived view
 
 Generated from current source on 2026-08-18.
-Curriculum source seal: `8ce3f0357b4811e0ee388ae879326d2a5e3aaceb8eb71a63e5d63a29e66761a1`.
+Curriculum source seal: `9cbac3a17800c33dab06146695b125e3d6163e1f411370833036aeac01845b8e`.
 
 - Total open rows: **14,725**
 - P0 rows: **1,404**
