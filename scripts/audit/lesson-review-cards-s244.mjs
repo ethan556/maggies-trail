@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import { decisionStatusOf, normalizeStandardsDecisionStatus, validateStandardsDecision } from "../standards/decision-contract.mjs";
 
 const ROOT = process.cwd();
 const CHECK = process.argv.includes("--check");
@@ -292,6 +293,7 @@ function loadStandards(lessonIds) {
   let inconsistentDecisionCount = 0;
   let invalidDecisionCount = 0;
   let validDecisionCount = 0;
+  let partialDecisionCount = 0;
   let approvedDecisionCount = 0;
   let rejectedDecisionCount = 0;
 
@@ -299,32 +301,43 @@ function loadStandards(lessonIds) {
     if (seenEdges.has(dossier.edgeId)) throw new Error(`Duplicate standards edge ${dossier.edgeId}`);
     seenEdges.add(dossier.edgeId);
     const explicitDecision = decisions.get(String(dossier.edgeId)) ?? null;
-    const explicitStatus = explicitDecision?.decision;
+    const explicitStatus = decisionStatusOf(explicitDecision);
     const { signature: recordedSignature, ...unsignedDecision } = explicitDecision ?? {};
     const signatureValid = explicitDecision ? hash(JSON.stringify(unsignedDecision)) === recordedSignature : false;
     const { dossierHash: currentDossierHash, ...readyDossierCore } = dossier;
     readyDossierCore.claimLimit = "Planning/review only. Not a verified alignment or mastery claim.";
     readyDossierCore.review = {
-      status: "ready-for-human-review",
+      status: "candidate",
       reviewer: null,
       reviewedAt: null,
       notes: null,
       officialTextSnapshot: null,
+      officialSourceUrl: null,
+      claimBoundary: null,
       approvedDepth: null
     };
+    const legacyReadyDossierCore = structuredClone(readyDossierCore);
+    legacyReadyDossierCore.review = {
+      status: "ready-for-human-review", reviewer: null, reviewedAt: null, notes: null,
+      officialTextSnapshot: null, approvedDepth: null
+    };
     const signedDossierBasisValid = explicitDecision
-      ? explicitDecision.dossierHash === currentDossierHash || explicitDecision.dossierHash === hash(JSON.stringify(readyDossierCore))
+      ? explicitDecision.dossierHash === currentDossierHash
+        || explicitDecision.dossierHash === hash(JSON.stringify(readyDossierCore))
+        || explicitDecision.dossierHash === hash(JSON.stringify(legacyReadyDossierCore))
       : false;
-    const reviewMatches = Boolean(explicitStatus && dossier.review?.status === explicitStatus);
-    const decisionValid = Boolean(explicitDecision && signatureValid && signedDossierBasisValid && reviewMatches);
+    const reviewMatches = Boolean(explicitStatus && normalizeStandardsDecisionStatus(dossier.review?.status) === explicitStatus);
+    const contractValid = explicitDecision ? validateStandardsDecision(explicitDecision).errors.length === 0 : false;
+    const decisionValid = Boolean(explicitDecision && signatureValid && signedDossierBasisValid && reviewMatches && contractValid);
     if (explicitDecision && !reviewMatches) inconsistentDecisionCount += 1;
     if (explicitDecision && !decisionValid) invalidDecisionCount += 1;
     if (decisionValid) {
       validDecisionCount += 1;
-      if (explicitStatus === "approve") approvedDecisionCount += 1;
-      if (explicitStatus === "reject") rejectedDecisionCount += 1;
+      if (explicitStatus === "partial") partialDecisionCount += 1;
+      if (explicitStatus === "approved") approvedDecisionCount += 1;
+      if (explicitStatus === "rejected") rejectedDecisionCount += 1;
     }
-    const reviewStatus = decisionValid ? explicitStatus : "ready-for-human-review";
+    const reviewStatus = decisionValid ? explicitStatus : "candidate";
     const coveredLessons = new Set([
       ...(dossier.evidenceSummary?.lessonIds ?? []),
       ...(dossier.stepEvidence ?? []).map((step) => step.lessonId)
@@ -358,9 +371,10 @@ function loadStandards(lessonIds) {
     invalidDecisionCount,
     unboundDecisionCount,
     validDecisionCount,
+    partialDecisionCount,
     approvedDecisionCount,
     rejectedDecisionCount,
-    pendingDecisionCount: (dossierDoc.dossiers ?? []).length - validDecisionCount
+    pendingDecisionCount: (dossierDoc.dossiers ?? []).length - approvedDecisionCount - rejectedDecisionCount
   };
 }
 
@@ -425,8 +439,9 @@ const cards = lessons.map((lesson) => {
   const humanDisposition = lessonDecisions.byLesson.get(lesson.lessonId);
   const duplicateEntries = duplicateInventory.byLesson.get(lesson.lessonId) ?? [];
   const dossierEntries = standards.byLesson.get(lesson.lessonId) ?? [];
-  const approvedEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "approve").length;
-  const rejectedEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "reject").length;
+  const partialEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "partial").length;
+  const approvedEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "approved").length;
+  const rejectedEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "rejected").length;
   const pendingEdgeCount = dossierEntries.length - approvedEdgeCount - rejectedEdgeCount;
   const standardsStatus = dossierEntries.length === 0
     ? "NO_CANDIDATE_DOSSIER"
@@ -495,6 +510,7 @@ const cards = lessons.map((lesson) => {
         ? "PRESENT_CANDIDATE_EVIDENCE"
         : "MISSING_CANDIDATE_EVIDENCE",
       dossierCount: dossierEntries.length,
+      partialEdgeCount,
       pendingEdgeCount,
       approvedEdgeCount,
       rejectedEdgeCount,
@@ -544,6 +560,7 @@ const summary = {
     explicitDecisionCount: explicitStandardsDecisions.length,
     validExplicitDecisionCount: standards.validDecisionCount,
     pendingEdgeCount: standards.pendingDecisionCount,
+    partialEdgeCount: standards.partialDecisionCount,
     approvedEdgeCount: standards.approvedDecisionCount,
     rejectedEdgeCount: standards.rejectedDecisionCount,
     needsExactBenchmarkCount: allDossiers.filter((dossier) => dossier.sourceTextStatus === "scope-locator-requires-exact-benchmark").length,

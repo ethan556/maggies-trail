@@ -2,8 +2,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { decisionStatusOf } from './standards/decision-contract.mjs';
 
 const root = process.cwd();
+const standardsOnly = process.argv.includes('--standards-only');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const write = (p,v) => { const f=path.join(root,p); fs.mkdirSync(path.dirname(f),{recursive:true}); fs.writeFileSync(f,JSON.stringify(v,null,2)+'\n'); };
 const hash = (v) => crypto.createHash('sha256').update(typeof v === 'string' ? v : JSON.stringify(v)).digest('hex');
@@ -30,7 +32,7 @@ const sourceByFramework = new Map(sourceRegistry.sources.map((s)=>[s.framework,s
 const objectives = read('content/standards/objectives.json').objectives;
 const reviewsPath='content/standards/human-review-decisions.json';
 const reviews = fs.existsSync(path.join(root,reviewsPath)) ? read(reviewsPath) : { schemaVersion:1, decisions:[] };
-const decisionByEdge = new Map((reviews.decisions ?? []).map((d)=>[d.edgeId,d]));
+const decisionByEdge = new Map((reviews.decisions ?? []).map((d)=>[d.edgeId,{...d,decision:decisionStatusOf(d)}]));
 const dossiers=[];
 for (const objective of objectives) {
   for (const ref of objective.frameworkRefs ?? []) {
@@ -60,30 +62,46 @@ for (const objective of objectives) {
     const dossierCore={
       edgeId, objectiveId:objective.id, objectiveTitle:objective.title, courseId:objective.courseId, gradeLevel:objective.gradeLevel,
       framework:ref.framework, candidateCode:ref.code, candidateLabel:ref.label, candidateRole:ref.role, candidateDepth:ref.depth,
-      sourceId:source.id, officialUrl:source.officialUrl, sourceVersion:source.versionLabel, sourceLocator:ref.code,
+      sourceId:source.id, officialUrl:ref.officialUrl ?? source.officialUrl, sourceVersion:source.versionLabel, sourceLocator:ref.sourceLocator ?? ref.code,
       sourceTextStatus: checks.exactStandardCodeCandidate ? 'exact-code-text-import-required' : 'scope-locator-requires-exact-benchmark',
       mappingRationale:`Review whether the full official expectation at ${ref.code} requires the mathematical action expressed by “${objective.title}”, including grade/course limits, representation, application, reasoning, and practices.`,
       evidenceSummary:{ lessonIds:objective.lessonIds, representations:objective.representations, directManipulation:objective.directManipulation, exactPracticeStates:objective.exactPracticeStates, designedEvidence:objective.evidence },
       stepEvidence, checks,
-      claimLimit: decision?.decision==='approve' ? 'Approved only to the reviewer-specified depth and official text snapshot.' : 'Planning/review only. Not a verified alignment or mastery claim.',
-      review:{ status:decision?.decision ?? 'ready-for-human-review', reviewer:decision?.reviewer ?? null, reviewedAt:decision?.reviewedAt ?? null, notes:decision?.notes ?? null, officialTextSnapshot:decision?.officialTextSnapshot ?? null, approvedDepth:decision?.approvedDepth ?? null }
+      claimLimit: decision?.decision === 'approved'
+        ? 'Approved only to the reviewer-specified depth and official text snapshot.'
+        : decision?.decision === 'partial'
+          ? decision.claimBoundary
+          : 'Planning/review only. Not a verified alignment or mastery claim.',
+      review:{
+        status:decision?.decision ?? 'candidate', reviewer:decision?.reviewer ?? null, reviewedAt:decision?.reviewedAt ?? null,
+        notes:decision?.notes ?? null, officialTextSnapshot:decision?.officialTextSnapshot ?? null,
+        officialSourceUrl:decision?.officialSourceUrl ?? null, claimBoundary:decision?.claimBoundary ?? null,
+        approvedDepth:decision?.approvedDepth ?? null
+      }
     };
+    if (ref.mappingRationale) dossierCore.mappingRationale = ref.mappingRationale;
     dossiers.push({...dossierCore,dossierHash:hash(dossierCore)});
   }
 }
 const counts={
   total:dossiers.length,
-  ready:dossiers.filter((d)=>d.review.status==='ready-for-human-review').length,
-  approved:dossiers.filter((d)=>d.review.status==='approve').length,
-  rejected:dossiers.filter((d)=>d.review.status==='reject').length,
+  candidate:dossiers.filter((d)=>d.review.status==='candidate').length,
+  partial:dossiers.filter((d)=>d.review.status==='partial').length,
+  approved:dossiers.filter((d)=>d.review.status==='approved').length,
+  rejected:dossiers.filter((d)=>d.review.status==='rejected').length,
   needsExactBenchmark:dossiers.filter((d)=>d.sourceTextStatus==='scope-locator-requires-exact-benchmark').length
 };
-write('content/standards/evidence-dossiers.json',{schemaVersion:1,generatedAt:'deterministic',counts,dossiers});
-const metrics=read('content/mastery/infrastructure-metrics.json');
-metrics.officialSourceRegistryCount=sourceRegistry.sources.length;
-metrics.reviewReadyEdges=counts.ready;
-metrics.humanApprovedEdges=counts.approved;
-metrics.humanRejectedEdges=counts.rejected;
-metrics.edgesNeedingExactBenchmark=counts.needsExactBenchmark;
-write('content/mastery/infrastructure-metrics.json',metrics);
+write('content/standards/evidence-dossiers.json',{schemaVersion:2,generatedAt:'deterministic',statusContract:['candidate','partial','approved','rejected'],counts,dossiers});
+if (!standardsOnly) {
+  const metrics=read('content/mastery/infrastructure-metrics.json');
+  metrics.officialSourceRegistryCount=sourceRegistry.sources.length;
+  metrics.reviewReadyEdges=counts.candidate;
+  metrics.humanPartialEdges=counts.partial;
+  metrics.humanApprovedEdges=counts.approved;
+  metrics.humanRejectedEdges=counts.rejected;
+  metrics.edgesNeedingExactBenchmark=counts.needsExactBenchmark;
+  write('content/mastery/infrastructure-metrics.json',metrics);
+}
+// Compatibility for the legacy console label only; persisted schema uses `candidate`.
+counts.ready=counts.candidate;
 console.log(`standards evidence dossiers: ${counts.total} edges · ${counts.ready} ready · ${counts.approved} approved · ${counts.rejected} rejected`);
