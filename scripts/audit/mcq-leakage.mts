@@ -32,6 +32,7 @@
  *
  * Usage: npx tsx scripts/audit/mcq-leakage.mts [--write]
  */
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { execSync } from "node:child_process";
@@ -40,10 +41,35 @@ import { hashSeed, mulberry32 } from "../../src/lib/prng";
 
 const ROOT = process.cwd();
 const WRITE = process.argv.includes("--write");
-const seal = (() => {
+const head = (() => {
   try { return execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim(); }
   catch { return "unsealed"; }
 })();
+
+const collectInputFiles = (directory: string): string[] => readdirSync(directory, { withFileTypes: true })
+  .flatMap((entry) => {
+    const child = join(directory, entry.name);
+    return entry.isDirectory() ? collectInputFiles(child) : entry.isFile() ? [child] : [];
+  });
+
+// Bind the evidence to the actual dirty-worktree inputs, not only to HEAD. This
+// lets the generated CSV prove which authored lessons and generator sources it
+// measured before the packet is committed.
+const inputFiles = [
+  ...collectInputFiles(join(ROOT, "content", "courses")),
+  ...collectInputFiles(join(ROOT, "src", "lib")),
+  join(ROOT, "scripts", "audit", "mcq-leakage.mts"),
+]
+  .filter((file) => !/[.]test[.][cm]?[jt]sx?$/.test(file))
+  .sort((a, b) => relative(ROOT, a).localeCompare(relative(ROOT, b)));
+const inputHash = createHash("sha256");
+for (const file of inputFiles) {
+  inputHash.update(relative(ROOT, file).split(sep).join("/"));
+  inputHash.update("\0");
+  inputHash.update(readFileSync(file));
+  inputHash.update("\0");
+}
+const seal = `${head}+inputs.${inputHash.digest("hex").slice(0, 12)}`;
 
 type Option = { label: string; correct: boolean };
 type Item = { source: string; owner: string; unit: string; prompt: string; options: Option[]; path: string };
@@ -191,6 +217,7 @@ for (const r of unique) byCode.set(r.leak.code, (byCode.get(r.leak.code) ?? 0) +
 const affected = new Set(unique.map((r) => `${r.source}|${r.owner}|${r.unit}`));
 
 console.log(`mcq-leakage @ ${seal}`);
+console.log(`  source input files        ${inputFiles.length}`);
 console.log(`  mcq items measured        ${items.length} (${items.filter((i) => i.source === "authored").length} authored, ${items.filter((i) => i.source === "generated").length} generated)`);
 console.log(`  items with any tell       ${affected.size}`);
 console.log(`  findings by cause:`);
@@ -203,7 +230,7 @@ if (WRITE) {
   mkdirSync(out, { recursive: true });
   const csv = (c: string[]) => c.map((x) => (/[",\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x)).join(",");
   writeFileSync(join(out, "MCQ_LEAKAGE_INDEX.csv"), [
-    `# sourceSeal=${seal} generatedBy=scripts/audit/mcq-leakage.mts`,
+    `# sourceSeal=${seal} inputFiles=${inputFiles.length} generatedBy=scripts/audit/mcq-leakage.mts`,
     "# One row per (item, tell). Each tell is a documented multiple-choice writing failure, scored",
     "# independently — a length leak is a different repair from a lone-justification leak.",
     "# NOT a rewrite list: MCQ review is grouped by misconception family, and nothing is reworded by",
