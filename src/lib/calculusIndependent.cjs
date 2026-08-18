@@ -45,6 +45,14 @@ const INTEGRATION_FOUNDATION_FORMS = {
   DEFINITE_NUMERIC: 'integration-accumulation__in-definite-integral__numeric',
   DEFINITE_MATCH: 'integration-accumulation__in-definite-integral__matchPairs',
   SIGNED_AREA_MCQ: 'integration-accumulation__in-signed-area__mcq',
+  ACCUMULATION_NUMERIC: 'integration-accumulation__in-accumulation__numeric',
+  ACCUMULATION_MCQ: 'integration-accumulation__in-accumulation__mcq',
+  READ_ACCUMULATION_MCQ: 'integration-accumulation__in-read-accumulation__mcq',
+  READ_ACCUMULATION_MATCH: 'integration-accumulation__in-read-accumulation__matchPairs',
+  SIGNED_AREA_NUMERIC: 'integration-accumulation__in-signed-area__numeric',
+  READ_ACCUMULATION_NUMERIC: 'integration-accumulation__in-read-accumulation__numeric',
+  NET_CHANGE_MCQ: 'integration-accumulation__in-net-change__mcq',
+  NET_CHANGE_NUMERIC: 'integration-accumulation__in-net-change__numeric',
 };
 
 function solveFirstDerivativeMaximum(input) {
@@ -433,6 +441,70 @@ function solveIntegrationFoundation(form, input) {
     const above = Number(match[1]);
     const below = Number(match[2]);
     return `signed integral = ${above - below}; total geometric area = ${above + below}`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.ACCUMULATION_NUMERIC) {
+    const value = /integral from 0 to x of \((-?\d+)t \+ (-?\d+)\) dt\. Find A\((-?\d+)\)\./.exec(prompt);
+    const difference = /integral from 0 to x of \((-?\d+)t \+ (-?\d+)\) dt\. Find A\((-?\d+)\) - A\((-?\d+)\)\./.exec(prompt);
+    if (!value && !difference) throw new Error(`unrecognized accumulation-value prompt: ${prompt}`);
+    const match = difference || value;
+    const m = Number(match[1]);
+    const c = Number(match[2]);
+    const antiderivative = (x) => m * x * x / 2 + c * x;
+    return difference ? antiderivative(Number(match[3])) - antiderivative(Number(match[4])) : antiderivative(Number(match[3]));
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.ACCUMULATION_MCQ) {
+    const match = /integral from 0 to (\w+) of f\((\w+)\) d\2, what role does \2 play\?/.exec(prompt);
+    if (!match) throw new Error(`unrecognized dummy-variable prompt: ${prompt}`);
+    return `${match[2]} is the dummy variable of integration.`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.READ_ACCUMULATION_MCQ) {
+    const match = /f\(x\) = .*\(x - (\d+)\).*At which x does A have its (minimum|maximum)\?/.exec(prompt);
+    if (!match) throw new Error(`unrecognized accumulation-extremum prompt: ${prompt}`);
+    return `x = ${match[1]}`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.READ_ACCUMULATION_MATCH) {
+    const match = /takes the values (\d+), 0, and -(\d+) at/.exec(prompt);
+    if (!match) throw new Error(`unrecognized accumulation-matching prompt: ${prompt}`);
+    const rise = Number(match[1]);
+    const fall = Number(match[2]);
+    const expected = {
+      [`f(x) = ${rise}`]: `A rises at ${rise} units per x-unit`,
+      'f(x) = 0': 'A is momentarily flat',
+      [`f(x) = -${fall}`]: `A falls at ${fall} units per x-unit`,
+    };
+    const shownLeft = new Set((parts[1] || '').split('\u001f'));
+    const shownRight = new Set((parts[2] || '').split('\u001f'));
+    for (const [left, right] of Object.entries(expected)) {
+      if (!shownLeft.has(left) || !shownRight.has(right)) {
+        throw new Error(`matching columns omit prompt-derived pair ${left} -> ${right}`);
+      }
+    }
+    return expected;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.SIGNED_AREA_NUMERIC) {
+    const match = /encloses area (\d+) above the x-axis and area (\d+) below it/.exec(prompt);
+    if (!match) throw new Error(`unrecognized signed-area numeric prompt: ${prompt}`);
+    return Number(match[1]) - Number(match[2]);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.READ_ACCUMULATION_NUMERIC) {
+    const match = /is zero only at x = ([\d, ]+), and changes sign at every listed zero/.exec(prompt);
+    if (!match) throw new Error(`unrecognized accumulation-turning-point prompt: ${prompt}`);
+    return match[1].split(',').length;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.NET_CHANGE_MCQ) {
+    const units = /measured in ([a-z ]+ per [a-z]+), and t is measured in ([a-z]+)\. What units/.exec(prompt);
+    if (units) return units[1].replace(/ per [a-z]+$/, '');
+    const motion = /integral of v\(t\) is (-?\d+) ([a-z]+), while the integral of \|v\(t\)\| is (\d+) ([a-z]+)/.exec(prompt);
+    if (!motion) throw new Error(`unrecognized net-change MCQ prompt: ${prompt}`);
+    return `Net change = ${motion[1]} ${motion[2]}; total travel = ${motion[3]} ${motion[4]}.`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.NET_CHANGE_NUMERIC) {
+    const match = /r\(t\) = (-?\d+)t ([+-]) (\d+) litres per minute.*first (\d+) minutes/.exec(prompt);
+    if (!match) throw new Error(`unrecognized net-change numeric prompt: ${prompt}`);
+    const m = Number(match[1]);
+    const c = (match[2] === '+' ? 1 : -1) * Number(match[3]);
+    const n = Number(match[4]);
+    return m * n * n / 2 + c * n;
   }
   throw new Error(`unrecognized integration-foundation form ${form}`);
 }

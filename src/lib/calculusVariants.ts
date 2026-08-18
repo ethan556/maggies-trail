@@ -1443,6 +1443,281 @@ function signedAreaMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   );
 }
 
+const ACCUMULATION_VALUE_CASES = [
+  { m: 2, c: 1, n: 2 }, { m: 2, c: 3, n: 3 }, { m: 4, c: 1, n: 3 },
+  { m: 4, c: 2, n: 4 }, { m: 6, c: 1, n: 2 }, { m: 6, c: 2, n: 3 },
+] as const;
+
+const ACCUMULATION_DIFFERENCE_CASES = [
+  { m: 2, c: 1, a: 1, b: 3 }, { m: 2, c: 2, a: 2, b: 5 },
+  { m: 4, c: 1, a: 1, b: 4 }, { m: 4, c: 3, a: 2, b: 4 },
+  { m: 6, c: 1, a: 1, b: 3 }, { m: 6, c: 2, a: 2, b: 5 },
+] as const;
+
+function uniqueNumericErrors(answer: number, entries: readonly { value: number; feedback: string }[]) {
+  return entries.filter((entry, index, all) => entry.value !== answer && all.findIndex((other) => other.value === entry.value) === index);
+}
+
+function accumulationNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  if (rand() < 0.5) {
+    const { m, c, n } = pick(rand, ACCUMULATION_VALUE_CASES);
+    const answer = m * n * n / 2 + c * n;
+    const finalHeight = m * n + c;
+    const widget = {
+      type: "numeric" as const,
+      prompt: `Let A(x) = the integral from 0 to x of (${m}t + ${c}) dt. Find A(${n}).`,
+      answer,
+      tolerance: 0,
+      unit: "",
+      commonErrors: uniqueNumericErrors(answer, [
+        { value: finalHeight, feedback: `That is f(${n}), the final height. A(${n}) is the accumulated area from 0 to ${n}.` },
+        { value: m * n * n + c * n, feedback: "The sloping part forms a triangle, so its area includes a factor of one-half." },
+        { value: c * n, feedback: `That counts only the constant rectangle. Include the area contributed by ${m}t.` },
+      ]),
+      fallbackFeedback: `Integrate term by term: A(${n}) = (${m}/2)(${n})^2 + ${c}(${n}) = ${answer}.`,
+      successFeedback: `The accumulated value is ${answer}.`,
+    };
+    return { widget, answer };
+  }
+  const { m, c, a, b } = pick(rand, ACCUMULATION_DIFFERENCE_CASES);
+  const antiderivative = (x: number) => m * x * x / 2 + c * x;
+  const answer = antiderivative(b) - antiderivative(a);
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Let A(x) = the integral from 0 to x of (${m}t + ${c}) dt. Find A(${b}) - A(${a}).`,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: antiderivative(b), feedback: `That is A(${b}) alone. Subtract A(${a}) to isolate the accumulation from ${a} to ${b}.` },
+      { value: antiderivative(b) + antiderivative(a), feedback: "The requested difference subtracts the earlier accumulation; it does not add both values." },
+      { value: b - a, feedback: "That is only the interval width. Accumulation also depends on the values of f across the interval." },
+    ]),
+    fallbackFeedback: `Use A(x) = (${m}/2)x^2 + ${c}x. Then A(${b}) - A(${a}) = ${answer}.`,
+    successFeedback: `The accumulation added between ${a} and ${b} is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const DUMMY_VARIABLE_CASES = [
+  { accumulation: "A", endpoint: "x", dummy: "t" }, { accumulation: "A", endpoint: "u", dummy: "s" },
+  { accumulation: "B", endpoint: "y", dummy: "r" }, { accumulation: "F", endpoint: "z", dummy: "v" },
+  { accumulation: "G", endpoint: "p", dummy: "q" }, { accumulation: "H", endpoint: "w", dummy: "k" },
+  { accumulation: "P", endpoint: "b", dummy: "a" }, { accumulation: "Q", endpoint: "c", dummy: "h" },
+  { accumulation: "R", endpoint: "d", dummy: "j" }, { accumulation: "S", endpoint: "m", dummy: "n" },
+  { accumulation: "T", endpoint: "g", dummy: "r" }, { accumulation: "V", endpoint: "u", dummy: "p" },
+] as const;
+
+function accumulationMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { accumulation, endpoint, dummy } = pick(rand, DUMMY_VARIABLE_CASES);
+  return integrationMcq(
+    rand,
+    `In ${accumulation}(${endpoint}) = the integral from 0 to ${endpoint} of f(${dummy}) d${dummy}, what role does ${dummy} play?`,
+    [
+      { label: `${dummy} is the dummy variable of integration.`, correct: true, feedback: `The letter ${dummy} moves across the interval and can be renamed without changing ${accumulation}(${endpoint}).` },
+      { label: `${dummy} is the upper endpoint.`, correct: false, feedback: `The upper endpoint is ${endpoint}; ${dummy} moves between the limits.` },
+      { label: `${dummy} is a fixed constant.`, correct: false, feedback: `${dummy} varies as the integral sweeps across the interval.` },
+      { label: `${dummy} is the strip width.`, correct: false, feedback: `d${dummy} represents an infinitesimal width; ${dummy} locates the strip.` },
+    ],
+  );
+}
+
+const ACCUMULATION_EXTREMUM_CASES = [
+  { scale: 1, root: 2 }, { scale: 2, root: 3 }, { scale: 3, root: 4 },
+  { scale: 1, root: 5 }, { scale: 2, root: 6 }, { scale: 3, root: 7 },
+  { scale: -1, root: 2 }, { scale: -2, root: 3 }, { scale: -3, root: 4 },
+  { scale: -1, root: 5 }, { scale: -2, root: 6 }, { scale: -3, root: 7 },
+] as const;
+
+function readAccumulationMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { scale, root } = pick(rand, ACCUMULATION_EXTREMUM_CASES);
+  const upper = root * 2;
+  const kind = scale > 0 ? "minimum" : "maximum";
+  const direction = scale > 0 ? "negative to positive" : "positive to negative";
+  const expression = scale === 1 ? `(x - ${root})` : scale === -1 ? `-(x - ${root})` : `${scale}(x - ${root})`;
+  const correct = `x = ${root}`;
+  return integrationMcq(
+    rand,
+    `For f(x) = ${expression} on [0, ${upper}], let A(x) be the integral from 0 to x of f(t) dt. At which x does A have its ${kind}?`,
+    [
+      { label: correct, correct: true, feedback: `At x = ${root}, f changes from ${direction}, so A changes direction there.` },
+      { label: "x = 0", correct: false, feedback: `The endpoint starts the accumulation, but A continues toward its ${kind} until f changes sign.` },
+      { label: `x = ${upper}`, correct: false, feedback: `By the far endpoint, A has already turned at the zero of f.` },
+      { label: `x = ${root + 1}`, correct: false, feedback: `A turns where A'(x) = f(x) changes sign, which occurs at x = ${root}.` },
+    ],
+  );
+}
+
+const ACCUMULATION_MATCH_CASES = [
+  { rise: 1, fall: 2 }, { rise: 2, fall: 1 }, { rise: 2, fall: 3 },
+  { rise: 3, fall: 2 }, { rise: 3, fall: 4 }, { rise: 4, fall: 3 },
+  { rise: 4, fall: 5 }, { rise: 5, fall: 4 }, { rise: 5, fall: 6 },
+  { rise: 6, fall: 5 }, { rise: 6, fall: 7 }, { rise: 7, fall: 6 },
+] as const;
+
+function readAccumulationMatchWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { rise, fall } = pick(rand, ACCUMULATION_MATCH_CASES);
+  const left = [
+    { id: "l-positive", label: `f(x) = ${rise}` },
+    { id: "l-zero", label: "f(x) = 0" },
+    { id: "l-negative", label: `f(x) = -${fall}` },
+  ];
+  const right = [
+    { id: "r-positive", label: `A rises at ${rise} units per x-unit` },
+    { id: "r-zero", label: "A is momentarily flat" },
+    { id: "r-negative", label: `A falls at ${fall} units per x-unit` },
+  ];
+  const pairs = { "l-positive": "r-positive", "l-zero": "r-zero", "l-negative": "r-negative" };
+  const shuffledLeft = shuffle(rand, left);
+  let shuffledRight = shuffle(rand, right);
+  const aligned = () => shuffledLeft.every((item, index) => pairs[item.id as keyof typeof pairs] === shuffledRight[index]?.id);
+  if (aligned()) shuffledRight = [...shuffledRight.slice(1), shuffledRight[0]!];
+  const widget = {
+    type: "matchPairs" as const,
+    prompt: `For A(x) = the integral from 0 to x of f(t) dt, f(x) takes the values ${rise}, 0, and -${fall} at three marked points. Match each value of f(x) to A's instantaneous behavior.`,
+    left: shuffledLeft,
+    right: shuffledRight,
+    pairs,
+    pairErrors: [
+      { left: "l-zero", right: "r-negative", feedback: "When f(x) = 0, the instantaneous slope A'(x) is 0, so A is flat at that point." },
+      { left: "l-negative", right: "r-positive", feedback: "A negative value of f gives A a negative slope, so A falls." },
+    ],
+    missFeedback: "Use A'(x) = f(x): the value of f is the instantaneous slope of A.",
+    successFeedback: "Each match follows from A'(x) = f(x).",
+  };
+  return { widget, answer: pairs };
+}
+
+const SIGNED_AREA_NUMERIC_CASES = [
+  { above: 3, below: 1 }, { above: 4, below: 7 }, { above: 5, below: 1 },
+  { above: 6, below: 11 }, { above: 8, below: 2 }, { above: 9, below: 16 },
+  { above: 10, below: 2 }, { above: 11, below: 20 }, { above: 13, below: 3 },
+  { above: 14, below: 25 }, { above: 16, below: 4 }, { above: 18, below: 31 },
+] as const;
+
+function signedAreaNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { above, below } = pick(rand, SIGNED_AREA_NUMERIC_CASES);
+  const answer = above - below;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `On [a, b], the graph of f encloses area ${above} above the x-axis and area ${below} below it. Find the signed integral from a to b of f(x) dx.`,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: above + below, feedback: "That is total geometric area. A signed integral subtracts the below-axis area." },
+      { value: below - above, feedback: "This reverses the signs. Above-axis area is positive and below-axis area is negative." },
+      { value: above, feedback: "Include the below-axis region as a negative contribution." },
+    ]),
+    fallbackFeedback: `Signed area is above minus below: ${above} - ${below} = ${answer}.`,
+    successFeedback: `The signed integral is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const TURNING_POINT_CASES = [
+  { roots: [2], start: "negative" }, { roots: [3], start: "positive" },
+  { roots: [1, 4], start: "positive" }, { roots: [2, 5], start: "negative" },
+  { roots: [1, 3, 6], start: "negative" }, { roots: [2, 4, 7], start: "positive" },
+  { roots: [1, 3, 5, 8], start: "positive" }, { roots: [2, 4, 6, 9], start: "negative" },
+  { roots: [1, 2, 4, 7, 10], start: "negative" }, { roots: [2, 3, 5, 8, 11], start: "positive" },
+  { roots: [1, 2, 4, 6, 9, 12], start: "positive" }, { roots: [2, 3, 5, 7, 10, 13], start: "negative" },
+] as const;
+
+function readAccumulationNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { roots, start } = pick(rand, TURNING_POINT_CASES);
+  const upper = roots[roots.length - 1]! + 2;
+  const rootList = roots.join(", ");
+  const answer = roots.length;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `On [0, ${upper}], f starts ${start}, is zero only at x = ${rootList}, and changes sign at every listed zero. How many turning points does A(x) = the integral from 0 to x of f(t) dt have?`,
+    answer,
+    tolerance: 0,
+    unit: "turning points",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: answer - 1, feedback: "Each listed zero changes the sign of A'(x) = f(x), so every one creates a turning point." },
+      { value: answer + 1, feedback: "Endpoints are not counted here; count only the interior sign changes of f." },
+      { value: 0, feedback: "Because f changes sign, A changes from increasing to decreasing or vice versa at each listed zero." },
+    ]),
+    fallbackFeedback: `A'(x) = f(x). The ${answer} sign-changing zeros of f therefore give A ${answer} turning points.`,
+    successFeedback: `There are ${answer} turning points, one at each sign-changing zero of f.`,
+  };
+  return { widget, answer };
+}
+
+const NET_CHANGE_UNIT_CASES = [
+  { rate: "velocity", rateUnit: "kilometres per hour", timeUnit: "hours", result: "kilometres" },
+  { rate: "signed water flow", rateUnit: "litres per minute", timeUnit: "minutes", result: "litres" },
+  { rate: "electric current", rateUnit: "coulombs per second", timeUnit: "seconds", result: "coulombs" },
+  { rate: "population change", rateUnit: "people per year", timeUnit: "years", result: "people" },
+  { rate: "power", rateUnit: "joules per second", timeUnit: "seconds", result: "joules" },
+  { rate: "signed mass flow", rateUnit: "kilograms per minute", timeUnit: "minutes", result: "kilograms" },
+] as const;
+
+const NET_CHANGE_TRAVEL_CASES = [
+  { net: 2, total: 8, unit: "km" }, { net: -3, total: 11, unit: "km" },
+  { net: 4, total: 14, unit: "m" }, { net: -5, total: 17, unit: "m" },
+  { net: 6, total: 20, unit: "miles" }, { net: -7, total: 23, unit: "miles" },
+] as const;
+
+function netChangeMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  if (rand() < 0.5) {
+    const entry = pick(rand, NET_CHANGE_UNIT_CASES);
+    return integrationMcq(
+      rand,
+      `A ${entry.rate} rate r(t) is measured in ${entry.rateUnit}, and t is measured in ${entry.timeUnit}. What units does the integral of r(t) dt have?`,
+      [
+        { label: entry.result, correct: true, feedback: `Multiplying ${entry.rateUnit} by ${entry.timeUnit} cancels the time unit.` },
+        { label: entry.rateUnit, correct: false, feedback: "Those are the units of the rate before integration; integration multiplies by time." },
+        { label: entry.timeUnit, correct: false, feedback: "Those are only the units of the interval width, not the accumulated quantity." },
+        { label: `${entry.result} per ${entry.timeUnit} squared`, correct: false, feedback: "Those derivative units move in the opposite direction from integration." },
+      ],
+    );
+  }
+  const { net, total, unit } = pick(rand, NET_CHANGE_TRAVEL_CASES);
+  const correct = `Net change = ${net} ${unit}; total travel = ${total} ${unit}.`;
+  return integrationMcq(
+    rand,
+    `For a motion, the integral of v(t) is ${net} ${unit}, while the integral of |v(t)| is ${total} ${unit}. Which interpretation is correct?`,
+    [
+      { label: correct, correct: true, feedback: "The signed velocity integral gives displacement; the absolute-value integral gives total distance traveled." },
+      { label: `Net change = ${total} ${unit}; total travel = ${net} ${unit}.`, correct: false, feedback: "This swaps displacement with total distance." },
+      { label: `Net change = ${net} ${unit}; total travel = ${Math.abs(net)} ${unit}.`, correct: false, feedback: "The magnitude of displacement need not equal total travel when direction changes." },
+      { label: `Net change = ${total} ${unit}; total travel = ${total} ${unit}.`, correct: false, feedback: "The signed integral already states the net change; total travel uses the absolute-value integral." },
+    ],
+  );
+}
+
+const NET_CHANGE_NUMERIC_CASES = [
+  { m: 2, c: 1, n: 2 }, { m: 2, c: -3, n: 4 }, { m: 4, c: 1, n: 3 },
+  { m: 4, c: -5, n: 4 }, { m: 6, c: 2, n: 3 }, { m: 6, c: -7, n: 4 },
+  { m: -2, c: 5, n: 2 }, { m: -2, c: 3, n: 4 }, { m: -4, c: 9, n: 3 },
+  { m: -4, c: 5, n: 4 }, { m: -6, c: 11, n: 3 }, { m: -6, c: 7, n: 4 },
+] as const;
+
+function netChangeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { m, c, n } = pick(rand, NET_CHANGE_NUMERIC_CASES);
+  const sign = c >= 0 ? "+" : "-";
+  const answer = m * n * n / 2 + c * n;
+  const finalRate = m * n + c;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `A tank's signed flow rate is r(t) = ${m}t ${sign} ${Math.abs(c)} litres per minute. Find the net volume change during the first ${n} minutes, in litres.`,
+    answer,
+    tolerance: 0,
+    unit: "litres",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: finalRate, feedback: `That is the rate at t = ${n}, measured in litres per minute, not the accumulated volume change.` },
+      { value: finalRate * n, feedback: "This treats the final rate as if it held throughout the interval. Integrate the changing rate instead." },
+      { value: Math.abs(answer), feedback: "Net change is signed. Do not replace a negative contribution by its absolute value." },
+    ]),
+    fallbackFeedback: `Integrate the rate: (${m}/2)(${n})^2 ${sign} ${Math.abs(c)}(${n}) = ${answer} litres.`,
+    successFeedback: `The net volume change is ${answer} litres.`,
+  };
+  return { widget, answer };
+}
+
 const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "integration-accumulation__in-riemann__numeric": riemannNumericWidget,
   "integration-accumulation__in-riemann__mcq": riemannMcqWidget,
@@ -1451,6 +1726,14 @@ const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => Generated
   "integration-accumulation__in-definite-integral__numeric": definiteIntegralNumericWidget,
   "integration-accumulation__in-definite-integral__matchPairs": definiteIntegralMatchWidget,
   "integration-accumulation__in-signed-area__mcq": signedAreaMcqWidget,
+  "integration-accumulation__in-accumulation__numeric": accumulationNumericWidget,
+  "integration-accumulation__in-accumulation__mcq": accumulationMcqWidget,
+  "integration-accumulation__in-read-accumulation__mcq": readAccumulationMcqWidget,
+  "integration-accumulation__in-read-accumulation__matchPairs": readAccumulationMatchWidget,
+  "integration-accumulation__in-signed-area__numeric": signedAreaNumericWidget,
+  "integration-accumulation__in-read-accumulation__numeric": readAccumulationNumericWidget,
+  "integration-accumulation__in-net-change__mcq": netChangeMcqWidget,
+  "integration-accumulation__in-net-change__numeric": netChangeNumericWidget,
 };
 
 const TARGET_GENERATOR = "g13-curve-analysis";
