@@ -25396,10 +25396,10 @@ function IaTopBottomSwap() {
       <text x={225} y={31} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>
         orange − blue
       </text>
-      <text x={75} y={153} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+      <text x={75} y={146} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
         top − bottom
       </text>
-      <text x={225} y={153} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+      <text x={225} y={146} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
         top − bottom
       </text>
     </svg>

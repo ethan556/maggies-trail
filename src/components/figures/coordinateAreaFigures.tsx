@@ -78,10 +78,10 @@ export function AsvCoordinateRectangleArea() {
         <path d={`M ${px(6) + 20} ${py(4)} V ${py(2)}`} stroke={LEAF} strokeWidth={2} />
         <path d={`M ${px(6) + 15} ${py(4)} H ${px(6) + 25} M ${px(6) + 15} ${py(2)} H ${px(6) + 25}`} stroke={LEAF} strokeWidth={2} />
         <text x={px(6) + 29} y={(py(4) + py(2)) / 2 + 4} fontSize={11} fontWeight={700} fill={INK}>4 − 2 = 2</text>
-        <rect x="242" y="75" width="102" height="70" rx="14" fill="#EAF2FC" stroke={SKY} strokeWidth={1.2} />
-        <text x="293" y="98" textAnchor="middle" fontSize={11} fill={INK}>width × height</text>
-        <text x="293" y="123" textAnchor="middle" fontSize={17} fontWeight={800} fill={INK}>4 × 2 = 8</text>
-        <text x="293" y="137" textAnchor="middle" fontSize={10} fill={INK}>square units</text>
+        <rect x="250" y="145" width="102" height="70" rx="14" fill="#EAF2FC" stroke={SKY} strokeWidth={1.2} />
+        <text x="301" y="166" textAnchor="middle" fontSize={11} fill={INK}>width × height</text>
+        <text x="301" y="188" textAnchor="middle" fontSize={17} fontWeight={800} fill={INK}>4 × 2 = 8</text>
+        <text x="301" y="207" textAnchor="middle" fontSize={10} fill={INK}>square units</text>
       </g>
     </svg>
   );
