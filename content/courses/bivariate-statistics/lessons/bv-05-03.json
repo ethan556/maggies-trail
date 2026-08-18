@@ -109,7 +109,7 @@
       "body": "Trade-offs are forced.",
       "conceptTag": "bv-fit-by-residual",
       "explanationVariants": [
-        "Lowering b to catch (2,6) exactly drops every other prediction by the same amount, converting three perfect hits into misses.",
+        "Raising b to catch (2,6) exactly raises every other prediction by the same amount, converting three perfect hits into misses.",
         "Improving one residual at the expense of the rest is how you recognize an already-optimal line."
       ],
       "widget": {
@@ -118,19 +118,19 @@
         "options": [
           {
             "id": "no",
-            "label": "No — three zero-residuals become −1s to fix one +1",
+            "label": "Reject: one exact hit creates three misses",
             "correct": true,
             "feedback": "Total miss grows from 1 to 3. The line was already placed."
           },
           {
             "id": "yes",
-            "label": "Yes — any exact hit helps",
+            "label": "Accept: every exact hit improves the fit",
             "correct": false,
             "feedback": "Exactness at one point isn't the goal; small TOTAL miss is."
           },
           {
             "id": "depends",
-            "label": "Depends which point matters most",
+            "label": "Decide by which point matters most",
             "correct": false,
             "feedback": "Without a reason to privilege (2,6), the balanced line wins."
           }
@@ -164,19 +164,19 @@
         "options": [
           {
             "id": "yes",
-            "label": "Yes — it balances misses; touching points is irrelevant",
+            "label": "Yes: fit quality does not require contact",
             "correct": true,
             "feedback": "The line minimizes collective leftovers and often threads between all of them."
           },
           {
             "id": "no",
-            "label": "No — it must touch at least one",
+            "label": "No: it must touch at least one point",
             "correct": false,
             "feedback": "Nothing rewards contact. A line through empty space can leave smaller total misses than any point-touching line."
           },
           {
             "id": "two",
-            "label": "It must touch at least two",
+            "label": "No: it must touch at least two points",
             "correct": false,
             "feedback": "Two-point lines are how you DRAW a line, not how you FIT one."
           }
