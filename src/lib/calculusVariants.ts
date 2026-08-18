@@ -1049,6 +1049,165 @@ function otherLimitFormsWidget(rand: Rand) {
   };
 }
 
+const SLOPE_FIELD_CASES = [
+  { a: 1, b: 0, x: 2, y: 7 }, { a: 2, b: 0, x: -3, y: 4 },
+  { a: 0, b: 1, x: 5, y: -2 }, { a: 0, b: 3, x: 1, y: 4 },
+  { a: 1, b: 1, x: 2, y: 3 }, { a: 2, b: 1, x: -1, y: 5 },
+  { a: 1, b: -1, x: 4, y: 2 }, { a: 3, b: -1, x: 2, y: 5 },
+  { a: -1, b: 2, x: 3, y: 4 }, { a: 2, b: -3, x: 5, y: 2 },
+  { a: -2, b: 1, x: -3, y: 6 }, { a: 4, b: 1, x: 1, y: -2 },
+] as const;
+
+function linearExpression(a: number, b: number): string {
+  const xTerm = a === 0 ? "" : a === 1 ? "x" : a === -1 ? "-x" : `${a}x`;
+  const yTerm = b === 0 ? "" : b > 0 ? `${xTerm ? " + " : ""}${b === 1 ? "y" : `${b}y`}` : `${xTerm ? " - " : "-"}${Math.abs(b) === 1 ? "y" : `${Math.abs(b)}y`}`;
+  return `${xTerm}${yTerm}`;
+}
+
+function slopeFieldWidget(rand: Rand) {
+  const chosen = SLOPE_FIELD_CASES[Math.floor(rand() * SLOPE_FIELD_CASES.length)]!;
+  const answer = chosen.a * chosen.x + chosen.b * chosen.y;
+  const traps = [chosen.x, chosen.y, chosen.x * chosen.y]
+    .filter((value, index, all) => value !== answer && all.indexOf(value) === index);
+  const expression = linearExpression(chosen.a, chosen.b);
+  return {
+    type: "numeric" as const,
+    prompt: `For dy/dx = ${expression}, find the slope-field value at (${chosen.x}, ${chosen.y}).`,
+    answer, tolerance: 0, unit: "",
+    commonErrors: traps.map((value) => ({ value, feedback: "Substitute the point's x- and y-coordinates into the displayed right-hand side exactly as written." })),
+    fallbackFeedback: `Substitute the point into the field rule: at (${chosen.x}, ${chosen.y}), ${expression} = ${answer}.`,
+    successFeedback: `The field assigns slope ${answer} at that point.`,
+  };
+}
+
+const SEPARABLE_CASES = [
+  { coefficient: 2, initial: 2, x: 1 }, { coefficient: 2, initial: 3, x: 1 },
+  { coefficient: 2, initial: 4, x: 1 }, { coefficient: 4, initial: 2, x: 1 },
+  { coefficient: 4, initial: 3, x: 1 }, { coefficient: 6, initial: 2, x: 1 },
+  { coefficient: 2, initial: 5, x: 2 }, { coefficient: 4, initial: 1, x: 2 },
+  { coefficient: -2, initial: 3, x: 1 }, { coefficient: -4, initial: 5, x: 1 },
+  { coefficient: -2, initial: 4, x: 2 }, { coefficient: 6, initial: 1, x: 2 },
+] as const;
+
+function separableWidget(rand: Rand) {
+  const chosen = SEPARABLE_CASES[Math.floor(rand() * SEPARABLE_CASES.length)]!;
+  const exponent = chosen.coefficient * chosen.x ** 2 / 2;
+  const answer = Number((chosen.initial * Math.exp(exponent)).toFixed(3));
+  return {
+    type: "numeric" as const,
+    prompt: `The equation dy/dx = ${chosen.coefficient}xy has y(0) = ${chosen.initial}. Its solution is y = ${chosen.initial}e^(${chosen.coefficient / 2}x^2). Find y(${chosen.x}) to three decimal places.`,
+    answer, tolerance: 0.0005, unit: "",
+    commonErrors: [chosen.initial, Number(Math.exp(exponent).toFixed(3)), chosen.initial ** 2]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "Substitute x into the exponent, evaluate the exponential, and keep the initial-value multiplier." })),
+    fallbackFeedback: `Substituting x = ${chosen.x} into the separated solution gives y(${chosen.x}) = ${chosen.initial}e^(${exponent}) = ${answer}.`,
+    successFeedback: `The separated solution gives y(${chosen.x}) = ${answer}.`,
+  };
+}
+
+const LOGISTIC_CASES = [40, 60, 80, 100, 120, 200, 300, 400, 500, 600, 800, 1000] as const;
+
+function logisticWidget(rand: Rand) {
+  const capacity = LOGISTIC_CASES[Math.floor(rand() * LOGISTIC_CASES.length)]!;
+  const rate = [0.1, 0.2, 0.3, 0.4][capacity % 4] ?? 0.2;
+  const answer = capacity / 2;
+  return {
+    type: "numeric" as const,
+    prompt: `A population follows dP/dt = ${rate}P(1 - P/${capacity}). At what population is its growth rate greatest?`,
+    answer, tolerance: 0, unit: "",
+    commonErrors: [capacity, 0, rate].filter((value) => value !== answer).map((value) => ({ value, feedback: "The logistic growth-rate parabola has zeros at 0 and the carrying capacity, so its maximum is halfway between." })),
+    fallbackFeedback: `The carrying capacity is ${capacity}, so the rate peaks at P = ${capacity}/2 = ${answer}.`,
+    successFeedback: `Maximum growth occurs at half the carrying capacity: ${answer}.`,
+  };
+}
+
+const EQUILIBRIUM_CASES = [
+  { job: "count" as const, capacity: 4, initial: 6 }, { job: "count" as const, capacity: 10, initial: 12 },
+  { job: "count" as const, capacity: 50, initial: 70 }, { job: "count" as const, capacity: 100, initial: 140 },
+  { job: "peak" as const, capacity: 20, initial: 30 }, { job: "peak" as const, capacity: 40, initial: 60 },
+  { job: "peak" as const, capacity: 80, initial: 120 }, { job: "peak" as const, capacity: 200, initial: 260 },
+  { job: "settle" as const, capacity: 30, initial: 45 }, { job: "settle" as const, capacity: 60, initial: 90 },
+  { job: "settle" as const, capacity: 120, initial: 180 }, { job: "settle" as const, capacity: 300, initial: 450 },
+] as const;
+
+function equilibriumWidget(rand: Rand) {
+  const chosen = EQUILIBRIUM_CASES[Math.floor(rand() * EQUILIBRIUM_CASES.length)]!;
+  const prompt = chosen.job === "count"
+    ? `For dy/dt = 0.4y(1 - y/${chosen.capacity}), how many equilibrium solutions are there?`
+    : chosen.job === "peak"
+      ? `For dP/dt = 0.4P(1 - P/${chosen.capacity}), at what population is the growth rate greatest?`
+      : `A population follows dP/dt = 0.4P(1 - P/${chosen.capacity}) and starts at P = ${chosen.initial}. What value does it approach in the long run?`;
+  const answer = chosen.job === "count" ? 2 : chosen.job === "peak" ? chosen.capacity / 2 : chosen.capacity;
+  return {
+    type: "numeric" as const,
+    prompt, answer, tolerance: 0, unit: "",
+    commonErrors: [0, chosen.capacity / 2, chosen.capacity, chosen.initial]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index).slice(0, 3)
+      .map((value) => ({ value, feedback: "Use the two logistic equilibria, the midpoint peak, and the stable carrying capacity according to the question's job." })),
+    fallbackFeedback: chosen.job === "count" ? "The factors vanish at y = 0 and y = K, giving two equilibria." : chosen.job === "peak" ? `The growth-rate parabola peaks at K/2 = ${answer}.` : `The stable carrying capacity is ${answer}, so the solution approaches it.`,
+    successFeedback: `The requested logistic value is ${answer}.`,
+  };
+}
+
+const EXPONENTIAL_MODEL_CASES = [
+  { job: "growth" as const, initial: 100, rate: 0.1, time: 5 }, { job: "growth" as const, initial: 200, rate: 0.1, time: 10 },
+  { job: "growth" as const, initial: 80, rate: 0.2, time: 4 }, { job: "growth" as const, initial: 150, rate: 0.05, time: 8 },
+  { job: "growth" as const, initial: 300, rate: 0.03, time: 12 }, { job: "growth" as const, initial: 50, rate: 0.15, time: 6 },
+  { job: "halfLife" as const, halfLife: 2 }, { job: "halfLife" as const, halfLife: 3 },
+  { job: "halfLife" as const, halfLife: 4 }, { job: "halfLife" as const, halfLife: 5 },
+  { job: "halfLife" as const, halfLife: 8 }, { job: "halfLife" as const, halfLife: 10 },
+] as const;
+
+function exponentialModelWidget(rand: Rand) {
+  const chosen = EXPONENTIAL_MODEL_CASES[Math.floor(rand() * EXPONENTIAL_MODEL_CASES.length)]!;
+  if (chosen.job === "growth") {
+    const answer = Number((chosen.initial * Math.exp(chosen.rate * chosen.time)).toFixed(3));
+    return {
+      type: "numeric" as const,
+      prompt: `A quantity satisfies dP/dt = ${chosen.rate}P with P(0) = ${chosen.initial}. Find P(${chosen.time}) to three decimal places.`,
+      answer, tolerance: 0.0005, unit: "",
+      commonErrors: [chosen.initial, chosen.initial * chosen.time, chosen.initial * (1 + chosen.rate)]
+        .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+        .map((value) => ({ value, feedback: "Use P(t) = P(0)e^(kt); continuous exponential growth is not a one-time percentage or linear change." })),
+      fallbackFeedback: `P(${chosen.time}) = ${chosen.initial}e^(${chosen.rate * chosen.time}) = ${answer}.`, successFeedback: `The exponential model gives ${answer}.`,
+    };
+  }
+  const answer = Number((Math.log(2) / chosen.halfLife).toFixed(4));
+  return {
+    type: "numeric" as const,
+    prompt: `A substance has half-life ${chosen.halfLife} days. Find the positive decay constant k = ln(2)/T to four decimal places.`,
+    answer, tolerance: 0.00005, unit: "per day",
+    commonErrors: [chosen.halfLife, 1 / chosen.halfLife, Math.log(2)]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "The positive decay constant is ln(2) divided by the half-life." })),
+    fallbackFeedback: `k = ln(2)/${chosen.halfLife} = ${answer} per day.`, successFeedback: `The decay constant is ${answer} per day.`,
+  };
+}
+
+const EULER_CASES = [
+  { rate: 1, initial: 1, step: 0.5, steps: 1 }, { rate: 1, initial: 1, step: 0.5, steps: 2 },
+  { rate: 1, initial: 1, step: 0.25, steps: 4 }, { rate: 2, initial: 1, step: 0.25, steps: 2 },
+  { rate: 0.5, initial: 4, step: 0.5, steps: 2 }, { rate: -1, initial: 8, step: 0.25, steps: 2 },
+  { rate: 1, initial: 2, step: 0.2, steps: 5 }, { rate: 2, initial: 3, step: 0.1, steps: 4 },
+  { rate: -0.5, initial: 10, step: 0.2, steps: 3 }, { rate: 3, initial: 1, step: 0.1, steps: 3 },
+  { rate: 0.25, initial: 16, step: 0.4, steps: 2 }, { rate: -2, initial: 5, step: 0.1, steps: 4 },
+] as const;
+
+function eulerWidget(rand: Rand) {
+  const chosen = EULER_CASES[Math.floor(rand() * EULER_CASES.length)]!;
+  const answer = Number((chosen.initial * (1 + chosen.rate * chosen.step) ** chosen.steps).toFixed(4));
+  return {
+    type: "numeric" as const,
+    prompt: `Use Euler's method for dy/dx = ${chosen.rate}y, starting at y(0) = ${chosen.initial}, with step h = ${chosen.step}. Find y after ${chosen.steps} step${chosen.steps === 1 ? "" : "s"}, to four decimal places.`,
+    answer, tolerance: 0.00005, unit: "",
+    commonErrors: [chosen.initial, chosen.initial * (1 + chosen.rate * chosen.step), chosen.initial + chosen.steps * chosen.step]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "For each Euler step, update y by h times the current slope; here every step multiplies y by 1 + kh." })),
+    fallbackFeedback: `Each step multiplies y by ${1 + chosen.rate * chosen.step}, giving ${answer} after ${chosen.steps} step${chosen.steps === 1 ? "" : "s"}.`,
+    successFeedback: `Euler's method gives ${answer}.`,
+  };
+}
+
 const TARGET_GENERATOR = "g13-curve-analysis";
 const TARGET_FORM = "curve-analysis__ca-first-derivative-test__numeric";
 const TARGET_SIGN_FORM = "curve-analysis__ca-first-derivative-test__signChart";
@@ -1081,8 +1240,27 @@ const CONTEXT_NUMERIC_BUILDERS: Record<string, (rand: Rand) => ReturnType<typeof
 const CONTEXT_STRUCTURED_BUILDERS = {
   "derivatives-in-context__dc-differentials__numeric": differentialLabGenerated,
 } as const;
+const DIFFERENTIAL_EQUATION_BUILDERS: Record<string, (rand: Rand) => ReturnType<typeof slopeFieldWidget>> = {
+  "differential-equations__de-slope-field__numeric": slopeFieldWidget,
+  "differential-equations__de-separable__numeric": separableWidget,
+  "differential-equations__de-logistic__numeric": logisticWidget,
+  "differential-equations__de-equilibrium__numeric": equilibriumWidget,
+  "differential-equations__de-exponential__numeric": exponentialModelWidget,
+  "differential-equations__de-euler__numeric": eulerWidget,
+};
 
 export const CALCULUS_GENERATORS = AUTHORED_CALCULUS_GENERATORS.map((generator) => {
+  if (generator.tag === "g13-differential-equations") {
+    return {
+      ...generator,
+      gen: (rand: Rand, band: Band = "core", form = "default") => {
+        const builder = DIFFERENTIAL_EQUATION_BUILDERS[form];
+        if (!builder) return generator.gen(rand, band, form);
+        const widget = builder(rand);
+        return { tag: generator.tag, widget, answer: widget.answer };
+      },
+    };
+  }
   if (generator.tag === "g13-derivatives-in-context") {
     return {
       ...generator,

@@ -29,6 +29,14 @@ const DIFFERENTIALS_NUMERIC = 'derivatives-in-context__dc-differentials__numeric
 const LINEARISATION_LIMITS_NUMERIC = 'derivatives-in-context__dc-linearisation-limits__numeric';
 const LHOPITAL_NUMERIC = 'derivatives-in-context__dc-lhopital__numeric';
 const OTHER_FORMS_NUMERIC = 'derivatives-in-context__dc-other-forms__numeric';
+const DIFFERENTIAL_EQUATION_FORMS = {
+  SLOPE: 'differential-equations__de-slope-field__numeric',
+  SEPARABLE: 'differential-equations__de-separable__numeric',
+  LOGISTIC: 'differential-equations__de-logistic__numeric',
+  EQUILIBRIUM: 'differential-equations__de-equilibrium__numeric',
+  EXPONENTIAL: 'differential-equations__de-exponential__numeric',
+  EULER: 'differential-equations__de-euler__numeric',
+};
 
 function solveFirstDerivativeMaximum(input) {
   const prompt = String(input)
@@ -308,6 +316,50 @@ function solveLhopital(input) {
   return power * point ** (power - 1);
 }
 
+function solveDifferentialEquation(form, input) {
+  const prompt = String(input).split('||', 1)[0];
+  if (form === DIFFERENTIAL_EQUATION_FORMS.SLOPE) {
+    const point = /at \((-?\d+),\s*(-?\d+)\)/.exec(prompt);
+    const expression = /dy\/dx\s*=\s*(.*?), find/i.exec(prompt)?.[1];
+    if (!point || !expression) throw new Error(`unrecognized slope-field prompt: ${prompt}`);
+    const x = Number(point[1]); const y = Number(point[2]);
+    const compact = expression.replace(/\s+/g, '');
+    const coefficient = (raw) => raw === '' || raw === '+' ? 1 : raw === '-' ? -1 : Number(raw);
+    const xMatch = /^([+-]?\d*)x/.exec(compact);
+    const yMatch = /([+-]\d*)y$|^([+-]?\d*)y$/.exec(compact);
+    const a = xMatch ? coefficient(xMatch[1]) : 0;
+    const rawY = yMatch ? (yMatch[1] ?? yMatch[2]) : '';
+    const b = yMatch ? coefficient(rawY) : 0;
+    return a * x + b * y;
+  }
+  if (form === DIFFERENTIAL_EQUATION_FORMS.SEPARABLE) {
+    const match = /dy\/dx\s*=\s*(-?\d+)xy.*y\(0\)\s*=\s*(\d+).*Find y\((-?\d+)\)/i.exec(prompt);
+    if (!match) throw new Error(`unrecognized separable prompt: ${prompt}`);
+    return Number((Number(match[2]) * Math.exp(Number(match[1]) * Number(match[3]) ** 2 / 2)).toFixed(3));
+  }
+  if (form === DIFFERENTIAL_EQUATION_FORMS.LOGISTIC) {
+    return Number(/P\/(\d+)\)/.exec(prompt)?.[1]) / 2;
+  }
+  if (form === DIFFERENTIAL_EQUATION_FORMS.EQUILIBRIUM) {
+    const capacity = Number(/P\/(\d+)\)|y\/(\d+)/.exec(prompt)?.slice(1).find(Boolean));
+    if (/how many equilibrium/i.test(prompt)) return 2;
+    if (/growth rate greatest/i.test(prompt)) return capacity / 2;
+    return capacity;
+  }
+  if (form === DIFFERENTIAL_EQUATION_FORMS.EXPONENTIAL) {
+    const growth = /dP\/dt\s*=\s*(\d+(?:\.\d+)?)P with P\(0\)\s*=\s*(\d+).*P\((\d+)\)/i.exec(prompt);
+    if (growth) return Number((Number(growth[2]) * Math.exp(Number(growth[1]) * Number(growth[3]))).toFixed(3));
+    const halfLife = /half-life (\d+) days/i.exec(prompt)?.[1];
+    if (halfLife) return Number((Math.log(2) / Number(halfLife)).toFixed(4));
+  }
+  if (form === DIFFERENTIAL_EQUATION_FORMS.EULER) {
+    const match = /dy\/dx\s*=\s*(-?\d+(?:\.\d+)?)y.*y\(0\)\s*=\s*(\d+).*h\s*=\s*(\d+(?:\.\d+)?).*after (\d+) step/i.exec(prompt);
+    if (!match) throw new Error(`unrecognized Euler prompt: ${prompt}`);
+    return Number((Number(match[2]) * (1 + Number(match[1]) * Number(match[3])) ** Number(match[4])).toFixed(4));
+  }
+  throw new Error(`unrecognized differential-equation prompt for ${form}: ${prompt}`);
+}
+
 function solvePrompt(form, input) {
   if (form === FIRST_DERIVATIVE_NUMERIC && /f\(x\)\s*=\s*x(?:³|\^3)/.test(String(input))) {
     return solveFirstDerivativeMaximum(input);
@@ -351,6 +403,7 @@ function solvePrompt(form, input) {
   }
   if (form === LHOPITAL_NUMERIC && /using L'Hopital's rule/i.test(String(input))) return solveLhopital(input);
   if (form === OTHER_FORMS_NUMERIC && /lim\(x -> (?:infinity|0\+)\)/i.test(String(input))) return 0;
+  if (Object.values(DIFFERENTIAL_EQUATION_FORMS).includes(form)) return solveDifferentialEquation(form, input);
   return authoredSolver(form, input);
 }
 
