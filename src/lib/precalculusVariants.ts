@@ -409,6 +409,16 @@ const LIMIT_DNE_NUMERIC_FORM = "limits-continuity__lc-dne__numeric";
 const LIMIT_FACTOR_NUMERIC_FORM = "limits-continuity__lc-factor__numeric";
 const LIMIT_RATIONALIZE_MCQ_FORM = "limits-continuity__lc-rationalize__mcq";
 const LIMIT_RATIONALIZE_NUMERIC_FORM = "limits-continuity__lc-rationalize__numeric";
+const LIMIT_ONESIDED_MCQ_FORM = "limits-continuity__lc-onesided__mcq";
+const LIMIT_ONESIDED_NUMERIC_FORM = "limits-continuity__lc-onesided__numeric";
+const LIMIT_INFINITY_NUMERIC_FORM = "limits-continuity__lc-infinity__numeric";
+const LIMIT_ENDBEHAVIOR_MCQ_FORM = "limits-continuity__lc-endbehavior__mcq";
+const LIMIT_CONTINUITY_MCQ_FORM = "limits-continuity__lc-continuity__mcq";
+const LIMIT_CONTINUITY_NUMERIC_FORM = "limits-continuity__lc-continuity__numeric";
+const LIMIT_DISCONTINUITY_MCQ_FORM = "limits-continuity__lc-discontinuity__mcq";
+const LIMIT_DISCONTINUITY_NUMERIC_FORM = "limits-continuity__lc-discontinuity__numeric";
+const LIMIT_IVT_MCQ_FORM = "limits-continuity__lc-ivt__mcq";
+const LIMIT_IVT_NUMERIC_FORM = "limits-continuity__lc-ivt__numeric";
 
 const chooseLimitCase = <T,>(rand: () => number, cases: readonly T[]): T =>
   cases[Math.floor(rand() * cases.length)]!;
@@ -505,7 +515,93 @@ const LIMIT_RATIONALIZE_CASES = [
   { root: 9 }, { root: 10 }, { root: 11 }, { root: 12 },
 ] as const;
 
+const LIMIT_ONESIDED_CASES = [
+  { at: -5, m: -2, b: 1, side: "left" }, { at: -4, m: 3, b: -2, side: "right" },
+  { at: -3, m: 4, b: 5, side: "left" }, { at: -2, m: -3, b: -4, side: "right" },
+  { at: -1, m: 5, b: 2, side: "left" }, { at: 0, m: -4, b: 7, side: "right" },
+  { at: 1, m: 6, b: -3, side: "left" }, { at: 2, m: -5, b: 4, side: "right" },
+  { at: 3, m: 2, b: -6, side: "left" }, { at: 4, m: 7, b: 1, side: "right" },
+  { at: 5, m: -6, b: 3, side: "left" }, { at: 6, m: 3, b: -5, side: "right" },
+] as const;
+
+const LIMIT_TWOSIDED_CASES = [
+  { at: -5, left: -3, right: -3 }, { at: -4, left: 2, right: 7 },
+  { at: -3, left: 8, right: 8 }, { at: -2, left: -6, right: 1 },
+  { at: -1, left: 4, right: 4 }, { at: 0, left: -2, right: 5 },
+  { at: 1, left: 6, right: 6 }, { at: 2, left: 9, right: -1 },
+  { at: 3, left: -4, right: -4 }, { at: 4, left: 10, right: 3 },
+  { at: 5, left: 11, right: 11 }, { at: 6, left: 3, right: -5 },
+] as const;
+
+const LIMIT_INFINITY_CASES = [
+  { numerator: -7, denominator: 2 }, { numerator: -5, denominator: 4 },
+  { numerator: -3, denominator: 2 }, { numerator: -1, denominator: 4 },
+  { numerator: 1, denominator: 5 }, { numerator: 2, denominator: 3 },
+  { numerator: 3, denominator: 2 }, { numerator: 4, denominator: 3 },
+  { numerator: 5, denominator: 2 }, { numerator: 7, denominator: 4 },
+  { numerator: 8, denominator: 3 }, { numerator: 9, denominator: 2 },
+] as const;
+
+const LIMIT_END_CASES = [
+  { a: 3, n: 1, b: 2, m: 3 }, { a: -5, n: 2, b: 4, m: 5 },
+  { a: 7, n: 3, b: 3, m: 4 }, { a: -2, n: 1, b: 5, m: 2 },
+  { a: 4, n: 2, b: 2, m: 2 }, { a: -3, n: 3, b: 2, m: 3 },
+  { a: 5, n: 4, b: 4, m: 4 }, { a: -7, n: 1, b: 2, m: 1 },
+  { a: 2, n: 3, b: 5, m: 1 }, { a: -4, n: 4, b: 3, m: 2 },
+  { a: 6, n: 5, b: 5, m: 3 }, { a: -8, n: 3, b: 7, m: 1 },
+] as const;
+
+const LIMIT_CONTINUITY_CASES = [
+  { at: -5, limit: -3, point: -3 }, { at: -4, limit: 2, point: 7 },
+  { at: -3, limit: 8, point: 8 }, { at: -2, limit: -6, point: 1 },
+  { at: -1, limit: 4, point: 4 }, { at: 0, limit: -2, point: 5 },
+  { at: 1, limit: 6, point: 6 }, { at: 2, limit: 9, point: -1 },
+  { at: 3, limit: -4, point: -4 }, { at: 4, limit: 10, point: 3 },
+  { at: 5, limit: 11, point: 11 }, { at: 6, limit: 3, point: -5 },
+] as const;
+
+const LIMIT_CONTINUITY_PARAMETER_CASES = [
+  { at: -5, m: -2, b: 1 }, { at: -4, m: 3, b: -2 },
+  { at: -3, m: 4, b: 5 }, { at: -2, m: -3, b: -4 },
+  { at: -1, m: 5, b: 2 }, { at: 0, m: -4, b: 7 },
+  { at: 1, m: 6, b: -3 }, { at: 2, m: -5, b: 4 },
+  { at: 3, m: 2, b: -6 }, { at: 4, m: 7, b: 1 },
+  { at: 5, m: -6, b: 3 }, { at: 6, m: 3, b: -5 },
+] as const;
+
+const LIMIT_DISCONTINUITY_CASES = [
+  { at: -6, kind: "removable", first: 4, second: 0 },
+  { at: -5, kind: "jump", first: -2, second: 3 },
+  { at: -4, kind: "infinite", first: 0, second: 0 },
+  { at: -3, kind: "removable", first: 7, second: 0 },
+  { at: -2, kind: "jump", first: 5, second: -1 },
+  { at: -1, kind: "infinite", first: 0, second: 0 },
+  { at: 0, kind: "removable", first: -4, second: 0 },
+  { at: 1, kind: "jump", first: -3, second: 6 },
+  { at: 2, kind: "infinite", first: 0, second: 0 },
+  { at: 3, kind: "removable", first: 9, second: 0 },
+  { at: 4, kind: "jump", first: 8, second: 2 },
+  { at: 5, kind: "infinite", first: 0, second: 0 },
+] as const;
+
+const LIMIT_IVT_CASES = [
+  { a: -6, b: -4, fa: -5, fb: 3 }, { a: -5, b: -2, fa: 7, fb: -1 },
+  { a: -4, b: -1, fa: -2, fb: 6 }, { a: -3, b: 1, fa: 4, fb: -8 },
+  { a: -2, b: 2, fa: -7, fb: 5 }, { a: -1, b: 3, fa: 9, fb: -3 },
+  { a: 0, b: 4, fa: -4, fb: 2 }, { a: 1, b: 5, fa: 6, fb: -5 },
+  { a: 2, b: 6, fa: -8, fb: 1 }, { a: 3, b: 7, fa: 3, fb: -9 },
+  { a: 4, b: 8, fa: -6, fb: 7 }, { a: 5, b: 9, fa: 2, fb: -4 },
+] as const;
+
+const LIMIT_IVT_EVALUATION_CASES = [
+  { x: -6, c: 5 }, { x: -5, c: 7 }, { x: -4, c: 3 },
+  { x: -3, c: 8 }, { x: -2, c: 1 }, { x: -1, c: 6 },
+  { x: 1, c: 9 }, { x: 2, c: -2 }, { x: 3, c: 4 },
+  { x: 4, c: -3 }, { x: 5, c: 2 }, { x: 6, c: -4 },
+] as const;
+
 const signedLimitNumber = (value: number): string => value < 0 ? `−${Math.abs(value)}` : String(value);
+const limitPower = (value: number): string => ({ 1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵" })[value] ?? String(value);
 const decimalLimitNumber = (value: number): string => {
   const fixed = value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
   return fixed.startsWith("-") ? `−${fixed.slice(1)}` : fixed;
@@ -638,6 +734,223 @@ function limitRationalizeMcqVariant(rand: () => number): LimitGeneratedVariant {
   );
 }
 
+function limitOneSidedNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_ONESIDED_CASES);
+  const answer = chosen.m * chosen.at + chosen.b;
+  const relation = chosen.side === "left" ? `x < ${signedLimitNumber(chosen.at)}` : `x > ${signedLimitNumber(chosen.at)}`;
+  const sign = chosen.b < 0 ? `− ${Math.abs(chosen.b)}` : `+ ${chosen.b}`;
+  return limitNumeric(
+    `For the ${chosen.side}-hand branch, f(x) = ${signedLimitNumber(chosen.m)}x ${sign} when ${relation}. Find the ${chosen.side}-hand limit at x = ${signedLimitNumber(chosen.at)}.`,
+    answer,
+    [chosen.at, chosen.m * chosen.at, chosen.b],
+    `Follow only the ${chosen.side}-hand branch and approach the boundary: ${signedLimitNumber(chosen.m)}(${signedLimitNumber(chosen.at)}) ${sign} = ${signedLimitNumber(answer)}.`,
+  );
+}
+
+function limitOneSidedMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_TWOSIDED_CASES);
+  const left = signedLimitNumber(chosen.left);
+  const right = signedLimitNumber(chosen.right);
+  const agrees = chosen.left === chosen.right;
+  const truth = agrees ? `${left}; both one-sided limits agree` : `DNE; left ${left} differs from right ${right}`;
+  const average = decimalLimitNumber((chosen.left + chosen.right) / 2);
+  const choices: LimitChoice[] = agrees
+    ? [
+        { label: truth, correct: true, feedback: "Correct. Matching one-sided limits establish the two-sided limit." },
+        { label: "DNE; one-sided limits never combine", correct: false, feedback: "One-sided limits do combine when their values agree." },
+        { label: `${signedLimitNumber(chosen.at)}; use the boundary input`, correct: false, feedback: "The boundary input is not the output approached by the function." },
+      ]
+    : [
+        { label: truth, correct: true, feedback: "Correct. Different one-sided limits prevent a two-sided limit." },
+        { label: `${left}; use only the left-hand value`, correct: false, feedback: `The right-hand value is ${right}, so both sides do not agree.` },
+        { label: `${right}; use only the right-hand value`, correct: false, feedback: `The left-hand value is ${left}, so both sides do not agree.` },
+        { label: `${average}; average the one-sided values`, correct: false, feedback: "One-sided limits are not averaged; disagreement means DNE." },
+      ];
+  return limitMcq(rand,
+    `At x = ${signedLimitNumber(chosen.at)}, the left-hand limit is ${left} and the right-hand limit is ${right}. What is the two-sided limit?`,
+    choices,
+  );
+}
+
+function limitInfinityNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_INFINITY_CASES);
+  const answer = Number((chosen.numerator / chosen.denominator).toFixed(3));
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `For f(x) = (${signedLimitNumber(chosen.numerator)}x³ + 1)/(${chosen.denominator}x³ − 2), find the limit as x approaches +∞. Give a decimal to three places.`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [
+      { id: "a", label: "the numerator's leading coefficient", value: chosen.numerator },
+      { id: "b", label: "the denominator's leading coefficient", value: chosen.denominator },
+    ],
+    approxFormula: { op: "divide" as const, left: { op: "const" as const, id: "a" }, right: { op: "const" as const, id: "b" } },
+    approxRound: 3,
+    answerMode: "numeric" as const,
+    tolerance: 0.0005,
+    numericErrors: [0, chosen.numerator, chosen.denominator, Number((chosen.denominator / chosen.numerator).toFixed(3))]
+      .filter((value, index, all) => value !== answer && Number.isFinite(value) && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "Equal degrees give the ratio of leading coefficients, numerator over denominator." })),
+    choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
+    explorationFeedback: "Compare the highest powers and their coefficients before checking.",
+    fallbackFeedback: `The degrees match, so the limit is ${chosen.numerator}/${chosen.denominator} = ${answer}.`,
+    successFeedback: `The leading-coefficient ratio is ${answer}.`,
+  };
+  return { tag: "g12-limits-continuity", widget, answer };
+}
+
+function limitEndBehaviorMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_END_CASES);
+  const ratio = Number((chosen.a / chosen.b).toFixed(3));
+  const truth = chosen.n < chosen.m
+    ? `limit 0; degree ${chosen.m} in the denominator is larger`
+    : chosen.n === chosen.m
+      ? `limit ${signedLimitNumber(ratio)}; equal degrees give the coefficient ratio`
+      : chosen.a / chosen.b > 0
+        ? `grows to +∞; numerator degree ${chosen.n} is larger`
+        : `falls to −∞; numerator degree ${chosen.n} is larger`;
+  const correctCategory = chosen.n < chosen.m ? "lower" : chosen.n === chosen.m ? "equal" : chosen.a / chosen.b > 0 ? "positive" : "negative";
+  const candidates = [
+    { category: "lower", label: "limit 0; denominator growth dominates", feedback: "That applies only when the denominator has the higher degree." },
+    { category: "equal", label: `limit ${signedLimitNumber(ratio)}; use the leading-coefficient ratio`, feedback: "A finite coefficient ratio applies only when the degrees are equal." },
+    { category: "positive", label: "grows to +∞; positive numerator growth dominates", feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
+    { category: "negative", label: "falls to −∞; negative numerator growth dominates", feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
+  ].filter((choice) => choice.category !== correctCategory).map(({ label, feedback }) => ({ label, feedback }));
+  return limitMcq(rand,
+    `A rational function has leading terms ${signedLimitNumber(chosen.a)}x${limitPower(chosen.n)} in the numerator and ${chosen.b}x${limitPower(chosen.m)} in the denominator (degrees ${chosen.n} and ${chosen.m}). As x approaches +∞, which end behavior is correct?`,
+    [{ label: truth, correct: true, feedback: "Correct. Compare degrees first, then use the leading coefficients when needed." }, ...candidates.map((choice) => ({ ...choice, correct: false }))],
+  );
+}
+
+function limitContinuityMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_CONTINUITY_CASES);
+  const limit = signedLimitNumber(chosen.limit);
+  const point = signedLimitNumber(chosen.point);
+  const continuous = chosen.limit === chosen.point;
+  const truth = continuous
+    ? `continuous; the limit and f(${signedLimitNumber(chosen.at)}) both equal ${limit}`
+    : `not continuous; the limit is ${limit} but f(${signedLimitNumber(chosen.at)}) is ${point}`;
+  const distractors: LimitChoice[] = continuous
+    ? [
+        { label: "not continuous; every checked point is a break", correct: false, feedback: "Checking a point does not create a break; here the value matches the limit." },
+        { label: "not continuous; equal values force a hole", correct: false, feedback: "Equal limit and function values satisfy the point condition for continuity." },
+        { label: "not continuous; only one-sided limits count", correct: false, feedback: "The stated two-sided limit exists and agrees with the point value." },
+      ]
+    : [
+        { label: `continuous; a finite limit ${limit} is enough`, correct: false, feedback: "Continuity also requires the limit to equal the actual function value." },
+        { label: `continuous; use only the point value ${point}`, correct: false, feedback: "The point value alone cannot establish continuity; it must match the limit." },
+        { label: "continuous; any two finite values qualify", correct: false, feedback: "The two finite values must be equal, not merely defined." },
+      ];
+  return limitMcq(rand,
+    `At x = ${signedLimitNumber(chosen.at)}, the two-sided limit is ${limit} and f(${signedLimitNumber(chosen.at)}) = ${point}. Is f continuous there?`,
+    [{ label: truth, correct: true, feedback: continuous ? "Correct. The limit exists and equals the function value." : "Correct. Continuity fails when the limit and function value differ." }, ...distractors],
+  );
+}
+
+function limitContinuityNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_CONTINUITY_PARAMETER_CASES);
+  const answer = chosen.m * chosen.at + chosen.b;
+  const sign = chosen.b < 0 ? `− ${Math.abs(chosen.b)}` : `+ ${chosen.b}`;
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `For x < ${signedLimitNumber(chosen.at)}, f(x) = ${signedLimitNumber(chosen.m)}x ${sign}; define f(${signedLimitNumber(chosen.at)}) = k. What value of k makes f continuous at x = ${signedLimitNumber(chosen.at)}?`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [
+      { id: "m", label: "the branch slope", value: chosen.m },
+      { id: "a", label: "the boundary input", value: chosen.at },
+      { id: "b", label: "the branch intercept", value: chosen.b },
+    ],
+    approxFormula: {
+      op: "add" as const,
+      left: { op: "multiply" as const, left: { op: "const" as const, id: "m" }, right: { op: "const" as const, id: "a" } },
+      right: { op: "const" as const, id: "b" },
+    },
+    approxRound: 0, answerMode: "numeric" as const, tolerance: 0,
+    numericErrors: [chosen.at, chosen.m * chosen.at, chosen.b]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "For continuity, k must equal the branch's limiting value at the boundary." })),
+    choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
+    explorationFeedback: "Evaluate the approaching branch at the boundary before checking k.",
+    fallbackFeedback: `The branch approaches ${signedLimitNumber(chosen.m)}(${signedLimitNumber(chosen.at)}) ${sign} = ${signedLimitNumber(answer)}, so k = ${signedLimitNumber(answer)}.`,
+    successFeedback: `Setting k = ${signedLimitNumber(answer)} makes the value match the limit.`,
+  };
+  return { tag: "g12-limits-continuity", widget, answer };
+}
+
+function limitDiscontinuityNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_FACTOR_CASES);
+  const answer = chosen.at - chosen.other;
+  const cancelled = limitLinearFactor(chosen.at);
+  const remaining = limitLinearFactor(chosen.other);
+  return limitNumeric(
+    `A graph has a removable hole at x = ${signedLimitNumber(chosen.at)} from [${cancelled}${remaining}]/${cancelled}. What is the hole's y-value?`,
+    answer,
+    [0, chosen.at, chosen.other],
+    `Cancel the common factor, then evaluate ${remaining} at x = ${signedLimitNumber(chosen.at)} to get ${signedLimitNumber(answer)}.`,
+  );
+}
+
+function limitDiscontinuityMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_DISCONTINUITY_CASES);
+  const at = signedLimitNumber(chosen.at);
+  const prompt = chosen.kind === "removable"
+    ? `At x = ${at}, a finite two-sided limit ${signedLimitNumber(chosen.first)} exists, but the point is missing. Which discontinuity is shown?`
+    : chosen.kind === "jump"
+      ? `At x = ${at}, the left-hand limit is ${signedLimitNumber(chosen.first)} and the right-hand limit is ${signedLimitNumber(chosen.second)}. Which discontinuity is shown?`
+      : `At x = ${at}, the function values grow without bound beside a vertical asymptote. Which discontinuity is shown?`;
+  const truth = `${chosen.kind} discontinuity at x = ${at}`;
+  return limitMcq(rand, prompt, ["removable", "jump", "infinite"].map((kind) => ({
+    label: `${kind} discontinuity at x = ${at}`,
+    correct: kind === chosen.kind,
+    feedback: kind === chosen.kind ? `Correct. This is a ${truth}.` : "Recheck whether the graph has a finite hole, disagreeing sides, or unbounded behavior.",
+  })) as LimitChoice[]);
+}
+
+function limitIvtMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_IVT_CASES);
+  const truth = `at least one root lies in (${chosen.a}, ${chosen.b})`;
+  return limitMcq(rand,
+    `A function is continuous on [${chosen.a}, ${chosen.b}], with f(${chosen.a}) = ${signedLimitNumber(chosen.fa)} and f(${chosen.b}) = ${signedLimitNumber(chosen.fb)}. What does the Intermediate Value Theorem guarantee?`,
+    [
+      { label: truth, correct: true, feedback: "Correct. Opposite endpoint signs force the continuous graph to cross zero inside the interval." },
+      { label: `exactly one root lies in (${chosen.a}, ${chosen.b})`, correct: false, feedback: "The theorem guarantees at least one crossing, not uniqueness." },
+      { label: `a root must occur at x = ${chosen.a}`, correct: false, feedback: "The endpoint value is nonzero; the guaranteed root lies strictly inside." },
+      { label: `no root is forced in (${chosen.a}, ${chosen.b})`, correct: false, feedback: "Continuity plus opposite endpoint signs does force an interior zero." },
+    ],
+  );
+}
+
+function limitIvtNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_IVT_EVALUATION_CASES);
+  const answer = chosen.x ** 2 - chosen.c;
+  const cSign = chosen.c < 0 ? `+ ${Math.abs(chosen.c)}` : `− ${chosen.c}`;
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `For the IVT sign check, let f(x) = x² ${cSign}. Compute f(${signedLimitNumber(chosen.x)}).`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [
+      { id: "x", label: "the endpoint input", value: chosen.x },
+      { id: "c", label: "the subtracted constant", value: chosen.c },
+    ],
+    approxFormula: {
+      op: "subtract" as const,
+      left: { op: "multiply" as const, left: { op: "const" as const, id: "x" }, right: { op: "const" as const, id: "x" } },
+      right: { op: "const" as const, id: "c" },
+    },
+    approxRound: 0, answerMode: "numeric" as const, tolerance: 0,
+    numericErrors: [chosen.x - chosen.c, chosen.x ** 2, -chosen.c]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "Square the endpoint input first, then subtract the signed constant exactly as printed." })),
+    choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
+    explorationFeedback: "Evaluate the endpoint value before using its sign in the IVT argument.",
+    fallbackFeedback: `f(${signedLimitNumber(chosen.x)}) = (${signedLimitNumber(chosen.x)})² ${cSign} = ${signedLimitNumber(answer)}.`,
+    successFeedback: `The endpoint value is ${signedLimitNumber(answer)}.`,
+  };
+  return { tag: "g12-limits-continuity", widget, answer };
+}
+
 function limitsContinuityVariant(rand: () => number, requestedForm: string): LimitGeneratedVariant | null {
   if (requestedForm === LIMIT_IDEA_MCQ_FORM) return limitIdeaMcqVariant(rand);
   if (requestedForm === LIMIT_IDEA_NUMERIC_FORM) return limitIdeaNumericVariant(rand);
@@ -647,6 +960,16 @@ function limitsContinuityVariant(rand: () => number, requestedForm: string): Lim
   if (requestedForm === LIMIT_FACTOR_NUMERIC_FORM) return limitFactorNumericVariant(rand);
   if (requestedForm === LIMIT_RATIONALIZE_MCQ_FORM) return limitRationalizeMcqVariant(rand);
   if (requestedForm === LIMIT_RATIONALIZE_NUMERIC_FORM) return limitRationalizeNumericVariant(rand);
+  if (requestedForm === LIMIT_ONESIDED_MCQ_FORM) return limitOneSidedMcqVariant(rand);
+  if (requestedForm === LIMIT_ONESIDED_NUMERIC_FORM) return limitOneSidedNumericVariant(rand);
+  if (requestedForm === LIMIT_INFINITY_NUMERIC_FORM) return limitInfinityNumericVariant(rand);
+  if (requestedForm === LIMIT_ENDBEHAVIOR_MCQ_FORM) return limitEndBehaviorMcqVariant(rand);
+  if (requestedForm === LIMIT_CONTINUITY_MCQ_FORM) return limitContinuityMcqVariant(rand);
+  if (requestedForm === LIMIT_CONTINUITY_NUMERIC_FORM) return limitContinuityNumericVariant(rand);
+  if (requestedForm === LIMIT_DISCONTINUITY_MCQ_FORM) return limitDiscontinuityMcqVariant(rand);
+  if (requestedForm === LIMIT_DISCONTINUITY_NUMERIC_FORM) return limitDiscontinuityNumericVariant(rand);
+  if (requestedForm === LIMIT_IVT_MCQ_FORM) return limitIvtMcqVariant(rand);
+  if (requestedForm === LIMIT_IVT_NUMERIC_FORM) return limitIvtNumericVariant(rand);
   return null;
 }
 
