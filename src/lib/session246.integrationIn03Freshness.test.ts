@@ -114,4 +114,36 @@ describe("S246 in-03 Fundamental Theorem generator assurance", () => {
       }
     }
   });
+
+  it("recomputes requested closed-interval extrema instead of returning a memorized critical point", () => {
+    const form = "integration-accumulation__in-ftc1__numeric";
+    expect(solveCalculusPrompt(
+      form,
+      "Let A(x) be the integral from 0 to x of (t^2 - 4) dt on [0, 4]. At what x does A reach its maximum?",
+    )).toBe(4);
+    expect(solveCalculusPrompt(
+      form,
+      "Let A(x) be the integral from 0 to x of (t^2 - 4) dt on [0, 1]. At what x does A reach its minimum?",
+    )).toBe(1);
+    expect(solveCalculusPrompt(
+      form,
+      "Let A(x) be the integral from 0 to x of (4 - t^2) dt on [3, 4]. At what x does A reach its maximum?",
+    )).toBe(3);
+    expect(() => solveCalculusPrompt(
+      form,
+      "Let A(x) be the integral from 0 to x of (t^2 - 4) dt on [4, 0]. At what x does A reach its minimum?",
+    )).toThrow(/invalid FTC Part 1 extremum domain/);
+  });
+
+  it("joins only contiguous pieces that exactly cover the requested interval", () => {
+    const form = "integration-accumulation__in-ftc2__mcq";
+    const valid = "The integral from 0 to 2 is 3, and the integral from 2 to 4 is 7. What is the integral from 0 to 4?";
+    expect(solveCalculusPrompt(form, valid)).toBe("The joined integral is 10.");
+
+    const overreach = "The integral from 0 to 2 is 3, and the integral from 2 to 4 is 7. What is the integral from 0 to 5?";
+    expect(() => solveCalculusPrompt(form, overreach)).toThrow(/do not exactly cover the requested interval/);
+
+    const gap = "The integral from 0 to 2 is 3, and the integral from 3 to 4 is 7. What is the integral from 0 to 4?";
+    expect(() => solveCalculusPrompt(form, gap)).toThrow(/do not exactly cover the requested interval/);
+  });
 });

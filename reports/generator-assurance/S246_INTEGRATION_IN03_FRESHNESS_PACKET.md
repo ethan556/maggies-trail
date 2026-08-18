@@ -30,14 +30,14 @@ The designed family pool increased from 12 authored prompts to 84 dynamic prompt
 
 ## Independent truth contract
 
-`calculusIndependent.cjs` parses the learner-visible prompt and independently recomputes every answer. It never reads generated numeric answers, MCQ correctness markers, drag-order IDs, or drag-bucket assignments. For the structured tasks it reconstructs the expected semantic labels from the parameters printed in the prompt, then the test compares those labels with the generated presentation.
+`calculusIndependent.cjs` parses the learner-visible prompt and independently recomputes every answer. It never reads generated numeric answers, MCQ correctness markers, drag-order IDs, or drag-bucket assignments. For extrema it evaluates endpoints and in-domain critical points for the requested minimum or maximum on the explicit closed interval. For adjacent integrals it requires the printed pieces to be contiguous and to cover the requested interval exactly. For the structured tasks it reconstructs the expected semantic labels from the parameters printed in the prompt, then the test compares those labels with the generated presentation.
 
-The focused test samples 280 direct generator seeds and 96 unseen resolver seeds per form. It ratchets exact prompt/truth pools, exact replay, schema validity, one-answer MCQs, stable answer-ID agreement, distinct numeric errors, shuffled proof presentation, and use of both theorem buckets.
+The focused test samples 280 direct generator seeds and 96 unseen resolver seeds per form. It ratchets exact prompt/truth pools, exact replay, schema validity, one-answer MCQs, stable answer-ID agreement, distinct numeric errors, shuffled proof presentation, and use of both theorem buckets. Adversarial mutations also require the oracle to recompute a requested maximum instead of returning a memorized critical point, respect domains that exclude that critical point, and reject gapped or overextended interval joins.
 
 ## Gates
 
-- Focused packet: PASS, 2/2 tests.
-- Focused packet plus the `in-01` and `in-02` predecessor packets: PASS, 6/6 tests.
+- Focused packet: PASS, 4/4 tests, including the extrema-domain and exact-interval-coverage mutation cases.
+- Focused packet plus the `in-01` and `in-02` predecessor packets: PASS, 8/8 tests.
 - Typecheck: PASS.
 - Targeted ESLint: PASS with 0 errors; 3 pre-existing `no-explicit-any` warnings in `calculusVariants.ts`.
 - Scoped diff check: PASS.

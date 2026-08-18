@@ -528,9 +528,27 @@ function solveIntegrationFoundation(form, input) {
     throw new Error(`unrecognized FTC Part 1 MCQ prompt: ${prompt}`);
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.FTC1_NUMERIC) {
-    const match = /\(t\^2 - (\d+)\)|\((\d+) - t\^2\)/.exec(prompt);
+    const match = /integral from (-?\d+(?:\.\d+)?) to x of \((?:t\^2 - (\d+(?:\.\d+)?)|(\d+(?:\.\d+)?) - t\^2)\) dt on \[(-?\d+(?:\.\d+)?), (-?\d+(?:\.\d+)?)\]\. At what x does A reach its (minimum|maximum)\?/.exec(prompt);
     if (!match) throw new Error(`unrecognized FTC Part 1 extremum prompt: ${prompt}`);
-    return Math.sqrt(Number(match[1] || match[2]));
+    const square = Number(match[2] || match[3]);
+    const domainLower = Number(match[4]);
+    const domainUpper = Number(match[5]);
+    const requested = match[6];
+    if (square < 0 || domainLower > domainUpper) throw new Error(`invalid FTC Part 1 extremum domain: ${prompt}`);
+    const sign = match[2] ? 1 : -1;
+    const antiderivative = (x) => sign * (x ** 3 / 3 - square * x);
+    const root = Math.sqrt(square);
+    const candidates = [domainLower, domainUpper, -root, root]
+      .filter((x) => x >= domainLower && x <= domainUpper)
+      .filter((x, index, all) => all.findIndex((other) => Math.abs(other - x) < 1e-12) === index);
+    const ranked = candidates
+      .map((x) => ({ x, value: antiderivative(x) }))
+      .sort((a, b) => requested === 'minimum' ? a.value - b.value : b.value - a.value);
+    const best = ranked[0];
+    if (!best) throw new Error(`FTC Part 1 extremum prompt has no domain candidates: ${prompt}`);
+    const ties = ranked.filter((candidate) => Math.abs(candidate.value - best.value) < 1e-9);
+    if (ties.length !== 1) throw new Error(`FTC Part 1 extremum is not unique on the stated domain: ${prompt}`);
+    return best.x;
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.FTC2_NUMERIC) {
     const power = /integral from (-?\d+) to (-?\d+) of x\^(\d+) dx/.exec(prompt);
@@ -550,8 +568,16 @@ function solveIntegrationFoundation(form, input) {
     if (constant) return `The +${constant[1]} cancels when endpoint values are subtracted.`;
     const reverse = /integral from (-?\d+) to (-?\d+) of f\(x\) dx is (-?\d+)\. What happens/.exec(prompt);
     if (reverse) return `The reversed integral is ${-Number(reverse[3])}.`;
-    const join = /integral from 0 to (\d+) is (-?\d+), and the integral from \1 to \d+ is (-?\d+)\. What is the integral/.exec(prompt);
-    if (join) return `The joined integral is ${Number(join[2]) + Number(join[3])}.`;
+    const join = /integral from (-?\d+(?:\.\d+)?) to (-?\d+(?:\.\d+)?) is (-?\d+(?:\.\d+)?), and the integral from (-?\d+(?:\.\d+)?) to (-?\d+(?:\.\d+)?) is (-?\d+(?:\.\d+)?)\. What is the integral from (-?\d+(?:\.\d+)?) to (-?\d+(?:\.\d+)?)\?/.exec(prompt);
+    if (join) {
+      const firstLower = Number(join[1]); const firstUpper = Number(join[2]); const firstValue = Number(join[3]);
+      const secondLower = Number(join[4]); const secondUpper = Number(join[5]); const secondValue = Number(join[6]);
+      const requestedLower = Number(join[7]); const requestedUpper = Number(join[8]);
+      if (firstUpper !== secondLower || requestedLower !== firstLower || requestedUpper !== secondUpper) {
+        throw new Error(`FTC Part 2 pieces do not exactly cover the requested interval: ${prompt}`);
+      }
+      return `The joined integral is ${firstValue + secondValue}.`;
+    }
     throw new Error(`unrecognized FTC Part 2 MCQ prompt: ${prompt}`);
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.FTC_UNIFIED_ORDER) {
