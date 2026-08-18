@@ -1192,6 +1192,144 @@ function rotationMcqWidget(rand: Rand): any {
   };
 }
 
+type CompositionCase = TranslationCase & { degrees: RotationDegrees };
+const COMPOSITION_CASES: readonly CompositionCase[] = [
+  { x: 2, y: 3, dx: 4, dy: -1, degrees: 90, axis: "x" },
+  { x: -5, y: 4, dx: 3, dy: 2, degrees: 180, axis: "y" },
+  { x: 6, y: -2, dx: -4, dy: 5, degrees: 270, axis: "x" },
+  { x: -3, y: -7, dx: 8, dy: 3, degrees: 90, axis: "y" },
+  { x: 9, y: 1, dx: -2, dy: -6, degrees: 180, axis: "x" },
+  { x: 4, y: -8, dx: 5, dy: 4, degrees: 270, axis: "y" },
+  { x: -6, y: 5, dx: -3, dy: 7, degrees: 90, axis: "x" },
+  { x: 7, y: -4, dx: 2, dy: 9, degrees: 180, axis: "y" },
+  { x: -8, y: -1, dx: 6, dy: -5, degrees: 270, axis: "x" },
+  { x: 3, y: 10, dx: -7, dy: -2, degrees: 90, axis: "y" },
+  { x: -2, y: 6, dx: 9, dy: -4, degrees: 180, axis: "x" },
+  { x: 5, y: -9, dx: -8, dy: 6, degrees: 270, axis: "y" },
+] as const;
+
+function compositionResult(entry: CompositionCase): [number, number] {
+  return rotatePoint(entry.degrees, entry.x + entry.dx, entry.y + entry.dy);
+}
+
+function compositionNumericWidget(rand: Rand): any {
+  const entry = pick(rand, COMPOSITION_CASES);
+  const { x, y, dx, dy, degrees, axis } = entry;
+  const translated: [number, number] = [x + dx, y + dy];
+  const [finalX, finalY] = compositionResult(entry);
+  const answer = axis === "x" ? finalX : finalY;
+  const stoppedEarly = axis === "x" ? translated[0] : translated[1];
+  const rotatedOnly = rotatePoint(degrees, x, y);
+  const skippedTranslation = axis === "x" ? rotatedOnly[0] : rotatedOnly[1];
+  return {
+    type: "numeric",
+    prompt: `Start at P${pointLabel(x, y)}. Apply translation (x, y) → (${signedTerm("x", dx)}, ${signedTerm("y", dy)}), then rotate ${degrees}° counterclockwise about the origin. Find the final ${axis}-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: stoppedEarly, feedback: "That is the coordinate after the translation only; the stated rotation must still act on the intermediate image." },
+      { value: skippedTranslation, feedback: "That rotates the starting point and skips the translation; apply both motions in the printed order." },
+    ],
+    fallbackFeedback: `The translation gives ${pointLabel(...translated)}; rotating that image ${degrees}° gives ${pointLabel(finalX, finalY)}, so the final ${axis}-coordinate is ${answer}.`,
+    successFeedback: `Applying both motions in order gives the final image ${pointLabel(finalX, finalY)} and ${axis} = ${answer}.`,
+  };
+}
+
+function compositionMcqWidget(rand: Rand): any {
+  const entry = pick(rand, COMPOSITION_CASES);
+  const { x, y, dx, dy, degrees } = entry;
+  const translated: [number, number] = [x + dx, y + dy];
+  const correct = compositionResult(entry);
+  const rotatedOnly = rotatePoint(degrees, x, y);
+  const reverseOrder: [number, number] = [rotatedOnly[0] + dx, rotatedOnly[1] + dy];
+  const candidates = [correct, translated, rotatedOnly, reverseOrder];
+  if (new Set(candidates.map(([px, py]) => `${px},${py}`)).size !== candidates.length) {
+    throw new Error("Composition case does not produce four distinct diagnostic outcomes");
+  }
+  return {
+    type: "mcq",
+    prompt: `Start at P${pointLabel(x, y)}. Apply translation (x, y) → (${signedTerm("x", dx)}, ${signedTerm("y", dy)}), then rotate ${degrees}° counterclockwise about the origin. Where is the final image?`,
+    options: [
+      { id: "correct", label: pointLabel(...correct), correct: true, feedback: "This point results from applying the translation first and rotating its image second." },
+      { id: "translated", label: pointLabel(...translated), correct: false, feedback: "This is the intermediate image after the translation; the rotation has not yet been applied." },
+      { id: "rotated-only", label: pointLabel(...rotatedOnly), correct: false, feedback: "This rotates the starting point but omits the translation that must happen first." },
+      { id: "reverse", label: pointLabel(...reverseOrder), correct: false, feedback: "This applies the two motions in reverse order; composition must follow the sequence printed in the prompt." },
+    ],
+  };
+}
+
+const REGULAR_POLYGON_SIDES = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18] as const;
+const regularPolygonLabel = (sides: number): string => `a regular ${sides}-gon`;
+
+function lineSymmetryNumericWidget(rand: Rand): any {
+  const sides = pick(rand, REGULAR_POLYGON_SIDES);
+  return {
+    type: "numeric",
+    prompt: `How many lines of symmetry does a regular ${sides}-gon have?`,
+    answer: sides,
+    tolerance: 0,
+    commonErrors: [
+      { value: sides / 2, feedback: "That counts only half the matching folds; a regular polygon has one symmetry line associated with each vertex or side position." },
+      { value: 2 * sides, feedback: "That double-counts each fold from its two directions; a line is counted once, not once from each end." },
+    ],
+    fallbackFeedback: `A regular n-gon has n lines of symmetry, so a regular ${sides}-gon has ${sides}.`,
+    successFeedback: `One symmetry line corresponds to each repeated position, giving exactly ${sides} lines.`,
+  };
+}
+
+function lineSymmetryMcqWidget(rand: Rand): any {
+  const sides = pick(rand, REGULAR_POLYGON_SIDES);
+  const candidates = [sides, sides - 1, sides + 1, sides + 3];
+  return {
+    type: "mcq",
+    prompt: `Which regular polygon has exactly ${sides} lines of symmetry?`,
+    options: candidates.map((candidate) => ({
+      id: String(candidate),
+      label: regularPolygonLabel(candidate),
+      correct: candidate === sides,
+      feedback: candidate === sides
+        ? `A regular ${sides}-gon has one symmetry line for each of its ${sides} repeated positions.`
+        : `A regular ${candidate}-gon has ${candidate} symmetry lines, so it does not match the requested count.`,
+    })),
+  };
+}
+
+const ROTATIONAL_POLYGON_SIDES = [3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24] as const;
+const rotationalDescription = (sides: number, angle = 360 / sides): string =>
+  `order ${sides}; smallest turn ${angle}°`;
+
+function rotationalSymmetryNumericWidget(rand: Rand): any {
+  const sides = pick(rand, ROTATIONAL_POLYGON_SIDES);
+  const answer = 360 / sides;
+  return {
+    type: "numeric",
+    prompt: `A regular ${sides}-gon has rotational symmetry of order ${sides}. What is its smallest positive matching rotation, in degrees?`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: sides, feedback: "That repeats the order as an angle; divide the full 360° turn by the number of matching positions." },
+      { value: 180 / sides, feedback: "That divides a half-turn among the positions; rotational order partitions the full 360° turn." },
+    ],
+    fallbackFeedback: `Divide a full turn by the order: 360° ÷ ${sides} = ${answer}°.`,
+    successFeedback: `The ${sides} matching positions divide 360° equally, so the smallest turn is ${answer}°.`,
+  };
+}
+
+function rotationalSymmetryMcqWidget(rand: Rand): any {
+  const sides = pick(rand, ROTATIONAL_POLYGON_SIDES);
+  const angle = 360 / sides;
+  return {
+    type: "mcq",
+    prompt: `Which statement correctly describes the rotational symmetry of a regular ${sides}-gon?`,
+    options: [
+      { id: "correct", label: rotationalDescription(sides), correct: true, feedback: `The ${sides} repeated positions divide the full 360° turn into steps of ${angle}°.` },
+      { id: "double-angle", label: rotationalDescription(sides, 2 * angle), correct: false, feedback: "This skips the first matching position; the smallest positive turn is one full-turn step, not two." },
+      { id: "double-order", label: rotationalDescription(2 * sides, angle), correct: false, feedback: "This doubles the order without adding matching positions; a regular n-gon has rotational order n." },
+      { id: "one-less", label: rotationalDescription(sides - 1, angle), correct: false, feedback: "This removes one matching position while keeping the angle unchanged, so the order and turn no longer agree." },
+    ],
+  };
+}
+
 const GEOMETRY_FOUNDATIONS_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
   "gf-translation-rule__numeric": translationNumericWidget,
   "gf-translation-rule__mcq": translationMcqWidget,
@@ -1199,6 +1337,12 @@ const GEOMETRY_FOUNDATIONS_FORM_BUILDERS: Record<string, (rand: Rand) => any> = 
   "gf-reflection-rule__mcq": reflectionMcqWidget,
   "gf-rotation-rule__numeric": rotationNumericWidget,
   "gf-rotation-rule__mcq": rotationMcqWidget,
+  "gf-composition__numeric": compositionNumericWidget,
+  "gf-composition__mcq": compositionMcqWidget,
+  "gf-line-symmetry__numeric": lineSymmetryNumericWidget,
+  "gf-line-symmetry__mcq": lineSymmetryMcqWidget,
+  "gf-rotational-symmetry__numeric": rotationalSymmetryNumericWidget,
+  "gf-rotational-symmetry__mcq": rotationalSymmetryMcqWidget,
 };
 
 function cleanTypography(text: string): string {

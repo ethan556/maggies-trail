@@ -50,6 +50,10 @@ function rotatedPoint(degrees, x, y) {
   throw new Error(`unsupported rotation ${degrees}`);
 }
 
+function printedPoint(x, y) {
+  return `(${x}, ${y})`;
+}
+
 function solvePrompt(form, input) {
   const entry = FORM_INDEX.get(form);
   if (!entry) throw new Error(`unsupported geometry independent form ${form}`);
@@ -115,6 +119,44 @@ function solvePrompt(form, input) {
       });
       if (matches.length !== 1) throw new Error(`rotation prompt has ${matches.length} solutions: ${prompt}`);
       return `${matches[0]}° counterclockwise about the origin`;
+    }
+  }
+  if (form === 'gf-composition__numeric' || form === 'gf-composition__mcq') {
+    const match = prompt.match(/Start at P\((-?\d+), (-?\d+)\)\. Apply translation \(x, y\) → \(([^,]+), ([^)]+)\), then rotate (90|180|270)° counterclockwise about the origin\./);
+    if (match) {
+      const x = Number(match[1]);
+      const y = Number(match[2]);
+      const dx = printedShift(match[3], 'x');
+      const dy = printedShift(match[4], 'y');
+      const [finalX, finalY] = rotatedPoint(Number(match[5]), x + dx, y + dy);
+      if (form === 'gf-composition__mcq') return printedPoint(finalX, finalY);
+      const axisMatch = prompt.match(/Find the final ([xy])-coordinate\./);
+      if (!axisMatch) throw new Error(`composition prompt omits requested coordinate: ${prompt}`);
+      return axisMatch[1] === 'x' ? finalX : finalY;
+    }
+  }
+  if (form === 'gf-line-symmetry__numeric') {
+    const match = prompt.match(/regular (\d+)-gon have\?/);
+    if (match) return Number(match[1]);
+  }
+  if (form === 'gf-line-symmetry__mcq') {
+    const match = prompt.match(/exactly (\d+) lines of symmetry/);
+    if (match) return `a regular ${Number(match[1])}-gon`;
+  }
+  if (form === 'gf-rotational-symmetry__numeric') {
+    const match = prompt.match(/regular (\d+)-gon has rotational symmetry of order (\d+)/);
+    if (match) {
+      const sides = Number(match[1]);
+      const order = Number(match[2]);
+      if (sides !== order) throw new Error(`regular polygon order disagrees with side count: ${prompt}`);
+      return 360 / order;
+    }
+  }
+  if (form === 'gf-rotational-symmetry__mcq') {
+    const match = prompt.match(/regular (\d+)-gon/);
+    if (match) {
+      const sides = Number(match[1]);
+      return `order ${sides}; smallest turn ${360 / sides}°`;
     }
   }
   /* S246: reconstruct perpendicular-at-a-point answers from the quantities in
