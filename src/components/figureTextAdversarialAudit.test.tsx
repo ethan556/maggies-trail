@@ -261,7 +261,8 @@ describe("adversarial illustration and accompanying-text audit", () => {
 
     /* S246 coordinate-area packet: four exact visual-first figures replace the generic
      * `asv-coord-area` reuse across the two coordinate-polygon lessons. */
-    expect(descriptions.size).toBe(1888);
+    /* S246 Kindergarten subtraction canary adds five concept-specific figures. */
+    expect(descriptions.size).toBe(1893);
     expect([...descriptions.values()].every(Boolean)).toBe(true);
     /* S242 / VIS-04: 3,816 → 3,815. One placement was REMOVED, not reclassified —
      * `ia-01-01#c2`, the lesson "Area Between Two Curves", was carrying `dr-flat-not-turning`:
@@ -290,8 +291,10 @@ describe("adversarial illustration and accompanying-text audit", () => {
      * truthful representations instead of the unrelated fixed 4 + 3 number-line exemplar. */
     /* S246 coordinate-area packet: three blocked placements now have exact synchronized
      * replacements. The fourth replacement improves a generic figure that already rendered. */
-    expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1065);
-    expect(pendingRows).toHaveLength(1065);
+    /* S246 Kindergarten subtraction canary replaces ten suppressed `count-on-hops`
+     * placements with five exact subtraction representations. */
+    expect(rows.filter((row) => row.render_decision === "SUPPRESS_KNOWN_MISMATCH")).toHaveLength(1055);
+    expect(pendingRows).toHaveLength(1055);
     expect(pendingRows.every((row) => row.status === "OPEN_REPLACEMENT_REQUIRED")).toBe(true);
     const adversariallyBlocked = rows.filter((row) => FIGURE_TEXT_MISMATCH_BLOCKLIST.has(row.binding_key));
     expect(adversariallyBlocked).toHaveLength(133);

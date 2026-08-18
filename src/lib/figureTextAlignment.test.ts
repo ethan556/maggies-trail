@@ -33,9 +33,9 @@ describe("fixed-example figure and lesson-text alignment", () => {
     for (const file of files(COURSES)) visit(JSON.parse(readFileSync(file, "utf8")), uses);
     /* S245 Kindergarten joining packet replaced ten suppressed `count-on-hops`
      * placeholders with truthful concept-specific figures. */
-    expect(uses).toHaveLength(944);
+    expect(uses).toHaveLength(934);
     expect(uses.filter((use) => use.aligned)).toHaveLength(12);
-    expect(uses.filter((use) => !use.aligned)).toHaveLength(932);
+    expect(uses.filter((use) => !use.aligned)).toHaveLength(922);
   });
 
   it("uses the equal-versus-unequal fraction illustration on the reported lesson", () => {

@@ -8,6 +8,13 @@ import {
   KoaJoinTwoGroups,
 } from "./figures/koaJoinFigures";
 import {
+  KoaCountBackLeft,
+  KoaSubtractionActOut,
+  KoaSubtractionCrossOut,
+  KoaSubtractionSentence,
+  KoaTakeAwayRemoval,
+} from "./figures/koaSubtractionFigures";
+import {
   AsvCoordinateCompositeSetup,
   AsvCoordinateCompositeSum,
   AsvCoordinateRectangleArea,
@@ -29246,6 +29253,11 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "koa-add-with-drawing": KoaAddWithDrawing,
   "koa-act-out-a-join": KoaActOutAJoin,
   "koa-addition-sentence": KoaAdditionSentence,
+  "koa-take-away-removal": KoaTakeAwayRemoval,
+  "koa-subtraction-cross-out": KoaSubtractionCrossOut,
+  "koa-subtraction-act-out": KoaSubtractionActOut,
+  "koa-subtraction-sentence": KoaSubtractionSentence,
+  "koa-count-back-left": KoaCountBackLeft,
   "count-on-hops": CountOnHops,
   "count-on-small": CountOnSmall,
   "bigger-first": BiggerFirst,
