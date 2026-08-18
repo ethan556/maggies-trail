@@ -1,9 +1,19 @@
 // @vitest-environment jsdom
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { MathProse } from "./MathText";
+import { accessibleMathText, MathProse } from "./MathText";
 
 describe("MathProse", () => {
+  it("turns authored shorthand into a caret-free natural-language accessible name", () => {
+    const spoken = accessibleMathText("Compare **3^x**, x², sqrt(9), and θ = π/4.");
+    expect(spoken).not.toMatch(/[\^*_]/);
+    expect(spoken).toContain("3 raised to x");
+    expect(spoken).toContain("x squared");
+    expect(spoken).toContain("square root of");
+    expect(spoken).toContain("theta equals pi");
+    expect(spoken).not.toContain("times times");
+  });
+
   it("renders power shorthand through KaTeX without changing the surrounding prompt", async () => {
     const { container } = render(<p><MathProse text="Simplify (2^4)^2 to 2^?. What is the exponent?" /></p>);
     expect(screen.getByText(/Simplify/)).toBeTruthy();

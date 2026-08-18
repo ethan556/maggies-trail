@@ -23,7 +23,7 @@ import { responseCopy } from "@/lib/adaptivePolicy";
 import { classifyBaseTen, classifyFraction, classifyGraph, classifyNumberLine, classifyRatio, strategyCue, type Strategy } from "@/lib/strategyClassifiers";
 import { sameCMLValue, usePlayer } from "./playerStore";
 import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, TrailDots } from "./playerChrome";
-import { MathProse } from "@/components/math/MathText";
+import { accessibleMathText, MathProse } from "@/components/math/MathText";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { LessonCompletionIdentity } from "@/components/LessonCompletionIdentity";
 
@@ -607,13 +607,14 @@ export default function LessonPlayer({
                 Make a prediction first
               </p>
               <p className="mt-1 text-lg font-bold"><MathProse text={s.predict.prompt} /></p>
-              <div className="mt-3 grid gap-2" role="radiogroup" aria-label={s.predict.prompt}>
+              <div className="mt-3 grid gap-2" role="radiogroup" aria-label={accessibleMathText(s.predict.prompt)}>
                 {(predictOrder ?? s.predict.options).map((o) => (
                   <button
                     key={o.id}
                     type="button"
                     role="radio"
                     aria-checked={false}
+                    aria-label={accessibleMathText(o.label)}
                     onClick={() => st.commitPrediction(o.id)}
                     className="pressable min-h-11 rounded-card border border-ink/12 bg-white px-4 py-3 text-left text-base font-bold text-ink shadow-[0_1px_2px_rgba(34,49,79,0.03)] hover:border-tangerine/70 hover:bg-tangerine/5 dark:border-paper/15"
                   >

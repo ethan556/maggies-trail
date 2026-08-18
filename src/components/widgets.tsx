@@ -34,7 +34,7 @@ import { gridScales, integers, linScale, samplePolyline } from "@/components/plo
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
-import { MathDisplay, MathInline, MathProse } from "@/components/math/MathText";
+import { accessibleMathText, MathDisplay, MathInline, MathProse } from "@/components/math/MathText";
 import { SvgMathText } from "@/components/math/SvgMathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
 import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleMeasurementText, scaledCircleScaleUnitSpoken, scaledCircleScaleUnitText, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyChoiceEvidence, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
@@ -405,7 +405,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
   // plot, then the options. A spec without `plotData` renders exactly as it always has.
   const plot = plotDataParts(spec);
   return (
-    <div role="radiogroup" aria-label={spec.prompt} className="grid gap-3">
+    <div role="radiogroup" aria-label={accessibleMathText(spec.prompt)} className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
       {ordered.map((o) => {
@@ -418,7 +418,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
             type="button"
             role="radio"
             aria-checked={selected}
-            aria-label={o.label}
+            aria-label={accessibleMathText(o.label)}
             disabled={disabled}
             onClick={() => onChange(o.id)}
             className={`pressable flex min-h-11 items-center gap-3 rounded-card border-2 px-4 py-3 text-left text-base transition-colors motion-reduce:transition-none ${
@@ -9278,7 +9278,7 @@ function EvalOrderW({ spec, value, onChange, disabled, tone }: WProps<TEvalOrder
       <div
         className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-ink/10 px-3 py-4"
         role="group"
-        aria-label={`Expression: ${reading}`}
+        aria-label={`Expression: ${accessibleMathText(reading)}`}
       >
         {tokens.map((t, i) =>
           isEvalOp(t) ? (
@@ -14630,7 +14630,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`Parabola y = ${aText}(x ${hSign})² ${kSign}, vertex at (${h}, ${k})${spec.showParent ? ", with the parent y = x² dashed behind it" : ""}.`}>
+        role="img" aria-label={accessibleMathText(`Parabola y = ${aText}(x ${hSign})² ${kSign}, vertex at (${h}, ${k})${spec.showParent ? ", with the parent y = x² dashed behind it" : ""}.`)}>
         <style>{`.qe-curve,.qe-vtx{transition:none}@media (prefers-reduced-motion: no-preference){.qe-curve,.qe-vtx{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         {gridLines.map((g) => (
           <g key={g}>
@@ -18641,7 +18641,7 @@ function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = fa
   // greyscale, low vision, and a screen reader alike.
   const mark = shown === "good" ? "✓" : shown === "warn" ? "!" : "";
   const spoken = shown === "good" ? "on target" : shown === "warn" ? "needs attention" : "";
-  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={`${label}: ${value}${spoken ? `, ${spoken}` : ""}`}>
+  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={accessibleMathText(`${label}: ${value}${spoken ? `, ${spoken}` : ""}`)}>
     <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65"><MathProse text={label} includeArithmetic /></div>
     {/* THE VALUE KEEPS ITS OWN ELEMENT. Prefixing the mark into the same text node made the value
       * read as "✓ -14", and two tests that assert on the exact readout — one of them named "keeps
@@ -19264,7 +19264,7 @@ function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }:
   }});
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg ref={svgRef} viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img"
-      aria-label={`A ${sphere?"balloon":"disc"} of radius ${r} growing at dr/dt = ${rate}. Its ${sphere?"volume":"area"} is ${sizeText} and ${rateLabel} is ${rateText}.`}>
+      aria-label={accessibleMathText(`A ${sphere?"balloon":"disc"} of radius ${r} growing at dr/dt = ${rate}. Its ${sphere?"volume":"area"} is ${sizeText} and ${rateLabel} is ${rateText}.`)}>
       <style>{`.rrg{transition:none}@media (prefers-reduced-motion: no-preference){.rrg{transition:r .16s ease-out}}`}</style>
       {/* Concentric past-radii rings make GROWTH visible: the disc the learner had, still faint. */}
       {Array.from({length:r-1},(_,i)=>i+1).map(k=><circle key={k} cx={cx} cy={cy} r={k*U} fill="none" stroke={PALETTE.ink} strokeOpacity={0.12} strokeWidth={1}/>)}
@@ -19287,11 +19287,11 @@ function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }:
       <LabReadout label={sizeLabel} value={sizeText}/>
       <LabReadout label={rateLabel} value={`${sphere?`4π·${r}²·${rate}`:`2π·${r}·${rate}`} = ${rateText}`} tone="warn"/>
     </div>
-    <label className="grid gap-1 text-sm font-bold"><span>Grow the radius — dr/dt stays {rate}; watch what {rateLabel} does</span>
+    <label className="grid gap-1 text-sm font-bold"><span><MathProse text={`Grow the radius — dr/dt stays ${rate}; watch what ${rateLabel} does`} /></span>
       <input aria-label="radius" type="range" min="1" max={rMax} step="1" value={st.x} disabled={disabled} onChange={e=>setR(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{sphere
+    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold"><MathProse text={sphere
       ?"Differentiate V = 4/3·πr³: the chain rule brings the exponent down — dV/dt = 4πr²·dr/dt. The rate itself grows with the SQUARE of the radius."
-      :"Differentiate A = πr²: the chain rule turns the square into a doubling — dA/dt = 2πr·dr/dt. The bigger the disc, the faster the area runs."}</p></div>;
+      :"Differentiate A = πr²: the chain rule turns the square into a doubling — dA/dt = 2πr·dr/dt. The bigger the disc, the faster the area runs."} /></p></div>;
 }
 
 function RelatedRatesLabW(props: WProps<TRelatedRatesLab>) {
@@ -19308,7 +19308,7 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
   const setX=(next:number)=>{const d=moveRelation(st.x,next,spec.targetX);if(d)onEvent?.({control:'ladder-foot',dir:d,kind:'efficient'});onChange({x:next,moves:st.moves+1})};
   const sx=(n:number)=>70+n*(250/L), sy=(n:number)=>220-n*(180/L);
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <svg viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={spec.framing==="slope"?`A point on the circle x² + y² = ${L}² sits at x ${x.toFixed(1)}, y ${y.toFixed(2)}; the slope dy/dx there is ${verticalRate.toFixed(2)}.`:`A ${L}-unit ladder has foot x ${x.toFixed(1)}, height y ${y.toFixed(2)}, and vertical rate ${verticalRate.toFixed(2)}.`}><line x1="70" y1="20" x2="70" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1="70" y1="220" x2="355" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1={sx(0)} y1={sy(y)} x2={sx(x)} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="10" strokeLinecap="round"/><circle cx={sx(x)} cy={sy(0)} r="9" fill={PALETTE.tangerine}/><circle cx={sx(0)} cy={sy(y)} r="9" fill={PALETTE.leaf}/><path d="M 70 202 h 18 v 18" fill="none" stroke={PALETTE.berry} strokeWidth="3"/><text x="205" y="242" textAnchor="middle" fontSize="12" fontWeight="900">x² + y² = {L}²</text>
+    <svg viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={accessibleMathText(spec.framing==="slope"?`A point on the circle x² + y² = ${L}² sits at x ${x.toFixed(1)}, y ${y.toFixed(2)}; the slope dy/dx there is ${verticalRate.toFixed(2)}.`:`A ${L}-unit ladder has foot x ${x.toFixed(1)}, height y ${y.toFixed(2)}, and vertical rate ${verticalRate.toFixed(2)}.`)}><line x1="70" y1="20" x2="70" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1="70" y1="220" x2="355" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1={sx(0)} y1={sy(y)} x2={sx(x)} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="10" strokeLinecap="round"/><circle cx={sx(x)} cy={sy(0)} r="9" fill={PALETTE.tangerine}/><circle cx={sx(0)} cy={sy(y)} r="9" fill={PALETTE.leaf}/><path d="M 70 202 h 18 v 18" fill="none" stroke={PALETTE.berry} strokeWidth="3"/><text x="205" y="242" textAnchor="middle" fontSize="12" fontWeight="900">x² + y² = {L}²</text>
     {/* Reveal ghost: the ladder AT the target foot position, dashed — mirrors
         evaluate (x === targetX). Same invariant length; only the configuration
         the question asks about is ghosted in. */}
@@ -19324,8 +19324,8 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
       );
     })()}<AxisCaptions w={390} h={250} /></svg>
     <div className="grid grid-cols-3 gap-2"><LabReadout label="x" value={x.toFixed(1)} tone={st.x===spec.targetX?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="y" value={y.toFixed(2)}/><LabReadout label={spec.framing==="slope"?"dy/dx":"dy/dt"} value={verticalRate.toFixed(2)} tone="warn"/></div>
-    <label className="grid gap-1 text-sm font-bold"><span>{spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"}</span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."}</p></div>;
+    <label className="grid gap-1 text-sm font-bold"><span><MathProse text={spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"} /></span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
+    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold"><MathProse text={spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."} /></p></div>;
 }
 
 export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
@@ -19352,13 +19352,13 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
       {described !== null && (
         <details className="mt-3 rounded-card border border-ink/15 bg-ink/[0.03] px-3 py-2" data-testid="a11y-panel">
           <summary className="flex min-h-11 cursor-pointer items-center text-sm font-bold text-ink/70">Describe this model</summary>
-          <p className="mt-1 text-sm leading-relaxed text-ink/80">{described}</p>
+          <p className="mt-1 text-sm leading-relaxed text-ink/80"><MathProse text={described} includeArithmetic /></p>
           <p className="mt-2 text-sm font-bold text-ink/70">How to change it</p>
           <p className="text-sm leading-relaxed text-ink/80">{actionsFor(rest.spec.type)}</p>
           {lastDescribed !== null && (
             <>
               <p className="mt-2 text-sm font-bold text-ink/70">Previous model</p>
-              <p className="text-sm leading-relaxed text-ink/70">{lastDescribed}</p>
+              <p className="text-sm leading-relaxed text-ink/70"><MathProse text={lastDescribed} includeArithmetic /></p>
             </>
           )}
         </details>

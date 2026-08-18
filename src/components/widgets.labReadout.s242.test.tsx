@@ -44,7 +44,7 @@ const atTarget = { h: 1, innerRate: 3, outerRate: 1, moves: 4 };
  * emits passes its loop zero times and asserts nothing. */
 const readouts = () => Array.from(document.querySelectorAll("[aria-label]"))
   .map((n) => n.getAttribute("aria-label") ?? "")
-  .filter((l) => /^(ordered numerator|v²|quotient rate):/.test(l));
+  .filter((l) => /^(ordered numerator|v squared|quotient rate):/.test(l));
 
 describe("ENG-01 R2 — a correctness readout waits for the verdict", () => {
   it("does not say 'on target' while the learner is still working", () => {
