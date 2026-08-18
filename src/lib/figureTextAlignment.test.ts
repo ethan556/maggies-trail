@@ -31,9 +31,11 @@ describe("fixed-example figure and lesson-text alignment", () => {
   it("suppresses every unrelated fixed exemplar across the complete lesson corpus", () => {
     const uses: Array<{ id: string; text: string; aligned: boolean }> = [];
     for (const file of files(COURSES)) visit(JSON.parse(readFileSync(file, "utf8")), uses);
-    expect(uses).toHaveLength(954);
+    /* S245 Kindergarten joining packet replaced ten suppressed `count-on-hops`
+     * placeholders with truthful concept-specific figures. */
+    expect(uses).toHaveLength(944);
     expect(uses.filter((use) => use.aligned)).toHaveLength(12);
-    expect(uses.filter((use) => !use.aligned)).toHaveLength(942);
+    expect(uses.filter((use) => !use.aligned)).toHaveLength(932);
   });
 
   it("uses the equal-versus-unequal fraction illustration on the reported lesson", () => {

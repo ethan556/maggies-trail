@@ -7,6 +7,12 @@ import {
   KoaAddWithFingers,
   KoaJoinTwoGroups,
 } from "./figures/koaJoinFigures";
+import {
+  AsvCoordinateCompositeSetup,
+  AsvCoordinateCompositeSum,
+  AsvCoordinateRectangleArea,
+  AsvCoordinateRightTriangleLegs,
+} from "./figures/coordinateAreaFigures";
 /**
  * Named concept figures — small inline SVGs rendered above concept-step bodies.
  * Design rules (DESIGN.md): ink/paper/sky/tangerine/leaf tokens only; borders over
@@ -29485,6 +29491,10 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "asv-subtract": AsvSubtract,
   "asv-coord-length": AsvCoordLength,
   "asv-coord-area": AsvCoordArea,
+  "asv-coordinate-rectangle-area": AsvCoordinateRectangleArea,
+  "asv-coordinate-right-triangle-legs": AsvCoordinateRightTriangleLegs,
+  "asv-coordinate-composite-setup": AsvCoordinateCompositeSetup,
+  "asv-coordinate-composite-sum": AsvCoordinateCompositeSum,
   "asv-tri-prism": AsvTriPrism,
   "asv-frac-volume": AsvFracVolume,
   "asv-boxes-fit": AsvBoxesFit,
