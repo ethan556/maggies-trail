@@ -419,6 +419,12 @@ const LIMIT_DISCONTINUITY_MCQ_FORM = "limits-continuity__lc-discontinuity__mcq";
 const LIMIT_DISCONTINUITY_NUMERIC_FORM = "limits-continuity__lc-discontinuity__numeric";
 const LIMIT_IVT_MCQ_FORM = "limits-continuity__lc-ivt__mcq";
 const LIMIT_IVT_NUMERIC_FORM = "limits-continuity__lc-ivt__numeric";
+const LIMIT_AVG_RATE_MCQ_FORM = "limits-continuity__lc-avg-rate__mcq";
+const LIMIT_AVG_RATE_NUMERIC_FORM = "limits-continuity__lc-avg-rate__numeric";
+const LIMIT_DERIVATIVE_MCQ_FORM = "limits-continuity__lc-derivative__mcq";
+const LIMIT_DERIVATIVE_NUMERIC_FORM = "limits-continuity__lc-derivative__numeric";
+const LIMIT_SERIES_MCQ_FORM = "limits-continuity__lc-series-limit__mcq";
+const LIMIT_SERIES_NUMERIC_FORM = "limits-continuity__lc-series-limit__numeric";
 
 const chooseLimitCase = <T,>(rand: () => number, cases: readonly T[]): T =>
   cases[Math.floor(rand() * cases.length)]!;
@@ -600,11 +606,67 @@ const LIMIT_IVT_EVALUATION_CASES = [
   { x: 4, c: -3 }, { x: 5, c: 2 }, { x: 6, c: -4 },
 ] as const;
 
+const LIMIT_AVG_RATE_CASES = [
+  { q: 1, m: 0, c: 2, a: 1, b: 2 }, { q: 1, m: 1, c: -3, a: 1, b: 3 },
+  { q: 1, m: -1, c: 4, a: 2, b: 5 }, { q: 2, m: 0, c: -1, a: 1, b: 3 },
+  { q: 1, m: 2, c: 5, a: 3, b: 5 }, { q: 2, m: 1, c: -4, a: 2, b: 4 },
+  { q: 3, m: -2, c: 1, a: 1, b: 5 }, { q: 2, m: 3, c: 2, a: 3, b: 5 },
+  { q: 3, m: 1, c: -2, a: 2, b: 5 }, { q: 4, m: -3, c: 3, a: 3, b: 4 },
+  { q: 3, m: 4, c: -5, a: 4, b: 5 }, { q: 5, m: -2, c: 6, a: 3, b: 5 },
+] as const;
+
+const LIMIT_DERIVATIVE_CASES = [
+  { q: 1, m: 0, c: 2, at: 1 }, { q: 1, m: 1, c: -3, at: 2 },
+  { q: 1, m: -2, c: 4, at: 4 }, { q: 2, m: 0, c: 1, at: 2 },
+  { q: 2, m: 3, c: -2, at: 2 }, { q: 2, m: -1, c: 5, at: 4 },
+  { q: 3, m: 0, c: -1, at: 3 }, { q: 3, m: 2, c: 2, at: 4 },
+  { q: 3, m: -4, c: 0, at: 6 }, { q: 4, m: 1, c: 3, at: 5 },
+  { q: 4, m: -2, c: -5, at: 6 }, { q: 5, m: 3, c: 1, at: 5 },
+] as const;
+
+const LIMIT_SERIES_CASES = [
+  { aNum: 1, aDen: 5, rNum: 1, rDen: 2 }, { aNum: 1, aDen: 3, rNum: 1, rDen: 3 },
+  { aNum: 3, aDen: 10, rNum: 1, rDen: 2 }, { aNum: 1, aDen: 2, rNum: 1, rDen: 3 },
+  { aNum: 3, aDen: 5, rNum: 1, rDen: 4 }, { aNum: 1, aDen: 2, rNum: 1, rDen: 2 },
+  { aNum: 4, aDen: 5, rNum: 1, rDen: 3 }, { aNum: 1, aDen: 1, rNum: 1, rDen: 5 },
+  { aNum: 1, aDen: 1, rNum: 1, rDen: 3 }, { aNum: 4, aDen: 5, rNum: 1, rDen: 2 },
+  { aNum: 1, aDen: 1, rNum: 1, rDen: 2 }, { aNum: 2, aDen: 1, rNum: 1, rDen: 5 },
+] as const;
+
 const signedLimitNumber = (value: number): string => value < 0 ? `−${Math.abs(value)}` : String(value);
 const limitPower = (value: number): string => ({ 1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵" })[value] ?? String(value);
 const decimalLimitNumber = (value: number): string => {
   const fixed = value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
   return fixed.startsWith("-") ? `−${fixed.slice(1)}` : fixed;
+};
+const limitPolynomial = (q: number, m: number, c: number): string => {
+  const quadratic = q === 1 ? "x²" : `${q}x²`;
+  const linear = m === 0 ? "" : ` ${m < 0 ? "−" : "+"} ${Math.abs(m) === 1 ? "" : Math.abs(m)}x`;
+  const constant = c === 0 ? "" : ` ${c < 0 ? "−" : "+"} ${Math.abs(c)}`;
+  return `${quadratic}${linear}${constant}`;
+};
+
+const limitLinearExpression = (coefficient: number, constant: number, variable = "a"): string => {
+  const linear = coefficient === 1 ? variable : `${coefficient}${variable}`;
+  return constant === 0 ? linear : `${linear} ${constant < 0 ? "−" : "+"} ${Math.abs(constant)}`;
+};
+
+const distinctLimitNumbers = (answer: number, candidates: readonly number[]): number[] => {
+  const used = new Set([answer]);
+  const values: number[] = [];
+  for (const candidate of candidates) {
+    const value = Number(candidate.toFixed(3));
+    if (!Number.isFinite(value) || used.has(value)) continue;
+    used.add(value);
+    values.push(value);
+  }
+  for (let offset = 1; values.length < 3; offset += 1) {
+    const value = Number((answer + offset).toFixed(3));
+    if (used.has(value)) continue;
+    used.add(value);
+    values.push(value);
+  }
+  return values.slice(0, 3);
 };
 
 function limitIdeaNumericVariant(rand: () => number): LimitGeneratedVariant {
@@ -802,23 +864,20 @@ function limitInfinityNumericVariant(rand: () => number): LimitGeneratedVariant 
 function limitEndBehaviorMcqVariant(rand: () => number): LimitGeneratedVariant {
   const chosen = chooseLimitCase(rand, LIMIT_END_CASES);
   const ratio = Number((chosen.a / chosen.b).toFixed(3));
-  const truth = chosen.n < chosen.m
-    ? `limit 0; degree ${chosen.m} in the denominator is larger`
-    : chosen.n === chosen.m
-      ? `limit ${signedLimitNumber(ratio)}; equal degrees give the coefficient ratio`
-      : chosen.a / chosen.b > 0
-        ? `grows to +∞; numerator degree ${chosen.n} is larger`
-        : `falls to −∞; numerator degree ${chosen.n} is larger`;
   const correctCategory = chosen.n < chosen.m ? "lower" : chosen.n === chosen.m ? "equal" : chosen.a / chosen.b > 0 ? "positive" : "negative";
-  const candidates = [
-    { category: "lower", label: "limit 0; denominator growth dominates", feedback: "That applies only when the denominator has the higher degree." },
-    { category: "equal", label: `limit ${signedLimitNumber(ratio)}; use the leading-coefficient ratio`, feedback: "A finite coefficient ratio applies only when the degrees are equal." },
-    { category: "positive", label: "grows to +∞; positive numerator growth dominates", feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
-    { category: "negative", label: "falls to −∞; negative numerator growth dominates", feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
-  ].filter((choice) => choice.category !== correctCategory).map(({ label, feedback }) => ({ label, feedback }));
+  const choices = [
+    { category: "lower", label: `limit 0; denominator degree ${chosen.m} exceeds numerator degree ${chosen.n}`, feedback: "That applies only when the denominator has the higher degree." },
+    { category: "equal", label: `limit ${signedLimitNumber(ratio)}; numerator degree ${chosen.n} equals denominator degree ${chosen.m}`, feedback: "A finite coefficient ratio applies only when the degrees are equal." },
+    { category: "positive", label: `limit +∞; numerator degree ${chosen.n} exceeds denominator degree ${chosen.m}`, feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
+    { category: "negative", label: `limit −∞; numerator degree ${chosen.n} exceeds denominator degree ${chosen.m}`, feedback: "Check both the degree comparison and the sign of the leading-coefficient ratio." },
+  ].map((choice) => ({
+    label: choice.label,
+    correct: choice.category === correctCategory,
+    feedback: choice.category === correctCategory ? "Correct. Compare degrees first, then use the leading coefficients when needed." : choice.feedback,
+  }));
   return limitMcq(rand,
     `A rational function has leading terms ${signedLimitNumber(chosen.a)}x${limitPower(chosen.n)} in the numerator and ${chosen.b}x${limitPower(chosen.m)} in the denominator (degrees ${chosen.n} and ${chosen.m}). As x approaches +∞, which end behavior is correct?`,
-    [{ label: truth, correct: true, feedback: "Correct. Compare degrees first, then use the leading coefficients when needed." }, ...candidates.map((choice) => ({ ...choice, correct: false }))],
+    choices,
   );
 }
 
@@ -951,6 +1010,113 @@ function limitIvtNumericVariant(rand: () => number): LimitGeneratedVariant {
   return { tag: "g12-limits-continuity", widget, answer };
 }
 
+function limitAverageRateNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_AVG_RATE_CASES);
+  const answer = chosen.q * (chosen.a + chosen.b) + chosen.m;
+  const run = chosen.b - chosen.a;
+  const rise = answer * run;
+  return limitNumeric(
+    `For f(x) = ${limitPolynomial(chosen.q, chosen.m, chosen.c)}, find the average rate of change on [${chosen.a}, ${chosen.b}].`,
+    answer,
+    [rise, run, chosen.q * chosen.a ** 2 + chosen.m * chosen.a + chosen.c],
+    `Use [f(${chosen.b}) − f(${chosen.a})]/(${chosen.b} − ${chosen.a}); the secant slope is ${answer}.`,
+  );
+}
+
+function limitAverageRateMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_AVG_RATE_CASES);
+  const answer = chosen.q * (chosen.a + chosen.b) + chosen.m;
+  const run = chosen.b - chosen.a;
+  const rise = answer * run;
+  const distractors = distinctLimitNumbers(answer, [rise, run, chosen.q * chosen.a + chosen.m]);
+  return limitMcq(rand,
+    `For f(x) = ${limitPolynomial(chosen.q, chosen.m, chosen.c)} on [${chosen.a}, ${chosen.b}], which average rate of change is correct?`,
+    [
+      { label: `average rate = ${answer}`, correct: true, feedback: `Correct. The secant slope [f(${chosen.b}) − f(${chosen.a})]/(${run}) equals ${answer}.` },
+      ...distractors.map((value) => ({ label: `average rate = ${value}`, correct: false, feedback: "Compute the endpoint rise, then divide by the full interval width." })),
+    ],
+  );
+}
+
+function limitDerivativeMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_DERIVATIVE_CASES);
+  const derivative = limitLinearExpression(2 * chosen.q, chosen.m);
+  const quotient = `${derivative} + ${chosen.q === 1 ? "" : chosen.q}h`;
+  const functionAtA = limitPolynomial(chosen.q, chosen.m, chosen.c).replaceAll("x", "a");
+  return limitMcq(rand,
+    `For f(x) = ${limitPolynomial(chosen.q, chosen.m, chosen.c)}, the difference quotient simplifies to ${quotient}. As h approaches 0, which formula is f′(a)?`,
+    [
+      { label: `f′(a) = ${derivative}`, correct: true, feedback: "Correct. Taking h to 0 removes the remaining h-term." },
+      { label: `f′(a) = ${limitLinearExpression(chosen.q, chosen.m)}`, correct: false, feedback: "The quadratic term contributes twice its coefficient after the limit." },
+      { label: `f′(a) = ${limitLinearExpression(2 * chosen.q, chosen.m + chosen.q)}`, correct: false, feedback: "The h-term approaches 0; it does not become its coefficient." },
+      { label: `f′(a) = ${functionAtA}`, correct: false, feedback: "That is f(a), the function value, not the limit of the difference quotient." },
+    ],
+  );
+}
+
+function limitDerivativeNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_DERIVATIVE_CASES);
+  const answer = 2 * chosen.q * chosen.at + chosen.m;
+  const functionValue = chosen.q * chosen.at ** 2 + chosen.m * chosen.at + chosen.c;
+  return limitNumeric(
+    `For f(x) = ${limitPolynomial(chosen.q, chosen.m, chosen.c)}, use the difference-quotient limit to find f′(${chosen.at}).`,
+    answer,
+    [functionValue, chosen.q * chosen.at + chosen.m, 2 * chosen.q * chosen.at],
+    `The limit gives f′(x) = ${limitLinearExpression(2 * chosen.q, chosen.m, "x")}; at x = ${chosen.at}, f′(${chosen.at}) = ${answer}.`,
+  );
+}
+
+const limitSeriesParts = (chosen: typeof LIMIT_SERIES_CASES[number]) => {
+  const first = chosen.aNum / chosen.aDen;
+  const ratio = chosen.rNum / chosen.rDen;
+  const answer = Number((first / (1 - ratio)).toFixed(3));
+  return { first, ratio, answer, firstText: `${chosen.aNum}/${chosen.aDen}`, ratioText: `${chosen.rNum}/${chosen.rDen}` };
+};
+
+function limitSeriesNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_SERIES_CASES);
+  const { first, ratio, answer, firstText, ratioText } = limitSeriesParts(chosen);
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `A geometric series has first term ${firstText} and common ratio ${ratioText}. Find its infinite sum a/(1 − r). Give a decimal to three places.`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [
+      { id: "a", label: "the first term", value: first },
+      { id: "r", label: "the common ratio", value: ratio },
+    ],
+    approxFormula: {
+      op: "divide" as const,
+      left: { op: "const" as const, id: "a" },
+      right: { op: "subtract" as const, left: { op: "lit" as const, value: 1 }, right: { op: "const" as const, id: "r" } },
+    },
+    approxRound: 3,
+    answerMode: "numeric" as const,
+    tolerance: 0.0005,
+    numericErrors: distinctLimitNumbers(answer, [first, ratio, first / ratio]).map((value) => ({
+      value,
+      feedback: "Use the first term divided by 1 minus the common ratio; do not report a single term or the ratio.",
+    })),
+    choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
+    explorationFeedback: "Identify the first term and common ratio before evaluating the limiting sum.",
+    fallbackFeedback: `Use a/(1 − r): (${firstText})/(1 − ${ratioText}) = ${answer}.`,
+    successFeedback: `The partial sums approach ${answer}.`,
+  };
+  return { tag: "g12-limits-continuity", widget, answer };
+}
+
+function limitSeriesMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_SERIES_CASES);
+  const { first, ratio, answer, firstText, ratioText } = limitSeriesParts(chosen);
+  const distractors = distinctLimitNumbers(answer, [first, ratio, first / ratio]);
+  return limitMcq(rand,
+    `A geometric series has first term ${firstText} and common ratio ${ratioText}. Which infinite sum is correct?`,
+    [
+      { label: `sum = ${decimalLimitNumber(answer)}`, correct: true, feedback: `Correct. a/(1 − r) = (${firstText})/(1 − ${ratioText}) = ${decimalLimitNumber(answer)}.` },
+      ...distractors.map((value) => ({ label: `sum = ${decimalLimitNumber(value)}`, correct: false, feedback: "Use a/(1 − r), not a single term, the ratio, or a/r." })),
+    ],
+  );
+}
 function limitsContinuityVariant(rand: () => number, requestedForm: string): LimitGeneratedVariant | null {
   if (requestedForm === LIMIT_IDEA_MCQ_FORM) return limitIdeaMcqVariant(rand);
   if (requestedForm === LIMIT_IDEA_NUMERIC_FORM) return limitIdeaNumericVariant(rand);
@@ -970,6 +1136,12 @@ function limitsContinuityVariant(rand: () => number, requestedForm: string): Lim
   if (requestedForm === LIMIT_DISCONTINUITY_NUMERIC_FORM) return limitDiscontinuityNumericVariant(rand);
   if (requestedForm === LIMIT_IVT_MCQ_FORM) return limitIvtMcqVariant(rand);
   if (requestedForm === LIMIT_IVT_NUMERIC_FORM) return limitIvtNumericVariant(rand);
+  if (requestedForm === LIMIT_AVG_RATE_MCQ_FORM) return limitAverageRateMcqVariant(rand);
+  if (requestedForm === LIMIT_AVG_RATE_NUMERIC_FORM) return limitAverageRateNumericVariant(rand);
+  if (requestedForm === LIMIT_DERIVATIVE_MCQ_FORM) return limitDerivativeMcqVariant(rand);
+  if (requestedForm === LIMIT_DERIVATIVE_NUMERIC_FORM) return limitDerivativeNumericVariant(rand);
+  if (requestedForm === LIMIT_SERIES_MCQ_FORM) return limitSeriesMcqVariant(rand);
+  if (requestedForm === LIMIT_SERIES_NUMERIC_FORM) return limitSeriesNumericVariant(rand);
   return null;
 }
 

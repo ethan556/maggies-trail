@@ -104,6 +104,12 @@ const LIMIT_DISCONTINUITY_MCQ_FORM = 'limits-continuity__lc-discontinuity__mcq';
 const LIMIT_DISCONTINUITY_NUMERIC_FORM = 'limits-continuity__lc-discontinuity__numeric';
 const LIMIT_IVT_MCQ_FORM = 'limits-continuity__lc-ivt__mcq';
 const LIMIT_IVT_NUMERIC_FORM = 'limits-continuity__lc-ivt__numeric';
+const LIMIT_AVG_RATE_MCQ_FORM = 'limits-continuity__lc-avg-rate__mcq';
+const LIMIT_AVG_RATE_NUMERIC_FORM = 'limits-continuity__lc-avg-rate__numeric';
+const LIMIT_DERIVATIVE_MCQ_FORM = 'limits-continuity__lc-derivative__mcq';
+const LIMIT_DERIVATIVE_NUMERIC_FORM = 'limits-continuity__lc-derivative__numeric';
+const LIMIT_SERIES_MCQ_FORM = 'limits-continuity__lc-series-limit__mcq';
+const LIMIT_SERIES_NUMERIC_FORM = 'limits-continuity__lc-series-limit__numeric';
 
 const normalizedLimitPrompt = (input) => String(input).split('||', 1)[0].replaceAll('−', '-').trim();
 const displayLimitNumber = (value) => value < 0 ? `−${Math.abs(value)}` : String(value);
@@ -229,11 +235,11 @@ function solveLimitEndBehaviorMcq(input) {
   if (!match) throw new Error(`unrecognized rational end-behavior prompt: ${prompt}`);
   const a = Number(match[1]); const b = Number(match[2]); const n = Number(match[3]); const m = Number(match[4]);
   const ratio = Number((a / b).toFixed(3));
-  if (n < m) return `limit 0; degree ${m} in the denominator is larger`;
-  if (n === m) return `limit ${displayLimitNumber(ratio)}; equal degrees give the coefficient ratio`;
+  if (n < m) return `limit 0; denominator degree ${m} exceeds numerator degree ${n}`;
+  if (n === m) return `limit ${displayLimitNumber(ratio)}; numerator degree ${n} equals denominator degree ${m}`;
   return a / b > 0
-    ? `grows to +∞; numerator degree ${n} is larger`
-    : `falls to −∞; numerator degree ${n} is larger`;
+    ? `limit +∞; numerator degree ${n} exceeds denominator degree ${m}`
+    : `limit −∞; numerator degree ${n} exceeds denominator degree ${m}`;
 }
 
 function solveLimitContinuityMcq(input) {
@@ -306,6 +312,65 @@ function solveLimitIvtNumeric(input) {
   return x * x - constant;
 }
 
+function parseLimitQuadratic(prompt) {
+  const match = /f\(x\) = (?:(\d+))?x²(?: ([+-]) (?:(\d+))?x)?(?: ([+-]) (\d+))?/.exec(prompt);
+  if (!match) throw new Error(`unrecognized quadratic prompt: ${prompt}`);
+  const q = match[1] ? Number(match[1]) : 1;
+  const m = match[2] ? (match[2] === '+' ? 1 : -1) * (match[3] ? Number(match[3]) : 1) : 0;
+  const c = match[4] ? (match[4] === '+' ? 1 : -1) * Number(match[5]) : 0;
+  return { q, m, c };
+}
+
+const displayLimitLinear = (coefficient, constant, variable = 'a') => {
+  const linear = coefficient === 1 ? variable : `${coefficient}${variable}`;
+  return constant === 0 ? linear : `${linear} ${constant < 0 ? '−' : '+'} ${Math.abs(constant)}`;
+};
+
+function solveLimitAverageRate(input, asChoice) {
+  const prompt = normalizedLimitPrompt(input);
+  const { q, m } = parseLimitQuadratic(prompt);
+  const interval = /on \[(-?\d+), (-?\d+)\]/.exec(prompt);
+  if (!interval) throw new Error(`unrecognized average-rate interval: ${prompt}`);
+  const a = Number(interval[1]); const b = Number(interval[2]);
+  if (a >= b) throw new Error(`average-rate interval is not increasing: ${prompt}`);
+  const answer = q * (a + b) + m;
+  return asChoice ? `average rate = ${answer}` : answer;
+}
+
+function solveLimitDerivativeMcq(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const { q, m } = parseLimitQuadratic(prompt);
+  const quotient = /simplifies to (\d*)a(?: ([+-]) (\d+))? \+ (\d*)h/.exec(prompt);
+  if (!quotient) throw new Error(`unrecognized simplified difference quotient: ${prompt}`);
+  const aCoefficient = quotient[1] ? Number(quotient[1]) : 1;
+  const constant = quotient[2] ? (quotient[2] === '+' ? 1 : -1) * Number(quotient[3]) : 0;
+  const hCoefficient = quotient[4] ? Number(quotient[4]) : 1;
+  if (aCoefficient !== 2 * q || constant !== m || hCoefficient !== q) {
+    throw new Error(`difference quotient is inconsistent with the printed quadratic: ${prompt}`);
+  }
+  return `f′(a) = ${displayLimitLinear(2 * q, m)}`;
+}
+
+function solveLimitDerivativeNumeric(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const { q, m } = parseLimitQuadratic(prompt);
+  const at = /find f′\((-?\d+)\)/.exec(prompt)?.[1];
+  if (at === undefined) throw new Error(`unrecognized derivative evaluation point: ${prompt}`);
+  return 2 * q * Number(at) + m;
+}
+
+function solveLimitSeries(input, asChoice) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /first term (\d+)\/(\d+) and common ratio (\d+)\/(\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized geometric-series prompt: ${prompt}`);
+  const aDen = Number(match[2]); const rDen = Number(match[4]);
+  if (aDen === 0 || rDen === 0) throw new Error(`geometric-series prompt has a zero denominator: ${prompt}`);
+  const first = Number(match[1]) / aDen;
+  const ratio = Number(match[3]) / rDen;
+  if (Math.abs(ratio) >= 1) throw new Error(`geometric-series prompt does not converge: ${prompt}`);
+  const answer = Number((first / (1 - ratio)).toFixed(3));
+  return asChoice ? `sum = ${displayLimitNumber(answer)}` : answer;
+}
 function solvePrompt(form, input) {
   if (form === 'conic-sections__co-parabola-def__numeric') {
     return solveParabolaDefinition(input);
@@ -339,7 +404,12 @@ function solvePrompt(form, input) {
   if (form === LIMIT_DISCONTINUITY_NUMERIC_FORM) return solveLimitDiscontinuityNumeric(input);
   if (form === LIMIT_IVT_MCQ_FORM) return solveLimitIvtMcq(input);
   if (form === LIMIT_IVT_NUMERIC_FORM) return solveLimitIvtNumeric(input);
-  return solveAuthoredPrompt(form, input);
+  if (form === LIMIT_AVG_RATE_MCQ_FORM) return solveLimitAverageRate(input, true);
+  if (form === LIMIT_AVG_RATE_NUMERIC_FORM) return solveLimitAverageRate(input, false);
+  if (form === LIMIT_DERIVATIVE_MCQ_FORM) return solveLimitDerivativeMcq(input);
+  if (form === LIMIT_DERIVATIVE_NUMERIC_FORM) return solveLimitDerivativeNumeric(input);
+  if (form === LIMIT_SERIES_MCQ_FORM) return solveLimitSeries(input, true);
+  if (form === LIMIT_SERIES_NUMERIC_FORM) return solveLimitSeries(input, false);  return solveAuthoredPrompt(form, input);
 }
 
 module.exports = { solvePrompt };

@@ -128,15 +128,15 @@ describe("S246 limits-continuity lc-03/lc-04 generator assurance", () => {
     expect(solvePrecalculusPrompt(
       "limits-continuity__lc-endbehavior__mcq",
       "A rational function has leading terms 4x² in the numerator and 3x⁵ in the denominator (degrees 2 and 5). As x approaches +∞, which end behavior is correct?",
-    )).toBe("limit 0; degree 5 in the denominator is larger");
+    )).toBe("limit 0; denominator degree 5 exceeds numerator degree 2");
     expect(solvePrecalculusPrompt(
       "limits-continuity__lc-endbehavior__mcq",
       "A rational function has leading terms -6x³ in the numerator and 4x³ in the denominator (degrees 3 and 3). As x approaches +∞, which end behavior is correct?",
-    )).toBe("limit −1.5; equal degrees give the coefficient ratio");
+    )).toBe("limit −1.5; numerator degree 3 equals denominator degree 3");
     expect(solvePrecalculusPrompt(
       "limits-continuity__lc-endbehavior__mcq",
       "A rational function has leading terms -2x⁵ in the numerator and 7x² in the denominator (degrees 5 and 2). As x approaches +∞, which end behavior is correct?",
-    )).toBe("falls to −∞; numerator degree 5 is larger");
+    )).toBe("limit −∞; numerator degree 5 exceeds denominator degree 2");
     expect(solvePrecalculusPrompt(
       "limits-continuity__lc-onesided__mcq",
       "At x = 4, the left-hand limit is 9 and the right-hand limit is 9. What is the two-sided limit?",
@@ -147,6 +147,29 @@ describe("S246 limits-continuity lc-03/lc-04 generator assurance", () => {
     )).toBe("DNE; left 9 differs from right 3");
   });
 
+  it("keeps every end-behavior option structurally parallel and degree-explicit", () => {
+    const generator = PRECALCULUS_GENERATORS.find((candidate) => candidate.tag === GENERATOR)!;
+    const positions = new Set<number>();
+    for (let index = 0; index < 240; index += 1) {
+      const seed = `s246-limits-endbehavior-parity|${index}`;
+      const generated = generator.gen(mulberry32(hashSeed(seed)), "core", "limits-continuity__lc-endbehavior__mcq");
+      const widget = WidgetSpec.parse(generated.widget);
+      expect(widget.type, seed).toBe("mcq");
+      if (widget.type !== "mcq") continue;
+      const degrees = /\(degrees (\d+) and (\d+)\)/.exec(widget.prompt);
+      expect(degrees, seed).not.toBeNull();
+      const [, numeratorDegree, denominatorDegree] = degrees!;
+      for (const option of widget.options) {
+        expect(option.label.startsWith("limit "), `${seed}: ${option.label}`).toBe(true);
+        expect(option.label, `${seed}: numerator degree`).toContain(`degree ${numeratorDegree}`);
+        expect(option.label, `${seed}: denominator degree`).toContain(`degree ${denominatorDegree}`);
+      }
+      const lengths = widget.options.map((option) => option.label.length);
+      expect(Math.max(...lengths) - Math.min(...lengths), `${seed}: option-length parity`).toBeLessThanOrEqual(12);
+      positions.add(widget.options.findIndex((option) => option.correct));
+    }
+    expect(positions.size).toBeGreaterThanOrEqual(3);
+  });
   it("recomputes valid mutations and rejects inconsistent branches, holes, jumps, and IVT claims", () => {
     expect(solvePrecalculusPrompt(
       "limits-continuity__lc-infinity__numeric",
