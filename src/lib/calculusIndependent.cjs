@@ -53,6 +53,13 @@ const INTEGRATION_FOUNDATION_FORMS = {
   READ_ACCUMULATION_NUMERIC: 'integration-accumulation__in-read-accumulation__numeric',
   NET_CHANGE_MCQ: 'integration-accumulation__in-net-change__mcq',
   NET_CHANGE_NUMERIC: 'integration-accumulation__in-net-change__numeric',
+  FTC1_MCQ: 'integration-accumulation__in-ftc1__mcq',
+  FTC1_NUMERIC: 'integration-accumulation__in-ftc1__numeric',
+  FTC2_NUMERIC: 'integration-accumulation__in-ftc2__numeric',
+  FTC2_MCQ: 'integration-accumulation__in-ftc2__mcq',
+  FTC_UNIFIED_ORDER: 'integration-accumulation__in-ftc-unified__dragOrder',
+  FTC_UNIFIED_BUCKET: 'integration-accumulation__in-ftc-unified__dragBucket',
+  FTC_UNIFIED_NUMERIC: 'integration-accumulation__in-ftc-unified__numeric',
 };
 
 function solveFirstDerivativeMaximum(input) {
@@ -505,6 +512,80 @@ function solveIntegrationFoundation(form, input) {
     const c = (match[2] === '+' ? 1 : -1) * Number(match[3]);
     const n = Number(match[4]);
     return m * n * n / 2 + c * n;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC1_MCQ) {
+    const basic = /Find d\/dx of the integral from (-?\d+) to x of (\d+)t\^(\d+) dt/.exec(prompt);
+    if (basic) return `${basic[2]}x^${basic[3]}`;
+    const compare = /Compare d\/dx of the integral from (-?\d+) to x of (\d+)t\^(\d+) dt with d\/dx/.exec(prompt);
+    if (compare) return `Both derivatives are ${compare[2]}x^${compare[3]}.`;
+    const chain = /Find d\/dx of the integral from (-?\d+) to x\^(\d+) of (\d+)t\^(\d+) dt/.exec(prompt);
+    if (chain) {
+      const inner = Number(chain[2]);
+      const coeff = Number(chain[3]);
+      const power = Number(chain[4]);
+      return `${coeff * inner}x^${inner * power + inner - 1}`;
+    }
+    throw new Error(`unrecognized FTC Part 1 MCQ prompt: ${prompt}`);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC1_NUMERIC) {
+    const match = /\(t\^2 - (\d+)\)|\((\d+) - t\^2\)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized FTC Part 1 extremum prompt: ${prompt}`);
+    return Math.sqrt(Number(match[1] || match[2]));
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC2_NUMERIC) {
+    const power = /integral from (-?\d+) to (-?\d+) of x\^(\d+) dx/.exec(prompt);
+    if (power) {
+      const lower = Number(power[1]);
+      const upper = Number(power[2]);
+      const divisor = Number(power[3]) + 1;
+      return Number(((upper ** divisor - lower ** divisor) / divisor).toFixed(3));
+    }
+    const rate = /r\(t\) = (\d+)t \+ (\d+) litres per minute.*first (\d+) minutes/.exec(prompt);
+    if (!rate) throw new Error(`unrecognized FTC Part 2 numeric prompt: ${prompt}`);
+    const m = Number(rate[1]); const c = Number(rate[2]); const n = Number(rate[3]);
+    return m * n * n / 2 + c * n;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC2_MCQ) {
+    const constant = /G\(x\) = F\(x\) \+ (\d+)\. Why/.exec(prompt);
+    if (constant) return `The +${constant[1]} cancels when endpoint values are subtracted.`;
+    const reverse = /integral from (-?\d+) to (-?\d+) of f\(x\) dx is (-?\d+)\. What happens/.exec(prompt);
+    if (reverse) return `The reversed integral is ${-Number(reverse[3])}.`;
+    const join = /integral from 0 to (\d+) is (-?\d+), and the integral from \1 to \d+ is (-?\d+)\. What is the integral/.exec(prompt);
+    if (join) return `The joined integral is ${Number(join[2]) + Number(join[3])}.`;
+    throw new Error(`unrecognized FTC Part 2 MCQ prompt: ${prompt}`);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC_UNIFIED_ORDER) {
+    const match = /For ([A-Z])\(x\) = the integral from (\w+) to x of ([a-z])\(t\) dt, order the steps that derive the evaluation formula using ([A-Z]) at (\w+)\./.exec(prompt);
+    if (!match) throw new Error(`unrecognized unified-FTC proof prompt: ${prompt}`);
+    const [, accumulation, lower, integrand, antiderivative, upper] = match;
+    return [
+      `Part 1 gives ${accumulation}'(x) = ${integrand}(x), so ${accumulation} is an antiderivative.`,
+      `Any other antiderivative ${antiderivative} has ${antiderivative}(x) = ${accumulation}(x) + C.`,
+      `Subtracting endpoints cancels C: ${antiderivative}(${upper}) - ${antiderivative}(${lower}) = ${accumulation}(${upper}) - ${accumulation}(${lower}).`,
+      `Because ${accumulation}(${lower}) = 0, the difference equals the integral from ${lower} to ${upper}.`,
+    ];
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC_UNIFIED_BUCKET) {
+    const match = /Use p = (\d+), q = (\d+), c = (\d+), and b = (\d+)\./.exec(prompt);
+    if (!match) throw new Error(`unrecognized unified-FTC bucket prompt: ${prompt}`);
+    const [, p, q, c, b] = match;
+    return {
+      [`Differentiate the accumulation from ${c} to x of t^${p} dt`]: 'Differentiate an accumulation (Part 1)',
+      [`Evaluate the integral from 0 to ${b} of x^${q} dx`]: 'Evaluate a definite integral (Part 2)',
+      [`Find where the accumulation of (t - ${c}) from 0 to x is smallest`]: 'Differentiate an accumulation (Part 1)',
+      [`Find the total from a rate over [0, ${b}]`]: 'Evaluate a definite integral (Part 2)',
+    };
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.FTC_UNIFIED_NUMERIC) {
+    const power = /integral from (-?\d+) to (-?\d+) of x\^(\d+) dx/.exec(prompt);
+    if (power) {
+      const lower = Number(power[1]); const upper = Number(power[2]); const divisor = Number(power[3]) + 1;
+      return Number(((upper ** divisor - lower ** divisor) / divisor).toFixed(3));
+    }
+    const minimum = /\(t\^2 - (\d+)\) dt.*Find the minimum value/.exec(prompt);
+    if (!minimum) throw new Error(`unrecognized unified-FTC numeric prompt: ${prompt}`);
+    const root = Math.sqrt(Number(minimum[1]));
+    return Number((-2 * root ** 3 / 3).toFixed(3));
   }
   throw new Error(`unrecognized integration-foundation form ${form}`);
 }

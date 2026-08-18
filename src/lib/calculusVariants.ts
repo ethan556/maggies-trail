@@ -1718,6 +1718,323 @@ function netChangeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   return { widget, answer };
 }
 
+const FTC1_MCQ_CASES = [
+  { kind: "basic", lower: 0, coeff: 2, power: 2 }, { kind: "basic", lower: 1, coeff: 3, power: 3 },
+  { kind: "basic", lower: 2, coeff: 4, power: 4 }, { kind: "basic", lower: 3, coeff: 5, power: 2 },
+  { kind: "compare", lower: 1, other: 4, coeff: 2, power: 3 }, { kind: "compare", lower: 2, other: 6, coeff: 3, power: 2 },
+  { kind: "compare", lower: 3, other: 7, coeff: 4, power: 3 }, { kind: "compare", lower: 4, other: 9, coeff: 5, power: 2 },
+  { kind: "chain", lower: 0, coeff: 2, power: 2, inner: 2 }, { kind: "chain", lower: 1, coeff: 3, power: 2, inner: 3 },
+  { kind: "chain", lower: 2, coeff: 2, power: 3, inner: 2 }, { kind: "chain", lower: 3, coeff: 4, power: 2, inner: 2 },
+] as const;
+
+function ftc1McqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, FTC1_MCQ_CASES);
+  const integrand = `${entry.coeff}t^${entry.power}`;
+  const baseTruth = `${entry.coeff}x^${entry.power}`;
+  if (entry.kind === "basic") {
+    return integrationMcq(rand, `Find d/dx of the integral from ${entry.lower} to x of ${integrand} dt.`, [
+      { label: baseTruth, correct: true, feedback: "FTC Part 1 returns the integrand evaluated at the moving endpoint x." },
+      { label: `${entry.coeff}x^${entry.power + 1}/${entry.power + 1}`, correct: false, feedback: "That is an antiderivative, but the question differentiates the accumulation." },
+      { label: `${entry.coeff * entry.power}x^${entry.power - 1}`, correct: false, feedback: "That differentiates the integrand instead of differentiating the accumulation." },
+      { label: "0", correct: false, feedback: "A fixed lower endpoint contributes no derivative, but the moving upper endpoint does." },
+    ]);
+  }
+  if (entry.kind === "compare") {
+    const correct = `Both derivatives are ${baseTruth}.`;
+    return integrationMcq(
+      rand,
+      `Compare d/dx of the integral from ${entry.lower} to x of ${integrand} dt with d/dx of the integral from ${entry.other} to x of ${integrand} dt.`,
+      [
+        { label: correct, correct: true, feedback: "Changing a fixed lower limit shifts the accumulation by a constant, so its derivative is unchanged." },
+        { label: `They differ by ${Math.abs(entry.other - entry.lower)}.`, correct: false, feedback: "The accumulation functions differ by a constant, but their derivatives do not." },
+        { label: `Only the first derivative is ${baseTruth}.`, correct: false, feedback: "FTC Part 1 applies to either fixed lower limit." },
+        { label: "They cannot be compared.", correct: false, feedback: "Both derivatives are determined by the same integrand at the same upper endpoint." },
+      ],
+    );
+  }
+  const coefficient = entry.coeff * entry.inner;
+  const exponent = entry.inner * entry.power + entry.inner - 1;
+  const correct = `${coefficient}x^${exponent}`;
+  return integrationMcq(rand, `Find d/dx of the integral from ${entry.lower} to x^${entry.inner} of ${integrand} dt.`, [
+    { label: correct, correct: true, feedback: "Evaluate the integrand at the moving endpoint, then multiply by the endpoint derivative." },
+    { label: `${entry.coeff}x^${entry.inner * entry.power}`, correct: false, feedback: "This substitutes the endpoint but omits its derivative from the chain rule." },
+    { label: `${entry.inner}x^${entry.inner - 1}`, correct: false, feedback: "That is only the derivative of the moving endpoint; also evaluate the integrand there." },
+    { label: `${entry.coeff}x^${entry.inner * (entry.power + 1)}/${entry.power + 1}`, correct: false, feedback: "That describes the accumulation rather than its derivative." },
+  ]);
+}
+
+const FTC1_EXTREMUM_CASES = [
+  { root: 2, direction: "minimum" }, { root: 3, direction: "minimum" }, { root: 4, direction: "minimum" },
+  { root: 5, direction: "minimum" }, { root: 6, direction: "minimum" }, { root: 7, direction: "minimum" },
+  { root: 2, direction: "maximum" }, { root: 3, direction: "maximum" }, { root: 4, direction: "maximum" },
+  { root: 5, direction: "maximum" }, { root: 6, direction: "maximum" }, { root: 7, direction: "maximum" },
+] as const;
+
+function ftc1NumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { root, direction } = pick(rand, FTC1_EXTREMUM_CASES);
+  const square = root * root;
+  const expression = direction === "minimum" ? `t^2 - ${square}` : `${square} - t^2`;
+  const upper = root + 2;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Let A(x) be the integral from 0 to x of (${expression}) dt on [0, ${upper}]. At what x does A reach its ${direction}?`,
+    answer: root,
+    tolerance: 0,
+    unit: "",
+    commonErrors: uniqueNumericErrors(root, [
+      { value: 0, feedback: `A continues toward its ${direction} after the left endpoint because A'(x) has not yet changed sign.` },
+      { value: upper, feedback: `By x = ${upper}, A has already turned where A'(x) changed sign.` },
+      { value: square, feedback: `Solve x^2 = ${square}; the nonnegative critical point in the interval is x = ${root}.` },
+    ]),
+    fallbackFeedback: `FTC Part 1 gives A'(x) = ${expression}. Its sign changes at x = ${root}, producing the ${direction}.`,
+    successFeedback: `A reaches its ${direction} at x = ${root}.`,
+  };
+  return { widget, answer: root };
+}
+
+const FTC2_POWER_CASES = [
+  { power: 1, lower: 0, upper: 3 }, { power: 1, lower: 1, upper: 4 },
+  { power: 2, lower: 0, upper: 2 }, { power: 2, lower: 1, upper: 3 },
+  { power: 3, lower: 0, upper: 2 }, { power: 3, lower: 1, upper: 3 },
+] as const;
+
+const FTC2_RATE_CASES = [
+  { m: 2, c: 1, n: 3 }, { m: 2, c: 3, n: 4 }, { m: 4, c: 1, n: 2 },
+  { m: 4, c: 2, n: 3 }, { m: 6, c: 1, n: 2 }, { m: 6, c: 2, n: 4 },
+] as const;
+
+const round3 = (value: number) => Number(value.toFixed(3));
+
+function ftc2NumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  if (rand() < 0.5) {
+    const { power, lower, upper } = pick(rand, FTC2_POWER_CASES);
+    const divisor = power + 1;
+    const answer = round3((upper ** divisor - lower ** divisor) / divisor);
+    const upperOnly = round3(upper ** divisor / divisor);
+    const widget = {
+      type: "numeric" as const,
+      prompt: `Evaluate the integral from ${lower} to ${upper} of x^${power} dx. Give a decimal to three places.`,
+      answer,
+      tolerance: 0.005,
+      unit: "",
+      commonErrors: uniqueNumericErrors(answer, [
+        { value: upper ** power, feedback: "That is the integrand's height at the upper endpoint, not the accumulated area." },
+        { value: upperOnly, feedback: "Evaluate the antiderivative at both endpoints and subtract the lower value." },
+        { value: round3(upper ** divisor - lower ** divisor), feedback: `The antiderivative of x^${power} divides by ${divisor}.` },
+      ]),
+      fallbackFeedback: `Use F(x) = x^${divisor}/${divisor}. Then F(${upper}) - F(${lower}) = ${answer}.`,
+      successFeedback: `The definite integral is ${answer}.`,
+    };
+    return { widget, answer };
+  }
+  const { m, c, n } = pick(rand, FTC2_RATE_CASES);
+  const answer = m * n * n / 2 + c * n;
+  const finalRate = m * n + c;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Water enters at r(t) = ${m}t + ${c} litres per minute. Use an antiderivative to find how many litres arrive in the first ${n} minutes.`,
+    answer,
+    tolerance: 0,
+    unit: "litres",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: finalRate, feedback: `That is r(${n}), the final rate, rather than the accumulated volume.` },
+      { value: finalRate * n, feedback: "This treats the final rate as constant across the whole interval." },
+      { value: m * n * n / 2, feedback: `Include the antiderivative of the constant term +${c}.` },
+    ]),
+    fallbackFeedback: `An antiderivative is (${m}/2)t^2 + ${c}t. Its change from 0 to ${n} is ${answer} litres.`,
+    successFeedback: `${answer} litres arrive.`,
+  };
+  return { widget, answer };
+}
+
+const FTC2_MCQ_CASES = [
+  { kind: "constant", k: 2, lower: 0, upper: 3 }, { kind: "constant", k: 5, lower: 1, upper: 4 },
+  { kind: "constant", k: 7, lower: 2, upper: 6 }, { kind: "constant", k: 11, lower: 3, upper: 8 },
+  { kind: "reverse", value: 6, lower: 1, upper: 4 }, { kind: "reverse", value: 9, lower: 2, upper: 5 },
+  { kind: "reverse", value: 13, lower: 0, upper: 6 }, { kind: "reverse", value: 17, lower: 3, upper: 9 },
+  { kind: "join", first: 2, second: 5, middle: 2 }, { kind: "join", first: 3, second: 7, middle: 3 },
+  { kind: "join", first: 4, second: 9, middle: 4 }, { kind: "join", first: 6, second: 11, middle: 5 },
+] as const;
+
+function ftc2McqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, FTC2_MCQ_CASES);
+  if (entry.kind === "constant") {
+    const correct = `The +${entry.k} cancels when endpoint values are subtracted.`;
+    return integrationMcq(
+      rand,
+      `F and G are antiderivatives of f with G(x) = F(x) + ${entry.k}. Why do both give the same integral from ${entry.lower} to ${entry.upper}?`,
+      [
+        { label: correct, correct: true, feedback: `G(${entry.upper}) - G(${entry.lower}) contains +${entry.k} at both endpoints, so the constants cancel.` },
+        { label: `The +${entry.k} is too small to matter.`, correct: false, feedback: "Constants can have any size; exact subtraction, not approximation, removes them." },
+        { label: "F and G are actually the same function.", correct: false, feedback: "They are different antiderivatives with the same derivative." },
+        { label: "Only F may be used for a definite integral.", correct: false, feedback: "Any antiderivative works because endpoint subtraction cancels its constant shift." },
+      ],
+    );
+  }
+  if (entry.kind === "reverse") {
+    const correct = `The reversed integral is -${entry.value}.`;
+    return integrationMcq(
+      rand,
+      `The integral from ${entry.lower} to ${entry.upper} of f(x) dx is ${entry.value}. What happens when the limits are reversed?`,
+      [
+        { label: correct, correct: true, feedback: "Reversing the endpoint subtraction changes the sign of the definite integral." },
+        { label: `The reversed integral is ${entry.value}.`, correct: false, feedback: "The magnitude stays the same, but reversing the limits changes the sign." },
+        { label: `The reversed integral is ${-2 * entry.value}.`, correct: false, feedback: "Reversing limits negates the value; it does not double it." },
+        { label: "The reversed integral is 0.", correct: false, feedback: "Only equal limits force a zero integral." },
+      ],
+    );
+  }
+  const joined = entry.first + entry.second;
+  const correct = `The joined integral is ${joined}.`;
+  return integrationMcq(
+    rand,
+    `The integral from 0 to ${entry.middle} is ${entry.first}, and the integral from ${entry.middle} to ${entry.middle + 2} is ${entry.second}. What is the integral from 0 to ${entry.middle + 2}?`,
+    [
+      { label: correct, correct: true, feedback: "Definite integrals over adjacent intervals add." },
+      { label: `The joined integral is ${entry.second - entry.first}.`, correct: false, feedback: "The intervals point in the same direction, so their values add rather than subtract." },
+      { label: `The joined integral is ${entry.first * entry.second}.`, correct: false, feedback: "Adjacent interval values add; they do not multiply." },
+      { label: "The joined integral cannot be determined.", correct: false, feedback: "The two adjacent pieces cover the full requested interval without a gap." },
+    ],
+  );
+}
+
+const FTC_PROOF_CASES = [
+  { accumulation: "A", antiderivative: "F", integrand: "f", lower: "a", upper: "b" },
+  { accumulation: "B", antiderivative: "G", integrand: "g", lower: "c", upper: "d" },
+  { accumulation: "P", antiderivative: "Q", integrand: "p", lower: "m", upper: "n" },
+  { accumulation: "R", antiderivative: "S", integrand: "r", lower: "u", upper: "v" },
+  { accumulation: "H", antiderivative: "K", integrand: "h", lower: "1", upper: "4" },
+  { accumulation: "J", antiderivative: "L", integrand: "j", lower: "2", upper: "6" },
+  { accumulation: "M", antiderivative: "N", integrand: "m", lower: "0", upper: "5" },
+  { accumulation: "U", antiderivative: "V", integrand: "u", lower: "3", upper: "8" },
+  { accumulation: "C", antiderivative: "D", integrand: "c", lower: "q", upper: "z" },
+  { accumulation: "E", antiderivative: "I", integrand: "e", lower: "s", upper: "w" },
+  { accumulation: "O", antiderivative: "T", integrand: "o", lower: "2", upper: "9" },
+  { accumulation: "W", antiderivative: "Y", integrand: "w", lower: "1", upper: "7" },
+] as const;
+
+function ftcProofLabels(entry: typeof FTC_PROOF_CASES[number]) {
+  return [
+    `Part 1 gives ${entry.accumulation}'(x) = ${entry.integrand}(x), so ${entry.accumulation} is an antiderivative.`,
+    `Any other antiderivative ${entry.antiderivative} has ${entry.antiderivative}(x) = ${entry.accumulation}(x) + C.`,
+    `Subtracting endpoints cancels C: ${entry.antiderivative}(${entry.upper}) - ${entry.antiderivative}(${entry.lower}) = ${entry.accumulation}(${entry.upper}) - ${entry.accumulation}(${entry.lower}).`,
+    `Because ${entry.accumulation}(${entry.lower}) = 0, the difference equals the integral from ${entry.lower} to ${entry.upper}.`,
+  ];
+}
+
+function ftcUnifiedDragOrderWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, FTC_PROOF_CASES);
+  const labels = ftcProofLabels(entry);
+  const items = labels.map((label, index) => ({ id: ["a", "b", "c", "d"][index]!, label }));
+  const correctOrder = ["a", "b", "c", "d"];
+  let shuffledItems = shuffle(rand, items);
+  if (shuffledItems.every((item, index) => item.id === correctOrder[index])) shuffledItems = [...shuffledItems.slice(1), shuffledItems[0]!];
+  const widget = {
+    type: "dragOrder" as const,
+    prompt: `For ${entry.accumulation}(x) = the integral from ${entry.lower} to x of ${entry.integrand}(t) dt, order the steps that derive the evaluation formula using ${entry.antiderivative} at ${entry.upper}.`,
+    items: shuffledItems,
+    correctOrder,
+    misorderFeedback: [
+      { first: "c", second: "b", feedback: "First establish that the antiderivatives differ by a constant; only then can endpoint subtraction cancel it." },
+      { first: "d", second: "a", feedback: "Begin with FTC Part 1, which establishes that the accumulation function is an antiderivative." },
+    ],
+    missFeedback: "Start with FTC Part 1, relate the two antiderivatives, cancel the constant, then use the zero accumulation at the lower endpoint.",
+    successFeedback: "FTC Part 2 follows from Part 1 and the cancellation of the antiderivative constant.",
+  };
+  return { widget, answer: correctOrder };
+}
+
+const FTC_BUCKET_CASES = [
+  { p: 1, q: 2, c: 2, b: 3 }, { p: 2, q: 3, c: 3, b: 4 }, { p: 3, q: 1, c: 4, b: 5 },
+  { p: 4, q: 2, c: 5, b: 6 }, { p: 2, q: 4, c: 6, b: 7 }, { p: 3, q: 2, c: 7, b: 8 },
+  { p: 1, q: 3, c: 4, b: 7 }, { p: 2, q: 1, c: 5, b: 8 }, { p: 3, q: 4, c: 2, b: 6 },
+  { p: 4, q: 3, c: 3, b: 7 }, { p: 1, q: 4, c: 6, b: 9 }, { p: 4, q: 1, c: 7, b: 10 },
+] as const;
+
+function ftcBucketLabels(entry: typeof FTC_BUCKET_CASES[number]) {
+  return [
+    `Differentiate the accumulation from ${entry.c} to x of t^${entry.p} dt`,
+    `Evaluate the integral from 0 to ${entry.b} of x^${entry.q} dx`,
+    `Find where the accumulation of (t - ${entry.c}) from 0 to x is smallest`,
+    `Find the total from a rate over [0, ${entry.b}]`,
+  ];
+}
+
+function ftcUnifiedDragBucketWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, FTC_BUCKET_CASES);
+  const labels = ftcBucketLabels(entry);
+  const buckets = [
+    { id: "p1", label: "Differentiate an accumulation (Part 1)" },
+    { id: "p2", label: "Evaluate a definite integral (Part 2)" },
+  ];
+  const items = [
+    { id: "s1", label: labels[0]!, bucketId: "p1", feedback: "Differentiating an accumulation uses FTC Part 1 to return the integrand at the endpoint." },
+    { id: "s2", label: labels[1]!, bucketId: "p2", feedback: "Computing a definite value uses an antiderivative and endpoint subtraction from FTC Part 2." },
+    { id: "s3", label: labels[2]!, bucketId: "p1", feedback: "An accumulation extremum is found from its derivative, so this uses FTC Part 1." },
+    { id: "s4", label: labels[3]!, bucketId: "p2", feedback: "Accumulating a rate over a fixed interval is a definite-integral evaluation using FTC Part 2." },
+  ];
+  const shuffledItems = shuffle(rand, items);
+  const answer = Object.fromEntries(items.map((item) => [item.id, item.bucketId]));
+  const widget = {
+    type: "dragBucket" as const,
+    prompt: `Use p = ${entry.p}, q = ${entry.q}, c = ${entry.c}, and b = ${entry.b}. Sort each task by the part of the Fundamental Theorem it uses.`,
+    buckets,
+    items: shuffledItems,
+    missFeedback: "Ask whether the task differentiates an accumulation or evaluates a definite integral.",
+    successFeedback: "Part 1 differentiates accumulation functions; Part 2 evaluates definite integrals from antiderivatives.",
+  };
+  return { widget, answer };
+}
+
+const FTC_UNIFIED_POWER_CASES = [
+  { power: 2, lower: 0, upper: 3 }, { power: 3, lower: 0, upper: 2 },
+  { power: 4, lower: 0, upper: 2 }, { power: 2, lower: 1, upper: 4 },
+  { power: 3, lower: 1, upper: 3 }, { power: 4, lower: 1, upper: 3 },
+] as const;
+
+const FTC_UNIFIED_MINIMUM_ROOTS = [2, 3, 4, 5, 6, 7] as const;
+
+function ftcUnifiedNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  if (rand() < 0.5) {
+    const { power, lower, upper } = pick(rand, FTC_UNIFIED_POWER_CASES);
+    const divisor = power + 1;
+    const answer = round3((upper ** divisor - lower ** divisor) / divisor);
+    const widget = {
+      type: "numeric" as const,
+      prompt: `Use both parts of the FTC to evaluate the integral from ${lower} to ${upper} of x^${power} dx. Give a decimal to three places.`,
+      answer,
+      tolerance: 0.005,
+      unit: "",
+      commonErrors: uniqueNumericErrors(answer, [
+        { value: upper ** power, feedback: "That is the integrand at the endpoint, which FTC Part 1 would return after differentiating an accumulation." },
+        { value: round3(upper ** divisor / divisor), feedback: "FTC Part 2 requires subtracting the antiderivative value at the lower endpoint." },
+        { value: round3(upper ** divisor - lower ** divisor), feedback: `The antiderivative of x^${power} includes division by ${divisor}.` },
+      ]),
+      fallbackFeedback: `An antiderivative is x^${divisor}/${divisor}; endpoint subtraction gives ${answer}.`,
+      successFeedback: `The definite integral is ${answer}.`,
+    };
+    return { widget, answer };
+  }
+  const root = pick(rand, FTC_UNIFIED_MINIMUM_ROOTS);
+  const square = root * root;
+  const answer = round3(-2 * root ** 3 / 3);
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Let G(x) be the integral from 0 to x of (t^2 - ${square}) dt on [0, ${root + 2}]. Find the minimum value of G, as a decimal to three places.`,
+    answer,
+    tolerance: 0.005,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: root, feedback: `That is where the minimum occurs. Use FTC Part 2 to evaluate G(${root}).` },
+      { value: Math.abs(answer), feedback: "The accumulated region before the turning point lies below the axis, so the minimum value is negative." },
+      { value: 0, feedback: "G starts at zero but decreases while its derivative is negative." },
+    ]),
+    fallbackFeedback: `FTC Part 1 locates the minimum at x = ${root}; FTC Part 2 gives G(${root}) = ${answer}.`,
+    successFeedback: `The minimum value of G is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
 const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "integration-accumulation__in-riemann__numeric": riemannNumericWidget,
   "integration-accumulation__in-riemann__mcq": riemannMcqWidget,
@@ -1734,6 +2051,13 @@ const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => Generated
   "integration-accumulation__in-read-accumulation__numeric": readAccumulationNumericWidget,
   "integration-accumulation__in-net-change__mcq": netChangeMcqWidget,
   "integration-accumulation__in-net-change__numeric": netChangeNumericWidget,
+  "integration-accumulation__in-ftc1__mcq": ftc1McqWidget,
+  "integration-accumulation__in-ftc1__numeric": ftc1NumericWidget,
+  "integration-accumulation__in-ftc2__numeric": ftc2NumericWidget,
+  "integration-accumulation__in-ftc2__mcq": ftc2McqWidget,
+  "integration-accumulation__in-ftc-unified__dragOrder": ftcUnifiedDragOrderWidget,
+  "integration-accumulation__in-ftc-unified__dragBucket": ftcUnifiedDragBucketWidget,
+  "integration-accumulation__in-ftc-unified__numeric": ftcUnifiedNumericWidget,
 };
 
 const TARGET_GENERATOR = "g13-curve-analysis";
