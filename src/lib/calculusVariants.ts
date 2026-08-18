@@ -2035,6 +2035,223 @@ function ftcUnifiedNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   return { widget, answer };
 }
 
+/* S246 / Phase 5. Chapter in-04 previously fell back to two or three authored
+ * examples per form. These builders keep the original question jobs and
+ * response surfaces while varying every quantity needed to recompute truth
+ * from the learner-visible prompt. */
+const ANTIDERIVATIVE_MCQ_CASES = [
+  { power: 1, scale: 1 }, { power: 1, scale: 2 }, { power: 1, scale: 3 },
+  { power: 2, scale: 1 }, { power: 2, scale: 2 }, { power: 2, scale: 3 },
+  { power: 3, scale: 1 }, { power: 3, scale: 2 }, { power: 3, scale: 3 },
+  { power: 4, scale: 1 }, { power: 4, scale: 2 }, { power: 4, scale: 3 },
+] as const;
+
+const powerLabel = (coefficient: number, power: number) => {
+  if (power === 0) return String(coefficient);
+  const coefficientText = coefficient === 1 ? "" : String(coefficient);
+  return power === 1 ? `${coefficientText}x` : `${coefficientText}x^${power}`;
+};
+
+function antiderivativeMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { power, scale } = pick(rand, ANTIDERIVATIVE_MCQ_CASES);
+  const coefficient = scale * (power + 1);
+  const correct = `${powerLabel(scale, power + 1)} + C`;
+  return integrationMcq(rand, `What is the indefinite integral of ${powerLabel(coefficient, power)} dx?`, [
+    { label: correct, correct: true, feedback: `Raise the power to ${power + 1}, divide ${coefficient} by ${power + 1}, and include the constant of integration.` },
+    { label: `${powerLabel(coefficient * power, power - 1)} + C`, correct: false, feedback: "That differentiates the displayed power instead of antidifferentiating it." },
+    { label: `${powerLabel(coefficient, power + 1)} + C`, correct: false, feedback: `Raising the power is only half the reversal; also divide by ${power + 1}.` },
+    { label: `${powerLabel(coefficient, power)} + C`, correct: false, feedback: "An antiderivative must differentiate back to the integrand; leaving the power unchanged does not." },
+  ]);
+}
+
+const ANTIDERIVATIVE_NUMERIC_CASES = [
+  { cubic: 1, square: 1, lower: 0, upper: 2 }, { cubic: 1, square: 2, lower: 0, upper: 3 },
+  { cubic: 2, square: 1, lower: 0, upper: 2 }, { cubic: 2, square: 2, lower: 1, upper: 3 },
+  { cubic: 3, square: 1, lower: 1, upper: 2 }, { cubic: 3, square: 2, lower: 0, upper: 3 },
+  { cubic: 4, square: 1, lower: 1, upper: 3 }, { cubic: 4, square: 3, lower: 0, upper: 2 },
+  { cubic: 5, square: 2, lower: 1, upper: 2 }, { cubic: 5, square: 3, lower: 0, upper: 3 },
+  { cubic: 6, square: 1, lower: 2, upper: 4 }, { cubic: 6, square: 4, lower: 1, upper: 3 },
+] as const;
+
+function antiderivativeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { cubic, square, lower, upper } = pick(rand, ANTIDERIVATIVE_NUMERIC_CASES);
+  const x2 = 3 * cubic;
+  const x1 = 2 * square;
+  const primitive = (x: number) => cubic * x ** 3 + square * x ** 2;
+  const answer = primitive(upper) - primitive(lower);
+  const upperOnly = primitive(upper);
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Evaluate the integral from ${lower} to ${upper} of (${x2}x^2 + ${x1}x) dx.`,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: upperOnly, feedback: `That is F(${upper}) alone. Subtract F(${lower}) as well.` },
+      { value: (x2 * upper ** 3 + x1 * upper ** 2) - (x2 * lower ** 3 + x1 * lower ** 2), feedback: "The coefficients must be divided by the new powers when antidifferentiating." },
+      { value: x2 * upper ** 2 + x1 * upper, feedback: "That evaluates the integrand at the upper endpoint rather than accumulating it." },
+    ]),
+    fallbackFeedback: `An antiderivative is ${powerLabel(cubic, 3)} + ${powerLabel(square, 2)}. Endpoint subtraction gives ${answer}.`,
+    successFeedback: `The definite integral is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const INITIAL_VALUE_CASES = [
+  { a: 2, b: 1, at: 0, initial: 4, target: 2 }, { a: 2, b: 3, at: 1, initial: 6, target: 3 },
+  { a: 4, b: 1, at: 0, initial: 5, target: 2 }, { a: 4, b: 2, at: 1, initial: 8, target: 3 },
+  { a: 6, b: 1, at: 0, initial: 2, target: 3 }, { a: 6, b: 2, at: 1, initial: 7, target: 2 },
+  { a: 8, b: 1, at: 0, initial: 3, target: 2 }, { a: 8, b: 3, at: 1, initial: 9, target: 3 },
+  { a: 10, b: 1, at: 0, initial: 6, target: 2 }, { a: 10, b: 2, at: 1, initial: 11, target: 2 },
+  { a: 12, b: 1, at: 0, initial: 1, target: 3 }, { a: 12, b: 4, at: 1, initial: 12, target: 3 },
+] as const;
+
+function constantOfIntegrationNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { a, b, at, initial, target } = pick(rand, INITIAL_VALUE_CASES);
+  const primitive = (x: number) => a * x ** 2 / 2 + b * x;
+  const constant = initial - primitive(at);
+  const answer = primitive(target) + constant;
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `F'(x) = ${a}x + ${b} and F(${at}) = ${initial}. Find F(${target}).`,
+    task: "antiderivativeInitialValue" as const,
+    values: [],
+    aivRate: [a, b],
+    aivOrder: 1,
+    aivAt0: at,
+    aivInit: [initial],
+    aivTarget: target,
+    answerMode: "numeric" as const,
+    tolerance: 0,
+    numericErrors: uniqueNumericErrors(answer, [
+      { value: primitive(target), feedback: "That silently sets C = 0. Use the given point to determine the vertical shift." },
+      { value: initial, feedback: `That is F(${at}), the given value, rather than F(${target}).` },
+      { value: a * target + b, feedback: `That is F'(${target}), the rate at the target, not the function value.` },
+    ]),
+    choices: [],
+    authoredStages: [],
+    requiredStageKeys: [],
+    requiredExplorations: 1,
+    explorationFeedback: "Use the initial condition to identify the one member of the antiderivative family.",
+    fallbackFeedback: `The initial condition gives C = ${constant}; substituting x = ${target} gives ${answer}.`,
+    successFeedback: `The initial condition fixes C = ${constant}, so F(${target}) = ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const CONSTANT_FAMILY_CASES = [
+  { a: 2, b: 1 }, { a: 2, b: 2 }, { a: 2, b: 3 }, { a: 2, b: 4 },
+  { a: 4, b: 1 }, { a: 4, b: 2 }, { a: 4, b: 3 }, { a: 4, b: 4 },
+  { a: 6, b: 1 }, { a: 6, b: 2 }, { a: 6, b: 3 }, { a: 6, b: 4 },
+] as const;
+
+function constantOfIntegrationMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { a, b } = pick(rand, CONSTANT_FAMILY_CASES);
+  const half = a / 2;
+  const family = `${powerLabel(half, 2)} + ${powerLabel(b, 1)} + C`;
+  return integrationMcq(rand, `F'(x) = ${a}x + ${b}, but no value of F is given. Which conclusion is fully determined?`, [
+    { label: `F(x) = ${family}.`, correct: true, feedback: "The derivative determines the shape, while the unknown vertical position remains as C." },
+    { label: `F(x) = ${powerLabel(half, 2)} + ${powerLabel(b, 1)}.`, correct: false, feedback: "Without one value of F, there is no evidence that the constant is zero." },
+    { label: `F(x) = ${powerLabel(a, 1)} + ${b} + C.`, correct: false, feedback: "That repeats the derivative rather than antidifferentiating it." },
+    { label: "C = 0.", correct: false, feedback: "A derivative cannot reveal vertical position; an initial value is needed to determine C." },
+  ]);
+}
+
+type LibraryChoiceCase =
+  | { kind: "sin" | "cos" | "exp"; k: number }
+  | { kind: "log"; m: number };
+
+const LIBRARY_MCQ_CASES: readonly LibraryChoiceCase[] = [
+  { kind: "sin", k: 2 }, { kind: "sin", k: 3 }, { kind: "sin", k: 4 },
+  { kind: "cos", k: 2 }, { kind: "cos", k: 3 }, { kind: "cos", k: 5 },
+  { kind: "exp", k: 2 }, { kind: "exp", k: 4 }, { kind: "exp", k: 6 },
+  { kind: "log", m: 2 }, { kind: "log", m: 3 }, { kind: "log", m: 5 },
+];
+
+function libraryMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, LIBRARY_MCQ_CASES);
+  if (entry.kind === "log") {
+    const correct = `${entry.m} ln|x| + C`;
+    return integrationMcq(rand, `What is the indefinite integral of ${entry.m}/x dx?`, [
+      { label: correct, correct: true, feedback: "Because the derivative of ln|x| is 1/x, the coefficient carries through unchanged." },
+      { label: `${entry.m}/x + C`, correct: false, feedback: "That repeats the integrand; differentiating it would produce a negative square in the denominator." },
+      { label: `ln|${entry.m}x| + C`, correct: false, feedback: "A constant inside the logarithm changes only the integration constant; it does not create the required outside coefficient." },
+      { label: `${entry.m}x ln|x| + C`, correct: false, feedback: "Differentiating this introduces an extra logarithm term." },
+    ]);
+  }
+  const { kind, k } = entry;
+  const prompt = `What is the indefinite integral of ${kind}(${k}x) dx?`;
+  if (kind === "sin") {
+    const correct = `-cos(${k}x)/${k} + C`;
+    return integrationMcq(rand, prompt, [
+      { label: correct, correct: true, feedback: "The minus reverses the derivative of cosine, and division by the inner coefficient reverses the chain rule." },
+      { label: `cos(${k}x)/${k} + C`, correct: false, feedback: "Differentiating gives the negative of the requested sine." },
+      { label: `-cos(${k}x) + C`, correct: false, feedback: `Differentiating multiplies by ${k}; divide by ${k} to cancel it.` },
+      { label: `sin(${k}x)/${k} + C`, correct: false, feedback: "Differentiating sine produces cosine, not sine." },
+    ]);
+  }
+  if (kind === "cos") {
+    const correct = `sin(${k}x)/${k} + C`;
+    return integrationMcq(rand, prompt, [
+      { label: correct, correct: true, feedback: "Differentiate back: the inner factor cancels the division, leaving cosine." },
+      { label: `-sin(${k}x)/${k} + C`, correct: false, feedback: "Cosine needs no negative sign when read backward from the derivative of sine." },
+      { label: `sin(${k}x) + C`, correct: false, feedback: `Divide by ${k} to reverse the inner derivative.` },
+      { label: `cos(${k}x)/${k} + C`, correct: false, feedback: "Differentiating cosine produces sine with a negative sign." },
+    ]);
+  }
+  const correct = `e^(${k}x)/${k} + C`;
+  return integrationMcq(rand, prompt, [
+    { label: correct, correct: true, feedback: `The exponential keeps its form, and division by ${k} reverses the inner derivative.` },
+    { label: `e^(${k}x) + C`, correct: false, feedback: `Differentiating would produce ${k} times the requested integrand.` },
+    { label: `${k}e^(${k}x) + C`, correct: false, feedback: "That multiplies by the inner derivative again instead of reversing it." },
+    { label: `e^x/${k} + C`, correct: false, feedback: "The inner expression remains kx in the antiderivative." },
+  ]);
+}
+
+type LibraryNumericCase =
+  | { kind: "log" | "sin" | "cos" | "exp"; multiplier: number };
+
+const LIBRARY_NUMERIC_CASES: readonly LibraryNumericCase[] = [
+  { kind: "log", multiplier: 2 }, { kind: "log", multiplier: 3 }, { kind: "log", multiplier: 5 },
+  { kind: "sin", multiplier: 3 }, { kind: "sin", multiplier: 4 }, { kind: "sin", multiplier: 6 },
+  { kind: "cos", multiplier: 7 }, { kind: "cos", multiplier: 9 }, { kind: "cos", multiplier: 10 },
+  { kind: "exp", multiplier: 11 }, { kind: "exp", multiplier: 13 }, { kind: "exp", multiplier: 14 },
+];
+
+function libraryNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { kind, multiplier } = pick(rand, LIBRARY_NUMERIC_CASES);
+  const prompt = kind === "log"
+    ? `Evaluate the integral from 1 to e of ${multiplier}/x dx.`
+    : kind === "sin"
+      ? `Evaluate the integral from 0 to pi of ${multiplier} sin x dx.`
+      : kind === "cos"
+        ? `Evaluate the integral from 0 to pi/2 of ${multiplier} cos x dx.`
+        : `Evaluate the integral from 0 to ln 2 of ${multiplier} e^x dx.`;
+  const answer = kind === "sin" ? 2 * multiplier : multiplier;
+  const widget = {
+    type: "numeric" as const,
+    prompt,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: multiplier, feedback: kind === "sin" ? "The sine accumulation from 0 to pi contributes a factor of 2." : "Recheck the endpoint subtraction rather than copying the coefficient." },
+      { value: 2 * multiplier, feedback: kind === "sin" ? "That is the correct endpoint change; recheck which quantity the prompt asks for." : "This doubles the endpoint change without a mathematical reason." },
+      { value: 0, feedback: "The antiderivative has different values at the two stated endpoints." },
+      { value: -answer, feedback: "This reverses the endpoint subtraction or the antiderivative sign." },
+    ]),
+    fallbackFeedback: kind === "log"
+      ? `${multiplier}[ln x] from 1 to e is ${answer}.`
+      : kind === "sin"
+        ? `${multiplier}[-cos x] from 0 to pi is ${answer}.`
+        : kind === "cos"
+          ? `${multiplier}[sin x] from 0 to pi/2 is ${answer}.`
+          : `${multiplier}[e^x] from 0 to ln 2 is ${answer}.`,
+    successFeedback: `The definite integral is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
 const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "integration-accumulation__in-riemann__numeric": riemannNumericWidget,
   "integration-accumulation__in-riemann__mcq": riemannMcqWidget,
@@ -2058,6 +2275,12 @@ const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => Generated
   "integration-accumulation__in-ftc-unified__dragOrder": ftcUnifiedDragOrderWidget,
   "integration-accumulation__in-ftc-unified__dragBucket": ftcUnifiedDragBucketWidget,
   "integration-accumulation__in-ftc-unified__numeric": ftcUnifiedNumericWidget,
+  "integration-accumulation__in-antiderivative__mcq": antiderivativeMcqWidget,
+  "integration-accumulation__in-antiderivative__numeric": antiderivativeNumericWidget,
+  "integration-accumulation__in-constant-of-integration__numeric": constantOfIntegrationNumericWidget,
+  "integration-accumulation__in-constant-of-integration__mcq": constantOfIntegrationMcqWidget,
+  "integration-accumulation__in-library__mcq": libraryMcqWidget,
+  "integration-accumulation__in-library__numeric": libraryNumericWidget,
 };
 
 const TARGET_GENERATOR = "g13-curve-analysis";

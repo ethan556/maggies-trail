@@ -60,7 +60,19 @@ const INTEGRATION_FOUNDATION_FORMS = {
   FTC_UNIFIED_ORDER: 'integration-accumulation__in-ftc-unified__dragOrder',
   FTC_UNIFIED_BUCKET: 'integration-accumulation__in-ftc-unified__dragBucket',
   FTC_UNIFIED_NUMERIC: 'integration-accumulation__in-ftc-unified__numeric',
+  ANTIDERIVATIVE_MCQ: 'integration-accumulation__in-antiderivative__mcq',
+  ANTIDERIVATIVE_NUMERIC: 'integration-accumulation__in-antiderivative__numeric',
+  CONSTANT_NUMERIC: 'integration-accumulation__in-constant-of-integration__numeric',
+  CONSTANT_MCQ: 'integration-accumulation__in-constant-of-integration__mcq',
+  LIBRARY_MCQ: 'integration-accumulation__in-library__mcq',
+  LIBRARY_NUMERIC: 'integration-accumulation__in-library__numeric',
 };
+
+function powerLabel(coefficient, power) {
+  if (power === 0) return String(coefficient);
+  const coefficientText = coefficient === 1 ? '' : String(coefficient);
+  return power === 1 ? `${coefficientText}x` : `${coefficientText}x^${power}`;
+}
 
 function solveFirstDerivativeMaximum(input) {
   const prompt = String(input)
@@ -612,6 +624,60 @@ function solveIntegrationFoundation(form, input) {
     if (!minimum) throw new Error(`unrecognized unified-FTC numeric prompt: ${prompt}`);
     const root = Math.sqrt(Number(minimum[1]));
     return Number((-2 * root ** 3 / 3).toFixed(3));
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.ANTIDERIVATIVE_MCQ) {
+    const match = /indefinite integral of (\d*)x(?:\^(\d+))? dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized antiderivative MCQ prompt: ${prompt}`);
+    const coefficient = match[1] ? Number(match[1]) : 1;
+    const power = match[2] ? Number(match[2]) : 1;
+    const divisor = power + 1;
+    if (coefficient % divisor !== 0) throw new Error(`antiderivative coefficient is not exactly divisible: ${prompt}`);
+    return `${powerLabel(coefficient / divisor, divisor)} + C`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.ANTIDERIVATIVE_NUMERIC) {
+    const match = /integral from (-?\d+) to (-?\d+) of \((\d+)x\^2 \+ (\d+)x\) dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized antiderivative numeric prompt: ${prompt}`);
+    const lower = Number(match[1]); const upper = Number(match[2]);
+    const x2 = Number(match[3]); const x1 = Number(match[4]);
+    if (x2 % 3 !== 0 || x1 % 2 !== 0) throw new Error(`antiderivative prompt does not have exact integer coefficients: ${prompt}`);
+    const primitive = (x) => x2 * x ** 3 / 3 + x1 * x ** 2 / 2;
+    return primitive(upper) - primitive(lower);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.CONSTANT_NUMERIC) {
+    const match = /F'\(x\) = (\d+)x \+ (\d+) and F\((-?\d+)\) = (-?\d+)\. Find F\((-?\d+)\)\./.exec(prompt);
+    if (!match) throw new Error(`unrecognized initial-value prompt: ${prompt}`);
+    const a = Number(match[1]); const b = Number(match[2]); const at = Number(match[3]);
+    const initial = Number(match[4]); const target = Number(match[5]);
+    const primitive = (x) => a * x ** 2 / 2 + b * x;
+    return primitive(target) + initial - primitive(at);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.CONSTANT_MCQ) {
+    const match = /F'\(x\) = (\d+)x \+ (\d+), but no value of F is given/.exec(prompt);
+    if (!match) throw new Error(`unrecognized constant-family prompt: ${prompt}`);
+    const a = Number(match[1]); const b = Number(match[2]);
+    if (a % 2 !== 0) throw new Error(`constant-family prompt has a non-integral quadratic coefficient: ${prompt}`);
+    return `F(x) = ${powerLabel(a / 2, 2)} + ${powerLabel(b, 1)} + C.`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.LIBRARY_MCQ) {
+    const log = /indefinite integral of (\d+)\/x dx/.exec(prompt);
+    if (log) return `${log[1]} ln|x| + C`;
+    const trigOrExp = /indefinite integral of (sin|cos|exp)\((\d+)x\) dx/.exec(prompt);
+    if (!trigOrExp) throw new Error(`unrecognized antiderivative-library MCQ prompt: ${prompt}`);
+    const kind = trigOrExp[1]; const k = Number(trigOrExp[2]);
+    if (kind === 'sin') return `-cos(${k}x)/${k} + C`;
+    if (kind === 'cos') return `sin(${k}x)/${k} + C`;
+    return `e^(${k}x)/${k} + C`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.LIBRARY_NUMERIC) {
+    const log = /integral from 1 to e of (\d+)\/x dx/.exec(prompt);
+    if (log) return Number(log[1]);
+    const sine = /integral from 0 to pi of (\d+) sin x dx/.exec(prompt);
+    if (sine) return 2 * Number(sine[1]);
+    const cosine = /integral from 0 to pi\/2 of (\d+) cos x dx/.exec(prompt);
+    if (cosine) return Number(cosine[1]);
+    const exponential = /integral from 0 to ln 2 of (\d+) e\^x dx/.exec(prompt);
+    if (exponential) return Number(exponential[1]);
+    throw new Error(`unrecognized antiderivative-library numeric prompt: ${prompt}`);
   }
   throw new Error(`unrecognized integration-foundation form ${form}`);
 }
