@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `e6ee9627e59ad20a918b9b5e89504c85d0d274089cfb10055ec74e3dc0ca4e01`
-- Queue-compatible lesson-only seal: `b2588d68ce358c3b9b023c78e14d89b5f4b9acf8393696da5fe436960838a4b9`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `b2588d68ce358c3b9b023c78e14d89b5f4b9acf8393696da5fe436960838a4b9`)
+- Review-basis seal (lessons plus course/grade metadata): `c477b3b674aaa21681fb8fed869c7d6b87878347e3e9351b04dfd9f1afbe7fb1`
+- Queue-compatible lesson-only seal: `8b8bbacd4dc964b4871f4041e77e7c160f43f74b243cc04bb03967ebedfdd6f0`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `8b8bbacd4dc964b4871f4041e77e7c160f43f74b243cc04bb03967ebedfdd6f0`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
