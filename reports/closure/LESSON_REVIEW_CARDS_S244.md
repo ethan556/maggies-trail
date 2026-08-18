@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `217876890311c9b66c19cd2f5875b80670ab168ee4a73a5d26e9538624403b38`
-- Queue-compatible lesson-only seal: `e38ffd09ea69133b7797744a5b8ee645b31cdd0abee67cf89193559bace52b32`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `e38ffd09ea69133b7797744a5b8ee645b31cdd0abee67cf89193559bace52b32`)
+- Review-basis seal (lessons plus course/grade metadata): `e81418230d34c69e5789edbc445e734827818bcd9f63cba61394dc0c543d9ea4`
+- Queue-compatible lesson-only seal: `9e0ec5f6d0d5694a6dc25233fc3b56e45c8865d9aa7add1d650bf8686737498e`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `9e0ec5f6d0d5694a6dc25233fc3b56e45c8865d9aa7add1d650bf8686737498e`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -15,13 +15,13 @@ These counts overlap and must not be summed as independent lesson defects.
 
 | Judgment / evidence packet | Explicitly closed | Pending / flagged |
 |---|---:|---:|
-| Whole-lesson KEEP / REVISE / ESCALATE | 0 | 1,701 lessons |
-| Visual required / preferred / sufficient | 0 | 1,701 lessons |
-| Grade-band language fitness | 0 | 1,701 lessons |
+| Whole-lesson KEEP / REVISE / ESCALATE | 50 | 1,651 lessons |
+| Visual required / preferred / sufficient | 50 | 1,651 lessons |
+| Grade-band language fitness | 50 | 1,651 lessons |
 | Standards edge approval / rejection | 0 | 6,121 edges |
 | Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
 | Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 126 clusters / 288 placements |
-| Broader progression / repetition queue | 0 semantic dispositions recorded here | 690 lessons |
+| Broader progression / repetition queue | 0 semantic dispositions recorded here | 672 lessons |
 
 Exact duplicate evidence includes **49** within-lesson groups across **179** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
 

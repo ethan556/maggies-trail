@@ -116,30 +116,30 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | 103 | pq-02-02 — Opposite & Consecutive Angles | Polygons & Quadrilaterals (G10) | pq-para-angles | 10 | 18 | 100% | — | static |
 | 104 | dd-04b-02 — Comparing with Box Plots | Data & Distributions (G6) | box-plot-compare | 70 | 15 | 83% | Distribution Lab | rich-widget |
 | 105 | tc-04-03 — Choosing the Right Center | Triangle Congruence & Centers (G10) | tc-centers-choice | 145 | 14 | 100% | — | static |
-| 106 | mf3-02-01 — The ×6 Facts | Multiplication Fluency (G3) | g3m-x6 | 13 | 18 | 67% | Fraction Models | rich-widget |
-| 107 | in-05-02 — Changing the Limits | Calculus: Integration & the Fundamental Theorem (G13) | in-usub-limits | 23 | 16 | 100% | — | static |
-| 108 | sr-04-03 — Geometric Series at Work | Algebra 2: Sequences & Series (G11) | sr-geo-apply | 9 | 17 | 83% | Function Lab | rich-widget |
-| 109 | dop-01-03 — Writing & Reading Expressions | Decimal & Whole-Number Operations (G5) | expression-forms | 598 | 14 | 83% | — | static |
-| 110 | se-01-02 — Solving by Graphing | Algebra 1: Systems of Linear Equations (G9) | solve-by-graphing | 54 | 18 | 50% | Coordinate Plane | rich-widget |
-| 111 | re-03-01 — The Square-Root Function | Algebra 2: Radical Functions & Equations (G11) | re-sqrt-fn | 55 | 17 | 83% | — | static |
-| 112 | cx-05-03 — Circles in Disguise | Geometry: Coordinate Proofs (G10) | cx-circle-cts | 15 | 19 | 83% | — | static |
-| 113 | mf3-02-03 — The ×8 Facts | Multiplication Fluency (G3) | g3m-x8 | 11 | 18 | 67% | Fraction Models | rich-widget |
-| 114 | alg1-01-02 — Variables on Both Sides | Algebra 1: Solving Linear Equations (G9) | both-sides | 361 | 14 | 83% | — | static |
-| 115 | alg1-01-03 — Distribute, Then Solve | Algebra 1: Solving Linear Equations (G9) | distribute-solve | 360 | 14 | 83% | — | static |
-| 116 | alg1-02-01 — Equations with One Fraction | Algebra 1: Solving Linear Equations (G9) | fraction-eq | 359 | 14 | 83% | — | static |
-| 117 | alg1-02-02 — Clear with the LCD | Algebra 1: Solving Linear Equations (G9) | lcd-clear | 358 | 14 | 83% | — | static |
-| 118 | alg1-02-03 — Decimal Equations | Algebra 1: Solving Linear Equations (G9) | decimal-eq | 357 | 14 | 83% | — | static |
-| 119 | pp-01-03 — Rectangular → Polar: Watch the Quadrant | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-to-polar | 16 | 16 | 100% | — | static |
-| 120 | sr-01-03 — Converting Between Forms | Algebra 2: Sequences & Series (G11) | sr-convert | 17 | 17 | 67% | Algebra Balance, Function Lab | rich-widget |
-| 121 | lc-02-01 — Direct Substitution & the Limit Laws | Precalculus: Limits & the Doorway to Calculus (G12) | lc-laws | 89 | 14 | 80% | Coordinate Plane | rich-widget |
-| 122 | dr-04-02 — Chains Within Chains | Calculus: The Derivative (G13) | dr-chain-nested, dr-implicit | 67 | 15 | 100% | — | static |
-| 123 | dd-05-03 — The Data Detective | Data & Distributions (G6) | data-capstone | 66 | 15 | 100% | — | static |
-| 124 | sr-02-03 — Writing Sums in Sigma Form | Algebra 2: Sequences & Series (G11) | sr-sigma-write | 14 | 17 | 67% | Function Lab, Algebra Balance | rich-widget |
-| 125 | cn-02-03 — Complex Numbers & the Plane | Algebra 2: Complex Numbers & Quadratics (G11) | cn-complex-plane | 147 | 14 | 67% | Coordinate Plane | rich-widget |
-| 126 | tm-01-03 — Turning with Rotations | Grade 8: Transformations & Measurement (G8) | tm-rotation | 231 | 14 | 83% | — | static |
-| 127 | ep-04-01 — Factoring with the GCF | Algebra 1: Exponents & Polynomials (G9) | factor-gcf | 245 | 14 | 57% | Algebra Balance | rich-widget |
-| 128 | pq-02-01 — Opposite Sides | Polygons & Quadrilaterals (G10) | pq-para-sides | 11 | 19 | 83% | — | static |
-| 129 | g4v-01-03 — Converting Length | Measurement Word Problems (G4) | g4v-length | 9 | 18 | 67% | Dynamic Number Line | rich-widget |
+| 106 | in-05-02 — Changing the Limits | Calculus: Integration & the Fundamental Theorem (G13) | in-usub-limits | 23 | 16 | 100% | — | static |
+| 107 | sr-04-03 — Geometric Series at Work | Algebra 2: Sequences & Series (G11) | sr-geo-apply | 9 | 17 | 83% | Function Lab | rich-widget |
+| 108 | dop-01-03 — Writing & Reading Expressions | Decimal & Whole-Number Operations (G5) | expression-forms | 598 | 14 | 83% | — | static |
+| 109 | se-01-02 — Solving by Graphing | Algebra 1: Systems of Linear Equations (G9) | solve-by-graphing | 54 | 18 | 50% | Coordinate Plane | rich-widget |
+| 110 | re-03-01 — The Square-Root Function | Algebra 2: Radical Functions & Equations (G11) | re-sqrt-fn | 55 | 17 | 83% | — | static |
+| 111 | cx-05-03 — Circles in Disguise | Geometry: Coordinate Proofs (G10) | cx-circle-cts | 15 | 19 | 83% | — | static |
+| 112 | mf3-02-01 — The ×8 Facts | Multiplication Fluency (G3) | g3m-x8 | 11 | 18 | 67% | Fraction Models | rich-widget |
+| 113 | alg1-01-02 — Variables on Both Sides | Algebra 1: Solving Linear Equations (G9) | both-sides | 361 | 14 | 83% | — | static |
+| 114 | alg1-01-03 — Distribute, Then Solve | Algebra 1: Solving Linear Equations (G9) | distribute-solve | 360 | 14 | 83% | — | static |
+| 115 | alg1-02-01 — Equations with One Fraction | Algebra 1: Solving Linear Equations (G9) | fraction-eq | 359 | 14 | 83% | — | static |
+| 116 | alg1-02-02 — Clear with the LCD | Algebra 1: Solving Linear Equations (G9) | lcd-clear | 358 | 14 | 83% | — | static |
+| 117 | alg1-02-03 — Decimal Equations | Algebra 1: Solving Linear Equations (G9) | decimal-eq | 357 | 14 | 83% | — | static |
+| 118 | pp-01-03 — Rectangular → Polar: Watch the Quadrant | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-to-polar | 16 | 16 | 100% | — | static |
+| 119 | sr-01-03 — Converting Between Forms | Algebra 2: Sequences & Series (G11) | sr-convert | 17 | 17 | 67% | Algebra Balance, Function Lab | rich-widget |
+| 120 | lc-02-01 — Direct Substitution & the Limit Laws | Precalculus: Limits & the Doorway to Calculus (G12) | lc-laws | 89 | 14 | 80% | Coordinate Plane | rich-widget |
+| 121 | dr-04-02 — Chains Within Chains | Calculus: The Derivative (G13) | dr-chain-nested, dr-implicit | 67 | 15 | 100% | — | static |
+| 122 | dd-05-03 — The Data Detective | Data & Distributions (G6) | data-capstone | 66 | 15 | 100% | — | static |
+| 123 | sr-02-03 — Writing Sums in Sigma Form | Algebra 2: Sequences & Series (G11) | sr-sigma-write | 14 | 17 | 67% | Function Lab, Algebra Balance | rich-widget |
+| 124 | cn-02-03 — Complex Numbers & the Plane | Algebra 2: Complex Numbers & Quadratics (G11) | cn-complex-plane | 147 | 14 | 67% | Coordinate Plane | rich-widget |
+| 125 | tm-01-03 — Turning with Rotations | Grade 8: Transformations & Measurement (G8) | tm-rotation | 231 | 14 | 83% | — | static |
+| 126 | ep-04-01 — Factoring with the GCF | Algebra 1: Exponents & Polynomials (G9) | factor-gcf | 245 | 14 | 57% | Algebra Balance | rich-widget |
+| 127 | pq-02-01 — Opposite Sides | Polygons & Quadrilaterals (G10) | pq-para-sides | 11 | 19 | 83% | — | static |
+| 128 | g4v-01-03 — Converting Length | Measurement Word Problems (G4) | g4v-length | 9 | 18 | 67% | Dynamic Number Line | rich-widget |
+| 129 | mf3-02-03 — The ×10 Facts | Multiplication Fluency (G3) | g3m-x10 | 9 | 18 | 67% | Fraction Models | rich-widget |
 | 130 | dr-02-02 — Constants, Sums and Multiples | Calculus: The Derivative (G13) | dr-constant-sum | 73 | 14 | 80% | Calculus Visualizer | rich-widget |
 | 131 | in-03-01 — FTC Part 1: The Slope of the Area | Calculus: Integration & the Fundamental Theorem (G13) | in-ftc1 | 29 | 15 | 80% | Calculus Visualizer | rich-widget |
 | 132 | sp-02b-01 — MAD as a Ruler | Grade 7: Sampling & Probability (G7) | sp-mad-multiple | 54 | 16 | 83% | — | static |
@@ -692,6 +692,7 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | smg1-02-03 — Fourths Make Halves | Grade 1: Shapes & Fractions | Fraction Models | smg1-halves-fourths |
 | bv-02-02 — Judging a Good Fit | Grade 8: Bivariate Statistics | Coordinate Plane | bv-judge-fit |
 | cx-01-03 — Distances at Work | Geometry: Coordinate Proofs | Coordinate Plane | cx-dist-apps |
+| mf3-01-05 — The ×6 Facts | Multiplication Fluency | Fraction Models | g3m-x6 |
 | mc-05-01 — Measuring to the Nearest Fraction | Measure & Convert | — | fraction-measurement |
 | ca-01-01 — Finding the Suspects | Calculus: Curve Analysis | Calculus Visualizer | ca-critical-point |
 | bv-03-03 — How Far to Trust a Prediction | Grade 8: Bivariate Statistics | Coordinate Plane | bv-prediction-limits |
@@ -706,7 +707,7 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | smg1-02-01 — Splitting a Shape in Half | Grade 1: Shapes & Fractions | Fraction Models | smg1-halves |
 | fr-02-01 — Cutting the Line | Fractions from Scratch | — | nl-partition |
 | rf-01-02 — Simplify by Factoring | Algebra 2: Rational Functions | Function Lab, Algebra Balance | rf-simplify |
-| mf3-02-02 — The ×7 Facts | Multiplication Fluency | Fraction Models | g3m-x7 |
+| mf3-01-06 — The ×7 Facts | Multiplication Fluency | Fraction Models | g3m-x7 |
 | fr-02-04 — Fractions Past One | Fractions from Scratch | — | nl-beyond-one |
 | c120-05-02 — Ten More, Ten Less | Count & Write to 120 | Dynamic Number Line | ten-more-less |
 | md-02-03 — Measure-and-Solve Stories | Measurement, Time & Data | — | measure-problems |
@@ -736,7 +737,7 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | tm-02-01 — Congruent Shapes | Grade 8: Transformations & Measurement | Transformations | tm-congruence |
 | df3-01-02 — Dividing by 3 | Division Fluency | Fraction Models | g3d-div3 |
 | g4m-01-06 — Two-Digit by Two-Digit: Partial Products | Multi-Digit Multiplication & Division | Fraction Models | g4m-2x2-partial |
-| mf3-02-04 — The ×9 Facts | Multiplication Fluency | Fraction Models | g3m-x9 |
+| mf3-02-02 — The ×9 Facts | Multiplication Fluency | Fraction Models | g3m-x9 |
 | tg-02-01 — Cosine's Graph: Starting at the Top | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-cos-graph |
 | sr-05-02 — The Infinite Sum Formula | Algebra 2: Sequences & Series | Function Lab | sr-inf-sum |
 | dd-02-01 — Dot Plots | Data & Distributions | Distribution Lab, Coordinate Plane | dot-plot |
@@ -747,7 +748,6 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | cr-03-02 — The Two-Tangent Theorem | Geometry: Circle Theorems | Unit Circle & Trig | cr-two-tangent |
 | df3-01-03 — Dividing by 4 and 5 | Division Fluency | Fraction Models | g3d-div45 |
 | g4p-01-01 — Finding All Factor Pairs | Patterns, Factors & Multiples | Fraction Models | g4pf-factor-pairs |
-| mf3-01-05 — The ×10 Facts | Multiplication Fluency | Fraction Models | g3m-x10 |
 | dr-01-02 — Reading f′ Off the Shape of f | Calculus: The Derivative | Calculus Visualizer | dr-flat-not-turning, dr-sign-of-derivative, dr-critical-point |
 | tm-01-02 — Flipping with Reflections | Grade 8: Transformations & Measurement | Transformations | tm-reflection |
 | dop-03-02 — Long Division, Two-Digit Divisor | Decimal & Whole-Number Operations | Dynamic Number Line | long-division-2digit |
@@ -775,7 +775,7 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | as-03-02 — Counting Back | Addition & Subtraction within 20 | Dynamic Number Line | count-back |
 | as-03-03 — Finding the Difference | Addition & Subtraction within 20 | Dynamic Number Line | difference |
 | df3-01-04 — Dividing by 6 and 7 | Division Fluency | Fraction Models | g3d-div67 |
-| mf3-01-06 — Square Facts: 6×6 to 9×9 | Multiplication Fluency | Fraction Models | g3m-squares |
+| mf3-02-04 — Square Facts: 3×3 to 5×5 | Multiplication Fluency | Fraction Models | g3m-squares |
 | as-03-04 — Subtraction Facts | Addition & Subtraction within 20 | Dynamic Number Line | sub-facts |
 | fr-04-04 — Only If the Wholes Match | Fractions from Scratch | — | same-whole |
 | as-05-02 — Put Together & Take Apart | Addition & Subtraction within 20 | Dynamic Number Line | part-whole |

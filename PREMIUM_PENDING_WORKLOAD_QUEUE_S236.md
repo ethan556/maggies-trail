@@ -1,11 +1,11 @@
 # Maggie's Trail V4 consolidated pending workload — live derived view
 
 Generated from current source on 2026-08-18.
-Curriculum source seal: `e38ffd09ea69133b7797744a5b8ee645b31cdd0abee67cf89193559bace52b32`.
+Curriculum source seal: `9e0ec5f6d0d5694a6dc25233fc3b56e45c8865d9aa7add1d650bf8686737498e`.
 
-- Total open rows: **14,595**
+- Total open rows: **14,447**
 - P0 rows: **1,403**
-- P1 rows: **13,189**
+- P1 rows: **13,041**
 - P2 rows: **3**
 
 ## Workstreams
@@ -13,13 +13,14 @@ Curriculum source seal: `e38ffd09ea69133b7797744a5b8ee645b31cdd0abee67cf89193559
 | Workstream | Open rows |
 |---|---:|
 | STANDARDS_VERIFICATION | 6,121 |
-| VISUAL_FIRST_REPRESENTATION | 1,701 |
-| GRADE_LANGUAGE_REVIEW | 1,701 |
-| LESSON_COMPLETE_DISPOSITION | 1,701 |
+| VISUAL_FIRST_REPRESENTATION | 1,651 |
+| GRADE_LANGUAGE_REVIEW | 1,651 |
+| LESSON_COMPLETE_DISPOSITION | 1,651 |
 | MATH_PRESENTATION_RESIDUE | 1,077 |
 | ILLUSTRATION_REPLACEMENT | 1,055 |
-| LESSON_PROGRESSION_AND_DUPLICATION | 690 |
-| CHOICE_SURFACE_INTEGRITY | 477 |
+| LESSON_PROGRESSION_AND_DUPLICATION | 672 |
+| CHOICE_SURFACE_INTEGRITY | 460 |
+| LESSON_REVISION_IMPLEMENTATION | 37 |
 | CLOSURE_LEDGER | 27 |
 | ENGINE_REVERSIBLE_PLAY | 17 |
 | QUESTION_DIVERSITY_AND_TRANSFER | 15 |
