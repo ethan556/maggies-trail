@@ -1,5 +1,6 @@
 import templates from "./precalculusVariantTemplates.json";
 import { generatorsFromAuthoredBank } from "./authoredTemplateVariants";
+import type { Variant } from "./variants";
 
 const AUTHORED_PRECALCULUS_GENERATORS = generatorsFromAuthoredBank(
   templates as Record<string, Record<string, any[]>>,
@@ -393,6 +394,262 @@ function inverseVerifyVariant(rand: () => number) {
   return { tag: "g12-function-analysis", widget, answer: chosen.x };
 }
 
+/* S246 / Phase 5: lc-01 previously fell back to one-to-three authored items per
+ * form. Keep the three lesson jobs distinct while giving every form a twelve-
+ * state mathematical pool. The independent checker parses only the learner-
+ * visible prompt; none of these case tables are shared with it. */
+type LimitGeneratedVariant = Variant & { tag: "g12-limits-continuity" };
+type LimitChoice = { label: string; correct: boolean; feedback: string };
+
+const LIMIT_IDEA_MCQ_FORM = "limits-continuity__lc-limit-idea__mcq";
+const LIMIT_IDEA_NUMERIC_FORM = "limits-continuity__lc-limit-idea__numeric";
+const LIMIT_READ_NUMERIC_FORM = "limits-continuity__lc-read-limit__numeric";
+const LIMIT_DNE_MCQ_FORM = "limits-continuity__lc-dne__mcq";
+const LIMIT_DNE_NUMERIC_FORM = "limits-continuity__lc-dne__numeric";
+const LIMIT_FACTOR_NUMERIC_FORM = "limits-continuity__lc-factor__numeric";
+const LIMIT_RATIONALIZE_MCQ_FORM = "limits-continuity__lc-rationalize__mcq";
+const LIMIT_RATIONALIZE_NUMERIC_FORM = "limits-continuity__lc-rationalize__numeric";
+
+const chooseLimitCase = <T,>(rand: () => number, cases: readonly T[]): T =>
+  cases[Math.floor(rand() * cases.length)]!;
+
+function shuffleLimitChoices(rand: () => number, choices: readonly LimitChoice[]) {
+  const copy = [...choices];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(rand() * (index + 1));
+    [copy[index], copy[swap]] = [copy[swap]!, copy[index]!];
+  }
+  return copy.map((choice, index) => ({ ...choice, id: `o${index}` }));
+}
+
+function limitMcq(rand: () => number, prompt: string, choices: readonly LimitChoice[]): LimitGeneratedVariant {
+  const options = shuffleLimitChoices(rand, choices);
+  const correct = options.find((option) => option.correct);
+  if (!correct) throw new Error("Generated limits MCQ has no correct option");
+  return { tag: "g12-limits-continuity", widget: { type: "mcq", prompt, options }, answer: correct.id };
+}
+
+function limitNumeric(prompt: string, answer: number, traps: readonly number[], feedback: string): LimitGeneratedVariant {
+  const used = new Set([answer]);
+  const commonErrors = traps.filter((value) => {
+    if (!Number.isFinite(value) || used.has(value)) return false;
+    used.add(value);
+    return true;
+  }).map((value) => ({ value, feedback }));
+  for (let offset = 1; commonErrors.length < 2; offset += 1) {
+    const value = answer + offset;
+    if (used.has(value)) continue;
+    used.add(value);
+    commonErrors.push({ value, feedback });
+  }
+  return {
+    tag: "g12-limits-continuity",
+    widget: { type: "numeric", prompt, answer, tolerance: 0, commonErrors, fallbackFeedback: feedback },
+    answer,
+  };
+}
+
+const LIMIT_APPROACH_CASES = [
+  { at: -5, value: -3, gap: 0.2 }, { at: -4, value: 2, gap: 0.1 },
+  { at: -3, value: 7, gap: 0.05 }, { at: -2, value: -6, gap: 0.25 },
+  { at: -1, value: 4, gap: 0.01 }, { at: 0, value: -2, gap: 0.1 },
+  { at: 1, value: 5, gap: 0.2 }, { at: 2, value: 9, gap: 0.05 },
+  { at: 3, value: -4, gap: 0.25 }, { at: 4, value: 6, gap: 0.01 },
+  { at: 5, value: 11, gap: 0.1 }, { at: 6, value: 3, gap: 0.2 },
+] as const;
+
+const LIMIT_POINT_CASES = [
+  { at: -5, approach: 3, point: -2 }, { at: -4, approach: -1, point: 6 },
+  { at: -3, approach: 8, point: 2 }, { at: -2, approach: 4, point: -5 },
+  { at: -1, approach: 7, point: 0 }, { at: 0, approach: -3, point: 5 },
+  { at: 1, approach: 6, point: -4 }, { at: 2, approach: 9, point: 1 },
+  { at: 3, approach: -2, point: 7 }, { at: 4, approach: 5, point: -1 },
+  { at: 5, approach: 10, point: 4 }, { at: 6, approach: 2, point: 11 },
+] as const;
+
+const LIMIT_LINE_CASES = [
+  { m: -4, b: 3, at: -2 }, { m: -3, b: -1, at: 4 },
+  { m: -2, b: 5, at: 3 }, { m: -1, b: -4, at: -5 },
+  { m: 1, b: 6, at: -3 }, { m: 2, b: -4, at: 4 },
+  { m: 3, b: 2, at: -2 }, { m: 4, b: -3, at: 5 },
+  { m: 5, b: 2, at: 2 }, { m: 6, b: -2, at: -1 },
+  { m: 7, b: 4, at: 3 }, { m: 8, b: -6, at: 2 },
+] as const;
+
+const LIMIT_JUMP_CASES = [
+  { at: -5, left: -3, right: 2 }, { at: -4, left: 1, right: 6 },
+  { at: -3, left: 7, right: -2 }, { at: -2, left: -5, right: 4 },
+  { at: -1, left: 0, right: 8 }, { at: 0, left: -4, right: 3 },
+  { at: 1, left: 2, right: 9 }, { at: 2, left: 6, right: -1 },
+  { at: 3, left: -2, right: 5 }, { at: 4, left: 10, right: 4 },
+  { at: 5, left: 3, right: 11 }, { at: 6, left: 8, right: -3 },
+] as const;
+
+const LIMIT_AGREEMENT_CASES = [
+  { at: -5, value: -8 }, { at: -4, value: 3 }, { at: -3, value: 7 },
+  { at: -2, value: -5 }, { at: -1, value: 2 }, { at: 0, value: 9 },
+  { at: 1, value: -4 }, { at: 2, value: 6 }, { at: 3, value: 11 },
+  { at: 4, value: -1 }, { at: 5, value: 8 }, { at: 6, value: 4 },
+] as const;
+
+const LIMIT_FACTOR_CASES = [
+  { at: 2, other: 3 }, { at: 3, other: -2 }, { at: 4, other: 1 },
+  { at: 5, other: -3 }, { at: -2, other: 4 }, { at: -3, other: -5 },
+  { at: 1, other: 6 }, { at: 6, other: 2 }, { at: -4, other: 3 },
+  { at: 7, other: -2 }, { at: -5, other: -1 }, { at: 8, other: -3 },
+] as const;
+
+const LIMIT_RATIONALIZE_CASES = [
+  { root: 1 }, { root: 2 }, { root: 3 }, { root: 4 },
+  { root: 5 }, { root: 6 }, { root: 7 }, { root: 8 },
+  { root: 9 }, { root: 10 }, { root: 11 }, { root: 12 },
+] as const;
+
+const signedLimitNumber = (value: number): string => value < 0 ? `−${Math.abs(value)}` : String(value);
+const decimalLimitNumber = (value: number): string => {
+  const fixed = value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  return fixed.startsWith("-") ? `−${fixed.slice(1)}` : fixed;
+};
+
+function limitIdeaNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_APPROACH_CASES);
+  const left = chosen.value - chosen.gap;
+  const right = chosen.value + chosen.gap;
+  return limitNumeric(
+    `Near x = ${signedLimitNumber(chosen.at)}, a table shows ${decimalLimitNumber(left)} from the left and ${decimalLimitNumber(right)} from the right. What value do both sides approach?`,
+    chosen.value,
+    [chosen.at, Number((right - left).toFixed(2)), Number((left + right).toFixed(2))],
+    `The two output values bracket ${signedLimitNumber(chosen.value)} equally, so the limit is ${signedLimitNumber(chosen.value)}.`,
+  );
+}
+
+function limitIdeaMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_POINT_CASES);
+  const approach = signedLimitNumber(chosen.approach);
+  const point = signedLimitNumber(chosen.point);
+  return limitMcq(rand,
+    `As x approaches ${signedLimitNumber(chosen.at)}, the curve approaches ${approach}, while the plotted point gives f(${signedLimitNumber(chosen.at)}) = ${point}. What is the limit?`,
+    [
+      { label: `${approach}; use the nearby approach`, correct: true, feedback: `Correct. A limit follows nearby values, which approach ${approach}.` },
+      { label: `${point}; use the plotted point`, correct: false, feedback: `That is the single function value. Nearby values approach ${approach}.` },
+      { label: "DNE; the point and approach differ", correct: false, feedback: `A different point value does not prevent the nearby curve from approaching ${approach}.` },
+    ],
+  );
+}
+
+function limitReadNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_LINE_CASES);
+  const answer = chosen.m * chosen.at + chosen.b;
+  const bSign = chosen.b < 0 ? `− ${Math.abs(chosen.b)}` : `+ ${chosen.b}`;
+  return limitNumeric(
+    `The graph is the continuous line f(x) = ${signedLimitNumber(chosen.m)}x ${bSign}. Find the limit as x approaches ${signedLimitNumber(chosen.at)}.`,
+    answer,
+    [chosen.at, chosen.m * chosen.at, chosen.b],
+    `A continuous line can be evaluated directly: ${signedLimitNumber(chosen.m)}(${signedLimitNumber(chosen.at)}) ${bSign} = ${signedLimitNumber(answer)}.`,
+  );
+}
+
+function limitDneMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_JUMP_CASES);
+  const left = signedLimitNumber(chosen.left);
+  const right = signedLimitNumber(chosen.right);
+  const average = decimalLimitNumber((chosen.left + chosen.right) / 2);
+  return limitMcq(rand,
+    `At x = ${signedLimitNumber(chosen.at)}, the left-hand limit is ${left} and the right-hand limit is ${right}. What is the two-sided limit?`,
+    [
+      { label: `DNE; the sides give ${left} and ${right}`, correct: true, feedback: `Correct. A two-sided limit exists only when both one-sided limits agree.` },
+      { label: `${left}; use only the left-hand side`, correct: false, feedback: `The right-hand side approaches ${right}, so the two sides do not agree.` },
+      { label: `${right}; use only the right-hand side`, correct: false, feedback: `The left-hand side approaches ${left}, so the two sides do not agree.` },
+      { label: `${average}; average the two side values`, correct: false, feedback: "One-sided limits are not averaged. Disagreement means the two-sided limit does not exist." },
+    ],
+  );
+}
+
+function limitDneNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_AGREEMENT_CASES);
+  return limitNumeric(
+    `At x = ${signedLimitNumber(chosen.at)}, both the left-hand and right-hand limits equal ${signedLimitNumber(chosen.value)}. What is the two-sided limit?`,
+    chosen.value,
+    [chosen.at, 2 * chosen.value, -chosen.value],
+    `The one-sided limits agree at ${signedLimitNumber(chosen.value)}, so the two-sided limit is ${signedLimitNumber(chosen.value)}.`,
+  );
+}
+
+const limitLinearFactor = (root: number): string => root < 0 ? `(x + ${Math.abs(root)})` : `(x − ${root})`;
+
+function limitFactorNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_FACTOR_CASES);
+  const answer = chosen.at - chosen.other;
+  const cancelled = limitLinearFactor(chosen.at);
+  const remaining = limitLinearFactor(chosen.other);
+  return limitNumeric(
+    `Find the limit as x approaches ${signedLimitNumber(chosen.at)} of [${cancelled}${remaining}]/${cancelled}.`,
+    answer,
+    [0, chosen.at, chosen.other],
+    `For x away from the removable point, cancel ${cancelled}; then ${remaining} approaches ${signedLimitNumber(answer)}.`,
+  );
+}
+
+function limitRationalizeNumericVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_RATIONALIZE_CASES);
+  const square = chosen.root ** 2;
+  const answer = Number((1 / (2 * chosen.root)).toFixed(3));
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `Find the limit as x approaches 0 of [√(x + ${square}) − ${chosen.root}]/x. Give a decimal to three places.`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [{ id: "c", label: "the value under the square root at x = 0", value: square }],
+    approxFormula: {
+      op: "divide" as const,
+      left: { op: "lit" as const, value: 1 },
+      right: {
+        op: "add" as const,
+        left: { op: "sqrt" as const, arg: { op: "const" as const, id: "c" } },
+        right: { op: "sqrt" as const, arg: { op: "const" as const, id: "c" } },
+      },
+    },
+    approxRound: 3,
+    answerMode: "numeric" as const,
+    tolerance: 0.0005,
+    numericErrors: [0, Number((1 / chosen.root).toFixed(3)), Number((1 / square).toFixed(3))]
+      .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
+      .map((value) => ({ value, feedback: "Multiply by the conjugate, cancel x, and evaluate 1 divided by twice the square-root value." })),
+    choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
+    explorationFeedback: "Use the conjugate to replace the radical difference with x before checking.",
+    fallbackFeedback: `The conjugate gives 1/[√(x + ${square}) + ${chosen.root}], so the limit is 1/${2 * chosen.root} = ${answer}.`,
+    successFeedback: `After rationalizing and canceling, the limit is ${answer}.`,
+  };
+  return { tag: "g12-limits-continuity", widget, answer };
+}
+
+function limitRationalizeMcqVariant(rand: () => number): LimitGeneratedVariant {
+  const chosen = chooseLimitCase(rand, LIMIT_RATIONALIZE_CASES);
+  const square = chosen.root ** 2;
+  const conjugate = `(√(x + ${square}) + ${chosen.root})/(√(x + ${square}) + ${chosen.root})`;
+  return limitMcq(rand,
+    `For [√(x + ${square}) − ${chosen.root}]/x as x approaches 0, which move resolves the 0/0 form?`,
+    [
+      { label: `use the conjugate: ${conjugate}`, correct: true, feedback: "Correct. The conjugate turns the numerator product into x, which then cancels." },
+      { label: `use the same sign: (√(x + ${square}) − ${chosen.root})/(√(x + ${square}) − ${chosen.root})`, correct: false, feedback: "That repeats the original radical difference. Use the conjugate with the opposite sign." },
+      { label: "use x factors: multiply numerator and denominator by x", correct: false, feedback: "That adds another factor of x and does not remove the radical difference." },
+      { label: "use substitution: stop and report the result as 0/0", correct: false, feedback: "The indeterminate form signals that an algebraic rewrite is needed; it is not the limit." },
+    ],
+  );
+}
+
+function limitsContinuityVariant(rand: () => number, requestedForm: string): LimitGeneratedVariant | null {
+  if (requestedForm === LIMIT_IDEA_MCQ_FORM) return limitIdeaMcqVariant(rand);
+  if (requestedForm === LIMIT_IDEA_NUMERIC_FORM) return limitIdeaNumericVariant(rand);
+  if (requestedForm === LIMIT_READ_NUMERIC_FORM) return limitReadNumericVariant(rand);
+  if (requestedForm === LIMIT_DNE_MCQ_FORM) return limitDneMcqVariant(rand);
+  if (requestedForm === LIMIT_DNE_NUMERIC_FORM) return limitDneNumericVariant(rand);
+  if (requestedForm === LIMIT_FACTOR_NUMERIC_FORM) return limitFactorNumericVariant(rand);
+  if (requestedForm === LIMIT_RATIONALIZE_MCQ_FORM) return limitRationalizeMcqVariant(rand);
+  if (requestedForm === LIMIT_RATIONALIZE_NUMERIC_FORM) return limitRationalizeNumericVariant(rand);
+  return null;
+}
+
 export const PRECALCULUS_GENERATORS = AUTHORED_PRECALCULUS_GENERATORS.map((generator) => {
   if (generator.tag === "g12-function-analysis") {
     return {
@@ -408,6 +665,13 @@ export const PRECALCULUS_GENERATORS = AUTHORED_PRECALCULUS_GENERATORS.map((gener
         if (requestedForm === INVERSE_VERIFY_FORM) return inverseVerifyVariant(rand);
         return generator.gen(rand, band, requestedForm);
       },
+    };
+  }
+  if (generator.tag === "g12-limits-continuity") {
+    return {
+      ...generator,
+      gen: (rand: () => number, band?: "support" | "core" | "stretch", requestedForm = "default") =>
+        limitsContinuityVariant(rand, requestedForm) ?? generator.gen(rand, band, requestedForm),
     };
   }
   return generator.tag === "g12-conic-sections"

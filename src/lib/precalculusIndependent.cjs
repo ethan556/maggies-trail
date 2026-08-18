@@ -86,6 +86,103 @@ function solveInverseVerify(input) {
   return Number(inputValue);
 }
 
+const LIMIT_IDEA_MCQ_FORM = 'limits-continuity__lc-limit-idea__mcq';
+const LIMIT_IDEA_NUMERIC_FORM = 'limits-continuity__lc-limit-idea__numeric';
+const LIMIT_READ_NUMERIC_FORM = 'limits-continuity__lc-read-limit__numeric';
+const LIMIT_DNE_MCQ_FORM = 'limits-continuity__lc-dne__mcq';
+const LIMIT_DNE_NUMERIC_FORM = 'limits-continuity__lc-dne__numeric';
+const LIMIT_FACTOR_NUMERIC_FORM = 'limits-continuity__lc-factor__numeric';
+const LIMIT_RATIONALIZE_MCQ_FORM = 'limits-continuity__lc-rationalize__mcq';
+const LIMIT_RATIONALIZE_NUMERIC_FORM = 'limits-continuity__lc-rationalize__numeric';
+
+const normalizedLimitPrompt = (input) => String(input).split('||', 1)[0].replaceAll('−', '-').trim();
+const displayLimitNumber = (value) => value < 0 ? `−${Math.abs(value)}` : String(value);
+
+function solveLimitIdeaNumeric(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /table shows (-?\d+(?:\.\d+)?) from the left and (-?\d+(?:\.\d+)?) from the right/.exec(prompt);
+  if (!match) throw new Error(`unrecognized limit-approach prompt: ${prompt}`);
+  const left = Number(match[1]);
+  const right = Number(match[2]);
+  const midpoint = (left + right) / 2;
+  if (!(left < midpoint && midpoint < right) || Math.abs(midpoint * 2 - left - right) > 1e-9) {
+    throw new Error(`limit table does not symmetrically bracket one value: ${prompt}`);
+  }
+  return midpoint;
+}
+
+function solveLimitIdeaMcq(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /curve approaches (-?\d+), while the plotted point gives f\((-?\d+)\) = (-?\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized point-versus-limit prompt: ${prompt}`);
+  const approach = Number(match[1]);
+  const point = Number(match[3]);
+  if (approach === point) throw new Error(`point-versus-limit prompt does not distinguish the two values: ${prompt}`);
+  return `${displayLimitNumber(approach)}; use the nearby approach`;
+}
+
+function solveLimitReadNumeric(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /f\(x\) = (-?\d+)x ([+-]) (\d+)\. Find the limit as x approaches (-?\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized continuous-line limit prompt: ${prompt}`);
+  const slope = Number(match[1]);
+  const intercept = (match[2] === '+' ? 1 : -1) * Number(match[3]);
+  return slope * Number(match[4]) + intercept;
+}
+
+function solveLimitDneMcq(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /left-hand limit is (-?\d+) and the right-hand limit is (-?\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized disagreeing-sides prompt: ${prompt}`);
+  const left = Number(match[1]);
+  const right = Number(match[2]);
+  if (left === right) throw new Error(`disagreeing-sides prompt has equal one-sided limits: ${prompt}`);
+  return `DNE; the sides give ${displayLimitNumber(left)} and ${displayLimitNumber(right)}`;
+}
+
+function solveLimitDneNumeric(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /both the left-hand and right-hand limits equal (-?\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized agreeing-sides prompt: ${prompt}`);
+  return Number(match[1]);
+}
+
+const rootFromPrintedFactor = (sign, magnitude) => sign === '-' ? Number(magnitude) : -Number(magnitude);
+
+function solveLimitFactorNumeric(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /approaches (-?\d+) of \[\(x ([+-]) (\d+)\)\(x ([+-]) (\d+)\)\]\/\(x ([+-]) (\d+)\)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized factor-and-cancel prompt: ${prompt}`);
+  const at = Number(match[1]);
+  const cancelledRoot = rootFromPrintedFactor(match[2], match[3]);
+  const remainingRoot = rootFromPrintedFactor(match[4], match[5]);
+  const denominatorRoot = rootFromPrintedFactor(match[6], match[7]);
+  if (cancelledRoot !== at || denominatorRoot !== at) {
+    throw new Error(`factor-and-cancel prompt has an inconsistent removable factor: ${prompt}`);
+  }
+  return at - remainingRoot;
+}
+
+function rationalizeParts(input) {
+  const prompt = normalizedLimitPrompt(input);
+  const match = /√\(x \+ (\d+)\) - (\d+)/.exec(prompt);
+  if (!match) throw new Error(`unrecognized rationalizing prompt: ${prompt}`);
+  const square = Number(match[1]);
+  const root = Number(match[2]);
+  if (root * root !== square) throw new Error(`rationalizing prompt has an inconsistent square-root constant: ${prompt}`);
+  return { square, root };
+}
+
+function solveLimitRationalizeNumeric(input) {
+  const { root } = rationalizeParts(input);
+  return Number((1 / (2 * root)).toFixed(3));
+}
+
+function solveLimitRationalizeMcq(input) {
+  const { square, root } = rationalizeParts(input);
+  return `use the conjugate: (√(x + ${square}) + ${root})/(√(x + ${square}) + ${root})`;
+}
+
 function solvePrompt(form, input) {
   if (form === 'conic-sections__co-parabola-def__numeric') {
     return solveParabolaDefinition(input);
@@ -101,6 +198,14 @@ function solvePrompt(form, input) {
   if (form === 'function-analysis__fna-restricted__numeric') return solveRestrictedInverse(input);
   if (form === 'function-analysis__fna-inverse-verify__pointEntry') return solveInversePoint(input);
   if (form === 'function-analysis__fna-inverse-verify__numeric') return solveInverseVerify(input);
+  if (form === LIMIT_IDEA_MCQ_FORM) return solveLimitIdeaMcq(input);
+  if (form === LIMIT_IDEA_NUMERIC_FORM) return solveLimitIdeaNumeric(input);
+  if (form === LIMIT_READ_NUMERIC_FORM) return solveLimitReadNumeric(input);
+  if (form === LIMIT_DNE_MCQ_FORM) return solveLimitDneMcq(input);
+  if (form === LIMIT_DNE_NUMERIC_FORM) return solveLimitDneNumeric(input);
+  if (form === LIMIT_FACTOR_NUMERIC_FORM) return solveLimitFactorNumeric(input);
+  if (form === LIMIT_RATIONALIZE_MCQ_FORM) return solveLimitRationalizeMcq(input);
+  if (form === LIMIT_RATIONALIZE_NUMERIC_FORM) return solveLimitRationalizeNumeric(input);
   return solveAuthoredPrompt(form, input);
 }
 
