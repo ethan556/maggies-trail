@@ -1006,6 +1006,201 @@ const COORDINATE_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
   "cx-shoelace__numeric": coordinateShoelaceWidget,
 };
 
+/* S246 / Phase 5. The original transformation-rule forms were one- or two-row
+ * template pools, so the learner could replay the same mathematics under many
+ * seeds. These builders keep each form's question job stable while varying the
+ * coordinates, motion, requested coordinate, correct result, and misconceptions. */
+const signedTerm = (variable: "x" | "y", delta: number): string =>
+  `${variable} ${delta < 0 ? "−" : "+"} ${Math.abs(delta)}`;
+const pointLabel = (x: number, y: number): string => `(${x}, ${y})`;
+
+type TranslationCase = { x: number; y: number; dx: number; dy: number; axis: "x" | "y" };
+const TRANSLATION_CASES: readonly TranslationCase[] = [
+  { x: 10, y: 2, dx: -4, dy: 7, axis: "x" },
+  { x: -3, y: 8, dx: 6, dy: -5, axis: "y" },
+  { x: 7, y: -4, dx: -9, dy: 3, axis: "x" },
+  { x: -8, y: -2, dx: 5, dy: 11, axis: "y" },
+  { x: 4, y: 9, dx: 7, dy: -12, axis: "x" },
+  { x: 12, y: -7, dx: -8, dy: 4, axis: "y" },
+  { x: -5, y: 6, dx: -3, dy: -9, axis: "x" },
+  { x: 2, y: -11, dx: 10, dy: 6, axis: "y" },
+  { x: -9, y: 3, dx: 12, dy: -8, axis: "x" },
+  { x: 6, y: 5, dx: -11, dy: 9, axis: "y" },
+  { x: 1, y: -8, dx: 4, dy: 13, axis: "x" },
+  { x: -12, y: 7, dx: 9, dy: -6, axis: "y" },
+] as const;
+
+function translationNumericWidget(rand: Rand): any {
+  const { x, y, dx, dy, axis } = pick(rand, TRANSLATION_CASES);
+  const answer = axis === "x" ? x + dx : y + dy;
+  const unchanged = axis === "x" ? x : y;
+  const reversed = axis === "x" ? x - dx : y - dy;
+  return {
+    type: "numeric",
+    prompt: `Translation (x, y) → (${signedTerm("x", dx)}, ${signedTerm("y", dy)}) sends P${pointLabel(x, y)} to P′. Find P′'s ${axis}-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: unchanged, feedback: `That keeps the original ${axis}-coordinate; apply the ${axis}-shift printed in the translation rule.` },
+      { value: reversed, feedback: `That reverses the ${axis}-shift; preserve the sign shown in the translation rule before combining values.` },
+    ],
+    fallbackFeedback: `Substitute P into the rule's ${axis}-slot: the image's ${axis}-coordinate is ${answer}.`,
+    successFeedback: `Applying the printed translation to P gives ${axis} = ${answer} for the image.`,
+  };
+}
+
+function translationRuleLabel(dx: number, dy: number): string {
+  return `(x, y) → (${signedTerm("x", dx)}, ${signedTerm("y", dy)})`;
+}
+
+function translationMcqWidget(rand: Rand): any {
+  const { x, y, dx, dy } = pick(rand, TRANSLATION_CASES);
+  const imageX = x + dx;
+  const imageY = y + dy;
+  return {
+    type: "mcq",
+    prompt: `A translation sends A${pointLabel(x, y)} to A′${pointLabel(imageX, imageY)}. Which rule describes the translation?`,
+    options: [
+      { id: "correct", label: translationRuleLabel(dx, dy), correct: true, feedback: `Image minus preimage gives the shift ⟨${dx}, ${dy}⟩, matching both coordinate changes.` },
+      { id: "inverse", label: translationRuleLabel(-dx, -dy), correct: false, feedback: "This is the inverse motion from A′ back to A; subtract preimage coordinates from image coordinates instead." },
+      { id: "swap", label: translationRuleLabel(dy, dx), correct: false, feedback: "This swaps the horizontal and vertical changes; keep each coordinate difference in its matching slot." },
+      { id: "y-sign", label: translationRuleLabel(dx, -dy), correct: false, feedback: "The horizontal change matches, but the vertical direction is reversed from the movement shown by A and A′." },
+    ],
+  };
+}
+
+type ReflectionName = "the x-axis" | "the y-axis" | "the line y = x" | "the line y = −x";
+const reflectPoint = (name: ReflectionName, x: number, y: number): [number, number] => {
+  if (name === "the x-axis") return [x, -y];
+  if (name === "the y-axis") return [-x, y];
+  if (name === "the line y = x") return [y, x];
+  return [-y, -x];
+};
+type ReflectionCase = { x: number; y: number; mirror: ReflectionName; axis: "x" | "y" };
+const REFLECTION_CASES: readonly ReflectionCase[] = [
+  { x: -4, y: 6, mirror: "the y-axis", axis: "x" },
+  { x: 7, y: 3, mirror: "the line y = x", axis: "x" },
+  { x: 5, y: -8, mirror: "the x-axis", axis: "y" },
+  { x: -2, y: 9, mirror: "the line y = −x", axis: "x" },
+  { x: 11, y: -3, mirror: "the y-axis", axis: "x" },
+  { x: -6, y: -10, mirror: "the x-axis", axis: "y" },
+  { x: 4, y: -7, mirror: "the line y = x", axis: "y" },
+  { x: 8, y: 1, mirror: "the line y = −x", axis: "y" },
+  { x: -9, y: 5, mirror: "the y-axis", axis: "x" },
+  { x: 3, y: 12, mirror: "the x-axis", axis: "y" },
+  { x: -8, y: 2, mirror: "the line y = x", axis: "x" },
+  { x: 6, y: -5, mirror: "the line y = −x", axis: "y" },
+] as const;
+
+function reflectionNumericWidget(rand: Rand): any {
+  const { x, y, mirror, axis } = pick(rand, REFLECTION_CASES);
+  const [imageX, imageY] = reflectPoint(mirror, x, y);
+  const answer = axis === "x" ? imageX : imageY;
+  const unchanged = axis === "x" ? x : y;
+  const otherCoordinate = axis === "x" ? y : x;
+  const wrongRule = mirror === "the line y = x" || mirror === "the line y = −x" ? -answer : otherCoordinate;
+  return {
+    type: "numeric",
+    prompt: `Reflect P${pointLabel(x, y)} across ${mirror}. Find P′'s ${axis}-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: unchanged, feedback: "That leaves the requested coordinate unchanged; apply the coordinate rule for the named mirror line." },
+      { value: wrongRule, feedback: "That uses a different reflection rule; check whether the named mirror swaps coordinates, changes a sign, or does both." },
+    ],
+    fallbackFeedback: `Applying the reflection rule to P gives P′${pointLabel(imageX, imageY)}, so the requested coordinate is ${answer}.`,
+    successFeedback: `The reflection maps P to P′${pointLabel(imageX, imageY)}, making the requested coordinate ${answer}.`,
+  };
+}
+
+const REFLECTION_NAMES: readonly ReflectionName[] = ["the x-axis", "the y-axis", "the line y = x", "the line y = −x"];
+function reflectionMcqWidget(rand: Rand): any {
+  const { x, y, mirror } = pick(rand, REFLECTION_CASES.filter((entry) => entry.x !== entry.y && entry.x !== -entry.y));
+  const [imageX, imageY] = reflectPoint(mirror, x, y);
+  return {
+    type: "mcq",
+    prompt: `Point P${pointLabel(x, y)} maps to P′${pointLabel(imageX, imageY)} under a reflection. Which line is the mirror?`,
+    options: REFLECTION_NAMES.map((name) => ({
+      id: name,
+      label: name,
+      correct: name === mirror,
+      feedback: name === mirror
+        ? `Applying this mirror's coordinate rule sends both coordinates of P exactly to P′.`
+        : `Applying this mirror's coordinate rule does not send both coordinates of P to the displayed image P′.`,
+    })),
+  };
+}
+
+type RotationDegrees = 90 | 180 | 270;
+const rotatePoint = (degrees: RotationDegrees, x: number, y: number): [number, number] =>
+  degrees === 90 ? [-y, x] : degrees === 180 ? [-x, -y] : [y, -x];
+type RotationCase = { x: number; y: number; degrees: RotationDegrees; axis: "x" | "y" };
+const ROTATION_CASES: readonly RotationCase[] = [
+  { x: 4, y: 1, degrees: 90, axis: "y" },
+  { x: 1, y: 7, degrees: 270, axis: "y" },
+  { x: -3, y: 8, degrees: 180, axis: "x" },
+  { x: 6, y: -2, degrees: 90, axis: "x" },
+  { x: -5, y: -9, degrees: 270, axis: "x" },
+  { x: 10, y: 3, degrees: 180, axis: "y" },
+  { x: -7, y: 4, degrees: 90, axis: "y" },
+  { x: 2, y: -11, degrees: 270, axis: "y" },
+  { x: 9, y: -6, degrees: 180, axis: "x" },
+  { x: -8, y: 5, degrees: 90, axis: "x" },
+  { x: 3, y: 12, degrees: 270, axis: "x" },
+  { x: -4, y: -7, degrees: 180, axis: "y" },
+] as const;
+
+function rotationNumericWidget(rand: Rand): any {
+  const { x, y, degrees, axis } = pick(rand, ROTATION_CASES);
+  const [imageX, imageY] = rotatePoint(degrees, x, y);
+  const answer = axis === "x" ? imageX : imageY;
+  const unchanged = axis === "x" ? x : y;
+  const signError = -answer;
+  return {
+    type: "numeric",
+    prompt: `Rotate P${pointLabel(x, y)} ${degrees}° counterclockwise about the origin. Find P′'s ${axis}-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: unchanged, feedback: "That keeps the original coordinate; apply the full coordinate rule for the stated rotation angle." },
+      { value: signError, feedback: "That has the correct magnitude but the opposite sign; trace the counterclockwise direction around the origin." },
+    ],
+    fallbackFeedback: `The ${degrees}° counterclockwise rule maps P to P′${pointLabel(imageX, imageY)}, so the requested coordinate is ${answer}.`,
+    successFeedback: `Applying the ${degrees}° counterclockwise rule gives P′${pointLabel(imageX, imageY)} and the requested coordinate ${answer}.`,
+  };
+}
+
+const rotationLabel = (degrees: RotationDegrees): string => `${degrees}° counterclockwise about the origin`;
+function rotationMcqWidget(rand: Rand): any {
+  const { x, y, degrees } = pick(rand, ROTATION_CASES.filter((entry) => entry.x !== 0 && entry.y !== 0 && Math.abs(entry.x) !== Math.abs(entry.y)));
+  const [imageX, imageY] = rotatePoint(degrees, x, y);
+  const labels = ([90, 180, 270] as const).map(rotationLabel);
+  return {
+    type: "mcq",
+    prompt: `A rotation about the origin sends P${pointLabel(x, y)} to P′${pointLabel(imageX, imageY)}. Which rotation was applied?`,
+    options: [
+      ...labels.map((label, index) => ({
+        id: label,
+        label,
+        correct: ([90, 180, 270] as const)[index] === degrees,
+        feedback: ([90, 180, 270] as const)[index] === degrees
+          ? "This rotation's coordinate rule sends both coordinates of P exactly to the displayed image."
+          : "This rotation's coordinate rule sends P to a different ordered pair than the displayed image.",
+      })),
+      { id: "reflection", label: "reflection across the y-axis", correct: false, feedback: "A reflection is a different rigid motion; compare both coordinate changes with the three origin-rotation rules." },
+    ],
+  };
+}
+
+const GEOMETRY_FOUNDATIONS_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
+  "gf-translation-rule__numeric": translationNumericWidget,
+  "gf-translation-rule__mcq": translationMcqWidget,
+  "gf-reflection-rule__numeric": reflectionNumericWidget,
+  "gf-reflection-rule__mcq": reflectionMcqWidget,
+  "gf-rotation-rule__numeric": rotationNumericWidget,
+  "gf-rotation-rule__mcq": rotationMcqWidget,
+};
+
 function cleanTypography(text: string): string {
   return text
     .replace(/\bUNDEFINED TERMS?\b/g, (value) => value.endsWith("S") ? "PRIMITIVE TERMS" : "PRIMITIVE TERM")
@@ -1091,7 +1286,9 @@ function buildVariant(tag: string, rand: Rand, _band: Band, requestedForm: strin
       ? CONSTRUCTION_FORM_BUILDERS[form]
       : tag === "g10-coordinate-proofs"
         ? COORDINATE_FORM_BUILDERS[form]
-        : undefined;
+        : tag === "g10-geometry-foundations"
+          ? GEOMETRY_FOUNDATIONS_FORM_BUILDERS[form]
+          : undefined;
   const widget = customBuilder ? customBuilder(rand) : deepClone(pick(rand, pool));
   // This bank has no free-response reasoning surface, so the prompt must not
   // request a justification the learner has nowhere to enter.

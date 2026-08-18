@@ -23,10 +23,100 @@ function basePrompt(input) {
   const visiblePrompt = String(input).split('||', 1)[0];
   return visiblePrompt.split(REASONING_MARK, 1)[0].trim();
 }
+
+function printedShift(expression, variable) {
+  const match = expression.match(new RegExp(`${variable}\\s*([+−-])\\s*(\\d+)`));
+  if (!match) throw new Error(`cannot parse ${variable}-shift from ${expression}`);
+  return (match[1] === '+' ? 1 : -1) * Number(match[2]);
+}
+
+function printedTranslationRule(dx, dy) {
+  const term = (variable, delta) => `${variable} ${delta < 0 ? '−' : '+'} ${Math.abs(delta)}`;
+  return `(x, y) → (${term('x', dx)}, ${term('y', dy)})`;
+}
+
+function reflectedPoint(mirror, x, y) {
+  if (mirror === 'the x-axis') return [x, -y];
+  if (mirror === 'the y-axis') return [-x, y];
+  if (mirror === 'the line y = x') return [y, x];
+  if (mirror === 'the line y = −x') return [-y, -x];
+  throw new Error(`unsupported mirror ${mirror}`);
+}
+
+function rotatedPoint(degrees, x, y) {
+  if (degrees === 90) return [-y, x];
+  if (degrees === 180) return [-x, -y];
+  if (degrees === 270) return [y, -x];
+  throw new Error(`unsupported rotation ${degrees}`);
+}
+
 function solvePrompt(form, input) {
   const entry = FORM_INDEX.get(form);
   if (!entry) throw new Error(`unsupported geometry independent form ${form}`);
   const prompt = basePrompt(input);
+  /* S246: transformation-rule variants are solved from the learner-visible
+   * coordinates and motion, independent of the generator's case tables. */
+  if (form === 'gf-translation-rule__numeric') {
+    const match = prompt.match(/Translation \(x, y\) → \(([^,]+), ([^)]+)\) sends P\((-?\d+), (-?\d+)\) to P′\. Find P′'s ([xy])-coordinate\./);
+    if (match) {
+      const x = Number(match[3]);
+      const y = Number(match[4]);
+      const dx = printedShift(match[1], 'x');
+      const dy = printedShift(match[2], 'y');
+      return match[5] === 'x' ? x + dx : y + dy;
+    }
+  }
+  if (form === 'gf-translation-rule__mcq') {
+    const match = prompt.match(/sends A\((-?\d+), (-?\d+)\) to A′\((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const dx = Number(match[3]) - Number(match[1]);
+      const dy = Number(match[4]) - Number(match[2]);
+      return printedTranslationRule(dx, dy);
+    }
+  }
+  if (form === 'gf-reflection-rule__numeric') {
+    const match = prompt.match(/Reflect P\((-?\d+), (-?\d+)\) across (the x-axis|the y-axis|the line y = x|the line y = −x)\. Find P′'s ([xy])-coordinate\./);
+    if (match) {
+      const [imageX, imageY] = reflectedPoint(match[3], Number(match[1]), Number(match[2]));
+      return match[4] === 'x' ? imageX : imageY;
+    }
+  }
+  if (form === 'gf-reflection-rule__mcq') {
+    const match = prompt.match(/Point P\((-?\d+), (-?\d+)\) maps to P′\((-?\d+), (-?\d+)\) under a reflection/);
+    if (match) {
+      const x = Number(match[1]);
+      const y = Number(match[2]);
+      const image = [Number(match[3]), Number(match[4])];
+      const mirrors = ['the x-axis', 'the y-axis', 'the line y = x', 'the line y = −x'];
+      const matches = mirrors.filter((mirror) => {
+        const candidate = reflectedPoint(mirror, x, y);
+        return candidate[0] === image[0] && candidate[1] === image[1];
+      });
+      if (matches.length !== 1) throw new Error(`reflection prompt has ${matches.length} solutions: ${prompt}`);
+      return matches[0];
+    }
+  }
+  if (form === 'gf-rotation-rule__numeric') {
+    const match = prompt.match(/Rotate P\((-?\d+), (-?\d+)\) (90|180|270)° counterclockwise about the origin\. Find P′'s ([xy])-coordinate\./);
+    if (match) {
+      const [imageX, imageY] = rotatedPoint(Number(match[3]), Number(match[1]), Number(match[2]));
+      return match[4] === 'x' ? imageX : imageY;
+    }
+  }
+  if (form === 'gf-rotation-rule__mcq') {
+    const match = prompt.match(/sends P\((-?\d+), (-?\d+)\) to P′\((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const x = Number(match[1]);
+      const y = Number(match[2]);
+      const image = [Number(match[3]), Number(match[4])];
+      const matches = [90, 180, 270].filter((degrees) => {
+        const candidate = rotatedPoint(degrees, x, y);
+        return candidate[0] === image[0] && candidate[1] === image[1];
+      });
+      if (matches.length !== 1) throw new Error(`rotation prompt has ${matches.length} solutions: ${prompt}`);
+      return `${matches[0]}° counterclockwise about the origin`;
+    }
+  }
   /* S246: reconstruct perpendicular-at-a-point answers from the quantities in
    * the learner-visible prompt. This route deliberately does not share the
    * generator's case table. */
