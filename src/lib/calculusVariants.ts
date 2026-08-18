@@ -2252,6 +2252,346 @@ function libraryNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   return { widget, answer };
 }
 
+/* S246 / Phase 5. The in-05 authored banks repeated the same substitution
+ * exercises across twelve lesson consumers. These pools preserve the seven
+ * response surfaces while varying the inside function, derivative receipt,
+ * exponent, limits, and resulting truth. */
+const USUB_POWER_CASES = [
+  { power: 2, shift: 1, outer: 1, scale: 1 }, { power: 2, shift: 2, outer: 1, scale: 2 },
+  { power: 2, shift: 3, outer: 1, scale: 3 }, { power: 3, shift: 1, outer: 2, scale: 2 },
+  { power: 3, shift: 2, outer: 2, scale: 3 }, { power: 3, shift: 3, outer: 2, scale: 4 },
+  { power: 4, shift: 1, outer: 3, scale: 1 }, { power: 4, shift: 2, outer: 3, scale: 2 },
+  { power: 4, shift: 3, outer: 3, scale: 3 }, { power: 5, shift: 1, outer: 4, scale: 1 },
+  { power: 5, shift: 2, outer: 4, scale: 2 }, { power: 5, shift: 3, outer: 4, scale: 3 },
+] as const;
+
+function receiptTerm(coefficient: number, power: number) {
+  if (power === 0) return String(coefficient);
+  const coefficientText = coefficient === 1 ? "" : String(coefficient);
+  return power === 1 ? `${coefficientText}x` : `${coefficientText}x^${power}`;
+}
+
+function uSubMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { power, shift, outer, scale } = pick(rand, USUB_POWER_CASES);
+  const receipt = receiptTerm(scale * power, power - 1);
+  const correct = `u = x^${power} + ${shift}.`;
+  return integrationMcq(rand, `In the integral of ${receipt}(x^${power} + ${shift})^${outer} dx, which substitution exposes the power rule?`, [
+    { label: correct, correct: true, feedback: `Its derivative is ${power}x^${power - 1}, and the displayed factor differs only by the constant ${scale}.` },
+    { label: `u = ${receipt}.`, correct: false, feedback: "That is the derivative receipt, not the repeated inside expression." },
+    { label: `u = (x^${power} + ${shift})^${outer}.`, correct: false, feedback: "Choose the inside before the outer power so the remaining expression becomes a simple power of u." },
+    { label: "u = x.", correct: false, feedback: "This changes no structure and leaves the nested power intact." },
+  ]);
+}
+
+function powerSubstitutionNumeric(rand: Rand, family: "usub" | "choosing"): GeneratedIntegrationVariant {
+  const { power, shift, outer, scale } = pick(rand, USUB_POWER_CASES);
+  const receipt = receiptTerm(scale * power, power - 1);
+  const divisor = outer + 1;
+  const exact = scale * ((shift + 1) ** divisor - shift ** divisor) / divisor;
+  const answer = round3(exact);
+  const prompt = family === "usub"
+    ? `Evaluate the integral from 0 to 1 of ${receipt}(x^${power} + ${shift})^${outer} dx. Give a decimal to three places.`
+    : `Choose u, then evaluate the integral from 0 to 1 of ${receipt}(x^${power} + ${shift})^${outer} dx. Give a decimal to three places.`;
+  const widget = {
+    type: "numeric" as const,
+    prompt,
+    answer,
+    tolerance: 0.005,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: round3(exact / scale), feedback: `The derivative receipt carries the constant factor ${scale}; do not discard it.` },
+      { value: round3(scale * (shift + 1) ** divisor / divisor), feedback: "A definite integral subtracts the transformed lower endpoint as well as evaluating the upper endpoint." },
+      { value: round3(exact * divisor), feedback: `The antiderivative of u^${outer} divides by ${divisor}.` },
+    ]),
+    fallbackFeedback: `Use u = x^${power} + ${shift}. The receipt becomes ${scale} du and the limits become ${shift} and ${shift + 1}, giving ${answer}.`,
+    successFeedback: `The substitution gives ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const USUB_LIMIT_CASES = [
+  { m: 2, c: 1, a: 0, b: 1, outer: 2 }, { m: 2, c: 3, a: 1, b: 2, outer: 1 },
+  { m: 3, c: 1, a: 0, b: 1, outer: 1 }, { m: 3, c: 2, a: 1, b: 2, outer: 2 },
+  { m: 4, c: 1, a: 0, b: 2, outer: 1 }, { m: 4, c: 3, a: 1, b: 2, outer: 2 },
+  { m: 5, c: 1, a: 0, b: 1, outer: 2 }, { m: 5, c: 2, a: 1, b: 3, outer: 1 },
+  { m: 6, c: 1, a: 0, b: 2, outer: 1 }, { m: 6, c: 3, a: 1, b: 2, outer: 2 },
+  { m: 7, c: 2, a: 0, b: 1, outer: 2 }, { m: 8, c: 1, a: 1, b: 2, outer: 1 },
+] as const;
+
+function uSubLimitsMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { m, c, a, b, outer } = pick(rand, USUB_LIMIT_CASES);
+  const lower = m * a + c;
+  const upper = m * b + c;
+  const correct = `u runs from ${lower} to ${upper}.`;
+  return integrationMcq(rand, `For the integral from ${a} to ${b} of ${m}(${m}x + ${c})^${outer} dx with u = ${m}x + ${c}, what are the u-limits?`, [
+    { label: correct, correct: true, feedback: `Substitute each x-endpoint into u = ${m}x + ${c}.` },
+    { label: `u runs from ${a} to ${b}.`, correct: false, feedback: "Those are x-values; a u-integral requires u-values." },
+    { label: `u runs from ${m * a} to ${m * b}.`, correct: false, feedback: `This omits the +${c} from both endpoint conversions.` },
+    { label: `u runs from ${upper} to ${lower}.`, correct: false, feedback: "This reverses the orientation of the interval." },
+  ]);
+}
+
+function uSubLimitsNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { m, c, a, b, outer } = pick(rand, USUB_LIMIT_CASES);
+  const lower = m * a + c;
+  const upper = m * b + c;
+  const divisor = outer + 1;
+  const answer = round3((upper ** divisor - lower ** divisor) / divisor);
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Evaluate the integral from ${a} to ${b} of ${m}(${m}x + ${c})^${outer} dx by changing to u-limits. Give a decimal to three places.`,
+    answer,
+    tolerance: 0.005,
+    unit: "",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: round3((b ** divisor - a ** divisor) / divisor), feedback: "Those are the original x-limits used inside a u-antiderivative." },
+      { value: round3(upper ** divisor / divisor), feedback: `Subtract the transformed lower endpoint u = ${lower}.` },
+      { value: round3(upper ** divisor - lower ** divisor), feedback: `The antiderivative of u^${outer} divides by ${divisor}.` },
+    ]),
+    fallbackFeedback: `The limits become ${lower} and ${upper}; integrating u^${outer} gives ${answer}.`,
+    successFeedback: `Changing the limits gives ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+function choosingUMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { power, shift, outer, scale } = pick(rand, USUB_POWER_CASES);
+  const receipt = receiptTerm(scale * power, power - 1);
+  const correct = `u = x^${power} + ${shift}.`;
+  return integrationMcq(rand, `For the integral of ${receipt}(x^${power} + ${shift})^${outer} dx, which choice of u leaves no x behind?`, [
+    { label: correct, correct: true, feedback: `du = ${power}x^${power - 1} dx, so the remaining factor is only the constant ${scale}.` },
+    { label: `u = x^${power - 1}.`, correct: false, feedback: "This chooses the outside receipt rather than the repeated inside expression." },
+    { label: `u = x^${power}.`, correct: false, feedback: `Including the +${shift} turns the complete bracket into u.` },
+    { label: "No power-rule substitution works.", correct: false, feedback: "The derivative of the inside is present up to a constant, so substitution does work." },
+  ]);
+}
+
+const CHOOSING_U_BUCKET_CASES = [
+  { power: 2, shift: 1 }, { power: 2, shift: 2 }, { power: 2, shift: 3 },
+  { power: 3, shift: 1 }, { power: 3, shift: 2 }, { power: 3, shift: 3 },
+  { power: 4, shift: 1 }, { power: 4, shift: 2 }, { power: 4, shift: 3 },
+  { power: 5, shift: 1 }, { power: 5, shift: 2 }, { power: 5, shift: 3 },
+] as const;
+
+function choosingUBucketLabels(power: number, shift: number) {
+  return [
+    `integral of ${power}x^${power - 1} cos(x^${power} + ${shift}) dx`,
+    `integral of cos(x^${power} + ${shift}) dx`,
+    `integral of (x + ${shift})^${power} dx`,
+    `integral of x^${Math.max(0, power - 2)}(x^${power} + ${shift})^2 dx`,
+  ];
+}
+
+function choosingUDragBucketWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { power, shift } = pick(rand, CHOOSING_U_BUCKET_CASES);
+  const labels = choosingUBucketLabels(power, shift);
+  const buckets = [
+    { id: "yes", label: "Substitution works" },
+    { id: "no", label: "The needed derivative factor is missing" },
+  ];
+  const items = [
+    { id: "s1", label: labels[0]!, bucketId: "yes", feedback: "The derivative of the inside is present exactly." },
+    { id: "s2", label: labels[1]!, bucketId: "no", feedback: `u = x^${power} + ${shift} needs an x^${power - 1} factor.` },
+    { id: "s3", label: labels[2]!, bucketId: "yes", feedback: "The inside x plus a constant has derivative 1." },
+    { id: "s4", label: labels[3]!, bucketId: "no", feedback: `The displayed x-power is one degree short of the x^${power - 1} receipt.` },
+  ];
+  const shuffledItems = shuffle(rand, items);
+  const answer = Object.fromEntries(items.map((item) => [item.id, item.bucketId]));
+  return {
+    widget: {
+      type: "dragBucket" as const,
+      prompt: `Use p = ${power} and c = ${shift}. Sort each integral by whether a direct u-substitution has its derivative receipt.`,
+      buckets,
+      items: shuffledItems,
+      missFeedback: "Differentiate the proposed inside and look for that factor, allowing only a constant multiple.",
+      successFeedback: "A usable substitution needs both a meaningful inside and its derivative receipt.",
+    },
+    answer,
+  };
+}
+
+/* S246 / Phase 5: ia-01 area and solids-of-revolution assurance. */
+const AREA_BETWEEN_MCQ_CASES = Array.from({ length: 12 }, (_, index) => ({
+  line: index + 1,
+  quadratic: index % 3 + 1,
+})) as readonly { line: number; quadratic: number }[];
+
+function areaBetweenMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { line, quadratic } = pick(rand, AREA_BETWEEN_MCQ_CASES);
+  const intersection = round3(line / quadratic);
+  const correct = `y = ${line}x is on top.`;
+  return integrationMcq(rand, `On the open interval from 0 to ${intersection}, which curve is on top: y = ${line}x or y = ${quadratic}x^2?`, [
+    { label: correct, correct: true, feedback: "Between the two intersections, the linear curve has the greater y-value." },
+    { label: `y = ${quadratic}x^2 is on top.`, correct: false, feedback: "That curve is below the line between the intersections and catches it at the right endpoint." },
+    { label: "The curves have equal height throughout.", correct: false, feedback: "They agree only at their intersection points, not throughout the interval." },
+    { label: "The top curve changes inside the interval.", correct: false, feedback: "There is no additional intersection inside the stated open interval." },
+  ]);
+}
+
+type AreaBetweenNumericCase = { kind: "intersection" | "signed" | "area"; line: number; quadratic: number };
+const AREA_BETWEEN_NUMERIC_CASES: readonly AreaBetweenNumericCase[] = [
+  { kind: "intersection", line: 1, quadratic: 1 }, { kind: "intersection", line: 2, quadratic: 1 },
+  { kind: "intersection", line: 3, quadratic: 2 }, { kind: "intersection", line: 4, quadratic: 3 },
+  { kind: "signed", line: 1, quadratic: 2 }, { kind: "signed", line: 2, quadratic: 1 },
+  { kind: "signed", line: 3, quadratic: 1 }, { kind: "signed", line: 4, quadratic: 2 },
+  { kind: "area", line: 1, quadratic: 1 }, { kind: "area", line: 2, quadratic: 2 },
+  { kind: "area", line: 3, quadratic: 1 }, { kind: "area", line: 4, quadratic: 1 },
+];
+
+function areaBetweenNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { kind, line, quadratic } = pick(rand, AREA_BETWEEN_NUMERIC_CASES);
+  const upper = line / quadratic;
+  const signed = quadratic * upper ** 3 / 3 - line * upper ** 2 / 2;
+  const rawAnswer = kind === "intersection" ? upper : kind === "signed" ? signed : -signed;
+  const answer = Number(rawAnswer.toFixed(4));
+  const prompt = kind === "intersection"
+    ? `The curves y = ${line}x and y = ${quadratic}x^2 meet at x = 0 and at what larger x-value? Give a decimal to four places.`
+    : kind === "signed"
+      ? `Find the signed integral from 0 to ${round3(upper)} of (${quadratic}x^2 - ${line}x) dx. Give a decimal to four places.`
+      : `Find the area between y = ${line}x and y = ${quadratic}x^2 from x = 0 to x = ${round3(upper)}. Give a decimal to four places.`;
+  const widget = {
+    type: "numeric" as const,
+    prompt,
+    answer,
+    tolerance: 0.0005,
+    unit: kind === "area" ? "square units" : "",
+    commonErrors: uniqueNumericErrors(answer, kind === "intersection" ? [
+      { value: 0, feedback: "That is the shared origin; the question asks for the larger intersection." },
+      { value: round3(quadratic / line), feedback: "This reverses the coefficient ratio when solving x(line - quadratic*x) = 0." },
+    ] : [
+      { value: Number((-rawAnswer).toFixed(4)), feedback: kind === "signed" ? "This changes the requested signed integral into positive geometric area." : "Area is nonnegative; subtract the lower curve from the upper curve." },
+      { value: Number((Math.abs(rawAnswer) * 2).toFixed(4)), feedback: "Recheck the antiderivative coefficients rather than doubling the region." },
+      { value: 0, feedback: "The curves meet at the endpoints, but the vertical gap is nonzero inside the interval." },
+    ]),
+    fallbackFeedback: kind === "intersection"
+      ? `Factor x(${line} - ${quadratic}x) = 0; the larger solution is ${answer}.`
+      : `Integrate the displayed upper-minus-lower order over the stated interval to obtain ${answer}.`,
+    successFeedback: `${kind === "area" ? "The geometric area" : kind === "signed" ? "The signed integral" : "The larger intersection"} is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const DISC_CASES = Array.from({ length: 12 }, (_, index) => ({
+  coefficient: index + 1,
+  power: index % 3 + 1,
+})) as readonly { coefficient: number; power: number }[];
+
+function discMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { coefficient, power } = pick(rand, DISC_CASES);
+  const functionLabel = `${coefficient}x^${power}`;
+  const correct = `The radius is ${functionLabel}.`;
+  return integrationMcq(rand, `The region under y = ${functionLabel} is revolved about the x-axis. What is the radius of the disc at x?`, [
+    { label: correct, correct: true, feedback: "The radius is the vertical distance from the x-axis to the curve." },
+    { label: `The radius is (${functionLabel})^2.`, correct: false, feedback: "Squaring occurs in the circle-area formula after identifying the radius." },
+    { label: `The radius is pi*${functionLabel}.`, correct: false, feedback: "Pi belongs to the disc area, not the radius." },
+    { label: "The radius is dx.", correct: false, feedback: "dx is the slice thickness, not its distance from the axis." },
+  ]);
+}
+
+function discNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { coefficient, power } = pick(rand, DISC_CASES);
+  const answer = round3(Math.PI * coefficient ** 2 / (2 * power + 1));
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Revolve y = ${coefficient}x^${power} on [0, 1] about the x-axis. Find the volume to three decimal places.`,
+    answer,
+    tolerance: 0.005,
+    unit: "cubic units",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: round3(Math.PI * coefficient / (power + 1)), feedback: "This integrates the radius, but disc area is pi times the radius squared." },
+      { value: round3(coefficient ** 2 / (2 * power + 1)), feedback: "The circular cross-section contributes a factor of pi." },
+      { value: round3(Math.PI * coefficient ** 2 / (power + 1)), feedback: "Squaring x^p doubles the exponent before integration." },
+    ]),
+    fallbackFeedback: `V = pi times the integral of (${coefficient}x^${power})^2 from 0 to 1, which is ${answer}.`,
+    successFeedback: `The disc-method volume is ${answer} cubic units.`,
+  };
+  return { widget, answer };
+}
+
+const WASHER_CASES = Array.from({ length: 12 }, (_, index) => ({
+  outer: index + 3,
+  inner: index % 2 + 1,
+})) as readonly { outer: number; inner: number }[];
+
+function washerMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { outer, inner } = pick(rand, WASHER_CASES);
+  const coefficient = outer ** 2 - inner ** 2;
+  const correct = `${coefficient}pi square units.`;
+  return integrationMcq(rand, `A washer has outer radius ${outer} and inner radius ${inner}. What is its face area?`, [
+    { label: correct, correct: true, feedback: "Subtract the inner disc area from the outer disc area." },
+    { label: `${outer ** 2 + inner ** 2}pi square units.`, correct: false, feedback: "The central hole is removed, so its area is subtracted rather than added." },
+    { label: `${(outer - inner) ** 2}pi square units.`, correct: false, feedback: "Subtract the squared radii, not the radii before squaring." },
+    { label: `${outer ** 2}pi square units.`, correct: false, feedback: "That is the full outer disc before removing the inner hole." },
+  ]);
+}
+
+function washerNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { outer } = pick(rand, WASHER_CASES);
+  const answer = round3(2 * Math.PI * outer ** 2 / 3);
+  const widget = {
+    type: "numeric" as const,
+    prompt: `Revolve the region between y = ${outer} and y = ${outer}x on [0, 1] about the x-axis. Find the washer-method volume to three decimal places.`,
+    answer,
+    tolerance: 0.005,
+    unit: "cubic units",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: round3(Math.PI * outer ** 2), feedback: "That uses only the outer cylinder and does not remove the growing inner radius." },
+      { value: round3(Math.PI * outer ** 2 / 3), feedback: "That is the inner solid alone; subtract it from the outer cylinder." },
+      { value: round3(4 * Math.PI * outer ** 2 / 3), feedback: "Recheck outer-minus-inner; this doubles the surviving washer volume." },
+    ]),
+    fallbackFeedback: `Integrate pi((${outer})^2 - (${outer}x)^2) from 0 to 1 to obtain ${answer}.`,
+    successFeedback: `The washer-method volume is ${answer} cubic units.`,
+  };
+  return { widget, answer };
+}
+
+function washerMatchWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { outer, inner } = pick(rand, WASHER_CASES);
+  const face = outer ** 2 - inner ** 2;
+  const left = [
+    { id: "l-outer", label: `outer radius R = ${outer}` },
+    { id: "l-inner", label: `inner radius r = ${inner}` },
+    { id: "l-face", label: `face area = ${face}pi` },
+    { id: "l-volume", label: `slice volume = ${face}pi dx` },
+  ];
+  const right = [
+    { id: "r-outer", label: "distance from the axis to the outside curve" },
+    { id: "r-inner", label: "distance from the axis to the hole boundary" },
+    { id: "r-face", label: "area on one washer face" },
+    { id: "r-volume", label: "volume of one thin washer" },
+  ];
+  const pairs = { "l-outer": "r-outer", "l-inner": "r-inner", "l-face": "r-face", "l-volume": "r-volume" };
+  const shuffledLeft = shuffle(rand, left);
+  let shuffledRight = shuffle(rand, right);
+  if (shuffledLeft.every((item, index) => pairs[item.id as keyof typeof pairs] === shuffledRight[index]?.id)) {
+    shuffledRight = [...shuffledRight.slice(1), shuffledRight[0]!];
+  }
+  const widget = {
+    type: "matchPairs" as const,
+    prompt: `For a washer with R = ${outer}, r = ${inner}, and thickness dx, match each visible quantity to what it measures.`,
+    left: shuffledLeft,
+    right: shuffledRight,
+    pairs,
+    pairErrors: [
+      { left: "l-face", right: "r-volume", feedback: "Face area becomes a volume only after multiplication by the thickness dx." },
+      { left: "l-inner", right: "r-outer", feedback: "The inner radius reaches the hole boundary; the outer radius reaches the outside curve." },
+    ],
+    missFeedback: "Separate radius, face area, and thin-slice volume before matching.",
+    successFeedback: "The washer model moves from two radii to face area and then to thin-slice volume.",
+  };
+  return { widget, answer: pairs };
+}
+
+const INTEGRATION_APPLICATION_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
+  "integration-applications__ia-area-between__mcq": areaBetweenMcqWidget,
+  "integration-applications__ia-area-between__numeric": areaBetweenNumericWidget,
+  "integration-applications__ia-disc__mcq": discMcqWidget,
+  "integration-applications__ia-disc__numeric": discNumericWidget,
+  "integration-applications__ia-washer__mcq": washerMcqWidget,
+  "integration-applications__ia-washer__numeric": washerNumericWidget,
+  "integration-applications__ia-washer__matchPairs": washerMatchWidget,
+};
+
 const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "integration-accumulation__in-riemann__numeric": riemannNumericWidget,
   "integration-accumulation__in-riemann__mcq": riemannMcqWidget,
@@ -2281,6 +2621,13 @@ const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => Generated
   "integration-accumulation__in-constant-of-integration__mcq": constantOfIntegrationMcqWidget,
   "integration-accumulation__in-library__mcq": libraryMcqWidget,
   "integration-accumulation__in-library__numeric": libraryNumericWidget,
+  "integration-accumulation__in-usub__mcq": uSubMcqWidget,
+  "integration-accumulation__in-usub__numeric": (rand) => powerSubstitutionNumeric(rand, "usub"),
+  "integration-accumulation__in-usub-limits__mcq": uSubLimitsMcqWidget,
+  "integration-accumulation__in-usub-limits__numeric": uSubLimitsNumericWidget,
+  "integration-accumulation__in-choosing-u__mcq": choosingUMcqWidget,
+  "integration-accumulation__in-choosing-u__numeric": (rand) => powerSubstitutionNumeric(rand, "choosing"),
+  "integration-accumulation__in-choosing-u__dragBucket": choosingUDragBucketWidget,
 };
 
 const TARGET_GENERATOR = "g13-curve-analysis";
@@ -2325,6 +2672,17 @@ const DIFFERENTIAL_EQUATION_BUILDERS: Record<string, (rand: Rand) => ReturnType<
 };
 
 export const CALCULUS_GENERATORS = AUTHORED_CALCULUS_GENERATORS.map((generator) => {
+  if (generator.tag === "g13-integration-applications") {
+    return {
+      ...generator,
+      gen: (rand: Rand, band: Band = "core", form = "default") => {
+        const builder = INTEGRATION_APPLICATION_BUILDERS[form];
+        if (!builder) return generator.gen(rand, band, form);
+        const generated = builder(rand);
+        return { tag: generator.tag, widget: generated.widget, answer: generated.answer };
+      },
+    };
+  }
   if (generator.tag === "g13-integration-accumulation") {
     return {
       ...generator,

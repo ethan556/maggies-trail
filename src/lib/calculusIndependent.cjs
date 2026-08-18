@@ -66,6 +66,22 @@ const INTEGRATION_FOUNDATION_FORMS = {
   CONSTANT_MCQ: 'integration-accumulation__in-constant-of-integration__mcq',
   LIBRARY_MCQ: 'integration-accumulation__in-library__mcq',
   LIBRARY_NUMERIC: 'integration-accumulation__in-library__numeric',
+  USUB_MCQ: 'integration-accumulation__in-usub__mcq',
+  USUB_NUMERIC: 'integration-accumulation__in-usub__numeric',
+  USUB_LIMITS_MCQ: 'integration-accumulation__in-usub-limits__mcq',
+  USUB_LIMITS_NUMERIC: 'integration-accumulation__in-usub-limits__numeric',
+  CHOOSING_U_MCQ: 'integration-accumulation__in-choosing-u__mcq',
+  CHOOSING_U_NUMERIC: 'integration-accumulation__in-choosing-u__numeric',
+  CHOOSING_U_BUCKET: 'integration-accumulation__in-choosing-u__dragBucket',
+};
+const INTEGRATION_APPLICATION_FORMS = {
+  AREA_MCQ: 'integration-applications__ia-area-between__mcq',
+  AREA_NUMERIC: 'integration-applications__ia-area-between__numeric',
+  DISC_MCQ: 'integration-applications__ia-disc__mcq',
+  DISC_NUMERIC: 'integration-applications__ia-disc__numeric',
+  WASHER_MCQ: 'integration-applications__ia-washer__mcq',
+  WASHER_NUMERIC: 'integration-applications__ia-washer__numeric',
+  WASHER_MATCH: 'integration-applications__ia-washer__matchPairs',
 };
 
 function powerLabel(coefficient, power) {
@@ -679,7 +695,135 @@ function solveIntegrationFoundation(form, input) {
     if (exponential) return Number(exponential[1]);
     throw new Error(`unrecognized antiderivative-library numeric prompt: ${prompt}`);
   }
+  if (form === INTEGRATION_FOUNDATION_FORMS.USUB_MCQ || form === INTEGRATION_FOUNDATION_FORMS.CHOOSING_U_MCQ) {
+    const match = /integral of (\d*)x(?:\^(\d+))?\(x\^(\d+) \+ (\d+)\)\^(\d+) dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized substitution-choice prompt: ${prompt}`);
+    const coefficient = match[1] ? Number(match[1]) : 1;
+    const receiptPower = match[2] ? Number(match[2]) : 1;
+    const innerPower = Number(match[3]);
+    const shift = Number(match[4]);
+    if (receiptPower !== innerPower - 1 || coefficient % innerPower !== 0) {
+      throw new Error(`substitution receipt does not match the inside derivative: ${prompt}`);
+    }
+    return `u = x^${innerPower} + ${shift}.`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.USUB_NUMERIC || form === INTEGRATION_FOUNDATION_FORMS.CHOOSING_U_NUMERIC) {
+    const match = /integral from (-?\d+) to (-?\d+) of (\d*)x(?:\^(\d+))?\(x\^(\d+) \+ (\d+)\)\^(\d+) dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized substitution numeric prompt: ${prompt}`);
+    const lower = Number(match[1]); const upper = Number(match[2]);
+    const coefficient = match[3] ? Number(match[3]) : 1;
+    const receiptPower = match[4] ? Number(match[4]) : 1;
+    const innerPower = Number(match[5]); const shift = Number(match[6]); const outer = Number(match[7]);
+    if (receiptPower !== innerPower - 1 || coefficient % innerPower !== 0 || lower >= upper) {
+      throw new Error(`invalid substitution receipt or interval: ${prompt}`);
+    }
+    const scale = coefficient / innerPower;
+    const divisor = outer + 1;
+    const transformedLower = lower ** innerPower + shift;
+    const transformedUpper = upper ** innerPower + shift;
+    return Number((scale * (transformedUpper ** divisor - transformedLower ** divisor) / divisor).toFixed(3));
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.USUB_LIMITS_MCQ) {
+    const match = /integral from (-?\d+) to (-?\d+) of (\d+)\((\d+)x \+ (\d+)\)\^(\d+) dx with u = (\d+)x \+ (\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized changed-limits prompt: ${prompt}`);
+    const lower = Number(match[1]); const upper = Number(match[2]);
+    const outside = Number(match[3]); const inner = Number(match[4]); const shift = Number(match[5]);
+    const declaredInner = Number(match[7]); const declaredShift = Number(match[8]);
+    if (outside !== inner || inner !== declaredInner || shift !== declaredShift || lower >= upper) {
+      throw new Error(`changed-limits prompt has an inconsistent substitution: ${prompt}`);
+    }
+    return `u runs from ${inner * lower + shift} to ${inner * upper + shift}.`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.USUB_LIMITS_NUMERIC) {
+    const match = /integral from (-?\d+) to (-?\d+) of (\d+)\((\d+)x \+ (\d+)\)\^(\d+) dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized changed-limits numeric prompt: ${prompt}`);
+    const lower = Number(match[1]); const upper = Number(match[2]);
+    const outside = Number(match[3]); const inner = Number(match[4]);
+    const shift = Number(match[5]); const outer = Number(match[6]);
+    if (outside !== inner || lower >= upper) throw new Error(`invalid changed-limits receipt or interval: ${prompt}`);
+    const divisor = outer + 1;
+    const transformedLower = inner * lower + shift;
+    const transformedUpper = inner * upper + shift;
+    return Number(((transformedUpper ** divisor - transformedLower ** divisor) / divisor).toFixed(3));
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.CHOOSING_U_BUCKET) {
+    const match = /Use p = (\d+) and c = (\d+)\./.exec(prompt);
+    if (!match) throw new Error(`unrecognized choosing-u bucket prompt: ${prompt}`);
+    const power = Number(match[1]); const shift = Number(match[2]);
+    if (power < 2) throw new Error(`choosing-u bucket needs a nonlinear inside: ${prompt}`);
+    return {
+      [`integral of ${power}x^${power - 1} cos(x^${power} + ${shift}) dx`]: 'Substitution works',
+      [`integral of cos(x^${power} + ${shift}) dx`]: 'The needed derivative factor is missing',
+      [`integral of (x + ${shift})^${power} dx`]: 'Substitution works',
+      [`integral of x^${Math.max(0, power - 2)}(x^${power} + ${shift})^2 dx`]: 'The needed derivative factor is missing',
+    };
+  }
   throw new Error(`unrecognized integration-foundation form ${form}`);
+}
+
+function solveIntegrationApplication(form, input) {
+  const prompt = String(input).split('||')[0].trim();
+  if (form === INTEGRATION_APPLICATION_FORMS.AREA_MCQ) {
+    const match = /open interval from 0 to (\d+(?:\.\d+)?), which curve is on top: y = (\d+)x or y = (\d+)x\^2/.exec(prompt);
+    if (!match) throw new Error(`unrecognized area-between MCQ prompt: ${prompt}`);
+    const upper = Number(match[1]); const line = Number(match[2]); const quadratic = Number(match[3]);
+    if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between interval does not end at the second intersection: ${prompt}`);
+    return `y = ${line}x is on top.`;
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.AREA_NUMERIC) {
+    const intersection = /curves y = (\d+)x and y = (\d+)x\^2 meet at x = 0 and at what larger x-value/.exec(prompt);
+    if (intersection) return Number((Number(intersection[1]) / Number(intersection[2])).toFixed(4));
+    const signed = /signed integral from 0 to (\d+(?:\.\d+)?) of \((\d+)x\^2 - (\d+)x\) dx/.exec(prompt);
+    if (signed) {
+      const upper = Number(signed[1]); const quadratic = Number(signed[2]); const line = Number(signed[3]);
+      return Number((quadratic * upper ** 3 / 3 - line * upper ** 2 / 2).toFixed(4));
+    }
+    const area = /area between y = (\d+)x and y = (\d+)x\^2 from x = 0 to x = (\d+(?:\.\d+)?)/.exec(prompt);
+    if (!area) throw new Error(`unrecognized area-between numeric prompt: ${prompt}`);
+    const line = Number(area[1]); const quadratic = Number(area[2]); const upper = Number(area[3]);
+    if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between bounds do not match the displayed intersections: ${prompt}`);
+    return Number((line * upper ** 2 / 2 - quadratic * upper ** 3 / 3).toFixed(4));
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.DISC_MCQ) {
+    const match = /region under y = (\d+)x\^(\d+) is revolved about the x-axis/.exec(prompt);
+    if (!match) throw new Error(`unrecognized disc MCQ prompt: ${prompt}`);
+    return `The radius is ${match[1]}x^${match[2]}.`;
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.DISC_NUMERIC) {
+    const match = /Revolve y = (\d+)x\^(\d+) on \[0, (\d+)\] about the x-axis/.exec(prompt);
+    if (!match) throw new Error(`unrecognized disc numeric prompt: ${prompt}`);
+    const coefficient = Number(match[1]); const power = Number(match[2]); const upper = Number(match[3]);
+    if (upper <= 0) throw new Error(`disc interval must have positive width: ${prompt}`);
+    return Number((Math.PI * coefficient ** 2 * upper ** (2 * power + 1) / (2 * power + 1)).toFixed(3));
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.WASHER_MCQ) {
+    const match = /outer radius (\d+) and inner radius (\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized washer MCQ prompt: ${prompt}`);
+    const outer = Number(match[1]); const inner = Number(match[2]);
+    if (inner < 0 || outer <= inner) throw new Error(`washer radii are not ordered outer > inner: ${prompt}`);
+    return `${outer ** 2 - inner ** 2}pi square units.`;
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.WASHER_NUMERIC) {
+    const match = /between y = (\d+) and y = (\d+)x on \[0, (\d+)\] about the x-axis/.exec(prompt);
+    if (!match) throw new Error(`unrecognized washer numeric prompt: ${prompt}`);
+    const outer = Number(match[1]); const slope = Number(match[2]); const upper = Number(match[3]);
+    if (slope * upper > outer || upper <= 0) throw new Error(`inner radius exceeds the outer radius on the washer interval: ${prompt}`);
+    return Number((Math.PI * (outer ** 2 * upper - slope ** 2 * upper ** 3 / 3)).toFixed(3));
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.WASHER_MATCH) {
+    const match = /washer with R = (\d+), r = (\d+), and thickness dx/.exec(prompt);
+    if (!match) throw new Error(`unrecognized washer match prompt: ${prompt}`);
+    const outer = Number(match[1]); const inner = Number(match[2]);
+    if (inner < 0 || outer <= inner) throw new Error(`washer match radii are not ordered outer > inner: ${prompt}`);
+    const face = outer ** 2 - inner ** 2;
+    return {
+      [`outer radius R = ${outer}`]: 'distance from the axis to the outside curve',
+      [`inner radius r = ${inner}`]: 'distance from the axis to the hole boundary',
+      [`face area = ${face}pi`]: 'area on one washer face',
+      [`slice volume = ${face}pi dx`]: 'volume of one thin washer',
+    };
+  }
+  throw new Error(`unrecognized integration-application form ${form}`);
 }
 
 function solvePrompt(form, input) {
@@ -727,6 +871,7 @@ function solvePrompt(form, input) {
   if (form === OTHER_FORMS_NUMERIC && /lim\(x -> (?:infinity|0\+)\)/i.test(String(input))) return 0;
   if (Object.values(DIFFERENTIAL_EQUATION_FORMS).includes(form)) return solveDifferentialEquation(form, input);
   if (Object.values(INTEGRATION_FOUNDATION_FORMS).includes(form)) return solveIntegrationFoundation(form, input);
+  if (Object.values(INTEGRATION_APPLICATION_FORMS).includes(form)) return solveIntegrationApplication(form, input);
   return authoredSolver(form, input);
 }
 
