@@ -69,12 +69,18 @@ interface ReviewCardsReport {
       lessonEdgeReferenceCount: number;
       sharedAcrossLessonsEdgeCount: number;
       extraSharedLessonReferenceCount: number;
+      explicitDecisionCount: number;
+      validExplicitDecisionCount: number;
       pendingEdgeCount: number;
+      partialEdgeCount: number;
       approvedEdgeCount: number;
       rejectedEdgeCount: number;
+      needsExactBenchmarkCount: number;
       lessonsWithCandidateEvidenceMap: number;
       lessonsMissingCandidateEvidenceMap: number;
+      inconsistentDecisionCount: number;
       invalidDecisionCount: number;
+      unboundDecisionCount: number;
     };
     queue: { sourceStatus: string; declaredCurriculumSeal: string | null };
     priorInteractionClassification: { importedAsV4DispositionCount: number };
@@ -147,43 +153,69 @@ describe("S244 source-sealed lesson review cards", () => {
 
   it("publishes stable exact-MCQ cluster references and reconciled live counts", () => {
     expect(report.summary.duplicates).toMatchObject({
-      clusterCount: 136,
-      placementCount: 314,
-      affectedLessonCount: 192,
+      clusterCount: 127,
+      placementCount: 290,
+      affectedLessonCount: 180,
       withinLessonGroupCount: 49
     });
-    expect(report.duplicateClusters).toHaveLength(136);
-    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(136);
-    expect(report.duplicateClusters.reduce((total, cluster) => total + cluster.placementCount, 0)).toBe(314);
-    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(314);
+    expect(report.duplicateClusters).toHaveLength(127);
+    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(127);
+    expect(report.duplicateClusters.reduce((total, cluster) => total + cluster.placementCount, 0)).toBe(290);
+    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(290);
     expect(report.cards.reduce((total, card) => total + card.duplicates.withinLessonGroupCount, 0)).toBe(49);
-    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds)).size).toBe(136);
+    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds)).size).toBe(127);
   });
 
-  it("keeps every standards packet candidate-only until a valid explicit decision exists", () => {
+  it("keeps candidate and partial standards packets open until approval or rejection", () => {
     expect(report.summary.standards).toMatchObject({
-      dossierCount: 6119,
-      lessonEdgeReferenceCount: 6301,
-      sharedAcrossLessonsEdgeCount: 162,
-      extraSharedLessonReferenceCount: 182,
-      pendingEdgeCount: 6119,
+      dossierCount: 6121,
+      lessonEdgeReferenceCount: 6311,
+      sharedAcrossLessonsEdgeCount: 164,
+      extraSharedLessonReferenceCount: 190,
+      explicitDecisionCount: 2,
+      validExplicitDecisionCount: 2,
+      pendingEdgeCount: 6121,
+      partialEdgeCount: 2,
       approvedEdgeCount: 0,
       rejectedEdgeCount: 0,
-      lessonsWithCandidateEvidenceMap: 1129,
-      lessonsMissingCandidateEvidenceMap: 572,
-      invalidDecisionCount: 0
+      needsExactBenchmarkCount: 6119,
+      lessonsWithCandidateEvidenceMap: 1134,
+      lessonsMissingCandidateEvidenceMap: 567,
+      inconsistentDecisionCount: 0,
+      invalidDecisionCount: 0,
+      unboundDecisionCount: 0
     });
-    expect(report.cards.reduce((total, card) => total + card.standards.dossierCount, 0)).toBe(6301);
-    const edgeIds = report.cards.flatMap((card) => card.standards.edgeIds);
-    expect(edgeIds).toHaveLength(6301);
-    expect(new Set(edgeIds).size).toBe(6119);
+    expect(report.summary.standards.pendingEdgeCount).toBe(report.summary.standards.dossierCount);
+    expect(report.cards.reduce((total, card) => total + card.standards.dossierCount, 0)).toBe(6311);
+
+    const edgeRefs = report.cards.flatMap((card) => card.standards.edgeRefs);
+    expect(edgeRefs).toHaveLength(6311);
+    expect(edgeRefs.filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(6301);
+    expect(edgeRefs.filter((edge) => edge.reviewStatus === "partial")).toHaveLength(10);
+    expect(edgeRefs.some((edge) => edge.reviewStatus === "ready-for-human-review")).toBe(false);
+    expect(new Set(edgeRefs.map((edge) => edge.reviewStatus))).toEqual(new Set(["candidate", "partial"]));
+
+    const uniqueEdges = new Map<string, { reviewStatus: string; decisionIntegrityStatus: string }>();
+    for (const edge of edgeRefs) {
+      const existing = uniqueEdges.get(edge.edgeId);
+      if (existing) expect(edge, edge.edgeId).toMatchObject(existing);
+      else uniqueEdges.set(edge.edgeId, edge);
+    }
+    expect(uniqueEdges.size).toBe(6121);
+    expect([...uniqueEdges.values()].filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(6119);
+    expect([...uniqueEdges.values()].filter((edge) => edge.reviewStatus === "partial")).toHaveLength(2);
+
     for (const card of report.cards) {
       expect(card.standards.approvedEdgeCount, card.lessonId).toBe(0);
       expect(card.standards.rejectedEdgeCount, card.lessonId).toBe(0);
       expect(card.standards.pendingEdgeCount, card.lessonId).toBe(card.standards.dossierCount);
       for (const edge of card.standards.edgeRefs) {
-        expect(edge.reviewStatus, edge.edgeId).toBe("ready-for-human-review");
-        expect(edge.decisionIntegrityStatus, edge.edgeId).toBe("NO_EXPLICIT_HUMAN_DECISION");
+        if (edge.reviewStatus === "partial") {
+          expect(edge.decisionIntegrityStatus, edge.edgeId).toBe("VALID_EXPLICIT_HUMAN_DECISION");
+        } else {
+          expect(edge.reviewStatus, edge.edgeId).toBe("candidate");
+          expect(edge.decisionIntegrityStatus, edge.edgeId).toBe("NO_EXPLICIT_HUMAN_DECISION");
+        }
       }
     }
   });
