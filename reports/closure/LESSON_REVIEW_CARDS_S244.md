@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `b0ed4f90c1f19edf549a5af041a3f5738bf6e78dda9408d8b22d84a56a396fe6`
-- Queue-compatible lesson-only seal: `bea42d6424fef94038441f5f88829734c199f533c00e6e8476c1bc7529f5333c`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `bea42d6424fef94038441f5f88829734c199f533c00e6e8476c1bc7529f5333c`)
+- Review-basis seal (lessons plus course/grade metadata): `b5373d05764d8450c52bb8a6d32868bd43ca233a9bbd4671e97d33fc518edf30`
+- Queue-compatible lesson-only seal: `8ce3f0357b4811e0ee388ae879326d2a5e3aaceb8eb71a63e5d63a29e66761a1`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `8ce3f0357b4811e0ee388ae879326d2a5e3aaceb8eb71a63e5d63a29e66761a1`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -18,15 +18,15 @@ These counts overlap and must not be summed as independent lesson defects.
 | Whole-lesson KEEP / REVISE / ESCALATE | 0 | 1,701 lessons |
 | Visual required / preferred / sufficient | 0 | 1,701 lessons |
 | Grade-band language fitness | 0 | 1,701 lessons |
-| Standards edge approval / rejection | 0 | 6,119 edges |
-| Candidate standards evidence-map coverage | 1,129 candidate-mapped | 572 lessons missing |
+| Standards edge approval / rejection | 0 | 6,121 edges |
+| Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
 | Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 127 clusters / 290 placements |
 | Broader progression / repetition queue | 0 semantic dispositions recorded here | 731 lessons |
 
 Exact duplicate evidence includes **49** within-lesson groups across **180** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
 
 Standards evidence remains candidate-only: **6,119** dossiers still need exact benchmark text and independent review; **0** are approved and **0** rejected.
-The **6,119** central standards edges appear as **6,301** lesson-card references because **162** edges are shared across lessons; cards reference that central authority rather than copying decisions.
+The **6,121** central standards edges appear as **6,311** lesson-card references because **164** edges are shared across lessons; cards reference that central authority rather than copying decisions.
 
 ## Authority boundaries
 
