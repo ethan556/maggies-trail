@@ -1,7 +1,8 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { WidgetSpec, widgetIntegrityErrors, type TWidget } from "./schema";
+import { lintLesson } from "./pedagogy";
+import { Lesson as LessonSchema, WidgetSpec, widgetIntegrityErrors, type TWidget } from "./schema";
 
 type Option = { id: string; label: string; correct: boolean };
 type Widget = { type: string; prompt: string; options?: Option[] };
@@ -100,6 +101,13 @@ describe("S246 Kindergarten geometry-build diversity packet", () => {
             `${lesson.id}/${step.id}: distinct choices`).toBe(4);
         }
       }
+    }
+  });
+
+  it("keeps every lesson free of aggregate pedagogy findings", () => {
+    for (const lesson of lessons) {
+      const parsed = LessonSchema.parse(lesson);
+      expect(lintLesson(parsed), lesson.id).toEqual([]);
     }
   });
 });
