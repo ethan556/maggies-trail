@@ -28,14 +28,18 @@ interface Card {
   lessonCourseBasisHash: string;
   reviewBasisHash: string;
   reviewCardHash: string;
+  cardStatus: string;
   disposition: {
     status: string;
     decision: "KEEP" | "REVISE" | "ESCALATE" | null;
+    queueStatus: string;
     recordId: string | null;
     reviewer: string | null;
     reviewedBasisHash: string | null;
+    visualDecision: "REQUIRED" | "PREFERRED" | "SUFFICIENT" | "ESCALATE" | null;
+    gradeLanguageDecision: "FIT" | "REVISE" | "ESCALATE" | null;
   };
-  reviewStatus: { queueSourceStatus: string };
+  reviewStatus: { queueSourceStatus: string; visual: string; gradeLanguage: string };
   duplicates: {
     clusterCount: number;
     placementCount: number;
@@ -84,7 +88,7 @@ interface ReviewCardsReport {
     };
     queue: { sourceStatus: string; declaredCurriculumSeal: string | null };
     priorInteractionClassification: { importedAsV4DispositionCount: number };
-    lessonDecisionLedger: { historyRecordCount: number; currentCount: number; staleCount: number; invalidCount: number };
+    lessonDecisionLedger: { historyRecordCount: number; currentCount: number; staleCount: number; invalidCount: number; duplicateRecordIdCount: number; unknownLessonRecordCount: number };
   };
   duplicateClusters: Array<{ clusterId: string; placementCount: number; placements: Array<{ lessonId: string }> }>;
   cards: Card[];
@@ -132,19 +136,41 @@ describe("S244 source-sealed lesson review cards", () => {
     expect(new Set(report.cards.map((card) => card.reviewStatus.queueSourceStatus))).toEqual(new Set([report.summary.queue.sourceStatus]));
   });
 
-  it("never imports mechanical KEEP labels or candidate evidence as semantic approval", () => {
+  it("accepts only current explicit decisions and exposes closed review statuses", () => {
     expect(report.summary.priorInteractionClassification.importedAsV4DispositionCount).toBe(0);
-    expect(report.summary.lessonDecisionLedger.historyRecordCount).toBe(0);
-    expect(report.summary.lessonDecisionLedger.currentCount).toBe(0);
-    expect(report.summary.lessonDecisionLedger.staleCount).toBe(0);
-    expect(report.summary.lessonDecisionLedger.invalidCount).toBe(0);
-    expect(report.summary.disposition).toEqual({ explicitDecisions: 0, pendingHumanDecisions: 1701 });
+    expect(report.summary.lessonDecisionLedger).toEqual({
+      historyRecordCount: 50, currentCount: 50, staleCount: 0, invalidCount: 0,
+      duplicateRecordIdCount: 0, unknownLessonRecordCount: 0
+    });
+    expect(report.summary.disposition).toEqual({ explicitDecisions: 50, pendingHumanDecisions: 1651 });
+
+    const keep = report.cards.find((card) => card.lessonId === "dg4-01-01");
+    expect(keep).toMatchObject({
+      cardStatus: "CURRENT_HUMAN_DISPOSITION",
+      disposition: {
+        status: "CURRENT_HUMAN_DECISION", decision: "KEEP", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S246-DG4-dg4-01-01", visualDecision: "SUFFICIENT", gradeLanguageDecision: "FIT"
+      },
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:SUFFICIENT", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+    });
+
+    const revise = report.cards.find((card) => card.lessonId === "k100-01-01");
+    expect(revise).toMatchObject({
+      cardStatus: "CURRENT_HUMAN_DISPOSITION",
+      disposition: {
+        status: "CURRENT_HUMAN_DECISION", decision: "REVISE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S246-K100-k100-01-01", visualDecision: "REQUIRED", gradeLanguageDecision: "FIT"
+      },
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+    });
+
+    const currentCards = report.cards.filter((card) => card.disposition.status === "CURRENT_HUMAN_DECISION");
+    const pendingCards = report.cards.filter((card) => card.disposition.status === "PENDING_EXPLICIT_HUMAN_DECISION");
+    expect(currentCards).toHaveLength(50);
+    expect(pendingCards).toHaveLength(1651);
+    expect(currentCards.every((card) => card.disposition.queueStatus === "CLOSED_BY_CURRENT_HUMAN_DECISION")).toBe(true);
+    expect(pendingCards.every((card) => card.disposition.decision === null)).toBe(true);
     for (const card of report.cards) {
-      expect(card.disposition.decision, card.lessonId).toBeNull();
-      expect(card.disposition.status, card.lessonId).toBe("PENDING_EXPLICIT_HUMAN_DECISION");
-      if (card.priorInteractionClosureClassification?.decision === "KEEP") {
-        expect(card.disposition.decision, card.lessonId).not.toBe("KEEP");
-      }
       expect(card.standards.alignmentClaimAllowed, card.lessonId).toBe(false);
       expect(card.standards.masteryClaimAllowed, card.lessonId).toBe(false);
       expect(card.standards.lessonClosureAllowed, card.lessonId).toBe(false);
