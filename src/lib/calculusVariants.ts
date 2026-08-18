@@ -2582,6 +2582,147 @@ function washerMatchWidget(rand: Rand): GeneratedIntegrationVariant {
   return { widget, answer: pairs };
 }
 
+type CrossSectionShape = "squares" | "equilateral triangles" | "semicircles";
+const CROSS_SECTION_CASES = Array.from({ length: 12 }, (_, index) => ({
+  shape: (["squares", "equilateral triangles", "semicircles"] as const)[index % 3]!,
+  coefficient: index + 1,
+  power: index % 3 + 1,
+})) as readonly { shape: CrossSectionShape; coefficient: number; power: number }[];
+
+function crossSectionFactor(shape: CrossSectionShape) {
+  return shape === "squares" ? 1 : shape === "equilateral triangles" ? Math.sqrt(3) / 4 : Math.PI / 8;
+}
+
+function crossSectionNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { shape, coefficient, power } = pick(rand, CROSS_SECTION_CASES);
+  const factor = crossSectionFactor(shape);
+  const answer = round3(factor * coefficient ** 2 / (2 * power + 1));
+  const widthRole = shape === "semicircles" ? "diameter" : "side length";
+  const widget = {
+    type: "numeric" as const,
+    prompt: `The base width is y = ${coefficient}x^${power} on [0, 1]. Cross-sections perpendicular to the x-axis are ${shape}, with ${widthRole} equal to the base width. Find the volume to three decimal places.`,
+    answer,
+    tolerance: 0.005,
+    unit: "cubic units",
+    commonErrors: uniqueNumericErrors(answer, [
+      { value: round3(factor * coefficient / (power + 1)), feedback: "Cross-sectional area depends on the square of the base width." },
+      { value: round3(coefficient ** 2 / (2 * power + 1)), feedback: shape === "squares" ? "This is the correct square-slice factor; recheck the requested result." : "This omits the shape-specific area factor." },
+      { value: round3(factor * coefficient ** 2 / (power + 1)), feedback: "Squaring x^p doubles the exponent before integration." },
+    ]),
+    fallbackFeedback: `Use the ${shape} area factor times (${coefficient}x^${power})^2, then integrate from 0 to 1 to obtain ${answer}.`,
+    successFeedback: `The cross-sectional volume is ${answer} cubic units.`,
+  };
+  return { widget, answer };
+}
+
+const CROSS_SECTION_MCQ_CASES = Array.from({ length: 12 }, (_, index) => ({
+  shape: (["squares", "equilateral triangles", "semicircles"] as const)[index % 3]!,
+  width: index + 2,
+})) as readonly { shape: CrossSectionShape; width: number }[];
+
+function crossSectionAreaLabel(shape: CrossSectionShape, width: number) {
+  if (shape === "squares") return `The slice area is ${width ** 2} square units.`;
+  if (shape === "equilateral triangles") return `The slice area is ${width ** 2}sqrt(3)/4 square units.`;
+  return `The slice area is ${width ** 2}pi/8 square units.`;
+}
+
+function crossSectionName(shape: CrossSectionShape) {
+  if (shape === "squares") return "a square";
+  if (shape === "equilateral triangles") return "an equilateral triangle";
+  return "a semicircle";
+}
+
+function crossSectionMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { shape, width } = pick(rand, CROSS_SECTION_MCQ_CASES);
+  const correct = crossSectionAreaLabel(shape, width);
+  const shapeName = crossSectionName(shape);
+  return integrationMcq(rand, `At a marked x-value, the base width is ${width} units. The perpendicular cross-section is ${shapeName}, with its side or diameter equal to that width. Which slice-area statement is correct?`, [
+    { label: correct, correct: true, feedback: "Use the area formula for the stated shape with the displayed base width." },
+    { label: `The slice area is ${width} square units.`, correct: false, feedback: "Area is not the unsquared one-dimensional width." },
+    { label: `The slice area is ${width ** 2}pi square units.`, correct: false, feedback: "That treats the width as a circle radius and ignores the stated cross-section formula." },
+    { label: `The slice area is ${width ** 2}/2 square units.`, correct: false, feedback: `That area rule does not match ${shapeName}.` },
+  ]);
+}
+
+type AverageValueNumericCase =
+  | { kind: "average"; coefficient: number; power: number; upper: number }
+  | { kind: "meanPoint"; coefficient: number; power: number; upper: number }
+  | { kind: "velocity"; slope: number; intercept: number; upper: number };
+
+const AVERAGE_VALUE_NUMERIC_CASES: readonly AverageValueNumericCase[] = [
+  { kind: "average", coefficient: 1, power: 1, upper: 2 },
+  { kind: "average", coefficient: 2, power: 1, upper: 3 },
+  { kind: "average", coefficient: 3, power: 2, upper: 2 },
+  { kind: "average", coefficient: 4, power: 3, upper: 3 },
+  { kind: "meanPoint", coefficient: 1, power: 2, upper: 3 },
+  { kind: "meanPoint", coefficient: 2, power: 3, upper: 4 },
+  { kind: "meanPoint", coefficient: 3, power: 1, upper: 5 },
+  { kind: "meanPoint", coefficient: 4, power: 4, upper: 6 },
+  { kind: "velocity", slope: 2, intercept: 1, upper: 4 },
+  { kind: "velocity", slope: 3, intercept: 2, upper: 4 },
+  { kind: "velocity", slope: 4, intercept: 3, upper: 5 },
+  { kind: "velocity", slope: 5, intercept: 4, upper: 6 },
+];
+
+function averageValueNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, AVERAGE_VALUE_NUMERIC_CASES);
+  let answer: number;
+  let prompt: string;
+  let feedback: string;
+  if (entry.kind === "velocity") {
+    answer = round3(entry.slope * entry.upper / 2 + entry.intercept);
+    prompt = `A velocity is v(t) = ${entry.slope}t + ${entry.intercept} on [0, ${entry.upper}]. Find the average velocity to three decimal places.`;
+    feedback = `Divide the displacement integral by the elapsed time ${entry.upper}.`;
+  } else {
+    const average = entry.coefficient * entry.upper ** entry.power / (entry.power + 1);
+    if (entry.kind === "average") {
+      answer = round3(average);
+      prompt = `Find the average value of f(x) = ${entry.coefficient}x^${entry.power} on [0, ${entry.upper}], to three decimal places.`;
+      feedback = `Divide the integral by the interval width ${entry.upper}.`;
+    } else {
+      answer = round3(entry.upper / (entry.power + 1) ** (1 / entry.power));
+      prompt = `For f(x) = ${entry.coefficient}x^${entry.power} on [0, ${entry.upper}], find the positive c where f(c) equals its average value. Give three decimals.`;
+      feedback = `First compute the average ${round3(average)}, then solve f(c) = average.`;
+    }
+  }
+  const widget = {
+    type: "numeric" as const,
+    prompt,
+    answer,
+    tolerance: 0.005,
+    unit: entry.kind === "velocity" ? "units per time" : "",
+    commonErrors: uniqueNumericErrors(answer, entry.kind === "meanPoint" ? [
+      { value: round3(entry.upper / (entry.power + 1)), feedback: "The equation for c includes a power; take the appropriate root." },
+      { value: entry.upper, feedback: "The right endpoint is not generally where the function equals its average." },
+      { value: 0, feedback: "A positive increasing power function has a positive average on this interval." },
+    ] : [
+      { value: round3(answer * entry.upper), feedback: "That is the accumulated integral before division by interval width." },
+      { value: round3(answer / entry.upper), feedback: "This divides by the interval width twice." },
+      { value: 0, feedback: "The displayed function is positive over most or all of the interval." },
+    ]),
+    fallbackFeedback: feedback,
+    successFeedback: `The requested average-value result is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const AVERAGE_VALUE_MCQ_CASES = Array.from({ length: 12 }, (_, index) => ({
+  coefficient: index + 1,
+  power: index % 4 + 1,
+  upper: index % 3 + 2,
+})) as readonly { coefficient: number; power: number; upper: number }[];
+
+function averageValueMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { coefficient, power, upper } = pick(rand, AVERAGE_VALUE_MCQ_CASES);
+  const correct = `1/${upper} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`;
+  return integrationMcq(rand, `For f(x) = ${coefficient}x^${power} on [0, ${upper}], which expression gives the average value?`, [
+    { label: correct, correct: true, feedback: "Average value is accumulated function value divided by interval width." },
+    { label: `1 times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "That is total accumulation; divide by the interval width to obtain an average." },
+    { label: `1/${upper + 1} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "Divide by the interval width, not one more than the width." },
+    { label: `1/${upper ** 2} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "Divide by the interval length once, not its square." },
+  ]);
+}
+
 const INTEGRATION_APPLICATION_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "integration-applications__ia-area-between__mcq": areaBetweenMcqWidget,
   "integration-applications__ia-area-between__numeric": areaBetweenNumericWidget,
@@ -2590,6 +2731,10 @@ const INTEGRATION_APPLICATION_BUILDERS: Record<string, (rand: Rand) => Generated
   "integration-applications__ia-washer__mcq": washerMcqWidget,
   "integration-applications__ia-washer__numeric": washerNumericWidget,
   "integration-applications__ia-washer__matchPairs": washerMatchWidget,
+  "integration-applications__ia-cross-sections__mcq": crossSectionMcqWidget,
+  "integration-applications__ia-cross-sections__numeric": crossSectionNumericWidget,
+  "integration-applications__ia-average-value__mcq": averageValueMcqWidget,
+  "integration-applications__ia-average-value__numeric": averageValueNumericWidget,
 };
 
 const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {

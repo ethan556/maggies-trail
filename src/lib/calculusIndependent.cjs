@@ -82,6 +82,10 @@ const INTEGRATION_APPLICATION_FORMS = {
   WASHER_MCQ: 'integration-applications__ia-washer__mcq',
   WASHER_NUMERIC: 'integration-applications__ia-washer__numeric',
   WASHER_MATCH: 'integration-applications__ia-washer__matchPairs',
+  CROSS_SECTIONS_MCQ: 'integration-applications__ia-cross-sections__mcq',
+  CROSS_SECTIONS_NUMERIC: 'integration-applications__ia-cross-sections__numeric',
+  AVERAGE_VALUE_MCQ: 'integration-applications__ia-average-value__mcq',
+  AVERAGE_VALUE_NUMERIC: 'integration-applications__ia-average-value__numeric',
 };
 
 function powerLabel(coefficient, power) {
@@ -822,6 +826,49 @@ function solveIntegrationApplication(form, input) {
       [`face area = ${face}pi`]: 'area on one washer face',
       [`slice volume = ${face}pi dx`]: 'volume of one thin washer',
     };
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.CROSS_SECTIONS_MCQ) {
+    const match = /base width is (\d+) units\. The perpendicular cross-section is (a square|an equilateral triangle|a semicircle)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized cross-section MCQ prompt: ${prompt}`);
+    const width = Number(match[1]); const shape = match[2];
+    if (width <= 0) throw new Error(`cross-section width must be positive: ${prompt}`);
+    if (shape === 'a square') return `The slice area is ${width ** 2} square units.`;
+    if (shape === 'an equilateral triangle') return `The slice area is ${width ** 2}sqrt(3)/4 square units.`;
+    return `The slice area is ${width ** 2}pi/8 square units.`;
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.CROSS_SECTIONS_NUMERIC) {
+    const match = /base width is y = (\d+)x\^(\d+) on \[0, (\d+)\]\. Cross-sections perpendicular to the x-axis are (squares|equilateral triangles|semicircles)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized cross-section numeric prompt: ${prompt}`);
+    const coefficient = Number(match[1]); const power = Number(match[2]); const upper = Number(match[3]); const shape = match[4];
+    if (coefficient <= 0 || power < 1 || upper <= 0) throw new Error(`cross-section dimensions must be positive: ${prompt}`);
+    const factor = shape === 'squares' ? 1 : shape === 'equilateral triangles' ? Math.sqrt(3) / 4 : Math.PI / 8;
+    return Number((factor * coefficient ** 2 * upper ** (2 * power + 1) / (2 * power + 1)).toFixed(3));
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.AVERAGE_VALUE_MCQ) {
+    const match = /For f\(x\) = (\d+)x\^(\d+) on \[0, (\d+)\], which expression gives the average value/.exec(prompt);
+    if (!match) throw new Error(`unrecognized average-value MCQ prompt: ${prompt}`);
+    const coefficient = Number(match[1]); const power = Number(match[2]); const upper = Number(match[3]);
+    if (coefficient <= 0 || power < 1 || upper <= 0) throw new Error(`average-value parameters must be positive: ${prompt}`);
+    return `1/${upper} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`;
+  }
+  if (form === INTEGRATION_APPLICATION_FORMS.AVERAGE_VALUE_NUMERIC) {
+    const average = /average value of f\(x\) = (\d+)x\^(\d+) on \[0, (\d+)\]/.exec(prompt);
+    if (average) {
+      const coefficient = Number(average[1]); const power = Number(average[2]); const upper = Number(average[3]);
+      if (coefficient <= 0 || power < 1 || upper <= 0) throw new Error(`average-value parameters must be positive: ${prompt}`);
+      return Number((coefficient * upper ** power / (power + 1)).toFixed(3));
+    }
+    const point = /For f\(x\) = (\d+)x\^(\d+) on \[0, (\d+)\], find the positive c where f\(c\) equals its average value/.exec(prompt);
+    if (point) {
+      const coefficient = Number(point[1]); const power = Number(point[2]); const upper = Number(point[3]);
+      if (coefficient <= 0 || power < 1 || upper <= 0) throw new Error(`mean-value point parameters must be positive: ${prompt}`);
+      return Number((upper / (power + 1) ** (1 / power)).toFixed(3));
+    }
+    const velocity = /velocity is v\(t\) = (\d+)t \+ (\d+) on \[0, (\d+)\]/.exec(prompt);
+    if (!velocity) throw new Error(`unrecognized average-value numeric prompt: ${prompt}`);
+    const slope = Number(velocity[1]); const intercept = Number(velocity[2]); const upper = Number(velocity[3]);
+    if (upper <= 0) throw new Error(`average-velocity interval must have positive width: ${prompt}`);
+    return Number((slope * upper / 2 + intercept).toFixed(3));
   }
   throw new Error(`unrecognized integration-application form ${form}`);
 }
