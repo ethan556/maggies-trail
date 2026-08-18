@@ -2,9 +2,9 @@
 
 Deterministic, content-addressed evidence cache. It is not curriculum, a backlog, or approval authority.
 
-- Cache seal: `fb25456739e6845771511cc3dbde2ae5fb63ddf04d616f23fb72f699f9a5e8e2`
-- Local cache: `.chatgpt-work-cache/maggies-v4/fb25456739e6845771511cc3dbde2ae5fb63ddf04d616f23fb72f699f9a5e8e2/`
-- Base commit metadata: `2fc6d5d70bd055ea26295dec6df45e35d2baf591`
+- Cache seal: `4e2423c8cede25bd020c84ceda4756845fe3b048a0102d787b6ecfb81b7d64e3`
+- Local cache: `.chatgpt-work-cache/maggies-v4/4e2423c8cede25bd020c84ceda4756845fe3b048a0102d787b6ecfb81b7d64e3/`
+- Base commit metadata: `e705ca8820ce1ab9cfd115c53559c560a51f5803`
 - Queue freshness: **SOURCE_SEAL_MATCH**
 - Inventory: **129 courses / 1,701 lessons / 15,653 top-level steps**
 - Canonical policy pin: `8c87f7c8e16c66c6b8d711855322f6be7f7a815ab70fd2930403474e9fd8c694`
@@ -25,7 +25,7 @@ Deterministic, content-addressed evidence cache. It is not curriculum, a backlog
 | visuals-assets | 227 | 14,809,913 | `ba719e26b6fcfebfa2d4ec33d1100319f9a4e32efc96a9b1b16665c1e46594b6` |
 | standards-toolchain | 14 | 122,497 | `3a188beaf092ce6b5449aba9e6e2f34254f1a0c430b04834a6918f90a7a0175d` |
 | review-detectors | 8 | 109,944 | `93735707ae099cb361796215b7f3ffee88f1bc60c188e0a39420e0fd034fa22e` |
-| evidence-artifacts | 67 | 17,329,728 | `820f64ef06bd700ed540c1232a6a99982859ef8139e02612b41698cd5adf5595` |
+| evidence-artifacts | 67 | 17,375,583 | `3961ed57284195aa6bed53ce3073b93120836fd5d069f82d64408cf2fd210c1a` |
 
 The manifest contains one compact capsule per course and logical dependency family. It carries no lesson prose, standards text, raw audit rows, or screenshots.
 

@@ -15,9 +15,9 @@ These counts overlap and must not be summed as independent lesson defects.
 
 | Judgment / evidence packet | Explicitly closed | Pending / flagged |
 |---|---:|---:|
-| Whole-lesson KEEP / REVISE / ESCALATE | 50 | 1,651 lessons |
-| Visual required / preferred / sufficient | 50 | 1,651 lessons |
-| Grade-band language fitness | 50 | 1,651 lessons |
+| Whole-lesson KEEP / REVISE / ESCALATE | 91 | 1,610 lessons |
+| Visual required / preferred / sufficient | 91 | 1,610 lessons |
+| Grade-band language fitness | 91 | 1,610 lessons |
 | Standards edge approval / rejection | 0 | 6,121 edges |
 | Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
 | Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 126 clusters / 288 placements |
