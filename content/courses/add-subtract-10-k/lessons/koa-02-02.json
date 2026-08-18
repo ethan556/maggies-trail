@@ -17,7 +17,7 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Cross some out.",
+      "body": "Predict, draw, and check.",
       "conceptTag": "koa-sub-drawings",
       "widget": {
         "type": "numberLineHop",
@@ -193,32 +193,32 @@
       "body": "Cross some out.",
       "conceptTag": "koa-sub-drawings",
       "explanationVariants": [
-        "6 circles with 4 crossed out leaves 2.",
-        "The plain circles are what is left."
+        "After 4 of 6 circles are crossed out, only 2 plain circles stay.",
+        "The drawing checks the prediction: fewer than 4 circles remain."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Draw 6 circles, then cross out 4. How many circles are NOT crossed out?",
+        "prompt": "Draw 6 circles and cross out 4. Predict first, then check: how many plain circles stay?",
         "answer": 2,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 4,
-            "feedback": "That counts the crossed-out circles. The question asks about the ones still plain."
+            "feedback": "That counts the circles with crosses. Touch only the plain circles when you check."
           },
           {
             "value": 6,
-            "feedback": "That counts every circle drawn, including the crossed-out ones."
+            "feedback": "That is the whole drawing before crossing out. Four circles no longer count as part of the group."
           }
         ],
-        "fallbackFeedback": "Count only the circles with no cross on them.",
-        "successFeedback": "Correct — 6 circles with 4 crossed out leaves 2."
+        "fallbackFeedback": "Cross out 4 of the 6 circles. Touch the 2 circles that still have no cross.",
+        "successFeedback": "Correct — your drawing confirms that 2 plain circles stay."
       },
       "hints": [
-        "Count the plain ones.",
-        "Skip the crossed ones.",
-        "6 − 4 = 2."
+        "Guess whether the answer will be more or less than 4.",
+        "Cross out 4 of the 6 circles.",
+        "Touch and count the 2 plain circles."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -250,35 +250,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Cross some out.",
+      "body": "Find and fix a drawing mistake.",
       "conceptTag": "koa-sub-drawings",
       "explanationVariants": [
-        "9 circles with 2 crossed out leaves 7.",
-        "The plain circles are what is left."
+        "Mina counted the 2 crossed-out circles instead of the 7 plain circles.",
+        "Nine circles split into 2 crossed out and 7 still plain."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Draw 9 circles, then cross out 2. How many circles are NOT crossed out?",
+        "prompt": "Mina draws 9 circles and crosses out 2. She says 2 are left. How many plain circles are really left?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 2,
-            "feedback": "That counts the crossed-out circles. The question asks about the ones still plain."
+            "feedback": "That repeats Mina's mistake. Two circles have crosses; count the other circles."
           },
           {
             "value": 9,
-            "feedback": "That counts every circle drawn, including the crossed-out ones."
+            "feedback": "That counts every mark on the page. Crossed-out circles are not left in the group."
           }
         ],
-        "fallbackFeedback": "Count only the circles with no cross on them.",
-        "successFeedback": "Correct — 9 circles with 2 crossed out leaves 7."
+        "fallbackFeedback": "Point to the 2 crossed-out circles, then count the 7 different circles that stay plain.",
+        "successFeedback": "Correct — Mina counted the wrong part; 7 plain circles are left."
       },
       "hints": [
-        "Count the plain ones.",
-        "Skip the crossed ones.",
-        "9 − 2 = 7."
+        "Do not count the 2 circles with crosses.",
+        "Count the other circles in Mina's drawing.",
+        "Nine minus 2 leaves 7."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -310,39 +310,50 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Cross some out.",
+      "body": "Choose a drawing that models a new story.",
       "conceptTag": "koa-sub-drawings",
       "explanationVariants": [
-        "7 circles with 5 crossed out leaves 2.",
-        "The plain circles are what is left."
+        "A correct model starts with all 7 cats and crosses out the 5 that leave.",
+        "The drawing must show both the starting group and what happened to it."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Draw 7 circles, then cross out 5. How many circles are NOT crossed out?",
-        "answer": 2,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "7 cats sit on a wall. Then 5 cats jump down. Which drawing shows the story?",
+        "options": [
           {
-            "value": 5,
-            "feedback": "That counts the crossed-out circles. The question asks about the ones still plain."
+            "id": "o1",
+            "label": "7 cats drawn, with 5 cats crossed out",
+            "correct": true,
+            "feedback": "Yes. The drawing begins with all 7 cats and crosses out the 5 that jump down."
           },
           {
-            "value": 7,
-            "feedback": "That counts every circle drawn, including the crossed-out ones."
+            "id": "o2",
+            "label": "7 cats drawn, with 5 more cats added",
+            "correct": false,
+            "feedback": "Adding cats shows a growing group, but the story says cats jump down and leave."
+          },
+          {
+            "id": "o3",
+            "label": "12 cats drawn, with none crossed out",
+            "correct": false,
+            "feedback": "The story starts with 7 cats, not 12, and the drawing must show 5 leaving."
+          },
+          {
+            "id": "o4",
+            "label": "Only 5 cats drawn",
+            "correct": false,
+            "feedback": "That shows only the cats that leave. It does not show the full starting group of 7."
           }
-        ],
-        "fallbackFeedback": "Count only the circles with no cross on them.",
-        "successFeedback": "Correct — 7 circles with 5 crossed out leaves 2."
+        ]
       },
       "hints": [
-        "Count the plain ones.",
-        "Skip the crossed ones.",
-        "7 − 5 = 2."
+        "The drawing must begin with 7 cats.",
+        "Five cats must be shown leaving.",
+        "Choose the drawing with 5 of the 7 crossed out."
       ],
       "variant": {
         "gen": "k0-add-subtract",
-        "form": "KoaSubDrawingsNumeric"
+        "form": "KoaModelStoryMcq"
       },
       "cml": {
         "stage": "construct",
@@ -394,27 +405,27 @@
         "body": "",
         "conceptTag": "koa-sub-drawings",
         "explanationVariants": [
-          "8 circles with 3 crossed out leaves 5.",
-          "The plain circles are what is left."
+          "Five circles with 3 crossed out leave 2 plain circles.",
+          "Touch each plain circle once: there are 2."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Draw 8 circles, then cross out 3. How many circles are NOT crossed out?",
-          "answer": 5,
+          "prompt": "Draw 5 big circles. Cross out 3 slowly. How many plain circles can you touch?",
+          "answer": 2,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 3,
-              "feedback": "That counts the crossed-out circles. The question asks about the ones still plain."
+              "feedback": "That counts the circles with crosses. Touch only circles that are still plain."
             },
             {
-              "value": 8,
-              "feedback": "That counts every circle drawn, including the crossed-out ones."
+              "value": 5,
+              "feedback": "That is how many circles you drew before crossing out 3 of them."
             }
           ],
-          "fallbackFeedback": "Count only the circles with no cross on them.",
-          "successFeedback": "Correct — 8 circles with 3 crossed out leaves 5."
+          "fallbackFeedback": "Cover each crossed-out circle with a finger. Two plain circles are still showing.",
+          "successFeedback": "Correct — 2 plain circles remain."
         }
       }
     }

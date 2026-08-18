@@ -67,7 +67,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Some go home.",
+      "body": "Act it out, then count the group.",
       "conceptTag": "koa-sub-act-out",
       "explanationVariants": [
         "6 children with 2 gone leaves 4.",
@@ -178,32 +178,32 @@
       "body": "Some go home.",
       "conceptTag": "koa-sub-act-out",
       "explanationVariants": [
-        "8 children with 3 gone leaves 5.",
-        "Leaving makes the group smaller."
+        "Eight children begin in the playing group; after 3 leave, 5 still play.",
+        "Acting out the leaving makes the shrinking group easy to see."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 children are playing. 3 go home. How many children are still playing?",
+        "prompt": "Ask 8 children to stand. Have 3 sit down to act out going home. How many are still standing?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 8,
-            "feedback": "That is how many started. 3 have left, so fewer are playing now."
+            "feedback": "That counts everyone before the action. Three children sit down, so count the smaller standing group."
           },
           {
             "value": 3,
-            "feedback": "That counts the children who went home, not the ones still playing."
+            "feedback": "That counts the children who sit down. The question asks for the children still standing."
           }
         ],
-        "fallbackFeedback": "Start at 8 and count back 3.",
-        "successFeedback": "Correct — 8 children with 3 gone leaves 5."
+        "fallbackFeedback": "Stand up 8 fingers if people are not nearby. Fold down 3, then count the 5 still up.",
+        "successFeedback": "Correct — the acted-out group leaves 5 children standing."
       },
       "hints": [
-        "Did the group shrink?",
-        "Count back 3.",
-        "8 − 3 = 5."
+        "Make a group of 8.",
+        "Move 3 people out of the group.",
+        "Count the 5 people who stay."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -235,35 +235,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Some go home.",
+      "body": "Check Leo's act-out.",
       "conceptTag": "koa-sub-act-out",
       "explanationVariants": [
-        "5 children with 4 gone leaves 1.",
-        "Leaving makes the group smaller."
+        "Leo points to the 4 children who leave, but the answer is the 1 child who stays.",
+        "Five children split into 4 who go home and 1 who remains."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "5 children are playing. 4 go home. How many children are still playing?",
+        "prompt": "Leo acts out 5 children playing and 4 going home. He answers 4. How many are really still playing?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 5,
-            "feedback": "That is how many started. 4 have left, so fewer are playing now."
+            "feedback": "That is the whole group before anyone goes home. The group shrinks after the action."
           },
           {
             "value": 4,
-            "feedback": "That counts the children who went home, not the ones still playing."
+            "feedback": "That repeats Leo's mistake. Four children leave; count the different child who stays."
           }
         ],
-        "fallbackFeedback": "Start at 5 and count back 4.",
-        "successFeedback": "Correct — 5 children with 4 gone leaves 1."
+        "fallbackFeedback": "Hold up 5 fingers and fold down 4. One finger is still up.",
+        "successFeedback": "Correct — Leo counted the leaving group; 1 child is really still playing."
       },
       "hints": [
-        "Did the group shrink?",
-        "Count back 4.",
-        "5 − 4 = 1."
+        "Show all 5 children first.",
+        "Move the 4 who go home.",
+        "Count the 1 child who remains."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -295,39 +295,44 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Some go home.",
+      "body": "Choose the action for a new take-away story.",
       "conceptTag": "koa-sub-act-out",
       "explanationVariants": [
-        "9 children with 5 gone leaves 4.",
-        "Leaving makes the group smaller."
+        "Ducks flying away make the pond group smaller, so subtract the leaving group.",
+        "The setting changes from a playground to a pond, but the take-away action still transfers."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "9 children are playing. 5 go home. How many children are still playing?",
-        "answer": 4,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "9 ducks swim in a pond. Then 5 ducks fly away. Which action finds how many ducks stay?",
+        "options": [
           {
-            "value": 9,
-            "feedback": "That is how many started. 5 have left, so fewer are playing now."
+            "id": "o1",
+            "label": "Subtract the leaving group",
+            "correct": true,
+            "feedback": "Yes. The 5 ducks leave the group of 9, so subtraction finds which ducks stay."
           },
           {
-            "value": 5,
-            "feedback": "That counts the children who went home, not the ones still playing."
+            "id": "o2",
+            "label": "Add the leaving group",
+            "correct": false,
+            "feedback": "Adding would make the pond group larger, but 5 ducks fly away from it."
+          },
+          {
+            "id": "o3",
+            "label": "Count the leaving group only",
+            "correct": false,
+            "feedback": "That finds how many ducks fly away, not how many ducks stay in the pond."
           }
-        ],
-        "fallbackFeedback": "Start at 9 and count back 5.",
-        "successFeedback": "Correct — 9 children with 5 gone leaves 4."
+        ]
       },
       "hints": [
-        "Did the group shrink?",
-        "Count back 5.",
-        "9 − 5 = 4."
+        "Watch what happens to the pond group.",
+        "Five ducks leave, so the group gets smaller.",
+        "Choose subtraction for a shrinking group."
       ],
       "variant": {
         "gen": "k0-add-subtract",
-        "form": "KoaSubActOutNumeric"
+        "form": "KoaChooseOpMcq"
       },
       "cml": {
         "stage": "construct",
@@ -379,27 +384,27 @@
         "body": "",
         "conceptTag": "koa-sub-act-out",
         "explanationVariants": [
-          "6 children with 2 gone leaves 4.",
-          "Leaving makes the group smaller."
+          "Four toy people with 1 moved home leave 3 at the playground.",
+          "Move the leaving person before counting the people who stay."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "6 children are playing. 2 go home. How many children are still playing?",
-          "answer": 4,
+          "prompt": "Set out 4 toy people. Move 1 toy person home. How many toy people stay at the playground?",
+          "answer": 3,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 6,
-              "feedback": "That is how many started. 2 have left, so fewer are playing now."
+              "value": 4,
+              "feedback": "That counts the whole group before anyone moves home. Act out the leaving first."
             },
             {
-              "value": 2,
-              "feedback": "That counts the children who went home, not the ones still playing."
+              "value": 1,
+              "feedback": "That counts the toy person moved home. Count the toy people still at the playground."
             }
           ],
-          "fallbackFeedback": "Start at 6 and count back 2.",
-          "successFeedback": "Correct — 6 children with 2 gone leaves 4."
+          "fallbackFeedback": "Move 1 of the 4 toy people away. Touch the 3 toy people that stay.",
+          "successFeedback": "Correct — 3 toy people stay at the playground."
         }
       }
     }

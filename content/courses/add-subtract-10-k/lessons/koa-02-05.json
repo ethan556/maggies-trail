@@ -63,7 +63,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "What is left?",
+      "body": "Track each balloon with a finger.",
       "conceptTag": "koa-how-many-left",
       "explanationVariants": [
         "10 balloons with 4 gone leaves 6.",
@@ -174,32 +174,32 @@
       "body": "What is left?",
       "conceptTag": "koa-how-many-left",
       "explanationVariants": [
-        "8 balloons with 5 gone leaves 3.",
-        "Each balloon that floats away is one fewer held."
+        "Fold down one finger for each of the 5 balloons that leaves; 3 fingers stay up.",
+        "The fingers still up model the balloons that remain."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 balloons float away one at a time until 5 have gone. How many balloons are left?",
+        "prompt": "Show 8 fingers to stand for the balloons. Fold down 5 fingers, one at a time. How many fingers stay up?",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 5,
-            "feedback": "That counts the balloons that floated away, not the ones still held."
+            "feedback": "That counts the folded fingers, which model balloons that left. Count the fingers still up."
           },
           {
             "value": 8,
-            "feedback": "That is the starting number. 5 have gone since then."
+            "feedback": "That is how many fingers were up before any balloons left. Five fingers must fold down."
           }
         ],
-        "fallbackFeedback": "Start at 8 and count back 5.",
-        "successFeedback": "Correct — 8 balloons with 5 gone leaves 3."
+        "fallbackFeedback": "Hold up 8 fingers. Fold down 1, 2, 3, 4, 5. Three fingers stay up.",
+        "successFeedback": "Correct — 3 fingers stay up, so 3 balloons are left."
       },
       "hints": [
-        "Count back from 8.",
-        "5 floated off.",
-        "8 − 5 = 3."
+        "Hold up 8 fingers.",
+        "Fold down one finger for each of the 5 balloons.",
+        "Count the 3 fingers still up."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -231,35 +231,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "What is left?",
+      "body": "Check Jo's count.",
       "conceptTag": "koa-how-many-left",
       "explanationVariants": [
-        "9 balloons with 3 gone leaves 6.",
-        "Each balloon that floats away is one fewer held."
+        "Jo counted the 3 balloons that left instead of the 6 balloons that remain.",
+        "Nine balloons split into 3 gone and 6 still held."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 balloons float away one at a time until 3 have gone. How many balloons are left?",
+        "prompt": "Jo holds 9 balloons. Then 3 float away. Jo says 3 are left. How many balloons does Jo really hold?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 3,
-            "feedback": "That counts the balloons that floated away, not the ones still held."
+            "feedback": "That repeats Jo's mistake. Three balloons are gone; count the other balloons still held."
           },
           {
             "value": 9,
-            "feedback": "That is the starting number. 3 have gone since then."
+            "feedback": "That is the number before any balloons leave. The held group becomes smaller."
           }
         ],
-        "fallbackFeedback": "Start at 9 and count back 3.",
-        "successFeedback": "Correct — 9 balloons with 3 gone leaves 6."
+        "fallbackFeedback": "Draw 9 balloon loops and cross out 3. The 6 plain loops are still held.",
+        "successFeedback": "Correct — Jo counted what was gone; 6 balloons are really left."
       },
       "hints": [
-        "Count back from 9.",
-        "3 floated off.",
-        "9 − 3 = 6."
+        "Mark the 3 balloons that float away.",
+        "Do not count the balloons that are gone.",
+        "Count the 6 balloons Jo still holds."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -291,39 +291,50 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "What is left?",
+      "body": "Write a sentence for a new object story.",
       "conceptTag": "koa-how-many-left",
       "explanationVariants": [
-        "7 balloons with 2 gone leaves 5.",
-        "Each balloon that floats away is one fewer held."
+        "Two kites leave a group of 7, so the matching sentence is 7 minus 2 equals 5.",
+        "Changing balloons to kites does not change the take-away relationship."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "7 balloons float away one at a time until 2 have gone. How many balloons are left?",
-        "answer": 5,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "7 kites fly in the sky. Then 2 kites land. Which number sentence shows how many stay in the sky?",
+        "options": [
           {
-            "value": 2,
-            "feedback": "That counts the balloons that floated away, not the ones still held."
+            "id": "o1",
+            "label": "7 − 2 = 5",
+            "correct": true,
+            "feedback": "Correct. Begin with 7 kites and take away the 2 that land, leaving 5 in the sky."
           },
           {
-            "value": 7,
-            "feedback": "That is the starting number. 2 have gone since then."
+            "id": "o2",
+            "label": "7 + 2 = 9",
+            "correct": false,
+            "feedback": "A plus sign would show 2 more kites joining the sky. These 2 kites land and leave."
+          },
+          {
+            "id": "o3",
+            "label": "2 − 7 = 0",
+            "correct": false,
+            "feedback": "The story starts with 7 kites, so the sentence must start with 7."
+          },
+          {
+            "id": "o4",
+            "label": "7 − 2 = 6",
+            "correct": false,
+            "feedback": "The minus sign is right, but two fewer than 7 is 5, not 6."
           }
-        ],
-        "fallbackFeedback": "Start at 7 and count back 2.",
-        "successFeedback": "Correct — 7 balloons with 2 gone leaves 5."
+        ]
       },
       "hints": [
-        "Count back from 7.",
-        "2 floated off.",
-        "7 − 2 = 5."
+        "Start with the 7 kites in the sky.",
+        "The 2 landing kites leave the sky group.",
+        "Choose 7 minus 2 equals 5."
       ],
       "variant": {
         "gen": "k0-add-subtract",
-        "form": "KoaHowManyLeftNumeric"
+        "form": "KoaWriteSubMcq"
       },
       "cml": {
         "stage": "construct",
@@ -375,27 +386,27 @@
         "body": "",
         "conceptTag": "koa-how-many-left",
         "explanationVariants": [
-          "10 balloons with 4 gone leaves 6.",
-          "Each balloon that floats away is one fewer held."
+          "Six balloons with 2 covered leave 4 balloons showing.",
+          "Cover the balloons that leave, then count only what you can still see."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "10 balloons float away one at a time until 4 have gone. How many balloons are left?",
-          "answer": 6,
+          "prompt": "Draw 6 balloons. Cover 2 balloons with your hand. How many balloons can you still see?",
+          "answer": 4,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 4,
-              "feedback": "That counts the balloons that floated away, not the ones still held."
+              "value": 2,
+              "feedback": "That counts the balloons under your hand. Count the balloons you can still see."
             },
             {
-              "value": 10,
-              "feedback": "That is the starting number. 4 have gone since then."
+              "value": 6,
+              "feedback": "That is how many you drew before covering 2. Look again at the visible group."
             }
           ],
-          "fallbackFeedback": "Start at 10 and count back 4.",
-          "successFeedback": "Correct — 10 balloons with 4 gone leaves 6."
+          "fallbackFeedback": "Cover 2 of the 6 balloon drawings. Touch the 4 drawings that are still visible.",
+          "successFeedback": "Correct — 4 balloons are still visible."
         }
       }
     }
