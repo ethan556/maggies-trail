@@ -201,69 +201,69 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | 188 | pra-05-02 — The Boundary Rule: Zeros Close, Excluded Values Never | Precalculus: Polynomial & Rational Analysis (G12) | pra-boundary-rule | 94 | 11 | 80% | Algebra Balance | rich-widget |
 | 189 | ca-03-03 — What the MVT Buys | Calculus: Curve Analysis (G13) | ca-mvt-consequences | 6 | 15 | 100% | — | static |
 | 190 | pq-01-03 — Regular Polygons | Polygons & Quadrilaterals (G10) | pq-regular-angles | 12 | 16 | 67% | — | static |
-| 191 | koa-02-03 — Acting Out a Take-Away | Adding & Taking Away (G0) | koa-sub-act-out | 12 | 14 | 67% | Dynamic Number Line | rich-widget |
-| 192 | vec-03-02 — The Angle Between Two Vectors | Precalculus: Vectors & Matrices (G12) | vec-angle | 7 | 14 | 80% | Vector & Matrix Plane | rich-widget |
-| 193 | rad-01-03 — Fully Simplified Form | Algebra 1: Radicals & Rational Exponents (G9) | rad-fully-simplified | 71 | 14 | 71% | — | static |
-| 194 | pf-01-01 — Polynomial Functions & Their Shape | Algebra 2: Polynomial Functions (G11) | pf-anatomy | 122 | 14 | 33% | Function Lab | rich-widget |
-| 195 | exp-01-01 — Evaluating Exponential Functions | Algebra 1: Exponential Functions (G9) | exp-evaluate | 32 | 16 | 29% | Function Lab | rich-widget |
-| 196 | exp-04-03 — Exponential vs Linear | Algebra 1: Exponential Functions (G9) | exp-vs-linear | 21 | 14 | 57% | Function Lab | rich-widget |
-| 197 | esn-01b-01 — Same Base, Add the Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-product-rule | 11 | 16 | 67% | — | static |
-| 198 | lg-02-01 — The Product Property | Algebra 2: Exponentials & Logarithms (G11) | lg-product | 11 | 16 | 67% | — | static |
-| 199 | pra-03-01 — When the Asymptote Tilts | Precalculus: Polynomial & Rational Analysis (G12) | pra-slant-when | 101 | 10 | 80% | Coordinate Plane | rich-widget |
-| 200 | g1s-01-02 — Color and Size Don't Count | Composing Shapes (G1) | g1s-nondefining | 8 | 14 | 100% | — | static |
-| 201 | tse-01b-02 — The Multiplier Inside a Percent Increase | Grade 7: Two-Step Equations & Inequalities (G7) | structure-multiplier | 83 | 14 | 67% | — | static |
-| 202 | exp-02-01 — Growth Models | Algebra 1: Exponential Functions (G9) | exp-growth-model | 29 | 16 | 29% | Function Lab | rich-widget |
-| 203 | pp-04-01 — Parametric Equations: Curves Over Time | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-parametric | 9 | 16 | 71% | — | static |
-| 204 | exp-02-02 — Decay Models | Algebra 1: Exponential Functions (G9) | exp-decay-model | 28 | 16 | 29% | Function Lab | rich-widget |
-| 205 | rad-04-02 — When the Answer is a Radical | Algebra 1: Radicals & Rational Exponents (G9) | rad-pythagorean-radical | 63 | 14 | 71% | — | static |
-| 206 | pp-05-02 — Peak, Flight Time, and Range | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-trajectory | 5 | 15 | 100% | — | static |
-| 207 | exp-03-02 — Equations with a Coefficient | Algebra 1: Exponential Functions (G9) | exp-coeff-equation | 25 | 16 | 29% | Function Lab | rich-widget |
-| 208 | exp-03-03 — Decay & Negative Exponents | Algebra 1: Exponential Functions (G9) | exp-negative-exponent | 24 | 16 | 29% | Function Lab | rich-widget |
-| 209 | rf-05-03 — Inverse & Joint Variation | Algebra 2: Rational Functions (G11) | rf-variation | 108 | 15 | 50% | — | static |
-| 210 | rad-02-01 — Adding & Subtracting Like Radicals | Algebra 1: Radicals & Rational Exponents (G9) | rad-like-terms | 70 | 16 | 43% | — | static |
-| 211 | esn-01b-02 — A Power of a Power | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-power-rule | 10 | 16 | 67% | — | static |
-| 212 | g1p-01-04 — Counting On Three or Less | Strategies That Always Work (G1) | g1p-count-on-3 | 10 | 14 | 67% | Dynamic Number Line | rich-widget |
-| 213 | g4v-01-02 — Building a Conversion Table | Measurement Word Problems (G4) | g4v-table | 10 | 14 | 67% | Distribution Lab | rich-widget |
-| 214 | koa-02-05 — How Many Are Left? | Adding & Taking Away (G0) | koa-how-many-left | 10 | 14 | 67% | Dynamic Number Line | rich-widget |
-| 215 | si-03-02 — What "95% Confident" Actually Counts | Statistical Inference (G11) | si-ci-meaning | 10 | 14 | 67% | Probability Sim | rich-widget |
-| 216 | fna-03-01 — Even & Odd: The Symmetry Test | Precalculus: Function Analysis (G12) | fna-even-odd | 87 | 10 | 80% | Calculus Visualizer | rich-widget |
-| 217 | rad-02-03 — Distributing Radicals | Algebra 1: Radicals & Rational Exponents (G9) | rad-distribute | 68 | 16 | 43% | — | static |
-| 218 | lc-03-03 — End Behavior: The Full Picture | Precalculus: Limits & the Doorway to Calculus (G12) | lc-endbehavior | 84 | 10 | 80% | Coordinate Plane | rich-widget |
-| 219 | exp-04-01 — Reading Exponential Graphs | Algebra 1: Exponential Functions (G9) | exp-graph-read | 23 | 15 | 43% | Function Lab | rich-widget |
-| 220 | in-05-03 — Choosing u | Calculus: Integration & the Fundamental Theorem (G13) | in-choosing-u | 22 | 13 | 100% | — | static |
-| 221 | esn-01b-03 — Zero and Negative Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-zero-negative | 9 | 16 | 67% | — | static |
-| 222 | lg-02-03 — Expand & Condense Fluency | Algebra 2: Exponentials & Logarithms (G11) | lg-expand-condense | 9 | 16 | 67% | — | static |
-| 223 | sc-01-01 — Beyond Geometric | Calculus BC: Series & Convergence (G13) | sc-nth-term, sc-ratio-test | 5 | 14 | 80% | Function Lab | rich-widget |
-| 224 | rf-01-03 — Opposite Factors: the −1 Trick | Algebra 2: Rational Functions (G11) | rf-opposite | 120 | 13 | 50% | Function Lab, Algebra Balance | rich-widget |
-| 225 | pf-03-01 — Polynomial Long Division | Algebra 2: Polynomial Functions (G11) | pf-long-div | 116 | 13 | 50% | Algebra Balance | rich-widget |
-| 226 | pf-03-02 — Synthetic Division | Algebra 2: Polynomial Functions (G11) | pf-synthetic | 115 | 13 | 50% | Algebra Balance | rich-widget |
-| 227 | k100-03-06 — Missing Numbers on the Chart | Counting to 100 (G0) | kcc-chart-missing | 1 | 15 | 83% | Dynamic Number Line | rich-widget |
-| 228 | df3-03-03 — Mixed Division Facts | Division Fluency (G3) | g3d-mixed | 1 | 16 | 67% | Fraction Models | rich-widget |
-| 229 | kcm-03-03 — Line Them Up in Order | Comparing (G0) | kcm-order-numerals | 1 | 16 | 67% | Dynamic Number Line | rich-widget |
-| 230 | koa-03-02 — Take-From Stories | Adding & Taking Away (G0) | koa-take-from-story | 8 | 14 | 67% | Dynamic Number Line | rich-widget |
-| 231 | se-03-03 — Scale Both, and Special Cases | Algebra 1: Systems of Linear Equations (G9) | eliminate-scale-both | 47 | 15 | 57% | — | static |
-| 232 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | mmt-estimate | 11 | 14 | 57% | Dynamic Number Line | rich-widget |
-| 233 | cpr-04-03 — Independent vs Mutually Exclusive | Conditional Probability & the Rules of Chance (G10) | cpr-indep-vs-disjoint | 34 | 11 | 80% | Probability Sim | rich-widget |
-| 234 | cn-05-02 — Building Quadratics from Roots | Algebra 2: Complex Numbers & Quadratics (G11) | cn-build-quad | 139 | 12 | 50% | Algebra Balance | rich-widget |
-| 235 | fa-02-03 — Ordering with Benchmarks | Fractions That Add Up (G4) | benchmark-order | 143 | 13 | 67% | — | static |
-| 236 | co-02-01 — The Ellipse: Two Foci and a String | Precalculus: Conic Sections (G12) | co-ellipse | 11 | 14 | 80% | — | static |
-| 237 | pq-01-01 — The Interior Angle Sum | Polygons & Quadrilaterals (G10) | pq-interior-sum | 14 | 16 | 50% | — | static |
-| 238 | lf-02-03 — x-intercept vs y-intercept | Algebra 1: Linear Functions (G9) | intercepts | 284 | 13 | 29% | Function Lab, Algebra Balance | rich-widget |
-| 239 | co-01-03 — The Reflective Property | Precalculus: Conic Sections (G12) | co-reflector | 12 | 13 | 100% | — | static |
-| 240 | co-02-02 — Foci, Axes & the a-b-c Relationship | Precalculus: Conic Sections (G12) | co-abc | 10 | 14 | 80% | — | static |
-| 241 | lg-03-03 — Solving Log Equations | Algebra 2: Exponentials & Logarithms (G11) | lg-log-solve | 6 | 16 | 67% | — | static |
-| 242 | pf-04-01 — GCF & Quadratic Form | Algebra 2: Polynomial Functions (G11) | pf-quad-form | 113 | 12 | 50% | Algebra Balance | rich-widget |
-| 243 | pf-04-02 — Factoring by Grouping | Algebra 2: Polynomial Functions (G11) | pf-grouping | 112 | 12 | 50% | Algebra Balance | rich-widget |
-| 244 | re-04-01 — Square Both Sides | Algebra 2: Radical Functions & Equations (G11) | re-solve | 52 | 16 | 33% | — | static |
-| 245 | re-05-03 — Radical Models | Algebra 2: Radical Functions & Equations (G11) | re-models | 47 | 15 | 50% | — | static |
-| 246 | exp-01-03 — The Constant Ratio | Algebra 1: Exponential Functions (G9) | exp-ratio | 30 | 15 | 29% | Function Lab | rich-widget |
-| 247 | kc-04-03 — Break Apart Numbers | Kindergarten: Counting & Numbers (G0) | kc-decompose | 968 | 10 | 33% | Base-Ten Workspace | rich-widget |
-| 248 | se-02-03 — Substitution in Action | Algebra 1: Systems of Linear Equations (G9) | substitution-solve | 50 | 14 | 57% | — | static |
-| 249 | co-01-02 — Shifted Parabolas & Orientation | Precalculus: Conic Sections (G12) | co-shifted-parabola | 13 | 12 | 100% | — | static |
-| 250 | pra-01-02 — Putting Candidates on Trial | Precalculus: Polynomial & Rational Analysis (G12) | pra-rrt-test | 106 | 10 | 60% | Algebra Balance | rich-widget |
-| 251 | lg-03-02 — Solving Exponential Equations | Algebra 2: Exponentials & Logarithms (G11) | lg-exp-solve | 7 | 15 | 50% | Function Lab | rich-widget |
-| 252 | re-01-01 — Between Radicals & Exponents | Algebra 2: Radical Functions & Equations (G11) | re-convert | 61 | 13 | 50% | Algebra Balance | rich-widget |
-| 253 | pra-04-03 — Polynomial Inequalities from Scratch | Precalculus: Polynomial & Rational Analysis (G12) | pra-ineq-scratch | 96 | 10 | 60% | Algebra Balance | rich-widget |
+| 191 | vec-03-02 — The Angle Between Two Vectors | Precalculus: Vectors & Matrices (G12) | vec-angle | 7 | 14 | 80% | Vector & Matrix Plane | rich-widget |
+| 192 | rad-01-03 — Fully Simplified Form | Algebra 1: Radicals & Rational Exponents (G9) | rad-fully-simplified | 71 | 14 | 71% | — | static |
+| 193 | pf-01-01 — Polynomial Functions & Their Shape | Algebra 2: Polynomial Functions (G11) | pf-anatomy | 122 | 14 | 33% | Function Lab | rich-widget |
+| 194 | exp-01-01 — Evaluating Exponential Functions | Algebra 1: Exponential Functions (G9) | exp-evaluate | 32 | 16 | 29% | Function Lab | rich-widget |
+| 195 | exp-04-03 — Exponential vs Linear | Algebra 1: Exponential Functions (G9) | exp-vs-linear | 21 | 14 | 57% | Function Lab | rich-widget |
+| 196 | esn-01b-01 — Same Base, Add the Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-product-rule | 11 | 16 | 67% | — | static |
+| 197 | lg-02-01 — The Product Property | Algebra 2: Exponentials & Logarithms (G11) | lg-product | 11 | 16 | 67% | — | static |
+| 198 | pra-03-01 — When the Asymptote Tilts | Precalculus: Polynomial & Rational Analysis (G12) | pra-slant-when | 101 | 10 | 80% | Coordinate Plane | rich-widget |
+| 199 | g1s-01-02 — Color and Size Don't Count | Composing Shapes (G1) | g1s-nondefining | 8 | 14 | 100% | — | static |
+| 200 | tse-01b-02 — The Multiplier Inside a Percent Increase | Grade 7: Two-Step Equations & Inequalities (G7) | structure-multiplier | 83 | 14 | 67% | — | static |
+| 201 | exp-02-01 — Growth Models | Algebra 1: Exponential Functions (G9) | exp-growth-model | 29 | 16 | 29% | Function Lab | rich-widget |
+| 202 | pp-04-01 — Parametric Equations: Curves Over Time | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-parametric | 9 | 16 | 71% | — | static |
+| 203 | exp-02-02 — Decay Models | Algebra 1: Exponential Functions (G9) | exp-decay-model | 28 | 16 | 29% | Function Lab | rich-widget |
+| 204 | rad-04-02 — When the Answer is a Radical | Algebra 1: Radicals & Rational Exponents (G9) | rad-pythagorean-radical | 63 | 14 | 71% | — | static |
+| 205 | pp-05-02 — Peak, Flight Time, and Range | Precalculus: Polar Coordinates & Parametric Curves (G12) | pp-trajectory | 5 | 15 | 100% | — | static |
+| 206 | exp-03-02 — Equations with a Coefficient | Algebra 1: Exponential Functions (G9) | exp-coeff-equation | 25 | 16 | 29% | Function Lab | rich-widget |
+| 207 | exp-03-03 — Decay & Negative Exponents | Algebra 1: Exponential Functions (G9) | exp-negative-exponent | 24 | 16 | 29% | Function Lab | rich-widget |
+| 208 | rf-05-03 — Inverse & Joint Variation | Algebra 2: Rational Functions (G11) | rf-variation | 108 | 15 | 50% | — | static |
+| 209 | rad-02-01 — Adding & Subtracting Like Radicals | Algebra 1: Radicals & Rational Exponents (G9) | rad-like-terms | 70 | 16 | 43% | — | static |
+| 210 | esn-01b-02 — A Power of a Power | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-power-rule | 10 | 16 | 67% | — | static |
+| 211 | g1p-01-04 — Counting On Three or Less | Strategies That Always Work (G1) | g1p-count-on-3 | 10 | 14 | 67% | Dynamic Number Line | rich-widget |
+| 212 | g4v-01-02 — Building a Conversion Table | Measurement Word Problems (G4) | g4v-table | 10 | 14 | 67% | Distribution Lab | rich-widget |
+| 213 | koa-02-05 — How Many Are Left? | Adding & Taking Away (G0) | koa-how-many-left | 10 | 14 | 67% | Dynamic Number Line | rich-widget |
+| 214 | si-03-02 — What "95% Confident" Actually Counts | Statistical Inference (G11) | si-ci-meaning | 10 | 14 | 67% | Probability Sim | rich-widget |
+| 215 | fna-03-01 — Even & Odd: The Symmetry Test | Precalculus: Function Analysis (G12) | fna-even-odd | 87 | 10 | 80% | Calculus Visualizer | rich-widget |
+| 216 | rad-02-03 — Distributing Radicals | Algebra 1: Radicals & Rational Exponents (G9) | rad-distribute | 68 | 16 | 43% | — | static |
+| 217 | lc-03-03 — End Behavior: The Full Picture | Precalculus: Limits & the Doorway to Calculus (G12) | lc-endbehavior | 84 | 10 | 80% | Coordinate Plane | rich-widget |
+| 218 | exp-04-01 — Reading Exponential Graphs | Algebra 1: Exponential Functions (G9) | exp-graph-read | 23 | 15 | 43% | Function Lab | rich-widget |
+| 219 | in-05-03 — Choosing u | Calculus: Integration & the Fundamental Theorem (G13) | in-choosing-u | 22 | 13 | 100% | — | static |
+| 220 | esn-01b-03 — Zero and Negative Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | exponent-zero-negative | 9 | 16 | 67% | — | static |
+| 221 | lg-02-03 — Expand & Condense Fluency | Algebra 2: Exponentials & Logarithms (G11) | lg-expand-condense | 9 | 16 | 67% | — | static |
+| 222 | sc-01-01 — Beyond Geometric | Calculus BC: Series & Convergence (G13) | sc-nth-term, sc-ratio-test | 5 | 14 | 80% | Function Lab | rich-widget |
+| 223 | rf-01-03 — Opposite Factors: the −1 Trick | Algebra 2: Rational Functions (G11) | rf-opposite | 120 | 13 | 50% | Function Lab, Algebra Balance | rich-widget |
+| 224 | pf-03-01 — Polynomial Long Division | Algebra 2: Polynomial Functions (G11) | pf-long-div | 116 | 13 | 50% | Algebra Balance | rich-widget |
+| 225 | pf-03-02 — Synthetic Division | Algebra 2: Polynomial Functions (G11) | pf-synthetic | 115 | 13 | 50% | Algebra Balance | rich-widget |
+| 226 | k100-03-06 — Missing Numbers on the Chart | Counting to 100 (G0) | kcc-chart-missing | 1 | 15 | 83% | Dynamic Number Line | rich-widget |
+| 227 | df3-03-03 — Mixed Division Facts | Division Fluency (G3) | g3d-mixed | 1 | 16 | 67% | Fraction Models | rich-widget |
+| 228 | kcm-03-03 — Line Them Up in Order | Comparing (G0) | kcm-order-numerals | 1 | 16 | 67% | Dynamic Number Line | rich-widget |
+| 229 | koa-03-02 — Take-From Stories | Adding & Taking Away (G0) | koa-take-from-story | 8 | 14 | 67% | Dynamic Number Line | rich-widget |
+| 230 | se-03-03 — Scale Both, and Special Cases | Algebra 1: Systems of Linear Equations (G9) | eliminate-scale-both | 47 | 15 | 57% | — | static |
+| 231 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | mmt-estimate | 11 | 14 | 57% | Dynamic Number Line | rich-widget |
+| 232 | cpr-04-03 — Independent vs Mutually Exclusive | Conditional Probability & the Rules of Chance (G10) | cpr-indep-vs-disjoint | 34 | 11 | 80% | Probability Sim | rich-widget |
+| 233 | cn-05-02 — Building Quadratics from Roots | Algebra 2: Complex Numbers & Quadratics (G11) | cn-build-quad | 139 | 12 | 50% | Algebra Balance | rich-widget |
+| 234 | fa-02-03 — Ordering with Benchmarks | Fractions That Add Up (G4) | benchmark-order | 143 | 13 | 67% | — | static |
+| 235 | co-02-01 — The Ellipse: Two Foci and a String | Precalculus: Conic Sections (G12) | co-ellipse | 11 | 14 | 80% | — | static |
+| 236 | pq-01-01 — The Interior Angle Sum | Polygons & Quadrilaterals (G10) | pq-interior-sum | 14 | 16 | 50% | — | static |
+| 237 | lf-02-03 — x-intercept vs y-intercept | Algebra 1: Linear Functions (G9) | intercepts | 284 | 13 | 29% | Function Lab, Algebra Balance | rich-widget |
+| 238 | co-01-03 — The Reflective Property | Precalculus: Conic Sections (G12) | co-reflector | 12 | 13 | 100% | — | static |
+| 239 | co-02-02 — Foci, Axes & the a-b-c Relationship | Precalculus: Conic Sections (G12) | co-abc | 10 | 14 | 80% | — | static |
+| 240 | lg-03-03 — Solving Log Equations | Algebra 2: Exponentials & Logarithms (G11) | lg-log-solve | 6 | 16 | 67% | — | static |
+| 241 | pf-04-01 — GCF & Quadratic Form | Algebra 2: Polynomial Functions (G11) | pf-quad-form | 113 | 12 | 50% | Algebra Balance | rich-widget |
+| 242 | pf-04-02 — Factoring by Grouping | Algebra 2: Polynomial Functions (G11) | pf-grouping | 112 | 12 | 50% | Algebra Balance | rich-widget |
+| 243 | re-04-01 — Square Both Sides | Algebra 2: Radical Functions & Equations (G11) | re-solve | 52 | 16 | 33% | — | static |
+| 244 | re-05-03 — Radical Models | Algebra 2: Radical Functions & Equations (G11) | re-models | 47 | 15 | 50% | — | static |
+| 245 | exp-01-03 — The Constant Ratio | Algebra 1: Exponential Functions (G9) | exp-ratio | 30 | 15 | 29% | Function Lab | rich-widget |
+| 246 | kc-04-03 — Break Apart Numbers | Kindergarten: Counting & Numbers (G0) | kc-decompose | 968 | 10 | 33% | Base-Ten Workspace | rich-widget |
+| 247 | se-02-03 — Substitution in Action | Algebra 1: Systems of Linear Equations (G9) | substitution-solve | 50 | 14 | 57% | — | static |
+| 248 | co-01-02 — Shifted Parabolas & Orientation | Precalculus: Conic Sections (G12) | co-shifted-parabola | 13 | 12 | 100% | — | static |
+| 249 | pra-01-02 — Putting Candidates on Trial | Precalculus: Polynomial & Rational Analysis (G12) | pra-rrt-test | 106 | 10 | 60% | Algebra Balance | rich-widget |
+| 250 | lg-03-02 — Solving Exponential Equations | Algebra 2: Exponentials & Logarithms (G11) | lg-exp-solve | 7 | 15 | 50% | Function Lab | rich-widget |
+| 251 | re-01-01 — Between Radicals & Exponents | Algebra 2: Radical Functions & Equations (G11) | re-convert | 61 | 13 | 50% | Algebra Balance | rich-widget |
+| 252 | pra-04-03 — Polynomial Inequalities from Scratch | Precalculus: Polynomial & Rational Analysis (G12) | pra-ineq-scratch | 96 | 10 | 60% | Algebra Balance | rich-widget |
+| 253 | koa-02-03 — Acting Out a Take-Away | Adding & Taking Away (G0) | koa-sub-act-out | 12 | 13 | 67% | Dynamic Number Line | rich-widget |
 | 254 | kc-01-02 — Numbers 0 to 10 | Kindergarten: Counting & Numbers (G0) | kc-read-numerals | 978 | 8 | 33% | Base-Ten Workspace | rich-widget |
 | 255 | g5d-01-03 — Adding with Different Lengths | Decimal Operations Fluency (G5) | g5dc-add-ragged | 13 | 14 | 67% | — | static |
 | 256 | se-04-01 — Totals and Differences | Algebra 1: Systems of Linear Equations (G9) | word-total-difference | 46 | 16 | 29% | — | static |
@@ -644,25 +644,25 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | as100-02-01 — Adding Tens | Addition & Subtraction within 100 | Dynamic Number Line | add-tens |
 | as100-02-02 — Add Ones to a Two-Digit Number | Addition & Subtraction within 100 | Dynamic Number Line | add-ones |
 | ti-04-03 — Double-Angle in Action | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-double-action |
-| mmt-04-01 — Skip-Counting by 5s on the Clock | Grade 2: Measurement, Money & Time | Dynamic Number Line | mmt-skip-5s |
 | as100-02-03 — Adding Two-Digit Numbers | Addition & Subtraction within 100 | Base-Ten Workspace | add-2digit |
-| ns-02-02 — Adding and Subtracting Decimals | The Number System | — | decimal-add-sub |
+| mmt-04-01 — Skip-Counting by 5s on the Clock | Grade 2: Measurement, Money & Time | Dynamic Number Line | mmt-skip-5s |
 | as100-02-04 — Trade Ten Ones | Addition & Subtraction within 100 | Base-Ten Workspace | regroup-add |
+| ns-02-02 — Adding and Subtracting Decimals | The Number System | — | decimal-add-sub |
 | les-01-01 — Keeping the Balance | Grade 8: Linear Equations & Systems | Algebra Balance | les-balance-both-sides |
 | as100-03-01 — Subtracting Tens | Addition & Subtraction within 100 | Dynamic Number Line | sub-tens |
 | as100-03-02 — Take Ones Away | Addition & Subtraction within 100 | Dynamic Number Line | sub-ones |
 | as100-03-03 — Subtracting Two-Digit Numbers | Addition & Subtraction within 100 | Base-Ten Workspace | sub-2digit |
-| in-02-03 — The Integral of a Rate Is a Total | Calculus: Integration & the Fundamental Theorem | Calculus Visualizer | in-net-change |
 | as100-03-04 — Break a Ten | Addition & Subtraction within 100 | Base-Ten Workspace | unbundle-sub |
 | c120-01-03 — Counting to Fifty | Count & Write to 120 | Dynamic Number Line | count-sequence |
+| in-02-03 — The Integral of a Rate Is a Total | Calculus: Integration & the Fundamental Theorem | Calculus Visualizer | in-net-change |
 | fr-01-01 — Cutting into Equal Parts | Fractions from Scratch | — | equal-parts |
 | fg-02-01 — Rate of Change | Grade 8: Functions | Calculus Visualizer | fg-rate-of-change |
 | cpr-03-02 — Which Way Round? P(A|B) vs P(B|A) | Conditional Probability & the Rules of Chance | — | cpr-conditional-table, cpr-reversal-error |
 | dr-03-02 — The Quotient Rule | Calculus: The Derivative | — | dr-quotient-rule |
 | c120-02-03 — Down a Row is Ten More | Count & Write to 120 | Dynamic Number Line | chart-pattern |
 | fr-03-03 — Whole Numbers in Disguise | Fractions from Scratch | Algebra Balance | whole-as-fraction |
-| gf-02-03 — Algebra Meets Geometry | Geometry: Foundations & Rigid Motions | Algebra Balance | gf-algebra-measures |
 | c120-03-03 — Past One Hundred | Count & Write to 120 | Dynamic Number Line | past-hundred |
+| gf-02-03 — Algebra Meets Geometry | Geometry: Foundations & Rigid Motions | Algebra Balance | gf-algebra-measures |
 | c120-04-02 — Counting a Pile | Count & Write to 120 | Base-Ten Workspace | count-pile |
 | c120-05-01 — One More, One Less | Count & Write to 120 | Dynamic Number Line | one-more-less |
 | md-03-03 — Asking the Graph Questions | Measurement, Time & Data | Distribution Lab | graph-questions |
@@ -697,13 +697,13 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | bv-03-03 — How Far to Trust a Prediction | Grade 8: Bivariate Statistics | Coordinate Plane | bv-prediction-limits |
 | mc-05-02 — Building a Line Plot | Measure & Convert | Distribution Lab | line-plot-build |
 | les-01-03 — Distribute, Then Solve | Grade 8: Linear Equations & Systems | Algebra Balance | les-distribute-solve |
-| mc-05-03 — Reading Line Plot Questions | Measure & Convert | Distribution Lab | line-plot-questions |
 | ee-02-03 — Writing Expressions from Words | Expressions & Equations | Function Lab | write-expr |
+| mc-05-03 — Reading Line Plot Questions | Measure & Convert | Distribution Lab | line-plot-questions |
 | pq-04-02 — The Trapezoid Midsegment | Polygons & Quadrilaterals | Transformations | pq-midsegment |
 | ee-03-02 — Combining Like Terms | Expressions & Equations | Algebra Balance | like-terms |
 | dc-01-01 — Position, Velocity, Acceleration | Calculus: Derivatives in Context | Calculus Visualizer | dc-motion |
-| smg1-02-01 — Splitting a Shape in Half | Grade 1: Shapes & Fractions | Fraction Models | smg1-halves |
 | ee-05-03 — Dependent and Independent Variables | Expressions & Equations | Function Lab | dependent-independent |
+| smg1-02-01 — Splitting a Shape in Half | Grade 1: Shapes & Fractions | Fraction Models | smg1-halves |
 | fr-02-01 — Cutting the Line | Fractions from Scratch | — | nl-partition |
 | rf-01-02 — Simplify by Factoring | Algebra 2: Rational Functions | Function Lab, Algebra Balance | rf-simplify |
 | mf3-02-02 — The ×7 Facts | Multiplication Fluency | Fraction Models | g3m-x7 |
@@ -733,10 +733,10 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | ft-05-03 — Graphs & Verification | Algebra 2: Functions & Transformations | Coordinate Plane | ft-inverse-graph |
 | dd-03-02 — The Median as Middle | Data & Distributions | Distribution Lab | median |
 | lc-02-02 — The 0/0 Form: Factor and Cancel | Precalculus: Limits & the Doorway to Calculus | Coordinate Plane | lc-factor |
+| tm-02-01 — Congruent Shapes | Grade 8: Transformations & Measurement | Transformations | tm-congruence |
 | df3-01-02 — Dividing by 3 | Division Fluency | Fraction Models | g3d-div3 |
 | g4m-01-06 — Two-Digit by Two-Digit: Partial Products | Multi-Digit Multiplication & Division | Fraction Models | g4m-2x2-partial |
 | mf3-02-04 — The ×9 Facts | Multiplication Fluency | Fraction Models | g3m-x9 |
-| tm-02-01 — Congruent Shapes | Grade 8: Transformations & Measurement | Transformations | tm-congruence |
 | tg-02-01 — Cosine's Graph: Starting at the Top | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-cos-graph |
 | sr-05-02 — The Infinite Sum Formula | Algebra 2: Sequences & Series | Function Lab | sr-inf-sum |
 | dd-02-01 — Dot Plots | Data & Distributions | Distribution Lab, Coordinate Plane | dot-plot |
@@ -766,16 +766,16 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | les-01-02 — Variables on Both Sides | Grade 8: Linear Equations & Systems | — | les-isolate-variable |
 | rr-01-03 — Equivalent Ratios | Ratios & Rates | Fraction Models | equivalent-ratios |
 | as-01-03 — Start with the Bigger Number | Addition & Subtraction within 20 | Dynamic Number Line, Base-Ten Workspace | bigger-first |
-| pv2-03-03 — Front-End Estimation | Place Value to a Million | Dynamic Number Line | front-end-estimation |
 | as-02-01 — Partners of Ten | Addition & Subtraction within 20 | Base-Ten Workspace | tens-partners |
-| fr-04-01 — Same Bottom, Compare Tops | Fractions from Scratch | — | compare-same-denom |
+| pv2-03-03 — Front-End Estimation | Place Value to a Million | Dynamic Number Line | front-end-estimation |
 | as-02-02 — Split to Make Ten | Addition & Subtraction within 20 | Base-Ten Workspace, Dynamic Number Line | make-ten-first |
+| fr-04-01 — Same Bottom, Compare Tops | Fractions from Scratch | — | compare-same-denom |
 | as-02-04 — Make Ten: You've Got It | Addition & Subtraction within 20 | Base-Ten Workspace | make-ten-add |
 | as-03-01 — Take Away | Addition & Subtraction within 20 | Dynamic Number Line | take-away |
 | as-03-02 — Counting Back | Addition & Subtraction within 20 | Dynamic Number Line | count-back |
+| as-03-03 — Finding the Difference | Addition & Subtraction within 20 | Dynamic Number Line | difference |
 | df3-01-04 — Dividing by 6 and 7 | Division Fluency | Fraction Models | g3d-div67 |
 | mf3-01-06 — Square Facts: 6×6 to 9×9 | Multiplication Fluency | Fraction Models | g3m-squares |
-| as-03-03 — Finding the Difference | Addition & Subtraction within 20 | Dynamic Number Line | difference |
 | as-03-04 — Subtraction Facts | Addition & Subtraction within 20 | Dynamic Number Line | sub-facts |
 | fr-04-04 — Only If the Wholes Match | Fractions from Scratch | — | same-whole |
 | as-05-02 — Put Together & Take Apart | Addition & Subtraction within 20 | Dynamic Number Line | part-whole |
@@ -825,8 +825,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g4p-01-04 — Is It a Multiple? | Patterns, Factors & Multiples | Dynamic Number Line | g4pf-is-multiple |
 | g4v-02-02 — Converting Time | Measurement Word Problems | Dynamic Number Line | g4v-time |
 | mf3-02-06 — Using a Fact You Know | Multiplication Fluency | Fraction Models | g3m-derive |
-| avp-01-01 — Absolute Value Is a Distance | Algebra 1: Absolute Value & Piecewise Functions | Dynamic Number Line | avp-abs-distance |
 | as100-04-02 — Stories that Trade | Addition & Subtraction within 100 | — | two-step-trade |
+| avp-01-01 — Absolute Value Is a Distance | Algebra 1: Absolute Value & Piecewise Functions | Dynamic Number Line | avp-abs-distance |
 | dpv-01-01 — Tenths: The First Rung Below One | Powers of Ten & Decimals | Dynamic Number Line | tenths-intro |
 | ns-04-03 — The Four Quadrants | The Number System | Coordinate Plane | four-quadrants |
 | avp-02-01 — Two Numbers Share a Distance | Algebra 1: Absolute Value & Piecewise Functions | Dynamic Number Line | avp-abs-equations |
@@ -842,8 +842,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g5u-01-03 — The Least Common Denominator | Adding & Subtracting Unlike Fractions | Fraction Models | g5u-lcd |
 | avp-03-01 — A Function Defined in Pieces | Algebra 1: Absolute Value & Piecewise Functions | Function Lab | avp-piecewise-define |
 | avp-03-02 — Graphing Piecewise Functions | Algebra 1: Absolute Value & Piecewise Functions | Coordinate Plane | avp-piecewise-graph |
-| nls-01-03 — Zero, One, or Two | Algebra 1: Nonlinear Systems | Coordinate Plane | nls-solution-count |
 | rr-04-01 — Percent Means Per Hundred | Ratios & Rates | Fraction Models | percent-meaning |
+| nls-01-03 — Zero, One, or Two | Algebra 1: Nonlinear Systems | Coordinate Plane | nls-solution-count |
 | fg-04-01 — Linear vs. Nonlinear | Grade 8: Functions | — | fg-linear-vs-nonlinear |
 | pq-03-01 — Rectangles | Polygons & Quadrilaterals | Transformations, Coordinate Plane | pq-rectangle |
 | md-04-03 — The Break-Apart Rectangle | Measurement, Time & Data | — | area-distributive |
@@ -926,8 +926,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | pp-03-02 — Multiply by Rotating: De Moivre | Precalculus: Polar Coordinates & Parametric Curves | Vector & Matrix Plane | pp-de-moivre |
 | dc-04-01 — L'Hôpital: 0/0 Explained at Last | Calculus: Derivatives in Context | Coordinate Plane | dc-lhopital |
 | geo-01-02 — The Quadrilateral Family | Shapes & Space | — | quadrilaterals |
-| cn-04-01 — Square Roots of Negatives in Equations | Algebra 2: Complex Numbers & Quadratics | Function Lab, Algebra Balance | cn-neg-eq |
 | bv-03-02 — What Slope and Intercept Mean | Grade 8: Bivariate Statistics | Coordinate Plane | bv-interpret |
+| cn-04-01 — Square Roots of Negatives in Equations | Algebra 2: Complex Numbers & Quadratics | Function Lab, Algebra Balance | cn-neg-eq |
 | geo-01-03 — Squares Are Rectangles?! | Shapes & Space | — | shape-hierarchy |
 | ca-05-01 — Setting Up an Optimisation | Calculus: Curve Analysis | Function Lab | ca-optimisation-setup |
 | vm-04-03 — V = B × h | Volume & Measurement | Transformations | volume-bh |
@@ -937,9 +937,9 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | mf3-03-04 — Missing Factor | Multiplication Fluency | Fraction Models | g3m-missing-factor |
 | bv-05-01 — The Leftover: Observed − Predicted | Grade 8: Bivariate Statistics | Coordinate Plane | bv-residual |
 | kc-04-02 — Taking Away | Kindergarten: Counting & Numbers | Dynamic Number Line | kc-subtract-within-10 |
+| sa7-02-02 — Composite Areas | Grade 7: Geometry | — | sa7-composite-area |
 | dd-01-02 — Data as Answers | Data & Distributions | Distribution Lab | data-collection |
 | tse-01-01 — Distributing with Negative Coefficients | Grade 7: Two-Step Equations & Inequalities | Algebra Balance | tse-distribute-negative, tse-distribute-check |
-| sa7-02-02 — Composite Areas | Grade 7: Geometry | — | sa7-composite-area |
 | rr-01-02 — Part, Part, Whole | Ratios & Rates | Fraction Models, Algebra Balance | part-part-whole |
 | la-01-01 — Naming the Basics | Lines & Angles | — | geometric-basics |
 | pv2-02-02 — Reading Big Numbers Aloud | Place Value to a Million | — | reading-big-numbers |
@@ -958,8 +958,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | rns-02-02 — Classifying Rational & Irrational | Grade 8: The Real Number System | — | rns-classify |
 | iar-03-03 — A Real Plan | Algebra 1: Inequalities & Regions | Coordinate Plane | iar-lp-model |
 | de-04-01 — Euler's Method: Walking the Field | Calculus: Differential Equations | Calculus Visualizer | de-euler |
-| sp-04-02 — Compound Events | Grade 7: Sampling & Probability | Probability Sim | sp-compound-prob, sp-sample-space-size |
 | tg-02-03 — Reflections & Equivalent Rules | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-equiv-rules |
+| sp-04-02 — Compound Events | Grade 7: Sampling & Probability | Probability Sim | sp-compound-prob, sp-sample-space-size |
 | sc-02-01 — Building a Function Out of Powers | Calculus BC: Series & Convergence | Calculus Visualizer | sc-taylor |
 | la-02-01 — Lines That Never Meet | Lines & Angles | — | parallel-lines |
 | koa-01-01 — Putting Groups Together | Adding & Taking Away | Base-Ten Workspace | koa-join-groups |
@@ -1021,6 +1021,7 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | geo-02-01 — Sorting by Rules | Shapes & Space | — | sorting-rules |
 | pq-05-03 — The Quadrilateral Capstone | Polygons & Quadrilaterals | — | pq-capstone |
 | fr-01-04 — Top Number, Bottom Number | Fractions from Scratch | Fraction Models | num-denom |
+| fr-02-02 — Locating 1/b | Fractions from Scratch | Dynamic Number Line | nl-unit |
 | g3f-02-05 — Whole Numbers as Fractions | Fractions: Going Deeper | Fraction Models | g3f-whole-as-fraction |
 | g3w-02-04 — Estimating First | Two-Step Word Problems | Dynamic Number Line | g3w-estimate-first |
 | g4m-03-01 — Four-Digit by One-Digit | Multi-Digit Multiplication & Division | Dynamic Number Line | g4m-4div1 |
@@ -1031,7 +1032,6 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g5u-02-05 — Simplifying the Answer | Adding & Subtracting Unlike Fractions | Fraction Models | g5u-simplify |
 | g5v-02-02 — Using V = B × h | Volume Problems | Dynamic Number Line | g5v-formula-bh |
 | mf3-03-02 — Mixed Facts to 9×9 | Multiplication Fluency | Fraction Models | g3m-mixed-large |
-| fr-02-02 — Locating 1/b | Fractions from Scratch | Dynamic Number Line | nl-unit |
 | geo-02-02 — The Misfits | Shapes & Space | — | non-examples |
 | in-03-03 — Why the Two Halves Are One Theorem | Calculus: Integration & the Fundamental Theorem | Calculus Visualizer | in-ftc-unified |
 | kcm-02-04 — Which Number Is Greater? | Comparing | Dynamic Number Line | kcm-greater-numeral |
@@ -1046,11 +1046,11 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g1a-01-02 — When the Ones Fill a Ten | Adding Within 100 | Base-Ten Workspace | g1a-ones-make-ten |
 | g1p-01-02 — Why Swapping Is Safe | Strategies That Always Work | Dynamic Number Line | g1p-why-commutative |
 | g2b-01-04 — Trading Tens for a Hundred | Adding & Subtracting Within 1,000 | Base-Ten Workspace | g2b-trade-tens |
-| lc-01-03 — When a Limit Fails to Exist | Precalculus: Limits & the Doorway to Calculus | Coordinate Plane | lc-dne |
 | ev-01-01 — A Number Attached to Chance | Probability Distributions & Expected Value | Probability Sim | ev-random-variable |
+| lc-01-03 — When a Limit Fails to Exist | Precalculus: Limits & the Doorway to Calculus | Coordinate Plane | lc-dne |
+| ti-04-01 — Double-Angle: One Angle, Twice | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-double-basic |
 | ia-01-03 — The Washer: a Disc With a Bite Out of It | Calculus: Applications of the Integral | Calculus Visualizer | ia-washer |
 | si-06-02 — 68, 95, 99.7 | Statistical Inference | Dynamic Number Line | si-empirical-rule |
-| ti-04-01 — Double-Angle: One Angle, Twice | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-double-basic |
 | as-01-01 — Counting On from a Number | Addition & Subtraction within 20 | Dynamic Number Line, Base-Ten Workspace | counting-on |
 | dd-01-03 — From Question to Data | Data & Distributions | Distribution Lab | question-capstone |
 | ti-04-02 — The Three Faces of cos 2θ | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-cos2-forms |
@@ -1063,9 +1063,9 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g2b-01-05 — Two Trades at Once | Adding & Subtracting Within 1,000 | Base-Ten Workspace | g2b-two-trades |
 | g5e-01-01 — Order of Operations | Expressions & Patterns | Distribution Lab | g5e-order |
 | g4p-01-02 — Is It a Factor? | Patterns, Factors & Multiples | — | g4pf-is-factor |
-| tg-01-01 — Phase Shift: Sliding the Wave | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-phase |
 | nls-02-03 — Miss, Touch, Cross | Algebra 1: Nonlinear Systems | Coordinate Plane | nls-tangent-miss |
 | ev-02-02 — Is the Game Fair? | Probability Distributions & Expected Value | Probability Sim | ev-fair-games |
+| tg-01-01 — Phase Shift: Sliding the Wave | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-phase |
 | ti-05-02 — Mixed Functions: Convert First | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-convert-solve |
 | lf-03-03 — Standard Form Ax + By = C | Algebra 1: Linear Functions | — | standard-form |
 | nls-01-01 — Where Line Meets Parabola | Algebra 1: Nonlinear Systems | Coordinate Plane | nls-check-intersection, nls-substitution |
@@ -1082,8 +1082,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | kcm-03-01 — Which Number Is Less? | Comparing | Dynamic Number Line | kcm-less-numeral |
 | kgb-03-01 — Drawing a Shape | Building Shapes | Dynamic Number Line | kgb-draw-shape |
 | tg-03-03 — Transforming Tangent | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-tan-transform |
-| kgb-02-04 — How Are These Different? | Building Shapes | Dynamic Number Line | kgb-compare-different |
 | nls-02-01 — The Circle as an Equation | Algebra 1: Nonlinear Systems | Coordinate Plane | nls-circle-equation |
+| kgb-02-04 — How Are These Different? | Building Shapes | Dynamic Number Line | kgb-compare-different |
 | la-03-01 — Classifying Triangles | Lines & Angles | — | triangle-classification |
 | g1m-02-01 — Laying Units End to End | Measuring Length | — | g1m-iterate |
 | dg4-02-02 — Tenths to Hundredths | Decimals: Tenths & Hundredths | — | g4d-tenth-to-hundredth |
@@ -1096,8 +1096,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | g5e-01-02 — Parentheses First | Expressions & Patterns | Distribution Lab | g5e-parentheses |
 | dpv-02-02 — Expanded Form with Decimals | Powers of Ten & Decimals | Algebra Balance | decimal-expanded-form |
 | lg-01-01 — The Exponent-Finder | Algebra 2: Exponentials & Logarithms | Function Lab | lg-define |
-| fa-05-01 — Repeated Addition of Fractions | Fractions That Add Up | — | fraction-times-whole |
 | lc-01-02 — Reading Limits from Tables & Graphs | Precalculus: Limits & the Doorway to Calculus | Coordinate Plane | lc-read-limit |
+| fa-05-01 — Repeated Addition of Fractions | Fractions That Add Up | — | fraction-times-whole |
 | kgb-02-02 — Same Shape, Different Size | Building Shapes | Dynamic Number Line | kgb-size-invariance |
 | g1s-01-03 — Sorting by Defining Attributes | Composing Shapes | — | g1s-sort-defining |
 | ti-01-02 — Tangent's Ladder & Merging Families | Precalculus: Trig Identities & Equations | Unit Circle & Trig | ti-tan-ladder |
@@ -1234,8 +1234,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | pp-02-03 — Limaçons & Cardioids | Precalculus: Polar Coordinates & Parametric Curves | Unit Circle & Trig | pp-limacons |
 | g1s-02-03 — Making a Hexagon | Composing Shapes | — | g1s-make-hexagon |
 | g2a-02-02 — Counting an Array by Rows | Arrays, Odd & Even | — | g2a-count-rows |
-| khm-03-02 — Growing by One | How Many? | Dynamic Number Line | kch-grow-by-one |
 | tg-03-01 — Tangent: the Wave That Isn't | Precalculus: Trig Graphs & Inverse Trig | Unit Circle & Trig | tg-tan-shape |
+| khm-03-02 — Growing by One | How Many? | Dynamic Number Line | kch-grow-by-one |
 | sc-03-01 — New Series for Nothing | Calculus BC: Series & Convergence | Calculus Visualizer | sc-power-ops |
 | les-02-03 — Classifying Any Equation | Grade 8: Linear Equations & Systems | — | les-classify-solutions |
 | si-06-01 — The Bell That Wobble Builds | Statistical Inference | Probability Sim | si-normal-shape, si-normal-spread |
@@ -1354,8 +1354,8 @@ conversion is a content edit rather than new engineering. The next 300 candidate
 | khm-02-04 — Count Again, Same Answer | How Many? | Base-Ten Workspace, Dynamic Number Line | kch-conservation |
 | g3f-01-02 — Naming the Unit Fraction | Fractions: Going Deeper | Fraction Models | g3f-unit-name |
 | kgb-02-03 — How Are These Alike? | Building Shapes | Dynamic Number Line | kgb-compare-alike |
-| ns-04-02 — Comparing Negatives | The Number System | Dynamic Number Line | compare-negatives |
 | dm-01-01 — One Dataset's Shape, Two Datasets Compared | Data & Models | Distribution Lab | dm-shape-spread |
+| ns-04-02 — Comparing Negatives | The Number System | Dynamic Number Line | compare-negatives |
 | ns-05-02 — Comparing with Absolute Value | The Number System | Dynamic Number Line | abs-compare |
 | dgr1-03-02 — How Many More? | Organizing Data | Distribution Lab | g1d-compare |
 | f20-03-04 — Missing Numbers | Fluency Within 20 | Dynamic Number Line | g2f-missing |

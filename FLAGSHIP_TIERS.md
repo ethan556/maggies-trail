@@ -21,12 +21,12 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 179 | 219 | 12 | 0 | 410 |
+| K-2 | 183 | 215 | 12 | 0 | 410 |
 | 3-5 | 277 | 141 | 1 | 0 | 419 |
 | 6-8 | 147 | 96 | 2 | 0 | 245 |
 | HS | 199 | 356 | 72 | 0 | 627 |
 
-**K–8 targets** — Tier A 603/200–250 ✓ · Tier B 456/200–300 ✓.
+**K–8 targets** — Tier A 607/200–250 ✓ · Tier B 452/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
@@ -120,4 +120,4 @@ across **65** lessons.
 | 14 | mmt-04-03 — Practicing Five-Minute Times | Grade 2: Measurement, Money & Time (G2) | C | 23/39 | prediction formal transfer adapt | — | 52 |
 | 15 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
 
-Totals: 1701 lessons · A 802 · B 812 · C 87 · D 0.
+Totals: 1701 lessons · A 806 · B 808 · C 87 · D 0.

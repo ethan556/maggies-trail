@@ -153,17 +153,17 @@ describe("S244 source-sealed lesson review cards", () => {
 
   it("publishes stable exact-MCQ cluster references and reconciled live counts", () => {
     expect(report.summary.duplicates).toMatchObject({
-      clusterCount: 127,
-      placementCount: 290,
-      affectedLessonCount: 180,
+      clusterCount: 126,
+      placementCount: 288,
+      affectedLessonCount: 179,
       withinLessonGroupCount: 49
     });
-    expect(report.duplicateClusters).toHaveLength(127);
-    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(127);
-    expect(report.duplicateClusters.reduce((total, cluster) => total + cluster.placementCount, 0)).toBe(290);
-    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(290);
+    expect(report.duplicateClusters).toHaveLength(126);
+    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(126);
+    expect(report.duplicateClusters.reduce((total, cluster) => total + cluster.placementCount, 0)).toBe(288);
+    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(288);
     expect(report.cards.reduce((total, card) => total + card.duplicates.withinLessonGroupCount, 0)).toBe(49);
-    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds)).size).toBe(127);
+    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds)).size).toBe(126);
   });
 
   it("keeps candidate and partial standards packets open until approval or rejection", () => {
