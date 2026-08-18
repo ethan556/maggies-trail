@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { loadLessonReviewAuthority, reviewQueueDirective } from "./lesson-review-authority-s246.mjs";
 
 const root = process.cwd();
 const queuePath = path.join(root, "PREMIUM_PENDING_WORKLOAD_QUEUE.csv");
@@ -118,27 +119,6 @@ for (const row of readObjects("reports/vis/VIS01_PLACEMENTS.csv")) {
     mismatch_evidence: `${row.cause}: ${row.body}`,
     next_action: "Classify the visual as required, preferred, fading scaffold, or unnecessary; replace any required withheld exemplar with a synchronized, accessible representation."
   });
-}
-
-function currentLessons() {
-  const records = [];
-  const coursesRoot = path.join(root, "content", "courses");
-  for (const course of fs.readdirSync(coursesRoot, { withFileTypes: true })) {
-    if (!course.isDirectory()) continue;
-    const lessonsDir = path.join(coursesRoot, course.name, "lessons");
-    if (!fs.existsSync(lessonsDir)) continue;
-    for (const file of fs.readdirSync(lessonsDir).filter((name) => name.endsWith(".json")).sort()) {
-      const absolute = path.join(lessonsDir, file);
-      const lesson = JSON.parse(fs.readFileSync(absolute, "utf8"));
-      records.push({
-        courseId: course.name,
-        lesson,
-        lessonId: lesson.id ?? file.replace(/\.json$/, ""),
-        source: path.relative(root, absolute).replaceAll(path.sep, "/")
-      });
-    }
-  }
-  return records.sort((a, b) => a.lessonId.localeCompare(b.lessonId));
 }
 
 function stable(value) {
@@ -321,62 +301,59 @@ for (const row of readObjects("PREMIUM_INTERACTION_PRIORITY.csv")) {
 }
 
 // V4 extends the existing queue with complete lesson-level dispositions rather than creating a
-// competing tracker. These rows are intentionally open until a calibrated semantic review closes
-// them with evidence from the same candidate build.
-const lessons = currentLessons();
+// competing tracker. The shared authority derives freshness from live lesson/course source, exact
+// MCQ duplicate references, and standards-edge references. Only a valid current human record can
+// close these three review rows; a signed REVISE/ESCALATE remains visible as implementation debt.
+const reviewAuthority = loadLessonReviewAuthority(root);
+const lessons = reviewAuthority.lessons;
 const curriculumSeal = createHash("sha256")
-  .update(lessons.map(({ source }) => `${source}\0${fs.readFileSync(path.join(root, source), "utf8")}\0`).join(""))
+  .update(lessons.map(({ source, raw }) => `${source}\0${raw}\0`).join(""))
   .digest("hex");
 for (const record of lessons) {
   const { lesson, lessonId, source } = record;
-  add({
-    work_id: `LESSON-${lessonId}`,
-    priority: "P1",
-    priority_score: 300,
-    workstream: "LESSON_COMPLETE_DISPOSITION",
-    status: "OPEN_KEEP_REVISE_ESCALATE_DISPOSITION",
-    source,
-    lesson_id: lessonId,
-    step_path: "lesson",
-    learner_harm: 3,
-    frequency: 1,
-    visibility: 5,
-    strategic_importance: 5,
-    mismatch_evidence: "V4 requires one evidence-backed KEEP, REVISE, or ESCALATE disposition per lesson.",
-    next_action: "Review the complete lesson interaction, question-job progression, feedback truth, visual purpose, language fit, challenge demand, and deployment evidence."
-  });
-  add({
-    work_id: `VISUAL-DISPOSITION-${lessonId}`,
-    priority: "P1",
-    priority_score: 320,
-    workstream: "VISUAL_FIRST_REPRESENTATION",
-    status: "OPEN_VISUAL_REQUIRED_PREFERRED_SUFFICIENT_DECISION",
-    source,
-    lesson_id: lessonId,
-    step_path: "lesson",
-    learner_harm: 3,
-    frequency: 1,
-    visibility: 5,
-    strategic_importance: 5,
-    mismatch_evidence: "No calibrated lesson-level V4 visual-opportunity disposition is recorded.",
-    next_action: "Classify the lesson and each concept/question medium; prove every required visual is meaningful, synchronized, visible, and accessibly equivalent."
-  });
-  add({
-    work_id: `LANGUAGE-${lessonId}`,
-    priority: "P1",
-    priority_score: 300,
-    workstream: "GRADE_LANGUAGE_REVIEW",
-    status: "OPEN_GRADE_BAND_LANGUAGE_REVIEW",
-    source,
-    lesson_id: lessonId,
-    step_path: "lesson",
-    learner_harm: 3,
-    frequency: 1,
-    visibility: 5,
-    strategic_importance: 4,
-    mismatch_evidence: "V4 language review is not yet attached across prompts, options, hints, feedback, narration, and generated surfaces.",
-    next_action: "Review clarity, naturalness, sentence and clause load, referents, vocabulary introduction, and read-aloud fit for the intended grade without diluting mathematics."
-  });
+  const disposition = reviewAuthority.lessonDecisions.byLesson.get(lessonId);
+  const directive = reviewQueueDirective(disposition);
+  if (directive.emitGenericReviewRows) {
+    add({
+      work_id: `LESSON-${lessonId}`,
+      priority: "P1", priority_score: 300, workstream: "LESSON_COMPLETE_DISPOSITION",
+      status: "OPEN_KEEP_REVISE_ESCALATE_DISPOSITION", source, lesson_id: lessonId, step_path: "lesson",
+      learner_harm: 3, frequency: 1, visibility: 5, strategic_importance: 5,
+      mismatch_evidence: "V4 requires one evidence-backed KEEP, REVISE, or ESCALATE disposition per lesson.",
+      next_action: "Review the complete lesson interaction, question-job progression, feedback truth, visual purpose, language fit, challenge demand, and deployment evidence."
+    });
+    add({
+      work_id: `VISUAL-DISPOSITION-${lessonId}`,
+      priority: "P1", priority_score: 320, workstream: "VISUAL_FIRST_REPRESENTATION",
+      status: "OPEN_VISUAL_REQUIRED_PREFERRED_SUFFICIENT_DECISION", source, lesson_id: lessonId, step_path: "lesson",
+      learner_harm: 3, frequency: 1, visibility: 5, strategic_importance: 5,
+      mismatch_evidence: "No calibrated lesson-level V4 visual-opportunity disposition is recorded.",
+      next_action: "Classify the lesson and each concept/question medium; prove every required visual is meaningful, synchronized, visible, and accessibly equivalent."
+    });
+    add({
+      work_id: `LANGUAGE-${lessonId}`,
+      priority: "P1", priority_score: 300, workstream: "GRADE_LANGUAGE_REVIEW",
+      status: "OPEN_GRADE_BAND_LANGUAGE_REVIEW", source, lesson_id: lessonId, step_path: "lesson",
+      learner_harm: 3, frequency: 1, visibility: 5, strategic_importance: 4,
+      mismatch_evidence: "V4 language review is not yet attached across prompts, options, hints, feedback, narration, and generated surfaces.",
+      next_action: "Review clarity, naturalness, sentence and clause load, referents, vocabulary introduction, and read-aloud fit for the intended grade without diluting mathematics."
+    });
+  }
+  if (directive.emitRevisionImplementationRow) {
+    const decision = disposition.record;
+    add({
+      work_id: `LESSON-REVISION-${lessonId}`,
+      priority: decision.decision === "ESCALATE" ? "P0" : "P1",
+      priority_score: decision.decision === "ESCALATE" ? 500 : 380,
+      workstream: "LESSON_REVISION_IMPLEMENTATION",
+      status: decision.decision === "ESCALATE" ? "OPEN_ESCALATED_LESSON_REMEDIATION" : "OPEN_REVIEWED_LESSON_REMEDIATION",
+      source, lesson_id: lessonId, step_path: "lesson",
+      learner_harm: decision.decision === "ESCALATE" ? 5 : 4,
+      frequency: 1, visibility: 5, strategic_importance: 5,
+      mismatch_evidence: `recordId=${decision.recordId}; decision=${decision.decision}; visualDecision=${decision.visualDecision}; gradeLanguageDecision=${decision.gradeLanguageDecision}; rationale=${decision.rationale}`,
+      next_action: `Implement the signed ${decision.decision} remediation, preserve evidence from ${decision.recordId}, then regenerate the review basis and obtain a new current disposition.`
+    });
+  }
 
   const widgets = (lesson.steps ?? []).filter((step) => step?.widget).map((step) => ({
     id: step.id ?? "",

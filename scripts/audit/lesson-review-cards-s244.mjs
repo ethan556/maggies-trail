@@ -2,7 +2,7 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { decisionStatusOf, normalizeStandardsDecisionStatus, validateStandardsDecision } from "../standards/decision-contract.mjs";
+import { loadLessonReviewAuthority } from "./lesson-review-authority-s246.mjs";
 
 const ROOT = process.cwd();
 const CHECK = process.argv.includes("--check");
@@ -14,7 +14,6 @@ const MD_PATH = path.join(REPORT_DIR, "LESSON_REVIEW_CARDS_S244.md");
 const relative = (file) => path.relative(ROOT, file).replaceAll(path.sep, "/");
 const hash = (value) => createHash("sha256").update(value).digest("hex");
 const readText = (file) => fs.readFileSync(path.join(ROOT, file), "utf8");
-const readJson = (file) => JSON.parse(readText(file));
 
 function stable(value) {
   if (Array.isArray(value)) return `[${value.map(stable).join(",")}]`;
@@ -66,121 +65,6 @@ function csv(value) {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
-function loadLessons() {
-  const records = [];
-  const coursesRoot = path.join(ROOT, "content", "courses");
-  for (const courseEntry of fs.readdirSync(coursesRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-    if (!courseEntry.isDirectory()) continue;
-    const courseRoot = path.join(coursesRoot, courseEntry.name);
-    const coursePath = path.join(courseRoot, "course.json");
-    const lessonsPath = path.join(courseRoot, "lessons");
-    if (!fs.existsSync(coursePath) || !fs.existsSync(lessonsPath)) continue;
-    const courseRaw = fs.readFileSync(coursePath, "utf8");
-    const course = JSON.parse(courseRaw);
-    const courseSource = relative(coursePath);
-    for (const file of fs.readdirSync(lessonsPath).filter((name) => name.endsWith(".json")).sort()) {
-      const absolute = path.join(lessonsPath, file);
-      const raw = fs.readFileSync(absolute, "utf8");
-      const parsed = JSON.parse(raw);
-      const lesson = parsed.lesson ?? parsed;
-      const lessonId = String(lesson.id ?? file.replace(/\.json$/, ""));
-      if (records.some((record) => record.lessonId === lessonId)) throw new Error(`Duplicate lesson id ${lessonId}`);
-      records.push({
-        lessonId,
-        courseId: String(lesson.courseId ?? course.id ?? courseEntry.name),
-        courseTitle: String(course.title ?? courseEntry.name),
-        gradeLevel: Number(course.gradeLevel),
-        title: String(lesson.title ?? lessonId),
-        lesson,
-        raw,
-        source: relative(absolute),
-        lessonSourceHash: hash(raw),
-        courseSource,
-        courseSourceHash: hash(courseRaw),
-        lessonCourseBasisHash: hash(`${relative(absolute)}\0${raw}\0${courseSource}\0${courseRaw}\0`),
-        courseRaw
-      });
-    }
-  }
-  return records.sort((a, b) => a.lessonId.localeCompare(b.lessonId));
-}
-
-function mcqIdentity(widget) {
-  if (widget?.type !== "mcq" || !String(widget.prompt ?? "").trim() || !Array.isArray(widget.options)) return null;
-  const labels = widget.options.map((option) => String(option?.label ?? "").trim()).sort().join("|");
-  return `${String(widget.prompt).trim()}~~${labels}`;
-}
-
-function buildDuplicateInventory(lessons) {
-  const placementsByIdentity = new Map();
-  for (const record of lessons) {
-    for (const [index, step] of (record.lesson.steps ?? []).entries()) {
-      const identity = mcqIdentity(step?.widget);
-      if (!identity) continue;
-      const placement = { lessonId: record.lessonId, stepId: String(step.id ?? index), index };
-      if (!placementsByIdentity.has(identity)) placementsByIdentity.set(identity, []);
-      placementsByIdentity.get(identity).push(placement);
-    }
-  }
-
-  const clusters = [...placementsByIdentity]
-    .filter(([, placements]) => placements.length > 1)
-    .map(([identity, placements]) => {
-      const clusterId = `MCQ-${hash(identity).slice(0, 16)}`;
-      const sortedPlacements = placements.sort((a, b) =>
-        a.lessonId.localeCompare(b.lessonId) || a.index - b.index || a.stepId.localeCompare(b.stepId)
-      );
-      const lessonCounts = new Map();
-      for (const placement of sortedPlacements) {
-        lessonCounts.set(placement.lessonId, (lessonCounts.get(placement.lessonId) ?? 0) + 1);
-      }
-      return {
-        clusterId,
-        identityHash: hash(identity),
-        prompt: identity.split("~~", 1)[0],
-        placementCount: sortedPlacements.length,
-        withinLesson: [...lessonCounts.values()].some((count) => count > 1),
-        placements: sortedPlacements
-      };
-    })
-    .sort((a, b) => a.clusterId.localeCompare(b.clusterId));
-
-  const ids = new Set(clusters.map((cluster) => cluster.clusterId));
-  if (ids.size !== clusters.length) throw new Error("Duplicate cluster id collision");
-
-  const byLesson = new Map(lessons.map((lesson) => [lesson.lessonId, []]));
-  let withinLessonGroupCount = 0;
-  for (const cluster of clusters) {
-    const grouped = new Map();
-    for (const placement of cluster.placements) {
-      if (!grouped.has(placement.lessonId)) grouped.set(placement.lessonId, []);
-      grouped.get(placement.lessonId).push(placement);
-    }
-    for (const [lessonId, placements] of grouped) {
-      if (placements.length > 1) withinLessonGroupCount += 1;
-      byLesson.get(lessonId).push({
-        clusterId: cluster.clusterId,
-        placementCount: placements.length,
-        withinLesson: placements.length > 1,
-        stepIds: placements.map((placement) => placement.stepId)
-      });
-    }
-  }
-  for (const entries of byLesson.values()) entries.sort((a, b) => a.clusterId.localeCompare(b.clusterId));
-
-  return {
-    clusters,
-    byLesson,
-    summary: {
-      clusterCount: clusters.length,
-      placementCount: clusters.reduce((total, cluster) => total + cluster.placementCount, 0),
-      affectedLessonCount: [...byLesson.values()].filter((entries) => entries.length > 0).length,
-      withinLessonClusterCount: clusters.filter((cluster) => cluster.withinLesson).length,
-      withinLessonGroupCount
-    }
-  };
-}
-
 function groupBy(rows, key) {
   const result = new Map();
   for (const row of rows) {
@@ -201,181 +85,13 @@ function queueStatus(rows, workstream, absentStatus) {
   };
 }
 
-function loadLessonDecisions(lessons) {
-  const file = "reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl";
-  const raw = readText(file);
-  const records = raw.split(/\r?\n/).filter(Boolean).map((line, index) => {
-    try {
-      return { value: JSON.parse(line), line: index + 1 };
-    } catch (error) {
-      throw new Error(`${file}:${index + 1} is not valid JSON: ${error.message}`);
-    }
-  });
-  const schema = records[0]?.value;
-  if (schema?.recordType !== "schema" || schema?.schemaVersion !== 1) {
-    throw new Error(`${file} must begin with the S244 schema record`);
+function decisionAwareReviewStatus(rows, workstream, humanDisposition, closedStatus) {
+  if (humanDisposition.status === "CURRENT_HUMAN_DECISION") {
+    const matches = rows.filter((row) => row.workstream === workstream);
+    if (matches.length !== 0) throw new Error(`${humanDisposition.record.lessonId} has a current decision but ${matches.length} open ${workstream} rows`);
+    return { status: closedStatus, rowCount: 0, workIds: [] };
   }
-
-  const lessonById = new Map(lessons.map((lesson) => [lesson.lessonId, lesson]));
-  const latest = new Map();
-  const recordIds = new Set();
-  let duplicateRecordIdCount = 0;
-  let unknownLessonRecordCount = 0;
-  for (const entry of records.slice(1)) {
-    const record = entry.value;
-    if (record.recordType !== "lesson-disposition") continue;
-    if (recordIds.has(record.recordId)) duplicateRecordIdCount += 1;
-    recordIds.add(record.recordId);
-    if (!lessonById.has(String(record.lessonId))) unknownLessonRecordCount += 1;
-    latest.set(String(record.lessonId), { record, line: entry.line });
-  }
-
-  const allowedLesson = new Set(schema.contract.allowedLessonDecisions ?? []);
-  const allowedVisual = new Set(schema.contract.allowedVisualDecisions ?? []);
-  const allowedLanguage = new Set(schema.contract.allowedGradeLanguageDecisions ?? []);
-  const byLesson = new Map();
-  let currentCount = 0;
-  let staleCount = 0;
-  let invalidCount = duplicateRecordIdCount + unknownLessonRecordCount;
-  for (const lesson of lessons) {
-    const entry = latest.get(lesson.lessonId);
-    if (!entry) {
-      byLesson.set(lesson.lessonId, { status: "PENDING_EXPLICIT_HUMAN_DECISION", decision: null, record: null, errors: [] });
-      continue;
-    }
-    const { record } = entry;
-    const errors = [];
-    if (!record.recordId) errors.push("recordId");
-    if (!allowedLesson.has(record.decision)) errors.push("decision");
-    if (!allowedVisual.has(record.visualDecision)) errors.push("visualDecision");
-    if (!allowedLanguage.has(record.gradeLanguageDecision)) errors.push("gradeLanguageDecision");
-    if (!String(record.reviewer ?? "").trim()) errors.push("reviewer");
-    if (!String(record.rationale ?? "").trim()) errors.push("rationale");
-    if (!String(record.reopenCondition ?? "").trim()) errors.push("reopenCondition");
-    if (!Array.isArray(record.evidenceRefs) || record.evidenceRefs.length === 0 || record.evidenceRefs.some((ref) => !String(ref).trim())) errors.push("evidenceRefs");
-    if (!Number.isFinite(Date.parse(String(record.reviewedAt ?? "")))) errors.push("reviewedAt");
-    if (!/^[a-f0-9]{64}$/i.test(String(record.reviewedBasisHash ?? ""))) errors.push("reviewedBasisHash");
-    if (errors.length > 0) {
-      invalidCount += 1;
-      byLesson.set(lesson.lessonId, { status: "INVALID_HUMAN_DECISION", decision: null, record, errors });
-    } else if (record.reviewedBasisHash !== lesson.reviewBasisHash) {
-      staleCount += 1;
-      byLesson.set(lesson.lessonId, { status: "STALE_HUMAN_DECISION", decision: null, record, errors: [] });
-    } else {
-      currentCount += 1;
-      byLesson.set(lesson.lessonId, { status: "CURRENT_HUMAN_DECISION", decision: record.decision, record, errors: [] });
-    }
-  }
-  return {
-    file,
-    raw,
-    schema,
-    byLesson,
-    summary: {
-      historyRecordCount: records.slice(1).filter((entry) => entry.value.recordType === "lesson-disposition").length,
-      currentCount,
-      staleCount,
-      invalidCount,
-      duplicateRecordIdCount,
-      unknownLessonRecordCount
-    }
-  };
-}
-
-function loadStandards(lessonIds) {
-  const evidenceMap = readJson("content/standards/lesson-evidence-map.json");
-  const dossierDoc = readJson("content/standards/evidence-dossiers.json");
-  const decisionsDoc = readJson("content/standards/human-review-decisions.json");
-  const evidenceLessonIds = new Set((evidenceMap.lessons ?? []).map((lesson) => String(lesson.lessonId)));
-  const decisions = new Map((decisionsDoc.decisions ?? []).map((decision) => [String(decision.edgeId), decision]));
-  const byLesson = new Map([...lessonIds].map((lessonId) => [lessonId, []]));
-  const seenEdges = new Set();
-  let inconsistentDecisionCount = 0;
-  let invalidDecisionCount = 0;
-  let validDecisionCount = 0;
-  let partialDecisionCount = 0;
-  let approvedDecisionCount = 0;
-  let rejectedDecisionCount = 0;
-
-  for (const dossier of dossierDoc.dossiers ?? []) {
-    if (seenEdges.has(dossier.edgeId)) throw new Error(`Duplicate standards edge ${dossier.edgeId}`);
-    seenEdges.add(dossier.edgeId);
-    const explicitDecision = decisions.get(String(dossier.edgeId)) ?? null;
-    const explicitStatus = decisionStatusOf(explicitDecision);
-    const { signature: recordedSignature, ...unsignedDecision } = explicitDecision ?? {};
-    const signatureValid = explicitDecision ? hash(JSON.stringify(unsignedDecision)) === recordedSignature : false;
-    const { dossierHash: currentDossierHash, ...readyDossierCore } = dossier;
-    readyDossierCore.claimLimit = "Planning/review only. Not a verified alignment or mastery claim.";
-    readyDossierCore.review = {
-      status: "candidate",
-      reviewer: null,
-      reviewedAt: null,
-      notes: null,
-      officialTextSnapshot: null,
-      officialSourceUrl: null,
-      claimBoundary: null,
-      approvedDepth: null
-    };
-    const legacyReadyDossierCore = structuredClone(readyDossierCore);
-    legacyReadyDossierCore.review = {
-      status: "ready-for-human-review", reviewer: null, reviewedAt: null, notes: null,
-      officialTextSnapshot: null, approvedDepth: null
-    };
-    const signedDossierBasisValid = explicitDecision
-      ? explicitDecision.dossierHash === currentDossierHash
-        || explicitDecision.dossierHash === hash(JSON.stringify(readyDossierCore))
-        || explicitDecision.dossierHash === hash(JSON.stringify(legacyReadyDossierCore))
-      : false;
-    const reviewMatches = Boolean(explicitStatus && normalizeStandardsDecisionStatus(dossier.review?.status) === explicitStatus);
-    const contractValid = explicitDecision ? validateStandardsDecision(explicitDecision).errors.length === 0 : false;
-    const decisionValid = Boolean(explicitDecision && signatureValid && signedDossierBasisValid && reviewMatches && contractValid);
-    if (explicitDecision && !reviewMatches) inconsistentDecisionCount += 1;
-    if (explicitDecision && !decisionValid) invalidDecisionCount += 1;
-    if (decisionValid) {
-      validDecisionCount += 1;
-      if (explicitStatus === "partial") partialDecisionCount += 1;
-      if (explicitStatus === "approved") approvedDecisionCount += 1;
-      if (explicitStatus === "rejected") rejectedDecisionCount += 1;
-    }
-    const reviewStatus = decisionValid ? explicitStatus : "candidate";
-    const coveredLessons = new Set([
-      ...(dossier.evidenceSummary?.lessonIds ?? []),
-      ...(dossier.stepEvidence ?? []).map((step) => step.lessonId)
-    ].map(String));
-    for (const lessonId of coveredLessons) {
-      if (!byLesson.has(lessonId)) continue;
-      byLesson.get(lessonId).push({
-        edgeId: String(dossier.edgeId),
-        dossierHash: String(dossier.dossierHash),
-        framework: String(dossier.framework),
-        candidateCode: String(dossier.candidateCode),
-        candidateDepth: String(dossier.candidateDepth),
-        sourceTextStatus: String(dossier.sourceTextStatus),
-        reviewStatus,
-        decisionIntegrityStatus: explicitDecision
-          ? decisionValid ? "VALID_EXPLICIT_HUMAN_DECISION" : "INVALID_OR_STALE_EXPLICIT_DECISION"
-          : "NO_EXPLICIT_HUMAN_DECISION"
-      });
-    }
-  }
-  for (const entries of byLesson.values()) entries.sort((a, b) => a.edgeId.localeCompare(b.edgeId));
-
-  const unboundDecisionCount = [...decisions.keys()].filter((edgeId) => !seenEdges.has(edgeId)).length;
-  return {
-    evidenceMap,
-    dossierDoc,
-    decisionsDoc,
-    evidenceLessonIds,
-    byLesson,
-    inconsistentDecisionCount,
-    invalidDecisionCount,
-    unboundDecisionCount,
-    validDecisionCount,
-    partialDecisionCount,
-    approvedDecisionCount,
-    rejectedDecisionCount,
-    pendingDecisionCount: (dossierDoc.dossiers ?? []).length - approvedDecisionCount - rejectedDecisionCount
-  };
+  return queueStatus(rows, workstream, "MISSING_REQUIRED_OPEN_QUEUE_ROW");
 }
 
 function writeOrCheck(file, expected) {
@@ -389,8 +105,8 @@ function writeOrCheck(file, expected) {
   fs.writeFileSync(file, expected);
 }
 
-const lessons = loadLessons();
-const lessonIds = new Set(lessons.map((lesson) => lesson.lessonId));
+const reviewAuthority = loadLessonReviewAuthority(ROOT);
+const { lessons, duplicateInventory, standards, lessonDecisions } = reviewAuthority;
 const curriculumSeal = hash(lessons.map(({ source, raw }) => `${source}\0${raw}\0`).join(""));
 const uniqueCourses = [...new Map(lessons.map((lesson) => [lesson.courseSource, lesson.courseRaw])).entries()]
   .sort(([a], [b]) => a.localeCompare(b));
@@ -409,34 +125,28 @@ const queueSourceStatus = queueDeclaredSeal === curriculumSeal ? "SOURCE_SEAL_MA
 if (queueSourceStatus === "SOURCE_SEAL_MATCH") {
   for (const lesson of lessons) {
     const rows = queueByLesson.get(lesson.lessonId) ?? [];
+    const humanDisposition = lessonDecisions.byLesson.get(lesson.lessonId);
+    const expectedGenericCount = humanDisposition.status === "CURRENT_HUMAN_DECISION" ? 0 : 1;
     for (const workstream of ["LESSON_COMPLETE_DISPOSITION", "VISUAL_FIRST_REPRESENTATION", "GRADE_LANGUAGE_REVIEW"]) {
-      if (rows.filter((row) => row.workstream === workstream).length !== 1) {
-        throw new Error(`${lesson.lessonId} must have exactly one ${workstream} queue row`);
-      }
+      const actual = rows.filter((row) => row.workstream === workstream).length;
+      if (actual !== expectedGenericCount) throw new Error(`${lesson.lessonId} must have exactly ${expectedGenericCount} ${workstream} queue rows; found ${actual}`);
     }
+    const expectedRevisionCount = humanDisposition.status === "CURRENT_HUMAN_DECISION"
+      && ["REVISE", "ESCALATE"].includes(humanDisposition.decision) ? 1 : 0;
+    const actualRevisionCount = rows.filter((row) => row.workstream === "LESSON_REVISION_IMPLEMENTATION").length;
+    if (actualRevisionCount !== expectedRevisionCount) throw new Error(`${lesson.lessonId} must have exactly ${expectedRevisionCount} LESSON_REVISION_IMPLEMENTATION queue rows; found ${actualRevisionCount}`);
   }
 }
-
-const duplicateInventory = buildDuplicateInventory(lessons);
-const standards = loadStandards(lessonIds);
-for (const lesson of lessons) {
-  lesson.reviewBasisHash = hash(stable({
-    lessonCourseBasisHash: lesson.lessonCourseBasisHash,
-    duplicateClusters: duplicateInventory.byLesson.get(lesson.lessonId) ?? [],
-    standardsEdges: standards.byLesson.get(lesson.lessonId) ?? []
-  }));
-}
-const lessonDecisions = loadLessonDecisions(lessons);
 const legacyClassificationRaw = readText("CLOSURE_LESSON_CLASSIFICATION.csv");
 const legacyClassifications = new Map(csvObjects(legacyClassificationRaw).map((row) => [row.lesson, row]));
 
 const cards = lessons.map((lesson) => {
   const rows = queueByLesson.get(lesson.lessonId) ?? [];
-  const complete = queueStatus(rows, "LESSON_COMPLETE_DISPOSITION", "MISSING_QUEUE_ROW");
-  const visual = queueStatus(rows, "VISUAL_FIRST_REPRESENTATION", "MISSING_QUEUE_ROW");
-  const language = queueStatus(rows, "GRADE_LANGUAGE_REVIEW", "MISSING_QUEUE_ROW");
-  const progression = queueStatus(rows, "LESSON_PROGRESSION_AND_DUPLICATION", "NO_OPEN_HEURISTIC_FLAG");
   const humanDisposition = lessonDecisions.byLesson.get(lesson.lessonId);
+  const complete = decisionAwareReviewStatus(rows, "LESSON_COMPLETE_DISPOSITION", humanDisposition, "CLOSED_BY_CURRENT_HUMAN_DECISION");
+  const visual = decisionAwareReviewStatus(rows, "VISUAL_FIRST_REPRESENTATION", humanDisposition, `CLOSED_BY_CURRENT_HUMAN_DECISION:${humanDisposition.record?.visualDecision ?? ""}`);
+  const language = decisionAwareReviewStatus(rows, "GRADE_LANGUAGE_REVIEW", humanDisposition, `CLOSED_BY_CURRENT_HUMAN_DECISION:${humanDisposition.record?.gradeLanguageDecision ?? ""}`);
+  const progression = queueStatus(rows, "LESSON_PROGRESSION_AND_DUPLICATION", "NO_OPEN_HEURISTIC_FLAG");
   const duplicateEntries = duplicateInventory.byLesson.get(lesson.lessonId) ?? [];
   const dossierEntries = standards.byLesson.get(lesson.lessonId) ?? [];
   const partialEdgeCount = dossierEntries.filter((entry) => entry.reviewStatus === "partial").length;
