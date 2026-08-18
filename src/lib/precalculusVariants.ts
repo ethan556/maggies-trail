@@ -1118,6 +1118,10 @@ function limitSeriesMcqVariant(rand: () => number): LimitGeneratedVariant {
   );
 }
 function limitsContinuityVariant(rand: () => number, requestedForm: string): LimitGeneratedVariant | null {
+  // The registry-wide generator gate also exercises the legacy bare/default
+  // route. Keep it on the same prompt-derived contract as the declared
+  // consumers instead of falling back to the small authored template bank.
+  if (requestedForm === "default") return limitAverageRateMcqVariant(rand);
   if (requestedForm === LIMIT_IDEA_MCQ_FORM) return limitIdeaMcqVariant(rand);
   if (requestedForm === LIMIT_IDEA_NUMERIC_FORM) return limitIdeaNumericVariant(rand);
   if (requestedForm === LIMIT_READ_NUMERIC_FORM) return limitReadNumericVariant(rand);

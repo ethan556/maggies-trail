@@ -873,7 +873,46 @@ function solveIntegrationApplication(form, input) {
   throw new Error(`unrecognized integration-application form ${form}`);
 }
 
+const PC01_FORMS = new Set([
+  'parametric-polar-calculus__pc-parametric-derivative__numeric',
+  'parametric-polar-calculus__pc-parametric-derivative__mcq',
+  'parametric-polar-calculus__pc-second-derivative__numeric',
+  'parametric-polar-calculus__pc-arc-length__numeric',
+  'parametric-polar-calculus__pc-arc-length__mcq',
+]);
+
+const roundPc = (value) => Number(value.toFixed(3));
+
+function solveParametricPc01(form, input) {
+  const prompt = String(input).split('||', 1)[0].replace(/[−–—]/g, '-');
+  if (form.includes('pc-parametric-derivative')) {
+    const match = /x\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? and y\(t\) = (\d+)t(?:²|\^2)(?:\s*[+-]\s*\d+)?[\s\S]*?at t = (\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized parametric-derivative prompt: ${prompt}`);
+    const ax = Number(match[1]); const ay = Number(match[2]); const at = Number(match[3]);
+    if (ax === 0) throw new Error(`dx/dt must be nonzero: ${prompt}`);
+    const answer = roundPc(2 * ay * at / ax);
+    return form.endsWith('__mcq') ? `dy/dx = ${answer}` : answer;
+  }
+  if (form.endsWith('pc-second-derivative__numeric')) {
+    const match = /x\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? and y\(t\) = (\d+)t(?:³|\^3)(?:\s*[+-]\s*\d+)?[\s\S]*?at t = (\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized second-parametric-derivative prompt: ${prompt}`);
+    const ax = Number(match[1]); const ay = Number(match[2]); const at = Number(match[3]);
+    if (ax === 0) throw new Error(`dx/dt must be nonzero: ${prompt}`);
+    return roundPc(6 * ay * at / (ax * ax));
+  }
+  if (form.includes('pc-arc-length')) {
+    const match = /x\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? and y\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? for 0\s*(?:≤|<=)\s*t\s*(?:≤|<=)\s*(\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized parametric-arc prompt: ${prompt}`);
+    const ax = Number(match[1]); const ay = Number(match[2]); const upper = Number(match[3]);
+    if (upper <= 0) throw new Error(`arc-length interval must have positive width: ${prompt}`);
+    const answer = roundPc(Math.hypot(ax, ay) * upper);
+    return form.endsWith('__mcq') ? `arc length = ${answer}` : answer;
+  }
+  throw new Error(`unrecognized pc-01 form ${form}`);
+}
+
 function solvePrompt(form, input) {
+  if (PC01_FORMS.has(form)) return solveParametricPc01(form, input);
   if (form === FIRST_DERIVATIVE_NUMERIC && /f\(x\)\s*=\s*x(?:³|\^3)/.test(String(input))) {
     return solveFirstDerivativeMaximum(input);
   }

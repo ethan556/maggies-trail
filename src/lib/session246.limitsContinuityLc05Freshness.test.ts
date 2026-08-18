@@ -75,6 +75,26 @@ describe("S246 limits-continuity lc-05 generator assurance", () => {
     });
     expect([...counts.values()].reduce((sum, count) => sum + count, 0)).toBe(12);
   });
+  it("keeps the legacy bare/default route on the prompt-solvable average-rate MCQ contract", () => {
+    const generator = PRECALCULUS_GENERATORS.find((candidate) => candidate.tag === GENERATOR)!;
+    const prompts = new Set<string>();
+    const truths = new Set<string>();
+    const positions = new Set<number>();
+    for (let index = 0; index < 240; index += 1) {
+      const seed = `s246-limits-default|${index}`;
+      const first = generator.gen(mulberry32(hashSeed(seed)), "core");
+      const replay = generator.gen(mulberry32(hashSeed(seed)), "core");
+      expect(replay, seed).toEqual(first);
+      const observed = assertPromptTruth("limits-continuity__lc-avg-rate__mcq", first, seed);
+      prompts.add(observed.prompt);
+      truths.add(observed.truth);
+      if (first.widget.type === "mcq") positions.add(first.widget.options.findIndex((option: { correct?: boolean }) => option.correct));
+    }
+    expect(prompts.size).toBe(12);
+    expect(truths.size).toBe(12);
+    expect(positions.size).toBeGreaterThanOrEqual(3);
+  });
+
 
   it("ratchets twelve prompt-derived truth states per form with deterministic replay", () => {
     const generator = PRECALCULUS_GENERATORS.find((candidate) => candidate.tag === GENERATOR)!;

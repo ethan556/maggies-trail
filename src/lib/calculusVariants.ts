@@ -2723,7 +2723,141 @@ function averageValueMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   ]);
 }
 
+/* S246 / Phase 5. The pc-01 authored pools exposed only one to three fixed
+ * prompts per form. These builders preserve each lesson surface while varying
+ * coefficients, translations, evaluation times, intervals, and exact truth. */
+type ParametricPcCase = { ax: number; ay: number; t: number; x0: number; y0: number };
+const PARAMETRIC_PC_CASES: readonly ParametricPcCase[] = [
+  { ax: 2, ay: 1, t: 1, x0: -3, y0: 2 }, { ax: 3, ay: 2, t: 1, x0: 4, y0: -1 },
+  { ax: 4, ay: 3, t: 1, x0: -2, y0: 5 }, { ax: 5, ay: 4, t: 1, x0: 1, y0: -4 },
+  { ax: 1, ay: 1, t: 1, x0: 6, y0: 3 }, { ax: 3, ay: 2, t: 2, x0: -5, y0: 1 },
+  { ax: 4, ay: 3, t: 2, x0: 3, y0: -2 }, { ax: 5, ay: 4, t: 2, x0: -1, y0: 6 },
+  { ax: 2, ay: 3, t: 2, x0: 5, y0: -3 }, { ax: 3, ay: 4, t: 3, x0: -4, y0: 2 },
+  { ax: 4, ay: 5, t: 4, x0: 2, y0: -5 }, { ax: 5, ay: 6, t: 5, x0: -6, y0: 4 },
+];
+
+const parametricExpression = (coefficient: number, power: 1 | 2 | 3, constant: number) =>
+  `${coefficient}t${power === 1 ? "" : power === 2 ? "²" : "³"}${signedConstant(constant)}`;
+
+function pcNumericWidget(prompt: string, answer: number, candidates: readonly number[], feedback: string): GeneratedIntegrationVariant {
+  const commonErrors = uniqueNumericErrors(answer, candidates.map((value) => ({
+    value: round3(value),
+    feedback,
+  }))).slice(0, 3);
+  for (let offset = 1; commonErrors.length < 3; offset += 1) {
+    const value = round3(answer + offset);
+    if (value !== answer && commonErrors.every((error) => error.value !== value)) commonErrors.push({ value, feedback });
+  }
+  const widget = {
+    type: "numeric" as const, prompt, answer, tolerance: 0.005, unit: "", commonErrors,
+    fallbackFeedback: feedback,
+    successFeedback: `The prompt-derived value is ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+function pcChoiceValues(answer: number, candidates: readonly number[]) {
+  const values = [answer, ...candidates.map(round3)].filter((value, index, all) => all.indexOf(value) === index);
+  for (let offset = 1; values.length < 4; offset += 1) {
+    const value = round3(answer + offset);
+    if (!values.includes(value)) values.push(value);
+  }
+  return values.slice(0, 4);
+}
+
+function parametricDerivativeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, PARAMETRIC_PC_CASES);
+  const dx = entry.ax;
+  const dy = 2 * entry.ay * entry.t;
+  const answer = round3(dy / dx);
+  return pcNumericWidget(
+    `x(t) = ${parametricExpression(entry.ax, 1, entry.x0)} and y(t) = ${parametricExpression(entry.ay, 2, entry.y0)}. Find dy/dx at t = ${entry.t}. Give three decimals if needed.`,
+    answer, [round3(dx / dy), round3(entry.ay * entry.t / entry.ax), round3(Math.hypot(dx, dy))],
+    `Differentiate both coordinates with respect to t, then divide dy/dt = ${dy} by dx/dt = ${dx}.`,
+  );
+}
+
+function parametricDerivativeMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, PARAMETRIC_PC_CASES);
+  const dx = entry.ax;
+  const dy = 2 * entry.ay * entry.t;
+  const answer = round3(dy / dx);
+  const values = pcChoiceValues(answer, [dx / dy, entry.ay * entry.t / entry.ax, Math.hypot(dx, dy)]);
+  return integrationMcq(rand,
+    `For x(t) = ${parametricExpression(entry.ax, 1, entry.x0)} and y(t) = ${parametricExpression(entry.ay, 2, entry.y0)}, which value is dy/dx at t = ${entry.t}?`,
+    values.map((value) => ({
+      label: `dy/dx = ${value}`,
+      correct: value === answer,
+      feedback: value === answer
+        ? `Dividing dy/dt = ${dy} by dx/dt = ${dx} gives ${answer}.`
+        : `Use (dy/dt)/(dx/dt); the displayed coordinate derivatives are ${dy} and ${dx}.`,
+    })),
+  );
+}
+
+function parametricSecondDerivativeWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, PARAMETRIC_PC_CASES);
+  const answer = round3(6 * entry.ay * entry.t / (entry.ax ** 2));
+  const firstDerivative = round3(3 * entry.ay * entry.t ** 2 / entry.ax);
+  return pcNumericWidget(
+    `x(t) = ${parametricExpression(entry.ax, 1, entry.x0)} and y(t) = ${parametricExpression(entry.ay, 3, entry.y0)}. Find d²y/dx² at t = ${entry.t}. Give three decimals if needed.`,
+    answer, [firstDerivative, round3(6 * entry.ay * entry.t / entry.ax), round3(6 * entry.ay / (entry.ax ** 2))],
+    `Differentiate dy/dx with respect to t, then divide once more by dx/dt = ${entry.ax}.`,
+  );
+}
+
+type ParametricArcCase = { ax: number; ay: number; upper: number; x0: number; y0: number };
+const PARAMETRIC_ARC_CASES: readonly ParametricArcCase[] = [
+  { ax: 3, ay: 4, upper: 1, x0: -2, y0: 1 }, { ax: 5, ay: 12, upper: 1, x0: 3, y0: -4 },
+  { ax: 8, ay: 15, upper: 1, x0: -5, y0: 2 }, { ax: 7, ay: 24, upper: 1, x0: 4, y0: -3 },
+  { ax: 20, ay: 21, upper: 1, x0: -1, y0: 5 }, { ax: 12, ay: 35, upper: 1, x0: 6, y0: -2 },
+  { ax: 9, ay: 40, upper: 1, x0: -4, y0: 3 }, { ax: 28, ay: 45, upper: 1, x0: 2, y0: -6 },
+  { ax: 3, ay: 4, upper: 2, x0: 5, y0: 1 }, { ax: 5, ay: 12, upper: 2, x0: -3, y0: 4 },
+  { ax: 8, ay: 15, upper: 2, x0: 1, y0: -5 }, { ax: 7, ay: 24, upper: 2, x0: -6, y0: 2 },
+];
+
+const arcPrompt = (entry: ParametricArcCase) =>
+  `The curve has x(t) = ${parametricExpression(entry.ax, 1, entry.x0)} and y(t) = ${parametricExpression(entry.ay, 1, entry.y0)} for 0 ≤ t ≤ ${entry.upper}.`;
+
+function parametricArcNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, PARAMETRIC_ARC_CASES);
+  const speed = Math.hypot(entry.ax, entry.ay);
+  const answer = round3(speed * entry.upper);
+  return pcNumericWidget(
+    `${arcPrompt(entry)} Find its arc length.`, answer,
+    [round3((entry.ax + entry.ay) * entry.upper), round3((entry.ax ** 2 + entry.ay ** 2) * entry.upper), entry.upper],
+    `The speed is sqrt(${entry.ax}² + ${entry.ay}²) = ${speed}; integrate that constant speed over ${entry.upper} time unit${entry.upper === 1 ? "" : "s"}.`,
+  );
+}
+
+function parametricArcMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, PARAMETRIC_ARC_CASES);
+  const speed = Math.hypot(entry.ax, entry.ay);
+  const answer = round3(speed * entry.upper);
+  const values = pcChoiceValues(answer, [
+    (entry.ax + entry.ay) * entry.upper,
+    (entry.ax ** 2 + entry.ay ** 2) * entry.upper,
+    answer + entry.upper,
+  ]);
+  return integrationMcq(rand, `${arcPrompt(entry)} Which arc length is correct?`, values.map((value) => ({
+    label: `arc length = ${value}`,
+    correct: value === answer,
+    feedback: value === answer
+      ? `The constant speed ${speed} integrated over ${entry.upper} time unit${entry.upper === 1 ? "" : "s"} gives ${answer}.`
+      : `Use the magnitude sqrt((dx/dt)² + (dy/dt)²), then multiply by the full parameter interval.`,
+  })));
+}
+
+const PARAMETRIC_PC01_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
+  "parametric-polar-calculus__pc-parametric-derivative__numeric": parametricDerivativeNumericWidget,
+  "parametric-polar-calculus__pc-parametric-derivative__mcq": parametricDerivativeMcqWidget,
+  "parametric-polar-calculus__pc-second-derivative__numeric": parametricSecondDerivativeWidget,
+  "parametric-polar-calculus__pc-arc-length__numeric": parametricArcNumericWidget,
+  "parametric-polar-calculus__pc-arc-length__mcq": parametricArcMcqWidget,
+};
+
 const INTEGRATION_APPLICATION_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
+
   "integration-applications__ia-area-between__mcq": areaBetweenMcqWidget,
   "integration-applications__ia-area-between__numeric": areaBetweenNumericWidget,
   "integration-applications__ia-disc__mcq": discMcqWidget,
@@ -2817,6 +2951,17 @@ const DIFFERENTIAL_EQUATION_BUILDERS: Record<string, (rand: Rand) => ReturnType<
 };
 
 export const CALCULUS_GENERATORS = AUTHORED_CALCULUS_GENERATORS.map((generator) => {
+  if (generator.tag === "g13-parametric-polar-calculus") {
+    return {
+      ...generator,
+      gen: (rand: Rand, band: Band = "core", form = "default") => {
+        const builder = PARAMETRIC_PC01_BUILDERS[form];
+        if (!builder) return generator.gen(rand, band, form);
+        const generated = builder(rand);
+        return { tag: generator.tag, widget: generated.widget, answer: generated.answer };
+      },
+    };
+  }
   if (generator.tag === "g13-integration-applications") {
     return {
       ...generator,
