@@ -37,6 +37,15 @@ const DIFFERENTIAL_EQUATION_FORMS = {
   EXPONENTIAL: 'differential-equations__de-exponential__numeric',
   EULER: 'differential-equations__de-euler__numeric',
 };
+const INTEGRATION_FOUNDATION_FORMS = {
+  RIEMANN_NUMERIC: 'integration-accumulation__in-riemann__numeric',
+  RIEMANN_MCQ: 'integration-accumulation__in-riemann__mcq',
+  SQUEEZE_NUMERIC: 'integration-accumulation__in-squeeze__numeric',
+  SQUEEZE_MCQ: 'integration-accumulation__in-squeeze__mcq',
+  DEFINITE_NUMERIC: 'integration-accumulation__in-definite-integral__numeric',
+  DEFINITE_MATCH: 'integration-accumulation__in-definite-integral__matchPairs',
+  SIGNED_AREA_MCQ: 'integration-accumulation__in-signed-area__mcq',
+};
 
 function solveFirstDerivativeMaximum(input) {
   const prompt = String(input)
@@ -360,6 +369,74 @@ function solveDifferentialEquation(form, input) {
   throw new Error(`unrecognized differential-equation prompt for ${form}: ${prompt}`);
 }
 
+function solveIntegrationFoundation(form, input) {
+  const parts = String(input).split('||');
+  const prompt = parts[0].trim();
+  if (form === INTEGRATION_FOUNDATION_FORMS.RIEMANN_NUMERIC) {
+    const match = /f\(x\) = (\d+)x on \[0, (\d+)\], use (\d+) equal strips and left endpoints/.exec(prompt);
+    if (!match) throw new Error(`unrecognized Riemann-sum prompt: ${prompt}`);
+    const m = Number(match[1]);
+    const upper = Number(match[2]);
+    const strips = Number(match[3]);
+    const width = upper / strips;
+    let sum = 0;
+    for (let index = 0; index < strips; index += 1) sum += m * (index * width) * width;
+    return sum;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.RIEMANN_MCQ) {
+    const match = /is (increasing|decreasing).*rectangles use (left|right) endpoints/.exec(prompt);
+    if (!match) throw new Error(`unrecognized Riemann-direction prompt: ${prompt}`);
+    const underestimate = (match[1] === 'increasing' && match[2] === 'left') || (match[1] === 'decreasing' && match[2] === 'right');
+    return underestimate ? 'The estimate is an underestimate.' : 'The estimate is an overestimate.';
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.SQUEEZE_NUMERIC) {
+    const match = /f\(x\) = (\d+)x on \[0, (\d+)\], use (\d+) equal strips/.exec(prompt);
+    if (!match) throw new Error(`unrecognized squeeze-gap prompt: ${prompt}`);
+    const m = Number(match[1]);
+    const upper = Number(match[2]);
+    const strips = Number(match[3]);
+    return m * upper * (upper / strips);
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.SQUEEZE_MCQ) {
+    const match = /left sum (-?\d+(?:\.\d+)?) and right sum (-?\d+(?:\.\d+)?)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized squeeze-bound prompt: ${prompt}`);
+    return `The integral is in [${Number(match[1])}, ${Number(match[2])}].`;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.DEFINITE_NUMERIC) {
+    const match = /Given ∫₁³ f\(x\) dx = (-?\d+) and ∫₃⁵ f\(x\) dx = (-?\d+), find (∫₁⁵|∫₅¹)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized definite-integral property prompt: ${prompt}`);
+    const joined = Number(match[1]) + Number(match[2]);
+    return match[3] === '∫₅¹' ? -joined : joined;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.DEFINITE_MATCH) {
+    const match = /Given ∫₁³ f\(x\) dx = (-?\d+) and ∫₃⁵ f\(x\) dx = (-?\d+)/.exec(prompt);
+    if (!match) throw new Error(`unrecognized definite-integral matching prompt: ${prompt}`);
+    const p = Number(match[1]);
+    const q = Number(match[2]);
+    const expected = {
+      '∫₁⁵ f(x) dx': String(p + q),
+      '∫₃¹ f(x) dx': String(-p),
+      '∫₅³ f(x) dx': String(-q),
+    };
+    const shownLeft = new Set((parts[1] || '').split('\u001f'));
+    const shownRight = new Set((parts[2] || '').split('\u001f'));
+    for (const [left, right] of Object.entries(expected)) {
+      if (!shownLeft.has(left) || !shownRight.has(right)) {
+        throw new Error(`matching columns omit prompt-derived pair ${left} -> ${right}`);
+      }
+    }
+    return expected;
+  }
+  if (form === INTEGRATION_FOUNDATION_FORMS.SIGNED_AREA_MCQ) {
+    const match = /area (\d+) above the x-axis and area (\d+) below it/.exec(prompt);
+    if (!match) throw new Error(`unrecognized signed-area prompt: ${prompt}`);
+    const above = Number(match[1]);
+    const below = Number(match[2]);
+    return `signed integral = ${above - below}; total geometric area = ${above + below}`;
+  }
+  throw new Error(`unrecognized integration-foundation form ${form}`);
+}
+
 function solvePrompt(form, input) {
   if (form === FIRST_DERIVATIVE_NUMERIC && /f\(x\)\s*=\s*x(?:³|\^3)/.test(String(input))) {
     return solveFirstDerivativeMaximum(input);
@@ -404,6 +481,7 @@ function solvePrompt(form, input) {
   if (form === LHOPITAL_NUMERIC && /using L'Hopital's rule/i.test(String(input))) return solveLhopital(input);
   if (form === OTHER_FORMS_NUMERIC && /lim\(x -> (?:infinity|0\+)\)/i.test(String(input))) return 0;
   if (Object.values(DIFFERENTIAL_EQUATION_FORMS).includes(form)) return solveDifferentialEquation(form, input);
+  if (Object.values(INTEGRATION_FOUNDATION_FORMS).includes(form)) return solveIntegrationFoundation(form, input);
   return authoredSolver(form, input);
 }
 

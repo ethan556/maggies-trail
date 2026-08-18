@@ -8,6 +8,15 @@ const AUTHORED_CALCULUS_GENERATORS = generatorsFromAuthoredBank(
 
 type Rand = () => number;
 type Band = "support" | "core" | "stretch";
+const pick = <T>(rand: Rand, values: readonly T[]): T => values[Math.floor(rand() * values.length)]!;
+const shuffle = <T>(rand: Rand, values: readonly T[]): T[] => {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(rand() * (index + 1));
+    [result[index], result[swapIndex]] = [result[swapIndex]!, result[index]!];
+  }
+  return result;
+};
 
 const FIRST_DERIVATIVE_MAXIMUM_CASES = [
   { a: 1, constant: 0 },
@@ -1208,6 +1217,242 @@ function eulerWidget(rand: Rand) {
   };
 }
 
+/* S246 / Phase 5. The in-01 pools repeated one or two mathematical prompts.
+ * These builders preserve the Riemann-sum, squeeze, integral-property, and
+ * signed-area jobs while varying the quantities and independently gradeable truth. */
+type GeneratedIntegrationVariant = { widget: any; answer: any };
+type ChoiceSeed = { label: string; correct: boolean; feedback: string };
+
+function integrationMcq(rand: Rand, prompt: string, choices: readonly ChoiceSeed[]): GeneratedIntegrationVariant {
+  const options = shuffle(rand, choices).map((choice, index) => ({ ...choice, id: `o${index}` }));
+  const correct = options.find((choice) => choice.correct);
+  if (!correct) throw new Error("Generated integration MCQ has no correct choice");
+  return { widget: { type: "mcq", prompt, options }, answer: correct.id };
+}
+
+const RIEMANN_NUMERIC_CASES = [
+  { m: 1, n: 2 }, { m: 2, n: 2 }, { m: 1, n: 3 }, { m: 2, n: 3 },
+  { m: 3, n: 3 }, { m: 1, n: 5 }, { m: 2, n: 4 }, { m: 3, n: 4 },
+  { m: 2, n: 5 }, { m: 4, n: 4 }, { m: 3, n: 5 }, { m: 4, n: 5 },
+] as const;
+
+function riemannNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { m, n } = pick(rand, RIEMANN_NUMERIC_CASES);
+  const answer = m * n * (n - 1) / 2;
+  const right = m * n * (n + 1) / 2;
+  const exact = m * n * n / 2;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `For f(x) = ${m}x on [0, ${n}], use ${n} equal strips and left endpoints. What is the Riemann-sum estimate?`,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: [
+      { value: right, feedback: "That uses the right endpoints; the requested left sum begins with x = 0 and stops one strip before the upper bound." },
+      { value: exact, feedback: "That is the exact triangular area; the question asks for the finite left-endpoint rectangle sum." },
+    ],
+    fallbackFeedback: `Each strip has width 1, so add the heights ${m}·0 through ${m}·${n - 1}; the estimate is ${answer}.`,
+    successFeedback: `The ${n} left-endpoint heights sum to ${answer}, with unit strip width.`,
+  };
+  return { widget, answer };
+}
+
+const RIEMANN_CHOICE_CASES = [
+  { m: 1, c: 2, b: 3, direction: "increasing", rule: "left" },
+  { m: 2, c: 1, b: 4, direction: "increasing", rule: "right" },
+  { m: 3, c: 20, b: 5, direction: "decreasing", rule: "left" },
+  { m: 1, c: 9, b: 6, direction: "decreasing", rule: "right" },
+  { m: 4, c: 3, b: 2, direction: "increasing", rule: "left" },
+  { m: 5, c: 2, b: 3, direction: "increasing", rule: "right" },
+  { m: 2, c: 18, b: 7, direction: "decreasing", rule: "left" },
+  { m: 3, c: 25, b: 6, direction: "decreasing", rule: "right" },
+  { m: 6, c: 1, b: 4, direction: "increasing", rule: "left" },
+  { m: 2, c: 5, b: 8, direction: "increasing", rule: "right" },
+  { m: 4, c: 30, b: 5, direction: "decreasing", rule: "left" },
+  { m: 5, c: 40, b: 6, direction: "decreasing", rule: "right" },
+] as const;
+
+function riemannMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const entry = pick(rand, RIEMANN_CHOICE_CASES);
+  const increasing = entry.direction === "increasing";
+  const underestimate = (increasing && entry.rule === "left") || (!increasing && entry.rule === "right");
+  const expression = increasing ? `${entry.m}x + ${entry.c}` : `${entry.c} − ${entry.m}x`;
+  const correct = underestimate ? "The estimate is an underestimate." : "The estimate is an overestimate.";
+  return integrationMcq(
+    rand,
+    `The function f(x) = ${expression} is ${entry.direction} on [0, ${entry.b}]. Equal-width rectangles use ${entry.rule} endpoints. Which conclusion is guaranteed?`,
+    [
+      { label: "The estimate is an underestimate.", correct: correct === "The estimate is an underestimate.", feedback: "Compare each endpoint height with the function values across its entire strip." },
+      { label: "The estimate is an overestimate.", correct: correct === "The estimate is an overestimate.", feedback: "Compare each endpoint height with the function values across its entire strip." },
+      { label: "The estimate is exact for every number of strips.", correct: false, feedback: "Endpoint rectangles do not match a nonconstant sloping graph exactly for every partition." },
+      { label: "The error direction cannot be determined from monotonicity.", correct: false, feedback: "Monotonicity and the endpoint choice determine whether every rectangle lies above or below the graph." },
+    ],
+  );
+}
+
+const SQUEEZE_NUMERIC_CASES = [
+  { m: 1, n: 2 }, { m: 1, n: 3 }, { m: 2, n: 2 }, { m: 2, n: 3 },
+  { m: 2, n: 4 }, { m: 3, n: 3 }, { m: 3, n: 4 }, { m: 3, n: 5 },
+  { m: 4, n: 4 }, { m: 4, n: 5 }, { m: 5, n: 5 }, { m: 5, n: 6 },
+] as const;
+
+function squeezeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { m, n } = pick(rand, SQUEEZE_NUMERIC_CASES);
+  const answer = m * n;
+  const widget = {
+    type: "numeric" as const,
+    prompt: `For f(x) = ${m}x on [0, ${n}], use ${n} equal strips. By how much does the right sum exceed the left sum?`,
+    answer,
+    tolerance: 0,
+    unit: "",
+    commonErrors: [
+      { value: m * n * n, feedback: "That omits the strip-width factor; the endpoint-height gap must be multiplied by Δx." },
+      { value: 1, feedback: "That is only the strip width; multiply it by f(b) − f(a) to get the gap between sums." },
+    ],
+    fallbackFeedback: `The gap is [f(${n}) − f(0)]Δx = ${m * n}·1 = ${answer}.`,
+    successFeedback: `The endpoint-height difference times Δx gives a right-minus-left gap of ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+const SQUEEZE_BOUND_CASES = [
+  { left: 2, right: 9 }, { left: 4, right: 11 }, { left: 5, right: 13 }, { left: 7, right: 16 },
+  { left: 8, right: 18 }, { left: 10, right: 21 }, { left: 12, right: 25 }, { left: 15, right: 29 },
+  { left: 18, right: 33 }, { left: 20, right: 37 }, { left: 24, right: 42 }, { left: 27, right: 48 },
+] as const;
+
+function squeezeMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { left, right } = pick(rand, SQUEEZE_BOUND_CASES);
+  const correct = `The integral is in [${left}, ${right}].`;
+  return integrationMcq(
+    rand,
+    `For a continuous increasing function, a partition gives left sum ${left} and right sum ${right}. What has this proved about the definite integral?`,
+    [
+      { label: correct, correct: true, feedback: "The increasing graph lies above every left rectangle and below every right rectangle, so these are rigorous bounds." },
+      { label: `The integral equals ${(left + right) / 2}.`, correct: false, feedback: "The midpoint is an estimate, but the two endpoint sums alone do not prove the integral equals it." },
+      { label: `The integral is less than ${left}.`, correct: false, feedback: "The left sum is the lower bound for this increasing function, not an upper bound." },
+      { label: `The integral is greater than ${right}.`, correct: false, feedback: "The right sum is the upper bound for this increasing function, so the integral cannot exceed it." },
+    ],
+  );
+}
+
+const INTEGRAL_PROPERTY_CASES = [
+  { p: 2, q: 5 }, { p: 3, q: 7 }, { p: 4, q: 9 }, { p: 5, q: 8 },
+  { p: 6, q: 11 }, { p: 7, q: 13 }, { p: 8, q: 15 }, { p: 9, q: 17 },
+  { p: 10, q: 19 }, { p: 11, q: 21 }, { p: 12, q: 23 }, { p: 14, q: 25 },
+] as const;
+
+function definiteIntegralNumericWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { p, q } = pick(rand, INTEGRAL_PROPERTY_CASES);
+  const reversed = rand() < 0.5;
+  const answer = reversed ? -(p + q) : p + q;
+  const formula = reversed
+    ? { op: "negate", arg: { op: "add", left: { op: "const", id: "p" }, right: { op: "const", id: "q" } } }
+    : { op: "add", left: { op: "const", id: "p" }, right: { op: "const", id: "q" } };
+  const target = reversed ? "∫₅¹ f(x) dx" : "∫₁⁵ f(x) dx";
+  const widget = {
+    type: "exactNumberLab" as const,
+    prompt: `Given ∫₁³ f(x) dx = ${p} and ∫₃⁵ f(x) dx = ${q}, find ${target}.`,
+    task: "approximationEvaluate" as const,
+    values: [],
+    approxConstants: [
+      { id: "p", label: "integral from 1 to 3", value: p },
+      { id: "q", label: "integral from 3 to 5", value: q },
+    ],
+    approxFormula: formula,
+    approxRound: 0,
+    answerMode: "numeric" as const,
+    tolerance: 0,
+    numericErrors: [
+      { value: reversed ? p + q : q - p, feedback: reversed ? "This joins the intervals but does not reverse the sign for the backward limits." : "Adjacent intervals add; subtracting their values does not represent their union." },
+      { value: p * q, feedback: "Definite integrals over adjacent intervals add rather than multiply." },
+      { value: reversed ? -p - q + 1 : p + q + 1, feedback: "Reapply interval addition and, when needed, the sign change from reversing limits." },
+    ],
+    choices: [],
+    authoredStages: [],
+    requiredStageKeys: [],
+    requiredExplorations: 1,
+    explorationFeedback: "Inspect the two adjacent interval values before combining them.",
+    fallbackFeedback: reversed
+      ? `First join the intervals: ${p} + ${q} = ${p + q}; reversing the limits gives ${answer}.`
+      : `Adjacent intervals add: ${p} + ${q} = ${answer}.`,
+    successFeedback: reversed
+      ? `The joined value is ${p + q}, and reversing the limits gives ${answer}.`
+      : `The adjacent integral values combine to ${answer}.`,
+  };
+  return { widget, answer };
+}
+
+function definiteIntegralMatchWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { p, q } = pick(rand, INTEGRAL_PROPERTY_CASES);
+  const left = [
+    { id: "l-total", label: "∫₁⁵ f(x) dx" },
+    { id: "l-first-reverse", label: "∫₃¹ f(x) dx" },
+    { id: "l-second-reverse", label: "∫₅³ f(x) dx" },
+  ];
+  const right = [
+    { id: "r-total", label: String(p + q) },
+    { id: "r-first-reverse", label: String(-p) },
+    { id: "r-second-reverse", label: String(-q) },
+  ];
+  const pairs = {
+    "l-total": "r-total",
+    "l-first-reverse": "r-first-reverse",
+    "l-second-reverse": "r-second-reverse",
+  };
+  const shuffledLeft = shuffle(rand, left);
+  let shuffledRight = shuffle(rand, right);
+  const aligned = () => shuffledLeft.every((item, index) => pairs[item.id as keyof typeof pairs] === shuffledRight[index]?.id);
+  if (aligned()) shuffledRight = [...shuffledRight.slice(1), shuffledRight[0]!];
+  const widget = {
+    type: "matchPairs" as const,
+    prompt: `Given ∫₁³ f(x) dx = ${p} and ∫₃⁵ f(x) dx = ${q}, match each integral to its value.`,
+    left: shuffledLeft,
+    right: shuffledRight,
+    pairs,
+    pairErrors: [
+      { left: "l-first-reverse", right: "r-first-reverse" === pairs["l-first-reverse"] ? "r-total" : "r-first-reverse", feedback: "Reversing the first interval changes its sign; it does not join both intervals." },
+      { left: "l-total", right: "r-first-reverse", feedback: "The interval from 1 to 5 joins the two forward pieces, so their values add." },
+    ],
+    missFeedback: "Use interval addition for the joined interval and negate an integral whenever its limits are reversed.",
+    successFeedback: "The joined interval adds the two values, while each reversed interval keeps its magnitude and changes sign.",
+  };
+  return { widget, answer: pairs };
+}
+
+const SIGNED_AREA_CASES = [
+  { above: 5, below: 2 }, { above: 7, below: 3 }, { above: 9, below: 4 }, { above: 11, below: 5 },
+  { above: 8, below: 6 }, { above: 13, below: 4 }, { above: 15, below: 7 }, { above: 17, below: 8 },
+  { above: 12, below: 5 }, { above: 14, below: 9 }, { above: 19, below: 6 }, { above: 21, below: 10 },
+] as const;
+
+function signedAreaMcqWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { above, below } = pick(rand, SIGNED_AREA_CASES);
+  const signed = above - below;
+  const geometric = above + below;
+  const correct = `signed integral = ${signed}; total geometric area = ${geometric}`;
+  return integrationMcq(
+    rand,
+    `A graph encloses area ${above} above the x-axis and area ${below} below it. What are its signed integral and total geometric area?`,
+    [
+      { label: correct, correct: true, feedback: "The integral subtracts the below-axis region, while geometric area adds both magnitudes." },
+      { label: `signed integral = ${geometric}; total geometric area = ${geometric}`, correct: false, feedback: "This treats the below-axis region as positive in the signed integral instead of subtracting it." },
+      { label: `signed integral = ${signed}; total geometric area = ${signed}`, correct: false, feedback: "Geometric area adds region magnitudes and does not cancel the below-axis region." },
+      { label: `signed integral = ${geometric}; total geometric area = ${signed}`, correct: false, feedback: "This reverses the two roles: cancellation belongs to the signed integral, not geometric area." },
+    ],
+  );
+}
+
+const INTEGRATION_FOUNDATIONS_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
+  "integration-accumulation__in-riemann__numeric": riemannNumericWidget,
+  "integration-accumulation__in-riemann__mcq": riemannMcqWidget,
+  "integration-accumulation__in-squeeze__numeric": squeezeNumericWidget,
+  "integration-accumulation__in-squeeze__mcq": squeezeMcqWidget,
+  "integration-accumulation__in-definite-integral__numeric": definiteIntegralNumericWidget,
+  "integration-accumulation__in-definite-integral__matchPairs": definiteIntegralMatchWidget,
+  "integration-accumulation__in-signed-area__mcq": signedAreaMcqWidget,
+};
+
 const TARGET_GENERATOR = "g13-curve-analysis";
 const TARGET_FORM = "curve-analysis__ca-first-derivative-test__numeric";
 const TARGET_SIGN_FORM = "curve-analysis__ca-first-derivative-test__signChart";
@@ -1250,6 +1495,17 @@ const DIFFERENTIAL_EQUATION_BUILDERS: Record<string, (rand: Rand) => ReturnType<
 };
 
 export const CALCULUS_GENERATORS = AUTHORED_CALCULUS_GENERATORS.map((generator) => {
+  if (generator.tag === "g13-integration-accumulation") {
+    return {
+      ...generator,
+      gen: (rand: Rand, band: Band = "core", form = "default") => {
+        const builder = INTEGRATION_FOUNDATIONS_BUILDERS[form];
+        if (!builder) return generator.gen(rand, band, form);
+        const generated = builder(rand);
+        return { tag: generator.tag, widget: generated.widget, answer: generated.answer };
+      },
+    };
+  }
   if (generator.tag === "g13-differential-equations") {
     return {
       ...generator,
