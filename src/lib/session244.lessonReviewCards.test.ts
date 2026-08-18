@@ -139,10 +139,10 @@ describe("S244 source-sealed lesson review cards", () => {
   it("accepts only current explicit decisions and exposes closed review statuses", () => {
     expect(report.summary.priorInteractionClassification.importedAsV4DispositionCount).toBe(0);
     expect(report.summary.lessonDecisionLedger).toEqual({
-      historyRecordCount: 50, currentCount: 50, staleCount: 0, invalidCount: 0,
+      historyRecordCount: 91, currentCount: 91, staleCount: 0, invalidCount: 0,
       duplicateRecordIdCount: 0, unknownLessonRecordCount: 0
     });
-    expect(report.summary.disposition).toEqual({ explicitDecisions: 50, pendingHumanDecisions: 1651 });
+    expect(report.summary.disposition).toEqual({ explicitDecisions: 91, pendingHumanDecisions: 1610 });
 
     const keep = report.cards.find((card) => card.lessonId === "dg4-01-01");
     expect(keep).toMatchObject({
@@ -164,10 +164,20 @@ describe("S244 source-sealed lesson review cards", () => {
       reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
+    const escalate = report.cards.find((card) => card.lessonId === "bv-05-03");
+    expect(escalate).toMatchObject({
+      cardStatus: "CURRENT_HUMAN_DISPOSITION",
+      disposition: {
+        status: "CURRENT_HUMAN_DECISION", decision: "ESCALATE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S246-BV-bv-05-03", visualDecision: "ESCALATE", gradeLanguageDecision: "REVISE"
+      },
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:REVISE" }
+    });
+
     const currentCards = report.cards.filter((card) => card.disposition.status === "CURRENT_HUMAN_DECISION");
     const pendingCards = report.cards.filter((card) => card.disposition.status === "PENDING_EXPLICIT_HUMAN_DECISION");
-    expect(currentCards).toHaveLength(50);
-    expect(pendingCards).toHaveLength(1651);
+    expect(currentCards).toHaveLength(91);
+    expect(pendingCards).toHaveLength(1610);
     expect(currentCards.every((card) => card.disposition.queueStatus === "CLOSED_BY_CURRENT_HUMAN_DECISION")).toBe(true);
     expect(pendingCards.every((card) => card.disposition.decision === null)).toBe(true);
     for (const card of report.cards) {
