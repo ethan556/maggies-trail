@@ -54,6 +54,14 @@ function printedPoint(x, y) {
   return `(${x}, ${y})`;
 }
 
+function correspondingSide(left, right, source) {
+  const positions = [...source].map((vertex) => left.indexOf(vertex));
+  if (positions.length !== 2 || positions.some((position) => position < 0)) {
+    throw new Error(`side ${source} is not part of triangle ${left}`);
+  }
+  return positions.map((position) => right[position]).join('');
+}
+
 function solvePrompt(form, input) {
   const entry = FORM_INDEX.get(form);
   if (!entry) throw new Error(`unsupported geometry independent form ${form}`);
@@ -158,6 +166,57 @@ function solvePrompt(form, input) {
       const sides = Number(match[1]);
       return `order ${sides}; smallest turn ${360 / sides}°`;
     }
+  }
+  if (form === 'gf-congruence-def__numeric') {
+    let match = prompt.match(/A dilation with scale factor (\d+) maps a segment of length (\d+)/);
+    if (match) return Number(match[1]) * Number(match[2]);
+    match = prompt.match(/A (?:translation|reflection|rotation) maps (?:an angle measuring (\d+)°|a segment of length (\d+))/);
+    if (match) return Number(match[1] ?? match[2]);
+  }
+  if (form === 'gf-congruence-def__mcq') {
+    if (/^A dilation with scale factor/.test(prompt)) {
+      return 'F and F′ are not necessarily congruent because the rule changes lengths.';
+    }
+    if (/^A (?:translation|reflection|90°|180°|270°)/.test(prompt)) {
+      return 'F and F′ are congruent because every distance and angle is preserved.';
+    }
+  }
+  if (form === 'gf-find-motion__numeric') {
+    const match = prompt.match(/sends A\((-?\d+), (-?\d+)\) to A′\((-?\d+), (-?\d+)\)\. It sends P\((-?\d+), (-?\d+)\) to P′\. Find P′'s ([xy])-coordinate/);
+    if (match) {
+      const dx = Number(match[3]) - Number(match[1]);
+      const dy = Number(match[4]) - Number(match[2]);
+      return match[7] === 'x' ? Number(match[5]) + dx : Number(match[6]) + dy;
+    }
+  }
+  if (form === 'gf-find-motion__mcq') {
+    const match = prompt.match(/Point P\((-?\d+), (-?\d+)\) maps to P′\((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const x = Number(match[1]);
+      const y = Number(match[2]);
+      const image = [Number(match[3]), Number(match[4])];
+      const candidates = [
+        ['reflection across the x-axis', [x, -y]],
+        ['reflection across the y-axis', [-x, y]],
+        ['90° counterclockwise rotation about the origin', [-y, x]],
+        ['180° rotation about the origin', [-x, -y]],
+      ];
+      const matches = candidates.filter(([, point]) => point[0] === image[0] && point[1] === image[1]);
+      if (matches.length !== 1) throw new Error(`find-motion prompt has ${matches.length} solutions: ${prompt}`);
+      return matches[0][0];
+    }
+  }
+  if (form === 'gf-corresponding-parts__numeric') {
+    const match = prompt.match(/Δ([A-Z]{3}) ≅ Δ([A-Z]{3})\. If ([A-Z]{2}) = (\d+), find ([A-Z]{2})\./);
+    if (match) {
+      const expected = correspondingSide(match[1], match[2], match[3]);
+      if (match[5] !== expected) throw new Error(`asked segment does not match congruence order: ${prompt}`);
+      return Number(match[4]);
+    }
+  }
+  if (form === 'gf-corresponding-parts__mcq') {
+    const match = prompt.match(/Given Δ([A-Z]{3}) ≅ Δ([A-Z]{3}), which segment corresponds to ([A-Z]{2})\?/);
+    if (match) return correspondingSide(match[1], match[2], match[3]);
   }
   /* S246: reconstruct perpendicular-at-a-point answers from the quantities in
    * the learner-visible prompt. This route deliberately does not share the

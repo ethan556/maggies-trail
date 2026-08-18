@@ -1330,6 +1330,229 @@ function rotationalSymmetryMcqWidget(rand: Rand): any {
   };
 }
 
+type CongruenceMeasureCase =
+  | { kind: "angle"; motion: "reflection" | "rotation"; measure: number }
+  | { kind: "segment"; motion: "translation" | "reflection" | "rotation"; measure: number }
+  | { kind: "dilation"; scale: number; measure: number };
+const CONGRUENCE_MEASURE_CASES: readonly CongruenceMeasureCase[] = [
+  { kind: "angle", motion: "reflection", measure: 38 },
+  { kind: "angle", motion: "rotation", measure: 52 },
+  { kind: "segment", motion: "translation", measure: 7 },
+  { kind: "segment", motion: "reflection", measure: 11 },
+  { kind: "segment", motion: "rotation", measure: 14 },
+  { kind: "dilation", scale: 2, measure: 3 },
+  { kind: "dilation", scale: 3, measure: 4 },
+  { kind: "angle", motion: "reflection", measure: 67 },
+  { kind: "angle", motion: "rotation", measure: 105 },
+  { kind: "segment", motion: "translation", measure: 18 },
+  { kind: "dilation", scale: 4, measure: 5 },
+  { kind: "segment", motion: "reflection", measure: 23 },
+] as const;
+
+function congruenceDefinitionNumericWidget(rand: Rand): any {
+  const entry = pick(rand, CONGRUENCE_MEASURE_CASES);
+  if (entry.kind === "dilation") {
+    const answer = entry.scale * entry.measure;
+    return {
+      type: "numeric",
+      prompt: `A dilation with scale factor ${entry.scale} maps a segment of length ${entry.measure} to its image. What is the image length?`,
+      answer,
+      tolerance: 0,
+      commonErrors: [
+        { value: entry.measure, feedback: "That treats the dilation as a rigid motion; a non-unit scale factor changes every segment length." },
+        { value: entry.measure + entry.scale, feedback: "A scale factor multiplies lengths rather than adding its value to the original length." },
+      ],
+      fallbackFeedback: `Multiply the original length by the scale factor: ${entry.measure} × ${entry.scale} = ${answer}.`,
+      successFeedback: `The dilation multiplies the segment length by ${entry.scale}, producing image length ${answer}.`,
+    };
+  }
+  const noun = entry.kind === "angle" ? `an angle measuring ${entry.measure}°` : `a segment of length ${entry.measure}`;
+  const requested = entry.kind === "angle" ? "image angle measure, in degrees" : "image segment length";
+  return {
+    type: "numeric",
+    prompt: `A ${entry.motion} maps ${noun} to its image. What is the ${requested}?`,
+    answer: entry.measure,
+    tolerance: 0,
+    commonErrors: [
+      { value: 2 * entry.measure, feedback: "That changes the measure; a rigid motion preserves the size of every angle and segment." },
+      { value: entry.kind === "angle" ? 180 - entry.measure : entry.measure / 2, feedback: "That applies an unrelated calculation; rigid motions copy the original measure exactly." },
+    ],
+    fallbackFeedback: `A ${entry.motion} is rigid, so the image keeps the original measure ${entry.measure}${entry.kind === "angle" ? "°" : ""}.`,
+    successFeedback: `Rigid motions preserve ${entry.kind === "angle" ? "angle measures" : "segment lengths"}, so the image measure is ${entry.measure}.`,
+  };
+}
+
+type CongruenceMotionCase =
+  | { kind: "rigid"; description: string }
+  | { kind: "dilation"; scale: number };
+const CONGRUENCE_MOTION_CASES: readonly CongruenceMotionCase[] = [
+  { kind: "rigid", description: "translation 6 units right and 2 units down" },
+  { kind: "rigid", description: "reflection across the x-axis" },
+  { kind: "rigid", description: "90° counterclockwise rotation about the origin" },
+  { kind: "dilation", scale: 2 },
+  { kind: "rigid", description: "translation 4 units left and 7 units up" },
+  { kind: "rigid", description: "reflection across the line y = x" },
+  { kind: "rigid", description: "180° rotation about the origin" },
+  { kind: "dilation", scale: 3 },
+  { kind: "rigid", description: "translation 9 units down" },
+  { kind: "rigid", description: "reflection across the y-axis" },
+  { kind: "rigid", description: "270° counterclockwise rotation about the origin" },
+  { kind: "dilation", scale: 4 },
+] as const;
+const RIGID_CONGRUENCE_LABEL = "F and F′ are congruent because every distance and angle is preserved.";
+const DILATION_NONCONGRUENCE_LABEL = "F and F′ are not necessarily congruent because the rule changes lengths.";
+
+function congruenceDefinitionMcqWidget(rand: Rand): any {
+  const entry = pick(rand, CONGRUENCE_MOTION_CASES);
+  const motion = entry.kind === "rigid" ? entry.description : `dilation with scale factor ${entry.scale}`;
+  const rigid = entry.kind === "rigid";
+  return {
+    type: "mcq",
+    prompt: `A ${motion} maps figure F to figure F′. Which conclusion is justified?`,
+    options: [
+      { id: "rigid", label: RIGID_CONGRUENCE_LABEL, correct: rigid, feedback: rigid ? "The named rigid motion preserves all lengths and angles, which is exactly the congruence condition." : "A non-unit dilation changes lengths, so the rigid-motion congruence conclusion does not apply." },
+      { id: "dilation", label: DILATION_NONCONGRUENCE_LABEL, correct: !rigid, feedback: rigid ? "The named transformation is rigid and preserves lengths, so this noncongruence conclusion conflicts with the motion." : "A non-unit dilation scales lengths, so congruence is not guaranteed even though shape is preserved." },
+      { id: "area", label: "F and F′ are congruent only because their areas are equal.", correct: false, feedback: "Equal area alone is insufficient for congruence; the full distance-and-angle structure must be preserved." },
+      { id: "orientation", label: "F and F′ cannot be congruent if their orientation changes.", correct: false, feedback: "Orientation may reverse under a reflection while all lengths and angles remain preserved." },
+    ],
+  };
+}
+
+type FindTranslationCase = TranslationCase & { px: number; py: number };
+const FIND_TRANSLATION_CASES: readonly FindTranslationCase[] = [
+  { x: 1, y: 3, dx: 5, dy: -2, px: 2, py: 7, axis: "x" },
+  { x: -4, y: 6, dx: 3, dy: 8, px: 5, py: -1, axis: "y" },
+  { x: 7, y: -2, dx: -6, dy: 4, px: -3, py: 9, axis: "x" },
+  { x: -8, y: -5, dx: 9, dy: -3, px: 4, py: 6, axis: "y" },
+  { x: 2, y: 10, dx: -7, dy: -5, px: 11, py: 3, axis: "x" },
+  { x: 6, y: 4, dx: 2, dy: 7, px: -5, py: -6, axis: "y" },
+  { x: -3, y: 8, dx: -4, dy: 6, px: 9, py: 2, axis: "x" },
+  { x: 9, y: -7, dx: 5, dy: 3, px: -2, py: 12, axis: "y" },
+  { x: -6, y: 1, dx: 8, dy: -9, px: 7, py: -4, axis: "x" },
+  { x: 4, y: -9, dx: -3, dy: 11, px: -8, py: 5, axis: "y" },
+  { x: 10, y: 2, dx: -12, dy: 5, px: 3, py: -7, axis: "x" },
+  { x: -1, y: -4, dx: 6, dy: -8, px: 8, py: 9, axis: "y" },
+] as const;
+
+function findMotionNumericWidget(rand: Rand): any {
+  const { x, y, dx, dy, px, py, axis } = pick(rand, FIND_TRANSLATION_CASES);
+  const answer = axis === "x" ? px + dx : py + dy;
+  const unchanged = axis === "x" ? px : py;
+  const wrongShift = axis === "x" ? px + dy : py + dx;
+  return {
+    type: "numeric",
+    prompt: `A translation sends A${pointLabel(x, y)} to A′${pointLabel(x + dx, y + dy)}. It sends P${pointLabel(px, py)} to P′. Find P′'s ${axis}-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: unchanged, feedback: "That leaves P unchanged; first recover the translation vector from A to A′, then apply it to P." },
+      { value: wrongShift, feedback: "That applies the shift from the other coordinate; keep horizontal and vertical changes in their matching slots." },
+    ],
+    fallbackFeedback: `A to A′ gives vector ⟨${dx}, ${dy}⟩; applying it to P makes the requested coordinate ${answer}.`,
+    successFeedback: `The same vector ⟨${dx}, ${dy}⟩ maps P to its image, giving ${axis} = ${answer}.`,
+  };
+}
+
+type FindMotionName = "reflection across the x-axis" | "reflection across the y-axis" | "90° counterclockwise rotation about the origin" | "180° rotation about the origin";
+const FIND_MOTION_NAMES: readonly FindMotionName[] = [
+  "reflection across the x-axis",
+  "reflection across the y-axis",
+  "90° counterclockwise rotation about the origin",
+  "180° rotation about the origin",
+];
+const FIND_MOTION_CASES: readonly { x: number; y: number; motion: FindMotionName }[] = [
+  { x: 2, y: 7, motion: "reflection across the x-axis" },
+  { x: -4, y: 9, motion: "reflection across the y-axis" },
+  { x: 6, y: -3, motion: "90° counterclockwise rotation about the origin" },
+  { x: -5, y: -8, motion: "180° rotation about the origin" },
+  { x: 11, y: 4, motion: "reflection across the x-axis" },
+  { x: -7, y: 3, motion: "reflection across the y-axis" },
+  { x: 5, y: 12, motion: "90° counterclockwise rotation about the origin" },
+  { x: 8, y: -6, motion: "180° rotation about the origin" },
+  { x: -9, y: 2, motion: "reflection across the x-axis" },
+  { x: 3, y: -10, motion: "reflection across the y-axis" },
+  { x: -8, y: -1, motion: "90° counterclockwise rotation about the origin" },
+  { x: 4, y: 13, motion: "180° rotation about the origin" },
+] as const;
+const applyFindMotion = (motion: FindMotionName, x: number, y: number): [number, number] => {
+  if (motion === "reflection across the x-axis") return [x, -y];
+  if (motion === "reflection across the y-axis") return [-x, y];
+  if (motion === "90° counterclockwise rotation about the origin") return [-y, x];
+  return [-x, -y];
+};
+
+function findMotionMcqWidget(rand: Rand): any {
+  const { x, y, motion } = pick(rand, FIND_MOTION_CASES);
+  const image = applyFindMotion(motion, x, y);
+  return {
+    type: "mcq",
+    prompt: `Point P${pointLabel(x, y)} maps to P′${pointLabel(...image)}. Which rigid motion produced the image?`,
+    options: FIND_MOTION_NAMES.map((name) => ({
+      id: name,
+      label: name,
+      correct: name === motion,
+      feedback: name === motion
+        ? "This motion's coordinate rule sends both coordinates of P exactly to the displayed image."
+        : "This motion's coordinate rule sends P to a different ordered pair than the displayed image.",
+    })),
+  };
+}
+
+type CorrespondenceCase = { left: string; right: string; side: readonly [0 | 1, 1 | 2] | readonly [0, 2]; measure: number };
+const CORRESPONDENCE_CASES: readonly CorrespondenceCase[] = [
+  { left: "ABC", right: "DEF", side: [0, 1], measure: 9 },
+  { left: "ABC", right: "QRP", side: [1, 2], measure: 12 },
+  { left: "GHJ", right: "PQR", side: [0, 2], measure: 15 },
+  { left: "KLM", right: "XYZ", side: [0, 1], measure: 7 },
+  { left: "RST", right: "JKL", side: [1, 2], measure: 18 },
+  { left: "UVW", right: "CDE", side: [0, 2], measure: 11 },
+  { left: "ABC", right: "RQP", side: [0, 2], measure: 14 },
+  { left: "GHJ", right: "MNP", side: [1, 2], measure: 20 },
+  { left: "KLM", right: "QRS", side: [0, 2], measure: 8 },
+  { left: "RST", right: "DEF", side: [0, 1], measure: 13 },
+  { left: "UVW", right: "JKL", side: [1, 2], measure: 16 },
+  { left: "ABC", right: "XYZ", side: [0, 1], measure: 22 },
+] as const;
+const sideName = (triangle: string, [first, second]: CorrespondenceCase["side"]): string => `${triangle[first]}${triangle[second]}`;
+
+function correspondingPartsNumericWidget(rand: Rand): any {
+  const entry = pick(rand, CORRESPONDENCE_CASES);
+  const source = sideName(entry.left, entry.side);
+  const target = sideName(entry.right, entry.side);
+  return {
+    type: "numeric",
+    prompt: `Δ${entry.left} ≅ Δ${entry.right}. If ${source} = ${entry.measure}, find ${target}.`,
+    answer: entry.measure,
+    tolerance: 0,
+    commonErrors: [
+      { value: entry.measure + 3, feedback: "That changes the measure; corresponding sides of congruent triangles have equal lengths." },
+      { value: 2 * entry.measure, feedback: "That scales the corresponding side; congruence preserves size rather than multiplying it." },
+    ],
+    fallbackFeedback: `${source} and ${target} occupy the same two positions in the congruence statement, so ${target} = ${entry.measure}.`,
+    successFeedback: `Matching vertex positions pairs ${source} with ${target}, preserving the length ${entry.measure}.`,
+  };
+}
+
+function correspondingPartsMcqWidget(rand: Rand): any {
+  const entry = pick(rand, CORRESPONDENCE_CASES);
+  const source = sideName(entry.left, entry.side);
+  const target = sideName(entry.right, entry.side);
+  const triangleSideIndices = [[0, 1], [1, 2], [0, 2]] as const;
+  const rightSides = triangleSideIndices.map((indices) => sideName(entry.right, indices));
+  return {
+    type: "mcq",
+    prompt: `Given Δ${entry.left} ≅ Δ${entry.right}, which segment corresponds to ${source}?`,
+    options: [...rightSides, source].map((label) => ({
+      id: label,
+      label,
+      correct: label === target,
+      feedback: label === target
+        ? `The endpoints occupy the same two positions as ${source} in the congruence statement.`
+        : `Match each endpoint by its position in the congruence statement before naming the corresponding segment.`,
+    })),
+  };
+}
+
 const GEOMETRY_FOUNDATIONS_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
   "gf-translation-rule__numeric": translationNumericWidget,
   "gf-translation-rule__mcq": translationMcqWidget,
@@ -1343,6 +1566,12 @@ const GEOMETRY_FOUNDATIONS_FORM_BUILDERS: Record<string, (rand: Rand) => any> = 
   "gf-line-symmetry__mcq": lineSymmetryMcqWidget,
   "gf-rotational-symmetry__numeric": rotationalSymmetryNumericWidget,
   "gf-rotational-symmetry__mcq": rotationalSymmetryMcqWidget,
+  "gf-congruence-def__numeric": congruenceDefinitionNumericWidget,
+  "gf-congruence-def__mcq": congruenceDefinitionMcqWidget,
+  "gf-find-motion__numeric": findMotionNumericWidget,
+  "gf-find-motion__mcq": findMotionMcqWidget,
+  "gf-corresponding-parts__numeric": correspondingPartsNumericWidget,
+  "gf-corresponding-parts__mcq": correspondingPartsMcqWidget,
 };
 
 function cleanTypography(text: string): string {
