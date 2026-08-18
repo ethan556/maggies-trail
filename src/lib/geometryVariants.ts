@@ -714,6 +714,298 @@ const CONSTRUCTION_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
   "cp-vertical-angles__numeric": verticalAnglesWidget,
 };
 
+/* S246 / Phase 5. The coordinate-proof numeric pools contained only one to
+ * three frozen questions per form. These builders keep each form's proof job
+ * stable while varying the actual coordinates, equation, and answer. Every
+ * answer is independently reconstructed from the learner-visible prompt in
+ * geometryIndependent.cjs. */
+const COORDINATE_VECTOR_CASES = [
+  { a: 1, b: 2 },
+  { a: 2, b: 3 },
+  { a: 1, b: 4 },
+  { a: 3, b: 4 },
+  { a: 2, b: 5 },
+  { a: 1, b: 6 },
+  { a: 4, b: 5 },
+  { a: 5, b: 5 },
+  { a: 5, b: 6 },
+  { a: 1, b: 8 },
+] as const;
+
+const COORDINATE_TRIPLES = [
+  { a: 3, b: 4, c: 5 },
+  { a: 5, b: 12, c: 13 },
+  { a: 8, b: 15, c: 17 },
+  { a: 7, b: 24, c: 25 },
+  { a: 20, b: 21, c: 29 },
+  { a: 12, b: 35, c: 37 },
+  { a: 9, b: 40, c: 41 },
+  { a: 28, b: 45, c: 53 },
+  { a: 11, b: 60, c: 61 },
+  { a: 33, b: 56, c: 65 },
+] as const;
+
+const CIRCLE_COEFFICIENT_CASES = [
+  { d: -4, e: 6, f: -12 },
+  { d: 6, e: -8, f: 9 },
+  { d: -10, e: -2, f: -23 },
+  { d: 8, e: 4, f: -29 },
+  { d: -12, e: 10, f: 12 },
+  { d: 2, e: -14, f: 14 },
+  { d: -16, e: -6, f: 24 },
+  { d: 4, e: 18, f: 21 },
+  { d: -14, e: 12, f: 4 },
+  { d: 10, e: 16, f: 25 },
+] as const;
+
+function coordinateCircleCompleteSquareWidget(rand: Rand): any {
+  const { d, e, f } = pick(rand, CIRCLE_COEFFICIENT_CASES);
+  const answer = (d / 2) ** 2 + (e / 2) ** 2 - f;
+  return {
+    type: "numeric",
+    prompt: `A circle has equation x² + y² + Dx + Ey + F = 0 with D = ${d}, E = ${e}, and F = ${f}. After completing the square, find r².`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: Math.abs(f), feedback: "The constant alone is not r²; include both half-coefficient squares before subtracting F." },
+      { value: (d / 2) ** 2 + (e / 2) ** 2 + f, feedback: "The expanded constant moves to the other side, so the formula subtracts F." },
+    ],
+    fallbackFeedback: `r² = (D/2)² + (E/2)² − F = (${d}/2)² + (${e}/2)² − (${f}) = ${answer}.`,
+    successFeedback: `Completing both squares gives r² = ${answer}.`,
+  };
+}
+
+function coordinateCircleEquationWidget(rand: Rand): any {
+  const { a, b, c } = pick(rand, COORDINATE_TRIPLES);
+  const h = Math.floor(rand() * 7) - 3;
+  const k = Math.floor(rand() * 7) - 3;
+  const x = h + a;
+  const y = k + b;
+  const answer = c * c;
+  return {
+    type: "numeric",
+    prompt: `A circle is centered at (${h}, ${k}) and passes through (${x}, ${y}). Find r² in its standard equation.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: c, feedback: "That is r. The standard equation asks for the squared radius r²." },
+      { value: a + b, feedback: "Adding coordinate gaps does not give squared distance; square and add the gaps." },
+    ],
+    fallbackFeedback: `The coordinate gaps are ${a} and ${b}, so r² = ${a}² + ${b}² = ${answer}.`,
+    successFeedback: `The center-to-point squared distance is ${answer}, so the circle's right side is r² = ${answer}.`,
+  };
+}
+
+function coordinateCirclePositionWidget(rand: Rand): any {
+  const { a, b, c } = pick(rand, COORDINATE_TRIPLES);
+  const h = Math.floor(rand() * 7) - 3;
+  const k = Math.floor(rand() * 7) - 3;
+  const x = h - a;
+  const y = k + b;
+  const answer = c * c;
+  return {
+    type: "numeric",
+    prompt: `For a circle centered at (${h}, ${k}), evaluate (x − h)² + (y − k)² at the point (${x}, ${y}).`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: c, feedback: "That is the distance, but the expression evaluates to the squared distance." },
+      { value: a + b, feedback: "The circle expression squares each coordinate gap before adding." },
+    ],
+    fallbackFeedback: `The gaps have magnitudes ${a} and ${b}, so the value is ${a}² + ${b}² = ${answer}.`,
+    successFeedback: `Substitution gives the squared center-to-point distance ${answer}.`,
+  };
+}
+
+function coordinateClassifyQuadrilateralWidget(rand: Rand): any {
+  const { a, b } = pick(rand, COORDINATE_VECTOR_CASES);
+  const answer = a * a + b * b;
+  return {
+    type: "numeric",
+    prompt: `Square ABCD has A(0, 0), B(${a}, ${b}), and D(${-b}, ${a}). Compute the common side length squared.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: a + b, feedback: "Coordinate changes are not side lengths; square the horizontal and vertical changes." },
+      { value: 2 * answer, feedback: "That combines two equal sides. The question asks for one side length squared." },
+    ],
+    fallbackFeedback: `AB² = ${a}² + ${b}² = ${answer}; AD has the same squared length and is perpendicular to AB.`,
+    successFeedback: `Both adjacent side vectors have squared length ${answer}, supporting the square classification.`,
+  };
+}
+
+function coordinateClassifyTriangleWidget(rand: Rand): any {
+  const { a, b } = pick(rand, COORDINATE_VECTOR_CASES);
+  const legSquared = a * a + b * b;
+  const answer = 2 * legSquared;
+  return {
+    type: "numeric",
+    prompt: `Right-isosceles triangle ABC has A(0, 0), B(${a}, ${b}), and C(${-b}, ${a}). Compute hypotenuse BC².`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: legSquared, feedback: "That is one leg squared. The right-isosceles hypotenuse squared is the sum of both equal leg squares." },
+      { value: 2 * (a + b), feedback: "Adding coordinate gaps does not apply the distance formula." },
+    ],
+    fallbackFeedback: `AB² = AC² = ${legSquared}; the Pythagorean theorem gives BC² = ${legSquared} + ${legSquared} = ${answer}.`,
+    successFeedback: `The equal perpendicular legs produce hypotenuse squared ${answer}.`,
+  };
+}
+
+function coordinateDistanceApplicationWidget(rand: Rand): any {
+  const { a, b, c } = pick(rand, COORDINATE_TRIPLES);
+  const answer = 2 * a + 2 * c;
+  return {
+    type: "numeric",
+    prompt: `Find the perimeter of the isosceles triangle with vertices (0, 0), (${2 * a}, 0), and (${a}, ${b}).`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: 2 * a + c, feedback: "That counts only one slanted side; the triangle has two congruent slanted sides." },
+      { value: 2 * a + 2 * b, feedback: "The vertical height is not a side length; use the distance formula for each slanted side." },
+    ],
+    fallbackFeedback: `Each slanted side is √(${a}² + ${b}²) = ${c}; perimeter = ${2 * a} + ${c} + ${c} = ${answer}.`,
+    successFeedback: `The two distance-formula sides and the base total ${answer}.`,
+  };
+}
+
+function coordinateGeneralProofWidget(rand: Rand): any {
+  const { a, b, c } = pick(rand, COORDINATE_TRIPLES);
+  return {
+    type: "numeric",
+    prompt: `Rectangle A(0, 0), B(${a}, 0), C(${a}, ${b}), D(0, ${b}) has two congruent diagonals. Find either diagonal length.`,
+    answer: c,
+    tolerance: 0,
+    commonErrors: [
+      { value: a + b, feedback: "That walks two sides. A diagonal is the hypotenuse formed by the width and height." },
+      { value: c * c, feedback: "That is the diagonal length squared; take the square root for the length." },
+    ],
+    fallbackFeedback: `Each diagonal has length √(${a}² + ${b}²) = ${c}.`,
+    successFeedback: `Both diagonals share the same run and rise magnitudes, so each measures ${c}.`,
+  };
+}
+
+const PARALLEL_LINE_CASES = [
+  { x0: 1, y0: 2, p: 1, q: 2, x1: 7 },
+  { x0: 2, y0: -1, p: 3, q: 4, x1: 10 },
+  { x0: -3, y0: 4, p: 2, q: 5, x1: 7 },
+  { x0: 0, y0: -2, p: 5, q: 3, x1: 6 },
+  { x0: 4, y0: 1, p: -2, q: 3, x1: 10 },
+  { x0: -2, y0: 5, p: 4, q: 3, x1: 4 },
+  { x0: 3, y0: -4, p: -3, q: 5, x1: 13 },
+  { x0: 5, y0: 6, p: 7, q: 4, x1: 13 },
+  { x0: -5, y0: -3, p: 3, q: 2, x1: 1 },
+  { x0: 6, y0: 2, p: -5, q: 6, x1: 18 },
+] as const;
+
+function coordinateParallelProofWidget(rand: Rand): any {
+  const { x0, y0, p, q, x1 } = pick(rand, PARALLEL_LINE_CASES);
+  const answer = y0 + (p * (x1 - x0)) / q;
+  return {
+    type: "numeric",
+    prompt: `A line through (${x0}, ${y0}) is parallel to a line of slope ${p}/${q}. Find its y-coordinate when x = ${x1}.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: (p * (x1 - x0)) / q, feedback: "That is only the change in y; add it to the starting y-coordinate." },
+      { value: y0 + (q * (x1 - x0)) / p, feedback: "That swaps rise and run. Parallel lines keep the stated slope p/q." },
+    ],
+    fallbackFeedback: `Use y − ${y0} = (${p}/${q})(x − ${x0}); at x = ${x1}, y = ${answer}.`,
+    successFeedback: `The equal-slope equation gives y = ${answer}.`,
+  };
+}
+
+const PARTITION_CASES = [
+  { ax: 0, ay: 0, bx: 12, by: 6, m: 1, n: 2 },
+  { ax: 2, ay: -1, bx: 14, by: 5, m: 1, n: 2 },
+  { ax: -4, ay: 2, bx: 8, by: 8, m: 2, n: 1 },
+  { ax: 1, ay: 3, bx: 13, by: 9, m: 3, n: 1 },
+  { ax: -6, ay: 0, bx: 9, by: 5, m: 2, n: 3 },
+  { ax: 3, ay: -4, bx: 18, by: 6, m: 3, n: 2 },
+  { ax: -8, ay: 1, bx: 12, by: 11, m: 1, n: 4 },
+  { ax: 5, ay: 2, bx: 20, by: 7, m: 4, n: 1 },
+  { ax: -3, ay: -3, bx: 15, by: 9, m: 2, n: 1 },
+  { ax: 4, ay: 8, bx: 24, by: -2, m: 3, n: 2 },
+] as const;
+
+function coordinatePartitionWidget(rand: Rand): any {
+  const { ax, ay, bx, by, m, n } = pick(rand, PARTITION_CASES);
+  const answer = (n * ax + m * bx) / (m + n);
+  return {
+    type: "numeric",
+    prompt: `Point P divides A(${ax}, ${ay}) to B(${bx}, ${by}) internally in the ratio AP:PB = ${m}:${n}. Find P's x-coordinate.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: (ax + bx) / 2, feedback: "That is the midpoint and works only for a 1:1 ratio." },
+      { value: (m * ax + n * bx) / (m + n), feedback: "The endpoint weights are reversed; AP:PB weights B by AP and A by PB." },
+    ],
+    fallbackFeedback: `xP = (${n}·${ax} + ${m}·${bx})/(${m} + ${n}) = ${answer}.`,
+    successFeedback: `The section formula places P at x = ${answer}.`,
+  };
+}
+
+function coordinatePerpendicularProofWidget(rand: Rand): any {
+  const { x0, y0, p, q, x1 } = pick(rand, PARALLEL_LINE_CASES);
+  const answer = y0 - (q * (x1 - x0)) / p;
+  return {
+    type: "numeric",
+    prompt: `A line through (${x0}, ${y0}) is perpendicular to a line of slope ${p}/${q}. Find its y-coordinate when x = ${x1}.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: y0 + (p * (x1 - x0)) / q, feedback: "That keeps the original slope. A perpendicular line uses the negative reciprocal −q/p." },
+      { value: y0 + (q * (x1 - x0)) / p, feedback: "The reciprocal also needs the opposite sign for a perpendicular line." },
+    ],
+    fallbackFeedback: `The perpendicular slope is −${q}/${p}; using point-slope form at x = ${x1} gives y = ${answer}.`,
+    successFeedback: `The negative-reciprocal slope produces y = ${answer}.`,
+  };
+}
+
+const SHOELACE_CASES = [
+  { width: 3, height: 4, shear: 1 },
+  { width: 5, height: 6, shear: 2 },
+  { width: 7, height: 3, shear: -2 },
+  { width: 8, height: 5, shear: 3 },
+  { width: 9, height: 7, shear: -1 },
+  { width: 10, height: 4, shear: 4 },
+  { width: 11, height: 6, shear: -3 },
+  { width: 12, height: 8, shear: 2 },
+  { width: 13, height: 5, shear: -4 },
+  { width: 14, height: 9, shear: 3 },
+] as const;
+
+function coordinateShoelaceWidget(rand: Rand): any {
+  const { width, height, shear } = pick(rand, SHOELACE_CASES);
+  const answer = width * height;
+  return {
+    type: "numeric",
+    prompt: `Use the shoelace formula on parallelogram (0, 0), (${width}, 0), (${width + shear}, ${height}), (${shear}, ${height}). Find its area.`,
+    answer,
+    tolerance: 0,
+    commonErrors: [
+      { value: answer / 2, feedback: "That applies the final one-half twice. Shoelace already halves the cross-sum difference once." },
+      { value: width + height, feedback: "Adding dimensions does not measure area; the shoelace cross-products produce the base-height product." },
+    ],
+    fallbackFeedback: `The shoelace difference is ${2 * answer}; half of it is ${answer} square units.`,
+    successFeedback: `Shoelace confirms the parallelogram area ${width} × ${height} = ${answer}.`,
+  };
+}
+
+const COORDINATE_FORM_BUILDERS: Record<string, (rand: Rand) => any> = {
+  "cx-circle-cts__numeric": coordinateCircleCompleteSquareWidget,
+  "cx-circle-eq__numeric": coordinateCircleEquationWidget,
+  "cx-circle-position__numeric": coordinateCirclePositionWidget,
+  "cx-classify-quad__numeric": coordinateClassifyQuadrilateralWidget,
+  "cx-classify-tri__numeric": coordinateClassifyTriangleWidget,
+  "cx-dist-apps__numeric": coordinateDistanceApplicationWidget,
+  "cx-general-proof__numeric": coordinateGeneralProofWidget,
+  "cx-parallel-proof__numeric": coordinateParallelProofWidget,
+  "cx-partition__numeric": coordinatePartitionWidget,
+  "cx-perp-proof__numeric": coordinatePerpendicularProofWidget,
+  "cx-shoelace__numeric": coordinateShoelaceWidget,
+};
+
 function cleanTypography(text: string): string {
   return text
     .replace(/\bUNDEFINED TERMS?\b/g, (value) => value.endsWith("S") ? "PRIMITIVE TERMS" : "PRIMITIVE TERM")
@@ -797,7 +1089,9 @@ function buildVariant(tag: string, rand: Rand, _band: Band, requestedForm: strin
     ? CIRCLE_FORM_BUILDERS[form]
     : tag === "g10-constructions-proof"
       ? CONSTRUCTION_FORM_BUILDERS[form]
-      : undefined;
+      : tag === "g10-coordinate-proofs"
+        ? COORDINATE_FORM_BUILDERS[form]
+        : undefined;
   const widget = customBuilder ? customBuilder(rand) : deepClone(pick(rand, pool));
   // This bank has no free-response reasoning surface, so the prompt must not
   // request a justification the learner has nowhere to enter.

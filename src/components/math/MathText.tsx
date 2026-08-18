@@ -47,16 +47,27 @@ function useMath(tex: string, display: boolean): RenderedMath | null {
  * of the raw tex would OVERRIDE that MathML and read "\\frac{1}{2}" aloud — strictly worse.
  * The pre-load fallback shows the tex source to everyone for the moment before the
  * renderer arrives; the swap replaces it with self-describing KaTeX markup. */
-export function MathInline({ tex, fallback = tex }: { tex: string; fallback?: string }) {
+export function MathInline({ tex, fallback = "mathematical expression" }: { tex: string; fallback?: string }) {
   const out = useMath(tex, false);
   if (!out) return <span className="math-inline">{fallback}</span>;
   return <span className="math-inline" dangerouslySetInnerHTML={{ __html: out.html }} />;
 }
 
+/** The lazy renderer must never flash authoring syntax. This is deliberately
+ * plain-language rather than a second visual maths renderer: KaTeX replaces it
+ * as soon as the shared module arrives, while slow devices still see an honest
+ * caret-free expression. */
+function visibleMathFallback(source: string): string {
+  return source
+    .replaceAll("^", " raised to ")
+    .replaceAll("_", " subscript ")
+    .replace(/\s{2,}/g, " ");
+}
+
 function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) {
   return authoredMathParts(text, { includeArithmetic }).map((part, index) => (
     part.tex
-      ? <span key={`${keyPrefix}${index}`}><MathInline tex={part.tex} fallback={part.source} />{part.text}</span>
+      ? <span key={`${keyPrefix}${index}`}><MathInline tex={part.tex} fallback={visibleMathFallback(part.source ?? part.tex)} />{part.text}</span>
       : part.text
   ));
 }

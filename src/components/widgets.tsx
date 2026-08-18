@@ -2,6 +2,7 @@
 
 import { Fragment, type PointerEvent as ReactPointerEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import FigureView from "@/components/FigureView";
+import { SvgLatexSurface } from "@/components/math/SvgLatexSurface";
 import { FIGURE_IDS } from "@/components/figureIds";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { PALETTE } from "@/lib/palette";
@@ -33,7 +34,8 @@ import { gridScales, integers, linScale, samplePolyline } from "@/components/plo
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
-import { MathDisplay, MathProse } from "@/components/math/MathText";
+import { MathDisplay, MathInline, MathProse } from "@/components/math/MathText";
+import { SvgMathText } from "@/components/math/SvgMathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
 import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleMeasurementText, scaledCircleScaleUnitSpoken, scaledCircleScaleUnitText, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyChoiceEvidence, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
@@ -1043,13 +1045,13 @@ function PlaceCompareW({ spec, value, onChange, disabled, tone }: WProps<TPlaceC
       </div>
       {spec.placeLabels && (
         <p className="text-center text-xs font-semibold text-ink/70" aria-hidden="true">
-          {showDecide && deciding !== null
+          <MathProse text={showDecide && deciding !== null
             ? `look at the ${placeName(deciding)} place`
             : showConfirm && deciding !== null
               ? `the ${placeName(deciding)} place decided it`
               : showAllEqual
                 ? "every place matches"
-                : "\u00a0"}
+                : "\u00a0"} />
         </p>
       )}
       <div className="flex items-center justify-center gap-3" role="radiogroup" aria-label="comparison symbol">
@@ -2889,6 +2891,10 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
   const shown = expLogReadout(spec.mode, base, spec.x);
   const goal = expLogReadout(spec.mode, spec.targetBase, spec.x);
   const fmt = (v: number | null) => (v === null ? "undefined" : Math.abs(v) >= 1000 ? "huge" : Number(v.toFixed(2)).toString());
+  const exponentFallback = String(spec.x).replace(/[0-9-]/g, (character) => ({
+    "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵",
+    "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": "⁻",
+  })[character] ?? character);
 
   const M = Math.max(spec.x, goal ?? 4, 4) * 1.12;
   const W = 300, H = 210, PAD = 30;
@@ -2954,7 +2960,8 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         {spec.showMirror && (
           <>
             <line x1={X(0)} y1={Y(0)} x2={X(M)} y2={Y(M)} stroke={PALETTE.ink} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.45} />
-            <text x={X(M) - 22} y={Y(M) + 14} fontSize={10} fill={PALETTE.ink} fillOpacity={0.6}>y = x</text>
+            <SvgMathText x={X(M) - 22} y={Y(M) + 14} width={52} height={18} fontSize={10}
+              color={PALETTE.ink} opacity={0.6} tex="y=x" fallback="y = x" />
             {partner && <path d={partner} fill="none" stroke={PALETTE.leaf} strokeWidth={2} strokeOpacity={0.85} />}
           </>
         )}
@@ -2965,9 +2972,11 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         <text x={X(spec.x)} y={H - 12} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fillOpacity={0.75}>
           {spec.x}
         </text>
-        <text x={PAD + 4} y={20} fontSize={11} fontWeight={700} fill={PALETTE.sky}>
-          {spec.mode === "exponential" ? `y = ${base}^x` : `y = log_${base}(x)`}
-        </text>
+        <SvgMathText x={PAD + 4} y={20} anchor="start" width={112} height={22} fontSize={11}
+          color={PALETTE.sky}
+          tex={spec.mode === "exponential" ? `y=${base}^{x}` : `y=\\log_{${base}}(x)`}
+          fallback={spec.mode === "exponential" ? `y = ${base}ˣ` : `y = log base ${base} of x`}
+          testId="exp-log-equation" />
         {spec.showMirror && (
           <text x={PAD + 4} y={34} fontSize={10} fontWeight={700} fill={PALETTE.leaf}>
             its mirror across y = x
@@ -3002,7 +3011,10 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         )}
       <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
-        {spec.mode === "exponential" ? `${base}^${spec.x}` : `log base ${base} of ${spec.x}`} = {fmt(shown)}
+        <MathInline
+          tex={spec.mode === "exponential" ? `${base}^{${spec.x}}` : `\\log_{${base}}(${spec.x})`}
+          fallback={spec.mode === "exponential" ? `${base}${exponentFallback}` : `log base ${base} of ${spec.x}`}
+        /> = {fmt(shown)}
         <span className="ml-2 text-sm font-semibold text-ink/70">goal {fmt(goal)}</span>
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
@@ -8551,7 +8563,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="relation"?(truth.answerRelation==="lt"?"<":truth.answerRelation==="gt"?">":"="):correctChoice?.label??truth.answerClaim??"the exact-number conclusion";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p></section>
+    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums"><MathProse text={sourceText} includeArithmetic /></p></section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this exact state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "exact state", "inspected")}</p>
     {/* S205K — the magnitude rail: exactNumberLab's manipulation surface for numeric mode.
@@ -8681,7 +8693,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">
-      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label}</p><p className="mt-1 font-extrabold">{line.sourceText}</p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
+      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label}</p><p className="mt-1 font-extrabold"><MathProse text={line.sourceText} includeArithmetic /></p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate plot of ${spec.lines.map(line=>line.label).join(", ")}; each line also has a distinct dash pattern and text label.`}>
         <rect x="0" y="0" width={W} height={H} rx="16" fill="currentColor" opacity="0.03"/>
         {xMin<=0&&xMax>=0&&<line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke="currentColor" opacity="0.35"/>}{yMin<=0&&yMax>=0&&<line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke="currentColor" opacity="0.35"/>}
@@ -18630,7 +18642,7 @@ function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = fa
   const mark = shown === "good" ? "✓" : shown === "warn" ? "!" : "";
   const spoken = shown === "good" ? "on target" : shown === "warn" ? "needs attention" : "";
   return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={`${label}: ${value}${spoken ? `, ${spoken}` : ""}`}>
-    <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65">{label}</div>
+    <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65"><MathProse text={label} includeArithmetic /></div>
     {/* THE VALUE KEEPS ITS OWN ELEMENT. Prefixing the mark into the same text node made the value
       * read as "✓ -14", and two tests that assert on the exact readout — one of them named "keeps
       * reversal visible as a signed consequence rather than color alone", which is this same
@@ -18640,7 +18652,7 @@ function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = fa
       * announcing it at all. */}
     <div className="text-base font-black tabular-nums">
       {mark && <span aria-hidden="true">{mark} </span>}
-      <span>{value}</span>
+      <span><MathProse text={value} includeArithmetic /></span>
     </div>
   </div>;
 }
@@ -19198,7 +19210,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
         onKeyDown={e=>{if(!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"].includes(e.key))return;e.preventDefault();const next=e.key==="Home"?1:e.key==="End"?6:Math.max(1,Math.min(6,power+(["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));set({outerRate:next},'outer-rate',spec.targetOuterRate);}}
         className="h-11 w-full accent-tangerine"/></label>
       <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The 2x dx becomes du. A constant may remain out front; an x may not. Substitution is valid only when the u-world contains u and constants — no x.</p>
-      {tone==='info'&&!solved&&<GhostChip testid="dr-ghost">asked: factor {spec.targetInnerRate}, power {spec.targetOuterRate} → ∫u^{spec.targetOuterRate} du</GhostChip>}
+      {tone==='info'&&!solved&&<GhostChip testid="dr-ghost">asked: factor {spec.targetInnerRate}, power {spec.targetOuterRate} → <MathInline tex={`\\int u^{${spec.targetOuterRate}}\\,du`} fallback={`integral of u to power ${spec.targetOuterRate}`} /></GhostChip>}
     </div>;
   }
   const product=st.innerRate*st.outerRate;
@@ -19332,7 +19344,7 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
     }
   }, [described]);
   return (
-    <div
+    <SvgLatexSurface><div
       data-tone={tone}
       className={`stage lesson-stage rounded-card p-3 transition-shadow duration-200 ease-out motion-reduce:transition-none sm:p-5 ${STAGE_TONE_RING[tone]}`}
     >
@@ -19351,7 +19363,7 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
           )}
         </details>
       )}
-    </div>
+    </div></SvgLatexSurface>
   );
 }
 

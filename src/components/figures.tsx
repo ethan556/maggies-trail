@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { SvgMathText } from "./math/SvgMathText";
 import {
   KoaActOutAJoin,
   KoaAdditionSentence,
@@ -12463,7 +12464,9 @@ function PpNthRoots() {
       <path d="M 178.0 105.0 L 76.0 46.1 L 76.0 163.9 Z" fill={TANGERINE} fillOpacity={0.12} stroke={TANGERINE} strokeWidth={1.5} />
       <circle cx="178.0" cy="105.0" r="5" fill={BERRY} /><circle cx="76.0" cy="46.1" r="5" fill={BERRY} /><circle cx="76.0" cy="163.9" r="5" fill={BERRY} />
       <text x="186.0" y="109.0" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="start">2</text><text x="68.0" y="50.1" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="end">−1+i√3</text><text x="68.0" y="167.9" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="end">−1−i√3</text>
-      <text x="30" y="204" fontSize="10" fill={INK}>3 roots · 120° apart · radius 8^(1/3) = 2</text>
+      <SvgMathText x={30} y={204} anchor="start" width={245} height={18} fontSize={10} color={INK}
+        tex="3\\text{ roots}\\cdot120^\\circ\\text{ apart}\\cdot\\sqrt[3]{8}=2"
+        fallback="3 roots · 120° apart · radius ∛8 = 2" />
     </svg>
   );
 }
@@ -17672,7 +17675,8 @@ function RadDenomRoot() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Roots as exponents: the denominator picks the root, so one-fourth means the fourth root and one-fifth the fifth root.</title>
-      <text x={120} y={34} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>a^(1/n) = ⁿ√a</text>
+      <SvgMathText x={120} y={34} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="a^{1/n}=\\sqrt[n]{a}" fallback="a¹⁄ⁿ = ⁿ√a" />
       <text x={120} y={60} textAnchor="middle" fontSize={12} fontWeight={700} fill={SKY}>denominator = root index</text>
     </svg>
   );
@@ -17681,7 +17685,8 @@ function RadPerfectPower() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>This works for any perfect power: thirty-two to the one-fifth is two, because two to the fifth is thirty-two.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={15} fontWeight={800} fill={INK}>32^(1/5) = <tspan fill={LEAF}>2</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={15} fontWeight={800} color={INK}
+        tex="32^{1/5}=2" fallback="⁵√32 = 2" />
     </svg>
   );
 }
@@ -17689,7 +17694,8 @@ function RadPowerRoot() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Taking the root first keeps arithmetic easy: twenty-seven to the two-thirds is the cube root of twenty-seven squared, which is three squared, nine.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>27^(2/3) = (∛27)² = <tspan fill={LEAF}>9</tspan></text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="27^{2/3}=(\\sqrt[3]{27})^2=9" fallback="27²⁄³ = (∛27)² = 9" />
     </svg>
   );
 }
@@ -17708,7 +17714,8 @@ function RadNegRational() {
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>Negative rational exponents combine all three parts: the root from the denominator, the power from the numerator, and the reciprocal from the sign.</title>
       <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>root · power · reciprocal</text>
-      <text x={120} y={56} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>a^(−m/n) = 1 / (ⁿ√a)^m</text>
+      <SvgMathText x={120} y={56} width={220} height={28} fontSize={13} fontWeight={800} color={SKY}
+        tex="a^{-m/n}=\\frac{1}{(\\sqrt[n]{a})^m}" fallback="a⁻ᵐ⁄ⁿ = 1 ÷ (ⁿ√a)ᵐ" />
     </svg>
   );
 }
@@ -17796,7 +17803,8 @@ function EpQuotientRule() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Dividing subtracts: in a to the m over a to the n, cancel matching factors so the exponent is m minus n.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>aᵐ / aⁿ = <tspan fill={SKY}>a^(m−n)</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="\\frac{a^m}{a^n}=a^{m-n}" fallback="aᵐ ÷ aⁿ = aᵐ⁻ⁿ" />
     </svg>
   );
 }
@@ -17820,7 +17828,8 @@ function EpNegativeExp() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>A negative exponent means reciprocal: a to the negative n is one over a to the n; flip the base.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>a^(−n) = 1 / aⁿ</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="a^{-n}=\\frac{1}{a^n}" fallback="a⁻ⁿ = 1 ÷ aⁿ" />
     </svg>
   );
 }
@@ -17828,7 +17837,8 @@ function EpNegFromDivision() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Negative exponents also appear from division when the bottom exponent is bigger than the top.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>x²/x⁵ = x^(−3) = 1/x³</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="\\frac{x^2}{x^5}=x^{-3}=\\frac{1}{x^3}" fallback="x² ÷ x⁵ = x⁻³ = 1 ÷ x³" />
     </svg>
   );
 }
@@ -18341,7 +18351,8 @@ function FnGeomExponent() {
   return (
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>The exponent is n minus one: the fourth term uses r cubed, because the first term uses no factors of r.</title>
-      <text x={120} y={30} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>aₙ = a₁ · r^(n−1)</text>
+      <SvgMathText x={120} y={30} width={210} height={26} fontSize={14} fontWeight={800} color={INK}
+        tex="a_n=a_1\\cdot r^{n-1}" fallback="aₙ = a₁ · rⁿ⁻¹" />
       <text x={120} y={56} textAnchor="middle" fontSize={12} fontWeight={800} fill={SKY}>4th term uses r³</text>
     </svg>
   );
@@ -20580,7 +20591,8 @@ function ReRationalExponent() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Eight to the two-thirds is the cube root of eight, squared, which is four; now the base can be a variable.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>8^(2/3) = (∛8)² = <tspan fill={LEAF}>4</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="8^{2/3}=(\\sqrt[3]{8})^2=4" fallback="8²⁄³ = (∛8)² = 4" />
     </svg>
   );
 }
@@ -20588,7 +20600,8 @@ function ReOtherWay() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Going the other way is just as mechanical: x to the four-fifths is the fifth root of x to the fourth.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>x^(4/5) = ⁵√(x⁴)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="x^{4/5}=\\sqrt[5]{x^4}" fallback="x⁴⁄⁵ = ⁵√(x⁴)" />
     </svg>
   );
 }
@@ -20596,7 +20609,8 @@ function ReExponentRules() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Every exponent rule from Algebra 1 survives with fractions: add exponents when multiplying like bases.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>x^(1/2)·x^(1/3) = x^(5/6)</text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="x^{1/2}\\cdot x^{1/3}=x^{5/6}" fallback="x¹⁄² · x¹⁄³ = x⁵⁄⁶" />
     </svg>
   );
 }
@@ -20604,7 +20618,8 @@ function RePowerOfPower() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Power of a power is the workhorse: x to the sixth, all to the one-third, multiplies the exponents to give x squared.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>(x⁶)^(1/3) = <tspan fill={LEAF}>x²</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="(x^6)^{1/3}=x^2" fallback="(x⁶)¹⁄³ = x²" />
     </svg>
   );
 }
@@ -20612,7 +20627,8 @@ function ReVariableRadical() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Exponent form makes variable radicals mechanical: the square root of x to the sixth is x to the six-halves, which is x cubed.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>√(x⁶) = x^(6/2) = <tspan fill={LEAF}>x³</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="\\sqrt{x^6}=x^{6/2}=x^3" fallback="√(x⁶) = x⁶⁄² = x³" />
     </svg>
   );
 }
@@ -20764,7 +20780,8 @@ function ReReciprocalCancel() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Reciprocal exponents cancel: to undo a two-thirds power, raise to the three-halves power.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>(  )^(2/3) undone by ^(3/2)</text>
+      <SvgMathText x={120} y={38} width={225} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="(\\square)^{2/3}\\text{ undone by }(\\square)^{3/2}" fallback="(□)²⁄³ undone by (□)³⁄²" />
     </svg>
   );
 }
@@ -20772,7 +20789,8 @@ function ReReciprocalCheck() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Check the reciprocal arithmetic: x to the three-halves, all to the two-thirds, has exponent one, giving x.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>(x^(3/2))^(2/3) = <tspan fill={LEAF}>x</tspan></text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="(x^{3/2})^{2/3}=x" fallback="(x³⁄²)²⁄³ = x" />
     </svg>
   );
 }
@@ -20789,7 +20807,8 @@ function ReOddNumerator() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Odd numerators keep signs, so they stay single-answer: x to the three-fifths gives one solution.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>x^(3/5): single answer</text>
+      <SvgMathText x={120} y={38} width={210} height={26} fontSize={12} fontWeight={800} color={LEAF}
+        tex="x^{3/5}\\colon\\text{ single answer}" fallback="x³⁄⁵: single answer" />
     </svg>
   );
 }
@@ -20982,7 +21001,8 @@ function LgLnUndo() {
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>Natural log and e to the x undo each other in both directions: l n of e to the x is x, and e to the l n x is x.</title>
       <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>ln(eˣ) = x</text>
-      <text x={120} y={56} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>e^(ln x) = x</text>
+      <SvgMathText x={120} y={56} width={210} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="e^{\\ln x}=x" fallback="eˡⁿˣ = x" />
     </svg>
   );
 }
@@ -21006,7 +21026,8 @@ function LgContinuousModel() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>The all-purpose continuous model: amount equals principal times e to the rate times time.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={15} fontWeight={800} fill={INK}>A = P·e^(rt)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={15} fontWeight={800} color={INK}
+        tex="A=P\\cdot e^{rt}" fallback="A = P·eʳᵗ" />
     </svg>
   );
 }
@@ -21014,7 +21035,8 @@ function LgAnatomy() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Read the anatomy: in A equals three hundred times e to the zero point zero eight t, the start is three hundred and the rate is eight percent.</title>
-      <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>A = 300·e^(0.08t)</text>
+      <SvgMathText x={120} y={30} width={220} height={26} fontSize={13} fontWeight={800} color={INK}
+        tex="A=300\\cdot e^{0.08t}" fallback="A = 300·e⁰·⁰⁸ᵗ" />
       <text x={120} y={56} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>start 300 · rate 8%</text>
     </svg>
   );
@@ -21034,7 +21056,8 @@ function LgFractionalHalfLife() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Fractional half-lives run through the formula's exponent: raise one-half to the number of half-lives elapsed.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>N = N₀·(½)^(t/h)</text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="N=N_0\\cdot(\\frac12)^{t/h}" fallback="N = N₀·(½)ᵗ⁄ʰ" />
     </svg>
   );
 }
@@ -21479,7 +21502,8 @@ function SrGeomToExplicit() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Geometric rules convert the same way, with factors instead of hops: a n equals a one times r to the n minus one.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>aₙ = a₁·r^(n−1)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="a_n=a_1\\cdot r^{n-1}" fallback="aₙ = a₁·rⁿ⁻¹" />
     </svg>
   );
 }

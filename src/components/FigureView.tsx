@@ -15,6 +15,7 @@
  */
 import dynamic from "next/dynamic";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
+import { SvgLatexSurface } from "@/components/math/SvgLatexSurface";
 
 const FigureById = dynamic(
   async () => {
@@ -30,5 +31,5 @@ const FigureById = dynamic(
 
 export default function FigureView({ id, context = "" }: { id: string; context?: string }) {
   if (!isFigureTextAligned(id, context)) return null;
-  return <FigureById id={id} />;
+  return <SvgLatexSurface><FigureById id={id} /></SvgLatexSurface>;
 }

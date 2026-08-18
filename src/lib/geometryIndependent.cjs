@@ -143,6 +143,133 @@ function solvePrompt(form, input) {
       return a * x + b;
     }
   }
+  /* S246: coordinate-proof generators are checked from the quantities printed
+   * in each prompt. These solvers intentionally do not share the generator's
+   * case tables, so a stale key or mathematically inconsistent prompt fails. */
+  if (form === 'cx-circle-cts__numeric') {
+    const match = prompt.match(/D = (-?\d+), E = (-?\d+), and F = (-?\d+)/);
+    if (match) {
+      const d = Number(match[1]);
+      const e = Number(match[2]);
+      const f = Number(match[3]);
+      return (d / 2) ** 2 + (e / 2) ** 2 - f;
+    }
+  }
+  if (form === 'cx-circle-eq__numeric') {
+    const match = prompt.match(/centered at \((-?\d+), (-?\d+)\) and passes through \((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const dx = Number(match[3]) - Number(match[1]);
+      const dy = Number(match[4]) - Number(match[2]);
+      return dx * dx + dy * dy;
+    }
+  }
+  if (form === 'cx-circle-position__numeric') {
+    const match = prompt.match(/centered at \((-?\d+), (-?\d+)\).*point \((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const dx = Number(match[3]) - Number(match[1]);
+      const dy = Number(match[4]) - Number(match[2]);
+      return dx * dx + dy * dy;
+    }
+  }
+  if (form === 'cx-classify-quad__numeric') {
+    const match = prompt.match(/B\((-?\d+), (-?\d+)\), and D\((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const bx = Number(match[1]);
+      const by = Number(match[2]);
+      const dx = Number(match[3]);
+      const dy = Number(match[4]);
+      const first = bx * bx + by * by;
+      const second = dx * dx + dy * dy;
+      if (first !== second || bx * dx + by * dy !== 0) throw new Error(`prompt does not define equal perpendicular square sides: ${prompt}`);
+      return first;
+    }
+  }
+  if (form === 'cx-classify-tri__numeric') {
+    const match = prompt.match(/B\((-?\d+), (-?\d+)\), and C\((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const bx = Number(match[1]);
+      const by = Number(match[2]);
+      const cx = Number(match[3]);
+      const cy = Number(match[4]);
+      if (bx * cx + by * cy !== 0 || bx * bx + by * by !== cx * cx + cy * cy) {
+        throw new Error(`prompt does not define a right-isosceles triangle: ${prompt}`);
+      }
+      const dx = cx - bx;
+      const dy = cy - by;
+      return dx * dx + dy * dy;
+    }
+  }
+  if (form === 'cx-dist-apps__numeric') {
+    const match = prompt.match(/vertices \(0, 0\), \((-?\d+), 0\), and \((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const base = Math.abs(Number(match[1]));
+      const apexX = Number(match[2]);
+      const apexY = Number(match[3]);
+      const left = Math.hypot(apexX, apexY);
+      const right = Math.hypot(base - apexX, apexY);
+      return base + left + right;
+    }
+  }
+  if (form === 'cx-general-proof__numeric') {
+    const match = prompt.match(/B\((-?\d+), 0\), C\((-?\d+), (-?\d+)\), D\(0, (-?\d+)\)/);
+    if (match) {
+      const width = Number(match[1]);
+      const height = Number(match[3]);
+      if (Number(match[2]) !== width || Number(match[4]) !== height) throw new Error(`malformed rectangle prompt: ${prompt}`);
+      return Math.hypot(width, height);
+    }
+  }
+  if (form === 'cx-parallel-proof__numeric') {
+    const match = prompt.match(/through \((-?\d+), (-?\d+)\).*slope (-?\d+)\/(\d+)\. Find its y-coordinate when x = (-?\d+)/);
+    if (match) {
+      const x0 = Number(match[1]);
+      const y0 = Number(match[2]);
+      const p = Number(match[3]);
+      const q = Number(match[4]);
+      const x = Number(match[5]);
+      return y0 + (p * (x - x0)) / q;
+    }
+  }
+  if (form === 'cx-partition__numeric') {
+    const match = prompt.match(/A\((-?\d+), (-?\d+)\) to B\((-?\d+), (-?\d+)\).*AP:PB = (\d+):(\d+)/);
+    if (match) {
+      const ax = Number(match[1]);
+      const bx = Number(match[3]);
+      const m = Number(match[5]);
+      const n = Number(match[6]);
+      return (n * ax + m * bx) / (m + n);
+    }
+  }
+  if (form === 'cx-perp-proof__numeric') {
+    const match = prompt.match(/through \((-?\d+), (-?\d+)\).*slope (-?\d+)\/(\d+)\. Find its y-coordinate when x = (-?\d+)/);
+    if (match) {
+      const x0 = Number(match[1]);
+      const y0 = Number(match[2]);
+      const p = Number(match[3]);
+      const q = Number(match[4]);
+      const x = Number(match[5]);
+      if (p === 0) throw new Error(`perpendicular source slope cannot be zero in numeric prompt: ${prompt}`);
+      return y0 - (q * (x - x0)) / p;
+    }
+  }
+  if (form === 'cx-shoelace__numeric') {
+    const match = prompt.match(/\(0, 0\), \((-?\d+), 0\), \((-?\d+), (-?\d+)\), \((-?\d+), (-?\d+)\)/);
+    if (match) {
+      const points = [
+        [0, 0],
+        [Number(match[1]), 0],
+        [Number(match[2]), Number(match[3])],
+        [Number(match[4]), Number(match[5])],
+      ];
+      let cross = 0;
+      for (let index = 0; index < points.length; index += 1) {
+        const current = points[index];
+        const next = points[(index + 1) % points.length];
+        cross += current[0] * next[1] - current[1] * next[0];
+      }
+      return Math.abs(cross) / 2;
+    }
+  }
   /* S245: independently reconstruct the Thales result from the PRINTED equation. The generator
    * stores a table of legal cases; this route knows none of it. It uses only the theorem's 90°
    * invariant and the coefficient/constant parsed from the learner-visible prompt. */
