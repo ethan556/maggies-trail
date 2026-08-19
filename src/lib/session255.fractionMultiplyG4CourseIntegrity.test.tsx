@@ -13,13 +13,11 @@ const dir = join(process.cwd(), "content", "courses", "fraction-multiply-g4", "l
 const lessons = readdirSync(dir).filter((name) => name.endsWith(".json")).sort().map((name) => JSON.parse(readFileSync(join(dir, name), "utf8")) as RawLesson);
 const allSteps = (lesson: RawLesson) => [...lesson.steps, ...(lesson.remedials ?? []).flatMap((route) => [route.concept, route.check].filter((entry): entry is RawStep => Boolean(entry)))];
 const normalized = (prompt: string) => prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ").trim();
-const expectedFigures: Record<string, [string, string]> = {
-  "g4x-01-01": ["fa-repeated-add", "fa-add-like"], "g4x-01-02": ["fa-repeated-add", "fm-groups"],
-  "g4x-01-03": ["frac-unit-fourth", "fa-repeated-add"], "g4x-01-04": ["fm-groups", "fa-repeated-add"],
-  "g4x-02-01": ["number-line-jumps", "frac-numline-pastone"], "g4x-02-02": ["fm-groups", "fa-repeated-add"],
-  "g4x-02-03": ["frac-numline-pastone", "fa-improper-mixed"], "g4x-02-04": ["fa-improper-mixed", "fa-mixed-improper"],
-  "g4x-03-01": ["fm-groups", "fa-repeated-add"], "g4x-03-02": ["fm-groups", "fa-improper-mixed"],
-  "g4x-03-03": ["number-line-jumps", "fm-groups"], "g4x-03-04": ["fa-benchmark-half", "fa-repeated-add"],
+const expectedFigures: Record<string, string[]> = {
+  "g4x-01-01": [], "g4x-01-02": [], "g4x-01-03": [], "g4x-01-04": ["fm-groups", "fa-repeated-add"],
+  "g4x-02-01": ["number-line-jumps", "frac-numline-pastone"], "g4x-02-02": [], "g4x-02-03": ["frac-numline-pastone"],
+  "g4x-02-04": ["fa-improper-mixed"], "g4x-03-01": [], "g4x-03-02": ["fa-improper-mixed"],
+  "g4x-03-03": ["fm-groups"], "g4x-03-04": ["fa-benchmark-half"],
 };
 
 describe("S255 fraction-multiply-g4 whole-course integrity", () => {
@@ -32,12 +30,12 @@ describe("S255 fraction-multiply-g4 whole-course integrity", () => {
     }
   });
 
-  it("renders all 24 exact registered accessible semantic figures", () => {
+  it("renders the remaining registered accessible semantic figures after exact P0 fail-closure", () => {
     let count = 0;
     for (const lesson of lessons) {
       const concepts = lesson.steps.filter((entry) => entry.kind === "concept");
-      expect(concepts.map((entry) => entry.figure), lesson.id).toEqual(expectedFigures[lesson.id]);
-      for (const concept of concepts) {
+      expect(concepts.filter((entry) => entry.figure).map((entry) => entry.figure), lesson.id).toEqual(expectedFigures[lesson.id]);
+      for (const concept of concepts.filter((entry) => entry.figure)) {
         const Figure = FIGURES[concept.figure!];
         expect(Figure, `${lesson.id}/${concept.id}`).toBeDefined();
         const markup = renderToStaticMarkup(Figure());
@@ -47,7 +45,7 @@ describe("S255 fraction-multiply-g4 whole-course integrity", () => {
         count += 1;
       }
     }
-    expect(count).toBe(24);
+    expect(count).toBe(9);
   });
 
   it("closes all 12 detector-defined progression collisions with distinct jobs and payloads", () => {
