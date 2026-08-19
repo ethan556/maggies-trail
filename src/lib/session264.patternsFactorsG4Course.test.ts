@@ -23,7 +23,7 @@ const lessons: Lesson[] = files.map((file) => JSON.parse(fs.readFileSync(path.jo
 const expectedIds = ["g4p-01-01", "g4p-01-02", "g4p-01-03", "g4p-01-04", "g4p-02-01", "g4p-02-02", "g4p-03-01", "g4p-03-02", "g4p-03-03", "g4p-03-04"];
 const expectedI2Prompts = new Map([
   ["g4p-01-01", "area 36"], ["g4p-01-02", "Test 30"], ["g4p-01-03", "Count by 7s"], ["g4p-01-04", "54"], ["g4p-02-01", "21 is composite"],
-  ["g4p-02-02", "multiples-of-5"], ["g4p-03-01", "5, 10, 20, 40"], ["g4p-03-02", "4 squares, then 8"], ["g4p-03-03", "add 5"], ["g4p-03-04", "from 3"]
+  ["g4p-02-02", "multiples-of-5"], ["g4p-03-01", "5, 10, 20, 40"], ["g4p-03-02", "A teammate says this shape pattern adds 4"], ["g4p-03-03", "add 5"], ["g4p-03-04", "from 3"]
 ]);
 const progressionChecks = new Map([
   ["g4p-01-01/ch1", "How many factor pairs does 24"], ["g4p-01-02/ch1", "Which multiplication proves"], ["g4p-01-03/ch1", "42 is a multiple"],
