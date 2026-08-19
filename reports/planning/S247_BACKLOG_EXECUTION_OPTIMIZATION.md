@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-- **The live backlog is 5,410, 9,037 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `b8fed921159ba14896a3a7a8f98f9d5c208a54c1c9a8522db22d0c36ecfa8e88` at commit `c5af1f18`.
+- **The live backlog is 5,410, 9,037 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `b8fed921159ba14896a3a7a8f98f9d5c208a54c1c9a8522db22d0c36ecfa8e88` at commit `c977efa1`.
 - **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 146 primary portfolios: 129 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 37.05× fewer context scopes without deleting or auto-closing a single task.
 - **The fastest safe path is course-first, cause-first and evidence-last.** Read each course once, emit all semantic contracts, implement file-disjoint causes, run deterministic evidence once, and obtain an independent verdict. Standards use a separate exact-code cache and retain edge-level decisions.
 

@@ -2,9 +2,9 @@
 
 Deterministic, content-addressed evidence cache. It is not curriculum, a backlog, or approval authority.
 
-- Cache seal: `5af05f156e41633a20bb3c2eea115fe472a0e14c475c08254083f574c759f999`
-- Local cache: `.chatgpt-work-cache/maggies-v4/5af05f156e41633a20bb3c2eea115fe472a0e14c475c08254083f574c759f999/`
-- Base commit metadata: `c5af1f18bb58d2cb8858bc6ef028f31867934b15`
+- Cache seal: `f9babd2ab2be40f84863e301527c84d94c81e26d4f84f8056d55f8313cafad51`
+- Local cache: `.chatgpt-work-cache/maggies-v4/f9babd2ab2be40f84863e301527c84d94c81e26d4f84f8056d55f8313cafad51/`
+- Base commit metadata: `c977efa1b7c942b8ecab4ca0903e593b2f1b7776`
 - Queue freshness: **SOURCE_SEAL_MATCH**
 - Inventory: **129 courses / 1,701 lessons / 15,653 top-level steps**
 - Canonical policy pin: `8c87f7c8e16c66c6b8d711855322f6be7f7a815ab70fd2930403474e9fd8c694`
@@ -14,7 +14,7 @@ Deterministic, content-addressed evidence cache. It is not curriculum, a backlog
 
 | Partition | Files | Bytes | SHA-256 |
 |---|---:|---:|---|
-| curriculum | 1,832 | 23,351,352 | `6ff5fb2fde4afcdb5a8bd7bad1fcf7531c4e0044556b66e0f75581b82197a0d2` |
+| curriculum | 1,832 | 23,351,658 | `9455ddc19bfbd557ceb6e0790d8818d54ef9c5254b1b42aa39f99eb89ae14bba` |
 | standards | 12 | 55,996,742 | `6c9f39bfaade9b228e29f735d06e8dae00db892900f8afd296d5219d3b390e59` |
 | mastery | 6 | 8,251,662 | `40e05e95e415ebf357c3052548ce989d2afcea5b56b169eb2bb9c0a82eaabae6` |
 | rubric-contract | 20 | 231,688 | `dd26e1e9eee01601b70f2c48574a9929a7614dad87dc3b9eecf0c4e822552e92` |
@@ -25,7 +25,7 @@ Deterministic, content-addressed evidence cache. It is not curriculum, a backlog
 | visuals-assets | 229 | 15,296,890 | `c22680e12e228a5acc67dbdd25f4ccfa5136c3096154130c7392f1f7bc83be69` |
 | standards-toolchain | 31 | 246,024 | `cafcb11ed7ad93c0397883fa34988a4afb1a618d505e11d7845897946d2292f7` |
 | review-detectors | 8 | 109,944 | `93735707ae099cb361796215b7f3ffee88f1bc60c188e0a39420e0fd034fa22e` |
-| evidence-artifacts | 76 | 13,660,028 | `135370807ca2aabe6f1b66e078bc4218625d2e038da525691ac7167eaf9edda7` |
+| evidence-artifacts | 76 | 13,660,028 | `9adad8d8d3ad835496cc50e2453aaaa59d8360d063d8150c5290ef7e5963b9b4` |
 
 The manifest contains one compact capsule per course and logical dependency family. It carries no lesson prose, standards text, raw audit rows, or screenshots.
 
