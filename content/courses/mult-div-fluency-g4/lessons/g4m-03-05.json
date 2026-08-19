@@ -149,28 +149,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the quotient claim with a multiplication check.",
       "conceptTag": "g4m-check-quotient",
       "widget": {
-        "type": "columnCalc",
-        "prompt": "A classmate claims 213 is the exact quotient of 852 ÷ 4. Multiply 213 × 4 in columns to test the claim.",
-        "op": "multiply",
-        "a": 213,
-        "b": 4,
-        "commonResults": [
+        "type": "numeric",
+        "prompt": "A classmate claims 218 is the quotient of 654 ÷ 3. What product should 218 × 3 make?",
+        "answer": 654,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
           {
-            "value": 842,
-            "feedback": "842 stranded the carry from the ones column, so the check falls ten short of 852 — the slip is in the check, not the quotient."
+            "value": 648,
+            "feedback": "Check the tens and ones products again. The quotient must rebuild the original dividend."
+          },
+          {
+            "value": 218,
+            "feedback": "218 is the proposed quotient. Multiply it by the divisor 3 to check it."
           }
         ],
-        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
-        "successFeedback": "213 × 4 = 852. The proposed product rebuilds every place correctly."
+        "fallbackFeedback": "Multiply the proposed quotient by the divisor to see whether it rebuilds 654.",
+        "successFeedback": "Correct — 654. The multiplication check supports the quotient claim."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
+        "actionGoal": "Check a division claim by multiplying the proposed quotient by the divisor.",
         "invariants": [
           "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],

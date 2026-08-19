@@ -152,31 +152,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the claim with an exact calculation.",
       "conceptTag": "g4m-estimate-product",
       "widget": {
-        "type": "estimateSlider",
-        "prompt": "A classmate claims 2,000 is a useful estimate for 38 × 52. Slide to the benchmark area to test the claim.",
-        "min": 100,
-        "max": 20000,
-        "start": 100,
-        "target": 2000,
-        "acceptFactor": 2,
-        "unitLabel": "units",
-        "ticks": [
-          100,
-          10050,
-          20000
+        "type": "numeric",
+        "prompt": "A classmate claims 46 × 49 = 2,254. What is the exact product?",
+        "answer": 2254,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 2300,
+            "feedback": "That is 46 × 50. Subtract one group of 46 to return to 49 groups."
+          },
+          {
+            "value": 225,
+            "feedback": "A place value was lost. The product of two two-digit numbers here is in the thousands."
+          }
         ],
-        "lowFeedback": "Too low — forty groups of fifty already reaches two thousand.",
-        "highFeedback": "Too high — both factors are under 60, so the product cannot reach that far.",
-        "successFeedback": "About 2,000 — from 40 × 50, and the exact answer is 1,976."
+        "fallbackFeedback": "Use 46 × 50 = 2,300, then subtract one group of 46.",
+        "successFeedback": "Correct — 2,254. The claim is exact."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate product.",
+        "actionGoal": "Use a nearby friendly factor, then compensate to calculate an exact product.",
         "invariants": [
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate product decomposable at all."
         ],

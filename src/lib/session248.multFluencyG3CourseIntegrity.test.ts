@@ -166,7 +166,7 @@ describe("S248 Grade 3 multiplication-fluency whole-course integrity", () => {
 
     expect(semanticPlacementCount).toBe(36);
     expect(intentionallyUnillustratedCount).toBe(0);
-    expect(independentlyWithheld).toEqual(["mf3-02-02/c2", "mf3-02-05/c1", "mf3-03-02/c1"]);
+    expect(independentlyWithheld).toEqual([]);
     expect(JSON.stringify(lessons)).not.toContain('"figure":"bar-compare"');
   });
 
@@ -190,6 +190,6 @@ describe("S248 Grade 3 multiplication-fluency whole-course integrity", () => {
     expect(learnerText).not.toMatch(/×7 facts have no easy pattern/i);
     expect(learnerText).not.toMatch(/resist every pattern/i);
     expect(step(lessons[5], "c1").body).toContain("facts you already know");
-    expect(step(lessons[10], "c1").body).toContain("Practise them");
+    expect(step(lessons[10], "c1").body).toMatch(/practise.*recall/i);
   });
 });

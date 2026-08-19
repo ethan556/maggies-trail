@@ -145,31 +145,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the claim by calculating with place value.",
       "conceptTag": "g4m-powers-ten",
       "widget": {
-        "type": "areaModel",
-        "prompt": "A classmate claims 30 × 4 makes an area of 120. Build the required 30-by-4 rectangle to test the claim.",
-        "targetArea": 120,
-        "wMax": 30,
-        "hMax": 30,
-        "wStart": 1,
-        "hStart": 1,
-        "successFeedback": "30 × 4 = 120 — the fact 3 × 4 = 12, scaled by the ten inside 30.",
-        "lowFeedback": "Smaller than 120 — the rectangle has not reached the full area yet.",
-        "highFeedback": "Larger than 120 — one side has overshot the factor pair the prompt names.",
-        "square": false,
-        "requireFactors": {
-          "w": 30,
-          "h": 4
-        },
-        "factorFeedback": "That area is right, but not from the sides asked for — this rectangle must measure 30 by 4."
+        "type": "numeric",
+        "prompt": "A classmate claims 300 × 4 = 1,200. What is the product?",
+        "answer": 1200,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 120,
+            "feedback": "That is one place too small. Three hundreds times 4 is twelve hundreds."
+          },
+          {
+            "value": 12000,
+            "feedback": "That is one place too large. The factor is 300, not 3,000."
+          }
+        ],
+        "fallbackFeedback": "Use 3 × 4 = 12, then name the value of the 3 in 300.",
+        "successFeedback": "Correct — 1,200. Three hundreds times 4 is twelve hundreds."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m powers ten.",
+        "actionGoal": "Use place value to scale a basic multiplication fact and check the product.",
         "invariants": [
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m powers ten decomposable at all."
         ],

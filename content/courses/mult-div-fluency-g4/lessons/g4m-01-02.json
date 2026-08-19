@@ -145,31 +145,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the claim by adding two partial products.",
       "conceptTag": "g4m-area-model",
       "widget": {
-        "type": "areaModel",
-        "prompt": "A classmate claims 10 × 6 and 4 × 6 combine to make 84. Build the required 14-by-6 rectangle to test the claim.",
-        "targetArea": 84,
-        "wMax": 14,
-        "hMax": 14,
-        "wStart": 1,
-        "hStart": 1,
-        "successFeedback": "84 — and the rectangle splits cleanly into 10 × 6 = 60 and 4 × 6 = 24.",
-        "lowFeedback": "Smaller than 84 — keep building until both sides match 14 and 6.",
-        "highFeedback": "Larger than 84 — a side has grown past the factors the prompt names.",
-        "square": false,
-        "requireFactors": {
-          "w": 14,
-          "h": 6
-        },
-        "factorFeedback": "That area is right, but from different sides — the model asked for is 14 across and 6 down."
+        "type": "numeric",
+        "prompt": "A classmate claims 16 × 6 = 96. Split 16 into 10 + 6. What is the product?",
+        "answer": 96,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 60,
+            "feedback": "That is only 10 × 6. Include 6 × 6 too."
+          },
+          {
+            "value": 36,
+            "feedback": "That is only 6 × 6. Include 10 × 6 too."
+          }
+        ],
+        "fallbackFeedback": "Find 10 × 6 and 6 × 6, then add both partial products.",
+        "successFeedback": "Correct — 96. The partial products are 60 and 36."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m area model.",
+        "actionGoal": "Calculate and combine both partial products in a place-value split.",
         "invariants": [
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m area model decomposable at all."
         ],

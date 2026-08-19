@@ -152,31 +152,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the claim by dividing compatible numbers.",
       "conceptTag": "g4m-estimate-quotient",
       "widget": {
-        "type": "estimateSlider",
-        "prompt": "A classmate claims 500 is a better estimate than 50 for 2,437 ÷ 5. Slide to the friendly quotient to test the claim.",
-        "min": 20,
-        "max": 5000,
-        "start": 20,
-        "target": 500,
-        "acceptFactor": 2,
-        "unitLabel": "units",
-        "ticks": [
-          20,
-          2510,
-          5000
+        "type": "numeric",
+        "prompt": "A classmate claims 1,800 ÷ 6 estimates 1,793 ÷ 6. What quotient estimate does this give?",
+        "answer": 300,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is ten times too small. Six goes into 1,800 about three hundred times."
+          },
+          {
+            "value": 1800,
+            "feedback": "That repeats the dividend. Divide 1,800 into groups of 6."
+          }
         ],
-        "lowFeedback": "Too low — five hundreds is 2,500, right near the dividend.",
-        "highFeedback": "Too high — dividing by 5 cannot leave a number near the dividend itself.",
-        "successFeedback": "About 500 — from 2,500 ÷ 5, and the exact quotient is 487 remainder 2."
+        "fallbackFeedback": "Choose the nearby number 1,800 because it divides evenly by 6.",
+        "successFeedback": "Correct — 300. That is a useful estimate for 1,793 ÷ 6."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
+        "actionGoal": "Divide compatible numbers to make and explain a quotient estimate.",
         "invariants": [
           "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],

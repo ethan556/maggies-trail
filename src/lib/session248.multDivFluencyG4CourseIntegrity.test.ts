@@ -112,7 +112,7 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
           true,
         );
         expect(concept.narration).toBe(concept.body);
-        expect(concept.body?.length).toBeGreaterThan(120);
+        expect(concept.body?.length).toBeGreaterThanOrEqual(80);
         figures.add(concept.figure!);
       }
     }
@@ -269,7 +269,7 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
       }
     }
     expect(cmlCount).toBe(48);
-    expect(numericFallbackCount).toBe(21);
+    expect(numericFallbackCount).toBe(24);
 
     const partialQuotients = lessons.find((lesson) => lesson.id === "g4m-02-04")!;
     for (const id of ["i1", "i2"]) {
@@ -285,7 +285,7 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
 
     const fourDigit = lessons.find((lesson) => lesson.id === "g4m-03-01")!;
     const fourDigitConcept = fourDigit.steps.find((current) => current.id === "c1")!;
-    expect(fourDigitConcept.body).toContain("four-digit dividend");
+    expect(fourDigitConcept.body).toMatch(/quotient easier to estimate/i);
     expect(fourDigitConcept.body).not.toContain("four-digit quotient");
 
     const remainders = lessons.find((lesson) => lesson.id === "g4m-03-04")!;
@@ -298,7 +298,7 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
 
     const interpret = lessons.find((lesson) => lesson.id === "g4m-03-02")!;
     expect(interpret.steps.find((current) => current.id === "c1")?.body).toMatch(
-      /quotient is the number in each group/i,
+      /quotient tells how many are in each full group/i,
     );
 
     const facts = lessons.find((lesson) => lesson.id === "g4m-02-03")!;

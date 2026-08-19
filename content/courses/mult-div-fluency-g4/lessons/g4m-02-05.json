@@ -143,32 +143,32 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Test the claim with the model.",
+      "body": "Test the claim by finding what remains after a large equal-group chunk.",
       "conceptTag": "g4m-3div1",
       "widget": {
-        "type": "columnCalc",
-        "prompt": "A classmate claims 84 is the exact quotient of 504 ÷ 6. Multiply 84 × 6 in columns to test the claim.",
-        "op": "multiply",
-        "a": 84,
-        "b": 6,
-        "commonResults": [
+        "type": "numeric",
+        "prompt": "A classmate claims 80 groups of 6 can be taken from 504 first. Since 6 × 80 = 480, how much is left to share?",
+        "answer": 24,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
           {
-            "value": 484,
-            "feedback": "484 stranded the carry out of the ones column, so the check falls ten short of 504."
+            "value": 480,
+            "feedback": "480 is the amount already shared. Subtract it from 504 to find what remains."
           },
           {
             "value": 84,
-            "feedback": "That wrote only the ones-column product and never multiplied the tens place at all."
+            "feedback": "84 is the final quotient, not the amount left after 80 groups."
           }
         ],
-        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
-        "successFeedback": "84 × 6 = 504. The proposed product rebuilds every place correctly."
+        "fallbackFeedback": "Subtract the amount already shared: 504 − 480.",
+        "successFeedback": "Correct — 24 remains after 80 groups of 6 are taken."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Divide place by place, keep every quotient digit aligned, and multiply the quotient by the divisor to rebuild the dividend.",
+        "actionGoal": "Use a large equal-group chunk and subtract it from the dividend before finishing division.",
         "invariants": [
           "Each quotient digit names equal shares in its place, and for exact division the completed quotient × divisor equals the original dividend."
         ],
