@@ -1,250 +1,250 @@
 {
- "id": "sc-01-03",
- "slug": "alternating-series",
- "title": "Alternating Series and the Error Bound",
- "courseId": "series-convergence",
- "chapterId": "ch1-convergence-beyond-geometric",
- "minutes": 12,
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "body": "The harmonic series diverges. But put a **minus sign on every other term** —\n\n1 − 1/2 + 1/3 − 1/4 + …\n\n— and it converges, to ln 2 ≈ 0.693.\n\nThe terms have not changed size at all. Only their signs. Convergence is not just about how fast terms fade; it is about **cancellation**.",
-   "figure": "dr-power-rule-pattern"
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Why the signs rescue it.",
-   "conceptTag": "sc-alternating",
-   "explanationVariants": [
-    "Each partial sum overshoots, then undershoots, then overshoots by less — the sums BOUNCE and close in on a limit, squeezed between consecutive partial sums.",
-    "S₁ = 1, S₂ = 0.5, S₃ = 0.833, S₄ = 0.583 — the interval is halving in on ln 2 ≈ 0.693 from both sides."
-   ],
-   "widget": {
-    "type": "mcq",
-    "prompt": "The partial sums of 1 − 1/2 + 1/3 − 1/4 + … run 1, 0.5, 0.833, 0.583, … What are they doing?",
-    "options": [
-     {
-      "id": "o1",
-      "label": "Bouncing above and below, and closing in — each step is smaller than the last, so they squeeze onto a limit.",
-      "correct": true,
-      "feedback": "Right, and the limit is trapped BETWEEN any two consecutive partial sums. That is what makes the error so easy to bound."
-     },
-     {
-      "id": "o2",
-      "label": "Growing without bound, like the harmonic series.",
-      "correct": false,
-      "feedback": "The harmonic series climbs monotonically. These sums bounce, and each bounce is smaller — they are being squeezed onto ln 2 ≈ 0.693."
-     },
-     {
-      "id": "o3",
-      "label": "Oscillating forever without settling.",
-      "correct": false,
-      "feedback": "They would, if the terms did not FADE. Because the steps shrink to zero, the bouncing closes in rather than continuing forever."
-     },
-     {
-      "id": "o4",
-      "label": "Converging to 0.5.",
-      "correct": false,
-      "feedback": "0.5 is only S₂. The sums continue past it and settle on ln 2 ≈ 0.693."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "g13-series-convergence",
-    "form": "series-convergence__sc-alternating__mcq"
-   }
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Squeezed between consecutive sums.",
-   "widget": {
-    "type": "steppedReveal",
-    "prompt": "Why the error is so easy to bound here.",
-    "panels": [
-     {
-      "title": "Each step overshoots",
-      "body": "Add +1/3 and you go past the limit. Subtract 1/4 and you fall back below it. Every partial sum lands on the OPPOSITE side of the limit from the last one."
-     },
-     {
-      "title": "So the limit is trapped",
-      "body": "If S₃ is above and S₄ is below, the true sum is somewhere between them. And the gap between S₃ and S₄ is exactly the size of the term you just added: 1/4."
-     },
-     {
-      "title": "The error bound",
-      "body": "So the error after n terms is smaller than the FIRST TERM YOU LEFT OUT. Not roughly — provably. That is the cleanest error bound in the whole subject, and it costs nothing to compute."
-     }
-    ],
-    "continueFeedback": "Keep going — the third panel is a theorem, not a rule of thumb.",
-    "successFeedback": "The limit is trapped between consecutive partial sums, so the error is smaller than the first omitted term. Free, and exact."
-   }
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Use the bound.",
-   "conceptTag": "sc-alternating",
-   "explanationVariants": [
-    "Stop after 4 terms and the first omitted term is 1/5 = 0.2. So the error is less than 0.2 — no calculation of the true sum required.",
-    "You get an error bound for free, just by looking at the next term you did not add."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "For 1 − 1/2 + 1/3 − 1/4 + …, you stop after 4 terms. What is the largest the error can be?",
-    "answer": 0.2,
-    "tolerance": 0.005,
-    "commonErrors": [
-     {
-      "value": 0.25,
-      "feedback": "That is the term you DID add (1/4). The bound is the FIRST OMITTED term, which is 1/5 = 0.2."
-     },
-     {
-      "value": 0.583,
-      "feedback": "That is S₄, the partial sum itself, not the error in it. The error is bounded by the next term: 1/5."
-     },
-     {
-      "value": 0.693,
-      "feedback": "That is the true limit, ln 2. The error bound is the first omitted term, 1/5 = 0.2."
-     }
-    ],
-    "fallbackFeedback": "The first omitted term is 1/5 = 0.2, so the error is smaller than that."
-   },
-   "variant": {
-    "gen": "g13-series-convergence",
-    "form": "series-convergence__sc-alternating__numeric"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "The test itself has two conditions, and both are needed:\n\n**The terms must alternate in sign.**\n**Their SIZES must shrink, steadily, to zero.**\n\nIf either fails, the bouncing does not close in — and the series need not converge at all.",
-   "figure": "dr-flat-not-turning"
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "How many terms for two decimals?",
-   "conceptTag": "sc-alternating",
-   "explanationVariants": [
-    "You need the first omitted term under 0.01: 1/(n + 1) < 0.01 gives n + 1 > 100, so n = 100 terms.",
-    "That is a lot of terms for two decimal places — alternating series converge, but this one converges VERY slowly."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "For 1 − 1/2 + 1/3 − …, how many terms are needed to guarantee an error below 0.01?",
-    "answer": 100,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 10,
-      "feedback": "The bound is 1/(n + 1) < 0.01, which needs n + 1 > 100. Ten terms leaves an error of up to 1/11 ≈ 0.09 — ten times too big."
-     },
-     {
-      "value": 99,
-      "feedback": "Close: 1/(n + 1) < 0.01 needs n + 1 > 100, so n = 100. With n = 99 the bound is exactly 0.01, which is not strictly less."
-     },
-     {
-      "value": 2,
-      "feedback": "Two terms leaves an error of up to 1/3 ≈ 0.33."
-     }
-    ],
-    "fallbackFeedback": "1/(n + 1) < 0.01 → n = 100 terms. Convergent, but painfully slow."
-   },
-   "variant": {
-    "gen": "g13-series-convergence",
-    "form": "series-convergence__sc-alternating__numeric"
-   }
-  },
-  {
-   "id": "ch1",
-   "kind": "challenge",
-   "body": "Bound an error you cannot compute.",
-   "conceptTag": "sc-alternating",
-   "hints": [
-    "The series 1 − 1/4 + 1/9 − 1/16 + … has terms 1/n², alternating.",
-    "Stop after 3 terms. What is the FIRST term you left out?",
-    "The 4th term has size 1/16."
-   ],
-   "explanationVariants": [
-    "The first omitted term is 1/16 = 0.0625, so the error after 3 terms is smaller than that.",
-    "You bounded the error of a series whose sum you have never computed and could not easily name. That is what the theorem buys you."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "For 1 − 1/4 + 1/9 − 1/16 + …, you stop after 3 terms. Bound the error, to four decimals.",
-    "answer": 0.0625,
-    "tolerance": 0.0005,
-    "commonErrors": [
-     {
-      "value": 0.1111,
-      "feedback": "That is 1/9 — the term you DID add. The bound is the first term you LEFT OUT, which is 1/16."
-     },
-     {
-      "value": 0.0278,
-      "feedback": "That is 1/36, the FIFTH term. You stopped after three, so the first omitted one is the fourth: 1/16."
-     },
-     {
-      "value": 0.8611,
-      "feedback": "That is the partial sum 1 − 1/4 + 1/9, not the error in it."
-     }
-    ],
-    "fallbackFeedback": "The first omitted term is 1/16 = 0.0625, so the error is smaller than that."
-   },
-   "variant": {
-    "gen": "g13-series-convergence",
-    "form": "series-convergence__sc-alternating__numeric"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "Cancellation, and a free error bound.",
-   "takeaways": [
-    "Alternating signs can rescue a series whose terms fade too slowly to be summed on their own.",
-    "The partial sums bounce and close in, so the limit is trapped BETWEEN consecutive partial sums.",
-    "Hence the error is smaller than the FIRST OMITTED TERM — provably, and for free."
-   ],
-   "teaser": "Last: differentiate and integrate a series term by term, and get new ones for nothing."
-  }
- ],
- "remedials": [
-  {
-   "conceptTag": "sc-alternating",
-   "concept": {
-    "id": "rc1",
-    "kind": "concept",
-    "body": "Add a term and you overshoot. Subtract the next and you fall short. Each step is smaller than the last, so the sums close in from both sides — and the true limit is always caught between the last two. That is why the error is never bigger than the next term you would have added.",
-    "figure": "dr-power-rule-pattern"
-   },
-   "check": {
-    "id": "rk1",
-    "kind": "check",
-    "body": "The first omitted term.",
-    "conceptTag": "sc-alternating",
-    "explanationVariants": [
-     "Stopping after 5 terms leaves 1/6 as the first omitted one, so the error is under 1/6 ≈ 0.167.",
-     "The bound is always the next term you did not add."
-    ],
-    "widget": {
-     "type": "numeric",
-     "prompt": "For 1 − 1/2 + 1/3 − …, stop after 5 terms. Bound the error, to three decimals.",
-     "answer": 0.167,
-     "tolerance": 0.005,
-     "commonErrors": [
-      {
-       "value": 0.2,
-       "feedback": "That is 1/5 — the term you DID add. The first OMITTED one is 1/6 ≈ 0.167."
+  "id": "sc-01-03",
+  "slug": "alternating-series",
+  "title": "Alternating Series and the Error Bound",
+  "courseId": "series-convergence",
+  "chapterId": "ch1-convergence-beyond-geometric",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The harmonic series diverges. But put a **minus sign on every other term** —\n\n1 − 1/2 + 1/3 − 1/4 + …\n\n— and it converges, to ln 2 ≈ 0.693.\n\nThe terms have not changed size at all. Only their signs. Convergence is not just about how fast terms fade; it is about **cancellation**.",
+      "figure": "dr-power-rule-pattern"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Why the signs rescue it.",
+      "conceptTag": "sc-alternating",
+      "explanationVariants": [
+        "Each partial sum overshoots, then undershoots, then overshoots by less — the sums BOUNCE and close in on a limit, squeezed between consecutive partial sums.",
+        "S₁ = 1, S₂ = 0.5, S₃ = 0.833, S₄ = 0.583 — the interval is halving in on ln 2 ≈ 0.693 from both sides."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "The partial sums of 1 − 1/2 + 1/3 − 1/4 + … run 1, 0.5, 0.833, 0.583, … What are they doing?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "They alternate above and below a limit, with shrinking jumps that squeeze together",
+            "correct": true,
+            "feedback": "Right, and the limit is trapped BETWEEN any two consecutive partial sums. That is what makes the error so easy to bound."
+          },
+          {
+            "id": "o2",
+            "label": "They grow upward without bound because the positive terms dominate",
+            "correct": false,
+            "feedback": "The harmonic series climbs monotonically. These sums bounce, and each bounce is smaller — they are being squeezed onto ln 2 ≈ 0.693."
+          },
+          {
+            "id": "o3",
+            "label": "They keep oscillating with a fixed gap and never settle",
+            "correct": false,
+            "feedback": "They would, if the terms did not FADE. Because the steps shrink to zero, the bouncing closes in rather than continuing forever."
+          },
+          {
+            "id": "o4",
+            "label": "They settle exactly at the second partial sum, 0.5",
+            "correct": false,
+            "feedback": "0.5 is only S₂. The sums continue past it and settle on ln 2 ≈ 0.693."
+          }
+        ]
       },
-      {
-       "value": 0.783,
-       "feedback": "That is the partial sum, not the error in it."
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-alternating__mcq"
       }
-     ],
-     "fallbackFeedback": "The first omitted term is 1/6 ≈ 0.167."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Squeezed between consecutive sums.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why the error is so easy to bound here.",
+        "panels": [
+          {
+            "title": "Each step overshoots",
+            "body": "Add +1/3 and you go past the limit. Subtract 1/4 and you fall back below it. Every partial sum lands on the OPPOSITE side of the limit from the last one."
+          },
+          {
+            "title": "So the limit is trapped",
+            "body": "If S₃ is above and S₄ is below, the true sum is somewhere between them. And the gap between S₃ and S₄ is exactly the size of the term you just added: 1/4."
+          },
+          {
+            "title": "The error bound",
+            "body": "So the error after n terms is smaller than the FIRST TERM YOU LEFT OUT. Not roughly — provably. That is the cleanest error bound in the whole subject, and it costs nothing to compute."
+          }
+        ],
+        "continueFeedback": "Keep going — the third panel is a theorem, not a rule of thumb.",
+        "successFeedback": "The limit is trapped between consecutive partial sums, so the error is smaller than the first omitted term. Free, and exact."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Use the bound.",
+      "conceptTag": "sc-alternating",
+      "explanationVariants": [
+        "Stop after 4 terms and the first omitted term is 1/5 = 0.2. So the error is less than 0.2 — no calculation of the true sum required.",
+        "You get an error bound for free, just by looking at the next term you did not add."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 1 − 1/2 + 1/3 − 1/4 + …, you stop after 4 terms. What is the largest the error can be?",
+        "answer": 0.2,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 0.25,
+            "feedback": "That is the term you DID add (1/4). The bound is the FIRST OMITTED term, which is 1/5 = 0.2."
+          },
+          {
+            "value": 0.583,
+            "feedback": "That is S₄, the partial sum itself, not the error in it. The error is bounded by the next term: 1/5."
+          },
+          {
+            "value": 0.693,
+            "feedback": "That is the true limit, ln 2. The error bound is the first omitted term, 1/5 = 0.2."
+          }
+        ],
+        "fallbackFeedback": "The first omitted term is 1/5 = 0.2, so the error is smaller than that."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-alternating__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The test itself has two conditions, and both are needed:\n\n**The terms must alternate in sign.**\n**Their SIZES must shrink, steadily, to zero.**\n\nIf either fails, the bouncing does not close in — and the series need not converge at all.",
+      "figure": "dr-flat-not-turning"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "How many terms for two decimals?",
+      "conceptTag": "sc-alternating",
+      "explanationVariants": [
+        "You need the first omitted term under 0.01: 1/(n + 1) < 0.01 gives n + 1 > 100, so n = 100 terms.",
+        "That is a lot of terms for two decimal places — alternating series converge, but this one converges VERY slowly."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 1 − 1/2 + 1/3 − …, how many terms are needed to guarantee an error below 0.01?",
+        "answer": 100,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 10,
+            "feedback": "The bound is 1/(n + 1) < 0.01, which needs n + 1 > 100. Ten terms leaves an error of up to 1/11 ≈ 0.09 — ten times too big."
+          },
+          {
+            "value": 99,
+            "feedback": "Close: 1/(n + 1) < 0.01 needs n + 1 > 100, so n = 100. With n = 99 the bound is exactly 0.01, which is not strictly less."
+          },
+          {
+            "value": 2,
+            "feedback": "Two terms leaves an error of up to 1/3 ≈ 0.33."
+          }
+        ],
+        "fallbackFeedback": "1/(n + 1) < 0.01 → n = 100 terms. Convergent, but painfully slow."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-alternating__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Bound an error you cannot compute.",
+      "conceptTag": "sc-alternating",
+      "hints": [
+        "The series 1 − 1/4 + 1/9 − 1/16 + … has terms 1/n², alternating.",
+        "Stop after 3 terms. What is the FIRST term you left out?",
+        "The 4th term has size 1/16."
+      ],
+      "explanationVariants": [
+        "The first omitted term is 1/16 = 0.0625, so the error after 3 terms is smaller than that.",
+        "You bounded the error of a series whose sum you have never computed and could not easily name. That is what the theorem buys you."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "For 1 − 1/4 + 1/9 − 1/16 + …, you stop after 3 terms. Bound the error, to four decimals.",
+        "answer": 0.0625,
+        "tolerance": 0.0005,
+        "commonErrors": [
+          {
+            "value": 0.1111,
+            "feedback": "That is 1/9 — the term you DID add. The bound is the first term you LEFT OUT, which is 1/16."
+          },
+          {
+            "value": 0.0278,
+            "feedback": "That is 1/36, the FIFTH term. You stopped after three, so the first omitted one is the fourth: 1/16."
+          },
+          {
+            "value": 0.8611,
+            "feedback": "That is the partial sum 1 − 1/4 + 1/9, not the error in it."
+          }
+        ],
+        "fallbackFeedback": "The first omitted term is 1/16 = 0.0625, so the error is smaller than that."
+      },
+      "variant": {
+        "gen": "g13-series-convergence",
+        "form": "series-convergence__sc-alternating__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Cancellation, and a free error bound.",
+      "takeaways": [
+        "Alternating signs can rescue a series whose terms fade too slowly to be summed on their own.",
+        "The partial sums bounce and close in, so the limit is trapped BETWEEN consecutive partial sums.",
+        "Hence the error is smaller than the FIRST OMITTED TERM — provably, and for free."
+      ],
+      "teaser": "Last: differentiate and integrate a series term by term, and get new ones for nothing."
     }
-   }
-  }
- ]
+  ],
+  "remedials": [
+    {
+      "conceptTag": "sc-alternating",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Add a term and you overshoot. Subtract the next and you fall short. Each step is smaller than the last, so the sums close in from both sides — and the true limit is always caught between the last two. That is why the error is never bigger than the next term you would have added.",
+        "figure": "dr-power-rule-pattern"
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "The first omitted term.",
+        "conceptTag": "sc-alternating",
+        "explanationVariants": [
+          "Stopping after 5 terms leaves 1/6 as the first omitted one, so the error is under 1/6 ≈ 0.167.",
+          "The bound is always the next term you did not add."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "For 1 − 1/2 + 1/3 − …, stop after 5 terms. Bound the error, to three decimals.",
+          "answer": 0.167,
+          "tolerance": 0.005,
+          "commonErrors": [
+            {
+              "value": 0.2,
+              "feedback": "That is 1/5 — the term you DID add. The first OMITTED one is 1/6 ≈ 0.167."
+            },
+            {
+              "value": 0.783,
+              "feedback": "That is the partial sum, not the error in it."
+            }
+          ],
+          "fallbackFeedback": "The first omitted term is 1/6 ≈ 0.167."
+        }
+      }
+    }
+  ]
 }
