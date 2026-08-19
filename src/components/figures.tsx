@@ -3847,6 +3847,33 @@ function DopLongDivision() {
   );
 }
 
+/** Grade 4 partial quotients: 852 ÷ 4 as two exact, convenient chunks. */
+function G4mPartialQuotients852Over4() {
+  return (
+    <svg
+      viewBox="0 0 320 142"
+      role="img"
+      aria-label="Partial quotients for 852 divided by 4: 200 groups of 4 make 800, leaving 52; 13 groups of 4 make 52, leaving 0; 200 plus 13 equals 213."
+      className="mx-auto w-full max-w-sm"
+    >
+      <title>Partial quotients: 852 ÷ 4 = 213; 200 × 4 = 800; 852 − 800 = 52; 13 × 4 = 52; 200 + 13 = 213.</title>
+      <text x="160" y="20" fontSize="16" fontWeight="700" fill={INK} textAnchor="middle">852 ÷ 4</text>
+      <rect x="10" y="34" width="138" height="64" rx="10" fill={SKY} fillOpacity={0.14} stroke={INK} strokeWidth="1.5" />
+      <text x="79" y="54" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">Step 1: 200 groups</text>
+      <text x="79" y="74" fontSize="11" fill={INK} textAnchor="middle">200 × 4 = 800</text>
+      <text x="79" y="90" fontSize="11" fill={INK} textAnchor="middle">852 − 800 = 52 left</text>
+      <path d="M 151 66 H 168" fill="none" stroke={INK} strokeWidth="1.5" />
+      <path d="M 168 66 l-5 -4 M 168 66 l-5 4" fill="none" stroke={INK} strokeWidth="1.5" />
+      <rect x="172" y="34" width="138" height="64" rx="10" fill={LEAF} fillOpacity={0.14} stroke={INK} strokeWidth="1.5" />
+      <text x="241" y="54" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">Step 2: 13 groups</text>
+      <text x="241" y="74" fontSize="11" fill={INK} textAnchor="middle">13 × 4 = 52</text>
+      <text x="241" y="90" fontSize="11" fill={INK} textAnchor="middle">52 − 52 = 0 left</text>
+      <line x1="84" y1="111" x2="236" y2="111" stroke={INK} strokeWidth="1" opacity="0.35" />
+      <text x="160" y="132" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">partial quotients: 200 + 13 = 213</text>
+    </svg>
+  );
+}
+
 /** Grade 5 decimal/operations figure: A remainder means different things. */
 function DopRemainder() {
   return (
@@ -30126,6 +30153,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "dop-two-by-two": DopTwoByTwo,
   "dop-estimate-quotient": DopEstimateQuotient,
   "dop-long-division": DopLongDivision,
+  "g4m-partial-quotients-852-4": G4mPartialQuotients852Over4,
   "dop-remainder": DopRemainder,
   "dop-line-up": DopLineUp,
   "dop-pad-borrow": DopPadBorrow,

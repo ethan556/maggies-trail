@@ -68,6 +68,7 @@ export const FIGURE_NUMERIC_CLAIMS = {
   "g3w-multiply-then-add": "(5 × 6) + 4 = 34",
   "g3w-share-then-add": "18 ÷ 3 + 2 = 8 each",
   "g3w-subtract-once": "20 − 3 = 17",
+  "g4m-partial-quotients-852-4": "852 ÷ 4 = 213; 200 × 4 = 800; 852 − 800 = 52; 13 × 4 = 52; 200 + 13 = 213",
   "g7-circle-c-vs-a": "For radius 10, C equals 2 pi r is 20 pi, while A equals pi r squared is 100 pi — area grows much faster.",
   "g7-circumference": "With diameter 10, the distance around is C equals pi times d, which is 10 pi.",
   "g7-roundup": "The fence around it is circumference C equals 2 pi times 6, which is 12 pi meters; the water is area A equals pi times 6 squared, which is 36 pi square meters.",
