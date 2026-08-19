@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-order-matters",
       "body": "Writing the equation makes the ORDER visible. Parentheses are not decoration — they say which step happens first.",
       "narration": "Writing the equation makes the ORDER visible. Parentheses are not decoration — they say which step happens first."
     },
@@ -43,8 +43,8 @@
           }
         ],
         "successFeedback": "17 — twenty chairs built, then three removed once from the whole.",
-        "lowFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
-        "highFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins."
+        "lowFeedback": "Use the story's operations and starting total to decide whether the placement is too low or too high.",
+        "highFeedback": "Use the story's operations and starting total to decide whether the placement is too low or too high."
       },
       "predict": {
         "prompt": "Do (5 × 4) − 3 and 5 × (4 − 3) give the same answer?",
@@ -65,12 +65,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -132,12 +132,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -154,7 +154,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-word-expr",
       "body": "(5 × 4) − 3 and 5 × (4 − 3) use the same three numbers and mean completely different stories. The brackets carry the meaning.",
       "narration": "(5 × 4) − 3 and 5 × (4 − 3) use the same three numbers and mean completely different stories. The brackets carry the meaning."
     },
@@ -165,41 +165,41 @@
       "conceptTag": "g3w-write-equation",
       "widget": {
         "type": "numberLinePlace",
-        "prompt": "Place where (5 × 4) − 3 lands on the line.",
+        "prompt": "Place where (4 × 6) + 5 lands; the added five joins the whole once.",
         "min": 0,
-        "max": 24,
+        "max": 48,
         "step": 1,
-        "tickStep": 2,
-        "target": 17,
+        "tickStep": 6,
+        "target": 29,
         "start": 0,
         "commonPlacements": [
           {
-            "value": 5,
-            "feedback": "5 is where 5 × (4 − 3) lands: that breaks three chairs at EVERY table, not three in total."
+            "value": 24,
+            "feedback": "That is the product before the five join the whole."
           },
           {
-            "value": 20,
-            "feedback": "20 is the total before anything breaks — the second step has not happened yet."
+            "value": 44,
+            "feedback": "That is 4 × (6 + 5), which adds five inside every group."
           },
           {
-            "value": 23,
-            "feedback": "23 adds the three instead of removing them; broken chairs come out of the total."
+            "value": 15,
+            "feedback": "That adds the three written numbers without building equal groups."
           }
         ],
-        "successFeedback": "17 — twenty chairs built, then three removed once from the whole.",
-        "lowFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
-        "highFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins."
+        "successFeedback": "29 — four groups of six make 24, then five join once.",
+        "lowFeedback": "Build 24 first and then add five once.",
+        "highFeedback": "Do not add five inside each of the four groups."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -224,22 +224,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 shelves hold 6 markers each. Students take 4 markers. How many markers remain?",
+        "prompt": "A class makes 36 markers, gives away 9, then makes 5 more. How many markers are there now?",
         "answer": 32,
         "tolerance": 0,
-        "unit": "",
+        "unit": "markers",
         "commonErrors": [
           {
-            "value": 40,
-            "feedback": "Taking markers away lowers the count; adding treats a loss like a gain."
+            "value": 31,
+            "feedback": "That is one below the required result; check the stated operation and quantities."
           },
           {
-            "value": 36,
-            "feedback": "That reported the starting pile — the 4 the students took never came off."
+            "value": 33,
+            "feedback": "That is one above the required result; recompute the declared step carefully."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 32."
+        "fallbackFeedback": "Use the quantities in the order stated and complete only the operation this check asks for.",
+        "successFeedback": "Correct — 32 markers."
       },
       "hints": [
         "Groups first, then change.",
@@ -250,12 +250,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -284,31 +284,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"There are 5 tables with 4 chairs each. 3 chairs break. How many chairs work?\" Which equation matches?",
+        "prompt": "Which story matches 6 × (5 − 2), rather than (6 × 5) − 2?",
         "options": [
           {
             "id": "o0",
-            "label": "(5 × 4) − 3",
+            "label": "Six boxes each lose 2 from their 5 pencils",
             "correct": true,
-            "feedback": "Correct — build the total first, then remove the broken ones; the parentheses hold the hidden step."
+            "feedback": "Correct — the loss happens inside every one of the six equal groups."
           },
           {
             "id": "o1",
-            "label": "5 × (4 − 3)",
+            "label": "Six boxes hold 5 pencils each, then 2 pencils are lost in all",
             "correct": false,
-            "feedback": "That breaks 3 chairs at EVERY table before multiplying — the story breaks only 3 in total."
+            "feedback": "That is (6 × 5) − 2 because the loss happens once to the total."
           },
           {
             "id": "o2",
-            "label": "5 + 4 − 3",
+            "label": "Six pencils join 5 pencils, then 2 are lost",
             "correct": false,
-            "feedback": "Adding tables to chairs mixes two different things; 5 tables OF 4 chairs is multiplication."
+            "feedback": "That story starts with addition, not six equal groups."
           },
           {
             "id": "o3",
-            "label": "(5 × 4) + 3",
+            "label": "Thirty pencils are shared among 2 boxes",
             "correct": false,
-            "feedback": "Broken chairs come OUT of the total, so the second step subtracts rather than adds."
+            "feedback": "That story uses division and does not match the expression."
           }
         ]
       },
@@ -321,12 +321,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -351,22 +351,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "There were 4 crates. One more crate arrived. Each crate holds 8 apples. How many apples are there now?",
+        "prompt": "After combining the group counts, the equation has 5 groups of 8. What is the value?",
         "answer": 40,
         "tolerance": 0,
-        "unit": "",
+        "unit": "items",
         "commonErrors": [
           {
-            "value": 13,
-            "feedback": "That added the two numbers; 5 groups OF 8 calls for multiplication."
+            "value": 39,
+            "feedback": "That is one below the required result; check the stated operation and quantities."
           },
           {
-            "value": 32,
-            "feedback": "That is one group short — the arriving crate is already counted in the 5."
+            "value": 41,
+            "feedback": "That is one above the required result; recompute the declared step carefully."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 40."
+        "fallbackFeedback": "Use the quantities in the order stated and complete only the operation this check asks for.",
+        "successFeedback": "Correct — 40 items."
       },
       "hints": [
         "Groups first, then change.",
@@ -377,12 +377,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w write equation.",
+        "actionGoal": "Translate the story into an equation whose grouping records which step happens first.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w write equation a two-step problem rather than two separate ones."
+          "Parentheses preserve the story's order and can change which quantity is adjusted."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Using the right numbers and operations in an order that tells a different story."
         ],
         "representations": [
           "symbolic",
@@ -418,8 +418,9 @@
       "concept": {
         "id": "rem-g3w-write-equation-c",
         "kind": "concept",
-        "body": "(5 × 4) − 3 and 5 × (4 − 3) use the same three numbers and mean completely different stories. The brackets carry the meaning.",
-        "narration": "(5 × 4) − 3 and 5 × (4 − 3) use the same three numbers and mean completely different stories. The brackets carry the meaning."
+        "body": "Six groups of 4 make 24. When 5 are donated once from the total, 24 − 5 = 19.",
+        "narration": "Six groups of 4 make 24. When 5 are donated once from the total, 24 − 5 = 19.",
+        "figure": "mb-multistep"
       },
       "check": {
         "id": "rem-g3w-write-equation-k",
@@ -432,31 +433,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "\"There are 5 tables with 4 chairs each. 3 chairs break. How many chairs work?\" Which equation matches?",
+          "prompt": "Four boxes hold 6 pencils each, then 5 pencils are donated. Which equation matches?",
           "options": [
             {
               "id": "o0",
-              "label": "(5 × 4) − 3",
+              "label": "(4 × 6) − 5",
               "correct": true,
-              "feedback": "Correct — build the total first, then remove the broken ones; the parentheses hold the hidden step."
+              "feedback": "Correct — build the total, then subtract once."
             },
             {
               "id": "o1",
-              "label": "5 × (4 − 3)",
+              "label": "4 × (6 − 5)",
               "correct": false,
-              "feedback": "That breaks 3 chairs at EVERY table before multiplying — the story breaks only 3 in total."
+              "feedback": "That removes five from every box."
             },
             {
               "id": "o2",
-              "label": "5 + 4 − 3",
+              "label": "4 + 6 − 5",
               "correct": false,
-              "feedback": "Adding tables to chairs mixes two different things; 5 tables OF 4 chairs is multiplication."
+              "feedback": "Equal groups require multiplication."
             },
             {
               "id": "o3",
-              "label": "(5 × 4) + 3",
+              "label": "(4 × 6) + 5",
               "correct": false,
-              "feedback": "Broken chairs come OUT of the total, so the second step subtracts rather than adds."
+              "feedback": "Donated pencils leave the total."
             }
           ]
         }

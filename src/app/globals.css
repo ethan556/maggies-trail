@@ -839,7 +839,7 @@ input[type="range"][class*="accent-"]:disabled::-moz-range-thumb { opacity: 0.55
 
 .trail-concept-stage,
 .math-stage-shell > .lesson-stage {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .trail-concept-stage {
@@ -1234,6 +1234,24 @@ html {
   overflow: visible;
   white-space: nowrap;
   width: 100%;
+}
+/* S260 — one responsive, non-clipping contract for authored figures and every
+   question widget. `display: contents` keeps this hydration boundary out of the
+   stage layout while its descendant rule still reaches dynamically loaded SVGs. */
+.svg-latex-surface {
+  display: contents;
+}
+
+.svg-latex-surface svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.svg-latex-surface foreignObject[data-svg-latex-overlay] {
+  overflow: visible;
+  pointer-events: none;
 }
 
 .svg-latex-overlay :is(.math-inline, .katex) {

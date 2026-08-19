@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A line plot puts a number line under the data: each measurement becomes one x above its value, and repeats stack up.",
-      "narration": "A line plot puts a number line under the data: each measurement becomes one x above its value, and repeats stack up."
+      "figure": "vm-line-plot-read",
+      "body": "A line plot puts the measurements on a number line. Draw one X for each result, so repeated results make a stack.",
+      "narration": "A line plot puts the measurements on a number line. Draw one X for each result, so repeated results make a stack."
     },
     {
       "id": "i1",
@@ -92,7 +92,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 6 x's above the number 11. How many data points are at 11?",
+        "prompt": "A line plot shows 6 x's above the number 11. How many measurements are at 11?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -106,7 +106,7 @@
             "feedback": "Label and count got added together; only the x's in the stack are data points."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 6."
       },
       "hints": [
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Building it is transcription — one x per record entry, no more, no less. The stacks appear on their own.",
-      "narration": "Building it is transcription — one x per record entry, no more, no less. The stacks appear on their own."
+      "figure": "vm-line-plot-read",
+      "body": "Copy the record carefully: one result becomes one X above that value. The stack heights show how often each value occurs.",
+      "narration": "Copy the record carefully: one result becomes one X above that value. The stack heights show how often each value occurs."
     },
     {
       "id": "i2",
@@ -155,27 +155,27 @@
       "conceptTag": "g2g-build-lineplot",
       "widget": {
         "type": "dotPlot",
-        "prompt": "The record 6, 6, 7, 6, 8, 7 became this plot. Verify the transcription: count the x's above 6.",
+        "prompt": "A second record has one 4, two 5s, and three 6s. Check its line plot by counting the x's above 6.",
         "values": [
-          12,
-          14,
-          16
+          8,
+          10,
+          12
         ],
         "target": [
-          3,
+          1,
           2,
-          1
+          3
         ],
-        "maxPerValue": 5,
-        "successFeedback": "Three — exactly as many x's as the record holds 6s. The transcription is faithful.",
-        "partialFeedback": "Check the plot against the record: the 6-stack must hold one x per recorded 6, no more, no less.",
+        "maxPerValue": 4,
+        "successFeedback": "Three x's stand above 6, one for each recorded 6.",
+        "partialFeedback": "Match each stack to the second record; every repeated value needs its own x.",
         "denominator": 2,
         "given": [
-          3,
+          1,
           2,
-          1
+          3
         ],
-        "askIndex": 0
+        "askIndex": 2
       },
       "cml": {
         "stage": "construct",
@@ -211,7 +211,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 5 x's above the number 10. How many data points are at 10?",
+        "prompt": "5 x's stand above 10 on a line plot. What count should be recorded for the value 10?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -225,7 +225,7 @@
             "feedback": "Label and count got added together; only the x's in the stack are data points."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 5."
       },
       "hints": [
@@ -271,33 +271,43 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You measured five ribbons: 6, 8, 6, 7, 6 cm. Which record keeps ALL the information?",
+        "prompt": "The record is 4, 4, 5. Which line-plot stacks match it?",
         "options": [
           {
-            "id": "o0",
-            "label": "6, 8, 6, 7, 6 — every measurement, repeats included",
-            "correct": true,
-            "feedback": "Correct — a record's job is completeness; the three 6s are three real ribbons, not one."
-          },
-          {
             "id": "o1",
-            "label": "6, 7, 8 — just the different values",
+            "label": "One X at 4; two at 5",
             "correct": false,
-            "feedback": "Dropping repeats erases HOW MANY ribbons hit each length — the very thing a line plot will need."
+            "feedback": "That swaps the frequencies of 4 and 5."
           },
           {
             "id": "o2",
-            "label": "The biggest: 8",
+            "label": "Three Xs at 4; none at 5",
             "correct": false,
-            "feedback": "One number describes one ribbon; four others vanish from that record."
+            "feedback": "The record contains a 5, so one X must stand above 5."
+          },
+          {
+            "id": "o0",
+            "label": "Two Xs at 4; one at 5",
+            "correct": true,
+            "feedback": "Correct — each of the two 4s gets an X, and the 5 gets one X."
           },
           {
             "id": "o3",
-            "label": "About 7 each",
+            "label": "One X at 4; one at 5",
             "correct": false,
-            "feedback": "An average-flavored summary trades away the individual measurements a plot is built from."
+            "feedback": "That drops the second recorded 4."
           }
-        ]
+        ],
+        "plotData": {
+          "values": [
+            4,
+            5
+          ],
+          "counts": [
+            2,
+            1
+          ]
+        }
       },
       "hints": [
         "One shared unit for all.",
@@ -352,7 +362,7 @@
             "feedback": "One x went uncounted — the stack holds every mark drawn above 3."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 8."
       },
       "hints": [
@@ -405,8 +415,9 @@
       "concept": {
         "id": "rem-g2g-build-lineplot-c",
         "kind": "concept",
-        "body": "Building it is transcription — one x per record entry, no more, no less. The stacks appear on their own.",
-        "narration": "Building it is transcription — one x per record entry, no more, no less. The stacks appear on their own."
+        "body": "Match each record entry to one X. If 5 appears twice in the record, the line plot needs two Xs above 5.",
+        "narration": "Match each record entry to one X. If 5 appears twice in the record, the line plot needs two Xs above 5.",
+        "figure": "vm-line-plot-read"
       },
       "check": {
         "id": "rem-g2g-build-lineplot-k",
@@ -419,22 +430,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A line plot shows 6 x's above the number 11. How many data points are at 11?",
-          "answer": 6,
+          "prompt": "A line plot has 4 Xs above 9. How many measurements equal 9?",
+          "answer": 4,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 11,
-              "feedback": "That read the LABEL under the stack — the count is how many x's stand on it."
+              "value": 9,
+              "feedback": "Nine is the value below the stack; count the four Xs above it."
             },
             {
-              "value": 17,
-              "feedback": "Label and count got added together; only the x's in the stack are data points."
+              "value": 13,
+              "feedback": "Do not add the value and the stack; count only the four Xs."
             }
           ],
-          "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
-          "successFeedback": "Correct — 6."
+          "fallbackFeedback": "Count the Xs above 9. Each X stands for one measurement.",
+          "successFeedback": "Correct — four Xs mean four measurements equal 9."
         }
       }
     }

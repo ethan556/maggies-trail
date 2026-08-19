@@ -158,6 +158,15 @@ const BARS = String.raw`\|[^|\n]+\|`;
 /** A caret power, a brace power (`∫₀^{2π}` is authored that way), or a Unicode superscript run. */
 const POWER = `(?:${SUP_CHARS}|\\^\\{[^{}\\n]*\\}|\\^${PAREN}|\\^(?:[?]|[A-Za-z0-9π∞+−-]+))`;
 const SCRIPTS = `(?:${SUB_CHARS})?(?:${POWER})?`;
+/** A single authored variable or numeral carrying a real Unicode/TeX script. Requiring the script
+ * and hard word boundaries makes this safe on arithmetic-off surfaces without guessing at prose. */
+const SCRIPTED_ATOM = `(?<![A-Za-z0-9])(?:[A-Za-z0-9θαβγλμσΔΩπ])(?:${SUB_CHARS}(?:${POWER})?|${POWER})(?![A-Za-z])`;
+/** A conservative algebraic numerator over a literal numeric denominator. This closes forms such
+ * as `(x³ + 1)⁶/18` and `3x²/18` without admitting dates, URLs, or word/word slashes. */
+const ALGEBRAIC_VALUE = `(?:${PAREN}(?:${SCRIPTS})?|[A-Za-zπθ](?:${SCRIPTS})?)`;
+const ALGEBRAIC_FACTOR = `(?:\\d+(?:\\.\\d+)?)?${ALGEBRAIC_VALUE}`;
+const ALGEBRAIC_NUMERATOR = `${ALGEBRAIC_FACTOR}(?:\\s*[·×*]\\s*${ALGEBRAIC_FACTOR})*`;
+const ALGEBRAIC_FRACTION = `(?<![\\w/])(${ALGEBRAIC_NUMERATOR})\\s*\\/\\s*(\\d+(?:\\.\\d+)?)(?![\\w/])`;
 /** `∫` plus its bounds — an atom in its own right, so `∫₀² + ∫₂⁵ = ∫₀⁵` is one island. */
 const INTEGRAL_OP = `∫(?:${INTEGRAL_SUB_CHARS})?(?:${POWER})?(?![${STRAY_SCRIPT}])`;
 /** Function names that become a TeX command verbatim. `sqrt`/`lim` have their own rules below. */
@@ -178,7 +187,7 @@ const DIFFERENTIAL = String.raw`d[A-Za-zθ](?![A-Za-z])`;
  * conservative path below; requiring √ on at least one side keeps URLs, dates and prose slashes
  * outside this always-on island while allowing the whole mathematical quantity to render as one
  * accessible stacked fraction instead of three disconnected islands. */
-const RADICAL_SOURCE = String.raw`√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)`;
+const RADICAL_SOURCE = String.raw`√(?:\((?:[^()\n]|\([^()\n]*\))*\)|\|[^|\n]+\||[A-Za-z0-9]+)`;
 const RADICAL_NUMBER = String.raw`\d+(?:\.\d+)?`;
 const RADICAL_FACTOR = String.raw`(?:${RADICAL_NUMBER})?${RADICAL_SOURCE}`;
 const RADICAL_FRACTION_TERM = String.raw`(?:\(${RADICAL_FACTOR}\)|${RADICAL_FACTOR}|${RADICAL_NUMBER})`;
@@ -360,7 +369,10 @@ function calculusShorthandToTex(source: string): string {
 
 /** Convert the corpus's explicit, author-friendly shorthand to TeX. */
 export function powerShorthandToTex(source: string): string {
-  /* S242. Authors write both `≤` and `<=`. Normalising the ASCII pair to the Unicode relation here
+  const algebraicFraction = source.match(new RegExp(`^${ALGEBRAIC_FRACTION}$`));
+  if (algebraicFraction && !hasProseWord(source)) {
+    return `\\frac{${powerShorthandToTex(algebraicFraction[1])}}{${algebraicFraction[2]}}`;
+  }  /* S242. Authors write both `≤` and `<=`. Normalising the ASCII pair to the Unicode relation here
    * — rather than adding a second spelling to the symbol table, the false-claim evaluator and every
    * future branch — means the rest of this file keeps one canonical form to reason about. Done
    * first so the `≤`/`≥` entries below pick them up. */
@@ -545,7 +557,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     /(?:(?<![A-Za-z0-9])\d+\s*)?(?<![A-Za-z])sqrt\s*\([^()\n]+\)/gi,
     candidates,
   );
-  collect(text, /√(?:\([^()\n]+\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
+  collect(text, /√(?:\((?:[^()\n]|\([^()\n]*\))*\)|\|[^|\n]+\||[A-Za-z0-9]+)/g, candidates);
   {
     const radicalFractions: Match[] = [];
     collect(text, new RegExp(RADICAL_FRACTION, "g"), radicalFractions);
@@ -587,6 +599,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     /(?<![\w.])\d+(?:\.\d+)?π(?:\([^()\n]{1,20}\))?|π\([^()\n]{1,20}\)/g,
     candidates,
   );
+
 
   /* S242 / MPB-05 — LEIBNIZ NOTATION IS AN ALWAYS-ON ISLAND, AND THE OPERATOR FORM CARRIES ITS
    * ARGUMENT.
@@ -661,7 +674,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_RELATION_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS_TERM = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:${POWER})?`;
     const ABSOLUTE = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
+    const term = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_RELATION_TERM}|${PLUS_MINUS_TERM}|${ABSOLUTE}|${SCRIPTED_ATOM}|(?<![A-Za-z])[θαβγλμσΔΩ](?:${SCRIPTS})?(?![A-Za-z])|\d+\s*\/\s*\d+(?:${POWER})?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:${POWER})?|\d+(?:\.\d+)?%?(?:${POWER})?|\([^()\n]{1,40}\)(?:${POWER})?)`;
     /* An operand is a sum, not a single term. Matching only one term made "2x + 4 >= 10" capture
      * `4 >= 10` — a FALSE claim, which the guard below then correctly refused, so the whole
      * inequality silently stayed raw. The leading sign binds tight (`(?:[-−]\s*)?`, not
@@ -686,6 +699,27 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
       if (!isFalseNumericClaim(candidate.source)) candidates.push(candidate);
     }
   }
+
+  /* S251 — EVERY LEARNER-VISIBLE MATHEMATICAL GLYPH USES THE MATH RENDERER.
+   * Larger validated expressions win overlap resolution. A false closed relation is still refused
+   * as a complete island; its operator remains a one-glyph math island so the glyph is consistently
+   * typeset without visually asserting the whole false statement. */
+  collect(text, new RegExp(SCRIPTED_ATOM, "g"), candidates);
+  {
+    const algebraicFractions: Match[] = [];
+    collect(text, new RegExp(ALGEBRAIC_FRACTION, "g"), algebraicFractions);
+    for (const candidate of algebraicFractions) {
+      if (!hasProseWord(candidate.source)) candidates.push(candidate);
+    }
+  }
+  {
+    const scriptedGroups: Match[] = [];
+    collect(text, new RegExp(`${PAREN}(?:${SUB_CHARS})?(?:${POWER})`, "g"), scriptedGroups);
+    for (const candidate of scriptedGroups) {
+      if (!hasProseWord(candidate.source)) candidates.push(candidate);
+    }
+  }
+  collect(text, /[πθαβγλμσΔΩ≤≥≠±∞∑∫√]/g, candidates);
 
   if (includeArithmetic) {
     /* S242 (ARCH-01, ruled 2026-08-15) — THE SINGLE-LETTER ATOM NEEDS WORD BOUNDARIES.
@@ -738,7 +772,7 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
     const PI_TERM = String.raw`\d*(?:\.\d+)?π(?:\([^()\n]{1,20}\))?`;
     const PLUS_MINUS = String.raw`±\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:${POWER})?`;
     const ABSOLUTE_ATOM = String.raw`\|\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z]))(?:\s*[-−+×÷·]\s*[-−]?\s*(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])))*\s*\|`;
-    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|\d+\s*\/\s*\d+(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\d+(?:\.\d+)?%?(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?|\([^()\n]{1,40}\)(?:\^(?:\((?:[^()\n]|\([^()\n]*\))*\)|(?:[?]|[A-Za-z0-9π∞+−-]+)))?)`;
+    const atom = String.raw`(?:${DERIVATIVE_OP}|${PI_FRACTION}|${PI_TERM}|${PLUS_MINUS}|${ABSOLUTE_ATOM}|${SCRIPTED_ATOM}|(?<![A-Za-z])[θαβγλμσΔΩ](?:${SCRIPTS})?(?![A-Za-z])|\d+\s*\/\s*\d+(?:${POWER})?|(?<![A-Za-z])(?:\d*[A-Za-z]|[A-Za-z]\d+)(?![A-Za-z])(?:${POWER})?|\d+(?:\.\d+)?%?(?:${POWER})?|\([^()\n]{1,40}\)(?:${POWER})?)`;
     /* S242. `<=` and `>=` lead the alternation deliberately. Tried after the single `<`/`>`, the
      * scanner matches `>` alone, then looks for an atom, finds `=`, and abandons the run — which is
      * why 75 authored strings carrying ASCII inequalities leaked at a 100% rate while every other
@@ -803,8 +837,9 @@ function mathMatches(text: string, includeArithmetic: boolean): Match[] {
   const byStartThenLongest = (a: Match, b: Match) =>
     a.start - b.start || b.end - b.start - (a.end - a.start);
   const accepted: Match[] = [];
+  const explicitRadicals = candidates.filter((candidate) => candidate.source.startsWith("√(") && candidate.source.slice(2, -1).includes("("));
   for (const candidate of [
-    ...calculusMatches(text).sort(byStartThenLongest),
+    ...[...calculusMatches(text), ...explicitRadicals].sort(byStartThenLongest),
     ...candidates.sort(byStartThenLongest),
   ]) {
     if (

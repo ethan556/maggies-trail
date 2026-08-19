@@ -141,7 +141,7 @@ describe("S246 derivatives-in-context related-rates canary", () => {
       expect(WidgetSpec.safeParse(first.widget).success, seed).toBe(true);
       expect(solveCalculusPrompt(LINEARISATION_FORM, first.widget.prompt), seed).toBe(first.answer);
       prompts.add(first.widget.prompt);
-      jobs.add(first.widget.prompt.includes("find f'") ? "slope" : first.widget.prompt.includes("sqrt") ? "sqrt-estimate" : "cubic-estimate");
+      jobs.add(/find f(?:'|′)/.test(first.widget.prompt) ? "slope" : /sqrt|√/.test(first.widget.prompt) ? "sqrt-estimate" : "cubic-estimate");
     }
     expect(prompts.size).toBeGreaterThanOrEqual(10);
     expect(jobs).toEqual(new Set(["slope", "sqrt-estimate", "cubic-estimate"]));

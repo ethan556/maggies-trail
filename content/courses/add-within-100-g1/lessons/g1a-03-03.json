@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A take-away story gives a starting total and how many left, and asks what remains.",
-      "narration": "A take-away story gives a starting total and how many left, and asks what remains."
+      "figure": "koa-take-away-removal",
+      "body": "A take-away story begins with a whole, removes one part, and asks what remains.",
+      "narration": "A take-away story begins with a whole, removes one part, and asks what remains."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That gives the number that left, not the number remaining."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 19 frogs sit by a pond. 12 hop away. How many are left7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Find the starting total and the amount removed.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The starting number and the amount removed are both known, so what remains is found by subtracting.",
-      "narration": "The starting number and the amount removed are both known, so what remains is found by subtracting."
+      "figure": "bar-part-whole",
+      "body": "A part-whole bar can reverse the story: if the whole is 13 and one part is 6, the missing part is 7.",
+      "narration": "A part-whole bar can reverse the story: if the whole is 13 and one part is 6, the missing part is 7."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-story-sub",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "A story starts with a total and some leave. Hop back by the amount that left.",
-        "min": 32,
-        "max": 54,
-        "start": 52,
-        "hop": 1,
-        "hops": 18,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 52 and count back 18: you land on 34.",
-        "successFeedback": "Landed on 34 — what remains after some left, found by subtracting."
+        "type": "tapDiagram",
+        "prompt": "Seventeen frogs begin at a pond and seven leave. Tap how many remain.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "9",
+            "icon": "9",
+            "count": 1,
+            "correct": false,
+            "feedback": "9 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "10",
+            "icon": "10",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — 17 − 7 = 10 frogs remain."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "11",
+            "icon": "11",
+            "count": 1,
+            "correct": false,
+            "feedback": "11 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — 17 − 7 = 10 frogs remain."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "17 frogs sit by a pond. 7 hop away. How many are left?",
+        "prompt": "Seventeen frogs start at a pond; seven leave. How many remain?",
         "answer": 10,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That gives the number that left, not the number remaining."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 17 frogs sit by a pond. 7 hop away. How many are left10."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 10."
       },
       "hints": [
         "Find the starting total and the amount removed.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "19 frogs sit by a pond. 3 hop away. How many are left?",
+        "prompt": "Nineteen frogs start; only three leave. What remains?",
         "answer": 16,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That gives the number that left, not the number remaining."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 19 frogs sit by a pond. 3 hop away. How many are left16."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 16."
       },
       "hints": [
         "Find the starting total and the amount removed.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "18 frogs sit by a pond. 6 hop away. How many are left?",
+        "prompt": "Eighteen frogs split into 6 that leave and the rest that stay. How many stay?",
         "answer": 12,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That gives the number that left, not the number remaining."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 18 frogs sit by a pond. 6 hop away. How many are left12."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 12."
       },
       "hints": [
         "Find the starting total and the amount removed.",
@@ -404,8 +434,8 @@
               "feedback": "That gives the number that left, not the number remaining."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 19 frogs sit by a pond. 12 hop away. How many are left7."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 7."
         }
       }
     }

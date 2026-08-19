@@ -85,12 +85,12 @@ export default function DailyClient() {
       <div aria-busy="true">
         <p className="sr-only">Setting out today's challenges…</p>
         <div aria-hidden className="flex gap-2">
-          <div className="h-11 w-24 animate-pulse rounded-pill bg-ink/8 dark:bg-paper/10" />
-          <div className="h-11 w-24 animate-pulse rounded-pill bg-ink/8 dark:bg-paper/10" />
+          <div className="h-11 w-24 motion-safe:animate-pulse rounded-pill bg-ink/8 dark:bg-paper/10" />
+          <div className="h-11 w-24 motion-safe:animate-pulse rounded-pill bg-ink/8 dark:bg-paper/10" />
         </div>
         <div aria-hidden className="mt-4 grid gap-3 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-28 animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
+            <div key={i} className="h-28 motion-safe:animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
           ))}
         </div>
       </div>

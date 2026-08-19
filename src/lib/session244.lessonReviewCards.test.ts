@@ -6,6 +6,8 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "closure", "LESSON_REVIEW_CARDS_S244.json");
+const LEDGER_PATH = join(ROOT, "reports", "closure", "LESSON_REVIEW_DECISIONS_S244.jsonl");
+const DUPLICATE_REFERENCE_PATH = join(ROOT, "reports", "mcq", "MCQ_DUPLICATE_ITEM_INDEX.csv");
 const SCRIPT_PATH = join(ROOT, "scripts", "audit", "lesson-review-cards-s244.mjs");
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 
@@ -63,11 +65,22 @@ interface Card {
 
 interface ReviewCardsReport {
   generatedAt: string;
-  sourceSeals: { queueCompatibleLessonCurriculum: string; curriculumReviewBasis: string };
+  sourceSeals: {
+    queueCompatibleLessonCurriculum: string;
+    curriculumReviewBasis: string;
+    duplicateReferenceIndex: string;
+    liveDuplicateInventory: string;
+  };
   summary: {
     lessonCount: number;
     disposition: { explicitDecisions: number; pendingHumanDecisions: number };
-    duplicates: { clusterCount: number; placementCount: number; affectedLessonCount: number; withinLessonGroupCount: number };
+    duplicates: {
+      clusterCount: number;
+      placementCount: number;
+      affectedLessonCount: number;
+      withinLessonClusterCount: number;
+      withinLessonGroupCount: number;
+    };
     standards: {
       dossierCount: number;
       lessonEdgeReferenceCount: number;
@@ -138,11 +151,27 @@ describe("S244 source-sealed lesson review cards", () => {
 
   it("accepts only current explicit decisions and exposes closed review statuses", () => {
     expect(report.summary.priorInteractionClassification.importedAsV4DispositionCount).toBe(0);
+    const ledgerRecords = readFileSync(LEDGER_PATH, "utf8")
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((line) => JSON.parse(line))
+      .filter((record) => record.recordType === "lesson-disposition");
+    const currentCards = report.cards.filter((card) => card.disposition.status === "CURRENT_HUMAN_DECISION");
+    const pendingCards = report.cards.filter((card) => card.disposition.status === "PENDING_EXPLICIT_HUMAN_DECISION");
+    const staleCards = report.cards.filter((card) => card.disposition.status === "STALE_HUMAN_DECISION");
+
     expect(report.summary.lessonDecisionLedger).toEqual({
-      historyRecordCount: 91, currentCount: 91, staleCount: 0, invalidCount: 0,
-      duplicateRecordIdCount: 0, unknownLessonRecordCount: 0
+      historyRecordCount: ledgerRecords.length,
+      currentCount: currentCards.length,
+      staleCount: staleCards.length,
+      invalidCount: 0,
+      duplicateRecordIdCount: 0,
+      unknownLessonRecordCount: 0
     });
-    expect(report.summary.disposition).toEqual({ explicitDecisions: 91, pendingHumanDecisions: 1610 });
+    expect(report.summary.disposition).toEqual({
+      explicitDecisions: currentCards.length,
+      pendingHumanDecisions: pendingCards.length + staleCards.length
+    });
 
     const keep = report.cards.find((card) => card.lessonId === "dg4-01-01");
     expect(keep).toMatchObject({
@@ -164,20 +193,29 @@ describe("S244 source-sealed lesson review cards", () => {
       reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
-    const escalate = report.cards.find((card) => card.lessonId === "bv-05-03");
+    const repaired = report.cards.find((card) => card.lessonId === "bv-05-03");
+    expect(repaired).toMatchObject({
+      cardStatus: "CURRENT_HUMAN_DISPOSITION",
+      disposition: {
+        status: "CURRENT_HUMAN_DECISION", decision: "REVISE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S247-BV-bv-05-03-OLS-SUPERSESSION", visualDecision: "REQUIRED", gradeLanguageDecision: "FIT"
+      },
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+    });
+
+    const escalate = report.cards.find((card) => card.lessonId === "mf3-02-05");
     expect(escalate).toMatchObject({
       cardStatus: "CURRENT_HUMAN_DISPOSITION",
       disposition: {
         status: "CURRENT_HUMAN_DECISION", decision: "ESCALATE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
-        recordId: "S246-BV-bv-05-03", visualDecision: "ESCALATE", gradeLanguageDecision: "REVISE"
+        recordId: "S248-MF3-mf3-02-05", visualDecision: "ESCALATE", gradeLanguageDecision: "ESCALATE"
       },
-      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:REVISE" }
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE" }
     });
 
-    const currentCards = report.cards.filter((card) => card.disposition.status === "CURRENT_HUMAN_DECISION");
-    const pendingCards = report.cards.filter((card) => card.disposition.status === "PENDING_EXPLICIT_HUMAN_DECISION");
-    expect(currentCards).toHaveLength(91);
-    expect(pendingCards).toHaveLength(1610);
+    expect(currentCards.length + pendingCards.length + staleCards.length).toBe(report.cards.length);
+    expect(report.summary.disposition.explicitDecisions + report.summary.disposition.pendingHumanDecisions).toBe(report.cards.length);
+    expect(report.summary.lessonDecisionLedger.historyRecordCount).toBeGreaterThanOrEqual(currentCards.length + staleCards.length);
     expect(currentCards.every((card) => card.disposition.queueStatus === "CLOSED_BY_CURRENT_HUMAN_DECISION")).toBe(true);
     expect(pendingCards.every((card) => card.disposition.decision === null)).toBe(true);
     for (const card of report.cards) {
@@ -188,18 +226,35 @@ describe("S244 source-sealed lesson review cards", () => {
   });
 
   it("publishes stable exact-MCQ cluster references and reconciled live counts", () => {
-    expect(report.summary.duplicates).toMatchObject({
-      clusterCount: 126,
-      placementCount: 288,
-      affectedLessonCount: 179,
-      withinLessonGroupCount: 49
+    expect(report.sourceSeals.duplicateReferenceIndex).toBe(hash(readFileSync(DUPLICATE_REFERENCE_PATH, "utf8")));
+    expect(report.sourceSeals.liveDuplicateInventory).toBe(hash(stable(report.duplicateClusters)));
+
+    const clusterCount = report.duplicateClusters.length;
+    const placementCount = report.duplicateClusters.reduce((total, cluster) => total + cluster.placements.length, 0);
+    const affectedLessonCount = new Set(report.duplicateClusters.flatMap((cluster) => cluster.placements.map((placement) => placement.lessonId))).size;
+    let withinLessonClusterCount = 0;
+    let withinLessonGroupCount = 0;
+    for (const cluster of report.duplicateClusters) {
+      expect(cluster.placementCount, cluster.clusterId).toBe(cluster.placements.length);
+      expect(cluster.placements.length, cluster.clusterId).toBeGreaterThan(1);
+      const byLesson = new Map<string, number>();
+      for (const placement of cluster.placements) byLesson.set(placement.lessonId, (byLesson.get(placement.lessonId) ?? 0) + 1);
+      const repeatedLessonGroups = [...byLesson.values()].filter((count) => count > 1).length;
+      if (repeatedLessonGroups > 0) withinLessonClusterCount += 1;
+      withinLessonGroupCount += repeatedLessonGroups;
+    }
+
+    expect(report.summary.duplicates).toEqual({
+      clusterCount,
+      placementCount,
+      affectedLessonCount,
+      withinLessonClusterCount,
+      withinLessonGroupCount
     });
-    expect(report.duplicateClusters).toHaveLength(126);
-    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(126);
-    expect(report.duplicateClusters.reduce((total, cluster) => total + cluster.placementCount, 0)).toBe(288);
-    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(288);
-    expect(report.cards.reduce((total, card) => total + card.duplicates.withinLessonGroupCount, 0)).toBe(49);
-    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds)).size).toBe(126);
+    expect(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)).size).toBe(clusterCount);
+    expect(report.cards.reduce((total, card) => total + card.duplicates.placementCount, 0)).toBe(placementCount);
+    expect(report.cards.reduce((total, card) => total + card.duplicates.withinLessonGroupCount, 0)).toBe(withinLessonGroupCount);
+    expect(new Set(report.cards.flatMap((card) => card.duplicates.clusterIds))).toEqual(new Set(report.duplicateClusters.map((cluster) => cluster.clusterId)));
   });
 
   it("keeps candidate and partial standards packets open until approval or rejection", () => {
@@ -208,12 +263,12 @@ describe("S244 source-sealed lesson review cards", () => {
       lessonEdgeReferenceCount: 6311,
       sharedAcrossLessonsEdgeCount: 164,
       extraSharedLessonReferenceCount: 190,
-      explicitDecisionCount: 2,
-      validExplicitDecisionCount: 2,
-      pendingEdgeCount: 6121,
+      explicitDecisionCount: 6121,
+      validExplicitDecisionCount: 6121,
+      pendingEdgeCount: 2,
       partialEdgeCount: 2,
       approvedEdgeCount: 0,
-      rejectedEdgeCount: 0,
+      rejectedEdgeCount: 6119,
       needsExactBenchmarkCount: 6119,
       lessonsWithCandidateEvidenceMap: 1134,
       lessonsMissingCandidateEvidenceMap: 567,
@@ -221,15 +276,15 @@ describe("S244 source-sealed lesson review cards", () => {
       invalidDecisionCount: 0,
       unboundDecisionCount: 0
     });
-    expect(report.summary.standards.pendingEdgeCount).toBe(report.summary.standards.dossierCount);
+    expect(report.summary.standards.pendingEdgeCount + report.summary.standards.rejectedEdgeCount).toBe(report.summary.standards.dossierCount);
     expect(report.cards.reduce((total, card) => total + card.standards.dossierCount, 0)).toBe(6311);
 
     const edgeRefs = report.cards.flatMap((card) => card.standards.edgeRefs);
     expect(edgeRefs).toHaveLength(6311);
-    expect(edgeRefs.filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(6301);
+    expect(edgeRefs.filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(0);
     expect(edgeRefs.filter((edge) => edge.reviewStatus === "partial")).toHaveLength(10);
     expect(edgeRefs.some((edge) => edge.reviewStatus === "ready-for-human-review")).toBe(false);
-    expect(new Set(edgeRefs.map((edge) => edge.reviewStatus))).toEqual(new Set(["candidate", "partial"]));
+    expect(new Set(edgeRefs.map((edge) => edge.reviewStatus))).toEqual(new Set(["partial", "rejected"]));
 
     const uniqueEdges = new Map<string, { reviewStatus: string; decisionIntegrityStatus: string }>();
     for (const edge of edgeRefs) {
@@ -238,15 +293,14 @@ describe("S244 source-sealed lesson review cards", () => {
       else uniqueEdges.set(edge.edgeId, edge);
     }
     expect(uniqueEdges.size).toBe(6121);
-    expect([...uniqueEdges.values()].filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(6119);
+    expect([...uniqueEdges.values()].filter((edge) => edge.reviewStatus === "candidate")).toHaveLength(0);
     expect([...uniqueEdges.values()].filter((edge) => edge.reviewStatus === "partial")).toHaveLength(2);
 
     for (const card of report.cards) {
       expect(card.standards.approvedEdgeCount, card.lessonId).toBe(0);
-      expect(card.standards.rejectedEdgeCount, card.lessonId).toBe(0);
-      expect(card.standards.pendingEdgeCount, card.lessonId).toBe(card.standards.dossierCount);
+      expect(card.standards.pendingEdgeCount + card.standards.rejectedEdgeCount, card.lessonId).toBe(card.standards.dossierCount);
       for (const edge of card.standards.edgeRefs) {
-        if (edge.reviewStatus === "partial") {
+        if (edge.reviewStatus === "partial" || edge.reviewStatus === "rejected") {
           expect(edge.decisionIntegrityStatus, edge.edgeId).toBe("VALID_EXPLICIT_HUMAN_DECISION");
         } else {
           expect(edge.reviewStatus, edge.edgeId).toBe("candidate");

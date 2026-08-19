@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-789-to-ten",
       "body": "The single marks finish with 7, 8, 9. Nine is the last amount one mark can name — the next number will need two.",
       "narration": "The single marks finish with 7, 8, 9. Nine is the last amount one mark can name — the next number will need two."
     },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-readable-orientation",
       "body": "A flipped or backwards mark risks being misread; the reader only has the shape, so the shape must be right.",
       "narration": "A flipped or backwards mark risks being misread; the reader only has the shape, so the shape must be right."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-789",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Build the amount the numeral 8 promises.",
-        "target": 8,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Put the check routine for a readable numeral in order.",
+        "items": [
           {
-            "count": 7,
-            "feedback": "Seven is one short of the promise; the mark 8 names one more."
+            "id": "stage-3",
+            "label": "Read the intended number"
           },
           {
-            "count": 9,
-            "feedback": "Nine overshoots; the mark 8 stops the count at eight."
+            "id": "stage-2",
+            "label": "Check its direction"
+          },
+          {
+            "id": "stage-1",
+            "label": "Write the numeral"
           }
         ],
-        "missFeedback": "Match the mark exactly: eight dots, then stop.",
-        "successFeedback": "Eight — the mark's double loop names this exact count."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Write the numeral, then Check its direction, then Read the intended number.",
+        "successFeedback": "Yes — write, check the direction, then confirm the numeral can be read."
       },
       "cml": {
         "stage": "construct",
@@ -208,7 +221,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 7 dots. Which numeral names that amount?",
+        "prompt": "A seven-bead string needs a numeral tag. Which tag is exact?",
         "options": [
           {
             "id": "o0",
@@ -364,8 +377,8 @@
             "feedback": "9 counts 1 extra. Touch each dot once in your mind — the group holds 8."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Watch again and group the ten-frame: it shows 8 dots.",
+        "successFeedback": "Yes — 8! The ten-frame and numeral agree."
       },
       "hints": [
         "The numeral records the count.",

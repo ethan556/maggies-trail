@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-paired-groups-leftover",
       "body": "“One more” also compares: if Ben has one more grape than Ana's six, Ben has seven — the very next number.",
       "narration": "“One more” also compares: if Ben has one more grape than Ana's six, Ben has seven — the very next number."
     },
@@ -91,7 +91,7 @@
         "options": [
           {
             "id": "o0",
-          "label": "Ben has 7 grapes",
+            "label": "Ben has 7 grapes",
             "correct": true,
             "feedback": "Correct — “one more” moves the count to the very next number, 7."
           },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-one-more-compare",
       "body": "Pairing the groups one to one shows it: every grape of Ana's matches one of Ben's, and Ben has a single grape left over.",
       "narration": "Pairing the groups one to one shows it: every grape of Ana's matches one of Ben's, and Ben has a single grape left over."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-one-more-group",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Ana has 6. Show Ben's group — ONE MORE than Ana's.",
-        "target": 7,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Ana has six grapes. Which paired record proves Ben has one more?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 6,
-            "feedback": "That builds a group that matches Ana's exactly — the pairing would leave nothing over, but Ben holds one extra."
+            "id": "less",
+            "x": 20,
+            "y": 50,
+            "label": "5 paired; none left",
+            "icon": "5 < 6",
+            "count": 5,
+            "correct": false,
+            "feedback": "Five is one less than six, not one more."
           },
           {
+            "id": "more",
+            "x": 50,
+            "y": 50,
+            "label": "6 paired; 1 left",
+            "icon": "6 + 1",
+            "count": 7,
+            "correct": true,
+            "feedback": "Six pairs and one leftover show that Ben has seven."
+          },
+          {
+            "id": "two",
+            "x": 80,
+            "y": 50,
+            "label": "6 paired; 2 left",
+            "icon": "6 + 2",
             "count": 8,
-            "feedback": "That is TWO more than six; one more stops at seven."
+            "correct": false,
+            "feedback": "Two leftovers show two more, not one more."
           }
         ],
-        "missFeedback": "Build Ana's six, then add exactly one more.",
-        "successFeedback": "Seven — one more than six is the next counting number."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Six pairs and one leftover show that Ben has seven."
       },
       "cml": {
         "stage": "construct",
@@ -344,7 +368,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "There are 6 stars and 5 hearts. Which statement is true?",
+        "prompt": "Pair 5 hearts with 5 of the 6 stars. What does the leftover star prove?",
         "options": [
           {
             "id": "o0",
@@ -440,7 +464,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "Ben has 7 grapes",
+              "label": "Ben has 7 grapes",
               "correct": true,
               "feedback": "Correct — “one more” moves the count to the very next number, 7."
             },

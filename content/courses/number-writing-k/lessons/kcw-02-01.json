@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-count-then-write",
       "body": "Write how many: count the group carefully, and the numeral you write is the last number you said. Counting and writing join hands.",
       "narration": "Write how many: count the group carefully, and the numeral you write is the last number you said. Counting and writing join hands."
     },
@@ -87,7 +87,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Kai counts her blocks: 1, 2, 3, 4, 5, 6. How many blocks does she have?",
+        "prompt": "After counting six blocks, what should Kai write?",
         "options": [
           {
             "id": "o0",
@@ -150,33 +150,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-no-early-guess",
       "body": "Never write before the count finishes — the numeral copies the count's final word, not a guess.",
       "narration": "Never write before the count finishes — the numeral copies the count's final word, not a guess."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-count",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count the group of 9, then show the amount your numeral must record.",
-        "target": 9,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The completed count ends at 9. Tap the numeral that records it.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 8,
-            "feedback": "The count did not stop at eight; one more dot carried it to nine."
+            "id": "card-8",
+            "x": 20,
+            "y": 50,
+            "label": "numeral 8",
+            "icon": "8",
+            "count": 1,
+            "correct": false,
+            "feedback": "8 names a different amount. Read the target again, then match it exactly."
           },
           {
-            "count": 10,
-            "feedback": "Ten overshoots the count; the numeral copies the last word said, nine."
+            "id": "card-9",
+            "x": 50,
+            "y": 50,
+            "label": "numeral 9",
+            "icon": "9",
+            "count": 1,
+            "correct": true,
+            "feedback": "Nine is the final number said, so 9 records the count."
+          },
+          {
+            "id": "card-10",
+            "x": 80,
+            "y": 50,
+            "label": "numeral 10",
+            "icon": "10",
+            "count": 1,
+            "correct": false,
+            "feedback": "10 names a different amount. Read the target again, then match it exactly."
           }
         ],
-        "missFeedback": "Count to the end first; the final word is the mark to write.",
-        "successFeedback": "Nine — the count ended there, so the written mark must say 9."
+        "missFeedback": "Compare the numeral with the amount or place-value clue before choosing.",
+        "successFeedback": "Nine is the final number said, so 9 records the count."
       },
       "cml": {
         "stage": "construct",
@@ -212,7 +236,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 8 dots. Which numeral names that amount?",
+        "prompt": "Eight dots fill the card. Which numeral is its exact label?",
         "options": [
           {
             "id": "o0",

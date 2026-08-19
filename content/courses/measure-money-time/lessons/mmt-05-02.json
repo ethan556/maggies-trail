@@ -96,47 +96,63 @@
   {
    "id": "i3",
    "kind": "interactive",
-   "body": "A short bar.",
+   "body": "Compare two bar heights.",
    "widget": {
-    "type": "graphRead",
-    "mode": "bar",
-    "prompt": "Follow the top of the bar across to the scale. Tap the number it reaches.",
-    "drawn": 1,
-    "unitValue": 1,
-    "categoryLabel": "This bar",
-    "unitNoun": "vote",
-    "unitNounPlural": "votes",
-    "scaleMax": 12,
-    "commonResults": [],
-    "fallbackFeedback": "Slide your eye straight across from the top of the bar to the numbers beside it: it lands on 1.",
-    "successFeedback": "1 — read straight across from the top of the bar. The bar's height IS the number; the gridlines just say which one."
+    "type": "lengthCompare",
+    "mode": "difference",
+    "orientation": "h",
+    "prompt": "A bar graph shows 4 votes for cats and 7 votes for dogs. How many more votes for dogs?",
+    "unitLabel": "votes",
+    "items": [
+     {
+      "id": "dogs",
+      "label": "Dogs",
+      "length": 7
+     },
+     {
+      "id": "cats",
+      "label": "Cats",
+      "length": 4
+     }
+    ],
+    "answerId": "dogs",
+    "targetDifference": 3,
+    "diffMax": 7,
+    "successFeedback": "3 more votes — compare the gap from 4 to 7.",
+    "countsWholeFeedback": "7 is the dogs total. The question asks for the gap: 7 − 4 = 3.",
+    "missFeedback": "Start at the end of the cats bar and count to the end of the dogs bar."
    }
   },
   {
    "id": "k2",
    "kind": "check",
-   "body": "A tall bar.",
+   "body": "Catch a scale mistake.",
    "conceptTag": "mmt-bar-graph",
    "explanationVariants": [
     "The bar reaches 8, each gridline worth 1: 8.",
     "Read the gridline directly: 8."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "A bar reaches 8 on the bar graph, where each gridline is worth 1. How many is that?",
-    "answer": 8,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "mcq",
+    "prompt": "A bar reaches 8. Each gridline is worth 1. Maya says the value is 16. Is Maya right?",
+    "options": [
      {
-      "value": 16,
-      "feedback": "Each gridline is worth 1, not 2 — don't double the reading. The bar reaches 8, so it's 8."
+      "id": "a",
+      "label": "No — the value is 8",
+      "correct": true,
+      "feedback": "Right — each line is 1, so a bar at 8 means 8, not 16."
      },
      {
-      "value": 7,
-      "feedback": "Read the exact gridline the bar reaches — it's 8."
+      "id": "b",
+      "label": "Yes — double 8",
+      "feedback": "Doubling would only work if each line were worth 2. Here each line is 1."
+     },
+     {
+      "id": "c",
+      "label": "No — the value is 1",
+      "feedback": "One is the value of each gridline, not the height the bar reaches."
      }
-    ],
-    "fallbackFeedback": "The bar reaches 8, and each gridline is worth 1, so the value is 8."
+    ]
    },
    "variant": {
     "gen": "g2-measure-money-time",
@@ -146,28 +162,34 @@
   {
    "id": "k3",
    "kind": "check",
-   "body": "A medium bar.",
+   "body": "Read a named bar.",
    "conceptTag": "mmt-bar-graph",
    "explanationVariants": [
     "The bar reaches 5, each gridline worth 1: 5.",
     "Read the gridline directly: 5."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "A bar reaches 5 on the bar graph, where each gridline is worth 1. How many is that?",
-    "answer": 5,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "graphRead",
+    "mode": "bar",
+    "prompt": "The plants bar ends at the gridline marked 5. Each gridline is 1 plant. How many plants are shown?",
+    "drawn": 5,
+    "unitValue": 1,
+    "categoryLabel": "Plants",
+    "unitNoun": "plant",
+    "unitNounPlural": "plants",
+    "scaleMax": 12,
+    "commonResults": [
      {
       "value": 10,
-      "feedback": "Each gridline is worth 1, not 2 — don't double the reading. The bar reaches 5, so it's 5."
+      "feedback": "Do not double the height. Each gridline is 1, so the bar shows 5 plants."
      },
      {
       "value": 4,
-      "feedback": "Read the exact gridline the bar reaches — it's 5."
+      "feedback": "The bar reaches the gridline marked 5."
      }
     ],
-    "fallbackFeedback": "The bar reaches 5, and each gridline is worth 1, so the value is 5."
+    "fallbackFeedback": "Read the top of the plants bar: it reaches 5.",
+    "successFeedback": "5 plants — one gridline per plant, read directly from the bar."
    },
    "variant": {
     "gen": "g2-measure-money-time",
@@ -177,28 +199,33 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "A very tall bar.",
+   "body": "Use bar heights to find a gap.",
    "conceptTag": "mmt-bar-graph",
    "explanationVariants": [
     "The bar reaches 11, each gridline worth 1: 11.",
     "Read the gridline directly: 11."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "A bar reaches 11 on the bar graph, where each gridline is worth 1. How many is that?",
-    "answer": 11,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "mcq",
+    "prompt": "The blue bar reaches 11 and the green bar reaches 6. How many more does the blue bar show?",
+    "options": [
      {
-      "value": 22,
-      "feedback": "Each gridline is worth 1, not 2 — don't double the reading. The bar reaches 11, so it's 11."
+      "id": "a",
+      "label": "5",
+      "correct": true,
+      "feedback": "Yes — 11 − 6 = 5 more."
      },
      {
-      "value": 10,
-      "feedback": "Read the exact gridline the bar reaches — it's 11."
+      "id": "b",
+      "label": "17",
+      "feedback": "17 adds the bar heights. “How many more” asks for the gap: 11 − 6."
+     },
+     {
+      "id": "c",
+      "label": "11",
+      "feedback": "11 is the blue bar's total, not how many more it shows."
      }
-    ],
-    "fallbackFeedback": "The bar reaches 11, and each gridline is worth 1, so the value is 11."
+    ]
    },
    "hints": [
     "Each gridline is worth exactly 1.",

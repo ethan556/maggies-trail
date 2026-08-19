@@ -2,6 +2,7 @@
 
 import { Fragment, type PointerEvent as ReactPointerEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import FigureView from "@/components/FigureView";
+import { NumberLineAxis } from "@/components/NumberLineSvgPrimitives";
 import { SvgLatexSurface } from "@/components/math/SvgLatexSurface";
 import { FIGURE_IDS } from "@/components/figureIds";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
@@ -286,8 +287,6 @@ export type StageTone = "neutral" | "success" | "error" | "info";
  *  needs. `widgets.labelCollision.s237.test.tsx` re-derives the same boxes from the rendered
  *  attributes and fails on any overlap. */
 const LABEL_EM = 0.72;
-/** Height of a label's box as a multiple of its font size — ascender to descender. */
-const LABEL_LINE = 1.26;
 /** Minimum clear space between two drawn labels, in viewBox units. */
 const LABEL_GAP = 2;
 const labelHalfWidth = (text: string, fontSize: number) => (text.length * fontSize * LABEL_EM) / 2;
@@ -324,6 +323,66 @@ function niceTicks(min: number, max: number, opts?: { target?: number; ends?: bo
 }
 /** A tick's printed form: an exact value, never a rounded stand-in (rule A10). */
 const tickText = (v: number) => String(Number(v.toFixed(4)));
+/** Conventional number-line scale shared by placement, landing, and hop-size modes. The visible
+ * label step is always on a 1-2-5 ladder; endpoints and an in-range origin are then added exactly
+ * once. Minor ticks use the next useful ladder rung and never exceed a bounded 121 marks. */
+type NumberLineScaleMark = { value: number; label: string; major: boolean };
+const numberLinePlainLabel = (value: number, denominator?: number) =>
+  denominator === undefined ? tickText(value).replace(/^-/, "−") : hopLabel(Math.round(value), denominator);
+const numberLineNiceStep = (span: number, target: number) => {
+  const raw = span / Math.max(2, target);
+  const magnitude = 10 ** Math.floor(Math.log10(Math.max(raw, Number.EPSILON)));
+  return ([1, 2, 5, 10].map((factor) => factor * magnitude).find((step) => step >= raw - 1e-9) ?? 10 * magnitude);
+};
+function numberLineScalePlan(min: number, max: number, denominator?: number, authoredMinorStep = 1): NumberLineScaleMark[] {
+  const lo = Math.min(min, max), hi = Math.max(min, max), span = hi - lo;
+  if (!(span > 0)) return [{ value: lo, label: numberLinePlainLabel(lo, denominator), major: true }];
+  const latticeStep = denominator !== undefined ? 1 : authoredMinorStep < 1 ? authoredMinorStep : 1;
+  const majorStep = latticeStep < 1
+    ? numberLineNiceStep(span, 8)
+    : span <= 10 ? 1 : span <= 20 ? 2 : numberLineNiceStep(span, 8);
+  const minorStep = span / latticeStep <= 101 ? latticeStep : numberLineNiceStep(span, 12);
+  const values = new Map<number, boolean>();
+  const add = (value: number, major: boolean) => {
+    const rounded = Number(value.toFixed(6));
+    if (rounded < lo - 1e-9 || rounded > hi + 1e-9) return;
+    values.set(rounded, Boolean(values.get(rounded)) || major);
+  };
+  add(lo, true); add(hi, true);
+  if (lo <= 0 && hi >= 0) add(0, true);
+  for (let value = Math.ceil(lo / minorStep - 1e-9) * minorStep; value <= hi + 1e-9; value += minorStep) add(value, false);
+  for (let value = Math.ceil(lo / majorStep - 1e-9) * majorStep; value <= hi + 1e-9; value += majorStep) add(value, true);
+  return [...values].sort(([a], [b]) => a - b).map(([value, major]) => ({
+    value,
+    label: numberLinePlainLabel(value, denominator),
+    major,
+  }));
+}
+const numberLineAxisTitle = (axisLabel: string | undefined, unit: string | undefined, fraction: boolean) => {
+  const label = axisLabel ?? (fraction ? "Fraction" : "Position");
+  return unit ? `${label} (${unit})` : label;
+};
+
+/** SVG-native stacked fraction label. The parent SVG owns the accessible state sentence, so this
+ * group is aria-hidden while data-label keeps visible/ARIA parity machine-checkable. */
+function NumberLineSvgLabel({ x, y, label, testId, viewWidth = 360 }: { x: number; y: number; label: string; testId: string; viewWidth?: number }) {
+  const estimatedHalfWidth = Math.max(5, labelHalfWidth(label, 10));
+  const safeX = Math.min(viewWidth - 8 - estimatedHalfWidth, Math.max(8 + estimatedHalfWidth, x));
+  const match = label.match(/^(−?)(?:(\d+) )?(\d+)\/(\d+)$/);
+  if (!match) return <text data-testid={testId} data-label={label} aria-hidden="true" x={safeX} y={y} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.76}>{label}</text>;
+  const [, sign, whole, numerator, denominator] = match;
+  const prefix = `${sign}${whole ? `${whole} ` : ""}`;
+  const prefixWidth = prefix.length * 5.5;
+  const fractionX = safeX + prefixWidth / 2;
+  return (
+    <g data-testid={testId} data-label={label} aria-hidden="true">
+      {prefix && <text x={safeX - 7} y={y + 1} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.76}>{prefix.trim()}</text>}
+      <text x={fractionX} y={y - 5} fontSize={8} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.78}>{numerator}</text>
+      <line data-testid="nl-fraction-bar" x1={fractionX - 5} y1={y - 2} x2={fractionX + 5} y2={y - 2} stroke={PALETTE.ink} strokeOpacity={0.76} strokeWidth={0.8} />
+      <text x={fractionX} y={y + 7} fontSize={8} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.78}>{denominator}</text>
+    </g>
+  );
+}
 /** Boxes standing for everything OUTSIDE the viewBox, so an s238Seat search treats the canvas edge
  * as an obstacle and a label that would clip simply takes another seat (rule B2). */
 function s238Walls(w: number, h: number): S238Box[] {
@@ -1522,7 +1581,7 @@ function ElapsedTimeW({ spec, value, onChange, disabled, tone }: WProps<TElapsed
         <text x={238} y={124} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.berry}>finish {hhmm(endHour, endMin)}</text>
         <line x1={116} y1={62} x2={184} y2={62} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
         <text x={150} y={54} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>{dur}</text>
-      
+
         {/* Reveal ghost: the asked-for duration and the finish it produces —
             mirrors evaluate (elapsed === targetMinutes). */}
         {tone === "info" && elapsed !== spec.targetMinutes && (() => {
@@ -1566,6 +1625,7 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
   const dx = Math.abs(x - ax), dy = Math.abs(y - ay);
   const dist = Math.sqrt(dx * dx + dy * dy);
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
+
 
   // WS-C (S239): the MOVING POINT is the learner's object — the legs and the hypotenuse are
   // consequences of where it sits. A press or sweep carries the point to the integer lattice
@@ -4323,7 +4383,7 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="mx-auto w-full max-w-md" role="img"
         aria-label={
           arith
             ? `Terms starting at ${spec.first} rising by ${v}. Term ${spec.atPosition} is ${nth}.`
@@ -6674,6 +6734,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const amount = (spec.whole * pct) / 100;
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
+
   // One setter for both inputs, so a drag emits the same process evidence a slider move does.
   const setPct = (next: number) => {
     if (next === pct) return;
@@ -8788,7 +8849,7 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact quotient source">
       <p className="text-xs font-black uppercase tracking-wide text-ink/55">Source state</p>
       <p className="mt-1 break-words text-2xl font-black tabular-nums"><MathProse text={source} includeArithmetic /></p>
-      
+
     </section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact quotient derivation stages">
       {truth.stages.map((stage, index) => {
@@ -8975,13 +9036,19 @@ function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraph
  * neutral. Nothing is graded until Check, so a wrong marker position is an allowed, visible state. */
 function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead>) {
   const picked = value && typeof (value as { picked?: number }).picked === "number" ? (value as { picked: number }).picked : null;
-  const ticks = Array.from({ length: spec.scaleMax + 1 }, (_, i) => i);
-  const W = 340, rowH = 26;
+  const answerTicks = Array.from({ length: spec.scaleMax + 1 }, (_, i) => i);
+  const barSteps = Math.ceil(spec.scaleMax / spec.unitValue);
+  const barTicks = Array.from({ length: barSteps + 1 }, (_, i) => i);
+  const W = 340, barTop = 24, barBase = barTop + barSteps * 12, barH = barBase + 42;
+  const barY = (step: number) => barBase - step * 12;
+  const title = spec.title ?? `${spec.categoryLabel} ${spec.mode === "bar" ? "bar chart" : spec.mode === "tally" ? "tally chart" : "picture graph"}`;
+  const valueAxisLabel = spec.valueAxisLabel ?? `Number of ${spec.unitNounPlural}`;
   const set = (n: number) => { if (!disabled) onChange({ picked: n }); };
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white p-3">
+        <p className="mb-1 text-center text-sm font-extrabold text-ink">{title}</p>
         <p className="mb-2 text-sm font-extrabold text-ink/70">{spec.categoryLabel}</p>
         {spec.mode === "tally" ? (
           // Tally marks in five-groups: four verticals, the fifth a diagonal gate. Real strokes,
@@ -9038,25 +9105,36 @@ function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead
             )}
           </div>
         ) : (
-          <svg viewBox={`0 0 ${W} ${(spec.scaleMax + 1) * 12 + 16}`} className="w-full" role="img"
-            aria-label={`Bar graph for ${spec.categoryLabel}: the bar reaches ${spec.drawn} on the scale, each gridline standing for ${spec.unitValue}.`}>
-            {ticks.map((t) => (
+          <svg viewBox={`0 0 ${W} ${barH}`} className="w-full" role="img"
+            aria-label={`${title}. ${valueAxisLabel} from 0 to ${barSteps * spec.unitValue}. ${spec.categoryLabel} reaches ${spec.drawn * spec.unitValue} ${spec.unitNounPlural}.`}>
+            <text x={W / 2} y={12} fontSize="11" fontWeight="800" textAnchor="middle" fill={PALETTE.ink}>{title}</text>
+            {barTicks.map((t) => (
               <g key={t}>
-                <line x1={34} y1={8 + (spec.scaleMax - t) * 12} x2={W - 8} y2={8 + (spec.scaleMax - t) * 12}
+                <line data-testid="gread-grid" x1={48} y1={barY(t)} x2={W - 8} y2={barY(t)}
                   stroke={PALETTE.ink} strokeOpacity={t % 5 === 0 ? 0.3 : 0.12} strokeWidth="1" />
-                <text x={28} y={11 + (spec.scaleMax - t) * 12} fontSize="9" fontWeight="700" textAnchor="end"
-                  fill={PALETTE.ink} fillOpacity=".6">{t}</text>
+                <line data-testid="gread-tick" x1={44} y1={barY(t)} x2={48} y2={barY(t)} stroke={PALETTE.ink} strokeWidth="1.4" />
+                <text x={40} y={barY(t) + 3} fontSize="9" fontWeight="700" textAnchor="end"
+                  fill={PALETTE.ink} fillOpacity=".7">{t * spec.unitValue}</text>
               </g>
             ))}
-            <rect x={70} y={8 + (spec.scaleMax - spec.drawn) * 12} width={90} height={spec.drawn * 12}
+            <line x1={48} y1={barTop} x2={48} y2={barBase} stroke={PALETTE.ink} strokeWidth="1.6" />
+            <line x1={48} y1={barBase} x2={W - 8} y2={barBase} stroke={PALETTE.ink} strokeWidth="1.6" />
+            <text x={12} y={(barTop + barBase) / 2} transform={`rotate(-90 12 ${(barTop + barBase) / 2})`} fontSize="9" fontWeight="700" textAnchor="middle" fill={PALETTE.ink}>{valueAxisLabel}</text>
+            <rect x={78} y={barY(spec.drawn)} width={90} height={spec.drawn * 12}
               fill={PALETTE.ink} fillOpacity=".8" rx={2} />
+            <text x={123} y={barBase + 15} fontSize="10" fontWeight="700" textAnchor="middle" fill={PALETTE.ink}>{spec.categoryLabel}</text>
           </svg>
+        )}
+        {spec.mode === "picture" && (
+          <p data-testid="gread-key" className="mt-1 text-center text-xs font-bold text-ink/70">
+            Key: each {spec.icon} = {spec.unitValue} {spec.unitValue === 1 ? spec.unitNoun : spec.unitNounPlural}
+          </p>
         )}
       </div>
       {/* The value scale: one 44px-plus target per number, so a G2 thumb can hit it. */}
       <div className="flex flex-wrap justify-center gap-1.5" role="group"
         aria-label={`Choose how many ${spec.unitNounPlural} the graph shows`}>
-        {ticks.map((n) => {
+        {answerTicks.map((n) => {
           const on = picked === n;
           return (
             <button key={n} type="button" disabled={disabled} onClick={() => set(n)} aria-pressed={on}
@@ -9558,10 +9636,10 @@ function DoubleNumberLineW({ spec, value, onChange, disabled, tone, onEvent }: W
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
-        aria-label={`Paired lines; your entry at the marked tick is ${fmt(top)}.`}>
-        <line x1={pad - 8} y1={topY} x2={W - pad + 8} y2={topY} stroke={PALETTE.sky} strokeWidth={2} />
-        <line x1={pad - 8} y1={botY} x2={W - pad + 8} y2={botY} stroke={PALETTE.tangerine} strokeWidth={2} />
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="mx-auto w-full max-w-md" role="img"
+        aria-label={`Paired number lines run from smaller values on the left to larger values on the right; your entry at the marked tick is ${fmt(top)}.`}>
+        <NumberLineAxis x1={pad - 8} x2={W - pad + 8} y={topY} color={PALETTE.sky} testId="dnl-top-axis" />
+        <NumberLineAxis x1={pad - 8} x2={W - pad + 8} y={botY} color={PALETTE.tangerine} testId="dnl-bottom-axis" />
         <text x={4} y={10} fontSize={9} fontWeight={800} fill={PALETTE.sky}>{spec.topLabel}</text>
         <text x={4} y={botY + 34} fontSize={9} fontWeight={800} fill={PALETTE.tangerine}>{spec.bottomLabel}</text>
         {ticks.map((t) => {
@@ -9629,6 +9707,10 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
     onChange({ m: nm, b: nb });
   };
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
+  const title = spec.title ?? "Scatter plot with line of fit";
+  const xAxisLabel = spec.xAxisLabel ?? "x";
+  const yAxisLabel = spec.yAxisLabel ?? "y";
+  const pointSummary = spec.points.map(([px, py]) => `(${fmt(px)}, ${fmt(py)})`).join(", ");
 
   // Direct manipulation: two handles RIDE the trend line, accent-matched to
   // their sliders — the sky handle LIFTS the whole line (changes b, slope
@@ -9670,8 +9752,13 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
    * the reference line is still drawn where the scale is read from).
    */
   const TICK_FS = 9;
-  const xTicks = niceTicks(spec.xMin, spec.xMax, { target: 4, ends: true });
-  const yTicks = niceTicks(spec.yMin, spec.yMax, { target: 4, ends: true });
+  const containsZeroX = spec.xMin <= 0 && spec.xMax >= 0;
+  const containsZeroY = spec.yMin <= 0 && spec.yMax >= 0;
+  const showsOrigin = containsZeroX && containsZeroY;
+  const withOrigin = (ticks: number[], hasZero: boolean) =>
+    [...new Set(hasZero ? [...ticks, 0] : ticks)].sort((a, b) => a - b);
+  const xTicks = withOrigin(niceTicks(spec.xMin, spec.xMax, { target: 4, ends: true }), containsZeroX);
+  const yTicks = withOrigin(niceTicks(spec.yMin, spec.yMax, { target: 4, ends: true }), containsZeroY);
   const axisX = sx(Math.min(Math.max(0, spec.xMin), spec.xMax));
   const axisY = sy(Math.min(Math.max(0, spec.yMin), spec.yMax));
   const xTickY = sy(spec.yMin) + 14;
@@ -9683,36 +9770,41 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
       { x: sx(v), y: xTickY, anchor: "middle" },
       { x: sx(v) + 3, y: xTickY, anchor: "end" },
       { x: sx(v) - 3, y: xTickY, anchor: "start" }
-    ], [s238Box("x", W - 4, H - 4, "end", 11), s238Box("y", 4, 12, "start", 11)])
+    ], [s238Box(xAxisLabel, W - 4, H - 4, "end", 11), s238Box(yAxisLabel, 4, 12, "start", 11)])
   }));
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="sf-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`Scatter with a trend line, y equals ${fmt(m)} x plus ${fmt(b)}.`}>
+        role="img" aria-label={`${title}. ${xAxisLabel} from ${fmt(spec.xMin)} to ${fmt(spec.xMax)}; ${yAxisLabel} from ${fmt(spec.yMin)} to ${fmt(spec.yMax)}. Points: ${pointSummary}. Current line: y equals ${fmt(m)} x ${b >= 0 ? "plus" : "minus"} ${fmt(Math.abs(b))}.`}>
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
-        {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
-        {integers(spec.yMin, spec.yMax).map((g) => <line key={`y${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
+        <g data-testid="sf-minor-grid" aria-hidden="true">
+          {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.055} strokeWidth={0.7} />)}
+          {integers(spec.yMin, spec.yMax).map((g) => <line key={`y${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.055} strokeWidth={0.7} />)}
+        </g>
+        <g data-testid="sf-major-grid" aria-hidden="true">
+          {xTicks.map((g) => <line key={`xm${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.13} strokeWidth={0.9} />)}
+          {yTicks.map((g) => <line key={`ym${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.13} strokeWidth={0.9} />)}
+        </g>
         <g data-testid="sf-ticks" aria-hidden="true">
-          <line x1={sx(spec.xMin)} y1={axisY} x2={sx(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-          <line x1={axisX} y1={sy(spec.yMin)} x2={axisX} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+          <line data-testid="sf-x-axis" x1={sx(spec.xMin)} y1={axisY} x2={sx(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
+          <line data-testid="sf-y-axis" x1={axisX} y1={sy(spec.yMin)} x2={axisX} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
+          <path data-testid="sf-axis-arrows" d={`M ${sx(spec.xMax)} ${axisY} l -6 -3 M ${sx(spec.xMax)} ${axisY} l -6 3 M ${axisX} ${sy(spec.yMax)} l -3 6 M ${axisX} ${sy(spec.yMax)} l 3 6`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
           {xTickSeats.map(({ v, seat }) => (
             <Fragment key={`xt${v}`}>
-              <line x1={sx(v)} y1={sy(spec.yMin)} x2={sx(v)} y2={sy(spec.yMin) + 4} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-              <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              <line data-testid="sf-x-tick" x1={sx(v)} y1={axisY - 3.5} x2={sx(v)} y2={axisY + 3.5} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.15} />
+              {!(showsOrigin && v === 0) && <text data-testid="sf-x-tick-value" x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.75}>{tickText(v)}</text>}
             </Fragment>
           ))}
           {yTicks.map((v) => (
             <Fragment key={`yt${v}`}>
-              <line x1={sx(spec.xMin)} y1={sy(v)} x2={sx(spec.xMin) + 4} y2={sy(v)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-              {/* Anchored INSIDE the left edge: the widest authored y value is "140", and outside
-                  the 18-unit pad that label would start at x = −4 and lose its first digit. */}
-              <text x={sx(spec.xMin) + 6} y={sy(v) - 3} textAnchor="start" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              <line data-testid="sf-y-tick" x1={axisX - 3.5} y1={sy(v)} x2={axisX + 3.5} y2={sy(v)} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.15} />
+              <text data-testid="sf-y-tick-value" x={sx(spec.xMin) + 6} y={sy(v) - 3} textAnchor="start" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.75}>{tickText(v)}</text>
             </Fragment>
           ))}
-        </g>
-        {/* Reveal ghost: the least-squares line, dashed — the canonical member
+        </g>        {/* Reveal ghost: the least-squares line, dashed — the canonical member
             of evaluate's accept set (mse ≤ tolerance). Residual whiskers stay
             attached to the learner's line so the contrast reads as "your tilt
             vs the balancing tilt", not as a replacement. */}
@@ -9728,7 +9820,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
             <g data-testid="scf-ghost" aria-hidden="true">
               <line x1={sx(spec.xMin)} y1={sy(gm * spec.xMin + gb)} x2={sx(spec.xMax)} y2={sy(gm * spec.xMax + gb)}
                 stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="7 5" />
-              <text x={sx(spec.xMax) - 4} y={sy(gm * spec.xMax + gb) - 6} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>best fit</text>
+              <text x={sx(spec.xMax) - 4} y={Math.max(12, Math.min(H - 12, sy(gm * spec.xMax + gb) - 6))} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>best fit</text>
             </g>
           );
         })()}
@@ -9746,7 +9838,10 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
             <circle className="mt-drag-hit" data-testid="sf-drag-m" cx={sx(xB)} cy={sy(m * xB + b)} r={16} aria-hidden="true" {...dragTilt.handleProps} />
           </>
         )}
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} x={xAxisLabel} y={yAxisLabel} /></svg>
+      <p data-testid="sf-visible-points" className="text-center text-xs font-bold leading-relaxed text-ink/65">
+        Plotted points: {pointSummary}
+      </p>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         y = {fmt(m)}x {b >= 0 ? "+" : "−"} {fmt(Math.abs(b))}
         <span className={`ml-3 text-sm ${mse <= spec.tolerance ? "text-leaf-ink" : "text-ink/70"}`}>miss = {fmt(mse)}</span>
@@ -9865,6 +9960,8 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
   const markedNum = ms.reduce((a, c, i) => a + c * spec.values[i], 0);
   const maxStack = Math.max(...given);
   const lbl = (i: number) => dotPlotLabel(spec.values[i], spec.denominator);
+  const title = spec.title ?? "Line plot";
+  const axisLabel = spec.axisLabel ?? "Value";
   const toggle = (i: number, k: number) => {
     if (disabled) return;
     // Tapping the k-th X marks up through it; tapping the top marked X unmarks it.
@@ -9876,13 +9973,14 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
       <div
         className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white px-3 pb-2 pt-3"
         role="group"
-        aria-label={`Line plot: ${spec.values.map((v, i) => `${given[i]} X above ${lbl(i)}`).join(", ")}. Tap X's to count them.`}
+        aria-label={`${title}. ${axisLabel}: ${spec.values.map((v, i) => `${given[i]} X above ${lbl(i)}`).join(", ")}. Tap X's to count them.`}
       >
+        <p className="mb-1 text-center text-sm font-extrabold text-ink">{title}</p>
         <div className="grid" style={{ gridTemplateColumns: `repeat(${spec.values.length}, 1fr)` }}>
           {spec.values.map((v, i) => (
             <div
               key={v}
-              className={`flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg pb-1 ${
+              className={`flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg border-l border-ink/10 pb-1 ${
                 tone === "info" && i === ask && ms[i] !== given[i] ? "outline-dashed outline-2 outline-tangerine" : ""
               }`}
               data-testid={tone === "info" && i === ask && ms[i] !== given[i] ? "dpr-ghost" : undefined}
@@ -9911,9 +10009,13 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
         </div>
         <div className="grid border-t-2 border-ink" style={{ gridTemplateColumns: `repeat(${spec.values.length}, 1fr)` }}>
           {spec.values.map((v, i) => (
-            <span key={v} className="pt-1 text-center text-sm font-extrabold tabular-nums text-ink/80">{lbl(i)}</span>
+            <span key={v} className="pt-0 text-center text-sm font-extrabold tabular-nums text-ink/80">
+              <span data-testid="dpr-tick" className="mx-auto block h-2 w-px bg-ink" aria-hidden="true" />
+              {lbl(i)}
+            </span>
           ))}
         </div>
+        <p className="mt-1 text-center text-xs font-bold text-ink/70">{axisLabel}</p>
       </div>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         counted: {markedCount}
@@ -9939,21 +10041,27 @@ function DotPlotBuildW({ spec, value, onChange, disabled, tone }: WProps<TDotPlo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 300, H = 190, pad = 24, baseY = H - 26;
+  const W = 320, H = 220, pad = 32, baseY = H - 42;
   const sx = linScale(Math.min(...spec.values), Math.max(...spec.values), pad, W - pad);
   const gap = 15, dotR = 5.5;
+  const title = spec.title ?? "Dot plot";
+  const axisLabel = spec.axisLabel ?? "Value";
+  const lbl = (i: number) => dotPlotLabel(spec.values[i], spec.denominator);
   const setCount = (i: number, v: number) => onChange(cs.map((c, j) => (j === i ? v : c)));
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Dot plot: ${spec.values.map((v, i) => `${v} has ${cs[i]}`).join(", ")}.`}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`${title}. ${axisLabel}: ${spec.values.map((v, i) => `${lbl(i)} has ${cs[i]} dots`).join(", ")}.`}>
         <style>{`.dp-dot{transition:none}@media (prefers-reduced-motion: no-preference){.dp-dot{transition:opacity .12s ease-out}}`}</style>
-        <line x1={pad - 6} y1={baseY} x2={W - pad + 6} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <text data-testid="dp-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
+        <line x1={pad} y1={baseY} x2={W - pad} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <path data-testid="dp-arrow" d={`M ${pad} ${baseY} l 7 -4 M ${pad} ${baseY} l 7 4 M ${W - pad} ${baseY} l -7 -4 M ${W - pad} ${baseY} l -7 4`} fill="none" stroke={PALETTE.ink} strokeWidth={1.5} />
         {spec.values.map((v, i) => (
           <g key={v}>
-            <line x1={sx(v)} y1={baseY - 3} x2={sx(v)} y2={baseY + 3} stroke={PALETTE.ink} strokeWidth={1.5} />
-            <text x={sx(v)} y={baseY + 16} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{v}</text>
+            <line data-testid="dp-grid" x1={sx(v)} y1={24} x2={sx(v)} y2={baseY} stroke={PALETTE.ink} strokeOpacity={0.1} />
+            <line data-testid="dp-tick" x1={sx(v)} y1={baseY - 4} x2={sx(v)} y2={baseY + 4} stroke={PALETTE.ink} strokeWidth={1.5} />
+            <text x={sx(v)} y={baseY + 16} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{lbl(i)}</text>
             {Array.from({ length: cs[i] }, (_, k) => (
               <circle className="dp-dot" key={k} cx={sx(v)} cy={baseY - dotR - 2 - k * gap} r={dotR} fill={PALETTE.sky} />
             ))}
@@ -9979,17 +10087,18 @@ function DotPlotBuildW({ spec, value, onChange, disabled, tone }: WProps<TDotPlo
           </g>
         ))}
         {tone === "info" && !cs.every((c, i) => c === spec.target[i]) && (
-          <text data-testid="dpx-target-note" aria-hidden="true" x={W - pad} y={14} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
+          <text data-testid="dpx-target-note" aria-hidden="true" x={W - pad} y={28} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
             dashed = target height
           </text>
         )}
+        <text x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{axisLabel}</text>
       </svg>
       <div className="grid gap-2">
         {spec.values.map((v, i) => (
           <label key={v} className="grid grid-cols-[3.5rem_1fr] items-center gap-2 text-sm font-bold text-ink/70">
-            <span>at {v}</span>
+            <span>at {lbl(i)}</span>
             <input type="range" min={0} max={spec.maxPerValue} step={1} value={cs[i]} disabled={disabled}
-              aria-label={`dots above ${v}`} aria-valuetext={`${cs[i]} at ${v}`}
+              aria-label={`dots above ${lbl(i)}`} aria-valuetext={`${cs[i]} at ${lbl(i)}`}
               onChange={(e) => setCount(i, Number(e.target.value))} className="h-11 w-full accent-sky" />
           </label>
         ))}
@@ -10009,10 +10118,17 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 320, H = 130, pad = 22, midY = 58;
+  const W = 320, H = 190, pad = 30, midY = 90, axisY = H - 30;
   const sx = linScale(spec.axisMin, spec.axisMax, pad, W - pad);
   const boxL = sx(Math.min(cur.q1, cur.q3)), boxR = sx(Math.max(cur.q1, cur.q3));
-  const rows: Array<[keyof typeof start, string]> = [["min", "minimum"], ["q1", "first quartile Q1"], ["med", "median"], ["q3", "third quartile Q3"], ["max", "maximum"]];
+  const rows: Array<[keyof typeof start, string]> = [["min", "set minimum"], ["q1", "set Q1 lower quartile"], ["med", "set median"], ["q3", "set Q3 upper quartile"], ["max", "set maximum"]];
+  const title = spec.title ?? "Box plot";
+  const axisLabel = spec.axisLabel ?? "Value";
+  const axisTicks = niceTicks(spec.axisMin, spec.axisMax, { target: 6, ends: true });
+  const landmarks: Array<{ key: keyof typeof start; short: string }> = [
+    { key: "min", short: "min" }, { key: "q1", short: "Q1" }, { key: "med", short: "median" },
+    { key: "q3", short: "Q3" }, { key: "max", short: "max" },
+  ];
   const set = (k: keyof typeof start, v: number) => onChange({ ...cur, [k]: v });
 
   // WS-C (S239): the FIVE-NUMBER SKELETON is the learner's object — whisker caps, box edges and
@@ -10057,14 +10173,26 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
           the image should describe the SHAPE that is drawn. So this now speaks box-plot geometry
           (box, centre line, whiskers) and reports the same five numbers, while reusing none of the
           control names. Honest, standard vocabulary, and no collision. */}
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot on an axis from ${spec.axisMin} to ${spec.axisMax}. The box runs ${Math.min(cur.q1, cur.q3)} to ${Math.max(cur.q1, cur.q3)}, its centre line at ${cur.med}, with whiskers reaching ${cur.min} and ${cur.max}.`}>
-        <line x1={pad - 6} y1={H - 18} x2={W - pad + 6} y2={H - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
-        {[spec.axisMin, Math.round((spec.axisMin + spec.axisMax) / 2), spec.axisMax].map((t) => (
+      <p className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`${title}. ${axisLabel} from ${spec.axisMin} to ${spec.axisMax}. Minimum ${cur.min}; Q1 lower quartile ${cur.q1}; median ${cur.med}; Q3 upper quartile ${cur.q3}; maximum ${cur.max}.`}>
+        {axisTicks.map((t) => (
           <g key={t}>
-            <line data-testid="bp-tick" x1={sx(t)} y1={H - 18} x2={sx(t)} y2={H - 13} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.5} />
-            <text x={sx(t)} y={H - 5} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}</text>
+            <line data-testid="bp-grid" x1={sx(t)} y1={38} x2={sx(t)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.1} />
+            <line data-testid="bp-tick" x1={sx(t)} y1={axisY - 4} x2={sx(t)} y2={axisY + 4} stroke={PALETTE.ink} strokeOpacity={0.65} strokeWidth={1.5} />
+            <text x={sx(t)} y={axisY + 16} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.68}>{tickText(t)}</text>
           </g>
         ))}
+        <line x1={pad} y1={axisY} x2={W - pad} y2={axisY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <path data-testid="bp-arrow" d={`M ${pad} ${axisY} l 7 -4 M ${pad} ${axisY} l 7 4 M ${W - pad} ${axisY} l -7 -4 M ${W - pad} ${axisY} l -7 4`} fill="none" stroke={PALETTE.ink} strokeWidth={1.5} />
+        {landmarks.map(({ key, short }, index) => {
+          const seat = pad + (index * (W - 2 * pad)) / 4;
+          return (
+            <g key={`label-${key}`} data-testid="bp-landmark-label">
+              <line x1={seat} y1={30} x2={sx(cur[key])} y2={midY - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
+              <text x={seat} y={24} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink}>{short} {cur[key]}</text>
+            </g>
+          );
+        })}
         {/* whiskers */}
         <line x1={sx(cur.min)} y1={midY} x2={boxL} y2={midY} stroke={PALETTE.ink} strokeWidth={1.5} />
         <line x1={boxR} y1={midY} x2={sx(cur.max)} y2={midY} stroke={PALETTE.ink} strokeWidth={1.5} />
@@ -10093,6 +10221,7 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
             );
           })()}
         {!disabled && <rect className="mt-drag-hit" data-testid="bpl-drag" x={pad - 10} y={midY - 26} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
+        <text x={W / 2} y={H - 3} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{axisLabel}</text>
       </svg>
       {/* (c) These rows printed the bare key — "min q1 med q3 max" — and no number. The five values
           the learner is setting appeared NOWHERE in visible text: not on the sliders, not on the
@@ -12594,33 +12723,20 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 300, H = 200, padX = 30, padTop = 12, baseY = H - 26;
+  const W = 320, H = 230, padX = 48, padTop = 28, baseY = H - 42;
   const barW = (W - 2 * padX) / spec.categories.length;
   const hScale = linScale(0, spec.maxVal, baseY, padTop);
   const gridVals = [];
   for (let g = 0; g <= spec.maxVal; g += spec.step) gridVals.push(g);
-  /** S237b — THE Y AXIS COULD NOT BE READ. `maxVal` and `step` are authored data, so the number of
-   *  gridlines is data-driven: g5d-01-01/i1 asks for bars of 40 and 25 with `maxVal: 45, step: 1`,
-   *  which put 46 labels into a 162px column — 3.5px apart, in a 9px font. Every label overprinted
-   *  its neighbours (574 colliding pairs in the authored corpus, all from this engine).
-   *  The GRIDLINES still draw at every step — the chart keeps its resolution. Only labels that
-   *  cannot clear the previously drawn one are dropped, top value first so the axis always states
-   *  its ceiling, then downward. */
-  const axisLabelled = (() => {
-    const MIN_GAP = Math.ceil(9 * LABEL_LINE) + 1; // 13: one 9px label's full height, plus air
-    const top = gridVals[gridVals.length - 1];
-    const bottom = gridVals[0];
-    const keep = new Set<number>([top, bottom]); // the ceiling and the baseline always state themselves
-    let lastY = hScale(top);
-    const floorY = hScale(bottom);
-    for (const g of [...gridVals].reverse().slice(1)) {
-      const y = hScale(g);
-      if (y - lastY < MIN_GAP || floorY - y < MIN_GAP) continue;
-      lastY = y;
-      keep.add(g);
-    }
-    return keep;
-  })();
+
+  const standardAxisLabels = new Set(niceTicks(0, spec.maxVal, { target: 6, ends: true }));
+  const title = spec.title ?? (spec.histogram ? "Frequency distribution" : "Bar chart");
+  const xAxisLabel = spec.axisLabel ?? (spec.histogram ? "Value interval" : "Category");
+  const yAxisLabel = spec.valueAxisLabel ?? "Frequency";
+  const parsedBins = spec.categories.map((category) => category.match(/^\s*(−?-?\d+(?:\.\d+)?)\s*[–—-]\s*(−?-?\d+(?:\.\d+)?)\s*$/));
+  const histogramEdges = spec.histogram && parsedBins.every(Boolean)
+    ? [Number(parsedBins[0]![1].replace("−", "-")), ...parsedBins.map((match) => Number(match![2].replace("−", "-")) + 1)]
+    : null;
   /** S237b — a category name is authored text and the column it sits under is 240/n units wide, so
    *  whether two names touch is data-driven: g4s-01-01 puts "Pack 1"…"Pack 8" under 34-unit
    *  columns. The label shrinks to fit its own column rather than being clipped or dropped — a bar
@@ -12682,7 +12798,9 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
       <div className="grid gap-4">
         <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
         <div className="grid gap-2" role="img"
-          aria-label={`${spec.display === "tally" ? "Tally chart" : "Picture graph"}: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+          aria-label={`${spec.title ?? (spec.display === "tally" ? "Tally chart" : "Picture graph")}: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+          <p className="text-center text-sm font-extrabold text-ink">{spec.title ?? (spec.display === "tally" ? "Tally chart" : "Picture graph")}</p>
+          {spec.display === "pictograph" && <p data-testid="bb-key" className="text-center text-xs font-bold text-ink/70">Key: each {spec.icon} = 1 count</p>}
           {spec.categories.map((c, i) => (
             <div key={c} className={`flex min-h-11 items-center gap-3 rounded-lg border px-3 py-1 ${done(i) ? "border-leaf/60 bg-leaf/10" : "border-ink/15 bg-white"}`}>
               <span className="w-16 shrink-0 truncate text-sm font-bold text-ink/80">{c}</span>
@@ -12715,13 +12833,17 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Bar chart: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`${title}. ${xAxisLabel}; ${yAxisLabel} from 0 to ${spec.maxVal}. ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
         <style>{`.bb-bar{transition:none}@media (prefers-reduced-motion: no-preference){.bb-bar{transition:y .16s ease-out,height .16s ease-out}}`}</style>
+        <text data-testid="bb-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
         {gridVals.map((g) => (
           <g key={g}>
-            <line x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={0.1} />
-            {axisLabelled.has(g) && (
-              <text x={padX - 5} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.5}>{g}</text>
+            <line data-testid="bb-grid" x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={standardAxisLabels.has(g) ? 0.22 : 0.09} />
+            {standardAxisLabels.has(g) && (
+              <>
+                <line data-testid="bb-tick" x1={padX - 5} y1={hScale(g)} x2={padX} y2={hScale(g)} stroke={PALETTE.ink} strokeWidth={1.4} />
+                <text x={padX - 8} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.72}>{g}</text>
+              </>
             )}
           </g>
         ))}
@@ -12734,17 +12856,23 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
           return (
             <g key={c}>
               <rect className="bb-bar" x={x} y={top} width={w} height={baseY - top} rx={spec.histogram ? 0 : 2}
-                fill={done ? PALETTE.leaf : PALETTE.sky} stroke={spec.histogram ? "#fff" : "none"} strokeWidth={spec.histogram ? 1 : 0} />
+                fill={done ? PALETTE.leaf : PALETTE.sky} stroke="none" />
               <text x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{hs[i]}</text>
               {/* S237b — 11, not 14: at 14 the category row's descenders ran into the axis caption
                   two rows below (dd-02-02's "10–19" bins against "minutes read"). */}
-              <text x={x + w / 2} y={baseY + 11} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{c}</text>
+              {!spec.histogram && <text x={x + w / 2} y={baseY + 13} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>}
             </g>
           );
         })}
-        {spec.axisLabel && (
-          <text x={W / 2} y={H - 2} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{spec.axisLabel}</text>
-        )}
+        {histogramEdges?.map((edge, index) => (
+          <g key={`edge-${edge}`}>
+            <line data-testid="hist-edge-tick" x1={padX + index * barW} y1={baseY} x2={padX + index * barW} y2={baseY + 5} stroke={PALETTE.ink} strokeWidth={1.4} />
+            <text x={padX + index * barW} y={baseY + 15} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{edge}</text>
+          </g>
+        ))}
+        <text x={W / 2} y={H - 4} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{xAxisLabel}</text>
+        <text x={12} y={(padTop + baseY) / 2} transform={`rotate(-90 12 ${(padTop + baseY) / 2})`} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{yAxisLabel}</text>
+        <line x1={padX} y1={padTop} x2={padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
         <line x1={padX} y1={baseY} x2={W - padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
         {!disabled && (
           <rect
@@ -13162,9 +13290,6 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Process evidence: each meaningful move reports whether it headed toward,
-  // away from, or past the target. The engine only names the relation; the
-  // player's classifier decides if a pattern is worth a gentle cue.
   const place = (next: number) => {
     if (next !== v) {
       const dir = moveRelation(v, next, spec.target);
@@ -13173,55 +13298,21 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
     onChange(next);
   };
 
-  const W = 320, pad = 20, y = 46;
+  const W = 360, H = 118, pad = 22, lineY = 58;
   const sx = linScale(spec.min, spec.max, pad, W - pad);
-  const ticks: number[] = [];
-  for (let t = spec.min; t <= spec.max + 1e-9; t += spec.tickStep) ticks.push(Math.round(t * 1e6) / 1e6);
-  // Fraction line: authored in jump units (0..den), rendered as 0..1 with UNLABELED
-  // interior ticks (labeling each tick with its fraction would print the answer on
-  // the line) and a positional readout ("mark 2 of 6") — the mark↔fraction
-  // correspondence stays the learner's to supply.
-  const fmtNum = (n: number) => (Number.isInteger(n) ? String(n) : String(Math.round(n * 1e6) / 1e6));
   const den = spec.fractionDen;
-  const tickLabel = (t: number): string | null => {
-    if (den === undefined) return fmtNum(t);
-    if (t === 0) return "0";
-    if (t === den) return "1";
-    return null;
-  };
-  const fmt = (n: number) => (den !== undefined ? `mark ${fmtNum(n)} of ${den}` : fmtNum(n));
-  /** S237b — THE SAME COLLISION numberLineHop had, from the same cause: a label per tick, with the
-   *  tick count coming from authored data. ns-04-01/e1 and ns-05-01/i1 run −10…10 with
-   *  `tickStep: 1`, which is 21 labels across 280px — "−10" is 20 units wide and its neighbour
-   *  "−9" starts 14 units away, so the two overprint. TICK MARKS still draw at every step; the
-   *  ENDS always keep their labels (they state the line's range) and an interior label is dropped
-   *  when it cannot clear the last one drawn. */
-  const labelledTicks = (() => {
-    const keep = new Set<number>();
-    if (ticks.length === 0) return keep;
-    const half = (t: number) => ((tickLabel(t) ?? "").length * 11 * LABEL_EM) / 2;
-    const first = ticks[0];
-    const last = ticks[ticks.length - 1];
-    keep.add(first);
-    keep.add(last);
-    let end = sx(first) + half(first) + LABEL_GAP;
-    const lastStart = sx(last) - half(last) - LABEL_GAP;
-    for (const t of ticks.slice(1, -1)) {
-      const x = sx(t);
-      if (x - half(t) < end || x + half(t) > lastStart) continue;
-      end = x + half(t) + LABEL_GAP;
-      keep.add(t);
-    }
-    return keep;
-  })();
+  const scale = numberLineScalePlan(spec.min, spec.max, den, spec.tickStep);
+  const majorScale = scale.filter((mark) => mark.major);
+  const title = spec.title ?? "Number line";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, den !== undefined);
+  const fmt = (n: number) => numberLinePlainLabel(n, den);
+  const scaleSentence = majorScale.map((mark) => mark.label).join(", ");
 
-  // Direct manipulation: press or drag anywhere on the line and the marker
-  // snaps there (same value lattice as the slider, which stays the keyboard path).
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useSvgDrag({
     svgRef,
     viewW: W,
-    viewH: 72,
+    viewH: H,
     disabled,
     onDrag: (vx) => {
       const raw = spec.min + ((vx - pad) / (W - 2 * pad)) * (spec.max - spec.min);
@@ -13230,106 +13321,66 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
   });
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="nlp-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${W} 72`}
-        className="mx-auto w-full max-w-md"
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="xMidYMid meet"
+        className="mx-auto w-full max-w-lg"
         role="img"
-        aria-label={
-          den !== undefined
-            ? `Number line from 0 to 1 split into ${den} equal jumps; your marker is at ${fmt(v)}.`
-            : `Number line; your marker is at ${fmt(v)}.`
-        }
+        aria-label={`${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${scaleSentence}. Marker at ${fmt(v)}${spec.showDistanceFromZero && den === undefined ? `; distance from zero ${numberLinePlainLabel(Math.abs(v))}` : ""}.`}
       >
         <style>{`.nl-mk{transition:none}@media (prefers-reduced-motion: no-preference){.nl-mk{transition:all .16s ease-out}}`}</style>
-        <line x1={pad} y1={y} x2={W - pad} y2={y} stroke={PALETTE.ink} strokeWidth={2} />
-        {ticks.map((t) => (
-          <g key={t}>
-            <line x1={sx(t)} y1={y - 5} x2={sx(t)} y2={y + 5} stroke={PALETTE.ink} strokeWidth={t === 0 || t === den ? 2.5 : 1.5} />
-            {tickLabel(t) !== null && labelledTicks.has(t) && (
-              <text x={sx(t)} y={y + 20} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{tickLabel(t)}</text>
-            )}
+        <g data-testid="nlp-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => (
+            <line key={`guide-${mark.value}`} x1={sx(mark.value)} y1={24} x2={sx(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />
+          ))}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlp-axis" arrowTestId="nlp-arrows" />
+
+        {scale.map((mark) => (
+          <g key={mark.value} data-testid={mark.major ? "nlp-major-tick" : "nlp-minor-tick"}>
+            <line x1={sx(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={sx(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
+            {mark.major && <NumberLineSvgLabel x={sx(mark.value)} y={lineY + 22} label={mark.label} testId="nlp-label" />}
           </g>
         ))}
-        {/* The learner's marker is their ACTIVE construction (ROLE.active = sky);
-            success confirms the relationship in leaf. Berry stays reserved for the
-            error cue below — the thing to repair, not the learner's own hand. */}
         <g className="nl-mk">
-          <line x1={sx(v)} y1={y - 16} x2={sx(v)} y2={y + 6} stroke={tone === "success" ? PALETTE.leaf : PALETTE.sky} strokeWidth={2} />
-          <circle data-testid="nlp-marker" cx={sx(v)} cy={y - 18} r={drag.dragging ? 8 : 6} fill={tone === "success" ? PALETTE.leaf : PALETTE.sky} />
+          <line x1={sx(v)} y1={lineY - 17} x2={sx(v)} y2={lineY + 7} stroke={tone === "success" ? PALETTE.leaf : PALETTE.sky} strokeWidth={2} />
+          <circle data-testid="nlp-marker" cx={sx(v)} cy={lineY - 19} r={drag.dragging ? 8 : 6} fill={tone === "success" ? PALETTE.leaf : PALETTE.sky} />
         </g>
-        {/* Error demonstration: on a miss the line itself points the way — a small
-            chevron beside the learner's marker aims toward the target (direction
-            only, matching the authored low/high feedback; never the distance). */}
         {tone === "error" && v !== spec.target && (() => {
           const dir = spec.target > v ? 1 : -1;
           const bx = sx(v) + dir * 14;
-          return (
-            <path
-              data-testid="nlp-cue"
-              aria-hidden="true"
-              d={`M ${bx} ${y - 24} l ${dir * 8} 6 l ${-dir * 8} 6`}
-              fill="none"
-              stroke={PALETTE.berry}
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          );
+          return <path data-testid="nlp-cue" aria-hidden="true" d={`M ${bx} ${lineY - 25} l ${dir * 8} 6 l ${-dir * 8} 6`} fill="none" stroke={PALETTE.berry} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />;
         })()}
-        {/* Reveal ghost: the target position, dashed, contrasted with where the
-            learner's marker stayed. */}
         {tone === "info" && v !== spec.target && (
           <g data-testid="nlp-ghost" aria-hidden="true">
-            <line x1={sx(spec.target)} y1={y - 16} x2={sx(spec.target)} y2={y + 6} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
-            <circle cx={sx(spec.target)} cy={y - 18} r={6} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.2} />
-            <text x={sx(spec.target)} y={y - 30} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>
-              target
-            </text>
+            <line x1={sx(spec.target)} y1={lineY - 17} x2={sx(spec.target)} y2={lineY + 7} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
+            <circle cx={sx(spec.target)} cy={lineY - 19} r={6} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.2} />
+            <text x={sx(spec.target)} y={lineY - 31} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>target</text>
           </g>
         )}
-        {!disabled && (
-          <rect
-            className="mt-drag-hit"
-            data-testid="nlp-drag"
-            x={pad - 10}
-            y={y - 30}
-            width={W - 2 * pad + 20}
-            height={52}
-            aria-hidden="true"
-            {...drag.handleProps}
-          />
-        )}
+        {!disabled && <rect className="mt-drag-hit" data-testid="nlp-drag" x={pad - 10} y={lineY - 31} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
+        <text data-testid="nlp-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
       <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">{fmt(v)}</p>
       {spec.showDistanceFromZero && den === undefined && (
-        // Position and distance, side by side and deliberately not the same number. The marker's
-        // sign lives in the first readout; its magnitude in the second. That gap IS absolute value.
-        <p
-          className="text-center text-base font-bold text-ink/70 tabular-nums"
-          aria-live="polite"
-          data-testid="nlp-distance"
-        >
-          distance from 0: <span className="text-ink">{fmtNum(Math.abs(v))}</span>
+        <p className="text-center text-base font-bold text-ink/70 tabular-nums" aria-live="polite" data-testid="nlp-distance">
+          distance from 0: <span className="text-ink">{numberLinePlainLabel(Math.abs(v))}</span>
         </p>
       )}
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>marker</span>
         <input type="range" min={spec.min} max={spec.max} step={spec.step} value={v} disabled={disabled}
           aria-label="marker position"
-          aria-valuetext={
-            spec.showDistanceFromZero && den === undefined
-              ? `${fmt(v)}, distance from zero ${fmtNum(Math.abs(v))}`
-              : fmt(v)
-          }
+          aria-valuetext={spec.showDistanceFromZero && den === undefined ? `${fmt(v)}, distance from zero ${numberLinePlainLabel(Math.abs(v))}` : fmt(v)}
           onChange={(e) => place(Number(e.target.value))} className="h-11 w-full accent-sky" />
       </label>
     </div>
   );
 }
-
 /* ---------------- FunctionMachine (input → rule → output) ---------------- */
 
 function FunctionMachineW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TFunctionMachine>) {
@@ -15993,15 +16044,25 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
   const showOrigin =
     numericBand(spec.xLabels) && numericBand(spec.yLabels) &&
     Number(spec.xLabels![0]) === 1 && Number(spec.yLabels![0]) === 1;
+  const title = spec.title ?? "Coordinate plotting grid";
+  const xAxisLabel = spec.xAxisLabel ?? "x";
+  const yAxisLabel = spec.yAxisLabel ?? "y";
+  const xScale = spec.xLabels ?? Array.from({ length: spec.cols }, (_, i) => String(i + 1));
+  const yScale = spec.yLabels ?? Array.from({ length: spec.rows }, (_, i) => String(i + 1));
+  const markedSummary = pts.length ? pts.map((p) => `(${xScale[p.x - 1]}, ${yScale[p.y - 1]})`).join(", ") : "none";
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="pp-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <p data-testid="pp-y-axis-label" className="text-center text-xs font-bold text-ink/70">{yAxisLabel} ↑</p>
       {/* ONE grid, no gaps: the y band, the cells, the x band and the connect overlay are all
           placed on the same tracks, so no layer can drift out of alignment with another. The
           separation between cells is padding INSIDE each button, which keeps the tap target
           equal to the track pitch. */}
       <div
         className="relative grid w-full justify-center"
+        role="group"
+        aria-label={`${title}. ${xAxisLabel}: ${xScale.join(", ")}. ${yAxisLabel}: ${yScale.join(", ")}. Marked points: ${markedSummary}.`}
         style={{ gridTemplateColumns: `${spec.yLabels ? "auto " : ""}repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
       >
         <style>{`@media (prefers-reduced-motion: no-preference){.pp-dot{animation:pp-pop .18s ease-out backwards}.pp-line{stroke-dasharray:100;animation:pp-draw .6s ease-out backwards}}@keyframes pp-pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}@keyframes pp-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}`}</style>
@@ -16090,7 +16151,30 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
             />
           </svg>
         )}
-        {spec.xLabels && (
+        <svg
+          data-testid="pp-graph-paper"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          viewBox={`0 0 ${spec.cols} ${spec.rows}`}
+          preserveAspectRatio="none"
+          style={{ gridColumn: `${cellCol} / span ${spec.cols}`, gridRow: `1 / span ${spec.rows}` }}
+        >
+          <g data-testid="pp-minor-grid">
+            {Array.from({ length: Math.max(0, spec.cols - 1) }, (_, i) => <line key={`mv${i}`} x1={i + 1} y1={0} x2={i + 1} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.07} strokeWidth={0.025} />)}
+            {Array.from({ length: Math.max(0, spec.rows - 1) }, (_, i) => <line key={`mh${i}`} x1={0} y1={i + 1} x2={spec.cols} y2={i + 1} stroke={PALETTE.ink} strokeOpacity={0.07} strokeWidth={0.025} />)}
+          </g>
+          <g data-testid="pp-major-grid">
+            {Array.from({ length: spec.cols }, (_, i) => <line key={`gv${i}`} x1={i + 0.5} y1={0} x2={i + 0.5} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.15} strokeWidth={0.035} />)}
+            {Array.from({ length: spec.rows }, (_, i) => <line key={`gh${i}`} x1={0} y1={i + 0.5} x2={spec.cols} y2={i + 0.5} stroke={PALETTE.ink} strokeOpacity={0.15} strokeWidth={0.035} />)}
+          </g>
+          <g data-testid="pp-axes">
+            <line x1={0} y1={spec.rows} x2={spec.cols} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            <line x1={0} y1={spec.rows} x2={0} y2={0} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            <path data-testid="pp-axis-arrows" d={`M ${spec.cols} ${spec.rows} l -0.18 -0.1 M ${spec.cols} ${spec.rows} l -0.18 0.1 M 0 0 l -0.1 0.18 M 0 0 l 0.1 0.18`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            {Array.from({ length: spec.cols }, (_, i) => <line data-testid="pp-x-tick" key={`tx${i}`} x1={i + 0.5} y1={spec.rows - 0.08} x2={i + 0.5} y2={spec.rows} stroke={PALETTE.ink} strokeWidth={0.045} />)}
+            {Array.from({ length: spec.rows }, (_, i) => <line data-testid="pp-y-tick" key={`ty${i}`} x1={0} y1={i + 0.5} x2={0.08} y2={i + 0.5} stroke={PALETTE.ink} strokeWidth={0.045} />)}
+          </g>
+        </svg>        {spec.xLabels && (
           <div aria-hidden="true" style={{ display: "contents" }}>
             {Array.from({ length: spec.cols }, (_, i) => (
               <span
@@ -16104,6 +16188,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
           </div>
         )}
       </div>
+      <p data-testid="pp-x-axis-label" className="text-center text-xs font-bold text-ink/70">{xAxisLabel} →</p>
     </div>
   );
 }
@@ -16200,7 +16285,7 @@ function SteppedRevealW({ spec, value, onChange, disabled }: WProps<TSteppedReve
             <p className="text-sm font-bold uppercase tracking-wide text-sky-ink">{p.title}</p>
           </div>
           {p.figure && FIGURE_IDS.has(p.figure) && isFigureTextAligned(p.figure, p.body ?? "") && (
-            <div className="my-2 overflow-hidden rounded-lg border border-ink/10 bg-white">
+            <div className="my-2 overflow-visible rounded-lg border border-ink/10 bg-white">
               <FigureView id={p.figure} context={p.body ?? ""} />
             </div>
           )}
@@ -16601,9 +16686,14 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const W = 360, H = 132, pad = 22, lineY = 68;
   const span = spec.max - spec.min || 1;
-  const xOf = (n: number) => 16 + (288 * (n - spec.min)) / span;
-  // Every place this stride actually lands, inside the line.
+  const xOf = (n: number) => pad + ((W - 2 * pad) * (n - spec.min)) / span;
+  const scale = numberLineScalePlan(spec.min, spec.max, spec.denom);
+  const majorScale = scale.filter((mark) => mark.major);
+  const fmt = (n: number) => numberLinePlainLabel(n, spec.denom);
+  const title = spec.title ?? "Hop-size number line";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, spec.denom !== undefined);
   const landings: number[] = [];
   for (let k = 0; spec.start + k * h <= spec.max; k++) landings.push(spec.start + k * h);
   const hits = (t: number) => (t - spec.start) % h === 0;
@@ -16620,52 +16710,45 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 320 104" className="w-full" role="img"
-        aria-label={`A stride of ${h} from ${spec.start}. ${targets.map((t) => `${t} is ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`}>
-        <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
-        {/* every landing this stride makes */}
-        {landings.map((n) => (
-          <circle key={`l${n}`} data-testid="nlh-landing" cx={xOf(n)} cy={64} r={3.5} fill="#2E7CD6" fillOpacity={0.75} />
+      <p data-testid="nlh-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="w-full" role="img"
+        aria-label={`${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${majorScale.map((mark) => mark.label).join(", ")}. A stride of ${fmt(h)} from ${fmt(spec.start)}. ${targets.map((t) => `${fmt(t)} is ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`}>
+        <g data-testid="nlh-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => <line key={`guide-${mark.value}`} x1={xOf(mark.value)} y1={25} x2={xOf(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />)}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlh-axis" arrowTestId="nlh-arrows" />
+
+        {scale.map((mark) => {
+          const wholeFraction = spec.denom !== undefined && mark.value % spec.denom === 0;
+          return (
+            <g key={mark.value} data-testid={mark.major ? "nlh-major-tick" : "nlh-minor-tick"}>
+              <line x1={xOf(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={xOf(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={wholeFraction ? 2 : mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
+            </g>
+          );
+        })}
+        {majorScale.map((mark) => (
+          <NumberLineSvgLabel key={`label-${mark.value}`} x={xOf(mark.value)} y={lineY + 22} label={mark.label} testId="nlh-label" />
         ))}
-        {/* the marks that must be hit: leaf when landed on, berry when skipped */}
-        {targets.map((t) => (
+        {landings.map((n) => <circle key={`l${n}`} data-testid="nlh-landing" cx={xOf(n)} cy={lineY} r={3.5} fill={PALETTE.sky} fillOpacity={0.75} />)}
+        {targets.map((t, index) => (
           <g key={`t${t}`}>
-            <line x1={xOf(t)} y1={50} x2={xOf(t)} y2={78} stroke={hits(t) ? PALETTE.leaf : PALETTE.berry} strokeWidth={3} />
-            <text x={xOf(t)} y={94} textAnchor="middle" fontSize={11} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>
-              {t}
-            </text>
-            <text x={xOf(t)} y={44} textAnchor="middle" fontSize={10} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>
-              {hits(t) ? "hit" : "skipped"}
-            </text>
+            <line x1={xOf(t)} y1={lineY - 15} x2={xOf(t)} y2={lineY + 10} stroke={hits(t) ? PALETTE.leaf : PALETTE.berry} strokeWidth={3} />
+            <text x={xOf(t)} y={36 - index * 12} textAnchor="middle" fontSize={10} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>{fmt(t)}: {hits(t) ? "hit" : "skipped"}</text>
           </g>
         ))}
-        <circle cx={xOf(spec.start)} cy={64} r={5} fill="#2E7CD6" />
-        {tone === "info" && answer !== null && h !== answer && (
-          <g data-testid="nlh-size-ghost" aria-hidden="true">
-            <text x={160} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill="#FF8A3D">
-              the largest stride hitting every mark is {answer}
-            </text>
-          </g>
-        )}
+        <circle cx={xOf(spec.start)} cy={lineY} r={5} fill={PALETTE.sky} />
+        {tone === "info" && answer !== null && h !== answer && <text data-testid="nlh-size-ghost" aria-hidden="true" x={W / 2} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>largest working stride: {fmt(answer)}</text>}
+        <text data-testid="nlh-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
       <div className="grid grid-cols-2 gap-2">
-        <LabReadout label="stride" value={`${h}`} tone={allHit ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="stride" value={fmt(h)} tone={allHit ? "good" : "neutral"} stage={tone} signalsCorrect />
         <LabReadout label="marks hit" value={`${targets.filter(hits).length} of ${targets.length}`} tone={allHit ? "good" : "warn"} stage={tone} signalsCorrect />
       </div>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>hop size</span>
-        <input
-          type="range"
-          min={lo}
-          max={hi}
-          step={1}
-          value={h}
-          disabled={disabled}
-          aria-label="hop size"
-          aria-valuetext={`stride ${h}; lands on ${targets.filter(hits).length} of ${targets.length} marks`}
-          onChange={(e) => set(Number(e.target.value))}
-          className="h-11 w-full accent-sky"
-        />
+        <input type="range" min={lo} max={hi} step={1} value={h} disabled={disabled}
+          aria-label={`${axisTitle} hop size`} aria-valuetext={`stride ${fmt(h)}; lands on ${targets.filter(hits).length} of ${targets.length} marks`}
+          onChange={(e) => set(Number(e.target.value))} className="h-11 w-full accent-sky" />
       </label>
       <p role="status" aria-live="polite" className="text-center text-base font-bold text-ink/70">
         {allHit ? "This stride lands on every mark — can a bigger one still do it?" : "This stride skips at least one mark."}
@@ -16673,268 +16756,137 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
     </div>
   );
 }
-
 function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNumberLineHop>) {
-  // Process evidence: each tap is a landing choice measured against the true
-  // landing (start ± hop·hops). A first tap is compared from the marked start.
   const landing = spec.start + (spec.direction === "back" ? -1 : 1) * spec.hop * spec.hops;
-  // Tap choices are the positions a HOP can actually reach from the start
-  // (start + k·hop, both directions, inside [min, max]) plus every authored
-  // trap landing — so anticipated wrong taps stay tappable even off the
-  // lattice. For hop = 1 this is every integer, exactly as before; for the
-  // authored count-by-tens steps it collapses 101 buttons to eleven. A
-  // kindergartner choosing among 101 targets was a defect, not a design.
-  const ticks = (() => {
+  const choices = (() => {
     const set = new Set<number>([spec.start]);
     for (let k = 1; spec.start + k * spec.hop <= spec.max; k++) set.add(spec.start + k * spec.hop);
     for (let k = 1; spec.start - k * spec.hop >= spec.min; k++) set.add(spec.start - k * spec.hop);
-    for (const c of spec.commonLandings) if (c.value >= spec.min && c.value <= spec.max) set.add(c.value);
+    for (const common of spec.commonLandings) if (common.value >= spec.min && common.value <= spec.max) set.add(common.value);
     return [...set].sort((a, b) => a - b);
   })();
   const chosen = typeof value === "number" ? value : null;
+  const W = 360, pad = 22, lineY = 66;
   const span = spec.max - spec.min || 1;
-  const xOf = (n: number) => 16 + (288 * (n - spec.min)) / span;
-  /** S237. Unit ruler under the choice ticks — see the comment at the render site. Whole units
-   *  only; on a fractional lattice the whole numbers are the landmarks the question is posed in.
-   *  Thinned to <= 12 labels so they stay readable in a 288px viewBox. */
-  const scaleTicks = useMemo(() => {
-    const first = Math.ceil(spec.min);
-    const last = Math.floor(spec.max);
-    const count = Math.max(1, last - first + 1);
-    // S237. Strides snap to a 1-2-5-10 ladder, not to count/N. Dividing gave a 0-100 line ticks
-    // every 3 and labels at 9, 18, 27 … — arithmetically even, and meaningless to read a position
-    // off. A ruler is only useful if its landmarks are the ones a learner already counts in.
-    const LADDER = [1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000];
-    const pick = (limit: number) => LADDER.find((k) => count / k <= limit) ?? LADDER[LADDER.length - 1];
-    const stride = pick(40);
-    const labelStride = Math.max(stride, pick(12));
-    const raw: number[] = [];
-    // Anchor on a multiple of the stride so labels land on round numbers, not on wherever min fell.
-    for (let n = Math.ceil(first / stride) * stride; n <= last; n += stride) raw.push(n);
-    return raw.map((n) => ({
-      n,
-      labelled: n % labelStride === 0 || n === first || n === last || n === spec.start,
-    }));
-  }, [spec.min, spec.max, spec.start]);
-  /** S237b — WHERE EVERY LABEL GOES. Reported from the running app: g3w-01-02/i1 (0…60, hops of 7,
-   *  authored trap landings 8 and 28) printed `78 10`, `221`, `2830`, `4042`, `490`. Two separate
-   *  causes, both fixed here.
-   *
-   *  1. THE RULER AND THE CHOICES SHARED ONE BASELINE (y = 86). They mean different things — the
-   *     scale of the line versus the positions a hop can reach — so the ruler now has its own row
-   *     BELOW the choice labels, and the viewBox grows to fit whatever is drawn. Suppression alone
-   *     would not have been enough: `28` and `30` are different numbers 9.6 units apart, and no
-   *     rule that keeps both can put them on one line.
-   *  2. A RULER LABEL NEXT TO A CHOICE LABEL IS REDUNDANT ANYWAY. Where a choice tick already names
-   *     a position, a fainter copy of a neighbouring round number a few units away reads as noise
-   *     even on its own row, so it is dropped once the two boxes come within a label's clearance.
-   *     The ruler's TICK MARKS always stay — the line keeps its scale; only duplicate text goes.
-   *
-   *  Choice labels can also collide with EACH OTHER, which is the rest of `78`: an authored trap
-   *  landing (8) sits one unit from a lattice landing (7). Those stagger onto a second row rather
-   *  than being dropped, because every one of them is tappable and its position is the answer.
-   *  A label with no free row is left undrawn — its tick still marks the spot and the radio button
-   *  below still names it — but on the authored corpus that case never arises. */
-  const labelPlan = useMemo(() => {
-    const ROW_GAP = Math.ceil(11 * LABEL_LINE) + 1; // 15: one 11px label, plus air
-    const ROWS = [86, 86 + ROW_GAP];
-    const xAt = (n: number) => 16 + (288 * (n - spec.min)) / span;
-    const rowEnd = ROWS.map(() => -Infinity);
-    const choice = new Map<number, { label: string; fontSize: number; x: number; y: number }>();
-    for (const n of ticks) {
-      const isWhole = !spec.denom || n % spec.denom === 0;
-      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
-      const fontSize = spec.denom && !isWhole ? 9 : 11;
-      const x = xAt(n);
-      const half = labelHalfWidth(label, fontSize);
-      const row = rowEnd.findIndex((end) => x - half >= end);
-      if (row < 0) continue;
-      rowEnd[row] = x + half + LABEL_GAP;
-      choice.set(n, { label, fontSize, x, y: ROWS[row] });
-    }
-    const lastRow = Math.max(ROWS[0], ...[...choice.values()].map((c) => c.y));
-    const rulerY = lastRow + ROW_GAP;
-    const drawn = [...choice.values()];
-    const ruler: { n: number; x: number; label: string }[] = [];
-    let rulerEnd = -Infinity;
-    for (const { n, labelled } of scaleTicks) {
-      if (!labelled) continue;
-      // On a rational lattice `n` counts DENOM-ths, so printing it raw would name 7 sixths "7".
-      // Every authored denom step hops by 1, so each of these positions is also a choice and the
-      // label is suppressed below — but a generator that hops by 2 would have printed the wrong
-      // number, and a scale that lies is worse than no scale.
-      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
-      const x = xAt(n);
-      const half = labelHalfWidth(label, 9);
-      if (drawn.some((c) => Math.abs(c.x - x) < half + labelHalfWidth(c.label, c.fontSize) + LABEL_GAP)) continue;
-      if (x - half < rulerEnd) continue;
-      rulerEnd = x + half + LABEL_GAP;
-      ruler.push({ n, x, label });
-    }
-    // A SINGLE surviving ruler label is not a scale — it is a stray number. Once suppression has
-    // removed the labels that duplicated a choice, one leftover (the reported case left only `60`,
-    // alone on its own row under a line already numbered 0..56) reads as unrelated to the line
-    // rather than as its end. A scale needs two reference points to be one; below that the tick
-    // marks carry the scale by themselves, which is what they did before any label existed.
-    const scale = ruler.length >= 2 ? ruler : [];
-    return { choice, ruler: scale, rulerY, height: (scale.length > 0 ? rulerY : lastRow) + 8 };
-  }, [ticks, scaleTicks, spec.denom, spec.min, span]);
-  // S119: ONE ARC PER HOP, not per unit. The previous version drew
-  // `|chosen - start|` arcs each spanning a single unit, so a count-by-tens
-  // lesson with three hops of ten drew THIRTY arcs — and the hop count is the
-  // entire thing those lessons teach. 18 shipped steps had hop > 1.
-  // An off-lattice tap (an authored trap landing that is not a whole number of
-  // hops from the start) cannot be shown as whole hops, so it draws a single
-  // arc spanning the whole distance rather than a misleading partial count.
+  const xOf = (n: number) => pad + ((W - 2 * pad) * (n - spec.min)) / span;
+  const fmt = (n: number) => numberLinePlainLabel(n, spec.denom);
+  const scale = numberLineScalePlan(spec.min, spec.max, spec.denom);
+  const majorScale = scale.filter((mark) => mark.major);
+  const title = spec.title ?? "Number-line hops";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, spec.denom !== undefined);
+  const majorValues = new Set(majorScale.map((mark) => mark.value));
+  const labelRows: number[] = [];
+  const labelPlan = [...new Set([...majorScale.map((mark) => mark.value), ...choices])]
+    .sort((a, b) => a - b)
+    .map((point) => {
+      const label = fmt(point);
+      const x = xOf(point);
+      const half = labelHalfWidth(label, 10) + LABEL_GAP;
+      let row = labelRows.findIndex((rightEdge) => x - half >= rightEdge);
+      if (row < 0) {
+        row = labelRows.length;
+        labelRows.push(Number.NEGATIVE_INFINITY);
+      }
+      labelRows[row] = x + half;
+      return { value: point, label, x, y: lineY + 22 + row * 15, major: majorValues.has(point) };
+    });
+  const H = Math.max(132, lineY + 22 + Math.max(0, labelRows.length - 1) * 15 + 34);
+  const safeWordX = (rawX: number, word: string, fontSize: number) => {
+    const half = labelHalfWidth(word, fontSize);
+    return Math.min(W - 8 - half, Math.max(8 + half, rawX));
+  };
+
   const delta = chosen !== null ? chosen - spec.start : 0;
   const stepDir = delta < 0 ? -1 : 1;
   const onLattice = delta !== 0 && Math.abs(delta) % spec.hop === 0;
   const arcCount = delta === 0 ? 0 : onLattice ? Math.abs(delta) / spec.hop : 1;
   const arcSpan = onLattice ? spec.hop : Math.abs(delta);
-  const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
-  /* S242 (D-23). This drawing was `role="group"` named "Number line" — a static name that says the
-   * same thing before and after the learner acts, on the one surface whose entire content IS the
-   * hops. Its own sibling HopSizeW already emits `role="img"` with a state sentence ("A stride of 4
-   * from 0. 8 is landed on; 12 is landed on."), so the pattern needed no invention, only applying.
-   * `role="group"` is also wrong on its own terms: the SVG holds no focusable children to group.
-   * Numbers go through the same `hopLabel`/`denom` formatter the ruler uses, so a rational lattice
-   * narrates "1 1/2" rather than the raw count of halves. */
-  const say = (n: number) => (spec.denom ? hopLabel(n, spec.denom) : String(n));
   const hopWord = arcCount === 1 ? "hop" : "hops";
   const dirWord = stepDir < 0 ? "back" : "forward";
-  const stateLabel =
-    chosen === null
-      ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Start marked at ${say(spec.start)}. No hop made yet.`
-      : delta === 0
-        ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Still on the start at ${say(spec.start)} — no hop made.`
-        : onLattice
-          ? `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, ${arcCount} ${hopWord} of ${say(arcSpan)} ${dirWord}, landing on ${say(chosen)}.`
-          : `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, one jump of ${say(arcSpan)} ${dirWord} to ${say(chosen)}, which is not a whole number of ${say(spec.hop)}-sized hops.`;
+  const scaleDescription = `${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${majorScale.map((mark) => mark.label).join(", ")}. Choice positions: ${choices.map(fmt).join(", ")}.`;
+  const stateLabel = chosen === null
+    ? `${scaleDescription} Start at ${fmt(spec.start)}. No hop made yet.`
+    : delta === 0
+      ? `${scaleDescription} Still at the start, ${fmt(spec.start)}; no hop made.`
+      : onLattice
+        ? `${scaleDescription} From ${fmt(spec.start)}, ${arcCount} ${hopWord} of ${fmt(arcSpan)} ${dirWord}, landing on ${fmt(chosen)}.`
+        : `${scaleDescription} From ${fmt(spec.start)}, one jump of ${fmt(arcSpan)} ${dirWord} to ${fmt(chosen)}, not a whole number of ${fmt(spec.hop)}-sized hops.`;
+  const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 320 ${labelPlan.height}`} className="w-full" role="img" aria-label={stateLabel}>
+      <p data-testid="nlh-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="w-full" role="img" aria-label={stateLabel}>
         <style>{css}</style>
-        <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
-        {/* S237. The line used to tick ONLY the tappable choices, so everything between them was
-            blank: "9 + 9: start at 9, make one hop of 9" drew a mark at 9 and marks at 17/18/19
-            with nothing in between, and the hop could not be COUNTED — which is the entire job of
-            a number line at this grade. A full unit scale now underlies the choice ticks: minor
-            marks at every unit, labels thinned to stay legible at 288px, and min/max/start always
-            labelled. Choice ticks still draw on top, taller and bolder, so what is tappable stays
-            obvious. Nothing here is interactive and nothing is graded — it is the ruler. */}
-        {scaleTicks.map(({ n }) => (
-          <line key={`sc-${n}`} aria-hidden="true" x1={xOf(n)} y1={59} x2={xOf(n)} y2={69} stroke="#22314F" strokeWidth={1} strokeOpacity={0.4} />
-        ))}
-        {/* The ruler's own row, below every choice label — see labelPlan. */}
-        {labelPlan.ruler.map(({ n, x, label }) => (
-          <text key={`sl-${n}`} aria-hidden="true" x={x} y={labelPlan.rulerY} textAnchor="middle" fontSize={9} fontWeight={600} fill="#22314F" fillOpacity={0.55}>
-            {label}
-          </text>
-        ))}
-        {/* hop arcs from start to the chosen landing, with a direction arrowhead */}
-        {Array.from({ length: arcCount }).map((_, i) => {
-          const a = spec.start + stepDir * i * arcSpan;
-          const b = a + stepDir * arcSpan;
-          const x1 = xOf(a);
-          const x2 = xOf(b);
-          const mid = (x1 + x2) / 2;
-          // arrowhead points in the travel direction (left for backward/subtraction)
-          const head = stepDir < 0 ? `M ${x2} 64 l 6 -5 m -6 5 l 6 5` : `M ${x2} 64 l -6 -5 m 6 5 l -6 5`;
+        <g data-testid="nlh-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => <line key={`guide-${mark.value}`} x1={xOf(mark.value)} y1={24} x2={xOf(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />)}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlh-axis" arrowTestId="nlh-arrows" />
+
+        {scale.map((mark) => {
+          const wholeFraction = spec.denom !== undefined && mark.value % spec.denom === 0;
           return (
-            <g key={i} className="nlh-hop" data-testid="nlh-arc" style={{ animationDelay: `${i * 0.12}s` }}>
-              <path d={`M ${x1} 64 Q ${mid} 36 ${x2} 64`} fill="none" stroke="#2E7CD6" strokeWidth={2.5} />
-              <path d={head} fill="none" stroke="#2E7CD6" strokeWidth={2.2} strokeLinecap="round" />
+            <g key={mark.value} data-testid={mark.major ? "nlh-major-tick" : "nlh-minor-tick"}>
+              <line x1={xOf(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={xOf(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={wholeFraction ? 2 : mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
             </g>
           );
         })}
-        {ticks.map((n) => {
-          const isStart = n === spec.start;
-          const isChosen = n === chosen;
-          // On a rational lattice the whole numbers are the landmarks the question is posed in,
-          // so they carry taller ticks and bolder labels; the fractional positions between them
-          // are the hops. On an integer line (no denom) every tick is a whole number and this
-          // reduces to exactly the previous rendering.
-          const isWhole = !spec.denom || n % spec.denom === 0;
-          const placed = labelPlan.choice.get(n);
+        {labelPlan.map((mark) => (
+          <NumberLineSvgLabel key={`label-${mark.value}`} x={mark.x} y={mark.y} label={mark.label} testId={mark.major ? "nlh-label" : "nlh-choice-label"} />
+        ))}
+        {Array.from({ length: arcCount }).map((_, index) => {
+          const from = spec.start + stepDir * index * arcSpan;
+          const to = from + stepDir * arcSpan;
+          const x1 = xOf(from), x2 = xOf(to), mid = (x1 + x2) / 2;
+          const head = stepDir < 0 ? `M ${x2} ${lineY} l 6 -5 m -6 5 l 6 5` : `M ${x2} ${lineY} l -6 -5 m 6 5 l -6 5`;
           return (
-            <g key={n}>
-              <line
-                x1={xOf(n)}
-                y1={isWhole ? 54 : 59}
-                x2={xOf(n)}
-                y2={isWhole ? 74 : 69}
-                stroke="#22314F"
-                strokeWidth={isWhole ? 2 : 1.2}
-                strokeOpacity={isWhole ? 1 : 0.55}
-              />
-              {placed && (
-                <text
-                  x={placed.x}
-                  y={placed.y}
-                  textAnchor="middle"
-                  fontSize={placed.fontSize}
-                  fontWeight={isStart || isWhole ? 800 : 600}
-                  fill="#22314F"
-                  fillOpacity={isWhole ? 1 : 0.7}
-                >
-                  {placed.label}
-                </text>
-              )}
-              {isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" fillOpacity={0.55} />}
-              {isChosen && !isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" />}
+            <g key={index} className="nlh-hop" data-testid="nlh-arc" style={{ animationDelay: `${index * 0.12}s` }}>
+              <path d={`M ${x1} ${lineY} Q ${mid} 31 ${x2} ${lineY}`} fill="none" stroke={PALETTE.sky} strokeWidth={2.5} />
+              <path d={head} fill="none" stroke={PALETTE.sky} strokeWidth={2.2} strokeLinecap="round" data-number-line-direction={stepDir < 0 ? "left" : "right"} />
             </g>
           );
         })}
-        {/* Reveal ghost: the true landing, dashed tangerine — hops are the learner's
-            (sky); tangerine stays reserved for the target. */}
+        {choices.map((n) => {
+          const isStart = n === spec.start, isChosen = n === chosen;
+          return (
+            <g key={n} data-testid="nlh-choice-tick">
+              <line x1={xOf(n)} y1={lineY - 9} x2={xOf(n)} y2={lineY + 9} stroke={PALETTE.ink} strokeWidth={isStart || isChosen ? 2.2 : 1.4} strokeOpacity={isStart || isChosen ? 0.9 : 0.6} />
+              {isStart && <circle cx={xOf(n)} cy={lineY} r={6} fill={PALETTE.sky} fillOpacity={0.55} />}
+              {isChosen && !isStart && <circle cx={xOf(n)} cy={lineY} r={6} fill={PALETTE.sky} />}
+            </g>
+          );
+        })}
+        <text x={safeWordX(xOf(spec.start), "start", 9)} y={18} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>start</text>
+        {chosen !== null && chosen !== spec.start && <text x={safeWordX(xOf(chosen), "landing", 9)} y={47} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>landing</text>}
         {tone === "info" && chosen !== landing && (
           <g data-testid="nlh-ghost" aria-hidden="true">
-            <circle cx={xOf(landing)} cy={64} r={9} fill="none" stroke="#FF8A3D" strokeWidth={2.4} strokeDasharray="4 3" />
-            <text x={xOf(landing)} y={48} textAnchor="middle" fontSize={10} fontWeight={800} fill="#FF8A3D">
-              target
-            </text>
+            <circle cx={xOf(landing)} cy={lineY} r={9} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="4 3" />
+            <text x={safeWordX(xOf(landing), "target", 10)} y={47} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>target</text>
           </g>
         )}
+        <text data-testid="nlh-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
-      {/* selection via native buttons — keyboard + touch, ≥44px targets */}
-      <div role="radiogroup" aria-label="Choose where you land" className="flex flex-wrap justify-center gap-1.5">
-        {ticks.map((n) => (
-          <button
-            key={n}
-            type="button"
-            role="radio"
-            aria-checked={chosen === n}
-            aria-label={`Land on ${spec.denom ? hopLabel(n, spec.denom) : n}`}
-            disabled={disabled}
+      <div role="radiogroup" aria-label={`Choose where you land on ${axisTitle}`} className="flex flex-wrap justify-center gap-1.5">
+        {choices.map((n) => (
+          <button key={n} type="button" role="radio" aria-checked={chosen === n} aria-label={`Land on ${fmt(n)}`} disabled={disabled}
             onClick={() => {
               const dir = moveRelation(chosen ?? spec.start, n, landing);
-              // Arrival is silent (success is not noise); every real move
-              // carries its position for the strategy layer.
               if (dir) onEvent?.({ control: "landing", dir, state: { pos: n } });
               onChange(n);
             }}
-            className={`min-h-11 min-w-11 rounded-card border-2 text-base font-bold tabular-nums transition-colors motion-reduce:transition-none ${
-              chosen === n ? "border-sky bg-cta text-white" : n === spec.start ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/25 enabled:hover:border-sky/60"
-            } disabled:opacity-40`}
-          >
-            {spec.denom ? hopLabel(n, spec.denom) : n}
+            className={`min-h-11 min-w-11 rounded-card border-2 text-base font-bold tabular-nums transition-colors motion-reduce:transition-none ${chosen === n ? "border-sky bg-cta text-white" : n === spec.start ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/25 enabled:hover:border-sky/60"} disabled:opacity-40`}>
+            {fmt(n)}
           </button>
         ))}
       </div>
       <p role="status" aria-live="polite" className="text-center text-base font-bold text-ink/70">
-        start at <span className="text-sky-ink">{spec.denom ? hopLabel(spec.start, spec.denom) : spec.start}</span>
-        {chosen !== null && (
-          <>
-            {" "}
-            → land on <span className="text-sky-ink tabular-nums">{spec.denom ? hopLabel(chosen, spec.denom) : chosen}</span>
-          </>
-        )}
+        start at <span className="text-sky-ink">{fmt(spec.start)}</span>
+        {chosen !== null && <> {"→"} land on <span className="text-sky-ink tabular-nums">{fmt(chosen)}</span></>}
       </p>
     </div>
   );
 }
-
 /* ---------------- G1–G2: Base-ten compose (tens rods + ones) ---------------- */
 
 /** Hoisted (s46): defined per-render this remounted its buttons on EVERY value

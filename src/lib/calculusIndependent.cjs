@@ -175,13 +175,13 @@ function solveDerivativeNumeric(form, input) {
     return Number(match[2]) ** Number(match[3]);
   }
   if (form === DERIVATIVE_FORMS.CRITICAL) {
-    const expression = /f'\(x\)\s*=\s*([^.]*)/.exec(prompt)?.[1] || '';
+    const expression = /f(?:'|′)\(x\)\s*=\s*([^.]*)/.exec(prompt)?.[1] || '';
     if (/\(x\s*[+-]\s*\d+\)\^2/.test(expression)) return 1;
     if (/x\^2\s*-\s*\d+/.test(expression)) return 2;
     if (/x\^2\s*\+\s*\d+/.test(expression)) return 0;
   }
   if (form === DERIVATIVE_FORMS.EVALUATE) {
-    const match = /f\(x\)\s*=\s*x\^(\d+), find f'\((-?\d+)\)/i.exec(prompt);
+    const match = /f\(x\)\s*=\s*x\^(\d+), find f(?:'|′)\((-?\d+)\)/i.exec(prompt);
     if (!match) throw new Error(`unrecognized derivative evaluation prompt: ${prompt}`);
     const n = Number(match[1]);
     const x = Number(match[2]);
@@ -328,9 +328,9 @@ function solveLadder(input) {
 
 function solveLinearisation(input) {
   const prompt = String(input).split('||', 1)[0];
-  const slope = /find f'\((\d+)\)/i.exec(prompt);
+  const slope = /find f(?:'|′)\((\d+)\)/i.exec(prompt);
   if (slope) return Number((1 / (2 * Math.sqrt(Number(slope[1])))).toFixed(3));
-  const squareRoot = /at x\s*=\s*(\d+) to estimate sqrt\((\d+(?:\.\d+)?)\)/i.exec(prompt);
+  const squareRoot = /at x\s*=\s*(\d+) to estimate (?:sqrt\(|√)(\d+(?:\.\d+)?)(?:\))?/i.exec(prompt);
   if (squareRoot) {
     const base = Number(squareRoot[1]);
     const target = Number(squareRoot[2]);
@@ -348,7 +348,7 @@ function solveLinearisation(input) {
 function solveDifferentials(input) {
   const prompt = String(input).split('||', 1)[0];
   const cubeError = /side is measured as (\d+(?:\.\d+)?) cm with an error of up to (\d+(?:\.\d+)?)/i.exec(prompt);
-  if (cubeError) return 3 * Number(cubeError[1]) ** 2 * Number(cubeError[2]);
+  if (cubeError) return Number((3 * Number(cubeError[1]) ** 2 * Number(cubeError[2])).toFixed(3));
   const percent = /with a (\d+(?:\.\d+)?)% error.*length\^(\d+)/i.exec(prompt);
   if (percent) return Number(percent[1]) * Number(percent[2]);
   const tolerance = /accurate within (\d+(?:\.\d+)?)%.*its (\d+(?:\.\d+)?)-cm side/i.exec(prompt);
@@ -409,9 +409,10 @@ function solveDifferentialEquation(form, input) {
     if (halfLife) return Number((Math.log(2) / Number(halfLife)).toFixed(4));
   }
   if (form === DIFFERENTIAL_EQUATION_FORMS.EULER) {
-    const match = /dy\/dx\s*=\s*(-?\d+(?:\.\d+)?)y.*y\(0\)\s*=\s*(\d+).*h\s*=\s*(\d+(?:\.\d+)?).*after (\d+) step/i.exec(prompt);
+    const match = /dy\/dx\s*=\s*([-−]?\d*(?:\.\d+)?)y.*y\(0\)\s*=\s*(\d+).*h\s*=\s*(\d+(?:\.\d+)?).*after (\d+) step/i.exec(prompt);
     if (!match) throw new Error(`unrecognized Euler prompt: ${prompt}`);
-    return Number((Number(match[2]) * (1 + Number(match[1]) * Number(match[3])) ** Number(match[4])).toFixed(4));
+    const rate = match[1] === "" ? 1 : /[-−]/.test(match[1]) && !/\d/.test(match[1]) ? -1 : Number(match[1].replace("−", "-"));
+    return Number((Number(match[2]) * (1 + rate * Number(match[3])) ** Number(match[4])).toFixed(4));
   }
   throw new Error(`unrecognized differential-equation prompt for ${form}: ${prompt}`);
 }
@@ -420,9 +421,9 @@ function solveIntegrationFoundation(form, input) {
   const parts = String(input).split('||');
   const prompt = parts[0].trim();
   if (form === INTEGRATION_FOUNDATION_FORMS.RIEMANN_NUMERIC) {
-    const match = /f\(x\) = (\d+)x on \[0, (\d+)\], use (\d+) equal strips and left endpoints/.exec(prompt);
+    const match = /f\(x\) = (\d*)x on \[0, (\d+)\], use (\d+) equal strips and left endpoints/.exec(prompt);
     if (!match) throw new Error(`unrecognized Riemann-sum prompt: ${prompt}`);
-    const m = Number(match[1]);
+    const m = match[1] === "" ? 1 : Number(match[1]);
     const upper = Number(match[2]);
     const strips = Number(match[3]);
     const width = upper / strips;
@@ -437,9 +438,9 @@ function solveIntegrationFoundation(form, input) {
     return underestimate ? 'The estimate is an underestimate.' : 'The estimate is an overestimate.';
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.SQUEEZE_NUMERIC) {
-    const match = /f\(x\) = (\d+)x on \[0, (\d+)\], use (\d+) equal strips/.exec(prompt);
+    const match = /f\(x\) = (\d*)x on \[0, (\d+)\], use (\d+) equal strips/.exec(prompt);
     if (!match) throw new Error(`unrecognized squeeze-gap prompt: ${prompt}`);
-    const m = Number(match[1]);
+    const m = match[1] === "" ? 1 : Number(match[1]);
     const upper = Number(match[2]);
     const strips = Number(match[3]);
     return m * upper * (upper / strips);
@@ -691,9 +692,9 @@ function solveIntegrationFoundation(form, input) {
   if (form === INTEGRATION_FOUNDATION_FORMS.LIBRARY_NUMERIC) {
     const log = /integral from 1 to e of (\d+)\/x dx/.exec(prompt);
     if (log) return Number(log[1]);
-    const sine = /integral from 0 to pi of (\d+) sin x dx/.exec(prompt);
+    const sine = /integral from 0 to (?:pi|π) of (\d+) sin x dx/.exec(prompt);
     if (sine) return 2 * Number(sine[1]);
-    const cosine = /integral from 0 to pi\/2 of (\d+) cos x dx/.exec(prompt);
+    const cosine = /integral from 0 to (?:pi|π)\/2 of (\d+) cos x dx/.exec(prompt);
     if (cosine) return Number(cosine[1]);
     const exponential = /integral from 0 to ln 2 of (\d+) e\^x dx/.exec(prompt);
     if (exponential) return Number(exponential[1]);
@@ -768,35 +769,35 @@ function solveIntegrationFoundation(form, input) {
 function solveIntegrationApplication(form, input) {
   const prompt = String(input).split('||')[0].trim();
   if (form === INTEGRATION_APPLICATION_FORMS.AREA_MCQ) {
-    const match = /open interval from 0 to (\d+(?:\.\d+)?), which curve is on top: y = (\d+)x or y = (\d+)x\^2/.exec(prompt);
+    const match = /open interval from 0 to (\d+(?:\.\d+)?), which curve is on top: y = (\d*)x or y = (\d*)x\^2/.exec(prompt);
     if (!match) throw new Error(`unrecognized area-between MCQ prompt: ${prompt}`);
-    const upper = Number(match[1]); const line = Number(match[2]); const quadratic = Number(match[3]);
+    const upper = Number(match[1]); const line = match[2] === "" ? 1 : Number(match[2]); const quadratic = match[3] === "" ? 1 : Number(match[3]);
     if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between interval does not end at the second intersection: ${prompt}`);
-    return `y = ${line}x is on top.`;
+    return `y = ${line === 1 ? "" : line}x is on top.`;
   }
   if (form === INTEGRATION_APPLICATION_FORMS.AREA_NUMERIC) {
-    const intersection = /curves y = (\d+)x and y = (\d+)x\^2 meet at x = 0 and at what larger x-value/.exec(prompt);
-    if (intersection) return Number((Number(intersection[1]) / Number(intersection[2])).toFixed(4));
-    const signed = /signed integral from 0 to (\d+(?:\.\d+)?) of \((\d+)x\^2 - (\d+)x\) dx/.exec(prompt);
+    const intersection = /curves y = (\d*)x and y = (\d*)x\^2 meet at x = 0 and at what larger x-value/.exec(prompt);
+    if (intersection) return Number(((intersection[1] === "" ? 1 : Number(intersection[1])) / (intersection[2] === "" ? 1 : Number(intersection[2]))).toFixed(4));
+    const signed = /signed integral from 0 to (\d+(?:\.\d+)?) of \((\d*)x\^2 - (\d*)x\) dx/.exec(prompt);
     if (signed) {
-      const upper = Number(signed[1]); const quadratic = Number(signed[2]); const line = Number(signed[3]);
+      const upper = Number(signed[1]); const quadratic = signed[2] === "" ? 1 : Number(signed[2]); const line = signed[3] === "" ? 1 : Number(signed[3]);
       return Number((quadratic * upper ** 3 / 3 - line * upper ** 2 / 2).toFixed(4));
     }
-    const area = /area between y = (\d+)x and y = (\d+)x\^2 from x = 0 to x = (\d+(?:\.\d+)?)/.exec(prompt);
+    const area = /area between y = (\d*)x and y = (\d*)x\^2 from x = 0 to x = (\d+(?:\.\d+)?)/.exec(prompt);
     if (!area) throw new Error(`unrecognized area-between numeric prompt: ${prompt}`);
-    const line = Number(area[1]); const quadratic = Number(area[2]); const upper = Number(area[3]);
+    const line = area[1] === "" ? 1 : Number(area[1]); const quadratic = area[2] === "" ? 1 : Number(area[2]); const upper = Number(area[3]);
     if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between bounds do not match the displayed intersections: ${prompt}`);
     return Number((line * upper ** 2 / 2 - quadratic * upper ** 3 / 3).toFixed(4));
   }
   if (form === INTEGRATION_APPLICATION_FORMS.DISC_MCQ) {
-    const match = /region under y = (\d+)x\^(\d+) is revolved about the x-axis/.exec(prompt);
+    const match = /region under y = (\d*)x\^(\d+) is revolved about the x-axis/.exec(prompt);
     if (!match) throw new Error(`unrecognized disc MCQ prompt: ${prompt}`);
     return `The radius is ${match[1]}x^${match[2]}.`;
   }
   if (form === INTEGRATION_APPLICATION_FORMS.DISC_NUMERIC) {
-    const match = /Revolve y = (\d+)x\^(\d+) on \[0, (\d+)\] about the x-axis/.exec(prompt);
+    const match = /Revolve y = (\d*)x\^(\d+) on \[0, (\d+)\] about the x-axis/.exec(prompt);
     if (!match) throw new Error(`unrecognized disc numeric prompt: ${prompt}`);
-    const coefficient = Number(match[1]); const power = Number(match[2]); const upper = Number(match[3]);
+    const coefficient = match[1] === "" ? 1 : Number(match[1]); const power = Number(match[2]); const upper = Number(match[3]);
     if (upper <= 0) throw new Error(`disc interval must have positive width: ${prompt}`);
     return Number((Math.PI * coefficient ** 2 * upper ** (2 * power + 1) / (2 * power + 1)).toFixed(3));
   }
@@ -944,7 +945,7 @@ function solvePrompt(form, input) {
     return solveRelatedRates(input);
   }
   if (form === LADDER_NUMERIC && /-ft ladder/i.test(String(input))) return solveLadder(input);
-  if (form === LINEARISATION_NUMERIC && /(sqrt\(x\)|tangent to f\(x\) = x\^3)/i.test(String(input))) {
+  if (form === LINEARISATION_NUMERIC && /(sqrt\(x\)|√x|tangent to f\(x\) = x\^3)/i.test(String(input))) {
     return solveLinearisation(input);
   }
   if (form === DIFFERENTIALS_NUMERIC && /(volume error|percentage error|accurate within)/i.test(String(input))) {

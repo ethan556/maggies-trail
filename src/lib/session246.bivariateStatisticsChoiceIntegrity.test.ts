@@ -97,8 +97,8 @@ describe("S246 Bivariate Statistics choice-surface integrity", () => {
     expect(rows.filter((row) => row.leaks)).toHaveLength(0);
     expect(Math.max(...rows.map((row) => row.spread))).toBe(10);
     expect(Math.max(...rows.map((row) => row.skew))).toBe(8);
-    expect(rows.reduce((sum, row) => sum + row.spread, 0)).toBe(77);
-    expect(rows.reduce((sum, row) => sum + row.skew, 0)).toBeCloseTo(103 / 2, 12);
+    expect(rows.reduce((sum, row) => sum + row.spread, 0)).toBe(74);
+    expect(rows.reduce((sum, row) => sum + row.skew, 0)).toBeCloseTo(49, 12);
   });
 
   it("preserves evaluator truth, diagnostic feedback, and seeded shuffling", () => {

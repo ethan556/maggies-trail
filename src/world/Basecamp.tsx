@@ -115,7 +115,7 @@ export function Basecamp({
 
       <Surface border className="mt-5 min-h-[104px] rounded-card p-4" elevation="e1">
         {!hydrated ? (
-          <div aria-hidden className="animate-pulse">
+          <div aria-hidden className="motion-safe:animate-pulse">
             <div className="h-6 w-44 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-2 h-11 w-56 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-3 h-2 w-full rounded-pill bg-ink/8 dark:bg-paper/10" />

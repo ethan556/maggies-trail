@@ -9,8 +9,8 @@
 
 import { useEffect, useState } from "react";
 import { TRAIL, TRAIL_STAGE } from "@/lib/trail";
-import type { TLesson, TStep } from "@/lib/schema";
-import { AppIcon, StepSegments } from "@/components/ui";
+import type { TStep } from "@/lib/schema";
+import { AppIcon, normalizeStepProgress, StepSegments } from "@/components/ui";
 import { canSpeak, cancelSpeech, narrationEnabled, narrationFor, setNarrationEnabled, speak } from "@/lib/speech";
 import { MathProse } from "@/components/math/MathText";
 /* ---------------- Rendering ---------------- */
@@ -100,7 +100,7 @@ export function TrailDots({
   current: number;
   remedialIds: Set<string>;
 }) {
-  const total = steps.length;
+  const progress = normalizeStepProgress(steps.length, current);
   // The broken bar over the whole sitting: walked segments LEAF (the trail
   // grammar app-wide), the current step TANGERINE, ahead a hairline; injected
   // remedial steps keep their berry ring + dot-in arrival, and the aria label
@@ -108,11 +108,11 @@ export function TrailDots({
   const injected = new Set(steps.map((s, i) => (remedialIds.has(s.id) ? i : -1)).filter((i) => i >= 0));
   return (
     <StepSegments
-      total={total}
-      current={current}
+      total={progress.total}
+      current={progress.current}
       injected={injected}
-      label={`Step ${current + 1} of ${total}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
-      className="overflow-hidden"
+      label={`Step ${progress.current + 1} of ${progress.total}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
+      className="min-w-0"
     />
   );
 }

@@ -32,14 +32,14 @@ describe("authored math shorthand", () => {
     ]);
   });
 
-  it("recognizes fractions and roots while leaving already-presented Unicode superscripts alone", () => {
+  it("recognizes fractions, roots, and authored Unicode-script expressions", () => {
     const parts = authoredMathParts("Compare 1/2 × 8 = 4, sqrt(9), √(−36), and (2⁴)².", { includeArithmetic: true });
     expect(parts.filter((part) => part.tex).map((part) => part.tex)).toEqual([
       "\\frac{1}{2} \\times  8 = 4",
       "\\sqrt{9}",
-      "\\sqrt{-36}"
+      "\\sqrt{-36}",
+      "(2^{4})^{2}"
     ]);
-    expect(parts.at(-1)?.text).toContain("(2⁴)²");
   });
 
   it("renders compact arithmetic and equality runs without swallowing prose", () => {
@@ -148,7 +148,7 @@ describe("WS-G calculus shorthand — integrals", () => {
       "So the definite integral is defined as ∫ₐᵇ f(x) dx = limit of the Riemann sums as n → ∞",
       { includeArithmetic: true }
     );
-    expect(riemann.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f(x) dx"]);
+    expect(riemann.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f(x) dx", "∞"]);
   });
 });
 
@@ -226,15 +226,15 @@ describe("WS-G calculus shorthand — limits", () => {
 });
 
 describe("WS-G calculus shorthand — what it refuses", () => {
-  it("leaves an operator whose operand is an English word entirely as prose", () => {
-    // Arbitrary prose remains refused. Four corpus-proven instructional placeholders are handled
-    // by the closed-vocabulary S245 integral path and render through \text instead of italics.
-    for (const text of [
+  it("renders the operator glyph but refuses an arbitrary English integrand", () => {
+    // The universal glyph policy renders the explicit integral sign, while the conservative
+    // calculus grammar still refuses to turn the neighbouring English words into variables.
+    expect(authoredMathParts(
       "The model writes ∫ total distance dt.",
-      "How many terms does Σ from k = 3 to 11 of (anything) have?"
-    ]) {
-      expect(authoredMathParts(text).filter((part) => part.tex), text).toEqual([]);
-    }
+    ).filter((part) => part.tex).map((part) => part.source)).toEqual(["∫"]);
+    expect(authoredMathParts(
+      "How many terms does Σ from k = 3 to 11 of (anything) have?",
+    ).filter((part) => part.tex)).toEqual([]);
   });
 
   it("still converts a single-letter operand — the guard rejects words, not variables", () => {
@@ -246,13 +246,14 @@ describe("WS-G calculus shorthand — what it refuses", () => {
     ]);
   });
 
-  it("leaves a bare operator alone — the symbol on its own is prose about the symbol", () => {
-    for (const text of [
-      "The ∫ is a stretched S for 'sum'.",
-      "If lim from the left is 1 and lim from the right is 3"
-    ]) {
-      expect(authoredMathParts(text), text).toEqual([{ text }]);
-    }
+  it("renders an explicit operator glyph while leaving a spelled-out operator as prose", () => {
+    expect(authoredMathParts("The ∫ is a stretched S for 'sum'.")).toEqual([
+      { text: "The " },
+      { text: "", source: "∫", tex: "\\int " },
+      { text: " is a stretched S for 'sum'." },
+    ]);
+    const prose = "If lim from the left is 1 and lim from the right is 3";
+    expect(authoredMathParts(prose)).toEqual([{ text: prose }]);
   });
 
   it("normalises the two corpus-proven legacy lower-bound glyphs only after an integral", () => {

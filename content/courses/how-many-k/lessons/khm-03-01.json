@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-one-more-object",
       "body": "Add one more toy and the count does not start over — it simply says the NEXT number. One more than five is six, always.",
       "narration": "Add one more toy and the count does not start over — it simply says the NEXT number. One more than five is six, always."
     },
@@ -155,38 +155,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-next-number",
       "body": "This is why the counting song matters: each number is exactly one more than the number before it.",
       "narration": "This is why the counting song matters: each number is exactly one more than the number before it."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-one-larger",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "What number comes right after 13? Hop one and tap where you land.",
-        "min": 10,
-        "max": 17,
-        "start": 13,
-        "hop": 1,
-        "hops": 1,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "Five toys gain one toy. Which group shows one more?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 13,
-            "feedback": "13 stops one complete hop too soon. Continue the final 1-unit hop to reach 14."
+            "id": "same",
+            "x": 20,
+            "y": 50,
+            "label": "still 5",
+            "icon": "●×5",
+            "count": 5,
+            "correct": false,
+            "feedback": "One toy was added, so the total cannot stay five."
           },
           {
-            "value": 15,
-            "feedback": "15 goes one complete hop too far. One hop from 13 lands on 14."
+            "id": "six",
+            "x": 50,
+            "y": 50,
+            "label": "now 6",
+            "icon": "●×6",
+            "count": 6,
+            "correct": true,
+            "feedback": "Six is exactly one more than five."
+          },
+          {
+            "id": "seven",
+            "x": 80,
+            "y": 50,
+            "label": "now 7",
+            "icon": "●×7",
+            "count": 7,
+            "correct": false,
+            "feedback": "Seven would be two more than five."
           }
         ],
-        "missFeedback": "Start at 13 and count on 1: you land on 14.",
-        "successFeedback": "14 — one hop forward, because each number is exactly one more than the last.",
-        "lowFeedback": "Short of the landing — a single hop forward reaches 14.",
-        "highFeedback": "Past the landing — right after 13 means one hop, stopping on 14."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Six is exactly one more than five."
       },
       "cml": {
         "stage": "construct",
@@ -222,7 +241,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "What number comes right after 5? Hop one and tap where you land.",
+        "prompt": "A row has 5 beads. Add one bead; use the hop to show the new total.",
         "min": 2,
         "max": 9,
         "start": 5,
@@ -287,7 +306,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What number comes right after 13?",
+        "prompt": "A full ten and three extras gain one more. Which total comes next?",
         "options": [
           {
             "id": "o0",

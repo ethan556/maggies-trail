@@ -186,7 +186,7 @@ export default function ReviewClient() {
     return (
       <div aria-busy="true">
         <p className="sr-only">Checking what's due…</p>
-        <div aria-hidden className="h-40 animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
+        <div aria-hidden className="h-40 motion-safe:animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
       </div>
     );
 

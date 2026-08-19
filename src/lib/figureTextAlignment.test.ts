@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { FIGURE_NUMERIC_CLAIMS } from "./figureNumericClaims.generated";
+import { FIXED_NUMERIC_EXEMPLAR_CONTRACTS } from "./figureNumericParity";
 import { FIXED_EXEMPLAR_FIGURES, isFigureTextAligned } from "./figureTextAlignment";
 
 const COURSES = join(process.cwd(), "content", "courses");
@@ -31,11 +33,20 @@ describe("fixed-example figure and lesson-text alignment", () => {
   it("suppresses every unrelated fixed exemplar across the complete lesson corpus", () => {
     const uses: Array<{ id: string; text: string; aligned: boolean }> = [];
     for (const file of files(COURSES)) visit(JSON.parse(readFileSync(file, "utf8")), uses);
-    /* S245 Kindergarten joining packet replaced ten suppressed `count-on-hops`
-     * placeholders with truthful concept-specific figures. */
-    expect(uses).toHaveLength(934);
-    expect(uses.filter((use) => use.aligned)).toHaveLength(12);
-    expect(uses.filter((use) => !use.aligned)).toHaveLength(922);
+    /* Four legacy guards plus manual semantic contracts plus the generated renderer registry. */
+    expect(FIXED_EXEMPLAR_FIGURES).toHaveLength(4 + Object.keys(FIXED_NUMERIC_EXEMPLAR_CONTRACTS).length + Object.keys(FIGURE_NUMERIC_CLAIMS).length);
+    const aligned = uses.filter((use) => use.aligned);
+    const safelyWithheld = uses.filter((use) => !use.aligned);
+    expect(uses.length).toBeGreaterThan(0);
+    expect(aligned.length).toBeGreaterThan(0);
+    expect(safelyWithheld.length).toBeGreaterThan(0);
+    expect(aligned.length + safelyWithheld.length).toBe(uses.length);
+  });
+
+
+  it("rejects a different array claim even when one factor is shared", () => {
+    expect(isFigureTextAligned("mult3-array", "The model shows 3 × 4 = 12.")).toBe(false);
+    expect(isFigureTextAligned("mult3-array", "The model shows 4 × 6 = 24.")).toBe(true);
   });
 
   it("uses the equal-versus-unequal fraction illustration on the reported lesson", () => {

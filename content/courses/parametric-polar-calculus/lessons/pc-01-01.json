@@ -1,251 +1,248 @@
 {
- "id": "pc-01-01",
- "slug": "parametric-derivatives",
- "title": "Differentiating a Parametric Curve",
- "courseId": "parametric-polar-calculus",
- "chapterId": "ch1-parametric-calculus",
- "minutes": 12,
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "body": "A parametric curve gives you x(t) and y(t) — never y as a function of x. So how do you find the slope?\n\nThe chain rule, with the parameter **cancelled**:\n\n**dy/dx = (dy/dt) / (dx/dt)**\n\nThe dt's divide out, exactly as the Leibniz notation promises. You never eliminate the parameter, and you never need to.",
-   "figure": "dr-chain-gears"
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Cancel the dt.",
-   "conceptTag": "pc-parametric-derivative",
-   "explanationVariants": [
-    "x = t² gives dx/dt = 2t, and y = t³ gives dy/dt = 3t². So dy/dx = 3t²/2t = 3t/2, which at t = 2 is 3.",
-    "Two ordinary derivatives and one division. The parameter never has to be eliminated."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "x = t², y = t³. Find dy/dx at t = 2.",
-    "answer": 3,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 12,
-      "feedback": "That is dy/dt = 3t² at t = 2. It must still be DIVIDED by dx/dt = 2t = 4, giving 3."
-     },
-     {
-      "value": 4,
-      "feedback": "That is dx/dt at t = 2. The slope is the ratio: (dy/dt)/(dx/dt) = 12/4 = 3."
-     },
-     {
-      "value": 6,
-      "feedback": "That is dy/dt divided by 2 — check dx/dt: differentiating t² gives 2t, which is 4 at t = 2."
-     }
-    ],
-    "fallbackFeedback": "dy/dx = 3t²/2t = 3t/2 → at t = 2 it is 3."
-   },
-   "variant": {
-    "gen": "g13-parametric-polar-calculus",
-    "form": "parametric-polar-calculus__pc-parametric-derivative__numeric"
-   }
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Rates chain, and the parameter cancels.",
-   "widget": {
-    "type": "steppedReveal",
-    "prompt": "Why dividing the two rates gives the slope.",
-    "panels": [
-     {
-      "title": "Two clocks, one curve",
-      "body": "As t advances, x moves at dx/dt and y moves at dy/dt. The point traces a curve, and its SLOPE is rise over run — how fast y climbs against how fast x moves."
-     },
-     {
-      "title": "So divide them",
-      "body": "dy/dx = (dy/dt)/(dx/dt). The dt's cancel, and the Leibniz notation is not lying to you: it really does behave like a fraction here, because both are rates measured against the same clock."
-     },
-     {
-      "title": "And the curve need not be a function",
-      "button": "",
-      "body": "This works even where the curve loops back on itself — where no y = f(x) exists at all. The parameter is what makes that possible, and it is the whole reason for parametrising in the first place."
-     }
-    ],
-    "continueFeedback": "Keep going — the third panel is why parametrisation was worth the trouble.",
-    "successFeedback": "Rise over run, both measured against the same clock. The dt's cancel, and the curve may loop as much as it likes."
-   }
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Where the tangent is horizontal.",
-   "conceptTag": "pc-parametric-derivative",
-   "explanationVariants": [
-    "A horizontal tangent needs dy/dt = 0 (and dx/dt ≠ 0). For y = t³ that means 3t² = 0, so t = 0.",
-    "Vertical tangents are the mirror image: dx/dt = 0 with dy/dt ≠ 0."
-   ],
-   "widget": {
-    "type": "mcq",
-    "prompt": "When does a parametric curve have a HORIZONTAL tangent?",
-    "options": [
-     {
-      "id": "o1",
-      "label": "When dy/dt = 0 and dx/dt ≠ 0 — y has stopped moving while x carries on.",
-      "correct": true,
-      "feedback": "Right. The slope is (dy/dt)/(dx/dt), so a zero on top with a nonzero bottom gives a slope of zero."
-     },
-     {
-      "id": "o2",
-      "label": "When dx/dt = 0.",
-      "correct": false,
-      "feedback": "That gives a VERTICAL tangent — the slope's denominator vanishes, so it runs away rather than flattening."
-     },
-     {
-      "id": "o3",
-      "label": "When both are zero.",
-      "correct": false,
-      "feedback": "Then the slope is 0/0 and the curve may have a cusp. That is a genuinely undecided case, not a horizontal tangent."
-     },
-     {
-      "id": "o4",
-      "label": "When t = 0.",
-      "correct": false,
-      "feedback": "There is nothing special about t = 0 in general. What matters is where dy/dt vanishes, whatever t that happens to be."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "g13-parametric-polar-calculus",
-    "form": "parametric-polar-calculus__pc-parametric-derivative__mcq"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "And now the classic error, which is worth meeting once, deliberately.\n\nThe second derivative is **NOT** (d²y/dt²)/(d²x/dt²).\n\nIt is the derivative of the SLOPE, and the slope is itself a function of t. So differentiate it with respect to t, and then divide by dx/dt again:\n\n**d²y/dx² = d/dt[dy/dx] ÷ (dx/dt)**",
-   "figure": "dr-chain-gears"
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "Two routes, two answers — one is wrong.",
-   "conceptTag": "pc-second-derivative",
-   "explanationVariants": [
-    "dy/dx = 3t/2, so d/dt of that is 3/2. Divide by dx/dt = 2t: d²y/dx² = 3/(4t), which at t = 2 is 0.375.",
-    "The tempting shortcut gives (6t)/(2) = 3t = 6 at t = 2 — a completely different number, and simply wrong."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "x = t², y = t³, so dy/dx = 3t/2. Find d²y/dx² at t = 2.",
-    "answer": 0.375,
-    "tolerance": 0.005,
-    "commonErrors": [
-     {
-      "value": 6,
-      "feedback": "That is the shortcut (d²y/dt²)/(d²x/dt²) = 6t/2 = 3t, and it is WRONG. The second derivative is the derivative of the SLOPE with respect to t, divided by dx/dt: (3/2)/(4) = 0.375."
-     },
-     {
-      "value": 1.5,
-      "feedback": "That is d/dt[dy/dx] = 3/2. It must still be divided by dx/dt = 2t = 4."
-     },
-     {
-      "value": 3,
-      "feedback": "That is dy/dx itself at t = 2, not its derivative."
-     }
-    ],
-    "fallbackFeedback": "d/dt[3t/2] = 3/2, and dividing by dx/dt = 4 gives 0.375."
-   },
-   "variant": {
-    "gen": "g13-parametric-polar-calculus",
-    "form": "parametric-polar-calculus__pc-second-derivative__numeric"
-   }
-  },
-  {
-   "id": "ch1",
-   "kind": "challenge",
-   "body": "Find the vertical tangent.",
-   "conceptTag": "pc-parametric-derivative",
-   "hints": [
-    "A vertical tangent needs dx/dt = 0 while dy/dt ≠ 0.",
-    "x = t² − 4t gives dx/dt = 2t − 4.",
-    "Set 2t − 4 = 0 and check that dy/dt is not also zero there."
-   ],
-   "explanationVariants": [
-    "dx/dt = 2t − 4 = 0 at t = 2, and dy/dt = 3t² = 12 ≠ 0 there. So the tangent is vertical at t = 2.",
-    "The slope's denominator vanishes while its numerator does not — which is exactly what 'vertical' means."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "x = t² − 4t, y = t³. At what t does the curve have a VERTICAL tangent?",
-    "answer": 2,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 0,
-      "feedback": "At t = 0 it is dy/dt = 3t² that vanishes, not dx/dt — that gives a horizontal tangent, not a vertical one."
-     },
-     {
-      "value": 4,
-      "feedback": "Check dx/dt = 2t − 4: at t = 4 that is 4, not 0. It vanishes at t = 2."
-     },
-     {
-      "value": -2,
-      "feedback": "The sign is flipped: 2t − 4 = 0 gives t = +2, not −2. Adding 4 to both sides and halving keeps it positive."
-     }
-    ],
-    "fallbackFeedback": "dx/dt = 2t − 4 = 0 → t = 2, where dy/dt = 12 ≠ 0: a vertical tangent."
-   },
-   "variant": {
-    "gen": "g13-parametric-polar-calculus",
-    "form": "parametric-polar-calculus__pc-parametric-derivative__numeric"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "Divide the rates.",
-   "takeaways": [
-    "dy/dx = (dy/dt)/(dx/dt) — the dt's cancel, and the curve may loop as much as it likes.",
-    "Horizontal tangent: dy/dt = 0. Vertical tangent: dx/dt = 0. (Both zero is a cusp, and undecided.)",
-    "The second derivative is NOT the ratio of second derivatives. It is d/dt[dy/dx] ÷ dx/dt — and getting that wrong is the classic error."
-   ],
-   "teaser": "Next: how long is a parametric curve? Add up tiny hypotenuses."
-  }
- ],
- "remedials": [
-  {
-   "conceptTag": "pc-parametric-derivative",
-   "concept": {
-    "id": "rc1",
-    "kind": "concept",
-    "body": "Differentiate x with respect to t. Differentiate y with respect to t. Divide the second by the first. The dt's cancel and what is left is the slope — no elimination of the parameter required.",
-    "figure": "dr-chain-gears"
-   },
-   "check": {
-    "id": "rk1",
-    "kind": "check",
-    "body": "Divide the rates.",
-    "conceptTag": "pc-parametric-derivative",
-    "explanationVariants": [
-     "dx/dt = 2 and dy/dt = 6t, so dy/dx = 3t, which at t = 1 is 3.",
-     "Two derivatives, one division."
-    ],
-    "widget": {
-     "type": "numeric",
-     "prompt": "x = 2t, y = 3t². Find dy/dx at t = 1.",
-     "answer": 3,
-     "tolerance": 0,
-     "commonErrors": [
-      {
-       "value": 6,
-       "feedback": "That is dy/dt = 6t at t = 1. Divide by dx/dt = 2 to get 3."
+  "id": "pc-01-01",
+  "slug": "parametric-derivatives",
+  "title": "Differentiating a Parametric Curve",
+  "courseId": "parametric-polar-calculus",
+  "chapterId": "ch1-parametric-calculus",
+  "minutes": 12,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "A parametric curve gives you x(t) and y(t) — never y as a function of x. So how do you find the slope?\n\nThe chain rule, with the parameter **cancelled**:\n\n**dy/dx = (dy/dt) / (dx/dt)**\n\nThe dt's divide out, exactly as the Leibniz notation promises. You never eliminate the parameter, and you never need to."
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Cancel the dt.",
+      "conceptTag": "pc-parametric-derivative",
+      "explanationVariants": [
+        "x = t² gives dx/dt = 2t, and y = t³ gives dy/dt = 3t². So dy/dx = 3t²/2t = 3t/2, which at t = 2 is 3.",
+        "Two ordinary derivatives and one division. The parameter never has to be eliminated."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x = t², y = t³. Find dy/dx at t = 2.",
+        "answer": 3,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "That is dy/dt = 3t² at t = 2. It must still be DIVIDED by dx/dt = 2t = 4, giving 3."
+          },
+          {
+            "value": 4,
+            "feedback": "That is dx/dt at t = 2. The slope is the ratio: (dy/dt)/(dx/dt) = 12/4 = 3."
+          },
+          {
+            "value": 6,
+            "feedback": "That is dy/dt divided by 2 — check dx/dt: differentiating t² gives 2t, which is 4 at t = 2."
+          }
+        ],
+        "fallbackFeedback": "dy/dx = 3t²/2t = 3t/2 → at t = 2 it is 3."
       },
-      {
-       "value": 2,
-       "feedback": "That is dx/dt. The slope is the RATIO: 6/2 = 3."
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-parametric-derivative__numeric"
       }
-     ],
-     "fallbackFeedback": "dy/dx = 6t/2 = 3t → 3 at t = 1."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Rates chain, and the parameter cancels.",
+      "widget": {
+        "type": "steppedReveal",
+        "prompt": "Why dividing the two rates gives the slope.",
+        "panels": [
+          {
+            "title": "Two clocks, one curve",
+            "body": "As t advances, x moves at dx/dt and y moves at dy/dt. The point traces a curve, and its SLOPE is rise over run — how fast y climbs against how fast x moves."
+          },
+          {
+            "title": "So divide them",
+            "body": "dy/dx = (dy/dt)/(dx/dt). The dt's cancel, and the Leibniz notation is not lying to you: it really does behave like a fraction here, because both are rates measured against the same clock."
+          },
+          {
+            "title": "And the curve need not be a function",
+            "button": "",
+            "body": "This works even where the curve loops back on itself — where no y = f(x) exists at all. The parameter is what makes that possible, and it is the whole reason for parametrising in the first place."
+          }
+        ],
+        "continueFeedback": "Keep going — the third panel is why parametrisation was worth the trouble.",
+        "successFeedback": "Rise over run, both measured against the same clock. The dt's cancel, and the curve may loop as much as it likes."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Where the tangent is horizontal.",
+      "conceptTag": "pc-parametric-derivative",
+      "explanationVariants": [
+        "A horizontal tangent needs dy/dt = 0 (and dx/dt ≠ 0). For y = t³ that means 3t² = 0, so t = 0.",
+        "Vertical tangents are the mirror image: dx/dt = 0 with dy/dt ≠ 0."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "When does a parametric curve have a HORIZONTAL tangent?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "When dy/dt = 0 and dx/dt ≠ 0 — y has stopped moving while x carries on.",
+            "correct": true,
+            "feedback": "Right. The slope is (dy/dt)/(dx/dt), so a zero on top with a nonzero bottom gives a slope of zero."
+          },
+          {
+            "id": "o2",
+            "label": "When dx/dt = 0.",
+            "correct": false,
+            "feedback": "That gives a VERTICAL tangent — the slope's denominator vanishes, so it runs away rather than flattening."
+          },
+          {
+            "id": "o3",
+            "label": "When both are zero.",
+            "correct": false,
+            "feedback": "Then the slope is 0/0 and the curve may have a cusp. That is a genuinely undecided case, not a horizontal tangent."
+          },
+          {
+            "id": "o4",
+            "label": "When t = 0.",
+            "correct": false,
+            "feedback": "There is nothing special about t = 0 in general. What matters is where dy/dt vanishes, whatever t that happens to be."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-parametric-derivative__mcq"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "And now the classic error, which is worth meeting once, deliberately.\n\nThe second derivative is **NOT** (d²y/dt²)/(d²x/dt²).\n\nIt is the derivative of the SLOPE, and the slope is itself a function of t. So differentiate it with respect to t, and then divide by dx/dt again:\n\n**d²y/dx² = d/dt[dy/dx] ÷ (dx/dt)**"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two routes, two answers — one is wrong.",
+      "conceptTag": "pc-second-derivative",
+      "explanationVariants": [
+        "dy/dx = 3t/2, so d/dt of that is 3/2. Divide by dx/dt = 2t: d²y/dx² = 3/(4t), which at t = 2 is 0.375.",
+        "The tempting shortcut gives (6t)/(2) = 3t = 6 at t = 2 — a completely different number, and simply wrong."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x = t², y = t³, so dy/dx = 3t/2. Find d²y/dx² at t = 2.",
+        "answer": 0.375,
+        "tolerance": 0.005,
+        "commonErrors": [
+          {
+            "value": 6,
+            "feedback": "That is the shortcut (d²y/dt²)/(d²x/dt²) = 6t/2 = 3t, and it is WRONG. The second derivative is the derivative of the SLOPE with respect to t, divided by dx/dt: (3/2)/(4) = 0.375."
+          },
+          {
+            "value": 1.5,
+            "feedback": "That is d/dt[dy/dx] = 3/2. It must still be divided by dx/dt = 2t = 4."
+          },
+          {
+            "value": 3,
+            "feedback": "That is dy/dx itself at t = 2, not its derivative."
+          }
+        ],
+        "fallbackFeedback": "d/dt[3t/2] = 3/2, and dividing by dx/dt = 4 gives 0.375."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-second-derivative__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find the vertical tangent.",
+      "conceptTag": "pc-parametric-derivative",
+      "hints": [
+        "A vertical tangent needs dx/dt = 0 while dy/dt ≠ 0.",
+        "x = t² − 4t gives dx/dt = 2t − 4.",
+        "Set 2t − 4 = 0 and check that dy/dt is not also zero there."
+      ],
+      "explanationVariants": [
+        "dx/dt = 2t − 4 = 0 at t = 2, and dy/dt = 3t² = 12 ≠ 0 there. So the tangent is vertical at t = 2.",
+        "The slope's denominator vanishes while its numerator does not — which is exactly what 'vertical' means."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "x = t² − 4t, y = t³. At what t does the curve have a VERTICAL tangent?",
+        "answer": 2,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 0,
+            "feedback": "At t = 0 it is dy/dt = 3t² that vanishes, not dx/dt — that gives a horizontal tangent, not a vertical one."
+          },
+          {
+            "value": 4,
+            "feedback": "Check dx/dt = 2t − 4: at t = 4 that is 4, not 0. It vanishes at t = 2."
+          },
+          {
+            "value": -2,
+            "feedback": "The sign is flipped: 2t − 4 = 0 gives t = +2, not −2. Adding 4 to both sides and halving keeps it positive."
+          }
+        ],
+        "fallbackFeedback": "dx/dt = 2t − 4 = 0 → t = 2, where dy/dt = 12 ≠ 0: a vertical tangent."
+      },
+      "variant": {
+        "gen": "g13-parametric-polar-calculus",
+        "form": "parametric-polar-calculus__pc-parametric-derivative__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Divide the rates.",
+      "takeaways": [
+        "dy/dx = (dy/dt)/(dx/dt) — the dt's cancel, and the curve may loop as much as it likes.",
+        "Horizontal tangent: dy/dt = 0. Vertical tangent: dx/dt = 0. (Both zero is a cusp, and undecided.)",
+        "The second derivative is NOT the ratio of second derivatives. It is d/dt[dy/dx] ÷ dx/dt — and getting that wrong is the classic error."
+      ],
+      "teaser": "Next: how long is a parametric curve? Add up tiny hypotenuses."
     }
-   }
-  }
- ]
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pc-parametric-derivative",
+      "concept": {
+        "id": "rc1",
+        "kind": "concept",
+        "body": "Differentiate x with respect to t. Differentiate y with respect to t. Divide the second by the first. The dt's cancel and what is left is the slope — no elimination of the parameter required."
+      },
+      "check": {
+        "id": "rk1",
+        "kind": "check",
+        "body": "Divide the rates.",
+        "conceptTag": "pc-parametric-derivative",
+        "explanationVariants": [
+          "dx/dt = 2 and dy/dt = 6t, so dy/dx = 3t, which at t = 1 is 3.",
+          "Two derivatives, one division."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "x = 2t, y = 3t². Find dy/dx at t = 1.",
+          "answer": 3,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 6,
+              "feedback": "That is dy/dt = 6t at t = 1. Divide by dx/dt = 2 to get 3."
+            },
+            {
+              "value": 2,
+              "feedback": "That is dx/dt. The slope is the RATIO: 6/2 = 3."
+            }
+          ],
+          "fallbackFeedback": "dy/dx = 6t/2 = 3t → 3 at t = 1."
+        }
+      }
+    }
+  ]
 }

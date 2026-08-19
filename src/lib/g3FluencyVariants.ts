@@ -288,8 +288,8 @@ divHandlers.DivSpecialNumeric = (r) => {
       `Correct — any number divided by 1 is itself: ${n} ÷ 1 = ${n}.`, { factFamily: factFamilyKey(1, n) });
   }
   return num(Dv, `${n} ÷ ${n} = ?`, 1,
-    [[n, `That repeats the number instead of dividing it by itself.`], [0, `A number divided by itself is never zero unless the number itself is zero.`]],
-    `Correct — any nonzero number divided by itself is 1: ${n} ÷ ${n} = 1.`, { factFamily: factFamilyKey(n, n) });
+    [[n, `That repeats the number instead of dividing it by itself.`], [0, `A nonzero number divided by itself equals 1, not 0. The separate expression 0 ÷ 0 is undefined.`]],
+    `Correct — any nonzero number divided by itself is 1: ${n} ÷ ${n} = 1.`, { factFamily: factFamilyKey(1, n) });
 };
 
 divHandlers.DivZeroMcq = (r) => {

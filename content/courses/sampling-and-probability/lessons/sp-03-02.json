@@ -290,41 +290,60 @@
         "Relative frequency = occurrences ÷ total trials."
       ],
       "widget": {
-        "type": "trialProbabilityLab",
-        "prompt": "A spinner's theoretical probability of blue is 1/2. After 40 spins, blue came up 24 times. What is the EXPERIMENTAL probability of blue?",
-        "mode": "experimental",
-        "favourable": 24,
-        "total": 40,
-        "successLabel": "blue spins",
-        "totalLabel": "spins",
-        "outcomes": [],
-        "choices": [
+        "type": "matchPairs",
+        "prompt": "Match the spinner evidence to the conclusion it supports.",
+        "left": [
           {
-            "id": "correct",
-            "label": "3/5",
-            "num": 3,
-            "den": 5,
-            "feedback": "Yes — 24 out of 40 simplifies to 3/5."
+            "id": "experimental",
+            "label": "24 blue spins out of 40"
           },
           {
-            "id": "trap-1",
-            "label": "1/2",
-            "num": 1,
-            "den": 2,
-            "feedback": "1/2 is the theoretical probability. The experimental result here (24 out of 40) is 3/5."
+            "id": "theoretical",
+            "label": "a fair spinner has blue on half its area"
           },
           {
-            "id": "trap-2",
-            "label": "24/16",
-            "num": 24,
-            "den": 16,
-            "feedback": "That compares successes to failures, not successes to the TOTAL spins. 24 out of 40 is 3/5."
+            "id": "comparison",
+            "label": "experimental result compared with theoretical"
           }
         ],
-        "fallbackFeedback": "The experimental result is blue spins over TOTAL spins: 24 over 40.",
-        "successFeedback": "Yes — 24 out of 40 simplifies to 3/5.",
-        "referenceNum": 1,
-        "referenceDen": 2
+        "right": [
+          {
+            "id": "threeFifths",
+            "label": "3/5"
+          },
+          {
+            "id": "oneHalf",
+            "label": "1/2"
+          },
+          {
+            "id": "oneTenthHigher",
+            "label": "1/10 higher"
+          }
+        ],
+        "pairs": {
+          "experimental": "threeFifths",
+          "theoretical": "oneHalf",
+          "comparison": "oneTenthHigher"
+        },
+        "pairErrors": [
+          {
+            "left": "experimental",
+            "right": "oneHalf",
+            "feedback": "1/2 is the theoretical chance. The observed 24/40 simplifies to 3/5."
+          },
+          {
+            "left": "theoretical",
+            "right": "threeFifths",
+            "feedback": "The fair spinner's blue area is half, so its theoretical probability is 1/2."
+          },
+          {
+            "left": "comparison",
+            "right": "oneHalf",
+            "feedback": "The two values are 3/5 and 1/2. Their difference is 1/10."
+          }
+        ],
+        "missFeedback": "Keep observed spins separate from the fair-spinner prediction, then compare the two fractions.",
+        "successFeedback": "Correct — the observed 3/5 is 1/10 higher than the theoretical 1/2."
       },
       "hints": [
         "Relative frequency = occurrences ÷ total trials.",

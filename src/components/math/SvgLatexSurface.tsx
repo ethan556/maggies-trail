@@ -46,10 +46,66 @@ function hasPositionedTspan(node: SVGTextElement): boolean {
   );
 }
 
+type SvgBounds = { minX: number; minY: number; width: number; height: number };
+
+function svgBounds(svg: SVGSVGElement): SvgBounds | null {
+  const values = (svg.getAttribute("viewBox") ?? "").trim().split(/[\s,]+/).map(Number);
+  if (values.length !== 4 || values.some((value) => !Number.isFinite(value))) return null;
+  const minX = values[0]!;
+  const minY = values[1]!;
+  const width = values[2]!;
+  const height = values[3]!;
+  if (width <= 0 || height <= 0) return null;
+  return { minX, minY, width, height };
+}
+
+function clamp(value: number, low: number, high: number): number {
+  return Math.min(Math.max(value, low), high);
+}
+
+/**
+ * A foreignObject clips its HTML to its own rectangle even when CSS overflow is visible.
+ * Measure the rendered KaTeX, grow that rectangle, and keep it inside the SVG viewport.
+ * Returning false is deliberately fail-safe: the caller leaves the authored SVG text visible.
+ */
+function fitOverlay(
+  svg: SVGSVGElement,
+  foreignObject: SVGForeignObjectElement,
+  host: HTMLElement,
+  box: DOMRect | SVGRect,
+  padX: number,
+  initialHeight: number,
+): boolean {
+  const bounds = svgBounds(svg);
+  if (!bounds) return false;
+
+  const inset = Math.max(1, padX * 0.25);
+  const maxWidth = bounds.width - inset * 2;
+  const maxHeight = bounds.height - inset * 2;
+  const measuredWidth = Math.max(box.width + padX * 2, host.scrollWidth + padX * 2);
+  const measuredHeight = Math.max(initialHeight, host.scrollHeight + Math.max(4, padX));
+  if (!Number.isFinite(measuredWidth) || !Number.isFinite(measuredHeight) ||
+      measuredWidth <= 0 || measuredHeight <= 0 || measuredWidth > maxWidth || measuredHeight > maxHeight) {
+    return false;
+  }
+
+  const centerX = box.x + box.width / 2;
+  const centerY = box.y + box.height / 2;
+  const x = clamp(centerX - measuredWidth / 2, bounds.minX + inset, bounds.minX + bounds.width - inset - measuredWidth);
+  const y = clamp(centerY - measuredHeight / 2, bounds.minY + inset, bounds.minY + bounds.height - inset - measuredHeight);
+  foreignObject.setAttribute("x", String(x));
+  foreignObject.setAttribute("y", String(y));
+  foreignObject.setAttribute("width", String(measuredWidth));
+  foreignObject.setAttribute("height", String(measuredHeight));
+  foreignObject.setAttribute("data-svg-latex-fit", "measured");
+  return true;
+}
+
 function hydrateText(node: SVGTextElement, render: Renderer): void {
   if (node.closest("foreignObject") || hasPositionedTspan(node)) return;
   const source = (node.textContent ?? "").replace(/\s+/g, " ").trim();
   if (!source) return;
+  if (node.getAttribute("data-svg-latex-fallback") === source) return;
   if (node.getAttribute("data-svg-latex-source") === source &&
       node.nextElementSibling?.matches("foreignObject[data-svg-latex-overlay]")) return;
 
@@ -105,16 +161,25 @@ function hydrateText(node: SVGTextElement, render: Renderer): void {
   host.innerHTML = html;
   foreignObject.appendChild(host);
 
+  // Insert before measuring: scrollWidth/scrollHeight are zero for detached HTML. The
+  // original label remains visible until the KaTeX rectangle has been proven to fit.
+  parent.insertBefore(foreignObject, node.nextSibling);
+  if (!fitOverlay(svg, foreignObject, host, box, padX, height)) {
+    foreignObject.remove();
+    node.setAttribute("data-svg-latex-fallback", source);
+    return;
+  }
+
   if (!node.hasAttribute("data-svg-latex-original-opacity")) {
     node.setAttribute("data-svg-latex-original-opacity", node.style.opacity);
   }
   if (!node.hasAttribute("data-svg-latex-original-aria-hidden")) {
     node.setAttribute("data-svg-latex-original-aria-hidden", node.getAttribute("aria-hidden") ?? "__missing__");
   }
+  node.removeAttribute("data-svg-latex-fallback");
   node.setAttribute("data-svg-latex-source", source);
   node.setAttribute("aria-hidden", "true");
   node.style.opacity = "0";
-  parent.insertBefore(foreignObject, node.nextSibling);
 }
 
 function hydrateSurface(root: HTMLElement, render: Renderer): void {
@@ -167,5 +232,5 @@ export function SvgLatexSurface({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <div ref={rootRef} style={{ display: "contents" }}>{children}</div>;
+  return <div ref={rootRef} className="svg-latex-surface">{children}</div>;
 }

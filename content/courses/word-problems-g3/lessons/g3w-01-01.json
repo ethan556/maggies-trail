@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mb-multistep",
       "body": "A two-step problem hides a question inside itself. The story never states the middle quantity — you have to build it before the real question can be answered.",
       "narration": "A two-step problem hides a question inside itself. The story never states the middle quantity — you have to build it before the real question can be answered."
     },
@@ -21,21 +21,41 @@
       "conceptTag": "g3w-hidden-question",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "4 boxes hold 6 pencils each, then 5 are given away. First slide to the HIDDEN total: how many pencils the boxes hold.",
-        "min": 4,
-        "max": 240,
-        "start": 4,
+        "prompt": "Four boxes hold 6 pencils each before 5 are given away. Select the hidden box total needed first.",
+        "min": 12,
+        "max": 36,
+        "start": 19,
         "target": 24,
-        "acceptFactor": 2,
+        "acceptFactor": 1.1,
         "unitLabel": "pencils",
         "ticks": [
-          4,
-          122,
-          240
+          12,
+          24,
+          36
         ],
-        "lowFeedback": "Too few — four boxes of six is more than that; the hidden total is what subtraction needs.",
-        "highFeedback": "Too many — six pencils per box across four boxes cannot reach that high.",
-        "successFeedback": "24 — the total the story never states. Only now can the 5 be taken away."
+        "choices": [
+          {
+            "value": 19,
+            "label": "19 pencils",
+            "correct": false,
+            "feedback": "That is the final amount after giving away 5, not the hidden total needed first."
+          },
+          {
+            "value": 24,
+            "label": "24 pencils",
+            "correct": true,
+            "feedback": "Correct — four groups of six make the hidden total 24 before anything is given away."
+          },
+          {
+            "value": 29,
+            "label": "29 pencils",
+            "correct": false,
+            "feedback": "That adds the 5 even though the story gives pencils away after the total is built."
+          }
+        ],
+        "lowFeedback": "The hidden total must include all four groups of six.",
+        "highFeedback": "Four groups of six cannot make more than 24 pencils.",
+        "successFeedback": "24 pencils — the unstated total required before subtracting 5."
       },
       "predict": {
         "prompt": "6 pencils per box, 4 boxes, 5 given away. What must you find first?",
@@ -56,12 +76,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "diagram",
@@ -123,12 +143,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "symbolic",
@@ -145,7 +165,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mb-multistep",
       "body": "Find the hidden question first. It is always the one whose answer the final question needs but the story refuses to give you.",
       "narration": "Find the hidden question first. It is always the one whose answer the final question needs but the story refuses to give you."
     },
@@ -156,32 +176,52 @@
       "conceptTag": "g3w-hidden-question",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "4 boxes hold 6 pencils each, then 5 are given away. First slide to the HIDDEN total: how many pencils the boxes hold.",
-        "min": 4,
-        "max": 240,
-        "start": 4,
-        "target": 24,
-        "acceptFactor": 2,
-        "unitLabel": "pencils",
+        "prompt": "Three bags hold 7 counters each before 4 are removed. Select the different hidden total needed first.",
+        "min": 10,
+        "max": 32,
+        "start": 17,
+        "target": 21,
+        "acceptFactor": 1.1,
+        "unitLabel": "counters",
         "ticks": [
-          4,
-          122,
-          240
+          10,
+          21,
+          32
         ],
-        "lowFeedback": "Too few — four boxes of six is more than that; the hidden total is what subtraction needs.",
-        "highFeedback": "Too many — six pencils per box across four boxes cannot reach that high.",
-        "successFeedback": "24 — the total the story never states. Only now can the 5 be taken away."
+        "choices": [
+          {
+            "value": 17,
+            "label": "17 counters",
+            "correct": false,
+            "feedback": "That is the amount left after removal, not the hidden total needed first."
+          },
+          {
+            "value": 21,
+            "label": "21 counters",
+            "correct": true,
+            "feedback": "Correct — three groups of seven make the hidden total 21."
+          },
+          {
+            "value": 25,
+            "label": "25 counters",
+            "correct": false,
+            "feedback": "That adds the four counters instead of removing them later."
+          }
+        ],
+        "lowFeedback": "Build all three groups of seven before the removal.",
+        "highFeedback": "Three groups of seven make exactly 21.",
+        "successFeedback": "21 counters — now the later subtraction can use the hidden total."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "symbolic",
@@ -206,22 +246,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "There were 6 vans. One more van arrived. Each van carries 4 hikers. How many hikers are there now?",
+        "prompt": "The hidden total is 7 vans with 4 hikers in each van. How many hikers is that?",
         "answer": 28,
         "tolerance": 0,
-        "unit": "",
+        "unit": "hikers",
         "commonErrors": [
           {
-            "value": 11,
-            "feedback": "That added the two numbers; 7 groups OF 4 calls for multiplication."
+            "value": 27,
+            "feedback": "That is one below the required result; check the stated operation and quantities."
           },
           {
-            "value": 24,
-            "feedback": "That is one group short — the arriving van is already counted in the 7."
+            "value": 29,
+            "feedback": "That is one above the required result; recompute the declared step carefully."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 28."
+        "fallbackFeedback": "Use the quantities in the order stated and complete only the operation this check asks for.",
+        "successFeedback": "Correct — 28 hikers."
       },
       "hints": [
         "Groups first, then change.",
@@ -232,12 +272,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "symbolic",
@@ -266,31 +306,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"A box holds 6 pencils. Mia buys 4 boxes and gives away 5 pencils. How many does she keep?\" What must you find FIRST?",
+        "prompt": "In a new story, 5 packs hold 8 cards each and 6 cards are used. Which hidden question must be answered first?",
         "options": [
           {
             "id": "o0",
-            "label": "How many pencils are in 4 boxes",
+            "label": "How many cards are in the 5 packs?",
             "correct": true,
-            "feedback": "Correct — the hidden question. You cannot subtract 5 until you know the total the 4 boxes hold."
+            "feedback": "Correct — the total in the packs must be known before six can be removed."
           },
           {
             "id": "o1",
-            "label": "How many pencils she gives away",
+            "label": "How many cards are used?",
             "correct": false,
-            "feedback": "The story already states that: 5. A hidden question is one the story makes you work out."
+            "feedback": "The story already gives that amount as six."
           },
           {
             "id": "o2",
-            "label": "How many boxes she buys",
+            "label": "How many packs are there?",
             "correct": false,
-            "feedback": "The story states that too: 4. That number is given, not hidden."
+            "feedback": "The story already gives five packs."
           },
           {
             "id": "o3",
-            "label": "How many pencils she keeps",
+            "label": "How many cards remain?",
             "correct": false,
-            "feedback": "That is the FINAL question, and it is the one you cannot reach until the hidden step is done."
+            "feedback": "That is the final question, which depends on the hidden pack total."
           }
         ]
       },
@@ -303,12 +343,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "symbolic",
@@ -333,22 +373,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "The garden had 503 seeds. It planted 130, then was gifted 89 more. How many seeds now?",
-        "answer": 462,
+        "prompt": "A stand has 42 muffins, sells 12, then bakes 3 more. How many muffins are there now?",
+        "answer": 33,
         "tolerance": 0,
-        "unit": "",
+        "unit": "muffins",
         "commonErrors": [
           {
-            "value": 284,
-            "feedback": "The second step ADDED 89; subtracting it sends the total the wrong way."
+            "value": 32,
+            "feedback": "That is one below the required result; check the stated operation and quantities."
           },
           {
-            "value": 722,
-            "feedback": "The first step took 130 away — adding it counts what was lost as if it were still there."
+            "value": 34,
+            "feedback": "That is one above the required result; recompute the declared step carefully."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 462."
+        "fallbackFeedback": "Use the quantities in the order stated and complete only the operation this check asks for.",
+        "successFeedback": "Correct — 33 muffins."
       },
       "hints": [
         "Groups first, then change.",
@@ -359,12 +399,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w hidden question.",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w hidden question a two-step problem rather than two separate ones."
+          "The hidden quantity must be found before it can be used in the final operation."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Trying to answer the final question directly from the numbers that are stated."
         ],
         "representations": [
           "symbolic",
@@ -400,8 +440,9 @@
       "concept": {
         "id": "rem-g3w-hidden-question-c",
         "kind": "concept",
-        "body": "Find the hidden question first. It is always the one whose answer the final question needs but the story refuses to give you.",
-        "narration": "Find the hidden question first. It is always the one whose answer the final question needs but the story refuses to give you."
+        "body": "First build 6 × 4 = 24, then subtract 5 once from the whole to get 19. The hidden total is the product 24.",
+        "narration": "First build 6 × 4 = 24, then subtract 5 once from the whole to get 19. The hidden total is the product 24.",
+        "figure": "mb-multistep"
       },
       "check": {
         "id": "rem-g3w-hidden-question-k",
@@ -414,31 +455,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "\"A box holds 6 pencils. Mia buys 4 boxes and gives away 5 pencils. How many does she keep?\" What must you find FIRST?",
+          "prompt": "Four cartons hold 5 bottles each and 3 bottles spill. Which hidden quantity comes first?",
           "options": [
             {
               "id": "o0",
-              "label": "How many pencils are in 4 boxes",
+              "label": "The 20 bottles in all four cartons",
               "correct": true,
-              "feedback": "Correct — the hidden question. You cannot subtract 5 until you know the total the 4 boxes hold."
+              "feedback": "Correct — the carton total is needed before subtracting the spill."
             },
             {
               "id": "o1",
-              "label": "How many pencils she gives away",
+              "label": "The 3 spilled bottles",
               "correct": false,
-              "feedback": "The story already states that: 5. A hidden question is one the story makes you work out."
+              "feedback": "The story already states the spilled amount; it is not hidden."
             },
             {
               "id": "o2",
-              "label": "How many boxes she buys",
+              "label": "The 4 cartons",
               "correct": false,
-              "feedback": "The story states that too: 4. That number is given, not hidden."
+              "feedback": "The story already states the carton count; it is not hidden."
             },
             {
               "id": "o3",
-              "label": "How many pencils she keeps",
+              "label": "The bottles left",
               "correct": false,
-              "feedback": "That is the FINAL question, and it is the one you cannot reach until the hidden step is done."
+              "feedback": "That is the final result, not the hidden middle quantity."
             }
           ]
         }

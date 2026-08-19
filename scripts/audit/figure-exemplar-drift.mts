@@ -12,21 +12,12 @@
  *
  * `count-on-hops` draws a number line with a dot on 4 and three hops to 7, captioned *four plus
  * three equals seven*. It was reused as decoration across 88 courses, and `isFigureTextAligned`
- * exists to stop it appearing beside prose about other numbers. That guard names THREE figures.
- *
- * But the property that makes `count-on-hops` dangerous is not that it is on a list. It is that its
- * own `<title>` asserts a numeric relationship — it is a FIXED EXEMPLAR. Scanning `figures.tsx`
- * finds **220 titles that do the same**:
- *
- *     "GCF of 12 and 18 is 6."
- *     "Factor out the GCF: 12 + 18 = 6(2 + 3)."
- *     "Polygon area on the grid: 5 × 3 = 15."
- *     "Flip and multiply: 3/4 ÷ 1/2 = 3/4 × 2/1."
- *
- * Each is correct about itself and wrong beside a lesson using different numbers, and 217 of them
- * have no guard at all. The title is the right thing to read because it is the figure's own
- * statement of what it draws, written for a screen reader — the same words a non-visual learner
- * receives.
+ * exists to stop it appearing beside prose about other numbers. That runtime guard now combines four
+ * legacy checks, narrow manually reviewed semantic allowances, and a generated exact-claim registry.
+ * The generated registry SSRs every registered figure and extracts arithmetic/equality assertions
+ * from its live `<title>` while excluding incidental axis ranges and tick sequences. Every extracted
+ * claim is checked before rendering with signed-value and operation-shape parity; the title remains
+ * authoritative because it is also what a non-visual learner receives.
  *
  * ── WHAT COUNTS AS DRIFT, AND WHY THE BAR IS WHERE IT IS ──
  *
@@ -36,7 +27,7 @@
  * requires that essentially none of them appear in the prose: a figure sharing one number with its
  * lesson is likely illustrating it, while one sharing none is decoration.
  *
- * The three already-guarded exemplars are excluded — their placements are `isFigureTextAligned`'s
+ * Source-declared fixed exemplars are excluded — their placements are `isFigureTextAligned`'s
  * business and counting them again would restate a known number as a new finding.
  *
  * Run: npx tsx scripts/audit/figure-exemplar-drift.mts
@@ -44,6 +35,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
 import { execSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { FIXED_EXEMPLAR_FIGURES, isFigureTextAligned } from "../../src/lib/figureTextAlignment";
 
 const ROOT = process.cwd();
@@ -111,7 +103,21 @@ let placements = 0;
 let rendering = 0;
 let exemplarPlacements = 0;
 
-for (const file of walk(join(ROOT, "content", "courses"))) {
+const courseFiles = walk(join(ROOT, "content", "courses"));
+const inputSeal = createHash("sha256");
+for (const file of [
+  join(ROOT, "scripts", "audit", "figure-exemplar-drift.mts"),
+  join(ROOT, "src", "components", "figures.tsx"),
+  join(ROOT, "src", "lib", "figureNumericParity.ts"),
+  join(ROOT, "src", "lib", "figureTextAlignment.ts"),
+  join(ROOT, "src", "lib", "figureNumericClaims.generated.ts"),
+  join(ROOT, "scripts", "audit", "generate-figure-numeric-claims.mts"),
+  join(ROOT, "src", "lib", "figureTextMismatchBlocklist.generated.ts"),
+  ...courseFiles,
+]) inputSeal.update(relative(ROOT, file)).update("\0").update(readFileSync(file)).update("\0");
+const contractInputSeal = inputSeal.digest("hex");
+
+for (const file of courseFiles) {
   let json: { lesson?: { id?: string; steps?: unknown[] }; id?: string; steps?: unknown[] };
   try { json = JSON.parse(readFileSync(file, "utf8")); } catch { continue; }
   const lesson = json.lesson ?? json;
@@ -184,16 +190,17 @@ for (const file of walk(join(ROOT, "content", "courses"))) {
 mkdirSync(OUT, { recursive: true });
 const csv = join(OUT, "VIS03_FIGURE_EXEMPLAR_DRIFT.csv");
 writeFileSync(csv, [
-  `# sourceSeal=${seal} — S242/VIS-03. Placements that RENDER (isFigureTextAligned passes) where the`,
-  "# figure's own <title> asserts a numeric relationship and NONE of its numbers appear in the prose",
-  "# beside it. The three already-guarded fixed exemplars are excluded — those are the alignment",
-  "# gate's business. This is the same defect class as count-on-hops, on figures nothing guards.",
+  `# sourceSeal=${seal}; contractInputSeal=${contractInputSeal} — VIS-03 rendering evidence after runtime alignment gates.`,
+  "# Rows are unguarded rendering placements whose figure title and adjacent prose assert conflicting numeric examples.",
+  "# Source-declared fixed exemplars are adjudicated before rendering by signed-value, operation-shape, and narrow",
+  "# generic-semantic contracts; the generated mismatch blocklist remains complementary. A zero-row file means no",
+  "# learner-visible high-confidence fixed-example conflict survived those gates, not that replacement debt is zero.",
   "lesson,step,figure,titleNumbers,proseNumbers,title,prose",
   ...rows.map((r) => [r.lesson, r.step, r.figure, r.titleNumbers, r.proseNumbers, r.title, r.prose]
     .map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
 ].join("\n") + "\n");
 
-console.log(`figure-exemplar-drift @ ${seal}`);
+console.log(`figure-exemplar-drift @ ${seal} / ${contractInputSeal.slice(0, 16)}`);
 console.log(`  ${placements.toLocaleString()} figure placements, ${rendering.toLocaleString()} render today`);
 console.log(`  ${titles.size.toLocaleString()} figure ids carry a <title>`);
 console.log(`  ${exemplarPlacements} RENDERING placements whose figure asserts a numeric relationship`);

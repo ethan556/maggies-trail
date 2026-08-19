@@ -634,6 +634,11 @@ const LIMIT_SERIES_CASES = [
 ] as const;
 
 const signedLimitNumber = (value: number): string => value < 0 ? `−${Math.abs(value)}` : String(value);
+const limitCoefficientVariable = (coefficient: number, variable: string): string => {
+  if (coefficient === 1) return variable;
+  if (coefficient === -1) return `−${variable}`;
+  return `${signedLimitNumber(coefficient)}${variable}`;
+};
 const limitPower = (value: number): string => ({ 1: "", 2: "²", 3: "³", 4: "⁴", 5: "⁵" })[value] ?? String(value);
 const decimalLimitNumber = (value: number): string => {
   const fixed = value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
@@ -700,7 +705,7 @@ function limitReadNumericVariant(rand: () => number): LimitGeneratedVariant {
   const answer = chosen.m * chosen.at + chosen.b;
   const bSign = chosen.b < 0 ? `− ${Math.abs(chosen.b)}` : `+ ${chosen.b}`;
   return limitNumeric(
-    `The graph is the continuous line f(x) = ${signedLimitNumber(chosen.m)}x ${bSign}. Find the limit as x approaches ${signedLimitNumber(chosen.at)}.`,
+    `The graph is the continuous line f(x) = ${limitCoefficientVariable(chosen.m, "x")} ${bSign}. Find the limit as x approaches ${signedLimitNumber(chosen.at)}.`,
     answer,
     [chosen.at, chosen.m * chosen.at, chosen.b],
     `A continuous line can be evaluated directly: ${signedLimitNumber(chosen.m)}(${signedLimitNumber(chosen.at)}) ${bSign} = ${signedLimitNumber(answer)}.`,
@@ -839,7 +844,7 @@ function limitInfinityNumericVariant(rand: () => number): LimitGeneratedVariant 
   const answer = Number((chosen.numerator / chosen.denominator).toFixed(3));
   const widget = {
     type: "exactNumberLab" as const,
-    prompt: `For f(x) = (${signedLimitNumber(chosen.numerator)}x³ + 1)/(${chosen.denominator}x³ − 2), find the limit as x approaches +∞. Give a decimal to three places.`,
+    prompt: `For f(x) = (${limitCoefficientVariable(chosen.numerator, "x³")} + 1)/(${chosen.denominator}x³ − 2), find the limit as x approaches +∞. Give a decimal to three places.`,
     task: "approximationEvaluate" as const,
     values: [],
     approxConstants: [

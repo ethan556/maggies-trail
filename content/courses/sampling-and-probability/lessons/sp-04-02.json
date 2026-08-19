@@ -178,26 +178,60 @@
       "kind": "interactive",
       "body": "Another compound-event probability.",
       "widget": {
-        "type": "mcq",
-        "prompt": "What is the probability of flipping heads and rolling an even number?",
-        "options": [
+        "type": "matchPairs",
+        "prompt": "Match each independent compound event to its probability.",
+        "left": [
           {
-            "id": "a",
-            "label": "1/4",
-            "correct": true,
-            "feedback": "Yes — 1/2 × 1/2 = 1/4, matching the 3 out of 12 total outcomes."
+            "id": "headsEven",
+            "label": "heads and an even number"
           },
           {
-            "id": "b",
-            "label": "3/6",
-            "feedback": "That simplifies to 1/2, which is only ONE event's probability. The compound probability is 1/4."
+            "id": "tailsSix",
+            "label": "tails and a 6"
           },
           {
-            "id": "c",
-            "label": "1/12",
-            "feedback": "That's the probability of ONE specific outcome (like H2 alone), not all 3 matching ones. The answer is 1/4."
+            "id": "headsMultipleThree",
+            "label": "heads and a multiple of 3"
           }
-        ]
+        ],
+        "right": [
+          {
+            "id": "quarter",
+            "label": "1/4"
+          },
+          {
+            "id": "twelfth",
+            "label": "1/12"
+          },
+          {
+            "id": "sixth",
+            "label": "1/6"
+          }
+        ],
+        "pairs": {
+          "headsEven": "quarter",
+          "tailsSix": "twelfth",
+          "headsMultipleThree": "sixth"
+        },
+        "pairErrors": [
+          {
+            "left": "headsEven",
+            "right": "sixth",
+            "feedback": "Heads is 1/2 and even is 1/2, so the product is 1/4."
+          },
+          {
+            "left": "tailsSix",
+            "right": "quarter",
+            "feedback": "Tails is 1/2 and one specific die face is 1/6, so the product is 1/12."
+          },
+          {
+            "left": "headsMultipleThree",
+            "right": "quarter",
+            "feedback": "Multiples of 3 are 2 of 6, or 1/3. With heads, 1/2 × 1/3 = 1/6."
+          }
+        ],
+        "missFeedback": "Find each single-event probability first, then multiply the independent probabilities.",
+        "successFeedback": "Correct — independent and events multiply."
       }
     },
     {
@@ -242,10 +276,10 @@
       ],
       "widget": {
         "type": "fractionEntry",
-        "prompt": "What is the probability of rolling a number greater than 4 on both dice?",
+        "prompt": "Roll two fair dice. What is the probability that the first die is a 6 and the second is greater than 4?",
         "answerWhole": 0,
         "answerNum": 1,
-        "answerDen": 9,
+        "answerDen": 18,
         "allowWhole": false,
         "form": "any",
         "unit": "",
@@ -254,17 +288,17 @@
             "whole": 0,
             "num": 1,
             "den": 6,
-            "feedback": "That's not the right product. 1/3 × 1/3 = 1/9, not 1/6."
+            "feedback": "1/6 is only the first die being a 6. Also multiply by 1/3 for the second die being greater than 4."
           },
           {
             "whole": 0,
-            "num": 2,
+            "num": 1,
             "den": 3,
-            "feedback": "2/3 adds 1/3 + 1/3 — 'both' events MULTIPLY: 1/3 × 1/3 = 1/9."
+            "feedback": "1/3 is only the second die being greater than 4. Also multiply by 1/6 for the first die being exactly 6."
           }
         ],
-        "fallbackFeedback": "Each die independently: P(>4) = 1/3, and 'both' multiplies the two.",
-        "successFeedback": "Yes — 1/3 × 1/3 = 1/9."
+        "fallbackFeedback": "The dice are independent: 1/6 × 1/3 = 1/18.",
+        "successFeedback": "Yes — 1/6 × 1/3 = 1/18."
       },
       "variant": {
         "gen": "prob-fraction",
@@ -281,30 +315,26 @@
         "For independent events, multiply the individual probabilities."
       ],
       "widget": {
-        "type": "fractionEntry",
-        "prompt": "What is the probability of flipping heads and rolling an even number?",
-        "answerWhole": 0,
-        "answerNum": 1,
-        "answerDen": 4,
-        "allowWhole": false,
-        "form": "any",
-        "unit": "",
-        "commonEntries": [
+        "type": "mcq",
+        "prompt": "A coin is flipped and a fair die is rolled. What is P(heads and a multiple of 3)?",
+        "options": [
           {
-            "whole": 0,
-            "num": 1,
-            "den": 6,
-            "feedback": "That's not the individual events' probabilities multiplied. 1/2 × 1/2 = 1/4."
+            "id": "a",
+            "label": "1/6",
+            "correct": true,
+            "feedback": "Yes — heads is 1/2 and multiples of 3 are 2 of 6, or 1/3. Multiply: 1/2 × 1/3 = 1/6."
           },
           {
-            "whole": 0,
-            "num": 2,
-            "den": 3,
-            "feedback": "That's much too high for a compound event needing BOTH conditions. 1/2 × 1/2 = 1/4."
+            "id": "b",
+            "label": "1/3",
+            "feedback": "1/3 is the die event only. The compound event also needs heads, so multiply by 1/2."
+          },
+          {
+            "id": "c",
+            "label": "1/12",
+            "feedback": "1/12 would use one die face. There are two multiples of 3: 3 and 6, so the die probability is 1/3."
           }
-        ],
-        "fallbackFeedback": "Multiply the two independent probabilities: 1/2 for heads, 1/2 for even.",
-        "successFeedback": "Yes — 1/2 × 1/2 = 1/4."
+        ]
       },
       "hints": [
         "P(heads) = 1/2.",

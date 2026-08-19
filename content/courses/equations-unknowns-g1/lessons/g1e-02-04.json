@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Subtraction hides unknowns too: 14 − __ = 9 asks what was taken away. The start and what remains are both visible.",
-      "narration": "Subtraction hides unknowns too: 14 − __ = 9 asks what was taken away. The start and what remains are both visible."
+      "figure": "difference-gap",
+      "body": "A subtraction blank can ask what was taken away: 14 − ? = 9. The missing amount is the gap. The picture shows another gap, 8 − 5 = 3.",
+      "narration": "A subtraction blank can ask what was taken away: 14 − ? = 9. The missing amount is the gap. The picture shows another gap, 8 − 5 = 3."
     },
     {
       "id": "i1",
@@ -138,9 +138,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The amount removed is the gap between the start and what remains — and adding it back to the remainder must rebuild the start.",
-      "narration": "The amount removed is the gap between the start and what remains — and adding it back to the remainder must rebuild the start."
+      "figure": "fact-family",
+      "body": "Add the removed part back to what remains. The picture shows 13 − 5 = 8 and the check 8 + 5 = 13.",
+      "narration": "Add the removed part back to what remains. The picture shows 13 − 5 = 8 and the check 8 + 5 = 13."
     },
     {
       "id": "i2",
@@ -149,21 +149,21 @@
       "conceptTag": "g1e-sub-unknown",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Find the removed amount of 14 − __ = 9: start at 14 and count back to 9, counting the hops. How many hops?",
-        "min": 7,
-        "max": 16,
-        "start": 14,
+        "prompt": "Find another removed amount: 16 − __ = 10. Start at 16 and count back until 10. Where do six hops land?",
+        "min": 8,
+        "max": 18,
+        "start": 16,
         "hop": 1,
-        "hops": 5,
+        "hops": 6,
         "direction": "back",
         "commonLandings": [
           {
-            "value": 10,
-            "feedback": "That is one hop short of reaching 9; keep hopping until you land on what remains."
+            "value": 11,
+            "feedback": "Eleven is one hop short. Make all six hops to reach ten."
           }
         ],
-        "missFeedback": "Start at 14 and count back 5: you land on 9.",
-        "successFeedback": "Five hops — the gap between 14 and 9 is the 5 that was taken away."
+        "missFeedback": "Start at sixteen and make six hops back.",
+        "successFeedback": "You landed on 10. The six-hop gap is the amount removed."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +199,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 − ? = 3. What was taken away?",
+        "prompt": "9 − ? = 3. What was taken away? Find the gap.",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -259,7 +259,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "17 − ? = 5. What was taken away?",
+        "prompt": "17 − ? = 5. What was taken away? Add your answer back to check.",
         "answer": 12,
         "tolerance": 0,
         "unit": "",
@@ -386,8 +386,9 @@
       "concept": {
         "id": "rem-g1e-sub-unknown-c",
         "kind": "concept",
-        "body": "The amount removed is the gap between the start and what remains — and adding it back to the remainder must rebuild the start.",
-        "narration": "The amount removed is the gap between the start and what remains — and adding it back to the remainder must rebuild the start."
+        "body": "The picture highlights the gap between 8 and 5. That gap is 3 because 8 − 3 = 5.",
+        "narration": "The picture highlights the gap between 8 and 5. That gap is 3 because 8 − 3 = 5.",
+        "figure": "difference-gap"
       },
       "check": {
         "id": "rem-g1e-sub-unknown-k",
@@ -400,22 +401,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "9 − ? = 4. What was taken away?",
+          "prompt": "Find the gap: 12 − ? = 7. What was taken away?",
           "answer": 5,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 4,
-              "feedback": "That is what remains, not what was removed."
+              "value": 7,
+              "feedback": "Seven is what remains. Find the gap from twelve down to seven."
             },
             {
-              "value": 9,
-              "feedback": "That is the starting whole."
+              "value": 19,
+              "feedback": "Adding twelve and seven does not find what was removed."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — the value 5 makes the statement true."
+          "fallbackFeedback": "Count back from twelve to seven, or find twelve minus seven.",
+          "successFeedback": "Correct — taking 5 from 12 leaves 7."
         }
       }
     }

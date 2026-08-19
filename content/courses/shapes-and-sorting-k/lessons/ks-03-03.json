@@ -287,53 +287,57 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "The grand sort.",
+      "body": "Match the sorting rule to the right group.",
       "conceptTag": "ks-sort-and-count",
       "explanationVariants": [
         "Count each group: 3 circles, 4 squares, 2 triangles. 4 is the most — squares win.",
         "Compare the counts 3, 4, 2 — the squares' 4 is biggest."
       ],
       "widget": {
-        "type": "tapDiagram",
-        "prompt": "You sort shapes: 3 circles, 4 squares, 2 triangles. Tap the BIGGEST group.",
-        "mode": "selectOne",
-        "canvas": {
-          "w": 3,
-          "h": 1
-        },
-        "hotspots": [
+        "type": "matchPairs",
+        "prompt": "Match each item and sorting rule to its group.",
+        "left": [
           {
-            "id": "circles",
-            "x": 16,
-            "y": 50,
-            "label": "3 circles",
-            "icon": "⚪",
-            "count": 3,
-            "correct": false,
-            "feedback": "3 loses to the squares' 4 — squares are biggest."
+            "id": "l1",
+            "label": "a red apple, sorted by color"
           },
           {
-            "id": "squares",
-            "x": 50,
-            "y": 50,
-            "label": "4 squares",
-            "icon": "🟦",
-            "count": 4,
-            "correct": true
+            "id": "l2",
+            "label": "a red apple, sorted by kind"
           },
           {
-            "id": "triangles",
-            "x": 84,
-            "y": 50,
-            "label": "2 triangles",
-            "icon": "🔺",
-            "count": 2,
-            "correct": false,
-            "feedback": "2 is the SMALLEST — the biggest group is squares (4)."
+            "id": "l3",
+            "label": "a toy car, sorted by kind"
           }
         ],
-        "missFeedback": "The counts differ: 3, 4, 2 — squares win.",
-        "successFeedback": "Yes — 4 beats 3 and 2. You sorted, counted, and compared!"
+        "right": [
+          {
+            "id": "r1",
+            "label": "red group"
+          },
+          {
+            "id": "r2",
+            "label": "food group"
+          },
+          {
+            "id": "r3",
+            "label": "things that drive"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "l2",
+            "right": "r1",
+            "feedback": "That would work for color. Here the rule is kind, so an apple goes with food."
+          }
+        ],
+        "missFeedback": "Read the sorting rule before choosing the group.",
+        "successFeedback": "Great sorting — the same item can move when the rule changes!"
       },
       "hints": [
         "Count each group first.",

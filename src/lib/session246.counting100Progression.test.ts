@@ -38,6 +38,26 @@ type Lesson = {
 };
 
 const LESSON_IDS = Object.keys(BEFORE_PATHS) as LessonId[];
+const CONCEPT_FIGURES: Record<LessonId, readonly [string | undefined, string | undefined]> = {
+  "k100-01-01": ["number-track", "c120-same-pattern"],
+  "k100-01-02": ["odometer-roll", "c120-roll-ten"],
+  "k100-01-03": ["chart-120", "chart-120"],
+  "k100-01-04": ["tno-move-tens-digit", "tno-move-tens-digit"],
+  "k100-01-05": ["kc-ten-hops-to-100", "kc-ten-hops-to-100"],
+  "k100-01-06": [undefined, "kc-ten-hops-to-100"],
+  "k100-02-01": ["kc-by-tens", "kc-by-tens"],
+  "k100-02-02": ["kc-ten-hops-to-100", "kc-ten-hops-to-100"],
+  "k100-02-03": ["chart-120", "chart-rows"],
+  "k100-02-04": ["kc-ten-hops-to-100", "kc-ten-hops-to-100"],
+  "k100-02-05": ["tno-count-down-tens", "tno-count-down-tens"],
+  "k100-03-01": [undefined, undefined],
+  "k100-03-02": [undefined, undefined],
+  "k100-03-03": ["chart-120", "chart-120"],
+  "k100-03-04": [undefined, undefined],
+  "k100-03-05": ["chart-rows", "c120-chart-row"],
+  "k100-03-06": ["c120-missing-order", "c120-missing-order"],
+  "k100-03-07": [undefined, undefined],
+};
 const lessons = Object.fromEntries(LESSON_IDS.map((id) => [
   id,
   JSON.parse(readFileSync(join(ROOT, `${id}.json`), "utf8")) as Lesson,
@@ -78,8 +98,9 @@ describe("S246 Counting to 100 complete-course progression packet", () => {
   it("preserves the visual-first hosts throughout the complete course", () => {
     for (const lessonId of LESSON_IDS) {
       const lesson = lessons[lessonId];
-      expect(step(lesson, "c1").figure, `${lessonId}/c1 figure`).toBe("number-track");
-      expect(step(lesson, "c2").figure, `${lessonId}/c2 figure`).toBe("number-track");
+      const [c1Figure, c2Figure] = CONCEPT_FIGURES[lessonId];
+      expect(step(lesson, "c1").figure, `${lessonId}/c1 figure`).toBe(c1Figure);
+      expect(step(lesson, "c2").figure, `${lessonId}/c2 figure`).toBe(c2Figure);
       expect(step(lesson, "i1").widget?.type, `${lessonId}/i1 causal host`).toBe("numberLineHop");
       expect(step(lesson, "i2").widget?.type, `${lessonId}/i2 ordering host`).toBe("dragOrder");
     }

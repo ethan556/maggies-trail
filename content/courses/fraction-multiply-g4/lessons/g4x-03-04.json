@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Estimating a fraction product compares each group to one whole. If 5/6 is nearly a whole, then 7 × 5/6 is a little under 7.",
-      "narration": "Estimating a fraction product compares each group to one whole. If 5/6 is nearly a whole, then 7 × 5/6 is a little under 7."
+      "figure": "fa-benchmark-half",
+      "body": "Since 5/6 is 1/6 below one, seven groups are 7/6 below seven: 7 × 5/6 = 5 5/6, so estimate about 6. The figure shows another benchmark comparison, 3/5 > 1/2; for 5/6, comparing with one whole supports an estimate near six for seven groups.",
+      "narration": "Since 5/6 is 1/6 below one, seven groups are 7/6 below seven: 7 × 5/6 = 5 5/6, so estimate about 6. The figure shows another benchmark comparison, 3/5 > 1/2; for 5/6, comparing with one whole supports an estimate near six for seven groups."
     },
     {
       "id": "i1",
@@ -23,19 +23,19 @@
         "type": "estimateSlider",
         "prompt": "7 × 5/6 — slide to estimate the product in wholes.",
         "min": 1,
-        "max": 40,
+        "max": 12,
         "start": 1,
         "target": 6,
-        "acceptFactor": 2,
+        "acceptFactor": 1.1,
         "unitLabel": "wholes",
         "ticks": [
           1,
-          21,
-          40
+          6,
+          12
         ],
-        "lowFeedback": "Too low — each of the seven groups is nearly a whole one.",
-        "highFeedback": "Too high — seven groups of just under one cannot pass seven.",
-        "successFeedback": "About 6 — the exact value is 35/6, which is 5 5/6, just under seven."
+        "lowFeedback": "Too low — thirty-five sixths is close to six wholes.",
+        "highFeedback": "Too high — the exact product is five and five sixths, just below six.",
+        "successFeedback": "About 6 — the exact value is 35/6, or 5 5/6, just under six."
       },
       "predict": {
         "prompt": "Is 7 × 5/6 nearer 6 or nearer 35?",
@@ -90,9 +90,9 @@
         "options": [
           {
             "id": "o0",
-            "label": "A little less than 7, since 5/6 is nearly a whole",
+            "label": "About 6, because 35 sixths is 5 5/6",
             "correct": true,
-            "feedback": "Correct — each group is just under one, so seven of them land just under seven."
+            "feedback": "Correct — thirty-five sixths is five and five sixths, which is close to six."
           },
           {
             "id": "o1",
@@ -110,7 +110,7 @@
             "id": "o3",
             "label": "Exactly 7, since 5/6 rounds to 1",
             "correct": false,
-            "feedback": "Rounding 5/6 up to 1 gives an estimate of 7, but the true product is slightly BELOW it."
+            "feedback": "Seven is an upper estimate, but 35/6 is 5 5/6 and is closer to 6."
           }
         ]
       },
@@ -145,9 +145,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "That single comparison catches the worst error in this topic — multiplying the denominators and landing an order of magnitude away.",
-      "narration": "That single comparison catches the worst error in this topic — multiplying the denominators and landing an order of magnitude away."
+      "figure": "fa-repeated-add",
+      "body": "Benchmarking exposes a denominator error: multiplying both numerator and denominator would leave the value at 5/6 instead of scaling it to 35/6. The figure shows another repeated-addition product, 3 × 2/5 = 6/5; unlike multiplying both parts, repeated groups increase the value.",
+      "narration": "Benchmarking exposes a denominator error: multiplying both numerator and denominator would leave the value at 5/6 instead of scaling it to 35/6. The figure shows another repeated-addition product, 3 × 2/5 = 6/5; unlike multiplying both parts, repeated groups increase the value."
     },
     {
       "id": "i2",
@@ -156,21 +156,41 @@
       "conceptTag": "g4x-estimate",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "7 × 5/6 — slide to estimate the product in wholes.",
+        "prompt": "Choose a benchmark estimate for 5 × 4/5.",
         "min": 1,
-        "max": 40,
-        "start": 1,
-        "target": 6,
-        "acceptFactor": 2,
+        "max": 8,
+        "start": 2,
+        "target": 4,
+        "acceptFactor": 1.25,
         "unitLabel": "wholes",
         "ticks": [
           1,
-          21,
-          40
+          4,
+          8
         ],
-        "lowFeedback": "Too low — each of the seven groups is nearly a whole one.",
-        "highFeedback": "Too high — seven groups of just under one cannot pass seven.",
-        "successFeedback": "About 6 — the exact value is 35/6, which is 5 5/6, just under seven."
+        "lowFeedback": "That estimate is below the product's benchmark.",
+        "highFeedback": "That estimate is above the product's benchmark.",
+        "successFeedback": "About 4 wholes — in fact, 5 × 4/5 = 20/5 = 4.",
+        "choices": [
+          {
+            "value": 2,
+            "label": "About 2 wholes",
+            "correct": false,
+            "feedback": "Four fifths is close to one, so five groups must be much more than two."
+          },
+          {
+            "value": 4,
+            "label": "About 4 wholes",
+            "correct": true,
+            "feedback": "Correct — 4/5 is just under one, and five groups make exactly four wholes."
+          },
+          {
+            "value": 6,
+            "label": "About 6 wholes",
+            "correct": false,
+            "feedback": "Five groups of less than one cannot be greater than five."
+          }
+        ]
       },
       "cml": {
         "stage": "construct",
@@ -206,7 +226,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 3 × 2/6 as ?/6. What is the numerator?",
+        "prompt": "Compute 3 × 2/6 as ?/6. What is the numerator? Then explain why the denominator keeps its role.",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -221,7 +241,7 @@
             "feedback": "That is one group's numerator — 3 groups of 2 sixths were asked for."
           }
         ],
-        "fallbackFeedback": "Count the same-size pieces the groups collect; the denominator never changes.",
+        "fallbackFeedback": "Count the equal-sized pieces first; keep the named denominator in the requested unsimplified form.",
         "successFeedback": "Correct — 6."
       },
       "hints": [
@@ -267,31 +287,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Roughly how big is 7 × 5/6, without computing exactly?",
+        "prompt": "Use a new benchmark: roughly how large is 4 × 3/4?",
         "options": [
           {
             "id": "o0",
-            "label": "A little less than 7, since 5/6 is nearly a whole",
+            "label": "About 3, because four groups of 3/4 make 3",
             "correct": true,
-            "feedback": "Correct — each group is just under one, so seven of them land just under seven."
+            "feedback": "Correct — here the benchmark is exact: 4 × 3/4 = 12/4 = 3."
           },
           {
             "id": "o1",
-            "label": "About 35, since 7 × 5 = 35",
+            "label": "About 12, using only 4 × 3",
             "correct": false,
-            "feedback": "That ignores the sixths entirely; 35 counts pieces, and 35 sixths is under six wholes."
+            "feedback": "Twelve counts fourths; twelve fourths is three wholes."
           },
           {
             "id": "o2",
-            "label": "Less than one, since 5/6 is a fraction",
+            "label": "Less than 1 because 3/4 is a fraction",
             "correct": false,
-            "feedback": "Taking seven groups of nearly-a-whole cannot land under one whole."
+            "feedback": "Four groups of three fourths combine to more than one whole."
           },
           {
             "id": "o3",
-            "label": "Exactly 7, since 5/6 rounds to 1",
+            "label": "About 4 because 3/4 is exactly 1",
             "correct": false,
-            "feedback": "Rounding 5/6 up to 1 gives an estimate of 7, but the true product is slightly BELOW it."
+            "feedback": "Three fourths is below one, and the exact product is three."
           }
         ]
       },
@@ -334,7 +354,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Convert 18/4 to a mixed number. What is the WHOLE NUMBER part?",
+        "prompt": "Transfer to a final context: Convert 18/4 to a mixed number. What is the WHOLE NUMBER part?",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -348,7 +368,7 @@
             "feedback": "That counted the leftover 2 fourths as another whole, but 2 is short of 4."
           }
         ],
-        "fallbackFeedback": "Count the same-size pieces the groups collect; the denominator never changes.",
+        "fallbackFeedback": "Group the pieces into denominator-sized wholes; report the number of complete groups.",
         "successFeedback": "Correct — 4."
       },
       "hints": [
@@ -401,8 +421,9 @@
       "concept": {
         "id": "rem-g4x-estimate-c",
         "kind": "concept",
-        "body": "That single comparison catches the worst error in this topic — multiplying the denominators and landing an order of magnitude away.",
-        "narration": "That single comparison catches the worst error in this topic — multiplying the denominators and landing an order of magnitude away."
+        "body": "Benchmarking exposes a denominator error: multiplying both numerator and denominator would leave the value at 5/6 instead of scaling it to 35/6. The figure benchmarks 3/5 against one half; comparing 4/5 with one whole similarly predicts the size of several groups.",
+        "narration": "Benchmarking exposes a denominator error: multiplying both numerator and denominator would leave the value at 5/6 instead of scaling it to 35/6. The figure benchmarks 3/5 against one half; comparing 4/5 with one whole similarly predicts the size of several groups.",
+        "figure": "fa-benchmark-half"
       },
       "check": {
         "id": "rem-g4x-estimate-k",
@@ -415,31 +436,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Roughly how big is 7 × 5/6, without computing exactly?",
+          "prompt": "Roughly how large is 6 × 4/5?",
           "options": [
             {
               "id": "o0",
-              "label": "A little less than 7, since 5/6 is nearly a whole",
+              "label": "About 5, because 24/5 = 4 4/5",
               "correct": true,
-              "feedback": "Correct — each group is just under one, so seven of them land just under seven."
+              "feedback": "Correct — twenty-four fifths is four and four fifths, close to five."
             },
             {
               "id": "o1",
-              "label": "About 35, since 7 × 5 = 35",
+              "label": "About 24, using only 6 × 4",
               "correct": false,
-              "feedback": "That ignores the sixths entirely; 35 counts pieces, and 35 sixths is under six wholes."
+              "feedback": "Twenty-four counts fifth-sized pieces; it is not twenty-four wholes."
             },
             {
               "id": "o2",
-              "label": "Less than one, since 5/6 is a fraction",
+              "label": "Less than 1 because 4/5 is a fraction",
               "correct": false,
-              "feedback": "Taking seven groups of nearly-a-whole cannot land under one whole."
+              "feedback": "Six groups of nearly one whole total nearly six wholes."
             },
             {
               "id": "o3",
-              "label": "Exactly 7, since 5/6 rounds to 1",
+              "label": "Exactly 6 because 4/5 rounds to 1",
               "correct": false,
-              "feedback": "Rounding 5/6 up to 1 gives an estimate of 7, but the true product is slightly BELOW it."
+              "feedback": "Six is an upper estimate; the exact value 4 4/5 is closer to five."
             }
           ]
         }

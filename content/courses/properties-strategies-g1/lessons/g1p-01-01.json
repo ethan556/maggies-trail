@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Two groups can be joined in either order. Three joined with eight makes the same total as eight joined with three, because the same counters are in the pile either way.",
-      "narration": "Two groups can be joined in either order. Three joined with eight makes the same total as eight joined with three, because the same counters are in the pile either way."
+      "figure": "as-commutative",
+      "body": "Four plus seven and seven plus four both make eleven. Swapping the addends keeps the same two groups.",
+      "narration": "Four plus seven and seven plus four both make eleven. Swapping the addends keeps the same two groups."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That is only the smaller addend, not the total."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 4 + 10 = Start at 10 and count on 4. 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "The order of the addends can change.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Starting from the bigger addend saves work: swap first so the small number is the one you count on.",
-      "narration": "Starting from the bigger addend saves work: swap first so the small number is the one you count on."
+      "figure": "bigger-first",
+      "body": "For three plus eight, starting at eight needs only three hops. Both orders still land on eleven.",
+      "narration": "For three plus eight, starting at eight needs only three hops. Both orders still land on eleven."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-commutative",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Add 3 + 8 the fast way: start at 8 and count on 3. Where do you land?",
-        "min": 6,
-        "max": 13,
-        "start": 8,
-        "hop": 1,
-        "hops": 3,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 8 and count on 3: you land on 11.",
-        "successFeedback": "Landed on 11 — swapping to start at 8 gave the same total with fewer hops."
+        "type": "tapDiagram",
+        "prompt": "Tap the equation that swaps two plus nine without changing its total.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "2 + 9 = 9 + 2",
+            "icon": "2 + 9 = 9 + 2",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — the same addends are joined in the opposite order."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "2 + 9 = 9 − 2",
+            "icon": "2 + 9 = 9 − 2",
+            "count": 1,
+            "correct": false,
+            "feedback": "2 + 9 = 9 − 2 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "2 + 9 = 2 + 2",
+            "icon": "2 + 9 = 2 + 2",
+            "count": 1,
+            "correct": false,
+            "feedback": "2 + 9 = 2 + 2 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — the same addends are joined in the opposite order."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "4 + 10 = ? Start at 10 and count on 4.",
+        "prompt": "A counter starts at ten and moves four spaces forward. Where does it land?",
         "answer": 14,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That is only the smaller addend, not the total."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 4 + 10 = Start at 10 and count on 4. 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "The order of the addends can change.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "3 + 5 = 8. What is 5 + 3?",
+        "prompt": "Three plus five makes eight. Which option shows the swapped sum?",
         "options": [
           {
             "id": "o0",
@@ -320,7 +350,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "1 + 12 = ? Start at 12 and count on 1.",
+        "prompt": "Twelve shells join one more shell. What is the total?",
         "answer": 13,
         "tolerance": 0,
         "unit": "",
@@ -334,8 +364,8 @@
             "feedback": "That is only the smaller addend, not the total."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 1 + 12 = Start at 12 and count on 1. 13."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 13."
       },
       "hints": [
         "The order of the addends can change.",
@@ -415,8 +445,8 @@
               "feedback": "That is only the smaller addend, not the total."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 4 + 10 = Start at 10 and count on 4. 14."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 14."
         }
       }
     }

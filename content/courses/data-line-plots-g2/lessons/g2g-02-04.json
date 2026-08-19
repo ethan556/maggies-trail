@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Reading a bar means following its top straight across to the scale — the number it touches is the count.",
-      "narration": "Reading a bar means following its top straight across to the scale — the number it touches is the count."
+      "figure": "single-scale-graph",
+      "body": "To read a bar, follow its top across to the numbered scale. The number it reaches is the count.",
+      "narration": "To read a bar, follow its top across to the numbered scale. The number it reaches is the count."
     },
     {
       "id": "i1",
@@ -40,7 +40,7 @@
             "feedback": "That reads one gridline high. The top touches 7, not the line above it."
           }
         ],
-        "fallbackFeedback": "Count what is actually drawn — one picture at a time — and move the marker to that number.",
+        "fallbackFeedback": "Follow the bar's top to the numbered scale and use the value it reaches.",
         "successFeedback": "Seven — the bar's top followed straight across to the scale."
       },
       "predict": {
@@ -106,7 +106,7 @@
             "feedback": "One gridline low; the bar's top sits exactly on 9."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Follow the bar's top to the unit scale and record the number it reaches.",
         "successFeedback": "Correct — 9."
       },
       "hints": [
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Compare bars the way you compared rows: taller means more, and the difference in heights is the difference in counts.",
-      "narration": "Compare bars the way you compared rows: taller means more, and the difference in heights is the difference in counts."
+      "figure": "g2g-bar-gap",
+      "body": "The dogs bar reaches 6 and the cats bar reaches 3. The taller bar has 3 more votes because 6 minus 3 equals 3.",
+      "narration": "The dogs bar reaches 6 and the cats bar reaches 3. The taller bar has 3 more votes because 6 minus 3 equals 3."
     },
     {
       "id": "i2",
@@ -155,27 +155,27 @@
       "conceptTag": "g2g-read-bar",
       "widget": {
         "type": "graphRead",
-        "prompt": "How many votes does the Pizza bar show? Move the marker.",
+        "prompt": "Read the Tacos bar on a different one-unit graph. Move the marker to its height.",
         "mode": "bar",
-        "drawn": 7,
+        "drawn": 5,
         "unitValue": 1,
-        "categoryLabel": "Pizza",
+        "categoryLabel": "Tacos",
         "unitNoun": "vote",
         "unitNounPlural": "votes",
-        "scaleMax": 10,
+        "scaleMax": 8,
         "icon": "●",
         "commonResults": [
           {
-            "value": 6,
-            "feedback": "That reads one gridline low. Follow the bar's TOP straight across to the scale."
+            "value": 4,
+            "feedback": "That is one gridline below the Tacos bar; follow its top to 5."
           },
           {
-            "value": 8,
-            "feedback": "That reads one gridline high. The top touches 7, not the line above it."
+            "value": 6,
+            "feedback": "That is one gridline above the Tacos bar; its top meets 5."
           }
         ],
-        "fallbackFeedback": "Count what is actually drawn — one picture at a time — and move the marker to that number.",
-        "successFeedback": "Seven — the bar's top followed straight across to the scale."
+        "fallbackFeedback": "Follow the bar's top to the numbered scale and use the value it reaches.",
+        "successFeedback": "Five — the Tacos bar reaches the gridline labeled 5."
       },
       "cml": {
         "stage": "construct",
@@ -225,7 +225,7 @@
             "feedback": "7 is Wednesday's whole count; the question wants only its lead over Tuesday."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the smaller category count from the larger category count to find the gap.",
         "successFeedback": "Correct — 4."
       },
       "hints": [
@@ -271,7 +271,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A bar reaches 6 on the bar graph, where each gridline is worth 1. How many is that?",
+        "prompt": "The Books bar ends at gridline 6 on a one-unit graph. What count does the bar show?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -285,7 +285,7 @@
             "feedback": "One gridline low; the bar's top sits exactly on 6."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Follow the bar's top to the unit scale and record the number it reaches.",
         "successFeedback": "Correct — 6."
       },
       "hints": [
@@ -345,7 +345,7 @@
             "feedback": "9 is Thursday's whole count; the question wants only its lead over Wednesday."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the smaller category count from the larger category count to find the gap.",
         "successFeedback": "Correct — 4."
       },
       "hints": [
@@ -398,8 +398,9 @@
       "concept": {
         "id": "rem-g2g-read-bar-c",
         "kind": "concept",
-        "body": "Compare bars the way you compared rows: taller means more, and the difference in heights is the difference in counts.",
-        "narration": "Compare bars the way you compared rows: taller means more, and the difference in heights is the difference in counts."
+        "body": "Read both bar heights, then subtract the smaller count from the larger count to find how many more.",
+        "narration": "Read both bar heights, then subtract the smaller count from the larger count to find how many more.",
+        "figure": "g2g-bar-gap"
       },
       "check": {
         "id": "rem-g2g-read-bar-k",
@@ -412,22 +413,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A bar reaches 9 on the bar graph, where each gridline is worth 1. How many is that?",
-          "answer": 9,
+          "prompt": "A bar starts at zero and reaches 4 on a scale where each gridline counts as 1. What count does it show?",
+          "answer": 4,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 10,
-              "feedback": "That read one gridline above the bar's top — follow the top straight across."
+              "value": 3,
+              "feedback": "That stops one gridline below the top of the bar."
             },
             {
-              "value": 8,
-              "feedback": "One gridline low; the bar's top sits exactly on 9."
+              "value": 5,
+              "feedback": "That goes one gridline above the top of the bar."
             }
           ],
-          "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
-          "successFeedback": "Correct — 9."
+          "fallbackFeedback": "Follow the top of the bar to the numbered scale. It reaches 4.",
+          "successFeedback": "Correct — the bar shows 4."
         }
       }
     }

@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "To subtract across ten, stop at ten on the way down. 15 − 7: take 5 to reach ten, then 2 more.",
-      "narration": "To subtract across ten, stop at ten on the way down. 15 − 7: take 5 to reach ten, then 2 more."
+      "figure": "as100-break-ten",
+      "body": "Subtract across the benchmark in stages: remove enough to reach it, then remove the rest.",
+      "narration": "Subtract across the benchmark in stages: remove enough to reach it, then remove the rest."
     },
     {
       "id": "i1",
@@ -108,8 +108,8 @@
             "feedback": "That is one too many left — check by adding back: 9 + 7 = 16, not 15."
           }
         ],
-        "fallbackFeedback": "Step down to ten first, then take the rest.",
-        "successFeedback": "Correct — 15 − 5 = 10, then 10 − 2 = 8."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Stop at ten on the way down.",
@@ -147,27 +147,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "Both steps stay inside facts already known, so nothing has to be counted one at a time.",
-      "narration": "Both steps stay inside facts already known, so nothing has to be counted one at a time."
+      "figure": "count-back-hops",
+      "body": "Purposeful backward jumps can replace repeated counting by single steps.",
+      "narration": "Purposeful backward jumps can replace repeated counting by single steps."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Finish the second step.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-across-ten",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 10 and hop back 2.",
-        "min": 0,
-        "max": 20,
-        "start": 10,
-        "hop": 1,
-        "hops": 2,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 10 and make 2 hops left, one number at a time.",
-        "successFeedback": "Two hops back from 10 lands on 8 — the answer to 15 − 7."
+        "type": "tapDiagram",
+        "prompt": "Break sixteen minus seven at ten. Tap the amount removed after reaching ten.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "2",
+            "icon": "2",
+            "count": 1,
+            "correct": false,
+            "feedback": "2 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "3",
+            "icon": "3",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — remove six to reach ten, then three more."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "4",
+            "icon": "4",
+            "count": 1,
+            "correct": false,
+            "feedback": "4 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — remove six to reach ten, then three more."
       },
       "cml": {
         "stage": "construct",
@@ -203,7 +233,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "13 − 5 = ?",
+        "prompt": "From thirteen, remove three to reach ten and two more afterward. What remains?",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -217,8 +247,8 @@
             "feedback": "That is one too many left — check by adding back: 9 + 5 = 14, not 13."
           }
         ],
-        "fallbackFeedback": "Step down to ten first, then take the rest.",
-        "successFeedback": "Correct — 13 − 3 = 10, then 10 − 2 = 8."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Stop at ten on the way down.",
@@ -264,7 +294,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "16 − 8 = ?",
+        "prompt": "Half of sixteen is removed. Find the difference.",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -278,8 +308,8 @@
             "feedback": "That is one too many left — check by adding back: 9 + 8 = 17, not 16."
           }
         ],
-        "fallbackFeedback": "Step down to ten first, then take the rest.",
-        "successFeedback": "Correct — 16 − 6 = 10, then 10 − 2 = 8."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Stop at ten on the way down.",
@@ -325,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "14 − 6 = ?",
+        "prompt": "Take four from fourteen to reach ten, then take two more.",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -339,8 +369,8 @@
             "feedback": "That is one too many left — check by adding back: 9 + 6 = 15, not 14."
           }
         ],
-        "fallbackFeedback": "Step down to ten first, then take the rest.",
-        "successFeedback": "Correct — 14 − 4 = 10, then 10 − 2 = 8."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Stop at ten on the way down.",
@@ -421,8 +451,8 @@
               "feedback": "That is one too many left — check by adding back: 9 + 7 = 16, not 15."
             }
           ],
-          "fallbackFeedback": "Step down to ten first, then take the rest.",
-          "successFeedback": "Correct — 15 − 5 = 10, then 10 − 2 = 8."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 8."
         }
       }
     }

@@ -146,7 +146,8 @@ describe("counting-to-100-k authored content", () => {
         }
         if (w.type === "dragOrder") {
           const labels = w.correctOrder.map((id: string) => Number(w.items.find((it) => it.id === id)!.label));
-          const sorted = [...labels].sort((a, b) => a - b);
+          const descending = /backward|biggest first/i.test(w.prompt);
+          const sorted = [...labels].sort((a, b) => descending ? b - a : a - b);
           expect(labels).toEqual(sorted);
           expect(evaluate(w, w.correctOrder).correct).toBe(true);
         }

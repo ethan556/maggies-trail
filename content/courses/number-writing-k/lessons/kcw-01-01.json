@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-123-amount",
       "body": "A numeral is a promise written down: make the mark 3 and you promise an amount of three. Writing starts with 1, 2, 3.",
       "narration": "A numeral is a promise written down: make the mark 3 and you promise an amount of three. Writing starts with 1, 2, 3."
     },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-write-3-path",
       "body": "Each mark has one practised path — the hand learns it, and the numeral comes out readable every time.",
       "narration": "Each mark has one practised path — the hand learns it, and the numeral comes out readable every time."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-123",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Show what the numeral 3 promises — build its amount.",
-        "target": 3,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Put the three writing moves in order for the numeral 3.",
+        "items": [
           {
-            "count": 2,
-            "feedback": "Two falls short of the promise; the mark 3 names one more than this."
+            "id": "stage-3",
+            "label": "Curve to the bottom"
           },
           {
-            "count": 4,
-            "feedback": "Four overshoots the promise; the mark 3 stops the count at three."
+            "id": "stage-2",
+            "label": "Curve to the middle"
+          },
+          {
+            "id": "stage-1",
+            "label": "Start at the top"
           }
         ],
-        "missFeedback": "Read the numeral, then build exactly that many.",
-        "successFeedback": "Three — the mark 3 and this group say the same thing in two languages."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Start at the top, then Curve to the middle, then Curve to the bottom.",
+        "successFeedback": "Yes — the stable top-to-bottom path makes a readable 3."
       },
       "cml": {
         "stage": "construct",
@@ -344,7 +357,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Kai counts her blocks: 1, 2, 3. How many blocks does she have?",
+        "prompt": "Mia counted three shells but wrote 2. Which numeral corrects her record?",
         "options": [
           {
             "id": "o0",

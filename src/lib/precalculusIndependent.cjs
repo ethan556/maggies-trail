@@ -139,9 +139,9 @@ function solveLimitIdeaMcq(input) {
 
 function solveLimitReadNumeric(input) {
   const prompt = normalizedLimitPrompt(input);
-  const match = /f\(x\) = (-?\d+)x ([+-]) (\d+)\. Find the limit as x approaches (-?\d+)/.exec(prompt);
+  const match = /f\(x\) = (-?\d*)x ([+-]) (\d+)\. Find the limit as x approaches (-?\d+)/.exec(prompt);
   if (!match) throw new Error(`unrecognized continuous-line limit prompt: ${prompt}`);
-  const slope = Number(match[1]);
+  const slope = match[1] === "" ? 1 : match[1] === "-" ? -1 : Number(match[1]);
   const intercept = (match[2] === '+' ? 1 : -1) * Number(match[3]);
   return slope * Number(match[4]) + intercept;
 }
@@ -224,9 +224,10 @@ function solveLimitOneSidedMcq(input) {
 
 function solveLimitInfinityNumeric(input) {
   const prompt = normalizedLimitPrompt(input);
-  const match = /f\(x\) = \((-?\d+)x³ \+ 1\)\/\((\d+)x³ - 2\)/.exec(prompt);
+  const match = /f\(x\) = \((-?\d*)x³ \+ 1\)\/\((\d+)x³ - 2\)/.exec(prompt);
   if (!match) throw new Error(`unrecognized equal-degree infinite-limit prompt: ${prompt}`);
-  return Number((Number(match[1]) / Number(match[2])).toFixed(3));
+  const numerator = match[1] === "" ? 1 : match[1] === "-" ? -1 : Number(match[1]);
+  return Number((numerator / Number(match[2])).toFixed(3));
 }
 
 function solveLimitEndBehaviorMcq(input) {

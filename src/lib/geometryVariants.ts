@@ -947,15 +947,15 @@ function coordinatePartitionWidget(rand: Rand): any {
 
 function coordinatePerpendicularProofWidget(rand: Rand): any {
   const { x0, y0, p, q, x1 } = pick(rand, PARALLEL_LINE_CASES);
-  const answer = y0 - (q * (x1 - x0)) / p;
+  const answer = Number((y0 - (q * (x1 - x0)) / p).toFixed(3));
   return {
     type: "numeric",
-    prompt: `A line through (${x0}, ${y0}) is perpendicular to a line of slope ${p}/${q}. Find its y-coordinate when x = ${x1}.`,
+    prompt: `A line through (${x0}, ${y0}) is perpendicular to a line of slope ${p}/${q}. Find its y-coordinate when x = ${x1}, rounded to three decimal places if needed.`,
     answer,
-    tolerance: 0,
+    tolerance: 0.0005,
     commonErrors: [
-      { value: y0 + (p * (x1 - x0)) / q, feedback: "That keeps the original slope. A perpendicular line uses the negative reciprocal −q/p." },
-      { value: y0 + (q * (x1 - x0)) / p, feedback: "The reciprocal also needs the opposite sign for a perpendicular line." },
+      { value: Number((y0 + (p * (x1 - x0)) / q).toFixed(3)), feedback: "That keeps the original slope. A perpendicular line uses the negative reciprocal −q/p." },
+      { value: Number((y0 + (q * (x1 - x0)) / p).toFixed(3)), feedback: "The reciprocal also needs the opposite sign for a perpendicular line." },
     ],
     fallbackFeedback: `The perpendicular slope is −${q}/${p}; using point-slope form at x = ${x1} gives y = ${answer}.`,
     successFeedback: `The negative-reciprocal slope produces y = ${answer}.`,

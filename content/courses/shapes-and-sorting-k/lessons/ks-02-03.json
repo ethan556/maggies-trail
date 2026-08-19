@@ -354,41 +354,51 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Count the builders.",
+      "body": "Sort the builds by what they make.",
       "conceptTag": "ks-compose-shapes",
       "explanationVariants": [
         "A square needs 2 triangles; a rectangle of two squares needs 4 triangles — 2 for each square.",
         "Each square takes 2 triangles: two squares take 4."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Two triangles make one square. How many triangles make TWO squares?",
-        "options": [
+        "type": "dragBucket",
+        "prompt": "Put each set of pieces under the shape it can build.",
+        "buckets": [
           {
-            "id": "a",
-            "label": "4",
-            "correct": true,
-            "feedback": "Yes — 2 triangles per square, and 2 and 2 make 4."
+            "id": "square",
+            "label": "Makes a square"
           },
           {
-            "id": "b",
-            "label": "2",
-            "correct": false,
-            "feedback": "That builds only ONE square — two squares need 4."
+            "id": "rectangle",
+            "label": "Makes a rectangle"
           },
           {
-            "id": "c",
-            "label": "3",
-            "correct": false,
-            "feedback": "Three leaves a square half-built — you need 4."
-          },
-          {
-            "id": "d",
-            "label": "6",
-            "correct": false,
-            "feedback": "That would build three squares — two squares need 4."
+            "id": "cube",
+            "label": "Makes a cube"
           }
-        ]
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "two same-size triangles joined on their long sides",
+            "bucketId": "square",
+            "feedback": "Those triangles can make a square."
+          },
+          {
+            "id": "d2",
+            "label": "three same-size squares in one row",
+            "bucketId": "rectangle",
+            "feedback": "A row gets longer than it is tall, making a rectangle."
+          },
+          {
+            "id": "d3",
+            "label": "six square faces folded into a closed box",
+            "bucketId": "cube",
+            "feedback": "Six square faces can wrap around to make a cube."
+          }
+        ],
+        "missFeedback": "Think about the outside edge of each finished build.",
+        "successFeedback": "Yes — small shapes can be joined to build new shapes!"
       },
       "hints": [
         "One square uses 2 triangles.",

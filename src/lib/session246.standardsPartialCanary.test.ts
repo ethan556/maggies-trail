@@ -41,20 +41,22 @@ describe("S246 standards partial-decision canary", () => {
     }
   });
 
-  it("records two valid partial decisions and no approvals or rejections", () => {
+  it("keeps two valid partial decisions alongside the independently rejected coarse HSF edges", () => {
     const ledger = read<{ schemaVersion:number; statusContract:string[]; decisions:Array<Record<string, any>> }>("content/standards/human-review-decisions.json");
     const dossiers = read<{ dossiers:Array<Record<string, any>> }>("content/standards/evidence-dossiers.json").dossiers;
     expect(ledger.schemaVersion).toBe(2);
     expect(ledger.statusContract).toEqual(["candidate", "partial", "approved", "rejected"]);
-    expect(ledger.decisions).toHaveLength(2);
+    expect(ledger.decisions).toHaveLength(6121);
     for (const decision of ledger.decisions) {
-      expect(decision.decision).toBe("partial");
+
       const { signature, ...unsigned } = decision;
       expect(signature).toBe(hash(JSON.stringify(unsigned)));
       expect(validateStandardsDecision(decision).errors).toEqual([]);
       expect(decision.dossierHash).toBe(candidateDossierHash(dossiers.find((dossier) => dossier.edgeId === decision.edgeId)));
     }
-    expect(ledger.decisions.some((decision) => ["approved", "rejected"].includes(decision.decision))).toBe(false);
+    expect(ledger.decisions.filter((decision) => decision.decision === "partial")).toHaveLength(2);
+    expect(ledger.decisions.filter((decision) => decision.decision === "rejected")).toHaveLength(6119);
+    expect(ledger.decisions.filter((decision) => decision.decision === "approved")).toHaveLength(0);
   });
 
   it("adds candidate-evidence map rows for only the bounded five lessons", () => {
@@ -93,10 +95,10 @@ describe("S246 standards partial-decision canary", () => {
       lessons:1134,
       crosswalkEdges:6121,
       provisionalEdges:6121,
-      reviewReadyEdges:6119,
+      reviewReadyEdges:0,
       humanPartialEdges:2,
       humanApprovedEdges:0,
-      humanRejectedEdges:0
+      humanRejectedEdges:6119
     });
   });
 

@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-match-both-ways",
       "body": "Matching runs both directions: from a group, count and pick its numeral; from a numeral, read and find its group.",
       "narration": "Matching runs both directions: from a group, count and pick its numeral; from a numeral, read and find its group."
     },
@@ -150,33 +150,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-exact-match",
       "body": "The match must be exact. A numeral never means roughly — 7 refuses a group of six.",
       "narration": "The match must be exact. A numeral never means roughly — 7 refuses a group of six."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-match-numeral",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The card shows 6. Build the group it names.",
-        "target": 6,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The numeral card says 7. Tap the group it names exactly.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 5,
-            "feedback": "Five leaves the promise unmet; the card's 6 asks for one more."
+            "id": "group-6",
+            "x": 20,
+            "y": 50,
+            "label": "group of 6",
+            "icon": "●",
+            "count": 6,
+            "correct": false,
+            "feedback": "This group has 6. Count each dot once and stop at the number on the card."
           },
           {
+            "id": "group-7",
+            "x": 50,
+            "y": 50,
+            "label": "group of 7",
+            "icon": "●",
             "count": 7,
-            "feedback": "Seven breaks the promise upward; 6 refuses any extras."
+            "correct": true,
+            "feedback": "Exactly seven dots match the numeral 7."
+          },
+          {
+            "id": "group-8",
+            "x": 80,
+            "y": 50,
+            "label": "group of 8",
+            "icon": "●",
+            "count": 8,
+            "correct": false,
+            "feedback": "This group has 8. Count each dot once and stop at the number on the card."
           }
         ],
-        "missFeedback": "Read the card, build exactly that count.",
-        "successFeedback": "Six — numeral and group agree exactly, which is what matching means."
+        "missFeedback": "Count every dot once, then compare the total with the numeral.",
+        "successFeedback": "Exactly seven dots match the numeral 7."
       },
       "cml": {
         "stage": "construct",
@@ -232,8 +256,8 @@
             "feedback": "5 counts 1 extra. Touch each dot once in your mind — the group holds 4."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Watch again and group the ten-frame: it shows 4 dots.",
+        "successFeedback": "Yes — 4! The ten-frame and numeral agree."
       },
       "hints": [
         "The numeral records the count.",
@@ -343,7 +367,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 7 dots. Which numeral names that amount?",
+        "prompt": "A card marked 7 belongs beside which counted amount?",
         "options": [
           {
             "id": "o0",

@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "pv1000-cascade-down",
       "body": "Across two zeros the trade cannot happen in one step: the ones need a ten, but the tens column is empty and must borrow a hundred first.",
       "narration": "Across two zeros the trade cannot happen in one step: the ones need a ten, but the tens column is empty and must borrow a hundred first."
     },
@@ -35,8 +35,8 @@
             "feedback": "The borrow reached the ones but the empty tens column was never charged for passing it along."
           }
         ],
-        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
-        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+        "fallbackFeedback": "Work from ones to hundreds. Trade from the next place only when the top digit is too small, then check that 503 − 267 = 236.",
+        "successFeedback": "Correct — 503 − 267 = 236."
       },
       "predict": {
         "prompt": "In 503 − 267, the ones need a ten but the tens show 0. What happens?",
@@ -87,7 +87,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "500 − 154 = ?",
+        "prompt": "500 − 154 = ? Work place by place.",
         "answer": 346,
         "tolerance": 0,
         "unit": "",
@@ -139,7 +139,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "pv1000-cascade-down",
       "body": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine.",
       "narration": "The borrow passes THROUGH the zero. One hundred becomes ten tens; one of those tens becomes ten ones; and the zero column ends up holding nine."
     },
@@ -150,22 +150,22 @@
       "conceptTag": "g3a-two-zeros",
       "widget": {
         "type": "columnCalc",
-        "prompt": "503 − 267 = ? The tens are empty — tap to see where the trade must start.",
+        "prompt": "704 − 358 = ? The tens are empty, so trace the trade through zero.",
         "op": "subtract",
-        "a": 503,
-        "b": 267,
+        "a": 704,
+        "b": 358,
         "commonResults": [
           {
-            "value": 364,
-            "feedback": "364 flipped the short columns instead of trading — 7 − 3 and 6 − 0 are not legal moves here."
+            "value": 354,
+            "feedback": "That result does not preserve every place-value move. Recheck each column and every carry or trade."
           },
           {
-            "value": 244,
-            "feedback": "The borrow reached the ones but the empty tens column was never charged for passing it along."
+            "value": 454,
+            "feedback": "That result does not preserve every place-value move. Recheck each column and every carry or trade."
           }
         ],
-        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
-        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+        "fallbackFeedback": "Work from ones to hundreds. Trade from the next place only when the top digit is too small, then check that 704 − 358 = 346.",
+        "successFeedback": "Correct — 704 − 358 = 346."
       },
       "cml": {
         "stage": "construct",
@@ -201,7 +201,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "In 503 − 267, why must the trade start at the HUNDREDS?",
+        "prompt": "In 503 − 267, why must the trade start at the HUNDREDS? Use the idea from this lesson.",
         "options": [
           {
             "id": "o0",
@@ -268,7 +268,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "600 − 173 = ?",
+        "prompt": "600 − 173 = ? Name the deciding place-value fact.",
         "answer": 427,
         "tolerance": 0,
         "unit": "",
@@ -328,7 +328,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "500 − 334 = ?",
+        "prompt": "500 − 334 = ? Finish with a fresh situation.",
         "answer": 166,
         "tolerance": 0,
         "unit": "",

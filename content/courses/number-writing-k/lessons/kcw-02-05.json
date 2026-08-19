@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-twenty-regroup",
       "body": "Twenty ends the stretch: the extras finally fill a second ten, and the numeral resets — 2 for two tens, 0 for no extras.",
       "narration": "Twenty ends the stretch: the extras finally fill a second ten, and the numeral resets — 2 for two tens, 0 for no extras."
     },
@@ -20,28 +20,29 @@
       "body": "Try it.",
       "conceptTag": "kcw-write-20",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "What number comes right after 17? Hop one and tap where you land.",
-        "min": 14,
-        "max": 21,
-        "start": 17,
-        "hop": 1,
-        "hops": 1,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "baseTenCompose",
+        "prompt": "Build 20 from tens and ones. Show exactly two full tens and no loose ones.",
+        "target": 20,
+        "requireStandard": true,
+        "commonBuilds": [
           {
-            "value": 17,
-            "feedback": "17 stops one complete hop too soon. Continue the final 1-unit hop to reach 18."
+            "tens": 1,
+            "ones": 10,
+            "feedback": "Ten loose ones must regroup into a second ten; standard form is 2 tens and 0 ones."
           },
           {
-            "value": 19,
-            "feedback": "19 goes one complete hop too far. One hop from 17 lands on 18."
+            "tens": 2,
+            "ones": 2,
+            "feedback": "Two tens and 2 loose ones make 22, not 20."
+          },
+          {
+            "tens": 1,
+            "ones": 0,
+            "feedback": "One ten and no loose ones make 10; twenty needs a second full ten."
           }
         ],
-        "missFeedback": "Count 1 on from 17: you land on 18.",
-        "successFeedback": "18 — the next numeral in the writing order is the next number in the song.",
-        "lowFeedback": "Short of the landing — a single hop forward reaches 18.",
-        "highFeedback": "Past the landing — right after 17 means one hop, stopping on 18."
+        "missFeedback": "Regroup every set of ten ones: 20 is 2 full tens and 0 loose ones.",
+        "successFeedback": "Yes — 20 is 2 tens and 0 ones, so the numeral needs a 2 followed by 0."
       },
       "predict": {
         "prompt": "After 19 comes 20. What happened to the nine extras?",
@@ -96,27 +97,27 @@
         "options": [
           {
             "id": "o0",
-            "label": "Two full tens and no extras",
+            "label": "Two tens, zero ones",
             "correct": true,
-            "feedback": "Correct — the 2 counts complete tens, the 0 says the ones place is empty."
+            "feedback": "Correct — the 2 records two tens and the 0 records no extra ones."
           },
           {
             "id": "o1",
-            "label": "A two and a nothing",
+            "label": "Two ones, zero tens",
             "correct": false,
-            "feedback": "The 0 is not nothing — it holds the ones place open so the 2 can mean tens."
+            "feedback": "That would make only 2; in 20 the 2 occupies the tens place."
           },
           {
             "id": "o2",
-            "label": "Twelve",
+            "label": "One ten, two ones",
             "correct": false,
-            "feedback": "Twelve is 12 — one ten and two ones; 20 doubles the tens and empties the ones."
+            "feedback": "One ten and two ones are written 12, not 20."
           },
           {
             "id": "o3",
-            "label": "Two",
+            "label": "Two tens, two ones",
             "correct": false,
-            "feedback": "Alone the 2 would mean two; the 0 beside it promotes it to two TENS."
+            "feedback": "Two tens and two ones are written 22; 20 has zero ones."
           }
         ]
       },
@@ -151,38 +152,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-zero-placeholder",
       "body": "20 echoes 10's shape: tens digit, then a 0 holding the empty ones place open.",
       "narration": "20 echoes 10's shape: tens digit, then a 0 holding the empty ones place open."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-20",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "What number comes right after 17? Hop one and tap where you land.",
-        "min": 14,
-        "max": 21,
-        "start": 17,
-        "hop": 1,
-        "hops": 1,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "dragOrder",
+        "prompt": "Show how nineteen and one more become twenty.",
+        "items": [
           {
-            "value": 17,
-            "feedback": "17 stops one complete hop too soon. Continue the final 1-unit hop to reach 18."
+            "id": "stage-3",
+            "label": "Write 20"
           },
           {
-            "value": 19,
-            "feedback": "19 goes one complete hop too far. One hop from 17 lands on 18."
+            "id": "stage-2",
+            "label": "Regroup as two tens"
+          },
+          {
+            "id": "stage-1",
+            "label": "Fill the second group of ten"
           }
         ],
-        "missFeedback": "Count 1 on from 17: you land on 18.",
-        "successFeedback": "18 — the next numeral in the writing order is the next number in the song.",
-        "lowFeedback": "Short of the landing — a single hop forward reaches 18.",
-        "highFeedback": "Past the landing — right after 17 means one hop, stopping on 18."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Fill the second group of ten, then Regroup as two tens, then Write 20.",
+        "successFeedback": "Yes — two tens and no extra ones are written 20."
       },
       "cml": {
         "stage": "construct",
@@ -289,7 +298,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "What number comes right after 19? Hop one and tap where you land.",
+        "prompt": "Nineteen gains one more. Which numeral records the regrouped amount?",
         "min": 16,
         "max": 23,
         "start": 19,
@@ -354,31 +363,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Why does writing ten take TWO marks — 1 and 0?",
+        "prompt": "Why does the numeral 20 need a zero in the ones place?",
         "options": [
           {
             "id": "o0",
-          "label": "1 full ten and 0 extras",
+            "label": "2 full tens and 0 extras",
             "correct": true,
-            "feedback": "Correct — 10 is a report: one complete ten, zero ones left over."
+            "feedback": "Correct — 20 reports two complete tens and zero ones left over."
           },
           {
             "id": "o1",
-            "label": "Ten is too big for one mark",
+            "label": "2 ones and 0 tens",
             "correct": false,
-            "feedback": "It is not about size — the two marks REPORT the ten-and-ones structure."
+            "feedback": "Two ones and no tens make 2; the 2 in 20 sits in the tens place."
           },
           {
             "id": "o2",
-            "label": "The 0 is decoration",
+            "label": "1 ten and 2 extras",
             "correct": false,
-            "feedback": "Drop the 0 and the mark reads as one; the 0 holds the ones place open."
+            "feedback": "One ten and 2 extras make 12; twenty has two tens and no extras."
           },
           {
             "id": "o3",
-            "label": "It is a mistake we keep",
+            "label": "2 tens and 2 extras",
             "correct": false,
-            "feedback": "The two-mark form is the system working: place tells each digit its job."
+            "feedback": "Two tens and 2 extras make 22; the zero in 20 records no loose ones."
           }
         ]
       },

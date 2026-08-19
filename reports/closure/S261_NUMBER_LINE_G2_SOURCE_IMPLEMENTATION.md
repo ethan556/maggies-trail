@@ -1,0 +1,11 @@
+# S261 number-line-g2 source implementation
+
+Baseline: 62 rows across 10 clean lessons (30 P0, 32 P1).
+
+The 20 P0 illustration rows all named the same fixed `count-on-hops` figure. Its visible and accessible claim is `4 + 3 = 7`; none of the twenty Grade 2 concepts makes that claim, and no registered figure exactly represents the concepts' values and routes. All 20 were therefore fail-closed at source. This removes the learner-visible contradiction without pretending an unrelated exemplar is evidence. Replacement debt remains explicit: each concept needs a parameterised, accessible number-line visual before a visual disposition may be independently approved.
+
+All ten progression causes were repaired without changing step IDs or the `numberLineHop` evaluator contract. The second interaction now serves a distinct job: reverse locating, five-unit scale transfer, inside-gap locating, forward/backward transfer, mixed-route completion, equation communication, residual-ones completion, reverse reconstruction, or a backward trail story. Every landing, alternate landing, direction, and feedback message is source-regressed.
+
+The two queued `g2l-02-03` choice surfaces retain `o0`–`o3`, one correct answer (`o0`), and diagnostic feedback. `k1` now tests the fewest-hop plan using parallel labels; `ch1` tests the exact two-one finish after the tens route, so it no longer repeats the decision. The identical remedial source was synchronised to the repaired plan. A full learner-path audit also replaced the unqueued exact `k1`/`k3` repeats in `g2l-01-01` and `g2l-01-02` with within-gap locating and equal-spacing placement decisions. The trail-distance checks in `g2l-03-04` were clarified: marker 14/13 are explicitly distances behind the current marker, not contradictory destinations.
+
+Queue-compatible source result: 32 rows closed — 20 illustration fail-closures, 10 progression/duplication causes, and 2 choice-surface causes. Residual: 30 independent assessor-controlled rows (10 complete-lesson dispositions, 10 visual-first dispositions, 10 grade-language reviews). Generic dispositions are intentionally not self-closed. No shared runtime, widget, schema, figure registry, queue, cards, cache, standards, or ledger files were changed.

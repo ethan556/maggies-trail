@@ -23,7 +23,7 @@ export default function LeaderboardClient() {
     return (
       <div aria-busy="true">
         <p className="sr-only">Setting up your league…</p>
-        <div aria-hidden className="h-72 animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
+        <div aria-hidden className="h-72 motion-safe:animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
       </div>
     );
 

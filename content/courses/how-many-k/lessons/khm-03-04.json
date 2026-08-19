@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-count-out-from-pile",
       "body": "Counting out reverses the game: instead of asking how many, you remove exactly the number asked for — and STOP when the count says so.",
       "narration": "Counting out reverses the game: instead of asking how many, you remove exactly the number asked for — and STOP when the count says so."
     },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-stop-and-remainder",
       "body": "The pile's total does not matter. Seven crayons means the count stops at seven, however many remain behind.",
       "narration": "The pile's total does not matter. Seven crayons means the count stops at seven, however many remain behind."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-count-out",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count out exactly 7 crayons from the big pile.",
-        "target": 7,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Count out exactly seven crayons from a larger pile.",
+        "items": [
           {
-            "count": 10,
-            "feedback": "That kept going past seven; counting out means stopping the moment the count arrives."
+            "id": "stage-3",
+            "label": "Stop when the count reaches 7"
           },
           {
-            "count": 6,
-            "feedback": "One crayon short — the count must reach seven before stopping."
+            "id": "stage-2",
+            "label": "Say the next count word"
+          },
+          {
+            "id": "stage-1",
+            "label": "Move one crayon at a time"
           }
         ],
-        "missFeedback": "Take one crayon per number, and stop the instant you say seven.",
-        "successFeedback": "Seven exactly — the count said stop, and you stopped."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Move one crayon at a time, then Say the next count word, then Stop when the count reaches 7.",
+        "successFeedback": "Yes — stop at seven and leave the rest in the pile."
       },
       "cml": {
         "stage": "construct",

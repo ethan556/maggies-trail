@@ -97,15 +97,15 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
   it("stores compact evidence references and exact counts, not raw duplicate logs", () => {
     const counts = Object.fromEntries(manifest.artifactRefs.map((artifact) => [artifact.id, artifact.recordCount]));
     expect(counts).toMatchObject({
-      "pending-workload": 14821,
+      "pending-workload": 6232,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 0,
-      "exact-mcq-duplicates": 136,
-      "visual-placement-index": 3825,
-      "choice-surface-index": 653,
-      "standards-dossiers": 6119,
-      "standards-lesson-map": 1129,
-      "standards-decisions": 0,
+      "lesson-review-decisions": 455,
+      "exact-mcq-duplicates": 103,
+      "visual-placement-index": 3837,
+      "choice-surface-index": 461,
+      "standards-dossiers": 6121,
+      "standards-lesson-map": 1134,
+      "standards-decisions": 6121,
       "strict-cml-ledger": 0
     });
     for (const artifact of manifest.artifactRefs) {

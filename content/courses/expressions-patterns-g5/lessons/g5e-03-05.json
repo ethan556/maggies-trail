@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Explaining why a pattern holds means pointing at the structure, not the examples: 'add 6' doubles 'add 3' because each of its steps covers two of the other's.",
       "narration": "Explaining why a pattern holds means pointing at the structure, not the examples: 'add 6' doubles 'add 3' because each of its steps covers two of the other's."
     },
@@ -149,36 +148,43 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Checking three terms shows the pattern; naming the reason shows it must continue — and that is the difference between noticing and knowing.",
       "narration": "Checking three terms shows the pattern; naming the reason shows it must continue — and that is the difference between noticing and knowing."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Use a new pair of step sizes to test the same reasoning.",
+      "body": "Select the structural reason; do not build another term table.",
       "conceptTag": "g5e-explain",
       "widget": {
-        "type": "barBuilder",
-        "prompt": "Build 'add 4' four times, then compare with 'add 12' reaching 12, 24, 36, 48.",
-        "categories": [
-          "A1",
-          "A2",
-          "A3",
-          "A4"
-        ],
-        "target": [
-          4,
-          8,
-          12,
-          16
-        ],
-        "maxVal": 20,
-        "step": 1,
-        "successFeedback": "4, 8, 12, 16 pairs with 12, 24, 36, 48 — tripled at every step.",
-        "partialFeedback": "Build the add-4 sequence first: 4, 8, 12, 16.",
-        "display": "bar",
-        "histogram": false
+        "type": "mcq",
+        "prompt": "Which explanation proves that 'add 12' makes three times the matching terms of 'add 4' when both rules start at 0?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Each 12-step equals three 4-steps, and both rules start at 0",
+            "correct": true,
+            "feedback": "Correct — the 3-to-1 step-size ratio and the shared zero start force every matching pair to have the same factor."
+          },
+          {
+            "id": "o1",
+            "label": "The first pair happens to be 4 and 12",
+            "correct": false,
+            "feedback": "One matching pair is evidence, but it does not explain why every later pair must follow."
+          },
+          {
+            "id": "o2",
+            "label": "The two rules both use even numbers",
+            "correct": false,
+            "feedback": "Being even does not create a factor of 3; the step sizes and shared start do."
+          },
+          {
+            "id": "o3",
+            "label": "The gap between the rules stays equal to 8",
+            "correct": false,
+            "feedback": "The gap grows at every step. The ratio stays fixed, not the difference."
+          }
+        ]
       },
       "cml": {
         "stage": "construct",

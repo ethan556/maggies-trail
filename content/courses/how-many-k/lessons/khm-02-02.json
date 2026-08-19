@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-unchanged-group-count",
       "body": "Once a group is counted, its number sticks. Asked again, the counter answers from memory — nothing changed, so the count still holds.",
       "narration": "Once a group is counted, its number sticks. Asked again, the counter answers from memory — nothing changed, so the count still holds."
     },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-recount-only-change",
       "body": "Recounting is only needed when the group itself changes: something added, something taken away.",
       "narration": "Recounting is only needed when the group itself changes: something added, something taken away."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-recount",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "You counted 6 shells. Show the answer again — without recounting.",
-        "target": 6,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The same six shells are still on the mat. Which answer uses the known count?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 7,
-            "feedback": "Nothing was added; asking the question again does not grow the group."
+            "id": "remember",
+            "x": 20,
+            "y": 50,
+            "label": "still 6",
+            "icon": "6",
+            "count": 6,
+            "correct": true,
+            "feedback": "An unchanged group keeps its known count of six."
           },
           {
+            "id": "guess",
+            "x": 50,
+            "y": 50,
+            "label": "maybe 5",
+            "icon": "5",
             "count": 5,
-            "feedback": "Nothing was removed; the count of 6 still stands."
+            "correct": false,
+            "feedback": "Nothing was removed, so the known count does not shrink."
+          },
+          {
+            "id": "add",
+            "x": 80,
+            "y": 50,
+            "label": "now 7",
+            "icon": "7",
+            "count": 7,
+            "correct": false,
+            "feedback": "Nothing was added, so the known count does not grow."
           }
         ],
-        "missFeedback": "The last count said 6, and the shells have not changed — show 6.",
-        "successFeedback": "Still six — the finished count keeps its answer while the group stays the same."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "An unchanged group keeps its known count of six."
       },
       "cml": {
         "stage": "construct",

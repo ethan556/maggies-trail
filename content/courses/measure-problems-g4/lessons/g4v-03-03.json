@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Multi-step measurement problems chain everything: build a total from equal groups, adjust it, then convert the result to the unit asked for.",
-      "narration": "Multi-step measurement problems chain everything: build a total from equal groups, adjust it, then convert the result to the unit asked for."
+      "figure": "mb-multistep",
+      "body": "In this family of multi-step measurement problems, build the equal-group total, apply the stated adjustment, then convert only if the question asks for another unit.",
+      "narration": "In this family of multi-step measurement problems, build the equal-group total, apply the stated adjustment, then convert only if the question asks for another unit."
     },
     {
       "id": "i1",
@@ -22,20 +22,40 @@
       "widget": {
         "type": "estimateSlider",
         "prompt": "8 shifts of 45 minutes, finishing 30 minutes early — estimate the minutes.",
-        "min": 50,
-        "max": 4000,
-        "start": 50,
+        "min": 220,
+        "max": 440,
+        "start": 240,
         "target": 330,
-        "acceptFactor": 2,
+        "acceptFactor": 1.1,
         "unitLabel": "minutes",
         "ticks": [
-          50,
-          2025,
-          4000
+          220,
+          330,
+          440
         ],
         "lowFeedback": "Too low — eight shifts of forty-five minutes already exceed five hours.",
         "highFeedback": "Too high — eight shifts of 45 minutes is 360 minutes, and the crew stops before that.",
-        "successFeedback": "About 330 — 360 minutes built, then 30 removed once."
+        "successFeedback": "About 330 — 360 minutes built, then 30 removed once.",
+        "choices": [
+          {
+            "value": 240,
+            "label": "About 240 minutes",
+            "correct": false,
+            "feedback": "Too low — eight 45-minute shifts already build 360 minutes."
+          },
+          {
+            "value": 330,
+            "label": "About 330 minutes",
+            "correct": true,
+            "feedback": "Correct — 360 minutes minus the one 30-minute adjustment is 330 minutes."
+          },
+          {
+            "value": 400,
+            "label": "About 400 minutes",
+            "correct": false,
+            "feedback": "Too high — finishing early makes the result less than 360 minutes."
+          }
+        ]
       },
       "predict": {
         "prompt": "Total first or convert first?",
@@ -56,12 +76,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "diagram",
@@ -100,7 +120,7 @@
             "feedback": "Adding a shift count to a shift length mixes two different quantities — 8 shifts OF 45 minutes multiply."
           }
         ],
-        "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
+        "fallbackFeedback": "Multiply to build the equal-group total, then subtract the one stated adjustment.",
         "successFeedback": "Correct — 350."
       },
       "hints": [
@@ -112,12 +132,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "symbolic",
@@ -138,7 +158,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "rr-chain",
       "body": "Do the steps in that order and each one stays simple. Convert first and you carry awkward numbers through every later step.",
       "narration": "Do the steps in that order and each one stays simple. Convert first and you carry awkward numbers through every later step."
     },
@@ -149,32 +169,52 @@
       "conceptTag": "g4v-multistep",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "8 shifts of 45 minutes, finishing 30 minutes early — estimate the minutes.",
-        "min": 50,
-        "max": 4000,
-        "start": 50,
-        "target": 330,
-        "acceptFactor": 2,
+        "prompt": "Estimate a second multi-step interval: 7 shifts of 40 minutes, finishing 20 minutes early.",
+        "min": 160,
+        "max": 360,
+        "start": 180,
+        "target": 260,
+        "acceptFactor": 1.1,
         "unitLabel": "minutes",
         "ticks": [
-          50,
-          2025,
-          4000
+          160,
+          260,
+          360
         ],
-        "lowFeedback": "Too low — eight shifts of forty-five minutes already exceed five hours.",
-        "highFeedback": "Too high — eight shifts of 45 minutes is 360 minutes, and the crew stops before that.",
-        "successFeedback": "About 330 — 360 minutes built, then 30 removed once."
+        "choices": [
+          {
+            "value": 180,
+            "label": "About 180 minutes",
+            "correct": false,
+            "feedback": "Too low — seven 40-minute shifts already build 280 minutes."
+          },
+          {
+            "value": 260,
+            "label": "About 260 minutes",
+            "correct": true,
+            "feedback": "Correct — 280 minutes minus the one 20-minute adjustment is 260 minutes."
+          },
+          {
+            "value": 340,
+            "label": "About 340 minutes",
+            "correct": false,
+            "feedback": "Too high — finishing early makes the result less than 280 minutes."
+          }
+        ],
+        "lowFeedback": "Too low — seven shifts build 280 minutes before only 20 minutes are removed.",
+        "highFeedback": "Too high — finishing early makes the result less than 280 minutes.",
+        "successFeedback": "About 260 minutes — 280 built, then 20 removed once."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "symbolic",
@@ -199,7 +239,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"A crew works 5 shifts of 30 minutes, then converts the total to hours.\" What is the correct ORDER?",
+        "prompt": "Apply without the opening model: \"A crew works 5 shifts of 30 minutes, then converts the total to hours.\" What is the correct ORDER?",
         "options": [
           {
             "id": "o0",
@@ -236,12 +276,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "symbolic",
@@ -266,7 +306,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A group buys 5 passes at 15 dollars each and a voucher takes 24 dollars off. How many dollars?",
+        "prompt": "Retrieve or diagnose in a new form: A group buys 5 passes at 15 dollars each and a voucher takes 24 dollars off. How many dollars?",
         "answer": 51,
         "tolerance": 0,
         "unit": "",
@@ -280,7 +320,7 @@
             "feedback": "A voucher reduces the bill, so the last step subtracts."
           }
         ],
-        "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
+        "fallbackFeedback": "Multiply to build the equal-group total, then subtract the one stated adjustment.",
         "successFeedback": "Correct — 51."
       },
       "hints": [
@@ -292,12 +332,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "symbolic",
@@ -326,7 +366,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A hike measures 420 minutes, and each hour is 60 minutes. Compute 420 ÷ 60.",
+        "prompt": "Transfer to a final context: A hike measures 420 minutes, and each hour is 60 minutes. Compute 420 ÷ 60.",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -352,12 +392,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v multistep.",
+        "actionGoal": "Order a multi-step measurement solution: build, adjust, then convert if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v multistep."
+          "Keeping a common unit through the arithmetic preserves the meaning of each step."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Mixing unlike units or converting with the wrong factor."
         ],
         "representations": [
           "symbolic",
@@ -421,7 +461,7 @@
               "feedback": "Adding a shift count to a shift length mixes two different quantities — 8 shifts OF 45 minutes multiply."
             }
           ],
-          "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
+          "fallbackFeedback": "Multiply to build the equal-group total, then subtract the one stated adjustment.",
           "successFeedback": "Correct — 350."
         }
       }

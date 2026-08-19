@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-eleven-twelve",
       "body": "Eleven and twelve are the tricky teens: their names hide the ten. No “teen” sound — yet 11 and 12 still write ten-and-one, ten-and-two.",
       "narration": "Eleven and twelve are the tricky teens: their names hide the ten. No “teen” sound — yet 11 and 12 still write ten-and-one, ten-and-two."
     },
@@ -96,27 +96,27 @@
         "options": [
           {
             "id": "o0",
-            "label": "No — position gives each digit its job",
+            "label": "No; places changed",
             "correct": true,
-            "feedback": "Correct — in 12 the 1 is a ten; in 21 the 2 is two tens. Order is meaning."
+            "feedback": "Correct — 12 has one ten and two ones, while 21 has two tens and one one."
           },
           {
             "id": "o1",
-            "label": "Yes — same digits, same number",
+            "label": "Yes; digits match",
             "correct": false,
-            "feedback": "Swap the digits and the tens digit changes: twelve becomes twenty-one."
+            "feedback": "Matching digits do not guarantee the same number; their places determine their values."
           },
           {
             "id": "o2",
-            "label": "Only on Tuesdays",
+            "label": "Only when counting",
             "correct": false,
-            "feedback": "Place value never takes a day off; position always assigns the jobs."
+            "feedback": "Place value does not change with the activity; 12 and 21 remain different."
           },
           {
             "id": "o3",
-            "label": "12 is bigger",
+            "label": "12 is always larger",
             "correct": false,
-            "feedback": "21 holds two full tens against 12's one — the swap made it BIGGER."
+            "feedback": "21 is greater than 12, but size is not the reason their values differ; the digit places are."
           }
         ]
       },
@@ -151,38 +151,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-name-vs-numeral",
       "body": "Trust the numeral over the name: the leading 1 says the ten is there, whatever the word sounds like.",
       "narration": "Trust the numeral over the name: the leading 1 says the ten is there, whatever the word sounds like."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-11-12",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 2. Tap where you land.",
-        "min": 8,
-        "max": 14,
-        "start": 10,
-        "hop": 1,
-        "hops": 2,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "One ten and two extra ones are shown. Tap the numeral that reveals that structure.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 11,
-            "feedback": "11 stops one complete hop too soon. Continue the final 1-unit hop to reach 12."
+            "id": "card-11",
+            "x": 20,
+            "y": 50,
+            "label": "numeral 11",
+            "icon": "11",
+            "count": 1,
+            "correct": false,
+            "feedback": "11 names a different amount. Read the target again, then match it exactly."
           },
           {
-            "value": 13,
-            "feedback": "13 goes one complete hop too far. Count just 2 hops from 10 to land on 12."
+            "id": "card-12",
+            "x": 50,
+            "y": 50,
+            "label": "numeral 12",
+            "icon": "12",
+            "count": 1,
+            "correct": true,
+            "feedback": "12 shows one ten and two ones even though its name does not say teen."
+          },
+          {
+            "id": "card-21",
+            "x": 80,
+            "y": 50,
+            "label": "numeral 21",
+            "icon": "21",
+            "count": 1,
+            "correct": false,
+            "feedback": "21 names a different amount. Read the target again, then match it exactly."
           }
         ],
-        "missFeedback": "Count 2 on from 10: you land on 12.",
-        "successFeedback": "10 and 2 more is 12 — the teen numeral writes exactly that: 1 ten, 2 ones.",
-        "lowFeedback": "Short of the landing — all 2 counts past ten are needed to reach 12.",
-        "highFeedback": "Past the landing — the count-on stops after 2 numbers, on 12."
+        "missFeedback": "Compare the numeral with the amount or place-value clue before choosing.",
+        "successFeedback": "12 shows one ten and two ones even though its name does not say teen."
       },
       "cml": {
         "stage": "construct",
@@ -218,7 +237,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 2. Tap where you land.",
+        "prompt": "Start at 10 and make 2 one-unit hops. Where do you land?",
         "min": 8,
         "max": 14,
         "start": 10,

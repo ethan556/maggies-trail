@@ -12,10 +12,12 @@ const residue = (text: string, includeArithmetic = false) =>
     .join("");
 
 describe("S245 integral presentation packet", () => {
-  it("renders a standalone integral label but leaves a symbol discussed in prose alone", () => {
+  it("renders an integral glyph consistently whether standalone or discussed in prose", () => {
     expect(islands("∫")).toEqual([{ text: "", source: "∫", tex: "\\int " }]);
     expect(authoredMathParts("The ∫ is a stretched S for sum.")).toEqual([
-      { text: "The ∫ is a stretched S for sum." },
+      { text: "The " },
+      { text: "", source: "∫", tex: "\\int " },
+      { text: " is a stretched S for sum." },
     ]);
   });
 
@@ -65,13 +67,15 @@ describe("S245 integral presentation packet", () => {
   });
 
   it("does not generalise the text-integrand licence to arbitrary prose", () => {
-    for (const text of [
-      "∫ speedy dt",
-      "∫ total distance dt",
-      "The integral of a rate gives change.",
-    ]) {
-      expect(islands(text), text).toEqual([]);
-      expect(residue(text), text).toBe(text);
+    for (const text of ["∫ speedy dt", "∫ total distance dt"]) {
+      expect(islands(text), text).toEqual([
+        { text: "", source: "∫", tex: "\\int " },
+      ]);
+      expect(residue(text), text).not.toMatch(/[∫]/);
+      expect(residue(text), text).toMatch(/(?:speedy|total distance) dt/);
     }
+    const prose = "The integral of a rate gives change.";
+    expect(islands(prose)).toEqual([]);
+    expect(residue(prose)).toBe(prose);
   });
 });

@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Adding a multiple of ten changes only the tens digit. The ones digit stays exactly the same.",
-      "narration": "Adding a multiple of ten changes only the tens digit. The ones digit stays exactly the same."
+      "figure": "tno-ones-stay",
+      "body": "Adding one ten to 34 makes 44. The tens digit grows by one while the four ones stay fixed.",
+      "narration": "Adding one ten to 34 makes 44. The tens digit grows by one while the four ones stay fixed."
     },
     {
       "id": "i1",
@@ -95,7 +95,7 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+        "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
         "successFeedback": "Correct — 49 + 10 = 59."
       },
       "hints": [
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Because only whole tens are being added, the ones never have to be touched or recounted.",
-      "narration": "Because only whole tens are being added, the ones never have to be touched or recounted."
+      "figure": "tno-add-tens-66",
+      "body": "Adding 40 to 26 combines two tens with four more tens. Six tens and six ones make 66.",
+      "narration": "Adding 40 to 26 combines two tens with four more tens. Six tens and six ones make 66."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-add-tens",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 43. Add one ten. Where do you land?",
-        "min": 41,
-        "max": 55,
-        "start": 43,
-        "hop": 1,
-        "hops": 10,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 43 and count on 10: you land on 53.",
-        "successFeedback": "Landed on 53 — the tens digit went up by one; the ones stayed at 3."
+        "type": "tapDiagram",
+        "prompt": "Twenty-six gains four tens. Tap the number with six tens and six ones.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "56",
+            "icon": "56",
+            "count": 1,
+            "correct": false,
+            "feedback": "56 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "66",
+            "icon": "66",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — 2 tens plus 4 tens is 6 tens, and the 6 ones stay fixed."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "76",
+            "icon": "76",
+            "count": 1,
+            "correct": false,
+            "feedback": "76 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — 2 tens plus 4 tens is 6 tens, and the 6 ones stay fixed."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "19 + 30 = ?",
+        "prompt": "A 19-bead train gains three tens. What is its new number?",
         "answer": 49,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 19 + 30 = 49."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 49."
       },
       "hints": [
         "Adding a ten changes only the tens digit.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "44 + 30 = ?",
+        "prompt": "Four tens and four ones gain three more tens. What number is built?",
         "answer": 74,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 44 + 30 = 74."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 74."
       },
       "hints": [
         "Adding a ten changes only the tens digit.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "70 + 20 = ?",
+        "prompt": "Seven tens join two tens. What number do they make?",
         "answer": 90,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 70 + 20 = 90."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 90."
       },
       "hints": [
         "Adding a ten changes only the tens digit.",
@@ -404,7 +434,7 @@
               "feedback": "That forgets to add the tens."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+          "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
           "successFeedback": "Correct — 49 + 10 = 59."
         }
       }

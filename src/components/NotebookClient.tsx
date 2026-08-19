@@ -90,7 +90,7 @@ export default function NotebookClient() {
         <p className="sr-only">Opening your notebook…</p>
         <div aria-hidden className="grid gap-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-28 animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
+            <div key={i} className="h-28 motion-safe:animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
           ))}
         </div>
       </div>

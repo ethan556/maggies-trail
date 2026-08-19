@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SyncIndicator from "@/components/SyncIndicator";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { COPY } from "@/lib/copy";
 import { resolveTrailName } from "@/lib/personalize";
 import { dueItems, localDateStr } from "@/lib/engine";
@@ -203,30 +203,108 @@ function AccountMenu() {
   );
 }
 
-/** Mobile "More" sheet — the secondary destinations, thumb-reachable, dismissible. */
-function MoreSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+/** Mobile "More" sheet — a native modal supplies focus containment and page inertness. */
+function MoreSheet({
+  open,
+  onClose,
+  returnFocusRef
+}: {
+  open: boolean;
+  onClose: () => void;
+  returnFocusRef: RefObject<HTMLButtonElement | null>;
+}) {
   const isActive = useIsActive();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const firstDestinationRef = useRef<HTMLAnchorElement>(null);
+
+  const finishClose = useCallback(() => {
+    onClose();
+    returnFocusRef.current?.focus();
+  }, [onClose, returnFocusRef]);
+
+  const requestClose = useCallback(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (typeof dialog.close === "function") dialog.close();
+    else {
+      dialog.removeAttribute("open");
+      finishClose();
+    }
+  }, [finishClose]);
+
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-  if (!open) return null;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (open && !dialog.open) {
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+      queueMicrotask(() => firstDestinationRef.current?.focus());
+    } else if (!open && dialog.open) {
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+    }
+  }, [open]);
+
   return (
-    <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="More destinations">
-      <button type="button" aria-label="Close menu" className="absolute inset-0 bg-ink/40" onClick={onClose} />
+    <dialog
+      ref={dialogRef}
+      id="mobile-more-dialog"
+      aria-label="More destinations"
+      aria-modal="true"
+      onKeyDown={(event) => {
+        if (event.key !== "Tab") return;
+        const focusable = Array.from(
+          event.currentTarget.querySelectorAll<HTMLElement>(
+            'a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (!first || !last) return;
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === event.currentTarget)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        requestClose();
+      }}
+      onClose={finishClose}
+      className="fixed inset-0 z-50 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-content md:hidden"
+    >
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute inset-0 bg-ink/40"
+        onClick={requestClose}
+      />
       <div className="banner-in absolute inset-x-0 bottom-0 rounded-t-[20px] border-t border-ink/10 bg-surface p-3 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-e3 dark:border-paper/12">
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-pill bg-ink/15 dark:bg-paper/20" />
+        <div className="mb-2 flex items-center justify-between">
+          <div className="ml-auto h-1.5 w-10 rounded-pill bg-ink/15 dark:bg-paper/20" aria-hidden="true" />
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={requestClose}
+            className="pressable ml-auto flex min-h-11 min-w-11 items-center justify-center rounded-pill text-content-2 hover:bg-sky/10 hover:text-sky-ink"
+          >
+            <AppIcon name="icon-703" size={20} />
+          </button>
+        </div>
         <div className="grid grid-cols-2 gap-2">
-          {SECONDARY.map((l) => {
+          {SECONDARY.map((l, index) => {
             const active = isActive(l.href);
             return (
               <Link
                 key={l.href}
+                ref={index === 0 ? firstDestinationRef : undefined}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                onClick={onClose}
+                onClick={requestClose}
                 className={`pressable flex min-h-14 flex-col items-center justify-center gap-1 rounded-card ${
                   active ? "bg-sky/12 text-sky-ink" : "bg-surface-2 text-content"
                 }`}
@@ -242,7 +320,7 @@ function MoreSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
           <ThemeToggle />
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
 
@@ -256,6 +334,8 @@ export default function SiteNav() {
   const isActive = useIsActive();
   const due = useDueCount();
   const [moreOpen, setMoreOpen] = useState(false);
+  const moreTriggerRef = useRef<HTMLButtonElement>(null);
+  const closeMore = useCallback(() => setMoreOpen(false), []);
 
   return (
     <>
@@ -334,9 +414,11 @@ export default function SiteNav() {
             );
           })}
           <button
+            ref={moreTriggerRef}
             type="button"
             aria-haspopup="dialog"
             aria-expanded={moreOpen}
+            aria-controls="mobile-more-dialog"
             onClick={() => setMoreOpen(true)}
             className="flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 pt-1.5 text-[11px] font-bold text-content-2"
           >
@@ -346,7 +428,7 @@ export default function SiteNav() {
         </div>
       </nav>
 
-      <MoreSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+      <MoreSheet open={moreOpen} onClose={closeMore} returnFocusRef={moreTriggerRef} />
     </>
   );
 }

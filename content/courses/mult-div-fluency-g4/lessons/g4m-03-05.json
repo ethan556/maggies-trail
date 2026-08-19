@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Multiplication undoes division, so every quotient carries its own proof: multiply it by the divisor and the dividend should come back.",
-      "narration": "Multiplication undoes division, so every quotient carries its own proof: multiply it by the divisor and the dividend should come back."
+      "figure": "mult3-fact-family",
+      "body": "The fact-family diagram shows why multiplication checks division. If 852 ÷ 4 = 213, then the inverse equation 213 × 4 must rebuild exactly 852 with no amount left over.",
+      "narration": "The fact-family diagram shows why multiplication checks division. If 852 ÷ 4 = 213, then the inverse equation 213 × 4 must rebuild exactly 852 with no amount left over."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the model and describe what its values show.",
       "conceptTag": "g4m-check-quotient",
       "widget": {
         "type": "columnCalc",
@@ -31,8 +31,8 @@
             "feedback": "842 stranded the carry from the ones column, so the check falls ten short of 852 — the slip is in the check, not the quotient."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include."
+        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
+        "successFeedback": "213 × 4 = 852. The proposed product rebuilds every place correctly."
       },
       "predict": {
         "prompt": "You found 852 ÷ 4 = 213. Which product should rebuild 852?",
@@ -53,23 +53,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
-          "symbolic",
+          "diagram",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "diagram",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       }
     },
     {
@@ -83,31 +83,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You compute 852 ÷ 4 = 213. Which check confirms it?",
+        "prompt": "Which inverse-operation equation directly verifies that 852 ÷ 4 = 213?",
         "options": [
           {
             "id": "o0",
-          "label": "213 × 4 = 852",
+            "label": "213 × 4 = 852",
             "correct": true,
-            "feedback": "Correct — multiplication undoes division, so the quotient times the divisor must rebuild the dividend."
+            "feedback": "Correct — multiplying the quotient by the divisor rebuilds the dividend exactly."
           },
           {
             "id": "o1",
-            "label": "Divide 852 ÷ 213",
+            "label": "213 × 4 = 842",
             "correct": false,
-            "feedback": "That gives 4, the divisor you already knew — it never tests whether 213 was computed correctly."
+            "feedback": "This product is ten short of the dividend, so it would disprove rather than verify the quotient."
           },
           {
             "id": "o2",
-            "label": "Add 213 + 4",
+            "label": "213 + 4 = 852",
             "correct": false,
-            "feedback": "Addition is not the inverse of division; the check has to reconstruct 852."
+            "feedback": "Addition does not undo division, and 213 + 4 does not equal the dividend."
           },
           {
             "id": "o3",
-            "label": "Divide 213 ÷ 4",
+            "label": "852 − 4 = 213",
             "correct": false,
-            "feedback": "That starts an unrelated problem and never returns to the 852 the answer should rebuild."
+            "feedback": "Subtraction does not check a quotient, and this equation is not numerically true."
           }
         ]
       },
@@ -120,40 +120,40 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "With a remainder the check gains one step — multiply, then add the leftover. If that does not rebuild the dividend, something slipped.",
-      "narration": "With a remainder the check gains one step — multiply, then add the leftover. If that does not rebuild the dividend, something slipped."
+      "figure": "dop-standard-algo",
+      "body": "The vertical multiplication diagram checks a quotient place by place. Multiplying the proposed quotient by the divisor exposes a wrong digit or missed regrouping because the product will not match the dividend.",
+      "narration": "The vertical multiplication diagram checks a quotient place by place. Multiplying the proposed quotient by the divisor exposes a wrong digit or missed regrouping because the product will not match the dividend."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Test the claim with the model.",
       "conceptTag": "g4m-check-quotient",
       "widget": {
         "type": "columnCalc",
-        "prompt": "Treat 213 as a possible quotient. Multiply 213 × 4 in columns to see whether it reconstructs 852 exactly.",
+        "prompt": "A classmate claims 213 is the exact quotient of 852 ÷ 4. Multiply 213 × 4 in columns to test the claim.",
         "op": "multiply",
         "a": 213,
         "b": 4,
@@ -163,30 +163,30 @@
             "feedback": "842 stranded the carry from the ones column, so the check falls ten short of 852 — the slip is in the check, not the quotient."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include."
+        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
+        "successFeedback": "213 × 4 = 852. The proposed product rebuilds every place correctly."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
-          "symbolic",
+          "diagram",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "diagram",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       }
     },
     {
@@ -214,7 +214,7 @@
             "feedback": "A place was dropped from the quotient; every place of 1074 has to be divided in turn."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Divide from the greatest place, keep each quotient digit aligned, and regroup what remains. Check by multiplying the quotient by the divisor and adding any remainder to rebuild the dividend.",
         "successFeedback": "Correct — 179."
       },
       "hints": [
@@ -226,23 +226,20 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
-          "symbolic",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
-        "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -260,31 +257,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A calculator reports 852 ÷ 4 = 213. Which inverse-operation equation proves the report is correct?",
+        "prompt": "Because 213 × 4 = 852, which statement about 852 ÷ 4 must be true?",
         "options": [
           {
             "id": "o0",
-          "label": "213 × 4 = 852",
+            "label": "The quotient is 213.",
             "correct": true,
-            "feedback": "Correct — multiplication undoes division, so the quotient times the divisor must rebuild the dividend."
+            "feedback": "Correct — division reverses the multiplication, so 852 shared into 4 equal groups gives 213."
           },
           {
             "id": "o1",
-            "label": "Divide 852 ÷ 213",
+            "label": "The quotient is 4.",
             "correct": false,
-            "feedback": "That gives 4, the divisor you already knew — it never tests whether 213 was computed correctly."
+            "feedback": "Four is the divisor, not the amount in each equal group after 852 is shared."
           },
           {
             "id": "o2",
-            "label": "Add 213 + 4",
+            "label": "The quotient is 852.",
             "correct": false,
-            "feedback": "Addition is not the inverse of division; the check has to reconstruct 852."
+            "feedback": "The dividend is 852; dividing it into four groups makes each group smaller."
           },
           {
             "id": "o3",
-            "label": "Divide 213 ÷ 4",
+            "label": "The remainder is 213.",
             "correct": false,
-            "feedback": "That starts an unrelated problem and never returns to the 852 the answer should rebuild."
+            "feedback": "The multiplication rebuilds 852 exactly, so the remainder is zero rather than 213."
           }
         ]
       },
@@ -297,29 +294,29 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g4m-check-quotient",
       "explanationVariants": [
         "Multi-step work, checked.",
@@ -341,7 +338,7 @@
             "feedback": "Eating removes apples, so the second step subtracts rather than adds."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "First multiply 32 × 5 to build the starting total. Then subtract the 145 apples eaten; do not stop after the multiplication step.",
         "successFeedback": "Correct — 15."
       },
       "hints": [
@@ -353,23 +350,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m check quotient.",
+        "actionGoal": "Check a quotient by multiplying divisor × quotient and adding any remainder; in transfer contexts, finish later operations only after the initial total is built.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m check quotient decomposable at all."
+          "A valid result satisfies divisor × quotient + remainder = dividend; for exact division the remainder is zero and multiplication rebuilds the dividend exactly."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Checking with addition, reversing the roles of dividend and quotient, ignoring a remainder, or skipping a later subtraction gives a false verification."
         ],
         "representations": [
-          "symbolic",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-check-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If multiplying the proposed quotient by the divisor missed the dividend, which quotient place would you inspect first?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -379,7 +376,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Explain the strategy in one clear sentence.",
       "takeaways": [
         "Multiplication undoes division.",
         "Quotient times divisor rebuilds the dividend.",
@@ -394,13 +391,13 @@
       "concept": {
         "id": "rem-g4m-check-quotient-c",
         "kind": "concept",
-        "body": "With a remainder the check gains one step — multiply, then add the leftover. If that does not rebuild the dividend, something slipped.",
-        "narration": "With a remainder the check gains one step — multiply, then add the leftover. If that does not rebuild the dividend, something slipped."
+        "body": "The vertical multiplication diagram checks a quotient place by place. Multiplying the proposed quotient by the divisor exposes a wrong digit or missed regrouping because the product will not match the dividend.",
+        "narration": "The vertical multiplication diagram checks a quotient place by place. Multiplying the proposed quotient by the divisor exposes a wrong digit or missed regrouping because the product will not match the dividend."
       },
       "check": {
-      "id": "rem-g4m-check-quotient-k",
+        "id": "rem-g4m-check-quotient-k",
         "kind": "check",
-        "body": "",
+        "body": "Use the scaffold, then solve the check.",
         "conceptTag": "g4m-check-quotient",
         "explanationVariants": [
           "Multiply the quotient back.",
@@ -412,7 +409,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "213 × 4 = 852",
+              "label": "213 × 4 = 852",
               "correct": true,
               "feedback": "Correct — multiplication undoes division, so the quotient times the divisor must rebuild the dividend."
             },

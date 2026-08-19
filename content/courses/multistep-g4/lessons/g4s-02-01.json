@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Multi-step problems often end in a remainder, and the remainder is only the beginning of the answer — the story decides what to do with it.",
-      "narration": "Multi-step problems often end in a remainder, and the remainder is only the beginning of the answer — the story decides what to do with it."
+      "figure": "mb-remainder",
+      "body": "Sharing 13 among 4 groups puts 3 in each group and leaves 1, so 13 ÷ 4 = 3 remainder 1. The context decides what that leftover means.",
+      "narration": "Sharing 13 among 4 groups puts 3 in each group and leaves 1, so 13 ÷ 4 = 3 remainder 1. The context decides what that leftover means."
     },
     {
       "id": "i1",
@@ -144,38 +144,38 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Eight full buses with two hikers left over means nine buses are needed. The arithmetic is the same; the answer is not.",
-      "narration": "Eight full buses with two hikers left over means nine buses are needed. The arithmetic is the same; the answer is not."
+      "figure": "dop-remainder",
+      "body": "For 27 ÷ 4, sharing gives 6 remainder 3. A bus context needs 7 whole buses, while an equal-share report stays 6 remainder 3.",
+      "narration": "For 27 ÷ 4, sharing gives 6 remainder 3. A bus context needs 7 whole buses, while an equal-share report stays 6 remainder 3."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Subtract full groups to expose the remainder.",
       "conceptTag": "g4ms-remainder",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "74 hikers into buses of 9. Hop by nines to find the full buses.",
+        "prompt": "Start at 58 and hop backward by 6 nine times. Where do you land?",
         "min": 0,
-        "max": 90,
-        "start": 0,
-        "hop": 9,
-        "hops": 8,
-        "direction": "forward",
+        "max": 60,
+        "start": 58,
+        "hop": 6,
+        "hops": 9,
+        "direction": "back",
         "commonLandings": [
           {
-            "value": 81,
-            "feedback": "Nine hops pass 74; only eight buses fill completely."
+            "value": 9,
+            "feedback": "9 is the number of full groups, not the amount left after subtracting them."
           },
           {
-            "value": 63,
-            "feedback": "Seven hops leave eleven hikers over, which is more than one busful."
+            "value": 6,
+            "feedback": "A remainder must be smaller than 6; subtract all nine complete groups."
           }
         ],
-        "missFeedback": "Eight hops of nine reach 72, just under 74.",
-        "successFeedback": "72 after eight hops — eight full buses, with two hikers still waiting for a ninth.",
-        "lowFeedback": "Short of the landing — eight hops of nine reach 72, just under 74.",
-        "highFeedback": "Past the landing — the eighth hop of nine stops at 72."
+        "missFeedback": "Nine backward hops of 6 remove 54 from 58 and leave 4.",
+        "successFeedback": "4 — that landing is the remainder in 58 ÷ 6 = 9 remainder 4.",
+        "lowFeedback": "Below the landing — nine groups remove 54, leaving 4.",
+        "highFeedback": "Above the landing — keep subtracting groups of 6 until nine full groups are removed."
       },
       "cml": {
         "stage": "construct",
@@ -330,7 +330,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Apply the same remainder rule in a different vehicle context.",
       "conceptTag": "g4ms-remainder",
       "explanationVariants": [
         "Bigger groups, same rule.",
@@ -338,22 +338,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "55 hikers ride buses holding 9 each. Every hiker must ride. How many buses are needed?",
+        "prompt": "A campground has 55 hikers and 9-seat vans. Every hiker must travel. How many vans are needed?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 6,
-            "feedback": "6 full buses leave 1 hikers behind, and every hiker has to travel."
+            "feedback": "Six full vans carry 54 hikers, but the remaining hiker still needs another van."
           },
           {
             "value": 1,
-            "feedback": "1 is the leftover group of hikers, not a count of buses."
+            "feedback": "1 is the leftover hiker count, not the number of vans needed."
           }
         ],
-        "fallbackFeedback": "Name what each step produces, then carry that quantity into the next step.",
-        "successFeedback": "Correct — 7."
+        "fallbackFeedback": "Six 9-seat vans carry 54 hikers; decide what the one remaining hiker requires.",
+        "successFeedback": "Correct — 7 vans are needed so the remaining hiker can travel."
       },
       "hints": [
         "Full groups, then leftover.",
@@ -405,8 +405,9 @@
       "concept": {
         "id": "rem-g4ms-remainder-c",
         "kind": "concept",
-        "body": "Eight full buses with two hikers left over means nine buses are needed. The arithmetic is the same; the answer is not.",
-        "narration": "Eight full buses with two hikers left over means nine buses are needed. The arithmetic is the same; the answer is not."
+        "body": "For 27 ÷ 4, sharing gives 6 remainder 3. A bus context needs 7 whole buses, while an equal-share report stays 6 remainder 3.",
+        "narration": "For 27 ÷ 4, sharing gives 6 remainder 3. A bus context needs 7 whole buses, while an equal-share report stays 6 remainder 3.",
+        "figure": "dop-remainder"
       },
       "check": {
         "id": "rem-g4ms-remainder-k",

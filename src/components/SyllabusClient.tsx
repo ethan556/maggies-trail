@@ -73,7 +73,7 @@ export default function SyllabusClient({ chapters }: { chapters: SyllabusChapter
             <ProgressBar value={pct} label="Course progress" className="mt-3" />
           </>
         ) : (
-          <div aria-hidden className="animate-pulse">
+          <div aria-hidden className="motion-safe:animate-pulse">
             <div className="h-6 w-44 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-2 h-11 w-56 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-3 h-2 w-full rounded-pill bg-ink/8 dark:bg-paper/10" />

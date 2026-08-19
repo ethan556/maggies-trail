@@ -446,6 +446,11 @@ export const MAX_PLOT_POINT_DIM = 8;
 export const PlotPointSpec = z.object({
   type: z.literal("plotPoint"),
   prompt: z.string().min(1),
+  /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
+  title: z.string().min(1).optional(),
+  xAxisLabel: z.string().min(1).optional(),
+  yAxisLabel: z.string().min(1).optional(),
+
   cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
   rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
   /** Optional axis labels; x left→right, y bottom→top. */
@@ -560,9 +565,15 @@ export const TenFrameSpec = z.object({
   successFeedback: z.string().min(1)
 });
 
+const NumberLineDisplayText = z.string().min(1).refine((value) => !value.includes("^"), "number-line display metadata cannot contain caret notation");
+
 export const NumberLineHopSpec = z.object({
   type: z.literal("numberLineHop"),
   prompt: z.string().min(1),
+  /** Optional contextual display metadata; unit stays upright in the composed axis title. */
+  title: NumberLineDisplayText.optional(),
+  axisLabel: NumberLineDisplayText.optional(),
+  unit: NumberLineDisplayText.optional(),
   min: z.number().int(),
   max: z.number().int(),
   /** Marked starting point. */
@@ -1464,6 +1475,10 @@ export function feasibleRegionCorners(slantM: number, slantB: number, vertical: 
 export const NumberLinePlaceSpec = z.object({
   type: z.literal("numberLinePlace"),
   prompt: z.string().min(1),
+  /** Optional contextual display metadata; unit stays upright in the composed axis title. */
+  title: NumberLineDisplayText.optional(),
+  axisLabel: NumberLineDisplayText.optional(),
+  unit: NumberLineDisplayText.optional(),
   min: z.number().int(),
   max: z.number().int(),
   step: z.number().positive().default(1),
@@ -1746,6 +1761,7 @@ export const DilationExploreSpec = z.object({
 export const BarBuilderSpec = z.object({
   type: z.literal("barBuilder"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
   categories: z.array(z.string().min(1)).min(2),
   target: z.array(z.number().int().nonnegative()).min(2),
   maxVal: z.number().int().positive(),
@@ -1762,6 +1778,8 @@ export const BarBuilderSpec = z.object({
   icon: z.string().min(1).default("●"),
   /** Optional axis title (e.g. "minutes read") — useful when categories are bin ranges. */
   axisLabel: z.string().optional(),
+  /** The scaled count/frequency axis. Kept separate from axisLabel, which names categories/bins. */
+  valueAxisLabel: z.string().min(1).optional(),
   successFeedback: z.string().min(1),
   partialFeedback: z.string().min(1)
 });
@@ -1775,6 +1793,8 @@ export const BarBuilderSpec = z.object({
 export const GraphReadSpec = z.object({
   type: z.literal("graphRead"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  valueAxisLabel: z.string().min(1).optional(),
   mode: z.enum(["picture", "bar", "tally"]),
   /** How many icons are drawn (picture mode) or how many gridlines the bar reaches (bar mode). */
   drawn: z.number().int().nonnegative(),
@@ -1806,6 +1826,8 @@ export function graphReadAnswer(spec: { drawn: number; unitValue: number }): num
 export const DotPlotSpec = z.object({
   type: z.literal("dotPlot"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  axisLabel: z.string().min(1).optional(),
   values: z.array(z.number().int()).min(2),
   target: z.array(z.number().int().nonnegative()).min(2),
   maxPerValue: z.number().int().positive().default(6),
@@ -1854,6 +1876,8 @@ export function dotPlotLabel(numerator: number, denominator?: number, style?: "m
 export const BoxPlotSpec = z.object({
   type: z.literal("boxPlot"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  axisLabel: z.string().min(1).optional(),
   axisMin: z.number().int(),
   axisMax: z.number().int(),
   targetMin: z.number().int(),
@@ -2230,6 +2254,11 @@ export const DoubleNumberLineSpec = z.object({
 export const ScatterFitSpec = z.object({
   type: z.literal("scatterFit"),
   prompt: z.string().min(1),
+  /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
+  title: z.string().min(1).optional(),
+  xAxisLabel: z.string().min(1).optional(),
+  yAxisLabel: z.string().min(1).optional(),
+
   points: z.array(z.tuple([z.number(), z.number()])).min(4),
   xMin: z.number().int(),
   xMax: z.number().int(),

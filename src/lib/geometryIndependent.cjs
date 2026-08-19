@@ -440,7 +440,7 @@ function solvePrompt(form, input) {
       const q = Number(match[4]);
       const x = Number(match[5]);
       if (p === 0) throw new Error(`perpendicular source slope cannot be zero in numeric prompt: ${prompt}`);
-      return y0 - (q * (x - x0)) / p;
+      return Number((y0 - (q * (x - x0)) / p).toFixed(3));
     }
   }
   if (form === 'cx-shoelace__numeric') {

@@ -1,353 +1,352 @@
 {
- "id": "rad-01-01",
- "slug": "perfect-squares-and-square-roots",
- "title": "Perfect Squares & Square Roots",
- "courseId": "radicals-and-exponents",
- "chapterId": "ch1-simplifying-radicals",
- "minutes": 10,
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "figure": "radical-factor",
-   "body": "The square root of a **perfect square** is a whole number: √49 = 7 because 7² = 49. The perfect squares are 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, … Knowing them on sight is the key to radicals."
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "A perfect square.",
-   "widget": {
-    "type": "numeric",
-    "prompt": "What is √49?",
-    "answer": 7,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 24,
-      "feedback": "√49 isn't 49 ÷ 2. It's the number whose square is 49: 7² = 49, so √49 = 7."
-     },
-     {
-      "value": 98,
-      "feedback": "That's 49 × 2. The square root is the number that squares to 49: that's 7."
-     }
-    ],
-    "fallbackFeedback": "7² = 49, so √49 = 7."
-   }
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Another one.",
-   "conceptTag": "rad-perfect-square",
-   "explanationVariants": [
-    "9² = 81, so √81 = 9.",
-    "The number that squares to 81 is 9."
-   ],
-   "widget": {
-    "type": "exactNumberLab",
-    "prompt": "What is √81?",
-    "task": "radicalSimplifyCoef",
-    "targetRadicand": 1,
-    "values": [
-     {
-      "id": "term",
-      "label": "√81",
-      "kind": "root",
-      "radicand": 81,
-      "coefficient": 1
-     }
-    ],
-    "answerMode": "numeric",
-    "tolerance": 0,
-    "numericErrors": [
-     {
-      "value": 40,
-      "feedback": "√81 isn't 81 ÷ 2. It's the number whose square is 81: 9² = 81, so √81 = 9."
-     },
-     {
-      "value": 162,
-      "feedback": "That's 81 × 2. The square root of 81 is 9."
-     }
-    ],
-    "choices": [],
-    "authoredStages": [],
-    "requiredStageKeys": [],
-    "requiredExplorations": 1,
-    "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "9² = 81, so √81 = 9.",
-    "successFeedback": "9² = 81, so √81 = 9."
-   },
-   "variant": {
-    "gen": "a1-radicals",
-    "form": "rad-perfect-square__numeric"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "Not every number is a perfect square. √20 isn't whole — it sits between √16 = 4 and √25 = 5. But we can still simplify √20 using a perfect-square factor, which is the next idea.",
-   "figure": "rad-between"
-  },
-  {
-   "id": "i2",
-   "kind": "interactive",
-   "body": "A bigger perfect square.",
-   "widget": {
-    "type": "numeric",
-    "prompt": "What is √144?",
-    "answer": 12,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 72,
-      "feedback": "√144 isn't 144 ÷ 2. It's the number whose square is 144: 12² = 144, so √144 = 12."
-     },
-     {
-      "value": 14,
-      "feedback": "14² = 196, too big. 12² = 144, so √144 = 12."
-     }
-    ],
-    "fallbackFeedback": "12² = 144, so √144 = 12."
-   }
-  },
-  {
-   "id": "c3",
-   "kind": "concept",
-   "body": "To simplify a non-perfect-square, find its **largest perfect-square factor**. For 20, that's 4 (since 20 = 4 · 5). Scanning the perfect squares — 4, 9, 16, 25, … — for the biggest one that divides makes this quick.",
-   "figure": "rad-largest-factor"
-  },
-  {
-   "id": "i3",
-   "kind": "interactive",
-   "body": "Use the number line to isolate the greatest square factor.",
-   "widget": {
-    "type": "slider",
-    "prompt": "Move the marker to the largest perfect-square factor of 20. Check 1, 4, 9, and 16 against 20.",
-    "min": 1,
-    "max": 20,
-    "step": 1,
-    "start": 1,
-    "target": 4,
-    "visual": "numberline",
-    "unitLabel": "factor",
-    "lowFeedback": "1 is a square factor, but it is not the largest one. A greater square divides 20 exactly.",
-    "highFeedback": "Neither 9 nor 16 divides 20. Move back to the greatest square that is also a factor.",
-    "successFeedback": "4 is both a perfect square and a factor: 20 = 4 × 5, so √20 = 2√5."
-   },
-   "predict": {
-    "prompt": "Before moving the marker, is 20 itself a perfect square?",
-    "options": [
-     {
-      "id": "no",
-      "label": "No — 20 lies between 16 and 25"
-     },
-     {
-      "id": "yes",
-      "label": "Yes — writing 20 as 4 × 5 is enough"
-     },
-     {
-      "id": "even",
-      "label": "Yes — every even number is a square"
-     }
-    ],
-    "outcomeId": "no",
-    "reveal": "20 lies between 4² = 16 and 5² = 25, so it is not a square. The marker still finds 4 as its largest square factor: 20 = 4 × 5, so √20 = 2√5."
-   }
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Square factor of 18.",
-   "conceptTag": "rad-perfect-square",
-   "explanationVariants": [
-    "18 = 9 · 2, and 9 is a perfect square, so the answer is 9.",
-    "The largest perfect-square factor of 18 is 9."
-   ],
-   "widget": {
-    "type": "exactNumberLab",
-    "prompt": "What is the largest perfect-square factor of 18?",
-    "task": "squareEvaluate",
-    "values": [
-     {
-      "id": "factor",
-      "label": "√9",
-      "kind": "root",
-      "radicand": 9,
-      "coefficient": 1
-     }
-    ],
-    "answerMode": "numeric",
-    "tolerance": 0,
-    "numericErrors": [
-     {
-      "value": 2,
-      "feedback": "2 divides 18 but isn't a perfect square. The largest perfect-square factor is 9."
-     },
-     {
-      "value": 6,
-      "feedback": "6 divides 18 but isn't a perfect square. The largest perfect-square factor is 9."
-     }
-    ],
-    "choices": [],
-    "authoredStages": [],
-    "requiredStageKeys": [],
-    "requiredExplorations": 1,
-    "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "18 = 9 · 2, so the factor is 9.",
-    "successFeedback": "18 = 9 · 2, so the factor is 9."
-   },
-   "variant": {
-    "gen": "a1-radicals",
-    "form": "rad-perfect-square__numeric"
-   }
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "One more perfect square.",
-   "conceptTag": "rad-perfect-square",
-   "explanationVariants": [
-    "10² = 100, so √100 = 10.",
-    "The number that squares to 100 is 10."
-   ],
-   "widget": {
-    "type": "exactNumberLab",
-    "prompt": "What is √100?",
-    "task": "radicalSimplifyCoef",
-    "targetRadicand": 1,
-    "values": [
-     {
-      "id": "term",
-      "label": "√100",
-      "kind": "root",
-      "radicand": 100,
-      "coefficient": 1
-     }
-    ],
-    "answerMode": "numeric",
-    "tolerance": 0,
-    "numericErrors": [
-     {
-      "value": 50,
-      "feedback": "√100 isn't 100 ÷ 2. It's the number whose square is 100: 10² = 100, so √100 = 10."
-     },
-     {
-      "value": 20,
-      "feedback": "20² = 400, too big. 10² = 100, so √100 = 10."
-     }
-    ],
-    "choices": [],
-    "authoredStages": [],
-    "requiredStageKeys": [],
-    "requiredExplorations": 1,
-    "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "10² = 100, so √100 = 10.",
-    "successFeedback": "10² = 100, so √100 = 10."
-   },
-   "variant": {
-    "gen": "a1-radicals",
-    "form": "rad-perfect-square__numeric"
-   }
-  },
-  {
-   "id": "ch1",
-   "kind": "challenge",
-   "body": "The largest square factor of 72.",
-   "conceptTag": "rad-perfect-square",
-   "explanationVariants": [
-    "72 = 36 · 2, and 36 is a perfect square, so the answer is 36.",
-    "Among 4, 9, 36 that divide 72, the largest perfect square is 36."
-   ],
-   "widget": {
-    "type": "exactNumberLab",
-    "prompt": "What is the largest perfect-square factor of 72?",
-    "task": "squareEvaluate",
-    "values": [
-     {
-      "id": "factor",
-      "label": "√36",
-      "kind": "root",
-      "radicand": 36,
-      "coefficient": 1
-     }
-    ],
-    "answerMode": "numeric",
-    "tolerance": 0,
-    "numericErrors": [
-     {
-      "value": 9,
-      "feedback": "9 divides 72, but 36 divides it too and is larger. The answer is 36."
-     },
-     {
-      "value": 8,
-      "feedback": "8 divides 72 but isn't a perfect square. The largest perfect-square factor is 36."
-     }
-    ],
-    "choices": [],
-    "authoredStages": [],
-    "requiredStageKeys": [],
-    "requiredExplorations": 1,
-    "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "72 = 36 · 2, so the factor is 36.",
-    "successFeedback": "72 = 36 · 2, so the factor is 36."
-   },
-   "hints": [
-    "Test perfect squares that divide 72: 4, 9, 36.",
-    "36 divides 72 (72 = 36 · 2).",
-    "The largest is 36."
-   ],
-   "variant": {
-    "gen": "a1-radicals",
-    "form": "rad-perfect-square__numeric"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "Perfect squares have whole-number roots; square factors unlock the rest.",
-   "takeaways": [
-    "√ of a perfect square is a whole number (√81 = 9).",
-    "Memorize the perfect squares up to 144.",
-    "The largest perfect-square factor is the key to simplifying."
-   ],
-   "teaser": "next: using that factor to simplify a radical."
-  }
- ],
- "remedials": [
-  {
-   "conceptTag": "rad-perfect-square",
-   "concept": {
-    "id": "rem-rps-c",
-    "kind": "concept",
-    "body": "√ of a perfect square is a whole number: √49 = 7 since 7² = 49. To prepare for simplifying, find a number's largest perfect-square factor — for 20, that's 4 (20 = 4 · 5)."
-   },
-   "check": {
-    "id": "rem-rps-k",
-    "kind": "check",
-    "body": "",
-    "conceptTag": "rad-perfect-square",
-    "explanationVariants": [
-     "7² = 49, so √49 = 7.",
-     "The number that squares to 49 is 7."
-    ],
-    "widget": {
-     "type": "numeric",
-     "prompt": "What is √49?",
-     "answer": 7,
-     "tolerance": 0,
-     "commonErrors": [
-      {
-       "value": 24,
-       "feedback": "Not 49 ÷ 2; 7² = 49, so √49 = 7."
-      },
-      {
-       "value": 98,
-       "feedback": "You doubled instead of taking a root. √49 asks what times itself makes 49: that's 7."
+  "id": "rad-01-01",
+  "slug": "perfect-squares-and-square-roots",
+  "title": "Perfect Squares & Square Roots",
+  "courseId": "radicals-and-exponents",
+  "chapterId": "ch1-simplifying-radicals",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "The square root of a **perfect square** is a whole number: √49 = 7 because 7² = 49. The perfect squares are 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, … Knowing them on sight is the key to radicals."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "A perfect square.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is √49?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "√49 isn't 49 ÷ 2. It's the number whose square is 49: 7² = 49, so √49 = 7."
+          },
+          {
+            "value": 98,
+            "feedback": "That's 49 × 2. The square root is the number that squares to 49: that's 7."
+          }
+        ],
+        "fallbackFeedback": "7² = 49, so √49 = 7."
       }
-     ],
-     "fallbackFeedback": "7² = 49, so √49 = 7."
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Another one.",
+      "conceptTag": "rad-perfect-square",
+      "explanationVariants": [
+        "9² = 81, so √81 = 9.",
+        "The number that squares to 81 is 9."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is √81?",
+        "task": "radicalSimplifyCoef",
+        "targetRadicand": 1,
+        "values": [
+          {
+            "id": "term",
+            "label": "√81",
+            "kind": "root",
+            "radicand": 81,
+            "coefficient": 1
+          }
+        ],
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 40,
+            "feedback": "√81 isn't 81 ÷ 2. It's the number whose square is 81: 9² = 81, so √81 = 9."
+          },
+          {
+            "value": 162,
+            "feedback": "That's 81 × 2. The square root of 81 is 9."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "9² = 81, so √81 = 9.",
+        "successFeedback": "9² = 81, so √81 = 9."
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-perfect-square__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Not every number is a perfect square. √20 isn't whole — it sits between √16 = 4 and √25 = 5. But we can still simplify √20 using a perfect-square factor, which is the next idea.",
+      "figure": "rad-between"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A bigger perfect square.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "What is √144?",
+        "answer": 12,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 72,
+            "feedback": "√144 isn't 144 ÷ 2. It's the number whose square is 144: 12² = 144, so √144 = 12."
+          },
+          {
+            "value": 14,
+            "feedback": "14² = 196, too big. 12² = 144, so √144 = 12."
+          }
+        ],
+        "fallbackFeedback": "12² = 144, so √144 = 12."
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "To simplify a non-perfect-square, find its **largest perfect-square factor**. For 20, that's 4 (since 20 = 4 · 5). Scanning the perfect squares — 4, 9, 16, 25, … — for the biggest one that divides makes this quick.",
+      "figure": "rad-largest-factor"
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Use the number line to isolate the greatest square factor.",
+      "widget": {
+        "type": "slider",
+        "prompt": "Move the marker to the largest perfect-square factor of 20. Check 1, 4, 9, and 16 against 20.",
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "start": 1,
+        "target": 4,
+        "visual": "numberline",
+        "unitLabel": "factor",
+        "lowFeedback": "1 is a square factor, but it is not the largest one. A greater square divides 20 exactly.",
+        "highFeedback": "Neither 9 nor 16 divides 20. Move back to the greatest square that is also a factor.",
+        "successFeedback": "4 is both a perfect square and a factor: 20 = 4 × 5, so √20 = 2√5."
+      },
+      "predict": {
+        "prompt": "Before moving the marker, is 20 itself a perfect square?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — 20 lies between 16 and 25"
+          },
+          {
+            "id": "yes",
+            "label": "Yes — writing 20 as 4 × 5 is enough"
+          },
+          {
+            "id": "even",
+            "label": "Yes — every even number is a square"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "20 lies between 4² = 16 and 5² = 25, so it is not a square. The marker still finds 4 as its largest square factor: 20 = 4 × 5, so √20 = 2√5."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Square factor of 18.",
+      "conceptTag": "rad-perfect-square",
+      "explanationVariants": [
+        "18 = 9 · 2, and 9 is a perfect square, so the answer is 9.",
+        "The largest perfect-square factor of 18 is 9."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is the largest perfect-square factor of 18?",
+        "task": "squareEvaluate",
+        "values": [
+          {
+            "id": "factor",
+            "label": "√9",
+            "kind": "root",
+            "radicand": 9,
+            "coefficient": 1
+          }
+        ],
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 2,
+            "feedback": "2 divides 18 but isn't a perfect square. The largest perfect-square factor is 9."
+          },
+          {
+            "value": 6,
+            "feedback": "6 divides 18 but isn't a perfect square. The largest perfect-square factor is 9."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "18 = 9 · 2, so the factor is 9.",
+        "successFeedback": "18 = 9 · 2, so the factor is 9."
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-perfect-square__numeric"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "One more perfect square.",
+      "conceptTag": "rad-perfect-square",
+      "explanationVariants": [
+        "10² = 100, so √100 = 10.",
+        "The number that squares to 100 is 10."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is √100?",
+        "task": "radicalSimplifyCoef",
+        "targetRadicand": 1,
+        "values": [
+          {
+            "id": "term",
+            "label": "√100",
+            "kind": "root",
+            "radicand": 100,
+            "coefficient": 1
+          }
+        ],
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 50,
+            "feedback": "√100 isn't 100 ÷ 2. It's the number whose square is 100: 10² = 100, so √100 = 10."
+          },
+          {
+            "value": 20,
+            "feedback": "20² = 400, too big. 10² = 100, so √100 = 10."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "10² = 100, so √100 = 10.",
+        "successFeedback": "10² = 100, so √100 = 10."
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-perfect-square__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "The largest square factor of 72.",
+      "conceptTag": "rad-perfect-square",
+      "explanationVariants": [
+        "72 = 36 · 2, and 36 is a perfect square, so the answer is 36.",
+        "Among 4, 9, 36 that divide 72, the largest perfect square is 36."
+      ],
+      "widget": {
+        "type": "exactNumberLab",
+        "prompt": "What is the largest perfect-square factor of 72?",
+        "task": "squareEvaluate",
+        "values": [
+          {
+            "id": "factor",
+            "label": "√36",
+            "kind": "root",
+            "radicand": 36,
+            "coefficient": 1
+          }
+        ],
+        "answerMode": "numeric",
+        "tolerance": 0,
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "9 divides 72, but 36 divides it too and is larger. The answer is 36."
+          },
+          {
+            "value": 8,
+            "feedback": "8 divides 72 but isn't a perfect square. The largest perfect-square factor is 36."
+          }
+        ],
+        "choices": [],
+        "authoredStages": [],
+        "requiredStageKeys": [],
+        "requiredExplorations": 1,
+        "explorationFeedback": "Inspect the required exact-number states before checking.",
+        "fallbackFeedback": "72 = 36 · 2, so the factor is 36.",
+        "successFeedback": "72 = 36 · 2, so the factor is 36."
+      },
+      "hints": [
+        "Test perfect squares that divide 72: 4, 9, 36.",
+        "36 divides 72 (72 = 36 · 2).",
+        "The largest is 36."
+      ],
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-perfect-square__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Perfect squares have whole-number roots; square factors unlock the rest.",
+      "takeaways": [
+        "√ of a perfect square is a whole number (√81 = 9).",
+        "Memorize the perfect squares up to 144.",
+        "The largest perfect-square factor is the key to simplifying."
+      ],
+      "teaser": "next: using that factor to simplify a radical."
     }
-   }
-  }
- ]
+  ],
+  "remedials": [
+    {
+      "conceptTag": "rad-perfect-square",
+      "concept": {
+        "id": "rem-rps-c",
+        "kind": "concept",
+        "body": "√ of a perfect square is a whole number: √49 = 7 since 7² = 49. To prepare for simplifying, find a number's largest perfect-square factor — for 20, that's 4 (20 = 4 · 5)."
+      },
+      "check": {
+        "id": "rem-rps-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "rad-perfect-square",
+        "explanationVariants": [
+          "7² = 49, so √49 = 7.",
+          "The number that squares to 49 is 7."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "What is √49?",
+          "answer": 7,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 24,
+              "feedback": "Not 49 ÷ 2; 7² = 49, so √49 = 7."
+            },
+            {
+              "value": 98,
+              "feedback": "You doubled instead of taking a root. √49 asks what times itself makes 49: that's 7."
+            }
+          ],
+          "fallbackFeedback": "7² = 49, so √49 = 7."
+        }
+      }
+    }
+  ]
 }

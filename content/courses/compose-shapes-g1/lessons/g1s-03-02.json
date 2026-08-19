@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Composing has an opposite: a shape can be cut into smaller shapes. A square cut along its diagonal becomes two triangles.",
-      "narration": "Composing has an opposite: a shape can be cut into smaller shapes. A square cut along its diagonal becomes two triangles."
+      "figure": "ks-build-shapes",
+      "body": "Read the picture backward: a square made from two matching triangle halves can be separated along its diagonal seam into those two triangles.",
+      "narration": "Read the picture backward: a square made from two matching triangle halves can be separated along its diagonal seam into those two triangles."
     },
     {
       "id": "i1",
@@ -117,13 +117,13 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "How can a rectangle be taken apart?",
+        "prompt": "A rectangle was built from two equal squares side by side. Which pieces can you recover by opening the middle seam?",
         "options": [
           {
             "id": "o0",
             "label": "Into two squares",
             "correct": true,
-            "feedback": "Correct — cut straight down the middle and the rectangle separates into two squares."
+            "feedback": "Correct — opening the middle seam recovers the two equal squares used to build the rectangle."
           },
           {
             "id": "o1",
@@ -180,14 +180,14 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Decomposing and composing undo each other — the pieces can always be rejoined into the original shape.",
-      "narration": "Decomposing and composing undo each other — the pieces can always be rejoined into the original shape."
+      "figure": "ks-build-shapes",
+      "body": "Read the picture forward again: the same two triangle pieces rejoin to rebuild the square. Composing and taking apart undo each other here.",
+      "narration": "Read the picture forward again: the same two triangle pieces rejoin to rebuild the square. Composing and taking apart undo each other here."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it another way.",
+      "body": "Put the pieces back.",
       "conceptTag": "g1s-decompose",
       "widget": {
         "type": "tapDiagram",
@@ -196,14 +196,14 @@
           "w": 4,
           "h": 1
         },
-        "prompt": "A square is cut along one diagonal. Tap the shape each piece becomes.",
+        "prompt": "Two matching triangle halves are pushed back together along their long edges. Tap the shape that returns.",
         "hotspots": [
           {
             "id": "h1",
             "x": 20,
             "y": 50,
-            "label": "triangle",
-            "icon": "🔺",
+            "label": "square",
+            "icon": "🟦",
             "count": 1,
             "correct": true
           },
@@ -211,10 +211,11 @@
             "id": "h2",
             "x": 40,
             "y": 50,
-            "label": "square",
-            "icon": "🟦",
+            "label": "triangle",
+            "icon": "🔺",
             "count": 1,
-            "feedback": "Each piece is only half the square, with three sides rather than four."
+            "feedback": "One piece is a triangle, but both matching halves together rebuild the square.",
+            "correct": false
           },
           {
             "id": "h3",
@@ -223,7 +224,8 @@
             "label": "rectangle",
             "icon": "▬",
             "count": 1,
-            "feedback": "A diagonal cut leaves a slanted edge, giving three sides, not four."
+            "feedback": "These are the two matching halves cut from a square, so rejoining them returns that square.",
+            "correct": false
           },
           {
             "id": "h4",
@@ -232,11 +234,12 @@
             "label": "circle",
             "icon": "⚪",
             "count": 1,
-            "feedback": "A straight cut cannot produce a curved edge."
+            "feedback": "Straight triangle edges cannot make a curved circle. They rebuild the square.",
+            "correct": false
           }
         ],
-        "missFeedback": "Follow the diagonal cut and count the sides of one piece.",
-        "successFeedback": "Yes — one straight diagonal cut turns a square into two triangles."
+        "missFeedback": "The pieces came from a square. Rejoin the matching long edges to rebuild it.",
+        "successFeedback": "Yes — rejoining the matching triangle halves rebuilds the square."
       },
       "cml": {
         "stage": "construct",
@@ -272,7 +275,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Two triangles are joined along their long edges to make a square. How many corners does a square have?",
+        "prompt": "Two matching triangle halves of a square are joined along their long edges to make a square. How many corners does a square have?",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -324,39 +327,39 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Recover known pieces.",
       "conceptTag": "g1s-decompose",
       "explanationVariants": [
-        "Pieces rebuild the whole.",
-        "Composing undoes cutting."
+        "The middle seam separates the built rectangle into the two equal squares used to make it.",
+        "Taking apart reverses the original build."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "How can a rectangle be taken apart?",
+        "prompt": "Which action reverses joining two equal squares along a middle seam?",
         "options": [
           {
             "id": "o0",
-            "label": "Into two squares",
+            "label": "Open the middle seam",
             "correct": true,
-            "feedback": "Correct — cut straight down the middle and the rectangle separates into two squares."
+            "feedback": "Correct — opening the seam reverses the join and recovers the two equal squares."
           },
           {
             "id": "o1",
-            "label": "Into nothing — it is one piece",
+            "label": "Erase the whole shape",
             "correct": false,
-            "feedback": "Any shape can be cut into smaller shapes; being one piece now does not prevent it."
+            "feedback": "Erasing does not take the built shape apart into its original pieces. Open the seam instead."
           },
           {
             "id": "o2",
-            "label": "Into a circle",
+            "label": "Round every outside edge",
             "correct": false,
-            "feedback": "Straight cuts produce straight edges, so a round piece cannot appear."
+            "feedback": "Changing the outside edges does not reverse the join. Open the middle seam to recover the squares."
           },
           {
             "id": "o3",
-            "label": "Into a cube",
+            "label": "Fold it into a cube",
             "correct": false,
-            "feedback": "A cube is a solid; cutting a flat shape leaves flat pieces."
+            "feedback": "Folding changes a flat shape into a solid; it does not recover the two flat square pieces."
           }
         ]
       },
@@ -470,8 +473,9 @@
       "concept": {
         "id": "rem-g1s-decompose-c",
         "kind": "concept",
-        "body": "Decomposing and composing undo each other — the pieces can always be rejoined into the original shape.",
-        "narration": "Decomposing and composing undo each other — the pieces can always be rejoined into the original shape."
+        "body": "Read the picture forward again: the same two triangle pieces rejoin to rebuild the square. Composing and taking apart undo each other here.",
+        "narration": "Read the picture forward again: the same two triangle pieces rejoin to rebuild the square. Composing and taking apart undo each other here.",
+        "figure": "ks-build-shapes"
       },
       "check": {
         "id": "rem-g1s-decompose-k",
@@ -484,13 +488,13 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "How can a rectangle be taken apart?",
+          "prompt": "A rectangle was built from two equal squares side by side. Which pieces can you recover by opening the middle seam?",
           "options": [
             {
               "id": "o0",
               "label": "Into two squares",
               "correct": true,
-              "feedback": "Correct — cut straight down the middle and the rectangle separates into two squares."
+              "feedback": "Correct — opening the middle seam recovers the two equal squares used to build the rectangle."
             },
             {
               "id": "o1",

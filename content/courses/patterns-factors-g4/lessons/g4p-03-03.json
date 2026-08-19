@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A pattern often shows features its rule never states. 'Add 3' from 3 produces 3, 6, 9, 12 — and the terms alternate odd, even, odd, even.",
       "narration": "A pattern often shows features its rule never states. 'Add 3' from 3 produces 3, 6, 9, 12 — and the terms alternate odd, even, odd, even."
     },
@@ -65,8 +64,8 @@
             "feedback": "The starting value is given outright, so it is stated rather than hidden."
           }
         ],
-        "missFeedback": "Fourths needs BOTH things: exactly four pieces AND all of them matching.",
-        "successFeedback": "Bars A and D pass: four pieces, all equal. B fails the fairness test; C fails the count."
+        "missFeedback": "The rule gives the start and the +3 step. Alternating parity and being multiples of 3 are features visible in the terms.",
+        "successFeedback": "Correct — alternating parity and being multiples of 3 are shown by the terms, although neither is stated in the rule."
       },
       "predict": {
         "prompt": "Does 'add 3' mention odd and even?",
@@ -176,23 +175,22 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Nothing about parity appears in the rule, yet adding an odd number flips odd to even every single step. The structure comes free.",
       "narration": "Nothing about parity appears in the rule, yet adding an odd number flips odd to even every single step. The structure comes free."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Inspect a new rule and distinguish its visible features from the information the rule directly gives.",
       "conceptTag": "g4pf-hidden-feature",
       "widget": {
         "type": "tapDiagram",
-        "prompt": "The rule is 'add 3' from 3: 3, 6, 9, 12, 15. Tap the features the RULE never states.",
         "mode": "selectAll",
         "canvas": {
           "w": 4,
           "h": 1
         },
+        "prompt": "The rule is 'add 5' from 5: 5, 10, 15, 20, 25. Tap the features the RULE never states.",
         "hotspots": [
           {
             "id": "parity",
@@ -207,7 +205,7 @@
             "id": "step",
             "x": 38,
             "y": 50,
-            "label": "Each term is 3 more than the last",
+            "label": "Each term is 5 more than the last",
             "icon": "➕",
             "count": 1,
             "feedback": "That is exactly what the rule says, so it is stated rather than discovered."
@@ -216,7 +214,7 @@
             "id": "mult3",
             "x": 63,
             "y": 50,
-            "label": "Every term is a multiple of 3",
+            "label": "Every term is a multiple of 5",
             "icon": "✳️",
             "count": 1,
             "correct": true
@@ -225,14 +223,14 @@
             "id": "start",
             "x": 88,
             "y": 50,
-            "label": "The pattern starts at 3",
+            "label": "The pattern starts at 5",
             "icon": "🚩",
             "count": 1,
             "feedback": "The starting value is given outright, so it is stated rather than hidden."
           }
         ],
-        "missFeedback": "Fourths needs BOTH things: exactly four pieces AND all of them matching.",
-        "successFeedback": "Bars A and D pass: four pieces, all equal. B fails the fairness test; C fails the count."
+        "missFeedback": "The rule tells the start and the +5 step. Alternating parity and being multiples of 5 are features visible in the terms.",
+        "successFeedback": "Correct — the terms alternate parity and are all multiples of 5, although neither feature is named in the rule."
       },
       "cml": {
         "stage": "construct",
@@ -395,31 +393,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "The rule is \"add 3\", starting at 3: 3, 6, 9, 12, 15. Which feature does the rule NOT state, but the pattern shows?",
+        "prompt": "The rule is 'add 5' from 5: 5, 10, 15, 20, 25. Which feature is visible but not stated?",
         "options": [
           {
             "id": "o0",
-            "label": "The terms alternate odd, even, odd, even",
+            "label": "The terms alternate odd and even",
             "correct": true,
-            "feedback": "Correct — nothing in \"add 3\" mentions parity, yet adding an odd number flips odd to even every step."
+            "feedback": "Correct — the +5 rule never names parity, but adding an odd amount flips parity each step."
           },
           {
             "id": "o1",
-            "label": "Each term is 3 more than the one before",
+            "label": "Each term is 5 more than the one before",
             "correct": false,
-            "feedback": "That is exactly what the rule states, so it is not a hidden feature."
+            "feedback": "That is the rule itself, so it is stated rather than a hidden feature."
           },
           {
             "id": "o2",
-            "label": "The pattern starts at 3",
+            "label": "The pattern starts at 5",
             "correct": false,
-            "feedback": "The starting value is given outright, so it is stated rather than discovered."
+            "feedback": "The starting value is given directly, so it is not a feature inferred from the terms."
           },
           {
             "id": "o3",
-            "label": "The pattern grows",
+            "label": "The rule adds 5",
             "correct": false,
-            "feedback": "Growth follows directly from adding a positive number — it is stated, not hidden."
+            "feedback": "This repeats the stated operation instead of identifying a feature the terms reveal."
           }
         ]
       },

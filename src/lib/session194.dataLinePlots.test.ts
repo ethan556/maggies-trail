@@ -159,7 +159,7 @@ describe("S194 data-line-plots-g2 — graph routes re-derived, display contracts
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct, `${lesson.id}/${s.id} correct not at index 0`).toBe(true);
+          expect(correct[0].id, `${lesson.id}/${s.id} stable correct option ID changed`).toBe("o0");
           const wrongFb = w.options.filter((o) => !o.correct).map((o) => o.feedback);
           expect(new Set(wrongFb).size).toBe(wrongFb.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);

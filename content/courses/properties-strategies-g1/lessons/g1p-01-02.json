@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Swapping is safe because addition only joins groups. The pile of counters does not know which group was named first.",
-      "narration": "Swapping is safe because addition only joins groups. The pile of counters does not know which group was named first."
+      "figure": "koa-join-two-groups",
+      "body": "Joining the same two groups makes the same whole, whichever group is named first.",
+      "narration": "Joining the same two groups makes the same whole, whichever group is named first."
     },
     {
       "id": "i1",
@@ -144,27 +144,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "This is a rule that always works — for every pair of numbers, not just the ones tried so far.",
-      "narration": "This is a rule that always works — for every pair of numbers, not just the ones tried so far."
+      "figure": "as-commutative",
+      "body": "The shown equation confirms the rule: four plus seven equals seven plus four.",
+      "narration": "The shown equation confirms the rule: four plus seven equals seven plus four."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-why-commutative",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Check the swap: start at 9 and count on 4 for 4 + 9. Where do you land?",
-        "min": 7,
-        "max": 15,
-        "start": 9,
-        "hop": 1,
-        "hops": 4,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 9 and count on 4: you land on 13.",
-        "successFeedback": "Landed on 13 — the same 13 that 4 + 9 makes, because the same groups joined."
+        "type": "tapDiagram",
+        "prompt": "Five red counters join eight blue counters. Tap the reversed addition fact.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "8 + 5",
+            "icon": "8 + 5",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — eight plus five reverses the addends and preserves the whole."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "8 − 5",
+            "icon": "8 − 5",
+            "count": 1,
+            "correct": false,
+            "feedback": "8 − 5 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "5 + 5",
+            "icon": "5 + 5",
+            "count": 1,
+            "correct": false,
+            "feedback": "5 + 5 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — eight plus five reverses the addends and preserves the whole."
       },
       "cml": {
         "stage": "construct",
@@ -200,7 +230,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "4 + 9 = 13. What is 9 + 4?",
+        "prompt": "Which total matches the reversed fact nine plus four?",
         "options": [
           {
             "id": "o0",
@@ -271,7 +301,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "3 + 8 = ? Start at 8 and count on 3.",
+        "prompt": "Start at eight and count on three. Where do you land?",
         "answer": 11,
         "tolerance": 0,
         "unit": "",
@@ -285,8 +315,8 @@
             "feedback": "That is only the smaller addend, not the total."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 3 + 8 = Start at 8 and count on 3. 11."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 11."
       },
       "hints": [
         "The order of the addends can change.",
@@ -331,7 +361,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "6 + 8 = 14. What is 8 + 6?",
+        "prompt": "Six plus eight makes fourteen. What does eight plus six make?",
         "options": [
           {
             "id": "o0",

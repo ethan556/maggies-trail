@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "A near double is one step from a double: 6 + 7 is double 6, plus one more.",
-      "narration": "A near double is one step from a double: 6 + 7 is double 6, plus one more."
+      "figure": "near-double",
+      "body": "A near double starts from two equal groups and adjusts one group by one.",
+      "narration": "A near double starts from two equal groups and adjusts one group by one."
     },
     {
       "id": "i1",
@@ -104,8 +104,8 @@
             "feedback": "That doubles 7, but the first addend is 6 — one LESS than 7."
           }
         ],
-        "fallbackFeedback": "Use the double you know, then adjust by one.",
-        "successFeedback": "Correct — double 6 is 12, and one more makes 13."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 13."
       },
       "hints": [
         "Start from a double you know.",
@@ -143,27 +143,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "Knowing one fact well gives its neighbors cheaply — adjust the double by one instead of starting over.",
-      "narration": "Knowing one fact well gives its neighbors cheaply — adjust the double by one instead of starting over."
+      "figure": "as100-near-doubles",
+      "body": "A known double can be adjusted by one to solve either neighboring near-double fact.",
+      "narration": "A known double can be adjusted by one to solve either neighboring near-double fact."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Another near double.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-near-doubles",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 16 (double 8) and hop forward 1 to find 8 + 9.",
-        "min": 0,
-        "max": 20,
-        "start": 16,
-        "hop": 1,
-        "hops": 1,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 16 and make 1 hop right, one number at a time.",
-        "successFeedback": "Double 8 is 16, and one more makes 17."
+        "type": "tapDiagram",
+        "prompt": "Use double eight, then add one more. Tap the value of eight plus nine.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "16",
+            "icon": "16",
+            "count": 1,
+            "correct": false,
+            "feedback": "16 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "17",
+            "icon": "17",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — double eight is sixteen, then one more is seventeen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "18",
+            "icon": "18",
+            "count": 1,
+            "correct": false,
+            "feedback": "18 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — double eight is sixteen, then one more is seventeen."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +229,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "4 + 5 = ?",
+        "prompt": "Double four is eight. Add one more to solve four plus five.",
         "answer": 9,
         "tolerance": 0,
         "unit": "",
@@ -213,8 +243,8 @@
             "feedback": "That doubles 5, but the first addend is 4 — one LESS than 5."
           }
         ],
-        "fallbackFeedback": "Use the double you know, then adjust by one.",
-        "successFeedback": "Correct — double 4 is 8, and one more makes 9."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 9."
       },
       "hints": [
         "Start from a double you know.",
@@ -260,7 +290,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 + 8 = ?",
+        "prompt": "Which total is one beyond double seven?",
         "answer": 15,
         "tolerance": 0,
         "unit": "",
@@ -274,8 +304,8 @@
             "feedback": "That doubles 8, but the first addend is 7 — one LESS than 8."
           }
         ],
-        "fallbackFeedback": "Use the double you know, then adjust by one.",
-        "successFeedback": "Correct — double 7 is 14, and one more makes 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 15."
       },
       "hints": [
         "Start from a double you know.",
@@ -321,7 +351,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 + 9 = ?",
+        "prompt": "Use the neighboring double to evaluate eight plus nine.",
         "answer": 17,
         "tolerance": 0,
         "unit": "",
@@ -335,8 +365,8 @@
             "feedback": "That doubles 9, but the first addend is 8 — one LESS than 9."
           }
         ],
-        "fallbackFeedback": "Use the double you know, then adjust by one.",
-        "successFeedback": "Correct — double 8 is 16, and one more makes 17."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 17."
       },
       "hints": [
         "Start from a double you know.",
@@ -417,8 +447,8 @@
               "feedback": "That doubles 7, but the first addend is 6 — one LESS than 7."
             }
           ],
-          "fallbackFeedback": "Use the double you know, then adjust by one.",
-          "successFeedback": "Correct — double 6 is 12, and one more makes 13."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 13."
         }
       }
     }

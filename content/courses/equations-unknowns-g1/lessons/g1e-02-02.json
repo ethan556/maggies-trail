@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The unknown can hide in the middle: 5 + __ = 12. One part and the total are known; the missing part is what joins 5 to reach 12.",
-      "narration": "The unknown can hide in the middle: 5 + __ = 12. One part and the total are known; the missing part is what joins 5 to reach 12."
+      "figure": "balance-unknown",
+      "body": "A blank can hide a part: 5 + ? = 12. The known part and missing part must make the whole. The picture shows 6 + 4 = 10.",
+      "narration": "A blank can hide a part: 5 + ? = 12. The known part and missing part must make the whole. The picture shows 6 + 4 = 10."
     },
     {
       "id": "i1",
@@ -138,9 +138,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The total already contains both parts — removing the known part from it leaves exactly the hidden one.",
-      "narration": "The total already contains both parts — removing the known part from it leaves exactly the hidden one."
+      "figure": "bar-part-whole",
+      "body": "Start with the whole and take away the known part. The picture shows 13 − 6 = 7, so the missing part is 7.",
+      "narration": "Start with the whole and take away the known part. The picture shows 13 − 6 = 7, so the missing part is 7."
     },
     {
       "id": "i2",
@@ -149,21 +149,21 @@
       "conceptTag": "g1e-unknown-middle",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Find the middle-unknown of 5 + __ = 12: start at 12 and count back 5. Where do you land?",
-        "min": 5,
-        "max": 14,
-        "start": 12,
+        "prompt": "Find another middle blank: 8 + __ = 14. Start at 14 and count back 8. Where do you land?",
+        "min": 4,
+        "max": 16,
+        "start": 14,
         "hop": 1,
-        "hops": 5,
+        "hops": 8,
         "direction": "back",
         "commonLandings": [
           {
-            "value": 8,
-            "feedback": "That removes one too few; take away the whole known part of 5."
+            "value": 7,
+            "feedback": "Seven is one hop too high. Remove all eight from fourteen."
           }
         ],
-        "missFeedback": "Start at 12 and count back 5: you land on 7.",
-        "successFeedback": "Landed on 7 — removing the known 5 from the total 12 leaves the hidden 7."
+        "missFeedback": "Start at fourteen and make eight hops back to remove the known part.",
+        "successFeedback": "You landed on 6, so 8 + 6 = 14."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +199,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "11 + ? = 15. What is the missing number?",
+        "prompt": "11 + ? = 15. What is the missing number? Use the whole and known part.",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -259,7 +259,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 + ? = 14. What is the missing number?",
+        "prompt": "6 + ? = 14. What is the missing number? Check by adding it back.",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -386,8 +386,9 @@
       "concept": {
         "id": "rem-g1e-unknown-middle-c",
         "kind": "concept",
-        "body": "The total already contains both parts — removing the known part from it leaves exactly the hidden one.",
-        "narration": "The total already contains both parts — removing the known part from it leaves exactly the hidden one."
+        "body": "The bar shows a whole of 13 split into 6 and 7. When one part is missing, subtract the known part from the whole.",
+        "narration": "The bar shows a whole of 13 split into 6 and 7. When one part is missing, subtract the known part from the whole.",
+        "figure": "bar-part-whole"
       },
       "check": {
         "id": "rem-g1e-unknown-middle-k",
@@ -400,22 +401,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "3 + ? = 9. What is the missing number?",
+          "prompt": "Use the bar model: 7 + ? = 13. What is the missing number?",
           "answer": 6,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 9,
-              "feedback": "That is the whole, not the missing part."
+              "value": 7,
+              "feedback": "Seven is the known part. Find the other part that makes thirteen."
             },
             {
-              "value": 3,
-              "feedback": "That repeats the known addend."
+              "value": 20,
+              "feedback": "Adding the whole and part does not find the missing part."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — the value 6 makes the statement true."
+          "fallbackFeedback": "Count from seven up to thirteen, or find thirteen minus seven.",
+          "successFeedback": "Correct — 7 + 6 = 13."
         }
       }
     }

@@ -8,7 +8,7 @@
  * badge renders from real progress.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import React from "react";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/dashboard" }));
@@ -21,6 +21,19 @@ import { localDateStr } from "@/lib/engine";
 beforeEach(() => {
   cleanup();
   window.localStorage.clear();
+  Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
+    configurable: true,
+    value(this: HTMLDialogElement) {
+      this.setAttribute("open", "");
+    }
+  });
+  Object.defineProperty(HTMLDialogElement.prototype, "close", {
+    configurable: true,
+    value(this: HTMLDialogElement) {
+      this.removeAttribute("open");
+      this.dispatchEvent(new Event("close"));
+    }
+  });
 });
 afterEach(cleanup);
 
@@ -90,6 +103,46 @@ describe("SiteNav shell", () => {
     fireEvent.click(screen.getByRole("button", { name: /^more$/i }));
     const sheet = screen.getByRole("dialog", { name: /more destinations/i });
     expect(within(sheet).getByRole("link", { name: /family/i }).getAttribute("href")).toBe("/family");
+  });
+
+  it("moves focus into the native modal and returns it after Escape", async () => {
+    render(<SiteNav />);
+    const trigger = screen.getByRole("button", { name: /^more$/i });
+    fireEvent.click(trigger);
+
+    const sheet = screen.getByRole("dialog", { name: /more destinations/i });
+    const firstDestination = within(sheet).getByRole("link", { name: /trailhead/i });
+    await waitFor(() => expect(document.activeElement).toBe(firstDestination));
+    expect(sheet.hasAttribute("open")).toBe(true);
+    expect(trigger.getAttribute("aria-expanded")).toBe("true");
+
+    const close = within(sheet).getByRole("button", { name: "Close menu" });
+    const theme = within(sheet).getByRole("button", { name: /Switch to (dark|light) mode/ });
+    theme.focus();
+    fireEvent.keyDown(sheet, { key: "Tab" });
+    expect(document.activeElement).toBe(close);
+    fireEvent.keyDown(sheet, { key: "Tab", shiftKey: true });
+    expect(document.activeElement).toBe(theme);
+
+    fireEvent(sheet, new Event("cancel", { cancelable: true }));
+    await waitFor(() => expect(document.activeElement).toBe(trigger));
+    expect(sheet.hasAttribute("open")).toBe(false);
+    expect(trigger.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("closes from the scrim and restores the More trigger", async () => {
+    render(<SiteNav />);
+    const trigger = screen.getByRole("button", { name: /^more$/i });
+    fireEvent.click(trigger);
+
+    const sheet = screen.getByRole("dialog", { name: /more destinations/i });
+    await waitFor(() => expect(document.activeElement).toBe(within(sheet).getByRole("link", { name: /trailhead/i })));
+    const scrim = sheet.querySelector<HTMLButtonElement>('button[aria-hidden="true"]');
+    expect(scrim).not.toBeNull();
+    fireEvent.click(scrim!);
+
+    await waitFor(() => expect(document.activeElement).toBe(trigger));
+    expect(sheet.hasAttribute("open")).toBe(false);
   });
 
   it("shows a due-review badge when the review queue has items", () => {

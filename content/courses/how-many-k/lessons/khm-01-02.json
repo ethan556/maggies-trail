@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-skip-repeat-errors",
       "body": "Two mistakes break a count: skipping a toy, and counting a toy twice. Skipping makes the answer too small; repeating makes it too big.",
       "narration": "Two mistakes break a count: skipping a toy, and counting a toy twice. Skipping makes the answer too small; repeating makes it too big."
     },
@@ -150,33 +150,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-exactly-once",
       "body": "Careful counters go slowly enough that each toy is touched exactly once — speed is the enemy of the pairing.",
       "narration": "Careful counters go slowly enough that each toy is touched exactly once — speed is the enemy of the pairing."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-no-skip",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count 6 buttons — one counter each, none skipped, none twice.",
-        "target": 6,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Six buttons were counted. Which tracking strip shows no skip and no repeat?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "five",
+            "x": 20,
+            "y": 50,
+            "label": "one skipped",
+            "icon": "✓✓✓✓✓",
             "count": 5,
-            "feedback": "One button was skipped; a skipped button leaves the count one short."
+            "correct": false,
+            "feedback": "Five checks leave one of the six buttons uncounted."
           },
           {
+            "id": "six",
+            "x": 50,
+            "y": 50,
+            "label": "each once",
+            "icon": "✓✓✓✓✓✓",
+            "count": 6,
+            "correct": true,
+            "feedback": "Six checks for six buttons is exact."
+          },
+          {
+            "id": "seven",
+            "x": 80,
+            "y": 50,
+            "label": "one repeated",
+            "icon": "✓✓✓✓✓✓✓",
             "count": 7,
-            "feedback": "One button was counted twice; a repeat pushes the count one too high."
+            "correct": false,
+            "feedback": "Seven checks mean one of the six buttons was counted twice."
           }
         ],
-        "missFeedback": "Slow down: touch each button once, saying one number per touch.",
-        "successFeedback": "Six counters for six buttons — nothing skipped, nothing doubled."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Six checks for six buttons is exact."
       },
       "cml": {
         "stage": "construct",
@@ -216,27 +240,27 @@
         "options": [
           {
             "id": "o0",
-            "label": "One block was skipped, so a block got no number",
+            "label": "One block was skipped",
             "correct": true,
-            "feedback": "Correct — fewer numbers than blocks means some block was never paired with a number."
+            "feedback": "Correct — saying four count words for five blocks leaves one block without a number."
           },
           {
             "id": "o1",
-            "label": "A number was said twice",
+            "label": "One block was repeated",
             "correct": false,
-            "feedback": "Repeating a number gives too FEW numbers only if a block is also skipped; the plain repeat error double-counts."
+            "feedback": "Repeating a block would make the spoken count too large, not too small."
           },
           {
             "id": "o2",
-            "label": "Sam counted backwards",
+            "label": "The count ran backward",
             "correct": false,
-            "feedback": "Backwards counting still says one number per block; the total spoken would match."
+            "feedback": "Counting backward can still pair one word with each block; the missing word shows a skip."
           },
           {
             "id": "o3",
-            "label": "Nothing — four is close enough",
+            "label": "Four is close enough",
             "correct": false,
-            "feedback": "Close is not counted; each block must receive exactly one number for the count to mean anything."
+            "feedback": "A count must be exact; one of the five blocks did not receive a count word."
           }
         ]
       },

@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-scattered-marking",
       "body": "Scattered things are hardest to count — nothing separates counted from uncounted. The oldest trick fixes it: mark each one as its number is said.",
       "narration": "Scattered things are hardest to count — nothing separates counted from uncounted. The oldest trick fixes it: mark each one as its number is said."
     },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-clean-waits",
       "body": "With a mark on every counted thing, the mess cannot fool you — the clean ones are exactly the ones still waiting.",
       "narration": "With a mark on every counted thing, the mess cannot fool you — the clean ones are exactly the ones still waiting."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-count-scattered",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "9 stickers are scattered. Mark each as you count — a counter per mark.",
-        "target": 9,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Organize a count of scattered stickers.",
+        "items": [
           {
-            "count": 8,
-            "feedback": "A clean sticker is hiding somewhere; unmarked means uncounted."
+            "id": "stage-3",
+            "label": "Stop when every sticker is marked"
           },
           {
-            "count": 10,
-            "feedback": "A sticker was marked twice; each mark must land on a clean one."
+            "id": "stage-2",
+            "label": "Say the next number and mark it"
+          },
+          {
+            "id": "stage-1",
+            "label": "Find an unmarked sticker"
           }
         ],
-        "missFeedback": "Mark one sticker per number; when no clean stickers remain, the last number is the answer.",
-        "successFeedback": "Nine marks, nine stickers — the mess never stood a chance."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Find an unmarked sticker, then Say the next number and mark it, then Stop when every sticker is marked.",
+        "successFeedback": "Yes — each visible mark separates counted stickers from waiting stickers."
       },
       "cml": {
         "stage": "construct",

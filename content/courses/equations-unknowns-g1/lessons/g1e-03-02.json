@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "An answer to an unknown can be PROVEN: put it back into the original equation and value both sides. Matching sides mean the answer is right.",
-      "narration": "An answer to an unknown can be PROVEN: put it back into the original equation and value both sides. Matching sides mean the answer is right."
+      "figure": "balance-unknown",
+      "body": "You can check an answer by putting it into the equation. If both sides match, the answer works. The picture checks 4 in 6 + ? = 10.",
+      "narration": "You can check an answer by putting it into the equation. If both sides match, the answer works. The picture checks 4 in 6 + ? = 10."
     },
     {
       "id": "i1",
@@ -30,7 +30,7 @@
         "direction": "forward",
         "commonLandings": [],
         "missFeedback": "Start at 7 and count on 4: you land on 11.",
-        "successFeedback": "Landed on 11 — substituting 7 makes the left side reach 11 exactly, proving the answer."
+        "successFeedback": "You landed on 11. Putting in 7 makes both sides equal 11, so the answer works."
       },
       "cml": {
         "stage": "construct",
@@ -61,7 +61,7 @@
       "body": "",
       "conceptTag": "g1e-check",
       "explanationVariants": [
-        "Substitution tests the value in the original claim.",
+        "Substitution means putting the number into the original equation.",
         "Matching sides prove the answer."
       ],
       "widget": {
@@ -70,7 +70,7 @@
         "options": [
           {
             "id": "o0",
-          "label": "4 + 6 = 10 is true",
+            "label": "4 + 6 = 10 is true",
             "correct": true,
             "feedback": "Putting the proposed value into the original equation directly tests whether both sides match."
           },
@@ -129,9 +129,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Substitution is the universal check — it works on every unknown, in every position, without redoing the solving.",
-      "narration": "Substitution is the universal check — it works on every unknown, in every position, without redoing the solving."
+      "figure": "as-unknown",
+      "body": "Putting a number in for a blank or x is called substitution. The picture uses 9 in ? − 4 = 5 and checks that it works.",
+      "narration": "Putting a number in for a blank or x is called substitution. The picture uses 9 in ? − 4 = 5 and checks that it works."
     },
     {
       "id": "i2",
@@ -140,16 +140,21 @@
       "conceptTag": "g1e-check",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Check whether x = 7 works in x + 4 = 11: start at 7 and count on 4. Where do you land?",
-        "min": 5,
+        "prompt": "Test an answer that does not work: try x = 6 in x + 5 = 12. Start at 6 and count on 5. Where do you land?",
+        "min": 4,
         "max": 13,
-        "start": 7,
+        "start": 6,
         "hop": 1,
-        "hops": 4,
+        "hops": 5,
         "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 7 and count on 4: you land on 11.",
-        "successFeedback": "Landed on 11 — substituting 7 makes the left side reach 11 exactly, proving the answer."
+        "commonLandings": [
+          {
+            "value": 12,
+            "feedback": "Twelve is the hoped-for total, but six plus five really lands on eleven."
+          }
+        ],
+        "missFeedback": "Start at six and make five hops. Compare the landing with twelve.",
+        "successFeedback": "You landed on 11, not 12, so x = 6 does not work."
       },
       "cml": {
         "stage": "construct",
@@ -191,13 +196,13 @@
             "id": "o0",
             "label": "Yes — 3 + 4 = 7",
             "correct": true,
-            "feedback": "Substituting 3 makes both sides equal 7, so it is a solution."
+            "feedback": "Putting in 3 makes both sides equal 7, so it works."
           },
           {
             "id": "o1",
-            "label": "No — 3 + 4 = 7, not 7",
+            "label": "No — 3 + 4 = 8",
             "correct": false,
-            "feedback": "The substitution actually balances the equation at 7."
+            "feedback": "Putting in 3 makes both sides equal 7."
           },
           {
             "id": "o2",
@@ -256,19 +261,19 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Is x = 8 a solution of x + 6 = 13?",
+        "prompt": "Test a claim: Is x = 8 a solution of x + 6 = 13?",
         "options": [
           {
             "id": "o0",
             "label": "No — 8 + 6 = 14, not 13",
             "correct": true,
-            "feedback": "Substituting 8 gives 14, so the equation is not true."
+            "feedback": "Putting in 8 gives 14, so the equation is not true."
           },
           {
             "id": "o1",
             "label": "Yes — 8 + 6 = 13",
             "correct": false,
-            "feedback": "A value is a solution only when substitution makes the two sides equal."
+            "feedback": "A number works only when putting it in makes the two sides equal."
           },
           {
             "id": "o2",
@@ -322,12 +327,12 @@
       "body": "One more, for the road.",
       "conceptTag": "g1e-check",
       "explanationVariants": [
-        "The same check works in every unknown position.",
-        "Substitute, value, compare."
+        "The same check works wherever the blank is.",
+        "Put the number in, add, and compare."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You solved x + 5 = 13 and got x = 8. How do you check it?",
+        "prompt": "Check by putting the answer back: you solved x + 5 = 13 and got x = 8. How do you check it?",
         "options": [
           {
             "id": "o0",
@@ -405,8 +410,9 @@
       "concept": {
         "id": "rem-g1e-check-c",
         "kind": "concept",
-        "body": "Substitution is the universal check — it works on every unknown, in every position, without redoing the solving.",
-        "narration": "Substitution is the universal check — it works on every unknown, in every position, without redoing the solving."
+        "body": "The picture puts 4 into 6 + ? = 10. Both sides become 10, so 4 works.",
+        "narration": "The picture puts 4 into 6 + ? = 10. Both sides become 10, so 4 works.",
+        "figure": "balance-unknown"
       },
       "check": {
         "id": "rem-g1e-check-k",
@@ -414,36 +420,36 @@
         "body": "",
         "conceptTag": "g1e-check",
         "explanationVariants": [
-          "Substitution tests the value in the original claim.",
+          "Substitution means putting the number into the original equation.",
           "Matching sides prove the answer."
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "You solved x + 6 = 10 and got x = 4. How do you check it?",
+          "prompt": "Does x = 5 work in x + 3 = 8?",
           "options": [
             {
               "id": "o0",
-            "label": "4 + 6 = 10 is true",
+              "label": "Yes — 5 + 3 = 8",
               "correct": true,
-              "feedback": "Putting the proposed value into the original equation directly tests whether both sides match."
+              "feedback": "Correct — putting in five makes both sides equal eight."
             },
             {
               "id": "o1",
-              "label": "Add the same number again without using the equation",
+              "label": "No — 5 + 3 = 9",
               "correct": false,
-              "feedback": "A check must test the proposed value in the original relationship, not perform an unrelated operation."
+              "feedback": "Five plus three is eight, so the answer does work."
             },
             {
               "id": "o2",
-              "label": "Assume the answer is right because it is positive",
+              "label": "Every number works",
               "correct": false,
-              "feedback": "The sign or size alone cannot prove an equation is balanced."
+              "feedback": "Only numbers that make both sides match are solutions."
             },
             {
               "id": "o3",
-              "label": "Change the equals sign to a plus sign",
+              "label": "x cannot stand for a number",
               "correct": false,
-              "feedback": "That would create a different expression rather than checking the original equation."
+              "feedback": "Here x stands for the number we are testing."
             }
           ]
         }

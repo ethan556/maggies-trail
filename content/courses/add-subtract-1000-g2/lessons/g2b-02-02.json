@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "When the ones run short, break one ten open: it becomes ten ones, and the tens column has one fewer ten.",
-      "narration": "When the ones run short, break one ten open: it becomes ten ones, and the tens column has one fewer ten."
+      "figure": "pv1000-trade-down",
+      "body": "If there are not enough ones, break 1 ten into 10 ones. The total stays the same.",
+      "narration": "If there are not enough ones, break 1 ten into 10 ones. The total stays the same."
     },
     {
       "id": "i1",
@@ -36,7 +36,7 @@
           }
         ],
         "missFeedback": "That build names a different number — total each unit's worth and match 43 exactly.",
-        "successFeedback": "3 rods and 13 cubes still make 43 — the opened ten just wears a different form."
+        "successFeedback": "Three rods and 13 cubes still make 43. Only the form changed."
       },
       "predict": {
         "prompt": "You break a ten into ten ones. What happens to the total?",
@@ -59,7 +59,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -87,7 +87,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "244 − 125 = ?",
+        "prompt": "Find the exact answer: 244 − 125 = ?",
         "answer": 119,
         "tolerance": 0,
         "unit": "",
@@ -115,7 +115,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -139,33 +139,33 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Breaking is trading downward — same value, smaller pieces, so the ones can pay their bill.",
-      "narration": "Breaking is trading downward — same value, smaller pieces, so the ones can pay their bill."
+      "figure": "pv1000-trade-down",
+      "body": "After the trade, there is 1 fewer ten and 10 more ones. Now subtract.",
+      "narration": "After the trade, there is 1 fewer ten and 10 more ones. Now subtract."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use the idea in a new way.",
       "conceptTag": "g2b-break-ten",
       "widget": {
         "type": "baseTenCompose",
-        "prompt": "Show 43 broken for subtraction: 3 rods and 13 cubes.",
-        "target": 43,
+        "prompt": "Break one ten in 52. Show 4 rods and 12 cubes.",
+        "target": 52,
         "requireStandard": false,
         "maxHundreds": 0,
-        "maxTens": 4,
+        "maxTens": 5,
         "maxOnes": 19,
         "commonBuilds": [
           {
             "hundreds": 0,
-            "tens": 4,
-            "ones": 13,
-            "feedback": "4 rods and 13 cubes make 53 — the broken ten must LEAVE the tens place."
+            "tens": 5,
+            "ones": 12,
+            "feedback": "Five rods and 12 cubes make 62. The broken ten must leave the tens place."
           }
         ],
-        "missFeedback": "That build names a different number — total each unit's worth and match 43 exactly.",
-        "successFeedback": "3 rods and 13 cubes still make 43 — the opened ten just wears a different form."
+        "missFeedback": "Keep the value 52 while changing 1 ten into 10 ones.",
+        "successFeedback": "Four rods and 12 cubes still show 52."
       },
       "cml": {
         "stage": "construct",
@@ -173,7 +173,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -201,7 +201,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "483 − 275 = ?",
+        "prompt": "Try a new number: 483 − 275 = ?",
         "answer": 208,
         "tolerance": 0,
         "unit": "",
@@ -229,7 +229,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -261,31 +261,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "While solving with 338, a student trades ten ones for a ten. Why is that allowed?",
+        "prompt": "Why can 1 ten be broken into 10 ones?",
         "options": [
           {
             "id": "o0",
-            "label": "Because ten ones and one ten are equal amounts",
+            "label": "They have the same value.",
             "correct": true,
-            "feedback": "Correct — the trade is legal exactly because both forms name the same quantity."
+            "feedback": "Yes. One ten and 10 ones both equal 10."
           },
           {
             "id": "o1",
-            "label": "Because the answer gets bigger",
+            "label": "It makes the number larger.",
             "correct": false,
-            "feedback": "A valid trade never changes the total at all — that is the whole point of it."
+            "feedback": "A trade does not make the number larger."
           },
           {
             "id": "o2",
-            "label": "Because tens look nicer than ones",
+            "label": "It removes one from the total.",
             "correct": false,
-            "feedback": "Looks are not the reason; equal VALUE is what licenses the swap."
+            "feedback": "A trade does not remove any value."
           },
           {
             "id": "o3",
-            "label": "Because subtraction requires it every time",
+            "label": "It changes subtraction to addition.",
             "correct": false,
-            "feedback": "Many subtractions need no trade; the trade appears only when a place runs short."
+            "feedback": "The operation stays subtraction. Only the form changes."
           }
         ]
       },
@@ -300,7 +300,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -328,7 +328,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "242 − 115 = ?",
+        "prompt": "Show what you know: 242 − 115 = ?",
         "answer": 127,
         "tolerance": 0,
         "unit": "",
@@ -356,7 +356,7 @@
         "kernel": "equivalence-transformation",
         "actionGoal": "Manipulate the model and track how it represents g2b break ten.",
         "invariants": [
-          "Trading between places changes the FORM of a quantity, never its value — the model and the number must stay equal for g2b break ten."
+          "Trading between places changes the form of a quantity, never its value — the model and the number must stay equal for g2b break ten."
         ],
         "misconceptions": [
           "Treating a trade as adding or removing amount instead of renaming the same total."
@@ -395,8 +395,9 @@
       "concept": {
         "id": "rem-g2b-break-ten-c",
         "kind": "concept",
-        "body": "Breaking is trading downward — same value, smaller pieces, so the ones can pay their bill.",
-        "narration": "Breaking is trading downward — same value, smaller pieces, so the ones can pay their bill."
+        "figure": "pv1000-trade-down",
+        "body": "After the trade, there is 1 fewer ten and 10 more ones. Now subtract.",
+        "narration": "After the trade, there is 1 fewer ten and 10 more ones. Now subtract."
       },
       "check": {
         "id": "rem-g2b-break-ten-k",

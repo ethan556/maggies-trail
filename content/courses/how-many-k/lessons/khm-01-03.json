@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-row-start-end",
       "body": "A line is the friendliest arrangement to count: start at one end, touch each thing in turn, and stop at the other end.",
       "narration": "A line is the friendliest arrangement to count: start at one end, touch each thing in turn, and stop at the other end."
     },
@@ -155,38 +155,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-counted-vs-waiting",
       "body": "The line does the organising for you — what has been counted sits behind your finger, and what remains sits ahead.",
       "narration": "The line does the organising for you — what has been counted sits behind your finger, and what remains sits ahead."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-count-line",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 5. Hop forward 4 times by 1. Where do you land?",
-        "min": 0,
-        "max": 12,
-        "start": 5,
-        "hop": 1,
-        "hops": 4,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "dragOrder",
+        "prompt": "Put the row-counting actions in a safe order.",
+        "items": [
           {
-            "value": 8,
-            "feedback": "8 stops one complete hop too soon. Continue the final 1-unit hop to reach 9."
+            "id": "stage-3",
+            "label": "Stop at the other end"
           },
           {
-            "value": 10,
-            "feedback": "10 goes one complete hop too far. Count just 4 hops from 5 to land on 9."
+            "id": "stage-2",
+            "label": "Touch each object in order"
+          },
+          {
+            "id": "stage-1",
+            "label": "Start at one end"
           }
         ],
-        "missFeedback": "Start at 5 and count on 4: you land on 9.",
-        "successFeedback": "5 and 4 more is 9 — each hop says the next counting number.",
-        "lowFeedback": "Short of the landing — count all 4 hops, one number per hop, to reach 9.",
-        "highFeedback": "Past the landing — the count stops after exactly 4 hops, on 9."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Start at one end, then Touch each object in order, then Stop at the other end.",
+        "successFeedback": "Yes — one end, every object, then stop."
       },
       "cml": {
         "stage": "construct",

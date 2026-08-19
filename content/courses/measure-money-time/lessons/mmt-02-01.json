@@ -243,33 +243,57 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "A close call estimate.",
+   "body": "Match an object to a sensible estimate.",
    "conceptTag": "mmt-estimate",
    "explanationVariants": [
     "9 is close to the actual 8 inches — a good estimate.",
     "Being off by just 1 inch is a good estimate."
    ],
    "widget": {
-    "type": "mcq",
-    "prompt": "A ruler-shaped block is about 8 inches long. Which is the best estimate?",
-    "options": [
+    "type": "matchPairs",
+    "prompt": "Match each object to a good estimate of its length.",
+    "left": [
      {
-      "id": "a",
-      "label": "9 inches",
-      "correct": true,
-      "feedback": "Yes — 9 is close to the actual 8 inches, just 1 inch off."
+      "id": "l1",
+      "label": "a book, about 9 inches"
      },
      {
-      "id": "b",
-      "label": "25 inches",
-      "feedback": "25 is much too far from 8 to be a good estimate."
+      "id": "l2",
+      "label": "a key, about 4 inches"
      },
      {
-      "id": "c",
-      "label": "1 inch",
-      "feedback": "1 is much too small compared to the actual 8 inches."
+      "id": "l3",
+      "label": "a marker, about 12 inches"
      }
-    ]
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "10 inches"
+     },
+     {
+      "id": "r2",
+      "label": "5 inches"
+     },
+     {
+      "id": "r3",
+      "label": "13 inches"
+     }
+    ],
+    "pairs": {
+     "l1": "r1",
+     "l2": "r2",
+     "l3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "l2",
+      "right": "r3",
+      "feedback": "13 inches is much too long for a 4-inch key. A good estimate is close: 5 inches."
+     }
+    ],
+    "missFeedback": "Choose the number that is close to each real length, not a number far away.",
+    "successFeedback": "Great estimates — each choice is close to the object, not exact on purpose!"
    },
    "hints": [
     "The actual length is about 8 inches.",

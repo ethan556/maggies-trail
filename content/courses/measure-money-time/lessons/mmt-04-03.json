@@ -10,7 +10,7 @@
       "id": "c1",
       "kind": "concept",
       "figure": "five-minute-clock",
-      "body": "Check the minute hand first: at 12, it's \":00\". Anywhere else, skip-count its position by 5s. Then read the hour from the short hand."
+      "body": "On this clock, the minute hand points to 4, so 4 × 5 = 20 minutes. The short hand is between 3 and 4, so the time is 3:20. For any other clock, skip-count the minute hand by 5s, then read the hour from the short hand."
     },
     {
       "id": "e1",
@@ -394,21 +394,38 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A full mixed challenge.",
+      "body": "Read the hands before setting one yourself.",
       "conceptTag": "mmt-time-mixed",
       "explanationVariants": [
         "Hour 9, minute hand at 9 (45 minutes): 9:45.",
         "9×5=45, so 9:45."
       ],
       "widget": {
-        "type": "clockSet",
-        "prompt": "Set the clock to show 9:45.",
-        "targetHour": 9,
-        "targetMinute": 45,
-        "minuteStep": 5,
-        "successFeedback": "Yes — hour 9, minute hand at 9 (9×5=45 minutes): 9:45.",
-        "hourFeedback": "Use the smaller number: 9, not 10.",
-        "minuteFeedback": "The minute hand at 9 means 9×5=45 minutes, not 9 minutes."
+        "type": "mcq",
+        "prompt": "The minute hand points to 8. The short hand is just past 2. What time is it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2:08",
+            "feedback": "The minute hand's number is counted by 5s: 8 × 5 = 40, not 8."
+          },
+          {
+            "id": "b",
+            "label": "2:40",
+            "correct": true,
+            "feedback": "Yes — 8 five-minute marks is 40 minutes, and the short hand says 2."
+          },
+          {
+            "id": "c",
+            "label": "8:10",
+            "feedback": "The long hand gives minutes, not the hour. The short hand is just past 2."
+          },
+          {
+            "id": "d",
+            "label": "3:40",
+            "feedback": "The short hand has not reached 3 yet. It is still 2:40."
+          }
+        ]
       },
       "hints": [
         "Check the minute hand first: it's at 9, not 12.",

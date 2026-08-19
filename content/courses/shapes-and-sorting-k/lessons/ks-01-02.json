@@ -247,51 +247,57 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Spot all the triangles.",
+      "body": "Match the changed pictures.",
       "conceptTag": "ks-shapes-any-way",
       "explanationVariants": [
         "All three are triangles: pointing up, pointing down, and tiny — 3 sides each.",
         "Every 3-sided shape is a triangle, any size or turn."
       ],
       "widget": {
-        "type": "tapDiagram",
-        "prompt": "Three shapes: a big triangle pointing up, one pointing down, and a tiny one. Tap every triangle.",
-        "mode": "selectAll",
-        "canvas": {
-          "w": 3,
-          "h": 1
-        },
-        "hotspots": [
+        "type": "matchPairs",
+        "prompt": "Match each turned or resized picture to its shape name.",
+        "left": [
           {
-            "id": "big",
-            "x": 16,
-            "y": 50,
-            "label": "big triangle pointing up",
-            "icon": "🔺",
-            "count": 1,
-            "correct": true
+            "id": "l1",
+            "label": "a square turned like a diamond"
           },
           {
-            "id": "down",
-            "x": 50,
-            "y": 50,
-            "label": "triangle pointing down",
-            "icon": "🔻",
-            "count": 1,
-            "correct": true
+            "id": "l2",
+            "label": "a tiny circle"
           },
           {
-            "id": "tiny",
-            "x": 84,
-            "y": 50,
-            "label": "tiny triangle",
-            "icon": "🔺",
-            "count": 1,
-            "correct": true
+            "id": "l3",
+            "label": "a triangle pointing down"
           }
         ],
-        "missFeedback": "Small and flipped ones count too — all 3 have three sides.",
-        "successFeedback": "Yes — each has 3 sides, so each is a triangle."
+        "right": [
+          {
+            "id": "r1",
+            "label": "square"
+          },
+          {
+            "id": "r2",
+            "label": "circle"
+          },
+          {
+            "id": "r3",
+            "label": "triangle"
+          }
+        ],
+        "pairs": {
+          "l1": "r1",
+          "l2": "r2",
+          "l3": "r3"
+        },
+        "pairErrors": [
+          {
+            "left": "l1",
+            "right": "r3",
+            "feedback": "Turning a square does not change its 4 equal sides."
+          }
+        ],
+        "missFeedback": "Look at sides and corners. Turning and size do not change a shape's name.",
+        "successFeedback": "Yes — same sides and corners, same shape name!"
       },
       "hints": [
         "Count each shape's sides.",

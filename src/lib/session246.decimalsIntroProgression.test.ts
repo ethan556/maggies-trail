@@ -75,14 +75,28 @@ describe("S246 Grade 4 decimals complete-course progression packet", () => {
     }
   });
 
-  it("preserves the visual-first hundredths model throughout the course", () => {
+  it("uses live hundredths grids while withholding fixed grid exemplars that contradict a named quantity", () => {
+    const withheld = new Set([
+      "dg4-01-01/c2", "dg4-01-02/c2", "dg4-01-06/c2", "dg4-02-01/c2", "dg4-02-02/c2", "dg4-02-03/c2",
+      "dg4-02-04/c1", "dg4-02-04/c2", "dg4-02-05/c2", "dg4-03-01/c1", "dg4-03-01/c2", "dg4-03-02/c2",
+      "dg4-03-03/c1", "dg4-03-04/c2", "dg4-03-05/c2", "dg4-03-06/c2",
+    ]);
+    let retained = 0;
     for (const lessonId of LESSON_IDS) {
       const lesson = lessons[lessonId];
-      expect(step(lesson, "c1").figure, `${lessonId}/c1 figure`).toBe("dpv-hundredths-grid");
-      expect(step(lesson, "c2").figure, `${lessonId}/c2 figure`).toBe("dpv-hundredths-grid");
+      for (const conceptId of ["c1", "c2"]) {
+        const concept = step(lesson, conceptId);
+        if (withheld.has(`${lessonId}/${conceptId}`)) {
+          expect(concept.figure, `${lessonId}/${conceptId} fixed exemplar`).toBeUndefined();
+        } else {
+          expect(concept.figure, `${lessonId}/${conceptId} generic grid`).toBe("dpv-hundredths-grid");
+          retained += 1;
+        }
+      }
       expect(step(lesson, "i1").widget?.type, `${lessonId}/i1 visual host`).toBe("hundredthsGrid");
       expect(step(lesson, "i2").widget?.type, `${lessonId}/i2 visual host`).toBe("hundredthsGrid");
     }
+    expect(retained).toBe(20);
   });
 
   it("assigns every challenge a distinct, grade-appropriate transfer job", () => {

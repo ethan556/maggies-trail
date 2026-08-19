@@ -38,6 +38,12 @@ function signedConstant(value: number): string {
   return value > 0 ? ` + ${value}` : ` − ${Math.abs(value)}`;
 }
 
+function coefficientVariable(coefficient: number, variable: string): string {
+  if (coefficient === 1) return variable;
+  if (coefficient === -1) return `−${variable}`;
+  return `${coefficient}${variable}`;
+}
+
 /**
  * S246 / Phase 5. The authored pool held only two numeric widgets, one of
  * which always answered 1. These cubics preserve the first-derivative-test
@@ -321,12 +327,12 @@ function nestedProductWidget(rand: Rand) {
     .slice(0, 3);
   return {
     type: "numeric" as const,
-    prompt: `f(x) = x(${a}x + ${b})^${n}. Find f'(0).`,
+    prompt: `f(x) = x(${a}x + ${b})^${n}. Find f′(0).`,
     answer,
     tolerance: 0,
     unit: "",
     commonErrors: traps.map((value) => ({ value, feedback: "Use the product rule before substituting x = 0; the term multiplied by x then vanishes." })),
-    fallbackFeedback: `f'(x) = (${a}x + ${b})^${n} + x * ${n * a}(${a}x + ${b})^${n - 1}. At x = 0, only ${b}^${n} remains, giving ${answer}.`,
+    fallbackFeedback: `f′(x) = (${a}x + ${b})^${n} + x × ${n * a}(${a}x + ${b})^${n - 1}. At x = 0, only ${b}^${n} remains, giving ${answer}.`,
     successFeedback: `At x = 0 the second product-rule term vanishes, while the first gives ${b}^${n} = ${answer}.`,
   };
 }
@@ -344,13 +350,13 @@ function criticalPointWidget(rand: Rand) {
   const chosen = CRITICAL_POINT_CASES[Math.floor(rand() * CRITICAL_POINT_CASES.length)]!;
   return {
     type: "numeric" as const,
-    prompt: `A differentiable function has f'(x) = ${chosen.derivative}. How many real critical points does f have?`,
+    prompt: `A differentiable function has f′(x) = ${chosen.derivative}. How many real critical points does f have?`,
     answer: chosen.answer,
     tolerance: 0,
     unit: "",
     commonErrors: [0, 1, 2, 3].filter((value) => value !== chosen.answer).slice(0, 3).map((value) => ({
       value,
-      feedback: "Critical points occur at the real zeros of f'. Count distinct real solutions, including an even-multiplicity zero once.",
+      feedback: "Critical points occur at the real zeros of f′. Count distinct real solutions, including an even-multiplicity zero once.",
     })),
     fallbackFeedback: `Solving ${chosen.derivative} = 0 gives ${chosen.answer} distinct real zero${chosen.answer === 1 ? "" : "s"}.`,
     successFeedback: `The derivative has ${chosen.answer} distinct real zero${chosen.answer === 1 ? "" : "s"}, so f has ${chosen.answer} critical point${chosen.answer === 1 ? "" : "s"}.`,
@@ -373,13 +379,13 @@ function derivativeEvaluationWidget(rand: Rand) {
     .slice(0, 3);
   return {
     type: "numeric" as const,
-    prompt: `For f(x) = x^${n}, find f'(${x}).`,
+    prompt: `For f(x) = x^${n}, find f′(${x}).`,
     answer,
     tolerance: 0,
     unit: "",
-    commonErrors: traps.map((value) => ({ value, feedback: `Use the power rule f'(x) = ${n}x^${n - 1}, then substitute x = ${x}.` })),
-    fallbackFeedback: `f'(x) = ${n}x^${n - 1}, so f'(${x}) = ${answer}.`,
-    successFeedback: `The power rule gives f'(${x}) = ${n}(${x})^${n - 1} = ${answer}.`,
+    commonErrors: traps.map((value) => ({ value, feedback: `Use the power rule f′(x) = ${n}x^${n - 1}, then substitute x = ${x}.` })),
+    fallbackFeedback: `f′(x) = ${n}x^${n - 1}, so f′(${x}) = ${answer}.`,
+    successFeedback: `The power rule gives f′(${x}) = ${n}(${x})^${n - 1} = ${answer}.`,
   };
 }
 
@@ -424,15 +430,15 @@ function exponentialDerivativeWidget(rand: Rand) {
   const coefficient = EXPONENTIAL_COEFFICIENTS[Math.floor(rand() * EXPONENTIAL_COEFFICIENTS.length)]!;
   return {
     type: "numeric" as const,
-    prompt: `f(x) = e^(${coefficient}x). Find f'(0).`,
+    prompt: `f(x) = e^(${coefficient}x). Find f′(0).`,
     answer: coefficient,
     tolerance: 0,
     unit: "",
     commonErrors: [0, 1, Math.E].filter((value) => value !== coefficient).map((value) => ({
       value,
-      feedback: `The chain rule gives f'(x) = ${coefficient}e^(${coefficient}x), and e^0 = 1.`,
+      feedback: `The chain rule gives f′(x) = ${coefficient}e^(${coefficient}x), and e^0 = 1.`,
     })),
-    fallbackFeedback: `f'(x) = ${coefficient}e^(${coefficient}x), so f'(0) = ${coefficient}.`,
+    fallbackFeedback: `f′(x) = ${coefficient}e^(${coefficient}x), so f′(0) = ${coefficient}.`,
     successFeedback: `The inner derivative contributes ${coefficient}, and e^0 = 1, giving ${coefficient}.`,
   };
 }
@@ -474,14 +480,14 @@ function signOfDerivativeWidget(rand: Rand) {
   const answer = 2 * radius - 1;
   return {
     type: "numeric" as const,
-    prompt: `f'(x) = ${scale}(x^2 - ${square}). How many integer values of x have f falling (f'(x) < 0)?`,
+    prompt: `f′(x) = ${scale}(x^2 - ${square}). How many integer values of x have f falling (f′(x) < 0)?`,
     answer,
     tolerance: 0,
     unit: "",
     commonErrors: [2 * radius + 1, 2 * radius, radius]
       .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
       .map((value) => ({ value, feedback: `The derivative is negative only for -${radius} < x < ${radius}; the endpoints make f' equal zero.` })),
-    fallbackFeedback: `f'(x) < 0 exactly when -${radius} < x < ${radius}, which contains ${answer} integers.`,
+    fallbackFeedback: `f′(x) < 0 exactly when -${radius} < x < ${radius}, which contains ${answer} integers.`,
     successFeedback: `There are ${answer} integers strictly between -${radius} and ${radius}.`,
   };
 }
@@ -762,18 +768,18 @@ function relatedRatesWidget(rand: Rand) {
     : [4 * chosen.radius ** 2, chosen.radius ** 3, answer / chosen.rate];
   return {
     type: "numeric" as const,
-    prompt: `The ${quantity} changes as its radius grows at dr/dt = ${chosen.rate} cm/s. Find ${symbol} when r = ${chosen.radius}, as a multiple of pi (give only the coefficient).`,
+    prompt: `The ${quantity} changes as its radius grows at dr/dt = ${chosen.rate} cm/s. Find ${symbol} when r = ${chosen.radius}, as a multiple of π (give only the coefficient).`,
     answer,
     tolerance: 0,
-    unit: `pi ${unit}`,
+    unit: `π ${unit}`,
     commonErrors: traps.filter((value, index, all) => value !== answer && all.indexOf(value) === index).map((value) => ({
       value,
       feedback: `Differentiate the ${chosen.shape === "circle" ? "area" : "volume"} formula with respect to time, including the factor dr/dt, before substituting the radius.`,
     })),
     fallbackFeedback: chosen.shape === "circle"
-      ? `dA/dt = 2 pi r(dr/dt) = 2 pi(${chosen.radius})(${chosen.rate}) = ${answer} pi.`
-      : `dV/dt = 4 pi r^2(dr/dt) = 4 pi(${chosen.radius})^2(${chosen.rate}) = ${answer} pi.`,
-    successFeedback: `The chain rule gives ${symbol} = ${answer} pi ${unit}.`,
+      ? `dA/dt = 2πr × dr/dt = 2π × ${chosen.radius} × ${chosen.rate} = ${answer}π.`
+      : `dV/dt = 4πr² × dr/dt = 4π × ${chosen.radius}² × ${chosen.rate} = ${answer}π.`,
+    successFeedback: `The chain rule gives ${symbol} = ${answer}π ${unit}.`,
   };
 }
 
@@ -804,7 +810,7 @@ function ladderWidget(rand: Rand) {
       commonErrors: [chosen.length - chosen.foot, chosen.length, chosen.foot]
         .filter((value, index, all) => value !== chosen.height && all.indexOf(value) === index)
         .map((value) => ({ value, feedback: "The ladder is the hypotenuse. Use x^2 + y^2 = L^2 and take the positive height." })),
-      fallbackFeedback: `y = sqrt(${chosen.length}^2 - ${chosen.foot}^2) = ${chosen.height} ft.`,
+      fallbackFeedback: `y = √(${chosen.length}^2 - ${chosen.foot}^2) = ${chosen.height} ft.`,
       successFeedback: `The Pythagorean relation gives height ${chosen.height} ft.`,
     };
   }
@@ -839,14 +845,14 @@ function linearisationWidget(rand: Rand) {
     const answer = Number((1 / (2 * chosen.root)).toFixed(3));
     return {
       type: "numeric" as const,
-      prompt: `For f(x) = sqrt(x), find f'(${input}) to three decimal places.`,
+      prompt: `For f(x) = √x, find f′(${input}) to three decimal places.`,
       answer,
       tolerance: 0.0005,
       unit: "",
       commonErrors: [chosen.root, 0.5, 2 * chosen.root]
         .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
-        .map((value) => ({ value, feedback: "The derivative is 1/(2 sqrt(x)); substitute the perfect-square input after differentiating." })),
-      fallbackFeedback: `f'(${input}) = 1/(2 * ${chosen.root}) = ${answer}.`,
+        .map((value) => ({ value, feedback: "The derivative is 1/(2√x); substitute the perfect-square input after differentiating." })),
+      fallbackFeedback: `f′(${input}) = 1/(2 × ${chosen.root}) = ${answer}.`,
       successFeedback: `The slope at x = ${input} is ${answer}.`,
     };
   }
@@ -856,14 +862,14 @@ function linearisationWidget(rand: Rand) {
     const answer = Number((chosen.root + chosen.delta / (2 * chosen.root)).toFixed(4));
     return {
       type: "numeric" as const,
-      prompt: `Use the tangent to sqrt(x) at x = ${base} to estimate sqrt(${target}). Give four decimal places.`,
+      prompt: `Use the tangent to √x at x = ${base} to estimate √${target}. Give four decimal places.`,
       answer,
       tolerance: 0.00005,
       unit: "",
       commonErrors: [chosen.root + chosen.delta, chosen.root, chosen.root + 2 * chosen.root * chosen.delta]
         .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
-        .map((value) => ({ value, feedback: `Use L(x) = ${chosen.root} + (x - ${base})/(2 * ${chosen.root}); scale the small input change by the tangent slope.` })),
-      fallbackFeedback: `L(${target}) = ${chosen.root} + ${chosen.delta}/(2 * ${chosen.root}) = ${answer}.`,
+        .map((value) => ({ value, feedback: `Use L(x) = ${chosen.root} + (x - ${base})/(2 × ${chosen.root}); scale the small input change by the tangent slope.` })),
+      fallbackFeedback: `L(${target}) = ${chosen.root} + ${chosen.delta}/(2 × ${chosen.root}) = ${answer}.`,
       successFeedback: `The tangent-line estimate is ${answer}.`,
     };
   }
@@ -877,7 +883,7 @@ function linearisationWidget(rand: Rand) {
     unit: "",
     commonErrors: [Number((target ** 3).toFixed(4)), chosen.base ** 3, 3 * chosen.base ** 2]
       .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
-      .map((value) => ({ value, feedback: "The linear estimate is f(a) + f'(a)(x - a); multiply the slope by the small change, not by the full input." })),
+      .map((value) => ({ value, feedback: "The linear estimate is f(a) + f′(a)(x - a); multiply the slope by the small change, not by the full input." })),
     fallbackFeedback: `L(${target}) = ${chosen.base ** 3} + ${3 * chosen.base ** 2}(${chosen.delta}) = ${answer}.`,
     successFeedback: `The tangent-line estimate is ${answer}.`,
   };
@@ -901,7 +907,7 @@ const DIFFERENTIAL_CASES = [
 function differentialLabGenerated(rand: Rand) {
   const chosen = DIFFERENTIAL_CASES[Math.floor(rand() * DIFFERENTIAL_CASES.length)]!;
   if (chosen.kind === "cubeError") {
-    const answer = 3 * chosen.side ** 2 * chosen.error;
+    const answer = Number((3 * chosen.side ** 2 * chosen.error).toFixed(3));
     const widget = {
       type: "exactNumberLab" as const,
       prompt: `A cube's side is measured as ${chosen.side} cm with an error of up to ${chosen.error} cm. Estimate the resulting volume error, in cm^3.`,
@@ -1207,7 +1213,7 @@ function eulerWidget(rand: Rand) {
   const answer = Number((chosen.initial * (1 + chosen.rate * chosen.step) ** chosen.steps).toFixed(4));
   return {
     type: "numeric" as const,
-    prompt: `Use Euler's method for dy/dx = ${chosen.rate}y, starting at y(0) = ${chosen.initial}, with step h = ${chosen.step}. Find y after ${chosen.steps} step${chosen.steps === 1 ? "" : "s"}, to four decimal places.`,
+    prompt: `Use Euler's method for dy/dx = ${coefficientVariable(chosen.rate, "y")}, starting at y(0) = ${chosen.initial}, with step h = ${chosen.step}. Find y after ${chosen.steps} step${chosen.steps === 1 ? "" : "s"}, to four decimal places.`,
     answer, tolerance: 0.00005, unit: "",
     commonErrors: [chosen.initial, chosen.initial * (1 + chosen.rate * chosen.step), chosen.initial + chosen.steps * chosen.step]
       .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
@@ -1243,7 +1249,7 @@ function riemannNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const exact = m * n * n / 2;
   const widget = {
     type: "numeric" as const,
-    prompt: `For f(x) = ${m}x on [0, ${n}], use ${n} equal strips and left endpoints. What is the Riemann-sum estimate?`,
+    prompt: `For f(x) = ${coefficientVariable(m, "x")} on [0, ${n}], use ${n} equal strips and left endpoints. What is the Riemann-sum estimate?`,
     answer,
     tolerance: 0,
     unit: "",
@@ -1276,7 +1282,7 @@ function riemannMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   const entry = pick(rand, RIEMANN_CHOICE_CASES);
   const increasing = entry.direction === "increasing";
   const underestimate = (increasing && entry.rule === "left") || (!increasing && entry.rule === "right");
-  const expression = increasing ? `${entry.m}x + ${entry.c}` : `${entry.c} − ${entry.m}x`;
+  const expression = increasing ? `${coefficientVariable(entry.m, "x")} + ${entry.c}` : `${entry.c} − ${coefficientVariable(entry.m, "x")}`;
   const correct = underestimate ? "The estimate is an underestimate." : "The estimate is an overestimate.";
   return integrationMcq(
     rand,
@@ -1301,7 +1307,7 @@ function squeezeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const answer = m * n;
   const widget = {
     type: "numeric" as const,
-    prompt: `For f(x) = ${m}x on [0, ${n}], use ${n} equal strips. By how much does the right sum exceed the left sum?`,
+    prompt: `For f(x) = ${coefficientVariable(m, "x")} on [0, ${n}], use ${n} equal strips. By how much does the right sum exceed the left sum?`,
     answer,
     tolerance: 0,
     unit: "",
@@ -1493,7 +1499,7 @@ function accumulationNumericWidget(rand: Rand): GeneratedIntegrationVariant {
       { value: antiderivative(b) + antiderivative(a), feedback: "The requested difference subtracts the earlier accumulation; it does not add both values." },
       { value: b - a, feedback: "That is only the interval width. Accumulation also depends on the values of f across the interval." },
     ]),
-    fallbackFeedback: `Use A(x) = (${m}/2)x^2 + ${c}x. Then A(${b}) - A(${a}) = ${answer}.`,
+    fallbackFeedback: `Use A(x) = (${m}/2)x^2 + ${coefficientVariable(c, "x")}. Then A(${b}) - A(${a}) = ${answer}.`,
     successFeedback: `The accumulation added between ${a} and ${b} is ${answer}.`,
   };
   return { widget, answer };
@@ -2223,9 +2229,9 @@ function libraryNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const prompt = kind === "log"
     ? `Evaluate the integral from 1 to e of ${multiplier}/x dx.`
     : kind === "sin"
-      ? `Evaluate the integral from 0 to pi of ${multiplier} sin x dx.`
+      ? `Evaluate the integral from 0 to π of ${multiplier} sin x dx.`
       : kind === "cos"
-        ? `Evaluate the integral from 0 to pi/2 of ${multiplier} cos x dx.`
+        ? `Evaluate the integral from 0 to π/2 of ${multiplier} cos x dx.`
         : `Evaluate the integral from 0 to ln 2 of ${multiplier} e^x dx.`;
   const answer = kind === "sin" ? 2 * multiplier : multiplier;
   const widget = {
@@ -2235,7 +2241,7 @@ function libraryNumericWidget(rand: Rand): GeneratedIntegrationVariant {
     tolerance: 0,
     unit: "",
     commonErrors: uniqueNumericErrors(answer, [
-      { value: multiplier, feedback: kind === "sin" ? "The sine accumulation from 0 to pi contributes a factor of 2." : "Recheck the endpoint subtraction rather than copying the coefficient." },
+      { value: multiplier, feedback: kind === "sin" ? "The sine accumulation from 0 to π contributes a factor of 2." : "Recheck the endpoint subtraction rather than copying the coefficient." },
       { value: 2 * multiplier, feedback: kind === "sin" ? "That is the correct endpoint change; recheck which quantity the prompt asks for." : "This doubles the endpoint change without a mathematical reason." },
       { value: 0, feedback: "The antiderivative has different values at the two stated endpoints." },
       { value: -answer, feedback: "This reverses the endpoint subtraction or the antiderivative sign." },
@@ -2243,9 +2249,9 @@ function libraryNumericWidget(rand: Rand): GeneratedIntegrationVariant {
     fallbackFeedback: kind === "log"
       ? `${multiplier}[ln x] from 1 to e is ${answer}.`
       : kind === "sin"
-        ? `${multiplier}[-cos x] from 0 to pi is ${answer}.`
+        ? `${multiplier}[-cos x] from 0 to π is ${answer}.`
         : kind === "cos"
-          ? `${multiplier}[sin x] from 0 to pi/2 is ${answer}.`
+          ? `${multiplier}[sin x] from 0 to π/2 is ${answer}.`
           : `${multiplier}[e^x] from 0 to ln 2 is ${answer}.`,
     successFeedback: `The definite integral is ${answer}.`,
   };
@@ -2419,10 +2425,12 @@ const AREA_BETWEEN_MCQ_CASES = Array.from({ length: 12 }, (_, index) => ({
 function areaBetweenMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   const { line, quadratic } = pick(rand, AREA_BETWEEN_MCQ_CASES);
   const intersection = round3(line / quadratic);
-  const correct = `y = ${line}x is on top.`;
-  return integrationMcq(rand, `On the open interval from 0 to ${intersection}, which curve is on top: y = ${line}x or y = ${quadratic}x^2?`, [
+  const linearLabel = coefficientVariable(line, "x");
+  const quadraticLabel = coefficientVariable(quadratic, "x^2");
+  const correct = `y = ${linearLabel} is on top.`;
+  return integrationMcq(rand, `On the open interval from 0 to ${intersection}, which curve is on top: y = ${linearLabel} or y = ${quadraticLabel}?`, [
     { label: correct, correct: true, feedback: "Between the two intersections, the linear curve has the greater y-value." },
-    { label: `y = ${quadratic}x^2 is on top.`, correct: false, feedback: "That curve is below the line between the intersections and catches it at the right endpoint." },
+    { label: `y = ${quadraticLabel} is on top.`, correct: false, feedback: "That curve is below the line between the intersections and catches it at the right endpoint." },
     { label: "The curves have equal height throughout.", correct: false, feedback: "They agree only at their intersection points, not throughout the interval." },
     { label: "The top curve changes inside the interval.", correct: false, feedback: "There is no additional intersection inside the stated open interval." },
   ]);
@@ -2444,11 +2452,13 @@ function areaBetweenNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const signed = quadratic * upper ** 3 / 3 - line * upper ** 2 / 2;
   const rawAnswer = kind === "intersection" ? upper : kind === "signed" ? signed : -signed;
   const answer = Number(rawAnswer.toFixed(4));
+  const linearLabel = coefficientVariable(line, "x");
+  const quadraticLabel = coefficientVariable(quadratic, "x^2");
   const prompt = kind === "intersection"
-    ? `The curves y = ${line}x and y = ${quadratic}x^2 meet at x = 0 and at what larger x-value? Give a decimal to four places.`
+    ? `The curves y = ${linearLabel} and y = ${quadraticLabel} meet at x = 0 and at what larger x-value? Give a decimal to four places.`
     : kind === "signed"
-      ? `Find the signed integral from 0 to ${round3(upper)} of (${quadratic}x^2 - ${line}x) dx. Give a decimal to four places.`
-      : `Find the area between y = ${line}x and y = ${quadratic}x^2 from x = 0 to x = ${round3(upper)}. Give a decimal to four places.`;
+      ? `Find the signed integral from 0 to ${round3(upper)} of (${quadraticLabel} - ${linearLabel}) dx. Give a decimal to four places.`
+      : `Find the area between y = ${linearLabel} and y = ${quadraticLabel} from x = 0 to x = ${round3(upper)}. Give a decimal to four places.`;
   const widget = {
     type: "numeric" as const,
     prompt,
@@ -2457,14 +2467,14 @@ function areaBetweenNumericWidget(rand: Rand): GeneratedIntegrationVariant {
     unit: kind === "area" ? "square units" : "",
     commonErrors: uniqueNumericErrors(answer, kind === "intersection" ? [
       { value: 0, feedback: "That is the shared origin; the question asks for the larger intersection." },
-      { value: round3(quadratic / line), feedback: "This reverses the coefficient ratio when solving x(line - quadratic*x) = 0." },
+      { value: round3(quadratic / line), feedback: "This reverses the coefficient ratio when solving the factored intersection equation." },
     ] : [
       { value: Number((-rawAnswer).toFixed(4)), feedback: kind === "signed" ? "This changes the requested signed integral into positive geometric area." : "Area is nonnegative; subtract the lower curve from the upper curve." },
       { value: Number((Math.abs(rawAnswer) * 2).toFixed(4)), feedback: "Recheck the antiderivative coefficients rather than doubling the region." },
       { value: 0, feedback: "The curves meet at the endpoints, but the vertical gap is nonzero inside the interval." },
     ]),
     fallbackFeedback: kind === "intersection"
-      ? `Factor x(${line} - ${quadratic}x) = 0; the larger solution is ${answer}.`
+      ? `Factor x(${line} - ${coefficientVariable(quadratic, "x")}) = 0; the larger solution is ${answer}.`
       : `Integrate the displayed upper-minus-lower order over the stated interval to obtain ${answer}.`,
     successFeedback: `${kind === "area" ? "The geometric area" : kind === "signed" ? "The signed integral" : "The larger intersection"} is ${answer}.`,
   };
@@ -2478,13 +2488,13 @@ const DISC_CASES = Array.from({ length: 12 }, (_, index) => ({
 
 function discMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   const { coefficient, power } = pick(rand, DISC_CASES);
-  const functionLabel = `${coefficient}x^${power}`;
+  const functionLabel = coefficientVariable(coefficient, `x^${power}`);
   const correct = `The radius is ${functionLabel}.`;
   return integrationMcq(rand, `The region under y = ${functionLabel} is revolved about the x-axis. What is the radius of the disc at x?`, [
     { label: correct, correct: true, feedback: "The radius is the vertical distance from the x-axis to the curve." },
     { label: `The radius is (${functionLabel})^2.`, correct: false, feedback: "Squaring occurs in the circle-area formula after identifying the radius." },
-    { label: `The radius is pi*${functionLabel}.`, correct: false, feedback: "Pi belongs to the disc area, not the radius." },
-    { label: "The radius is dx.", correct: false, feedback: "dx is the slice thickness, not its distance from the axis." },
+    { label: `The radius is π${functionLabel}.`, correct: false, feedback: "π belongs to the disc area, not the radius." },
+    { label: "The radius is the slice thickness dx.", correct: false, feedback: "dx is the slice thickness, not its distance from the axis." },
   ]);
 }
 
@@ -2493,16 +2503,16 @@ function discNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const answer = round3(Math.PI * coefficient ** 2 / (2 * power + 1));
   const widget = {
     type: "numeric" as const,
-    prompt: `Revolve y = ${coefficient}x^${power} on [0, 1] about the x-axis. Find the volume to three decimal places.`,
+    prompt: `Revolve y = ${coefficientVariable(coefficient, `x^${power}`)} on [0, 1] about the x-axis. Find the volume to three decimal places.`,
     answer,
     tolerance: 0.005,
     unit: "cubic units",
     commonErrors: uniqueNumericErrors(answer, [
-      { value: round3(Math.PI * coefficient / (power + 1)), feedback: "This integrates the radius, but disc area is pi times the radius squared." },
-      { value: round3(coefficient ** 2 / (2 * power + 1)), feedback: "The circular cross-section contributes a factor of pi." },
+      { value: round3(Math.PI * coefficient / (power + 1)), feedback: "This integrates the radius, but disc area is π times the radius squared." },
+      { value: round3(coefficient ** 2 / (2 * power + 1)), feedback: "The circular cross-section contributes a factor of π." },
       { value: round3(Math.PI * coefficient ** 2 / (power + 1)), feedback: "Squaring x^p doubles the exponent before integration." },
     ]),
-    fallbackFeedback: `V = pi times the integral of (${coefficient}x^${power})^2 from 0 to 1, which is ${answer}.`,
+    fallbackFeedback: `V = π times the integral of (${coefficientVariable(coefficient, `x^${power}`)})^2 from 0 to 1, which is ${answer}.`,
     successFeedback: `The disc-method volume is ${answer} cubic units.`,
   };
   return { widget, answer };
@@ -2539,7 +2549,7 @@ function washerNumericWidget(rand: Rand): GeneratedIntegrationVariant {
       { value: round3(Math.PI * outer ** 2 / 3), feedback: "That is the inner solid alone; subtract it from the outer cylinder." },
       { value: round3(4 * Math.PI * outer ** 2 / 3), feedback: "Recheck outer-minus-inner; this doubles the surviving washer volume." },
     ]),
-    fallbackFeedback: `Integrate pi((${outer})^2 - (${outer}x)^2) from 0 to 1 to obtain ${answer}.`,
+    fallbackFeedback: `Integrate π((${outer})^2 - (${outer}x)^2) from 0 to 1 to obtain ${answer}.`,
     successFeedback: `The washer-method volume is ${answer} cubic units.`,
   };
   return { widget, answer };
@@ -2826,7 +2836,7 @@ function parametricArcNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   return pcNumericWidget(
     `${arcPrompt(entry)} Find its arc length.`, answer,
     [round3((entry.ax + entry.ay) * entry.upper), round3((entry.ax ** 2 + entry.ay ** 2) * entry.upper), entry.upper],
-    `The speed is sqrt(${entry.ax}² + ${entry.ay}²) = ${speed}; integrate that constant speed over ${entry.upper} time unit${entry.upper === 1 ? "" : "s"}.`,
+    `The speed is √(${entry.ax}² + ${entry.ay}²) = ${speed}; integrate that constant speed over ${entry.upper} time unit${entry.upper === 1 ? "" : "s"}.`,
   );
 }
 
@@ -2844,7 +2854,7 @@ function parametricArcMcqWidget(rand: Rand): GeneratedIntegrationVariant {
     correct: value === answer,
     feedback: value === answer
       ? `The constant speed ${speed} integrated over ${entry.upper} time unit${entry.upper === 1 ? "" : "s"} gives ${answer}.`
-      : `Use the magnitude sqrt((dx/dt)² + (dy/dt)²), then multiply by the full parameter interval.`,
+      : `Use the magnitude √((dx/dt)² + (dy/dt)²), then multiply by the full parameter interval.`,
   })));
 }
 

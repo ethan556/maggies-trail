@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-circle-start-marker",
       "body": "A circle has no ends, so the counter must invent one: remember the starting bead, and stop just before reaching it again.",
       "narration": "A circle has no ends, so the counter must invent one: remember the starting bead, and stop just before reaching it again."
     },
@@ -91,7 +91,7 @@
         "options": [
           {
             "id": "o0",
-          "label": "Remember where you started",
+            "label": "Remember where you started",
             "correct": true,
             "feedback": "Correct — a circle has no natural end, so the starting bead marks where the count must stop."
           },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-stop-before-start",
       "body": "Forget the start and the count sails past it, counting beads a second time — the circle's only trap.",
       "narration": "Forget the start and the count sails past it, counting beads a second time — the circle's only trap."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-count-circle",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count 7 beads from a circle — one counter per bead, stopping at the start.",
-        "target": 7,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Put the circle-counting actions in order.",
+        "items": [
           {
-            "count": 8,
-            "feedback": "The count passed its starting bead and counted it twice; a circle needs a remembered start."
+            "id": "stage-3",
+            "label": "Stop before the marked bead repeats"
           },
           {
-            "count": 6,
-            "feedback": "One bead was missed — going once around must touch every bead exactly once."
+            "id": "stage-2",
+            "label": "Touch every bead once"
+          },
+          {
+            "id": "stage-1",
+            "label": "Mark the starting bead"
           }
         ],
-        "missFeedback": "Pick a starting bead, count around, and stop just before reaching it again.",
-        "successFeedback": "Seven counters, and the count stopped exactly where it began."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Mark the starting bead, then Touch every bead once, then Stop before the marked bead repeats.",
+        "successFeedback": "Yes — the marker creates a start and prevents a second lap."
       },
       "cml": {
         "stage": "construct",
@@ -440,7 +453,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "Remember where you started",
+              "label": "Remember where you started",
               "correct": true,
               "feedback": "Correct — a circle has no natural end, so the starting bead marks where the count must stop."
             },

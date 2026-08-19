@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Estimating before computing gives a neighbourhood for the answer: 7 × 68 − 90 rounds to 7 × 70 − 90 = 400.",
-      "narration": "Estimating before computing gives a neighbourhood for the answer: 7 × 68 − 90 rounds to 7 × 70 − 90 = 400."
+      "figure": "mult3-estimate",
+      "body": "Estimate before trusting an exact answer: 4 × 19 is close to 4 × 20 = 80, so the exact product 76 is reasonable.",
+      "narration": "Estimate before trusting an exact answer: 4 × 19 is close to 4 × 20 = 80, so the exact product 76 is reasonable."
     },
     {
       "id": "i1",
@@ -145,32 +145,32 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The estimate guards the most expensive error in multi-step work — a misplaced digit, which is wrong by a factor of ten.",
-      "narration": "The estimate guards the most expensive error in multi-step work — a misplaced digit, which is wrong by a factor of ten."
+      "figure": "mult3-estimate",
+      "body": "The estimate 4 × 20 = 80 makes 76 plausible for 4 × 19. An answer in a much larger place-value range would fail this check.",
+      "narration": "The estimate 4 × 20 = 80 makes 76 plausible for 4 × 19. An answer in a much larger place-value range would fail this check."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use order of magnitude to challenge an implausible result.",
       "conceptTag": "g4ms-estimate",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "7 × 68 − 90 — slide to estimate before computing.",
+        "prompt": "A result of 3,860 is claimed for 7 × 68 − 90. Slide to the reasonable order of magnitude before checking the exact work.",
         "min": 20,
-        "max": 4000,
+        "max": 800,
         "start": 20,
         "target": 400,
-        "acceptFactor": 2,
+        "acceptFactor": 1.5,
         "unitLabel": "units",
         "ticks": [
           20,
-          2010,
-          4000
+          400,
+          800
         ],
-        "lowFeedback": "Too low — seven groups of about seventy already exceed four hundred before the ninety comes off.",
-        "highFeedback": "Too high — seven times seventy is only 490, and ninety is still to be removed.",
-        "successFeedback": "About 400 — from 7 × 70 − 90, and the exact answer is 386."
+        "lowFeedback": "Too low — seven groups of about 70 already make about 490 before 90 is removed.",
+        "highFeedback": "Too high — 7 × 70 − 90 is about 400, nowhere near the thousands.",
+        "successFeedback": "About 400 — the claim 3,860 has a misplaced digit and is not reasonable."
       },
       "cml": {
         "stage": "construct",
@@ -258,7 +258,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Reject a place-value error with an estimate.",
       "conceptTag": "g4ms-estimate",
       "explanationVariants": [
         "Close means plausible.",
@@ -266,31 +266,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A student computes 7 × 68 − 90 and gets 386. Estimating gives 7 × 70 − 90 = 400. What follows?",
+        "prompt": "A student reports 3,860 for 7 × 68 − 90. The estimate is 7 × 70 − 90 = 400. What follows?",
         "options": [
           {
             "id": "o0",
-            "label": "386 is reasonable because it is near 400",
+            "label": "3,860 is not reasonable because it is about ten times too large",
             "correct": true,
-            "feedback": "Correct — rounding 68 up to 70 inflates the estimate slightly, so the exact answer should land just under it."
+            "feedback": "Correct — an estimate near 400 rules out a result in the thousands."
           },
           {
             "id": "o1",
-            "label": "386 is wrong because it is not 400",
+            "label": "3,860 is reasonable because it uses the same digits as 386",
             "correct": false,
-            "feedback": "An estimate is a neighbourhood, not a target; landing 14 away from it is exactly what rounding predicts."
+            "feedback": "Digit order and place value matter; the estimate puts the result near 400, not 4,000."
           },
           {
             "id": "o2",
-            "label": "The estimate is wrong because it is not 386",
+            "label": "The estimate proves the exact answer is 400",
             "correct": false,
-            "feedback": "Rounding deliberately changes the numbers, so a small difference is expected."
+            "feedback": "An estimate checks the size but does not replace the exact computation."
           },
           {
             "id": "o3",
             "label": "Nothing can be concluded",
             "correct": false,
-            "feedback": "A great deal can: an answer near 40 or 4,000 would have been caught immediately."
+            "feedback": "The estimate conclusively rejects an answer in the thousands."
           }
         ]
       },
@@ -400,8 +400,9 @@
       "concept": {
         "id": "rem-g4ms-estimate-c",
         "kind": "concept",
-        "body": "The estimate guards the most expensive error in multi-step work — a misplaced digit, which is wrong by a factor of ten.",
-        "narration": "The estimate guards the most expensive error in multi-step work — a misplaced digit, which is wrong by a factor of ten."
+        "body": "The estimate 4 × 20 = 80 makes 76 plausible for 4 × 19. An answer in a much larger place-value range would fail this check.",
+        "narration": "The estimate 4 × 20 = 80 makes 76 plausible for 4 × 19. An answer in a much larger place-value range would fail this check.",
+        "figure": "mult3-estimate"
       },
       "check": {
         "id": "rem-g4ms-estimate-k",

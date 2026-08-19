@@ -322,41 +322,51 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Balance it.",
+      "body": "Sort the weight clues.",
       "conceptTag": "ks-heavier-lighter",
       "explanationVariants": [
         "A level seesaw means the two sides weigh the same — equal weight.",
         "Level means balanced: equal."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Two bags sit on a seesaw and it stays perfectly LEVEL. What does that mean?",
-        "options": [
+        "type": "dragBucket",
+        "prompt": "Put each seesaw clue in the right group.",
+        "buckets": [
           {
-            "id": "a",
-            "label": "The bags weigh the same",
-            "correct": true,
-            "feedback": "Yes — level means balanced: equal weight."
+            "id": "heavier",
+            "label": "Heavier"
           },
           {
-            "id": "b",
-            "label": "The left bag is heavier",
-            "correct": false,
-            "feedback": "Heavier would tip its side DOWN — level means equal."
+            "id": "lighter",
+            "label": "Lighter"
           },
           {
-            "id": "c",
-            "label": "The right bag is heavier",
-            "correct": false,
-            "feedback": "Heavier tips down — level means the bags are equal."
-          },
-          {
-            "id": "d",
-            "label": "The seesaw is stuck",
-            "correct": false,
-            "feedback": "Nothing is stuck — level is what EQUAL looks like."
+            "id": "same",
+            "label": "Same weight"
           }
-        ]
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "the rock's side goes down",
+            "bucketId": "heavier",
+            "feedback": "The down side is heavier."
+          },
+          {
+            "id": "d2",
+            "label": "the balloon's side goes up",
+            "bucketId": "lighter",
+            "feedback": "The up side is lighter."
+          },
+          {
+            "id": "d3",
+            "label": "two bags keep the seesaw level",
+            "bucketId": "same",
+            "feedback": "Level means the weights are the same."
+          }
+        ],
+        "missFeedback": "Down means heavier, up means lighter, and level means the same.",
+        "successFeedback": "Right — the seesaw gives a clue about every weight."
       },
       "hints": [
         "Heavier tips its side down.",

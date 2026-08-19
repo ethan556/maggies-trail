@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-precedence",
       "body": "A long expression is just these rules applied in turn: groupings inside out, then the higher rank, then left to right among equals.",
       "narration": "A long expression is just these rules applied in turn: groupings inside out, then the higher rank, then left to right among equals."
     },
@@ -138,32 +138,44 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-precedence",
       "body": "Doing them in a different order does not give a different opinion — it gives a different number, and only one of them is what the expression says.",
       "narration": "Doing them in a different order does not give a different opinion — it gives a different number, and only one of them is what the expression says."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Track a different long expression on the slider.",
+      "body": "Choose the valid operation plan before computing.",
       "conceptTag": "g5e-evaluate",
       "widget": {
-        "type": "estimateSlider",
-        "prompt": "Compute 7 × 8 − 30 — slide to the value it names.",
-        "min": 1,
-        "max": 100,
-        "start": 1,
-        "target": 26,
-        "acceptFactor": 2,
-        "unitLabel": "units",
-        "ticks": [
-          1,
-          51,
-          100
-        ],
-        "lowFeedback": "Too low — seven eights make 56 before anything is removed.",
-        "highFeedback": "Too high — removing 30 from 56 leaves a value below 30.",
-        "successFeedback": "26 — the product 56 forms first, then 30 is removed."
+        "type": "mcq",
+        "prompt": "Which plan evaluates 7 × 8 − 30 correctly?",
+        "options": [
+          {
+            "id": "o0",
+            "label": "Multiply 7 by 8, then subtract 30",
+            "correct": true,
+            "feedback": "Correct — multiplication makes 56 first, and then 30 is removed."
+          },
+          {
+            "id": "o1",
+            "label": "Subtract 30 from 8, then multiply by 7",
+            "correct": false,
+            "feedback": "That changes the grouping. The product 7 × 8 must be completed before the subtraction."
+          },
+          {
+            "id": "o2",
+            "label": "Add 8 and 30, then multiply by 7",
+            "correct": false,
+            "feedback": "The expression contains subtraction, not addition, and multiplication has priority."
+          },
+          {
+            "id": "o3",
+            "label": "Subtract 7 from 30, then multiply by 8",
+            "correct": false,
+            "feedback": "That reverses the subtraction and moves it ahead of the product."
+          }
+        ]
       },
       "cml": {
         "stage": "construct",

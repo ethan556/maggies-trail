@@ -26,6 +26,7 @@ import { GoalRing, Narration, Rich, SparkBurst, SummitRoute, TrailAtmosphere, Tr
 import { accessibleMathText, MathProse } from "@/components/math/MathText";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { LessonCompletionIdentity } from "@/components/LessonCompletionIdentity";
+import SkipLink from "@/components/SkipLink";
 
 
 export interface NextLesson {
@@ -354,6 +355,8 @@ export default function LessonPlayer({
     const held = st.predictions.filter((x) => x.held).length;
     return (
       <main
+        id="main-content"
+        tabIndex={-1}
         data-band={trailContext?.gradeBand ?? "middle"}
         data-player-phase="done"
         data-lesson-id={st.lesson.id}
@@ -516,6 +519,7 @@ export default function LessonPlayer({
       data-step-count={st.queue.length}
       className="lesson-trail-shell lesson-trail-shell--active relative flex min-h-dvh flex-col overflow-x-clip"
     >
+      <SkipLink />
       <header className="trail-player-header sticky top-0 z-20 border-b border-ink/8 bg-paper/[0.88] backdrop-blur-xl dark:border-paper/8 dark:bg-night/[0.88]">
         <div className={`mx-auto flex w-full ${widthCls} ${colTransition} items-center gap-2.5 px-3 py-2 sm:px-4`}>
           <Link
@@ -554,6 +558,8 @@ export default function LessonPlayer({
       </header>
 
       <main
+        id="main-content"
+        tabIndex={-1}
         aria-labelledby="lesson-player-title"
         data-band={trailContext?.gradeBand ?? "middle"}
         data-step-kind={s.kind}
