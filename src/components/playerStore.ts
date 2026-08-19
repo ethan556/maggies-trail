@@ -31,6 +31,8 @@ interface PlayerState {
   lesson: TLesson | null;
   queue: TStep[];
   i: number;
+  /** A completed item opened only for inspection. It is transient and never persisted. */
+  reviewingIndex: number | null;
   phase: Phase;
   value: unknown;
   attempts: number; // wrong attempts on the current step
@@ -76,6 +78,10 @@ interface PlayerState {
    * of the new run. Not read by any component. */
   lastAdvanceAt: number;
   restart: () => void;
+  /** Open an earlier completed item without changing the canonical active item. */
+  reviewPrevious: () => void;
+  reviewStep: (index: number) => void;
+  returnToCurrent: () => void;
   commitPrediction: (optionId: string) => void;
   setValue: (v: unknown) => void;
   check: () => void;
@@ -130,6 +136,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
 
   function finalize(correct: boolean, revealed: boolean, fb: string) {
     const st = get();
+    if (st.reviewingIndex !== null) return;
     const s = st.queue[st.i];
     const kind =
       s.kind === "challenge" ? "challenge" : s.kind === "interactive" ? "interactive" : "check";
@@ -257,6 +264,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
     lesson: null,
     queue: [],
     i: 0,
+    reviewingIndex: null,
     phase: "work",
     lastAdvanceAt: 0,
     lastXp: 0,
@@ -298,6 +306,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
           lesson: lessonForRun,
           queue,
           i: snap.i,
+          reviewingIndex: null,
           phase: "work",
           lastAdvanceAt: 0,
           lastXp: 0,
@@ -316,6 +325,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
         lesson: lessonForRun,
         queue: lessonForRun.steps,
         i: 0,
+        reviewingIndex: null,
         phase: "work",
         lastAdvanceAt: 0,
         lastXp: 0,
@@ -338,6 +348,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
         lesson: l,
         queue: l.steps,
         i: 0,
+        reviewingIndex: null,
         phase: "work",
         lastAdvanceAt: 0,
         lastXp: 0,
@@ -352,8 +363,27 @@ export const usePlayer = create<PlayerState>((set, get) => {
       });
     },
 
+    reviewPrevious: () => {
+      const st = get();
+      const displayed = st.reviewingIndex ?? st.i;
+      if (displayed <= 0 || st.phase === "done") return;
+      set({ reviewingIndex: displayed - 1 });
+    },
+
+    reviewStep: (index) => {
+      const st = get();
+      if (!Number.isInteger(index) || index < 0 || index >= st.i || st.phase === "done") return;
+      set({ reviewingIndex: index });
+    },
+
+    returnToCurrent: () => {
+      if (get().reviewingIndex !== null) set({ reviewingIndex: null });
+    },
+
     setValue: (v) => {
-      const phase = get().phase;
+      const st = get();
+      if (st.reviewingIndex !== null) return;
+      const phase = st.phase;
       if (phase === "correct" || phase === "revealed") {
         set({ value: v, explorationActive: true, explorationFeedback: "", explorationCorrect: null });
         return;
@@ -363,6 +393,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
 
     check: () => {
       const st = get();
+      if (st.reviewingIndex !== null) return;
       // A verdict is a saved checkpoint, not a padlock. Post-verdict checks are
       // deliberately ungraded: no attempts, history, mastery, review item, or XP changes.
       if ((st.phase === "correct" || st.phase === "revealed") && st.explorationActive) {
@@ -396,10 +427,11 @@ export const usePlayer = create<PlayerState>((set, get) => {
       }
     },
 
-    tryAgain: () => { if (get().phase === "retry") set({ phase: "work" }); },
+    tryAgain: () => { const st = get(); if (st.reviewingIndex === null && st.phase === "retry") set({ phase: "work" }); },
 
     reveal: () => {
       const st = get();
+      if (st.reviewingIndex !== null) return;
       // Reveal is only reachable from retry; a second click after the reveal
       // has landed must not finalize (and pay out / record evidence) twice.
       if (st.phase !== "retry") return;
@@ -408,6 +440,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
 
     next: (skip = false) => {
       const st = get();
+      if (st.reviewingIndex !== null) return;
       // Phase guard: advancing is legal after a verdict, or from an ungraded
       // step (concept/recap/interactive) while working. In particular phase
       // "done" is NOT legal — the second half of a double-Continue on the last
@@ -428,7 +461,7 @@ export const usePlayer = create<PlayerState>((set, get) => {
         persistCompletion();
         // Completion resets the latch too: the terminal state must not carry
         // timing into whatever run is loaded next.
-        set({ phase: "done", lastAdvanceAt: 0 });
+        set({ phase: "done", lastAdvanceAt: 0, reviewingIndex: null });
         return;
       }
       // Entering a new step is the durable checkpoint: everything up to here
@@ -448,19 +481,21 @@ export const usePlayer = create<PlayerState>((set, get) => {
           savedAt: new Date().toISOString()
         });
       }
-      set({ i: nextI, phase: "work", lastAdvanceAt: now, resumedAt: null, ...freshStepState() });
+      set({ i: nextI, reviewingIndex: null, phase: "work", lastAdvanceAt: now, resumedAt: null, ...freshStepState() });
     },
 
     hint: () => {
       const st = get();
+      if (st.reviewingIndex !== null) return;
       const s = st.queue[st.i];
       if (s.hints && st.hintsShown < s.hints.length) set({ hintsShown: st.hintsShown + 1 });
     },
 
-    swapVariant: () => set({ variant: get().variant === 0 ? 1 : 0 }),
+    swapVariant: () => { const st = get(); if (st.reviewingIndex === null) set({ variant: st.variant === 0 ? 1 : 0 }); },
 
     noteSignal: (sig, opts) => {
       const st = get();
+      if (st.reviewingIndex !== null) return { kind: "none" };
       if (st.stepSignal !== null) return { kind: "none" }; // first latch wins, like the cue
       const counts = { ...st.signalCounts, [sig]: (st.signalCounts[sig] ?? 0) + 1 };
       // The never-slow-down gate mirrors the skip-offer's fluency notion: the
@@ -491,13 +526,9 @@ export const usePlayer = create<PlayerState>((set, get) => {
       return applied;
     },
 
-    clearLock: () => {
-      if (get().lockedControl !== null) set({ lockedControl: null });
-    },
+    clearLock: () => { const st = get(); if (st.reviewingIndex === null && st.lockedControl !== null) set({ lockedControl: null }); },
 
-    commitPrediction: (optionId) => {
-      if (get().prediction === null) set({ prediction: optionId });
-    }
+    commitPrediction: (optionId) => { const st = get(); if (st.reviewingIndex === null && st.prediction === null) set({ prediction: optionId }); }
   };
 });
 

@@ -805,20 +805,19 @@ function RrTools() {
   );
 }
 
-/** Grade 6 ratios-rates figure: Better buy: compare price per pound. */
+/** Grade 6 ratios-rates figure: Better buy: compare the lesson's two juice prices per ounce. */
 function RrBetterBuy() {
   return (
-    <svg viewBox="0 0 210 96" role="img" aria-label="Comparing two deals by unit price: 6 dollars for 3 pounds is 2 dollars per pound, beating 10 dollars for 4 pounds at 2 dollars 50 per pound.">
-      <title>Better buy: compare price per pound.</title>
-      <text x="16" y="30" fontSize="12" fill={INK}>$6 / 3 lb = <tspan fontWeight="700" fill={LEAF}>$2.00/lb</tspan> ✓</text>
-      <text x="16" y="58" fontSize="12" fill={INK}>$10 / 4 lb = <tspan fontWeight="700" fill={BERRY}>$2.50/lb</tspan></text>
-      <text x="105" y="82" fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">lower per-unit price wins</text>
+    <svg viewBox="0 0 258 108" role="img" className="mx-auto w-full max-w-sm" aria-label="Comparing the lesson's two juice deals by unit price: 3 dollars for 12 ounces is 25 cents per ounce. 4 dollars for 20 ounces is 20 cents per ounce, so the 20-ounce bottle wins.">
+      <title>3 dollars divided by 12 ounces equals 25 cents per ounce. 4 dollars divided by 20 ounces equals 20 cents per ounce. Twenty cents per ounce is lower.</title>
+      <text x="18" y="33" fontSize="13" fill={INK}>$3 ÷ 12 oz = <tspan fontWeight="700" fill={LEAF}>25¢/oz</tspan> ✓</text>
+      <text x="18" y="64" fontSize="13" fill={INK}>$4 ÷ 20 oz = <tspan fontWeight="700" fill={BERRY}>20¢/oz</tspan></text>
+      <text x="129" y="92" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">lower per-unit price wins</text>
     </svg>
   );
 }
 
-/** Grade 6 ratios-rates figure: Rates predict: at 60 mph, 3 h → 180 mi. */
-function RrPredict() {
+/** Grade 6 ratios-rates figure: Rates predict: at 60 mph, 3 h → 180 mi. */function RrPredict() {
   return (
     <svg viewBox="0 0 210 92" role="img" aria-label="A unit rate predicts ahead: at 60 miles per hour, 2 hours covers 120 miles and 3 hours covers 180 miles.">
       <title>Rates predict: at 60 mph, 3 h → 180 mi.</title>
@@ -4400,6 +4399,100 @@ function Md3Pictograph() {
       <text x="16" y="76" fontSize="11" fill={INK} textAnchor="start">3 full + half = 3×2 + 1 = 7</text>
     </svg>
   );
+}
+
+/**
+ * Exact pictograph data for assessed prompts. These intentionally show the key and
+ * marks only — never the total the learner is being asked to find. They make the
+ * given data inspectable without turning a check into an answer reveal.
+ */
+function Md3QuestionPictograph({
+  kind,
+  keyValue,
+  unit,
+  full,
+  half = false
+}: {
+  kind: "star" | "apple" | "book";
+  keyValue: number;
+  unit: string;
+  full: number;
+  half?: boolean;
+}) {
+  const noun = kind === "star" ? "star" : kind === "apple" ? "apple" : "book";
+  const plural = full === 1 ? noun : `${noun}s`;
+  const rowLabel = `${full} full ${plural}${half ? ` and one half-${noun}` : ""}`;
+  const aria = `Pictograph question data: each ${noun} is worth ${keyValue} ${unit}. The row has ${rowLabel}. No total is shown.`;
+  const start = 108;
+  const gap = 38;
+  const markX = (index: number) => start + index * gap;
+  const Star = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const path = "M0 -15 L3.5 -5 L14.5 -5 L5.5 1.5 L9 12 L0 6 L-9 12 L-5.5 1.5 L-14.5 -5 L-3.5 -5 Z";
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 15} y="39" width="15" height="30" /></clipPath></defs>}
+        <path d={path} transform={`translate(${x} 54)`} fill={TANGERINE} fillOpacity={halfMark ? 0.14 : 0.24} />
+        {halfMark && <path d={path} transform={`translate(${x} 54)`} fill={TANGERINE} clipPath={`url(#${clipId})`} />}
+        <path d={path} transform={`translate(${x} 54)`} fill="none" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      </g>
+    );
+  };
+  const Apple = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 14} y="38" width="14" height="31" /></clipPath></defs>}
+        <circle cx={x} cy="55" r="13" fill={BERRY} fillOpacity={halfMark ? 0.14 : 0.22} />
+        {halfMark && <circle cx={x} cy="55" r="13" fill={BERRY} clipPath={`url(#${clipId})`} />}
+        <circle cx={x} cy="55" r="13" fill="none" stroke={INK} strokeWidth="1.5" />
+        <path d={`M${x} 42q0-8 5-10`} fill="none" stroke={INK} strokeWidth="1.5" strokeLinecap="round" />
+        <path d={`M${x + 4} 35q6-4 8 1q-5 3-8-1Z`} fill={LEAF} stroke={INK} strokeWidth="1" />
+      </g>
+    );
+  };
+  const Book = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 12} y="38" width="12" height="32" /></clipPath></defs>}
+        <rect x={x - 12} y="40" width="24" height="29" rx="2" fill={SKY} fillOpacity={halfMark ? 0.14 : 0.24} />
+        {halfMark && <rect x={x - 12} y="40" width="24" height="29" rx="2" fill={SKY} clipPath={`url(#${clipId})`} />}
+        <rect x={x - 12} y="40" width="24" height="29" rx="2" fill="none" stroke={INK} strokeWidth="1.5" />
+        <line x1={x - 6} y1="47" x2={x + 6} y2="47" stroke={INK} strokeWidth="1.2" />
+        <line x1={x - 6} y1="53" x2={x + 6} y2="53" stroke={INK} strokeWidth="1.2" />
+      </g>
+    );
+  };
+  const Mark = kind === "star" ? Star : kind === "apple" ? Apple : Book;
+
+  return (
+    <svg viewBox="0 0 300 116" role="img" aria-label={aria} className="mx-auto w-full max-w-md">
+      <title>{aria}</title>
+      <rect x="10" y="10" width="280" height="96" rx="12" fill="#FAFBF5" stroke={INK} strokeOpacity="0.16" />
+      <text x="24" y="32" fontSize="12" fontWeight="800" fill={INK}>Key: each {kind === "star" ? "★" : kind === "apple" ? "apple" : "book"} = {keyValue} {unit}</text>
+      <text x="24" y="59" fontSize="12" fontWeight="800" fill={INK}>Row</text>
+      {Array.from({ length: full }).map((_, index) => <Mark key={index} x={markX(index)} />)}
+      {half && <Mark x={markX(full)} halfMark />}
+      <text x="24" y="91" fontSize="11" fontWeight="700" fill={INK}>{rowLabel}</text>
+    </svg>
+  );
+}
+
+function Md3PictographFourApples() {
+  return <Md3QuestionPictograph kind="apple" keyValue={2} unit="votes" full={4} />;
+}
+
+function Md3PictographThreeApples() {
+  return <Md3QuestionPictograph kind="apple" keyValue={2} unit="votes" full={3} />;
+}
+
+function Md3PictographThreeAndHalfStars() {
+  return <Md3QuestionPictograph kind="star" keyValue={10} unit="points" full={3} half />;
+}
+
+function Md3PictographThreeAndHalfBooks() {
+  return <Md3QuestionPictograph kind="book" keyValue={4} unit="books" full={3} half />;
 }
 
 /** Grade 3 measurement figure: A scaled bar graph: read the gridline value. */
@@ -26721,22 +26814,30 @@ function BtCrossTerms() {
 }
 function BtTermCountGrows() {
   return (
-    <svg viewBox="0 0 300 110" role="img" className="mx-auto w-full max-w-sm">
-      <title>Raising the power adds a term each time: the square has three terms, the cube four, the fourth power five — n plus one in general.</title>
-      {[["n = 2", 3], ["n = 3", 4], ["n = 4", 5]].map(([lab, k], i) => (
-        <g key={i}>
-          <text x={26} y={30 + i * 28} fontSize={10} fontWeight={800} fill={INK}>{lab as string}</text>
-          {Array.from({ length: k as number }, (_, j) => (
-            <rect key={j} x={72 + j * 26} y={20 + i * 28} width={20} height={14} rx={3} fill={SKY} opacity={0.25} stroke={SKY} strokeWidth={1.1} />
-          ))}
-          <text x={236} y={31 + i * 28} fontSize={10} fontWeight={800} fill={LEAF}>{k as number} terms</text>
-        </g>
-      ))}
-      <text x={150} y={100} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>(a + b)ⁿ expands into n + 1 terms</text>
+    <svg viewBox="0 0 420 226" role="img" className="mx-auto w-full max-w-md">
+      <title>Expanding a binomial: for n equals 2, the terms are a squared, 2ab, and b squared; for n equals 3, the terms are a cubed, 3a squared b, 3ab squared, and b cubed; for n equals 4, there are five terms. In general, a plus b to the n has n plus 1 terms.</title>
+      {[
+        { n: 2, terms: ["a²", "2ab", "b²"] },
+        { n: 3, terms: ["a³", "3a²b", "3ab²", "b³"] },
+        { n: 4, terms: ["a⁴", "4a³b", "6a²b²", "4ab³", "b⁴"] },
+      ].map(({ n, terms }, row) => {
+        const top = 10 + row * 66;
+        return (
+          <g key={n} data-binomial-row={n}>
+            <text x={24} y={top + 13} fontSize={12} fontWeight={800} fill={INK}>n = {n} · {terms.length} terms</text>
+            {terms.map((term, column) => (
+              <g key={term} data-binomial-term={term}>
+                <rect x={24 + column * 72} y={top + 22} width={66} height={27} rx={5} fill={SKY} opacity={0.28} stroke={SKY} strokeWidth={1.2} />
+                <text x={57 + column * 72} y={top + 40} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>{term}</text>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+      <text data-binomial-caption="true" x={210} y={219} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>(a + b)ⁿ has n + 1 terms</text>
     </svg>
   );
-}
-function BtPascalTriangle() {
+}function BtPascalTriangle() {
   const rows = [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]];
   return (
     <svg viewBox="0 0 300 130" role="img" className="mx-auto w-full max-w-sm">
@@ -30063,6 +30164,10 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "md3-kilo": Md3Kilo,
   "md3-liter": Md3Liter,
   "md3-pictograph": Md3Pictograph,
+  "md3-pictograph-four-apples": Md3PictographFourApples,
+  "md3-pictograph-three-apples": Md3PictographThreeApples,
+  "md3-pictograph-three-and-half-stars": Md3PictographThreeAndHalfStars,
+  "md3-pictograph-three-and-half-books": Md3PictographThreeAndHalfBooks,
   "md3-bargraph": Md3BarGraph,
   "md3-lineplot": Md3LinePlot,
   "md3-area-grid": Md3AreaGrid,

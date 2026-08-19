@@ -712,16 +712,21 @@ export function StepSegments({
   current,
   injected,
   label,
+  reviewingIndex = null,
+  onSelectCompleted,
   className = ""
 }: {
   total: number;
   current: number;
   injected?: Set<number>;
   label: string;
+  reviewingIndex?: number | null;
+  onSelectCompleted?: (index: number) => void;
   className?: string;
 }) {
   const progress = normalizeStepProgress(total, current);
   const descriptionId = React.useId();
+  const interactive = typeof onSelectCompleted === "function";
   const segmentStates = Array.from({ length: progress.total }, (_, index) => {
     const state = index < progress.current ? "completed" : index === progress.current ? "current" : "remaining";
     return `Item ${index + 1}: ${state}.`;
@@ -735,9 +740,10 @@ export function StepSegments({
       data-progress-completed={progress.completed}
       data-progress-current={progress.current + 1}
       data-progress-remaining={progress.remaining}
+      data-progress-reviewing={reviewingIndex === null ? undefined : reviewingIndex + 1}
       data-progress-strip
       data-progress-total={progress.total}
-      role="img"
+      role={interactive ? "group" : "img"}
     >
       <p className="sr-only" id={descriptionId}>
         {`${progress.completed} completed; item ${progress.current + 1} of ${progress.total} is current; ${progress.remaining} remaining. ${segmentStates}`}
@@ -750,7 +756,7 @@ export function StepSegments({
             : state === "current"
               ? "scale-y-125 border border-tangerine/80 bg-tangerine shadow-[0_0_0_3px_rgba(255,138,61,0.22)]"
               : "border border-dashed border-slate-400/70 bg-ink/12 !bg-slate-300/55 dark:border-slate-400/65 dark:!bg-slate-500/30";
-        return (
+        const visual = (
           <span
             aria-hidden
             data-progress-state={state}
@@ -763,11 +769,27 @@ export function StepSegments({
             title={`Item ${i + 1} of ${progress.total}: ${state}.`}
           />
         );
+        if (interactive && state === "completed") {
+          return (
+            <button
+              type="button"
+              key={i}
+              aria-current={reviewingIndex === i ? "step" : undefined}
+              aria-label={`Review completed item ${i + 1} of ${progress.total}`}
+              className="trail-segment-control flex min-h-7 min-w-1 flex-1 items-center rounded-pill focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2"
+              data-reviewing={reviewingIndex === i ? "true" : undefined}
+              onClick={() => onSelectCompleted(i)}
+              title={`Review completed item ${i + 1} of ${progress.total}`}
+            >
+              {visual}
+            </button>
+          );
+        }
+        return visual;
       })}
     </div>
   );
 }
-
 /* ----------------------------------------------------------- Stat tile ----- */
 
 export function StatTile({

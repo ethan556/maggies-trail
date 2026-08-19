@@ -6,7 +6,7 @@ import {
   systemsPointOn,
   type SystemsPairValue
 } from "./mmip/systemsPairAdapter";
-import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleScaleUnitSpoken, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, quotientRationalDisplay, graphStoryTruth, shapeHierarchyChoiceEvidence } from "./schema";
+import { compoundEventChoiceCorrect, compoundEventFavourable, compoundEventTotal, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, distributionGapUnits, distributionOverlapFraction, dotPlotLabel, trialProbabilityClaimCount, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleScaleUnitSpoken, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionTruth, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, conditionalTableReadTruth, proportionalReasoningTruth, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientReasoningExplorationKeys, quotientReasoningTruth, quotientRationalKey, quotientRationalDisplay, graphStoryTruth, shapeHierarchyChoiceEvidence } from "./schema";
 import {
   binomialExpand,
   rootsFormCoefs,
@@ -605,12 +605,12 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
     }
     case "proportionalReasoningLab": {
       const truth=proportionalReasoningTruth(spec);
-      const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
-      const validKeys=new Set(proportionalReasoningExplorationKeys(spec));
-      const explored=Array.isArray(v.revealed)?new Set(v.revealed.filter((item):item is string=>typeof item==="string"&&validKeys.has(item))).size:0;
-      const seriesText=truth.series.map((entry)=>`${entry.label}: ${entry.pairs.map(([x,y])=>`${fmt(x)} to ${fmt(y)}`).join(", ")}; unit rates ${entry.rates.map(fmt).join(", ")}`).join(". ");
+      const v=value&&typeof value==="object"?value as {unitRates?:unknown;verifiedUnitRates?:unknown;numeric?:unknown;choiceId?:unknown}:{};
+      const sourceKeys=truth.series.flatMap((entry)=>entry.pairs.map((_,index)=>`${entry.id}:${index}`));
+      const verified=new Set(Array.isArray(v.verifiedUnitRates)?v.verifiedUnitRates.filter((item):item is string=>typeof item==="string"&&sourceKeys.includes(item)):[]);
+      const seriesText=truth.series.map((entry)=>`${entry.label}: ${entry.pairs.map(([x,y])=>`${fmt(x)} to ${fmt(y)}`).join(", ")}`).join(". ");
       const answer=spec.answerMode==="numeric"?(typeof v.numeric==="number"?`Entered ${fmt(v.numeric)}${spec.answerUnit?` ${spec.answerUnit}`:""}.`:"No numeric answer entered."):(typeof v.choiceId==="string"?`Selected ${spec.choices.find((choice)=>choice.id===v.choiceId)?.label??v.choiceId}.`:"No conclusion selected.");
-      return `${seriesText}. ${explored} proportional checks have been opened; ${spec.requiredExplorations} are required. ${answer}`;
+      return `${seriesText}. ${verified.size} of ${sourceKeys.length} unit-rate checks verified. Enter and check each rate before the final response unlocks. ${answer}`;
     }
     case "placeValueTransformLab": {
       const truth=placeValueTransformTruth(spec);
@@ -1328,7 +1328,7 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   trialProbabilityLab: "Choose one exact fraction button. The evidence strip and claim marker project your fraction onto the same total, so numerator, denominator, complement, and theoretical-versus-experimental differences stay visible.",
   compoundEventLab: "Tab to the claim buttons and press Enter or Space to select exactly one count or probability claim. The stage cards and full ordered sample space stay fixed while you choose. Count their cells or marked combinations; the computed total and probability appear after the answer is settled.",
   compositeAreaLab: "Inspect the fixed geometric pieces, then Tab to the exact area-claim buttons and press Enter or Space. Added pieces use plus badges; cut-away pieces use minus badges and dashed berry patterns. Your selected claim stays visible on reveal.",
-  proportionalReasoningLab: "Use native buttons to normalize each row or build each multiplicative stage, then enter a value or select one exact claim. Each conclusion appears only once you have inspected the rows it depends on. A shown answer appears as a separate faded copy, so what you entered stays as you left it.",
+  proportionalReasoningLab: "For each Normalize row, enter the unit rate in the labelled numeric field and press Check unit rate. A method cue appears if it needs revision, but the rate is not displayed. Once every rate is checked, enter the final value or choose one exact claim. Optional build stages are available after the rate checks.",
   placeValueTransformLab: "Read the aligned base-ten source, then Tab through the derived-stage buttons and press Enter or Space to inspect the required digit, rounding, scaling, or exponent steps. Enter a value or choose one exact claim. A shown answer appears as a separate faded copy, so the value you typed stays as you left it.",
   graphStoryLab: "Read mode shows one labelled graph and exact claim buttons. Build mode uses Tab plus Enter or Space to add labelled segment cards in story order; Back removes the last card and Clear restarts. A shown answer is drawn as a separate dashed graph, so the cards you placed stay exactly where you left them.",
   conditionalTableLab: "Conditional mode uses row or column condition buttons and table-cell buttons. Read mode keeps the table fixed and uses exact claim buttons; highlighted cells and margins show the count or denominator used.",

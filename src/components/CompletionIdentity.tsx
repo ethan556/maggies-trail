@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
+import { MAGGIE_MARK_SRC } from "@/components/brand";
 import type { AvatarCustomization } from "@/lib/avatars";
 
 /**
@@ -37,7 +38,7 @@ export function CompletionIdentity({
       className="mb-3 flex items-end justify-center -space-x-2"
       aria-hidden="true"
     >
-      <Image src="/brand/maggies-mark.svg" alt="" width={56} height={56} unoptimized priority />
+      <Image src={MAGGIE_MARK_SRC} alt="" width={56} height={56} unoptimized priority />
       <AvatarDisplay
         avatarId={avatarId}
         customization={customization}

@@ -29,6 +29,9 @@ const H = 200;
  *
  * The dimming is safely colour-only here BECAUSE this svg is `aria-hidden`: the same
  * match/no-match state is carried as text in AccessibleRegionList, which is the semantic path.
+ * Only the cartographic marks dim. Grade labels remain full-contrast because they are the
+ * visual orientation key, and at the 520 px mobile canvas 14 SVG units still render just above
+ * the 10 px readability floor (14 × 520 / 720 = 10.1 px).
  */
 export function RegionMap({
   regions,
@@ -71,7 +74,7 @@ export function RegionMap({
             <g key={r.id} data-region-point={r.id} data-matched={matched ? "true" : "false"}>
               <circle cx={x} cy={y} r={active ? 8 : 5} fill="currentColor" fillOpacity={(active ? 0.9 : 0.45) * dim} />
               {active && <circle cx={x} cy={y} r={13} fill="none" stroke="currentColor" strokeWidth="2" strokeOpacity={0.7 * dim} />}
-              <text x={x} y={H - 4} textAnchor="middle" fontSize="10" fill="currentColor" fillOpacity={0.65 * dim}>
+              <text x={x} y={H - 4} textAnchor="middle" fontSize="14" fontWeight="800" fill="currentColor">
                 {r.gradeBand === 0 ? "K" : r.gradeBand <= 8 ? String(r.gradeBand) : ["A1", "Geo", "A2", "Pre", "Calc"][r.gradeBand - 9]}
               </text>
             </g>

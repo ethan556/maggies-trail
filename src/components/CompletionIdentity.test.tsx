@@ -13,14 +13,14 @@ describe("CompletionIdentity", () => {
     expect(avatar).toBeTruthy();
     expect(avatar?.getAttribute("width")).toBe("40");
     expect(avatar?.getAttribute("data-avatar-max-px")).toBe("56");
-    expect(container.querySelector('img[src="/brand/maggies-mark.svg"]')).toBeNull();
+    expect(container.querySelector('img[src="/brand/maggies-mark.png"]')).toBeNull();
   });
 
   it("pairs Maggie's mark with the learner identity at a celebration boundary", () => {
     const { container } = render(<CompletionIdentity avatarId="avatar-001" />);
     const identity = container.querySelector('[data-completion-identity="celebration"]');
     expect(identity?.getAttribute("aria-hidden")).toBe("true");
-    expect(identity?.querySelector('img[src="/brand/maggies-mark.svg"]')).toBeTruthy();
+    expect(identity?.querySelector('img[src="/brand/maggies-mark.png"]')).toBeTruthy();
     const avatar = identity?.querySelector('img[src="/avatars/avatar-001-256.webp"]');
     expect(avatar).toBeTruthy();
     expect(avatar?.getAttribute("width")).toBe("56");

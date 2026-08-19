@@ -240,14 +240,20 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("proportionalReasoningLab", () => {
     const { spec, holder, container } = mount("proportionalReasoningLab");
     auditNativeControls(container);
-    for (const button of screen.getAllByRole("button", { name: /Normalize/ })) fireEvent.click(button);
+    for (const [deal, rate] of [["Deal A", "1.5"], ["Deal B", "1.4"]] as const) {
+      fireEvent.change(screen.getByRole("spinbutton", { name: new RegExp(`Enter unit rate for ${deal}`) }), { target: { value: rate } });
+      fireEvent.click(screen.getByRole("button", { name: new RegExp(`Check unit rate for ${deal}`) }));
+    }
     fireEvent.click(screen.getByRole("button", { name: "Deal B" }));
     expectSolved(spec, holder);
   });
 
   it("proportionalReasoningLab: a wrong series claim is reachable and named", () => {
     const { spec, holder, container } = mount("proportionalReasoningLab");
-    for (const button of screen.getAllByRole("button", { name: /Normalize/ })) fireEvent.click(button);
+    for (const [deal, rate] of [["Deal A", "1.5"], ["Deal B", "1.4"]] as const) {
+      fireEvent.change(screen.getByRole("spinbutton", { name: new RegExp(`Enter unit rate for ${deal}`) }), { target: { value: rate } });
+      fireEvent.click(screen.getByRole("button", { name: new RegExp(`Check unit rate for ${deal}`) }));
+    }
     fireEvent.click(screen.getByRole("button", { name: "Deal A" }));
     expect(canCheck(spec, holder.v)).toBe(true);
     const wrong = evaluate(spec, holder.v);

@@ -443,29 +443,30 @@ export const BuildExpressionSpec = z.object({
  * (D-03: the g8-bv-scatter stretch band emitted 10×10 for exactly that reason). */
 export const MAX_PLOT_POINT_DIM = 8;
 
-export const PlotPointSpec = z.object({
-  type: z.literal("plotPoint"),
-  prompt: z.string().min(1),
-  /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
-  title: z.string().min(1).optional(),
-  xAxisLabel: z.string().min(1).optional(),
-  yAxisLabel: z.string().min(1).optional(),
+export const PlotPointSpec = z
+  .object({
+    type: z.literal("plotPoint"),
+    prompt: z.string().min(1),
+    /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
+    title: z.string().min(1).optional(),
+    xAxisLabel: z.string().min(1).optional(),
+    yAxisLabel: z.string().min(1).optional(),
 
-  cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
-  rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
-  /** Optional axis labels; x left→right, y bottom→top. */
-  xLabels: z.array(z.string()).optional(),
-  yLabels: z.array(z.string()).optional(),
-  /** 1-based cell coordinates, y counted from the bottom. All must be marked. */
-  targets: z.array(z.object({ x: z.number().int().min(1), y: z.number().int().min(1) })).min(1),
-  /** When true, a line is drawn through the targets (in array order) once all are correctly marked — makes "the points line up" visible. */
-  connectTargets: z.boolean().optional(),
-  pointErrors: z
-    .array(z.object({ x: z.number().int(), y: z.number().int(), feedback: z.string().min(1) }))
-    .default([]),
-  missFeedback: z.string().min(1),
-  successFeedback: z.string().min(1)
-});
+    cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
+    rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
+    /** Every coordinate plane must name its x tracks left→right and y tracks bottom→top. */
+    xLabels: z.array(z.string().trim().min(1)),
+    yLabels: z.array(z.string().trim().min(1)),
+    /** 1-based cell coordinates, y counted from the bottom. All must be marked. */
+    targets: z.array(z.object({ x: z.number().int().min(1), y: z.number().int().min(1) })).min(1),
+    /** When true, a line is drawn through the targets (in array order) once all are correctly marked — makes "the points line up" visible. */
+    connectTargets: z.boolean().optional(),
+    pointErrors: z
+      .array(z.object({ x: z.number().int(), y: z.number().int(), feedback: z.string().min(1) }))
+      .default([]),
+    missFeedback: z.string().min(1),
+    successFeedback: z.string().min(1)
+  });
 
 /** Boolean rule tree over toggle ids: "sw1" | {op:"and"|"or"|"not", args:[...]}. */
 export type TRule = string | { op: "and" | "or" | "not"; args: TRule[] };
@@ -6806,7 +6807,7 @@ export function numberLineRaySameSolutionSet(a: RayRelationLiteral, b: RayRelati
   );
 }
 
-export const WidgetSpec = z.discriminatedUnion("type", [
+const WidgetSpecBase = z.discriminatedUnion("type", [
   McqSpec,
   NumericSpec,
   FractionEntrySpec,
@@ -6937,6 +6938,36 @@ export const WidgetSpec = z.discriminatedUnion("type", [
   RelatedRatesLabSpec,
   NumberLineRaySpec
 ]);
+
+/** Rules that depend on sibling fields of a discriminated widget member. */
+const widgetSpecWithPlotPointIntegrity = WidgetSpecBase.superRefine((spec, ctx) => {
+  if (spec.type !== "plotPoint") return;
+  for (const [axis, labels, tracks] of [
+    ["xLabels", spec.xLabels, spec.cols],
+    ["yLabels", spec.yLabels, spec.rows],
+  ] as const) {
+    if (labels.length !== tracks) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [axis],
+        message: `${axis} must name each of its ${tracks} tracks exactly once`,
+      });
+    }
+    if (new Set(labels).size !== labels.length) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [axis],
+        message: `${axis} labels must be distinct`,
+      });
+    }
+  }
+});
+
+// Keep the discriminated-union member list available to registry tooling while
+// enforcing cross-field plot-point invariants at the public schema boundary.
+export const WidgetSpec = Object.assign(widgetSpecWithPlotPointIntegrity, {
+  options: WidgetSpecBase.options,
+});
 
 /** Structural integrity checks that discriminated unions can't express inline. */
 /** The authoring rules for the display-only `plotData` block, in one place because `numeric` and

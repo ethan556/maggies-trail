@@ -94,11 +94,15 @@ export function Rich({ text, early }: { text: string; early?: boolean }) {
 export function TrailDots({
   steps,
   current,
-  remedialIds
+  remedialIds,
+  reviewingIndex,
+  onSelectCompleted
 }: {
   steps: TStep[];
   current: number;
   remedialIds: Set<string>;
+  reviewingIndex?: number | null;
+  onSelectCompleted?: (index: number) => void;
 }) {
   const progress = normalizeStepProgress(steps.length, current);
   // The broken bar over the whole sitting: walked segments LEAF (the trail
@@ -111,7 +115,9 @@ export function TrailDots({
       total={progress.total}
       current={progress.current}
       injected={injected}
-      label={`Step ${progress.current + 1} of ${progress.total}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
+      label={`Step ${progress.current + 1} of ${progress.total}${onSelectCompleted ? "; completed items can be opened in read-only review" : ""}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
+      reviewingIndex={reviewingIndex}
+      onSelectCompleted={onSelectCompleted}
       className="min-w-0"
     />
   );

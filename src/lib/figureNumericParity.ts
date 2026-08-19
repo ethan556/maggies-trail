@@ -147,13 +147,22 @@ export function numericClaimShapes(value: string): NumericClaimShape[] {
 
 export function hasExplicitNumericOrSymbolicClaim(value: string): boolean {
   const text = compactMath(value);
+  const prose = plain(value);
   const atoms = signedRationalAtoms(text);
   const symbolicExpressions = text.match(/\b[a-z][+−\-×÷](?:\([−\-]?[a-z]\)|[−\-]?[a-z])/g) ?? [];
+  const wordOperation = /\b(?:plus|minus|times|multiplied by|divided by|over)\b/.test(prose);
+  const wordRate = /\b(?:dollars?|cents?)\s+for\s+\d/.test(prose) && /\bper\s+(?:ounce|ounces|pound|pounds)\b/.test(prose);
+  const wordEquality = /\b(?:equals?|is|becomes?)\b/.test(prose);
   return (
     (/=/.test(text) && (atoms.length >= 2 || /[a-z][+−\-×÷]/.test(text))) ||
     (atoms.length >= 2 && /(?:\d|\))\s*[+\-×÷]\s*\(?-?\d/.test(text)) ||
     (symbolicExpressions.length >= 2 && /\b(?:becomes?|rewrite|same as|think|equivalent)\b/.test(text)) ||
-    (atoms.length >= 2 && /\b(?:from|start(?:ing)? at|landing? at|jump|move|change|rise|fall|drop)\b/.test(text))
+    (atoms.length >= 2 && /\b(?:from|start(?:ing)? at|landing? at|jump|move|change|rise|fall|drop)\b/.test(text)) ||
+    // Figure titles often express a worked rate in accessible words ("3 dollars
+    // divided by 12 ounces equals 25 cents per ounce") rather than operators.
+    // Those are fixed learner-visible numerical claims and need the same exact
+    // parity protection as a symbolic equation.
+    (atoms.length >= 2 && (wordOperation || wordRate) && wordEquality)
   );
 }
 

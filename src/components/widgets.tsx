@@ -8292,14 +8292,17 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone, onEvent }: WPro
   );
 }
 
-/** proportionalReasoningLab — one normalized pair model for unit rates, predictions,
- * proportionality tests, constants, percent, and discount chains. Every exploration control is a
- * native button and every numeric response is a labelled input, so the complete lab is keyboard
- * reachable without relying on colour. */
+/** proportionalReasoningLab — every Normalize row asks the learner to produce a
+ * unit rate. The widget verifies that intermediate invariant without displaying
+ * it, then unlocks the final proportional claim. Optional build stages remain
+ * available as scaffolds after the learner has established the unit rate. */
 type ProportionalReasoningState = {
   revealed?: string[];
   numeric?: number | "";
   choiceId?: string;
+  unitRates?: Record<string, number | "">;
+  verifiedUnitRates?: string[];
+  unitRateStatus?: Record<string, "correct" | "retry">;
 };
 
 function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TProportionalReasoningLab>) {
@@ -8309,107 +8312,75 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
   const validRevealed = [...new Set(revealed.filter((key) => validExplorationKeys.has(key)))];
   const truth = proportionalReasoningTruth(spec);
   const fmt = (n: number) => Number(n.toFixed(6)).toString();
+  const rateKeys = truth.series.flatMap((series) => series.pairs.map((_, index) => `${series.id}:${index}`));
+  const validRateKeys = new Set(rateKeys);
+  const expectedRates = new Map<string, number>();
+  truth.series.forEach((series) => series.pairs.forEach((_, index) => expectedRates.set(`${series.id}:${index}`, series.rates[index]!)));
+  const rawUnitRates = v.unitRates && typeof v.unitRates === "object" && !Array.isArray(v.unitRates) ? v.unitRates : {};
+  const unitRates = Object.fromEntries(Object.entries(rawUnitRates).filter(([, rate]) => typeof rate === "number" || rate === "")) as Record<string, number | "">;
+  const rawStatus = v.unitRateStatus && typeof v.unitRateStatus === "object" && !Array.isArray(v.unitRateStatus) ? v.unitRateStatus : {};
+  const unitRateStatus = Object.fromEntries(Object.entries(rawStatus).filter(([, status]) => status === "correct" || status === "retry")) as Record<string, "correct" | "retry">;
+  const verified = new Set((Array.isArray(v.verifiedUnitRates) ? v.verifiedUnitRates : []).filter((key): key is string => typeof key === "string" && validRateKeys.has(key)));
+  const verifiedRateKeys = rateKeys.filter((key) => {
+    const rate = unitRates[key]; const expected = expectedRates.get(key);
+    return verified.has(key) && typeof rate === "number" && Number.isFinite(rate) && typeof expected === "number" && Math.abs(rate - expected) <= 1e-6;
+  });
+  const ratesReady = verifiedRateKeys.length === rateKeys.length;
   const reveal = (key: string) => {
-    if (disabled || !validExplorationKeys.has(key) || validRevealed.includes(key)) return;
+    if (disabled || !ratesReady || !validExplorationKeys.has(key) || validRevealed.includes(key)) return;
     onEvent?.({ control: "reveal", dir: "toward", state: { key } });
     onChange({ ...v, revealed: [...validRevealed, key] });
   };
-  const setNumeric = (raw: string) => {
+  const setUnitRate = (key: string, raw: string) => {
+    if (disabled || !validRateKeys.has(key)) return;
     const next = raw === "" ? "" : Number(raw);
-    const target = truth.answerNumber;
-    if (typeof next === "number" && typeof target === "number" && typeof v.numeric === "number") {
-      onEvent?.({ control: "numeric", dir: Math.abs(next - target) < Math.abs(v.numeric - target) ? "toward" : "away", state: { value: next } });
-    }
+    const nextStatus = { ...unitRateStatus }; delete nextStatus[key];
+    onChange({ ...v, unitRates: { ...unitRates, [key]: next }, verifiedUnitRates: verifiedRateKeys.filter((item) => item !== key), unitRateStatus: nextStatus });
+  };
+  const verifyUnitRate = (key: string) => {
+    if (disabled || !validRateKeys.has(key)) return;
+    const rate = unitRates[key]; const expected = expectedRates.get(key);
+    const correct = typeof rate === "number" && Number.isFinite(rate) && typeof expected === "number" && Math.abs(rate - expected) <= 1e-6;
+    onEvent?.({ control: "unit-rate", dir: correct ? "toward" : "away", state: { key, value: rate } });
+    onChange({ ...v, unitRates, verifiedUnitRates: correct ? [...new Set([...verifiedRateKeys, key])] : verifiedRateKeys.filter((item) => item !== key), unitRateStatus: { ...unitRateStatus, [key]: correct ? "correct" : "retry" } });
+  };
+  const setNumeric = (raw: string) => {
+    if (!ratesReady) return;
+    const next = raw === "" ? "" : Number(raw); const target = truth.answerNumber;
+    if (typeof next === "number" && typeof target === "number" && typeof v.numeric === "number") onEvent?.({ control: "numeric", dir: Math.abs(next - target) < Math.abs(v.numeric - target) ? "toward" : "away", state: { value: next } });
     onChange({ ...v, numeric: next });
   };
   const setChoice = (choiceId: string) => {
+    if (!ratesReady) return;
     const choice = spec.choices.find((c) => c.id === choiceId);
-    onEvent?.({ control: "choice", dir: choice && proportionalReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId } });
-    onChange({ ...v, choiceId });
+    onEvent?.({ control: "choice", dir: choice && proportionalReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId } }); onChange({ ...v, choiceId });
   };
   const correctChoice = spec.choices.find((choice) => proportionalReasoningChoiceCorrect(spec, choice));
-  const answerText = spec.answerMode === "numeric"
-    ? `${fmt(truth.answerNumber ?? NaN)}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}`
-    : correctChoice?.label ?? "the derived proportional claim";
+  const answerText = spec.answerMode === "numeric" ? `${fmt(truth.answerNumber ?? NaN)}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}` : correctChoice?.label ?? "the derived proportional claim";
   const showPipeline = ["predictOutput", "predictInput", "scaleRatio", "percentOf", "discount", "cheaperThenPredict"].includes(spec.task);
-  return (
-    <div className="grid gap-4">
-      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
-        {truth.series.map((series) => (
-          <section key={series.id} className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label={series.label}>
-            <h4 className="font-extrabold">{series.label}</h4>
-            <div className="mt-2 overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
-                <thead><tr><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.xLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.yLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">Normalize</th></tr></thead>
-                <tbody>{series.pairs.map(([x,y],index) => {
-                  const key=`${series.id}:${index}`;
-                  const open=revealed.includes(key);
-                  return <tr key={key}>
-                    <td className="px-2 py-1.5 tabular-nums">{fmt(x)}</td>
-                    <td className="px-2 py-1.5 tabular-nums">{fmt(y)}</td>
-                    <td className="px-2 py-1.5"><button type="button" disabled={disabled} onClick={()=>reveal(key)}
-                      aria-label={`Normalize ${series.label} row ${index+1} to one ${spec.xLabel}`}
-                      className="pressable min-h-11 rounded-card border-2 border-sky/35 px-3 py-2 text-xs font-extrabold text-sky-ink disabled:opacity-45">
-                      {open ? `${fmt(y)} ÷ ${fmt(x)} = ${fmt(series.rates[index]!)}` : `Show ${spec.yLabel} per 1 ${spec.xLabel}`}
-                    </button></td>
-                  </tr>;
-                })}</tbody>
-              </table>
-            </div>
-            <p className="mt-2 text-xs font-semibold text-ink/65" aria-live="polite">
-              {series.pairs.every((_, index) => revealed.includes(`${series.id}:${index}`))
-                ? (series.proportional ? "The inspected row multipliers agree." : "The inspected row multipliers do not all agree.")
-                : `Inspect ${series.pairs.length - series.pairs.filter((_, index) => revealed.includes(`${series.id}:${index}`)).length} more row${series.pairs.length - series.pairs.filter((_, index) => revealed.includes(`${series.id}:${index}`)).length === 1 ? "" : "s"} before drawing a conclusion.`}
-            </p>
-          </section>
-        ))}
-      </div>
-      {showPipeline && (
-        <div className="rounded-2xl border border-ink/15 bg-ink/[0.03] p-3" aria-label="Proportional target chain">
-          <div className="flex flex-wrap gap-2">
-            {typeof spec.targetInput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.xLabel}: {fmt(spec.targetInput)}</span>}
-            {typeof spec.targetOutput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.yLabel}: {fmt(spec.targetOutput)}</span>}
-            {typeof spec.percent === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">percent stage: {fmt(spec.percent)}%</span>}
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {truth.stages.map((stage,index) => {
-              const key=`stage:${index}`; const open=revealed.includes(key);
-              return <button key={key} type="button" disabled={disabled} onClick={()=>reveal(key)}
-                aria-label={`Reveal proportional stage ${index+1}: ${stage.label}`}
-                className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">
-                {open ? (tone!=="info"&&stageRevealsAnswer(stage.value,truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index+1}: ${stage.label}`}
-              </button>;
-            })}
-          </div>
-        </div>
-      )}
-      <p className="text-sm font-bold text-ink/65" aria-live="polite">
-        {explorationProgress(validRevealed.length, spec.requiredExplorations, "proportional check", "completed")}
-      </p>
-      {spec.answerMode === "numeric" ? (
-        <label className="grid gap-1 font-bold">
-          <span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span>
-          <input type="number" inputMode="decimal" disabled={disabled} value={v.numeric ?? ""} onChange={(e)=>setNumeric(e.target.value)}
-            aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`}
-            className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
-        </label>
-      ) : (
-        <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">
-          {spec.choices.map((choice) => {
-            const picked=v.choiceId===choice.id;
-            return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>setChoice(choice.id)}
-              className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>
-              <MathProse text={choice.label} />
-            </button>;
-          })}
-        </div>
-      )}
-      {tone === "info" && <GhostChip testid="prl-ghost">Correct proportional result: {answerText}</GhostChip>}
+  return <div className="grid gap-4">
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
+      {truth.series.map((series) => <section key={series.id} className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label={series.label}>
+        <h4 className="font-extrabold">{series.label}</h4><div className="mt-2 overflow-x-auto"><table className="w-full border-collapse text-sm">
+          <thead><tr><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.xLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.yLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">Normalize: enter unit rate</th></tr></thead>
+          <tbody>{series.pairs.map(([x, y], index) => {
+            const key = `${series.id}:${index}`; const rowVerified = verifiedRateKeys.includes(key); const status = unitRateStatus[key];
+            return <tr key={key}><td className="px-2 py-1.5 tabular-nums">{fmt(x)}</td><td className="px-2 py-1.5 tabular-nums">{fmt(y)}</td><td className="min-w-56 px-2 py-1.5"><div className="flex flex-wrap items-center gap-2">
+              <input type="number" inputMode="decimal" disabled={disabled} value={unitRates[key] ?? ""} onChange={(event) => setUnitRate(key, event.target.value)} aria-label={`Enter unit rate for ${series.label} row ${index + 1} in ${spec.yLabel} per 1 ${spec.xLabel}`} className="min-h-11 w-28 rounded-card border-2 border-ink/20 bg-white px-3 py-2 font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
+              <button type="button" disabled={disabled || typeof unitRates[key] !== "number" || !Number.isFinite(unitRates[key] as number)} onClick={() => verifyUnitRate(key)} aria-label={`Check unit rate for ${series.label} row ${index + 1}`} className="pressable min-h-11 rounded-card border-2 border-sky/35 px-3 py-2 text-xs font-extrabold text-sky-ink disabled:opacity-45">Check unit rate</button>
+            </div><p className={`mt-1 text-xs font-semibold ${rowVerified ? "text-leaf-ink" : status === "retry" ? "text-berry-ink" : "text-ink/65"}`} aria-live="polite">{rowVerified ? "Unit rate checked." : status === "retry" ? `Not yet. Divide ${fmt(y)} ${spec.yLabel} by ${fmt(x)} ${spec.xLabel}.` : `Enter ${spec.yLabel} per 1 ${spec.xLabel}.`}</p></td></tr>;
+          })}</tbody></table></div>
+      </section>)}
     </div>
-  );
+    {showPipeline && <div className="rounded-2xl border border-ink/15 bg-ink/[0.03] p-3" aria-label="Proportional target chain"><div className="flex flex-wrap gap-2">
+      {typeof spec.targetInput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.xLabel}: {fmt(spec.targetInput)}</span>}{typeof spec.targetOutput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.yLabel}: {fmt(spec.targetOutput)}</span>}{typeof spec.percent === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">percent stage: {fmt(spec.percent)}%</span>}
+    </div><div className="mt-3 flex flex-wrap gap-2">{truth.stages.map((stage, index) => { const key = `stage:${index}`; const open = revealed.includes(key); return <button key={key} type="button" disabled={disabled || !ratesReady} onClick={() => reveal(key)} aria-label={`Reveal proportional stage ${index + 1}: ${stage.label}`} className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">{open ? (tone !== "info" && stageRevealsAnswer(stage.value, truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index + 1}: ${stage.label}`}</button>; })}</div></div>}
+    <p className="text-sm font-bold text-ink/65" aria-live="polite">{ratesReady ? "All unit rates are checked. Use the constant rate to solve the question." : `Unit-rate checks: ${verifiedRateKeys.length} of ${rateKeys.length} verified. Complete each Normalize row to unlock your answer.`}</p>
+    {spec.answerMode === "numeric" ? <label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span><input type="number" inputMode="decimal" disabled={disabled || !ratesReady} value={v.numeric ?? ""} onChange={(e) => setNumeric(e.target.value)} aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" /></label> : <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">{spec.choices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled || !ratesReady} aria-pressed={picked} onClick={() => setChoice(choice.id)} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>; })}</div>}
+    {tone === "info" && <GhostChip testid="prl-ghost">Correct proportional result: {answerText}</GhostChip>}
+  </div>;
 }
-
 
 /** placeValueTransformLab — one keyboard-complete place-value workspace. The source numbers stay
  * visible while derived stages are deliberately closed until the learner opens them. That prevents
@@ -16015,7 +15986,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
    * target whose edges belonged to its neighbour.
    */
   const PP_MAX_CELL = "2.75rem"; // 44px — the tap-target ceiling, never a floor-and-ceiling both
-  const cellCol = spec.yLabels ? 2 : 1; // the first cell column; column 1 is the y-label band
+  const cellCol = 2; // the first cell column; column 1 is the required y-label band
   const rowOf = (y: number) => spec.rows - y + 1; // y counts from the bottom, grid rows from the top
   // Reveal ghost: dashed rings on every TARGET cell whenever the selection is
   // not yet the exact target set — the correct pattern shown against the
@@ -16039,16 +16010,16 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
    * already include "0" show their origin, and a categorical grid ("Hundreds / Tens / Ones") has
    * no origin to mark: printing one there would be a number about nothing.
    */
-  const numericBand = (labels?: string[]) =>
-    labels !== undefined && labels.length > 0 && labels.every((l) => l.trim() !== "" && Number.isFinite(Number(l)));
+  const numericBand = (labels: string[]) =>
+    labels.length > 0 && labels.every((l) => Number.isFinite(Number(l)));
   const showOrigin =
     numericBand(spec.xLabels) && numericBand(spec.yLabels) &&
-    Number(spec.xLabels![0]) === 1 && Number(spec.yLabels![0]) === 1;
+    Number(spec.xLabels[0]) === 1 && Number(spec.yLabels[0]) === 1;
   const title = spec.title ?? "Coordinate plotting grid";
   const xAxisLabel = spec.xAxisLabel ?? "x";
   const yAxisLabel = spec.yAxisLabel ?? "y";
-  const xScale = spec.xLabels ?? Array.from({ length: spec.cols }, (_, i) => String(i + 1));
-  const yScale = spec.yLabels ?? Array.from({ length: spec.rows }, (_, i) => String(i + 1));
+  const xScale = spec.xLabels;
+  const yScale = spec.yLabels;
   const markedSummary = pts.length ? pts.map((p) => `(${xScale[p.x - 1]}, ${yScale[p.y - 1]})`).join(", ") : "none";
   return (
     <div className="grid gap-3">
@@ -16063,24 +16034,21 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
         className="relative grid w-full justify-center"
         role="group"
         aria-label={`${title}. ${xAxisLabel}: ${xScale.join(", ")}. ${yAxisLabel}: ${yScale.join(", ")}. Marked points: ${markedSummary}.`}
-        style={{ gridTemplateColumns: `${spec.yLabels ? "auto " : ""}repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
+        style={{ gridTemplateColumns: `auto repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
       >
         <style>{`@media (prefers-reduced-motion: no-preference){.pp-dot{animation:pp-pop .18s ease-out backwards}.pp-line{stroke-dasharray:100;animation:pp-draw .6s ease-out backwards}}@keyframes pp-pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}@keyframes pp-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}`}</style>
-        {spec.yLabels && (
-          // `display: contents` so the spans are items of the grid ABOVE: each label shares its
-          // row track with the cells it names, at any cell size.
-          <div aria-hidden="true" style={{ display: "contents" }}>
-            {rows.map((y) => (
-              <span
-                key={y}
-                className="flex items-center justify-end pr-1 text-xs font-bold text-ink/70"
-                style={{ gridColumn: 1, gridRow: rowOf(y) }}
-              >
-                {spec.yLabels?.[y - 1] ?? y}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* `display: contents` keeps every y label on the same row track as its cells. */}
+        <div aria-hidden="true" style={{ display: "contents" }}>
+          {rows.map((y) => (
+            <span
+              key={y}
+              className="flex items-center justify-end pr-1 text-xs font-bold text-ink/70"
+              style={{ gridColumn: 1, gridRow: rowOf(y) }}
+            >
+              {spec.yLabels[y - 1]}
+            </span>
+          ))}
+        </div>
         {showOrigin && (
           // The corner where the two label bands meet IS (0, 0): column 1 of the x-label row.
           <span
@@ -16102,7 +16070,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
                 type="button"
                 disabled={disabled}
                 aria-pressed={marked}
-                aria-label={`${spec.xLabels?.[x - 1] ?? `column ${x}`}, ${spec.yLabels?.[y - 1] ?? `row ${y}`}`}
+                aria-label={`${spec.xLabels[x - 1]}, ${spec.yLabels[y - 1]}`}
                 onClick={() => toggle(x, y)}
                 style={{ gridColumn: cellCol + xi, gridRow: rowOf(y) }}
                 className="group relative aspect-square w-full min-w-0 p-0.5 disabled:opacity-70"
@@ -16174,19 +16142,18 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
             {Array.from({ length: spec.cols }, (_, i) => <line data-testid="pp-x-tick" key={`tx${i}`} x1={i + 0.5} y1={spec.rows - 0.08} x2={i + 0.5} y2={spec.rows} stroke={PALETTE.ink} strokeWidth={0.045} />)}
             {Array.from({ length: spec.rows }, (_, i) => <line data-testid="pp-y-tick" key={`ty${i}`} x1={0} y1={i + 0.5} x2={0.08} y2={i + 0.5} stroke={PALETTE.ink} strokeWidth={0.045} />)}
           </g>
-        </svg>        {spec.xLabels && (
-          <div aria-hidden="true" style={{ display: "contents" }}>
-            {Array.from({ length: spec.cols }, (_, i) => (
-              <span
-                key={i}
-                className="pt-1 text-center text-xs font-bold text-ink/70"
-                style={{ gridColumn: cellCol + i, gridRow: spec.rows + 1 }}
-              >
-                {spec.xLabels?.[i] ?? i + 1}
-              </span>
-            ))}
-          </div>
-        )}
+        </svg>
+        <div aria-hidden="true" style={{ display: "contents" }}>
+          {Array.from({ length: spec.cols }, (_, i) => (
+            <span
+              key={i}
+              className="pt-1 text-center text-xs font-bold text-ink/70"
+              style={{ gridColumn: cellCol + i, gridRow: spec.rows + 1 }}
+            >
+              {spec.xLabels[i]}
+            </span>
+          ))}
+        </div>
       </div>
       <p data-testid="pp-x-axis-label" className="text-center text-xs font-bold text-ink/70">{xAxisLabel} →</p>
     </div>

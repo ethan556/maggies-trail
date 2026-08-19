@@ -465,27 +465,30 @@ export default function LessonPlayer({
     );
   }
 
-  const s = st.queue[st.i];
+  const reviewingIndex = st.reviewingIndex;
+  const isReviewing = reviewingIndex !== null;
+  const displayIndex = reviewingIndex ?? st.i;
+  const s = st.queue[displayIndex];
   const actionable = s.kind !== "concept" && s.kind !== "recap";
-  const finalized = st.phase === "correct" || st.phase === "revealed";
+  const finalized = !isReviewing && (st.phase === "correct" || st.phase === "revealed");
   // WS-E Phase 3: a pending prediction no longer unmounts the widget — it renders
   // mounted-but-inert behind the gate (dimmed, aria-hidden, non-interactive) so the
   // learner can see what they are predicting about. Commit still gates interaction.
-  const predictPending = Boolean(s.predict && st.prediction === null);
+  const predictPending = !isReviewing && Boolean(s.predict && st.prediction === null);
   // Availability, not kind — same defect as the hint control below. 118 interactive
   // steps (116 of them the very steps that also carried stranded hint ladders) author
   // explanationVariants that this gate discarded, so the learner finished an explored
   // step with no "here is why" and no swap. `finalized` still means the reasoning is
   // over; concept/recap steps never author the field, so nothing new leaks earlier.
-  const showExplanation = finalized && actionable && s.explanationVariants;
+  const showExplanation = !isReviewing && finalized && actionable && s.explanationVariants;
   const early = st.lesson.readingProfile === "early";
   // Reveal contrast: the correct answer AND (for typed/choice widgets) the
   // learner's own submission, so the reveal shows *your* answer next to *the*
   // answer rather than the answer in isolation. learnerAnswerText returns null
   // where a one-line echo isn't honest (dense labs, sliders that self-narrate),
   // and the "you answered" line is suppressed when it would equal the answer.
-  const revealAnswer = s.widget ? correctAnswerText(s.widget) : "";
-  const revealYours = s.widget ? learnerAnswerText(s.widget, st.value) : null;
+  const revealAnswer = !isReviewing && s.widget ? correctAnswerText(s.widget) : "";
+  const revealYours = !isReviewing && s.widget ? learnerAnswerText(s.widget, st.value) : null;
 
   // The width tier this step earns: reading column for prose, wider stages for
   // laboratories. Header/main/footer share it so actions never detach from the
@@ -515,32 +518,48 @@ export default function LessonPlayer({
       data-player-phase={st.phase}
       data-lesson-id={st.lesson.id}
       data-step-id={s.id}
-      data-step-index={st.i}
+      data-step-index={displayIndex}
+      data-active-step-index={st.i}
+      data-review-only={isReviewing ? "true" : undefined}
       data-step-count={st.queue.length}
       className="lesson-trail-shell lesson-trail-shell--active relative flex min-h-dvh flex-col overflow-x-clip"
     >
       <SkipLink />
       <header className="trail-player-header sticky top-0 z-20 border-b border-ink/8 bg-paper/[0.88] backdrop-blur-xl dark:border-paper/8 dark:bg-night/[0.88]">
         <div className={`mx-auto flex w-full ${widthCls} ${colTransition} items-center gap-2.5 px-3 py-2 sm:px-4`}>
-          <Link
-            href="/"
-            aria-label="Exit lesson"
-            className="pressable trail-exit flex h-11 w-11 shrink-0 items-center justify-center rounded-pill border border-ink/8 bg-surface/75 text-ink/70 shadow-e1 backdrop-blur hover:border-sky/35 hover:bg-sky/8 hover:text-sky-ink dark:border-paper/10 dark:text-paper/70"
-          >
-            <AppIcon name="icon-703" size={20} />
-          </Link>
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              onClick={st.reviewPrevious}
+              disabled={displayIndex === 0}
+              aria-label="Review previous completed item"
+              title="Review previous completed item"
+              className="pressable trail-exit flex h-11 w-11 items-center justify-center rounded-pill border border-ink/8 bg-surface/75 text-ink/70 shadow-e1 backdrop-blur hover:border-sky/35 hover:bg-sky/8 hover:text-sky-ink disabled:cursor-not-allowed disabled:opacity-40 dark:border-paper/10 dark:text-paper/70"
+            >
+              <AppIcon name="icon-703" size={20} />
+            </button>
+            <Link
+              href="/"
+              aria-label="Exit lesson"
+              className="pressable flex min-h-11 items-center rounded-pill px-2 text-xs font-bold text-ink/65 underline underline-offset-2 hover:text-sky-ink dark:text-paper/70"
+            >
+              Exit
+            </Link>
+          </div>
           <div className="min-w-0 flex-1">
             <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2 px-0.5">
               <h1 id="lesson-player-title" className="truncate text-sm font-extrabold leading-tight text-ink/[0.85] dark:text-paper/[0.85]">
                 {st.lesson.title}
               </h1>
               <span className="shrink-0 text-[10px] font-bold tabular-nums text-ink/[0.55] dark:text-paper/[0.55]">
-                {st.i + 1}/{st.queue.length}
+                {isReviewing ? `Review ${displayIndex + 1}/${st.queue.length}` : `${st.i + 1}/${st.queue.length}`}
               </span>
             </div>
             <TrailDots
               steps={st.queue}
               current={st.i}
+              reviewingIndex={reviewingIndex}
+              onSelectCompleted={st.reviewStep}
               remedialIds={
                 new Set(
                   st.lesson.remedials
@@ -563,7 +582,7 @@ export default function LessonPlayer({
         aria-labelledby="lesson-player-title"
         data-band={trailContext?.gradeBand ?? "middle"}
         data-step-kind={s.kind}
-        key={`${s.id}:${st.i}`}
+        key={`${s.id}:${displayIndex}:${isReviewing ? "review" : "active"}`}
         className={`trail-step-enter relative z-[1] mx-auto w-full ${widthCls} ${colTransition} flex-1 px-4 pb-10 pt-4`}
       >
         {/* Prose lives in the reading column even when the stage below widens. */}
@@ -633,7 +652,7 @@ export default function LessonPlayer({
               </p>
             </div>
           )}
-          {s.predict && st.prediction !== null && !finalized && (
+          {!isReviewing && s.predict && st.prediction !== null && !finalized && (
             <p className="mt-4 inline-flex min-h-8 items-center gap-1.5 rounded-full border border-tangerine/40 bg-tangerine/15 px-3 py-1 text-sm font-bold text-tangerine-ink">
               <AppIcon name="icon-803" size={14} className="shrink-0" />
               <span>
@@ -654,7 +673,7 @@ export default function LessonPlayer({
         {s.widget && (
           <div
             className={`math-stage-shell mt-4 motion-safe:transition-opacity motion-safe:duration-300 ${
-              predictPending ? "pointer-events-none select-none opacity-50" : ""
+              predictPending || isReviewing ? "pointer-events-none select-none opacity-50" : ""
             }`}
             aria-hidden={predictPending || undefined}
             inert={predictPending || undefined}
@@ -662,17 +681,17 @@ export default function LessonPlayer({
           >
             <WidgetView
               spec={s.widget}
-              value={st.value}
-              onChange={setCMLValue}
-              disabled={predictPending}
+              value={isReviewing ? null : st.value}
+              onChange={isReviewing ? () => {} : setCMLValue}
+              disabled={predictPending || isReviewing}
               seed={`${st.lesson.id}:${s.id}`}
               tone={stageTone}
-              onEvent={onProcessEvent}
-              locks={st.lockedControl ? [st.lockedControl] : undefined}
+              onEvent={isReviewing ? undefined : onProcessEvent}
+              locks={isReviewing ? undefined : st.lockedControl ? [st.lockedControl] : undefined}
             />
             {/* The app noticing out loud: tentative, proximal, never a gate.
                 Hidden once the step is finalized — the diagnosis takes over. */}
-            {processCue && !finalized && (
+            {!isReviewing && processCue && !finalized && (
               <p
                 data-testid="process-cue"
                 aria-live="polite"
@@ -682,7 +701,7 @@ export default function LessonPlayer({
                 <span>{processCue}</span>
               </p>
             )}
-            {cmlEnabled && !finalized && cmlMoveCount > 0 && (
+            {!isReviewing && cmlEnabled && !finalized && cmlMoveCount > 0 && (
               <div
                 className="mx-auto mt-3 flex w-full max-w-2xl justify-end gap-2"
                 role="group"
@@ -710,7 +729,7 @@ export default function LessonPlayer({
                 </button>
               </div>
             )}
-            {cmlEnabled && finalized && (
+            {!isReviewing && cmlEnabled && finalized && (
               <CausalMasteryPanel
                 key={`cml:${s.id}:${st.i}`}
                 step={s}
@@ -738,7 +757,7 @@ export default function LessonPlayer({
             </div>
           )}
 
-          {s.hints && st.hintsShown > 0 && (
+          {!isReviewing && s.hints && st.hintsShown > 0 && (
             <div className="mt-5 grid gap-2" aria-label="Hints">
               {s.hints.slice(0, st.hintsShown).map((h, i) => {
                 const latest = i === st.hintsShown - 1;
@@ -772,7 +791,19 @@ export default function LessonPlayer({
               long diagnosis can never push the actions off a phone screen or
               bury the stage it refers to. */}
           <div data-testid="feedback-scroll" className="max-h-[42dvh] overflow-y-auto overscroll-contain">
-            {st.phase === "retry" && (
+            {isReviewing && (
+              <StatusBanner tone="info" icon="icon-808" title="Review-only item">
+                <p>This completed item is locked. Reviewing it cannot change your submitted answer, score, XP, or lesson progress.</p>
+                <button
+                  type="button"
+                  onClick={st.returnToCurrent}
+                  className="mt-2 min-h-11 rounded-card px-3 py-1 text-sm font-bold text-sky-ink underline underline-offset-2"
+                >
+                  Return to current item {st.i + 1}
+                </button>
+              </StatusBanner>
+            )}
+            {!isReviewing && st.phase === "retry" && (
               <StatusBanner tone="error" icon="icon-803" title={COPY.nudgeBanner}>
                 <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <p className="mt-1 text-xs font-semibold text-ink/70 dark:text-paper/70">
@@ -780,7 +811,7 @@ export default function LessonPlayer({
                 </p>
               </StatusBanner>
             )}
-            {st.phase === "correct" && (
+            {!isReviewing && st.phase === "correct" && (
               <div className="relative">
                 <SparkBurst key={`spark-${st.i}`} className="left-1/2 top-0" />
               <StatusBanner
@@ -798,7 +829,7 @@ export default function LessonPlayer({
               </StatusBanner>
               </div>
             )}
-            {st.phase === "revealed" && s.widget && (
+            {!isReviewing && st.phase === "revealed" && s.widget && (
               <StatusBanner tone="info" icon="icon-807" title={COPY.revealBanner}>
                 <p><MathProse text={st.feedback} includeArithmetic /></p>
                 <div className="mt-2 flex flex-wrap items-stretch gap-2">
@@ -876,6 +907,15 @@ export default function LessonPlayer({
           </div>
 
           <div className="trail-action-row flex flex-wrap items-center justify-end gap-3">
+            {isReviewing && (
+              <button
+                type="button"
+                onClick={st.returnToCurrent}
+                className="pressable trail-primary-action min-h-11 rounded-card bg-cta px-6 py-3 font-bold text-white"
+              >
+                Return to current item {st.i + 1}
+              </button>
+            )}
             {/* Hint availability, not step kind, gates the control. The store's hint()
                 and the ladder renderer above were both kind-agnostic already, and
                 xpFor() prices "interactive" hints at the same −2 XP — but this button
@@ -884,7 +924,7 @@ export default function LessonPlayer({
                 ratios-rates and six other courses) with no way to reach them. `actionable`
                 still excludes concept/recap; the hintsShown < length test still excludes
                 steps with no ladder authored. */}
-            {actionable &&
+            {!isReviewing && actionable &&
               st.phase !== "correct" &&
               st.phase !== "revealed" &&
               st.hintsShown < (s.hints?.length ?? 0) && (
@@ -897,7 +937,7 @@ export default function LessonPlayer({
               </button>
             )}
 
-            {!actionable && st.phase === "work" && (
+            {!isReviewing && !actionable && st.phase === "work" && (
               <button
                 type="button"
                 onClick={() => st.next()}
@@ -908,7 +948,7 @@ export default function LessonPlayer({
               </button>
             )}
 
-            {actionable && st.phase === "work" && s.widget && !predictPending && (
+            {!isReviewing && actionable && st.phase === "work" && s.widget && !predictPending && (
               <button
                 type="button"
                 onClick={st.check}
@@ -920,7 +960,7 @@ export default function LessonPlayer({
               </button>
             )}
 
-            {st.phase === "retry" && (
+            {!isReviewing && st.phase === "retry" && (
               <>
                 {s.kind === "interactive" && st.attempts >= 3 && (
                   <button
