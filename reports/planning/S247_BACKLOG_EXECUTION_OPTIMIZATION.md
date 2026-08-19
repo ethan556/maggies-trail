@@ -2,19 +2,19 @@
 
 ## Executive summary
 
-- **The live backlog is 5,243, 9,204 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `0f17459254aacb5240162a5efd6be4a1d7b1519a665111bcccd15b1c78849581` at commit `395a0201`.
-- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 146 primary portfolios: 129 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 35.91× fewer context scopes without deleting or auto-closing a single task.
+- **The live backlog is 5,233, 9,214 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `ac3a42731a56dddd9ffa0b417d6bc19a04ee06039594ad4ec2796330a1f4e455` at commit `7eaabf9a`.
+- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 146 primary portfolios: 129 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 35.84× fewer context scopes without deleting or auto-closing a single task.
 - **The fastest safe path is course-first, cause-first and evidence-last.** Read each course once, emit all semantic contracts, implement file-disjoint causes, run deterministic evidence once, and obtain an independent verdict. Standards use a separate exact-code cache and retain edge-level decisions.
 
 ## Dataset and grain
 
-The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 5243/5243 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
+The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 5233/5233 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
 
-## The breakthrough: 5,243 rows become 146 claimable portfolios
+## The breakthrough: 5,233 rows become 146 claimable portfolios
 
 | Portfolio class | Queue rows | Primary scopes | Rows per scope | P0 rows | Maximum scope |
 |---|---:|---:|---:|---:|---:|
-| COURSE_PORTFOLIO | 5,041 | 129 | 39.08 | 169 | 64 |
+| COURSE_PORTFOLIO | 5,031 | 129 | 39 | 163 | 63 |
 | GENERATOR_DOMAIN_PORTFOLIO | 166 | 14 | 11.86 | 0 | 46 |
 | PROGRAM_SHARED_PORTFOLIO | 34 | 2 | 17 | 15 | 27 |
 | STANDARD_FAMILY_PORTFOLIO | 2 | 1 | 2 | 0 | 2 |
@@ -23,15 +23,15 @@ This is a context-loading optimization, not a quality shortcut. A portfolio owns
 
 ## One course read should drive every local decision
 
-The 129 course portfolios cover 5,041 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
+The 129 course portfolios cover 5,031 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
 
 Top closure-leverage course portfolios:
 
 | Course | Rows | P0 | Lessons | Workstreams |
 |---|---:|---:|---:|---|
-| proportional-relationships | 64 | 9 | 16 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, ILLUSTRATION_REPLACEMENT, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
 | counting-to-100-k | 63 | 9 | 18 | GRADE_LANGUAGE_REVIEW, ILLUSTRATION_REPLACEMENT, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | expressions-equations | 63 | 6 | 18 | GRADE_LANGUAGE_REVIEW, ILLUSTRATION_REPLACEMENT, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| proportional-relationships | 59 | 4 | 16 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, ILLUSTRATION_REPLACEMENT, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
 | measurement-data | 59 | 0 | 17 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | circle-theorems | 58 | 0 | 16 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | function-analysis | 57 | 0 | 16 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
@@ -78,9 +78,9 @@ All 166 generator rows compile into 14 coherent grade/course domains while retai
 ## Shared causes that should close many rows
 
 - **Math rendering:** 0 rows compile into 0 symbol × surface × source contracts. Repair the renderer boundary once, then verify every dependent field and screen-reader string.
-- **Illustrations:** 127 rows compile into 87 figure+course contracts and 87 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
+- **Illustrations:** 121 rows compile into 82 figure+course contracts and 82 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
 - **Generators:** 166 generated rows compile into 14 parent domains, 57 required exact-tag contracts and 57 tag-bounded microbatches. Reuse domain context, but run the prompt-only oracle, deterministic replay and verdict independently per tag.
-- **Progression and choices:** 267 progression rows are 55 course contracts; 447 choice rows are 131 authored-course or generator contracts.
+- **Progression and choices:** 263 progression rows are 54 course contracts; 447 choice rows are 131 authored-course or generator contracts.
 
 ## Optimized operating sequence
 
