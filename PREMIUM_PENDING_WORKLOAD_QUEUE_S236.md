@@ -1,24 +1,24 @@
 # Maggie's Trail V4 consolidated pending workload — live derived view
 
 Generated from current source on 2026-08-19.
-Curriculum source seal: `1deb8003fee6804be7cb95a7b95ca307fd92e7a4304741eab2e13f13e2ab9863`.
+Curriculum source seal: `7468aaa37b833f120a591fdd0b57b8a2009afee250436d95fc309c9af9227950`.
 
-- Total open rows: **5,233**
-- P0 rows: **178**
-- P1 rows: **5,055**
+- Total open rows: **5,238**
+- P0 rows: **173**
+- P1 rows: **5,065**
 - P2 rows: **0**
 
 ## Workstreams
 
 | Workstream | Open rows |
 |---|---:|
-| VISUAL_FIRST_REPRESENTATION | 1,366 |
-| GRADE_LANGUAGE_REVIEW | 1,366 |
-| LESSON_COMPLETE_DISPOSITION | 1,366 |
+| VISUAL_FIRST_REPRESENTATION | 1,371 |
+| GRADE_LANGUAGE_REVIEW | 1,371 |
+| LESSON_COMPLETE_DISPOSITION | 1,371 |
 | CHOICE_SURFACE_INTEGRITY | 447 |
 | LESSON_PROGRESSION_AND_DUPLICATION | 263 |
-| LESSON_REVISION_IMPLEMENTATION | 253 |
-| ILLUSTRATION_REPLACEMENT | 121 |
+| LESSON_REVISION_IMPLEMENTATION | 248 |
+| ILLUSTRATION_REPLACEMENT | 116 |
 | CLOSURE_LEDGER | 27 |
 | QUESTION_DIVERSITY_AND_TRANSFER | 15 |
 | V4_PROGRAMME_PHASE | 7 |

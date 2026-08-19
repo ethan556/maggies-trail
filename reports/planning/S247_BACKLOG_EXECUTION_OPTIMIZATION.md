@@ -2,19 +2,19 @@
 
 ## Executive summary
 
-- **The live backlog is 5,233, 9,214 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `ac3a42731a56dddd9ffa0b417d6bc19a04ee06039594ad4ec2796330a1f4e455` at commit `7eaabf9a`.
-- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 146 primary portfolios: 129 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 35.84× fewer context scopes without deleting or auto-closing a single task.
+- **The live backlog is 5,238, 9,209 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `c9175c01345aadffa827958c32ecf764d4475a2d61a97603cb53d4ebe7ae0b45` at commit `c6d4c00a`.
+- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 146 primary portfolios: 129 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 35.88× fewer context scopes without deleting or auto-closing a single task.
 - **The fastest safe path is course-first, cause-first and evidence-last.** Read each course once, emit all semantic contracts, implement file-disjoint causes, run deterministic evidence once, and obtain an independent verdict. Standards use a separate exact-code cache and retain edge-level decisions.
 
 ## Dataset and grain
 
-The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 5233/5233 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
+The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 5238/5238 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
 
-## The breakthrough: 5,233 rows become 146 claimable portfolios
+## The breakthrough: 5,238 rows become 146 claimable portfolios
 
 | Portfolio class | Queue rows | Primary scopes | Rows per scope | P0 rows | Maximum scope |
 |---|---:|---:|---:|---:|---:|
-| COURSE_PORTFOLIO | 5,031 | 129 | 39 | 163 | 63 |
+| COURSE_PORTFOLIO | 5,036 | 129 | 39.04 | 158 | 63 |
 | GENERATOR_DOMAIN_PORTFOLIO | 166 | 14 | 11.86 | 0 | 46 |
 | PROGRAM_SHARED_PORTFOLIO | 34 | 2 | 17 | 15 | 27 |
 | STANDARD_FAMILY_PORTFOLIO | 2 | 1 | 2 | 0 | 2 |
@@ -23,7 +23,7 @@ This is a context-loading optimization, not a quality shortcut. A portfolio owns
 
 ## One course read should drive every local decision
 
-The 129 course portfolios cover 5,031 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
+The 129 course portfolios cover 5,036 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
 
 Top closure-leverage course portfolios:
 
@@ -78,7 +78,7 @@ All 166 generator rows compile into 14 coherent grade/course domains while retai
 ## Shared causes that should close many rows
 
 - **Math rendering:** 0 rows compile into 0 symbol × surface × source contracts. Repair the renderer boundary once, then verify every dependent field and screen-reader string.
-- **Illustrations:** 121 rows compile into 82 figure+course contracts and 82 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
+- **Illustrations:** 116 rows compile into 77 figure+course contracts and 77 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
 - **Generators:** 166 generated rows compile into 14 parent domains, 57 required exact-tag contracts and 57 tag-bounded microbatches. Reuse domain context, but run the prompt-only oracle, deterministic replay and verdict independently per tag.
 - **Progression and choices:** 263 progression rows are 54 course contracts; 447 choice rows are 131 authored-course or generator contracts.
 
@@ -102,7 +102,7 @@ All 166 generator rows compile into 14 coherent grade/course domains while retai
 
 ## Measured disposition leverage
 
-All 335 current signed lesson reviews resolved 1,005 generic disposition rows and left 253 implementation or escalation rows. If the same 75.5% revision-required rate held—a planning scenario, not a forecast—the remaining 1,366 reviews would resolve 4,098 generic rows, create about 1,032 implementation rows and reduce the queue by about 3,066 net rows before those fixes are completed.
+All 330 current signed lesson reviews resolved 990 generic disposition rows and left 248 implementation or escalation rows. If the same 75.2% revision-required rate held—a planning scenario, not a forecast—the remaining 1,371 reviews would resolve 4,113 generic rows, create about 1,030 implementation rows and reduce the queue by about 3,083 net rows before those fixes are completed.
 
 ## Immediate next waves
 
@@ -110,17 +110,17 @@ All 335 current signed lesson reviews resolved 1,005 generic disposition rows an
 2. Start renderer-boundary canaries, then expand through the 0 live exact boundary contracts.
 3. Build one typed semantic-figure canary for three different `count-on-hops` concepts; scale across the 0 live placements only if value, visible model, explanation and accessible description remain synchronized.
 4. Begin exact-code standards batches only after course evidence summaries are current; keep the existing 2 partial edges open.
-5. Implement or adjudicate the 253 current revision/escalation packets before reviewing their courses again.
+5. Implement or adjudicate the 248 current revision/escalation packets before reviewing their courses again.
 
 ## Further questions
 
 - Which exact semantic figure families can replace `count-on-hops` without recreating a generic illustration under a new name?
 - Which standards authorities permit stable direct-source retrieval in the execution environment, and which need a separately cached official snapshot?
-- Does the revision-required rate remain near the observed 75.5% once less risky courses are reviewed? Recalculate after every 100 decisions.
+- Does the revision-required rate remain near the observed 75.2% once less risky courses are reviewed? Recalculate after every 100 decisions.
 
 ## Caveats and assumptions
 
 - Portfolio compression reduces repeated reading and orchestration; it does not constitute closure evidence.
 - Standards remain the largest semantic workload. Source caching saves tokens, but no benchmark is approved by analogy.
-- The disposition scenario is based on all 335 current reviewed lessons and is deliberately labeled as a scenario.
+- The disposition scenario is based on all 330 current reviewed lessons and is deliberately labeled as a scenario.
 - Shared renderer and semantic-figure scaling stops on any learner-visible mathematical, accessibility or state-synchronization failure.
