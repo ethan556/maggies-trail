@@ -27,15 +27,20 @@ describe("S269 Decimal Intro fixed-exemplar withholding", () => {
     }
   });
 
-  it("retains only generic hundredths-grid bindings and preserves all 18 lesson sources", () => {
+  it("retains only generic hundredths-grid bindings (plus the corrected tenths number line in dg4-01-03) and preserves all 18 lesson sources", () => {
     const ids = ["01-01", "01-02", "01-03", "01-04", "01-05", "01-06", "02-01", "02-02", "02-03", "02-04", "02-05", "02-06", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06"]
       .map((suffix) => `dg4-${suffix}`);
     let gridBindings = 0;
+    let tenthsLineBindings = 0;
     for (const id of ids) {
       const current = lesson(id);
       expect(current.id).toBe(id);
       gridBindings += current.steps.filter((step) => step.figure === "dpv-hundredths-grid").length;
+      tenthsLineBindings += current.steps.filter((step) => step.figure === "dpv-tenths-number-line").length;
     }
-    expect(gridBindings).toBe(20);
+    // S319: dg4-01-03's c1/c2 teach a 0-to-1 number line, not the hundredths grid — those two
+    // bindings moved from the generic grid to the dedicated number-line figure.
+    expect(gridBindings).toBe(18);
+    expect(tenthsLineBindings).toBe(2);
   });
 });

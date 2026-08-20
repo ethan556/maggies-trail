@@ -157,3 +157,19 @@ Wave 01 remains closed for product-state truth. S221 executed every available no
 | CL-P1-060 | P1 | Learner-screen focus | The expanded CML surface placed authoring labels, lifecycle metadata, invariants, transfer tags, move telemetry, reflection prompts, and multiple bordered cards between the mathematical model and retry feedback. | **CLOSED — ACTIVE TASK SIMPLIFIED** | Active and retry states now show only the model, specific state cue, and plain Undo/Reset controls. The optional post-checkpoint panel contains only equivalent mathematical forms. The accessible model description remains available under the learner-facing label `Describe this model`. Reopen if internal curriculum/process metadata returns to an active learner screen. |
 | CL-P1-061 | P1 | Pending-workload truth | The durable pending queue contained only illustration replacements, leaving notation, MCQ, prediction, interaction, engine, ledger, and program-wave work fragmented across separate audits and handovers. | **CLOSED — CONSOLIDATED QUEUE** | `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` now contains 11,487 current open rows across nine workstreams, with deterministic regeneration via `npm run audit:pending-workload`. Queue presence is not completion; each child item retains its own closure condition. |
 
+## Session 319 detector-refresh update
+
+Bounded reconciliation packet (`reports/closure/S319_DETECTOR_REFRESH.md`). Scope: read-only
+cross-check of the 27 currently OPEN `CLOSURE_LEDGER` rows against S316–S318 evidence; no writer
+other than `npm run audit:pending-workload` was executed. 25 of 27 rows had no S316–S318 evidence
+bearing on their stated closure condition and are unchanged (not reproduced below). The two rows
+below share one underlying child artifact (`reports/vis/VIS01_PLACEMENTS.csv`, the illustration
+withheld-placement detector) that S316–S318 drove to zero; both stay OPEN because their own
+recorded reopen/closure condition requires a human visual/accessible-description parity pass that
+no S316–S318 report performs or claims.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---:|---|---|---|---|
+| CL-P0-054 | P0 | Illustration/text truth | S316–S318 cleared every remaining `VIS01_PLACEMENTS.csv` `cause != RENDERS` row via four S318 lane clearances (G3, G4/G7+HS, K2) plus prior S316/S317 figure-truth fixes. Live re-measurement: 3,573/3,573 placements `RENDERS`, 0 withheld. | **SAFE RUNTIME / DETECTOR CLEAR — HUMAN PARITY REVIEW STILL OPEN** | Detector evidence: `reports/vis/VIS01_PLACEMENTS.csv` (0 non-`RENDERS` rows). Clearance evidence: `reports/closure/S318_G3_WITHHELD_CLEARANCE.md`, `S318_G4G7_WITHHELD_CLEARANCE.md`, `S318_HS_WITHHELD_CLEARANCE.md`, `S318_K2_WITHHELD_CLEARANCE.md`. None of these four reports records a screenshot, browser render, or human visual/accessible-description parity pass — this row's own reopen condition ("close the visual backlog only after each restored pairing passes human visual and accessible-description parity review") is therefore not met. Status stays OPEN; do not close without that review. |
+| CL-P0-056 | P0 | Illustration replacement coverage | Same underlying backlog as CL-P0-054, tracked through the consolidated queue this row itself cites. `PREMIUM_PENDING_WORKLOAD_QUEUE.csv` now regenerates with 0 `ILLUSTRATION_REPLACEMENT` rows (962 P0 + 116 P1 = 1,078 at S234; 0 now), because every placement the detector once flagged now renders per current source. | **OPEN — DETECTOR CLEAR / HUMAN PARITY REVIEW PENDING (was 1,078 REPLACEMENTS REQUIRED)** | Same evidence as CL-P0-054. Per the queue contract ("queue presence is not completion"), the inverse also holds — queue absence is not completion either. Close only after the same human parity review CL-P0-054 needs. |
+

@@ -81,22 +81,28 @@ describe("S246 Grade 4 decimals complete-course progression packet", () => {
       "dg4-02-04/c1", "dg4-02-04/c2", "dg4-02-05/c2", "dg4-03-01/c1", "dg4-03-01/c2", "dg4-03-02/c2",
       "dg4-03-03/c1", "dg4-03-04/c2", "dg4-03-05/c2", "dg4-03-06/c2",
     ]);
+    // S319: dg4-01-03 teaches tenths on a 0-to-1 number line, not the hundredths grid — c1 and
+    // c2 are correctly rebound to the dedicated number-line figure instead of the generic grid.
+    const rebound = new Map([["dg4-01-03/c1", "dpv-tenths-number-line"], ["dg4-01-03/c2", "dpv-tenths-number-line"]]);
     let retained = 0;
     for (const lessonId of LESSON_IDS) {
       const lesson = lessons[lessonId];
       for (const conceptId of ["c1", "c2"]) {
         const concept = step(lesson, conceptId);
-        if (withheld.has(`${lessonId}/${conceptId}`)) {
-          expect(concept.figure, `${lessonId}/${conceptId} fixed exemplar`).toBeUndefined();
+        const key = `${lessonId}/${conceptId}`;
+        if (withheld.has(key)) {
+          expect(concept.figure, `${key} fixed exemplar`).toBeUndefined();
+        } else if (rebound.has(key)) {
+          expect(concept.figure, `${key} rebound number line`).toBe(rebound.get(key));
         } else {
-          expect(concept.figure, `${lessonId}/${conceptId} generic grid`).toBe("dpv-hundredths-grid");
+          expect(concept.figure, `${key} generic grid`).toBe("dpv-hundredths-grid");
           retained += 1;
         }
       }
       expect(step(lesson, "i1").widget?.type, `${lessonId}/i1 visual host`).toBe("hundredthsGrid");
       expect(step(lesson, "i2").widget?.type, `${lessonId}/i2 visual host`).toBe("hundredthsGrid");
     }
-    expect(retained).toBe(20);
+    expect(retained).toBe(18);
   });
 
   it("assigns every challenge a distinct, grade-appropriate transfer job", () => {

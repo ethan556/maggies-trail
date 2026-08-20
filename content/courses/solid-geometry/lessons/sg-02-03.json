@@ -258,16 +258,16 @@
    "conceptTag": "sg-cavalieri-limits",
    "hints": [
     "Volume: Cavalieri with vertical height. Surface: the slant does the work.",
-    "The lateral surface of the sheared square prism is 4 rectangles along the slant edge 13.",
-    "Perimeter of the base times slant: 16 × 13."
+    "The lateral surface has 4 parallelogram faces — only the TWO facing the lean stretch to the slant edge 13; the other two keep the vertical height 12.",
+    "Two faces at 4 × 12, two faces at 4 × 13 — add all four."
    ],
    "explanationVariants": [
-    "Lateral surface = (perimeter)(slant) = 16 × 13 = 208 — versus the upright twin's 16 × 12 = 192. The shear added 16 of surface while adding zero volume.",
-    "16 × 13 = 208."
+    "Lateral surface = 2(base × height) + 2(base × slant) = 2(4 × 12) + 2(4 × 13) = 96 + 104 = 200 — versus the upright twin's 16 × 12 = 192. Only the two faces facing the lean actually stretch.",
+    "2(4×12) + 2(4×13) = 96 + 104 = 200."
    ],
    "widget": {
     "type": "exactNumberLab",
-    "prompt": "Same sheared prism (4×4 base, vertical height 12, slant edge 13). Its LATERAL surface area (the four side faces) = ?",
+    "prompt": "Same sheared prism (4×4 base, vertical height 12, slant edge 13 — the top slides 5 units parallel to one pair of the base's sides). Its LATERAL surface area (the four side faces) = ?",
     "task": "approximationEvaluate",
     "values": [],
     "approxConstants": [
@@ -277,27 +277,53 @@
       "value": 4
      },
      {
+      "id": "h",
+      "label": "the vertical height",
+      "value": 12
+     },
+     {
       "id": "l",
       "label": "the slant edge",
       "value": 13
      }
     ],
     "approxFormula": {
-     "op": "multiply",
+     "op": "add",
      "left": {
       "op": "multiply",
       "left": {
        "op": "lit",
-       "value": 4
+       "value": 2
       },
       "right": {
-       "op": "const",
-       "id": "s"
+       "op": "multiply",
+       "left": {
+        "op": "const",
+        "id": "s"
+       },
+       "right": {
+        "op": "const",
+        "id": "h"
+       }
       }
      },
      "right": {
-      "op": "const",
-      "id": "l"
+      "op": "multiply",
+      "left": {
+       "op": "lit",
+       "value": 2
+      },
+      "right": {
+       "op": "multiply",
+       "left": {
+        "op": "const",
+        "id": "s"
+       },
+       "right": {
+        "op": "const",
+        "id": "l"
+       }
+      }
      }
     },
     "approxRound": 0,
@@ -305,16 +331,16 @@
     "tolerance": 0.01,
     "numericErrors": [
      {
-      "value": 192,
-      "feedback": "192 is the UPRIGHT twin's lateral surface (16 × 12) — the sheared sides run along 13: 16 × 13 = 208."
+      "value": 208,
+      "feedback": "208 = perimeter × slant (16 × 13) overcounts — only the two faces facing the lean actually stretch to 13; the other two keep height 12: 2(4×12) + 2(4×13) = 200."
      },
      {
-      "value": 416,
-      "feedback": "416 doubles — four sides of 4 × 13 total (16)(13) = 208."
+      "value": 192,
+      "feedback": "192 is the UPRIGHT twin's lateral surface (16 × 12) — shearing elongates two of the four faces to the slant 13: 2(4×12) + 2(4×13) = 200."
      },
      {
       "value": 52,
-      "feedback": "52 = 4 × 13 is ONE face — all four: 208."
+      "feedback": "52 = 4 × 13 is ONE elongated face — its twin matches at 52, but the other two faces stay at 4 × 12 = 48 each: 2(48) + 2(52) = 200."
      }
     ],
     "choices": [],
@@ -322,8 +348,8 @@
     "requiredStageKeys": [],
     "requiredExplorations": 1,
     "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "Perimeter × slant = 16 × 13 = 208 — the surface pays for the lean that volume got free.",
-    "successFeedback": "Perimeter × slant = 16 × 13 = 208 — the surface pays for the lean that volume got free."
+    "fallbackFeedback": "Two faces keep their original height (4×12=48 each); the other two elongate to the slant (4×13=52 each): 2(48)+2(52) = 200 — only the faces facing the lean actually stretch.",
+    "successFeedback": "Two faces keep their original height (4×12=48 each); the other two elongate to the slant (4×13=52 each): 2(48)+2(52) = 200 — only the faces facing the lean actually stretch."
    },
    "variant": {
     "gen": "g10-solid-geometry",
@@ -335,7 +361,7 @@
    "kind": "recap",
    "body": "Edges of the principle.",
    "takeaways": [
-    "Cavalieri certifies volume ONLY — shearing preserves volume but grows lateral surface (12 → 13 per side).",
+    "Cavalieri certifies volume ONLY — shearing preserves volume but grows lateral surface: two faces stretch from height 12 to slant 13 (192 → 200 total).",
     "The converse fails: equal volumes never promise matching slices (post vs block).",
     "'Every level' is strict — barrels beat end-matched cylinders in the unchecked middle."
    ],

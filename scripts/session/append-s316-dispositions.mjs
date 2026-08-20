@@ -54,6 +54,23 @@ const ORDER = [
   "laneV-s318-k2qdprog-dispositions.jsonl",
   "laneV-s318-g3-dispositions.jsonl",
   "laneV-s318-final-dispositions.jsonl",
+  // S319 wave (2026-08-20, fourth session round)
+  "laneB-s319-dig4-mdf4-dispositions.jsonl",
+  "laneB-s319-as20-as100-dispositions.jsonl",
+  "laneB-s319-hmk-c120-dispositions.jsonl",
+  "laneB-s319-tse-ns-dispositions.jsonl",
+  "laneB-s319-rr-mc-dispositions.jsonl",
+  "laneB-s319-sim-gf-dispositions.jsonl",
+  "laneB-s319-asv-pq-dispositions.jsonl",
+  "laneB-s319-ca-dr-dispositions.jsonl",
+  "laneB-s319-cn-pf-dispositions.jsonl",
+  "laneB-s319-cs-pp-dispositions.jsonl",
+  "laneB-s319-cp-sg-dispositions.jsonl",
+  "laneB-s319-ft-pra-dispositions.jsonl",
+  "laneB-right-triangles-trig-dispositions.jsonl" ,
+  "laneA-s319-df3.jsonl",
+  "laneV-s319-fig-hs-dispositions.jsonl",
+  "laneV-s319-early-mid-dispositions.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 
@@ -78,6 +95,7 @@ for (const file of ORDER) {
     try { return JSON.parse(l); } catch (e) { problems.push(`${file}:${i + 1} bad JSON`); return null; }
   }).filter(Boolean);
   for (const r of recs) {
+    if (r.recordType !== "lesson-disposition") continue; // staging files may carry evidence/log records
     // Format normalization (verdicts untouched): some staging writers put prose,
     // null, or the synonym APPROPRIATE in the two sub-decision enum fields.
     // Map mechanically and record provenance in the rationale.

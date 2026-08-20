@@ -247,13 +247,14 @@ function BoxLayers() {
     return cells;
   };
   return (
-    <svg viewBox="0 0 220 130" role="img" className="mx-auto w-full max-w-xs">
-      <title>A box built from unit cubes: a base layer of 3 by 2 cubes, stacked 3 layers high; the highlighted bottom layer shows the base.</title>
-      {layer(96 - 2 * h)}
-      {layer(96 - h)}
-      {layer(96, true)}
-      <text x={158} y={118} fontSize={10} fontWeight={700} fill={TANGERINE}>base layer: 3 × 2</text>
-      <text x={158} y={40} fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>3 layers tall</text>
+    <svg viewBox="0 0 300 170" role="img" className="mx-auto w-full max-w-xs">
+      <title>A box built from unit cubes: a base layer of 3 by 2 cubes, stacked 4 layers high; the highlighted bottom layer shows the base.</title>
+      {layer(136 - 3 * h)}
+      {layer(136 - 2 * h)}
+      {layer(136 - h)}
+      {layer(136, true)}
+      <text x={158} y={158} fontSize={10} fontWeight={700} fill={TANGERINE}>base layer: 3 × 2</text>
+      <text x={158} y={26} fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>4 layers tall</text>
     </svg>
   );
 }
@@ -761,6 +762,31 @@ function AsvBoxesFit() {
       {Array.from({length:2},(_,r)=>Array.from({length:2},(_,c)=>(<rect key={`${r}-${c}`} x={44+c*38} y={34+r*28} width={34} height={24} fill={LEAF} fillOpacity={0.3} stroke={INK} strokeWidth={0.8}/>)))}
       <text x="150" y="52" fontSize="11" fill={INK}>big V ÷</text>
       <text x="150" y="70" fontSize="11" fill={INK}>small V</text>
+    </svg>
+  );
+}
+
+/** Grade 6 area-surface-volume figure: outside (surface area, square units) vs inside (volume, cubic units) on one 2×2×1 box. */
+function AsvSurfaceVsVolume() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="A 2 by 2 by 1 box split to contrast its outside and inside: its 6 outside faces give 16 square units of surface area, while the 4 unit cubes packed inside give 4 cubic units of volume.">
+      <title>Surface area covers the outside in square units; volume fills the inside in cubic units — same 2×2×1 box, two different questions.</title>
+      <text x="105" y="14" fontSize="10" fontWeight="800" fill={INK} textAnchor="middle">outside (surface area) vs inside (volume)</text>
+      <g>
+        <path d="M 16 66 L 52 66 L 66 54 L 30 54 Z" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1.3} />
+        <path d="M 16 66 L 16 82 L 52 82 L 52 66 Z" fill={SKY} opacity={0.55} stroke={INK} strokeWidth={1.3} />
+        <path d="M 52 66 L 66 54 L 66 70 L 52 82 Z" fill={SKY} opacity={0.28} stroke={INK} strokeWidth={1.3} />
+        <text x="48" y="100" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">6 faces</text>
+        <text x="48" y="112" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">= 16 sq units</text>
+      </g>
+      <g>
+        <rect x={128} y={54} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={148} y={54} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={128} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={148} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <text x="160" y="100" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">4 unit cubes</text>
+        <text x="160" y="112" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">= 4 cu units</text>
+      </g>
     </svg>
   );
 }
@@ -3222,6 +3248,27 @@ function DpvHundredthsGrid() {
       {Array.from({length:10},(_,r)=>Array.from({length:10},(_,c)=>{const col0=c===0;const cell=r===0&&c===2;return <rect key={`${r}-${c}`} x={70+c*7} y={20+r*7} width={7} height={7} fill={col0?SKY:(cell?BERRY:"#ffffff")} fillOpacity={col0?0.4:(cell?0.8:1)} stroke={INK} strokeWidth={0.4}/>;}))}
       <text x="30" y="60" fontSize="10" fontWeight="700" fill={SKY}>0.1</text>
       <text x="150" y="30" fontSize="10" fontWeight="700" fill={BERRY}>0.01</text>
+    </svg>
+  );
+}
+
+/** Grade 4 decimals-place-value figure: tenths on a 0-to-1 number line, with 0.4 marked four steps from 0. */
+function DpvTenthsNumberLine() {
+  const x0 = 24, x1 = 196;
+  const px = (n: number) => x0 + (n / 10) * (x1 - x0);
+  return (
+    <svg viewBox="0 0 210 84" role="img" aria-label="A number line from 0 to 1 split into ten equal tenth-steps, with a mark at 0.4 four steps from 0.">
+      <title>0.4 is four tenth-steps from 0 on the walk from 0 to 1.</title>
+      <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">0 to 1, ten tenth-steps</text>
+      <line x1={x0} y1="54" x2={x1} y2="54" stroke={INK} strokeWidth={2} />
+      {Array.from({ length: 11 }, (_, i) => {
+        const big = i === 0 || i === 10;
+        return <line key={i} x1={px(i)} y1={big ? 47 : 50} x2={px(i)} y2={big ? 61 : 58} stroke={INK} strokeWidth={big ? 1.6 : 1} />;
+      })}
+      <text x={px(0)} y="74" fontSize="11" fill={INK} textAnchor="middle">0</text>
+      <text x={px(10)} y="74" fontSize="11" fill={INK} textAnchor="middle">1</text>
+      <circle cx={px(4)} cy="54" r="5" fill={BERRY} />
+      <text x={px(4)} y="40" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">0.4</text>
     </svg>
   );
 }
@@ -26232,6 +26279,100 @@ function CaMvtParallel() {
   );
 }
 
+/** The +C family: F, F+3, F+6 stacked vertically — identical tangent slope at every matching x, only the height differs. */
+function CaPlusCFamily() {
+  const cx = 170, ux = 34, uy = 14, baseY = 172;
+  const g = (t: number) => 0.3 * t * t;
+  const curve = (C: number) => {
+    const pts: string[] = [];
+    for (let t = -3.2; t <= 3.2 + 1e-9; t += 0.2) {
+      pts.push(`${pts.length ? "L" : "M"}${(cx + t * ux).toFixed(1)},${(baseY - (g(t) + C) * uy).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  const xTag = 1.6;
+  const slope = 0.6 * xTag;
+  const tangent = (C: number, color: string) => {
+    const y0 = g(xTag) + C;
+    const dx = 0.9;
+    const x1 = xTag - dx, x2 = xTag + dx;
+    const y1 = y0 - slope * dx, y2 = y0 + slope * dx;
+    return <line x1={cx + x1 * ux} y1={baseY - y1 * uy} x2={cx + x2 * ux} y2={baseY - y2 * uy} stroke={color} strokeWidth={2.2} strokeDasharray="4 3" />;
+  };
+  const labelY = (C: number) => baseY - (g(xTag) + C) * uy - 10;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>A curve shown together with two vertical shifts of itself, all sharing the same shape. At the same x-value on every copy the tangent line has the identical slope — only the height differs, which is exactly what the plus C in an antiderivative family means.</title>
+      <path d={curve(0)} fill="none" stroke={SKY} strokeWidth={2.4} strokeLinecap="round" />
+      <path d={curve(3)} fill="none" stroke={LEAF} strokeWidth={2.4} strokeLinecap="round" />
+      <path d={curve(6)} fill="none" stroke={TANGERINE} strokeWidth={2.4} strokeLinecap="round" />
+      {tangent(0, SKY)}
+      {tangent(3, LEAF)}
+      {tangent(6, TANGERINE)}
+      <text x={296} y={labelY(0)} textAnchor="end" fontSize={11} fontWeight={800} fill={SKY}>F</text>
+      <text x={296} y={labelY(3)} textAnchor="end" fontSize={11} fontWeight={800} fill={LEAF}>F + 3</text>
+      <text x={296} y={labelY(6)} textAnchor="end" fontSize={11} fontWeight={800} fill={TANGERINE}>F + 6</text>
+      <text x={170} y={18} textAnchor="middle" fontSize={11.5} fontWeight={700} fill={INK}>same slope everywhere — only the height differs</text>
+    </svg>
+  );
+}
+
+/** Open-top box setup: a 12×12 sheet with side-x corner squares cut, folded into a base-(12−2x), height-x box. */
+function CaOpenBoxSetup() {
+  const s = 96, ox = 18, oy = 26, cut = 22;
+  const bx = 210, by = 150, bw = 90, bh = 46, bd = 26;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>Left: a flat 12 by 12 sheet with a square of side x cut from each of its four corners, and dashed fold lines marking an inner square of side 12 minus 2x. Right: the same sheet folded up into an open-top box with that base and height x, giving volume V equals x times the quantity 12 minus 2x, squared, for x between 0 and 6.</title>
+      <g>
+        <rect x={ox} y={oy} width={s} height={s} fill="none" stroke={INK} strokeWidth={1.8} />
+        <rect x={ox} y={oy} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + s - cut} y={oy} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox} y={oy + s - cut} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + s - cut} y={oy + s - cut} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + cut} y={oy + cut} width={s - 2 * cut} height={s - 2 * cut} fill={SKY} opacity={0.12} stroke={SKY} strokeWidth={1.4} strokeDasharray="4 3" />
+        <text x={ox + cut / 2} y={oy + cut / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>x</text>
+        <text x={ox + s / 2} y={oy - 8} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>12</text>
+        <text x={ox} y={oy + s / 2 + 4} textAnchor="end" fontSize={11} fontWeight={800} fill={INK}>12</text>
+        <text x={ox + s / 2} y={oy + s / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={700} fill={SKY}>12 − 2x</text>
+      </g>
+      <g>
+        <path d={`M ${bx} ${by} L ${bx} ${by - bh} L ${bx + bw} ${by - bh} L ${bx + bw} ${by} Z`} fill="white" stroke={INK} strokeWidth={1.5} />
+        <path d={`M ${bx + bw} ${by} L ${bx + bw + bd} ${by - bd} L ${bx + bw + bd} ${by - bd - bh} L ${bx + bw} ${by - bh} Z`} fill={TANGERINE} opacity={0.2} stroke={INK} strokeWidth={1.5} />
+        <path d={`M ${bx} ${by - bh} L ${bx + bd} ${by - bd - bh} L ${bx + bw + bd} ${by - bd - bh} L ${bx + bw} ${by - bh} Z`} fill="none" stroke={SKY} strokeWidth={1.8} />
+        <line x1={bx - 8} y1={by} x2={bx - 8} y2={by - bh} stroke={LEAF} strokeWidth={2.2} />
+        <text x={bx - 18} y={by - bh / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>x</text>
+        <text x={bx + bw / 2} y={by + 16} textAnchor="middle" fontSize={10} fontWeight={700} fill={SKY}>base: 12 − 2x</text>
+      </g>
+      <text x={170} y={182} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>V = x(12 − 2x)², 0 &lt; x &lt; 6</text>
+    </svg>
+  );
+}
+
+/** Fence-against-a-wall setup: the wall is free, two runs of length x are perpendicular to it, one run of length 100−2x is parallel to it. */
+function CaFenceAgainstWall() {
+  const left = 60, right = 260, top = 40, bottom = 130;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>A rectangular pen against a wall: the wall forms the top side for free, two fence runs of length x form the left and right sides, and one fence run of length 100 minus 2x forms the bottom side, parallel to the wall, using a total of 2x plus y equals 100 metres of fence.</title>
+      <line x1={left - 12} y1={top} x2={right + 12} y2={top} stroke={INK} strokeWidth={6} strokeLinecap="round" />
+      {Array.from({ length: 12 }, (_, i) => {
+        const x = left - 8 + (i * (right - left + 16)) / 11;
+        return <line key={i} x1={x} y1={top - 10} x2={x + 8} y2={top + 2} stroke={INK} strokeWidth={1.4} opacity={0.5} />;
+      })}
+      <text x={170} y={top - 16} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>wall (free — no fence)</text>
+      <rect x={left} y={top} width={right - left} height={bottom - top} fill={SKY} opacity={0.1} stroke="none" />
+      <line x1={left} y1={top} x2={left} y2={bottom} stroke={TANGERINE} strokeWidth={3} />
+      <line x1={right} y1={top} x2={right} y2={bottom} stroke={TANGERINE} strokeWidth={3} />
+      <line x1={left} y1={bottom} x2={right} y2={bottom} stroke={LEAF} strokeWidth={3} />
+      <text x={left - 18} y={(top + bottom) / 2} textAnchor="middle" fontSize={12} fontWeight={800} fill={TANGERINE} transform={`rotate(-90 ${left - 18} ${(top + bottom) / 2})`}>x</text>
+      <text x={right + 18} y={(top + bottom) / 2} textAnchor="middle" fontSize={12} fontWeight={800} fill={TANGERINE} transform={`rotate(-90 ${right + 18} ${(top + bottom) / 2})`}>x</text>
+      <text x={170} y={bottom + 22} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>y = 100 − 2x</text>
+      <text x={170} y={172} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>2x + y = 100 · A = x(100 − 2x)</text>
+    </svg>
+  );
+}
+
 function DcSpeedingUpSigns() {
   const cells = [
     { v: "+", a: "+", w: "SPEEDING UP", c: LEAF, s: "forward, and faster" },
@@ -29440,6 +29581,9 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "in-ftc-slope-is-height": InFtcSlopeIsHeight,
   "ca-first-derivative-story": CaFirstDerivativeStory,
   "ca-mvt-parallel": CaMvtParallel,
+  "ca-plus-c-family": CaPlusCFamily,
+  "ca-open-box-setup": CaOpenBoxSetup,
+  "ca-fence-against-wall": CaFenceAgainstWall,
   "dc-speeding-up-signs": DcSpeedingUpSigns,
   "ia-strip-to-disc": IaStripToDisc,
   "ia-top-bottom-swap": IaTopBottomSwap,
@@ -30831,6 +30975,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "asv-tri-prism": AsvTriPrism,
   "asv-frac-volume": AsvFracVolume,
   "asv-boxes-fit": AsvBoxesFit,
+  "asv-surface-vs-volume": AsvSurfaceVsVolume,
   "rr-equivalent": RrEquivalent,
   "rr-tools": RrTools,
   "rr-better-buy": RrBetterBuy,
@@ -30880,6 +31025,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "g3w-relevant-information": G3wRelevantInformation,
   "g3w-multiply-then-add": G3wMultiplyThenAdd,
   "dpv-hundredths-grid": DpvHundredthsGrid,
+  "dpv-tenths-number-line": DpvTenthsNumberLine,
   "dpv-place-names": DpvPlaceNames,
   "dpv-expanded": DpvExpanded,
   "dpv-words": DpvWords,

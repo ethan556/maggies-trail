@@ -184,3 +184,55 @@ schema 1840/1840 · pedagogy 1711/1711 · CML strict · registration · tsc clea
 audit green · full serial writer chain green (world manifest, claims+check, VIS01: ZERO non-render
 placements, alignment, parity [pre-existing 4-debt recorded state unchanged], semantic inventory) ·
 build exit 0 · SOURCE_SEAL_MATCH.
+
+---
+
+# S319 addendum (same day, fourth aggressive round — the mass-assessment wave)
+
+## Queue movement
+4,221 → **3,109 rows / 29 P0** (cumulative from honest LF baseline: 5,473 → 3,109, **−2,364, 43% of the
+programme closed in one session**; P0 104 → 29).
+
+## Delivered (all signed + independently verified; evidence in reports/closure/S319_*.md)
+- **Mass assessment**: 12 dual-course assessors signed 374 lessons across 24 courses in one batch
+  (decimals-intro-g4, mult-div-fluency-g4, add-subtract-20, add-subtract-100, how-many-k,
+  counting-120, two-step-equations, number-system, ratios-rates, measure-convert, similarity,
+  geometry-foundations, area-surface-volume, polygons-quadrilaterals, curve-analysis,
+  derivative-rules, complex-numbers, polynomial-functions, conic-sections, polar-parametric,
+  coordinate-proofs, solid-geometry, function-transformations, polynomial-rational-analysis):
+  329 KEEP / 44 REVISE / 1 ESCALATE (ns-03-02, engine-capability judgment for a human).
+- **All 44 REVISE contracts implemented AND verified KEEP in-session** across four packets, notably:
+  sg-02-03's wrong lateral-area answer key (208 → 200, derived twice independently via cross
+  products, approxFormula rebuilt through the engine's own evaluator); pra-03-03's false
+  removable-hole claim; 9 mult-div-fluency i1/i2 byte-duplicates; 11 course-slug jargon leaks in
+  coordinate-proofs; 5 how-many-k cross-lesson duplicates; 6 new/rebound truthful figures
+  (ca-plus-c-family, ca-open-box-setup, ca-fence-against-wall, asv-surface-vs-volume,
+  dpv-tenths-number-line, BoxLayers parameterized to the lesson's real 2×3×4).
+- **QUESTION_DIVERSITY P0 15 → 10, legitimately**: excellence-backlog generator traced, rerun after
+  ONE evidence-backed adjudication (df3-03-02 ruled intentional-assessment with lesson-level
+  evidence; entry in scripts/audit/excellence-dispositions-s126.json). 6 rows dropped on live
+  tier-climb, 9 remain genuinely open (need extend/multi-engine design work — real debt, listed in
+  S319_EXCELLENCE_REFRESH.md). CLOSURE_LEDGER rows honestly left OPEN (their conditions demand
+  human visual review; Session-319 evidence table appended to CLOSURE_LEDGER.md).
+- rt-01-04/rt-05-04 length-parity contracts implemented+verified.
+- **421 further signed dispositions appended (session total: 1,037).**
+
+## New open debt found by verifiers (documented, not hidden)
+- vm-04-01 (volume-measurement) binds box-layers with mismatched prose — PRE-EXISTING both before
+  and after the parameterization; needs its own contract.
+- g4m-02-03/ch1 vs g4m-02-05/k1: cross-lesson byte-duplicate fact (1,393÷7) — new finding beyond
+  the original within-lesson scan.
+- ns-01-01/k3 "wait" scratch fragment (uncontracted); ns-03-02 ESCALATE (numberLineHop 5-hopper
+  promise vs engine gap, KNOWN_ISSUES S119).
+
+## Gates at S319 close
+schema 1840/1840 · pedagogy 1711/1711 · CML strict · registration · tsc clean · adversarial figure
+audit green · viewport parity outside=260 ≤261 (fixed 3 new + 2 inherited overruns in this wave's
+components; budget untouched) · full serial writer chain green, VIS01 still ZERO withheld · build
+exit 0 · SOURCE_SEAL_MATCH.
+
+## Remaining queue shape (3,109)
+792×3 per-lesson review streams (~78 courses still unassessed — the mass-assessment pattern above
+closes ~1,100 rows per 12-agent wave), CHOICE_SURFACE 447 (131 contracts; generator microbatches
+never yet run as a dedicated lane), PROGRESSION 228 (52 course contracts), CLOSURE_LEDGER 27,
+REVISION 12, QD 10, V4_PHASE 7, STANDARDS 2 (held per programme rule).
