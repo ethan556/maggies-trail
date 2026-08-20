@@ -48,6 +48,93 @@ export const PlotDataSpec = z.object({
 });
 export type TPlotData = z.infer<typeof PlotDataSpec>;
 
+/** DISPLAY ONLY — the bar-graph analogue of `PlotDataSpec` (S317). Several `measurement-data`
+ * bar-graph lessons (md-03-02, md-03-03) narrate specific category/value data in prose —
+ * "A bar graph shows: dogs 8, cats 6, fish 3, birds 5" — and render nothing: `plotData` covers
+ * line/dot plots, but no schema field lets a `numeric`, `mcq`, `matchPairs`, `dragOrder`, or
+ * `dragBucket` step draw the actual bar chart its prompt already describes
+ * (`reports/closure/S316_LANEB_MEASUREMENT_DATA_ASSESSMENT.md`).
+ *
+ * THE CONTRACT, copied from `PlotDataSpec`:
+ *   - never read by `evaluate`, `canCheck`, `correctAnswerText`, or any grading path;
+ *   - absent by default, so every other consumer of these five spec types is byte-identical;
+ *   - what it draws is a GIVEN the prompt already states, so showing it leaks no more than the
+ *     prompt itself already reveals — exactly the `md3-bargraph`/`Md3QuestionPictograph` house
+ *     pattern this closes the gap for. */
+export const BarDataSpec = z.object({
+  /** One label per bar, left to right. Must be distinct — two identically-labelled bars cannot
+   * be told apart on the chart or by a screen reader. */
+  categories: z.array(z.string().min(1)).min(2),
+  /** One non-negative height per category, same order and length as `categories`. */
+  values: z.array(z.number().nonnegative()).min(2),
+  /** Optional chart title (defaults to a generic "Bar graph" caption). */
+  title: z.string().min(1).optional(),
+  /** Optional value-axis label ("votes", "books"). */
+  axisLabel: z.string().min(1).optional(),
+  /** Gridline interval. Absent = a quarter of `axisMax` (at least 1), i.e. roughly four ticks. */
+  scaleStep: z.number().positive().optional(),
+  /** Top of the value axis. Absent = the tallest bar's own value — the axis never promises more
+   * scale than the data uses. */
+  axisMax: z.number().positive().optional(),
+  /** How each bar's height is exposed to a reader (S317 round 2). Absent = "all": the SAME
+   * behaviour as before this field existed — every bar's exact value is printed above the bar and
+   * stated plainly as "category: value" in the aria-label. Correct whenever the prompt already
+   * states every value in prose (charting identical numbers adds no new leak), which is every
+   * declared use except the two named below.
+   *
+   * "none": the SVG prints category and axis labels only — no per-bar numeric text — and the
+   * aria-label describes each bar's height by its POSITION relative to the labeled gridlines
+   * ("ends on the 2nd gridline above zero", "ends halfway between the 2nd gridline and the 3rd
+   * gridline") rather than stating the value outright. Use this ONLY where the bar's own value is
+   * the un-stated, graded quantity a check exists to test — printing it would hand over the answer
+   * a sighted learner is still asked to derive by reading the scale (md-03-02 `i1`, a match-the-
+   * value-to-the-line task, and `ch1`, whose challenge grades the un-stated halfway height of
+   * Bar B). Ordinal gridline counting never repeats a category's own line-count back as its
+   * computed value, so it adds zero information beyond what the category label / prompt already
+   * states, in either mode. */
+  valueLabels: z.enum(["all", "none"]).optional()
+});
+export type TBarData = z.infer<typeof BarDataSpec>;
+
+/** The most bars a chart may draw before the picture stops being readable at a phone width —
+ * the same judgement `MAX_PLOT_COLUMNS` makes for the line-plot figure, stated once for bars. */
+export const MAX_BAR_COLUMNS = 8;
+
+/** The chart resolved from the spec — the SINGLE source the renderer draws from and the
+ * accessible description speaks, so the picture on screen and the sentence a screen reader hears
+ * can never disagree (the `plotDataParts` contract, applied to bars).
+ *
+ * Returns null — draw nothing, say nothing — when the step declares no `barData`, or when the
+ * declared data is not something a chart can honestly show: a value per category missing, fewer
+ * than 2 or more than `MAX_BAR_COLUMNS` bars, duplicate category labels, a negative value, or a
+ * value taller than its own axis. Pure, total, never throws. DISPLAY ONLY: no caller grades
+ * with it. */
+export function barDataParts(
+  spec: { barData?: TBarData }
+): { categories: string[]; values: number[]; title?: string; axisLabel?: string; scaleStep: number; axisMax: number; valueLabels: "all" | "none" } | null {
+  const d = spec.barData;
+  if (!d) return null;
+  const { categories, values } = d;
+  if (categories.length !== values.length) return null;
+  if (categories.length < 2 || categories.length > MAX_BAR_COLUMNS) return null;
+  if (new Set(categories).size !== categories.length) return null;
+  if (values.some((v) => v < 0)) return null;
+  const maxVal = Math.max(...values);
+  const axisMax = d.axisMax ?? maxVal;
+  if (!(axisMax > 0) || maxVal > axisMax) return null;
+  const scaleStep = d.scaleStep ?? Math.max(1, axisMax / 4);
+  if (!(scaleStep > 0)) return null;
+  return {
+    categories: [...categories],
+    values: [...values],
+    title: d.title,
+    axisLabel: d.axisLabel,
+    scaleStep,
+    axisMax,
+    valueLabels: d.valueLabels ?? "all"
+  };
+}
+
 export const McqSpec = z.object({
   type: z.literal("mcq"),
   prompt: z.string().min(1),
@@ -59,6 +146,10 @@ export const McqSpec = z.object({
    * plot show?") — drawing the plot there would print the answer. Grading never reads it:
    * evaluate() looks at option ids alone, byte-identical with or without the field. */
   plotData: PlotDataSpec.optional(),
+  /** DISPLAY ONLY — see `BarDataSpec`. Same leakage rule as `plotData` above: correct for "read
+   * the bar graph" questions whose options interpret a dataset the prompt already states; wrong
+   * for any step where an option IS the dataset. Grading is untouched either way. */
+  barData: BarDataSpec.optional(),
   options: z
     .array(
       z.object({
@@ -114,6 +205,8 @@ export const NumericSpec = z.object({
   unit: z.string().optional(),
   /** DISPLAY ONLY — see `PlotDataSpec`. The line plot the prompt describes, drawn. */
   plotData: PlotDataSpec.optional(),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** DISPLAY ONLY — never read by `evaluate`, `canCheck`, `correctAnswerText` or any
    * integrity rule. Set it when the step asks for a NUMERATOR over a denominator the
    * PROMPT has already fixed ("How many fourths are shaded?"): the widget then draws the
@@ -374,6 +467,8 @@ export const DragOrderSpec = z.object({
   /** Presented top-to-bottom in this (shuffled) order. */
   items: z.array(z.object({ id: z.string().min(1), label: z.string().min(1) })).min(3),
   correctOrder: z.array(z.string().min(1)).min(3),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** Anticipated transpositions: fires when `first` is placed anywhere before `second`. */
   misorderFeedback: z
     .array(z.object({ first: z.string(), second: z.string(), feedback: z.string().min(1) }))
@@ -399,6 +494,8 @@ export const DragBucketSpec = z.object({
       })
     )
     .min(2),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   missFeedback: z.string().min(1),
   successFeedback: z.string().min(1)
 });
@@ -410,6 +507,8 @@ export const MatchPairsSpec = z.object({
   right: z.array(z.object({ id: z.string().min(1), label: z.string().min(1) })).min(2),
   /** leftId → rightId */
   pairs: z.record(z.string(), z.string()),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** Anticipated wrong links with diagnosis. */
   pairErrors: z
     .array(z.object({ left: z.string(), right: z.string(), feedback: z.string().min(1) }))
@@ -6995,12 +7094,44 @@ function plotDataIntegrityErrors(where: string, d: TPlotData): string[] {
   return errs;
 }
 
+/** The authoring rules for the display-only `barData` block (S317), in one place because
+ * `numeric`, `mcq`, `matchPairs`, `dragOrder`, and `dragBucket` share the field and must never
+ * diverge on what a drawable bar chart is. Every rule here is a reason `barDataParts` would
+ * refuse to draw, stated as a message an author can act on. */
+function barDataIntegrityErrors(where: string, d: TBarData): string[] {
+  const errs: string[] = [];
+  if (d.categories.length !== d.values.length)
+    errs.push(`${where}: barData needs one value per category (${d.categories.length} categories, ${d.values.length} values)`);
+  if (d.categories.length < 2)
+    errs.push(`${where}: barData needs at least 2 bars to be worth drawing`);
+  if (d.categories.length > MAX_BAR_COLUMNS)
+    errs.push(`${where}: barData has ${d.categories.length} bars; the chart draws at most ${MAX_BAR_COLUMNS}`);
+  if (new Set(d.categories).size !== d.categories.length)
+    errs.push(`${where}: barData category labels must be distinct — two identically-labelled bars cannot be told apart`);
+  if (d.values.some((v) => v < 0))
+    errs.push(`${where}: barData values must be non-negative — a bar cannot have negative height`);
+  if (d.axisMax !== undefined && d.values.some((v) => v > d.axisMax!))
+    errs.push(`${where}: barData has a value taller than its own axisMax — the bar would draw off the chart`);
+  if (d.scaleStep !== undefined && !(d.scaleStep > 0))
+    errs.push(`${where}: barData scaleStep must be positive`);
+  // Last line of defence: whatever the rules above missed, the renderer's own resolver decides.
+  if (errs.length === 0 && barDataParts({ barData: d }) === null)
+    errs.push(`${where}: barData cannot be drawn — the renderer would show nothing`);
+  return errs;
+}
+
 export function widgetIntegrityErrors(spec: TWidget): string[] {
   const errs: string[] = [];
   // Display-only, shared by three surfaces, and therefore checked before the per-type switch:
   // no branch owns it and none may drift from the others on what it means. (S238 added mcq.)
   if ((spec.type === "numeric" || spec.type === "fractionEntry" || spec.type === "mcq") && spec.plotData)
     errs.push(...plotDataIntegrityErrors(spec.type, spec.plotData));
+  // Same discipline for bars (S317): five surfaces share the field and must never diverge.
+  if (
+    (spec.type === "numeric" || spec.type === "mcq" || spec.type === "matchPairs" || spec.type === "dragOrder" || spec.type === "dragBucket") &&
+    spec.barData
+  )
+    errs.push(...barDataIntegrityErrors(spec.type, spec.barData));
   switch (spec.type) {
     case "numberLineRay": {
       const w = spec.window;

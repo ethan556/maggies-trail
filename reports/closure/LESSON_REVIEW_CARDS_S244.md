@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `65380dae339a7e7a44a1431c75f070b41fc99660b545d00f0dd59b468113fceb`
-- Queue-compatible lesson-only seal: `71e2b0a55839f8a5c6d64c15f749691eaf3a9cd5b21336ffe46189555c8d1b4c`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `71e2b0a55839f8a5c6d64c15f749691eaf3a9cd5b21336ffe46189555c8d1b4c`)
+- Review-basis seal (lessons plus course/grade metadata): `7e099198d46ae8099bb1e7fd26f5206522e2456ba61f6970cfe71170233fd2c8`
+- Queue-compatible lesson-only seal: `887e58b0d73033f93a84d2e566131f01aa0eadf17e706c85ad46eeff3c9604c6`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `887e58b0d73033f93a84d2e566131f01aa0eadf17e706c85ad46eeff3c9604c6`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -15,9 +15,9 @@ These counts overlap and must not be summed as independent lesson defects.
 
 | Judgment / evidence packet | Explicitly closed | Pending / flagged |
 |---|---:|---:|
-| Whole-lesson KEEP / REVISE / ESCALATE | 417 | 1,284 lessons |
-| Visual required / preferred / sufficient | 417 | 1,284 lessons |
-| Grade-band language fitness | 417 | 1,284 lessons |
+| Whole-lesson KEEP / REVISE / ESCALATE | 485 | 1,216 lessons |
+| Visual required / preferred / sufficient | 485 | 1,216 lessons |
+| Grade-band language fitness | 485 | 1,216 lessons |
 | Standards edge approval / rejection | 6,119 | 2 edges |
 | Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
 | Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 60 clusters / 133 placements |

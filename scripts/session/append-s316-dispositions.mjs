@@ -39,6 +39,14 @@ const ORDER = [
   "laneBV2-dispositions.jsonl",
   "laneAV4-final-dispositions.jsonl",
   "laneAV4-g2-g3-dispositions.jsonl",
+  // S317 wave (2026-08-20, second session round)
+  "laneB-data-distributions-dispositions.jsonl",
+  "laneB-statistical-inference-dispositions.jsonl",
+  "laneB-fractions-dispositions.jsonl",
+  "laneB-conditional-probability-dispositions.jsonl",
+  "laneV-s317-batch1-dispositions.jsonl",
+  "laneV-s317-batch2-dispositions.jsonl",
+  "laneV-s317-final-dispositions.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 
@@ -54,6 +62,7 @@ const existingIds = new Set(
 
 const out = [];
 const problems = [];
+let skippedAlreadyAppended = 0;
 const seenNewIds = new Set();
 for (const file of ORDER) {
   const p = path.join(stagingDir, file);
@@ -81,7 +90,8 @@ for (const file of ORDER) {
     const errs = [];
     if (r.recordType !== "lesson-disposition") errs.push("recordType");
     if (!r.recordId) errs.push("recordId");
-    if (existingIds.has(String(r.recordId)) || seenNewIds.has(String(r.recordId))) errs.push("duplicateRecordId");
+    if (existingIds.has(String(r.recordId))) { skippedAlreadyAppended += 1; continue; } // idempotent re-run
+    if (seenNewIds.has(String(r.recordId))) errs.push("duplicateRecordId");
     if (!allowedLesson.has(r.decision)) errs.push("decision");
     if (!allowedVisual.has(r.visualDecision)) errs.push("visualDecision");
     if (!allowedLanguage.has(r.gradeLanguageDecision)) errs.push("gradeLanguageDecision");
@@ -97,7 +107,7 @@ for (const file of ORDER) {
   }
 }
 
-console.log(JSON.stringify({ files: ORDER.length, validRecords: out.length, problems }, null, 2));
+console.log(JSON.stringify({ files: ORDER.length, validRecords: out.length, skippedAlreadyAppended, problems }, null, 2));
 if (problems.length) process.exit(1);
 if (process.argv.includes("--write")) {
   const text = out.map(({ record }) => JSON.stringify(record)).join("\n");

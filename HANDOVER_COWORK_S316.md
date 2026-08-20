@@ -99,3 +99,40 @@ rest with evidence. Do not claim "all tests green" on any platform until this is
   lesson-review-cards → S247 compile → work cache (SOURCE_SEAL_MATCH). validate:content 1840/1840,
   lint:pedagogy 1711/1711, cml strict clean, check-registration consistent, tsc clean,
   validate:native archive-only findings, build exit 0.
+
+---
+
+# S317 addendum (same day, second aggressive round)
+
+## Queue movement
+4,676 → **4,451 rows / 101 P0** (cumulative from honest LF baseline: 5,473 → 4,451, −1,022).
+
+## Delivered (all signed + independently verified; evidence in reports/closure/S317_*.md)
+- All prior open contracted debt implemented and verified: place-value 12/12 (figure-prose truth incl.
+  the 368/349 contradiction, two new Pv3EstimatePair figures, 13 mcq length rebalances, 545→546),
+  f20 5×R6 answer-on-screen, g3f-01-04 residuals, mmt-02-01 estimateSlider ascending reorder.
+- Engineering: ScatterFitW metric label corrected to MSE + residual accessibility (widget AND
+  describeState panel); **barData mechanism** built end-to-end (BarDataSpec in schema.ts, accessible
+  BarChartFigure with valueLabels:"all"|"none" anti-leak mode, authored onto md-03-02/03 where
+  truthful, one honest fail-close md-03-02/k2, 35 new tests incl. an exact corpus allowlist gate).
+- 4 new course assessments (67 lessons): data-distributions 17K/1R, statistical-inference 11K/7R,
+  fractions 9K/6R, conditional-probability 12K/4R — and ALL their REVISE contracts implemented and
+  verified in-session (13 mcq length-leak rebalances + si-01-02 teaser; fr-04-01/02/04 figure truth
+  via two new parameterized comparison figures; BOTH cpr P0 withheld-figure rows legitimately
+  cleared: cpr-03-03 reword off a stale blocklist fingerprint, cpr-05-01 fixed-exemplar restatement).
+- Gate items: retired the dangling cpr-03-03 manual hold (audit's bind-exactly-once invariant);
+  pv-02-04 prose reword to clear an OPERATION_CONFLICT heuristic false-positive; cpr-05-01 c2
+  tightened to the 80-word cap. schema.algebraTilesArea count pin (28 vs 29) confirmed PRE-EXISTING
+  at clean HEAD — left in the documented platform-red set.
+- 111 further signed dispositions appended (S317 records; append script extended, idempotent).
+
+## Gates at S317 close
+schema 1840/1840 · pedagogy 1711/1711 · CML strict clean · registration consistent · tsc clean ·
+figure adversarial audit green · figureViewportParity green · barData/plotData/describeState suites
+green · build exit 0 · SOURCE_SEAL_MATCH.
+
+## Remaining open debt (beyond the S316 list, updated)
+- dd course-wide mild length-parity pattern (8 lessons, non-blocking editorial notes).
+- session195 g3f-01-04 `.variant.gen` dereference red (pre-existing class, documented).
+- manualHolds follow-ups: none dangling; legacy zero-binding blocklist keys await their reviewed
+  removal wave. Platform-red reconciliation (~318 tests at clean HEAD) still the top next-session item.

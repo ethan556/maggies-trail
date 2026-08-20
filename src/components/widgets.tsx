@@ -43,7 +43,8 @@ import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, 
   rotationLabMapsOntoSelf,
   numericPreviewParts,
   partitionBarDrawable,
-  plotDataParts
+  plotDataParts,
+  barDataParts
 } from "@/lib/schema";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import {
@@ -463,10 +464,13 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
   // and `fractionEntry` draw, resolved through the same function, placed the same way: prompt,
   // plot, then the options. A spec without `plotData` renders exactly as it always has.
   const plot = plotDataParts(spec);
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec) — same placement as `plot`.
+  const bars = barDataParts(spec);
   return (
     <div role="radiogroup" aria-label={accessibleMathText(spec.prompt)} className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
+      {bars && <BarChartFigure parts={bars} />}
       {ordered.map((o) => {
         const selected = value === o.id;
         const ghost = reveal && o.correct;
@@ -593,6 +597,120 @@ function LinePlotFigure({ parts }: { parts: NonNullable<ReturnType<typeof plotDa
   );
 }
 
+/** "1st"/"2nd"/"3rd"/"4th"… — the English ordinal suffix for a non-negative integer gridline
+ * count, shared by `barGridlinePosition` below. */
+function ordinalWord(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
+}
+
+/** Describes a bar's height by its POSITION relative to the axis gridlines — an ORDINAL gridline
+ * count only, never a gridline's own numeric label — so the sentence repeats zero information
+ * beyond what the category itself already states. Backs `valueLabels: "none"` (`BarDataSpec`,
+ * S317 round 2): used only where the bar's own value IS the graded/un-stated quantity a check
+ * exists to test (md-03-02 `i1`'s match-the-value-to-the-line task; `ch1`'s un-stated Bar-B
+ * height), so the accessible description must demand the SAME derivation — count gridlines
+ * against the labelled scale — a sighted learner performs by eye, rather than handing the number
+ * over as a flat "category: value" fact. */
+function barGridlinePosition(category: string, value: number, scaleStep: number): string {
+  const steps = value / scaleStep;
+  const nearest = Math.round(steps);
+  if (Math.abs(steps - nearest) < 1e-6) {
+    return nearest === 0
+      ? `${category} sits at the baseline (zero).`
+      : `${category} ends on the ${ordinalWord(nearest)} gridline above zero.`;
+  }
+  const lo = Math.floor(steps);
+  const hi = lo + 1;
+  const frac = steps - lo;
+  const loLabel = lo === 0 ? "the baseline" : `the ${ordinalWord(lo)} gridline`;
+  const hiLabel = `the ${ordinalWord(hi)} gridline`;
+  const between = Math.abs(frac - 0.5) < 1e-6 ? "halfway between" : "between";
+  return `${category} ends ${between} ${loLabel} and ${hiLabel} above zero.`;
+}
+
+/** The bar graph a prompt DESCRIBES, drawn — the bar-chart analogue of `LinePlotFigure`, shared
+ * by `numeric`, `mcq`, `matchPairs`, `dragOrder`, and `dragBucket` through their optional
+ * `barData` block (see `BarDataSpec`, schema.ts; S317).
+ *
+ * Unlike `LinePlotFigure`, this figure is NOT `aria-hidden`: `role="img"` plus a `<title>` and a
+ * full `aria-label` carry the same category/value/scale facts a sighted learner reads off the
+ * bars and axis, so the picture and what a screen reader hears can never disagree (drawn from
+ * the SAME `barDataParts` call the caller resolves).
+ *
+ * `valueLabels` (S317 round 2; independent verification, `S317_BATCH1_VERIFICATION.md` md-03-02):
+ * "all" (default) prints every bar's own value above the bar and states it plainly as
+ * "category: value" in the aria-label — a non-colour cue, correct whenever the prompt already
+ * states every value in prose, so charting the identical numbers adds no new leak. "none" omits
+ * the per-bar numeric text entirely (category labels and the labelled axis still render) and
+ * describes each bar's height by POSITION instead (`barGridlinePosition`) — for the rare step
+ * where the bar's own value is the un-stated, graded quantity a check exists to test, so the
+ * chart must not hand it over as a flat fact. */
+function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDataParts>> }): ReactElement {
+  const { categories, values, title, axisLabel, scaleStep, axisMax, valueLabels } = parts;
+  const showValues = valueLabels !== "none";
+  const W = 320, H = 220, padX = 46, padTop = 30, baseY = H - 40;
+  const barW = (W - 2 * padX) / categories.length;
+  const hScale = linScale(0, axisMax, baseY, padTop);
+  const ticks: number[] = [];
+  for (let g = 0; g <= axisMax + 1e-9; g += scaleStep) ticks.push(Number(tickText(g)));
+  const chartTitle = title ?? "Bar graph";
+  const unitSuffix = axisLabel ? ` ${axisLabel}` : "";
+  const spoken =
+    `${chartTitle}${axisLabel ? `, ${axisLabel}` : ""}. Scale in steps of ${tickText(scaleStep)} up to ${tickText(axisMax)}. ` +
+    (showValues
+      ? categories.map((c, i) => `${c}: ${tickText(values[i])}${unitSuffix}`).join("; ") + "."
+      : categories.map((c, i) => barGridlinePosition(c, values[i], scaleStep)).join(" "));
+  const catFont = Math.max(7, Math.min(10, Math.floor(((barW - 4) / (Math.max(1, ...categories.map((c) => c.length)) * 5.5)) * 2) / 2));
+  return (
+    <svg
+      data-testid="bar-chart-figure"
+      viewBox={`0 0 ${W} ${H}`}
+      className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white"
+      role="img"
+      aria-label={spoken}
+    >
+      <title>{chartTitle}</title>
+      <text data-testid="bar-chart-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{chartTitle}</text>
+      {ticks.map((g) => (
+        <g key={g}>
+          <line data-testid="bar-chart-grid" x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={0.16} />
+          <line data-testid="bar-chart-tick" x1={padX - 5} y1={hScale(g)} x2={padX} y2={hScale(g)} stroke={PALETTE.ink} strokeWidth={1.4} />
+          <text data-testid="bar-chart-tick-value" x={padX - 8} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.72}>{tickText(g)}</text>
+        </g>
+      ))}
+      {categories.map((c, i) => {
+        const inset = barW * 0.18;
+        const x = padX + i * barW + inset;
+        const w = barW * 0.64;
+        const top = hScale(values[i]);
+        return (
+          <g key={c}>
+            <rect data-testid="bar-chart-bar" x={x} y={top} width={w} height={Math.max(0, baseY - top)} rx={2} fill={PALETTE.sky} stroke={PALETTE.ink} strokeOpacity={0.3} strokeWidth={1} />
+            {showValues && (
+              <text data-testid="bar-chart-value" x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{tickText(values[i])}</text>
+            )}
+            <text data-testid="bar-chart-category" x={x + w / 2} y={baseY + 13} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>
+          </g>
+        );
+      })}
+      <line x1={padX} y1={padTop} x2={padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+      <line x1={padX} y1={baseY} x2={W - padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+      {axisLabel && (
+        <text data-testid="bar-chart-axis-label" x={12} y={(padTop + baseY) / 2} transform={`rotate(-90 12 ${(padTop + baseY) / 2})`} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>
+          {axisLabel}
+        </text>
+      )}
+    </svg>
+  );
+}
+
 /** ONE den-partition bar with `shaded` cells filled — the shared drawing behind every live
  * "what you just typed" preview (fractionEntry's fraction part, numeric's fixed-denominator
  * bar). ROLE.active sky for filled cells, #fff for the remainder, ink hairlines between.
@@ -648,10 +766,14 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
   // directly under the prompt that names it and above the box — prompt, then plot, then answer.
   // A spec without `plotData` resolves to null here and renders exactly as it always has.
   const plot = plotDataParts(spec);
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). Same placement rule as
+  // `plot` above: prompt, chart, then the answer field. Absent barData renders exactly as before.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
+      {bars && <BarChartFigure parts={bars} />}
       {/* S238 — the control names WHAT IT TAKES, not the task. The whole prompt sentence as
           the input's accessible name was the last class-B naming instance recorded in the S238
           batch-3 log: the prompt is already on screen and read in document order, so repeating
@@ -9736,6 +9858,33 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
   const xAxisLabel = spec.xAxisLabel ?? "x";
   const yAxisLabel = spec.yAxisLabel ?? "y";
   const pointSummary = spec.points.map(([px, py]) => `(${fmt(px)}, ${fmt(py)})`).join(", ");
+  /* S317 (bv-05-03 fail-close, `reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl`
+   * S247-BV-bv-05-03-OLS-SUPERSESSION). `mse` above (line ~9792) sums each squared residual and
+   * DIVIDES BY `spec.points.length` — that is the MEAN of the squared residuals, not their sum,
+   * and `evaluate.ts`'s `scatterFit` case computes and grades the identical mean-squared formula
+   * against `spec.tolerance`. The old visible readout called this quantity "miss" with no unit —
+   * neither "mean" nor "sum" — while every scatterFit lesson's learner-facing text (e.g.
+   * bv-05-03's "their squared sum, 0.70, is the smallest possible") talks about the SUM of squared
+   * residuals (SSE), a different number (SSE = MSE × n). Relabelling "miss" as literally "SSE"
+   * would be false — the formula computed and graded here is the mean, not the sum — so per the
+   * signed rationale's own reopenCondition ("names its displayed quantity as mean squared
+   * residual... or displays SSE consistently") the fix taken is to NAME the metric correctly
+   * (mean squared residual / MSE) rather than change what is computed or graded. The math is
+   * unchanged: `mse`, `mseOf`, and every `setMB`/`evaluate.ts` call below and in evaluate.ts are
+   * byte-identical to before this comment.
+   *
+   * Per-point residuals (visible already as the thin berry whiskers in the SVG below) are now
+   * spoken too, so the accessible description carries the same residual/metric state a sighted
+   * learner reads off the picture — the reopenCondition's other ask ("SVG/state accessibility
+   * description communicates the data points, residual evidence, and current scored fit
+   * metric"). */
+  const residuals = spec.points.map(([px, py]) => py - (m * px + b));
+  const residualSummary = spec.points
+    .map(([px, py], i) => `(${fmt(px)}, ${fmt(py)}) residual ${residuals[i] >= 0 ? "+" : "−"}${fmt(Math.abs(residuals[i]))}`)
+    .join(", ");
+  const withinTolerance = mse <= spec.tolerance;
+  const metricSummary =
+    `Mean squared residual (MSE): ${fmt(mse)}, ${withinTolerance ? "at or under" : "above"} the target tolerance of ${fmt(spec.tolerance)}.`;
 
   // Direct manipulation: two handles RIDE the trend line, accent-matched to
   // their sliders — the sky handle LIFTS the whole line (changes b, slope
@@ -9803,7 +9952,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <p data-testid="sf-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`${title}. ${xAxisLabel} from ${fmt(spec.xMin)} to ${fmt(spec.xMax)}; ${yAxisLabel} from ${fmt(spec.yMin)} to ${fmt(spec.yMax)}. Points: ${pointSummary}. Current line: y equals ${fmt(m)} x ${b >= 0 ? "plus" : "minus"} ${fmt(Math.abs(b))}.`}>
+        role="img" aria-label={`${title}. ${xAxisLabel} from ${fmt(spec.xMin)} to ${fmt(spec.xMax)}; ${yAxisLabel} from ${fmt(spec.yMin)} to ${fmt(spec.yMax)}. Points: ${pointSummary}. Current line: y equals ${fmt(m)} x ${b >= 0 ? "plus" : "minus"} ${fmt(Math.abs(b))}. Residuals: ${residualSummary}. ${metricSummary}`}>
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
         <g data-testid="sf-minor-grid" aria-hidden="true">
           {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.055} strokeWidth={0.7} />)}
@@ -9869,7 +10018,17 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
       </p>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         y = {fmt(m)}x {b >= 0 ? "+" : "−"} {fmt(Math.abs(b))}
-        <span className={`ml-3 text-sm ${mse <= spec.tolerance ? "text-leaf-ink" : "text-ink/70"}`}>miss = {fmt(mse)}</span>
+        <span data-testid="sf-mse-readout" className={`ml-3 text-sm ${withinTolerance ? "text-leaf-ink" : "text-ink/70"}`}>
+          mean squared residual (MSE) = {fmt(mse)}
+        </span>
+      </p>
+      {/* S317 — the residual/metric state visually associated with the picture above (the berry
+          whiskers) as actual text, not only inside the on-demand a11y panel: a sighted learner
+          already reads "miss/MSE" and the whisker lengths off the SVG without opening anything,
+          so a non-visual learner gets the same residual values and pass/fail state here, always
+          present, right under the readout it describes. */}
+      <p data-testid="sf-residual-readout" className="text-center text-xs font-bold leading-relaxed text-ink/65">
+        Residuals: {residualSummary}
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>slope m = <span className="tabular-nums text-ink">{fmt(m)}</span></span>
@@ -15455,9 +15614,13 @@ function DragOrderW({ spec, value, onChange, disabled, tone }: WProps<TDragOrder
     [next[i], next[j]] = [next[j], next[i]];
     onChange(next);
   };
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec) — same block `numeric`
+  // and `mcq` draw. A spec without `barData` renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       {/* Live consequence (s48): for value orderings the claim is PLOTTED —
           each slot's value drawn rank-by-size, so a correct size order reads as
           a clean staircase and a misplaced value as a visible zigzag. For
@@ -15601,9 +15764,13 @@ function DragBucketW({ spec, value, onChange, disabled, seed, tone }: WProps<TDr
   const place = (itemId: string, bucketId: string) =>
     onChange({ ...placed, [itemId]: bucketId });
   const bucketLabel = (id: string) => spec.buckets.find((b) => b.id === id)?.label ?? id;
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). A spec without `barData`
+  // renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       {orderedItems.map((it) => (
         <div key={it.id} className="rounded-card border-2 border-ink/15 bg-white p-3">
           <p className="mb-2 font-semibold"><MathProse text={it.label} /></p>
@@ -15697,9 +15864,13 @@ function MatchPairsW({ spec, value, onChange, disabled, seed, tone }: WProps<TMa
   const usedRight = new Set(Object.values(links));
   const rightLabel = (id: string) => spec.right.find((r) => r.id === id)?.label ?? id;
   const leftLabel = (id: string) => spec.left.find((x) => x.id === id)?.label ?? id;
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). A spec without `barData`
+  // renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       <p className="text-sm text-ink/70">Tap one on the left, then its match on the right. Tap a numbered one to unlink.</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="grid content-start gap-2">

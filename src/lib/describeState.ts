@@ -1057,11 +1057,32 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       );
     }
     case "scatterFit": {
+      /* S317 round 2 (bv-05-03 fail-close, `S317_BATCH1_VERIFICATION.md`). The `ScatterFitW`
+       * widget's own on-picture text and aria-label already state each point's residual and the
+       * scored mean-squared-residual (MSE) metric against `spec.tolerance` (widgets.tsx,
+       * `residualSummary`/`metricSummary`) — but this corpus-wide "Describe this model" panel,
+       * built from the SAME state for every widget type, still only named the point range and the
+       * current line, leaving a screen-reader user who opens THIS panel without the residual/
+       * metric parity the SVG fix gave the widget's own on-screen readers. Extended to compute the
+       * IDENTICAL formula (`mse`, divides by `n` — a mean, matching `evaluate.ts`'s grading and
+       * the widget's own computation byte-for-byte) and state it the same way the widget's visible
+       * text and aria-label already do, so the two accessible surfaces the reopenCondition names
+       * ("SVG/state") can no longer disagree. Read-only: never used for grading. */
       const v = (value as { m: number; b: number } | null) ?? null;
       const n = spec.points.length;
       const intro = `${n} data points are scattered from (${fmt(spec.points[0][0])}, ${fmt(spec.points[0][1])}) to (${fmt(spec.points[n - 1][0])}, ${fmt(spec.points[n - 1][1])}).`;
       if (!v) return `${intro} No fit line has been set yet.`;
-      return `${intro} Your fit line is y = ${fmt(v.m)}x + ${fmt(v.b)} — slope ${fmt(v.m)} per unit, crossing the y-axis at ${fmt(v.b)}.`;
+      const residuals = spec.points.map(([px, py]) => py - (v.m * px + v.b));
+      const residualSummary = spec.points
+        .map(([px, py], i) => `(${fmt(px)}, ${fmt(py)}) residual ${residuals[i] >= 0 ? "+" : "−"}${fmt(Math.abs(residuals[i]))}`)
+        .join(", ");
+      const mse = spec.points.reduce((acc, [px, py]) => acc + (py - (v.m * px + v.b)) ** 2, 0) / n;
+      const withinTolerance = mse <= spec.tolerance;
+      return (
+        `${intro} Your fit line is y = ${fmt(v.m)}x + ${fmt(v.b)} — slope ${fmt(v.m)} per unit, crossing the y-axis at ${fmt(v.b)}. ` +
+        `Residuals: ${residualSummary}. ` +
+        `Mean squared residual (MSE): ${fmt(mse)}, ${withinTolerance ? "at or under" : "above"} the target tolerance of ${fmt(spec.tolerance)}.`
+      );
     }
     case "angleMeasure": {
       const a = (value as { angle: number } | null)?.angle ?? spec.angleStart;

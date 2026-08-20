@@ -4790,6 +4790,70 @@ function Pv3RoundHundred() {
   );
 }
 
+/**
+ * Reusable two-addend estimate figure: rounds two players to friendly numbers each with a
+ * labeled direction (never color alone), then combines the rounded pair with the stated
+ * operation. Backs both pv3-estimate-add-pair and pv3-estimate-sub-pair below.
+ */
+function Pv3EstimatePairFigure({
+  a,
+  aRounded,
+  aDir,
+  b,
+  bRounded,
+  bDir,
+  op,
+  result,
+}: {
+  a: number;
+  aRounded: number;
+  aDir: "up" | "down";
+  b: number;
+  bRounded: number;
+  bDir: "up" | "down";
+  op: "+" | "−";
+  result: number;
+}) {
+  return (
+    <>
+      <text x="105" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">
+        round each player, then {op === "+" ? "add" : "subtract"}
+      </text>
+      <text x="24" y="42" fontSize="13" fontWeight="700" fill={INK} textAnchor="start">{a}</text>
+      <text x="60" y="42" fontSize="13" fill={INK} textAnchor="middle">→</text>
+      <text x="88" y="42" fontSize="13" fontWeight="700" fill={SKY} textAnchor="middle">{aRounded}</text>
+      <text x="150" y="42" fontSize="10" fill={SKY} textAnchor="start">rounds {aDir}</text>
+      <text x="24" y="66" fontSize="13" fontWeight="700" fill={INK} textAnchor="start">{b}</text>
+      <text x="60" y="66" fontSize="13" fill={INK} textAnchor="middle">→</text>
+      <text x="88" y="66" fontSize="13" fontWeight="700" fill={LEAF} textAnchor="middle">{bRounded}</text>
+      <text x="150" y="66" fontSize="10" fill={LEAF} textAnchor="start">rounds {bDir}</text>
+      <text x="105" y="94" fontSize="13" fontWeight="700" fill={TANGERINE} textAnchor="middle">
+        {aRounded} {op} {bRounded} = {result}
+      </text>
+    </>
+  );
+}
+
+/** Grade 3 place value figure: estimate 289 + 512 by rounding each addend to its nearest hundred first: about 800. */
+function Pv3EstimateAddPair() {
+  return (
+    <svg viewBox="0 0 210 106" role="img" aria-label="Estimating 289 plus 512 by rounding each number to the nearest hundred first: 289 rounds up to 300, 512 rounds down to 500, and the friendly sum 300 plus 500 equals 800.">
+      <title>Round two addends, then add: 289 and 512 give about 800.</title>
+      <Pv3EstimatePairFigure a={289} aRounded={300} aDir="up" b={512} bRounded={500} bDir="down" op="+" result={800} />
+    </svg>
+  );
+}
+
+/** Grade 3 place value figure: guard 512 − 289 by rounding each number to its nearest hundred first: about 200. */
+function Pv3EstimateSubPair() {
+  return (
+    <svg viewBox="0 0 210 106" role="img" aria-label="Checking 512 minus 289 with a guard estimate: 512 rounds down to 500, 289 rounds up to 300, and the friendly difference 500 minus 300 equals 200.">
+      <title>Round two players, then subtract: 512 and 289 give a guard of about 200.</title>
+      <Pv3EstimatePairFigure a={512} aRounded={500} aDir="down" b={289} bRounded={300} bDir="up" op="−" result={200} />
+    </svg>
+  );
+}
+
 /** Grade 3 place value figure: The halfway rule: 45 rounds up to 50. */
 function Pv3Halfway() {
   return (
@@ -5242,6 +5306,96 @@ function FracCompareWholes() {
       <text x="105" y="104" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">same name, different size!</text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 fractions figure: parameterized same-denominator comparison.
+ * S317 fix (fr-04-01): `frac-compare-same-denom` is a fixed 2/5-vs-3/5
+ * exemplar built for fr-04-03; this reusable, typed-prop helper lets a
+ * lesson's own worked example (not that fixed pair) get its own figure
+ * without touching the original component or its other bindings.
+ */
+function FracCompareSameDenomExample({
+  den,
+  leftNum,
+  rightNum,
+  objectLabel,
+  leftColor = SKY,
+  rightColor = BERRY,
+}: {
+  den: number;
+  leftNum: number;
+  rightNum: number;
+  objectLabel: string;
+  leftColor?: string;
+  rightColor?: string;
+}) {
+  const winnerNum = Math.max(leftNum, rightNum);
+  const loserNum = Math.min(leftNum, rightNum);
+  return (
+    <svg
+      viewBox="0 0 210 104"
+      role="img"
+      aria-label={`Two bars in ${den}ths showing ${objectLabel}: the top shades ${leftNum} of ${den}, the bottom shades ${rightNum} of ${den}; with equal-size pieces, more shaded pieces means the larger fraction.`}
+    >
+      <title>{`Same denominator: ${winnerNum}/${den} has more shaded pieces than ${loserNum}/${den}.`}</title>
+      <text x="16" y="16" fontSize="11" fontWeight="700" fill={leftColor}>{`${leftNum}/${den}`}</text>
+      <FractionBar parts={den} shaded={leftNum} y={22} color={leftColor} />
+      <text x="16" y="62" fontSize="11" fontWeight="700" fill={rightColor}>{`${rightNum}/${den}`}</text>
+      <FractionBar parts={den} shaded={rightNum} y={54} color={rightColor} />
+      <text x="105" y="94" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">{`${winnerNum}/${den} > ${loserNum}/${den}`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 fractions figure: fr-04-01's own worked example, 3/8 vs 5/8 of one cake. */
+function FracCompareSameDenomCake() {
+  return <FracCompareSameDenomExample den={8} leftNum={3} rightNum={5} objectLabel="one cake" />;
+}
+
+/**
+ * Grade 3 fractions figure: parameterized same-numerator comparison.
+ * S317 fix (fr-04-02): `frac-compare-same-numer` is a fixed 1/3-vs-1/4
+ * exemplar built for fr-04-03; this reusable, typed-prop helper lets a
+ * lesson's own worked example (not that fixed pair) get its own figure
+ * without touching the original component or its other bindings.
+ */
+function FracCompareSameNumerExample({
+  num,
+  leftDen,
+  rightDen,
+  objectLabel,
+  leftColor = LEAF,
+  rightColor = TANGERINE,
+}: {
+  num: number;
+  leftDen: number;
+  rightDen: number;
+  objectLabel: string;
+  leftColor?: string;
+  rightColor?: string;
+}) {
+  const winnerDen = Math.min(leftDen, rightDen);
+  const loserDen = Math.max(leftDen, rightDen);
+  return (
+    <svg
+      viewBox="0 0 210 104"
+      role="img"
+      aria-label={`Two bars each with ${num} of their parts shaded for ${objectLabel}: the top split into ${leftDen} has ${leftDen < rightDen ? "a bigger" : "a smaller"} shaded piece than the bottom split into ${rightDen}; fewer parts means bigger pieces.`}
+    >
+      <title>{`Same numerator: ${num}/${winnerDen} has bigger pieces than ${num}/${loserDen}.`}</title>
+      <text x="16" y="16" fontSize="11" fontWeight="700" fill={leftColor}>{`${num}/${leftDen}`}</text>
+      <FractionBar parts={leftDen} shaded={num} y={22} color={leftColor} />
+      <text x="16" y="62" fontSize="11" fontWeight="700" fill={rightColor}>{`${num}/${rightDen}`}</text>
+      <FractionBar parts={rightDen} shaded={num} y={54} color={rightColor} />
+      <text x="105" y="94" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">{`${num}/${winnerDen} > ${num}/${loserDen} (bigger pieces)`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 fractions figure: fr-04-02's own worked example, 2/3 vs 2/8 of the same bar. */
+function FracCompareSameNumerBrownies() {
+  return <FracCompareSameNumerExample num={2} leftDen={3} rightDen={8} objectLabel="the same pan" />;
 }
 
 function FractionAreaModel() {
@@ -30609,6 +30763,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "pv3-trade-down": Pv3TradeDown,
   "pv3-round-ten": Pv3RoundTen,
   "pv3-round-hundred": Pv3RoundHundred,
+  "pv3-estimate-add-pair": Pv3EstimateAddPair,
+  "pv3-estimate-sub-pair": Pv3EstimateSubPair,
   "pv3-halfway": Pv3Halfway,
   "pv3-jump": Pv3Jump,
   "pv3-regroup": Pv3Regroup,
@@ -30641,7 +30797,9 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "frac-equiv-half": FracEquivHalf,
   "frac-whole-disguise": FracWholeDisguise,
   "frac-compare-same-denom": FracCompareSameDenom,
+  "frac-compare-same-denom-cake": FracCompareSameDenomCake,
   "frac-compare-same-numer": FracCompareSameNumer,
+  "frac-compare-same-numer-brownies": FracCompareSameNumerBrownies,
   "frac-compare-wholes": FracCompareWholes,
   "angle-types": AngleTypes,
   "g2l-choice-add-33-20": G2Add33Plus20Candidates,
