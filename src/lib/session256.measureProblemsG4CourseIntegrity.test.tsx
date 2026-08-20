@@ -14,12 +14,12 @@ const lessons = readdirSync(dir).filter((name) => name.endsWith(".json")).sort()
 const allSteps = (lesson: RawLesson) => [...lesson.steps, ...(lesson.remedials ?? []).flatMap((route) => [route.concept, route.check].filter((entry): entry is RawStep => Boolean(entry)))];
 const normalized = (prompt: string) => prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ").trim();
 const expectedFigures: Record<string, [string, string]> = {
-  "g4v-01-01": ["mc-length-ladder", "rr-conversion"], "g4v-01-02": ["ratio-table", "mc-length-ladder"],
-  "g4v-01-03": ["mc-length-ladder", "rr-conversion"], "g4v-01-04": ["md3-mass-scale", "mc-mass-volume"],
-  "g4v-02-01": ["md3-liter", "mc-mass-volume"], "g4v-02-02": ["clock-face", "rr-chain"],
-  "g4v-02-03": ["mb-multistep", "two-step-bar"], "g4v-02-04": ["md3-elapsed", "rr-chain"],
-  "g4v-03-01": ["mmt-coin-total", "mb-multistep"], "g4v-03-02": ["line-plot", "vm-total-length"],
-  "g4v-03-03": ["mb-multistep", "rr-chain"], "g4v-03-04": ["mb-multistep", "two-step-bar"],
+  "g4v-01-01": ["mc-length-ladder", "g4v-meter-cm-table"], "g4v-01-02": ["g4v-meter-cm-table", "mc-length-ladder"],
+  "g4v-01-03": ["mc-length-ladder", "g4v-length-both-ways-table"], "g4v-01-04": ["md3-mass-scale", "mc-mass-volume"],
+  "g4v-02-01": ["g4v-liter-ml-jug", "mc-mass-volume"], "g4v-02-02": ["g4v-clock-60", "rr-chain"],
+  "g4v-02-03": ["mb-multistep", "g4v-groups-adjust-distance"], "g4v-02-04": ["g4v-groups-adjust-time", "rr-chain"],
+  "g4v-03-01": ["g4v-groups-adjust-money", "mb-multistep"], "g4v-03-02": ["g4v-quarter-inch-plot", "vm-total-length"],
+  "g4v-03-03": ["mb-multistep", "rr-chain"], "g4v-03-04": ["g4v-groups-adjust-distance", "g4v-end-vs-inside-adjust"],
 };
 
 describe("S256 measure-problems-g4 whole-course integrity", () => {

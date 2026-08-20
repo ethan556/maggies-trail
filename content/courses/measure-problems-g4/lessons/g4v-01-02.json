@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "ratio-table",
+      "figure": "g4v-meter-cm-table",
       "body": "A conversion table records the relationship once and applies it to every row: 1 m = 100 cm, 2 m = 200 cm, 3 m = 300 cm.",
       "narration": "A conversion table records the relationship once and applies it to every row: 1 m = 100 cm, 2 m = 200 cm, 3 m = 300 cm."
     },
@@ -36,7 +36,7 @@
         ],
         "maxVal": 6,
         "step": 1,
-        "successFeedback": "1, 2, 3, 4 hundreds of centimeters — one constant factor generating every row.",
+        "successFeedback": "1, 2, 3, 4 hundreds of centimeters \u2014 one constant factor generating every row.",
         "partialFeedback": "Each row is one more hundred of centimeters than the row above it.",
         "display": "bar",
         "histogram": false
@@ -81,7 +81,7 @@
             "id": "o0",
             "label": "Every row follows one rule",
             "correct": true,
-            "feedback": "Correct — one constant factor generates every row, which is why you can jump straight to 9 m = 900 cm."
+            "feedback": "Correct \u2014 one constant factor generates every row, which is why you can jump straight to 9 m = 900 cm."
           },
           {
             "id": "o1",
@@ -93,7 +93,7 @@
             "id": "o2",
             "label": "The numbers increase",
             "correct": false,
-            "feedback": "Increasing numbers alone say nothing — the CONSTANT relationship between the columns does."
+            "feedback": "Increasing numbers alone say nothing \u2014 the CONSTANT relationship between the columns does."
           },
           {
             "id": "o3",
@@ -158,7 +158,7 @@
         ],
         "maxVal": 4,
         "step": 1,
-        "successFeedback": "1, 2, and 3 thousands of meters — every row uses the same factor of 1,000.",
+        "successFeedback": "1, 2, and 3 thousands of meters \u2014 every row uses the same factor of 1,000.",
         "partialFeedback": "Match each kilometer count with the same number of thousands of meters.",
         "display": "bar",
         "histogram": false
@@ -197,7 +197,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Apply without the opening model: A route measures 9 kilometers, and each kilometer is 1000 meters. Compute 9 × 1000.",
+        "prompt": "Apply without the opening model: A route measures 9 kilometers, and each kilometer is 1000 meters. Compute 9 \u00d7 1000.",
         "answer": 9000,
         "tolerance": 0,
         "unit": "",
@@ -212,7 +212,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 9000."
+        "successFeedback": "Correct \u2014 9000."
       },
       "hints": [
         "Which unit is smaller?",
@@ -257,7 +257,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Retrieve or diagnose in a new form: A trail measures 700 centimeters, and each meter is 100 centimeters. Compute 700 ÷ 100.",
+        "prompt": "Retrieve or diagnose in a new form: A trail measures 700 centimeters, and each meter is 100 centimeters. Compute 700 \u00f7 100.",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -272,7 +272,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 7."
+        "successFeedback": "Correct \u2014 7."
       },
       "hints": [
         "Which unit is smaller?",
@@ -317,7 +317,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Transfer to a final context: A route measures 5 kilometers, and each kilometer is 1000 meters. Compute 5 × 1000.",
+        "prompt": "Transfer to a final context: A route measures 5 kilometers, and each kilometer is 1000 meters. Compute 5 \u00d7 1000.",
         "answer": 5000,
         "tolerance": 0,
         "unit": "",
@@ -332,7 +332,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 5000."
+        "successFeedback": "Correct \u2014 5000."
       },
       "hints": [
         "Which unit is smaller?",
@@ -385,7 +385,8 @@
         "id": "rem-g4v-table-c",
         "kind": "concept",
         "body": "Because one constant factor generates every row, the table lets you jump straight to 9 m = 900 cm without listing the rows between.",
-        "narration": "Because one constant factor generates every row, the table lets you jump straight to 9 m = 900 cm without listing the rows between."
+        "narration": "Because one constant factor generates every row, the table lets you jump straight to 9 m = 900 cm without listing the rows between.",
+        "figure": "mc-length-ladder"
       },
       "check": {
         "id": "rem-g4v-table-k",
@@ -397,34 +398,23 @@
           "Predict any row."
         ],
         "widget": {
-          "type": "mcq",
-          "prompt": "A conversion table lists 1 m = 100 cm, 2 m = 200 cm, 3 m = 300 cm. What makes it a table rather than a list?",
-          "options": [
+          "type": "numeric",
+          "prompt": "A table shows 2 m = 200 cm and 5 m = 500 cm. Using the same rule, what is 7 m in centimeters?",
+          "answer": 700,
+          "tolerance": 0,
+          "unit": "",
+          "commonErrors": [
             {
-              "id": "o0",
-              "label": "Every row follows one rule",
-              "correct": true,
-              "feedback": "Correct — one constant factor generates every row, which is why you can jump straight to 9 m = 900 cm."
+              "value": 207,
+              "feedback": "Adding mixes a quantity with a rate. Each of the 7 meters needs its own factor of 100, not one addition."
             },
             {
-              "id": "o1",
-              "label": "It has exactly three rows",
-              "correct": false,
-              "feedback": "The row count is arbitrary; the shared rule is what makes it a table."
-            },
-            {
-              "id": "o2",
-              "label": "The numbers increase",
-              "correct": false,
-              "feedback": "Increasing numbers alone say nothing — the CONSTANT relationship between the columns does."
-            },
-            {
-              "id": "o3",
-              "label": "It uses two different units",
-              "correct": false,
-              "feedback": "Two units are necessary but not sufficient; the fixed factor linking them is the point."
+              "value": 7,
+              "feedback": "That kept the meter count. Centimeters are the smaller unit, so the number must grow by the table's factor."
             }
-          ]
+          ],
+          "fallbackFeedback": "Use the constant factor linking the columns: multiply the meter count by 100.",
+          "successFeedback": "Correct \u2014 700."
         }
       }
     }

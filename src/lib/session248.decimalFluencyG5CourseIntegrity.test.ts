@@ -201,7 +201,7 @@ describe("S248 decimal-fluency-g5 whole-course integrity", () => {
       }
     }
 
-    expect(count).toBe(22);
+    expect(count).toBe(23);
   });
 
   it("preserves numeric evaluator truth and removes the unrelated column feedback", () => {

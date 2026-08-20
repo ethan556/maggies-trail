@@ -53,22 +53,17 @@ describe("S245 scaledCircleLab visible and accessible units", () => {
     expect(screen.getByTestId("scl-derivation").textContent).toContain("3 cm × 2 m/cm = 6 m");
   });
 
-  it("uses linear metres for circumference and square metres for area", () => {
+  // g7-04-03/i2 was the lesson's single-stage area recheck (6 m × 6 m = 36 m²); S316
+  // (S251-COARSE-BASIS-g7-04-03-lfnorm) converted it to a cross-section retrieval MCQ because it
+  // duplicated the area check ch1 already exercises (see the two-stage test below), so "square
+  // metres for area" is verified there instead of with a redundant single-stage widget here.
+  it("uses linear metres for circumference", () => {
     const circumference = widget("geometry-g7", "g7-04-03", "k1");
     const circumferenceView = show(circumference);
     expect(screen.getByRole("img", { name: /circle radius 6 meters/i }).textContent).toContain("6 m");
     expect(screen.getByTestId("scl-derivation").textContent).toContain("2 × 6 m = ? m");
     circumferenceView.rerender(<WidgetRenderer spec={circumference} value="wrong-1" onChange={() => {}} disabled={false} tone="info" seed="s245-units" />);
     expect(screen.getByTestId("scl-derivation").textContent).toContain("2 × 6 m = 12 m");
-    cleanup();
-
-    const area = widget("geometry-g7", "g7-04-03", "i2");
-    const areaView = show(area);
-    expect(screen.getByRole("img", { name: /circle radius 6 meters/i }).textContent).toContain("6 m");
-    expect(screen.getByTestId("scl-derivation").textContent).toContain("6 m × 6 m = ? m²");
-    areaView.rerender(<WidgetRenderer spec={area} value="wrong-1" onChange={() => {}} disabled={false} tone="info" seed="s245-units" />);
-    expect(screen.getByTestId("scl-derivation").textContent).toContain("6 m × 6 m = 36 m²");
-    expect(screen.getByTestId("a11y-panel").textContent).toContain("36 square meters");
   });
 
   it("keeps both units truthful through the two-stage area challenge", () => {

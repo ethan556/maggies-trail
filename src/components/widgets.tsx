@@ -2001,9 +2001,13 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent, see
 
 /* ---------------- CompositeAreaLab (decomposition ↔ signed piece ledger ↔ exact claim) ---------------- */
 
-function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TCompositeAreaLab>) {
+function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TCompositeAreaLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const correct = spec.choices.find((choice) => compositeAreaChoiceCorrect(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const target = compositeAreaTarget(spec);
   const formula = (piece: TCompositeAreaLab["pieces"][number]) => {
     if (piece.shape === "rectangle") return `${piece.width} × ${piece.height}`;
@@ -2059,7 +2063,7 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
       {spec.target.kind === "piece" && <p className="mt-1 text-sm font-bold text-ink/70">The requested claim is one highlighted piece, not the whole ledger.</p>}
       <p className="mt-2 text-sm font-bold text-ink/70">Choose the exact area claim that this geometry supports.</p>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "area-claim", dir: compositeAreaChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, target } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
+    <div className="grid gap-2 sm:grid-cols-3">{orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "area-claim", dir: compositeAreaChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, target } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No area claim selected."}</p>
     {tone === "info" && selected && !compositeAreaChoiceCorrect(spec, selected) && <GhostChip testid="cal-ghost">correct claim: {correct.label}</GhostChip>}
   </div>;
@@ -2083,10 +2087,14 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
  * `|selected − answer| <= tolerance`, `atTarget` matches every field of the fractionGrid spec — and
  * each engine carries GRADED placements: 7, 12 and 4 respectively, 23 in all. The other flagged
  * sites are recorded in `ACC01_COLOUR_ONLY_CUE.md` with the reason each was left alone. */
-function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<TTrialProbabilityLab>) {
+function TrialProbabilityLabW({ spec, value, onChange, disabled, tone, seed }: WProps<TTrialProbabilityLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const accepted = selected ? trialProbabilityEquivalent(spec, selected) : false;
   const correct = spec.choices.find((choice) => trialProbabilityEquivalent(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const claim = selected ? trialProbabilityClaimCount(spec, selected) : null;
   const maxClaim = Math.max(spec.total, ...(spec.choices.map((choice) => trialProbabilityClaimCount(spec, choice))));
   const axisMax = Math.max(spec.total, Math.ceil(maxClaim));
@@ -2171,7 +2179,7 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
         </svg>
       </div>
       <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the probability fraction">
-        {spec.choices.map((choice) => (
+        {orderedChoices.map((choice) => (
           <button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id === choice.id} onClick={() => onChange(choice.id)} className={optionClass(selected?.id === choice.id)}>
             <span className="block text-lg font-extrabold tabular-nums"><MathProse text={choice.label} /></span>
             <span className="block text-xs font-semibold text-ink/60">projects to {fmt(trialProbabilityClaimCount(spec, choice))} of the same {spec.total}</span>
@@ -6824,7 +6832,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
 
 /* ---------------- PercentChangeLab (base ↔ percent change ↔ final price) ---------------- */
 
-function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TPercentChangeLab>) {
+function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TPercentChangeLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const amount = percentChangeAmount(spec);
   const target = percentChangeTarget(spec);
@@ -6835,6 +6843,15 @@ function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: W
   const sign = spec.direction === "markup" ? "+" : "−";
   const directionLabel = spec.direction === "markup" ? "add the markup" : "subtract the markdown";
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
+  // S316. Same mastery-integrity bug McqW documents above: authored content overwhelmingly
+  // lists the correct final-price claim first, so rendering spec.choices unshuffled let a
+  // learner clear this step by always pressing the first button. Shuffle DISPLAY ORDER ONLY —
+  // evaluate.ts (percentChangeLab case) looks the choice up by `choice.id`, never by index, so
+  // this cannot change which choice is correct or which feedback fires.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [spec.choices, seed]
+  );
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -6873,7 +6890,7 @@ function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: W
         </p>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => (
+        {orderedChoices.map((choice) => (
           <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
             onClick={() => {
               onEvent?.({ control: "final-price-claim", dir: percentChangeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, direction: spec.direction } });
@@ -6899,7 +6916,14 @@ const equationSideText=(coeff:number,constant:number,variable:string)=>{
   if(Math.abs(constant)>1e-9){const abs=Math.abs(constant),term=String(abs);if(!parts.length)parts.push(constant<0?`−${term}`:term);else parts.push(`${constant<0?"−":"+"} ${term}`)}
   return parts.length?parts.join(" "):"0";
 };
-function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TEquationOutcomeLab>) {
+function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TEquationOutcomeLab>) {
+  // Hook must run unconditionally on every render (this component early-returns for
+  // mode==="transform" below, so the memo cannot live past that branch). spec.choices defaults
+  // to [] for transform mode; seededShuffle([]) is a harmless no-op in that case.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   if(spec.mode==="transform"){
     const state=value&&typeof value==="object"&&!Array.isArray(value)?value as {stageIds?:string[];numeric?:number|""}:{};
     const stageIds=Array.isArray(state.stageIds)?state.stageIds:[];
@@ -6951,7 +6975,7 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
         {(!spec.choices?.length || tone === "info") && <p className="text-center text-sm font-bold">{truthText}</p>}
         {selected && <p className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center font-extrabold" aria-live="polite">Your claim: {selected.label}</p>}
       </section>
-      <div className="grid gap-2 sm:grid-cols-2">{spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "equation-outcome-claim", dir: equationOutcomeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, outcome: choice.outcome, truth } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
+      <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "equation-outcome-claim", dir: equationOutcomeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, outcome: choice.outcome, truth } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No equation-outcome claim selected."}</p>
       {tone === "info" && selected && !equationOutcomeChoiceCorrect(spec, selected) && <GhostChip testid="eol-ghost">correct outcome: {spec.choices.find((choice) => equationOutcomeChoiceCorrect(spec, choice))?.label}</GhostChip>}
     </div>
@@ -8305,7 +8329,7 @@ type ProportionalReasoningState = {
   unitRateStatus?: Record<string, "correct" | "retry">;
 };
 
-function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TProportionalReasoningLab>) {
+function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TProportionalReasoningLab>) {
   const v = (value && typeof value === "object" ? value : {}) as ProportionalReasoningState;
   const revealed = Array.isArray(v.revealed) ? v.revealed : [];
   const validExplorationKeys = new Set(proportionalReasoningExplorationKeys(spec));
@@ -8358,6 +8382,16 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
   const correctChoice = spec.choices.find((choice) => proportionalReasoningChoiceCorrect(spec, choice));
   const answerText = spec.answerMode === "numeric" ? `${fmt(truth.answerNumber ?? NaN)}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}` : correctChoice?.label ?? "the derived proportional claim";
   const showPipeline = ["predictOutput", "predictInput", "scaleRatio", "percentOf", "discount", "cheaperThenPredict"].includes(spec.task);
+  // S316. Same mastery-integrity bug McqW documents above: authored content overwhelmingly
+  // lists the correct proportional conclusion first, so rendering spec.choices unshuffled let a
+  // learner clear this step by always pressing the first button. Shuffle DISPLAY ORDER ONLY —
+  // evaluate.ts (proportionalReasoningLab case) looks the choice up by `choice.id`, never by
+  // index, so this cannot change which choice is correct or which feedback fires. Memoized on
+  // the seed + choice identity, matching McqW.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [spec.choices, seed]
+  );
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
@@ -8377,7 +8411,7 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
       {typeof spec.targetInput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.xLabel}: {fmt(spec.targetInput)}</span>}{typeof spec.targetOutput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.yLabel}: {fmt(spec.targetOutput)}</span>}{typeof spec.percent === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">percent stage: {fmt(spec.percent)}%</span>}
     </div><div className="mt-3 flex flex-wrap gap-2">{truth.stages.map((stage, index) => { const key = `stage:${index}`; const open = revealed.includes(key); return <button key={key} type="button" disabled={disabled || !ratesReady} onClick={() => reveal(key)} aria-label={`Reveal proportional stage ${index + 1}: ${stage.label}`} className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">{open ? (tone !== "info" && stageRevealsAnswer(stage.value, truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index + 1}: ${stage.label}`}</button>; })}</div></div>}
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{ratesReady ? "All unit rates are checked. Use the constant rate to solve the question." : `Unit-rate checks: ${verifiedRateKeys.length} of ${rateKeys.length} verified. Complete each Normalize row to unlock your answer.`}</p>
-    {spec.answerMode === "numeric" ? <label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span><input type="number" inputMode="decimal" disabled={disabled || !ratesReady} value={v.numeric ?? ""} onChange={(e) => setNumeric(e.target.value)} aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" /></label> : <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">{spec.choices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled || !ratesReady} aria-pressed={picked} onClick={() => setChoice(choice.id)} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>; })}</div>}
+    {spec.answerMode === "numeric" ? <label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span><input type="number" inputMode="decimal" disabled={disabled || !ratesReady} value={v.numeric ?? ""} onChange={(e) => setNumeric(e.target.value)} aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" /></label> : <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">{orderedChoices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled || !ratesReady} aria-pressed={picked} onClick={() => setChoice(choice.id)} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>; })}</div>}
     {tone === "info" && <GhostChip testid="prl-ghost">Correct proportional result: {answerText}</GhostChip>}
   </div>;
 }
@@ -8387,8 +8421,12 @@ function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEv
  * the renderer from announcing the rounded value, quotient, exponent, or winning comparison before
  * the learner has inspected the relevant base-ten positions. */
 type PlaceValueTransformState={revealed?:string[];numeric?:number|"";choiceId?:string};
-function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TPlaceValueTransformLab>){
+function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TPlaceValueTransformLab>){
   const v=(value&&typeof value==="object"?value:{}) as PlaceValueTransformState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(placeValueTransformExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter((key)=>allowed.has(key)))];
   const truth=placeValueTransformTruth(spec);
@@ -8420,7 +8458,7 @@ function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WPr
     </div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, isExponentChain?"exponent stage":"base-ten stage", "inspected")}</p>
     {spec.answerMode==="numeric"?<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={(e)=>onChange({...v,numeric:e.target.value===""?"":Number(e.target.value)})} aria-label={isExponentChain?"Enter exponent answer":`Enter place-value answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>:
-      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the place-value conclusion">{spec.choices.map((choice)=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:placeValueTransformChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the place-value conclusion">{orderedChoices.map((choice)=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:placeValueTransformChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {tone==="info"&&<GhostChip testid="pvtl-ghost">Correct place-value result: {answerText}</GhostChip>}
   </div>;
 }
@@ -8481,7 +8519,7 @@ function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.
   const distinctXs=[...new Set(spec.sets.flatMap(set=>set.points.map(point=>point.x)))].sort((a,b)=>a-b);
   const keptXs:number[]=[];{let lastX1=-Infinity;for(const xv of distinctXs){const w=String(xv).length*11*0.72;const x0=sx(xv)-w/2;if(x0>=lastX1+4){keptXs.push(xv);lastX1=x0+w}}}
   return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><circle key={`${set.id}-${point.id}`} cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/>))}{keptXs.map(xv=><text key={xv} x={sx(xv)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{xv}</text>)}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
-function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this point-set state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open point-set stage ${index+1}: ${accessibleMathText(stage.label)}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: <MathProse text={answerText} includeArithmetic /></GhostChip>}</div>}
+function PointSetReasoningLabW({spec,value,onChange,disabled,tone,seed}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";const orderedChoices=useMemo(()=>seededShuffle(spec.choices,seed??spec.choices.map(choice=>choice.id).join("|")),[seed,spec.choices]);return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this point-set state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open point-set stage ${index+1}: ${accessibleMathText(stage.label)}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: <MathProse text={answerText} includeArithmetic /></GhostChip>}</div>}
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
 type GeometricConstraintState={revealed?:string[];numeric?:number|"";choiceId?:string};
@@ -8584,8 +8622,12 @@ function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent,seed
 /** exactNumberLab — one exact ordered-number workbench. Every task keeps its own learner action,
  * while the displayed stages and grading share the same rational/radical truth state. */
 type ExactNumberState={revealed?:string[];numeric?:number|"";choiceId?:string;relation?:"lt"|"eq"|"gt"};
-function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExactNumberLab>){
+function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TExactNumberLab>){
   const v=(value&&typeof value==="object"?value:{}) as ExactNumberState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(exactNumberExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
   const truth=exactNumberTruth(spec);
@@ -8642,7 +8684,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
       </div>;
     })()}
     {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter exact-number answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
-    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact-number conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:exactNumberChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact-number conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:exactNumberChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {spec.answerMode==="relation"&&<div className="grid grid-cols-3 gap-2" role="group" aria-label="Choose the exact relation">{([['lt','<'],['eq','='],['gt','>']] as const).map(([id,label])=><button key={id} type="button" disabled={disabled} aria-pressed={v.relation===id} onClick={()=>onChange({...v,relation:id})} className={`pressable min-h-14 rounded-card border-2 text-2xl font-black ${v.relation===id?"border-sky bg-sky/10":"border-ink/20 hover:border-sky/60"}`}>{label}</button>)}</div>}
     {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required exact states to complete this exploration.</p>}
     {tone==="info"&&<GhostChip testid="enl-ghost">Correct exact-number result: {answerText}</GhostChip>}
@@ -8671,8 +8713,12 @@ type AffineRelationshipState={revealed?:string[];numeric?:number|"";choiceId?:st
  *   · The candidate point, the source cards, every answer control and the reveal ghost are
  *     unchanged. No new affordance was added this window.
  */
-function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TAffineRelationshipLab>){
+function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TAffineRelationshipLab>){
   const v=(value&&typeof value==="object"?value:{}) as AffineRelationshipState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(affineRelationshipExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
   const truth=affineRelationshipTruth(spec);
@@ -8767,7 +8813,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open affine stage ${index+1}: ${accessibleMathText(stage.label)}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "affine stage", "inspected")}</p>
     {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter affine answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
-    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the affine conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:affineRelationshipChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the affine conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:affineRelationshipChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {spec.answerMode==="point"&&<fieldset className="grid gap-2"><legend className="font-bold">Enter the ordered pair (x, y)</legend><div className="grid grid-cols-2 gap-2"><label className="grid gap-1 text-sm font-bold"><span>x-coordinate</span><input type="number" inputMode="decimal" disabled={disabled} value={point[0]} onChange={event=>setPoint(0,event.target.value)} aria-label="Enter affine x-coordinate" className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold dark:bg-ink/10"/></label><label className="grid gap-1 text-sm font-bold"><span>y-coordinate</span><input type="number" inputMode="decimal" disabled={disabled} value={point[1]} onChange={event=>setPoint(1,event.target.value)} aria-label="Enter affine y-coordinate" className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold dark:bg-ink/10"/></label></div></fieldset>}
     {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this parameter exploration.</p>}
     {tone==="info"&&<GhostChip testid="arl-ghost">Correct affine result: {answerText}</GhostChip>}
@@ -8783,8 +8829,12 @@ type QuotientReasoningState = {
   choiceId?: string;
   fraction?: { whole?: number | ""; num?: number | ""; den?: number | "" };
 };
-function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TQuotientReasoningLab>) {
+function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TQuotientReasoningLab>) {
   const v = (value && typeof value === "object" ? value : {}) as QuotientReasoningState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed = new Set(quotientReasoningExplorationKeys(spec));
   const revealed = [...new Set((Array.isArray(v.revealed) ? v.revealed : []).filter((key) => allowed.has(key)))];
   const truth = quotientReasoningTruth(spec);
@@ -8857,7 +8907,7 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
         className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
     </label>}
     {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact quotient conclusion">
-      {spec.choices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
+      {orderedChoices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
         onClick={() => {
               onEvent?.({ control: "choice", dir: quotientReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId: choice.id } });
               onChange({ ...v, choiceId: choice.id });
@@ -8934,8 +8984,12 @@ function GraphStoryPlot({ spec, kinds, labels, ghost = false, testid }: {
   );
 }
 
-function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraphStoryLab>) {
+function GraphStoryLabW({ spec, value, onChange, disabled, tone, seed }: WProps<TGraphStoryLab>) {
   const selectedChoice = spec.mode === "read" && typeof value === "string" ? value : "";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const segmentIds = spec.mode === "build" && value && typeof value === "object" && Array.isArray((value as {segmentIds?:unknown}).segmentIds)
     ? (value as {segmentIds:string[]}).segmentIds : [];
   const bankById = new Map(spec.bank.map((segment) => [segment.id, segment]));
@@ -8957,7 +9011,7 @@ function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraph
       </div>
       {spec.mode === "read" ? (
         <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the claim supported by the graph">
-          {spec.choices.map((choice) => {
+          {orderedChoices.map((choice) => {
             const picked = selectedChoice === choice.id;
             return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
               onClick={() => onChange(choice.id)}
@@ -18850,19 +18904,27 @@ function UnitRulerW({spec,value,onChange,disabled,onEvent}:WProps<TUnitRuler>){
   const v=value&&typeof value==='object'?value as {zeroAligned:boolean;unitSize:number;placements:number;spacing:'exact'|'gap'|'overlap'}:null;
   const st=v??{zeroAligned:false,unitSize:spec.startUnitSize,placements:0,spacing:'exact' as const};
   useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
-  const length=spec.objectEnd-spec.objectStart,covered=st.placements*st.unitSize,delta=st.spacing==='gap'?0.15:st.spacing==='overlap'?-0.15:0;
-  const finish=(st.zeroAligned?spec.objectStart:0)+covered+Math.max(0,st.placements-1)*delta;
+  const length=spec.objectEnd-spec.objectStart,unitsSum=st.placements*st.unitSize,delta=st.spacing==='gap'?0.15:st.spacing==='overlap'?-0.15:0;
+  // "Align zero" moves the measurement origin to 0 (the ruler's zero mark) — mirroring the real
+  // action of sliding the object so its start touches the ruler's zero. The unit track and the
+  // object bar always share this same origin so alignment is visible, not just numerically true.
+  const origin=st.zeroAligned?0:spec.objectStart;
+  // Physical span covered from the origin, including any gap/overlap slack between units — this
+  // is what "covered" and the finish marker describe, not the absolute axis coordinate.
+  const covered=unitsSum+Math.max(0,st.placements-1)*delta;
+  const finish=origin+covered;
+  const done=st.zeroAligned&&st.spacing==='exact'&&covered===length;
   const set=(n:Partial<typeof st>)=>onChange({...st,...n});const W=380,H=190,x=(n:number)=>24+n*16;
   const maxPlacements=Math.min(20,Math.max(spec.requiredPlacements+2,...(spec.commonPlacements ?? []).map((c)=>c.placements)));
   const place=()=>{const next=Math.min(maxPlacements,st.placements+1);onEvent?.({control:'iterate-unit',dir:next<=spec.requiredPlacements?'toward':'away',state:{placements:next}});set({placements:next})};
   const remove=()=>{const next=Math.max(0,st.placements-1);onEvent?.({control:'iterate-unit',dir:st.placements>spec.requiredPlacements?'toward':'away',state:{placements:next}});set({placements:next})};
   const chooseUnit=(u:number)=>{onEvent?.({control:'unit-size',dir:u===spec.targetUnitSize?'toward':'away',state:{unitSize:u}});set({unitSize:u,placements:0})};
   const chooseSpacing=(k:typeof st.spacing)=>{onEvent?.({control:'spacing',dir:k==='exact'?'toward':'away',state:{spacing:k}});set({spacing:k})};
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(spec.objectStart)} y1="52" x2={x(spec.objectEnd)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(spec.objectStart)+x(spec.objectEnd))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=(st.zeroAligned?spec.objectStart:0)+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(origin)} y1="52" x2={x(origin+length)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(origin)+x(origin+length))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=origin+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={done?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={done?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
     <div className="grid grid-cols-3 gap-2"><button type="button" disabled={disabled} onClick={()=>{onEvent?.({control:'zero',dir:'toward',kind:'efficient'});set({zeroAligned:true,placements:0})}} className={`min-h-12 rounded-xl border-2 font-extrabold ${st.zeroAligned?'border-leaf bg-leaf/10':'border-ink/15 bg-white'}`}>Align zero</button><button type="button" disabled={disabled||st.placements===0} onClick={remove} className="min-h-12 rounded-xl border-2 border-ink/15 bg-white font-extrabold disabled:text-ink/30">Remove unit</button><button type="button" disabled={disabled||st.placements>=maxPlacements} onClick={place} className="min-h-12 rounded-xl bg-cta font-extrabold text-white disabled:opacity-50">Place unit</button></div>
     <div className="grid grid-cols-3 gap-2">{spec.allowedUnitSizes.map(u=><button type="button" key={u} disabled={disabled} onClick={()=>chooseUnit(u)} aria-pressed={st.unitSize===u} className={`min-h-11 rounded-xl border-2 font-bold ${st.unitSize===u?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>unit {u}</button>)}</div>
     <div className="grid grid-cols-3 gap-2">{(['exact','gap','overlap'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>chooseSpacing(k)} aria-pressed={st.spacing===k} className={`min-h-11 rounded-xl border-2 text-sm font-bold ${st.spacing===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k}</button>)}</div>
-    <div className="grid grid-cols-3 gap-2"><LabReadout label="true length" value={String(length)} tone="good"/><LabReadout label="units placed" value={`${st.placements}/${spec.requiredPlacements}`} tone={st.placements===spec.requiredPlacements?'good':st.placements>spec.requiredPlacements?'warn':'neutral'}/><LabReadout label="covered" value={finish.toFixed(1)} tone={finish===spec.objectEnd&&st.spacing==='exact'?'good':'neutral'}/></div></div>}
+    <div className="grid grid-cols-3 gap-2"><LabReadout label="true length" value={String(length)} tone="good"/><LabReadout label="units placed" value={`${st.placements}/${spec.requiredPlacements}`} tone={st.placements===spec.requiredPlacements?'good':st.placements>spec.requiredPlacements?'warn':'neutral'}/><LabReadout label="covered" value={covered.toFixed(1)} tone={done?'good':'neutral'}/></div></div>}
 
 
 /* ---------------- Session 95–96 advanced causal laboratories ---------------- */

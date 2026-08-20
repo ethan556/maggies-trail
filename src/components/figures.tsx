@@ -2945,6 +2945,23 @@ function LaTriangleSum() {
   );
 }
 
+/** Grade 8 lines-angles figure (S316): a right triangle synchronized to 90°, 35°, and the
+ * inferred 55° — the exact worked example in tm-03-02's c2 body, which no prior figure showed
+ * as an actual three-vertex right triangle with a marked right angle. */
+function TmRightTriangleAngleSum() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="A right triangle: one angle is a marked right angle of 90 degrees, a second angle is 35 degrees, and the third angle is the inferred 55 degrees, since 90 plus 35 plus 55 equals 180.">
+      <title>A right triangle: 90°, 35°, and the inferred 55°.</title>
+      <polygon points="40,95 40,25 175,95" fill={SKY} fillOpacity={0.18} stroke={INK} strokeWidth={1.6}/>
+      <rect x="40" y="83" width="12" height="12" fill="none" stroke={INK} strokeWidth={1.4}/>
+      <text x="58" y="90" fontSize="11" fontWeight="700" fill={INK}>90°</text>
+      <text x="140" y="90" fontSize="11" fontWeight="700" fill={BERRY}>35°</text>
+      <text x="48" y="40" fontSize="11" fontWeight="700" fill={LEAF}>55° (inferred)</text>
+      <text x="105" y="112" textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>90° + 35° + 55° = 180°</text>
+    </svg>
+  );
+}
+
 /** Grade 4 lines-angles figure: A line of symmetry folds the halves to match. */
 function LaSymmetry() {
   return (
@@ -4214,6 +4231,20 @@ function Mult3DoubleDouble() {
       <text x="105" y="34" fontSize="13" fill={INK} textAnchor="middle">4 × 6:  double 6 → <tspan fontWeight="700" fill={SKY}>12</tspan></text>
       <text x="105" y="60" fontSize="13" fill={INK} textAnchor="middle">double 12 → <tspan fontWeight="700" fill={BERRY}>24</tspan></text>
       <text x="105" y="84" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">double twice = × 4</text>
+    </svg>
+  );
+}
+
+/** Grade 3 mult/div figure: Times eight is double-double-double (S316 semantic ×8 rebuild —
+ * mult3-double-double stops at 4 × 6 = 24 and cannot represent the ×8 lesson's extra doubling. */
+function Mult3DoubleDoubleDouble() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="Multiplying by eight by doubling three times: six doubles to twelve, twelve doubles to twenty-four, then twenty-four doubles to forty-eight.">
+      <title>Times eight is double-double-double: 6 → 12 → 24 → 48.</title>
+      <text x="105" y="26" fontSize="13" fill={INK} textAnchor="middle">8 × 6:  double 6 → <tspan fontWeight="700" fill={SKY}>12</tspan></text>
+      <text x="105" y="50" fontSize="13" fill={INK} textAnchor="middle">double 12 → <tspan fontWeight="700" fill={LEAF}>24</tspan></text>
+      <text x="105" y="74" fontSize="13" fill={INK} textAnchor="middle">double 24 → <tspan fontWeight="700" fill={BERRY}>48</tspan></text>
+      <text x="105" y="100" fontSize="11" fontWeight="700" fill={TANGERINE} textAnchor="middle">double three times = × 8</text>
     </svg>
   );
 }
@@ -27547,6 +27578,47 @@ function Sa7UnitsCheck() {
     </svg>
   );
 }
+
+/** Grade 7 surface-area figure (S316): a square pyramid's net — one square base and four
+ * triangular faces unfolded, five faces in all. Every registered sa7-* figure before this one
+ * was prism/box-only despite the lesson title promising pyramids (sa7-01-03's k3/ch1). Dimension-
+ * free so it stays accurate for k3's face-count question regardless of which numbers ch1 draws. */
+function Sa7PyramidParts() {
+  return (
+    <svg viewBox="-20 0 260 160" role="img" className="mx-auto w-full max-w-sm" aria-label="A square pyramid unfolded into a net: one square base in the center with four triangular faces attached to its four edges, five faces in all.">
+      <title>A square pyramid has one square base and four triangular faces — five faces in all.</title>
+      <polygon points="90,60 130,60 130,100 90,100" fill={SKY} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 130,60 110,25" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,100 130,100 110,135" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 90,100 55,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="130,60 130,100 165,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <text x={110} y={84} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>base</text>
+      <text x={110} y={150} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>4 triangular faces</text>
+      <text x={110} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>1 square + 4 triangles = 5 faces</text>
+    </svg>
+  );
+}
+
+/** Grade 7 surface-area figure (S316): the same square-pyramid net, dimensioned to exactly match
+ * sa7-01-03's ch1 challenge (base edge 6, slant height 5): base 36, four triangles of 15 each,
+ * total 96. */
+function Sa7PyramidNetTotal() {
+  return (
+    <svg viewBox="0 0 220 168" role="img" className="mx-auto w-full max-w-sm" aria-label="A square pyramid unfolded into a net: the square base has edge 6, giving area 36; each of the four triangular faces has base 6 and slant height 5, giving area 15, for 60 in total across all four; the whole net totals 96 square units.">
+      <title>Square pyramid net: base edge 6, slant height 5 — 36 plus four 15s make 96.</title>
+      <polygon points="90,60 130,60 130,100 90,100" fill={SKY} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 130,60 110,25" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,100 130,100 110,135" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 90,100 55,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="130,60 130,100 165,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <text x={110} y={76} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>edge 6</text>
+      <text x={110} y={92} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>area 36</text>
+      <text x={110} y={45} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>slant 5, area 15</text>
+      <text x={110} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>36 + 4×15 = 96</text>
+      <text x={110} y={155} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>base edge 6, slant height 5</text>
+    </svg>
+  );
+}
 function BvResidualGap() {
   return (
     <S200Plane title="Real points do not sit on the line: each one misses by a vertical gap called its residual.">
@@ -28624,6 +28696,329 @@ function CrLinearVsQuadratic() {
       <rect x={212} y={12} width={48} height={52} fill={TANGERINE} />
       <text x={236} y={53} textAnchor="middle" fontSize={10} fill="#fff" fontWeight={700}>4×</text>
       <text x={150} y={112} textAnchor="middle" fontSize={10} fill={INK} opacity={0.8}>length scales by k; area scales by k² — that k is π's constant partner</text>
+    </svg>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+ * S316 measure-problems-g4 main-route figure rebuild.
+ * Eight main-route (c1/c2) figures in measure-problems-g4 were static
+ * components depicting a scenario other than the one the lesson's own prose
+ * states (see reports/closure/S316_G4V_FIGURE_REBUILD.md). These replacements
+ * are built from small typed-prop helpers so the same relationship (equal
+ * groups adjusted once, at the end vs. inside every group) can be reused by
+ * future lessons with different numbers, instead of one-off hardcodes.
+ * ------------------------------------------------------------------------ */
+
+/** A conversion-table helper: two labeled columns, N rows of (a, b) pairs, and a caption naming the constant factor. Reusable for any two-unit table. */
+function ConversionTableRows({
+  leftLabel,
+  rightLabel,
+  leftFill,
+  rightFill,
+  rows,
+  factorCaption,
+}: {
+  leftLabel: string;
+  rightLabel: string;
+  leftFill: string;
+  rightFill: string;
+  rows: Array<[number, number]>;
+  factorCaption: string;
+}) {
+  const ox = 88, oy = 22, cw = 62, rh = 24;
+  return (
+    <>
+      <text x={ox + cw / 2} y={oy - 6} textAnchor="middle" fontSize={10} fontWeight={800} fill={leftFill}>{leftLabel}</text>
+      <text x={ox + cw + cw / 2} y={oy - 6} textAnchor="middle" fontSize={10} fontWeight={800} fill={rightFill}>{rightLabel}</text>
+      {rows.map(([a, b], i) => (
+        <g key={i}>
+          <rect x={ox} y={oy + i * rh} width={cw} height={rh} fill={i === 0 ? "#EAF2FC" : "white"} stroke={INK} strokeWidth={1.25} />
+          <rect x={ox + cw} y={oy + i * rh} width={cw} height={rh} fill={i === 0 ? "#FFE9D6" : "white"} stroke={INK} strokeWidth={1.25} />
+          <text x={ox + cw / 2} y={oy + i * rh + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>{a}</text>
+          <text x={ox + cw + cw / 2} y={oy + i * rh + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>{b}</text>
+        </g>
+      ))}
+      <text x={ox + cw} y={oy + rows.length * rh + 20} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>{factorCaption}</text>
+    </>
+  );
+}
+
+/** g4v-01-02 c1: replaces the flour/milk ratio-table figure with the lesson's actual meter/centimeter conversion table: 1 m = 100 cm, 2 m = 200 cm, 3 m = 300 cm. */
+function G4vMeterCmTable() {
+  return (
+    <svg viewBox="0 0 300 136" role="img" className="mx-auto w-full max-w-xs">
+      <title>A conversion table for meters and centimeters: 1 meter is 100 centimeters, 2 meters is 200 centimeters, and 3 meters is 300 centimeters — every row is the meter count times 100.</title>
+      <ConversionTableRows
+        leftLabel="meters"
+        rightLabel="centimeters"
+        leftFill={SKY}
+        rightFill={TANGERINE}
+        rows={[[1, 100], [2, 200], [3, 300]]}
+        factorCaption="every row: meters × 100 = centimeters"
+      />
+    </svg>
+  );
+}
+
+/** g4v-02-01 c1: replaces the plain one-liter jug with a jug marked in four liter bands, each labeled with its milliliter equivalent, showing the 1,000 mL factor. */
+function G4vLiterMlJug() {
+  const x0 = 78, x1 = 140, yTop = 14, yBot = 128;
+  const bandH = (yBot - yTop) / 4;
+  const levels = [1, 2, 3, 4];
+  return (
+    <svg viewBox="-25 0 270 148" role="img" className="mx-auto w-full max-w-xs">
+      <title>A liter jug divided into four equal bands: 1 liter equals 1,000 milliliters, 2 liters equals 2,000 milliliters, 3 liters equals 3,000 milliliters, and 4 liters equals 4,000 milliliters — the same factor of 1,000 in every band.</title>
+      <rect x={x0} y={yTop} width={x1 - x0} height={yBot - yTop} fill={SKY} fillOpacity={0.12} stroke={INK} strokeWidth={2} />
+      {levels.slice(1).map((L) => (
+        <line key={L} x1={x0} y1={yBot - (L - 1) * bandH} x2={x1} y2={yBot - (L - 1) * bandH} stroke={INK} strokeWidth={1} opacity={0.5} />
+      ))}
+      {levels.map((L) => (
+        <text key={L} x={x1 + 8} y={yBot - (L - 0.5) * bandH + 4} fontSize={10} fontWeight={700} fill={INK}>
+          {L} L = {L * 1000} mL
+        </text>
+      ))}
+      <text x={(x0 + x1) / 2} y={144} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>every liter is 1,000 milliliters</text>
+    </svg>
+  );
+}
+
+/** g4v-02-02 c1: replaces the clock frozen at 3:00 with a clock ringed in 60 ticks, stating both time factors the lesson teaches: 1 hour = 60 minutes and 1 minute = 60 seconds. */
+function G4vClock60() {
+  const cx = 100, cy = 66, r = 48;
+  const ticks = Array.from({ length: 60 }, (_, i) => i);
+  return (
+    <svg viewBox="0 0 200 176" role="img" className="mx-auto w-full max-w-xs">
+      <title>A clock face ringed with sixty minute-and-second tick marks, five thickened for every hour number: one hour equals sixty minutes, and one minute equals sixty seconds.</title>
+      <circle cx={cx} cy={cy} r={r} fill={SKY} fillOpacity={0.08} stroke={INK} strokeWidth={2} />
+      {ticks.map((i) => {
+        const a = (i / 60) * 2 * Math.PI - Math.PI / 2;
+        const major = i % 5 === 0;
+        const rInner = major ? r - 9 : r - 4;
+        return (
+          <line
+            key={i}
+            x1={cx + r * Math.cos(a)}
+            y1={cy + r * Math.sin(a)}
+            x2={cx + rInner * Math.cos(a)}
+            y2={cy + rInner * Math.sin(a)}
+            stroke={INK}
+            strokeWidth={major ? 1.6 : 0.8}
+            opacity={major ? 1 : 0.55}
+          />
+        );
+      })}
+      <text x={cx} y={cy + 5} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK} opacity={0.7}>60 ticks</text>
+      <text x={cx} y={140} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>1 hour = 60 minutes</text>
+      <text x={cx} y={160} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>1 minute = 60 seconds</text>
+    </svg>
+  );
+}
+
+/**
+ * Reusable equal-groups bar with ONE adjustment removed once from the END of the whole bar
+ * (never from every group). Typed on the groups, the value per group, the amount removed, and
+ * a unit suffix, so any equal-groups-then-subtract-once lesson can reuse it with new numbers.
+ */
+function EqualGroupsEndAdjustBar({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * perGroup;
+  const result = total - adjustment;
+  const boxW = Math.min(38, Math.floor(230 / groups));
+  const gap = 2;
+  const startX = 16;
+  const boxesEndX = startX + groups * (boxW + gap) - gap;
+  const crossX = boxesEndX + 6;
+  return (
+    <>
+      <text x={150} y={15} fontSize={11} fontWeight={700} fill={INK} textAnchor="middle">
+        {groups} equal parts of {perGroup}{suffix}
+      </text>
+      {Array.from({ length: groups }, (_, i) => (
+        <rect key={i} x={startX + i * (boxW + gap)} y={22} width={boxW} height={26} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+      ))}
+      <path d={`M ${startX} 52 L ${startX} 58 L ${boxesEndX} 58 L ${boxesEndX} 52`} fill="none" stroke={INK} strokeWidth={1.2} />
+      <text x={(startX + boxesEndX) / 2} y={70} fontSize={10} fontWeight={700} fill={INK} textAnchor="middle">
+        {groups} × {perGroup} = {total}{suffix}
+      </text>
+      <rect x={crossX} y={22} width={26} height={26} fill={BERRY} fillOpacity={0.16} stroke={BERRY} strokeWidth={1.2} strokeDasharray="3 2" />
+      <line x1={crossX + 2} y1={24} x2={crossX + 24} y2={46} stroke={BERRY} strokeWidth={1.4} />
+      <line x1={crossX + 24} y1={24} x2={crossX + 2} y2={46} stroke={BERRY} strokeWidth={1.4} />
+      <text x={crossX + 13} y={62} fontSize={10} fontWeight={700} fill={BERRY} textAnchor="middle">−{adjustment}</text>
+      <text x={150} y={92} fontSize={12} fontWeight={700} fill={LEAF} textAnchor="middle">
+        ({groups} × {perGroup}) − {adjustment} = {result}{suffix}
+      </text>
+    </>
+  );
+}
+
+/** g4v-02-03 c2 / g4v-03-04 c1: the lesson's own worked example — 6 equal 400 m laps, 150 m crossed off the end once: (6 × 400) − 150 = 2,250 m. Replaces the unrelated 18+24−15 two-step-bar. */
+function G4vGroupsAdjustDistance() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of six equal 400-meter laps, with 150 meters crossed off once at the end of the whole bar: six times 400 minus 150 equals 2,250 meters.</title>
+      <EqualGroupsEndAdjustBar groups={6} perGroup={400} adjustment={150} suffix=" m" />
+    </svg>
+  );
+}
+
+/** g4v-02-04 c1: the lesson's own worked example — 5 shifts of 30 minutes, 20 minutes finished early once: (5 × 30) − 20 = 130 minutes. Replaces the unrelated fixed 8:40–9:20 elapsed-time figure. */
+function G4vGroupsAdjustTime() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of five equal 30-minute shifts, with 20 minutes crossed off once at the end of the whole bar: five times 30 minus 20 equals 130 minutes.</title>
+      <EqualGroupsEndAdjustBar groups={5} perGroup={30} adjustment={20} suffix=" min" />
+    </svg>
+  );
+}
+
+/** g4v-03-01 c1: the lesson's own worked example — 9 passes at 25 dollars, a 40-dollar voucher removed once: (9 × 25) − 40 = 185 dollars. Replaces the unrelated 23-cent dimes/pennies coin-total figure. */
+function G4vGroupsAdjustMoney() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of nine equal 25-dollar passes, with a 40-dollar voucher crossed off once at the end of the whole bar: nine times 25 minus 40 equals 185 dollars.</title>
+      <EqualGroupsEndAdjustBar groups={9} perGroup={25} adjustment={40} suffix=" dollars" />
+    </svg>
+  );
+}
+
+/** g4v-03-02 c1: replaces the five-pencil line plot with the lesson's actual eight quarter-inch marks, grouped four at a time into two whole inches. */
+function G4vQuarterInchPlot() {
+  const axisY = 140, ox = 60, step = 13;
+  const y = (i: number) => axisY - 18 - i * step;
+  return (
+    <svg viewBox="0 0 220 195" role="img" className="mx-auto w-full max-w-sm">
+      <title>A line plot in quarter-inches with eight X marks stacked above the 1/4-inch tick on a number line from 0 to 1 inch. Grouped four at a time — the bottom four and the top four — the eight quarter-inch marks rebuild two whole inches.</title>
+      <text x={110} y={16} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>8 quarter-inch marks</text>
+      <line x1={20} y1={axisY} x2={190} y2={axisY} stroke={INK} strokeWidth={2} />
+      {[
+        [20, "0"],
+        [60, "1/4"],
+        [100, "1/2"],
+        [140, "3/4"],
+        [180, "1"],
+      ].map(([x, label]) => (
+        <g key={label}>
+          <line x1={x as number} y1={axisY - 4} x2={x as number} y2={axisY + 4} stroke={INK} strokeWidth={1.5} />
+          <text x={x as number} y={axisY + 18} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{label}</text>
+        </g>
+      ))}
+      {Array.from({ length: 8 }, (_, i) => (
+        <text key={i} x={ox} y={y(i)} textAnchor="middle" fontSize={10} fontWeight={800} fill={i < 4 ? SKY : LEAF}>✕</text>
+      ))}
+      <line x1={ox - 16} y1={(y(3) + y(4)) / 2} x2={ox + 16} y2={(y(3) + y(4)) / 2} stroke={INK} strokeWidth={1} strokeDasharray="2 2" opacity={0.5} />
+      <text x={ox + 40} y={(y(0) + y(3)) / 2 + 4} fontSize={10} fontWeight={700} fill={SKY} textAnchor="start">4 marks = 1 in</text>
+      <text x={ox + 40} y={(y(4) + y(7)) / 2 + 4} fontSize={10} fontWeight={700} fill={LEAF} textAnchor="start">4 marks = 1 in</text>
+      <text x={110} y={182} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>8 ÷ 4 = 2 inches total</text>
+    </svg>
+  );
+}
+
+/**
+ * Compact equal-groups-end-adjust bar (no captions besides the equation) sized for use as one
+ * panel of a two-panel contrast figure. Same relationship as EqualGroupsEndAdjustBar.
+ */
+function EqualGroupsEndAdjustCompact({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * perGroup;
+  const result = total - adjustment;
+  const boxW = Math.min(30, Math.floor(200 / groups));
+  const gap = 3;
+  const startX = 10;
+  const boxesEndX = startX + groups * (boxW + gap) - gap;
+  return (
+    <>
+      {Array.from({ length: groups }, (_, i) => (
+        <rect key={i} x={startX + i * (boxW + gap)} y={0} width={boxW} height={22} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+      ))}
+      <rect x={boxesEndX + 6} y={0} width={20} height={22} fill={BERRY} fillOpacity={0.18} stroke={BERRY} strokeWidth={1.1} strokeDasharray="2 2" />
+      <line x1={boxesEndX + 8} y1={2} x2={boxesEndX + 24} y2={20} stroke={BERRY} strokeWidth={1.2} />
+      <line x1={boxesEndX + 24} y1={2} x2={boxesEndX + 8} y2={20} stroke={BERRY} strokeWidth={1.2} />
+      <text x={150} y={40} fontSize={11} fontWeight={700} fill={LEAF} textAnchor="middle">
+        ({groups} × {perGroup}) − {adjustment} = {result}{suffix}
+      </text>
+    </>
+  );
+}
+
+/**
+ * Equal-groups bar with the SAME adjustment removed once from INSIDE every group (contrast
+ * against EqualGroupsEndAdjustCompact, which removes it once from the end of the whole bar).
+ */
+function EqualGroupsInsideAdjustBar({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * (perGroup - adjustment);
+  const boxW = Math.min(46, Math.floor(230 / groups));
+  const gap = 4;
+  const startX = 20;
+  return (
+    <>
+      {Array.from({ length: groups }, (_, i) => {
+        const bx = startX + i * (boxW + gap);
+        const cutW = Math.max(6, boxW * (adjustment / perGroup));
+        return (
+          <g key={i}>
+            <rect x={bx} y={0} width={boxW} height={26} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+            <rect x={bx + boxW - cutW} y={0} width={cutW} height={26} fill={BERRY} fillOpacity={0.32} stroke={BERRY} strokeWidth={1} strokeDasharray="2 2" />
+          </g>
+        );
+      })}
+      <text x={150} y={44} fontSize={11} fontWeight={700} fill={LEAF} textAnchor="middle">
+        {groups} × ({perGroup} − {adjustment}) = {total}{suffix}
+      </text>
+    </>
+  );
+}
+
+/**
+ * g4v-03-04 c2: contrasts the lesson's two structures with its own worked numbers — an END
+ * adjustment removed once from the whole bar (6 × 400 − 150 = 2,250 m, from k1) against an
+ * INSIDE adjustment removed once from every group (4 × (300 − 50) = 1,000 m, from k3). Replaces
+ * the reused two-step-bar, which showed only the end-subtraction case.
+ */
+function G4vEndVsInsideAdjust() {
+  return (
+    <svg viewBox="-60 0 420 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>Two bar diagrams contrasted. Top: six equal 400-meter parts with 150 meters crossed off once at the end of the whole bar — six times 400 minus 150 equals 2,250 meters. Bottom: four equal 300-meter parts, each with 50 meters crossed off inside the part — four times the quantity 300 minus 50 equals 1,000 meters. The same kind of numbers, cut in a different place, give a different total.</title>
+      <text x={150} y={12} fontSize={11} fontWeight={800} fill={INK} textAnchor="middle">crossed off at the END (once)</text>
+      <g transform="translate(0,20)">
+        <EqualGroupsEndAdjustCompact groups={6} perGroup={400} adjustment={150} suffix=" m" />
+      </g>
+      <line x1={20} y1={82} x2={280} y2={82} stroke={INK} strokeWidth={1} opacity={0.25} />
+      <text x={150} y={100} fontSize={11} fontWeight={800} fill={INK} textAnchor="middle">crossed off INSIDE every part</text>
+      <g transform="translate(0,110)">
+        <EqualGroupsInsideAdjustBar groups={4} perGroup={300} adjustment={50} suffix=" m" />
+      </g>
+      <text x={150} y={172} fontSize={10} fontWeight={700} fill={BERRY} textAnchor="middle">same kind of numbers, different total: 2,250 m vs. 1,000 m</text>
+    </svg>
+  );
+}
+
+/* --- S316 follow-up: 3 more measure-problems-g4 figure defects found by a second verification
+ * pass, closed with the helpers above (see reports/closure/S316_G4V_FIGURE_REBUILD.md §2). --- */
+
+/** g4v-01-03 c2: replaces the imperial rr-conversion figure ("12 in = 1 ft") with a metric conversion table stating this lesson's own two worked examples (4 m = 400 cm, from i1; 6 m = 600 cm, from i2) and both directions of the factor, matching c1's "runs both ways" claim. New rows (4, 6) rather than a reuse of g4v-meter-cm-table's (1, 2, 3) rows, because this lesson never states 1 m/2 m/3 m — its own numbers are 4 and 6. */
+function G4vLengthConversionBothWays() {
+  return (
+    <svg viewBox="0 0 300 120" role="img" className="mx-auto w-full max-w-xs">
+      <title>A conversion table for meters and centimeters running both ways: 4 meters is 400 centimeters and 6 meters is 600 centimeters, since meters times 100 gives centimeters going down, and centimeters divided by 100 gives meters back going up.</title>
+      <ConversionTableRows
+        leftLabel="meters"
+        rightLabel="centimeters"
+        leftFill={SKY}
+        rightFill={TANGERINE}
+        rows={[[4, 400], [6, 600]]}
+        factorCaption="down: × 100 · up: ÷ 100"
+      />
+    </svg>
+  );
+}
+
+/** g4v-03-04 remedial: replaces the reused two-step-bar (18 + 24 − 15, an unequal-addend JOIN story) with the remedial's own worked example — 5 equal 200 m parts, 30 m crossed off INSIDE every part once: 5 × (200 − 30) = 850 m — which is the remedial check's own correct answer, o0. The old figure showed an end-of-bar adjustment on unrelated numbers, contradicting the inside-every-group answer it was meant to illustrate. */
+function G4vGroupsInsideAdjustDiagram() {
+  return (
+    <svg viewBox="0 0 300 64" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of five equal 200-meter parts, each with 30 meters crossed off inside the part: five times the quantity 200 minus 30 equals 850 meters.</title>
+      <g transform="translate(0,8)">
+        <EqualGroupsInsideAdjustBar groups={5} perGroup={200} adjustment={30} suffix=" m" />
+      </g>
     </svg>
   );
 }
@@ -30094,6 +30489,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "la-perpendicular": LaPerpendicular,
   "la-triangle-angles": LaTriangleAngles,
   "la-triangle-sum": LaTriangleSum,
+  "tm-right-triangle-90-35-55": TmRightTriangleAngleSum,
   "la-symmetry": LaSymmetry,
   "la-symmetry-regular": LaSymmetryRegular,
   "la-symmetry-letters": LaSymmetryLetters,
@@ -30177,6 +30573,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "mult3-double": Mult3Double,
   "mult3-fives": Mult3Fives,
   "mult3-double-double": Mult3DoubleDouble,
+  "mult3-double-double-double": Mult3DoubleDoubleDouble,
   "mult3-nines": Mult3Nines,
   "mult3-break-apart": Mult3BreakApart,
   "mult3-which-op": Mult3WhichOp,
@@ -30525,6 +30922,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "sa7-many-correct-cuts": Sa7ManyCorrectCuts,
   "sa7-three-questions-one-crate": Sa7ThreeQuestionsOneCrate,
   "sa7-units-check": Sa7UnitsCheck,
+  "sa7-pyramid-parts": Sa7PyramidParts,
+  "sa7-pyramid-net-total": Sa7PyramidNetTotal,
   "bv-residual-gap": BvResidualGap,
   "bv-residual-sign": BvResidualSign,
   "bv-residual-plot-diagnoses": BvResidualPlotDiagnoses,
@@ -30579,5 +30978,15 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "fna-properties-anywhere": FnaPropertiesAnywhere,
   "sy-dilation-parallel": SyDilationParallel,
   "cr-circle-scaling": CrCircleScaling,
-  "cr-linear-vs-quadratic": CrLinearVsQuadratic
+  "cr-linear-vs-quadratic": CrLinearVsQuadratic,
+  "g4v-meter-cm-table": G4vMeterCmTable,
+  "g4v-liter-ml-jug": G4vLiterMlJug,
+  "g4v-clock-60": G4vClock60,
+  "g4v-groups-adjust-distance": G4vGroupsAdjustDistance,
+  "g4v-groups-adjust-time": G4vGroupsAdjustTime,
+  "g4v-groups-adjust-money": G4vGroupsAdjustMoney,
+  "g4v-quarter-inch-plot": G4vQuarterInchPlot,
+  "g4v-end-vs-inside-adjust": G4vEndVsInsideAdjust,
+  "g4v-length-both-ways-table": G4vLengthConversionBothWays,
+  "g4v-groups-inside-adjust-diagram": G4vGroupsInsideAdjustDiagram
 };

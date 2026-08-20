@@ -51,6 +51,30 @@ const ENTRY = new Set(["numeric", "fractionEntry", "buildExpression", "pointEntr
 const lessons = readdirSync(join(DIR, "lessons")).sort()
   .map((f) => JSON.parse(readFileSync(join(DIR, "lessons", f), "utf8")));
 
+/** Independent route for frozen authored-template decimal prose that carries NO usable variant
+ * binding (S252/S316 residual fixes removed several mismatched `Pv1000*` variants because that
+ * generator only ever emits whole-number "a + b = ?" prompts, not decimal prose — see
+ * S316_LANEA_MIXED_REVISION_IMPLEMENTATION.md, decimal-fluency-g5 section). Every pattern below
+ * recomputes the answer from the digits actually printed, doing fixed-point (cents/hundredths)
+ * integer arithmetic so floating point never masks a wrong parse. Throws for any prompt shape not
+ * covered, so a numeric check can never silently skip verification. */
+const toHundredths = (s: string): number => Math.round(Number(s) * 100);
+const solveDecimalProse = (prompt: string): number | undefined => {
+  let m = prompt.match(/^Add ([\d.]+) and ([\d.]+)(?:\. Pad [\d.]+ as [\d.]+ first, so the columns line up)?\. What is the sum\?$/);
+  if (m) return (toHundredths(m[1]) + toHundredths(m[2])) / 100;
+  m = prompt.match(/^Find the sum of ([\d.]+) and ([\d.]+) in columns\. Since [\d.]+ equals [\d.]+, line up the decimal points before adding\.$/);
+  if (m) return (toHundredths(m[1]) + toHundredths(m[2])) / 100;
+  m = prompt.match(/^Subtract ([\d.]+) from ([\d.]+)(?:\. Pad [\d.]+ as [\d.]+ first, so the columns line up)?\. What is the difference\?$/);
+  if (m) return (toHundredths(m[2]) - toHundredths(m[1])) / 100;
+  m = prompt.match(/^Multiply ([\d.]+) and ([\d.]+)\. What is the product\?$/);
+  if (m) return (toHundredths(m[1]) * toHundredths(m[2])) / 10000;
+  m = prompt.match(/^A wallet holds \$([\d.]+) and a jacket pocket holds \$([\d.]+)\. What is the total, in dollars\?$/);
+  if (m) return (toHundredths(m[1]) + toHundredths(m[2])) / 100;
+  m = prompt.match(/^You have \$([\d.]+) and spend \$([\d.]+) on lunch\. How much money is left\?$/);
+  if (m) return (toHundredths(m[1]) - toHundredths(m[2])) / 100;
+  return undefined;
+};
+
 describe("S197 decimal-fluency-g5 — course shape and family reuse", () => {
   it("grade 5, 3 chapters sized 6/5/5, files match course.json", () => {
     const cj = JSON.parse(readFileSync(join(DIR, "course.json"), "utf8"));
@@ -183,14 +207,24 @@ describe("S197 decimal-fluency-g5 — routes re-derived, decimal hazards pinned"
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const gen = s.variant.gen as string;
-          const derived = G2_FAMILIES.has(gen)
-            ? solveG2(s.variant.form, w.prompt)
-            : solveG4(s.variant.form, { prompt: w.prompt, options: [] });
-          expect(derived, `${lesson.id}/${s.id} ${gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          // Frozen authored-template prose (no variant, or a variant whose generator only ever
+          // emits a shape the printed prompt no longer matches) is solved by the prose route
+          // FIRST — it is independent of whatever tag happens to be declared on the step.
+          const prose = solveDecimalProse(w.prompt);
+          const gen = s.variant?.gen as string | undefined;
+          const derived = prose !== undefined
+            ? prose
+            : gen && G2_FAMILIES.has(gen)
+              ? solveG2(s.variant!.form, w.prompt)
+              : gen
+                ? solveG4(s.variant!.form, { prompt: w.prompt, options: [] })
+                : (() => { throw new Error(`${lesson.id}/${s.id}: no independent route for prompt: ${w.prompt}`); })();
+          expect(derived, `${lesson.id}/${s.id} ${gen ? `${gen}/${s.variant!.form}` : "no-variant"}: ${w.prompt}`).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
 
-          const f = s.variant.form as string;
+          // The Pv1000*/mb* hazard checks below only apply when the step is actually GRADED
+          // through that generator's own independent route (prose is a distinct, unrelated route).
+          const f = prose === undefined ? (s.variant!.form as string) : undefined;
           if (f === "Pv1000AddTradeNumeric" || f === "Pv1000SubtractTradeNumeric") {
             // decimal notation before the graded expression would hijack arithmetic()'s regex
             expect(/\d\.\d/.test(w.prompt),

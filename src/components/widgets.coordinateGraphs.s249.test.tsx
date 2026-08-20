@@ -49,10 +49,13 @@ const PLOT = corpus("plotPoint");
 const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
 describe("S249 coordinate-graph packet reaches the complete authored/remedial authority", () => {
-  it("pins the bounded 87-consumer portfolio", () => {
+  it("pins the bounded 86-consumer portfolio", () => {
+    // bivariate-statistics/bv-01-01/ch1 was converted from a plotPoint build to a
+    // swapped-coordinate diagnosis MCQ (S316_LANEA_MIXED_REVISION_IMPLEMENTATION.md), so the
+    // plotPoint corpus shrank by one; scatterFit is unaffected.
     expect(SCATTER.length, "scatterFit consumers").toBe(14);
-    expect(PLOT.length, "plotPoint consumers").toBe(73);
-    expect(SCATTER.length + PLOT.length).toBe(87);
+    expect(PLOT.length, "plotPoint consumers").toBe(72);
+    expect(SCATTER.length + PLOT.length).toBe(86);
   });
 });
 

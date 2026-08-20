@@ -136,9 +136,12 @@ function plotStatedIn(prompt: string, den: number):
     }
     return { kind: "marks", values, counts };
   }
-  // "stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches" — the authored g2g sentence.
-  // Counts come first, values second, and the two lists must pair off exactly.
-  const stacks = /stacks of ([\d,\sand]+?) x'?s above ([\d,\sand]+?) inches/.exec(prompt);
+  // "stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches" / "A later plot has 6, 2, 3, and 1
+  // Xs above 5, 6, 7, and 8 inches" — the g2g family's counts-first sentence. The "stacks of "
+  // lead-in is one authored phrasing of this shape, not the shape itself, so it is optional here
+  // (g2g-01-05/k3 states the identical shape without it) — counts always come first, values
+  // second, and the two lists must pair off exactly either way.
+  const stacks = /(?:stacks of )?([\d,\sand]+?) x'?s? above ([\d,\sand]+?) inches/i.exec(prompt);
   if (stacks) {
     const nums = (s: string) => (s.match(/\d+/g) ?? []).map(Number);
     const counts = nums(stacks[1]);
@@ -149,6 +152,56 @@ function plotStatedIn(prompt: string, den: number):
       const v = numeratorOf(String(rv), den);
       if (v === null) return null;
       values.push(v);
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "above 5, 6, 7, and 8 inches are 2, 5, 3, and 1 Xs" / "…inches have 2, 4, 3, and 1 Xs" /
+  // "The counts above 2, 3, 4, and 5 inches are 1, 4, 2, and 3." — the g2g family's values-first
+  // sentence (the mirror of the "stacks"/counts-first shape above). Values always come first,
+  // counts second; the trailing "Xs" word is optional (g2g-01-05/rem-g2g-mode-k's phrasing omits
+  // it and ends the clause on the bare count list instead).
+  const inchesAreHave = /above ([\d,\sand]+?) inches (?:are|have) ([\d,\sand]+?)(?:\s*Xs)?[.\n]/i.exec(prompt);
+  if (inchesAreHave) {
+    const nums = (s: string) => (s.match(/\d+/g) ?? []).map(Number);
+    const rawValues = nums(inchesAreHave[1]);
+    const counts = nums(inchesAreHave[2]);
+    if (counts.length !== rawValues.length || counts.length < 2) return null;
+    const values: number[] = [];
+    for (const rv of rawValues) {
+      const v = numeratorOf(String(rv), den);
+      if (v === null) return null;
+      values.push(v);
+    }
+    return { kind: "marks", values, counts };
+  }
+  // "The record is 4, 4, 5." — g2g-01-03/k3's raw-measurement-list sentence. A tally of the
+  // listed values, exactly the same tally dd-02-01/i1's own dedicated route computes from its
+  // (external, lesson-body) raw list — here the list is stated directly IN THIS WIDGET'S OWN
+  // prompt, so it belongs in the general reader rather than a one-off external route. Raw
+  // integers only (no fraction labels in this notation), so only meaningful at den === 1.
+  const recordIs = /record is ([\d,\s]+?)\./i.exec(prompt);
+  if (recordIs && den === 1) {
+    const nums = (recordIs[1].match(/\d+/g) ?? []).map(Number);
+    if (nums.length >= 2) {
+      const tally = new Map<number, number>();
+      for (const n of nums) tally.set(n, (tally.get(n) ?? 0) + 1);
+      const values = [...tally.keys()].sort((a, b) => a - b);
+      const counts = values.map((v) => tally.get(v)!);
+      return { kind: "marks", values, counts };
+    }
+  }
+  // "3 x's above the number 5 and 1 x above the number 6" — mmt-05-03's line-plot-narration
+  // sentence (S316 Lane B). Count first, value second, joined by "and"; NO "inches" suffix,
+  // which is what distinguishes it from the g2g "stacks of … x's above … inches" shape above.
+  const aboveNumber = [...prompt.matchAll(/(\d+)\s+x'?s?\s+above(?:\s+the\s+number)?\s+(\d+(?:\/\d+)?)/gi)];
+  if (aboveNumber.length >= 2) {
+    const values: number[] = [];
+    const counts: number[] = [];
+    for (const m of aboveNumber) {
+      const v = numeratorOf(m[2], den);
+      if (v === null) return null;
+      values.push(v);
+      counts.push(Number(m[1]));
     }
     return { kind: "marks", values, counts };
   }
@@ -296,6 +349,15 @@ function answerFromPlot(prompt: string, plot: TPlotData): number | null {
     const i = plot.values.indexOf(t);
     return i === -1 ? null : plot.counts[i];
   }
+  // "How many data points are at 5?" — mmt-05-03's line-plot question (S316 Lane B): the COUNT
+  // of marks at exactly that value.
+  const dataPointsAt = /how many data points are at (\d+(?:\/\d+)?)\?/i.exec(prompt);
+  if (dataPointsAt) {
+    const t = numeratorOf(dataPointsAt[1], den);
+    if (t === null) return null;
+    const i = plot.values.indexOf(t);
+    return i === -1 ? null : plot.counts[i];
+  }
   // "how many ribbons were measured in all?" / "How many measurements are shown in all?" —
   // the COUNT of X's on the whole plot.
   if (/in all/i.test(prompt)) return plot.counts.reduce((s, c) => s + c, 0);
@@ -306,9 +368,10 @@ function answerFromPlot(prompt: string, plot: TPlotData): number | null {
     if (n < 1) return null;
     return plot.values.reduce((s, v, i) => s + v * plot.counts[i], 0) / n;
   }
-  // "which length is MOST common?" / "Which measurement is most common?" — the mode's VALUE,
+  // "which length is MOST common?" / "Which measurement is most common?" / "Which measurement is
+  // UNDER THE TALLEST STACK?" (g2g-01-05/rem-g2g-mode-k's phrasing) — all the same mode's VALUE,
   // demanding a unique tallest stack (a tie would make the authored answer unfixable).
-  if (/most common/i.test(prompt)) {
+  if (/most common/i.test(prompt) || /tallest stack/i.test(prompt)) {
     const max = Math.max(...plot.counts);
     if (plot.counts.filter((c) => c === max).length !== 1) return null;
     return plot.values[plot.counts.indexOf(max)];
@@ -355,7 +418,7 @@ function authoredAnswerInUnits(w: Record<string, unknown>, den: number): number 
 }
 
 describe("plotData — the corpus contract", () => {
-  it("is declared on exactly the 19 measured steps of the inline-dataset family", () => {
+  it("is declared on exactly the 24 measured steps of the inline-dataset family", () => {
     // S237 wired vm-02-02's four graded steps; S238 extended the field to mcq and wired the
     // rest of the READY family (S237 handover §3.2): vm-02-01 whole, the three g2g mode checks,
     // g2g-03-03's, and vm-02-02's two stragglers (i2, rem-lo-k). The S238 wave-9 rulings
@@ -364,9 +427,17 @@ describe("plotData — the corpus contract", () => {
     // mc-05-02/k2 (its marks reordered to ascend, the axis's own requirement). The ONE row
     // still absent is a decision, not drift: dd-02-01/k2 stays excluded by the mcq LEAKAGE
     // policy — its options ARE datasets, so drawing the dataset would print the answer —
-    // regardless of glyph.
+    // regardless of glyph. S316 Lane B then wired mmt-05-03's four bare-numeric line-plot
+    // steps (i1, k1, i3, k3), each extended to a truthful 2-stack `plotData` — bringing the
+    // family to 23. A follow-up pass then found g2g-01-03/k3 already carrying a truthful,
+    // pre-existing `plotData` block ("The record is 4, 4, 5…") that had never been added to
+    // this allowlist or given its own independent verification route (both added below), and
+    // removed the two mmt-05-03 `variant` declarations (k1, k3) whose generator could not
+    // regenerate the plot it was paired with (see the "variant-bearing" list's own comment) —
+    // bringing the family to 24, all four mmt-05-03 rows now static.
     expect(declared.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
       "dd-02-01/i1",
+      "g2g-01-03/k3",
       "g2g-01-05/k1",
       "g2g-01-05/k3",
       "g2g-01-05/rem-g2g-mode-k",
@@ -375,6 +446,10 @@ describe("plotData — the corpus contract", () => {
       "md-03-04/ch1",
       "md-03-04/k1",
       "md-03-04/k2",
+      "mmt-05-03/i1",
+      "mmt-05-03/i3",
+      "mmt-05-03/k1",
+      "mmt-05-03/k3",
       "vm-02-01/ch1",
       "vm-02-01/k1",
       "vm-02-01/k2",
@@ -450,12 +525,19 @@ describe("plotData — the corpus contract", () => {
     }
   });
 
+  // g2g-01-03/k3 asks WHICH STACKS MATCH the record — its correct answer is a whole multi-stack
+  // SHAPE, not the single derived number every other mcq row here fixes (a mode, a total, a
+  // count-at-value). `mcqAnswerLabelFromPlot` only ever returns one such number, so this row is
+  // verified separately, below, by its own dedicated independent route.
+  const MULTI_STACK_MCQ = new Set(["g2g-01-03/k3"]);
+
   it("for the mcq rows, the CORRECT OPTION states the value the drawn plot fixes", () => {
     // The mcq analog of the frozen-answer check: the plot must be the dataset the keyed option
     // comes from. The label check is boundary-guarded — "6" must match "6 inches", never "60".
     let checked = 0;
     for (const d of declared) {
       if (d.w.type !== "mcq") continue;
+      if (MULTI_STACK_MCQ.has(`${d.lesson}/${d.step}`)) continue;
       const label = mcqAnswerLabelFromPlot(String(d.w.prompt), d.plot);
       expect(label, `${d.lesson}/${d.step}: no answer shape recognised`).not.toBeNull();
       const options = d.w.options as Array<{ label: string; correct?: boolean }>;
@@ -468,6 +550,55 @@ describe("plotData — the corpus contract", () => {
       checked++;
     }
     expect(checked).toBe(7);
+  });
+
+  it("g2g-01-03/k3: the KEYED option's stacks match the drawn plot, and every other listed option's do not — verified by direct stack-for-stack comparison, never by reading the prompt's own 'record is' list", () => {
+    // Independent of `plotStatedIn`/the "record is" reader used above: this route parses each
+    // OPTION's own label text ("Two Xs at 4; one at 5") into a {value → count} map using a
+    // number-WORD vocabulary (never digits — the options never spell counts as digits, so this
+    // route cannot degenerate into the same digit-matching the disagreements test already does),
+    // then compares that map directly, entry-for-entry, against the plot's OWN {value → count}
+    // map. This is "count matching stacks by direct comparison": it never reads what the PROMPT
+    // states, only what the DRAWN PLOT and the OPTION TEXT each independently say.
+    const d = declared.find((x) => x.lesson === "g2g-01-03" && x.step === "k3");
+    expect(d, "g2g-01-03/k3 must be present in the declared corpus").toBeDefined();
+    expect(d!.w.type).toBe("mcq");
+
+    const WORD_TO_COUNT: Record<string, number> = {
+      none: 0, zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5,
+      six: 6, seven: 7, eight: 8, nine: 9, ten: 10
+    };
+    function stacksFromOptionLabel(label: string): Map<number, number> | null {
+      const clauses = [...label.matchAll(/\b(none|zero|one|two|three|four|five|six|seven|eight|nine|ten)\b(?:\s+Xs?)?\s+at\s+(\d+)/gi)];
+      if (clauses.length < 2) return null;
+      const m = new Map<number, number>();
+      for (const c of clauses) {
+        const count = WORD_TO_COUNT[c[1].toLowerCase()];
+        if (count === undefined) return null;
+        m.set(Number(c[2]), count);
+      }
+      return m;
+    }
+    function sameStacks(a: Map<number, number>, b: Map<number, number>): boolean {
+      if (a.size !== b.size) return false;
+      for (const [v, c] of a) if (b.get(v) !== c) return false;
+      return true;
+    }
+
+    const plotStacks = new Map(d!.plot.values.map((v, i) => [v, d!.plot.counts[i]]));
+    const options = d!.w.options as Array<{ id: string; label: string; correct?: boolean }>;
+    let matching = 0;
+    for (const opt of options) {
+      const parsed = stacksFromOptionLabel(opt.label);
+      expect(parsed, `g2g-01-03/k3 option ${opt.id}: no word-count "at V" clauses found in "${opt.label}"`).not.toBeNull();
+      const matches = sameStacks(parsed!, plotStacks);
+      if (matches) matching++;
+      expect(
+        matches,
+        `g2g-01-03/k3 option ${opt.id} (correct=${!!opt.correct}): parsed stacks ${JSON.stringify([...parsed!])} vs drawn plot ${JSON.stringify([...plotStacks])}`
+      ).toBe(!!opt.correct);
+    }
+    expect(matching, "exactly one option's stacks must match the drawn plot").toBe(1);
   });
 
   it("every declared plot is drawable, and passes the shared integrity rules", () => {
@@ -528,7 +659,16 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
   const withVariant = declared.filter((d) => d.variant !== undefined);
   const withoutVariant = declared.filter((d) => d.variant === undefined);
 
-  it("exactly the 11 variant-bearing steps regenerate; the 8 static rows are the ones expected", () => {
+  it("exactly the 11 variant-bearing steps regenerate; the 13 static rows are the ones expected", () => {
+    // S316 Lane B initially added mmt-05-03/k1 and /k3 as variant-bearing (paired with a
+    // `g2-measure-money-time`/`MmtLinePlotNumeric` variant) and /i1 and /i3 as static. That
+    // generator's shared `num()` builder (src/lib/g2Variants.ts:59) never emits `plotData`, so a
+    // variant-bearing plotData step there could never regenerate WITH its plot — a silent
+    // mismatch on every re-ask. The `variant` key was removed from k1 and k3 (content change,
+    // logged as generator debt for a future forms author to give MmtLinePlotNumeric a real
+    // multi-stack plotData-emitting form), so all four mmt-05-03 rows are now static, and the
+    // variant-bearing count is back to its original 11. g2g-01-03/k3 (also static — no
+    // `variant`) was newly added to the corpus contract, bringing static from 8 to 13.
     expect(withVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
       "mc-05-02/k2",
       "md-03-04/ch1",
@@ -544,10 +684,15 @@ describe("plotData survives the re-ask: every declared generator emits it", () =
     ]);
     expect(withoutVariant.map((d) => `${d.lesson}/${d.step}`).sort()).toEqual([
       "dd-02-01/i1",
+      "g2g-01-03/k3",
       "g2g-01-05/k1",
       "g2g-01-05/k3",
       "g2g-01-05/rem-g2g-mode-k",
       "g2g-03-03/k3",
+      "mmt-05-03/i1",
+      "mmt-05-03/i3",
+      "mmt-05-03/k1",
+      "mmt-05-03/k3",
       "vm-02-01/rem-rl-k",
       "vm-02-02/i2",
       "vm-02-02/rem-lo-k"

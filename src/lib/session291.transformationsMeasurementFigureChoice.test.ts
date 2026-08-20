@@ -42,7 +42,7 @@ describe("S291 transformations-measurement figure truth and choice repair", () =
       expect(hash(source.body)).toBe(bodySeal);
     }
     const triangle = step("tm-03-02", "c2");
-    expect(triangle.figure).toBe("la-triangle-sum");
+    expect(triangle.figure).toBe("tm-right-triangle-90-35-55");
     expect(hash(triangle.body)).toBe("67cedceffcd1021f2592262b8a3144cb6369dfe3f479d3b831f89939e9791282");
   });
 

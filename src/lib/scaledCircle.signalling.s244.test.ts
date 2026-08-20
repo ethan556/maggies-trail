@@ -32,14 +32,17 @@ function authoredScaledCircles(): Array<{ lesson: string; step: string; spec: TS
 }
 
 describe("S244 scaledCircleLab answer-signalling contract", () => {
-  it("covers all seven authored uses and every target mode", () => {
+  it("covers all six authored uses and every target mode", () => {
+    // g7-04-03/i2 was a redundant single-stage area recheck; S316
+    // (S251-COARSE-BASIS-g7-04-03-lfnorm) converted it to a cross-section retrieval MCQ, so it no
+    // longer carries a scaledCircleLab widget — area is still covered by g7-04-03/ch1.
     const uses = authoredScaledCircles();
     expect(uses.map(({ lesson, step }) => `${lesson}/${step}`)).toEqual([
       "cr-06-01/i1", "cr-06-01/i2", "cr-06-01/i3",
-      "g7-04-03/i1", "g7-04-03/k1", "g7-04-03/i2", "g7-04-03/ch1"
+      "g7-04-03/i1", "g7-04-03/k1", "g7-04-03/ch1"
     ]);
     expect(uses.map(({ spec }) => spec.ask).sort()).toEqual([
-      "areaCoef", "areaCoef", "areaCoef", "areaCoef",
+      "areaCoef", "areaCoef", "areaCoef",
       "circumferenceCoef", "circumferenceCoef", "realRadius"
     ]);
   });

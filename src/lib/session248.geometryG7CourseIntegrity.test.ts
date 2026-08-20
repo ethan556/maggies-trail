@@ -181,7 +181,7 @@ describe("S248 geometry-g7 whole-course integrity", () => {
         );
       }
     }
-    expect(count).toBe(29);
+    expect(count).toBe(30);
   });
 
   it("authors complete circle formulas as renderable KaTeX islands", () => {

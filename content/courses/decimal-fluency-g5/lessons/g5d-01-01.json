@@ -149,21 +149,36 @@
       "conceptTag": "g5dc-add-model",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Use the two bars to verify that 40 hundredths plus 25 hundredths makes 65 hundredths.",
+        "prompt": "A classmate claims that 55 hundredths plus 38 hundredths make 83 hundredths. Build both bars and count every shaded cell to check.",
         "categories": [
-          "0.40",
-          "0.25"
+          "0.55",
+          "0.38"
         ],
         "target": [
-          40,
-          25
+          55,
+          38
         ],
-        "maxVal": 45,
+        "maxVal": 60,
         "step": 1,
-        "successFeedback": "40 and 25 hundredths — 65 cells shaded in all, which is 0.65.",
-        "partialFeedback": "Shade 40 cells for the first amount and 25 for the second, counting in hundredths.",
+        "successFeedback": "55 and 38 hundredths — 93 cells shaded in all, which is 0.93. The classmate's 83 dropped the carried ten.",
+        "partialFeedback": "Shade 55 cells for the first amount and 38 for the second, counting in hundredths.",
         "display": "bar",
         "histogram": false
+      },
+      "predict": {
+        "prompt": "Before building, does 55 hundredths plus 38 hundredths equal 83 hundredths?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a ten was dropped from the carry"
+          },
+          {
+            "id": "yes",
+            "label": "Yes, that matches"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Counting every shaded cell gives 93, not 83 — adding 5 and 8 ones-of-hundredths makes 13, and that extra ten must carry into the tens-of-hundredths column."
       },
       "cml": {
         "stage": "construct",
@@ -259,22 +274,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: 460 + 404 = ?",
-        "answer": 864,
-        "tolerance": 0,
+        "prompt": "Add 0.65 and 0.19. What is the sum?",
+        "answer": 0.84,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 764,
-            "feedback": "A hundred hundredths went missing in the carry — that is a whole 1.00 lost from the total."
+            "value": 0.74,
+            "feedback": "A ten hundredths carried out of the hundredths column got dropped — 5 + 9 = 14 must send a tenth left."
           },
           {
-            "value": 56,
-            "feedback": "That found the difference; putting the two amounts together calls for addition."
+            "value": 84,
+            "feedback": "That is 84 as a whole number; the decimal point still belongs two places from the right."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 864."
+        "successFeedback": "Correct — 0.84."
       },
       "hints": [
         "Line up the points.",
@@ -302,10 +317,6 @@
         "transferFamily": "decimal-fluency-g5:g5dc-add-model",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddTradeNumeric"
       }
     },
     {
@@ -319,22 +330,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "On a hundredths grid, show 0.72. How many cells out of 100 must be shaded?",
-        "answer": 72,
-        "tolerance": 0,
+        "prompt": "A unit square is split into 100 equal cells, and 47 of them are shaded. Write the shaded amount as a decimal.",
+        "answer": 0.47,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 7,
-            "feedback": "That read the amount as tenths; a hundredths grid counts all 100 cells."
+            "value": 47,
+            "feedback": "That is the count of shaded cells, and a count of parts is a whole number. Each cell is one hundredth, so the count belongs after the decimal point, ending in the hundredths place."
           },
           {
-            "value": 28,
-            "feedback": "That shaded the REST of the grid — the part left over rather than the part named."
+            "value": 0.53,
+            "feedback": "That is the count of UNSHADED cells, the part left over rather than the part the question named."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 72."
+        "successFeedback": "Correct — 0.47."
       },
       "hints": [
         "Ten columns, or a hundred cells.",
@@ -365,7 +376,7 @@
       },
       "variant": {
         "gen": "g4-decimals",
-        "form": "dHundredthsCellsNumeric"
+        "form": "dHundredthsWriteNumeric"
       }
     },
     {

@@ -189,20 +189,16 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Same cell, different base.",
+      "body": "Diagnose a wrong denominator.",
       "conceptTag": "bv-relative-frequency",
-      "variant": {
-        "gen": "g8-bv-relative-frequency",
-        "form": "bvRelAllA"
-      },
       "explanationVariants": [
-        "Of all 50, the 20 dog-loving children are 20 ÷ 50 = 40%.",
-        "Out of everyone: 20 ÷ 50 = 40%."
+        "Of all 50, the 20 dog-loving children are 20 ÷ 50 = 40%, not 20 ÷ 30 = 67%.",
+        "'Of everyone' divides by the grand total, 50 — not by the 30 children."
       ],
       "widget": {
         "type": "conditionalTableLab",
         "mode": "read",
-        "prompt": "Of all 50 people, 20 are children who prefer dogs. What percent of everyone is that?",
+        "prompt": "A classmate says 20 dog-loving children out of 50 people is 67%, because they divided by the 30 children instead of everyone. What is the correct percent of everyone?",
         "rowLabels": [
           "child",
           "adult"
@@ -227,22 +223,22 @@
             "id": "c0",
             "label": "40%",
             "value": 40,
-            "feedback": "20 ÷ 50 = 0.40 = 40% of everyone."
+            "feedback": "Right — 'of everyone' divides by the grand total 50: 20 ÷ 50 = 40%, not the classmate's 67%."
           },
           {
             "id": "c1",
-            "label": "80%",
-            "value": 80,
-            "feedback": "That divides by 25 (dog-lovers) — 'of everyone' means divide by 50: 40%."
+            "label": "67%",
+            "value": 66.6667,
+            "feedback": "That repeats the classmate's mistake — dividing by the 30 children instead of the 50 total surveyed."
           },
           {
             "id": "c2",
             "label": "20",
             "value": 20,
-            "feedback": "That divides by 30 (children) — 'of everyone' divides by 50: 40%."
+            "feedback": "That's the count — divide by 50 (everyone): 20 ÷ 50 = 40%."
           }
         ],
-        "successFeedback": "20 ÷ 50 = 0.40 = 40% of everyone.",
+        "successFeedback": "Right — 20 ÷ 50 = 0.40 = 40% of everyone, not the classmate's 67%.",
         "explorationFeedback": "Select one exact claim from the drawn table.",
         "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
         "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
@@ -319,68 +315,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A percent of the whole.",
+      "body": "Same cell, a new total.",
+      "figure": "bv-rel-freq",
       "conceptTag": "bv-relative-frequency",
-      "variant": {
-        "gen": "g8-bv-relative-frequency",
-        "form": "bvRelAllB"
-      },
       "explanationVariants": [
-        "The 10 cat-loving children out of 50 are 10 ÷ 50 = 0.20 = 20%.",
-        "10 ÷ 50 = 20% of everyone."
+        "The same 15 cat-loving adults are 15 ÷ 20 = 75% of adults, but 15 ÷ 50 = 30% of everyone.",
+        "Same cell, different total: 15 ÷ 50 = 30% of all 50 people surveyed."
       ],
       "widget": {
-        "type": "conditionalTableLab",
-        "mode": "read",
-        "prompt": "Of all 50 people, 10 are children who prefer cats. What percent of everyone is that?",
-        "rowLabels": [
-          "child",
-          "adult"
-        ],
-        "colLabels": [
-          "dog",
-          "cat"
-        ],
-        "counts": [
-          20,
-          10,
-          5,
-          15
-        ],
-        "targetCondition": "row0",
-        "targetCell": "r0c1",
-        "startCondition": "col0",
-        "requiredSwitches": 1,
-        "readMetric": "relativeWhole",
-        "answerChoices": [
+        "type": "numeric",
+        "prompt": "Of the 20 adults surveyed, 15 prefer cats — that's 15 ÷ 20 = 75% of adults. What percent of all 50 people surveyed do those same 15 cat-loving adults represent?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
           {
-            "id": "c0",
-            "label": "20%",
-            "value": 20,
-            "feedback": "10 ÷ 50 = 0.20 = 20% of everyone."
+            "value": 75,
+            "feedback": "That repeats the percent of adults. Divide the same 15 by all 50 people instead: 15 ÷ 50 = 30%."
           },
           {
-            "id": "c1",
-            "label": "10",
-            "value": 10,
-            "feedback": "That divides by 30 (children) — 'of everyone' divides by 50: 10 ÷ 50 = 20%."
-          },
-          {
-            "id": "c2",
-            "label": "50%",
-            "value": 50,
-            "feedback": "That's the count — divide by 50: 10 ÷ 50 = 20%."
+            "value": 15,
+            "feedback": "That's the count of cat-loving adults, not a percent — divide 15 by 50 people: 15 ÷ 50 = 30%."
           }
         ],
-        "successFeedback": "10 ÷ 50 = 0.20 = 20% of everyone.",
-        "explorationFeedback": "Select one exact claim from the drawn table.",
-        "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
-        "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
+        "fallbackFeedback": "Divide the same cell, 15, by the new total, 50, instead of the total used before, 20."
       },
       "hints": [
-        "'Of everyone' means the base is the grand total, 50.",
-        "Divide the cell by 50: 10 ÷ 50.",
-        "10 ÷ 50 = 0.20 = 20%."
+        "The cell is still the 15 cat-loving adults.",
+        "This time divide by the whole survey, 50.",
+        "15 ÷ 50 = 0.30 = 30%."
       ]
     },
     {

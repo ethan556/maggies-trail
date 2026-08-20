@@ -129,7 +129,7 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Shrink instead of grow.",
+      "body": "Predict a length, then verify.",
       "widget": {
         "type": "dilationExplore",
         "prompt": "Dilate the triangle by a scale factor of 0.5 from the origin.",
@@ -161,6 +161,25 @@
         "successFeedback": "k = 0.5 halves every distance from the centre: (2,2) → (1,1) and (6,2) → (3,1). The triangle is smaller but its angles are untouched — similar, not congruent.",
         "lowFeedback": "That is smaller than a halving — the image has shrunk too far toward the centre. Bring k back up to 0.5.",
         "highFeedback": "The image is still larger than half size. A smaller k pulls the points further toward the centre."
+      },
+      "predict": {
+        "prompt": "Before you drag k to 0.5: the triangle's bottom side runs from (2, 2) to (6, 2), a length of 4. What happens to that side's LENGTH under k = 0.5?",
+        "options": [
+          {
+            "id": "half",
+            "label": "It becomes 2 — half as long"
+          },
+          {
+            "id": "quarter",
+            "label": "It becomes 1 — a quarter as long"
+          },
+          {
+            "id": "same",
+            "label": "It stays 4 — lengths don't change"
+          }
+        ],
+        "outcomeId": "half",
+        "reveal": "Lengths scale by k itself, not k² — that squared factor is the area rule from before. The side of 4 becomes 4 × 0.5 = 2. Only area picks up the extra squared factor."
       }
     },
     {

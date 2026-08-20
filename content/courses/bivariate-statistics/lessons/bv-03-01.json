@@ -138,29 +138,63 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Predict through the origin.",
+      "body": "Read the line from a table, then predict.",
       "widget": {
-        "type": "numeric",
-        "prompt": "A line of best fit is y = 5x (intercept 0). Predict y when x = 4.",
-        "answer": 20,
+        "type": "affineRelationshipLab",
+        "prompt": "A table of paired data gives (1, 5) and (2, 10). Using the line these points define, predict y when x = 4.",
+        "task": "evaluateAtX",
+        "lines": [
+          {
+            "id": "fit",
+            "label": "Line of best fit",
+            "m": 5,
+            "b": 0,
+            "sourceKind": "table",
+            "sourceText": "(1, 5), (2, 10)",
+            "tablePoints": [
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                10
+              ]
+            ]
+          }
+        ],
+        "targetLineId": "fit",
+        "targetInput": 4,
+        "rateGoal": "greater",
+        "requiredExplorations": 2,
+        "requiredStageKeys": [
+          "evaluate:fit:substitute",
+          "evaluate:fit:value"
+        ],
         "tolerance": 0,
-        "commonErrors": [
+        "choices": [],
+        "numericErrors": [
           {
             "value": 9,
-            "feedback": "That's 5 + 4 — the slope MULTIPLIES: 5 × 4 = 20."
+            "feedback": "That's 5 + 4 — first find the slope from the table (10 − 5 over 2 − 1 = 5), and the slope MULTIPLIES: 5 × 4 = 20."
           },
           {
             "value": 25,
             "feedback": "Use x = 4, not 5: 5 × 4 = 20."
           }
         ],
-        "fallbackFeedback": "y = 5x at x = 4: 5 × 4 = 20 (nothing to add, since the intercept is 0)."
+        "pointErrors": [],
+        "authoredStages": [],
+        "explorationFeedback": "Inspect every designated affine state before checking.",
+        "fallbackFeedback": "Find the slope from the table (rise over run: 5), then multiply by 4.",
+        "answerMode": "numeric",
+        "successFeedback": "The table's rise of 5 per step gives slope 5 with intercept 0, so 5 × 4 = 20."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Predict with a negative slope.",
+      "body": "Diagnose a classmate's prediction.",
       "conceptTag": "bv-predict",
       "explanationVariants": [
         "y = −2x + 20 at x = 4: −2 × 4 + 20 = −8 + 20 = 12.",
@@ -168,13 +202,13 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line of best fit is y = −2x + 20. Predict y when x = 4.",
+        "prompt": "A classmate predicts that y = −2x + 20 gives y = 28 when x = 4. What is the actual prediction?",
         "answer": 12,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 28,
-            "feedback": "The slope is negative: −2 × 4 = −8, then + 20 = 12, not 28."
+            "feedback": "That repeats the classmate's mistake — they used +2 × 4 instead of −2 × 4. The correct step is −2 × 4 = −8, then + 20 = 12."
           },
           {
             "value": 18,
@@ -182,77 +216,67 @@
           }
         ],
         "fallbackFeedback": "y = −2x + 20 at x = 4: −8 + 20 = 12."
-      },
-      "variant": {
-        "gen": "linear-predict",
-        "form": "negSlope"
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Predict further out.",
+      "body": "Predict with units.",
       "conceptTag": "bv-predict",
       "explanationVariants": [
-        "y = 4x + 5 at x = 4: 4 × 4 + 5 = 16 + 5 = 21.",
-        "Multiply 4 × 4 = 16, then add 5: 21."
+        "y = 4x + 5 at x = 4: 4 × 4 + 5 = 16 + 5 = 21 dollars.",
+        "Multiply 4 × 4 = 16, then add the $5 base fee: 21 dollars."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line of best fit is y = 4x + 5. Predict y when x = 4.",
+        "prompt": "A line predicts parking cost in dollars from hours parked: y = 4x + 5, where x is hours and y is dollars. Predict the cost, in dollars, for 4 hours.",
         "answer": 21,
         "tolerance": 0,
+        "unit": "dollars",
         "commonErrors": [
           {
             "value": 25,
-            "feedback": "That's 5 × 4 + 5 or 4 × 5 + 5 — use 4 × 4 + 5 = 21."
+            "feedback": "That's 5 × 4 + 5 or 4 × 5 + 5 dollars — use 4 × 4 + 5 = 21 dollars."
           },
           {
             "value": 16,
-            "feedback": "You stopped after multiplying — add the intercept: 16 + 5 = 21."
+            "feedback": "You stopped after multiplying — add the $5 base fee: 16 + 5 = 21 dollars."
           }
         ],
-        "fallbackFeedback": "y = 4x + 5 at x = 4: 16 + 5 = 21."
-      },
-      "variant": {
-        "gen": "linear-predict"
+        "fallbackFeedback": "y = 4x + 5 at x = 4 hours: 4 × 4 + 5 = 21 dollars."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A fractional slope.",
+      "body": "Compare the graph and the equation.",
       "conceptTag": "bv-predict",
       "explanationVariants": [
-        "y = ½x + 2 at x = 4: ½ × 4 = 2, then + 2 = 4.",
-        "Half of 4 is 2, then add 2: 4."
+        "The graph rises 1 for every 2 across — a slope of ½ — matching y = ½x + 2. At x = 4: ½ × 4 = 2, then + 2 = 4.",
+        "Half of 4 is 2, then add the graph's starting height of 2: 4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line of best fit is y = ½x + 2. Predict y when x = 4.",
+        "prompt": "A line of best fit passes through (0, 2) and rises 1 for every 2 steps across — matching the equation y = ½x + 2. Using either the graph's description or the equation, predict y when x = 4.",
         "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 8,
-            "feedback": "That's 2 × 4 — the slope is a HALF: ½ × 4 = 2, then + 2 = 4."
+            "feedback": "That doubles the rise instead of using the ½ rate the graph shows: ½ × 4 = 2, then + 2 = 4."
           },
           {
             "value": 6,
             "feedback": "½ × 4 = 2, then + 2 = 4, not 6 (don't add 4 itself)."
           }
         ],
-        "fallbackFeedback": "y = ½x + 2 at x = 4: ½ × 4 = 2, then + 2 = 4."
+        "fallbackFeedback": "The graph rises 1 for every 2 across, matching slope ½. At x = 4: ½ × 4 = 2, then + 2 = 4."
       },
       "hints": [
-        "Plug x = 4 into y = ½x + 2.",
-        "Half of 4 is 2 — that's the ½x part.",
-        "Then add the intercept: 2 + 2 = 4."
-      ],
-      "variant": {
-        "gen": "linear-predict",
-        "form": "halfSlope"
-      }
+        "The graph rises 1 for every 2 steps across — that's a slope of ½.",
+        "At x = 4, that's two 2-step moves, so two 1-unit rises: +2.",
+        "Starting height 2, plus the 2 risen: 4."
+      ]
     },
     {
       "id": "r1",

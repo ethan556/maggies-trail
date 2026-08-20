@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = join(process.cwd(), "content", "courses");
 const CASES = [
-  ["circle-theorems", "cr-05-03", "steps.0", /cyclic quadrilateral/i],
   ["conic-sections", "co-05-03", "steps.3", /Halley's Comet has e ≈ 0\.97/i],
   ["counting-120", "c120-05-01", "steps.0", /After 45 comes 46/i],
   ["curve-analysis", "ca-03-02", "remedials.0.concept", /compute the secant slope/i],

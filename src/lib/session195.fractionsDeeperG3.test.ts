@@ -38,6 +38,30 @@ const solveFor = (gen: string, form: string, w: TWidget & { prompt: string; opti
   return solveG2(form, envelope);
 };
 
+/** Independent route for numeric checks that legitimately carry NO `variant` — these are
+ * frozen authored-template items (S252/S253 corrections removed a `variant` that no longer
+ * reproduced the corrected prompt; a categorically new generator was out of scope for that
+ * packet, per S316-R). Each pattern below recomputes the answer from the printed prompt by a
+ * method independent of the authoring: straight arithmetic on the digits/words actually shown,
+ * never a lookup of the authored answer. Throws (loudly) for any prompt shape not covered, so
+ * a numeric check can never silently skip verification. */
+const FRACTION_WORD_COUNT: Record<string, number> = {
+  halves: 2, thirds: 3, fourths: 4, fifths: 5, sixths: 6, sevenths: 7, eighths: 8, ninths: 9, tenths: 10, twelfths: 12
+};
+const solveNoVariant = (prompt: string): number => {
+  let m = prompt.match(/^(\d+)\/(\d+) equals a whole number exactly\./);
+  if (m) return +m[1] / +m[2];
+  m = prompt.match(/^A set of (\d+) counters is split into (\d+) equal groups\./);
+  if (m) return +m[1] / +m[2];
+  m = prompt.match(/split into (\w+)\. How many equal pieces are there\?/);
+  if (m && m[1] in FRACTION_WORD_COUNT) return FRACTION_WORD_COUNT[m[1]];
+  m = prompt.match(/^A tray of (\d+) muffins is divided into (\d+) equal rows\. How many muffins are in one row\?$/);
+  if (m) return +m[1] / +m[2];
+  m = prompt.match(/^How many wholes are hiding inside (\d+)\/(\d+)\?$/);
+  if (m) return +m[1] / +m[2];
+  throw new Error(`solveNoVariant: no independent route for prompt: ${prompt}`);
+};
+
 describe("S195 fractions-deeper-g3 — course shape and computational-family reuse", () => {
   it("grade 3, 3 chapters sized 5/5/4, files match course.json", () => {
     const cj = JSON.parse(readFileSync(join(DIR, "course.json"), "utf8"));
@@ -106,21 +130,28 @@ describe("S195 fractions-deeper-g3 — routes re-derived, widget contracts held"
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveFor(s.variant.gen, s.variant.form, w as never);
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          const derived = s.variant
+            ? solveFor(s.variant.gen, s.variant.form, w as never)
+            : solveNoVariant(w.prompt);
+          expect(
+            derived,
+            `${lesson.id}/${s.id} ${s.variant ? `${s.variant.gen}/${s.variant.form}` : "no-variant"}: ${w.prompt}`
+          ).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
 
-          const f = s.variant.form;
-          if (f === "faLikeDenomWordNumeric") {
-            expect(w.prompt.includes("were available"),
-              `${lesson.id}/${s.id}: "were available" silently flips this route to subtraction`).toBe(false);
+          if (s.variant) {
+            const f = s.variant.form;
+            if (f === "faLikeDenomWordNumeric") {
+              expect(w.prompt.includes("were available"),
+                `${lesson.id}/${s.id}: "were available" silently flips this route to subtraction`).toBe(false);
+            }
+            if (f === "faEquivalenceRecapNumeric") {
+              const m = w.prompt.match(/(\d+)\/(\d+) = \?\/(\d+)/);
+              expect(m, `${lesson.id}/${s.id}: equivalence prompt shape`).toBeTruthy();
+              expect((+m![1] * +m![3]) % +m![2], `${lesson.id}/${s.id}: scaled numerator must be whole`).toBe(0);
+            }
+            if (f === "Ssg2ThirdsCountNumeric") expect(w.answer).toBe(3);
           }
-          if (f === "faEquivalenceRecapNumeric") {
-            const m = w.prompt.match(/(\d+)\/(\d+) = \?\/(\d+)/);
-            expect(m, `${lesson.id}/${s.id}: equivalence prompt shape`).toBeTruthy();
-            expect((+m![1] * +m![3]) % +m![2], `${lesson.id}/${s.id}: scaled numerator must be whole`).toBe(0);
-          }
-          if (f === "Ssg2ThirdsCountNumeric") expect(w.answer).toBe(3);
 
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);

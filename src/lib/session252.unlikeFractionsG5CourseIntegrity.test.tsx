@@ -102,7 +102,7 @@ describe("S252 unlike-fractions-g5 whole-course repair", () => {
         for (const option of widget.options) expect(evaluate(widget, option.id).correct, `${lesson.id}/${step.id}/${option.id}`).toBe(option.correct);
       }
     }
-    expect(createHash("sha256").update(JSON.stringify(evaluatorRows)).digest("hex")).toBe("8b35d2905bffc3f060f3653722e4c20f56be47d60233364d3d8a936ba13e4b45");
+    expect(createHash("sha256").update(JSON.stringify(evaluatorRows)).digest("hex")).toBe("960b2d2cd31e09f30a84aaaa595b3308b4fcb50fe0030b82459a0063c3ec3bfa");
 
     const mixed = lessons.find((lesson) => lesson.id === "g5u-02-03")!;
     expect(mixed.steps.find((step) => step.id === "i1")?.widget).not.toEqual(expect.objectContaining({ prompt: expect.stringMatching(/build nineteen eighths/i) }));

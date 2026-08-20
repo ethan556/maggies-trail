@@ -21,38 +21,33 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 183 | 215 | 12 | 0 | 410 |
-| 3-5 | 277 | 141 | 1 | 0 | 419 |
+| K-2 | 185 | 218 | 7 | 0 | 410 |
+| 3-5 | 274 | 143 | 2 | 0 | 419 |
 | 6-8 | 147 | 96 | 2 | 0 | 245 |
 | HS | 199 | 356 | 72 | 0 | 627 |
 
-**K–8 targets** — Tier A 607/200–250 ✓ · Tier B 452/200–300 ✓.
+**K–8 targets** — Tier A 606/200–250 ✓ · Tier B 457/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
 - benchmark-compare (best: C in fa-02-02)
-- kc-count-objects (best: C in kc-01-01)
-- kc-decompose (best: C in kc-04-03)
+- g3d-zero (best: C in df3-03-02)
 - ks-compose-shapes (best: C in ks-02-03)
 - ks-heavier-lighter (best: C in ks-03-02)
 - ks-name-shapes (best: C in ks-01-01)
 - ks-name-solids (best: C in ks-02-01)
 - ks-position-words (best: C in ks-01-03)
 - ks-shapes-any-way (best: C in ks-01-02)
-- ks-sort-and-count (best: C in ks-03-03)
 - mmt-estimate (best: C in mmt-02-01)
-- mmt-time-mixed (best: C in mmt-04-03)
 - sp-relative-freq (best: C in sp-03-02)
-- ssg2-compare-shares (best: C in ssg2-03-03)
 
-## One honest gate from Tier A — prediction-eligible (36 K–8 lessons)
+## One honest gate from Tier A — prediction-eligible (37 K–8 lessons)
 
 | lesson | course (grade) | total | focus domains | eligibility evidence |
 |---|---|--:|---|---|
 | sp-02-02 — Visual Overlap and What It Means | Grade 7: Sampling & Probability (G7) | 30/39 | probability; data distributions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | pr-03b-01 — Writing the Equation y = kx | Grade 7: Proportional Relationships (G7) | 28/39 | ratios & proportions; equations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | sp-02b-01 — MAD as a Ruler | Grade 7: Sampling & Probability (G7) | 28/39 | multiplication decomposition; probability | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
-| bv-02-03 — Reading a Line's Equation | Grade 8: Bivariate Statistics (G8) | 32/39 | equations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01-02 — Multiplying and Dividing Powers of Ten | Grade 8: Exponents, Roots & Scientific Notation (G8) | 32/39 | multiplication decomposition | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01-03 — Powers of Ten and Place Value | Grade 8: Exponents, Roots & Scientific Notation (G8) | 32/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | g7-01-03 — How Area Scales | Grade 7: Geometry (G7) | 32/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -66,6 +61,7 @@ across **65** lessons.
 | sp-04-03 — Probability Models in Real Situations | Grade 7: Sampling & Probability (G7) | 32/39 | probability | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | rns-01-01 — What Makes a Number Rational | Grade 8: The Real Number System (G8) | 32/39 | ratios & proportions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | rns-01-03 — Converting a Repeating Decimal to a Fraction | Grade 8: The Real Number System (G8) | 32/39 | fraction magnitude & operations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| tm-04-01 — Why the Theorem Works | Grade 8: Transformations & Measurement (G8) | 32/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | cg-03-03 — The Triangle Family | The Coordinate Plane & Shape Families (G5) | 30/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | dd-04-01 — Range: How Far Data Stretches | Data & Distributions (G6) | 30/39 | data distributions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | dpv-04-03 — Rounding in Context | Powers of Ten & Decimals (G5) | 30/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -74,6 +70,7 @@ across **65** lessons.
 | sp-02-03 — Comparing Two Populations in Real Situations | Grade 7: Sampling & Probability (G7) | 30/39 | probability | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-02-02 — When There Are Infinitely Many | Grade 8: Linear Equations & Systems (G8) | 29/39 | equations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | pv2-03-02 — Rounding Word Problems | Place Value to a Million (G4) | 29/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| tm-04-03 — The Converse and Distance | Grade 8: Transformations & Measurement (G8) | 29/39 | geometry & transformations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | dd-04b-02 — Comparing with Box Plots | Data & Distributions (G6) | 28/39 | data distributions | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-02-01 — When There Is No Solution | Grade 8: Linear Equations & Systems (G8) | 28/39 | equations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | rr-02b-01 — Ratio Pairs on the Plane | Ratios & Rates (G6) | 28/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -95,29 +92,25 @@ across **65** lessons.
 | rr-05-03 — Ratios Capstone | Ratios & Rates (G6) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rno-04-03 — All Four Operations with Rational Numbers | Grade 7: Rational Number Operations (G7) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
 | sp-02-01 — Are Two Groups Really Different? | Grade 7: Sampling & Probability (G7) | 31/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
+| bv-02-03 — Reading a Line's Equation | Grade 8: Bivariate Statistics (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | bv-04-01 — Reading Two-Way Tables | Grade 8: Bivariate Statistics (G8) | 33/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | fg-03-03 — Comparing Rate and Initial Value | Grade 8: Functions (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rns-02-03 — The Real Number Line Has No Gaps | Grade 8: The Real Number System (G8) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
-| tm-04-01 — Why the Theorem Works | Grade 8: Transformations & Measurement (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 
-## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 15)
+## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 11)
 
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
-| 1 | sp-03-02 — Estimating Probability from Trials | Grade 7: Sampling & Probability (G7) | C | 22/39 | prediction contrast formal transfer adapt | place-value estimation; probability | 71 |
-| 2 | fa-02-02 — Comparing Without a Common Denominator | Fractions That Add Up (G4) | C | 25/39 | prediction manip formal transfer | fraction magnitude & operations | 68 |
-| 3 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | C | 22/39 | prediction contrast formal transfer | place-value estimation | 64 |
-| 4 | ssg2-03-03 — Comparing Halves, Thirds, and Fourths | Grade 2: Shapes & Equal Shares (G2) | C | 23/39 | prediction formal transfer adapt | division meaning | 64 |
-| 5 | kc-01-01 — Count the Dots | Kindergarten: Counting & Numbers (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 6 | kc-04-03 — Break Apart Numbers | Kindergarten: Counting & Numbers (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
-| 7 | ks-01-01 — Name the Shapes | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer misconception adapt | — | 54 |
-| 8 | ks-01-02 — Shapes Any Way Up | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 9 | ks-01-03 — Where Is It? | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 10 | ks-02-01 — Shapes We Can Hold | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer misconception adapt | — | 54 |
-| 11 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
-| 12 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 13 | ks-03-03 — Sort and Count | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
-| 14 | mmt-04-03 — Practicing Five-Minute Times | Grade 2: Measurement, Money & Time (G2) | C | 23/39 | prediction formal transfer adapt | — | 52 |
-| 15 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
+| 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
+| 2 | sp-03-02 — Estimating Probability from Trials | Grade 7: Sampling & Probability (G7) | C | 22/39 | prediction contrast formal transfer adapt | place-value estimation; probability | 71 |
+| 3 | fa-02-02 — Comparing Without a Common Denominator | Fractions That Add Up (G4) | C | 25/39 | prediction manip formal transfer | fraction magnitude & operations | 68 |
+| 4 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | C | 22/39 | prediction contrast formal transfer | place-value estimation | 64 |
+| 5 | ks-01-01 — Name the Shapes | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 6 | ks-01-02 — Shapes Any Way Up | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 7 | ks-01-03 — Where Is It? | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 8 | ks-02-01 — Shapes We Can Hold | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 9 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
+| 10 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 11 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
 
-Totals: 1701 lessons · A 806 · B 808 · C 87 · D 0.
+Totals: 1701 lessons · A 805 · B 813 · C 83 · D 0.

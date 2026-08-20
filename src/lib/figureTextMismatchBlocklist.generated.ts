@@ -44,6 +44,7 @@ export const FIGURE_TEXT_MISMATCH_BLOCKLIST: ReadonlySet<string> = new Set([
   "2ff13c9b",
   "30a6ddf6",
   "323bfceb",
+  "32c154fa",
   "338bbbd6",
   "344f289b",
   "35988db8",

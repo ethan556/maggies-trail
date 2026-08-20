@@ -4770,3 +4770,14 @@ freshness gate, then continue resolver-led family assurance.
   schema **1,840/1,840**, pedagogy **1,711/1,711**, and strict CML **0/0** pass.
 - The real resolver now advances to `cx-01-03/k2` in the separate `g10-coordinate-proofs` family.
 - No lesson declaration or authored lesson prose changed.
+
+## Cowork S316 (2026-08-20) — variant bindings affected by signed content revisions
+
+No new generators. Variant keys REMOVED where signed lesson revisions legitimately outgrew the
+declared generator's template (leaving them would regenerate mismatched content): g3f-01-04/k3
+(Ssg2GridApplyNumeric), g5d-01-01/k3 (Pv1000AddTradeNumeric), mmt-05-03 k1+k3 (g2 line-plot gen
+never emits plotData), plus removals inside fractions-deeper-g3 documented in
+S316_LANEA_G2_G3_REVISION_IMPLEMENTATION.md. Flagged-not-removed (content diversified; needs new
+generator forms): ee-01-02/k3, ee-01-03/ch1, ee-04-02/k3, ee-04-03/ch1, pr-03-01 k3/ch1,
+tm-04-01/tm-04-03/tm-05-01/mult-01-03/mb-05-02 steps per S316_LANEA_MIXED report. These are
+generator debt: a future variants session should author new forms and re-declare.

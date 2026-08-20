@@ -98,19 +98,19 @@
             "id": "o1",
             "label": "Twelve tenths, or 1.2.",
             "correct": false,
-            "feedback": "Not quite — “Twelve tenths, or 1.2.” does not match the place-value model or the expected size."
+            "feedback": "That counts the 12 cells as if each were a full column (a tenth) rather than a single cell (a hundredth) — 12 tenths would fill more than one whole square."
           },
           {
             "id": "o2",
             "label": "Twelve wholes, or 12.",
             "correct": false,
-            "feedback": "Not quite — “Twelve wholes, or 12.” does not match the place-value model or the expected size."
+            "feedback": "That treats each of the 12 cells as one whole unit, but on a hundredths grid every cell is only one hundredth of the whole square."
           },
           {
             "id": "o3",
             "label": "Twelve thousandths, or 0.012.",
             "correct": false,
-            "feedback": "Not quite — “Twelve thousandths, or 0.012.” does not match the place-value model or the expected size."
+            "feedback": "That pushes the count one place too far right; the grid has only 100 cells, so the smallest piece it shows is a hundredth, not a thousandth."
           }
         ]
       },
@@ -156,11 +156,11 @@
       "conceptTag": "g5dc-mult-decimal",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "Both factors are less than 1. Use the slider to test whether their product belongs near 0.12.",
+        "prompt": "A classmate claims 0.6 × 0.7 lands near 4.2. Slide to test whether that is reasonable.",
         "min": 0.01,
         "max": 2,
         "start": 0.01,
-        "target": 0.12,
+        "target": 0.42,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
@@ -168,9 +168,24 @@
           1,
           2
         ],
-        "lowFeedback": "Too low — twelve hundredths is more than a hundredth or two.",
-        "highFeedback": "Too high — multiplying two numbers below one gives a result smaller than either of them.",
-        "successFeedback": "0.12 — from 4 × 3 = 12, with two decimal places because each factor carried one."
+        "lowFeedback": "Too low — six tenths of seven tenths lands close to four tenths, not near zero.",
+        "highFeedback": "Too high — multiplying two numbers below one gives a result smaller than either of them, so 4.2 is ten times too big.",
+        "successFeedback": "0.42 — from 6 × 7 = 42, with two decimal places because each factor carried one. The classmate's 4.2 was missing a decimal place."
+      },
+      "predict": {
+        "prompt": "A classmate says 0.6 × 0.7 = 4.2 because 6 × 7 = 42. What went wrong?",
+        "options": [
+          {
+            "id": "dropped",
+            "label": "Two decimal places were dropped from the product"
+          },
+          {
+            "id": "correct",
+            "label": "Nothing — that is correct"
+          }
+        ],
+        "outcomeId": "dropped",
+        "reveal": "Each factor carries one decimal place, so the product 42 must carry two: 0.42, not 4.2."
       },
       "cml": {
         "stage": "construct",
@@ -206,22 +221,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: compute 44 × 8.",
-        "answer": 352,
-        "tolerance": 0,
+        "prompt": "Multiply 0.6 and 0.9. What is the product?",
+        "answer": 0.54,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 52,
-            "feedback": "Adding mixes an amount with a repeat count — 8 copies of 44 hundredths multiply."
+            "value": 5.4,
+            "feedback": "That has only one decimal place. Each of the two factors carries one place, so the product needs two: 0.54, not 5.4."
           },
           {
-            "value": 308,
-            "feedback": "That is one copy short; 8 copies means 8 of them, not 7."
+            "value": 1.5,
+            "feedback": "That is the SUM of 0.6 and 0.9. The question asks for the product, which multiplies rather than combines them."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 352."
+        "successFeedback": "Correct — 0.54."
       },
       "hints": [
         "Count the places.",
@@ -249,10 +264,6 @@
         "transferFamily": "decimal-fluency-g5:g5dc-mult-decimal",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g4-multiply",
-        "form": "mbMultiplyTensNumeric"
       }
     },
     {
@@ -278,19 +289,19 @@
             "id": "o1",
             "label": "Every product uses hundredths.",
             "correct": false,
-            "feedback": "Not quite — “Every product uses hundredths.” does not match the place-value model or the expected size."
+            "feedback": "Not every decimal product lands in hundredths — a factor with two decimal places would push the product further right. The place count depends on the factors, not a fixed rule."
           },
           {
             "id": "o2",
             "label": "The product has two digits.",
             "correct": false,
-            "feedback": "Not quite — “The product has two digits.” does not match the place-value model or the expected size."
+            "feedback": "12 happens to have two digits, but that is a coincidence of this example — 4 × 3 also equals 12 with zero decimal places when neither factor is a decimal."
           },
           {
             "id": "o3",
             "label": "The factors are both below 1.",
             "correct": false,
-            "feedback": "Not quite — “The factors are both below 1.” does not match the place-value model or the expected size."
+            "feedback": "Being below 1 controls the SIZE of the product, not the number of decimal places; two decimal places come from each factor contributing one."
           }
         ]
       },
@@ -345,19 +356,19 @@
             "id": "o1",
             "label": "Between 1.8 and 4.",
             "correct": false,
-            "feedback": "Not quite — “Between 1.8 and 4.” does not match the place-value model or the expected size."
+            "feedback": "Multiplying by 0.4, a number below 1, shrinks 1.8 rather than growing it into that range."
           },
           {
             "id": "o2",
             "label": "Between 10 and 20.",
             "correct": false,
-            "feedback": "Not quite — “Between 10 and 20.” does not match the place-value model or the expected size."
+            "feedback": "That range would fit multiplying 1.8 by something well above 10, not by 0.4."
           },
           {
             "id": "o3",
             "label": "Exactly at 4.",
             "correct": false,
-            "feedback": "Not quite — “Exactly at 4.” does not match the place-value model or the expected size."
+            "feedback": "4 would come from a factor near 2.2, not 0.4; multiplying by a number below 1 makes the result smaller than 1.8."
           }
         ]
       },

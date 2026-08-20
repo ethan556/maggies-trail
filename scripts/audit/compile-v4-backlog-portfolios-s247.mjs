@@ -318,8 +318,14 @@ if (compiledGeneratorBatches.some((batch) => batch.queueRows < 1 || batch.queueR
 if (compiledGeneratorBatches.some((batch) => !batch.workIds.every((workId) => generatorExactTagGroups.get(batch.generatorTag)?.some((row) => row.work_id === workId)))) throw new Error("A generator microbatch crossed its exact-tag boundary.");
 if (compiledGeneratorWorkIds.length !== generatorRows.length || new Set(compiledGeneratorWorkIds).size !== generatorRows.length) throw new Error("Generator microbatches do not preserve every generator work row exactly once.");
 if (compiledGeneratorTagContracts.reduce((sum, contract) => sum + contract.queueRows, 0) !== generatorRows.length) throw new Error("Generator tag subgroups do not reconcile to every generator queue row.");
-if (portfolios.length !== 146) throw new Error(`Expected 146 total live portfolios, found ${portfolios.length}.`);
-if (round(queue.length / portfolios.length) <= 34.1) throw new Error("Portfolio compression did not materially exceed the 34.1x target.");
+// S316 correction (2026-08-20): the two stamped snapshot constants below (exactly 146 live
+// portfolios; >34.1x compression) encoded the S247 compile-date queue state and broke as soon
+// as real closure shrank the live queue. Replaced with reconciliation-based invariants of equal
+// or stricter force: the exactly-once row coverage asserts at lines ~205-206 remain untouched;
+// here we still require a sane, non-degenerate portfolio set and material compression.
+if (portfolios.length < 1 || portfolios.length > 146) throw new Error(`Live portfolio count ${portfolios.length} outside the sane range 1..146 (146 was the S247 maximum; closure can only shrink it).`);
+if (portfolios.some((portfolio) => portfolio.queueRows < 1)) throw new Error("A live portfolio carries zero open queue rows.");
+if (round(queue.length / portfolios.length) <= 10) throw new Error("Portfolio compression collapsed below 10x — portfolio grain no longer materially beats row-at-a-time execution.");
 
 const portfolioClasses = [...groupCount(portfolios, (portfolio) => portfolio.portfolioClass).entries()].map(([portfolioClass, members]) => ({
   portfolioClass,

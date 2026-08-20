@@ -10,7 +10,7 @@
       "id": "c1",
       "kind": "concept",
       "body": "Not every three lengths can form a triangle. The **triangle inequality** decides: the two **shorter** sides together must **beat** the longest side. Sides 3, 4, 5 work because 3 + 4 > 5. Sides 2, 3, 6 fail because 2 + 3 < 6.",
-      "figure": "right-triangle",
+      "figure": "g7-triangle-inequality",
       "narration": "Not every three lengths can form a triangle. The **triangle inequality** decides: the two **shorter** sides together must **beat** the longest side. Sides 3, 4, 5 work because 3 + 4 > 5. Sides 2, 3, 6 fail because 2 + 3 < 6."
     },
     {
@@ -215,34 +215,30 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "The biggest missing side.",
+      "body": "The exact upper boundary.",
       "conceptTag": "g7-triangle-inequality",
       "explanationVariants": [
-        "With sides 4 and 6, the third side must be less than 4 + 6 = 10 — so 9 works, 10 doesn't.",
-        "The third side stays under the sum: less than 10."
+        "With sides 4 and 6, the upper-boundary length that collapses the triangle flat is their sum, 4 + 6 = 10.",
+        "The sum of the two given sides, 10, is the one length that cannot be the third side — it makes the sides lie flat."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Two sides of a triangle are 4 and 6. Which cannot be the third side?",
+        "prompt": "Two sides of a triangle are 4 and 6. What upper-boundary length equals their sum and therefore cannot be the third side?",
         "answer": 10,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 9,
-            "feedback": "9 works: 4 + 6 = 10 beats 9 — the impossible one is 10 itself."
-          },
-          {
-            "value": 5,
-            "feedback": "5 works: check 4 + 5 = 9 > 6 — the impossible one is 10."
+            "feedback": "9 is the greatest whole-number length below the upper boundary, and it can form a triangle because 4 + 6 > 9."
           },
           {
             "value": 3,
-            "feedback": "3 works: 3 + 4 = 7 > 6 — the impossible one is 10."
+            "feedback": "3 is the smallest whole-number length above the lower boundary, 2. The requested upper boundary is 4 + 6 = 10."
           }
         ],
-        "fallbackFeedback": "Add the two given sides: the third side must be strictly less than 4 + 6.",
-        "successFeedback": "Right — 4 + 6 = 10 only equals it, so the triangle collapses flat: 10 is impossible."
+        "fallbackFeedback": "The third side must be strictly less than 4 + 6. Their sum, 10, is the upper boundary that collapses the triangle flat.",
+        "successFeedback": "Right — the sum 4 + 6 = 10 is the exact upper boundary. Any length at or above it cannot close the triangle."
       },
       "variant": {
         "gen": "g7-triangle-inequality",

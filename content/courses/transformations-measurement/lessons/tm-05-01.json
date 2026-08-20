@@ -58,32 +58,28 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Another cylinder.",
+      "body": "A cylinder with real units.",
       "conceptTag": "tm-cylinder-volume",
       "explanationVariants": [
-        "V = πr²h = π × 5² × 2 = π × 25 × 2 = 50π.",
-        "Square the radius (25), times height (2): 50π."
+        "V = πr²h = π × 3² × 5 = π × 9 × 5 = 45π cm³.",
+        "Square the radius (9), times height (5): 45π cm³."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A cylinder has radius 5 and height 2. What is its volume as a number times π?",
-        "answer": 50,
+        "prompt": "A cylindrical drum has radius 3 cm and height 5 cm. What is its volume, in cm³, as a number times π?",
+        "answer": 45,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 20,
-            "feedback": "That used 2r (10) instead of r² (25) — square the radius: 5² × 2 = 50."
+            "value": 30,
+            "feedback": "That used 2r (6) instead of r² (9) — square the radius: 3² × 5 = 45."
           },
           {
-            "value": 100,
-            "feedback": "That squared 5 then multiplied by 2² — height isn't squared: 25 × 2 = 50."
+            "value": 75,
+            "feedback": "That squared the height (25) instead of the radius — only r is squared: 9 × 5 = 45."
           }
         ],
-        "fallbackFeedback": "V = πr²h = π × 25 × 2 = 50π, so the number is 50."
-      },
-      "variant": {
-        "gen": "g8-tm-cylinder-volume",
-        "form": "tmCylinderA"
+        "fallbackFeedback": "V = πr²h = π × 9 × 5 = 45π cm³, so the number is 45."
       }
     },
     {
@@ -111,32 +107,28 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "A taller cylinder.",
+      "body": "Work backward to the radius.",
       "conceptTag": "tm-cylinder-volume",
       "explanationVariants": [
-        "V = πr²h = π × 2² × 10 = π × 4 × 10 = 40π.",
-        "Square r (4), times height (10): 40π."
+        "Divide the coefficient by the height first: 40 ÷ 10 = 4 = r². Then r = √4 = 2.",
+        "r² = 40 ÷ 10 = 4, so r = 2."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A cylinder has radius 2 and height 10. What is its volume as a number times π?",
-        "answer": 40,
+        "prompt": "A cylinder has height 10 and volume 40π. What is its radius?",
+        "answer": 2,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 20,
-            "feedback": "That used r × h without squaring — r² × h = 4 × 10 = 40."
+            "value": 4,
+            "feedback": "4 is r² (40 ÷ 10), not r itself — take the square root: √4 = 2."
           },
           {
-            "value": 400,
-            "feedback": "That squared the height too — only the radius is squared: 4 × 10 = 40."
+            "value": 20,
+            "feedback": "That divided the wrong way — 40 ÷ 10 = 4 is r², so r = √4 = 2."
           }
         ],
-        "fallbackFeedback": "V = πr²h = π × 4 × 10 = 40π, so the number is 40."
-      },
-      "variant": {
-        "gen": "g8-tm-cylinder-volume",
-        "form": "tmCylinderB"
+        "fallbackFeedback": "Divide the coefficient by the height: 40 ÷ 10 = 4 = r², then r = √4 = 2."
       }
     },
     {
@@ -186,38 +178,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A real-world cylinder.",
+      "body": "A real-world cylinder, measured by diameter.",
       "conceptTag": "tm-cylinder-volume",
       "explanationVariants": [
-        "A tank with radius 4 and height 3: V = π × 4² × 3 = π × 16 × 3 = 48π.",
-        "Square r (16), times height (3): 48π."
+        "The tank's diameter is 8, so its radius is 8 ÷ 2 = 4: V = π × 4² × 3 = π × 16 × 3 = 48π.",
+        "Halve the diameter to get r = 4, square it (16), times height (3): 48π."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A cylindrical water tank has radius 4 and height 3. What is its volume as a number times π?",
+        "prompt": "A cylindrical water tank has diameter 8 and height 3. What is its volume as a number times π?",
         "answer": 48,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 24,
-            "feedback": "That used 2r (8) instead of r² (16) — square the radius: 16 × 3 = 48."
+            "value": 192,
+            "feedback": "That used the DIAMETER (8) as the radius — halve it first: 8 ÷ 2 = 4, then 4² × 3 = 48."
           },
           {
             "value": 144,
-            "feedback": "That squared the height too — only r is squared: 16 × 3 = 48."
+            "feedback": "That squared the height too — only the radius is squared: 4² × 3 = 16 × 3 = 48."
           }
         ],
-        "fallbackFeedback": "V = πr²h = π × 4² × 3 = π × 16 × 3 = 48π, so the number is 48."
+        "fallbackFeedback": "Radius = diameter ÷ 2 = 4. V = πr²h = π × 4² × 3 = π × 16 × 3 = 48π, so the number is 48."
       },
       "hints": [
-        "Use V = πr²h with r = 4 and h = 3.",
-        "Square the radius first: 4² = 16. Then multiply by the height 3.",
+        "The formula needs the RADIUS, but you're given the diameter, 8.",
+        "Halve the diameter first: r = 8 ÷ 2 = 4. Then square it: 4² = 16.",
         "16 × 3 = 48, so V = 48π."
-      ],
-      "variant": {
-        "gen": "g8-tm-cylinder-volume",
-        "form": "tmCylinderTank"
-      }
+      ]
     },
     {
       "id": "r1",
@@ -245,25 +233,25 @@
         "body": "",
         "conceptTag": "tm-cylinder-volume",
         "explanationVariants": [
-          "V = πr²h = π × 3² × 2 = π × 9 × 2 = 18π.",
-          "Square r (9), times height (2): 18π."
+          "The classmate squared the height instead of the radius. Correctly, V = πr²h = π × 3² × 2 = π × 9 × 2 = 18π.",
+          "Square r, not h: 3² × 2 = 9 × 2 = 18π."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A cylinder has radius 3 and height 2. What is its volume as a number times π?",
+          "prompt": "A classmate found a cylinder's volume with radius 3 and height 2 by computing 3 × 2² = 12, giving V = 12π. What is the CORRECT volume, as a number times π?",
           "answer": 18,
           "tolerance": 0,
           "commonErrors": [
             {
               "value": 12,
-              "feedback": "That used 2r (6) instead of r² (9) — square the radius: 9 × 2 = 18."
+              "feedback": "That's the classmate's mistake — they squared the height (2² = 4) instead of the radius: 3² × 2 = 9 × 2 = 18."
             },
             {
               "value": 36,
-              "feedback": "That squared the height too — only r is squared: 9 × 2 = 18."
+              "feedback": "That squares both r and h — only r is squared: 9 × 2 = 18."
             }
           ],
-          "fallbackFeedback": "V = πr²h = π × 9 × 2 = 18π, so the number is 18."
+          "fallbackFeedback": "Square the RADIUS, not the height: 3² × 2 = 9 × 2 = 18π, so the number is 18."
         }
       }
     }

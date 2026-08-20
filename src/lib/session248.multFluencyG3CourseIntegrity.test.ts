@@ -62,7 +62,7 @@ const expectedFigures: Record<
   "mf3-01-04": "mult3-fives",
   "mf3-01-05": "mult3-break-apart",
   "mf3-01-06": "mult3-break-apart",
-  "mf3-02-01": "mult3-double-double",
+  "mf3-02-01": "mult3-double-double-double",
   "mf3-02-02": "mult3-nines",
   "mf3-02-03": ["mult3-times-ten-place-value", "mult3-times-ten-empty-ones"],
   "mf3-02-04": ["mult3-square-array", "mult3-next-square-growth"],

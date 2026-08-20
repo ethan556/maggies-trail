@@ -2,11 +2,11 @@
 
 Deterministic, content-addressed evidence cache. It is not curriculum, a backlog, or approval authority.
 
-- Cache seal: `f9babd2ab2be40f84863e301527c84d94c81e26d4f84f8056d55f8313cafad51`
-- Local cache: `.chatgpt-work-cache/maggies-v4/f9babd2ab2be40f84863e301527c84d94c81e26d4f84f8056d55f8313cafad51/`
-- Base commit metadata: `c977efa1b7c942b8ecab4ca0903e593b2f1b7776`
+- Cache seal: `01fcc620cd02078cbb9715aa4cf0983c3abe252658fe452f3f6fb13718230c88`
+- Local cache: `.chatgpt-work-cache/maggies-v4/01fcc620cd02078cbb9715aa4cf0983c3abe252658fe452f3f6fb13718230c88/`
+- Base commit metadata: `06a9bb1f9e827ab4b77b886dcf4071ddf0d9b37c`
 - Queue freshness: **SOURCE_SEAL_MATCH**
-- Inventory: **129 courses / 1,701 lessons / 15,653 top-level steps**
+- Inventory: **129 courses / 1,701 lessons / 15,654 top-level steps**
 - Canonical policy pin: `8c87f7c8e16c66c6b8d711855322f6be7f7a815ab70fd2930403474e9fd8c694`
 - Exact worker prefix: `23106956319f89721869698d4cad42db1b2dc3cd2ed6c78c181915622fbf3a2f`
 
@@ -14,18 +14,18 @@ Deterministic, content-addressed evidence cache. It is not curriculum, a backlog
 
 | Partition | Files | Bytes | SHA-256 |
 |---|---:|---:|---|
-| curriculum | 1,832 | 23,351,658 | `9455ddc19bfbd557ceb6e0790d8818d54ef9c5254b1b42aa39f99eb89ae14bba` |
-| standards | 12 | 55,996,742 | `6c9f39bfaade9b228e29f735d06e8dae00db892900f8afd296d5219d3b390e59` |
-| mastery | 6 | 8,251,662 | `40e05e95e415ebf357c3052548ce989d2afcea5b56b169eb2bb9c0a82eaabae6` |
-| rubric-contract | 20 | 231,688 | `dd26e1e9eee01601b70f2c48574a9929a7614dad87dc3b9eecf0c4e822552e92` |
-| contract-code | 15 | 831,422 | `25e3085a923275c66cf8cbc821c4f88f869236e67ae94b6267c3405a8c2e8349` |
-| generators | 22 | 4,581,561 | `3b7002f2d9bf7dbd45f85afb4a7b88efccb9214315b72361ca451be3c0e22fbf` |
-| widgets | 8 | 2,083,717 | `f25be5474f0a62869882cb157415882bca62c705ee1bf593cab9006335295c42` |
-| evaluators | 17 | 1,333,914 | `00ff6bf6baddbcf21ff72bcb919b8ddd74493ad2cc707b8977e4b82290d7843e` |
-| visuals-assets | 229 | 15,296,890 | `c22680e12e228a5acc67dbdd25f4ccfa5136c3096154130c7392f1f7bc83be69` |
-| standards-toolchain | 31 | 246,024 | `cafcb11ed7ad93c0397883fa34988a4afb1a618d505e11d7845897946d2292f7` |
-| review-detectors | 8 | 109,944 | `93735707ae099cb361796215b7f3ffee88f1bc60c188e0a39420e0fd034fa22e` |
-| evidence-artifacts | 76 | 13,660,028 | `9adad8d8d3ad835496cc50e2453aaaa59d8360d063d8150c5290ef7e5963b9b4` |
+| curriculum | 1,832 | 23,022,490 | `b700e56613b1caf8d52962a634d924d5bfd11881e37ce288b1abf7522b265e52` |
+| standards | 12 | 55,993,745 | `b595f211b348c8576b9884c6dd27a62537e5271abce1bfeee34e3344fc5a3f10` |
+| mastery | 6 | 8,015,251 | `73641fc0d9e3bf7b7a36fe546edd9a771c03ab049b8b2f686716c4e6dabe030d` |
+| rubric-contract | 20 | 229,155 | `88231c6dca7df685d113beeebc251fa132fde7419add7e82495d630f78463f9f` |
+| contract-code | 15 | 817,290 | `699e937fdf3513486ebdbabf361cd2c5203d7acff8761b409956b9e9172a68af` |
+| generators | 22 | 4,484,969 | `525834884a9b71d1a62eed86b128fcbe04546d4f3c7f2e976175a5ed8b5ea56b` |
+| widgets | 8 | 2,054,588 | `cdab1b5ba79f7e265537bed74e06b3604b247fa2b85abf15410bf246086b08f4` |
+| evaluators | 17 | 1,312,383 | `175b6b610556144582b1327a81a4a6e4be29e7814304170d3e0278d17e8db216` |
+| visuals-assets | 229 | 15,290,514 | `5b2884057bd4c47ce77f55239ba08bb9c10916a78b26bce557fc6781c9cdcf0f` |
+| standards-toolchain | 31 | 244,274 | `3d0770632699e9801f36f5a202cd5e031630bc4df65b26f90cd80b4aa90484ed` |
+| review-detectors | 8 | 108,646 | `18b83d8c8c87e22c00a64af4fd592fd7af126e7a3f7319514cfcf3191d1c8936` |
+| evidence-artifacts | 76 | 14,399,688 | `e35d50f22024e5ea0fd2dde9b06e51ba340f5ab12586eca0da90b8865e232942` |
 
 The manifest contains one compact capsule per course and logical dependency family. It carries no lesson prose, standards text, raw audit rows, or screenshots.
 

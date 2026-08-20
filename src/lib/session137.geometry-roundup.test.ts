@@ -27,7 +27,7 @@ function parsedById(id: string) {
   return WidgetSpec.parse(step.widget);
 }
 
-const scaledIds = ["i1", "k1", "i2", "ch1"];
+const scaledIds = ["i1", "k1", "ch1"];
 
 function scaledSpecs(): TScaledCircleLab[] {
   return scaledIds.map((id) => {
@@ -45,18 +45,30 @@ function triangleSpec(): TTriangleClosureLab {
 
 describe("Session 137 geometry-roundup causal surfaces", () => {
   it("converts the six graded claims onto three exact-fit causal surfaces", () => {
-    expect(scaledSpecs()).toHaveLength(4);
+    expect(scaledSpecs()).toHaveLength(3);
+    expect(parsedById("i2").type).toBe("mcq");
     expect(parsedById("k2").type).toBe("angleMeasure");
     expect(triangleSpec().type).toBe("triangleClosureLab");
     expect(lesson.steps.find((step) => step.id === "k2")?.variant).toEqual({ gen: "angle-equation", form: "linearPairLab" });
     expect(lesson.steps.find((step) => step.id === "k3")?.variant).toEqual({ gen: "g7-triangle-inequality", form: "frameCheck" });
   });
 
+  it("keeps the i2 cross-section retrieval MCQ evaluator-true", () => {
+    const spec = parsedById("i2");
+    if (spec.type !== "mcq") throw new Error("wrong i2 surface");
+    const correct = spec.options.filter((option) => option.correct);
+    expect(correct).toHaveLength(1);
+    expect(correct[0]?.id).toBe("a");
+    for (const option of spec.options) {
+      expect(evaluate(spec, option.id).correct).toBe(option.correct);
+      expect(evaluate(spec, option.id).feedback).toBe(option.feedback);
+    }
+  });
+
   it("independently derives every scaled-circle target and preserves each authored wrong value", () => {
     const expected = {
       i1: { target: 6, wrong: [3, 12] },
       k1: { target: 12, wrong: [36, 6] },
-      i2: { target: 36, wrong: [12, 6] },
       ch1: { target: 16, wrong: [4, 8] }
     } as const;
     for (const [index, spec] of scaledSpecs().entries()) {
