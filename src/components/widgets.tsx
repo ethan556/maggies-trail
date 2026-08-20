@@ -10436,13 +10436,25 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
   /* S243 choice-order canary. The authored corpus puts the supported conclusion first in all nine
    * distributionCompareLab judge moments. Shuffle DISPLAY ORDER only, using stable option IDs and
    * the question seed, so position cannot leak correctness while grading/feedback keep using IDs.
-   * Measure choices deliberately opt out: their numeric order is part of the ruler/measurement
-   * model, so changing it would damage a semantic/spatial sequence rather than remove a cue. */
+   * S320-A3: measure choices carry the SAME defect (20 of 21 authored instances put the correct
+   * choice at index 1) — evaluate.ts grades measure mode strictly by `choice.value` (never
+   * position, see evaluate.ts's "distributionCompareLab" case), so there is no ordered-semantics
+   * argument for leaving these unshuffled; each button already prints its own value/label
+   * regardless of position. Shuffle DISPLAY ORDER only, keyed by value, mirroring orderedJudgeOptions. */
   const orderedJudgeOptions = useMemo(
     () => spec.mode === "judge"
       ? seededShuffle(
           spec.judgeOptions,
           `distributionCompareLab:judge:${seed ?? spec.judgeOptions.map((option) => option.id).join("|")}`
+        )
+      : [],
+    [seed, spec]
+  );
+  const orderedMeasureChoices = useMemo(
+    () => spec.mode === "measure"
+      ? seededShuffle(
+          spec.measureChoices,
+          `distributionCompareLab:measure:${seed ?? spec.measureChoices.map((choice) => String(choice.value)).join("|")}`
         )
       : [],
     [seed, spec]
@@ -10551,7 +10563,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
       </div>
       {spec.mode === "measure" ? (
         <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the number of variability-units between the means">
-          {spec.measureChoices.map((choice) => (
+          {orderedMeasureChoices.map((choice) => (
             <button key={choice.value} type="button" disabled={disabled} aria-pressed={selectedMeasure === choice.value} onClick={() => { onEvent?.({ control: "measure", dir: spec.answer !== undefined && Math.abs(choice.value - spec.answer) <= spec.tolerance ? "toward" : "away", state: { value: choice.value } }); onChange(choice.value); }} className={optionClass(selectedMeasure === choice.value)}>
               <span className="block text-base font-extrabold tabular-nums">{choice.label ?? fmt(choice.value)}</span>
               <span className="block text-xs font-semibold text-ink/60">variability-unit{choice.value === 1 ? "" : "s"}</span>

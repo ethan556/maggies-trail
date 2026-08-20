@@ -121,23 +121,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Add four tens.",
+      "body": "Count the tens instead of the total.",
       "widget": {
         "type": "numeric",
-        "prompt": "26 + 40 = ?",
-        "answer": 66,
+        "prompt": "26 + 40 adds how many tens?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 30,
-            "feedback": "You're adding 4 tens, not 4 ones: 2 tens + 4 tens = 6 tens, so 66."
+            "value": 66,
+            "feedback": "66 is the sum of 26 and 40, not the number of tens being added. 40 is 4 tens."
           },
           {
-            "value": 62,
-            "feedback": "Keep the ones (6) and add the tens: 2 tens + 4 tens = 6 tens = 66."
+            "value": 40,
+            "feedback": "40 is the number added, but the question asks how many TENS that is: 4."
           }
         ],
-        "fallbackFeedback": "2 tens + 4 tens = 6 tens = 66 (ones stay 6)."
+        "fallbackFeedback": "40 = 4 tens, so 4 tens are being added."
       }
     },
     {
@@ -149,122 +149,110 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Add three tens.",
+      "body": "Find the missing addend.",
       "widget": {
         "type": "numeric",
-        "prompt": "55 + 30 = ?",
-        "answer": 85,
+        "prompt": "55 + ? = 85. What number was added?",
+        "answer": 30,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 58,
-            "feedback": "You're adding 3 tens, not 3 ones: 5 tens + 3 tens = 8 tens, so 85."
+            "value": 140,
+            "feedback": "That adds 55 and 85 together. The number added is the DIFFERENCE: 85 − 55 = 30."
           },
           {
-            "value": 25,
-            "feedback": "That's 55 − 30. Adding gives 85."
+            "value": 3,
+            "feedback": "The tens digit went up by 3, but the actual number added is 3 tens: 30, not 3."
           }
         ],
-        "fallbackFeedback": "5 tens + 3 tens = 8 tens = 85."
+        "fallbackFeedback": "85 − 55 = 30, so 30 was added."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Add three tens.",
+      "body": "Work backward to the starting number.",
       "conceptTag": "tno-add-tens",
       "explanationVariants": [
-        "3 tens + 3 tens = 6 tens, ones stay 3: 63.",
-        "33 + 30 adds three tens: 63."
+        "Undo the +30 by subtracting: 63 − 30 = 33.",
+        "Work backward from the result to find the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "33 + 30 = ?",
-        "answer": 63,
+        "prompt": "After adding 30, the result is 63. What number did we start with?",
+        "answer": 33,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 36,
-            "feedback": "You're adding 3 tens, not 3 ones: 3 tens + 3 tens = 6 tens, so 63."
+            "value": 93,
+            "feedback": "That adds 30 again instead of undoing the add. Undo by subtracting: 63 − 30 = 33."
           },
           {
-            "value": 30,
-            "feedback": "Keep the ones (3): 3 tens + 3 tens = 6 tens = 63."
+            "value": 60,
+            "feedback": "That subtracts 3, not 3 tens. Subtracting a full 30 from 63 gives 33."
           }
         ],
-        "fallbackFeedback": "3 tens + 3 tens = 6 tens = 63."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoAddTensNumeric"
+        "fallbackFeedback": "Undo the +30 by subtracting: 63 − 30 = 33."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Add two tens.",
+      "body": "Find the missing first addend.",
       "conceptTag": "tno-add-tens",
       "explanationVariants": [
-        "1 ten + 2 tens = 3 tens, ones stay 7: 37.",
-        "17 + 20 adds two tens: 37."
+        "37 − 20 = 17, so 17 is missing.",
+        "Find the gap between the two numbers."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "17 + 20 = ?",
-        "answer": 37,
+        "prompt": "? + 20 = 37. What number is missing?",
+        "answer": 17,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 19,
-            "feedback": "You're adding 2 tens, not 2 ones: 1 ten + 2 tens = 3 tens, so 37."
+            "value": 57,
+            "feedback": "That adds 20 and 37 together. The missing number is the DIFFERENCE: 37 − 20 = 17."
           },
           {
-            "value": 15,
-            "feedback": "That's 17 − 2. Add two tens: 17 + 20 = 37."
+            "value": 2,
+            "feedback": "The tens digit is 2 more in the answer, but the actual missing number is 17, not 2."
           }
         ],
-        "fallbackFeedback": "1 ten + 2 tens = 3 tens = 37."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoAddTensNumeric"
+        "fallbackFeedback": "37 − 20 = 17, so 17 is missing."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Add five tens.",
+      "body": "Catch a counting mistake.",
       "conceptTag": "tno-add-tens",
       "explanationVariants": [
-        "4 tens + 5 tens = 9 tens, ones stay 4: 94.",
-        "44 + 50 adds five tens: 94."
+        "50 is 5 tens: 4 tens + 5 tens = 9 tens, so 94.",
+        "Zara added only one ten instead of five."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "44 + 50 = ?",
+        "prompt": "Zara computed 44 + 50 but treated it like adding just one ten, getting 54. What is the correct sum?",
         "answer": 94,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 49,
-            "feedback": "You're adding 5 tens, not 5 ones: 4 tens + 5 tens = 9 tens, so 94."
+            "value": 54,
+            "feedback": "That repeats Zara's mistake of adding only one ten. 50 is FIVE tens: 4 tens + 5 tens = 9 tens, so 94."
           },
           {
-            "value": 40,
-            "feedback": "Keep the ones (4): 4 tens + 5 tens = 9 tens = 94."
+            "value": 49,
+            "feedback": "That adds 5 as ones, not 5 tens. 50 is 5 tens: 44 + 50 = 94."
           }
         ],
-        "fallbackFeedback": "4 tens + 5 tens = 9 tens = 94."
+        "fallbackFeedback": "50 is 5 tens: 4 tens + 5 tens = 9 tens, so 94."
       },
       "hints": [
-        "50 is 5 tens.",
-        "Add the tens: 4 tens + 5 tens = 9 tens.",
+        "50 means 5 tens, not just 1 ten — that was Zara's mistake.",
+        "4 tens + 5 tens = 9 tens.",
         "Keep the ones (4): 94."
-      ],
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoAddTensNumeric"
-      }
+      ]
     },
     {
       "id": "r1",

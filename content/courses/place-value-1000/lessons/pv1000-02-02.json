@@ -149,122 +149,110 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Skip-count by fives near the top.",
+      "body": "Find the missing number in the middle of a count.",
       "widget": {
         "type": "numeric",
-        "prompt": "Skip-count by 5s: 985, 990, 995, ___?",
-        "answer": 1000,
+        "prompt": "Skip-count by 5s: 985, ___, 995, 1000?",
+        "answer": 990,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 996,
-            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 995+5=1000."
+            "value": 1005,
+            "feedback": "That continues past 1000 instead of filling the gap right after 985. Between 985 and 995 comes 990."
           },
           {
-            "value": 1005,
-            "feedback": "That jumps by 10, not 5. Adding 5 to 995 gives 1000."
+            "value": 995,
+            "feedback": "995 is already given as the third number. The MISSING number sits between 985 and 995: 990."
           }
         ],
-        "fallbackFeedback": "995 + 5 = 1000."
+        "fallbackFeedback": "Between 985 and 995, skip-counting by 5s lands on 990."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another fives sequence.",
+      "body": "Count backward this time.",
       "conceptTag": "pv1000-skip-fives",
       "explanationVariants": [
-        "720+5=725.",
-        "Each jump adds 5."
+        "Counting backward, 715 − 5 = 710.",
+        "Backward skip-counting subtracts the jump size each time."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Skip-count by 5s: 710, 715, 720, ___?",
-        "answer": 725,
+        "prompt": "Skip-count backward by 5s: 725, 720, 715, ___?",
+        "answer": 710,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 721,
-            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 720+5=725."
+            "value": 715,
+            "feedback": "That repeats the last number given — take one more hop BACK of five: 710."
           },
           {
-            "value": 730,
-            "feedback": "That jumps by 10, not 5. Adding 5 to 720 gives 725."
+            "value": 714,
+            "feedback": "That's a jump of 1, not 5. Five back from 715 is 710."
           }
         ],
-        "fallbackFeedback": "720 + 5 = 725."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SkipFivesNumeric"
+        "fallbackFeedback": "Counting backward by fives: 715 − 5 = 710."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A fives sequence with a rollover.",
+      "body": "Start somewhere and count forward several jumps.",
       "conceptTag": "pv1000-skip-fives",
       "explanationVariants": [
-        "495+5=500.",
-        "The tens and ones roll over, hundreds grows by 1."
+        "485 + 5 + 5 + 5 = 500.",
+        "Each jump adds 5, repeated three times."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Skip-count by 5s: 485, 490, 495, ___?",
+        "prompt": "Start at 485. Skip-count by 5s three times. What number do you land on?",
         "answer": 500,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 4100,
-            "feedback": "The hundreds digit rolls over to the next hundred: 495+5=500, not 4100."
+            "value": 488,
+            "feedback": "Each jump adds 5, not 1. Three jumps of 5 from 485: 485+15=500."
           },
           {
-            "value": 505,
-            "feedback": "That jumps by 10, not 5. Adding 5 to 495 gives 500."
+            "value": 515,
+            "feedback": "That's 3 jumps of 10, not 5. Three jumps of 5 from 485 is 500."
           }
         ],
-        "fallbackFeedback": "495 + 5 = 500."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SkipFivesNumeric"
+        "fallbackFeedback": "485 + 5 + 5 + 5 = 500."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A trickier fives sequence.",
+      "body": "Catch a counting mistake.",
       "conceptTag": "pv1000-skip-fives",
       "explanationVariants": [
-        "845+5=850.",
-        "Each jump adds 5."
+        "845 + 5 = 850 — Priya's off-by-one mistake undercounts the jump.",
+        "Skip-counting by fives jumps 5 each time, not 1."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Skip-count by 5s: 835, 840, 845, ___?",
+        "prompt": "Priya tried to skip-count by 5s starting at 835, and said the next number after 845 is 846. What is the correct next number?",
         "answer": 850,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 846,
-            "feedback": "Skip-counting by fives jumps 5 each time, not 1: 845+5=850."
+            "feedback": "That repeats Priya's mistake of counting by 1. Skip-counting by fives from 845 lands on 850."
           },
           {
-            "value": 855,
-            "feedback": "That jumps by 10, not 5. Adding 5 to 845 gives 850."
+            "value": 945,
+            "feedback": "That jumps by 100, not 5. Five more than 845 is 850."
           }
         ],
-        "fallbackFeedback": "845 + 5 = 850."
+        "fallbackFeedback": "Skip-counting by fives: 845 + 5 = 850."
       },
       "hints": [
-        "You're skip-counting by 5s: each jump adds 5.",
+        "You're skip-counting by 5s: each jump adds 5, not 1 — that was Priya's mistake.",
         "845 + 5 = 850.",
         "Check: 850 ends in 0, matching the fives pattern."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SkipFivesNumeric"
-      }
+      ]
     },
     {
       "id": "r1",

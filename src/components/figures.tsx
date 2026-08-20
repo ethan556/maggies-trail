@@ -7819,6 +7819,46 @@ function DistributeArea() {
 }
 
 /**
+ * monomial-distribute-area: 3x(x + 4) as a 3x-tall rectangle split into an x-wide part and a
+ * 4-wide part — area 3x·x = 3x² and 3x·4 = 12x, total 3x² + 12x. Distinct from distribute-area
+ * (a plain-constant multiplier): here the multiplier is itself the monomial 3x, so one sub-area
+ * is a square of x² and the coefficient on that term is the SAME 3 that multiplies the 4 — the
+ * two areas are also told apart by shape/hatch, not colour alone. The two sub-areas light in
+ * turn; reduced-motion gated.
+ */
+function MonomialDistributeArea() {
+  const css = `@media (prefers-reduced-motion: no-preference){.mda-a{animation:mda-in .5s ease-out .4s backwards}.mda-b{animation:mda-in .5s ease-out .9s backwards}@keyframes mda-in{from{opacity:0}to{opacity:1}}}`;
+  return (
+    <svg viewBox="0 0 300 132" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        A rectangle three x tall and x plus four wide splits into two parts: one three x by x
+        square, solid-filled, with area three x times x equals three x squared; one three x by
+        four rectangle, cross-hatched, with area three x times four equals twelve x. So three x
+        times the quantity x plus four equals three x squared plus twelve x.
+      </title>
+      <style>{css}</style>
+      <defs>
+        <pattern id="mda-hatch" width={6} height={6} patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width={6} height={6} fill="#FFE9D6" />
+          <line x1={0} y1={0} x2={0} y2={6} stroke="#FF8A3D" strokeWidth={1.4} />
+        </pattern>
+      </defs>
+      <rect className="mda-a" x={60} y={26} width={70} height={62} fill="#EAF2FC" stroke="#2E7CD6" strokeWidth={1.6} />
+      <rect className="mda-b" x={130} y={26} width={90} height={62} fill="url(#mda-hatch)" stroke="#FF8A3D" strokeWidth={1.6} />
+      <text className="mda-a" x={95} y={62} textAnchor="middle" fontSize={13} fontWeight={800} fill="#2E7CD6">3x·x</text>
+      <text className="mda-a" x={95} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill="#2E7CD6">= 3x²</text>
+      <text className="mda-b" x={175} y={62} textAnchor="middle" fontSize={13} fontWeight={800} fill="#FF8A3D">3x·4</text>
+      <text className="mda-b" x={175} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill="#FF8A3D">= 12x</text>
+      <text x={95} y={18} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">x</text>
+      <text x={175} y={18} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">4</text>
+      <text x={44} y={62} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">3x</text>
+      <text x={150} y={110} textAnchor="middle" fontSize={12} fontWeight={800} fill="#22314F">3x(x + 4) = 3x² + 12x — the 3x reaches BOTH parts</text>
+      <text x={150} y={124} textAnchor="middle" fontSize={10} fontWeight={700} fill="#22314F">solid = 3x·x, hatched = 3x·4</text>
+    </svg>
+  );
+}
+
+/**
  * fraction-undo: x/3 + 2 = 7 as a machine (÷3 then +2) reversed: 7 → −2 → 5 → ×3 → 15.
  * Reverse arrows light in sequence; reduced-motion gated.
  */
@@ -16838,6 +16878,42 @@ function VmBaseLayers() {
       <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>base = 10 sq units</text>
       <text x={120} y={54} textAnchor="middle" fontSize={13} fontWeight={800} fill={TANGERINE}>× 3 layers</text>
       <text x={120} y={78} textAnchor="middle" fontSize={15} fontWeight={800} fill={LEAF}>= 30 cubes</text>
+    </svg>
+  );
+}
+/** vm-04-01's own base-layer figure (S320, additive): a house-style twin of BoxLayers (which
+ *  renders asv-05-01's independently owned 3×2×4 example) built for THIS lesson's actual
+ *  numbers, so c1's "4-by-3 base, 5 layers, 60 cubes" prose never again drifts from what
+ *  renders beside it. */
+function VmSixtyCubeBox() {
+  const w = 26, d = 12, h = 20; // cube face metrics (BoxLayers convention)
+  const cols = 4, rows = 3, layerCount = 5, x0 = 26, bottomY = 160;
+  const cube = (cx: number, cy: number, accent = false) => (
+    <g stroke={INK} strokeWidth={1.25}>
+      <polygon points={`${cx},${cy} ${cx + w},${cy} ${cx + w + d},${cy - d} ${cx + d},${cy - d}`} fill={accent ? "#FFE3CC" : "#F0F3F7"} />
+      <polygon points={`${cx},${cy} ${cx + w},${cy} ${cx + w},${cy + h} ${cx},${cy + h}`} fill={accent ? "#FFD1AB" : "white"} />
+      <polygon points={`${cx + w},${cy} ${cx + w + d},${cy - d} ${cx + w + d},${cy - d + h} ${cx + w},${cy + h}`} fill={accent ? "#F5B076" : "#DCE4EE"} />
+    </g>
+  );
+  const layer = (baseY: number, accent = false) => {
+    const cells: JSX.Element[] = [];
+    for (let row = rows - 1; row >= 0; row--) {
+      for (let col = 0; col < cols; col++) {
+        cells.push(<g key={`${baseY}-${row}-${col}`}>{cube(x0 + col * w + row * d, baseY - row * d, accent)}</g>);
+      }
+    }
+    return cells;
+  };
+  const layerEls = Array.from({ length: layerCount }, (_, i) => layerCount - 1 - i).map((i) => (
+    <g key={i}>{layer(bottomY - i * h, i === 0)}</g>
+  ));
+  return (
+    <svg viewBox="0 0 340 200" role="img" className="mx-auto w-full max-w-sm">
+      <title>A box built from unit cubes: the base layer is 4 by 3 cubes, stacked 5 layers high, for 60 cubes in all; the highlighted bottom layer shows the base.</title>
+      {layerEls}
+      <text x={190} y={22} fontSize={10} fontWeight={700} fill={TANGERINE}>5 layers tall</text>
+      <text x={190} y={92} fontSize={11} fontWeight={700} fill={INK}>base layer: 4 × 3 = 12</text>
+      <text x={190} y={176} fontSize={13} fontWeight={800} fill={LEAF}>12 × 5 = 60 cubes</text>
     </svg>
   );
 }
@@ -30401,6 +30477,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "vm-count-cubes": VmCountCubes,
   "vm-slice-layers": VmSliceLayers,
   "vm-base-layers": VmBaseLayers,
+  "vm-sixty-cube-box": VmSixtyCubeBox,
   "vm-formula-lwh": VmFormulaLWH,
   "vm-units-cubed": VmUnitsCubed,
   "vm-base-height": VmBaseHeight,
@@ -30746,6 +30823,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "undo-machine": UndoMachine,
   "both-sides-scale": BothSidesScale,
   "distribute-area": DistributeArea,
+  "monomial-distribute-area": MonomialDistributeArea,
   "fraction-undo": FractionUndo,
   "lcd-clear": LcdClear,
   "decimal-shift": DecimalShift,

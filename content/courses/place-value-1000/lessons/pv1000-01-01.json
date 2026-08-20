@@ -113,23 +113,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Find a digit's worth with a zero.",
+      "body": "Find a digit's worth in the tens spot, with a zero nearby.",
       "widget": {
         "type": "numeric",
-        "prompt": "In the number 503, what is the 5 worth?",
-        "answer": 500,
+        "prompt": "In the number 640, what is the value of the 4?",
+        "answer": 40,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 5,
-            "feedback": "The 5 is in the HUNDREDS spot: 5 hundreds = 500, not just 5."
+            "value": 4,
+            "feedback": "That names the digit itself, not its place value. The 4 sits in the TENS spot: worth 40, not just 4."
           },
           {
-            "value": 50,
-            "feedback": "50 would be the tens spot, but this number has 0 tens. The 5 is worth 500."
+            "value": 400,
+            "feedback": "400 would be the hundreds spot. The 4 in 640 is in the tens spot, worth 40."
           }
         ],
-        "fallbackFeedback": "The 5 is in the hundreds spot: 500."
+        "fallbackFeedback": "The 4 in 640 is in the tens spot: worth 40."
       }
     },
     {
@@ -163,100 +163,88 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Build another number from parts.",
+      "body": "Build a number when the parts come out of order.",
       "conceptTag": "pv1000-build-number",
       "explanationVariants": [
-        "3 hundreds, 5 tens, 2 ones = 352.",
-        "Combine the counts in order: hundreds, tens, ones."
+        "Sort by spot first: 3 hundreds, 5 tens, 2 ones = 352.",
+        "The order the counts are listed in doesn't matter — only their spot does."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number has 3 hundreds, 5 tens, and 2 ones?",
+        "prompt": "A number has 2 ones, 3 hundreds, and 5 tens. What number is it?",
         "answer": 352,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 10,
-            "feedback": "That adds the counts together (3+5+2=10) instead of building the number: 352."
+            "value": 235,
+            "feedback": "That uses the order the counts were listed in (2, 3, 5) instead of their spots. 3 hundreds, 5 tens, 2 ones is 352."
           },
           {
-            "value": 235,
-            "feedback": "Keep the order: hundreds first, then tens, then ones: 352, not 235."
+            "value": 10,
+            "feedback": "That adds the counts together (2+3+5=10) instead of building the number: 352."
           }
         ],
-        "fallbackFeedback": "3 hundreds, 5 tens, 2 ones = 352."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000BuildNumberNumeric"
+        "fallbackFeedback": "Sort by spot first — 3 hundreds, 5 tens, 2 ones — then combine: 352."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A digit's worth, tricky spot.",
+      "body": "A digit's worth, described in words.",
       "conceptTag": "pv1000-digit-worth",
       "explanationVariants": [
-        "The 6 is in the ones spot: worth just 6.",
-        "Check which spot the digit sits in."
+        "With 9 in the ones spot, its value is simply 9.",
+        "The ones spot's value always equals the digit itself."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the number 816, what is the 6 worth?",
-        "answer": 6,
+        "prompt": "A number has 6 hundreds, 1 ten, and 9 ones. What is the value of its ones digit?",
+        "answer": 9,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 60,
-            "feedback": "60 would be the tens spot. The 6 is in the ONES spot: worth just 6."
+            "value": 90,
+            "feedback": "90 would be the value of a 9 in the TENS spot. Here the 9 is in the ONES spot, worth just 9."
           },
           {
-            "value": 600,
-            "feedback": "600 would be the hundreds spot. The 6 is in the ones spot: worth just 6."
+            "value": 16,
+            "feedback": "That adds all three digits together (6+1+9=16) instead of finding just the ones digit's value: 9."
           }
         ],
-        "fallbackFeedback": "The 6 is in the ones spot: worth 6."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000DigitWorthNumeric"
+        "fallbackFeedback": "With 9 in the ones spot, its value is simply 9 — the ones spot always equals the digit itself."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Build a number with a zero spot.",
+      "body": "Catch a mistake with an empty spot.",
       "conceptTag": "pv1000-build-number",
       "explanationVariants": [
-        "6 hundreds, 0 tens, 8 ones = 608.",
+        "Milo skipped the empty tens spot. The correct number is 608.",
         "Don't skip the empty tens spot — it holds a 0."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number has 6 hundreds, 0 tens, and 8 ones?",
+        "prompt": "Milo built a number with 6 hundreds, 0 tens, and 8 ones, but skipped the empty tens spot and wrote 68 instead. What is the correct number?",
         "answer": 608,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 68,
-            "feedback": "Don't skip the empty tens spot — it still holds a 0: 608, not 68."
+            "feedback": "That repeats Milo's mistake of skipping the empty tens spot. The correct number keeps all three spots: 608."
           },
           {
             "value": 680,
             "feedback": "Keep the order: hundreds, tens, ones. 6 hundreds, 0 tens, 8 ones is 608, not 680."
           }
         ],
-        "fallbackFeedback": "6 hundreds, 0 tens, 8 ones = 608."
+        "fallbackFeedback": "Don't skip the empty tens spot — it still holds a 0: 608, not 68."
       },
       "hints": [
         "Hundreds spot: 6.",
-        "Tens spot: 0 (empty, but still counts).",
+        "Tens spot: 0 — that's the spot Milo skipped, but it still counts.",
         "Ones spot: 8. Put them in order: 608."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000BuildNumberNumeric"
-      }
+      ]
     },
     {
       "id": "r1",

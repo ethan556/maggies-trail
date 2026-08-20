@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `bbf377514a35eb2d09d9d85a7a79d44b8eff60a11d16021e22b66f0366e48925`
-- Queue-compatible lesson-only seal: `66b7e2726f096214161cf6554cf55de7ec2a27c134764e97185b84d04a268ff1`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `66b7e2726f096214161cf6554cf55de7ec2a27c134764e97185b84d04a268ff1`)
+- Review-basis seal (lessons plus course/grade metadata): `53e656311a4b61784af0b0abd0ad1adc4fcf877ac8e834873220b71861ddecba`
+- Queue-compatible lesson-only seal: `8f91ba50f1e5cb69f6a0bd946df4ca91859a852efa22b5d55464c15879fa343d`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `8f91ba50f1e5cb69f6a0bd946df4ca91859a852efa22b5d55464c15879fa343d`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -15,15 +15,15 @@ These counts overlap and must not be summed as independent lesson defects.
 
 | Judgment / evidence packet | Explicitly closed | Pending / flagged |
 |---|---:|---:|
-| Whole-lesson KEEP / REVISE / ESCALATE | 909 | 792 lessons |
-| Visual required / preferred / sufficient | 909 | 792 lessons |
-| Grade-band language fitness | 909 | 792 lessons |
+| Whole-lesson KEEP / REVISE / ESCALATE | 1,294 | 407 lessons |
+| Visual required / preferred / sufficient | 1,294 | 407 lessons |
+| Grade-band language fitness | 1,294 | 407 lessons |
 | Standards edge approval / rejection | 6,119 | 2 edges |
 | Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
-| Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 56 clusters / 122 placements |
-| Broader progression / repetition queue | 0 semantic dispositions recorded here | 228 lessons |
+| Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 22 clusters / 50 placements |
+| Broader progression / repetition queue | 0 semantic dispositions recorded here | 181 lessons |
 
-Exact duplicate evidence includes **0** within-lesson groups across **95** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
+Exact duplicate evidence includes **0** within-lesson groups across **48** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
 
 Standards evidence remains candidate-only: **6,119** dossiers still need exact benchmark text and independent review; **0** are approved and **6,119** rejected.
 The **6,121** central standards edges appear as **6,311** lesson-card references because **164** edges are shared across lessons; cards reference that central authority rather than copying decisions.

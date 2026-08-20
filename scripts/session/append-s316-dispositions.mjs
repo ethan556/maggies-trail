@@ -71,6 +71,26 @@ const ORDER = [
   "laneA-s319-df3.jsonl",
   "laneV-s319-fig-hs-dispositions.jsonl",
   "laneV-s319-early-mid-dispositions.jsonl",
+  // S320 mega-wave (2026-08-20, fifth session round)
+  "laneB-s320-A1-dispositions.jsonl",
+  "laneB-s320-A2-dispositions.jsonl",
+  "laneB-s320-A3-dispositions.jsonl",
+  "laneB-s320-A4-dispositions.jsonl",
+  "laneB-s320-A5-dispositions.jsonl",
+  "laneB-s320-A6-dispositions.jsonl",
+  "laneB-s320-A7-dispositions.jsonl",
+  "laneB-s320-A8-dispositions.jsonl",
+  "laneB-s320-A9-dispositions.jsonl",
+  "laneB-s320-A10-dispositions.jsonl",
+  "laneB-s320-A11-dispositions.jsonl",
+  "laneB-s320-A12-dispositions.jsonl",
+  "laneB-s320-A13-dispositions.jsonl",
+  // S321 final wave — only the packets that completed before the org spend limit hit.
+  // F3/F10 exist but carry truncated/incomplete records (validator rejects them); the
+  // remaining F-wave and verifier packets never wrote. See HANDOVER addendum for resumption.
+  "laneB-s321-F4-dispositions.jsonl",
+  "laneB-s321-F7-dispositions.jsonl",
+  "laneB-s321-F9-dispositions.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

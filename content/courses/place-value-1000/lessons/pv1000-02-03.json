@@ -121,23 +121,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count forward by fives, several jumps.",
+      "body": "Count the jumps instead of the landing number.",
       "widget": {
         "type": "numeric",
-        "prompt": "Count forward from 615 by 5s, 4 times. What number do you land on?",
-        "answer": 635,
+        "prompt": "Starting at 615, you take jumps of 5: 620, 625, 630, 635. How many jumps did you take?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 619,
-            "feedback": "Each jump adds 5, not 1. Four jumps of 5 from 615: 615+20=635."
+            "value": 635,
+            "feedback": "635 is the landing number, not the count of jumps. Listed are 4 stops: 620, 625, 630, 635 — that's 4 jumps."
           },
           {
-            "value": 655,
-            "feedback": "That's 4 jumps of 10, not 5. Four jumps of 5 from 615 is 635."
+            "value": 5,
+            "feedback": "5 is the size of each jump, not how many jumps happened. Counting the stops listed gives 4 jumps."
           }
         ],
-        "fallbackFeedback": "615 + 5+5+5+5 = 635."
+        "fallbackFeedback": "Four stops are listed after 615 — 620, 625, 630, 635 — so that's 4 jumps."
       }
     },
     {
@@ -149,122 +149,110 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Count forward, crossing a rollover.",
+      "body": "Count backward this time, crossing a rollover.",
       "widget": {
         "type": "numeric",
-        "prompt": "Count forward from 480 by 10s, 3 times. What number do you land on?",
-        "answer": 510,
+        "prompt": "Count backward from 480 by 10s, 3 times. What number do you land on?",
+        "answer": 450,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 483,
-            "feedback": "Each jump adds 10, not 1. Three jumps of 10 from 480: 480+30=510."
+            "feedback": "Each jump subtracts 10, not 1. Three jumps of 10 back from 480: 480−30=450."
           },
           {
-            "value": 780,
-            "feedback": "That's 3 jumps of 100, not 10. Three jumps of 10 from 480 is 510."
+            "value": 180,
+            "feedback": "That's 3 jumps of 100, not 10. Three jumps of 10 back from 480 is 450."
           }
         ],
-        "fallbackFeedback": "480 + 10 + 10 + 10 = 510 (crossing the hundred at 500)."
+        "fallbackFeedback": "480 − 10 − 10 − 10 = 450."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Count forward by hundreds, more jumps.",
+      "body": "Work backward to find the starting number.",
       "conceptTag": "pv1000-count-forward",
       "explanationVariants": [
-        "300 + 100 + 100 + 100 = 600.",
-        "Each jump adds 100."
+        "Undo three jumps of 100: 600 − 100 − 100 − 100 = 300.",
+        "Work backward from the landing number to find the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Count forward from 300 by 100s, 3 times. What number do you land on?",
-        "answer": 600,
+        "prompt": "After counting forward by 100s, 3 times, you land on 600. Where did you start?",
+        "answer": 300,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 303,
-            "feedback": "Each jump adds 100, not 1. Three jumps of 100 from 300: 300+300=600."
+            "value": 900,
+            "feedback": "That adds the jumps instead of working backward. Undo three jumps of 100 from 600: 600−300=300."
           },
           {
-            "value": 330,
-            "feedback": "That's 3 jumps of 10, not 100. Three jumps of 100 from 300 is 600."
+            "value": 597,
+            "feedback": "That subtracts 1 each time instead of 100. Undoing three jumps of 100 from 600 gives 300."
           }
         ],
-        "fallbackFeedback": "300 + 100 + 100 + 100 = 600."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000CountForwardNumeric"
+        "fallbackFeedback": "Undo three jumps of 100: 600 − 100 − 100 − 100 = 300."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Count forward by fives, crossing a rollover.",
+      "body": "Work out the size of each jump.",
       "conceptTag": "pv1000-count-forward",
       "explanationVariants": [
-        "190 + 5+5+5 = 205.",
-        "Each jump adds 5."
+        "The total distance is 205 − 190 = 15, split evenly across 3 jumps: 5 each.",
+        "Find the total distance, then split it evenly across the jumps."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Count forward from 190 by 5s, 3 times. What number do you land on?",
-        "answer": 205,
+        "prompt": "Counting forward from 190, three equal jumps land on 205. How big was each jump?",
+        "answer": 5,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 193,
-            "feedback": "Each jump adds 5, not 1. Three jumps of 5 from 190: 190+15=205."
+            "value": 15,
+            "feedback": "15 is the total distance covered in three jumps, not the size of one jump. 15 ÷ 3 = 5."
           },
           {
-            "value": 220,
-            "feedback": "That's 3 jumps of 10, not 5. Three jumps of 5 from 190 is 205."
+            "value": 3,
+            "feedback": "3 is how many jumps were taken, not how big each one was. Each jump was 5."
           }
         ],
-        "fallbackFeedback": "190 + 5+5+5 = 205 (crossing the hundred at 200)."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000CountForwardNumeric"
+        "fallbackFeedback": "The total distance is 205 − 190 = 15, split evenly across 3 jumps: 15 ÷ 3 = 5 each."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A full mixed challenge, many jumps.",
+      "body": "Catch a counting mistake.",
       "conceptTag": "pv1000-count-forward",
       "explanationVariants": [
-        "760 + 10×5 = 810.",
-        "Five jumps of 10, added one at a time or all at once."
+        "760 + 10×5 = 810 — Kai added only the jump count, not the total distance.",
+        "Multiply jump size by number of jumps, then add to the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Count forward from 760 by 10s, 5 times. What number do you land on?",
+        "prompt": "Kai started at 760 and took 5 jumps of 10, but said he landed on 765. What is the correct landing number?",
         "answer": 810,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 765,
-            "feedback": "Each jump adds 10, not 1. Five jumps of 10 from 760: 760+50=810."
+            "feedback": "That repeats Kai's mistake of adding just the number of jumps (5) instead of 5 jumps of 10. The correct total is 760+50=810."
           },
           {
             "value": 1260,
             "feedback": "That's 5 jumps of 100, not 10. Five jumps of 10 from 760 is 810."
           }
         ],
-        "fallbackFeedback": "760 + 10+10+10+10+10 = 810."
+        "fallbackFeedback": "Five jumps of 10 add up to 50: 760 + 50 = 810."
       },
       "hints": [
-        "Each jump adds 10.",
-        "5 jumps of 10 is 50 total.",
-        "760 + 50 = 810."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000CountForwardNumeric"
-      }
+        "Each jump adds 10, and there are 5 jumps — that's 5×10=50 total, not just 5.",
+        "760 + 50 = 810.",
+        "Kai's mistake was adding the jump COUNT instead of the total distance covered."
+      ]
     },
     {
       "id": "r1",

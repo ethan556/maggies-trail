@@ -172,23 +172,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Subtract first.",
+      "body": "A robot on a grid.",
       "widget": {
         "type": "numeric",
-        "prompt": "What is the distance from (1,2) to (4,6)?",
+        "prompt": "A robot moves from (2,3) to (6,6) on a factory floor grid, in meters. What is the straight-line distance it travels?",
         "answer": 5,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 8,
-            "feedback": "The gaps are Δx = 3 and Δy = 4; add their squares: √(9 + 16) = 5, not 3 + 4 + something."
+            "value": 7,
+            "feedback": "The gaps are Δx = 4 and Δy = 3; add their squares: √(16 + 9) = 5, not 4 + 3."
           },
           {
             "value": 25,
-            "feedback": "25 is d² (9 + 16). Take the root: d = 5."
+            "feedback": "25 is d² (16 + 9). Take the root: d = 5."
           }
         ],
-        "fallbackFeedback": "Δx = 3, Δy = 4, so d = √(9 + 16) = 5."
+        "fallbackFeedback": "Δx = 4, Δy = 3, so d = √(16 + 9) = 5."
       }
     },
     {
@@ -200,26 +200,26 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "A radical distance.",
+      "body": "A city planner's map.",
       "widget": {
         "type": "mcq",
-        "prompt": "What is the distance from (0,0) to (2,2)?",
+        "prompt": "A city planner marks two intersections at (0,0) and (3,3) on a grid, in blocks. What is the straight-line distance between them?",
         "options": [
           {
             "id": "a",
-            "label": "2√2",
+            "label": "3√2",
             "correct": true,
-            "feedback": "Yes — d = √(4 + 4) = √8 = 2√2."
+            "feedback": "Yes — d = √(9 + 9) = √18 = 3√2."
           },
           {
             "id": "b",
-            "label": "√8",
-            "feedback": "√8 has the value but isn't simplified: √8 = 2√2."
+            "label": "√18",
+            "feedback": "√18 has the value but isn't simplified: √18 = 3√2."
           },
           {
             "id": "c",
-            "label": "4",
-            "feedback": "That would be 2 + 2. The distance is √(4 + 4) = √8 = 2√2."
+            "label": "6",
+            "feedback": "That would be 3 + 3. The distance is √(9 + 9) = √18 = 3√2."
           }
         ]
       }
@@ -227,11 +227,11 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "A vertical gap.",
+      "body": "An elevator's climb.",
       "conceptTag": "rad-distance",
       "explanationVariants": [
-        "Δx = 0 and Δy = 8, so d = √(0 + 64) = 8.",
-        "The points share an x-value, so the distance is just the vertical gap, 8."
+        "Δx = 0 and Δy = 9, so d = √(0 + 81) = 9.",
+        "The points share an x-value, so the distance is just the vertical gap, 9."
       ],
       "widget": {
         "type": "geometricConstraintLab",
@@ -242,14 +242,14 @@
             {
               "id": "o",
               "label": "A",
-              "x": 2,
-              "y": 1
+              "x": 5,
+              "y": 2
             },
             {
               "id": "p",
               "label": "B",
-              "x": 2,
-              "y": 9
+              "x": 5,
+              "y": 11
             }
           ],
           "span": {
@@ -257,17 +257,17 @@
             "b": "p"
           }
         },
-        "prompt": "What is the distance from (2,1) to (2,9)?",
+        "prompt": "An elevator travels straight up from position (5,2) to (5,11) on a building's coordinate diagram. What is the distance traveled?",
         "tolerance": 0,
         "choices": [],
         "numericErrors": [
           {
-            "value": 10,
-            "feedback": "Δx = 0 here, so d = √(0 + 64) = 8, not 2 + 8 or similar."
+            "value": 16,
+            "feedback": "Δx = 0 here, so d = √(0 + 81) = 9, not 5 + 11 or similar."
           },
           {
-            "value": 64,
-            "feedback": "64 is d² (0 + 64). Take the root: d = 8."
+            "value": 81,
+            "feedback": "81 is d² (0 + 81). Take the root: d = 9."
           }
         ],
         "authoredStages": [],
@@ -277,9 +277,9 @@
           "proof:span-root"
         ],
         "requiredExplorations": 3,
-        "successFeedback": "Δx = 0, Δy = 8, so d = √64 = 8.",
+        "successFeedback": "Δx = 0, Δy = 9, so d = √81 = 9.",
         "explorationFeedback": "Inspect every required geometric constraint before checking.",
-        "fallbackFeedback": "Δx = 0, Δy = 8, so d = √64 = 8.",
+        "fallbackFeedback": "Δx = 0, Δy = 9, so d = √81 = 9.",
         "answerMode": "numeric"
       },
       "variant": {
@@ -290,11 +290,74 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Both gaps nonzero.",
+      "body": "A hiking trail marker.",
       "conceptTag": "rad-distance",
       "explanationVariants": [
-        "Δx = 4, Δy = 3, so d = √(16 + 9) = √25 = 5.",
-        "16 + 9 = 25, so d = √25 = 5."
+        "Δx = 6, Δy = 8, so d = √(36 + 64) = √100 = 10.",
+        "36 + 64 = 100, so d = √100 = 10."
+      ],
+      "widget": {
+        "type": "geometricConstraintLab",
+        "task": "coordinateProof",
+        "coordinateProof": {
+          "kind": "segmentLength",
+          "points": [
+            {
+              "id": "o",
+              "label": "A",
+              "x": 3,
+              "y": 2
+            },
+            {
+              "id": "p",
+              "label": "B",
+              "x": 9,
+              "y": 10
+            }
+          ],
+          "span": {
+            "a": "o",
+            "b": "p"
+          }
+        },
+        "prompt": "A hiking trail marker moves from (3,2) to (9,10) on a park's coordinate map, in hundred-meter units. What is the straight-line distance?",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 14,
+            "feedback": "The gaps are Δx = 6 and Δy = 8; add their squares: √(36 + 64) = 10, not 6 + 8."
+          },
+          {
+            "value": 100,
+            "feedback": "100 is d² (36 + 64). Take the root: d = 10."
+          }
+        ],
+        "authoredStages": [],
+        "requiredStageKeys": [
+          "proof:span-runs",
+          "proof:span-squares",
+          "proof:span-root"
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Δx = 6, Δy = 8, so d = √100 = 10.",
+        "explorationFeedback": "Inspect every required geometric constraint before checking.",
+        "fallbackFeedback": "Δx = 6, Δy = 8, so d = √100 = 10.",
+        "answerMode": "numeric"
+      },
+      "variant": {
+        "gen": "a1-radicals",
+        "form": "rad-distance__numeric"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "A ship's voyage.",
+      "conceptTag": "rad-distance",
+      "explanationVariants": [
+        "Δx = 12, Δy = 5, so d = √(144 + 25) = √169 = 13.",
+        "144 + 25 = 169, so d = √169 = 13."
       ],
       "widget": {
         "type": "geometricConstraintLab",
@@ -306,75 +369,12 @@
               "id": "o",
               "label": "A",
               "x": 1,
-              "y": 1
-            },
-            {
-              "id": "p",
-              "label": "B",
-              "x": 5,
               "y": 4
-            }
-          ],
-          "span": {
-            "a": "o",
-            "b": "p"
-          }
-        },
-        "prompt": "What is the distance from (1,1) to (5,4)?",
-        "tolerance": 0,
-        "choices": [],
-        "numericErrors": [
-          {
-            "value": 7,
-            "feedback": "The gaps are Δx = 4 and Δy = 3; add their squares: √(16 + 9) = 5, not 4 + 3."
-          },
-          {
-            "value": 25,
-            "feedback": "25 is d² (16 + 9). Take the root: d = 5."
-          }
-        ],
-        "authoredStages": [],
-        "requiredStageKeys": [
-          "proof:span-runs",
-          "proof:span-squares",
-          "proof:span-root"
-        ],
-        "requiredExplorations": 3,
-        "successFeedback": "Δx = 4, Δy = 3, so d = √25 = 5.",
-        "explorationFeedback": "Inspect every required geometric constraint before checking.",
-        "fallbackFeedback": "Δx = 4, Δy = 3, so d = √25 = 5.",
-        "answerMode": "numeric"
-      },
-      "variant": {
-        "gen": "a1-radicals",
-        "form": "rad-distance__numeric"
-      }
-    },
-    {
-      "id": "ch1",
-      "kind": "challenge",
-      "body": "A longer distance.",
-      "conceptTag": "rad-distance",
-      "explanationVariants": [
-        "Δx = 8, Δy = 6, so d = √(64 + 36) = √100 = 10.",
-        "64 + 36 = 100, so d = √100 = 10."
-      ],
-      "widget": {
-        "type": "geometricConstraintLab",
-        "task": "coordinateProof",
-        "coordinateProof": {
-          "kind": "segmentLength",
-          "points": [
-            {
-              "id": "o",
-              "label": "A",
-              "x": 2,
-              "y": 3
             },
             {
               "id": "p",
               "label": "B",
-              "x": 10,
+              "x": 13,
               "y": 9
             }
           ],
@@ -383,17 +383,17 @@
             "b": "p"
           }
         },
-        "prompt": "What is the distance from (2,3) to (10,9)?",
+        "prompt": "A ship sails from port position (1,4) to (13,9) on a nautical chart, in nautical miles. What is the straight-line distance?",
         "tolerance": 0,
         "choices": [],
         "numericErrors": [
           {
-            "value": 14,
-            "feedback": "The gaps are Δx = 8 and Δy = 6; add their squares: √(64 + 36) = 10, not 8 + 6."
+            "value": 17,
+            "feedback": "The gaps are Δx = 12 and Δy = 5; add their squares: √(144 + 25) = 13, not 12 + 5."
           },
           {
-            "value": 100,
-            "feedback": "100 is d² (64 + 36). Take the root: d = 10."
+            "value": 169,
+            "feedback": "169 is d² (144 + 25). Take the root: d = 13."
           }
         ],
         "authoredStages": [],
@@ -403,15 +403,15 @@
           "proof:span-root"
         ],
         "requiredExplorations": 3,
-        "successFeedback": "Δx = 8, Δy = 6, so d = √100 = 10.",
+        "successFeedback": "Δx = 12, Δy = 5, so d = √169 = 13.",
         "explorationFeedback": "Inspect every required geometric constraint before checking.",
-        "fallbackFeedback": "Δx = 8, Δy = 6, so d = √100 = 10.",
+        "fallbackFeedback": "Δx = 12, Δy = 5, so d = √169 = 13.",
         "answerMode": "numeric"
       },
       "hints": [
-        "Find the gaps: Δx = 10 − 2 = 8, Δy = 9 − 3 = 6.",
-        "Add the squares: 64 + 36 = 100.",
-        "√100 = 10."
+        "Find the gaps: Δx = 13 − 1 = 12, Δy = 9 − 4 = 5.",
+        "Add the squares: 144 + 25 = 169.",
+        "√169 = 13."
       ],
       "variant": {
         "gen": "a1-radicals",

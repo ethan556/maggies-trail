@@ -236,3 +236,61 @@ exit 0 · SOURCE_SEAL_MATCH.
 closes ~1,100 rows per 12-agent wave), CHOICE_SURFACE 447 (131 contracts; generator microbatches
 never yet run as a dedicated lane), PROGRESSION 228 (52 course contracts), CLOSURE_LEDGER 27,
 REVISION 12, QD 10, V4_PHASE 7, STANDARDS 2 (held per programme rule).
+
+---
+
+# S320–S321 addendum (same day, final rounds — cut short by the org monthly spend limit)
+
+## Queue movement
+3,109 → 1,569 (post-S320 integration) → **1,735 at final commit** (see "unverified limbo" below).
+Cumulative from honest LF baseline: **5,473 → 1,735 (−3,738, 68% closed with full verification;
+~75%+ once the pending verification round lands).** P0 29 → 35 (honest re-opens from severe finds).
+
+## S320 delivered (all signed + verified except where noted)
+- Mass wave: 12 triple-course assessors signed 496 lessons (346K/143R/6E); 495 dispositions appended.
+- CHOICE_SURFACE_INTEGRITY legitimately regenerated via its own generator (mcq-leakage.mts):
+  447 → 252 (90.2% of authored rows were stale — S298–S315 repairs never re-scanned; generated
+  166 unchanged, correctly — no repair has ever touched variants.ts). Trace: S320_CHOICE_LANE.md.
+- Progression dedup: 45 rows fixed across place-value-1000/tens-and-ones/radicals-and-exponents/
+  rational-number-operations (S320_PROGRESSION_DEDUP.md).
+- ALL 143 S320 REVISE contracts implemented across 8 packets (S320_IMPL_*.md): incl. the alg1-03-02
+  hard math error (6h=24→h=4), the systemic esn-01-01 "n zeros" off-by-one (13 occurrences), massive
+  K-course dedup waves, DistributionCompareLabW measure-mode shuffle fix (22/22 tests).
+- Small debt: vm-04-01 60-cube figure, g4m cross-dup, ns-01-01 k3 (S320_SMALL_DEBT_FIXES.md).
+
+## S321 — where the spend limit hit
+18-agent closing wave launched (14 assessors covering ALL remaining courses + 3 verifiers over the
+143 implemented lessons + 1 figure packet). ONLY 3 completed: F4 (multistep-g4/volume-problems-g5/
+long-division-g5, 13K/9R), F7 (differential-equations/series-convergence/integration-applications,
+15K/3R), F9 (mult-fluency-g3/multiplication-division/transformations-measurement, 52K/5R/3E).
+Their 100 dispositions are appended. F3/F10 wrote truncated staging files (validator rejects — do
+NOT append; re-run those assessors fresh). The other 9 assessors + all 3 verifiers + the ep-03-01
+figure packet died mid-run with no usable output.
+
+## UNVERIFIED LIMBO — the first thing the next session must fix
+The 143 S320-contract implementations are DONE and self-checked but NOT independently verified
+(their verifiers died). Their content edits made the S320 REVISE dispositions hash-stale, so ~370
+generic review rows re-opened at regen — that's why the final queue reads 1,735 not ~1,400. ONE
+verification round (3 packets, prompts preserved in this conversation's pattern; lesson lists in
+laneA-s320-impl-*.jsonl) re-signs them and collapses those rows. Resumption order:
+1. 3 verifier packets over impl-1..8 + smalldebt lessons (sign S321-V* dispositions).
+2. Re-run assessors for: F1 (patterns-factors-g4, multiply-bigger, word-problems-g3), F2
+   (absolute-value-piecewise, inequalities-and-regions, nonlinear-systems), F3 (shapes-and-sorting-k,
+   shapes-shares-g2, four-addends-g2), F5 (number-line-g2, length-problems-g2, arrays-even-odd-g2),
+   F6 (the-real-number-system, binomial-theorem, expected-value), F8 (bivariate-statistics,
+   data-and-models, parametric-polar-calculus), F10 (fractions-deeper-g3, unlike-fractions-g5,
+   decimal-fluency-g5), F11 (measure-problems-g4, division-fluency-g3, shapes-space), F12
+   (place-value-1000, tens-and-ones, radicals-and-exponents — doubles as dedup verification), F13
+   (rational-number-operations, exponential-functions, functions-and-sequences), F14
+   (linear-functions, volume-measurement).
+3. Implement the new F4/F7/F9 contracts (17 REVISE: mostly duplicates + 3 length-leaks + 2 figure
+   mismatches mult-04-04/mult-05-01 + tm scratch-text) and the ep-03-01 distribute-area figure.
+4. Ledger append → full serial writer chain → gates → commit.
+Projected end state after that round: queue ≈ 300–500, essentially only CLOSURE_LEDGER umbrellas
+(need human visual review), generated-CHOICE 166 (needs the missing per-tag replay tool), QD 9
+(need extend/multi-engine design), V4_PHASE 7, STANDARDS 2.
+
+## Gates at this commit
+schema 1840/1840 · pedagogy 1711/1711 · CML strict · registration · tsc clean · diff-check clean.
+(Full vitest/build NOT re-run after the S320 impl wave — the limit hit first; next session must run
+the full suite + build before deploying. Known-green at the S319 commit.)

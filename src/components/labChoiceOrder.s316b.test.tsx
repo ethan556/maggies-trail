@@ -44,7 +44,8 @@ import type {
   TExactNumberLab,
   TAffineRelationshipLab,
   TQuotientReasoningLab,
-  TGraphStoryLab
+  TGraphStoryLab,
+  TDistributionCompareLab
 } from "@/lib/schema";
 
 afterEach(cleanup);
@@ -500,5 +501,104 @@ describe("graphStoryLab (read) choice order (S316 sweep)", () => {
     fireEvent.click(correctButton);
     expect(onChange).toHaveBeenCalledWith("a");
     expect(evaluate(GRAPH_STORY, "a").correct).toBe(true);
+  });
+});
+
+/* ---------------- distributionCompareLab (measure mode) — S320-A3 ----------------
+ * content/courses/sampling-and-probability/lessons/sp-02-01.json i1 — the correct choice (value 3)
+ * is authored at index 1, same as 20 of 21 authored measure-mode instances across the 6 lessons the
+ * S320-A3 independent assessment escalated. `DistributionCompareLabW`'s judge mode already guarded
+ * against this with a seeded `orderedJudgeOptions` shuffle; measure mode rendered `spec.measureChoices`
+ * in raw authored order with no shuffle at all, so "always click the 2nd button" scored ~95% on these
+ * steps. Fixed with the same `orderedMeasureChoices = useMemo(() => seededShuffle(...), [seed, spec])`
+ * pattern. `evaluate.ts`'s "distributionCompareLab" measure-mode case grades strictly by `value`
+ * (`spec.measureChoices.some((c) => c.value === value)` / `Math.abs(value - spec.answer) <= spec.tolerance`),
+ * never rendered position, so the shuffle is evaluator-safe. */
+const DISTRIBUTION_COMPARE_MEASURE: TDistributionCompareLab = {
+  type: "distributionCompareLab",
+  prompt: "Group A has a mean of 20. Group B has a mean of 8. The variability measure is 4. How many variability-units apart are the means?",
+  mode: "measure",
+  meanA: 20,
+  meanB: 8,
+  variability: 4,
+  answer: 3,
+  tolerance: 0,
+  measureChoices: [
+    { value: 12, feedback: "That's just the raw gap (20−8). Divide by the variability measure: 12÷4=3." },
+    { value: 3, feedback: "(20−8)÷4 = 3 variability-units." },
+    { value: 4, feedback: "That's the variability measure itself, not the gap in units. (20−8)÷4=3." }
+  ],
+  fallbackFeedback: "(20−8)÷4 = 3 variability-units.",
+  successFeedback: "(20−8)÷4 = 3 variability-units.",
+  judgeOptions: [],
+  groupALabel: "Group A",
+  groupBLabel: "Group B"
+};
+
+function measureGroup() {
+  return screen.getByRole("group", { name: "Choose the number of variability-units between the means" });
+}
+
+function measureOrder(): string[] {
+  return within(measureGroup()).getAllByRole("button").map((button) => button.textContent ?? "");
+}
+
+describe("distributionCompareLab (measure) choice order (S320-A3)", () => {
+  it("moves the correct choice across positions over different question seeds (was fixed at index 1)", () => {
+    const positions = new Set<number>();
+    for (let i = 0; i < 18; i++) {
+      const view = render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={() => {}} disabled={false} seed={`sp-02-01:i1:${i}`} />);
+      positions.add(measureOrder().findIndex((text) => text.startsWith("3variability")));
+      view.unmount();
+    }
+    expect(positions.size).toBeGreaterThan(1);
+    expect([...positions].every((position) => position >= 0 && position < 3)).toBe(true);
+  });
+
+  it("does not render choices in authored order for a seed that displaces the correct one", () => {
+    let seed = "";
+    for (let i = 0; i < 50; i++) {
+      const candidate = `dcl-measure-probe-${i}`;
+      const { unmount } = render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={() => {}} disabled={false} seed={candidate} />);
+      const displaced = !measureOrder()[0].startsWith("12variability");
+      unmount();
+      if (displaced) { seed = candidate; break; }
+    }
+    expect(seed).not.toBe("");
+    render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={() => {}} disabled={false} seed={seed} />);
+    expect(measureOrder()[0]).not.toMatch(/^12variability/);
+  });
+
+  it("still grades correct by value when the correct choice is clicked wherever it renders — survives shuffle", () => {
+    const onChange = vi.fn();
+    let seed = "";
+    for (let i = 0; i < 50; i++) {
+      const candidate = `dcl-measure-grade-probe-${i}`;
+      const { unmount } = render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={() => {}} disabled={false} seed={candidate} />);
+      const displaced = !measureOrder()[0].startsWith("12variability");
+      unmount();
+      if (displaced) { seed = candidate; break; }
+    }
+    expect(seed).not.toBe(""); // sanity: a displacing seed exists
+    render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={onChange} disabled={false} seed={seed} />);
+    const buttons = within(measureGroup()).getAllByRole("button");
+    expect(buttons[0].textContent).not.toMatch(/^12variability/); // sanity: really displaced
+    const correctButton = buttons.find((b) => b.textContent?.startsWith("3variability"))!;
+    fireEvent.click(correctButton);
+    expect(onChange).toHaveBeenCalledWith(3);
+    expect(evaluate(DISTRIBUTION_COMPARE_MEASURE, 3).correct).toBe(true);
+  });
+
+  it("keeps grading correct by value even when a wrong choice is clicked wherever it renders", () => {
+    const onChange = vi.fn();
+    render(<WidgetView spec={DISTRIBUTION_COMPARE_MEASURE} value={null} onChange={onChange} disabled={false} seed="dcl-measure-wrong-probe" />);
+    const buttons = within(measureGroup()).getAllByRole("button");
+    const wrongButton = buttons.find((b) => b.textContent?.startsWith("4variability"))!;
+    fireEvent.click(wrongButton);
+    expect(onChange).toHaveBeenCalledWith(4);
+    expect(evaluate(DISTRIBUTION_COMPARE_MEASURE, 4)).toEqual({
+      correct: false,
+      feedback: "That's the variability measure itself, not the gap in units. (20−8)÷4=3."
+    });
   });
 });

@@ -117,23 +117,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Take four tens away.",
+      "body": "Count the tens instead of the result.",
       "widget": {
         "type": "numeric",
-        "prompt": "90 - 40 = ?",
-        "answer": 50,
+        "prompt": "90 − 40 removes how many tens?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 86,
-            "feedback": "You're subtracting 4 tens, not 4 ones: 9 tens − 4 tens = 5 tens, so 50."
+            "value": 50,
+            "feedback": "50 is the result of 90 − 40, not the number of tens removed. 40 is 4 tens."
           },
           {
             "value": 40,
-            "feedback": "9 tens − 4 tens = 5 tens = 50, not 40."
+            "feedback": "40 is the number subtracted, but the question asks how many TENS that is: 4."
           }
         ],
-        "fallbackFeedback": "9 tens − 4 tens = 5 tens = 50."
+        "fallbackFeedback": "40 = 4 tens, so 4 tens are being removed."
       }
     },
     {
@@ -145,108 +145,108 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Take two tens away.",
+      "body": "Find the missing subtrahend.",
       "widget": {
         "type": "numeric",
-        "prompt": "88 - 20 = ?",
-        "answer": 68,
+        "prompt": "88 − ? = 68. What number was subtracted?",
+        "answer": 20,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 86,
-            "feedback": "You're subtracting 2 tens, not 2 ones: 8 tens − 2 tens = 6 tens, so 68."
+            "value": 156,
+            "feedback": "That adds 88 and 68 together. The number subtracted is the DIFFERENCE: 88 − 68 = 20."
           },
           {
-            "value": 48,
-            "feedback": "That's minus 4 tens. 88 − 20 removes 2 tens: 68."
+            "value": 2,
+            "feedback": "The tens digit went down by 2, but the actual number subtracted is 2 tens: 20, not 2."
           }
         ],
-        "fallbackFeedback": "8 tens − 2 tens = 6 tens = 68."
+        "fallbackFeedback": "88 − 68 = 20, so 20 was subtracted."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Take two tens away.",
+      "body": "Work backward to the starting number.",
       "conceptTag": "tno-subtract-tens",
       "explanationVariants": [
-        "5 tens − 2 tens = 3 tens, ones stay 6: 36.",
-        "56 − 20 removes two tens: 36."
+        "Undo the −20 by adding: 36 + 20 = 56.",
+        "Work backward from the result to find the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "56 - 20 = ?",
-        "answer": 36,
+        "prompt": "After subtracting 20, the result is 36. What number did we start with?",
+        "answer": 56,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 54,
-            "feedback": "You're subtracting 2 tens, not 2 ones: 5 tens − 2 tens = 3 tens, so 36."
+            "value": 16,
+            "feedback": "That subtracts 20 again instead of undoing the subtraction. Undo by adding: 36 + 20 = 56."
           },
           {
-            "value": 16,
-            "feedback": "That's minus 4 tens. 56 − 20 removes 2 tens: 36."
+            "value": 38,
+            "feedback": "That only adds back 2, not 2 tens. Adding a full 20 back to 36 gives 56."
           }
         ],
-        "fallbackFeedback": "5 tens − 2 tens = 3 tens = 36."
+        "fallbackFeedback": "Undo the −20 by adding: 36 + 20 = 56."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Take three tens away.",
+      "body": "Find the missing minuend.",
       "conceptTag": "tno-subtract-tens",
       "explanationVariants": [
-        "4 tens − 3 tens = 1 ten, ones stay 7: 17.",
-        "47 − 30 removes three tens: 17."
+        "30 + 17 = 47, so 47 is the missing number.",
+        "Undo the subtraction by adding back."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "47 - 30 = ?",
-        "answer": 17,
+        "prompt": "? − 30 = 17. What number is missing?",
+        "answer": 47,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 44,
-            "feedback": "You're subtracting 3 tens, not 3 ones: 4 tens − 3 tens = 1 ten, so 17."
+            "value": 13,
+            "feedback": "That subtracts 17 from 30 instead of finding the missing minuend. Add instead: 30 + 17 = 47."
           },
           {
-            "value": 77,
-            "feedback": "That's 47 + 30. Subtracting gives 17."
+            "value": 30,
+            "feedback": "30 is the number being subtracted, not the missing starting number. The start is 30 + 17 = 47."
           }
         ],
-        "fallbackFeedback": "4 tens − 3 tens = 1 ten = 17."
+        "fallbackFeedback": "30 + 17 = 47, so 47 is the missing number."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Take six tens away.",
+      "body": "Catch a counting mistake.",
       "conceptTag": "tno-subtract-tens",
       "explanationVariants": [
-        "8 tens − 6 tens = 2 tens, ones stay 3: 23.",
-        "83 − 60 removes six tens: 23."
+        "60 is 6 tens: 8 tens − 6 tens = 2 tens, so 23.",
+        "Milo subtracted only one ten instead of six."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "83 - 60 = ?",
+        "prompt": "Milo computed 83 − 60 but treated it like subtracting just one ten, getting 73. What is the correct difference?",
         "answer": 23,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 77,
-            "feedback": "You're subtracting 6 tens, not 6 ones: 8 tens − 6 tens = 2 tens, so 23."
+            "value": 73,
+            "feedback": "That repeats Milo's mistake of subtracting only one ten. 60 is SIX tens: 8 tens − 6 tens = 2 tens, so 23."
           },
           {
-            "value": 20,
-            "feedback": "Keep the ones (3): 8 tens − 6 tens = 2 tens = 23, not 20."
+            "value": 77,
+            "feedback": "That subtracts 6 as ones, not 6 tens. 60 is 6 tens: 83 − 60 = 23."
           }
         ],
-        "fallbackFeedback": "8 tens − 6 tens = 2 tens = 23."
+        "fallbackFeedback": "60 is 6 tens: 8 tens − 6 tens = 2 tens, so 23."
       },
       "hints": [
-        "60 is 6 tens.",
-        "Subtract the tens: 8 tens − 6 tens = 2 tens.",
+        "60 means 6 tens, not just 1 ten — that was Milo's mistake.",
+        "8 tens − 6 tens = 2 tens.",
         "Keep the ones (3): 23."
       ]
     },
