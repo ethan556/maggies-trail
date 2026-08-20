@@ -62,11 +62,17 @@ describe("lineExplore — slope↔intercept confusion", () => {
 });
 
 describe("plotPoint — x/y reversal", () => {
+  // xLabels/yLabels are required by the schema (one label per track — see schema.ts
+  // PlotPointSpec) and a cell's accessible name is `${xLabel}, ${yLabel}` (see
+  // widgets.tsx PlotPointW), not "column N row M" — labelling the tracks "1".."3" keeps
+  // the cell names numerically identical to their (x, y) grid position.
   const spec = {
     type: "plotPoint",
     prompt: "Mark the point.",
     cols: 3,
     rows: 3,
+    xLabels: ["1", "2", "3"],
+    yLabels: ["1", "2", "3"],
     targets: [{ x: 1, y: 2 }],
     missFeedback: "m",
     successFeedback: "s"
@@ -74,13 +80,13 @@ describe("plotPoint — x/y reversal", () => {
 
   it("tapping the transposed cell tags xy-reversal", () => {
     const { events } = mount(spec);
-    fireEvent.click(screen.getByRole("button", { name: /column 2.*row 1/i }));
+    fireEvent.click(screen.getByRole("button", { name: "2, 1" }));
     expect(events).toEqual([{ control: "cell", dir: "away", tag: "xy-reversal" }]);
   });
 
   it("tapping the target cell emits nothing", () => {
     const { events } = mount(spec);
-    fireEvent.click(screen.getByRole("button", { name: /column 1.*row 2/i }));
+    fireEvent.click(screen.getByRole("button", { name: "1, 2" }));
     expect(events).toEqual([]);
   });
 });

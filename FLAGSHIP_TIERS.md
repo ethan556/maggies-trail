@@ -21,16 +21,15 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 185 | 218 | 7 | 0 | 410 |
-| 3-5 | 274 | 143 | 2 | 0 | 419 |
+| K-2 | 187 | 216 | 7 | 0 | 410 |
+| 3-5 | 274 | 144 | 1 | 0 | 419 |
 | 6-8 | 147 | 96 | 2 | 0 | 245 |
 | HS | 199 | 356 | 72 | 0 | 627 |
 
-**K–8 targets** — Tier A 606/200–250 ✓ · Tier B 457/200–300 ✓.
+**K–8 targets** — Tier A 608/200–250 ✓ · Tier B 456/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
-- benchmark-compare (best: C in fa-02-02)
 - g3d-zero (best: C in df3-03-02)
 - ks-compose-shapes (best: C in ks-02-03)
 - ks-heavier-lighter (best: C in ks-03-02)
@@ -97,20 +96,19 @@ across **65** lessons.
 | fg-03-03 — Comparing Rate and Initial Value | Grade 8: Functions (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rns-02-03 — The Real Number Line Has No Gaps | Grade 8: The Real Number System (G8) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
 
-## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 11)
+## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 10)
 
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
 | 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
 | 2 | sp-03-02 — Estimating Probability from Trials | Grade 7: Sampling & Probability (G7) | C | 22/39 | prediction contrast formal transfer adapt | place-value estimation; probability | 71 |
-| 3 | fa-02-02 — Comparing Without a Common Denominator | Fractions That Add Up (G4) | C | 25/39 | prediction manip formal transfer | fraction magnitude & operations | 68 |
-| 4 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | C | 22/39 | prediction contrast formal transfer | place-value estimation | 64 |
-| 5 | ks-01-01 — Name the Shapes | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 6 | ks-01-02 — Shapes Any Way Up | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 7 | ks-01-03 — Where Is It? | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 8 | ks-02-01 — Shapes We Can Hold | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 9 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
-| 10 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 11 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
+| 3 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | C | 22/39 | prediction contrast formal transfer | place-value estimation | 64 |
+| 4 | ks-01-01 — Name the Shapes | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 5 | ks-01-02 — Shapes Any Way Up | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 6 | ks-01-03 — Where Is It? | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 7 | ks-02-01 — Shapes We Can Hold | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 8 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
+| 9 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
+| 10 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
 
-Totals: 1701 lessons · A 805 · B 813 · C 83 · D 0.
+Totals: 1701 lessons · A 807 · B 812 · C 82 · D 0.

@@ -816,11 +816,16 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("boxPlot", () => {
     const { spec, holder, container } = mount("boxPlot");
     auditNativeControls(container);
-    fireEvent.change(screen.getByLabelText(/minimum/i), { target: { value: "2" } });
-    fireEvent.change(screen.getByLabelText(/first quartile/i), { target: { value: "4" } });
-    fireEvent.change(screen.getByLabelText(/median/i), { target: { value: "6" } });
-    fireEvent.change(screen.getByLabelText(/third quartile/i), { target: { value: "9" } });
-    fireEvent.change(screen.getByLabelText(/maximum/i), { target: { value: "12" } });
+    // Each slider's own aria-label is "set <statistic>" ("set minimum", "set Q1 lower
+    // quartile", ...) — see widgets.tsx BoxPlotW `rows`. A bare /minimum/i etc. also matches
+    // the plot's own image aria-label (which restates every statistic in one sentence, e.g.
+    // "...Minimum 0; Q1 lower quartile 3;..."), so the query must include the "set " prefix
+    // that only the input carries.
+    fireEvent.change(screen.getByLabelText(/set minimum/i), { target: { value: "2" } });
+    fireEvent.change(screen.getByLabelText(/set q1 lower quartile/i), { target: { value: "4" } });
+    fireEvent.change(screen.getByLabelText(/set median/i), { target: { value: "6" } });
+    fireEvent.change(screen.getByLabelText(/set q3 upper quartile/i), { target: { value: "9" } });
+    fireEvent.change(screen.getByLabelText(/set maximum/i), { target: { value: "12" } });
     expectSolved(spec, holder);
   });
 
@@ -1260,9 +1265,11 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("plotPoint (grid cells toggle, y counts from the bottom)", () => {
     const { spec, holder, container } = mount("plotPoint");
     auditNativeControls(container);
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 1" }));
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 2" }));
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 3" }));
+    // A cell's accessible name is `${xLabel}, ${yLabel}` (see widgets.tsx PlotPointW); the
+    // gallery sample's yLabels are plain track numbers ("1".."4"), not "row N" text.
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 1" }));
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 2" }));
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 3" }));
     expectSolved(spec, holder);
   });
 

@@ -150,25 +150,25 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Adjust a different oversized trial digit and verify that the revised product fits without creating a negative remainder.",
+      "body": "After adjusting the trial digit, find the remainder that is left over — and confirm it never goes negative or matches the divisor.",
       "conceptTag": "g5ld-adjust",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "5 × 26 = 130 overshoots the 119 available — slide to what 4 × 26 gives.",
+        "prompt": "The trial digit was lowered to 4, giving 4 × 26 = 104. Slide to what remains after subtracting 104 from the 119 available.",
         "min": 5,
-        "max": 200,
+        "max": 100,
         "start": 5,
-        "target": 104,
+        "target": 15,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
           5,
-          103,
-          200
+          26,
+          100
         ],
-        "lowFeedback": "Too low — four twenty-sixes make 104, so the adjusted product is above one hundred.",
-        "highFeedback": "Too high — the revised digit is 4, and 4 × 26 is 104, safely below 119.",
-        "successFeedback": "104 — it fits inside 119 and leaves 15, so lowering the trial digit avoids a negative remainder."
+        "lowFeedback": "Too low — 119 minus 104 leaves a bit more than that.",
+        "highFeedback": "Too high — 119 minus 104 is only fifteen.",
+        "successFeedback": "15 — that remainder is safely less than the 26 divisor, so the lowered digit fits correctly."
       },
       "cml": {
         "stage": "construct",
@@ -319,43 +319,43 @@
       "body": "One more, for the road.",
       "conceptTag": "g5ld-adjust",
       "explanationVariants": [
-        "Only that digit changes.",
-        "Earlier steps stand."
+        "Test every candidate digit.",
+        "The remainder must stay under the divisor."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+        "prompt": "For 217 ÷ 34, which trial digit is correct for the first step: 5, 6, 7, or 8?",
         "options": [
           {
             "id": "o0",
-            "label": "Lower the digit to 3 and multiply again",
+            "label": "6, because 6 × 34 = 204 fits within 217 and no larger digit does",
             "correct": true,
-            "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
+            "feedback": "Correct — 6 × 34 = 204 fits inside 217, and 7 × 34 = 238 overshoots, so 6 is the largest digit that works."
           },
           {
             "id": "o1",
-            "label": "Subtract anyway and carry a negative",
+            "label": "5, because it fits safely under 217",
             "correct": false,
-            "feedback": "The algorithm never leaves a negative remainder; the digit must be reduced instead."
+            "feedback": "5 does fit, but its remainder of 217 − 170 = 47 is larger than the 34 divisor, so a bigger digit still fits."
           },
           {
             "id": "o2",
-            "label": "Start the whole division again",
+            "label": "7, because it uses more of the 217 available",
             "correct": false,
-            "feedback": "Only this digit is wrong; the earlier steps are unaffected."
+            "feedback": "7 × 34 = 238, which is larger than the 217 available — that overshoots and cannot be used."
           },
           {
             "id": "o3",
-            "label": "Round 88 up to 96",
+            "label": "8, because bigger digits divide faster",
             "correct": false,
-            "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
+            "feedback": "8 × 34 = 272, far past the 217 available — the digit must be lowered, not raised."
           }
         ]
       },
       "hints": [
-        "Take convenient batches.",
-        "Total them at the end.",
-        "Same groups either way."
+        "Multiply each candidate digit by the divisor.",
+        "The product must not exceed the dividend.",
+        "The leftover remainder must stay below the divisor."
       ],
       "cml": {
         "stage": "construct",

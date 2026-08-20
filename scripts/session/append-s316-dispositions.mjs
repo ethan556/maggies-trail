@@ -47,6 +47,13 @@ const ORDER = [
   "laneV-s317-batch1-dispositions.jsonl",
   "laneV-s317-batch2-dispositions.jsonl",
   "laneV-s317-final-dispositions.jsonl",
+  // S318 wave (2026-08-20, third session round)
+  "laneB-right-triangles-trig-dispositions.jsonl",
+  "laneB-exponential-functions-dispositions.jsonl",
+  "laneV-s318-g4hs-dispositions.jsonl",
+  "laneV-s318-k2qdprog-dispositions.jsonl",
+  "laneV-s318-g3-dispositions.jsonl",
+  "laneV-s318-final-dispositions.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

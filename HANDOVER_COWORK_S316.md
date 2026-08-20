@@ -136,3 +136,51 @@ green · build exit 0 · SOURCE_SEAL_MATCH.
 - session195 g3f-01-04 `.variant.gen` dereference red (pre-existing class, documented).
 - manualHolds follow-ups: none dangling; legacy zero-binding blocklist keys await their reviewed
   removal wave. Platform-red reconciliation (~318 tests at clean HEAD) still the top next-session item.
+
+---
+
+# S318 addendum (same day, third aggressive round)
+
+## Queue movement
+4,451 → **4,221 rows / 33 P0** (cumulative from honest LF baseline: 5,473 → 4,221, −1,252; P0 104 → 33).
+
+## Headline: the WITHHELD-figure P0 class is fully closed
+The serial VIS writer chain (vis01-illustration-measurement etc.) had not been run since the figure
+work landed; running it revealed the true state and drove the wave. All **56 withheld placements**
+(33 WITHHELD_BLOCKLIST_FINGERPRINT + 23 WITHHELD_FIXED_EXEMPLAR_TEXT_GUARD) across 24 courses were
+legitimately cleared — figure and prose now genuinely agree, verified per placement with the repo's
+own isFigureTextAligned/fingerprint modules AND the adversarial risks() heuristic (zero candidates;
+figureTextAdversarialAudit fully green). 16 new parameterized figure components (additive; e.g.
+Mult3MissingFactorExample) replaced fixed exemplars where prose contortion would have been dishonest;
+1 wrong-topic figure got a new truthful component (DecimalShiftDivide); 2 dangling manual holds
+retired per the in-file precedent; ILLUSTRATION_REPLACEMENT is no longer in the queue table.
+Verification: 57 lessons re-signed KEEP across four independent passes (laneV-s318-*).
+
+## Also closed
+- QUESTION_DIVERSITY P0: 15 rows worked — 14 proven stale queue signals (already repaired in
+  committed S263–S282 sessions; evidence per row), 1 real defect fixed (fa-02-02 ch1 →
+  dragBucket transfer task, precedent S267). NOTE: the queue detector still emits these 15 rows
+  because its cached evidence predates the repairs — a consolidator-refresh item for next session,
+  documented in S318_QD_P0_IMPLEMENTATION.md.
+- PROGRESSION P0: 11 rows — 10 fixed (duplication genuinely resolved, verified), 1 adjudicated
+  NOT_REPRODUCIBLE (rno-04-02 k2 is deliberate compare-contrast pedagogy; two independent
+  concurring rulings). 7 stale variant keys removed as generator debt (VARIANT_LOG).
+- Platform reds: 60 tests across 5 files fixed (stale DOM/schema locators, NOT CRLF — the CRLF
+  hypothesis was disproven: zero CRLF files exist; classification in
+  S318_PLATFORM_RED_RECONCILIATION.md). ~230 remaining reds are classified content/generator
+  defects + 6 stale generated artifacts + 2 ambiguous; one flaky file flagged
+  (session252.unlikeFractionsG5 flips run-to-run).
+- 2 more course assessments: right-triangles-trig 13K/2R (two mcq length-parity contracts, open),
+  exponential-functions 12K/0R.
+- 89 further signed dispositions appended (total this session: 616).
+
+## Remaining P0 (33)
+CLOSURE_LEDGER 12 (umbrella rows), QUESTION_DIVERSITY 15 (stale detector evidence — refresh
+consolidator inputs), LESSON_REVISION_IMPLEMENTATION 3 (mf3 ESCALATEs awaiting human pedagogy
+decision), V4_PROGRAMME_PHASE 3 (umbrella).
+
+## Gates at S318 close
+schema 1840/1840 · pedagogy 1711/1711 · CML strict · registration · tsc clean · adversarial figure
+audit green · full serial writer chain green (world manifest, claims+check, VIS01: ZERO non-render
+placements, alignment, parity [pre-existing 4-debt recorded state unchanged], semantic inventory) ·
+build exit 0 · SOURCE_SEAL_MATCH.

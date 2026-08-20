@@ -326,32 +326,32 @@
       "body": "One more, for the road.",
       "conceptTag": "g2l-spacing",
       "explanationVariants": [
-        "Predict the next mark from the step.",
-        "The pattern continues evenly."
+        "Take every jump, not just one.",
+        "Three equal moves, one landing."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "40 + 5 = ? (the next mark when marks sit every 5)",
-        "answer": 45,
+        "prompt": "Marks sit every 5, starting at 60. After three jumps, what mark do you land on?",
+        "answer": 75,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 41,
-            "feedback": "That moved one — equally spaced marks here step by 5 every time."
+            "value": 65,
+            "feedback": "That is only one jump of 5 — three jumps must be taken to reach the landing mark."
           },
           {
-            "value": 50,
-            "feedback": "That is a ten-step; this line's marks sit 5 apart."
+            "value": 90,
+            "feedback": "That treats each jump as size 10 — these marks are actually spaced 5 apart."
           }
         ],
         "fallbackFeedback": "Walk the line: find the start mark, take the jumps one at a time, and read the mark you land on.",
-        "successFeedback": "Correct — 45."
+        "successFeedback": "Correct — 75."
       },
       "hints": [
-        "Find the labeled marks first.",
-        "Equal gaps carry equal amounts.",
-        "Position tells the number."
+        "Find the start mark and the jump size.",
+        "Take each jump one at a time.",
+        "Three jumps means three equal moves."
       ],
       "cml": {
         "stage": "construct",
@@ -374,10 +374,6 @@
         "transferFamily": "number-line-g2:g2l-spacing",
         "delayed": true,
         "counterfactualPrompt": "Which change — start, jump size, or direction — would move the landing, and which would leave it alone?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "AddOnesNumeric"
       }
     },
     {

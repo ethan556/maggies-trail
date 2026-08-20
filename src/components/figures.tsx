@@ -4006,6 +4006,33 @@ function Mult3FairShares() {
   );
 }
 
+/**
+ * Grade 3 mult/div figure: parameterized fair-shares division fact.
+ * S318 fix (mult-02-01 c2): `mult3-fair-shares` is a fixed 12÷3=4 exemplar
+ * (matching this lesson's own c1); c2 teaches a distinct worked example
+ * (15 grapes shared among 5 friends), so this reusable, typed-prop helper
+ * lets that placement bind its own real numbers without touching the
+ * original component or its other bindings. Viewbox width scales with the
+ * group count so `EqualGroups`'s fixed per-group spacing still fits.
+ */
+function Mult3FairSharesExample({ total, groups }: { total: number; groups: number }) {
+  const per = total / groups;
+  const width = Math.max(210, groups * 62 + 30);
+  return (
+    <svg viewBox={`0 0 ${width} 108`} role="img" aria-label={`${total} dots dealt fairly into ${groups} rings, ${per} in each, showing ${total} divided by ${groups} equals ${per}.`}>
+      <title>{`Fair shares: ${total} ÷ ${groups} = ${per} each.`}</title>
+      <text x={width / 2} y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">{`${total} shared into ${groups} groups → ${per} each`}</text>
+      <EqualGroups groups={groups} per={per} fill={TANGERINE} />
+      <text x={width / 2} y="98" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">{`${total} ÷ ${groups} = ${per}`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 mult/div figure: mult-02-01's own c2 worked example, 15 grapes shared among 5 friends. */
+function Mult3FairShares15Over5() {
+  return <Mult3FairSharesExample total={15} groups={5} />;
+}
+
 /** Grade 3 mult/div figure: How many groups: 12 ÷ 4 = 3. */
 function Mult3HowManyGroups() {
   return (
@@ -4030,6 +4057,56 @@ function Mult3MissingFactor() {
   );
 }
 
+/**
+ * Grade 3 mult/div figure: parameterized "division finds the missing factor" fact.
+ * S318 fix: `mult3-missing-factor` is a fixed 4×▢=12 exemplar; several
+ * division-fluency-g3 and word-problems-g3 lessons teach their own distinct
+ * missing-factor facts, so this reusable, typed-prop helper lets each
+ * placement bind its own real numbers without touching the original
+ * component or its other bindings. Title stays generic (no digits) so the
+ * renderer-derived numeric-claims map does not gate every future body
+ * against these exact digits — the same convention the fixed original uses.
+ */
+function Mult3MissingFactorExample({ a, b }: { a: number; b: number }) {
+  const product = a * b;
+  return (
+    <svg viewBox="0 0 210 100" role="img" aria-label={`A multiplication with a missing factor, ${a} times a box equals ${product}, and the matching division ${product} divided by ${a} equals ${b} finds it.`}>
+      <title>Division finds the missing factor.</title>
+      <text x="105" y="40" fontSize="16" fontWeight="700" fill={INK} textAnchor="middle">{`${a} × ▢ = ${product}`}</text>
+      <text x="105" y="66" fontSize="12" fill={INK} textAnchor="middle">{`so ▢ = ${product} ÷ ${a}`}</text>
+      <text x="105" y="88" fontSize="15" fontWeight="700" fill={BERRY} textAnchor="middle">{`▢ = ${b}`}</text>
+    </svg>
+  );
+}
+/** df3-01-04 c1 (chapter's own leading fact) and g3w-02-01 c2 ("6 × n = 42"): 6 × 7 = 42. */
+function Mult3MissingFactor6x7() {
+  return <Mult3MissingFactorExample a={6} b={7} />;
+}
+/** df3-01-04 remedial concept's own worked example: 6 × 5 = 30. */
+function Mult3MissingFactor6x5() {
+  return <Mult3MissingFactorExample a={6} b={5} />;
+}
+/** df3-02-01 c1 (chapter's own leading fact, matching its i1/predict): 8 × 9 = 72. */
+function Mult3MissingFactor8x9() {
+  return <Mult3MissingFactorExample a={8} b={9} />;
+}
+/** df3-02-03 c1's own worked example ("56 ÷ 7 asks 7 × ? = 56"): 7 × 8 = 56. */
+function Mult3MissingFactor7x8() {
+  return <Mult3MissingFactorExample a={7} b={8} />;
+}
+/** df3-02-03 remedial concept's own worked example ("49 ÷ 7 is 7 × ? = 49"): 7 × 7 = 49. */
+function Mult3MissingFactor7x7() {
+  return <Mult3MissingFactorExample a={7} b={7} />;
+}
+/** df3-02-04 c1's own worked example ("6 × ? = 54 or 54 ÷ ? = 9"): 6 × 9 = 54. */
+function Mult3MissingFactor6x9() {
+  return <Mult3MissingFactorExample a={6} b={9} />;
+}
+/** df3-02-04 remedial concept's own worked example ("8 × ? = 56"): 8 × 7 = 56. */
+function Mult3MissingFactor8x7() {
+  return <Mult3MissingFactorExample a={8} b={7} />;
+}
+
 /** Grade 3 mult/div figure: A fact family from 3, 4, and 12. */
 function Mult3FactFamily() {
   return (
@@ -4045,6 +4122,36 @@ function Mult3FactFamily() {
       <text x="172" y="89" fontSize="10" fill={INK}>12÷4=3</text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 mult/div figure: parameterized fact-family triangle.
+ * S318 fix (df3-03-03 remedial): `mult3-fact-family` is a fixed 3/4/12
+ * exemplar; that remedial concept teaches its own fact (5 × 7 = 35), so this
+ * reusable, typed-prop helper lets it bind its own real numbers without
+ * touching the original component or its other bindings. Title stays in the
+ * same comma-list style as the original (no operators/equals), so it is not
+ * newly admitted to the renderer-derived numeric-claims map.
+ */
+function Mult3FactFamilyExample({ a, b }: { a: number; b: number }) {
+  const product = a * b;
+  return (
+    <svg viewBox="0 0 230 104" role="img" aria-label={`A fact-family triangle with ${product} at the top and ${a} and ${b} at the corners, generating two multiplications and two divisions.`}>
+      <title>{`A fact family from ${a}, ${b}, and ${product}.`}</title>
+      <polygon points="105,22 60,86 150,86" fill="none" stroke={INK} strokeWidth={1.6} />
+      <text x="105" y="36" fontSize="15" fontWeight="700" fill={BERRY} textAnchor="middle">{product}</text>
+      <text x="58" y="92" fontSize="14" fontWeight="700" fill={SKY} textAnchor="middle">{a}</text>
+      <text x="152" y="92" fontSize="14" fontWeight="700" fill={LEAF} textAnchor="middle">{b}</text>
+      <text x="172" y="44" fontSize="10" fill={INK}>{`${a}×${b}=${product}`}</text>
+      <text x="172" y="59" fontSize="10" fill={INK}>{`${b}×${a}=${product}`}</text>
+      <text x="172" y="74" fontSize="10" fill={INK}>{`${product}÷${a}=${b}`}</text>
+      <text x="172" y="89" fontSize="10" fill={INK}>{`${product}÷${b}=${a}`}</text>
+    </svg>
+  );
+}
+/** df3-03-03 remedial concept's own worked example ("Use the matching multiplication fact: 5 × 7 = 35"). */
+function Mult3FactFamily5x7() {
+  return <Mult3FactFamilyExample a={5} b={7} />;
 }
 
 /** Grade 3 mult/div figure: Special rules: ×1, ×0, and ÷1. */
@@ -4299,6 +4406,32 @@ function Mult3Estimate() {
       <text x="105" y="84" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">does the answer make sense?</text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 mult/div figure: parameterized "estimate with a nearby friendly
+ * fact" check. S318 fix (mult-04-05 c2): `mult3-estimate` is a fixed
+ * 4×19≈80/exact-76 exemplar; c2 teaches its own worked example (6 × 9,
+ * rounded to 6 × 10 = 60), so this reusable, typed-prop helper lets that
+ * placement bind its own real numbers without touching the original
+ * component or its other bindings. Title stays generic (no digits), the
+ * same convention the fixed original uses.
+ */
+function Mult3EstimateExample({ a, bExact, bRound }: { a: number; bExact: number; bRound: number }) {
+  const estimate = a * bRound;
+  const exact = a * bExact;
+  return (
+    <svg viewBox="0 0 210 100" role="img" aria-label={`Checking an answer by estimating: ${a} times ${bExact} is about ${a} times ${bRound}, which is ${estimate}, so an exact answer near ${exact} makes sense.`}>
+      <title>Estimate to check the answer.</title>
+      <text x="105" y="34" fontSize="13" fill={INK} textAnchor="middle">{`${a} × ${bExact} ≈ ${a} × ${bRound} = `}<tspan fontWeight="700" fill={LEAF}>{estimate}</tspan></text>
+      <text x="105" y="60" fontSize="13" fill={INK} textAnchor="middle">{`exact ${exact} is close to ${estimate} ✓`}</text>
+      <text x="105" y="84" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">does the answer make sense?</text>
+    </svg>
+  );
+}
+/** mult-04-05 c2's own worked example: 6 × 9 estimated by 6 × 10 = 60, exact 54. */
+function Mult3Estimate6x9() {
+  return <Mult3EstimateExample a={6} bExact={9} bRound={10} />;
 }
 
 /** Grade 3 mult/div figure: Patterns in the addition table. */
@@ -5672,6 +5805,67 @@ function NumberLineJumps() {
       </text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 mult/div figure: parameterized equal-hop number line.
+ * S318 fix (mult-02-03 c2): `number-line-jumps` is a fixed 3-hops-of-4
+ * exemplar; c2 teaches its own worked example — skip-counting to check a
+ * division fact (35 ÷ 5, seven hops of 5) — so this reusable, typed-prop
+ * helper lets that placement bind its own real numbers without touching the
+ * original component or its other bindings. Unit spacing and tick/label
+ * density scale with the landing spot so any (hops, hopLength) pair stays
+ * legible inside the viewBox.
+ */
+function NumberLineJumpsExample({ hops, hopLength }: { hops: number; hopLength: number }) {
+  const landing = hops * hopLength;
+  const ox = 24, oy = 78;
+  const u = Math.min(22, 260 / landing);
+  const width = Math.round(ox + landing * u + 20);
+  const X = (n: number) => ox + n * u;
+  const hop = (a: number, b: number) => (
+    <>
+      <path
+        d={`M ${X(a)} ${oy - 4} Q ${X((a + b) / 2)} ${oy - 40} ${X(b)} ${oy - 4}`}
+        fill="none"
+        stroke={TANGERINE}
+        strokeWidth={2.5}
+      />
+      <NumberLineDirectionHead x={X(b)} y={oy - 4} direction="right" color={TANGERINE} size={6} testId="number-line-jumps-example-direction" />
+    </>
+  );
+  const tickEvery = landing <= 12 ? 1 : landing <= 20 ? 2 : landing <= 40 ? 5 : 10;
+  const labelEvery = landing <= 12 ? 2 : tickEvery;
+  const jumpPoints = Array.from({ length: hops }, (_, i) => (i + 1) * hopLength);
+  return (
+    <svg viewBox={`0 0 ${width} 110`} role="img" className="mx-auto w-full max-w-sm" aria-label={`A number line from 0 to ${landing} with ${hops} equal hops of ${hopLength}: the hops land on ${jumpPoints.join(", ")}, showing ${hops} times ${hopLength} equals ${landing}.`}>
+      <title>{`A number line with ${hops} equal hops of ${hopLength} landing on ${landing}, showing ${hops} times ${hopLength} equals ${landing}.`}</title>
+      <NumberLineAxis x1={X(0) - 8} x2={X(landing) + 12} y={oy} color={INK} testId="number-line-jumps-example-axis" />
+      {Array.from({ length: landing + 1 }, (_, n) => (
+        <g key={n}>
+          {n % tickEvery === 0 && <line x1={X(n)} y1={oy - 4} x2={X(n)} y2={oy + 4} stroke={INK} strokeWidth={n % hopLength === 0 ? 2 : 1} />}
+          {n % labelEvery === 0 && (
+            <text x={X(n)} y={oy + 17} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+              {n}
+            </text>
+          )}
+        </g>
+      ))}
+      {jumpPoints.map((n, i) => (
+        <g key={n}>{hop(i === 0 ? 0 : jumpPoints[i - 1], n)}</g>
+      ))}
+      {jumpPoints.map((n) => (
+        <circle key={n} cx={X(n)} cy={oy} r={4} fill={SKY} />
+      ))}
+      <text x={X(landing / 2)} y={oy + 32} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>
+        {`${hops} hops of ${hopLength} → lands on ${landing}`}
+      </text>
+    </svg>
+  );
+}
+/** mult-02-03 c2's own worked example ("35 ÷ 5: count 5, 10, ... — seven hops, so the answer is 7"): 7 hops of 5 = 35. */
+function NumberLineJumps7x5() {
+  return <NumberLineJumpsExample hops={7} hopLength={5} />;
 }
 
 /** pv2-01-01's ladder: ones up to millions, every rung ×10 — exactly the lesson's seven named rungs. */
@@ -7652,6 +7846,31 @@ function DecimalShift() {
         <text x={238} y={66} textAnchor="middle" fontSize={14} fontWeight={800} fill="#2FA36B">→ x = 5</text>
       </g>
       <text x={160} y={100} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">×10 shifts EVERY decimal one place — no term left behind</text>
+    </svg>
+  );
+}
+
+/**
+ * decimal-shift-divide: 1.5 ÷ 0.5, with both numbers ×10 so the divisor becomes
+ * whole: 15 ÷ 5 = 3. Same "shift both, together" idea as DecimalShift, but for
+ * long division instead of equation-clearing — the two figures render different
+ * fixed numbers because they illustrate different worked examples. Digits shift
+ * together; reduced-motion gated.
+ */
+function DecimalShiftDivide() {
+  const css = `@media (prefers-reduced-motion: no-preference){.dsd-out{animation:dsd-a .6s ease-out .5s backwards}@keyframes dsd-a{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}}`;
+  return (
+    <svg viewBox="0 0 320 112" role="img" className="mx-auto w-full max-w-md">
+      <title>1.5 divided by 0.5. Shifting both numbers one place right makes the divisor a whole number: 15 divided by 5 equals 3.</title>
+      <style>{css}</style>
+      <text x={110} y={30} textAnchor="middle" fontSize={16} fontWeight={800} fill="#22314F">1.5 ÷ 0.5</text>
+      <rect x={196} y={16} width={44} height={20} rx={10} fill="#FF8A3D" />
+      <text x={218} y={30} textAnchor="middle" fontSize={11} fontWeight={800} fill="white">×10 both</text>
+      <g className="dsd-out">
+        <text x={110} y={66} textAnchor="middle" fontSize={16} fontWeight={800} fill="#2E7CD6">15 ÷ 5</text>
+        <text x={218} y={66} textAnchor="middle" fontSize={14} fontWeight={800} fill="#2FA36B">= 3</text>
+      </g>
+      <text x={160} y={100} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">×10 shifts BOTH numbers one place — the quotient stays the same</text>
     </svg>
   );
 }
@@ -30386,6 +30605,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "fraction-undo": FractionUndo,
   "lcd-clear": LcdClear,
   "decimal-shift": DecimalShift,
+  "decimal-shift-divide": DecimalShiftDivide,
   "formula-rearrange": FormulaRearrange,
   "flip-arrow": FlipArrow,
   "quad-family-tree": QuadFamilyTree,
@@ -30712,9 +30932,18 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "mult3-array": Mult3Array,
   "mult3-flip": Mult3Flip,
   "mult3-fair-shares": Mult3FairShares,
+  "mult3-fair-shares-15-over-5": Mult3FairShares15Over5,
   "mult3-how-many-groups": Mult3HowManyGroups,
   "mult3-missing-factor": Mult3MissingFactor,
+  "mult3-missing-factor-6x7": Mult3MissingFactor6x7,
+  "mult3-missing-factor-6x5": Mult3MissingFactor6x5,
+  "mult3-missing-factor-8x9": Mult3MissingFactor8x9,
+  "mult3-missing-factor-7x8": Mult3MissingFactor7x8,
+  "mult3-missing-factor-7x7": Mult3MissingFactor7x7,
+  "mult3-missing-factor-6x9": Mult3MissingFactor6x9,
+  "mult3-missing-factor-8x7": Mult3MissingFactor8x7,
   "mult3-fact-family": Mult3FactFamily,
+  "mult3-fact-family-5x7": Mult3FactFamily5x7,
   "mult3-special": Mult3Special,
   "mult3-divide-by-nine": Mult3DivideByNine,
   "mult3-divide-by-ten": Mult3DivideByTen,
@@ -30732,6 +30961,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "mult3-break-apart": Mult3BreakApart,
   "mult3-which-op": Mult3WhichOp,
   "mult3-estimate": Mult3Estimate,
+  "mult3-estimate-6x9": Mult3Estimate6x9,
   "mult3-add-table": Mult3AddTable,
   "mult3-mult-table": Mult3MultTable,
   "mult3-even-odd": Mult3EvenOdd,
@@ -30809,6 +31039,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "g2l-choice-gap-53-33": G2Gap53Minus33Candidates,
   "g2l-choice-gap-43-33": G2Gap43Minus33Candidates,
   "number-line-jumps": NumberLineJumps,
+  "number-line-jumps-7x5": NumberLineJumps7x5,
   "place-value-ladder": PlaceValueLadder,
   "times-as-many": TimesAsMany,
   "decimal-tenths": DecimalTenths,
