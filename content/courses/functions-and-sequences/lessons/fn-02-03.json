@@ -139,23 +139,28 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Ninth term.",
+      "body": "Same formula, either direction.",
       "widget": {
-        "type": "numeric",
-        "prompt": "For the sequence 1, 4, 7, 10, ..., what is the 9th term?",
-        "answer": 25,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "For the sequence 1, 4, 7, 10, …, can a_n = a_1 + (n − 1)d find BOTH the 9th term AND which term equals 25?",
+        "options": [
           {
-            "value": 28,
-            "feedback": "Take (9 − 1) = 8 steps, not 9: 1 + 8·3 = 25."
+            "id": "a",
+            "label": "Yes — solve for a_n to get 25, or solve for n to get 9",
+            "correct": true,
+            "feedback": "Right — 1 + 8·3 = 25 gives the term; setting 1 + (n − 1)·3 = 25 and solving gives n = 9. Same formula, either direction."
           },
           {
-            "value": 27,
-            "feedback": "a_1 = 1, d = 3, so a_9 = 1 + 24 = 25."
+            "id": "b",
+            "label": "No — it only gives a term's value, not a position",
+            "feedback": "The formula also solves for position: set a_n to the target value and solve for n. Both directions work."
+          },
+          {
+            "id": "c",
+            "label": "No — it only gives a position, not a term's value",
+            "feedback": "The formula also gives a term's value directly: plug in n. Both directions work."
           }
-        ],
-        "fallbackFeedback": "a_9 = 1 + 8·3 = 25."
+        ]
       }
     },
     {

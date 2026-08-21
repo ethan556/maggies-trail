@@ -163,63 +163,65 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Seventh term.",
+      "body": "Which sequence pulls ahead?",
       "conceptTag": "fn-nth-term",
       "explanationVariants": [
-        "a_7 = 5 + (7 − 1)·4 = 5 + 24 = 29.",
-        "Six steps of 4 from 5: 5 + 24 = 29."
+        "A: 5 + 6·4 = 29; B: 8 + 6·3 = 26 — A is larger.",
+        "Evaluate both 7th terms and compare: 29 beats 26."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "For a_1 = 5, d = 4, what is the 7th term?",
-        "answer": 29,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Sequence A has a_1 = 5, d = 4. Sequence B has a_1 = 8, d = 3. Which has the larger 7th term?",
+        "options": [
           {
-            "value": 33,
-            "feedback": "Take (7 − 1) = 6 steps, not 7: 5 + 6·4 = 29, not 5 + 7·4."
+            "id": "a",
+            "label": "Sequence A",
+            "correct": true,
+            "feedback": "Yes — A's 7th term is 5 + 6·4 = 29, B's is 8 + 6·3 = 26. 29 > 26."
           },
           {
-            "value": 28,
-            "feedback": "5 + (7 − 1)·4 = 5 + 24 = 29."
+            "id": "b",
+            "label": "Sequence B",
+            "feedback": "Check both: A gives 5 + 6·4 = 29; B gives 8 + 6·3 = 26. A is larger, not B."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "They're close but not equal: A's 7th term is 29, B's is 26 — a difference of 3."
           }
-        ],
-        "fallbackFeedback": "a_7 = 5 + 6·4 = 29."
-      },
-      "variant": {
-        "gen": "fn-arith-seq",
-        "form": "nthPos"
+        ]
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A negative step.",
+      "body": "Catch the mistake.",
       "conceptTag": "fn-nth-term",
       "explanationVariants": [
-        "a_6 = 50 + (6 − 1)·(−5) = 50 − 25 = 25.",
-        "Five steps of −5 from 50: 50 − 25 = 25."
+        "Only 5 steps separate a_1 from a_6: 50 + 5·(−5) = 25, not 20.",
+        "(6 − 1) = 5 steps of −5 from 50 gives 25 — the student used 6 steps instead."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "For a_1 = 50, d = -5, what is the 6th term?",
-        "answer": 25,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "For a_1 = 50, d = -5, a student says the 6th term is 50 − 6·5 = 20. Is the student correct?",
+        "options": [
           {
-            "value": 20,
-            "feedback": "Take (6 − 1) = 5 steps, not 6: 50 − 5·5 = 25, not 50 − 6·5."
+            "id": "a",
+            "label": "No — the correct 6th term is 25 (only 5 steps separate a_1 from a_6: 50 + 5·(−5) = 25)",
+            "correct": true,
+            "feedback": "Right — (6 − 1) = 5 steps, not 6, and adding a negative d steps down: 50 + 5·(−5) = 25."
           },
           {
-            "value": 30,
-            "feedback": "50 + (6 − 1)·(−5) = 50 − 25 = 25."
+            "id": "b",
+            "label": "Yes, 20 is correct",
+            "feedback": "Not quite — that uses 6 steps instead of (6 − 1) = 5. Five steps of −5 from 50 gives 50 + 5·(−5) = 25."
+          },
+          {
+            "id": "c",
+            "label": "No — the correct 6th term is 75",
+            "feedback": "That flips a sign somewhere (subtracting −5 instead of adding it). Five steps of −5 from 50: 50 + 5·(−5) = 25, not 75."
           }
-        ],
-        "fallbackFeedback": "a_6 = 50 − 25 = 25."
-      },
-      "variant": {
-        "gen": "fn-arith-seq",
-        "form": "nthNeg"
+        ]
       }
     },
     {

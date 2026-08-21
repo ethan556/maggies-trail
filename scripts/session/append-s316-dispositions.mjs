@@ -190,6 +190,38 @@ const ORDER = [
   "laneA-s329-Q2.jsonl",
   "laneA-s329-CL3.jsonl",
   "laneA-s329-recon-mainloop.jsonl",
+  // S330 wave (2026-08-21): user directive "complete all queued work" -- the remaining 109
+  // LESSON_PROGRESSION_AND_DUPLICATION rows (the only in-authority workstream; CLOSURE_LEDGER/
+  // V4_PROGRAMME_PHASE/STANDARDS_VERIFICATION/QUESTION_DIVERSITY_AND_TRANSFER's 32 rows are
+  // out-of-authority per the HANDOVER S316 framing, re-confirmed not re-litigated). 10 course-
+  // grouped redesign packets (G1-G10, 109 lessons reviewed, 39 redesigned / 70 KEEP-with-
+  // rationale); G11 (7 singles-tail lessons) reviewed and kept all 7 with zero edits, so wrote
+  // no disposition file. Mid-wave the shared working tree was hit by a self-inflicted `git
+  // stash` (from G1's recovery attempt) that transiently reset all agents' uncommitted edits to
+  // HEAD; every affected packet (G1, G3, G4, G5, G6, G10) noticed and reapplied its own work.
+  // Orchestrator-side reconciliation after the wave returned: confirmed the stash (still present
+  // as stash@{0}) diffed byte-identical against the final working tree for 25/26 of its files,
+  // and the 26th (pr-04-01.json) differed only because G3 kept iterating on it after the stash
+  // snapshot -- no data loss, stash dropped. Independently re-ran the live S236 detector before
+  // and after this append: all 39 edited lessons' redesigned steps dropped out of that lesson's
+  // flagged-evidence list, zero new/unexplained collisions appeared anywhere, and every
+  // deliberately-kept sibling collision remained flagged exactly as each packet's rationale
+  // documented (19 of the 39 edited lessons still carry a separate, intentionally-kept
+  // collision and so remain open rows -- expected, not a gap). See S330_PROGRESSION_G1..G11.md.
+  "laneA-s330-G1.jsonl",
+  "laneA-s330-G2.jsonl",
+  "laneA-s330-G3.jsonl",
+  "laneA-s330-G4.jsonl",
+  "laneA-s330-G5.jsonl",
+  "laneA-s330-G6.jsonl",
+  "laneA-s330-G7.jsonl",
+  "laneA-s330-G8.jsonl",
+  "laneA-s330-G9.jsonl",
+  "laneA-s330-G10.jsonl",
+  // Orchestrator reconciliation fix: g2p-02-01's k2 incorrect-feedback text tripped the generic-
+  // feedback lint heuristic after G7's redesign landed; reworded (see rationale), re-disposed
+  // against the fresh post-edit hash.
+  "laneA-s330-recon.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

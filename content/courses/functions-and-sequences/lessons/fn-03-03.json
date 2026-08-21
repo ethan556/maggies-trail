@@ -158,32 +158,33 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A sixth power of two.",
+      "body": "Compare two growth rates.",
       "conceptTag": "fn-geo-rule",
       "explanationVariants": [
-        "a_1 = 2, r = 2, so a_6 = 2 · 2⁵ = 64.",
-        "Five factors of 2 from 2: 64."
+        "A: 2·2⁵ = 64; B: 2·3⁵ = 486 — B is larger.",
+        "The bigger ratio compounds faster: B's 486 beats A's 64 by the 6th term."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "For the sequence 2, 4, 8, 16, ..., what is the 6th term?",
-        "answer": 64,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Sequence A: 2, 4, 8, 16, … (r = 2). Sequence B: 2, 6, 18, 54, … (r = 3). Which has the larger 6th term?",
+        "options": [
           {
-            "value": 128,
-            "feedback": "Use r^(6 − 1) = 2⁵, not 2⁶: 2 · 32 = 64, not 2 · 64."
+            "id": "a",
+            "label": "Sequence B",
+            "correct": true,
+            "feedback": "Yes — A's 6th term is 2 · 2⁵ = 64; B's is 2 · 3⁵ = 486. The bigger ratio pulls ahead fast."
           },
           {
-            "value": 32,
-            "feedback": "32 is the 5th term. The 6th is 2 · 2⁵ = 64."
+            "id": "b",
+            "label": "Sequence A",
+            "feedback": "Check both: A gives 2 · 2⁵ = 64; B gives 2 · 3⁵ = 486. B is larger — its bigger ratio compounds faster."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "Not equal: A's 6th term is 64, B's is 486 — B has grown much further by term 6."
           }
-        ],
-        "fallbackFeedback": "a_6 = 2 · 2⁵ = 64."
-      },
-      "variant": {
-        "gen": "a1-functions-sequences",
-        "form": "fn-geo-rule__numeric"
+        ]
       }
     },
     {

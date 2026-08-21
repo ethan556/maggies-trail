@@ -78,13 +78,17 @@ describe("exp-function: every form upgrades and self-derives across many draws (
 });
 
 describe("exp-function: all 16 frozen steps self-derive their frozen answers (S180)", () => {
-  // [lesson, step, expected] — expected computed by hand: 5·3·3=45; 3·2·2·2·2=48; f(0)=5;
-  // 2·3·3·3=54; 10÷5=2; 4÷1=4; 24·(6÷3)=48; 20÷(100÷20)=4 (S329: term-before reversal, was
+  // [lesson, step, expected] — expected computed by hand: 5·3·3=45; f(0)=5;
+  // 2·3·3·3=54; 10÷5=2; 24·(6÷3)=48; 20÷(100÷20)=4 (S329: term-before reversal, was
   // 135·(15÷5)=405); 500·2·2·2=4000; 150·2·2·2·2=2400;
   // A(0)=500; 20·3·3·3=540; 640÷2÷2÷2=80; 24000÷2÷2÷2=3000; A(0)=640; 256÷4÷4=16.
+  // (S330-G1: exp-01-01/k2 ["3·2·2·2·2=48"] and exp-01-03/k2 ["4÷1=4"] were each redesigned off
+  // this engine into a hand-authored mcq — catch-the-mistake, and compare-two-sequences — closing
+  // a coverage gap this lesson otherwise left unchecked. Neither new prompt matches the
+  // exp-function generator's fixed template, so both `exp-function` tags are dropped here too.)
   const FROZEN: Array<[string, string, number]> = [
-    ["exp-01-01", "k1", 45], ["exp-01-01", "k2", 48], ["exp-01-01", "k3", 5], ["exp-01-01", "ch1", 54],
-    ["exp-01-03", "k1", 2], ["exp-01-03", "k2", 4], ["exp-01-03", "k3", 48], ["exp-01-03", "ch1", 4],
+    ["exp-01-01", "k1", 45], ["exp-01-01", "k3", 5], ["exp-01-01", "ch1", 54],
+    ["exp-01-03", "k1", 2], ["exp-01-03", "k3", 48], ["exp-01-03", "ch1", 4],
     ["exp-02-01", "k1", 4000], ["exp-02-01", "k2", 2400], ["exp-02-01", "k3", 500], ["exp-02-01", "ch1", 540],
     ["exp-02-02", "k1", 80], ["exp-02-02", "k2", 3000], ["exp-02-02", "k3", 640], ["exp-02-02", "ch1", 16],
   ];
@@ -108,7 +112,9 @@ describe("exp-function: all 16 frozen steps self-derive their frozen answers (S1
         }
       }
     }
-    expect(total).toBe(14); // S329: exp-01-01/ch1, exp-01-03/ch1 redesigned and de-tagged (16 → 14)
+    // S329: exp-01-01/ch1, exp-01-03/ch1 redesigned and de-tagged (16 → 14).
+    // S330-G1: exp-01-01/k2, exp-01-03/k2 redesigned and de-tagged (14 → 12).
+    expect(total).toBe(12);
   });
 });
 

@@ -286,48 +286,68 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Watch the hands carefully.",
+      "body": "Read the hands — don't let a near-12 hour trick you.",
       "conceptTag": "smg1-time-hour",
       "explanationVariants": [
-        "Hour hand at 11, minute hand at 12, means 11:00.",
-        "Minute hand straight up means exactly on the hour: 11:00."
+        "The short hand at 11 gives the hour; the long hand at 12 means exactly on the hour: 11:00.",
+        "Close to 12 is not the same as AT 12 — the short hand is still pointing at 11."
       ],
       "widget": {
-        "type": "clockSet",
-        "prompt": "Set the clock to show 11:00.",
-        "targetHour": 11,
-        "targetMinute": 0,
-        "minuteStep": 30,
-        "successFeedback": "Yes — hour hand at 11, minute hand at 12, means 11:00.",
-        "hourFeedback": "The hour comes from the SHORT hand — it's at 11, so it's 11:00, not 12:11.",
-        "minuteFeedback": "11:30 needs the minute hand at 6, not 12. This is 11:00."
+        "type": "mcq",
+        "prompt": "The hour hand points to 11 and the minute hand points to 12. What time is it?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "11:00",
+            "correct": true,
+            "feedback": "Right — the SHORT hand gives the hour. It's at 11, and the long hand at 12 means exactly on the hour."
+          },
+          {
+            "id": "o2",
+            "label": "12:00",
+            "correct": false,
+            "feedback": "The hour hand is close to 12 but hasn't reached it — it's still pointing at 11, so the time is 11:00."
+          },
+          {
+            "id": "o3",
+            "label": "12:11",
+            "correct": false,
+            "feedback": "That mixes up the hands — the short hand (11) gives the hour, and the long hand at 12 means \":00\", not \":11\"."
+          },
+          {
+            "id": "o4",
+            "label": "10:00",
+            "correct": false,
+            "feedback": "That is one hour too early — the short hand points to 11, not 10, so the time is 11:00."
+          }
+        ]
       },
       "hints": [
-        "The hour hand (short one) is at 11.",
-        "The minute hand (long one) is at 12, meaning \":00\".",
-        "So the time is 11:00."
+        "The hour hand (short one) is close to 12 — but check exactly where it points.",
+        "It points to 11, not 12, so the hour is 11.",
+        "The minute hand (long one) is at 12, meaning \":00\". So the time is 11:00."
       ],
       "cml": {
-        "stage": "construct",
+        "stage": "retrieve",
         "flagship": false,
         "kernel": "spatial-invariance",
-        "actionGoal": "Manipulate the model and track how it represents time hour.",
+        "actionGoal": "Read a described hand position and identify the correct time without being misled by an hour hand sitting close to the next number, for smg1 time hour.",
         "invariants": [
-          "The manipulated model and the mathematical relationship for time hour must stay consistent."
+          "The digital time named must stay consistent with the described hour-hand and minute-hand positions, however close the hour hand sits to the next number."
         ],
         "misconceptions": [
-          "Changing a visible feature without preserving the relationship that defines time hour."
+          "Rounding an hour hand that sits near a boundary number up to that number, or swapping which hand supplies the hour versus the \":00\" reading."
         ],
         "representations": [
-          "concrete",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "concrete",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "shapes-measure-g1:smg1-time-hour",
         "delayed": true,
-        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
+        "counterfactualPrompt": "What would the hands have to look like for this to be 12:00 instead of 11:00?"
       }
     },
     {

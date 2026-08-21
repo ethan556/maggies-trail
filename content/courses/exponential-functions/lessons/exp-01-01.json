@@ -184,88 +184,33 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "One more step out.",
+      "body": "Catch the mistake.",
       "conceptTag": "exp-evaluate",
       "explanationVariants": [
-        "2⁴ = 16, then 3 · 16 = 48.",
-        "f(4) = 3 · 2⁴ = 3 · 16 = 48."
+        "Each step MULTIPLIES by 2, it doesn't add 2: f(4) = 3 · 2⁴ = 3 · 16 = 48.",
+        "3, 6, 12, 24, 48 — multiplying by 2 four times, not adding 2 four times."
       ],
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "For f(x) = 3 · 2^x, what is f(4)?",
-        "task": "approximationEvaluate",
-        "values": [],
-        "approxConstants": [
+        "type": "mcq",
+        "prompt": "Starting from f(0) = 3 for f(x) = 3 · 2^x, a student finds f(1) through f(4) by ADDING 2 each time: 3, 5, 7, 9, 11. What is the actual value of f(4)?",
+        "options": [
           {
             "id": "a",
-            "label": "the start amount a",
-            "value": 3
+            "label": "48",
+            "correct": true,
+            "feedback": "Right — each step MULTIPLIES by 2: 3, 6, 12, 24, 48. f(4) = 3 · 2⁴ = 3 · 16 = 48."
           },
           {
             "id": "b",
-            "label": "the base b (one factor per step)",
-            "value": 2
-          }
-        ],
-        "approxFormula": {
-          "op": "multiply",
-          "left": {
-            "op": "multiply",
-            "left": {
-              "op": "multiply",
-              "left": {
-                "op": "multiply",
-                "left": {
-                  "op": "const",
-                  "id": "a"
-                },
-                "right": {
-                  "op": "const",
-                  "id": "b"
-                }
-              },
-              "right": {
-                "op": "const",
-                "id": "b"
-              }
-            },
-            "right": {
-              "op": "const",
-              "id": "b"
-            }
-          },
-          "right": {
-            "op": "const",
-            "id": "b"
-          }
-        },
-        "approxRound": 0,
-        "answerMode": "numeric",
-        "tolerance": 0,
-        "numericErrors": [
-          {
-            "value": 24,
-            "feedback": "That's f(3) = 3 · 8. Go one more step: 3 · 2⁴ = 3 · 16 = 48."
+            "label": "11",
+            "feedback": "11 is what adding 2 four times gives — but exponential steps multiply, not add. f(4) = 3 · 2⁴ = 48."
           },
           {
-            "value": 96,
-            "feedback": "2⁴ = 16, not 32: f(4) = 3 · 16 = 48."
+            "id": "c",
+            "label": "24",
+            "feedback": "24 comes from 3 · 2 · 4, multiplying the exponent in instead of raising 2 to the 4th power. 2⁴ = 16, so f(4) = 3 · 16 = 48."
           }
-        ],
-        "choices": [],
-        "authoredStages": [],
-        "requiredStageKeys": [
-          "approx:a",
-          "approx:b",
-          "approx:compute"
-        ],
-        "requiredExplorations": 3,
-        "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "f(4) = 3 · 2⁴ = 3 · 16 = 48.",
-        "successFeedback": "f(4) = 3 · 2⁴ = 3 · 16 = 48."
-      },
-      "variant": {
-        "gen": "exp-function"
+        ]
       }
     },
     {

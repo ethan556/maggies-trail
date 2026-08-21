@@ -120,9 +120,37 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
       // already-reviewed, unchanged widget surface (g1m-03-02/g2l-03-04/k100-02-05/
       // mmt-02-01/mmt-05-02 -- see reports/closure/cowork-staging/laneA-s329-recon-mainloop.jsonl).
       // Decisions 3590 -> 3595. Queue total, dup/visual/choice counts all unchanged.
-      "pending-workload": 141,
+      // S330 (user directive "complete all queued work"): 10-agent wave (G1-G10) over the
+      // full remaining 109 LESSON_PROGRESSION_AND_DUPLICATION rows -- the only in-authority
+      // workstream this round; the other 32 rows (CLOSURE_LEDGER 22, V4_PROGRAMME_PHASE 7,
+      // STANDARDS_VERIFICATION 2, QUESTION_DIVERSITY_AND_TRANSFER 1) are out-of-authority
+      // per the HANDOVER S316 framing and were correctly left untouched. 39 of 109 lessons
+      // redesigned (one or more flagged steps rewritten to a distinct, hand-authored angle);
+      // 70 reviewed and kept unedited with documented fluency/spacing rationale (G11's 7
+      // singles-tail lessons among them, all 7 confirmed false positives, so it wrote no
+      // disposition file). Orchestrator-side reconciliation independently re-ran the live
+      // S236 detector before and after: all 39 edits mechanically clear exactly the step(s)
+      // each packet's rationale claims, zero new/unexplained collisions anywhere, and 19 of
+      // the 39 edited lessons still carry one *other*, deliberately-kept sibling collision
+      // and so correctly remain open rows (not a gap -- the detector is disposition-blind by
+      // design). Queue 141 -> 121 (LESSON_PROGRESSION_AND_DUPLICATION 109 -> 89; the 32
+      // out-of-authority rows unchanged). A mid-wave self-inflicted `git stash` transiently
+      // reset the shared working tree to pre-edit HEAD; every affected packet noticed and
+      // reapplied its work, independently confirmed byte-identical (bar one file that kept
+      // iterating after the stash snapshot, strictly superseding it) before the stash was
+      // dropped. Decisions 3595 -> 3634 (39 new S330 records). Duplicates and visual
+      // placements unchanged; topLevelLessonSteps unchanged (redesigns rewrote existing
+      // steps in place, no new steps added). One follow-up record, 3634 -> 3635: g2p-02-01's
+      // k2 incorrect-feedback text tripped the generic-feedback lint heuristic (led with a
+      // bare "No" before its real diagnosis); reworded and re-disposed against the fresh
+      // hash -- prose only, doesn't touch widget.prompt, so the queue total is unaffected.
+      // Second follow-up, 3635 -> 3636: pr-04-03's KEPT (not redesigned) step k3 had a body-text
+      // aside G3 flagged but correctly left unactioned ("A bigger percent increase" on a smaller
+      // rate, 50->60/+20%, than sibling k1's 80->100/+25%); reworded to "Another percent
+      // increase." (matching k1's own neutral body text), re-disposed against the fresh hash.
+      "pending-workload": 121,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 3595,
+      "lesson-review-decisions": 3636,
       "exact-mcq-duplicates": 100,
       "visual-placement-index": 3573,
       "choice-surface-index": 0,

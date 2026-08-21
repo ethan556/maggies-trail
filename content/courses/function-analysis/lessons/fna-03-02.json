@@ -73,31 +73,33 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Deep in the second branch.",
+      "body": "Compare across the branches.",
       "conceptTag": "fna-piecewise",
       "explanationVariants": [
-        "3 ≥ 2 → second rule: p(3) = 3² = 9.",
-        "Only one rule owns x = 3, and it's the squaring one: 9."
+        "p(1) = 1 + 5 = 6 (first branch, 1 < 2). p(2) = 2² = 4 (second branch, 2 ≥ 2). Even though 2 is the bigger input, p(2) is the SMALLER output — the branch switch causes a drop.",
+        "A bigger input doesn't guarantee a bigger output once the rule changes: p(1) = 6 but p(2) = 4."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "What is p(3)?",
-        "answer": 9,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Is p(2) bigger than, smaller than, or equal to p(1)?",
+        "options": [
           {
-            "value": 8,
-            "feedback": "3 + 5 = 8 is the first branch, but 3 is NOT less than 2 — the condition fails. Use x²: 9."
+            "id": "o1",
+            "label": "bigger than p(1)",
+            "feedback": "p(2) = 2² = 4 and p(1) = 1 + 5 = 6. Even though 2 is the larger input, its output is the smaller one — the branch switch causes a drop."
           },
           {
-            "value": 6,
-            "feedback": "You may have doubled instead of squared: 3² = 3·3 = 9."
+            "id": "o2",
+            "label": "smaller than p(1)",
+            "correct": true,
+            "feedback": "Right — p(2) = 4 (second branch) is less than p(1) = 6 (first branch). A bigger input doesn't always mean a bigger output once the rule changes."
+          },
+          {
+            "id": "o3",
+            "label": "equal to p(1)",
+            "feedback": "They use different rules: p(1) = 1 + 5 = 6 and p(2) = 2² = 4 — different branches, different values, not equal."
           }
-        ],
-        "fallbackFeedback": "3 ≥ 2 → p(3) = 9."
-      },
-      "variant": {
-        "gen": "piecewise-eval"
+        ]
       }
     },
     {

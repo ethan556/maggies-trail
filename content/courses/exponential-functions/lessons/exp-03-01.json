@@ -86,23 +86,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count the fives.",
+      "body": "Catch the mistake.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 5^x = 25.",
-        "answer": 2,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A student solves 5^x = 125 by writing 5x = 125, so x = 25. What is the actual value of x?",
+        "options": [
           {
-            "value": 5,
-            "feedback": "This isn't 5·x = 25. 25 = 5², so x = 2."
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "Right — 125 = 5³ (5·5·5), so x = 3. 5^x means 5 multiplied by itself x times, not 5 times x."
           },
           {
-            "value": 3,
-            "feedback": "5³ = 125, too big. 25 = 5², so x = 2."
+            "id": "b",
+            "label": "25",
+            "feedback": "That comes from treating 5^x as 5·x. But 5^x is repeated multiplication: 5·5·5 = 125, so x = 3."
+          },
+          {
+            "id": "c",
+            "label": "4",
+            "feedback": "5⁴ = 625, one power too far. 5³ = 125 is the match, so x = 3."
           }
-        ],
-        "fallbackFeedback": "25 = 5², so x = 2."
+        ]
       }
     },
     {
@@ -114,23 +119,28 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Powers of ten.",
+      "body": "Compare, don't just solve.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 10^x = 1000.",
-        "answer": 3,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which has the larger value of x: 2^x = 16, or 2^x = 64?",
+        "options": [
           {
-            "value": 100,
-            "feedback": "100 = 10², not the answer. 1000 = 10³, so x = 3."
+            "id": "a",
+            "label": "2^x = 64",
+            "correct": true,
+            "feedback": "Yes — 2⁶ = 64 needs six multiplications (x = 6), more than 2⁴ = 16 needs (x = 4). The bigger target takes the bigger exponent."
           },
           {
-            "value": 2,
-            "feedback": "10² = 100. To reach 1000 you need 10³, so x = 3."
+            "id": "b",
+            "label": "2^x = 16",
+            "feedback": "16 is the SMALLER target, so it needs fewer multiplications: 2⁴ = 16 (x = 4). 2^x = 64 needs x = 6, which is larger."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "Same base, different targets give different exponents: 2⁴ = 16 but 2⁶ = 64. x = 6 is larger than x = 4."
           }
-        ],
-        "fallbackFeedback": "1000 = 10³, so x = 3."
+        ]
       }
     },
     {

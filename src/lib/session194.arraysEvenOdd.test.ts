@@ -45,12 +45,19 @@ describe("S194 arrays-even-odd-g2 — course shape and generator reuse", () => {
         expect(registered.has(s.variant.form), `${lesson.id}/${s.id}: ${s.variant.form} NOT registered`).toBe(true);
       }
     }
-    // Re-pinned 32 -> exactly 25: signed S318 PROG (g2a-02-03, verified
+    // Re-pinned 32 -> 25 -> exactly 24: signed S318 PROG (g2a-02-03, verified
     // S318-V2-g2a-02-03) and s323-P6 (g2a-01-02/g2a-02-02/g2a-03-03) replaced
     // duplicate/regressive items with scenario- and repeated-sum-specific rewrites
     // that no registered generator form regenerates, withdrawing 7 declarations
-    // (see POOL_WITHDRAWN below for the numeric ones). Exact pin ratchets both ways.
-    expect(declared).toBe(25);
+    // (see POOL_WITHDRAWN below for the numeric ones). S330-G7 then redesigned
+    // g2a-01-03/ch1 from a numeric "9 + 9 = ?" clone of k1/k3 into a hand-authored
+    // misconception-comparison mcq (identify which of two even sums is a true
+    // double) — a different question job with no matching registered form, so its
+    // DoublesNumeric variant was deleted rather than left mismatched; it needs no
+    // POOL_WITHDRAWN entry because that set only gates the numeric-widget branch
+    // and ch1 is no longer numeric. Withdrawing 1 more declaration. Exact pin
+    // ratchets both ways.
+    expect(declared).toBe(24);
   });
 });
 

@@ -159,63 +159,69 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another tax problem.",
+      "body": "Compare two totals.",
       "conceptTag": "pr-add-percent",
       "explanationVariants": [
-        "5% of $80 is $4, so the total is $84.",
-        "Add the tax amount to the price: 84."
+        "$80 × 1.05 = $84.00, but $76 × 1.10 = $83.60 — the lower rate still costs more here.",
+        "Work out both totals before comparing: $84.00 vs $83.60."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A jacket costs $80. With 5% tax, what is the total?",
-        "answer": 84,
-        "tolerance": 0.01,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which costs more after tax: an $80 jacket with 5% tax, or a $76 jacket with 10% tax?",
+        "options": [
           {
-            "value": 80.05,
-            "feedback": "5% means 5/100 of $80 = $4, not $0.05. The total is 80 + 4 = 84."
+            "id": "a",
+            "label": "The $80 jacket at 5% tax",
+            "correct": true,
+            "feedback": "Yes — $80 × 1.05 = $84.00, while $76 × 1.10 = $83.60. The lower tax rate doesn't mean the lower total here."
           },
           {
-            "value": 4,
-            "feedback": "$4 is just the tax amount. Add it to the price: 80 + 4 = 84."
+            "id": "b",
+            "label": "The $76 jacket at 10% tax",
+            "correct": false,
+            "feedback": "Check both totals: $76 × 1.10 = $83.60, but $80 × 1.05 = $84.00 — the higher tax rate isn't enough to catch up to the higher price."
+          },
+          {
+            "id": "c",
+            "label": "They cost the same after tax",
+            "correct": false,
+            "feedback": "Close, but not equal: $84.00 vs $83.60 — a $0.40 difference in favor of the $76 jacket."
           }
-        ],
-        "fallbackFeedback": "5% of $80 is $4, so the total is $80 + $4 = $84."
-      },
-      "variant": {
-        "gen": "pr-add-percent-g7",
-        "form": "percentTax"
+        ]
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A tip problem.",
+      "body": "Catch the tipping mistake.",
       "conceptTag": "pr-add-percent",
       "explanationVariants": [
-        "25% of $10 is $2.50, so the total is $12.50.",
-        "Add the tip to the price: 12.50."
+        "25% of $10 is $2.50 (not $0.25), so the correct total is $10 + $2.50 = $12.50.",
+        "Deja added 0.25 instead of finding 25% of the bill first."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A meal costs $10. With 25% tip, what is the total?",
-        "answer": 12.5,
-        "tolerance": 0.01,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A meal costs $10. Deja computes a 25% tip by adding 10 + 0.25 to get $10.25. What is the CORRECT total with tip?",
+        "options": [
           {
-            "value": 10.25,
-            "feedback": "25% means 25/100 of $10 = $2.50, not $0.25. The total is 10 + 2.50 = 12.50."
+            "id": "a",
+            "label": "$10.25 — that matches Deja's answer",
+            "correct": false,
+            "feedback": "That repeats Deja's mistake: treating 25% as $0.25. 25% of $10 is $2.50, so the correct total is $10 + $2.50 = $12.50."
           },
           {
-            "value": 2.5,
-            "feedback": "$2.50 is just the tip amount. Add it to the price: 10 + 2.50 = 12.50."
+            "id": "b",
+            "label": "$12.50",
+            "correct": true,
+            "feedback": "Right — 25% of $10 is $2.50 (10 × 0.25), so the total is $10 + $2.50 = $12.50. Deja's mistake was treating 25% as $0.25 instead of finding 25% of the bill."
+          },
+          {
+            "id": "c",
+            "label": "$2.50",
+            "correct": false,
+            "feedback": "$2.50 is the tip itself, correctly computed — but the total still needs the tip ADDED to the price: $10 + $2.50 = $12.50."
           }
-        ],
-        "fallbackFeedback": "25% of $10 is $2.50, so the total is $10 + $2.50 = $12.50."
-      },
-      "variant": {
-        "gen": "pr-add-percent-g7",
-        "form": "percentTip"
+        ]
       }
     },
     {

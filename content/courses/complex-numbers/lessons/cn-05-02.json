@@ -280,86 +280,47 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Negative center.",
+   "body": "Same center, different spread — what actually moves?",
    "conceptTag": "cn-build-quad",
    "explanationVariants": [
-    "Sum = −2, so −(sum)x = +2x; product = 1 + 4 = 5: x² + 2x + 5.",
-    "Roots −1 ± 2i: watch the double negative in the middle term."
+    "Both pairs share real part −1, so the sum is −2 for each — the x-coefficient (+2x) can't change. Only the product a² + b² sees the imaginary part: 1 + 4 = 5 for A, 1 + 16 = 17 for B.",
+    "The middle term is set entirely by the real part; the constant term is the only place the imaginary magnitude shows up."
    ],
    "widget": {
-    "type": "buildExpression",
-    "prompt": "Which quadratic has roots −1 ± 2i?",
-    "tokens": [
+    "type": "mcq",
+    "prompt": "Quadratic A has roots −1 ± 2i. Quadratic B has roots −1 ± 4i. Which part of x² − (sum)x + (product) is DIFFERENT between A and B?",
+    "options": [
      {
-      "id": "t0",
-      "label": "x²"
+      "id": "o1",
+      "label": "the x-coefficient only",
+      "correct": false,
+      "feedback": "Both pairs share the same real part, −1, so the sum (−2) — and the x-coefficient it sets — is identical for A and B. Look at the constant instead."
      },
      {
-      "id": "t1",
-      "label": "+ 2x"
+      "id": "o2",
+      "label": "the constant term only",
+      "correct": true,
+      "feedback": "Right — the sum only depends on the real part (−1 for both, giving +2x either way), but the product a² + b² grows with the imaginary part: 1 + 4 = 5 for A, 1 + 16 = 17 for B."
      },
      {
-      "id": "t2",
-      "label": "− 2x"
+      "id": "o3",
+      "label": "both the x-coefficient and the constant term",
+      "correct": false,
+      "feedback": "The x-coefficient stays put — it's set only by the real part, and both pairs share real part −1. Only the constant term moves."
      },
      {
-      "id": "t3",
-      "label": "+ 5"
-     },
-     {
-      "id": "t4",
-      "label": "+ 3"
-     },
-     {
-      "id": "t5",
-      "label": "− 5"
+      "id": "o4",
+      "label": "neither — A and B are the same quadratic",
+      "correct": false,
+      "feedback": "They share an x-coefficient (+2x) but not a constant: A's product is 1 + 4 = 5, B's is 1 + 16 = 17. Different quadratics."
      }
-    ],
-    "correct": [
-     "t0",
-     "t1",
-     "t3"
-    ],
-    "acceptAlso": [],
-    "commonBuilds": [
-     {
-      "sequence": [
-       "t0",
-       "t2",
-       "t3"
-      ],
-      "feedback": "The sum is NEGATIVE two, and minus a negative gives +2x."
-     },
-     {
-      "sequence": [
-       "t0",
-       "t1",
-       "t4"
-      ],
-      "feedback": "4 − 1 subtracts — the product is 1 + 4 = 5."
-     },
-     {
-      "sequence": [
-       "t0",
-       "t1",
-       "t5"
-      ],
-      "feedback": "A conjugate-pair product is positive: +5."
-     }
-    ],
-    "reusable": false,
-    "missFeedback": "Roots −1 ± 2i sum to −2 (→ +2x) and multiply to 1 + 4 = 5.",
-    "successFeedback": "Right — sum −2 makes the middle term −(−2)x = +2x; product 1 + 4 = 5."
+    ]
    },
    "hints": [
-    "Sum first: (−1 + 2i) + (−1 − 2i) = −2.",
-    "The middle term is −(sum)x = −(−2)x = +2x.",
-    "Product: (−1)² + 2² = 5."
-   ],
-   "variant": {
-    "gen": "a2-complex",
-    "form": "cn-build-quad__buildExpression"
-   }
+    "Find the sum for each pair first: (−1+2i)+(−1−2i) and (−1+4i)+(−1−4i).",
+    "Both sums are −2 — so the x-coefficient −(−2)x = +2x is locked in for both.",
+    "Now the products: 1² + 2² = 5 for A, but 1² + 4² = 17 for B. That's the one that moves."
+   ]
   },
   {
    "id": "r1",

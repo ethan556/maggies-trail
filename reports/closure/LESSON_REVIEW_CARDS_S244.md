@@ -2,9 +2,9 @@
 
 Deterministic assessor view generated from the live lesson source. No semantic judgment is auto-approved.
 
-- Review-basis seal (lessons plus course/grade metadata): `3881c26ffd607cb24b3209e2050f262971600186fb1910ee1a57116ef6478263`
-- Queue-compatible lesson-only seal: `b3fc9f5a0da651dc2ebd1841b45748a5b53a769a1e28e2d95ed648ae6bff063a`
-- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `b3fc9f5a0da651dc2ebd1841b45748a5b53a769a1e28e2d95ed648ae6bff063a`)
+- Review-basis seal (lessons plus course/grade metadata): `491e5302d8453bd365941b6ecf9f1fe0beae37164a7865c2926cee56c6bc4df8`
+- Queue-compatible lesson-only seal: `587575f83041128edda2097f53b79248bdcf836d98f8dc564d7f20f9f3722c1d`
+- Queue freshness: **SOURCE_SEAL_MATCH** (declared seal: `587575f83041128edda2097f53b79248bdcf836d98f8dc564d7f20f9f3722c1d`)
 - Cards: **1,701**
 - Card JSON: `reports/closure/LESSON_REVIEW_CARDS_S244.json`
 - Compact CSV: `reports/closure/LESSON_REVIEW_CARDS_S244.csv`
@@ -21,7 +21,7 @@ These counts overlap and must not be summed as independent lesson defects.
 | Standards edge approval / rejection | 6,119 | 2 edges |
 | Candidate standards evidence-map coverage | 1,134 candidate-mapped | 567 lessons missing |
 | Exact MCQ duplicate identities | 0 semantic dispositions recorded here | 6 clusters / 13 placements |
-| Broader progression / repetition queue | 0 semantic dispositions recorded here | 109 lessons |
+| Broader progression / repetition queue | 0 semantic dispositions recorded here | 89 lessons |
 
 Exact duplicate evidence includes **0** within-lesson groups across **13** affected lessons. It proves repeated item identity, not whether a cross-lesson recurrence is instructionally justified.
 

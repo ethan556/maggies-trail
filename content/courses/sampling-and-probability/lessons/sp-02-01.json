@@ -95,29 +95,28 @@
       "body": "Interpret a small gap.",
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 12. Group B has a mean of 12. The variability measure is 2. How many variability-units apart are the means?",
-        "mode": "measure",
-        "meanA": 12,
-        "meanB": 12,
-        "variability": 2,
-        "answer": 0,
-        "tolerance": 0,
-        "measureChoices": [
+        "prompt": "Two after-school clubs have a gap-in-units of 0.6 between their average attendance. What does this suggest?",
+        "mode": "judge",
+        "gapUnits": 0.6,
+        "judgeOptions": [
           {
-            "value": 0,
-            "feedback": "(12−12)÷2 = 0 — the means are identical, so there's no gap."
+            "id": "a",
+            "label": "The clubs' attendance isn't meaningfully different",
+            "correct": true,
+            "feedback": "Yes — a gap-in-units of 0.6 is less than 1, so there's a lot of overlap and no clear difference."
           },
           {
-            "value": 2,
-            "feedback": "That's the variability measure, not the gap. The means are IDENTICAL: (12−12)÷2=0."
+            "id": "b",
+            "label": "One club clearly has more members",
+            "feedback": "A gap-in-units of 0.6 is under 1 — that's too small to support a clear difference."
           },
           {
-            "value": 6,
-            "feedback": "There's no gap between equal means. (12−12)÷2=0, not 6."
+            "id": "c",
+            "label": "A gap under 1 means the two clubs must have identical attendance every week",
+            "feedback": "A gap under 1 means heavy overlap, not that the two groups are exactly identical."
           }
         ],
-        "fallbackFeedback": "(12−12)÷2 = 0 — the means are identical, so there's no gap.",
-        "successFeedback": "(12−12)÷2 = 0 — the means are identical, so there's no gap."
+        "successFeedback": "Yes — a gap-in-units of 0.6 is less than 1, so there's a lot of overlap and no clear difference."
       }
     },
     {
@@ -129,32 +128,31 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Measure a large gap.",
+      "body": "Judge a large gap.",
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 90. Group B has a mean of 66. The variability measure is 6. How many variability-units apart are the means?",
-        "mode": "measure",
-        "meanA": 90,
-        "meanB": 66,
-        "variability": 6,
-        "answer": 4,
-        "tolerance": 0,
-        "measureChoices": [
+        "prompt": "Two summer camps have a gap-in-units of 5 between their average enrollment. What does this suggest?",
+        "mode": "judge",
+        "gapUnits": 5,
+        "judgeOptions": [
           {
-            "value": 24,
-            "feedback": "That's just the raw gap (90−66). Divide by the variability measure: 24÷6=4."
+            "id": "a",
+            "label": "The camps' enrollment numbers are clearly, meaningfully different",
+            "correct": true,
+            "feedback": "Yes — a gap-in-units of 5 is several times the variability, so the camps barely overlap."
           },
           {
-            "value": 4,
-            "feedback": "(90−66)÷6 = 4 variability-units."
+            "id": "b",
+            "label": "The camps have about the same enrollment",
+            "feedback": "A gap-in-units of 5 is far from 0 — that rules out 'about the same.'"
           },
           {
-            "value": 6,
-            "feedback": "That's the variability measure itself, not the gap in units. (90−66)÷6=4."
+            "id": "c",
+            "label": "A gap this large means one camp's enrollment data must be an error",
+            "feedback": "A large gap-in-units is a normal sign of a real difference, not a sign of an error in the data."
           }
         ],
-        "fallbackFeedback": "(90−66)÷6 = 4 variability-units.",
-        "successFeedback": "(90−66)÷6 = 4 variability-units."
+        "successFeedback": "Yes — a gap-in-units of 5 is several times the variability, so the camps barely overlap."
       }
     },
     {
@@ -203,38 +201,34 @@
       "body": "A gap with the groups reversed.",
       "conceptTag": "sp-gap-units",
       "explanationVariants": [
-        "(45−30)÷5=3, taking the positive gap regardless of order.",
+        "(40−22)÷6=3, taking the positive gap regardless of order.",
         "Use the size of the gap, not which group is listed first."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 30. Group B has a mean of 45. The variability measure is 5. How many variability-units apart are the means?",
+        "prompt": "Two choir recitals' audience counts average 22 and 40 people, with a variability measure of 6 people. How many variability-units apart are the recital averages?",
         "mode": "measure",
-        "meanA": 30,
-        "meanB": 45,
-        "variability": 5,
+        "meanA": 22,
+        "meanB": 40,
+        "variability": 6,
         "answer": 3,
         "tolerance": 0,
         "measureChoices": [
           {
-            "value": 15,
-            "feedback": "That's just the raw gap. Divide by the variability measure: 15÷5=3."
+            "value": 18,
+            "feedback": "That's just the raw gap (40−22). Divide by the variability measure: 18÷6=3."
           },
           {
             "value": 3,
-            "feedback": "(45−30)÷5 = 3 variability-units."
+            "feedback": "(40−22)÷6 = 3 variability-units."
           },
           {
             "value": -3,
             "feedback": "The number of units apart is always positive — use the size of the gap: 3, not -3."
           }
         ],
-        "fallbackFeedback": "(45−30)÷5 = 3 variability-units.",
-        "successFeedback": "(45−30)÷5 = 3 variability-units."
-      },
-      "variant": {
-        "gen": "g7-sp-gap-units",
-        "form": "spGapReverse"
+        "fallbackFeedback": "(40−22)÷6 = 3 variability-units.",
+        "successFeedback": "(40−22)÷6 = 3 variability-units, regardless of which recital's average is listed first."
       }
     },
     {

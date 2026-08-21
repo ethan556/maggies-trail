@@ -86,23 +86,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A power of ten.",
+      "body": "Catch the mistake.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 3 · 10^x = 300.",
-        "answer": 2,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A student solves 4 · 2^x = 32 by ignoring the coefficient and solving 2^x = 32 directly, getting x = 5. What is the actual value of x?",
+        "options": [
           {
-            "value": 100,
-            "feedback": "100 is 10ˣ after dividing — finish: 100 = 10², so x = 2."
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "Right — divide out the 4 first: 32 ÷ 4 = 8, then 2^x = 8 gives x = 3. Skipping the division changes the equation you're solving."
           },
           {
-            "value": 297,
-            "feedback": "Divide by 3, don't subtract it: 300/3 = 100 = 10², so x = 2."
+            "id": "b",
+            "label": "5",
+            "feedback": "That solves 2^x = 32 without dividing out the coefficient first. Divide by 4 first: 2^x = 8, so x = 3."
+          },
+          {
+            "id": "c",
+            "label": "8",
+            "feedback": "8 is 2^x after dividing (32 ÷ 4 = 8) — that's not x itself. Finish the job: 8 = 2³, so x = 3."
           }
-        ],
-        "fallbackFeedback": "300/3 = 100 = 10², so x = 2."
+        ]
       }
     },
     {
@@ -114,23 +119,28 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Your turn.",
+      "body": "Which change moves x?",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 4 · 3^x = 36.",
-        "answer": 2,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "In 3 · 2^x = 24, if the coefficient 3 were changed to 6 (so 6 · 2^x = 24), would x increase, decrease, or stay the same?",
+        "options": [
           {
-            "value": 9,
-            "feedback": "9 is 3ˣ after dividing — finish: 9 = 3², so x = 2."
+            "id": "a",
+            "label": "Decrease",
+            "correct": true,
+            "feedback": "Yes — dividing by the bigger coefficient 6 leaves less for the power to reach: 24 ÷ 6 = 4 = 2², so x drops from 3 to 2."
           },
           {
-            "value": 32,
-            "feedback": "Divide by 4, don't subtract it: 36/4 = 9 = 3², so x = 2."
+            "id": "b",
+            "label": "Increase",
+            "feedback": "A bigger coefficient leaves LESS for the power to cover (24 ÷ 6 = 4, versus 24 ÷ 3 = 8), so x gets smaller, not bigger."
+          },
+          {
+            "id": "c",
+            "label": "Stay the same",
+            "feedback": "Changing the coefficient changes what's left after dividing (8 versus 4), so x changes too: it drops from 3 to 2."
           }
-        ],
-        "fallbackFeedback": "36/4 = 9 = 3², so x = 2."
+        ]
       }
     },
     {

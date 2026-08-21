@@ -84,7 +84,11 @@ describe("the exponential-functions course is COMPLETE and honest (S181)", () =>
     // the named generator/form could not reproduce the new authored prompt shape on replay —
     // exp-01-01, exp-01-02, exp-01-03 (exp-function/a1-exponential), exp-03-01, exp-03-02,
     // exp-03-03 (a1-exponential/exp-solve), exp-04-03 (a1-exponential). 39 → 32.
-    expect(converted).toBe(32);
+    // S330-G1: exp-01-01/k2 and exp-01-03/k2 were each redesigned off a same-shape duplicate
+    // check into a hand-authored catch-the-mistake/compare mcq (LESSON_PROGRESSION_AND_DUPLICATION
+    // queue). Neither's new prompt is reproducible by the exp-function generator's fixed template,
+    // so both variant tags were dropped rather than repointed. 32 → 30.
+    expect(converted).toBe(30);
   });
 
   it("the 11 newly converted answers are exactly the frozen ones", () => {

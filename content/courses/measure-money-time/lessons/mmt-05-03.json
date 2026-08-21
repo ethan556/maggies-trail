@@ -190,69 +190,73 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger X-count.",
+      "body": "Four stacks — the tallest one isn't what's asked.",
       "conceptTag": "mmt-line-plot",
       "explanationVariants": [
-        "10 X's above 6 means 10 data points.",
-        "Count the X's directly: 10."
+        "1 x above 7 means 1 data point — the tallest stack (above 5) isn't the one asked about.",
+        "Find the column above 7 and count only its X's: 1."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 10 x's above the number 6 and 1 x above the number 7. How many data points are at 6?",
-        "answer": 10,
+        "prompt": "A line plot shows 2 x's above the number 3, 6 x's above the number 5, 1 x above the number 7, and 4 x's above the number 9. How many data points are at 7?",
+        "answer": 1,
         "tolerance": 0,
         "plotData": {
-          "values": [6, 7],
-          "counts": [10, 1]
+          "values": [3, 5, 7, 9],
+          "counts": [2, 6, 1, 4]
         },
         "commonErrors": [
           {
-            "value": 6,
-            "feedback": "6 is the number on the line, not the count of X's above it. There are 10 X's, so 10 data points."
+            "value": 7,
+            "feedback": "7 is the number on the line, not the count of X's above it. The stack above 7 has just 1 X."
           },
           {
-            "value": 9,
-            "feedback": "Count again — there are exactly 10 X's above 6."
+            "value": 6,
+            "feedback": "6 is the count above the number 5, the tallest stack here — not above 7, the one asked about. The stack directly over 7 has just 1 X."
           }
         ],
-        "fallbackFeedback": "There are 10 X's above 6, so 10 data points."
+        "fallbackFeedback": "The stack directly above 7 has 1 X, so 1 data point."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A close comparison.",
+      "body": "A close comparison — but which day has more might surprise you.",
       "conceptTag": "mmt-graph-compare",
       "explanationVariants": [
-        "11 − 10 = 1 more vote, even with close numbers.",
-        "Even a small difference still subtracts the same way."
+        "Monday's bar is longer here: 9 − 8 = 1 more vote, even though Monday is named first.",
+        "Don't assume the second-named day is bigger — measure the actual gap: 1."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Monday has 10 votes and Tuesday has 11 votes. How many more votes on Tuesday?",
-        "answer": 1,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "lengthCompare",
+        "mode": "difference",
+        "orientation": "h",
+        "prompt": "Each square is one vote. Count the votes Monday has beyond Tuesday's.",
+        "unitLabel": "votes",
+        "items": [
           {
-            "value": 21,
-            "feedback": "That's 10 + 11. To find how many MORE, subtract: 11 − 10 = 1."
+            "id": "mon",
+            "label": "Monday",
+            "length": 9
           },
           {
-            "value": 10,
-            "feedback": "10 is Monday's total, not the difference. 11 − 10 = 1."
+            "id": "tue",
+            "label": "Tuesday",
+            "length": 8
           }
         ],
-        "fallbackFeedback": "11 − 10 = 1 more vote on Tuesday."
+        "answerId": "mon",
+        "targetDifference": 1,
+        "diffMax": 9,
+        "successFeedback": "1 more vote. Monday is named FIRST here but still has more — always measure the actual gap between the bar ends, not the order the days are named in.",
+        "countsWholeFeedback": "9 is Monday's whole total. The question compares the two days, so count only the part that sticks out beyond Tuesday's bar: 1.",
+        "missFeedback": "Count the shaded squares, starting from the end of Tuesday's bar."
       },
       "hints": [
-        "You want the gap between 11 and 10.",
-        "Subtract: 11 − 10.",
-        "11 − 10 = 1."
-      ],
-      "variant": {
-        "gen": "g2-measure-money-time",
-        "form": "MmtGraphCompareNumeric"
-      }
+        "Check the actual lengths — Monday's bar is the longer one this time.",
+        "Line up the bars from the same starting point.",
+        "Count only the squares that stick out past Tuesday's bar: that's 1."
+      ]
     },
     {
       "id": "r1",

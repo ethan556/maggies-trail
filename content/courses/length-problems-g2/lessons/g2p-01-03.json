@@ -196,23 +196,34 @@
         "The ruler forgives it."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A pencil stretches from the 5 cm mark to the 10 cm mark on a ruler. How long is it?",
-        "answer": 5,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie measures a pencil from the 5 cm mark to the 10 cm mark and says it is 10 cm long. What mistake did she make?",
+        "options": [
           {
-            "value": 10,
-            "feedback": "That read the END mark as the length — a start away from zero must be subtracted off."
+            "id": "o0",
+            "label": "She read the end mark as the length — the pencil is really 10 − 5 = 5 cm.",
+            "correct": true,
+            "feedback": "Correct — the pencil starts away from zero, so the end mark alone overcounts it. 10 − 5 = 5 cm is the true length."
           },
           {
-            "value": 15,
-            "feedback": "Adding the marks measures nothing on a ruler; the length is the span BETWEEN them."
+            "id": "o1",
+            "label": "Nothing — 10 cm is correct because that is the mark the pencil reaches.",
+            "correct": false,
+            "feedback": "The mark it reaches is not the length when the pencil starts away from zero — subtract the start mark first: 10 − 5 = 5."
+          },
+          {
+            "id": "o2",
+            "label": "She should have added the two marks: 5 + 10 = 15 cm.",
+            "correct": false,
+            "feedback": "Adding the marks measures nothing on a ruler; the length is the span BETWEEN them, 10 − 5 = 5."
+          },
+          {
+            "id": "o3",
+            "label": "She should have counted the ruler marks instead of the gaps, making it 6 cm.",
+            "correct": false,
+            "feedback": "Counting the marks 5, 6, 7, 8, 9, 10 gives 6 marks, one more than the true span — count the gaps BETWEEN marks instead: 10 − 5 = 5."
           }
-        ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 5."
+        ]
       },
       "hints": [
         "Find both marks.",
@@ -240,10 +251,6 @@
         "transferFamily": "length-problems-g2:g2p-length-diff",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-measure-money-time",
-        "form": "MmtRulerSubtractNumeric"
       }
     },
     {

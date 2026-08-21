@@ -196,37 +196,46 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Narrow a bigger root.",
+      "body": "A classmate's reasoning went wrong somewhere — find the correct one.",
       "conceptTag": "rns-locate-number-line",
-      "variant": {
-        "gen": "g8-rns-root-estimate",
-        "form": "rnsRoundChallenge"
-      },
       "explanationVariants": [
-        "√83 ≈ 9.110, which rounds to 9.1 at one decimal place.",
-        "9.1² = 82.81 undershoots 83, and 9.2² = 84.64 overshoots it, so √83 rounds to 9.1."
+        "9.1 is correct: 83 is only 0.19 above 82.81 (9.1²) but 1.64 below 84.64 (9.2²) — nowhere close to a tie.",
+        "Comparing at the wrong scale (81 and 100, the whole-number brackets) instead of 82.81 and 84.64 (the tenths brackets) is the trap here."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "To one decimal place, √83 ≈ ____",
-        "answer": 9.1,
-        "tolerance": 0.05,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which is the correct one-decimal estimate for √83, and why?",
+        "options": [
           {
-            "value": 9.2,
-            "feedback": "√83 ≈ 9.11, which rounds DOWN to 9.1, not up to 9.2."
+            "id": "a",
+            "label": "9.1, since 83 is much closer to 82.81 (9.1²) than to 84.64 (9.2²)",
+            "correct": true,
+            "feedback": "Right — 83 − 82.81 = 0.19, but 84.64 − 83 = 1.64, so 9.1 is the much closer tenths-level bound."
           },
           {
-            "value": 9,
-            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 9.1."
+            "id": "b",
+            "label": "9.2, since 83 is closer to 100 than to 81",
+            "correct": false,
+            "feedback": "That compares 83 to the WHOLE-number brackets (81 and 100), not the tenths brackets that actually decide a one-decimal estimate: 82.81 and 84.64. Compared correctly, 83 is much nearer 82.81, so the estimate is 9.1."
+          },
+          {
+            "id": "c",
+            "label": "9.15, the exact midpoint of 9.1 and 9.2",
+            "correct": false,
+            "feedback": "A one-decimal estimate has to end in a single decimal digit — 9.15 isn't one, and it isn't even the closer value: 9.1 is."
+          },
+          {
+            "id": "d",
+            "label": "9, since that's the whole-number bound",
+            "correct": false,
+            "feedback": "9 hasn't been narrowed at all — the question asks for one decimal place, and that's 9.1."
           }
-        ],
-        "fallbackFeedback": "√83 ≈ 9.110, so to one decimal place it's 9.1."
+        ]
       },
       "hints": [
-        "First bracket √83 between whole numbers: 9² = 81 and 10² = 100, so it's between 9 and 10.",
-        "Now test tenths: 9.1² = 82.81 and 9.2² = 84.64 — where does 83 fall?",
-        "82.81 < 83 < 84.64, so √83 rounds to 9.1 at one decimal place."
+        "Compare 83 to the TENTHS-level brackets, not the whole-number ones: 9.1² = 82.81 and 9.2² = 84.64.",
+        "83 − 82.81 = 0.19, and 84.64 − 83 = 1.64.",
+        "0.19 is far smaller than 1.64, so √83 rounds to 9.1."
       ]
     },
     {

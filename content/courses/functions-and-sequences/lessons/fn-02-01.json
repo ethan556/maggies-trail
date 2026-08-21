@@ -161,62 +161,55 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "A bigger step.",
+      "body": "Find the missing middle term.",
       "conceptTag": "fn-common-diff",
       "explanationVariants": [
-        "9 − 2 = 7, so d = 7.",
-        "The terms rise by 7 each step, so d = 7."
+        "d = 24 − 18 = 6, so the missing term is 6 + 6 = 12.",
+        "The two known later terms give d = 6; add one step to the first term: 6 + 6 = 12."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the sequence 2, 9, 16, 23, what is the common difference?",
-        "answer": 7,
+        "prompt": "The arithmetic sequence 6, __, 18, 24 is missing its second term. What is it?",
+        "answer": 12,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 9,
-            "feedback": "9 is the second term. The difference is 9 − 2 = 7."
+            "value": 15,
+            "feedback": "That's the average of 6 and 24 — but those aren't adjacent terms. Use the two later terms you know (18 and 24) to find d = 6, then add: 6 + 6 = 12."
           },
           {
-            "value": 2,
-            "feedback": "2 is the first term, not the step. Subtract: 9 − 2 = 7."
+            "value": 0,
+            "feedback": "d = 24 − 18 = 6, but that steps AWAY from the first term if subtracted: 6 + 6 = 12, not 6 − 6."
           }
         ],
-        "fallbackFeedback": "9 − 2 = 7, so d = 7."
-      },
-      "variant": {
-        "gen": "fn-arith-seq"
+        "fallbackFeedback": "Find d from the two known later terms: 24 − 18 = 6. Then add one step to the first term: 6 + 6 = 12."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Extend a rising sequence.",
+      "body": "Only two terms this time.",
       "conceptTag": "fn-common-diff",
       "explanationVariants": [
-        "d = 3, so the next term is 14 + 3 = 17.",
-        "Add the step 3: 14 + 3 = 17."
+        "d = 11 − 8 = 3, so the 5th term is 11 + 2·3 = 17.",
+        "The step is 3; from the 3rd term, two more steps reach the 5th: 11 + 6 = 17."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the sequence 5, 8, 11, 14, what is the next term?",
+        "prompt": "An arithmetic sequence has 2nd term 8 and 3rd term 11. What is the 5th term?",
         "answer": 17,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 15,
-            "feedback": "The common difference is 3, not 1: 14 + 3 = 17."
+            "value": 14,
+            "feedback": "That's the 4th term (11 + 3). The 5th term needs one more step: 14 + 3 = 17."
           },
           {
-            "value": 20,
-            "feedback": "Add one step of 3, not two: 14 + 3 = 17."
+            "value": 23,
+            "feedback": "That uses 5 steps from the 2nd term, but 2nd to 5th is only 3 steps: 8 + 3·3 = 17."
           }
         ],
-        "fallbackFeedback": "14 + 3 = 17."
-      },
-      "variant": {
-        "gen": "fn-arith-seq",
-        "form": "nextUp"
+        "fallbackFeedback": "Find d = 11 − 8 = 3, then step twice more from the 3rd term: 11 + 2·3 = 17."
       }
     },
     {

@@ -188,32 +188,33 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Geometric, fifth term.",
+      "body": "Catch the wrong formula.",
       "conceptTag": "fn-choose-formula",
       "explanationVariants": [
-        "a_1 = 1, r = 5, so a_5 = 1 · 5⁴ = 625.",
-        "Four factors of 5 from 1: 625."
+        "The ratio is constant (5 each time), so it's geometric: a_5 = 1 · 5⁴ = 625, not 17.",
+        "Constant ratio (×5) means geometric, not arithmetic — the arithmetic guess (17) is far off from the true 625."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "For 1, 5, 25, 125, ... (geometric), what is the 5th term?",
-        "answer": 625,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "For 1, 5, 25, 125, ... a student assumes it's arithmetic with d = 4 (from 5 − 1) and gets a_5 = 1 + 4·4 = 17. What is the actual 5th term?",
+        "options": [
           {
-            "value": 3125,
-            "feedback": "Use r^(5 − 1) = 5⁴, not 5⁵: 1 · 625 = 625."
+            "id": "a",
+            "label": "625 — the sequence is geometric (r = 5), not arithmetic",
+            "correct": true,
+            "feedback": "Right — check the ratio: 5÷1=5, 25÷5=5, 125÷25=5, all constant. It's geometric: a_5 = 1 · 5⁴ = 625, nowhere near 17."
           },
           {
-            "value": 125,
-            "feedback": "125 is the 4th term (already listed). The 5th is 1 · 5⁴ = 625."
+            "id": "b",
+            "label": "17 — the student's answer is correct",
+            "feedback": "The differences (4, 20, 100) aren't constant, so it's NOT arithmetic. The ratio IS constant (5 each time): a_5 = 1 · 5⁴ = 625."
+          },
+          {
+            "id": "c",
+            "label": "125 — just continue the pattern shown",
+            "feedback": "125 is already the 4th term (already listed). One more factor of 5: 125 · 5 = 625."
           }
-        ],
-        "fallbackFeedback": "a_5 = 1 · 5⁴ = 625."
-      },
-      "variant": {
-        "gen": "a1-functions-sequences",
-        "form": "fn-choose-formula__numeric"
+        ]
       }
     },
     {

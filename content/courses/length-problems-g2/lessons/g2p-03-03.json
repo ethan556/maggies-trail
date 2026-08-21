@@ -196,28 +196,39 @@
         "Used subtracts, bought adds."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Maggie had 70 cm of ribbon, used 22 cm on a bow, then bought 30 cm more. How much ribbon now?",
-        "answer": 78,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie had 45 cm of ribbon, used 18 cm on a bow, then bought 12 cm more. Which expression matches her story?",
+        "options": [
           {
-            "value": 48,
-            "feedback": "The story has a second step — the new 30 cm still joins after the cutting."
+            "id": "o0",
+            "label": "45 − 18 + 12",
+            "correct": true,
+            "feedback": "Correct — using ribbon SUBTRACTS and buying more ADDS: 45 − 18 + 12 = 39."
           },
           {
-            "value": 62,
-            "feedback": "The steps ran backward: the bow TOOK ribbon away, and the purchase brought more."
+            "id": "o1",
+            "label": "45 + 18 − 12",
+            "correct": false,
+            "feedback": "That swaps the directions — using the ribbon on the bow SUBTRACTS, and buying more ADDS, not the other way around."
+          },
+          {
+            "id": "o2",
+            "label": "45 + 18 + 12",
+            "correct": false,
+            "feedback": "Using the ribbon on the bow takes some away — that step must subtract, not add."
+          },
+          {
+            "id": "o3",
+            "label": "45 − 18 − 12",
+            "correct": false,
+            "feedback": "Buying more ribbon ADDS to the total — that step must add, not subtract."
           }
-        ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 78."
+        ]
       },
       "hints": [
-        "Place the pieces end to end.",
-        "The total is the far end.",
-        "Every piece counts once."
+        "Read the story in order.",
+        "Using ribbon takes away: subtract.",
+        "Buying ribbon adds: add."
       ],
       "cml": {
         "stage": "construct",
@@ -240,10 +251,6 @@
         "transferFamily": "length-problems-g2:g2p-two-step",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "TwoStepTradeNumeric"
       }
     },
     {

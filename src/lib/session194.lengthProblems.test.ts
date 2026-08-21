@@ -45,11 +45,21 @@ for (const tag of FAMILIES) {
  *   g2p-03-03/ch1 reorders the two-step trade so the purchase happens BEFORE the cut
  *     (50 + 25 − 18 = 57), reversing the surface order every sibling in this lesson shares.
  * None of these four shapes are producible by a registered form; all four are hand-verified
- * here and re-checked below against evaluate()/commonErrors like every other numeric. */
+ * here and re-checked below against evaluate()/commonErrors like every other numeric.
+ *
+ * g2p-02-03/k2: Signed PROGRESSION-g2p-02-03 (S330-G7, LESSON_PROGRESSION_AND_DUPLICATION
+ * lane) closed a number-normalized-template collision with k1 (both "the whole trail runs #
+ * meters and the first stretch covers # meters...") by flipping k2 to the COMPLEMENTARY
+ * direction of the same fact family — given the two stretches, find the whole (35+22=57) —
+ * instead of k1's given-the-whole-and-one-stretch, find-the-other (66−36=30). MmtLengthDifferenceNumeric
+ * only generates the subtraction/remainder shape, not this addition shape, so the variant was
+ * withdrawn rather than left mismatched; the new prompt is hand-verified here like every other
+ * numeric. */
 const POOL_WITHDRAWN: Record<string, string[]> = {
   "g2p-02-02": ["k2", "ch1"],
   "g2p-01-01": ["ch1"],
   "g2p-02-01": ["ch1"],
+  "g2p-02-03": ["k2"],
   "g2p-03-02": ["ch1"],
   "g2p-03-03": ["ch1"],
 };

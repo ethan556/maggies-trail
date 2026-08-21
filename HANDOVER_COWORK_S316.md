@@ -632,8 +632,9 @@ re-verification after each fix, reconciled with a strict file>test-name diff scr
   plus all 233 `NOT_FRESH`) are confirmed pre-existing and deliberately left as documented,
   out-of-scope debt under the pace directive — not silently dropped, not falsely claimed fixed.
 
-## Remaining queue at 141 rows (0 P0) — every row is one of exactly four classes now (down from
-five: QUESTION_DIVERSITY_AND_TRANSFER's design-needed framing no longer applies)
+## Remaining queue at 141 rows (0 P0 *actionable* — see correction below) — every row is one of
+exactly four classes now (down from five: QUESTION_DIVERSITY_AND_TRANSFER's design-needed framing
+no longer applies)
 - CLOSURE_LEDGER 22 (down from 27) — genuinely infra/business/human-pilot/hardware/
   human-visual-parity/product-authority gated. Each of the 22 was individually re-examined this
   session, not assumed as a block; only CL-P0-054/056 are visual-parity-gated by the file's own
@@ -649,3 +650,124 @@ five: QUESTION_DIVERSITY_AND_TRANSFER's design-needed framing no longer applies)
   an earlier round; every remaining row is the mildest P1 number-normalized-template tier.
 No LESSON_REVISION_IMPLEMENTATION, ILLUSTRATION_REPLACEMENT, or CHOICE_SURFACE_INTEGRITY rows
 remain open.
+
+**Correction (S330):** the "(0 P0)" heading above is imprecise and should not be read as "no P0
+rows in the queue." Reading `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`'s `priority` column directly
+(rather than trusting the earlier prose summary) shows 16 P0 rows at the 141-row snapshot:
+CLOSURE_LEDGER 12, V4_PROGRAMME_PHASE 3, QUESTION_DIVERSITY_AND_TRANSFER 1 — every one of them
+inside the three out-of-authority buckets described above (LESSON_PROGRESSION_AND_DUPLICATION is
+entirely P1). "0 P0" was true only in the narrower sense of "0 P0 rows this session has the
+authority to act on"; it should have said that explicitly. No content changed as a result of this
+correction — it is a reporting-accuracy fix only.
+
+## S330 wave (2026-08-21, user directive "complete all queued work")
+
+Scope: the full remaining 109 LESSON_PROGRESSION_AND_DUPLICATION rows — the only workstream in
+authority this round; CLOSURE_LEDGER/V4_PROGRAMME_PHASE/STANDARDS_VERIFICATION/
+QUESTION_DIVERSITY_AND_TRANSFER's 32 rows were re-confirmed (not re-litigated) out of an agent's
+authority per this document's own S316-era framing, by re-reading `CLOSURE_LEDGER.md` and
+`scripts/audit/consolidate-pending-workload-s236.mjs` directly rather than trusting the prior
+summary alone.
+
+**Execution:** all 109 rows were split into 11 course-grouped packets (G1–G11, zero overlap,
+verified by script against the raw CSV before dispatch) and run as 11 parallel `general-purpose`
+subagents in one wave, each with a self-contained brief covering the exact detector mechanism, its
+lesson list, a KEEP-vs-REDESIGN framework, redesign vocabulary, generator-collision-avoidance
+guidance (prefer converting a flagged step to a hand-authored static widget over touching a shared
+`src/lib/variants.ts` generator, to keep 11 concurrent agents from colliding on the same file), and
+the disposition-writing schema. A genuine KEEP was explicitly sanctioned as an acceptable outcome —
+not every flagged row was to be forced into a redesign.
+
+**Outcome:** 39 of 109 lessons redesigned (one or more flagged steps rewritten to a distinct,
+hand-authored angle targeting a real misconception); 70 reviewed and kept unedited with a
+documented fluency/spacing rationale. G11 (the 7-lesson singles tail) reviewed and kept all 7 with
+zero edits — confirmed false positives, not missed work — and so wrote no disposition file.
+Per-packet: G1 4/9, G2 7/9, G3 4/9, G4 4/12, G5 3/10, G6 2/10, G7 5/12, G8 1/11, G9 6/6 (heaviest
+packet, all touched), G10 3/10, G11 0/7 (edited/reviewed). Full per-lesson rationale, math
+re-derivation, and verification notes are in `reports/closure/S330_PROGRESSION_G1.md` through
+`_G11.md`.
+
+**Mid-wave incident — shared working tree, fully reconciled, no data loss.** Several packets (G1,
+G3, G4, G5, G6, G10) independently reported their in-progress edits vanishing mid-task. Root cause,
+reconstructed from `git reflog` and a dangling `stash@{0}` found after the wave: G1 self-inflicted
+a `git stash` while recovering from its own mistake, which (as `git stash`'s normal last step) hard-
+reset the shared working tree to HEAD — wiping every agent's in-flight uncommitted edits at that
+instant, not just G1's own, since all 11 agents share one working tree and one index. Every affected
+packet noticed its files had reverted and reapplied its work; none of this was silently lost.
+Orchestrator-side reconciliation after the wave returned (before trusting or building on any
+report): confirmed all 44 expected files (39 content + 5 shared test files, cross-checked file-for-
+file against every packet's own claimed edit list) were present, valid JSON, with no conflict
+markers; diffed the dangling stash against the final working tree file-by-file and found 25 of its
+26 files byte-identical (proof the "clobbered" edits really did make it back to disk) and the 26th
+(`pr-04-01.json`) differing only because G3 kept iterating on it after the stash snapshot was taken
+— a strict superset, not a loss. The stash was then dropped.
+
+**Independent mechanical re-verification (not just trusting the 11 reports):**
+- Re-ran the live `consolidate-pending-workload-s236.mjs` detector before and after the wave's
+  edits landed (before any disposition was appended, so this check is disposition-blind by
+  construction, same as the detector itself): LESSON_PROGRESSION_AND_DUPLICATION dropped 109 → 89.
+  Diffed the two runs' `step_path`/`mismatch_evidence` fields lesson-by-lesson: every one of the 39
+  edited lessons' redesigned steps disappeared from its lesson's flagged-evidence list; zero new or
+  unexplained steps appeared anywhere (in either the 20 lessons that fully cleared or the 19 that
+  remain open); every step a packet's rationale explicitly says it left alone (deliberate spaced-
+  fluency KEEP) is still present in the evidence — proof the redesigns mechanically do exactly what
+  each packet claims, no more and no less. The 19-of-39 "edited but still open" lessons are not a
+  gap: each carries a *second*, separately-reviewed, intentionally-kept collision the edit was never
+  meant to touch (e.g. `exp-01-01`: k2 redesigned and cleared, k3-vs-i2 reviewed and knowingly kept
+  as legitimate delayed practice, so the lesson row stays flagged on k3 alone).
+- Full-corpus schema + lint + evaluator re-check (`Lesson.parse`, `lintLesson`, `evaluate()`) run
+  directly against all 39 edited files via a standalone script: 0 schema errors, 0 eval errors
+  (every graded step's own recorded/correct answer grades correct through the real evaluator) on
+  the first pass, and exactly 1 lint finding — `g2p-02-01`/k2's redesigned incorrect-feedback text
+  tripped the generic-feedback heuristic (led with a bare "No" before its real diagnosis, even
+  though the diagnosis itself was substantive) — reworded; re-verified clean.
+- Targeted `vitest` across the 5 directly-edited shared test files plus every other test file that
+  references any of the 39 lesson ids (27 files found by grepping the corpus, one call): 457/459
+  tests passed. The 2 failures (`conversions.s120.test.ts` — `sy-01-01` dead feedback;
+  `session144.proportional-reasoning.test.ts` — a `proportionalReasoningLab` truth-model mismatch)
+  are confirmed byte-identical (same file, test name, assertion text) against `/tmp/vitest-s326.log`,
+  a full-suite baseline from well before this wave — 100% pre-existing, untouched by any packet,
+  already independently flagged by G4/G10 in their own reports. Also ran the two whole-corpus gates:
+  `content.test.ts` clean; `content.widgets.audit.test.ts` (SOLVABLE / not PRE-SOLVED / no DEAD
+  paths across ~265 widgets) surfaced the same `g4x-02-01`/`sy-01-01` pair, both confirmed
+  pre-existing the same way.
+- `content.duplicateItems.s242.test.ts` (a *different*, stricter, exact-text MCQ-duplicate ratchet
+  under workstream MCQ-01, unrelated to the S236 detector this wave targets) fails 4/4 assertions —
+  but confirmed byte-identical against `/tmp/vitest-s326.log` too: its hardcoded pins (162/75/67/
+  "checked>0") are stale from a much earlier baseline and the *actual* counts (6/0/0/0) already sat
+  far below them before this wave touched anything, evidently from large volumes of prior-session
+  duplicate cleanup already landed on this branch. Independently flagged by both G2 and G10.
+  Genuinely pre-existing, outside this wave's workstream, and non-trivial to fix properly (its 4th
+  assertion "no duplicate resolved a variant — this test is measuring nothing" suggests the test's
+  own logic needs reconsideration, not just a number re-pin) — left open and documented rather than
+  silently ignored or scope-crept into. **Flagged for a future round.**
+- `variants.resolver.test.ts -t "item-level variant declarations|variant resolver"` surfaced 2
+  failures against `mmt-05-02.json/k3` (measure-money-time, outside every packet's assignment) —
+  confirmed byte-identical against `/tmp/vitest-s329-truefinal.log` (a full-suite run from
+  immediately before this wave started). Pre-existing, independently flagged by G6, not remediated.
+- One further finding acted on beyond the 39 redesigns: G3's report flagged (but correctly did not
+  act on, since it was out of its redesign scope) that `pr-04-03`'s KEPT step k3 has body text
+  reading "A bigger percent increase" on a rate (50→60, +20%) that is in fact *smaller* than sibling
+  k1's (80→100, +25%) — independently confirmed by hand (20 < 25). Reworded to "Another percent
+  increase.", mirroring k1's own neutral body text, without touching the widget/prompt/traps G3
+  already reviewed.
+
+**Ledger and derivation chain:** appended the 39 new S330 dispositions (`laneA-s330-G1.jsonl`
+through `-G10.jsonl`) plus 2 orchestrator follow-up records (`laneA-s330-recon.jsonl`, for the
+`g2p-02-01` and `pr-04-03` prose fixes above, each citing the fresh post-edit
+`reviewBasisHash`) to `LESSON_REVIEW_DECISIONS_S244.jsonl` via `append-s316-dispositions.mjs`
+(dry-run then `--write`, both times zero problems). Re-ran the full derivation chain
+(`audit:pending-workload` → `lesson-review-cards-s244.mjs` → `compile-v4-backlog-portfolios-s247.mjs`
+→ `chatgpt-work-v4-cache.mjs`) three times total (once after the 39-record append, once each after
+the two follow-up records) — `staleCount: 0`, `SOURCE_SEAL_MATCH` every time. Editing the 39
+lessons' content transiently reopened 3 disposition-staleness workstreams
+(VISUAL_FIRST_REPRESENTATION, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION — 39 rows each,
+confirming these are the disposition-hash staleness cascade, not new problems), which the
+disposition append fully closed back to 0/0/0, confirming the append actually took effect and isn't
+a paper exercise. `session244.chatgptWorkPrecache.test.ts` re-pinned three times in step (final:
+`pending-workload` 121, `lesson-review-decisions` 3636) and green (6/6) each time.
+
+**Net result:** queue 141 → 121 (LESSON_PROGRESSION_AND_DUPLICATION 109 → 89; the 32
+out-of-authority rows correctly untouched). Decisions 3595 → 3636 (41 new records: 39 packet + 2
+orchestrator recon). `npm run build` still not run this round — same as every prior round in this
+session, never run concurrently with a vitest pass on this 2-CPU sandbox; run before shipping.
