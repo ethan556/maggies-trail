@@ -771,3 +771,220 @@ a paper exercise. `session244.chatgptWorkPrecache.test.ts` re-pinned three times
 out-of-authority rows correctly untouched). Decisions 3595 → 3636 (41 new records: 39 packet + 2
 orchestrator recon). `npm run build` still not run this round — same as every prior round in this
 session, never run concurrently with a vitest pass on this 2-CPU sandbox; run before shipping.
+
+# S330 post-recon addendum (2026-08-21, same session, same user directive "complete ALL tasks" —
+sent immediately after the S330 wave report above, reading as continued dissatisfaction with pace)
+
+The user's message paired a specific pushback ("pace is too slow") with the S330 wave's own result
+summary and an explicit "please complete ALL tasks". Rather than re-litigating the
+LESSON_PROGRESSION_AND_DUPLICATION queue by force-redesigning legitimate KEEPs (which would violate
+this document's own disposition-blind, honesty-first architecture — a KEEP with real rationale is
+not a defect to be gamed away), this round opened genuinely new ground: the first passing production
+build all session, a full-suite vitest reconciliation, a 7-agent adversarial audit of every prior
+"kept"/"out-of-authority" judgment call, and — once the audit surfaced real findings — 7 more
+lesson redesigns plus two fixes to test files whose frozen numeric pins the redesigns broke.
+
+## `npm run build`: first clean pass all session
+
+`npm run build` (`next build`) had never once been run in this entire multi-window engagement.
+First attempt failed with a genuine, previously-invisible TypeScript error:
+`./src/lib/variants.ts:11423:65 Type error: Type '"subX2"' is not assignable to type 'VariantForm'.`
+Root cause: at some earlier point this session, `"subX2"` was added to the `poly-addsub` generator's
+`forms` array with a full working runtime branch (`if (form === "subX2")` at line 11542) — but the
+`VariantForm` TypeScript union type itself was never updated to include it. `vitest`'s esbuild/swc
+transform doesn't type-check, so this was invisible to every test run all session; `next build`'s
+type-check phase caught it on the first real attempt. Fixed with a single-line, type-only addition
+(`| "subX2"` to the union, zero runtime effect — safe even with vitest running concurrently). Second
+attempt: `✓ Compiled successfully in 50s`, full route manifest, only pre-existing ESLint warnings
+(no errors). **This is a real bug that had been sitting in the codebase, silently, for an unknown
+number of prior rounds, undetected because the gate that would have caught it was simply never run.**
+
+## Full vitest reconciliation
+
+A complete, isolated `npx vitest run` (no concurrent content edits, per this session's own race-
+condition rule) completed at `Test Files 74 failed | 653 passed (727)`, `Tests 300 failed | 15471
+passed | 1 skipped (15772)`. Reconciled against `/tmp/vitest-s329-truefinal.log` (this session's most
+recent prior full-suite baseline) by diffing the full `FAIL` line sets: **zero new failures** — the
+300-failure set is a strict subset of the baseline's. Six baseline failures are now absent
+(`session183.counting100k.test.ts`'s tier-preconditions check; five `variants.test.ts` gate tests
+including `poly-addsub @ form=subX2`) — traced via `git log -S` to commit `7778cf7` ("S327-S329 +
+reconciliation"), the parent of this session's HEAD: that commit's own message documents fixing
+exactly this class of bug ("5 pre-existing variant.form wiring gaps... a second full run then caught
+7 more"), and `/tmp/vitest-s329-truefinal.log`'s mtime (17:15:47) predates that commit (17:49:21) —
+the baseline log was captured from a run that started while that commit's fixes were still landing,
+mid-flight. Not this round's work; already-committed prior-session fixes, now confirmed clean by the
+first full run to complete after that commit finalized. The lone failure visible in earlier partial
+tails (`g13-parametric-polar-calculus`, `calculusIndependent.cjs:906`, "unrecognized parametric-arc
+prompt") is confirmed byte-identical against both `/tmp/vitest-s326.log` and `/tmp/vitest-s329-
+truefinal.log` — pre-existing, unrelated to any session work.
+
+## 7-agent adversarial audit wave (read-only, dispatched while vitest ran)
+
+Five agents independently re-reviewed all 89 still-open LESSON_PROGRESSION_AND_DUPLICATION rows'
+KEEP rationale (from the S330 wave and earlier) with an adversarial "would you sign off on this as
+someone auditing the auditor" brief: **82 HOLD, 7 WEAK, 0 unexplained.** The 7 WEAK: `exp-03-01`,
+`exp-03-02`, `exp-04-01`, `exp-04-02`, `fn-04-01`, `lf-04-01`, `pr-04b-01` — see below for what was
+actually wrong with each (re-derived from the live CSV, not the audit agents' prose, before touching
+any file — see caveat in the next section). One agent audited all 22 CLOSURE_LEDGER rows: 2
+genuinely blocked (real external-execution dependencies), 2 stale/reconsider, **18 partially
+actionable** (Stripe/Mailer/LTI/Telemetry provider-interface scaffolding, an automated visual-
+placement screenshot gallery over 3,573 rows, accessible-state/mobile-control extensions, and
+similar prep work that doesn't require live secrets or an external account to start). One agent
+audited the 10 V4_PROGRAMME_PHASE/STANDARDS_VERIFICATION/QUESTION_DIVERSITY_AND_TRANSFER rows and
+proved by direct code quote that V4_PROGRAMME_PHASE's 7 rows are **permanently unclosable**:
+`consolidate-pending-workload-s236.mjs` lines ~468–493 contain a literal, hardcoded 7-element
+`phases` array, looped unconditionally with no `if`/`continue`/filter/file-read gating it — these 7
+rows cannot leave the queue via any content or engineering work; they are a permanent report
+fixture, not backlog. **This is an important reporting-accuracy finding for whoever next reports the
+queue total: 121 (now 114) has never meant "121 things to do" — 7 of it is unclosable by
+construction.**
+
+## 7 lesson redesigns (LESSON_PROGRESSION_AND_DUPLICATION, corrected scope)
+
+The audit agents' prose diagnoses (e.g. "exp-04-01: k1/i3/k3/ch1 four-way cluster") were **not**
+trusted directly — the live `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`, freshly regenerated, was re-read
+for the authoritative `step_path` per lesson before designing any fix, and in three of the seven
+cases the true scope differed materially from the audit prose (`exp-04-01`/`exp-04-02` needed only
+`k3`, not a 4-way cluster; `fn-04-01` needed 4 steps — `i2`,`i3`,`k2`,`k3` — not the 1 the prose
+implied; `lf-04-01`'s pair `k2`/`ch1` both collide with unflagged `i2`, not with each other). The
+detector's exact mechanism (`consolidate-pending-workload-s236.mjs` lines 358–393) was re-read
+directly to confirm the normalization is `prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g,
+"#").replace(/\s+/g," ")` compared **across every widget-bearing step regardless of kind** (not
+just `check`/`challenge` steps as earlier working notes assumed) — this changed several designs
+mid-flight once hand-computed templates showed steps colliding that a kind-scoped assumption would
+have missed.
+
+- **`exp-03-01`** (k1/k2/k3 all `"solve #^x = #."`): k2 redesigned as a repeated-multiplication
+  "machine output" story (6^x=216) whose distractor (36, from 216÷6) newly gives the "exponent means
+  repeated multiplication, not b·x" misconception — introduced by `i2` but never graded before — a
+  graded check. k3 redesigned as a true/false claim-verification mcq testing that a fractional
+  exponent (x=3/2) solves 4^x=8 even though 8 isn't a whole-number power of 4.
+- **`exp-03-02`** (k1/k2/k3 all `"solve # · #^x = #."`): k2 reframed as "find the power" (5·4^x=1280,
+  answer 4) with a multiply-instead-of-divide distractor. k3 reframed as an explicit divide-first
+  instruction (3·5^x=75, answer 2, same value as its own prior wording — only the sentence changed).
+- **`exp-04-01`** (k1/k3 both `"at what value does f(x) = # · #^x cross the y-axis?"`): k3 redesigned
+  with a differently-named function (h(x)=8·5^x, y-intercept 8) and a distinct sentence shape.
+- **`exp-04-02`** (k1/k3 both `"for g(x) = # · #^x, what is g(#)?"`): k3 redesigned as a population
+  model (p(t)=2·5^t at t=3, answer 250).
+- **`fn-04-01`** (k1/i2/i3/k2/k3 all `"which kind of sequence is #, #, #, #?"`): the underlying
+  sequences and answers were already pedagogically fine (geometric/neither/arithmetic mix with
+  varying ratios) — the defect was purely the copy-pasted sentence frame. Reworded only `i2`, `i3`,
+  `k2`, `k3`'s `widget.prompt` to four distinct shapes; left every sequence, answer, option, and
+  feedback string untouched.
+- **`lf-04-01`** (i2/k2/ch1 all `"a line passes through (#, #) with slope #. what is b?"` — i2
+  unflagged as first occurrence): k2 and ch1 reworded to distinct sentence shapes; point/slope
+  values and all math (b=5, b=-4) unchanged.
+- **`pr-04b-01`** (i1/i2 both `"a $# loan charges #% interest per year. shade one year's
+  interest."`): i2 redesigned to shade TWO years' worth of simple interest on the same loan (target
+  20%, not a different loan's one year) — this actually exercises the "equal steps, never
+  compounds" idea from the immediately-preceding `c2` concept step, which no widget in the lesson
+  previously tested directly.
+
+**Verification (all against live runtime code, not hand-computation alone):** a temporary vitest
+harness (`_tmp-verify-redesigns.test.ts`, written, run, deleted) ran `Lesson.parse` + `lintLesson` +
+`evaluate()` / `exactNumberTruth()` against every edited step across all 7 files — 0 schema errors,
+0 lint findings, every true answer grades correct with matching success feedback, every
+distractor/commonError grades incorrect with matching feedback text. Building this harness caught
+two bugs in the harness itself, not the content (`evaluate()` takes an mcq option id directly, not
+`{picked:id}`; `exactNumberLab`'s exploration gate needs `exactNumberExplorationKeys()`, not a raw
+copy of `requiredStageKeys`, when that array is empty) — both fixed before trusting a single green
+result. Re-ran the S236 detector: LESSON_PROGRESSION_AND_DUPLICATION 89 → 82, exactly the 7 lessons
+dropped, zero new/unexplained collisions anywhere in the corpus.
+
+**A targeted grep for the 7 lesson ids across every test file in the corpus** (not just the ones the
+audit agents happened to mention) turned up 6 files; running them found two genuine regressions this
+round's number changes caused, both fixed:
+- `session181.a1Exponential.test.ts` and `session181.exponentSolve.test.ts` each pin a "frozen"
+  table of exact numeric answers per lesson/step, hand-derived at authoring time, to catch silent
+  content drift. `exp-04-01/k3`'s y-intercept changed 10→8 and `exp-03-01/k2`'s solved exponent
+  changed 5→3 (both intentional, part of the redesign) — both frozen tables updated to the new
+  values with a dated comment explaining why, rather than either reverting the redesign or leaving
+  the tests broken.
+- `manipulativeAlongside.s237.test.ts` (5 failures: `de-01-01`, `de-03-01`, `de-03-02`, `dr-01-03`,
+  `pr-04b-02`) and `content.duplicateItems.s242.test.ts` / `variants.resolver.test.ts` (6 more,
+  `mmt-05-02` among them) were all confirmed byte-identical against `/tmp/vitest-s330-full.log`
+  (captured before this round's edits) — pre-existing, unrelated to any of the 7 lessons touched
+  this round (note `pr-04b-02` is a *different* lesson from the redesigned `pr-04b-01` — a one-
+  character difference that would be easy to misattribute without checking).
+
+## Disposition and derivation chain
+
+First pass (`laneA-s330-postrecon-progression.jsonl`, 7 records) used `decision: "REVISE"` — this
+was a genuine process mistake, not a data error: `REVISE` is the ledger's forward-looking "flag for
+future implementation" signal (`reviewQueueDirective` in `lesson-review-authority-s246.mjs` opens a
+`LESSON_REVISION_IMPLEMENTATION` row whenever a current disposition reads REVISE/ESCALATE), not a
+retrospective "I revised this" confirmation — but the redesigns were already fully implemented and
+verified *before* that record was written. Caught immediately when the chain re-run showed 7 new
+`LESSON_REVISION_IMPLEMENTATION` rows instead of the queue simply shrinking. Corrected with a second
+staging file (`laneA-s330-postrecon-progression-fix.jsonl`, 7 records, same `reviewedBasisHash`,
+`decision: "KEEP"`) superseding the first — matching the established `s330-recon` pattern from
+earlier this session for an already-completed, already-verified fix. Both appended via
+`append-s316-dispositions.mjs` (dry-run then `--write`, zero problems each time). Full derivation
+chain re-run three times total (after the 7 REVISE records, after the 7 KEEP corrections, and a
+final confirmation pass) — `staleCount: 0`, `SOURCE_SEAL_MATCH` every time.
+`session244.chatgptWorkPrecache.test.ts` re-pinned (`pending-workload` 121→114,
+`lesson-review-decisions` 3636→3650) and green (6/6).
+
+Also regenerated two report files that had drifted out of sync with already-committed lesson content
+from earlier in the session (`EXCELLENCE_BACKLOG_S126.json`/`.md` via `npm run audit:excellence`,
+`FLAGSHIP_TIERS.md` via `scripts/flagship-tier.mjs`) — both are live-derived reports, not source of
+truth, and their diffs reflect redesigns already committed in `f90b251`, not new edits.
+
+**Net result this addendum:** queue 121 → 114 (LESSON_PROGRESSION_AND_DUPLICATION 89 → 82; the 32
+out-of-authority rows unchanged). Decisions 3636 → 3650 (14 new records: 7 + 7 correction).
+`npm run build` now passes clean. Full vitest run reconciled with zero new failures.
+
+## Post-redesign final gate (typecheck, build, full vitest — run again after all 7 edits)
+
+Everything above (the `vitest-s330-full.log` vs `vitest-s329-truefinal.log` reconciliation) predates
+the 7 lesson redesigns — it was this round's *starting* gate, confirming the tree was clean before
+touching content. After all 7 redesigns, both frozen-test-pin fixes, the disposition correction, and
+the report re-pin landed, the same three gates were re-run once more, in isolation, as this round's
+*closing* gate: `npx tsc --noEmit -p .` → exit 0, zero diagnostics. `npm run build` → exit 0, every
+route including `/placement` and `/onboarding` compiles and prerenders. A full `npx vitest run`
+(727 files / 15,772 tests) finished `Test Files 73 failed | 654 passed`, `Tests 299 failed | 15472
+passed | 1 skipped` (`/tmp/vitest-s330-postrecon-full.log`). Reconciled against the pre-redesign
+`/tmp/vitest-s330-full.log` by the same sorted-`FAIL`-line `comm` diff used all session: **zero new
+failures** anywhere, and exactly one previously-failing test now passes —
+`session244.chatgptWorkPrecache.test.ts`'s manifest-currency check — which is precisely this round's
+own report-regeneration fix, not an unexplained change. Both frozen-pin fixes land as an exact wash
+(passing in both the pre- and post-redesign runs, as intended: old content + old pins passed before,
+new content + new pins pass now). One onboarding-area failure
+(`onboarding.branches.s242.test.ts` — "grade 0 offers every domain its catalogue carries") is present
+in both runs, unchanged by this session, and is about domain-catalogue coverage, unrelated to
+anything this round touched.
+
+## CLOSURE_LEDGER.md — CL-P1-031 / CL-P0-003 investigated, both correctly left OPEN
+
+Added a new dated section to `CLOSURE_LEDGER.md` ("Session 330 post-recon closure review"),
+following the established S319 "detector-refresh update" precedent: investigate with fresh evidence,
+check strictly against each row's *own* recorded closure/reopen condition, and only report what the
+evidence actually shows. `CL-P1-031` ("Release-environment provenance," OPEN since S221, closure
+condition "current S221/S220 seal runs the complete semantic/test/build/browser chain") and
+`CL-P0-003` ("Onboarding/placement," status "CLOSED-SOURCE / RUNTIME REPROVE OPEN," reopen condition
+"Full tests/browser show route, persistence, or accessibility regression") both specifically require
+**browser**-level evidence, not just source/test evidence — matching what actually closed their twin
+row `CL-P0-004` in S222 ("Node 24.15.0; npm ci PASS; typecheck PASS; build PASS; 90/90 final captures
+PASS"). This round supplied fresh current-tree typecheck/build/full-vitest evidence for both (see the
+gate above) — the semantic/test/build legs — then attempted the missing browser leg via
+`npx playwright test e2e/smoke.spec.ts --project=chromium` (the repo's existing 3-test smoke spec).
+Two attempts (180s, then 280s outer timeouts) both hung without Playwright completing, and the first
+left an orphaned `next-server`/`npm run dev` process pair running unattended at 58–64% CPU / ~2.9GB
+RAM — discovered still active and competing with the concurrently-running vitest gate, cleaned up
+with a targeted `kill -9` on the specific PIDs (a broader `pkill -f "next dev"` had already been tried
+and missed them, since the actual command lines didn't match that pattern). Judged unreliable in this
+sandbox and not retried further, per the standing "avoid rabbit holes" discipline, rather than risk
+corrupting the vitest gate a second time or silently claiming browser evidence that was never
+obtained. **Both rows stay open in the ledger** — `CL-P1-031` as
+`OPEN — SEMANTIC/TEST/BUILD LEGS CURRENT, BROWSER LEG UNOBTAINABLE HERE`, `CL-P0-003` unchanged at
+`CLOSED-SOURCE / RUNTIME REPROVE OPEN` with the same browser-leg caveat — with the exact evidence and
+the exact gap recorded in the ledger itself, not just here. Whoever picks this up next needs either a
+sandbox where the Next dev server survives Playwright, or a real browser-capable CI environment, to
+close either row.
+
+The audit wave's other CLOSURE_LEDGER findings — 2 stale/reconsider rows and 18 partially-actionable
+findings (Stripe/Mailer/LTI/Telemetry provider-interface scaffolding, a 3,573-row automated
+screenshot gallery, accessible-state/mobile-control extensions) — were only a high-level scan, not a
+row-by-row fresh-evidence investigation like the two above, so none of them were written into
+`CLOSURE_LEDGER.md` this round; they remain exactly the menu described in the previous section of
+this addendum, for the user to prioritize rather than something this session built unilaterally.

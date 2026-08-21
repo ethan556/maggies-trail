@@ -21,18 +21,18 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 205 | 205 | 0 | 0 | 410 |
+| K-2 | 206 | 204 | 0 | 0 | 410 |
 | 3-5 | 274 | 144 | 1 | 0 | 419 |
 | 6-8 | 147 | 98 | 0 | 0 | 245 |
-| HS | 208 | 346 | 73 | 0 | 627 |
+| HS | 209 | 345 | 73 | 0 | 627 |
 
-**K–8 targets** — Tier A 626/200–250 ✓ · Tier B 447/200–300 ✓.
+**K–8 targets** — Tier A 627/200–250 ✓ · Tier B 446/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
 - g3d-zero (best: C in df3-03-02)
 
-## One honest gate from Tier A — prediction-eligible (39 K–8 lessons)
+## One honest gate from Tier A — prediction-eligible (40 K–8 lessons)
 
 | lesson | course (grade) | total | focus domains | eligibility evidence |
 |---|---|--:|---|---|
@@ -45,7 +45,6 @@ across **65** lessons.
 | g7-03-02 — Vertical and Adjacent Angles | Grade 7: Geometry (G7) | 32/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-04-03 — Systems in the Real World | Grade 8: Linear Equations & Systems (G8) | 32/39 | equations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | md-05-02 — The Missing Side | Measurement, Time & Data (G3) | 32/39 | data distributions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
-| pr-02-01 — Testing a Table | Grade 7: Proportional Relationships (G7) | 32/39 | ratios & proportions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | pr-02-03 — Tables in Real Situations | Grade 7: Proportional Relationships (G7) | 32/39 | ratios & proportions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | rr-03-02 — The Better Buy | Ratios & Rates (G6) | 32/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | rr-03-03 — Rates That Predict | Ratios & Rates (G6) | 32/39 | ratios & proportions | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -58,9 +57,11 @@ across **65** lessons.
 | dpv-04-03 — Rounding in Context | Powers of Ten & Decimals (G5) | 30/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-04-02 — Back-Substituting for y | Grade 8: Linear Equations & Systems (G8) | 30/39 | equations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | ns-01-02 — Flip and Multiply | The Number System (G6) | 30/39 | multiplication decomposition | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| pr-02-01 — Testing a Table | Grade 7: Proportional Relationships (G7) | 30/39 | ratios & proportions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | sp-02-03 — Comparing Two Populations in Real Situations | Grade 7: Sampling & Probability (G7) | 30/39 | probability | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-02-02 — When There Are Infinitely Many | Grade 8: Linear Equations & Systems (G8) | 29/39 | equations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | pv2-03-02 — Rounding Word Problems | Place Value to a Million (G4) | 29/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| sp-02-01 — Are Two Groups Really Different? | Grade 7: Sampling & Probability (G7) | 29/39 | probability | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | tm-04-03 — The Converse and Distance | Grade 8: Transformations & Measurement (G8) | 29/39 | geometry & transformations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | dd-04b-02 — Comparing with Box Plots | Data & Distributions (G6) | 28/39 | data distributions | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
 | les-02-01 — When There Is No Solution | Grade 8: Linear Equations & Systems (G8) | 28/39 | equations | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -76,16 +77,14 @@ across **65** lessons.
 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 
-## Honest Tier-B ceilings — prediction would be redundant or unsafe (10)
+## Honest Tier-B ceilings — prediction would be redundant or unsafe (8)
 
 | lesson | course (grade) | total | status | reason |
 |---|---|--:|---|---|
 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
-| ssg2-02-02 — Bigger Grids | Grade 2: Shapes & Equal Shares (G2) | 29/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | dpv-03-01 — Lining Up the Places | Powers of Ten & Decimals (G5) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rr-05-03 — Ratios Capstone | Ratios & Rates (G6) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rno-04-03 — All Four Operations with Rational Numbers | Grade 7: Rational Number Operations (G7) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
-| sp-02-01 — Are Two Groups Really Different? | Grade 7: Sampling & Probability (G7) | 31/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | bv-02-03 — Reading a Line's Equation | Grade 8: Bivariate Statistics (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | bv-04-01 — Reading Two-Way Tables | Grade 8: Bivariate Statistics (G8) | 33/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | fg-03-03 — Comparing Rate and Initial Value | Grade 8: Functions (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
@@ -97,4 +96,4 @@ across **65** lessons.
 |--:|---|---|---|--:|---|---|--:|
 | 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
 
-Totals: 1701 lessons · A 834 · B 793 · C 74 · D 0.
+Totals: 1701 lessons · A 836 · B 791 · C 74 · D 0.

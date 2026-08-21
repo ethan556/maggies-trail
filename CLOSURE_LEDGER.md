@@ -196,3 +196,51 @@ CL-P0-008, CL-P0-009, CL-P0-013, CL-P1-010, CL-P1-011, CL-P1-014, CL-P1-015, CL-
 | CL-P1-049 | P1 | Prediction ceremony | 200 of 1,362 authored prediction gates did not meet the direct causal surface threshold in the deterministic audit — but that audit is a per-widget-type capability lookup that never reads a gate's own `predict.prompt`/`predict.reveal` text, so its 200-row flag measured widget-engine capability, not gate quality. | **CLOSED — WAVE D REVIEW COMPLETE, 200/200 REVIEWED, 0/200 REMOVED** | S329 human review of all 200 flagged rows against their own live `predict.prompt`/`predict.reveal` text: 169/200 are genuine informative prediction → action → reveal loops, retained unchanged; 31/200 already have no live `predict` block at all (resolved by unrelated later content revision); 0/200 were genuinely duplicated within their lesson or non-causal/arbitrary. Zero lesson edits; 179 signed KEEP dispositions in the ledger (18 of the 200 lessons reviewed but left undisposed — owned by other same-wave packets, all also classify retain). Full row-by-row evidence: `reports/closure/S329_CLOSURE_CL3.md`. | Reopen if a future detector that reads gate text directly (not widget_type) flags a specific gate, or if any undisposed lesson's predict content changes to reintroduce a genuine duplicate/non-causal gate. |
 | CL-P1-033 | P1 | Current full Vitest | Windows current branch is not green: 15 failures / 12,813 tests across 6 files; 321 files and 12,798 tests pass. | **OPEN — SOURCE FIXES APPLIED, WINDOWS RE-RUN STILL NEEDED** | S329 source audit fixed 3 concrete path-separator defects (`content.authoredKeys.s242.test.ts` + `widgets.buildReadout.s242.test.tsx`'s native-separator `globSync().split("/")`; `AvatarDisplay.fence.test.tsx`'s bare `/`-only path check; `deployability.test.ts`'s Linux-only `/proc/version` dependency) and 2 concrete temp-cleanup defects (`authz.s46.test.ts` + `badJson.s46.test.ts` deleting a temp dir with an open DB handle still inside it — Windows enforces the lock, POSIX doesn't). Audited and found no instance of the third named class (order-dependent Set/array expectations). Targeted run of all 6 fixed files: 20/21 pass; the 1 remaining failure is proven pre-existing/unrelated content-corpus drift via `git stash` A/B test. This sandbox cannot execute on Windows, so the row stays OPEN — close only on an actual Windows (or Windows CI) full-suite re-run. | Rerun full suite on Linux CI and Windows; the S236 focused learner-flow set remains green throughout (unchanged from the row's standing reopen condition). |
 
+## Session 330 post-recon closure review
+
+Targeted, bounded follow-up on the two OPEN rows whose own recorded condition explicitly names
+**browser**-level execution, not just source/test evidence: CL-P1-031 (closure condition: "current
+S221/S220 seal runs the complete semantic/test/build/browser chain") and CL-P0-003 (reopen
+condition: "Full tests/browser show route, persistence, or accessibility regression"). This review
+was not the S330 post-recon wave's primary goal — that wave redesigned 7 duplicate-template lesson
+collisions found by a 7-agent audit (full account in the "S330 post-recon addendum" section of
+`HANDOVER_COWORK_S316.md`) — but that wave produced the freshest current-tree semantic/test/build
+evidence available this session, so this entry checks it against each row's own stated condition
+rather than assuming it satisfies either. Per the ledger's own governing rule (line 3), neither row
+closes here.
+
+Fresh current-tree evidence gathered this pass, after all S330 post-recon content/test edits landed:
+`npx tsc --noEmit -p .` exits 0 with zero diagnostics (`/tmp/typecheck-s330-postrecon.log`, empty).
+`npm run build` exits 0; every route, including `/placement` and `/onboarding`, compiles and
+prerenders (`/tmp/build-s330-postrecon.log`). A fresh full `npx vitest run` — 727 test files, 15,772
+tests — finished at Test Files 73 failed / 654 passed, Tests 299 failed / 15,472 passed / 1 skipped
+(`/tmp/vitest-s330-postrecon-full.log`). Reconciled against the immediately-prior full run from
+earlier this same session (`/tmp/vitest-s330-full.log`, 74 failed files / 300 failed tests, captured
+before this wave's edits) via an exact sorted-`FAIL`-line `comm` diff: zero FAIL lines appear in the
+new run that were absent from the old one (no new failures anywhere in the suite), and exactly one
+FAIL line present in the old run is absent from the new one —
+`session244.chatgptWorkPrecache.test.ts > ... > is a deterministic, byte-current tracked manifest` —
+which is the expected, understood result of this wave's own report regeneration (the precache
+manifest's recorded workload/decision counts were stale and are now current), not a masked
+regression. One pre-existing failure touches the onboarding area in both the old and new run,
+unchanged by this session: `src/lib/onboarding.branches.s242.test.ts > ... > grade 0 offers every
+domain its catalogue carries` — a domain-catalogue-coverage gap, unrelated to the legacy-quiz-vs-
+diagnostic inconsistency CL-P0-003 is actually about.
+
+A genuine attempt was made to close the remaining gap — real browser execution — via
+`npx playwright test e2e/smoke.spec.ts --project=chromium` (the repo's existing 3-test smoke spec
+covering dashboard/courses rendering, a lesson opening in the player, and a bad-date API 400). Two
+attempts (180s, then 280s outer timeouts) both hung without Playwright itself exiting, and the first
+attempt left an orphaned `next-server`/`npm run dev` process pair running unattended at 58–64% CPU /
+~2.9GB RAM, discovered still competing with the concurrently-running vitest gate and cleaned up with
+a targeted `kill -9` on the specific PIDs. This was judged an unreliable path in this sandbox rather
+than retried further, per the standing "avoid rabbit holes" discipline — so the browser leg of
+either row's condition remains genuinely unobtained here, not quietly assumed. (CL-P1-033, the
+separate full-Vitest row, names a Windows-specific re-run condition this Linux-sandbox run does not
+speak to either way; it is not rescored by this entry.)
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-031 | P1 | Release-environment provenance | The semantic/test/build legs of this row's closure condition now have same-session current-tree evidence; the browser leg — the specific reason this row has stayed open since S221 — was attempted and could not be obtained in this sandbox. | **OPEN — SEMANTIC/TEST/BUILD LEGS CURRENT, BROWSER LEG UNOBTAINABLE HERE** | `/tmp/typecheck-s330-postrecon.log` (0 diagnostics), `/tmp/build-s330-postrecon.log` (exit 0), `/tmp/vitest-s330-postrecon-full.log` reconciled zero-new-failures against `/tmp/vitest-s330-full.log`. Playwright attempt log: two hung runs, no captures produced. Close when a Playwright-capable environment (or a sandbox where the Next dev server does not hang under Playwright) runs the existing `e2e/` suite against this seal. |
+| CL-P0-003 | P0 | Onboarding/placement | This row's own reopen trigger is "full tests/browser show a regression." The "tests" half now has current-tree confirmation of zero new regressions anywhere in the suite (one pre-existing, unrelated onboarding-area failure is unchanged from before this session, per above). The "browser" half — real `/placement` and `/onboarding` route navigation, persistence-across-navigation, and accessibility-tree checks — was attempted via the same Playwright run as CL-P1-031 and could not be obtained. | **CLOSED-SOURCE / RUNTIME REPROVE OPEN (unchanged) — TESTS REFRESHED, BROWSER LEG UNOBTAINABLE HERE** | Same typecheck/build/vitest evidence as CL-P1-031, plus the fresh build's confirmation that both `/placement` and `/onboarding` compile and prerender cleanly. No route/persistence/accessibility regression appears in the current-tree test evidence. Close (or definitively reopen) only once genuine browser-level route/persistence/accessibility evidence is captured — this pass did not produce it. |
+

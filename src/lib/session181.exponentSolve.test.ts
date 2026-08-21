@@ -167,9 +167,13 @@ describe("exponentSolve: the 8 frozen steps self-derive their frozen answers (S1
   // the exactNumberLab/exponentSolve engine onto a plain `numeric` widget — the new ch1 tasks are
   // no longer expressible as this engine's b^x = target shape, so all three are dropped here
   // (11 → 8). The remaining k1/k2/k3 rows are untouched.
+  // Post-S330 audit-wave redesign (LESSON_PROGRESSION_AND_DUPLICATION): exp-03-01/k2 reworded to
+  // a repeated-multiplication story (6^x=216, was 2^x=32), 5→3. exp-03-02/k2 reworded to a
+  // "find the power" framing (5·4^x=1280, was 7·2^x=56), 3→4. exp-03-02/k3's answer is unchanged
+  // (3·5^x=75 still solves to x=2, same as the original 2·5^x=50) — only its wording changed.
   const FROZEN: Array<[string, string, number]> = [
-    ["exp-03-01", "k1", 4], ["exp-03-01", "k2", 5],
-    ["exp-03-02", "k1", 3], ["exp-03-02", "k2", 3], ["exp-03-02", "k3", 2],
+    ["exp-03-01", "k1", 4], ["exp-03-01", "k2", 3],
+    ["exp-03-02", "k1", 3], ["exp-03-02", "k2", 4], ["exp-03-02", "k3", 2],
     ["exp-03-03", "k1", -2], ["exp-03-03", "k2", -4], ["exp-03-03", "k3", -2],
   ];
   const doc = (id: string) =>

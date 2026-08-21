@@ -148,9 +148,25 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
       // aside G3 flagged but correctly left unactioned ("A bigger percent increase" on a smaller
       // rate, 50->60/+20%, than sibling k1's 80->100/+25%); reworded to "Another percent
       // increase." (matching k1's own neutral body text), re-disposed against the fresh hash.
-      "pending-workload": 121,
+      // Post-S330 adversarial audit wave (same "complete ALL tasks" directive): 7 parallel
+      // read-only agents re-reviewed all 89 remaining LESSON_PROGRESSION_AND_DUPLICATION rows'
+      // KEEP rationale plus the 32 out-of-authority rows; found 7 lessons (exp-03-01, exp-03-02,
+      // exp-04-01, exp-04-02, fn-04-01, lf-04-01, pr-04b-01) whose detector-flagged collision(s)
+      // the S330 wave had not yet reached. All 7 redesigned (fn-04-01 was a 5-way template
+      // cluster on 4 flagged steps; the rest 1-2 flagged steps each), each verified via live
+      // Lesson.parse + lintLesson + evaluate()/exactNumberTruth against the app's own runtime
+      // code (not hand-computation alone), then re-disposed against fresh post-edit hashes.
+      // Queue 121 -> 114 (LESSON_PROGRESSION_AND_DUPLICATION 89 -> 82; the 32 out-of-authority
+      // rows unchanged). Decisions 3636 -> 3650 (7 new records citing the redesigns, decision=
+      // REVISE -- then a same-session correction, 7 more records superseding those to decision=
+      // KEEP, since REVISE is the consolidator's forward-looking "not yet implemented" flag and
+      // the redesigns were already done and verified before the first 7 records were written;
+      // using REVISE had correctly but unintentionally opened 7 LESSON_REVISION_IMPLEMENTATION
+      // rows, which the KEEP correction closed). Duplicates and visual placements unchanged;
+      // topLevelLessonSteps unchanged (redesigns rewrote existing steps in place).
+      "pending-workload": 114,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 3636,
+      "lesson-review-decisions": 3650,
       "exact-mcq-duplicates": 100,
       "visual-placement-index": 3573,
       "choice-surface-index": 0,

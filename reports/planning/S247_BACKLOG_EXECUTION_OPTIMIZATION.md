@@ -2,19 +2,19 @@
 
 ## Executive summary
 
-- **The live backlog is 121, 14,326 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `c4579df8be3b1a24bd114eb32cd2e66ea1e8e63d5808e637aa3f27113a1e8b02` at commit `7778cf7a`.
-- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 35 primary portfolios: 32 course portfolios, 1 standards parent-family portfolio, 0 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 0 exact generator tags remain required subgroups. That is 3.46× fewer context scopes without deleting or auto-closing a single task.
+- **The live backlog is 114, 14,333 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `0eb5bc2f57e0d7add000875ee193bb8ad28545bbc5dbbefa5b1cb791fdf53866` at commit `f90b251c`.
+- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 35 primary portfolios: 32 course portfolios, 1 standards parent-family portfolio, 0 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 0 exact generator tags remain required subgroups. That is 3.26× fewer context scopes without deleting or auto-closing a single task.
 - **The fastest safe path is course-first, cause-first and evidence-last.** Read each course once, emit all semantic contracts, implement file-disjoint causes, run deterministic evidence once, and obtain an independent verdict. Standards use a separate exact-code cache and retain edge-level decisions.
 
 ## Dataset and grain
 
-The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 121/121 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
+The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 114/114 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
 
-## The breakthrough: 121 rows become 35 claimable portfolios
+## The breakthrough: 114 rows become 35 claimable portfolios
 
 | Portfolio class | Queue rows | Primary scopes | Rows per scope | P0 rows | Maximum scope |
 |---|---:|---:|---:|---:|---:|
-| COURSE_PORTFOLIO | 90 | 32 | 2.81 | 1 | 9 |
+| COURSE_PORTFOLIO | 83 | 32 | 2.59 | 1 | 7 |
 | PROGRAM_SHARED_PORTFOLIO | 29 | 2 | 14.5 | 15 | 22 |
 | STANDARD_FAMILY_PORTFOLIO | 2 | 1 | 2 | 0 | 2 |
 
@@ -22,20 +22,20 @@ This is a context-loading optimization, not a quality shortcut. A portfolio owns
 
 ## One course read should drive every local decision
 
-The 32 course portfolios cover 90 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
+The 32 course portfolios cover 83 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
 
 Top closure-leverage course portfolios:
 
 | Course | Rows | P0 | Lessons | Workstreams |
 |---|---:|---:|---:|---|
-| exponential-functions | 9 | 0 | 9 | LESSON_PROGRESSION_AND_DUPLICATION |
-| functions-and-sequences | 8 | 0 | 8 | LESSON_PROGRESSION_AND_DUPLICATION |
-| proportional-relationships | 8 | 0 | 8 | LESSON_PROGRESSION_AND_DUPLICATION |
-| linear-functions | 5 | 0 | 5 | LESSON_PROGRESSION_AND_DUPLICATION |
+| functions-and-sequences | 7 | 0 | 7 | LESSON_PROGRESSION_AND_DUPLICATION |
+| proportional-relationships | 7 | 0 | 7 | LESSON_PROGRESSION_AND_DUPLICATION |
+| exponential-functions | 5 | 0 | 5 | LESSON_PROGRESSION_AND_DUPLICATION |
 | the-real-number-system | 5 | 0 | 5 | LESSON_PROGRESSION_AND_DUPLICATION |
 | arrays-even-odd-g2 | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
 | decimals-place-value | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
 | functions-g8 | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
+| linear-functions | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
 | long-division-g5 | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
 | measure-money-time | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
 | number-line-g2 | 4 | 0 | 4 | LESSON_PROGRESSION_AND_DUPLICATION |
@@ -66,7 +66,7 @@ All 0 generator rows compile into 0 coherent grade/course domains while retainin
 - **Math rendering:** 0 rows compile into 0 symbol × surface × source contracts. Repair the renderer boundary once, then verify every dependent field and screen-reader string.
 - **Illustrations:** 0 rows compile into 0 figure+course contracts and 0 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
 - **Generators:** 0 generated rows compile into 0 parent domains, 0 required exact-tag contracts and 0 tag-bounded microbatches. Reuse domain context, but run the prompt-only oracle, deterministic replay and verdict independently per tag.
-- **Progression and choices:** 89 progression rows are 31 course contracts; 0 choice rows are 0 authored-course or generator contracts.
+- **Progression and choices:** 82 progression rows are 31 course contracts; 0 choice rows are 0 authored-course or generator contracts.
 
 ## Optimized operating sequence
 

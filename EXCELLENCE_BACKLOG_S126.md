@@ -9,7 +9,7 @@ Regenerate with `npm run audit:excellence`. This report is generated from live l
 - Deterministically classified representation-novelty rows: **0**
 - UNREVIEWED: **0**
 - Representation absent: **0**; partial: **0**
-- Honest prediction ceilings currently detected outside the C/D queue: **20**
+- Honest prediction ceilings currently detected outside the C/D queue: **18**
 
 ## Candidate disposition
 
@@ -44,14 +44,12 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 - **mmt-02-01** (G2, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-01** (G2, B24): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-02** (G2, B27): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
-- **ssg2-02-02** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ssg2-02-03** (G2, B24): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ssg2-03-03** (G2, B25): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **dop-01-03** (G5, B27): unsafe — The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface.
 - **dpv-03-01** (G5, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **rr-05-03** (G6, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **rno-04-03** (G7, B31): unsafe — The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface.
-- **sp-02-01** (G7, B31): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **bv-02-03** (G8, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **bv-04-01** (G8, B33): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **fg-03-03** (G8, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
@@ -65,7 +63,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 ## Representation-presence audit
 
-The strict whole-corpus text scan found **47** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the classified rows above are authoritative for this phase.
+The strict whole-corpus text scan found **48** candidates where a graded answer surface names a graph/table/ruler/grid/number line/figure without a step-level rendered object. These are candidates, not automatic defects; the classified rows above are authoritative for this phase.
 
 - cx-01-01/k1 [numeric] — Read it off the figure. Compute the distance from A(1, 2) to B(7, 10).
 - cx-01-03/k2 [numeric] — Perimeter on the grid. Find the perimeter of the triangle with vertices (0, 0), (3, 4), (6, 0).
@@ -85,6 +83,7 @@ The strict whole-corpus text scan found **47** candidates where a graded answer 
 - exp-04-01/i3 [numeric] — Read the start. The graph of f(x) = 7 · 2^x has what y-intercept?
 - ee-05-02/k2 [buildExpression] — Read a graph. A number line shows a CLOSED circle at 4 with the arrow pointing RIGHT. Which inequality does this graph?
 - ee-05-02/k3 [mcq] — Test a point against a graph. The graph shows x < 0 (open circle at 0, arrow left). Does x = -3 satisfy it?
+- fn-01-03/i2 [mcq] — Does the rule stop at the table's edge? The table only shows f(1) = 2, f(2) = 4, f(3) = 6. A student says f(20) is unknown because 20 never appears in the table. Which is correct?
 - fg-02-03/k1 [numeric] — Read initial value from a table. A table shows x: 0, 1, 2 with y: 7, 10, 13. What is the initial value?
 - fg-03-01/k3 [buildExpression] — Read initial value from a graph description. A graphed line crosses the y-axis at 4 and rises 1 for every 1 across. Its equation is:
 - gf-02-01/i1 [numeric] — Read the ruler. On a number line, P has coordinate 2 and Q has coordinate 9. What is PQ?
@@ -94,7 +93,7 @@ The strict whole-corpus text scan found **47** candidates where a graded answer 
 - mmt-05-03/i1 [numeric] — Count the X's. A line plot shows 3 x's above the number 5 and 1 x above the number 6. How many data points are at 5?
 - mmt-05-03/k1 [numeric] — Another number's X's. A line plot shows 6 x's above the number 8 and 2 x's above the number 9. How many data points are at 8?
 - mmt-05-03/i3 [numeric] — Three stacks this time — read the one the question asks for, not the biggest. A line plot shows 4 x's above the number 2, 2 x's above the number 3, and 1 x above the number 4. How many data points are at 4?
-- mmt-05-03/k3 [numeric] — A bigger X-count. A line plot shows 10 x's above the number 6 and 1 x above the number 7. How many data points are at 6?
+- mmt-05-03/k3 [numeric] — Four stacks — the tallest one isn't what's asked. A line plot shows 2 x's above the number 3, 6 x's above the number 5, 1 x above the number 7, and 4 x's above the number 9. How many data points are at 7?
 - g4v-02-03/k2 [mcq] — Apply without the opening model: A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?
 - g4v-03-04/k1 [mcq] — A bar diagram shows 5 equal parts of 300 m, with 80 m crossed off the end. What does it record?
 - md-03-02/k1 [mcq] — Which bar wins? A bar graph of books read: Mon 4, Tue 7, Wed 7, Thu 2. Which statement is TRUE?

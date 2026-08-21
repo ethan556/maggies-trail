@@ -222,6 +222,18 @@ const ORDER = [
   // feedback lint heuristic after G7's redesign landed; reworded (see rationale), re-disposed
   // against the fresh post-edit hash.
   "laneA-s330-recon.jsonl",
+  // Post-audit-wave redesigns (2026-08-21, same user directive "complete ALL tasks"): a 7-agent
+  // adversarial audit of the 89 rows the S330 wave left open found 7 lessons whose KEEP rationale
+  // was genuinely weak (structural collisions the detector's per-lesson pairwise check hadn't yet
+  // reached, or in fn-04-01's case a 5-way cluster). All 7 redesigned; see rationale per record.
+  "laneA-s330-postrecon-progression.jsonl",
+  // Correction: the above file used decision="REVISE" on 7 lessons whose redesign was already
+  // implemented and verified -- REVISE is a forward-looking flag (opens LESSON_REVISION_
+  // IMPLEMENTATION) and the consolidator correctly reacted by opening 7 such rows. Supersedes
+  // each of the 7 decisions to KEEP, matching the established s330-recon pattern for an
+  // already-completed, already-verified fix. Same reviewedBasisHash throughout (no further
+  // content change).
+  "laneA-s330-postrecon-progression-fix.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

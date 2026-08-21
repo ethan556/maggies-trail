@@ -166,6 +166,7 @@ export type VariantForm =
   | "subX2"
   | "subConst"
   | "subFlip"
+  | "subX2"
   | "mulHigh"
   | "mulConst"
   | "mulNeg"

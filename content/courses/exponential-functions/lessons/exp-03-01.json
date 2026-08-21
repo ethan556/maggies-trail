@@ -146,32 +146,32 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Higher power of two.",
+      "body": "Same idea, told as repeated multiplying.",
       "conceptTag": "exp-match-base",
       "explanationVariants": [
-        "32 = 2⁵ (2·2·2·2·2), so x = 5.",
-        "Double from 1: 2, 4, 8, 16, 32 is five steps, so x = 5."
+        "216 = 6³ (6·6·6), so x = 3.",
+        "Multiply by 6 three times: 6 → 36 → 216, so x = 3."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "Solve 2^x = 32.",
+        "prompt": "A machine's output multiplies by 6 every step, starting at 6. After how many steps does the output first reach 216?",
         "task": "exponentSolve",
         "values": [],
         "esCoef": 1,
-        "esBaseNum": 2,
+        "esBaseNum": 6,
         "esBaseDen": 1,
-        "esRhsNum": 32,
+        "esRhsNum": 216,
         "esRhsDen": 1,
         "answerMode": "numeric",
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 16,
-            "feedback": "16 = 2⁴, one short. 32 = 2⁵, so x = 5."
+            "value": 36,
+            "feedback": "36 is 216 ÷ 6 — that comes from treating the output as 6 × (steps), which is linear growth. This is MULTIPLYING by 6 each step instead: 6³ = 216, so the answer is 3 steps."
           },
           {
-            "value": 30,
-            "feedback": "This isn't 2·x = 32. 32 = 2⁵, so x = 5."
+            "value": 2,
+            "feedback": "After 2 steps the output is 6² = 36, not yet 216. One more step: 6³ = 216, so x = 3."
           }
         ],
         "choices": [],
@@ -183,8 +183,8 @@
         ],
         "requiredExplorations": 3,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "32 = 2⁵, so x = 5.",
-        "successFeedback": "32 = 2⁵, so x = 5."
+        "fallbackFeedback": "216 = 6³, so x = 3.",
+        "successFeedback": "216 = 6³, so x = 3."
       },
       "variant": {
         "gen": "a1-exponential",
@@ -202,23 +202,23 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Solve 4^x = 8.",
+        "prompt": "A student claims 4^x = 8 has no solution, since 8 never shows up in the list 4¹, 4², 4³, .... Are they right?",
         "options": [
           {
             "id": "a",
-            "label": "3/2",
+            "label": "No — 4^(3/2) = (√4)³ = 2³ = 8",
             "correct": true,
-            "feedback": "Yes — base 2: 2^(2x) = 2³ gives 2x = 3, so x = 3/2."
+            "feedback": "Right — the exponent doesn't have to be whole. 4^(3/2) = (√4)³ = 2³ = 8, so x = 3/2 solves it even though 8 isn't 4, 16, or 64."
           },
           {
             "id": "b",
-            "label": "2",
-            "feedback": "4² = 16, too big. Rewriting base 2 gives x = 3/2."
+            "label": "Yes — 8 truly is not 4, 16, or 64",
+            "feedback": "8 isn't a WHOLE-number power of 4, that part is true — but x doesn't have to be whole. 4^(3/2) = 2³ = 8, so a solution does exist."
           },
           {
             "id": "c",
-            "label": "1/2",
-            "feedback": "4^(1/2) = 2, too small. The answer is x = 3/2."
+            "label": "No — but only because the list has an arithmetic mistake",
+            "feedback": "The list itself is correct (4¹=4, 4²=16, 4³=64) — no arithmetic mistake there. The real gap is assuming x has to be whole: 4^(3/2) = 2³ = 8 works."
           }
         ]
       },
