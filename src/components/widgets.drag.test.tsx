@@ -2154,3 +2154,99 @@ describe("parametricTrace point drag — circle mode", () => {
     expect(screen.queryByTestId("ptr-drag")).toBeNull();
   });
 });
+
+/* ------------------------------------------------------------------ *
+ * S330 (CL-P1-057) — pointEntry's decorative, aria-hidden mini-grid
+ * becomes a genuine redundant drag input: a role=img SVG with a live
+ * coordinate label, always rendered (not gated on a complete typed
+ * pair), snapping drags to the integer lattice within a range fixed
+ * from the spec's own authored tuples (answer + commonEntries decoys)
+ * so the axes never rescale under a mid-drag pointer. Same contract as
+ * every other drag surface here: snapped values only, the typed fields
+ * remain the keyboard-parity path via the same emit(), no hit area
+ * when disabled.
+ * ------------------------------------------------------------------ */
+
+describe("pointEntry drag", () => {
+  const spec = WidgetSpec.parse({
+    type: "pointEntry",
+    prompt: "Plot (-2, 3).",
+    answer: [-2, 3],
+    commonEntries: [
+      { values: [3, -2], feedback: "Swapped — x first." },
+      { values: [2, 3], feedback: "Check the x-sign." }
+    ],
+    fallbackFeedback: "Read each move separately."
+  }) as TWidget;
+
+  // viewBox is a fixed 96x96; pinning the rect to the same size keeps client px == viewBox
+  // units. R = max(3, |answer|..., |decoys|...) + 2 = max(3,2,3, 3,2,2,3) + 2 = 5, so
+  // C=48, unit = (48-8)/5 = 8 px per integer step.
+
+  it("press on the grid places the tuple at the snapped point", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 96, 96);
+    const hit = screen.getByTestId("pe-drag");
+    // (-2, 3): x = 48 - 2*8 = 32; y = 48 - 3*8 = 24
+    fireEvent.pointerDown(hit, { clientX: 32, clientY: 24, pointerId: 1 });
+    expect(holder.v).toEqual([-2, 3]);
+  });
+
+  it("dragging within one gesture snaps continuously between lattice points, never a raw float", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 96, 96);
+    const hit = screen.getByTestId("pe-drag");
+    fireEvent.pointerDown(hit, { clientX: 32, clientY: 24, pointerId: 1 });
+    expect(holder.v).toEqual([-2, 3]);
+    // off-lattice toward (2, -1): raw x = 1.625 -> 2, raw y = -1.375 -> -1
+    fireEvent.pointerMove(hit, { clientX: 61, clientY: 59, pointerId: 1 });
+    expect(holder.v).toEqual([2, -1]);
+    fireEvent.pointerUp(hit, { clientX: 61, clientY: 59, pointerId: 1 });
+  });
+
+  it("clamps to the spec's fixed range at the grid's edge", () => {
+    const { holder, container } = mount(spec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 96, 96);
+    // far past the right edge, dead center vertically -> clamps to (R, 0) = (5, 0)
+    fireEvent.pointerDown(screen.getByTestId("pe-drag"), { clientX: 200, clientY: 48, pointerId: 1 });
+    expect(holder.v).toEqual([5, 0]);
+  });
+
+  it("the angle delimiter drags too, on ITS OWN decoy-derived range", () => {
+    const vec = WidgetSpec.parse({
+      type: "pointEntry",
+      prompt: "Enter the vector.",
+      answer: [3, -4],
+      delimiter: "angle",
+      commonEntries: [
+        { values: [-3, 4], feedback: "Reversed." },
+        { values: [4, -3], feedback: "Components swapped." }
+      ],
+      fallbackFeedback: "Tip minus tail, componentwise."
+    }) as TWidget;
+    // decoys reach 4, so R = max(3, 3,4, 3,4,4,3) + 2 = 6; unit = (48-8)/6 = 6.667 px.
+    const { holder, container } = mount(vec);
+    const svg = container.querySelector("svg") as SVGSVGElement;
+    pinRect(svg, 96, 96);
+    // (3, -4): x = 48 + 3*6.667 = 68; y = 48 + 4*6.667 = 74.67
+    fireEvent.pointerDown(screen.getByTestId("pe-drag"), { clientX: 68, clientY: 75, pointerId: 1 });
+    expect(holder.v).toEqual([3, -4]);
+  });
+
+  it("keeps the typed fields as the keyboard-parity path to the same graded value", () => {
+    const { holder } = mount(spec);
+    fireEvent.change(screen.getByRole("textbox", { name: "first value" }), { target: { value: "-2" } });
+    fireEvent.change(screen.getByRole("textbox", { name: "second value" }), { target: { value: "3" } });
+    expect(holder.v).toEqual([-2, 3]);
+  });
+
+  it("removes the drag surface when disabled; the typed fields stay put", () => {
+    mount(spec, true);
+    expect(screen.queryByTestId("pe-drag")).toBeNull();
+    expect(screen.getByRole("textbox", { name: "first value" })).toBeTruthy();
+    expect(screen.getByRole("textbox", { name: "second value" })).toBeTruthy();
+  });
+});

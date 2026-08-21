@@ -24,7 +24,7 @@ across **65** lessons.
 | K-2 | 206 | 204 | 0 | 0 | 410 |
 | 3-5 | 274 | 144 | 1 | 0 | 419 |
 | 6-8 | 147 | 98 | 0 | 0 | 245 |
-| HS | 209 | 345 | 73 | 0 | 627 |
+| HS | 209 | 346 | 72 | 0 | 627 |
 
 **K–8 targets** — Tier A 627/200–250 ✓ · Tier B 446/200–300 ✓.
 
@@ -77,7 +77,7 @@ across **65** lessons.
 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 
-## Honest Tier-B ceilings — prediction would be redundant or unsafe (8)
+## Honest Tier-B ceilings — prediction would be redundant or unsafe (9)
 
 | lesson | course (grade) | total | status | reason |
 |---|---|--:|---|---|
@@ -89,6 +89,7 @@ across **65** lessons.
 | bv-04-01 — Reading Two-Way Tables | Grade 8: Bivariate Statistics (G8) | 33/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | fg-03-03 — Comparing Rate and Initial Value | Grade 8: Functions (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rns-02-03 — The Real Number Line Has No Gaps | Grade 8: The Real Number System (G8) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
+| tm-01-03 — Turning with Rotations | Grade 8: Transformations & Measurement (G8) | 30/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
 
 ## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 1)
 
@@ -96,4 +97,4 @@ across **65** lessons.
 |--:|---|---|---|--:|---|---|--:|
 | 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
 
-Totals: 1701 lessons · A 836 · B 791 · C 74 · D 0.
+Totals: 1701 lessons · A 836 · B 792 · C 73 · D 0.

@@ -1534,7 +1534,7 @@ const ACTION_DEFAULT =
   "Every control is a native button, slider, or text field — Tab moves between them, arrow keys adjust sliders, Enter or Space activates buttons. Anything draggable has this keyboard path too.";
 
 const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
-  pointEntry: "Type each coordinate into its labelled field (first value, second value); minus signs are allowed. The mini-grid shows your point as you type.",
+  pointEntry: "Type each coordinate into its labelled field (first value, second value); minus signs are allowed. You can also drag the point directly on the grid, which always shows the current point live.",
   placeCompare: "Tab to the comparison symbols — less than, equal to, greater than — and press the one that holds.",
   lengthCompare: "Each object is a button naming its length in units. Tab between them and press the one your answer picks.",
   absValueLine: "Each number is a button under the line; a separate button says they're the same distance. Press your choice.",

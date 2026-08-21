@@ -9,7 +9,7 @@ Regenerate with `npm run audit:excellence`. This report is generated from live l
 - Deterministically classified representation-novelty rows: **0**
 - UNREVIEWED: **0**
 - Representation absent: **0**; partial: **0**
-- Honest prediction ceilings currently detected outside the C/D queue: **18**
+- Honest prediction ceilings currently detected outside the C/D queue: **19**
 
 ## Candidate disposition
 
@@ -30,9 +30,9 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 | band | causal widget steps | exploration causal coverage | lessons with causal spine |
 |---|---:|---:|---:|
 | K–2 | 1014/2538 (40.0%) | 734/890 (82.5%) | 405/410 (98.8%) |
-| G3–5 | 726/2543 (28.5%) | 630/851 (74.0%) | 404/419 (96.4%) |
-| G6–8 | 510/1553 (32.8%) | 327/566 (57.8%) | 232/245 (94.7%) |
-| HS | 613/3644 (16.8%) | 550/1202 (45.8%) | 503/627 (80.2%) |
+| G3–5 | 728/2543 (28.6%) | 630/851 (74.0%) | 404/419 (96.4%) |
+| G6–8 | 516/1553 (33.2%) | 327/566 (57.8%) | 232/245 (94.7%) |
+| HS | 623/3644 (17.1%) | 550/1202 (45.8%) | 503/627 (80.2%) |
 
 ## Honest prediction ceilings
 
@@ -54,6 +54,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 - **bv-04-01** (G8, B33): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **fg-03-03** (G8, B32): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **rns-02-03** (G8, B31): unsafe — The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface.
+- **tm-01-03** (G8, B30): unsafe — The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface.
 
 ## Classified queue
 

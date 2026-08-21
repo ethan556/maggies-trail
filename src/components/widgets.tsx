@@ -1004,27 +1004,68 @@ function PointEntryW({ spec, value, onChange, disabled, onEvent, tone }: WProps<
     if (complete) onChange(nums as number[]);
     else onChange(null);
   };
-  // Live mini-grid of the LEARNER's tuple (ROLE.active = sky, axes = ink): a dot
-  // for a point, an origin arrow for a vector — sign and quadrant become visible
-  // as they type. Draws only the learner's own entry; 2-slot tuples only.
-  const pv = spec.answer.length === 2 ? raws.map(parse) : [];
-  const pvOk = pv.length === 2 && pv.every((n) => typeof n === "number" && !Number.isNaN(n));
-  const [px, py] = pvOk ? (pv as number[]) : [0, 0];
-  const R = pvOk ? Math.max(Math.abs(px), Math.abs(py), 1) + 1 : 0;
+  // Live mini-grid: a dot for a point, an origin arrow for a vector. Always
+  // rendered (S330/CL-P1-057) — before both slots parse it shows the origin,
+  // so a learner can START from the grid instead of only confirming a typed
+  // guess after the fact. The visible range is fixed from the AUTHORED
+  // tuples (the answer plus every commonEntries decoy, longest axis plus a
+  // margin) rather than the learner's own entry, so the axes never rescale
+  // under a mid-drag pointer — only the point on the grid moves, never the
+  // frame around it.
+  const only2D = spec.answer.length === 2;
+  const numOr0 = (n: number | null) => (typeof n === "number" && !Number.isNaN(n) ? n : 0);
+  const decoyMags = spec.commonEntries.flatMap((e) => e.values.slice(0, 2).map((n) => Math.abs(n)));
+  const R = only2D ? Math.max(3, Math.abs(spec.answer[0]), Math.abs(spec.answer[1]), ...decoyMags) + 2 : 1;
+  const clampToGrid = (v: number) => Math.max(-R, Math.min(R, v));
+  const px = clampToGrid(numOr0(parse(raws[0])));
+  const py = only2D ? clampToGrid(numOr0(parse(raws[1]))) : 0;
   const S = 96, C = S / 2;
   const sx = (x: number) => C + (x / R) * (C - 8);
   const sy = (y: number) => C - (y / R) * (C - 8);
-  const miniGrid = pvOk ? (
-    <svg viewBox={`0 0 ${S} ${S}`} className="mx-auto h-24 w-24" aria-hidden="true">
+  // Drag is a REDUNDANT input (useSvgDrag contract): the typed fields above stay the
+  // keyboard-parity path and the only route the accessibility tree sees, so every drag
+  // update is routed through the SAME emit() the typed onChange already uses — grading
+  // cannot tell, and does not care, which input produced the tuple.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const placeAt = (nx: number, ny: number) => {
+    const next = raws.slice();
+    next[0] = String(nx);
+    next[1] = String(ny);
+    setRaws(next);
+    emit(next);
+  };
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: S,
+    viewH: S,
+    disabled,
+    onDrag: (vx, vy) => {
+      const nx = snapToStep(((vx - C) / (C - 8)) * R, -R, R, 1);
+      const ny = snapToStep(((C - vy) / (C - 8)) * R, -R, R, 1);
+      if (nx !== px || ny !== py) placeAt(nx, ny);
+    }
+  });
+  const signed = (n: number) => (n < 0 ? `−${-n}` : `${n}`);
+  const miniGrid = only2D ? (
+    <svg
+      ref={svgRef}
+      viewBox={`0 0 ${S} ${S}`}
+      className="mx-auto h-24 w-24"
+      role="img"
+      aria-label={`${spec.delimiter === "angle" ? "Vector" : "Point"} plot: ${lb}${signed(px)}, ${signed(py)}${rb}${disabled ? "" : ". Drag to move it."}`}
+    >
       <line x1={2} y1={C} x2={S - 2} y2={C} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.5} />
       <line x1={C} y1={2} x2={C} y2={S - 2} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.5} />
       {spec.delimiter === "angle" ? (
-        <g>
+        <g aria-hidden="true">
           <line x1={C} y1={C} x2={sx(px)} y2={sy(py)} stroke={tone === "error" ? PALETTE.berry : PALETTE.sky} strokeWidth={2.4} />
           <circle cx={sx(px)} cy={sy(py)} r={3.4} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} />
         </g>
       ) : (
-        <circle cx={sx(px)} cy={sy(py)} r={4.2} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} stroke="#fff" strokeWidth={1.2} />
+        <circle aria-hidden="true" cx={sx(px)} cy={sy(py)} r={4.2} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} stroke="#fff" strokeWidth={1.2} />
+      )}
+      {!disabled && (
+        <rect className="mt-drag-hit" data-testid="pe-drag" aria-hidden="true" x={0} y={0} width={S} height={S} {...drag.handleProps} />
       )}
     </svg>
   ) : null;
