@@ -6738,18 +6738,32 @@ function SolutionRay() {
 }
 
 
-/** asv-01-01's image: a triangle inside its enclosing rectangle, half shaded to show area = 1/2 base x height. */
+/**
+ * asv-01-01's image: a triangle inside its enclosing rectangle, half shaded to show area = 1/2 base x height.
+ *
+ * CL-P1-051 fix (S329): the old `viewBox="0 0 240 130"` was too narrow for its own right-side
+ * "height" label (modelled box x:[216..263.52], clipRight margin -23.52 against a 240-wide
+ * viewBox — the SVG's own overflow:hidden root clips it, independent of screen width) and its
+ * center caption sat ON the hypotenuse (modelled caption box x:[15.16..244.84] y:[74.22..88.08]
+ * vs the hypotenuse segment (40,110)-(200,20), which crosses that box — confirmed with a
+ * Liang-Barsky segment/rect test). Widening the viewBox to 280x160 clears the height-label clip
+ * (new margin +16.48) and moving the caption below the whole figure — same "summary caption
+ * under the shape" placement `LShapeDecompose`/`PrismNet` already use — puts its whole box at
+ * y:[137.22..151.08], entirely below the shape's y<=110 extent, so the hypotenuse cannot cross
+ * it (mathematically, not just empirically). All three labels keep zero pairwise collisions
+ * under textBoxes.testkit.ts's exact box model. See reports/closure/S329_CLOSURE_CL2.md.
+ */
 function TriangleHalfRectangle() {
   const ox = 40, oy = 20, w = 160, h = 90;
   return (
-    <svg viewBox="0 0 240 130" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 280 160" role="img" className="mx-auto w-full max-w-sm">
       <title>A triangle sits inside a rectangle of the same base and height; the triangle covers exactly half the rectangle's area.</title>
       <rect x={ox} y={oy} width={w} height={h} fill="none" stroke={INK} strokeWidth={1.5} strokeDasharray="4 3" opacity={0.5} />
       <polygon points={`${ox},${oy + h} ${ox + w},${oy + h} ${ox + w},${oy}`} fill={SKY} opacity={0.25} />
       <polygon points={`${ox},${oy + h} ${ox + w},${oy + h} ${ox + w},${oy}`} fill="none" stroke={SKY} strokeWidth={2.5} />
       <text x={ox + w / 2} y={oy + h + 20} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>base</text>
       <text x={ox + w + 16} y={oy + h / 2} fontSize={11} fontWeight={700} fill={INK}>height</text>
-      <text x={ox + w / 2 + 10} y={oy + h / 2 + 20} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>
+      <text x={140} y={oy + h + 38} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>
         triangle = half the rectangle
       </text>
     </svg>
@@ -17229,6 +17243,81 @@ function VmLShape() {
       <text x={64} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>box 1</text>
       <text x={115} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>box 2</text>
       <text x={100} y={104} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>cut, then add</text>
+    </svg>
+  );
+}
+
+/**
+ * g5v-03-01 (S328, closes S327-A4's ESCALATE): the lesson's own defining action — a
+ * rectangular notch cut from one corner of a full rectangular block, then subtracted —
+ * had no visual anywhere (neither barBuilder widget ever renders the notch; it is only
+ * narrated in feedback text). This is deliberately RECTANGULAR and unit-cube-registered
+ * (not sg-subtracting's circle/pricing register) and ADDITIVE-free (not vm-l-shape's or
+ * vm-add-volumes' "cut into two boxes and add" method, which is the wrong operation for
+ * this lesson). Numbers (48, 15, 33) are a fresh illustrative instance distinct from every
+ * worked pair already in this lesson (i1 30−8=22, i2 28−6=22, k2 24−16=8, ch1 36−24=12,
+ * remedial 28−6=22) so binding this to c1 — which sits before i1's predict-before-reveal
+ * question ("A 5-by-6 block with an 8-cube notch — volume? 22 or 38") — cannot hand the
+ * learner that answer; the dashed corner is drawn "removed" (white fill, dashed BERRY
+ * stroke), following sg-subtracting's own "outer minus removed" convention, so this reads
+ * as a same-family, register-corrected sibling rather than an unrelated new idiom.
+ */
+function VmNotchBlock() {
+  return (
+    <svg
+      viewBox="0 0 220 140"
+      role="img"
+      className="mx-auto w-full max-w-xs"
+      aria-label="A rectangular block with a rectangular notch cut from its top-right corner. The full block holds 48 unit cubes. The notch is drawn white with a dashed outline to show it is now empty space, removing 15 unit cubes. The remaining solid holds 48 minus 15, which is 33, unit cubes."
+    >
+      <title>Subtract the notch from the full block: 48 − 15 = 33 unit cubes remain.</title>
+      <rect x={25} y={25} width={140} height={70} fill={SKY} opacity={0.25} stroke={INK} strokeWidth={1.8} />
+      <rect x={110} y={25} width={55} height={35} fill="white" stroke={BERRY} strokeWidth={1.8} strokeDasharray="4 3" />
+      <text x={70} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>full block: 48</text>
+      <text x={137} y={46} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>notch: 15</text>
+      <text x={110} y={120} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>48 − 15 = 33 remain</text>
+    </svg>
+  );
+}
+
+/**
+ * g5v-03-03 (S328, closes S327-A4's ESCALATE): the lesson's central claim — that two
+ * differently-proportioned rectangular solids can hold the same volume — was only ever
+ * asserted in feedback prose (i1/i2's successFeedback); no widget shows the two solids
+ * side by side, and neither concept step carried a figure. Bound only to c2 (whose own
+ * sentence, "different shapes can hold identical volumes," is exactly this claim); NOT
+ * bound to c1, which precedes i1's own predict-before-reveal question ("A is 20×3 and B
+ * is 12×5. Which is larger? Equal — both 60, or A") — using the lesson's real numbers
+ * here would hand that answer away before the learner commits to a prediction. By the
+ * time c2 renders, i1 has already completed and its own successFeedback has already
+ * stated "60 — and B is also 60" in words, so drawing that same, already-revealed pair
+ * here adds the missing picture without previewing anything still ahead (i2's 14×4/7×8
+ * pair is untouched). Solid A (base 20, 3 layers) renders wide-and-short; Solid B (base
+ * 12, 5 layers) renders narrow-and-tall, sharing one ground line, so the different
+ * proportions are the whole visual point.
+ */
+function VmEqualVolumesCompare() {
+  return (
+    <svg
+      viewBox="0 0 280 170"
+      role="img"
+      className="mx-auto w-full max-w-md"
+      aria-label="Solid A, a wide short stack with base 20 and 3 layers, stands beside Solid B, a narrower taller stack with base 12 and 5 layers, both resting on the same ground line. Both hold exactly 60 unit cubes: 20 times 3 equals 60, and 12 times 5 also equals 60."
+    >
+      <title>Two differently shaped solids share one volume: 20 × 3 = 12 × 5 = 60.</title>
+      <rect x={35} y={70} width={100} height={36} fill={SKY} opacity={0.3} stroke={INK} strokeWidth={1.6} />
+      <line x1={35} y1={82} x2={135} y2={82} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={35} y1={94} x2={135} y2={94} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <rect x={175} y={46} width={60} height={60} fill={TANGERINE} opacity={0.3} stroke={INK} strokeWidth={1.6} />
+      <line x1={175} y1={58} x2={235} y2={58} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={70} x2={235} y2={70} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={82} x2={235} y2={82} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={94} x2={235} y2={94} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={30} y1={106} x2={240} y2={106} stroke={INK} strokeWidth={1.8} />
+      <text x={85} y={55} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>base 20 × 3 layers</text>
+      <text x={205} y={32} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>base 12 × 5 layers</text>
+      <text x={155} y={80} textAnchor="middle" fontSize={18} fontWeight={900} fill={INK}>=</text>
+      <text x={140} y={130} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>20 × 3 = 12 × 5 = 60</text>
     </svg>
   );
 }
@@ -30896,6 +30985,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "vm-add-volumes": VmAddVolumes,
   "vm-no-overlap": VmNoOverlap,
   "vm-l-shape": VmLShape,
+  "vm-notch-block": VmNotchBlock,
+  "vm-equal-volumes-compare": VmEqualVolumesCompare,
 
   "cg-order-matters": CgOrderMatters,
   "cg-plot-walk": CgPlotWalk,

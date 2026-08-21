@@ -223,46 +223,42 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "One more, start to finish.",
+      "body": "This time, the overflow happens in the tens.",
       "conceptTag": "regroup-add",
       "explanationVariants": [
-        "Ones: 8 + 6 = 14 → 4 stays, 1 trades up. Tens: 5 + 1 + 1 = 7. Answer 74.",
-        "Jump-check: 58 + 10 = 68, + 6 = 74 — both roads agree."
+        "Ones: 3 + 1 = 4 — no overflow there. Tens: 9 + 8 = 17 → 7 stays, and this time a whole HUNDRED trades up. Answer 174.",
+        "Jump-check: 93 + 80 = 173, + 1 = 174 — both roads agree."
       ],
       "widget": {
         "type": "baseTenCompose",
-        "prompt": "58 + 16 = ? Build the sum in standard form with rods and cubes.",
-        "target": 74,
+        "prompt": "93 + 81 = ? The tens overflow this time — build the sum in standard form with flats, rods, and cubes.",
+        "target": 174,
         "requireStandard": true,
-        "maxHundreds": 0,
-        "maxTens": 9,
-        "maxOnes": 16,
+        "maxHundreds": 1,
+        "maxTens": 19,
+        "maxOnes": 9,
         "commonBuilds": [
           {
             "hundreds": 0,
+            "tens": 7,
+            "ones": 4,
+            "feedback": "074 dropped the trade receipt — the hundred that came from the tens' overflow (9+8=17) never joined the hundreds column: 1 hundred, 7 tens, 4 ones."
+          },
+          {
+            "hundreds": 0,
+            "tens": 17,
+            "ones": 4,
+            "feedback": "0-17-4 wrote all 17 tens in the tens spot. One digit per spot: trade ten of them for a hundred — 1 hundred, 7 tens, 4 ones."
+          },
+          {
+            "hundreds": 1,
             "tens": 6,
             "ones": 4,
-            "feedback": "64 lost the trade receipt — the traded ten must join the tens: 5 + 1 + 1 = 7 tens, not 6."
-          },
-          {
-            "hundreds": 0,
-            "tens": 6,
-            "ones": 14,
-            "feedback": "614 stuffed all 14 ones into the ones spot. One digit per spot: trade ten for a rod — 7 tens, 4 ones."
-          },
-          {
-            "hundreds": 0,
-            "tens": 7,
-            "ones": 3,
-            "feedback": "73 left only 3 ones behind — but 14 ones minus the 10 that traded is 4."
+            "feedback": "164 left only 6 tens behind — but 17 tens minus the 10 that traded is 7."
           }
         ],
-        "missFeedback": "Ones overflow (14), trade, then count tens with the receipt: 5 + 1 + 1 = 7. The sum is 74.",
-        "successFeedback": "7 rods and 4 cubes — the fourteen ones sent a ten across."
-      },
-      "variant": {
-        "gen": "base-ten-build",
-        "form": "tradeUp"
+        "missFeedback": "Ones first (3 + 1 = 4, no trade), then tens overflow (9 + 8 = 17 → trade a hundred, keep 7 tens). The sum is 174.",
+        "successFeedback": "1 flat, 7 rods, 4 cubes — the seventeen tens sent a hundred across, just like ones send a ten."
       },
       "cml": {
         "stage": "construct",

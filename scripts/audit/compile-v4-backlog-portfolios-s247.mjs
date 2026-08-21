@@ -222,9 +222,23 @@ if (standardFamilyGroups.size !== 1) throw new Error(`Expected 1 live standards 
 const generatorRows = queue.filter((row) => row.source.startsWith("generator:"));
 const generatorExactTagGroups = groupCount(generatorRows, (row) => generatorFromSource(row.source));
 const generatorDomainGroups = groupCount(generatorRows, (row) => generatorDomainFromTag(generatorFromSource(row.source)));
-if (generatorRows.length !== 166) throw new Error(`Expected 166 live generator rows, found ${generatorRows.length}.`);
-if (generatorExactTagGroups.size !== 57) throw new Error(`Expected 57 exact generator-tag contracts, found ${generatorExactTagGroups.size}.`);
-if (generatorDomainGroups.size !== 14) throw new Error(`Expected 14 stable generator domains, found ${generatorDomainGroups.size}.`);
+// S327 correction: the generator-engineering wave fixed all 57 owners across the 166 known
+// generator-sourced CHOICE_SURFACE_INTEGRITY rows (npx tsx scripts/audit/mcq-leakage.mts
+// now reports "items with any tell: 0" across all 5203 measured MCQ items, corpus-wide).
+// 0 live generator rows is the expected fully-closed state, not corruption -- tolerate it
+// (and the vacuous 0/0 subgroup counts that follow from an empty row set) without touching
+// the row-coverage/reconciliation invariants below. Any OTHER count still hard-fails: a
+// partial or inconsistent state (1-165, or 167+) is real drift worth investigating, not a
+// legitimate closure state.
+if (generatorRows.length !== 166 && generatorRows.length !== 0) {
+  throw new Error(`Expected 166 live generator rows, or 0 if the workstream is fully closed, found ${generatorRows.length}.`);
+}
+if (generatorRows.length === 166) {
+  if (generatorExactTagGroups.size !== 57) throw new Error(`Expected 57 exact generator-tag contracts, found ${generatorExactTagGroups.size}.`);
+  if (generatorDomainGroups.size !== 14) throw new Error(`Expected 14 stable generator domains, found ${generatorDomainGroups.size}.`);
+} else {
+  console.warn(`[s247] Generator-sourced CHOICE_SURFACE_INTEGRITY backlog is fully closed (0 live rows; was 166 across 57 tags / 14 domains). Generator-domain portfolio batching is moot for this workstream until it reopens.`);
+}
 
 const groupedAssignments = groupCount(assignments, (item) => `${item.portfolioClass}\u0000${item.portfolioKey}`);
 const classGuidance = {

@@ -297,9 +297,9 @@ divHandlers.DivZeroMcq = (r) => {
   // Conceptual: reasoning about undefined division, not a specific fact-family — no factFamily.
   return mcq(r, Dv, `What is ${n} ÷ 0?`,
     ["Undefined — division by zero has no answer", `Correct — there is no number that, multiplied by 0, gives ${n}, so ${n} ÷ 0 is undefined.`],
-    [["0", `If ${n} ÷ 0 = 0, then 0 × 0 would have to equal ${n}, which is false unless ${n} is 0.`],
-     [String(n), `If ${n} ÷ 0 = ${n}, then ${n} × 0 would have to equal ${n}, but ${n} × 0 = 0.`],
-     ["1", `If ${n} ÷ 0 = 1, then 1 × 0 would have to equal ${n}, but 1 × 0 = 0.`]]);
+    [["0 — dividing by zero gives nothing", `If ${n} ÷ 0 = 0, then 0 × 0 would have to equal ${n}, which is false unless ${n} is 0.`],
+     [`${n} — dividing by zero repeats the number`, `If ${n} ÷ 0 = ${n}, then ${n} × 0 would have to equal ${n}, but ${n} × 0 = 0.`],
+     ["1 — dividing by zero always equals one", `Multiplying back doesn't work either: 1 × 0 = 0, not ${n}, so ${n} ÷ 0 can't be 1.`]]);
 };
 
 const mixedDivPool = fullFactUniverse(2, 10);

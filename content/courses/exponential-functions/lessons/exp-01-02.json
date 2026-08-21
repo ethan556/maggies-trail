@@ -297,26 +297,26 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Decay, four steps out.",
+      "body": "A half-life word problem.",
       "conceptTag": "exp-growth-decay",
       "explanationVariants": [
-        "(1/2)⁴ = 1/16, then 32 · 1/16 = 2.",
-        "32 → 16 → 8 → 4 → 2, so f(4) = 2."
+        "Halve four times from 320: 320 → 160 → 80 → 40 → 20.",
+        "f(4) = 320 · (1/2)⁴ = 320/16 = 20."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "For f(x) = 32 · (1/2)^x, what is f(4)?",
+        "prompt": "A medicine dose starts at 320 mg and is cut in half by the body every hour (its half-life is 1 hour). How much remains after 4 hours?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
             "id": "a",
-            "label": "the start amount",
-            "value": 32
+            "label": "the starting dose (mg)",
+            "value": 320
           },
           {
             "id": "h",
-            "label": "the decay factor 1/2 (one factor per step)",
+            "label": "the fraction remaining each hour (half-life = 1 hour)",
             "value": 0.5
           }
         ],
@@ -357,12 +357,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 4,
-            "feedback": "That's f(3). One more halving gives f(4) = 2."
+            "value": 40,
+            "feedback": "That's the amount after 3 hours. One more halving: 40 ÷ 2 = 20 after the 4th hour."
           },
           {
-            "value": 8,
-            "feedback": "That's f(2). Keep going: f(3) = 4, f(4) = 2."
+            "value": 80,
+            "feedback": "Each hour halves the CURRENT amount again (not the original divided by the hour count): 320 → 160 → 80 → 40 → 20."
           }
         ],
         "choices": [],
@@ -374,18 +374,14 @@
         ],
         "requiredExplorations": 3,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "f(4) = 32 · (1/2)⁴ = 32/16 = 2.",
-        "successFeedback": "f(4) = 32 · (1/2)⁴ = 32/16 = 2."
+        "fallbackFeedback": "After 4 hours: 320 · (1/2)⁴ = 20 mg.",
+        "successFeedback": "After 4 hours: 320 · (1/2)⁴ = 20 mg."
       },
       "hints": [
-        "Halve repeatedly from 32.",
-        "32 → 16 → 8 → 4 → 2.",
-        "That's four halvings, so f(4) = 2."
-      ],
-      "variant": {
-        "gen": "a1-exponential",
-        "form": "exp-growth-decay__numeric"
-      }
+        "Halve the CURRENT amount each hour, not the original.",
+        "320 → 160 → 80 → 40 → 20.",
+        "After 4 hours: 20 mg remain."
+      ]
     },
     {
       "id": "r1",

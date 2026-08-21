@@ -156,21 +156,28 @@ describe("S197 expressions-patterns-g5 — routes re-derived, grid caps held", (
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveG4(s.variant.form, { prompt: w.prompt, options: [] });
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
 
-          const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
-          const f = s.variant.form as string;
-          // re-derive positionally: a number in the prose ahead of the expression becomes ns[0]
-          if (f === "mbMultiStepNumeric") {
-            expect(n[0] * n[1] - n[2],
-              `${lesson.id}/${s.id}: ns0*ns1−ns2 must be the answer — this route IS order of operations`)
-              .toBe(w.answer);
+          // g5e-01-04/k3 has no `variant`: S327_FIX_PG6.md redesigned it to a diagnose-a-worked-error
+          // prompt and intentionally dropped the g4-multiply/mbMultiStepNumeric tag, since that
+          // generator produces an unrelated "class buys packs of markers" problem. Mirrors the
+          // `if (s.variant)` guard already used below for mcq widgets.
+          if (s.variant) {
+            const derived = solveG4(s.variant.form, { prompt: w.prompt, options: [] });
+            expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+
+            const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
+            const f = s.variant.form as string;
+            // re-derive positionally: a number in the prose ahead of the expression becomes ns[0]
+            if (f === "mbMultiStepNumeric") {
+              expect(n[0] * n[1] - n[2],
+                `${lesson.id}/${s.id}: ns0*ns1−ns2 must be the answer — this route IS order of operations`)
+                .toBe(w.answer);
+            }
+            if (f === "mbMultiplyTensNumeric" || f === "mbTimesAsManyNumeric") expect(n[0] * n[1]).toBe(w.answer);
+            if (f === "mbDivideBigNumeric") expect(n[0] / n[1]).toBe(w.answer);
+            if (f === "mbPatternsNumeric") expect(n[n.length - 1] * (n[1] / n[0])).toBe(w.answer);
           }
-          if (f === "mbMultiplyTensNumeric" || f === "mbTimesAsManyNumeric") expect(n[0] * n[1]).toBe(w.answer);
-          if (f === "mbDivideBigNumeric") expect(n[0] / n[1]).toBe(w.answer);
-          if (f === "mbPatternsNumeric") expect(n[n.length - 1] * (n[1] / n[0])).toBe(w.answer);
 
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);

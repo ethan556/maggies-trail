@@ -421,7 +421,16 @@ const countHandlers: Record<string, FormHandler> = {
   },
   countTeenFrame: (rand, band) => {
     const extra = pick(rand, 1, bandHi(band, 4, 7, 9)), teen = 10 + extra;
-    return tenFrame("g0-counting", `A full group of 10 is already shown. Add the extra dots needed to make ${teen}.`, extra, 0, "tangerine");
+    // S328: the frame renders a single 10-cell grid (TenFrameW, widgets.tsx) and the schema caps
+    // target at 10 with preFilled required to be < target (schema.ts TenFrameSpec / tenFrame
+    // widget check) — so preFilled can never be 10 here. With preFilled=0 the frame starts fully
+    // EMPTY; it never shows a locked ten. The prompt must not claim otherwise (previously: "A full
+    // group of 10 is already shown"). State the ten-and-more decomposition as a math fact about the
+    // teen number instead of a claim about the widget's rendered state, then ask for only the
+    // achievable, already-honest target range (0..extra) — mirroring shapeSortFrame's pattern.
+    const dots = extra === 1 ? "dot" : "dots";
+    const that = extra === 1 ? "that" : "those";
+    return tenFrame("g0-counting", `${teen} is a full ten and ${extra} more. Tap to build ${that} ${extra} extra ${dots}.`, extra, 0, "tangerine");
   },
 };
 
@@ -598,7 +607,7 @@ function family(tag: string, label: string, forms: readonly string[], handlers: 
  * voice: short, concrete, one idea per sentence. */
 const K100_FORMS = [
   "kSeqNextHop", "kSeqNextMcq", "kSeqBeforeHop", "kSeqMissingMcq", "kDecadeCrossHop",
-  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensOrderDrag",
+  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensBackMcq", "kTensOrderDrag",
   "kChartRowMcq", "kChartMissingMcq", "kCountFromHop", "kCountBackHop", "kSeqOrderDrag",
 ] as const;
 const kCap = (band: Band, support: number, core: number, stretch: number) => bandHi(band, support, core, stretch);
@@ -655,6 +664,22 @@ const k100Handlers: Record<string, FormHandler> = {
   kTensBackHop: (r, b) => {
     const t = pick(r, 3, kCap(b, 5, 8, 10)) * 10;
     return numberLine("k0-count-100", `Count back by tens from ${t}. Hop one ten back and tap where you land.`, Math.max(0, t - 20), Math.min(100, t + 10), t, 10, 1, "back");
+  },
+  // Added for k100-02-05/k3, whose authored widget is an mcq (options 20/30/21/10 for "what
+  // comes before 40?") but which declared the numberLine-producing kTensBackHop -- a genuine
+  // pre-existing (S318) widget-surface mismatch the resolver contract catches. kTensNextMcq
+  // above is the mirror of this: same trap shape (off-by-one, wrong direction, no change),
+  // reflected for "back" instead of "next".
+  kTensBackMcq: (r, b) => {
+    // Cap held to 9 (not kTensBackHop's 10): unlike the numberLine widget above, which clamps its
+    // drawn max via Math.min(100, t + 10), this MCQ prints the t+10 trap as a raw option label with
+    // no clamp point -- at t=100 that trap would read 110, breaking the K.CC.A.1 0..100 ceiling.
+    const t = pick(r, 3, kCap(b, 5, 8, 9)) * 10;
+    return mcq(r, "k0-count-100", `Counting back by tens — what comes before ${t}?`,
+      [String(t - 10), `Yes — one ten before ${t} is ${t - 10}.`],
+      [[String(t - 1), `That is just one less. Counting BACK by TENS goes back a whole ten: ${t - 10}.`],
+       [String(t + 10), `That goes forward a ten. Counting back by tens gives ${t - 10}.`],
+       [String(t), `That stays still. One ten before ${t} is ${t - 10}.`]]);
   },
   kTensOrderDrag: (r, b) => {
     const t0 = pick(r, 1, kCap(b, 2, 4, 6)) * 10;
@@ -952,7 +977,7 @@ export const G0_FORM_SURFACES: Readonly<Record<string, string>> = {
   KoaJoinNumeric: "numeric", KoaFingersNumeric: "numeric", KoaDrawingsNumeric: "numeric", KoaActOutNumeric: "numeric", KoaWriteAddMcq: "mcq", KoaTakeAwayNumeric: "numeric", KoaSubDrawingsNumeric: "numeric", KoaSubActOutNumeric: "numeric", KoaWriteSubMcq: "mcq", KoaHowManyLeftNumeric: "numeric", KoaAddToStoryNumeric: "numeric", KoaTakeFromStoryNumeric: "numeric", KoaPutTogetherNumeric: "numeric", KoaChooseOpMcq: "mcq", KoaModelStoryMcq: "mcq", KoaSums5Numeric: "numeric", KoaDiffs5Numeric: "numeric", KoaPlusMinusOneNumeric: "numeric", KoaZeroFactNumeric: "numeric", KoaSpeedy5Numeric: "numeric",
   kSeqNextHop: "numberLineHop", kSeqNextMcq: "mcq", kSeqBeforeHop: "numberLineHop", kSeqMissingMcq: "mcq",
   kDecadeCrossHop: "numberLineHop", kDecadeNextMcq: "mcq", kTensNextHop: "numberLineHop", kTensNextMcq: "mcq",
-  kTensBackHop: "numberLineHop", kTensOrderDrag: "dragOrder", kChartRowMcq: "mcq", kChartMissingMcq: "mcq",
+  kTensBackHop: "numberLineHop", kTensBackMcq: "mcq", kTensOrderDrag: "dragOrder", kChartRowMcq: "mcq", kChartMissingMcq: "mcq",
   kCountFromHop: "numberLineHop", kCountBackHop: "numberLineHop", kSeqOrderDrag: "dragOrder",
   countAddMcq: "mcq", countAddLine: "numberLineHop", countCompareEqualMcq: "mcq", countTensMcq: "mcq", countTensLine: "numberLineHop",
   countObjectsMcq: "mcq", countObjectsFlash: "subitizeFlash", countDecomposeMcq: "mcq", countMakeTenMcq: "mcq", countMoreFewerMcq: "mcq",

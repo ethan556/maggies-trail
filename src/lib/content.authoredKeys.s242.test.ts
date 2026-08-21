@@ -37,6 +37,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { globSync } from "node:fs";
+import { basename } from "node:path";
 import { WidgetSpec } from "./schema";
 
 /** Measured at seal 6cfba1f, 2026-08-16. Lower it when inert prose is removed or wired up; never raise it. */
@@ -44,8 +45,11 @@ const DROPPED_KEY_BASELINE = 148;
 
 interface Lesson { steps?: Array<{ id?: string; widget?: Record<string, unknown> }> }
 
+// `basename()`, not `.split("/").pop()`: node:fs's globSync joins matches with the platform
+// separator (backslash on Windows), so a forward-slash split silently returns the WHOLE path
+// there instead of the last segment. `path.basename` understands both separators on every OS.
 const lessons = globSync("content/courses/*/lessons/*.json").map((file) => ({
-  id: file.split("/").pop()!.replace(".json", ""),
+  id: basename(file, ".json"),
   data: JSON.parse(readFileSync(file, "utf8")) as Lesson,
 }));
 

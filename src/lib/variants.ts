@@ -2864,7 +2864,7 @@ const g6RatioVariant = (rand: () => number, band: Band, form: VariantForm): Vari
   if (form === "rrZeroAnchor") {
     const offset = pick(rand, 1, 3);
     return mcq(rand, "pr-constant-k-g7", `A student draws double number lines for ${a} laps in ${b} minutes but starts the minutes line at ${offset} instead of 0. What goes wrong?`,
-      [`The stacked marks stop sharing one multiplier, so the pairs are not equivalent ratios`, `Correct — the offset changes proportional scaling into addition. Both lines must share the zero anchor.`],
+      [`The stacked marks stop sharing a common ratio`, `Correct — the offset changes proportional scaling into addition, so the pairs stop sharing one multiplier and are no longer equivalent ratios. Both lines must share the zero anchor.`],
       [
         [`Nothing changes because the gap stays constant`, `A constant gap is additive, while ratios require a constant multiplier from a shared zero.`],
         [`Starting the laps line at ${offset} fixes the diagram`, `Shifting both lines still removes the common origin. Proportional pairs must scale outward from 0.`],
@@ -3202,8 +3202,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
       `A class asks, "How many ${ctx.variable} for each of the ${ctx.group}?" What makes this a statistical question?`,
       ["It expects the individual answers to vary", `Correct — the question gathers one value from each member and anticipates different answers.`],
       [
-        ["It contains numbers", `Numbers can appear in fixed-fact questions too. Statistical questions are defined by expected variability.`],
-        ["It can be answered quickly", `Speed does not determine whether a question is statistical. The expected spread of answers does.`],
+        ["It contains numbers in the question", `Numbers can appear in fixed-fact questions too. Statistical questions are defined by expected variability.`],
+        ["It can be answered very quickly by anyone", `Speed does not determine whether a question is statistical. The expected spread of answers does.`],
       ]);
   }
   if (form === "ddStatRewrite") {
@@ -3231,8 +3231,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
     return mcq(rand, "g6-data-literacy", `Is "${f.q}" a statistical question?`,
       [`No — it has the fixed answer ${f.fact}, so no variability is expected`, `Correct — asking more people would repeat the same mathematical fact rather than create a distribution.`],
       [
-        ["Yes — many people could be asked", `The number of people asked does not create variability when the underlying answer is fixed.`],
-        ["Yes — it is a mathematics question", `A mathematics topic can be statistical or non-statistical. This one has one predetermined answer.`],
+        ["Yes — the question could be asked to many different people", `The number of people asked does not create variability when the underlying answer is fixed.`],
+        ["Yes — it is a question about mathematics facts in general", `A mathematics topic can be statistical or non-statistical. This one has one predetermined answer.`],
       ]);
   }
   if (form === "ddStatChoose") {
@@ -3268,8 +3268,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
     return mcq(rand, "g6-data-literacy", `A sheet accidentally mixes answers for "${a}" and "${b}" into one list. Why is that a problem?`,
       ["The values answer different questions, so one distribution cannot describe them", `Correct — a data set needs one shared variable so its center, spread, and shape have a coherent meaning.`],
       [
-        ["The two questions might use some of the same numbers", `Shared numerals are harmless. The defect is that the numbers measure different variables.`],
-        ["It is fine because all data values are numbers", `Numerical format alone does not make values comparable; they must answer the same statistical question.`],
+        ["The two different questions might happen to use some of the same numbers", `Shared numerals are harmless. The defect is that the numbers measure different variables.`],
+        ["It is completely fine, because all of the data values are numbers", `Numerical format alone does not make values comparable; they must answer the same statistical question.`],
       ]);
   }
   if (form === "ddDataCountList") {
@@ -3312,9 +3312,9 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
   }
   if (form === "ddReadyQuestion") {
     const q = [
-      { good: "How many minutes did each student in class read last night?", vague: "Do students read a lot?", opinion: "Is reading good?" },
-      { good: "How many goals did each player score this season?", vague: "Is the team successful?", opinion: "Is soccer fun?" },
-      { good: "How many hours did each family sleep last night?", vague: "Do families sleep enough?", opinion: "Is sleeping early better?" },
+      { good: "How many minutes did each student in class read last night?", vague: "Does the class read a lot outside of school?", opinion: "Is reading a good use of a student's free time?" },
+      { good: "How many goals did each player score this season?", vague: "Is the team doing well again this season?", opinion: "Is playing soccer more fun than other sports?" },
+      { good: "How many hours did each family sleep last night?", vague: "Do most families get enough sleep at night?", opinion: "Is sleeping early better than sleeping in?" },
     ][pick(rand, 0, support ? 1 : 2)];
     return mcq(rand, "g6-data-literacy", "Which question is ready for consistent data collection?",
       [q.good, `Correct — it names the group, the measurable variable, and the time frame for every response.`],
@@ -3367,8 +3367,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
       [
         // S242 / MCQ-01: "always" appeared only in the two distractors, and an absolute in a wrong
         // option is one of the oldest tells in multiple choice. Both are stated plainly now.
-        ["A dot plot — one dot for every value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
-        ["No display — the raw list of values", `A raw list preserves values but hides the distribution's shape and concentration.`],
+        ["A dot plot — drawing one dot for every single value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
+        ["No display — just showing the plain raw list of values", `A raw list preserves values but hides the distribution's shape and concentration.`],
       ]);
   }
   const width = support ? 5 : pick(rand, 4, 8);
@@ -3630,7 +3630,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddFullReport") {
     const center=pickBandInt(rand,band,[6,12],[10,22],[18,36]), spread=pick(rand,3,support?6:10);
     return mcq(rand,"g6-center-spread",`Which two-number report includes both a center and a spread for a distribution with median ${center} and IQR ${spread}?`,
-      [`Median ${center}; IQR ${spread} — one center and one spread`, `Correct — the pair reports both where the distribution sits and how tightly its middle half is packed.`],
+      [`Median ${center}; IQR ${spread}`, `Correct — the pair reports both where the distribution sits and how tightly its middle half is packed: one center, one spread.`],
       [
         [`Mean ${center} and median ${center}`,`Two centers do not describe variability, so the report omits spread.`],
         [`Range ${spread+5} and IQR ${spread}`,`Two spread measures omit the distribution's central location.`],
@@ -3657,7 +3657,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddBestDescription") {
     const median=pickBandInt(rand,band,[8,14],[12,24],[20,38]), spread=pick(rand,4,support?8:12);
     return mcq(rand,"g6-center-spread",`Choose the best one-sentence description of a roughly symmetric distribution with median ${median}, IQR ${spread}, and no outliers.`,
-      [`Values cluster symmetrically around ${median}, with the middle half spanning ${spread}`, `Correct — the sentence combines shape, center, and spread in context.`],
+      [`Values cluster symmetrically around ${median}`, `Correct — the sentence combines shape and center in context; the middle half of the data spans ${spread}.`],
       [
         [`The mean and median are both about ${median}`,`Two center values omit the amount of variability and the distribution's shape.`],
         [`The range is ${spread+10} and the IQR is ${spread}`,`Two spread measures omit where the data is centered and whether the shape is symmetric.`],
@@ -3693,7 +3693,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddCapReport") {
     const median=pickBandInt(rand,band,[2,6],[4,12],[8,20]),iqr=pick(rand,2,support?5:8),out=median+pick(rand,10,24);
     return mcq(rand,"g6-center-spread",`A distribution clusters near ${median}, has IQR ${iqr}, and contains one high outlier ${out}. Which report should be filed?`,
-      [`Most values cluster near ${median}; median ${median}, IQR ${iqr}, with a high outlier at ${out}`, `Correct — the report includes center, spread, overall concentration, and the unusual observation.`],
+      [`Most values cluster near ${median}, with a high outlier at ${out}`, `Correct — the report keeps the outlier rather than deleting it and captures both the overall cluster and the unusual observation; median ${median} and IQR ${iqr} describe the typical spread.`],
       [
         [`The average is ${median+1}`,`One average omits the spread, cluster, and outlier that define the distribution.`],
         [`Median ${median}, after deleting ${out} as an error`,`An unusual observation should not be erased without evidence that it is invalid.`],
@@ -11420,7 +11420,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "poly-addsub",
     label: "Adding and subtracting polynomials, one column at a time",
-    forms: ["addX", "addSquare", "subX", "subConst", "subFlip"],
+    forms: ["addX", "addSquare", "subX", "subConst", "subFlip", "subX2"],
     // Column arithmetic with signs. Addition traps: adding the SIZES, or landing on the wrong
     // sign. Subtraction traps: forgetting that the minus flips EVERY sign in the second
     // polynomial, or flipping the result instead. Each form isolates one column of one operation.
@@ -11537,6 +11537,37 @@ const GENERATORS: VariantGen[] = [
             [-(B + 1), `Watch the signs: ${B} + 1 = +${ans}.`],
           ],
           `Subtracting \u2212x adds one x: ${B} + 1 = ${ans}.`
+        );
+      }
+      if (form === "subX2") {
+        // Subtraction on the LEADING (x^2) column. Added for ep-02-03/k2 (S327 PG2 redesign),
+        // which retargeted a template-duplicate-of-k1 step to ask about the x^2 column instead
+        // of the x column, specifically to preserve the "a column can cancel to zero" idea on
+        // the leading term (4x^2 - 4x^2 = 0 in the authored example). A zero answer is
+        // legitimate and authored here (A === D), mirroring subX's own B === E zero-answer case
+        // -- so unlike the other subtract forms above, this one must NOT force A > D.
+        const { A, B, C, D, E, F } = draw(
+          rand,
+          (r) => ({ A: pick(r, 2, hi), B: pick(r, 2, hi), C: pick(r, 1, 6), D: pick(r, 2, hi), E: pick(r, 2, hi), F: pick(r, 1, 6) }),
+          ({ A, D }) => {
+            const ans = A - D;
+            const added = A + D;
+            const other = ans === 0 ? -added : -ans;
+            return added !== 0 && added !== ans && other !== ans && other !== added;
+          }
+        );
+        const ans = A - D;
+        const other = ans === 0 ? -(A + D) : -ans;
+        return num(
+          "poly-addsub",
+          `Subtract: (${A}x^2 + ${B}x - ${C}) - (${D}x^2 + ${E}x - ${F}). What is the coefficient of x^2?`,
+          ans,
+          0,
+          [
+            [A + D, `Subtraction flips the second term: ${A} − ${D} = ${ans}, not ${A} + ${D}.`],
+            [other, `Watch the sign: ${A} − ${D} = ${ans === 0 ? "0" : `${ans > 0 ? "+" : ""}${ans}`}.`],
+          ],
+          `The minus flips +${D}x^2 to −${D}x^2: ${A} − ${D} = ${ans}.`
         );
       }
       // default: the constant column of a SUM, C + (−F). With C, F ≥ 1 the sizes-trap C + F
@@ -12758,8 +12789,8 @@ const GENERATORS: VariantGen[] = [
           `In pay = ${rate}h, which variable is independent?`,
           ["h (hours worked)", `Hours worked is the input a worker chooses or records; the pay changes in response to h.`],
           [
-            ["pay", `Pay depends on how many hours were worked, so it is the dependent variable.`],
-            [`${rate}`, `${rate} is the fixed hourly rate, not a variable that changes from case to case.`],
+            ["pay (the total earned)", `Pay depends on how many hours were worked, so it is the dependent variable.`],
+            [`${rate} (the hourly rate)`, `${rate} is the fixed hourly rate, not a variable that changes from case to case.`],
           ]
         );
       }
@@ -19765,8 +19796,8 @@ const GENERATORS: VariantGen[] = [
           "critical-count",
           `f(x) = x${supNum(n)} has a critical point at x = 0. What is it?`,
           [
-            `Neither a peak nor a valley — f′ = ${n}x${supNum(n - 1)} is positive on BOTH sides, so f keeps climbing.`,
-            `Right. Finding a critical point proves nothing on its own. This is the whole reason the classification step exists.`,
+            `Neither a peak nor a valley`,
+            `Right — f′ = ${n}x${supNum(n - 1)} is positive on BOTH sides, so f keeps climbing. Finding a critical point proves nothing on its own; this is the whole reason the classification step exists.`,
           ],
           [
             [`A minimum.`, `A minimum needs the curve to FALL into it and rise out. Here it rises in and rises out — it merely pauses.`],
@@ -20195,11 +20226,11 @@ const GENERATORS: VariantGen[] = [
             ],
             [
               [
-                `A hole.`,
+                `A removable hole, if the numerator also vanished there.`,
                 `A hole needs both numerator and denominator to vanish, so the factor CANCELS. Here ${a}(${k}) ${b < 0 ? "−" : "+"} ${Math.abs(b)} = ${a * k + b} ≠ 0, so nothing cancels and the function explodes.`,
               ],
-              [`A root.`, `Roots come from the NUMERATOR vanishing (${a}x ${b < 0 ? "−" : "+"} ${Math.abs(b)} = 0), not the denominator.`],
-              [`Nothing special.`, `Division by zero is always special: the function has no value at all at x = ${k}, and it blows up on either side.`],
+              [`A root of the numerator, not the denominator.`, `Roots come from the NUMERATOR vanishing (${a}x ${b < 0 ? "−" : "+"} ${Math.abs(b)} = 0), not the denominator.`],
+              [`Nothing special happens at this particular x-value.`, `Division by zero is always special: the function has no value at all at x = ${k}, and it blows up on either side.`],
             ]
           );
         }
@@ -20234,8 +20265,8 @@ const GENERATORS: VariantGen[] = [
           "end-behavior",
           `f(x) = ${xTerm(a, n)} ${a > 0 ? "−" : "+"} ${xTerm(C, n - 1)}. What happens as x → −∞?`,
           [
-            `f → ${dir} — the ${term} term dominates and is ${goesUp ? "positive" : "negative"} for negative x.`,
-            `Right. The ${term} term overwhelms the lower-degree term for large |x|, and that comparison alone decides the outcome.`,
+            `f → ${dir}`,
+            `Right — the ${term} term dominates and is ${goesUp ? "positive" : "negative"} for negative x, so the function follows it to ${dir}. The ${term} term overwhelms the lower-degree term for large |x|, and that comparison alone decides the outcome.`,
           ],
           [
             [`f → ${otherDir}`, `${parityWhy[0].toUpperCase()}${parityWhy.slice(1)}, and x${supNum(n)} beats x${supNum(n - 1)} for large |x|. The curve goes to ${dir} on the left.`],
@@ -20289,9 +20320,9 @@ const GENERATORS: VariantGen[] = [
             `Right — just past the maximum at 0, and not yet at the inflection at ${p}. The descent is accelerating.`,
           ],
           [
-            [`Falling, but levelling off.`, `That is the stretch AFTER the inflection, on (${p}, ${2 * p}), where f″ turns positive and the fall eases.`],
-            [`Rising and bending up.`, `f′ = 3x(x − ${2 * p}) is NEGATIVE between 0 and ${2 * p}, so the curve is going down.`],
-            [`Flat throughout.`, `f′ is zero only at 0 and ${2 * p} — at the endpoints of the interval, not inside it.`],
+            [`Falling, but levelling off as it approaches the next turn.`, `That is the stretch AFTER the inflection, on (${p}, ${2 * p}), where f″ turns positive and the fall eases.`],
+            [`Rising steadily and bending upward the whole time.`, `f′ = 3x(x − ${2 * p}) is NEGATIVE between 0 and ${2 * p}, so the curve is going down.`],
+            [`Perfectly flat throughout the entire interval.`, `f′ is zero only at 0 and ${2 * p} — at the endpoints of the interval, not inside it.`],
           ]
         );
       }
@@ -20310,14 +20341,14 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `Nothing — a curve can rise and still have a maximum.`,
+              `Nothing is wrong — a curve can rise and still have a maximum.`,
               `That fails strictly inside an interval where it is rising throughout. Points just to the right of ${m} are HIGHER than f(${m}), so f(${m}) is no maximum.`,
             ],
             [
-              `The maximum should be at x = ${lo}.`,
+              `The maximum should really be located at x = ${lo} instead.`,
               `x = ${lo} is an endpoint of the interval, and the claim was about an interior maximum. The contradiction is with the sign of f′, not the location.`,
             ],
-            [`f″ must be negative there.`, `The second derivative is not the issue. The contradiction is already fatal at the first: rising throughout rules out an interior peak.`],
+            [`The second derivative f″ must be negative there instead.`, `The second derivative is not the issue. The contradiction is already fatal at the first: rising throughout rules out an interior peak.`],
           ]
         );
       }
@@ -20480,9 +20511,9 @@ const GENERATORS: VariantGen[] = [
             `Right. The algebra offers it; the physics rejects it. Stating the domain first is what lets you reject it with confidence.`,
           ],
           [
-            [`Because it is a maximum too, and you can only have one.`, `It is a MINIMUM (V = 0), and in any case a function can have several maxima. The reason it is useless is that it is an empty box.`],
-            [`Because ${threeM} is not a critical point.`, `It genuinely is: V′(${threeM}) = 0. It is simply a worthless one.`],
-            [`Because the derivative is wrong.`, `The derivative is right. It is the physical meaning of x = ${threeM} that disqualifies it.`],
+            [`Because it is a maximum of the volume function too, and a function can only have one maximum overall.`, `It is a MINIMUM (V = 0), and in any case a function can have several maxima. The reason it is useless is that it is an empty box.`],
+            [`Because x = ${threeM} does not actually make the derivative equal to zero.`, `It genuinely is: V′(${threeM}) = 0. It is simply a worthless one.`],
+            [`Because the derivative was computed incorrectly and needs to be redone.`, `The derivative is right. It is the physical meaning of x = ${threeM} that disqualifies it.`],
           ]
         );
       }
@@ -20942,7 +20973,7 @@ const GENERATORS: VariantGen[] = [
             `Right — and in the limit the +${k} cancels with the −${k} before h even gets small.`,
           ],
           [
-            [`Because ${k} is small.`, `Size is irrelevant: adding ${big} would change nothing either. Vertical shifts do not tilt anything.`],
+            [`Because the value ${k} happens to be a fairly small number.`, `Size is irrelevant: adding ${big} would change nothing either. Vertical shifts do not tilt anything.`],
             [`Because the derivative of ${k} is ${k}.`, `The derivative of a constant is 0 — a horizontal line has no slope to speak of.`],
             [`It is not the same; there is a leftover ${k}.`, `Try it from the definition: the +${k} appears in both f(x+h) and f(x), so it subtracts away entirely.`],
           ]
@@ -22172,11 +22203,11 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `4, like every family`,
+              `4, since every family has that many`,
               `Try writing all four out: the flip of ${a} × ${a} is ${a} × ${a} again, and ${sq} ÷ ${a} = ${a} either way round. Two of the four are duplicates.`,
             ],
-            [`1`, `There are two distinct facts here: one multiplication (${a} × ${a} = ${sq}) and one division (${sq} ÷ ${a} = ${a}).`],
-            [`3`, `Count again — the multiplication has no different flip, and neither does the division, so the four collapse to exactly two.`],
+            [`1, as if the flip didn't count separately`, `There are two distinct facts here: one multiplication (${a} × ${a} = ${sq}) and one division (${sq} ÷ ${a} = ${a}).`],
+            [`3, forgetting that one flip repeats itself`, `Count again — the multiplication has no different flip, and neither does the division, so the four collapse to exactly two.`],
           ]
         );
       }
@@ -22439,7 +22470,7 @@ const GENERATORS: VariantGen[] = [
           rand,
           "area-formula-pick",
           `A trapezoid has parallel bases ${b1} and ${b2} and height ${h}. Why does its formula average the two bases?`,
-          [`Averaging gives an effective width between ${b2} and ${b1}; multiplying by ${h} gives area ${area}`, `The trapezoid can be decomposed into two triangles, so their areas add to 1/2 × (${b1} + ${b2}) × ${h} = ${area}.`],
+          [`The average width times ${h} gives area ${area}`, `Averaging gives an effective width between ${b2} and ${b1}. The trapezoid can be decomposed into two triangles, so their areas add to 1/2 × (${b1} + ${b2}) × ${h} = ${area}.`],
           [
             [`Using only base ${b1} gives ${b1 * h}, which is close enough`, `Using only the longer base treats the whole figure like a ${b1}-by-${h} parallelogram and overcounts the tapered part.`],
             [`Using only base ${b2} gives ${b2 * h}, which is close enough`, `Using only the shorter base ignores the wider part of the trapezoid and undercounts its area.`],
@@ -24438,11 +24469,11 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `Even`,
+              `An even function`,
               `Even needs h(−x) = h(x). Here h(−1) = ${a} − ${b} = ${sn(atNeg1)} while h(1) = ${a} + ${b} = ${at1} — unequal outputs at mirrored inputs.`,
             ],
             [
-              `Odd`,
+              `An odd function`,
               `Odd needs h(−1) = −h(1) = ${sn(-at1)}, but h(−1) = ${sn(atNeg1)}. The ${aTerm} term refuses to flip sign, which spoils it.`,
             ],
           ]
@@ -25718,15 +25749,15 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `There is an outlier`,
+              `There is a single outlier far from the rest`,
               `An outlier is a LONE far-off dot. A bunched GROUP is the opposite: many points close together.`,
             ],
             [
-              `The association is negative`,
+              `The overall association between x and y is negative`,
               `A cluster's location does not set direction — the overall trend could rise, fall, or do neither.`,
             ],
             [
-              `The form is nonlinear`,
+              `The overall form of the pattern is nonlinear`,
               `Bunching is a cluster, not form. Form describes the SHAPE of the overall pattern — straight or curved.`,
             ],
           ]
@@ -29037,9 +29068,9 @@ const GENERATORS: VariantGen[] = [
             `Estimation supports planning and reasonableness checks; it should not replace an exact value when every unit matters.`,
           ],
           [
-            [`Whenever an exact answer is difficult`, `Difficulty alone does not justify losing precision; exact methods are still needed when the decision depends on every unit.`],
-            [`When paying a bill to the exact cent`, `Payment requires the exact amount, so rounding could underpay or overpay.`],
-            [`Only when both numbers end in zero`, `Any numbers can be rounded; the key question is whether an approximate result fits the purpose.`],
+            [`Whenever getting an exact answer turns out to be difficult`, `Difficulty alone does not justify losing precision; exact methods are still needed when the decision depends on every unit.`],
+            [`When paying a bill that must be exact to the very last cent`, `Payment requires the exact amount, so rounding could underpay or overpay.`],
+            [`Only when both of the numbers happen to end in zero`, `Any numbers can be rounded; the key question is whether an approximate result fits the purpose.`],
           ]
         );
       }
@@ -29691,7 +29722,7 @@ const GENERATORS: VariantGen[] = [
           "nl-fraction",
           `Where does ${a}/${b} land?`,
           [
-            `Exactly halfway — the same spot as 1/2`,
+            `Exactly halfway along the trip`,
             `${a} of ${b} jumps is half the trip, so ${a}/${b} and 1/2 mark the same spot.`,
           ],
           [
@@ -29700,11 +29731,11 @@ const GENERATORS: VariantGen[] = [
               `That is ONE jump — 1/${b}. You took ${a}, which is ${a} times as far.`,
             ],
             [
-              `At the number ${a}`,
+              `Landing exactly at the number ${a}`,
               `${a} ${FRACTION_NAME[b].one}-jumps stay well inside the 0→1 trip; reaching the whole number ${a} would need ${a * b} of them.`,
             ],
             [
-              `Almost at 1`,
+              `Almost all the way, near 1`,
               `Almost-there would be ${b - 1}/${b}. Taking ${a} of ${b} jumps leaves ${a} still to go.`,
             ],
           ]
@@ -30544,15 +30575,15 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `${N} is right — ${big} beats ${small}`,
+              `${N} is right — ${big} is simply a bigger number than ${small}`,
               `Picture both: a bar cut into ${big} against the same bar cut into ${small}. The ${big}-way slices are much thinner.`,
             ],
             [
-              `She should add the tops and bottoms`,
+              `She should add the tops together and the bottoms together`,
               `Adding ${top} + ${big} and ${top} + ${small} mixes the two numbers' jobs. The top counts pieces and the bottom sizes them.`,
             ],
             [
-              `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} aren't real fractions`,
+              `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} aren't valid fractions at all`,
               `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} are perfectly real — just small. Being small is exactly why ${top}/${big} loses here.`,
             ],
           ]
@@ -30964,9 +30995,9 @@ const GENERATORS: VariantGen[] = [
             `Thirty minutes is half an hour, so the short hand has completed half of its trip from ${hour} to ${next}.`,
           ],
           [
-            [`Exactly on the ${hour}`, `The hour hand is exactly on ${hour} only at ${hour}:00. It moves continuously while the minutes pass.`],
-            [`On the 6`, `The long MINUTE hand points to 6 at :30. The short hour hand stays between ${hour} and ${next}.`],
-            [`Exactly on the ${next}`, `The hour hand reaches ${next} only at ${next}:00. Half past is only halfway there.`],
+            [`Right on the ${hour}, not moving yet`, `The hour hand is exactly on ${hour} only at ${hour}:00. It moves continuously while the minutes pass.`],
+            [`Pointing at the 6, like the minute hand`, `The long MINUTE hand points to 6 at :30. The short hour hand stays between ${hour} and ${next}.`],
+            [`Already all the way at the ${next}`, `The hour hand reaches ${next} only at ${next}:00. Half past is only halfway there.`],
           ]
         );
       }
@@ -31452,9 +31483,9 @@ const GENERATORS: VariantGen[] = [
       if (form === "definingAttribute") {
         return mcq(rand, "attributes", `Which fact is a defining attribute of a ${S.name}?`,
           [`It has ${S.sides} straight sides and is closed`, `Side count and closure determine membership in this shape family.`],
-          [[`It is drawn in blue`, `Colour can change without changing the shape's geometric family.`],
-           [`It is larger than a hand`, `Size is not part of the definition; small and large copies remain the same shape.`],
-           [`One vertex points upward`, `Orientation is optional and can change under rotation.`]]);
+          [[`It is drawn in a particular shade of blue`, `Colour can change without changing the shape's geometric family.`],
+           [`It happens to be larger than a human hand`, `Size is not part of the definition; small and large copies remain the same shape.`],
+           [`One of its vertices currently points upward`, `Orientation is optional and can change under rotation.`]]);
       }
       if (form === "detectiveSides") {
         const colour = ["orange", "green", "purple", "blue"][pick(rand, 0, 3)];
@@ -32292,7 +32323,7 @@ const GENERATORS: VariantGen[] = [
             [expanded.join(", "), `Correct — each dot becomes one repeated copy of the value beneath its stack.`],
             [
               [values.join(", "), `This lists each labeled value once and ignores repeated dots, so it loses the frequencies.`],
-              [counts.join(", "), `These are the stack heights, not the measured data values along the horizontal axis.`],
+              [`Just the stack heights, not the actual data values: ${counts.join(", ")}`, `These are the stack heights, not the measured data values along the horizontal axis.`],
             ]), values, counts);
         }
         if (form === "ddDotMissingValue") {
@@ -32372,7 +32403,7 @@ const GENERATORS: VariantGen[] = [
         const data = [base, base, base, base + 1, base + 1, base + 2, out];
         const t = tally(data);
         return withPlot(mcq(rand, "line-plot", `The data are ${data.join(", ")}. Which description tells the full story?`,
-          [`Clustered at ${base}–${base + 1}, followed by a gap and an outlier at ${out}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated.`],
+          [`Clustered at ${base}–${base + 1}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated, following a gap after the ${base}–${base + 1} cluster.`],
           [
             [`Symmetric around ${Math.round((base + out) / 2)}`, `The frequencies and long empty interval do not mirror around a central value.`],
             [`Evenly spread from ${base} to ${out}`, `Most positions in that interval have no observations, so the data are not evenly spread.`],
@@ -34085,9 +34116,9 @@ const GENERATORS: VariantGen[] = [
             `${big} = ${factor} × ${small}, so every group counted by ${big}s is also a whole number of ${small}s.`,
           ],
           [
-            [`Both rows have the same last digit`, `Last digits cycle and do not define the relationship. The structural reason is that ${small} divides ${big} exactly.`],
-            [`It is only a coincidence among small products`, `The relationship never stops: any multiple of ${big} is still ${factor} times as many groups of ${small}.`],
-            [`${big} is larger than ${small}`, `Larger is not enough. A row is nested inside another only when its row number is a whole-number multiple of the smaller one.`],
+            [`Both rows just happen to share the same last digit`, `Last digits cycle and do not define the relationship. The structural reason is that ${small} divides ${big} exactly.`],
+            [`It is only a coincidence that shows up in small products`, `The relationship never stops: any multiple of ${big} is still ${factor} times as many groups of ${small}.`],
+            [`${big} is simply a larger number than ${small}`, `Larger is not enough. A row is nested inside another only when its row number is a whole-number multiple of the smaller one.`],
           ]
         );
       }
@@ -36168,8 +36199,8 @@ const GENERATORS: VariantGen[] = [
           why2: "Complaint callers are selected because they are dissatisfied.",
         },
         {
-          question: "A delivery service wants to estimate how satisfied all recent customers are.",
-          frame: "the complete customer list for deliveries completed in the past month",
+          question: "A delivery service wants to estimate how satisfied last month's delivery customers are.",
+          frame: "the complete delivery customer list",
           member: "customers",
           biased1: "survey only customers who requested a refund",
           why1: "Refund requests overrepresent customers who had a problem.",
@@ -37880,7 +37911,7 @@ const GENERATORS: VariantGen[] = [
     gen: (rand, band = "core", form = "default") => {
       const F = form === "default" ? "tmCongruenceMeaning" : form;
       if (F === "tmCongruenceMeaning") return mcq(rand, "g8-tm-congruence", `If two polygons are congruent, what must be true?`,
-        ["All corresponding side lengths and angle measures are equal", `Right — congruent figures match exactly after rigid motions.`],
+        ["All corresponding sides and angles match", `Right — every corresponding side length and angle measure is equal, since congruent figures match exactly after rigid motions.`],
         [
           ["Only their angle measures are equal", `Equal angles alone establish similarity, not necessarily equal size.`],
           ["Only their areas are equal", `Different shapes can share an area; congruence requires every corresponding length and angle to match.`],
@@ -38952,9 +38983,9 @@ const GENERATORS: VariantGen[] = [
         return mcq(rand, "g8-les-solution-count", `Classify: ${coeff}x + ${constant} = ${coeff}x + ${constant}.`,
           ["Infinitely many solutions", `Right — both sides are identical, so every value of x satisfies the equation.`],
           [
-            ["One solution", `A single value is not selected because the equation is true for every x.`],
-            ["No solution", `A no-solution result would require the constants to disagree after the x-terms cancel.`],
-            [`x = ${constant}`, `The constant does not become an x-value; all values satisfy identical expressions.`],
+            ["Exactly one x-value works", `A single value is not selected because the equation is true for every x.`],
+            ["No solution exists at all", `A no-solution result would require the constants to disagree after the x-terms cancel.`],
+            [`x = ${constant} is the only value`, `The constant does not become an x-value; all values satisfy identical expressions.`],
           ]);
       }
       if (F === "lesClassifyDistributed" || F === "lesClassifyChallenge") {
@@ -38968,9 +38999,9 @@ const GENERATORS: VariantGen[] = [
         return mcq(rand, "g8-les-solution-count", `Classify: ${outer}(x + ${inner}) = ${outer}x + ${outer * inner}.`,
           ["Infinitely many solutions", `Right — distributing the left side produces exactly the expression on the right.`],
           [
-            ["One solution", `After distribution the two sides are identical, so no single x-value is selected.`],
-            ["No solution", `A no-solution result would leave a false constant statement; this equation simplifies to a true identity.`],
-            [`x = ${inner}`, `The number inside the parentheses is not the only solution; every x makes the identity true.`],
+            ["Exactly one x-value works", `After distribution the two sides are identical, so no single x-value is selected.`],
+            ["No solution exists at all", `A no-solution result would leave a false constant statement; this equation simplifies to a true identity.`],
+            [`x = ${inner} is the only value`, `The number inside the parentheses is not the only solution; every x makes the identity true.`],
           ]);
       }
       return equationOutcomeVariant(rand, "g8-les-solution-count", `How many solutions does ${a}x + ${b} = ${a}x + ${d} have?`,

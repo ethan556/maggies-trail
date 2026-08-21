@@ -23,14 +23,20 @@ const findStep = (lesson: RawLesson, id: string) => lesson.steps.find((entry) =>
 
 const figures: Record<string, Record<string, string>> = {
   "kmd-01-01": { c1: "ks-size-trick", c2: "ks-seesaw" },
-  "kmd-01-02": { c1: "ks-compare-length", c2: "length-compare" },
+  // c2 figure removed per S327_ASSESS_A4.md kmd-01-02: "length-compare" (pencil-vs-eraser
+  // paperclip comparison) mismatched c2's actual point (one object's length renamed by
+  // orientation); no suitable replacement figure exists in the registry.
+  "kmd-01-02": { c1: "ks-compare-length" },
   "kmd-01-03": { c1: "ks-seesaw", c2: "ks-size-trick" },
 
   "kmd-02-01": { c1: "ks-compare-length", c2: "length-compare" },
   "kmd-02-02": { c1: "ks-seesaw", c2: "add-balance-scale" },
   "kmd-02-03": { c1: "ks-same-end-fair", c2: "ks-compare-length" },
   "kmd-02-04": { c1: "ks-compare-length", c2: "length-compare" },
-  "kmd-03-01": { c1: "ks-sort-count", c2: "geo3-sort-yesno" },
+  // c2 figure removed per S327_ASSESS_A4.md kmd-03-01: "geo3-sort-yesno" (a single Grade-3 shape
+  // tested against one yes/no rule) does not depict c2's rule-switching point (same object, two
+  // homes under two different rules); no suitable replacement figure exists in the registry.
+  "kmd-03-01": { c1: "ks-sort-count" },
   "kmd-03-02": { c1: "geo3-sort-yesno", c2: "ks-compare-length" },
   "kmd-03-03": { c1: "ks-sort-count", c2: "ks-count-groups" },
   "kmd-03-04": { c1: "ks-count-groups", c2: "ks-sort-count" },
@@ -68,7 +74,7 @@ describe("S253 measure-compare-k whole-course integrity", () => {
       expect(markup).toContain("<title>");
       expect(markup).toContain('role="img"');
     }
-    expect(count).toBe(22);
+    expect(count).toBe(20);
     expect(findStep(findLesson("kmd-01-04"), "c1").figure).toBe("kmd-capacity-same-scoop");
     expect(findStep(findLesson("kmd-01-04"), "c2").figure).toBe("kmd-capacity-same-scoop");
   });

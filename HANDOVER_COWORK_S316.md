@@ -339,3 +339,313 @@ extend/multi-engine design; V4_PHASE 7; STANDARDS 2 (held per programme rule); v
 ruling on the floor); asv-surface-vs-volume label collision (pre-existing, fix suggestion in
 S326_RECONCILE_R3.md); figureTextAlignment sentinel now vacuous-red because the corpus is fully
 clean (test-side pin decision needed).
+
+# S327–S328 addendum (2026-08-21, eleventh–twelfth aggressive rounds, still session-close)
+
+## Queue: 749 → 188 open rows (75% further reduction this round; 96.6% closed session-to-date)
+Honest chain state at close: 188 rows, 0 P0 (every remaining row is either an explicitly
+documented held/human-only class, or the mildest tier of a structural-only check — see below).
+Ledger: 3,334 disposition records; SOURCE_SEAL_MATCH end-to-end after every append; every one of
+1,701 lessons carries a CURRENT (non-stale, non-invalid) decision (0 stale, 0 invalid, 0 duplicate,
+0 unknown — `lesson-review-cards-s244.mjs` confirms `currentCount: 1701`).
+
+## What landed (all independently verified)
+- **S327 (17-agent wave):** discovered VISUAL_FIRST_REPRESENTATION / GRADE_LANGUAGE_REVIEW /
+  LESSON_COMPLETE_DISPOSITION are always the identical 92-lesson never-reviewed set (one signed
+  disposition closes all three) — 7 assessor packets (A1–A7) gave all 92 a full first-time
+  triple-disposition review. 6 progression-fixer packets (PG1–PG6) processed 170 of 175
+  LESSON_PROGRESSION_AND_DUPLICATION rows (redesign where the repeat was a real problem, signed
+  KEEP-with-fluency-rationale where it wasn't). 2 choice-fixer packets (CH1–CH2) closed the 46
+  authored-source CHOICE_SURFACE_INTEGRITY rows not already owned by a progression packet. 1
+  generator-engineering packet fixed all 166 generator-template-sourced CHOICE rows across 57
+  owners in `src/lib` — `npx tsx scripts/audit/mcq-leakage.mts` now reports **0 tells** across
+  5,203 measured MCQ items, corpus-wide. A free `mcq-leakage.mts --write` regen at wave start
+  (before any agent edits) also dropped CHOICE 252→232 at zero cost.
+  Process note: a shared ad hoc scratchpad helper (not the central append script) collided
+  mid-run and misdirected 11 of A1's 12 disposition records into sibling A3's staging file; A1
+  self-detected it, rebuilt its own correct file, and flagged A3's file untouched. Resolved at
+  integration via a two-pass append (A1's file alone first, so its recordIds enter the ledger's
+  `existingIds` set; then the remaining 14 files, whose 11 stray A1-prefixed duplicates inside
+  A3's file were silently skipped by the idempotent already-appended check rather than hard-
+  failing the run). See `append-s316-dispositions.mjs`'s ORDER comments for the exact mechanism.
+- **S327 architecture correction:** `compile-v4-backlog-portfolios-s247.mjs` hard-asserted
+  exactly 166 live generator-sourced CHOICE rows / 57 tags / 14 domains. Once the generator-
+  engineering packet legitimately closed all 166, this became a false-corruption trip on a real
+  success state (mirrors the S322 portfolio-compression correction). Fixed the same way: the
+  0-row fully-closed state is now tolerated with a warning instead of a throw; any OTHER count
+  (1–165, 167+) still hard-fails as genuine drift. Row-coverage/reconciliation invariants
+  unchanged.
+- **S327 finding — LESSON_PROGRESSION_AND_DUPLICATION has no disposition-closure path:**
+  unlike the three generic-review workstreams, this row type is computed purely from live
+  lesson JSON (`consolidate-pending-workload-s236.mjs`, repeatedWidgets/repeatedPrompts/
+  repeatedTemplates) with zero reference to the ledger — a KEEP-with-fluency-rationale
+  disposition is valid, signed, permanent evidence but does NOT suppress the row; only an actual
+  content redesign does. This is very likely a real gap between the workstream's own `next_action`
+  copy ("assign question jobs and approve a fluency/retrieval rationale **or** replace the
+  repeat...") and what was ever wired up. Deliberately NOT changed this round: a retroactive
+  disposition-based suppression is only safe if scoped to the *exact* repeated step IDs a
+  disposition actually reviewed (nothing in the current schema captures that — a lesson-level
+  KEEP covers many dimensions at once), and a naive lesson-level suppression would silently
+  vaporize genuine open flags across any of the corpus's many *other* already-KEEP lessons that
+  never evaluated this dimension. Left as a flagged architecture decision for explicit sign-off,
+  not a unilateral change. Net effect this round: PG1–6 fully reviewed all 175 rows; 33 closed by
+  redesign (100% of the P0/severe tier — verbatim-duplicate-widget and exact-duplicate-prompt
+  rows are now zero); the remaining 142 are 100% P1 (number-normalized-template-duplicate only —
+  same sentence shape, different numbers), each carrying a signed fluency rationale that is real
+  evidence but not (today) a closing action.
+- **S328 (3-agent wave):** discharged all 5 S327 LESSON_REVISION_IMPLEMENTATION escalations.
+  - E1: root-caused the corpus-wide `countTeenFrame` (`src/lib/g0Variants.ts`) authored-prompt
+    mismatch A4 (S327) had flagged — ground-truthed against the actual `TenFrameW` widget
+    component and its schema cap (`target ≤ 10`, `preFilled < target`), which proves a
+    "full-ten-plus-extra" rendering is structurally impossible, so the correct fix is the prompt
+    wording, not the widget state. Fixed the generator and swept the full `teen-numbers-k`
+    course: 9 lessons total (`knb-01-03`, `knb-02-02` — A4's originals, content already patched,
+    generator fix alone resolved them — plus 7 real siblings `knb-01-04/02-01/02-03/02-04/
+    03-01/03-03/03-04`; documented that A4's "8 siblings" list wrongly included `knb-03-02`,
+    which has zero tenFrame widgets).
+  - E2: closed both visual ESCALATEs with two new registered figures — `vm-notch-block`
+    (g5v-03-01, depicts subtracting a 15-cube notch from a 48-cube block) and
+    `vm-equal-volumes-compare` (g5v-03-03, depicts 20×3=12×5=60 side by side, bound only to `c2`
+    so it doesn't spoil `c1`'s predict-before-reveal step). Full registration chain run
+    (`gen-figure-ids.mjs`, `generate-figure-numeric-claims.mts`), new pinning test added
+    (`s328Figures.test.tsx`, 12/12), corpus-wide collision ratchet re-run clean modulo one
+    pre-existing unrelated failure (`asv-surface-vs-volume`, already documented S326 debt).
+  - E3: implemented `pv1000-02-01`'s REVISE. The blocking pin A1 (S327) cited
+    (`session273.placeValue1000Course.test.ts`, a step-ID/widget-type/withheld-figure pin over
+    the {pv1000-02-01, pv1000-04-02, pv1000-04-03} trio) turned out never to touch the actual
+    defect (a false "next problem" claim in `i1.predict.reveal` — `session273`'s `Step` type has
+    no `predict` field at all). The real, narrower pin was one row of
+    `session301.placeValue1000PredictionOrder.test.ts`'s per-lesson reveal-hash table. Fixed
+    content-only; re-pinned exactly that one hash cell; confirmed both trio-mates untouched and
+    their existing KEEP dispositions still stand.
+- **S328 main-loop:** a corpus-wide `vis01-illustration-measurement.mts` regen (a side effect of
+  E2's gate-running) surfaced 2 pre-existing, S327/S328-unrelated P0 ILLUSTRATION_REPLACEMENT
+  rows: `division-fluency-g3/df3-02-02` and `df3-03-02` each referenced the generic
+  `mult3-fact-family` figure (no numbers in the ID, unlike every sibling remedial in the course,
+  which all use a numerically-specific figure matching their own body) — production's
+  `figureTextAlignment` gate was silently withholding it at runtime
+  (`WITHHELD_BLOCKLIST_FINGERPRINT`). Purpose-built, already-registered figures existed for both
+  exact concepts (`mult3-divide-by-ten`, `mult3-divide-by-zero` — general fixed-exemplar worked
+  examples, not numerically pinned) and were a one-line reference swap each. `vis01` now reports
+  3,573/3,573 RENDERS, 0 withheld.
+
+## Gates run this round
+- `validate:content` 1840/1840 · `lint:pedagogy` 1711/1711 (re-run clean after every sub-wave:
+  S327 landing, S328 E1/E2/E3 landing, and the mainloop illustration fix).
+- `npx tsx scripts/audit/mcq-leakage.mts --write`: 0 tells / 5,203 items, corpus-wide.
+- `npx tsx scripts/audit/vis01-illustration-measurement.mts`: 3573/3573 RENDERS, 0 withheld.
+- Full chain (`audit:pending-workload` → `lesson-review-cards-s244.mjs` →
+  `compile-v4-backlog-portfolios-s247.mjs` → `chatgpt-work-v4-cache.mjs`) regenerated clean
+  after each integration; `session244.chatgptWorkPrecache.test.ts` re-pinned and green (6/6)
+  at every step; precache `queueFreshness: SOURCE_SEAL_MATCH` throughout.
+- Full vitest: an initial run raced against the concurrently-launched S328 E1/E2/E3 wave (started
+  before the agents landed their edits) and is NOT trustworthy — discarded. A clean full run
+  (no concurrent edits) was started after the mainloop fix landed; see the next session-close
+  note / commit message for its final reconciled numbers against the S326 baseline (301
+  failed/15,444 passed).
+- `npm run build`: to be re-confirmed green before this round's commit (see commit message for
+  final status — do not assume without checking).
+
+## Remaining queue at 188 rows (0 P0) — every row is one of exactly five classes
+- CLOSURE_LEDGER 27 (12 historically P0-flagged) — needs human visual review, not agent-closable.
+- V4_PROGRAMME_PHASE 7, STANDARDS_VERIFICATION 2 — held per programme rule.
+- QUESTION_DIVERSITY_AND_TRANSFER 10 — needs multi-engine design.
+- LESSON_PROGRESSION_AND_DUPLICATION 142 — structural-only check, P0 tier fully cleared (0
+  remaining), 100% P1 (mildest, likely-legitimate-fluency tier); see the architecture-gap note
+  above for why disposition alone cannot close these today.
+No LESSON_REVISION_IMPLEMENTATION, ILLUSTRATION_REPLACEMENT, or CHOICE_SURFACE_INTEGRITY rows
+remain open.
+
+*(Superseded by the S329 addendum below — the 188/27/10/142 figures above are this round's
+starting point, not its close.)*
+
+# S329 addendum (2026-08-21, thirteenth aggressive round, still session-close — triggered by an
+explicit user directive: "complete ALL pending work aggressively using multiple concurrent
+workers," specifically calling out that the pending-workload count had only moved 193→188 and
+pushing back on treating any category as inherently un-actionable)
+
+## Queue: 188 → 141 open rows (25% further reduction this round; 97.4% closed session-to-date,
+5,473 → 141)
+
+## What landed (all independently verified; evidence in reports/closure/S329_*.md)
+- 12-agent wave, deliberately aimed at the three categories a prior round had characterized as
+  "documented debt" without actually attempting them: CLOSURE_LEDGER,
+  QUESTION_DIVERSITY_AND_TRANSFER, LESSON_PROGRESSION_AND_DUPLICATION. That characterization
+  turned out to be partly wrong — see below.
+- **PG-A..PG-F (LESSON_PROGRESSION_AND_DUPLICATION):** redesign packets across six file-scope
+  partitions. ~68 lessons redesigned (PGA 15, PGB 8, PGC 6, PGD 12, PGE 25, PGF 2), ~74 more
+  explicitly reviewed and left unedited with documented KEEP-with-rationale judgments. 142→109
+  rows. Architecture note (unchanged from the earlier finding, re-confirmed): this workstream's
+  detector (`consolidate-pending-workload-s236.mjs` ~lines 358-393) is computed purely
+  structurally from live lesson JSON every run (`repeatedWidgets`/`repeatedPrompts`/
+  `repeatedTemplates`) with zero reference to the disposition ledger. A signed KEEP disposition
+  is valid pedagogical evidence but does not suppress the row — only a redesign that changes the
+  structural signature does. Deliberately left unwired to the ledger: a blanket
+  disposition-based suppression risks silently vaporizing genuine flags across lessons never
+  actually reviewed for this specific dimension. All P0/severe rows were already cleared in an
+  earlier round; every remaining row is the mildest P1 (number-normalized-template-only) tier.
+- **Q1/Q2 (QUESTION_DIVERSITY_AND_TRANSFER):** 9 lessons given new `ch2` engine-extension steps
+  (Q1: 6 `ks-*` lessons in `shapes-and-sorting-k`; Q2: `mmt-02-01`, `ns-04b-01`, `sp-03-02`).
+  Root cause of the row count not moving on content fixes alone: `EXCELLENCE_BACKLOG_S126.csv`
+  is added to the queue unconditionally by the consolidate script, with no live-content or
+  ledger check at all. It has its own sanctioned regenerator
+  (`scripts/audit/excellence-backlog-s126.mjs`, cross-references
+  `excellence-dispositions-s126.json` against live-measured corpus signals via
+  `representationSignature`/`predictionEligibility`/`engine-capabilities.json`; its own code
+  comment: "the reviewed policy is a living queue: completed lessons leave it"). Re-running it —
+  the correct integration step, not hand-editing the CSV — auto-dropped the 9 resolved rows:
+  10→1 (the survivor, `df3-03-02`, is already `candidateDisposition: intentional-assessment`).
+- **CL1–CL4 (CLOSURE_LEDGER):** read the entire 175-line file in full for the first time this
+  session. The prior round's blanket "needs human visual review, cannot be closed by agents"
+  characterization was an unverified assumption inherited from a pre-compaction summary — wrong
+  on inspection. Only 2 of 27 open rows (CL-P0-054, CL-P0-056) are human-visual-parity gated by
+  the file's own stated rule (matching a prior S319 investigation already recorded in the file).
+  CL1: portability fixes to 4 python audit scripts (`affine-relationship-s147.py`,
+  `exact-number-s148.py`, `geometric-constraint-s149.py`, `point-set-reasoning-s150.py`). CL2:
+  two isolated src fixes (`TriangleHalfRectangle` in `figures.tsx`, `DistributionCompareLabW` in
+  `widgets.tsx`) with 2 new permanent regression tests
+  (`figures.asv0101TriangleClip.s329.test.tsx`, `widgets.dclBracketLabel.s329.test.tsx`). CL3:
+  179 lesson dispositions. CL4: Windows path-separator/temp-cleanup fixes across 6 test files
+  (`content.authoredKeys.s242`, `widgets.buildReadout.s242`, `AvatarDisplay.fence`,
+  `server/deployability`, `api/authz.s46`, `api/badJson.s46`). Formally closed
+  CL-P1-044/040/051/012/049 with fresh gate-verified evidence, appended as a new dated section
+  in `CLOSURE_LEDGER.md` (matching the file's own append-only, last-occurrence-wins convention —
+  historical rows were not edited in place). CL-P1-033 stays **OPEN**: real source portability
+  fixes landed, but this sandbox cannot execute on Windows to verify them, and the ledger's own
+  header rule ("'Historical green' is never current-tree closure evidence") forbids claiming
+  closure without that proof. CLOSURE_LEDGER 27→22.
+- Ledger: 256 new signed dispositions appended this round across 9 staging files
+  (`laneA-s329-PGA..PGF.jsonl`, `-Q1.jsonl`, `-Q2.jsonl`, `-CL3.jsonl`; CL1/CL2/CL4 wrote none —
+  pure src/tooling fixes or already-resolved findings, zero lesson content edits). Decisions
+  3,334 → 3,590.
+- Cross-agent file-collision review: PG-B/C/E/F each flagged 1-2 files that looked touched
+  outside their own assigned scope (`g2p-01-03.json`, `g2p-02-02.json`, `se-03-03.json`'s `ch1`,
+  `ssg2-03-01.json`). Cross-referenced against my own complete written assignment lists (no
+  accidental overlaps in the instructions I gave) and spot-diffed `g2p-01-03.json`: an
+  MCQ-choice-label reword, the S327 CH1/CH2 wave's signature pattern — i.e. pre-existing dirty
+  state from before S329 started, not a genuine S329-to-S329 collision. Combined with 0/270 JSON
+  parse failures and clean `validate:content`/`lint:pedagogy` across the full accumulated tree,
+  concluded there was no actual corruption or double-edit — a few agents simply couldn't
+  distinguish "pre-existing dirty state from an earlier wave" from "a concurrent S329 sibling,"
+  which is understandable given they don't have the full session history.
+
+## Tooling fixes (post-wave, main loop)
+`scripts/audit/engine-registration-contract.mjs` had two pre-existing (pre-session — already in
+committed HEAD `7d8e4f4`, confirmed via `git diff HEAD` showing zero change on the affected
+lines) stale-detection bugs that made `check:engine-registration` fail 129/129, then 1/129, with
+false positives:
+1. Its union-block locator searched for the literal string
+   `export const WidgetSpec = z.discriminatedUnion("type", [`, which no longer exists — the
+   schema was refactored (pre-session, unrelated to this project) into `WidgetSpecBase` (the
+   actual union) plus a `.superRefine()` wrapper exported as `WidgetSpec` via `Object.assign`,
+   specifically to add a cross-field `plotPoint` invariant (see the comment at schema.ts:7065-66:
+   "Keep the discriminated-union member list available to registry tooling while enforcing
+   cross-field plot-point invariants at the public schema boundary"). Fixed the locator to match
+   `WidgetSpecBase` instead — the actual union member list is otherwise unchanged.
+2. Its per-type spec-name extractor required `z` and `.object(`/`.discriminatedUnion(` with zero
+   characters between them, which fails `PlotPointSpec`'s own multi-line declaration style
+   (`export const PlotPointSpec = z` then `.object({` on the next line — the only spec in the
+   file declared this way). Widened the regex from `z\.` to `z\s*\.` to tolerate the line break.
+
+Both fixes are minimal, surgical, script-only (zero schema/content changes); `git diff HEAD --
+src/lib/schema.ts` around both sites confirms neither issue was introduced this session — they
+were unmasked, not caused, by finally running this gate. `check:engine-registration` now reports
+`129/129 core-complete` cleanly.
+
+Separately, `npm run validate:native` fails in this live sandbox because `node_modules`, `.next`,
+`.chatgpt-work-cache`, and `tsconfig.tsbuildinfo` exist as normal dev-session artifacts — all
+four are gitignored (`git ls-files` confirms zero tracked matches). `npm run validate:native:clean`
+(the rsync-based clean-copy variant) could not run because rsync isn't installed in this sandbox,
+so the equivalent check was done manually: a `tar`-based copy of the live working tree (all
+S327-329 uncommitted edits included) excluding those same generated paths, checked directly with
+`native-integrity.mjs`. Passed cleanly: 2,531 JSON files, 1,979 source files, 2,938 local
+imports, 53 internal links, 4 assets, 282 buttons, 28 API routes, 0 issues. No script change
+needed or made here — this is a sandbox-environment artifact, not a repository defect.
+
+## Gates run this round
+- `validate:content` 1840/1840 · `lint:pedagogy` 1711/1711 clean across the full accumulated
+  tree after S329 landed. Unaffected by the post-S329 reconciliation pass below (that pass
+  touched zero `content/courses/**` files — generator/independent-solver/test code only).
+- `npx tsx scripts/audit/mcq-leakage.mts`: 0 tells / 5,203 items.
+- `npm run cml:lint:strict`: 0 errors, 0 warnings.
+- `npm run check:registration`: files ↔ course.json ↔ PLAN.md all consistent.
+- `npm run check:engine-registration`: 129/129 core-complete (after the two tooling fixes above;
+  see that section for why it initially failed and why the failures were pre-existing, not
+  S329-caused).
+- `validate:native`: 0 issues against a manually-constructed clean-artifact copy (see above).
+- Full chain (`audit:pending-workload` → `lesson-review-cards-s244.mjs` →
+  `compile-v4-backlog-portfolios-s247.mjs` → `chatgpt-work-v4-cache.mjs`) regenerated clean;
+  `session244.chatgptWorkPrecache.test.ts` re-pinned to 141/3,595/15,663 and green (6/6) as of
+  the post-S329 reconciliation pass's final state (see below).
+
+### Post-S329 final-reconciliation pass (this round, full vitest vs the S326 baseline)
+Baseline: 301 failed / 15,444 passed (`/tmp/vitest-s326.log`). Two full runs plus targeted
+re-verification after each fix, reconciled with a strict file>test-name diff script
+(`/tmp/reconcile_vitest.py`) against that baseline — never eyeballed:
+- 21 of the 22 originally-flagged NEW-vs-baseline failures were resolved directly (5 by me:
+  countTeenFrame's independent-solver drift, the precache-manifest cascade, and 3 more
+  resolver-contract `variant.form` wiring gaps found while unmasking `variants.resolver.test.ts`'s
+  onion-peeling for-loop — g1m-03-02/k100-02-05/mmt-02-01/mmt-05-02(k2); see
+  `laneA-s329-recon-mainloop.jsonl`) and 16 by 4 parallel triage agents (12 RE-PINNED with cited
+  evidence-report justification, 3 genuine test-bug fixes, 1 genuine content fix — g2l-03-04/ch1's
+  dropped `variant` field restored).
+- A second full run then surfaced 7 MORE new failures the first pass hadn't reached yet: the
+  precache manifest going stale AGAIN (g2l-03-04's content edit shifted the curriculum partition
+  seal — routine, re-ran the cache builder) and, more substantively, 6 failures traced to the 5
+  new resolver-contract forms added during the onion-peeling fix above (`kTensBackMcq`,
+  `Smg1UnitSizeCompareMcq`, `MmtBarGraphMistakeMcq`, `MmtEstimateMatchPairs`, `poly-addsub@subX2`):
+  every one of them had been wired into its generator/`K100_FORMS`-style registry but NOT into
+  the corresponding independent solver (`g0Independent.cjs`/`g1Independent.cjs`/
+  `g2Independent.cjs`/`variants.test.ts`'s `polyRoute`) — a safety-net gap, not a content bug,
+  since the independent solvers exist specifically to catch prompt/generator divergence. Fixed by
+  adding the missing routes (each re-deriving its answer from the prompt text alone, matching the
+  file's existing per-form style). Two of the 6 also turned out to be genuine, independently-caught
+  defects rather than pure solver gaps: `MmtEstimateMatchPairs`'s `matchPairs` helper could shuffle
+  the right column back into positional alignment with the left (a real "score without reading" UX
+  bug in the new `matchPairs` helper itself, 1-in-6 per draw with 3 rows — fixed with a
+  rotate-on-full-alignment guard), and `kTensBackMcq` could print a `t+10` trap of 110 at the
+  stretch band (a real K.CC.A.1 0..100 cap violation — kTensBackHop's identical cap tuning is
+  safe only because its widget clamps `Math.min(100, t+10)` at the display layer, which the new
+  MCQ's raw option label does not — fixed by tightening the stretch cap from 10 to 9). A 7th
+  failure (`session183.counting100k.test.ts`) was a duplicate, independently-maintained
+  `K100_FORMS`/`G0_FORM_SURFACES` registry pattern that also hadn't been told about
+  `kTensBackMcq` — updated in step, and its own 3-band adversarial sweep (schema validity, the
+  100-cap, trap distinctness, real-evaluator agreement) is what actually caught the cap bug above.
+  All 7 re-verified green via targeted re-runs; none required a fresh disposition (no
+  `content/courses/**` files touched in this half of the pass).
+- Net reconciled position: 301 baseline → 2 bonus RESOLVED (`session198.shapesBuildK`
+  kgb-02-02/kgb-02-03, unexplained but confirmed via the same diff script, not chased further
+  under the pace directive) → 0 unexplained NEW remaining → 299 STILL_FAILING, all confirmed
+  byte-identical (same file, test name, and assertion text) to the S326 baseline via the diff
+  script, i.e. pre-existing and out of this session's scope. A third, fully undisturbed full run
+  was started to produce one clean authoritative log for the record but was still in progress
+  (partial tail matched the reconciled picture above with no new surprises) when work stopped on
+  explicit user instruction ("commit and stop") — treat the 299/15,446-ish reconciled figure above
+  as high-confidence but NOT gate-verified by a single uninterrupted run; re-run `npm test` fresh
+  before relying on an exact final count.
+- `npm run build`: not run this round (never run concurrently with a full vitest pass on this
+  2-CPU sandbox; the vitest passes above consumed the available window). Run before shipping.
+- Separately, unmasking the resolver's onion-peeling for-loop found 251 total pre-existing
+  corpus-wide `variant.form`/widget-surface mismatches (233 `NOT_FRESH` in the g10/g12
+  trig/vector generator families, 18 `NULL_RESOLVE` elsewhere). 5 `NULL_RESOLVE` cases were fixed
+  above; the rest (mmt-05-02's own remaining k3/ch1, plus ~11 more in `ks-*`/`kcw-*`/`sp-*` files,
+  plus all 233 `NOT_FRESH`) are confirmed pre-existing and deliberately left as documented,
+  out-of-scope debt under the pace directive — not silently dropped, not falsely claimed fixed.
+
+## Remaining queue at 141 rows (0 P0) — every row is one of exactly four classes now (down from
+five: QUESTION_DIVERSITY_AND_TRANSFER's design-needed framing no longer applies)
+- CLOSURE_LEDGER 22 (down from 27) — genuinely infra/business/human-pilot/hardware/
+  human-visual-parity/product-authority gated. Each of the 22 was individually re-examined this
+  session, not assumed as a block; only CL-P0-054/056 are visual-parity-gated by the file's own
+  rule, the rest are the file's other documented gate classes (infra integration, business
+  decision, hardware dependency, human pilot data, product-direction authority).
+- V4_PROGRAMME_PHASE 7, STANDARDS_VERIFICATION 2 — held per programme rule, unattempted (not a
+  gap — these are intentionally out of an agent's authority).
+- QUESTION_DIVERSITY_AND_TRANSFER 1 (down from 10) — the one remaining row (`df3-03-02`) is
+  already `candidateDisposition: intentional-assessment` in the sanctioned backlog; there is
+  nothing left to design or fix here.
+- LESSON_PROGRESSION_AND_DUPLICATION 109 (down from 142) — structural-only detector, no
+  ledger-suppression path by design (see architecture note above). All P0/severe rows cleared in
+  an earlier round; every remaining row is the mildest P1 number-normalized-template tier.
+No LESSON_REVISION_IMPLEMENTATION, ILLUSTRATION_REPLACEMENT, or CHOICE_SURFACE_INTEGRITY rows
+remain open.

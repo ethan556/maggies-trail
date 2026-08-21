@@ -202,31 +202,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Exactly 7 same-size cubes cover a ribbon with no gaps and no overlaps. How long is the ribbon in cubes? Show the comparison result.",
+        "prompt": "A path is 12 cubes long. Covered with two-unit clips instead, how many clips does it take?",
         "options": [
           {
             "id": "o1",
-            "label": "8",
+            "label": "12",
             "correct": false,
-            "feedback": "That counts one unit more than were actually placed along the object."
+            "feedback": "That is the count in one-unit cubes. Two-unit clips are bigger, so it takes fewer of them to cover the same path."
           },
           {
             "id": "o2",
-            "label": "6",
+            "label": "24",
             "correct": false,
-            "feedback": "That misses one of the units that helped cover the object."
+            "feedback": "That doubles the cube count. Bigger units need fewer of them, not more, to cover the same length."
           },
           {
             "id": "o3",
-            "label": "14",
+            "label": "3",
             "correct": false,
-            "feedback": "That doubles the count, as if each unit were counted twice over."
+            "feedback": "That divides by four. Each clip is only twice as long as a cube, so divide the cube count by two, not four."
           },
           {
             "id": "o0",
-            "label": "7",
+            "label": "6",
             "correct": true,
-            "feedback": "Correct — the length is the number of same-size units that cover it end to end, which is 7."
+            "feedback": "Correct — each two-unit clip covers two cubes' worth of length, so 12 cubes take 6 clips."
           }
         ]
       },
@@ -268,23 +268,34 @@
         "Otherwise the difference means nothing."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "The ribbon is 13 cubes long and the pencil is 3 cubes long. How many cubes longer is the ribbon? Use a fresh measurement clue.",
-        "answer": 10,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Mia's crayon is 8 clips long. Ben's pencil is 8 cubes long, and a clip is bigger than a cube. Are the crayon and the pencil the same length?",
+        "options": [
           {
-            "value": 13,
-            "feedback": "That is the whole length of the ribbon, not the extra it has beyond the pencil."
+            "id": "o1",
+            "label": "Yes — both counts are 8",
+            "correct": false,
+            "feedback": "Same count, but a clip covers more length than a cube, so equal counts do not mean equal length."
           },
           {
-            "value": 3,
-            "feedback": "That is the length of the pencil, not the difference between the two."
+            "id": "o0",
+            "label": "No — the crayon is longer",
+            "correct": true,
+            "feedback": "Correct — each clip covers more length than a cube, so 8 clips covers more length than 8 cubes."
+          },
+          {
+            "id": "o2",
+            "label": "No — the pencil is longer",
+            "correct": false,
+            "feedback": "Clips are the bigger unit here, so the bigger length belongs to the clip count, not the cube count."
+          },
+          {
+            "id": "o3",
+            "label": "Cannot tell from the counts",
+            "correct": false,
+            "feedback": "You can tell without remeasuring: the count made of the bigger unit (clips) covers more length, even though the numbers match."
           }
-        ],
-        "fallbackFeedback": "Re-read the two lengths given, then compare them one step at a time.",
-        "successFeedback": "Correct — the difference is 10."
+        ]
       },
       "hints": [
         "Every unit must be the same size.",
@@ -315,7 +326,7 @@
       },
       "variant": {
         "gen": "g1-shapes-measure",
-        "form": "Smg1LengthDifferenceNumeric"
+        "form": "Smg1UnitSizeCompareMcq"
       }
     },
     {
@@ -417,7 +428,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "A stick measures 12 small cubes. Measured with units twice as long, will the count be more or fewer?",
+          "prompt": "A fence measures 10 small cubes. Measured with units three times as long, will the count be more or fewer?",
           "options": [
             {
               "id": "o0",

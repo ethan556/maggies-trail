@@ -302,15 +302,58 @@
    ],
    "variant": {
     "gen": "g2-measure-money-time",
-    "form": "MmtEstimateMcq"
+    "form": "MmtEstimateMatchPairs"
    }
+  },
+  {
+   "id": "ch2",
+   "kind": "challenge",
+   "body": "Check an estimate with a real measurement.",
+   "conceptTag": "mmt-estimate",
+   "explanationVariants": [
+    "12 − 3 = 9 inches. Measuring gives the exact length, while estimating only gets you close — here, both land near 9.",
+    "Nine one-inch units cover the book from mark 3 to mark 12 with no gaps or overlaps, so the real length is 9 inches."
+   ],
+   "widget": {
+    "type": "unitRuler",
+    "prompt": "You estimated a book is about 9 inches long. Time to check for real: this book runs from mark 3 to mark 12 on the ruler. Align zero with its start, choose one-inch units, and cover it exactly.",
+    "objectStart": 3,
+    "objectEnd": 12,
+    "allowedUnitSizes": [
+     0.5,
+     1,
+     2
+    ],
+    "targetUnitSize": 1,
+    "startUnitSize": 2,
+    "requiredPlacements": 9,
+    "commonPlacements": [
+     {
+      "placements": 12,
+      "feedback": "12 is just the end mark. Subtract the start: 12 − 3 = 9."
+     },
+     {
+      "placements": 15,
+      "feedback": "That's 12 + 3. Subtract instead: 12 − 3 = 9."
+     }
+    ],
+    "successFeedback": "12 − 3 = 9 inches — an exact measurement that matches the 9-inch estimate from the start of the lesson.",
+    "alignFeedback": "Move the measuring zero to the book's starting mark at 3.",
+    "gapOverlapFeedback": "Place exactly nine units end to end with no gaps or overlaps.",
+    "unitFeedback": "Use one-inch units; changing unit size changes the count, not the physical length."
+   },
+   "hints": [
+    "Length is what you get by actually measuring — end mark minus start mark, the same idea as estimating but exact.",
+    "The book runs from 3 to 12. Subtract: 12 − 3.",
+    "12 − 3 = 9, so nine one-inch units cover it exactly."
+   ]
   },
   {
    "id": "r1",
    "kind": "recap",
    "body": "A good estimate lands close to the actual length, not exactly on it.",
    "takeaways": [
-    "Estimate before measuring, as a smart guess.",
+    "Estimate first, as a smart guess — then measure to check it.",
     "Being off by 1 or 2 inches is fine.",
     "A far-off number is not a good estimate."
    ],

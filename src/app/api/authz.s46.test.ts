@@ -48,6 +48,9 @@ beforeEach(() => {
 });
 afterEach(() => {
   _setDbForTests(null);
+  // Close the handle before the temp dir is removed — better-sqlite3 keeps the file open until
+  // this runs, and unlike POSIX, Windows refuses to delete a file a process still has open.
+  db.close();
   rmSync(dir, { recursive: true, force: true });
 });
 

@@ -264,7 +264,7 @@
       "concept": {
         "id": "rem-pdw-c",
         "kind": "concept",
-        "body": "A digit's worth depends on its spot: hundreds, tens, or ones. In 582, the 8 sits in the tens spot, so it's worth 8 tens = 80."
+        "body": "A digit's worth depends only on its spot, not on the digit next to it. The SAME digit is worth a completely different amount in the hundreds spot than in the tens spot or the ones spot."
       },
       "check": {
         "id": "rem-pdw-k",
@@ -272,25 +272,25 @@
         "body": "",
         "conceptTag": "pv1000-digit-worth",
         "explanationVariants": [
-          "The 8 is in the tens spot: worth 80.",
+          "A 6 placed in the tens spot is worth 6 tens: 60.",
           "Check the digit's spot to find its worth."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "In the number 582, what is the 8 worth?",
-          "answer": 80,
+          "prompt": "A 6 is placed in the tens spot of a 3-digit number. What is that 6 worth?",
+          "answer": 60,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 8,
-              "feedback": "The 8 is in the tens spot: 80, not just 8."
+              "value": 6,
+              "feedback": "That names the digit itself, not its spot value. A 6 in the TENS spot is worth 6 tens: 60, not just 6."
             },
             {
-              "value": 800,
-              "feedback": "That's the hundreds spot. The 8 is in tens: 80."
+              "value": 600,
+              "feedback": "600 would be the hundreds spot. Here the 6 is placed in the tens spot, worth 60."
             }
           ],
-          "fallbackFeedback": "80."
+          "fallbackFeedback": "A 6 in the tens spot is worth 6 tens: 60."
         }
       }
     },
@@ -299,7 +299,7 @@
       "concept": {
         "id": "rem-pbn-c",
         "kind": "concept",
-        "body": "Build a number by combining hundreds, tens, and ones counts in order. 4 hundreds, 0 tens, 9 ones = 409 — the empty tens spot still holds its 0."
+        "body": "Build a number by combining its hundreds, tens, and ones counts — always in that order. Even when a spot is empty, it still holds a 0 and cannot be skipped."
       },
       "check": {
         "id": "rem-pbn-k",
@@ -307,25 +307,25 @@
         "body": "",
         "conceptTag": "pv1000-build-number",
         "explanationVariants": [
-          "4 hundreds, 0 tens, 9 ones = 409.",
-          "Combine the counts in order."
+          "6 hundred-cards, 0 ten-cards, 3 one-cards = 603.",
+          "Combine the counts in order — hundreds, then tens, then ones."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "What number has 4 hundreds, 0 tens, and 9 ones?",
-          "answer": 409,
+          "prompt": "A stack of place-value cards shows 6 hundred-cards, 0 ten-cards, and 3 one-cards. What number do the cards make?",
+          "answer": 603,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 49,
-              "feedback": "Don't skip the empty tens spot: 409."
+              "value": 63,
+              "feedback": "Don't skip the empty ten-cards spot — it still holds a 0: 603, not 63."
             },
             {
-              "value": 4009,
-              "feedback": "Only one digit per spot: 409."
+              "value": 6003,
+              "feedback": "That uses 4 digits. A 3-digit number needs exactly one digit per spot: 603."
             }
           ],
-          "fallbackFeedback": "409."
+          "fallbackFeedback": "6 hundred-cards, 0 ten-cards, 3 one-cards = 603."
         }
       }
     }

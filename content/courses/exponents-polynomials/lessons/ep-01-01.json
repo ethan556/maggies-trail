@@ -216,33 +216,33 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Evaluate a product.",
+      "body": "Combine both rules in one.",
       "conceptTag": "exponent-product-quotient",
       "explanationVariants": [
-        "2^4 · 2^3 = 2^(4+3) = 2^7 = 128.",
-        "Add the exponents to get 2^7, which is 128."
+        "(2^5 · 2^2) / 2^3 = 2^(5+2−3) = 2^4 = 16.",
+        "Multiply first: 2^5 · 2^2 = 2^7. Then divide: 2^7 / 2^3 = 2^4 = 16."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Evaluate 2^4 · 2^3.",
-        "answer": 128,
+        "prompt": "Evaluate (2^5 · 2^2) / 2^3.",
+        "answer": 16,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 4096,
-            "feedback": "That's 2^12 — the exponents were multiplied. Add them: 2^7 = 128."
+            "value": 1024,
+            "feedback": "That added all three exponents as if it were one big product, ignoring the division: combine the top first (5 + 2 = 7), THEN subtract the bottom's 3: 7 − 3 = 4, so 2^4 = 16."
           },
           {
-            "value": 64,
-            "feedback": "That's 2^6. Add carefully: 4 + 3 = 7, so 2^7 = 128."
+            "value": 128,
+            "feedback": "That's 2^7 — the product step only (2^5 · 2^2 = 2^7). Still need to divide by 2^3: 2^(7−3) = 2^4 = 16."
           }
         ],
-        "fallbackFeedback": "2^4 · 2^3 = 2^7 = 128."
+        "fallbackFeedback": "2^5 · 2^2 = 2^7, then ÷2^3 = 2^4 = 16."
       },
       "hints": [
-        "Same base, so add the exponents.",
-        "4 + 3 = 7, giving 2^7.",
-        "2^7 = 128."
+        "Multiply the top first: 5 + 2 = 7.",
+        "Now divide: 7 − 3 = 4.",
+        "2^4 = 16."
       ],
       "variant": {
         "gen": "power-product"

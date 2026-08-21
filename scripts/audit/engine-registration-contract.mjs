@@ -26,11 +26,11 @@ function specName(type) {
   const at = schema.indexOf(literal);
   if (at < 0) return null;
   const before = schema.slice(Math.max(0, at - 1200), at);
-  const matches = [...before.matchAll(/export const (\w+Spec)\s*=\s*z\./g)];
+  const matches = [...before.matchAll(/export const (\w+Spec)\s*=\s*z\s*\./g)];
   return matches.at(-1)?.[1] ?? null;
 }
 
-const unionStart = schema.indexOf('export const WidgetSpec = z.discriminatedUnion("type", [');
+const unionStart = schema.indexOf('const WidgetSpecBase = z.discriminatedUnion("type", [');
 const unionEnd = schema.indexOf("\n]);", unionStart);
 const unionBlock = unionStart >= 0 && unionEnd >= 0 ? schema.slice(unionStart, unionEnd) : "";
 const registeredStart = widgets.indexOf("export const REGISTERED_WIDGETS = [");

@@ -64,9 +64,16 @@ describe("fr-02-02 k2 / fr-01-04 ch1 — retry feedback does not print the answe
 });
 
 describe("pv-03-02 — restored misdigit traps fire with v36-verbatim diagnoses", () => {
+  // k3 was redesigned in session 329 (progression/duplication remediation,
+  // s329-PGE-pv-03-02): the ones-overflow "58 + 16" check duplicated k2's
+  // template ("# + # = ? build the sum in standard form with rods and
+  // cubes."), so k3 now targets a tens-overflow-into-hundreds trade
+  // ("93 + 81 = 174") instead — a different transfer demand, not just new
+  // numbers in the same shape. Its off-by-one-in-the-remainder trap is the
+  // v329-verbatim analogue of the old v36 diagnosis pinned below for k2/ch1.
   it.each([
     ["k2", { hundreds: 0, tens: 7, ones: 1 }, /71 lost a one in the shuffle/],
-    ["k3", { hundreds: 0, tens: 7, ones: 3 }, /73 left only 3 ones behind/],
+    ["k3", { hundreds: 1, tens: 6, ones: 4 }, /164 left only 6 tens behind/],
     ["ch1", { hundreds: 3, tens: 1, ones: 3 }, /313 dropped BOTH receipts.*both must be counted/]
   ])("%s build %o", (stepId, build, re) => {
     const w = lessonWidget("pv-03-02", stepId);

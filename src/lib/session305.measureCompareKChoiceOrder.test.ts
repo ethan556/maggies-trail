@@ -16,9 +16,13 @@ const contracts = [
   ["kmd-01-01", "k3", null, "b16e180be7fc73416eaef4dc4fd456a3a68ed3a526b756cda6fd61486cd4ebe8", "331c79a09fd272473ea513edabaadc0da6f69e98aaf599620ff1f91e97de38d0"],
   ["kmd-01-01", "ch1", null, "8c5e176a3ee7195f93ba1ed402c9ff5f0a192c9e8eef71916d887fbfabac043b", "061998a65c49af96978358036948aff3088205092b0a9f5384974c90d4d3b4e4"],
   ["kmd-01-02", "k1", null, "154715abe2489b5027d03f891c2ae1d12b06846b6b5d06abae6b3b966ad62be7", "67f6962147a7b2bdcae5624434498c498fbe711566a69a71f39f4e35daa888a1"],
-  ["kmd-01-03", "k1", null, "68cab8a4f7bf7e9437cd37605709cd1db5375e87951546d1195420118f8ab3dd", "8070f13ab992407700f7000ca75cd5bf6d47730e8a84a436796abe0eb90dfce5"],
+  // Re-pinned: options hash for k1/ch1 updated after S327_ASSESS_A4.md kmd-01-03 "referential-mismatch"
+  // fix (o2 label "The bags weigh the same" -> "The two sides weigh the same"; the bear/seesaw scenario
+  // never mentions bags — a copy-paste artifact from kmd-01-01/ch1's bag scenario). Prompt unchanged.
+  ["kmd-01-03", "k1", null, "68cab8a4f7bf7e9437cd37605709cd1db5375e87951546d1195420118f8ab3dd", "17b416ff21624c63c8307fa5a44fb4c0d2b6e7cf8db079505e9934a0a90ed9c0"],
   ["kmd-01-03", "k3", null, "7eeb4af55450e37cd156be48f077d780ed6d8228d7b746aa31b2a7a3080002f0", "d0760b63c6b68e81054ea69baa2d97e86712e4ab6b524e1f2639960b416043f7"],
-  ["kmd-01-03", "ch1", null, "7f245788014aa127a655af8c595436902b4be8aca1f34cd1fb4ca7fd985ead16", "b3aef0e9fa0fa830d24a69881a58fa3cd11682c9daf82affd3c297205b3cb06c"],
+  // Re-pinned: same o2 "bags" -> "two sides" fix as k1 above (S327_ASSESS_A4.md kmd-01-03).
+  ["kmd-01-03", "ch1", null, "7f245788014aa127a655af8c595436902b4be8aca1f34cd1fb4ca7fd985ead16", "8da393a78e8d92c606219073cb8525fba4752ee6a4dd9f74f91706e00d9b58e9"],
   ["kmd-01-04", "k1", null, "2ab299a870180f600c2575b951231a9d060450b69d31791afc5fa300c54545d4", "426c2b1bd475a8cfbf0828c0169cd8778ede7c866122788eb78701e1ed73731a"],
   // Re-pinned: signed S320-IMPL-kmd-01-04 replaced this ch1 byte-duplicate of
   // kmd-01-01/k3 with a new scale-vs-measuring-cup question (S326-R1 reconcile).

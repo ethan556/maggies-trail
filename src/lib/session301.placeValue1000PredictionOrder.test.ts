@@ -10,11 +10,17 @@ const lessons = readdirSync(directory)
   .sort()
   .map((file) => Lesson.parse(JSON.parse(readFileSync(join(directory, file), "utf8"))));
 
+// pv1000-02-01/i1 revealHash re-pinned (S328 evidence: reports/closure/S328_FIX_E3.md):
+// the prior reveal text falsely claimed the tens-into-hundreds rollover was "exactly what
+// the next problem will do" -- the actual next step (k1) is a rollover-free hundreds-only
+// count (200/300/400/500), so the claim was factually wrong (rollover first appears two
+// steps later, at i2). Reworded to drop the false immediate-adjacency claim; options,
+// outcomeId, and outcomeIndex parity are unchanged, so only this row's revealHash moved.
 const contracts = [
   ["pv1000-01-01", "i1", ["h", "t", "o"], "h", "Hundreds", "e682853d0747a6bee795f500e08356857ce8c1cccb29fa6c3290353cfbc89b7d", "e9ec08d9ade82dc93a5854f9cdd74f34386f967b0ceee4ae282ce024d48788f4"],
   ["pv1000-01-02", "i1", ["maya", "leo", "same"], "same", "They have the same amount", "f5302a42cbedcb42d821290964998ba7f0d872dd2bb33a56e797694be98416b2", "58813285d4ce28efb02ec894ee85542d4af6ee92f0f09402e5f6defcb1f8aaac"],
   ["pv1000-01-03", "i1", ["six", "four", "one"], "six", "The 6", "ee2830186844e6b9784d2cb0fcddfa3102e3726b65734a95240cee146d3bad9b", "880fccb6fa978a70cc2bbd2314991f86e24bf53de5f0d44fab97df19a1d3ac0f"],
-  ["pv1000-02-01", "i1", ["tens", "ones", "hundreds"], "tens", "The tens digit", "888f4ac4527ab448bc15546ac286f4e2a22fb67dfd98e98b7d5fd3bc879e677a", "872dd3eec4e5039d8f95417237038f8b1f2fb151617ef500c5d0e682221744cb"],
+  ["pv1000-02-01", "i1", ["tens", "ones", "hundreds"], "tens", "The tens digit", "888f4ac4527ab448bc15546ac286f4e2a22fb67dfd98e98b7d5fd3bc879e677a", "ff3571f388aa59ee4b9e23d7dd4627175dea6991db3592881b8699e76d31b3be"],
   ["pv1000-02-02", "i1", ["five", "zero", "three"], "five", "5", "09768d3545f80246d3dc3d47d7e509ba0695093919c5f9a0e9183c0bdcdf1100", "5c16a05cdbdde007675234c35e3c6d1e1d1b40ec72ef201d640c17237aea4c07"],
   ["pv1000-02-03", "i1", ["thirty", "thirteen", "three"], "thirty", "30 away", "0279461873039d2960453f5442a4081925369fa403779c789565aa259b4add4d", "eb73dde822f206759b07e3be7498e912977d99ee999d687e0d9674c845a3b092"],
   ["pv1000-03-01", "i1", ["zero", "skip", "one"], "zero", "Sit at 0 — but the spot still exists", "c3e73c70493dc4ae125c1bc8d729b26a43dc6ab2118604cb43a672a5b4193a4f", "50eba274eeebf79df1a3af59fcbe1dfe90de5d23aca741f66743995a28026582"],

@@ -93,12 +93,18 @@ function polyRoute(p: string): number {
     const k = m[3] === "constant term" ? 0 : m[3] === "coefficient of x" ? 1 : 2;
     return coeffOf(h, k, 2);
   }
-  m = p.match(/Subtract: \(([^)]+)\) - \(([^)]+)\)\. What is the (constant term|coefficient of x)/);
+  m = p.match(/Subtract: \(([^)]+)\) - \(([^)]+)\)\. What is the (constant term|coefficient of x\^2|coefficient of x)/);
   if (m) {
     const f = parsePoly(m[1]);
     const g = parsePoly(m[2]);
     const h = (x: number) => f(x) - g(x);
-    return coeffOf(h, m[3] === "constant term" ? 0 : 1, 2);
+    // S329 recon: widened to match "coefficient of x^2" the same way the Add branch above already
+    // does. Before, the alternation only offered "coefficient of x" -- which still matched as a
+    // PREFIX of "coefficient of x^2" (unanchored regex), silently grading subX2 against the x^1
+    // coefficient instead of x^2. subX/subConst's existing "coefficient of x?"/"constant term?"
+    // prompts are unaffected: neither ends in "^2", so they still fall through to the same branches.
+    const k = m[3] === "constant term" ? 0 : m[3] === "coefficient of x" ? 1 : 2;
+    return coeffOf(h, k, 2);
   }
   m = p.match(/Multiply \(([^)]+)\)\(([^)]+)\)\. What is the (constant term|coefficient of x\^4|coefficient of x)/)!;
   const f = parsePoly(m[1]);

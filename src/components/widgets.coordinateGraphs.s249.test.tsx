@@ -53,9 +53,11 @@ describe("S249 coordinate-graph packet reaches the complete authored/remedial au
     // bivariate-statistics/bv-01-01/ch1 was converted from a plotPoint build to a
     // swapped-coordinate diagnosis MCQ (S316_LANEA_MIXED_REVISION_IMPLEMENTATION.md), so the
     // plotPoint corpus shrank by one; scatterFit is unaffected.
+    // number-system/ns-04b-01 gained a new plotPoint challenge step `ch2` (double sign-flip,
+    // (3,-1)->(-3,1)), documented in reports/closure/S329_QDIVERSITY_Q2.md; corpus re-pinned 72->73.
     expect(SCATTER.length, "scatterFit consumers").toBe(14);
-    expect(PLOT.length, "plotPoint consumers").toBe(72);
-    expect(SCATTER.length + PLOT.length).toBe(86);
+    expect(PLOT.length, "plotPoint consumers").toBe(73);
+    expect(SCATTER.length + PLOT.length).toBe(87);
   });
 });
 

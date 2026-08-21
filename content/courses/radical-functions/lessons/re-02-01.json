@@ -329,19 +329,23 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Full pipeline.",
+   "body": "Full pipeline — now with a variable.",
    "conceptTag": "re-rationalize",
    "explanationVariants": [
-    "9/√27 = 9/(3√3) = 3/√3 = 3√3/3 = √3.",
-    "Simplify √27 = 3√3 first; everything telescopes to √3."
+    "√(9x) = 3√x, so 3x/√(9x) = 3x/(3√x) = x/√x = √x.",
+    "Pull the constant's square root out first (3), reduce 3x/3 = x, then the variable case finishes it: x/√x = √x."
    ],
    "widget": {
     "type": "buildExpression",
-    "prompt": "Simplify and rationalize 9/√27.",
+    "prompt": "Simplify and rationalize 3x/√(9x) (for x > 0).",
     "tokens": [
      {
-      "id": "s3",
-      "label": "√3"
+      "id": "sx",
+      "label": "√x"
+     },
+     {
+      "id": "tx",
+      "label": "x"
      },
      {
       "id": "t3",
@@ -349,15 +353,11 @@
      },
      {
       "id": "big",
-      "label": "9√27"
+      "label": "3x√(9x)"
      },
      {
-      "id": "t27",
-      "label": "27"
-     },
-     {
-      "id": "s27",
-      "label": "√27"
+      "id": "t9x",
+      "label": "9x"
      },
      {
       "id": "slash",
@@ -365,49 +365,39 @@
      }
     ],
     "correct": [
-     "s3"
+     "sx"
     ],
     "acceptAlso": [],
     "commonBuilds": [
      {
       "sequence": [
-       "t3",
-       "s3"
+       "tx"
       ],
-      "feedback": "Track the reductions: 9/(3√3) = 3/√3, and rationalizing gives 3√3/3 = √3 — the 3 cancels."
-     },
-     {
-      "sequence": [
-       "s3",
-       "t3"
-      ],
-      "feedback": "Track the reductions: 9/(3√3) = 3/√3, and rationalizing gives 3√3/3 = √3 — the 3 cancels."
+      "feedback": "3x/√(9x) reduces to x/√x, but that still has a radical in the denominator — rationalize once more: x/√x = √x."
      },
      {
       "sequence": [
        "big",
        "slash",
-       "t27"
+       "t9x"
       ],
-      "feedback": "Legal but unsimplified — √27 = 3√3 collapses the whole expression to √3."
+      "feedback": "That's rationalized without simplifying √(9x) first — √(9x) = 3√x collapses the whole expression down to x/√x before you ever need to rationalize."
      },
      {
       "sequence": [
-       "s27",
-       "slash",
        "t3"
       ],
-      "feedback": "Unfinished — √27 still simplifies: 3√3/3 = √3 is the fully reduced form."
+      "feedback": "The 3s do cancel (3x/3√x = x/√x), but the x doesn't vanish too — it becomes part of the final rationalized root: √x."
      }
     ],
     "reusable": false,
-    "missFeedback": "√27 = 3√3, so 9/(3√3) = 3/√3 — rationalize and the 3s cancel to √3.",
-    "successFeedback": "Right — 9/(3√3) = 3/√3 = √3."
+    "missFeedback": "√(9x) = 3√x, so 3x/√(9x) reduces to x/√x — then rationalize: x/√x = √x.",
+    "successFeedback": "Right — 3x/(3√x) = x/√x, and x/√x = √x."
    },
    "hints": [
-    "Simplify the radical first: √27 = 3√3.",
-    "9/(3√3) = 3/√3.",
-    "Multiply by √3/√3: 3√3/3 = √3."
+    "Pull the perfect square out of the radical first: √(9x) = 3√x.",
+    "3x/(3√x) reduces to x/√x.",
+    "Now rationalize: x/√x = √x (the x's cancel)."
    ],
    "variant": {
     "gen": "a2-radicals",

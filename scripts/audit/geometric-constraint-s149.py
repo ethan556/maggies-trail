@@ -49,7 +49,7 @@ def validate_widget(old,new,path):
  assert new.get('requiredExplorations',0)>=1 and len(new.get('requiredStageKeys',[]))>=new.get('requiredExplorations',0),f'{path}: impossible exploration'
 ledger=[]; total=main=rem=0
 for base_name,rel in TARGETS.items():
- old=json.loads((BASE/base_name).read_text()); new=json.loads((ROOT/rel).read_text())
+ old=json.loads((BASE/base_name).read_text(encoding='utf-8')); new=json.loads((ROOT/rel).read_text(encoding='utf-8'))
  assert strip_widgets(old)==strip_widgets(new),f'{rel}: non-widget authored drift'
  on=nodes(old); nn=nodes(new); assert [p for p,_ in on]==[p for p,_ in nn],f'{rel}: node identity drift'
  for (p,o),(p2,n) in zip(on,nn):
@@ -58,7 +58,7 @@ for base_name,rel in TARGETS.items():
   ledger.append({'lesson':rel,'node':p,'oldType':o['widget']['type'],'newType':n['widget']['type'],'oldWidgetHash':digest(o['widget']),'newWidgetHash':digest(n['widget']),'variant':o.get('variant')})
 assert total==42 and main==36 and rem==6,(total,main,rem)
 report={'session':149,'engine':'geometricConstraintLab','lessons':len(TARGETS),'experiences':total,'main':main,'remedials':rem,'nonWidgetAuthoredFieldsPreserved':True,'variantDeclarationsPreserved':True,'passed':True}
-(ROOT/'GEOMETRIC_CONSTRAINT_S149.json').write_text(json.dumps(report,indent=2)+'\n')
-(ROOT/'GEOMETRIC_CONSTRAINT_S149.md').write_text(f"# Geometric constraint audit — Session 149\n\n- Lessons: **{len(TARGETS)}**\n- Authored experiences: **{total}/{total}**\n- Main: **{main}**\n- Remedials: **{rem}**\n- Non-widget authored fields: **byte-semantic identical**\n- Variant declarations: **preserved**\n- Result: **PASS**\n")
-(ROOT/'SESSION149_AUTHORED_CONTENT_LEDGER.json').write_text(json.dumps({'session':149,'entries':ledger},indent=2)+'\n')
+(ROOT/'GEOMETRIC_CONSTRAINT_S149.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+(ROOT/'GEOMETRIC_CONSTRAINT_S149.md').write_text(f"# Geometric constraint audit — Session 149\n\n- Lessons: **{len(TARGETS)}**\n- Authored experiences: **{total}/{total}**\n- Main: **{main}**\n- Remedials: **{rem}**\n- Non-widget authored fields: **byte-semantic identical**\n- Variant declarations: **preserved**\n- Result: **PASS**\n",encoding='utf-8',newline='\n')
+(ROOT/'SESSION149_AUTHORED_CONTENT_LEDGER.json').write_text(json.dumps({'session':149,'entries':ledger},indent=2)+'\n',encoding='utf-8',newline='\n')
 print(f'geometric constraint authored audit passed: {total}/{total}; main {main}, remedials {rem}')

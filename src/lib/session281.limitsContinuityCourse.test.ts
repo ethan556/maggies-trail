@@ -13,7 +13,9 @@ const dir = "content/courses/limits-continuity/lessons";
 const course = JSON.parse(fs.readFileSync("content/courses/limits-continuity/course.json", "utf8")) as Course;
 const lessonIds = course.chapters.flatMap((chapter) => chapter.lessonIds);
 const labels = new Map<string, string[]>([
-  ["lc-01-03:k1", ["does not exist; values grow without bound", "approaches 0; values shrink", "approaches 1; values settle"]],
+  // lc-01-03:k1 distractors lengthened by S327 (reports/closure/S327_FIX_CH2.md #18, CHOICE-0043)
+  // to close a length-prose-vs-prose leak (27-char distractor vs 41-char correct answer).
+  ["lc-01-03:k1", ["does not exist; values grow without bound", "approaches 0; the values shrink toward it", "approaches 1; the values settle near it"]],
   ["lc-03-01:ch1", ["does not exist; sides approach 1 and 3", "approaches 2; average of 1 and 3", "approaches 1; the left-side value"]],
   ["lc-03-01:k2", ["does not exist; sides approach 3 and 4", "approaches 3.5; the two values averaged", "approaches 4; the right-side value"]],
   ["lc-03-03:ch1", ["grows to +∞; numerator degree is larger", "approaches 1/2; degrees are equal", "approaches 0; denominator degree is larger"]],

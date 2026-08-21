@@ -1521,9 +1521,9 @@ function accumulationMcqWidget(rand: Rand): GeneratedIntegrationVariant {
     `In ${accumulation}(${endpoint}) = the integral from 0 to ${endpoint} of f(${dummy}) d${dummy}, what role does ${dummy} play?`,
     [
       { label: `${dummy} is the dummy variable of integration.`, correct: true, feedback: `The letter ${dummy} moves across the interval and can be renamed without changing ${accumulation}(${endpoint}).` },
-      { label: `${dummy} is the upper endpoint.`, correct: false, feedback: `The upper endpoint is ${endpoint}; ${dummy} moves between the limits.` },
-      { label: `${dummy} is a fixed constant.`, correct: false, feedback: `${dummy} varies as the integral sweeps across the interval.` },
-      { label: `${dummy} is the strip width.`, correct: false, feedback: `d${dummy} represents an infinitesimal width; ${dummy} locates the strip.` },
+      { label: `${dummy} is the upper endpoint of the integral.`, correct: false, feedback: `The upper endpoint is ${endpoint}; ${dummy} moves between the limits.` },
+      { label: `${dummy} is a fixed constant, not a variable.`, correct: false, feedback: `${dummy} varies as the integral sweeps across the interval.` },
+      { label: `${dummy} is the strip width used in each slice.`, correct: false, feedback: `d${dummy} represents an infinitesimal width; ${dummy} locates the strip.` },
     ],
   );
 }

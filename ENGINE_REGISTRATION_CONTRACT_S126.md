@@ -100,7 +100,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | rotationLab | RotationLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | sampleSim | SampleSimSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | samplingBiasLab | SamplingBiasLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| scaledCircleLab | ScaledCircleLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| scaledCircleLab | ScaledCircleLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | scatterFit | ScatterFitSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | secantSlope | SecantSlopeSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | sequenceBuild | SequenceBuildSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |

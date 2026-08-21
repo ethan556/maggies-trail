@@ -36,7 +36,9 @@ function isReasoningSurface(path: string): boolean {
     /^LessonPlayer/.test(name) ||
     /^player(Chrome|Store)\./.test(name) ||
     /^(widgets|WidgetView|figures|FigureView|QuizShell|ProofStrip|widgetSamples)\./.test(name) ||
-    path.includes("/manipulative")
+    // Separator-tolerant like the `name` split above: `path` comes from `join()`, which is
+    // backslash-joined on Windows, so a bare "/manipulative" check would never match there.
+    /[\\/]manipulative/.test(path)
   );
 }
 

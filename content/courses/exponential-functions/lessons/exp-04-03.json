@@ -258,88 +258,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Evaluate the capstone.",
+      "body": "Evaluate the capstone: which model wins?",
       "conceptTag": "exp-vs-linear",
       "explanationVariants": [
-        "2³ = 8, then 5 · 8 = 40.",
-        "f(3) = 5 · 2³ = 5 · 8 = 40."
+        "Linear: 10 + 6·4 = 34. Exponential: 5 · 2⁴ = 80. The exponential is larger.",
+        "At x = 4, exponential growth (80) has already overtaken linear growth (34)."
       ],
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "For the exponential f(x) = 5 · 2^x, what is f(3)?",
-        "task": "approximationEvaluate",
-        "values": [],
-        "approxConstants": [
-          {
-            "id": "a",
-            "label": "the start amount a",
-            "value": 5
-          },
-          {
-            "id": "b",
-            "label": "the base b (one factor per step)",
-            "value": 2
-          }
-        ],
-        "approxFormula": {
-          "op": "multiply",
-          "left": {
-            "op": "multiply",
-            "left": {
-              "op": "multiply",
-              "left": {
-                "op": "const",
-                "id": "a"
-              },
-              "right": {
-                "op": "const",
-                "id": "b"
-              }
-            },
-            "right": {
-              "op": "const",
-              "id": "b"
-            }
-          },
-          "right": {
-            "op": "const",
-            "id": "b"
-          }
-        },
-        "approxRound": 0,
-        "answerMode": "numeric",
+        "type": "numeric",
+        "prompt": "A line starts at 10 and adds 6 each step; an exponential starts at 5 and multiplies by 2 each step. At x = 4, what is the LARGER of the two values?",
+        "answer": 80,
         "tolerance": 0,
-        "numericErrors": [
+        "commonErrors": [
           {
-            "value": 20,
-            "feedback": "That's f(2) = 5 · 4. One more step: f(3) = 5 · 8 = 40."
+            "value": 34,
+            "feedback": "That's the linear model's value (10 + 6·4 = 34). The exponential is larger: 5 · 2⁴ = 80."
           },
           {
-            "value": 15,
-            "feedback": "This isn't 5 + 2·... Use 2³ = 8: f(3) = 5 · 8 = 40."
+            "value": 16,
+            "feedback": "16 is 2⁴ alone — you dropped the starting value 5. The exponential is 5 · 2⁴ = 80, which beats the linear model's 34."
           }
         ],
-        "choices": [],
-        "authoredStages": [],
-        "requiredStageKeys": [
-          "approx:a",
-          "approx:b",
-          "approx:compute"
-        ],
-        "requiredExplorations": 3,
-        "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "f(3) = 5 · 2³ = 5 · 8 = 40.",
-        "successFeedback": "f(3) = 5 · 2³ = 5 · 8 = 40."
+        "fallbackFeedback": "Linear: 34. Exponential: 5 · 2⁴ = 80. The larger value is 80."
       },
       "hints": [
-        "Compute 2³ = 8.",
-        "Multiply by the start, 5.",
-        "5 · 8 = 40."
-      ],
-      "variant": {
-        "gen": "a1-exponential",
-        "form": "exp-vs-linear__numeric"
-      }
+        "Compute the linear value: 10 + 6·4 = 34.",
+        "Compute the exponential value: 5 · 2⁴ = 80.",
+        "80 > 34 — the exponential wins."
+      ]
     },
     {
       "id": "r1",

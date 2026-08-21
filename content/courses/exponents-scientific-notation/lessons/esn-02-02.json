@@ -183,26 +183,30 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another negative cube.",
+      "body": "A cube equation with an extra step.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "(−3)³ = −27, so x³ = −27 has the single solution x = −3.",
-        "Cubing −3 gives exactly −27, and no other real number does."
+        "(x+1)³ = −27 means x+1 = −3 (since only −3 cubes to −27), so x = −3 − 1 = −4.",
+        "Cube-root first to get x+1 = −3, then finish the linear step: x = −4."
       ],
       "widget": {
         "type": "buildExpression",
-        "prompt": "Which value solves x³ = −27?",
+        "prompt": "Which value solves (x+1)³ = −27?",
         "tokens": [
           {
             "id": "t0",
-            "label": "x = −3"
+            "label": "x = −4"
           },
           {
             "id": "t1",
-            "label": "x = 3"
+            "label": "x = −3"
           },
           {
             "id": "t2",
+            "label": "x = 2"
+          },
+          {
+            "id": "t3",
             "label": "or"
           }
         ],
@@ -215,28 +219,34 @@
             "sequence": [
               "t1"
             ],
-            "feedback": "3³ = 27 (positive), not −27 — the sign matters for cubes."
+            "feedback": "That's x+1 = −3, but you still need to isolate x: −3 − 1 = −4. (x+1)³ = −27 means x = −4, not −3."
           },
           {
             "sequence": [
-              "t1",
-              "t2",
-              "t0"
+              "t2"
             ],
-            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+            "feedback": "That drops the negative sign: (2+1)³ = 27, not −27. Cubing preserves the sign, so x+1 must be −3, which gives x = −4."
           },
           {
             "sequence": [
               "t0",
-              "t2",
-              "t1"
+              "t3",
+              "t2"
             ],
-            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+            "feedback": "Cube equations don't need ±: (2+1)³ = 27, not −27 — only x = −4 works."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t3",
+              "t0"
+            ],
+            "feedback": "Cube equations don't need ±: (2+1)³ = 27, not −27 — only x = −4 works."
           }
         ],
         "reusable": false,
-        "missFeedback": "Cubing preserves the sign: only (−3)³ = −27.",
-        "successFeedback": "Right — (−3)³ = −27."
+        "missFeedback": "Cubing preserves the sign: (x+1)³ = −27 means x+1 = −3, so x = −3 − 1 = −4.",
+        "successFeedback": "Right — (x+1)³ = −27 means x+1 = −3, so x = −3 − 1 = −4."
       },
       "variant": {
         "gen": "root-solve",
@@ -246,78 +256,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger perfect cube.",
+      "body": "Translate words into the equation first.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "5³ = 125, so x³ = 125 has the single solution x = 5.",
-        "Only 5 cubes to exactly 125."
+        "\"Multiplied by itself three times\" means cubed: translating to x³ = 216 gives x = 6.",
+        "6×6×6 = 216, and cube equations have just one real solution: 6."
       ],
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Which value solves x³ = 125?",
-        "tokens": [
+        "type": "numeric",
+        "prompt": "A number, multiplied by itself three times, equals 216. What is the number?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
           {
-            "id": "t0",
-            "label": "x = 5"
+            "value": 72,
+            "feedback": "72 comes from dividing by 3, but cubing means multiplying by itself THREE TIMES (6×6×6), not dividing. 6×6×6 = 216."
           },
           {
-            "id": "t1",
-            "label": "or"
-          },
-          {
-            "id": "t2",
-            "label": "x = −5"
-          },
-          {
-            "id": "t3",
-            "label": "x = 25"
-          },
-          {
-            "id": "t4",
-            "label": "x = 62.5"
+            "value": 108,
+            "feedback": "108 is half of 216, not a cube root. 6×6×6 = 216, so the number is 6."
           }
         ],
-        "correct": [
-          "t0"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t0",
-              "t1",
-              "t2"
-            ],
-            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
-          },
-          {
-            "sequence": [
-              "t2",
-              "t1",
-              "t0"
-            ],
-            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
-          },
-          {
-            "sequence": [
-              "t3"
-            ],
-            "feedback": "25³ is enormous compared to 125 — not a solution."
-          },
-          {
-            "sequence": [
-              "t4"
-            ],
-            "feedback": "That's half of 125, not a cube root — check 5³ = 125 instead."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "Only 5³ = 125 — the cube of −5 is −125, a different number.",
-        "successFeedback": "Right — 5³ = 125."
-      },
-      "variant": {
-        "gen": "root-solve",
-        "form": "cube"
+        "fallbackFeedback": "6×6×6 = 216, so the number is 6."
       }
     },
     {
@@ -345,70 +305,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Put it together: solve for the one real solution.",
+      "body": "Apply it: volume back to edge length.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "(−5)³ = −125, so x³ = −125 has the single solution x = −5.",
-        "Only −5 cubes to exactly −125 — no ± needed for cube equations."
+        "Volume = edge³, so 343 = edge³ means the edge is 7 inches, since 7×7×7 = 343.",
+        "7³ = 343 — translating the box's volume back to its edge length gives 7 inches."
       ],
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Which value solves x³ = −125?",
-        "tokens": [
+        "type": "numeric",
+        "prompt": "A cube-shaped box has a volume of 343 cubic inches. What is the length of one edge, in inches?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
           {
-            "id": "t0",
-            "label": "x = −5"
+            "value": 1029,
+            "feedback": "1029 multiplies 343 by 3, but cubing means finding what number times ITSELF three times gives 343 — not multiplying 343 by 3. 7×7×7 = 343, so the edge is 7 inches."
           },
           {
-            "id": "t1",
-            "label": "x = 5"
-          },
-          {
-            "id": "t2",
-            "label": "or"
+            "value": 171.5,
+            "feedback": "171.5 is half of 343, not a cube root. 7×7×7 = 343, so the edge is 7 inches."
           }
         ],
-        "correct": [
-          "t0"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t1"
-            ],
-            "feedback": "5³ = 125 (positive), not −125 — the sign matters for cubes."
-          },
-          {
-            "sequence": [
-              "t1",
-              "t2",
-              "t0"
-            ],
-            "feedback": "Only −5 works — cube equations never need ± like square equations do."
-          },
-          {
-            "sequence": [
-              "t0",
-              "t2",
-              "t1"
-            ],
-            "feedback": "Only −5 works — cube equations never need ± like square equations do."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "(−5)³ = −125 — one real cube root, sign intact.",
-        "successFeedback": "Right — (−5)³ = −125."
+        "fallbackFeedback": "7×7×7 = 343, so the edge length is 7 inches."
       },
       "hints": [
-        "Think of a perfect cube close to 125 first, ignoring the sign.",
-        "5³ = 125 — so the magnitude is 5. Now which sign makes it −125?",
-        "(−5)³ = −125, so x = −5 is the one and only real solution."
-      ],
-      "variant": {
-        "gen": "root-solve",
-        "form": "cubeNegative"
-      }
+        "Volume = edge × edge × edge.",
+        "Find a whole number that cubes to 343.",
+        "7 × 7 × 7 = 343, so the edge is 7 inches."
+      ]
     },
     {
       "id": "r1",

@@ -27,7 +27,11 @@ const contracts = [
   // Re-pinned: signed S320-IMPL-kcm-01-04 (smaller-group dedup rewrite) (S326-R1 reconcile).
   ["kcm-01-04", "k3", null, "5259b4859e5eb30e6c91f264746cc6dbd5a4d0442c7416b4b5e7621353c0a5dc", "468f731b5cfc68c70962ba2ad19795b4aedc47060128ac2a8d3624dd07589043"],
   // Re-pinned: signed S322-kcm-01-04 (stale stars/hearts stub-template fix) (S326-R1 reconcile).
-  ["kcm-01-04", "ch1", null, "b198fe4e5e36ca5bda4ba4d6c17114671bdae6a412de83f712b8e6c303a5e0b3", "98e64020eb5412b73f3aa97ae2df4fda188d1f40495d53c2482a36609a078a69"],
+  // Options hash further re-pinned per reports/closure/S327_FIX_CH2.md #17 (CHOICE-0033,
+  // length-prose-vs-prose): distractors lengthened so the correct "8 is the larger group, not the
+  // smaller one" no longer stood alone as the only long/contrastive option; correct answer,
+  // prompt, and figure unchanged. Independently re-verified clean against mcq-leakage.mts.
+  ["kcm-01-04", "ch1", null, "b198fe4e5e36ca5bda4ba4d6c17114671bdae6a412de83f712b8e6c303a5e0b3", "8322d1602190f4e3dcdcd1f5e60fed86ad4936773280bdfffe28e11d06de622c"],
   ["kcm-02-01", "k1", null, "86161e42b08e71872fe868530bb6326804e133035adf06777a08d25439394c8a", "8ece6010e892aa14f7083ceaed70c6d851fb16a28c35b0dee7ab93ca88bd0eb8"],
   ["kcm-02-01", "k2", null, "203df75b87735e870fa7be9e4fd60c3e4abc3d30c168ab4b13a7f5d195b8c6fa", "a6faf3f3200b82b21a0073bf321a8c00d84facde0c3704e4c5f21a921f03f201"],
   // Re-pinned: signed S322-kcm-02-01 (stale stars/hearts stub-template fix) (S326-R1 reconcile).

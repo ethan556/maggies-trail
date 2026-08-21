@@ -137,31 +137,28 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another hypotenuse.",
+      "body": "Now find a leg, graded this time.",
       "conceptTag": "tm-pythagorean-apply",
       "explanationVariants": [
-        "c = √(8² + 15²) = √(64 + 225) = √289 = 17.",
-        "Add leg-squares then root: √289 = 17."
+        "21² + b² = 29², so b = √(841 − 441) = √400 = 20.",
+        "Subtract leg-square from hyp-square, then root: √400 = 20."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A right triangle has legs 8 and 15. What is the hypotenuse?",
-        "answer": 17,
+        "prompt": "One leg of a right triangle is 21 and the hypotenuse is 29. What is the length of the other leg?",
+        "answer": 20,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 23,
-            "feedback": "That added the legs — use √(64 + 225) = √289 = 17."
+            "value": 50,
+            "feedback": "For a LEG, SUBTRACT: √(29² − 21²) = √(841 − 441) = √400 = 20, don't add."
           },
           {
-            "value": 289,
-            "feedback": "That's c² — take the square root: √289 = 17."
+            "value": 400,
+            "feedback": "That's the leg squared — take the square root: √400 = 20."
           }
         ],
-        "fallbackFeedback": "c = √(8² + 15²) = √(64 + 225) = √289 = 17."
-      },
-      "variant": {
-        "gen": "pythagorean"
+        "fallbackFeedback": "21² + b² = 29², so b = √(841 − 441) = √400 = 20."
       }
     },
     {
@@ -179,25 +176,25 @@
         "options": [
           {
             "id": "o0",
-            "label": "The legs must be squared and added before taking the square root, not added directly",
+            "label": "Square each leg, add the squares, then root — don't just add the legs",
             "correct": true,
             "feedback": "Correct — c = √(7² + 24²) = √625 = 25; adding the legs directly skips both squaring and the root."
           },
           {
             "id": "o1",
-            "label": "Nothing — 31 is correct",
+            "label": "Nothing is wrong — 31 is a correct hypotenuse for legs 7 and 24",
             "correct": false,
             "feedback": "31 is just the sum of the legs, not the hypotenuse; check with c = √(7² + 24²) = 25."
           },
           {
             "id": "o2",
-            "label": "The legs should have been subtracted, not added",
+            "label": "The legs should have been subtracted, then rooted, not added",
             "correct": false,
             "feedback": "Subtracting finds a missing leg from the hypotenuse; here both legs are known, so square and add them, then take the root."
           },
           {
             "id": "o3",
-            "label": "The square root should have been taken before squaring",
+            "label": "The square root should have been taken before the legs were squared",
             "correct": false,
             "feedback": "Squaring happens first — square each leg, add the squares, then take one square root of that sum."
           }

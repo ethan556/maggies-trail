@@ -21,26 +21,18 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 202 | 201 | 7 | 0 | 410 |
+| K-2 | 205 | 205 | 0 | 0 | 410 |
 | 3-5 | 274 | 144 | 1 | 0 | 419 |
-| 6-8 | 145 | 98 | 2 | 0 | 245 |
-| HS | 199 | 355 | 73 | 0 | 627 |
+| 6-8 | 147 | 98 | 0 | 0 | 245 |
+| HS | 208 | 346 | 73 | 0 | 627 |
 
-**K–8 targets** — Tier A 621/200–250 ✓ · Tier B 443/200–300 ✓.
+**K–8 targets** — Tier A 626/200–250 ✓ · Tier B 447/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
 - g3d-zero (best: C in df3-03-02)
-- ks-compose-shapes (best: C in ks-02-03)
-- ks-heavier-lighter (best: C in ks-03-02)
-- ks-name-shapes (best: C in ks-01-01)
-- ks-name-solids (best: C in ks-02-01)
-- ks-position-words (best: C in ks-01-03)
-- ks-shapes-any-way (best: C in ks-01-02)
-- mmt-estimate (best: C in mmt-02-01)
-- sp-relative-freq (best: C in sp-03-02)
 
-## One honest gate from Tier A — prediction-eligible (37 K–8 lessons)
+## One honest gate from Tier A — prediction-eligible (39 K–8 lessons)
 
 | lesson | course (grade) | total | focus domains | eligibility evidence |
 |---|---|--:|---|---|
@@ -81,11 +73,14 @@ across **65** lessons.
 | cg-01-03 — Graphs That Tell Stories | The Coordinate Plane & Shape Families (G5) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01b-02 — A Power of a Power | Grade 8: Exponents, Roots & Scientific Notation (G8) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01b-03 — Zero and Negative Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
+| ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 
-## Honest Tier-B ceilings — prediction would be redundant or unsafe (9)
+## Honest Tier-B ceilings — prediction would be redundant or unsafe (10)
 
 | lesson | course (grade) | total | status | reason |
 |---|---|--:|---|---|
+| mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | ssg2-02-02 — Bigger Grids | Grade 2: Shapes & Equal Shares (G2) | 29/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | dpv-03-01 — Lining Up the Places | Powers of Ten & Decimals (G5) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rr-05-03 — Ratios Capstone | Ratios & Rates (G6) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
@@ -96,19 +91,10 @@ across **65** lessons.
 | fg-03-03 — Comparing Rate and Initial Value | Grade 8: Functions (G8) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rns-02-03 — The Real Number Line Has No Gaps | Grade 8: The Real Number System (G8) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
 
-## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 10)
+## Upgrade backlog — K–8 Tier C/D, priority-ranked (top 60 of 1)
 
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
 | 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
-| 2 | sp-03-02 — Estimating Probability from Trials | Grade 7: Sampling & Probability (G7) | C | 22/39 | prediction contrast formal transfer adapt | place-value estimation; probability | 71 |
-| 3 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | C | 22/39 | prediction contrast formal transfer | place-value estimation | 64 |
-| 4 | ks-01-01 — Name the Shapes | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 5 | ks-01-02 — Shapes Any Way Up | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 6 | ks-01-03 — Where Is It? | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 7 | ks-02-01 — Shapes We Can Hold | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 8 | ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | C | 23/39 | prediction formal transfer adapt | — | 54 |
-| 9 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
-| 10 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
 
-Totals: 1701 lessons · A 820 · B 798 · C 83 · D 0.
+Totals: 1701 lessons · A 834 · B 793 · C 74 · D 0.

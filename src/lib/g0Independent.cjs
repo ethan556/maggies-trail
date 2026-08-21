@@ -44,6 +44,7 @@ function solvePrompt(form,input){
   case 'kTensNextHop': return ns[0]+10;
   case 'kTensNextMcq': case 'kChartRowMcq': return exact(options,String(ns[0]+10));
   case 'kTensBackHop': return ns[0]-10;
+  case 'kTensBackMcq': return exact(options,String(ns[0]-10));
   case 'kCountBackHop': return ns[0]-ns[1];
   case 'kTensOrderDrag': case 'kSeqOrderDrag': return state.items.map(x=>x.label).sort((a,b)=>+a-+b);
   case 'countAddMcq': {const values=/red counters?/.test(prompt)?ns.slice(0,3):ns.slice(0,2);return exact(options,String(values.reduce((a,b)=>a+b,0)));}
@@ -61,7 +62,13 @@ function solvePrompt(form,input){
   case 'countZeroTap': return state.hotspots.filter(h=>h.count===0).map(h=>h.label).sort();
   case 'countSubtractMcq': return exact(options,String(ns[0]-ns[1]));
   case 'countSubtractLine': {if(state)return state.start-state.hop*state.hops;const hops=/once/.test(prompt)?1:ns[1];return ns[0]-hops;}
-  case 'countTeenFrame': return ns[1]-10;
+  // S328 reworded the prompt from "A full group of 10 is already shown. Add the extra dots
+ // needed to make {teen}." (ns=[10,teen], answer=ns[1]-10) to "{teen} is a full ten and
+ // {extra} more. Tap to build {that} {extra} extra {dot(s)}." (ns=[teen,extra,extra]) because
+ // the frame actually starts EMPTY (preFilled=0) and can never show a pre-built ten -- the old
+ // wording claimed a rendered state the widget cannot produce. The second sentence now states
+ // the tap count directly, so the independent read is the second parsed number, not teen-10.
+ case 'countTeenFrame': return ns[1];
   case 'shapeComposePairs': {const map={'two triangles':'a square','two squares side by side':'a rectangle','six squares folded up':'a cube','two half-circles':'a circle','four equal triangles':'a larger square'};return Object.fromEntries(state.left.map(x=>[x.label,map[x.label]]));}
   case 'shapeComposeMcq': return prompt.startsWith('A simple')?exact(options,'A square and a triangle'):exact(options,String(ns[0]*2));
   case 'shapeComposeTap': return state.hotspots.filter(h=>h.label==='triangle').map(h=>h.label).sort();

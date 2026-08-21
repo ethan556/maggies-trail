@@ -190,18 +190,18 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Convert 0.181818… to a fraction in lowest terms.",
+      "body": "This one's already reduced.",
       "conceptTag": "rns-convert-to-fraction",
       "explanationVariants": [
-        "100x − x = 18 gives 99x = 18, so x = 18/99, which simplifies to 2/11.",
-        "Multiply by 100 for the two-digit block \"18\", then simplify 18/99 by dividing by 9."
+        "100x − x = 13 gives 99x = 13, so x = 13/99 — already in lowest terms, since 13 shares no factor with 99.",
+        "Two repeating digits still means ×100 first; 99x = 13 leaves 13/99, which doesn't simplify further."
       ],
       "widget": {
         "type": "quotientReasoningLab",
         "task": "repeatToFraction",
         "answerMode": "fraction",
-        "prompt": "0.181818… (block \"18\" repeats) equals:",
-        "repeatBlock": "18",
+        "prompt": "Convert 0.131313… (repeating block \"13\") to a fraction.",
+        "repeatBlock": "13",
         "candidates": [],
         "requiredExplorations": 4,
         "tolerance": 0,
@@ -210,15 +210,21 @@
         "fractionErrors": [
           {
             "whole": 0,
-            "num": 18,
+            "num": 13,
             "den": 100,
             "feedback": "That treats it as terminating, but it repeats forever — divide by 99, not 100."
+          },
+          {
+            "whole": 0,
+            "num": 13,
+            "den": 9,
+            "feedback": "That's the denominator for a ONE-digit repeating block. Two digits repeat here (\"13\"), so divide by 99, not 9."
           }
         ],
         "authoredStages": [],
-        "successFeedback": "Right — 18/99 simplifies to 2/11 (divide both by 9).",
+        "successFeedback": "Right — 13/99, and it's already in lowest terms: 13 shares no factor with 99.",
         "explorationFeedback": "Inspect at least 4 exact quotient states before checking.",
-        "fallbackFeedback": "A two-digit repeating block goes over 99: 18/99, then simplify."
+        "fallbackFeedback": "A two-digit repeating block goes over 99: 13/99 — and unlike the last one, this fraction is already in lowest terms."
       },
       "variant": {
         "gen": "repeat-decimal",

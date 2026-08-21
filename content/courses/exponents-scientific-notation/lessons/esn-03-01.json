@@ -180,19 +180,19 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Convert another large number.",
+      "body": "Apply it: a real rate, converted.",
       "conceptTag": "esn-sci-notation-large",
       "explanationVariants": [
-        "8,200,000 = 8.2 × 10⁶ — the decimal moves 6 places left.",
-        "Counting from 8200000., the decimal moves past 6 digits to land after the 8."
+        "250,000 = 2.5 × 10⁵ — the decimal moves 5 places left.",
+        "A quarter million operations is 2.5 × 10⁵, a different exponent class than the millions elsewhere in this lesson."
       ],
       "widget": {
         "type": "buildExpression",
-        "prompt": "8,200,000 in scientific notation is:",
+        "prompt": "A processor completes 250,000 operations per second. Write 250,000 in scientific notation.",
         "tokens": [
           {
             "id": "t0",
-            "label": "8.2"
+            "label": "2.5"
           },
           {
             "id": "t1",
@@ -200,19 +200,19 @@
           },
           {
             "id": "t2",
-            "label": "10⁶"
-          },
-          {
-            "id": "t3",
             "label": "10⁵"
           },
           {
+            "id": "t3",
+            "label": "10⁶"
+          },
+          {
             "id": "t4",
-            "label": "82"
+            "label": "25"
           },
           {
             "id": "t5",
-            "label": "10⁷"
+            "label": "10⁴"
           }
         ],
         "correct": [
@@ -228,15 +228,15 @@
               "t1",
               "t3"
             ],
-            "feedback": "Count again — 8,200,000 needs the decimal to move 6 places, not 5."
+            "feedback": "That's one power too many — 250,000 needs the decimal to move only 5 places, not 6."
           },
           {
             "sequence": [
               "t4",
               "t1",
-              "t3"
+              "t5"
             ],
-            "feedback": "The coefficient must be 1 ≤ a < 10 — 82 is too big; 8.2 × 10⁶ is standard form."
+            "feedback": "The coefficient must be 1 ≤ a < 10 — 25 is too big; 2.5 × 10⁵ is standard form."
           },
           {
             "sequence": [
@@ -244,48 +244,39 @@
               "t1",
               "t5"
             ],
-            "feedback": "That's one power too many — 8,200,000 needs exactly 6 places."
+            "feedback": "Count again — 250,000 needs the decimal to move 5 places, not 4."
           }
         ],
         "reusable": false,
-        "missFeedback": "Put the point after the 8, then count six places back to the original.",
-        "successFeedback": "Right — 6 places, and 8.2 is between 1 and 10."
-      },
-      "variant": {
-        "gen": "sci-notation"
+        "missFeedback": "Put the point after the 2, then count five places back to 250,000.",
+        "successFeedback": "Right — 5 places, and 2.5 is between 1 and 10."
       }
     },
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "One more conversion.",
+      "body": "Spot the flaw in someone else's conversion.",
       "widget": {
         "type": "mcq",
-        "prompt": "9,300,000 in scientific notation is:",
+        "prompt": "A city's population is 6,400,000. A student writes this as 64 × 10⁵. What's the flaw, and what should it be?",
         "options": [
           {
             "id": "a",
-            "label": "9.3 × 10⁶",
+            "label": "The coefficient must be under 10 — it should be 6.4 × 10⁶",
             "correct": true,
-            "feedback": "Right — 6 places, and 9.3 is between 1 and 10."
+            "feedback": "Right — 64 isn't a valid coefficient (1 ≤ a < 10). Moving one more place gives 6.4 × 10⁶, the same value with a valid coefficient."
           },
           {
             "id": "b",
-            "label": "9.3 × 10⁵",
+            "label": "The exponent should be 6, but 64 can stay as the coefficient",
             "correct": false,
-            "feedback": "Count again — 9,300,000 needs the decimal to move 6 places, not 5."
+            "feedback": "Changing only the exponent changes the value: 64 × 10⁶ = 64,000,000, not 6,400,000. The coefficient has to shrink to 6.4 when the exponent grows to 6."
           },
           {
             "id": "c",
-            "label": "93 × 10⁵",
+            "label": "Nothing is wrong — 64 × 10⁵ is valid scientific notation",
             "correct": false,
-            "feedback": "The coefficient must be 1 ≤ a < 10 — 93 is too big; 9.3 × 10⁶ is standard form."
-          },
-          {
-            "id": "d",
-            "label": "0.93 × 10⁷",
-            "correct": false,
-            "feedback": "The coefficient must be at least 1 — 0.93 is too small; 9.3 × 10⁶ is standard form."
+            "feedback": "64 × 10⁵ does equal 6,400,000, but scientific notation requires the coefficient to be between 1 and 10 — 64 is too big. The standard form is 6.4 × 10⁶."
           }
         ]
       }
@@ -293,19 +284,19 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Convert a round number.",
+      "body": "Don't drop the internal zero.",
       "conceptTag": "esn-sci-notation-large",
       "explanationVariants": [
-        "4,500,000 = 4.5 × 10⁶ — the decimal moves 6 places left.",
-        "Counting from 4500000., the decimal moves past 6 digits to land after the 4."
+        "5,080,000 = 5.08 × 10⁶ — the coefficient keeps its internal zero, from the 0 sitting right after the leading 5.",
+        "The decimal moves 6 places, landing after the 5, but the very next digit (0) stays in the coefficient too: 5.08."
       ],
       "widget": {
         "type": "buildExpression",
-        "prompt": "4,500,000 in scientific notation is:",
+        "prompt": "A stadium sold 5,080,000 tickets this year. Write that total in scientific notation.",
         "tokens": [
           {
             "id": "t0",
-            "label": "4.5"
+            "label": "5.08"
           },
           {
             "id": "t1",
@@ -317,15 +308,15 @@
           },
           {
             "id": "t3",
-            "label": "10⁵"
+            "label": "5.8"
           },
           {
             "id": "t4",
-            "label": "45"
+            "label": "508"
           },
           {
             "id": "t5",
-            "label": "10⁷"
+            "label": "10⁵"
           }
         ],
         "correct": [
@@ -337,19 +328,19 @@
         "commonBuilds": [
           {
             "sequence": [
-              "t0",
+              "t3",
               "t1",
-              "t3"
+              "t2"
             ],
-            "feedback": "Count again — 4,500,000 needs the decimal to move 6 places, not 5."
+            "feedback": "5.8 drops the internal zero — the digit right after the 5 is 0, and it belongs in the coefficient too: 5.08 × 10⁶."
           },
           {
             "sequence": [
               "t4",
               "t1",
-              "t3"
+              "t5"
             ],
-            "feedback": "The coefficient must be 1 ≤ a < 10 — 45 is too big; 4.5 × 10⁶ is standard form."
+            "feedback": "The coefficient must be 1 ≤ a < 10 — 508 is far too big; 5.08 × 10⁶ is standard form."
           },
           {
             "sequence": [
@@ -357,15 +348,12 @@
               "t1",
               "t5"
             ],
-            "feedback": "That's one power too many — 4,500,000 needs exactly 6 places."
+            "feedback": "Count again — 5,080,000 needs the decimal to move 6 places, not 5."
           }
         ],
         "reusable": false,
-        "missFeedback": "4.5 needs six place-hops to reach 4,500,000 — exponent 6.",
-        "successFeedback": "Right — 6 places, and 4.5 is between 1 and 10."
-      },
-      "variant": {
-        "gen": "sci-notation"
+        "missFeedback": "Keep every digit up to (and including) the last nonzero one: 5.08 × 10⁶, not 5.8.",
+        "successFeedback": "Right — the coefficient keeps its internal zero: 5.08 × 10⁶."
       }
     },
     {

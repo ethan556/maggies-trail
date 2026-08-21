@@ -330,39 +330,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Find the ratio, then extend.",
+      "body": "Go backward this time.",
       "conceptTag": "exp-ratio",
       "explanationVariants": [
-        "The ratio is 15/5 = 3, so the next term is 135 · 3 = 405.",
-        "Multiply the last term by 3: 135 · 3 = 405."
+        "The ratio is 100 ÷ 20 = 5. Going backward divides instead of multiplies: 20 ÷ 5 = 4.",
+        "Reverse the ×5 pattern: 20 ÷ 5 = 4."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "The sequence 5, 15, 45, 135 continues. What is the next term?",
+        "prompt": "A sequence continues 20, 100, 500, 2500, .... What term comes right BEFORE 20?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
             "id": "t0",
-            "label": "the first term",
-            "value": 5
+            "label": "the first given term",
+            "value": 20
           },
           {
             "id": "t1",
-            "label": "the second term",
-            "value": 15
-          },
-          {
-            "id": "tLast",
-            "label": "the last given term",
-            "value": 135
+            "label": "the second given term",
+            "value": 100
           }
         ],
         "approxFormula": {
-          "op": "multiply",
+          "op": "divide",
           "left": {
             "op": "const",
-            "id": "tLast"
+            "id": "t0"
           },
           "right": {
             "op": "divide",
@@ -381,12 +376,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 270,
-            "feedback": "The ratio is 3, not 2: the next term is 135 · 3 = 405."
+            "value": 100,
+            "feedback": "That continues FORWARD (20 × 5 = 100, which is already the next term shown). Going backward means dividing: 20 ÷ 5 = 4."
           },
           {
-            "value": 145,
-            "feedback": "You multiply by the ratio, not add: 135 · 3 = 405, not 135 + 10."
+            "value": 15,
+            "feedback": "5 is the ratio (a multiplier), not an amount to subtract. Reverse the multiplication instead: 20 ÷ 5 = 4."
           }
         ],
         "choices": [],
@@ -394,23 +389,18 @@
         "requiredStageKeys": [
           "approx:t0",
           "approx:t1",
-          "approx:tLast",
           "approx:compute"
         ],
-        "requiredExplorations": 4,
+        "requiredExplorations": 3,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "Ratio 15/5 = 3; next term 135 · 3 = 405.",
-        "successFeedback": "Ratio 15/5 = 3; next term 135 · 3 = 405."
+        "fallbackFeedback": "20 ÷ 5 = 4.",
+        "successFeedback": "20 ÷ 5 = 4."
       },
       "hints": [
-        "Find the ratio: 15 ÷ 5 = 3.",
-        "Multiply the last term by 3: 135 · 3.",
-        "That gives 405."
-      ],
-      "variant": {
-        "gen": "exp-function",
-        "form": "nextTerm"
-      }
+        "Find the ratio first: 100 ÷ 20 = 5.",
+        "Going backward reverses multiplication: divide instead.",
+        "20 ÷ 5 = 4."
+      ]
     },
     {
       "id": "r1",

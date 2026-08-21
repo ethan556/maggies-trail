@@ -201,33 +201,29 @@
   {
    "id": "k3",
    "kind": "check",
-   "body": "A trickier full-turn problem.",
+   "body": "This time, the last two angles are equal.",
    "conceptTag": "benchmark-angles",
    "explanationVariants": [
-    "150°+80°+60°=290°; the missing angle is 360−290=70°.",
-    "Add the three knowns, then subtract from 360."
+    "100+140=240; 360−240=120 remains for the last TWO equal angles, so each is 120÷2=60.",
+    "Subtract the knowns from 360, then split the remainder evenly between the two equal angles."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Four angles surround a point. Three are 150°, 80°, and 60°. What is the fourth?",
-    "answer": 70,
+    "prompt": "Four angles surround a point. Two are 100° and 140°, and the other two are equal to each other. What is each of the remaining angles?",
+    "answer": 60,
     "tolerance": 0,
     "unit": "degrees",
     "commonErrors": [
      {
-      "value": 290,
-      "feedback": "290 is just the sum of the three knowns — not the missing angle yet. Subtract it from 360: 70."
+      "value": 120,
+      "feedback": "That's the combined remaining amount for BOTH equal angles — divide by 2: 120÷2=60."
      },
      {
-      "value": 10,
-      "feedback": "10 subtracts the knowns from each other instead of adding them first. Add all three (150+80+60=290), then subtract from 360: 70."
+      "value": 240,
+      "feedback": "240 is just the sum of the two knowns. Subtract from 360 first (=120), then split evenly between the two equal angles: 60."
      }
     ],
-    "fallbackFeedback": "Add the three known angles, then subtract that total from 360."
-   },
-   "variant": {
-    "gen": "g4-measure",
-    "form": "mcBenchmarkAnglesNumeric"
+    "fallbackFeedback": "Subtract the two known angles from 360 (360−240=120), then divide by 2 since the remaining two are equal: 60."
    }
   },
   {

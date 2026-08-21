@@ -13,6 +13,12 @@ function solvePrompt(form,input){const {prompt,options,state,n}=parse(input);
  if(form==='Ssg2PyramidTapDiagram')return ['square pyramid'];
  if(form==='Ssg2NameThirdFractionBar')return {n:1,d:3};
  if(form==='Pv1000WriteWordsBuildExpression')return words(n[0]).split(' ');
+ // S329 recon: matchPairs forms carry no numeric/mcq answer field to check against, so (like g0's
+ // shapeComposePairs precedent) the route re-parses the -joined left labels straight out of
+ // the raw check() input and re-derives the pairing rule stated in the widget's own feedback text
+ // ("close, not exact") -- each real length's good estimate is real+1 inches -- independent of the
+ // generator's internal `estimates=reals.map(n=>n+1)` line.
+ if(form==='MmtEstimateMatchPairs'){const left=(input.split('||')[1]||'').split('').filter(Boolean);const out={};for(const label of left){const m=label.match(/about (\d+) inches/);out[label]=`${+m[1]+1} inches`;}return out;}
  switch(form){
  case'FlDoublesNumeric':{const m=prompt.match(/^(\d+) \+ (\d+) = \?/);return +m[1]+ +m[2];}
  case'FlNearDoublesNumeric':{const m=prompt.match(/^(\d+) \+ (\d+) = \?/);return +m[1]+ +m[2];}
@@ -40,6 +46,7 @@ function solvePrompt(form,input){const {prompt,options,state,n}=parse(input);
  case'TwoStepTradeMcq':return exact(options,'Break one ten into 10 ones');
  case'UnbundleSubMcq':return exact(options,'When the top ones are fewer than the bottom ones');
  case'MmtBarGraphNumeric':return n[0];
+ case'MmtBarGraphMistakeMcq':return exact(options,`No — the value is ${n[0]}`);
  case'MmtBestUnitMcq':case'MmtUnitFitMcq':{const item=(prompt.match(/length of a ([^?]+)/)||[])[1];const map={pencil:'inches',hallway:'feet',crayon:'centimeters',classroom:'meters',hand:'inches',playground:'yards','paper clip':'centimeters'};return exact(options,map[item]);}
  case'MmtCoinNameMcq':{const map={1:'penny',5:'nickel',10:'dime',25:'quarter'};return exact(options,map[n[0]])}
  case'MmtEstimateMcq':return exact(options,`${n[0]} inches`);

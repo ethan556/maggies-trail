@@ -198,6 +198,8 @@ export const FIGURE_NUMERIC_CLAIMS = {
   "tse7-distribute-neg": "−2(x − 6) = −2x + 12.",
   "tse7-two-step-order": "3x + 5 = 20 → x = 5",
   "vec-det-area": "A 2×2 matrix maps the unit square to a parallelogram of area |det|.",
+  "vm-equal-volumes-compare": "20 × 3 = 12 × 5 = 60",
+  "vm-notch-block": "48 − 15 = 33 unit cubes remain",
 } as const satisfies Record<string, string>;
 
 export type FigureNumericClaimId = keyof typeof FIGURE_NUMERIC_CLAIMS;

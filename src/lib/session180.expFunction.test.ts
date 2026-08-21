@@ -6,7 +6,13 @@ import { VARIANT_GENERATORS, type VariantForm } from "./variants";
 import { mulberry32 } from "./prng";
 
 /** S180: exp-function — all 7 named forms plus the unguarded `default` fallback (reached by an
- * ABSENT variant.form in three frozen steps), 16 steps across 4 lessons, zero new tasks.
+ * ABSENT variant.form in three frozen steps), 14 steps across 4 lessons, zero new tasks. (S329:
+ * exp-01-01/ch1 and exp-01-03/ch1 were redesigned — exp-01-01/ch1 kept the same a·b·b·b evaluate
+ * shape and answer under a word-problem reframe, so its frozen row is unchanged, but its stale
+ * `variant: {gen:"exp-function"}` tag was dropped since the generator's default form no longer
+ * matches the authored word-problem prompt on replay. exp-01-03/ch1 became a "term before"
+ * reversal with a new formula and answer, and lost its `nextTerm` tag for the same reason — that
+ * form only ever produces forward "next term" prompts. Both drops total 16 → 14 here.)
  *
  * Representation choices, per the S178 honesty principle ("represent the action, don't restate
  * the number"):
@@ -73,11 +79,12 @@ describe("exp-function: every form upgrades and self-derives across many draws (
 
 describe("exp-function: all 16 frozen steps self-derive their frozen answers (S180)", () => {
   // [lesson, step, expected] — expected computed by hand: 5·3·3=45; 3·2·2·2·2=48; f(0)=5;
-  // 2·3·3·3=54; 10÷5=2; 4÷1=4; 24·(6÷3)=48; 135·(15÷5)=405; 500·2·2·2=4000; 150·2·2·2·2=2400;
+  // 2·3·3·3=54; 10÷5=2; 4÷1=4; 24·(6÷3)=48; 20÷(100÷20)=4 (S329: term-before reversal, was
+  // 135·(15÷5)=405); 500·2·2·2=4000; 150·2·2·2·2=2400;
   // A(0)=500; 20·3·3·3=540; 640÷2÷2÷2=80; 24000÷2÷2÷2=3000; A(0)=640; 256÷4÷4=16.
   const FROZEN: Array<[string, string, number]> = [
     ["exp-01-01", "k1", 45], ["exp-01-01", "k2", 48], ["exp-01-01", "k3", 5], ["exp-01-01", "ch1", 54],
-    ["exp-01-03", "k1", 2], ["exp-01-03", "k2", 4], ["exp-01-03", "k3", 48], ["exp-01-03", "ch1", 405],
+    ["exp-01-03", "k1", 2], ["exp-01-03", "k2", 4], ["exp-01-03", "k3", 48], ["exp-01-03", "ch1", 4],
     ["exp-02-01", "k1", 4000], ["exp-02-01", "k2", 2400], ["exp-02-01", "k3", 500], ["exp-02-01", "ch1", 540],
     ["exp-02-02", "k1", 80], ["exp-02-02", "k2", 3000], ["exp-02-02", "k3", 640], ["exp-02-02", "ch1", 16],
   ];
@@ -101,7 +108,7 @@ describe("exp-function: all 16 frozen steps self-derive their frozen answers (S1
         }
       }
     }
-    expect(total).toBe(16);
+    expect(total).toBe(14); // S329: exp-01-01/ch1, exp-01-03/ch1 redesigned and de-tagged (16 → 14)
   });
 });
 

@@ -161,11 +161,16 @@ describe("exponentSolve: generators upgrade and self-derive across many draws (S
   });
 });
 
-describe("exponentSolve: the 11 frozen steps self-derive their frozen answers (S181)", () => {
+describe("exponentSolve: the 8 frozen steps self-derive their frozen answers (S181)", () => {
+  // S329: exp-03-01/ch1, exp-03-02/ch1, exp-03-03/ch1 were redesigned (a zero-exponent edge case,
+  // a solve-for-coefficient task, and a combined coefficient+negative-exponent task) and moved off
+  // the exactNumberLab/exponentSolve engine onto a plain `numeric` widget — the new ch1 tasks are
+  // no longer expressible as this engine's b^x = target shape, so all three are dropped here
+  // (11 → 8). The remaining k1/k2/k3 rows are untouched.
   const FROZEN: Array<[string, string, number]> = [
-    ["exp-03-01", "k1", 4], ["exp-03-01", "k2", 5], ["exp-03-01", "ch1", 5],
-    ["exp-03-02", "k1", 3], ["exp-03-02", "k2", 3], ["exp-03-02", "k3", 2], ["exp-03-02", "ch1", 3],
-    ["exp-03-03", "k1", -2], ["exp-03-03", "k2", -4], ["exp-03-03", "k3", -2], ["exp-03-03", "ch1", -2],
+    ["exp-03-01", "k1", 4], ["exp-03-01", "k2", 5],
+    ["exp-03-02", "k1", 3], ["exp-03-02", "k2", 3], ["exp-03-02", "k3", 2],
+    ["exp-03-03", "k1", -2], ["exp-03-03", "k2", -4], ["exp-03-03", "k3", -2],
   ];
   const doc = (id: string) =>
     JSON.parse(readFileSync(`content/courses/exponential-functions/lessons/${id}.json`, "utf8"));
@@ -199,7 +204,9 @@ describe("exponentSolve: the 11 frozen steps self-derive their frozen answers (S
         }
       }
     }
-    expect(solve).toBe(8);
-    expect(matchBase).toBe(3);
+    // S329: exp-03-02/ch1 and exp-03-03/ch1 (exp-solve) and exp-03-01/ch1 (a1-exponential
+    // exp-match-base) were redesigned off this engine — solve 8 → 6, matchBase 3 → 2.
+    expect(solve).toBe(6);
+    expect(matchBase).toBe(2);
   });
 });

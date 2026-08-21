@@ -159,41 +159,37 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another real-world gap-in-units problem.",
+      "body": "A real-world gap with the groups reversed.",
       "conceptTag": "sp-realworld-gap",
       "explanationVariants": [
-        "(56−32)÷8=3.",
-        "Divide the raw gap by the variability measure."
+        "(56−32)÷8=3, taking the positive gap regardless of which bakery is listed first.",
+        "Use the size of the gap, not which bakery came first in the sentence."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 56. Group B has a mean of 32. The variability measure is 8. How many variability-units apart are the means?",
+        "prompt": "Two bakeries' weekly bread sales average 32 and 56 loaves, with a variability measure of 8 loaves. How many variability-units apart are the bakery averages?",
         "mode": "measure",
-        "meanA": 56,
-        "meanB": 32,
+        "meanA": 32,
+        "meanB": 56,
         "variability": 8,
         "answer": 3,
         "tolerance": 0,
         "measureChoices": [
           {
             "value": 24,
-            "feedback": "That's just the raw gap (56−32). Divide by the variability measure: 24÷8=3."
+            "feedback": "That's just the raw gap. Divide by the variability measure: 24÷8=3."
           },
           {
             "value": 3,
             "feedback": "(56−32)÷8 = 3 variability-units."
           },
           {
-            "value": 8,
-            "feedback": "That's the variability measure itself, not the gap in units. (56−32)÷8=3."
+            "value": -3,
+            "feedback": "The number of units apart is always positive — use the size of the gap: 3, not -3."
           }
         ],
         "fallbackFeedback": "(56−32)÷8 = 3 variability-units.",
-        "successFeedback": "(56−32)÷8 = 3 variability-units."
-      },
-      "variant": {
-        "gen": "g7-sp-gap-units",
-        "form": "spGapRealA"
+        "successFeedback": "(56−32)÷8 = 3 variability-units, regardless of which bakery's average is listed first."
       }
     },
     {

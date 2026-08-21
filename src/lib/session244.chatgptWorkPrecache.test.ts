@@ -58,7 +58,7 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
     expect(manifest.inventory).toMatchObject({
       courses: 129,
       lessons: 1701,
-      topLevelLessonSteps: 15654,
+      topLevelLessonSteps: 15663,
       dependencyGroups: 12,
       artifactRefs: 12
     });
@@ -66,7 +66,7 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
     expect(manifest.curriculumPartitions).toHaveLength(129);
     expect(new Set(manifest.curriculumPartitions.map((partition) => partition.courseId)).size).toBe(129);
     expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.lessonCount, 0)).toBe(1701);
-    expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.stepCount, 0)).toBe(15654);
+    expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.stepCount, 0)).toBe(15663);
     for (const partition of manifest.curriculumPartitions) {
       expect(partition.sha256, partition.courseId).toMatch(/^[a-f0-9]{64}$/);
       expect(partition.sourcePrefix, partition.courseId).toBe(`content/courses/${partition.courseId}/`);
@@ -97,18 +97,35 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
   it("stores compact evidence references and exact counts, not raw duplicate logs", () => {
     const counts = Object.fromEntries(manifest.artifactRefs.map((artifact) => [artifact.id, artifact.recordCount]));
     expect(counts).toMatchObject({
-      // Recounted S326-R3, then finalized after the S326 reconciliation append (see
-      // S326_RECONCILE_R3.md §6): queue 6232 -> 1735 at commit a78d6a3 ("Queue honest
-      // state 1,735") -> 749 after this session's signed dispositions; decisions
-      // 455 -> 3011 (LESSON_REVIEW_DECISIONS_S244.jsonl incl. the 24 S326 corrective
-      // records); duplicates 103 -> 100; visual placements 3837 -> 3573 (S324_ENGFIG
-      // gate); choice surface 461 -> 259 (S320 CHOICE regeneration, commit a78d6a3).
-      "pending-workload": 749,
+      // Recounted after the S327-S329 waves landed (see HANDOVER S327-S329 addenda).
+      // S327: 17-agent assessor/progression/choice/generator closure (queue 749->193).
+      // S328: discharged all 5 LESSON_REVISION_IMPLEMENTATION escalations plus a
+      // main-loop illustration fix (193->188). S329 (user directive "complete ALL
+      // pending work aggressively, multiple concurrent workers"): 12-agent wave --
+      // 6 LESSON_PROGRESSION_AND_DUPLICATION redesign packets (142->109 rows; most of
+      // the ~68 lessons touched are KEEP-with-rationale, which doesn't suppress this
+      // workstream's structural-only check by design -- see architecture-gap note in
+      // the HANDOVER S327 addendum), 2 QUESTION_DIVERSITY_AND_TRANSFER engine-extension
+      // packets (9 lessons resolved; re-running the sanctioned excellence-backlog-s126
+      // generator dropped the CSV from 10 rows to the 1 already-intentional-assessment
+      // row, queue 10->1), 4 CLOSURE_LEDGER packets (5 rows formally CLOSED with fresh
+      // gate-verified evidence -- CL-P1-044/040/051/012/049; CL-P1-033 stays OPEN with
+      // real source portability fixes applied, honestly not claimed closed since this
+      // sandbox can't execute on Windows; 188->141 total, CLOSURE_LEDGER 27->22).
+      // Decisions 3334 -> 3590 (256 new S329 records). Duplicates and visual placements
+      // unchanged. topLevelLessonSteps 15654 -> 15663 (9 new ch2 challenge steps: 6 from
+      // the ks-* extend packet, 3 from the multi-engine packet).
+      // Post-S329 final-reconciliation pass (full vitest vs the S326 baseline): 5 more
+      // records for lessons whose variant.form was mechanically corrected to match an
+      // already-reviewed, unchanged widget surface (g1m-03-02/g2l-03-04/k100-02-05/
+      // mmt-02-01/mmt-05-02 -- see reports/closure/cowork-staging/laneA-s329-recon-mainloop.jsonl).
+      // Decisions 3590 -> 3595. Queue total, dup/visual/choice counts all unchanged.
+      "pending-workload": 141,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 3011,
+      "lesson-review-decisions": 3595,
       "exact-mcq-duplicates": 100,
       "visual-placement-index": 3573,
-      "choice-surface-index": 259,
+      "choice-surface-index": 0,
       "standards-dossiers": 6121,
       "standards-lesson-map": 1134,
       "standards-decisions": 6121,

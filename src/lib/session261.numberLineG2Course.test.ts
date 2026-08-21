@@ -157,13 +157,16 @@ describe("S261 number-line-g2 source implementation", () => {
   });
 
   it("states trail distance as a gap rather than a contradictory destination", () => {
+    // ch1 was rewritten by S327_FIX_PG4 (reports/closure/S327_FIX_PG4.md, "g2l-03-04"): it was a
+    // true duplicate of k2's no-regroup gap (46-14=32), so ch1 now poses a regrouping-required gap
+    // (71-44=27) instead. k2 itself is untouched and keeps its original expected values.
     for (const stepId of ["k2", "ch1"]) {
       const widget = requiredStep("g2l-03-04", stepId).widget;
       if (widget?.type !== "numeric") throw new Error(`expected numeric g2l-03-04/${stepId}`);
-      expect(widget.answer).toBe(32);
+      expect(widget.answer).toBe(stepId === "k2" ? 32 : 27);
       expect(widget.prompt).toMatch(/How far behind her/);
-      expect(widget.successFeedback).toContain("32 meters separate markers");
-      expect(widget.commonErrors.map((error) => error.value)).toEqual(stepId === "k2" ? [60, 34] : [58, 34]);
+      expect(widget.successFeedback).toContain(stepId === "k2" ? "32 meters separate markers" : "27 meters separate markers");
+      expect(widget.commonErrors.map((error) => error.value)).toEqual(stepId === "k2" ? [60, 34] : [33, 37]);
     }
   });
 });

@@ -34,7 +34,16 @@ const exactFigures = new Map([
   ["g5v-02-01:c2", "vm-count-cubes"],
   ["g5v-02-02:c1", "vm-base-height"],
   ["g5v-02-02:c2", "vm-base-height"],
+  // S328 (closes S327-A4's visual ESCALATE): the notch-subtraction action had no figure
+  // anywhere in the lesson. Bound to both concept steps (fresh 48-15=33 instance, distinct
+  // from every worked pair already in this lesson, so it cannot preview i1's predict answer).
+  ["g5v-03-01:c1", "vm-notch-block"],
+  ["g5v-03-01:c2", "vm-notch-block"],
   ["g5v-03-02:c1", "vm-formula-lwh"],
+  // S328 (closes S327-A4's visual ESCALATE): the equal-volumes claim was only ever asserted
+  // in feedback prose. Bound to c2 only (whose sentence IS this claim) — deliberately NOT c1,
+  // which precedes i1's own predict-before-reveal question and would give its answer away.
+  ["g5v-03-03:c2", "vm-equal-volumes-compare"],
 ]);
 
 const i2Goals = new Map<string, I2Goal>([
@@ -104,8 +113,8 @@ describe("S265 volume-problems-g5 source implementation", () => {
       }
     }
     expect(concepts).toBe(16);
-    expect(exact).toBe(8);
-    expect(withheld).toBe(8);
+    expect(exact).toBe(11);
+    expect(withheld).toBe(5);
   });
 
   it("turns every repeated i2 evaluator into a distinct, source-true transfer without changing its evaluator family", () => {

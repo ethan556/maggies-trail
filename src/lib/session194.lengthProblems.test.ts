@@ -27,6 +27,33 @@ for (const tag of FAMILIES) {
   );
 }
 
+/** Ratchet of numeric check/challenge steps whose `variant` declaration was deliberately
+ * withdrawn because a content rewrite changed the prompt SHAPE (not just its numbers) and no
+ * registered g2-measure-money-time/g2-add-subtract-100 form produces the new shape. Withdrawn
+ * steps stay withdrawn; every other numeric still re-derives via its declared form (S326-R1).
+ *
+ * g2p-02-02/k2+ch1: Signed PROGRESSION-g2p-02-02 (S318 PROG lane, verified S318-V2-g2p-02-02)
+ * rewrote both as three-addend leg sums (15+12+9=36, 40+15+9=64, both hand-verified).
+ *
+ * g2p-01-01/ch1, g2p-02-01/ch1, g2p-03-02/ch1, g2p-03-03/ch1: Signed PROGRESSION-<lessonId>
+ * (S329-PGB, LESSON_PROGRESSION_AND_DUPLICATION lane) closed a number-normalized-template
+ * collision between ch1 and an earlier check by changing ch1's task, not just its numbers:
+ *   g2p-01-01/ch1 adds a third length and a "shortest of the other two" selection step before
+ *     the subtraction (54 − 28 = 26, jump rope 40 cm is the same-shape distractor);
+ *   g2p-02-01/ch1 and g2p-03-02/ch1 join a third ribbon piece into the sum (25+23+15=63 and
+ *     28+15+9=52) instead of two;
+ *   g2p-03-03/ch1 reorders the two-step trade so the purchase happens BEFORE the cut
+ *     (50 + 25 − 18 = 57), reversing the surface order every sibling in this lesson shares.
+ * None of these four shapes are producible by a registered form; all four are hand-verified
+ * here and re-checked below against evaluate()/commonErrors like every other numeric. */
+const POOL_WITHDRAWN: Record<string, string[]> = {
+  "g2p-02-02": ["k2", "ch1"],
+  "g2p-01-01": ["ch1"],
+  "g2p-02-01": ["ch1"],
+  "g2p-03-02": ["ch1"],
+  "g2p-03-03": ["ch1"],
+};
+
 describe("S194 length-problems-g2 — course shape and cross-family reuse", () => {
   it("grade 2, 3 chapters sized 3/3/4, files match course.json", () => {
     const cj = JSON.parse(readFileSync(join(DIR, "course.json"), "utf8"));
@@ -94,12 +121,7 @@ describe("S194 length-problems-g2 — three route shapes re-derived by the REAL 
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          // Signed PROGRESSION-g2p-02-02 (S318 PROG lane, verified S318-V2-g2p-02-02)
-          // rewrote k2/ch1 as three-addend leg sums (15+12+9=36, 40+15+9=64, both
-          // hand-verified) that no registered form derives; their variant declarations
-          // were withdrawn with the rewrite. Ratchet: withdrawn steps stay withdrawn,
-          // every other numeric still re-derives via its declared form (S326-R1).
-          if (lesson.id === "g2p-02-02" && (s.id === "k2" || s.id === "ch1")) {
+          if (POOL_WITHDRAWN[lesson.id]?.includes(s.id)) {
             expect(s.variant, `${lesson.id}/${s.id} signed as pool-withdrawn`).toBeUndefined();
           } else {
             const derived = solveG2(s.variant.form, w.prompt);

@@ -10542,17 +10542,38 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
               by the evidence itself, not only by feedback text (the placeCompare precedent: the
               model illuminates the deciding structure at error). Computed from the same gap/overlap
               every other part of this widget uses — no second derivation. Nothing here marks WHICH
-              option is correct at retry; the quantities are structure, not the answer. */}
+              option is correct at retry; the quantities are structure, not the answer.
+
+              CL-P1-012 fix (S329): "overlap ≈ N%" used to sit at y=baseY-74=76, directly below the
+              gap bracket (the two ticks at y:[58,70] plus the y=64 bar). Modelled with
+              textBoxes.testkit.ts's exact box (0.72em/char, 0.98em ascent, 0.28em descent), that
+              label's box was y:[65.2..79.1] — its top 4.8 units into the ticks' y-range — and for
+              every authored gap <= ~1 variability-unit (the SMALL-gap "overlap dominates" judge
+              cases this bracket exists to teach: sp-02-02/i1 gap 0.4, sp-02-02/k2 + rem-soj-k gap
+              0.3, sp-02-03/k3 gap 0.2, si-03-03/i1 gap 1 — 5 of the current corpus's 10 judge
+              instances across sp-02-01/sp-02-02/sp-02-03/si-03-03) the means sit close enough that
+              BOTH tick lines fall inside the label's wide x-span too, so the ticks visually pierce
+              the text (Liang-Barsky segment/rect check: true for both ticks at every gap <= 1,
+              false for gap >= 2.5 — verified against every gapUnits value in the current authored
+              corpus, not just the two synthetic widgets.labelCollision.s237.test.tsx cases). There
+              is no gap between the bracket (bottom 70) and the hatch fill it would otherwise sit
+              against (top 82) big enough to hold an 11px label without touching one or the other,
+              so the label moves ABOVE the bracket instead, stacked over "gap ≈" with a 6+ unit
+              margin on every side (see reports/closure/S329_CLOSURE_CL2.md) — clear of the ticks,
+              clear of "gap ≈", and clear of the hatch, for every authored gap. Visual stacking
+              order carries no accessibility meaning here: the svg root's own aria-label already
+              states "gap ... apart. ... overlap is about ...%" in that order regardless of where
+              either <text> paints. */}
           {spec.mode === "judge" && (tone === "error" || tone === "info") && (
             <g data-testid="dcl-evidence">
               <line x1={X(aMean)} y1={64} x2={X(bMean)} y2={64} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
               <line x1={X(aMean)} y1={58} x2={X(aMean)} y2={70} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
               <line x1={X(bMean)} y1={58} x2={X(bMean)} y2={70} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
+              <text x={(X(aMean) + X(bMean)) / 2} y={34} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
+                overlap ≈ {Math.round(overlap * 100)}%
+              </text>
               <text x={(X(aMean) + X(bMean)) / 2} y={54} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
                 gap ≈ {fmt(gap)} variability-unit{gap === 1 ? "" : "s"}
-              </text>
-              <text x={(X(aMean) + X(bMean)) / 2} y={baseY - 74} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
-                overlap ≈ {Math.round(overlap * 100)}%
               </text>
             </g>
           )}

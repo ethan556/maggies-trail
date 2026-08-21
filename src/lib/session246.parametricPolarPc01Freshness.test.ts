@@ -58,14 +58,17 @@ describe("S246 parametric-polar-calculus pc-01 generator assurance", () => {
         if (form && FORMS.includes(form)) counts.set(form, (counts.get(form) ?? 0) + 1);
       }
     }
+    // pc-01-02/ch1 dropped its variant tag: S327_FIX_PG6.md redesigned it into an inverse
+    // "solve for t given arc length" prompt, which parametricArcNumericWidget (calculusVariants.ts)
+    // never produces — it only builds forward "Find its arc length" prompts. Re-pinned 3->2 / 8->7.
     expect(Object.fromEntries(counts)).toEqual({
       "parametric-polar-calculus__pc-parametric-derivative__numeric": 2,
       "parametric-polar-calculus__pc-parametric-derivative__mcq": 1,
       "parametric-polar-calculus__pc-second-derivative__numeric": 1,
-      "parametric-polar-calculus__pc-arc-length__numeric": 3,
+      "parametric-polar-calculus__pc-arc-length__numeric": 2,
       "parametric-polar-calculus__pc-arc-length__mcq": 1,
     });
-    expect([...counts.values()].reduce((sum, count) => sum + count, 0)).toBe(8);
+    expect([...counts.values()].reduce((sum, count) => sum + count, 0)).toBe(7);
   });
 
   it("ratchets twelve prompt-derived truth states per form with deterministic replay", () => {

@@ -263,35 +263,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Spot the mistake, then fix it.",
       "conceptTag": "g5e-evaluate",
       "explanationVariants": [
-        "One value only.",
-        "The rules fix it."
+        "Multiplication ranks first: 4 × 8 = 32, then 32 − 20 = 12 — not the student's −48.",
+        "The student's order was backward; doing multiplication first gives 12."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 4 × 8 − 20, multiplying before subtracting.",
+        "prompt": "A student computed 4 × 8 − 20 by subtracting first (8 − 20 = −12) and then multiplying by 4, getting −48. What is the correct value of 4 × 8 − 20?",
         "answer": 12,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 32,
-            "feedback": "That stopped after the multiplication; the 20 still has to come off."
+            "value": -48,
+            "feedback": "−48 is the student's WRONG answer, from subtracting before multiplying. Multiply first: 4 × 8 = 32, then subtract 20: 12."
           },
           {
-            "value": 15,
-            "feedback": "That value does not follow once the operations are done in the order the expression fixes."
+            "value": 32,
+            "feedback": "32 stops after the multiplication; the 20 still has to come off: 32 − 20 = 12."
           }
         ],
-        "fallbackFeedback": "Resolve the groupings first, then the higher-ranking operations, then work left to right.",
+        "fallbackFeedback": "Multiply first: 4 × 8 = 32. Then subtract: 32 − 20 = 12.",
         "successFeedback": "Correct — 12."
       },
       "hints": [
-        "Groupings first.",
-        "Then the higher rank.",
-        "Left to right within a rank."
+        "The student subtracted before multiplying — check the rank order.",
+        "Multiplication happens first: 4 × 8 = 32.",
+        "Then subtract: 32 − 20 = 12."
       ],
       "cml": {
         "stage": "construct",
@@ -314,10 +314,6 @@
         "transferFamily": "expressions-patterns-g5:g5e-evaluate",
         "delayed": true,
         "counterfactualPrompt": "If the brackets moved one term to the left, what value would the expression name instead?"
-      },
-      "variant": {
-        "gen": "g4-multiply",
-        "form": "mbMultiStepNumeric"
       }
     },
     {

@@ -165,53 +165,53 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Recognize a triple.",
+      "body": "Work backward from the magnitude.",
       "conceptTag": "vec-components",
       "explanationVariants": [
-        "|⟨6, 8⟩| = √(36 + 64) = √100 = 10 — a scaled 3-4-5.",
-        "Double the 3-4-5 triangle: legs 6 and 8, hypotenuse 10."
+        "A vector's magnitude follows a² + b² = c²; here 6² + y² = 10², so y = √(100 − 36) = 8.",
+        "Same 6-8-10 triple as before, solved for the missing leg instead of the hypotenuse."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "What is the magnitude of v = ⟨6, 8⟩?",
+        "prompt": "A vector v = ⟨6, y⟩ has magnitude 10. What is y (given y > 0)?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
+            "id": "c",
+            "label": "|v|",
+            "value": 10
+          },
+          {
             "id": "x",
             "label": "v_x",
             "value": 6
-          },
-          {
-            "id": "y",
-            "label": "v_y",
-            "value": 8
           }
         ],
         "approxFormula": {
           "op": "sqrt",
           "arg": {
-            "op": "add",
+            "op": "subtract",
             "left": {
               "op": "multiply",
               "left": {
                 "op": "const",
-                "id": "x"
+                "id": "c"
               },
               "right": {
                 "op": "const",
-                "id": "x"
+                "id": "c"
               }
             },
             "right": {
               "op": "multiply",
               "left": {
                 "op": "const",
-                "id": "y"
+                "id": "x"
               },
               "right": {
                 "op": "const",
-                "id": "y"
+                "id": "x"
               }
             }
           }
@@ -221,12 +221,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 14,
-            "feedback": "14 = 6 + 8 adds. |v| = √(36 + 64) = √100 = 10."
+            "value": 4,
+            "feedback": "4 = 10 − 6 subtracts directly. Magnitude uses squares: y = √(10² − 6²) = √64 = 8."
           },
           {
-            "value": 48,
-            "feedback": "48 = 6·8 multiplies. Use √(36 + 64) = 10."
+            "value": 64,
+            "feedback": "64 = 10² − 6² is under the root — take the square root: √64 = 8."
           }
         ],
         "choices": [],
@@ -234,12 +234,8 @@
         "requiredStageKeys": [],
         "requiredExplorations": 1,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "√(6² + 8²) = √100 = 10.",
-        "successFeedback": "√(6² + 8²) = √100 = 10."
-      },
-      "variant": {
-        "gen": "g12-vectors-matrices",
-        "form": "vectors-matrices__vec-components__numeric"
+        "fallbackFeedback": "y = √(10² − 6²) = √(100 − 36) = √64 = 8.",
+        "successFeedback": "y = √(10² − 6²) = √(100 − 36) = √64 = 8."
       }
     },
     {
@@ -281,31 +277,31 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A larger triangle.",
+      "body": "A real displacement.",
       "conceptTag": "vec-components",
       "explanationVariants": [
-        "|⟨5, 12⟩| = √(25 + 144) = √169 = 13 — the 5-12-13 right triangle.",
-        "Recognize the Pythagorean triple: the magnitude is 13."
+        "The drone's displacement is ⟨5, 12⟩ from the launch point, so its distance is √(5² + 12²) = √169 = 13 km.",
+        "Treat the two flight legs as vector components and apply the same magnitude formula: 13 km."
       ],
       "hints": [
-        "Magnitude = √(a² + b²).",
-        "5² + 12² = 25 + 144 = 169.",
+        "The two flight legs ARE the vector's components: ⟨5, 12⟩.",
+        "Magnitude = √(a² + b²) still applies: 5² + 12² = 25 + 144 = 169.",
         "√169 = ?"
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "What is the magnitude of v = ⟨5, 12⟩?",
+        "prompt": "A drone launches, flies 5 km east, then 12 km north. Directly from the launch point, how far away is the drone now, in kilometers?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
             "id": "x",
-            "label": "v_x",
+            "label": "east leg",
             "value": 5
           },
           {
             "id": "y",
-            "label": "v_y",
+            "label": "north leg",
             "value": 12
           }
         ],
@@ -343,11 +339,11 @@
         "numericErrors": [
           {
             "value": 17,
-            "feedback": "17 = 5 + 12 adds. |v| = √(25 + 144) = √169 = 13."
+            "feedback": "17 = 5 + 12 adds the legs directly. The displacement is ⟨5, 12⟩, whose magnitude is √(25 + 144) = 13 km."
           },
           {
             "value": 169,
-            "feedback": "169 = 5² + 12² skips the root: √169 = 13."
+            "feedback": "169 = 5² + 12² skips the root: √169 = 13 km."
           }
         ],
         "choices": [],
@@ -355,12 +351,8 @@
         "requiredStageKeys": [],
         "requiredExplorations": 1,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "√(5² + 12²) = √169 = 13.",
-        "successFeedback": "√(5² + 12²) = √169 = 13."
-      },
-      "variant": {
-        "gen": "g12-vectors-matrices",
-        "form": "vectors-matrices__vec-components__numeric"
+        "fallbackFeedback": "The flight legs are the vector's components ⟨5, 12⟩: √(5² + 12²) = √169 = 13 km.",
+        "successFeedback": "The flight legs are the vector's components ⟨5, 12⟩: √(5² + 12²) = √169 = 13 km."
       }
     },
     {

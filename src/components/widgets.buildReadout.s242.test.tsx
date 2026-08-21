@@ -28,6 +28,7 @@ import { describe, expect, it } from "vitest";
 import { render, cleanup, screen } from "@testing-library/react";
 import { afterEach } from "vitest";
 import { readFileSync, globSync } from "node:fs";
+import { basename } from "node:path";
 import { WidgetSpec, type TWidget } from "@/lib/schema";
 import { WidgetRenderer } from "./widgets";
 
@@ -44,7 +45,10 @@ for (const file of globSync("content/courses/*/lessons/*.json")) {
     const parsed = WidgetSpec.safeParse(raw);
     if (!parsed.success) continue;
     cases.push({
-      lesson: file.split("/").pop()!.replace(".json", ""),
+      // `basename()`, not `.split("/").pop()`: node:fs's globSync joins matches with the
+      // platform separator, so on Windows a forward-slash split would return the whole path
+      // instead of the file name. `path.basename` reads correctly on every OS.
+      lesson: basename(file, ".json"),
       step: String(step.id), kind: String(step.kind ?? "?"),
       spec: parsed.data as TWidget, correct: raw.correct,
     });

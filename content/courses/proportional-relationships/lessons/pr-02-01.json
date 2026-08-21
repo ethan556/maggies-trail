@@ -413,17 +413,17 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A trickier check.",
+      "body": "A trickier check — this one hides its broken ratio at the end.",
       "conceptTag": "pr-test-proportional",
       "explanationVariants": [
-        "10/2=5, 20/4=5, 30/6=5 — all equal, so it's proportional.",
-        "Every ratio here is 5."
+        "3/4 and 6/8 both equal 3/4, but 8/12 breaks the pattern — not proportional.",
+        "The first two ratios agree at 3/4; the third pair doesn't fit."
       ],
       "widget": {
         "type": "proportionalReasoningLab",
         "task": "testProportional",
         "answerMode": "choice",
-        "prompt": "A table has pairs (2, 10), (4, 20), (6, 30). Is this proportional?",
+        "prompt": "A table has pairs (4, 3), (8, 6), and (12, 8) — check every ratio, not just the first two, before deciding. Is this proportional?",
         "xLabel": "x",
         "yLabel": "y",
         "series": [
@@ -432,42 +432,42 @@
             "label": "table",
             "pairs": [
               [
-                2,
-                10
-              ],
-              [
                 4,
-                20
+                3
               ],
               [
-                6,
-                30
+                8,
+                6
+              ],
+              [
+                12,
+                8
               ]
             ]
           }
         ],
         "requiredExplorations": 3,
-        "successFeedback": "Yes — 10/2=20/4=30/6=5, so it's proportional.",
+        "successFeedback": "Yes — 3/4 and 6/8 both equal 3/4, but 8/12 doesn't match. One broken ratio makes it not proportional.",
         "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
         "fallbackFeedback": "Choose the conclusion supported by the normalized ratios.",
         "tolerance": 0,
         "choices": [
           {
             "id": "a",
-            "label": "Yes, every ratio is 5",
-            "feedback": "Yes — 10/2=20/4=30/6=5, so it's proportional.",
-            "claim": "proportional:yes"
+            "label": "No, the last ratio doesn't match",
+            "feedback": "Yes — 3/4 and 6/8 both equal 3/4, but 8/12 doesn't match. One broken ratio makes it not proportional.",
+            "claim": "proportional:no"
           },
           {
             "id": "b",
-            "label": "No, some pairs look different",
-            "feedback": "Looking different isn't the test — check the ratios: 10/2=20/4=30/6=5, all equal, so it IS proportional.",
+            "label": "Yes, every ratio is 3/4",
+            "feedback": "Not quite — the first two ratios are 3/4, but the third pair breaks the pattern: 8/12 doesn't match. Checking only the first two isn't enough.",
             "claim": "misconception:b"
           },
           {
             "id": "c",
-            "label": "Can't tell",
-            "feedback": "You can tell by checking every ratio: 10/2=20/4=30/6=5, so it's proportional.",
+            "label": "Can't tell without a fourth pair",
+            "feedback": "Three pairs are already enough: 3/4, 3/4, then 8/12 breaks the pattern — that's enough to know it's not proportional.",
             "claim": "misconception:c"
           }
         ],
@@ -475,14 +475,10 @@
         "targetSeriesId": "table"
       },
       "hints": [
-        "Compute each ratio: 10/2, 20/4, 30/6.",
-        "10/2=5, 20/4=5, 30/6=5.",
-        "All three ratios equal 5, so it's proportional."
-      ],
-      "variant": {
-        "gen": "pr-test-proportional-g7",
-        "form": "proportionalChallenge"
-      }
+        "Compute each ratio y ÷ x: 3/4, 6/8, 8/12.",
+        "3/4 and 6/8 both simplify to 3/4.",
+        "8/12 simplifies to 2/3, which breaks the pattern — not proportional."
+      ]
     },
     {
       "id": "r1",

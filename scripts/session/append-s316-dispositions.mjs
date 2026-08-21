@@ -132,6 +132,64 @@ const ORDER = [
   // S326 wave (2026-08-21): platform-red reconciliation corrective dispositions.
   "laneA-s326-R1.jsonl",
   "laneA-s326-R3.jsonl",
+  // S327 wave (2026-08-21) PASS 1 of 2: laneB-s327-A1 alone. A1 self-detected a shared
+  // scratchpad collision that misdirected 11 of its 12 records into laneB-s327-A3.jsonl
+  // (recordIds s327-A1-pv1000-01-02..04-03). A1 rebuilt its own correct file (12/12
+  // verified against fresh reviewedBasisHash). Appending A1 alone first lets its 12
+  // recordIds enter the ledger's existingIds set so pass 2 (below) silently skips the
+  // 11 stray duplicates inside A3's file via the idempotent already-appended check
+  // rather than hard-failing on an in-run duplicateRecordId collision. See HANDOVER
+  // S327 addendum.
+  "laneB-s327-A1.jsonl",
+  // S327 wave PASS 2 of 2: remaining 14 files. laneB-s327-A3.jsonl's 11 stray
+  // s327-A1-* duplicates are expected to land in skippedAlreadyAppended (already in
+  // the ledger from pass 1 above); its 12 legitimate s327-A3-* records write normally.
+  // No laneA-s327-genfix.jsonl exists — the generator-engineering packet was pure
+  // src/lib fixes with zero lesson-JSON cross-fixes, confirmed via directory listing.
+  "laneB-s327-A2.jsonl",
+  "laneB-s327-A3.jsonl",
+  "laneB-s327-A4.jsonl",
+  "laneB-s327-A5.jsonl",
+  "laneB-s327-A6.jsonl",
+  "laneB-s327-A7.jsonl",
+  "laneA-s327-PG1.jsonl",
+  "laneA-s327-PG2.jsonl",
+  "laneA-s327-PG3.jsonl",
+  "laneA-s327-PG4.jsonl",
+  "laneA-s327-PG5.jsonl",
+  "laneA-s327-PG6.jsonl",
+  "laneA-s327-CH1.jsonl",
+  "laneA-s327-CH2.jsonl",
+  // S328 wave (2026-08-21): discharge the 5 S327 LESSON_REVISION_IMPLEMENTATION
+  // escalations. E1 = countTeenFrame src fix (g0Variants.ts) + full knb-* sibling
+  // sweep (9 lessons total). E2 = two new registered figures (vm-notch-block,
+  // vm-equal-volumes-compare) closing the g5v-03-01/g5v-03-03 visual ESCALATEs. E3 =
+  // pv1000-02-01 REVISE implemented content-only after confirming the session273 trio
+  // pin was never actually implicated (only session301's single-row reveal hash was).
+  "laneA-s328-E1.jsonl",
+  "laneA-s328-E2.jsonl",
+  "laneA-s328-E3.jsonl",
+  // S328 main-loop: fixed 2 pre-existing (not S327/S328-caused) ILLUSTRATION_REPLACEMENT
+  // P0 rows surfaced by a VIS01 regen side effect of E2's work -- see rationale.
+  "laneA-s328-mainloop.jsonl",
+  // S329 wave (2026-08-21): user directive "complete ALL pending work aggressively,
+  // multiple concurrent workers". 6 LESSON_PROGRESSION_AND_DUPLICATION redesign packets
+  // (PGA-PGF, 142 lessons reviewed, ~68 redesigned / rest KEEP-with-rationale -- see
+  // HANDOVER S329 addendum for the closure-mechanism caveat), 2 QUESTION_DIVERSITY_AND_
+  // TRANSFER engine-extension packets (Q1: 6 ks-* lessons; Q2: 3 multi-engine lessons),
+  // 1 CLOSURE_LEDGER packet with lesson-content edits (CL3: 200/200 prediction-gate
+  // review, 0 removed). CL1/CL2/CL4 (also S329, CLOSURE_LEDGER.md work) wrote no lesson
+  // dispositions -- pure src/tooling fixes or already-resolved findings, zero content edits.
+  "laneA-s329-PGA.jsonl",
+  "laneA-s329-PGB.jsonl",
+  "laneA-s329-PGC.jsonl",
+  "laneA-s329-PGD.jsonl",
+  "laneA-s329-PGE.jsonl",
+  "laneA-s329-PGF.jsonl",
+  "laneA-s329-Q1.jsonl",
+  "laneA-s329-Q2.jsonl",
+  "laneA-s329-CL3.jsonl",
+  "laneA-s329-recon-mainloop.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

@@ -345,26 +345,26 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Put it together.",
+      "body": "A word problem this time.",
       "conceptTag": "exp-evaluate",
       "explanationVariants": [
-        "3³ = 27, then 2 · 27 = 54.",
-        "f(3) = 2 · 3³ = 2 · 27 = 54."
+        "Start at 2, triple three times: 2 → 6 → 18 → 54.",
+        "f(3) = 2 · 3³ = 2 · 27 = 54 bacteria."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "For f(x) = 2 · 3^x, what is f(3)?",
+        "prompt": "A colony starts with 2 bacteria and triples every hour. How many bacteria are there after 3 hours?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
             "id": "a",
-            "label": "the start amount a",
+            "label": "the starting bacteria count",
             "value": 2
           },
           {
             "id": "b",
-            "label": "the base b (one factor per step)",
+            "label": "the tripling factor (one factor per hour)",
             "value": 3
           }
         ],
@@ -398,12 +398,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 18,
-            "feedback": "That's f(2) = 2 · 9. For f(3), use 3³ = 27: 2 · 27 = 54."
+            "value": 27,
+            "feedback": "That's 3³ alone — you tripled three times but forgot to start from 2 bacteria: 2 · 27 = 54."
           },
           {
-            "value": 216,
-            "feedback": "Raise b first, then multiply: 2 · (3³) = 54, not (2·3)³ = 216."
+            "value": 24,
+            "feedback": "That swaps the starting count and the tripling factor. Start at a = 2 and multiply by b = 3 each hour: 2 · 3³ = 54, not 3 · 2³."
           }
         ],
         "choices": [],
@@ -415,17 +415,14 @@
         ],
         "requiredExplorations": 3,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "f(3) = 2 · 3³ = 2 · 27 = 54.",
-        "successFeedback": "f(3) = 2 · 3³ = 2 · 27 = 54."
+        "fallbackFeedback": "After 3 hours: 2 · 3³ = 2 · 27 = 54.",
+        "successFeedback": "After 3 hours: 2 · 3³ = 2 · 27 = 54."
       },
       "hints": [
-        "First compute 3³ = 27.",
-        "Then multiply by a = 2.",
-        "2 · 27 = 54."
-      ],
-      "variant": {
-        "gen": "exp-function"
-      }
+        "Tripling each hour means multiplying by 3, three times.",
+        "2 → 6 → 18 → 54.",
+        "After 3 hours: 54 bacteria."
+      ]
     },
     {
       "id": "r1",

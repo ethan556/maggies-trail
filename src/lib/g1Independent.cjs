@@ -71,6 +71,7 @@ function solvePrompt(form,input){const p=input.split('||'),prompt=p[0],raw=p.sli
  case'Smg1HalvesNumeric':return 2;case'Smg1FourthsNumeric':return 4;case'Smg1HalvesFourthsNumeric':return 2;
  case'Smg1HalvesMcq':return exact(options,'A half');case'Smg1FourthsMcq':return exact(options,'A fourth');case'Smg1HalvesFourthsMcq':return exact(options,'A fourth');
  case'Smg1LengthDifferenceNumeric':return n[0]-n[1];
+ case'Smg1UnitSizeCompareMcq':{const names=[...prompt.matchAll(/A ([\w-]+) is \d+ ([\w-]+)s long/g)].map(m=>({name:m[1],unit:m[2]}));const big=prompt.match(/a ([\w-]+) is bigger than a ([\w-]+)/);const winner=names.find(x=>x.unit===big[1]).name;return exact(options,`No — the ${winner} is longer`);}
  /* S326-R1: shape table extended with hexagon (6 sides/6 corners) and the article
     matcher widened to 'one <shape>' — covers the signed S320-IMPL-A13-g1s-01-03
     hexagon retarget and S320-IMPL-A13-g1s-03-02 decompose reframe; verified against

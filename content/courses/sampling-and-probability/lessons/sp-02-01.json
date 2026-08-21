@@ -46,37 +46,37 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Another gap-in-units measurement.",
+      "body": "A gap that isn't a whole number.",
       "conceptTag": "sp-gap-units",
       "explanationVariants": [
-        "(27−15)÷3=4.",
-        "Divide the raw gap by the variability measure."
+        "(34−20)÷4 = 3.5 — the gap-in-units doesn't have to be a whole number.",
+        "14÷4 = 3.5 exactly. Divide all the way through; don't round to the nearest whole unit."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 27. Group B has a mean of 15. The variability measure is 3. How many variability-units apart are the means?",
+        "prompt": "Two classes' project scores average 34 and 20 points, with a variability measure of 4 points. How many variability-units apart are the class averages?",
         "mode": "measure",
-        "meanA": 27,
-        "meanB": 15,
-        "variability": 3,
-        "answer": 4,
+        "meanA": 34,
+        "meanB": 20,
+        "variability": 4,
+        "answer": 3.5,
         "tolerance": 0,
         "measureChoices": [
           {
-            "value": 12,
-            "feedback": "That's just the raw gap (27−15). Divide by the variability measure: 12÷3=4."
+            "value": 14,
+            "feedback": "That's just the raw gap (34−20). Divide by the variability measure: 14÷4=3.5."
+          },
+          {
+            "value": 3.5,
+            "feedback": "(34−20)÷4 = 3.5 variability-units."
           },
           {
             "value": 4,
-            "feedback": "(27−15)÷3 = 4 variability-units."
-          },
-          {
-            "value": 3,
-            "feedback": "That's the variability measure itself, not the gap in units. (27−15)÷3=4."
+            "feedback": "That's the variability measure itself, not the gap in units. (34−20)÷4=3.5."
           }
         ],
-        "fallbackFeedback": "(27−15)÷3 = 4 variability-units.",
-        "successFeedback": "(27−15)÷3 = 4 variability-units."
+        "fallbackFeedback": "(34−20)÷4 = 3.5 variability-units.",
+        "successFeedback": "(34−20)÷4 = 3.5 variability-units."
       },
       "variant": {
         "gen": "g7-sp-gap-units",
@@ -160,37 +160,37 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another gap-in-units measurement.",
+      "body": "When the variability measure is exactly 1.",
       "conceptTag": "sp-gap-units",
       "explanationVariants": [
-        "(65−50)÷5=3.",
-        "Divide the raw gap by the variability measure."
+        "(19−15)÷1 = 4 — dividing by 1 leaves the raw gap unchanged.",
+        "A variability measure of 1 means the gap-in-units IS the raw difference."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 65. Group B has a mean of 50. The variability measure is 5. How many variability-units apart are the means?",
+        "prompt": "Two gardens' plant heights average 19 and 15 centimeters, with a variability measure of just 1 centimeter. How many variability-units apart are the garden averages?",
         "mode": "measure",
-        "meanA": 65,
-        "meanB": 50,
-        "variability": 5,
-        "answer": 3,
+        "meanA": 19,
+        "meanB": 15,
+        "variability": 1,
+        "answer": 4,
         "tolerance": 0,
         "measureChoices": [
           {
-            "value": 15,
-            "feedback": "That's just the raw gap (65−50). Divide by the variability measure: 15÷5=3."
+            "value": 1,
+            "feedback": "That's the variability measure itself, not the gap. (19−15)÷1=4."
           },
           {
-            "value": 3,
-            "feedback": "(65−50)÷5 = 3 variability-units."
+            "value": 4,
+            "feedback": "(19−15)÷1 = 4 — dividing by 1 doesn't change the raw gap."
           },
           {
-            "value": 5,
-            "feedback": "That's the variability measure itself, not the gap in units. (65−50)÷5=3."
+            "value": 8,
+            "feedback": "That doubles the raw gap — dividing by 1 leaves it unchanged: (19−15)÷1=4."
           }
         ],
-        "fallbackFeedback": "(65−50)÷5 = 3 variability-units.",
-        "successFeedback": "(65−50)÷5 = 3 variability-units."
+        "fallbackFeedback": "(19−15)÷1 = 4 — dividing by 1 leaves the raw gap unchanged.",
+        "successFeedback": "(19−15)÷1 = 4 — dividing by 1 leaves the raw gap unchanged."
       },
       "variant": {
         "gen": "g7-sp-gap-units",
@@ -240,47 +240,42 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A trickier gap-in-units measurement.",
+      "body": "Judge a real comparison, not just compute it.",
       "conceptTag": "sp-gap-units",
       "explanationVariants": [
-        "(84−60)÷8=3.",
-        "Divide the raw gap by the variability measure."
+        "A gap-in-units of 3 is well above 1, so the neighborhoods are more clearly separated than not, even with some overlap left.",
+        "Compare the gap to the benchmarks: near 0 means not different; several units means clearly different."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 84. Group B has a mean of 60. The variability measure is 8. How many variability-units apart are the means?",
-        "mode": "measure",
-        "meanA": 84,
-        "meanB": 60,
-        "variability": 8,
-        "answer": 3,
-        "tolerance": 0,
-        "measureChoices": [
+        "prompt": "Two neighborhoods' commute times have a gap-in-units of 3 — Group A's mean is 84 minutes, Group B's mean is 60 minutes, and the variability measure is 8. What does this gap suggest?",
+        "mode": "judge",
+        "gapUnits": 3,
+        "judgeOptions": [
           {
-            "value": 24,
-            "feedback": "That's just the raw gap (84−60). Divide by the variability measure: 24÷8=3."
+            "id": "a",
+            "label": "There is a real, fairly clear difference in commute time between the neighborhoods",
+            "correct": true,
+            "feedback": "Yes — a gap-in-units of 3 is well above 1, so the two neighborhoods are more clearly separated than not."
           },
           {
-            "value": 3,
-            "feedback": "(84−60)÷8 = 3 variability-units."
+            "id": "b",
+            "label": "The two neighborhoods have essentially the same average commute time",
+            "feedback": "A gap-in-units of 3 is not close to 0 — the means are clearly separated, not the same."
           },
           {
-            "value": 8,
-            "feedback": "That's the variability measure itself, not the gap in units. (84−60)÷8=3."
+            "id": "c",
+            "label": "The gap cannot be judged without also knowing the sample sizes",
+            "feedback": "The gap-in-units already standardizes the difference by variability — that alone is enough to judge how separated the groups are."
           }
         ],
-        "fallbackFeedback": "(84−60)÷8 = 3 variability-units.",
-        "successFeedback": "(84−60)÷8 = 3 variability-units."
+        "successFeedback": "Yes — a gap-in-units of 3 is well above 1, so the two neighborhoods are more clearly separated than not."
       },
       "hints": [
-        "Find the raw gap first: 84−60=24.",
-        "Divide by the variability measure: 24÷8.",
-        "24÷8 = 3 variability-units."
-      ],
-      "variant": {
-        "gen": "g7-sp-gap-units",
-        "form": "spGapChallenge"
-      }
+        "The gap-in-units is already given: 3.",
+        "Compare it to the benchmarks: near 0 means not different; several units means clearly different.",
+        "3 is well above 1, so this points to a real difference."
+      ]
     },
     {
       "id": "r1",

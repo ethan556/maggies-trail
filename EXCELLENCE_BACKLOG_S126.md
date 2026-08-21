@@ -4,26 +4,23 @@ Regenerate with `npm run audit:excellence`. This report is generated from live l
 
 ## Gate summary
 
-- Live K–8 C/D queue: **10**
-- Classified: **10**
-- Deterministically classified representation-novelty rows: **9**
+- Live K–8 C/D queue: **1**
+- Classified: **1**
+- Deterministically classified representation-novelty rows: **0**
 - UNREVIEWED: **0**
-- Representation absent: **0**; partial: **9**
-- Honest prediction ceilings currently detected outside the C/D queue: **17**
+- Representation absent: **0**; partial: **0**
+- Honest prediction ceilings currently detected outside the C/D queue: **20**
 
 ## Candidate disposition
 
 | disposition | lessons |
 |---|--:|
-| extend | 6 |
 | intentional-assessment | 1 |
-| multi-engine | 3 |
 
 ## Honest resting tier
 
 | tier | lessons |
 |---|--:|
-| B | 9 |
 | C-intentional | 1 |
 
 ## Step-weighted causal coverage
@@ -32,16 +29,19 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 | band | causal widget steps | exploration causal coverage | lessons with causal spine |
 |---|---:|---:|---:|
-| K–2 | 1013/2531 (40.0%) | 735/890 (82.6%) | 405/410 (98.8%) |
+| K–2 | 1014/2538 (40.0%) | 734/890 (82.5%) | 405/410 (98.8%) |
 | G3–5 | 726/2543 (28.5%) | 630/851 (74.0%) | 404/419 (96.4%) |
-| G6–8 | 508/1551 (32.8%) | 327/566 (57.8%) | 232/245 (94.7%) |
+| G6–8 | 510/1553 (32.8%) | 327/566 (57.8%) | 232/245 (94.7%) |
 | HS | 613/3644 (16.8%) | 550/1202 (45.8%) | 503/627 (80.2%) |
 
 ## Honest prediction ceilings
 
+- **ks-01-02** (G0, B26): unsafe — Every exploratory step is itself a classification/selection judgment; a preceding prediction would duplicate the assessed judgment.
+- **ks-02-01** (G0, B26): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ks-03-03** (G0, B24): unsafe — Every exploratory step is itself a classification/selection judgment; a preceding prediction would duplicate the assessed judgment.
 - **mmt-01-02** (G2, B26): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-01-03** (G2, B26): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
+- **mmt-02-01** (G2, B30): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-01** (G2, B24): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **mmt-05-02** (G2, B27): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
 - **ssg2-02-02** (G2, B29): redundant — Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship.
@@ -62,15 +62,6 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 | lesson | current | action | representation | prediction | target | candidate | remedial routes |
 |---|---:|---|---|---|---|---|---:|
 | df3-03-02 — Why You Can't Divide by Zero (G3) | C22 | intentional-assessment | symbolic process: yes | unsafe | C-intentional | No manipulable engine change or additional transfer item is warranted. All assessed/exploratory items (i1, i2 mcq + k1, k2, k3 check + ch1 challenge) are deliberately conventional select/entry surfaces (mcq, numeric) because the concept — division by zero is undefined — is a symbolic, definitional exclusion proven by inverse multiplication (0 x ? = n has no solution), not a spatial or quantitative relationship a drag/build engine would model more truthfully. k1 (7÷0) and k3 (12÷0) share the DivZeroMcq generator form to drill the same undefined-quotient judgment at different numbers (near-repetition is intentional practice, not a flaw); k2 (0÷5=0, zero as dividend) and ch1 (discriminate 8÷0 vs 0÷8) are authored one-off conceptual items. This shape is test-locked by src/lib/session186.fluencyPair.test.ts (NO_FACT_LESSONS = {df3-03-02}; UNVARIANTED_OK includes df3-03-02/k2 and df3-03-02/ch1, documented there as 'one-off conceptual items') and src/lib/session254.divisionFluencyG3CourseIntegrity.test.tsx (option-id/length parity checks specifically pin df3-03-02/k1 and df3-03-02/k3). | 1 |
-| ks-01-01 — Name the Shapes (G0) | C22 | extend | multiple: partial | eligible | B | Novel challenge extension beyond variant:match-object-shape:default + variant:shape-identify:default; current assessed surfaces: matchPairs + mcq + tapDiagram | 1 |
-| ks-01-02 — Shapes Any Way Up (G0) | C22 | extend | multiple: partial | unsafe | B | Novel challenge extension beyond variant:g0-shapes-sorting:shapeAnyWayMcq + variant:g0-shapes-sorting:shapeAnyWayTap; current assessed surfaces: matchPairs + mcq + tapDiagram | 1 |
-| ks-01-03 — Where Is It? (G0) | C22 | extend | multiple: partial | eligible | B | Novel challenge extension beyond variant:g0-shapes-sorting:shapePositionMcq + variant:g0-shapes-sorting:shapePositionTap; current assessed surfaces: dragBucket + mcq + tapDiagram | 1 |
-| ks-02-01 — Shapes We Can Hold (G0) | C22 | extend | multiple: partial | redundant | B | Novel challenge extension beyond variant:match-object-shape:solids + variant:shape-identify:solid; current assessed surfaces: matchPairs + mcq + tapDiagram | 1 |
-| ks-02-03 — Build with Shapes (G0) | C23 | extend | multiple: partial | eligible | B | Novel challenge extension beyond variant:g0-shapes-sorting:shapeComposeMcq + variant:g0-shapes-sorting:shapeComposePairs + variant:g0-shapes-sorting:shapeComposeTap; current assessed surfaces: dragBucket + matchPairs + mcq + tapDiagram | 1 |
-| ks-03-02 — Heavier, Lighter, Holds More (G0) | C22 | extend | multiple: partial | eligible | B | Novel challenge extension beyond variant:g0-shapes-sorting:shapeWeightMcq + variant:g0-shapes-sorting:shapeWeightTap; current assessed surfaces: dragBucket + mcq + tapDiagram | 1 |
-| mmt-02-01 — Estimating Before You Measure (G2) | C22 | multi-engine | multiple: partial | redundant | B | Multi-representation sequence beyond variant:g2-measure-money-time:MmtEstimateMcq; current assessed surfaces: matchPairs + mcq | 1 |
-| ns-04b-01 — Signs, and What a Flip Does to Them (G6) | C23 | multi-engine | multiple: partial | eligible | B | Multi-representation sequence beyond surface:mcq; current assessed surfaces: mcq | 0 |
-| sp-03-02 — Estimating Probability from Trials (G7) | C22 | multi-engine | multiple: partial | eligible | B | Multi-representation sequence beyond variant:g7-sp-likelihood-words:spLikelihoodImpossible + variant:prob-fraction:trialRelFreq; current assessed surfaces: matchPairs + mcq + trialProbabilityLab | 3 |
 
 ## Representation-presence audit
 
@@ -102,7 +93,7 @@ The strict whole-corpus text scan found **47** candidates where a graded answer 
 - la-02-01/k2 [mcq] — Read the arrow marks. In a diagram, line P and line R both have a single arrowhead mark; line Q has a double arrowhead mark. Which lines are parallel to each other?
 - mmt-05-03/i1 [numeric] — Count the X's. A line plot shows 3 x's above the number 5 and 1 x above the number 6. How many data points are at 5?
 - mmt-05-03/k1 [numeric] — Another number's X's. A line plot shows 6 x's above the number 8 and 2 x's above the number 9. How many data points are at 8?
-- mmt-05-03/i3 [numeric] — One more X-count. A line plot shows 2 x's above the number 3 and 1 x above the number 4. How many data points are at 3?
+- mmt-05-03/i3 [numeric] — Three stacks this time — read the one the question asks for, not the biggest. A line plot shows 4 x's above the number 2, 2 x's above the number 3, and 1 x above the number 4. How many data points are at 4?
 - mmt-05-03/k3 [numeric] — A bigger X-count. A line plot shows 10 x's above the number 6 and 1 x above the number 7. How many data points are at 6?
 - g4v-02-03/k2 [mcq] — Apply without the opening model: A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?
 - g4v-03-04/k1 [mcq] — A bar diagram shows 5 equal parts of 300 m, with 80 m crossed off the end. What does it record?

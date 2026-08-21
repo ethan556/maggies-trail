@@ -178,32 +178,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Bigger numbers.",
+      "body": "Divide first, THEN take the root.",
       "conceptTag": "quad-square-root",
       "explanationVariants": [
-        "x² = 81 gives x = ±9; the larger is 9.",
-        "√81 = 9, so x = ±9."
+        "Divide by 3: (x − 2)² = 4. Root: x − 2 = ±2, so x = 4 or x = 0; the larger is 4.",
+        "Isolate the square first (÷3), then take the root, then undo the shift: x = 4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Solve x^2 = 81. What is the larger solution?",
-        "answer": 9,
+        "prompt": "Solve 3(x - 2)^2 = 12. What is the larger solution?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": -9,
-            "feedback": "That's the smaller solution; the larger is 9."
+            "value": 6,
+            "feedback": "6 comes from treating 4 as x−2 directly. First divide by 3 to get (x−2)²=4, THEN take the square root: x−2=±2."
           },
           {
-            "value": 81,
-            "feedback": "81 is x². Take the square root: x = ±9."
+            "value": 0,
+            "feedback": "0 is the smaller solution (2−2). The larger is 2+2=4."
           }
         ],
-        "fallbackFeedback": "x = ±9; the larger is 9."
-      },
-      "variant": {
-        "gen": "a1-quadratics",
-        "form": "quad-square-root__numeric"
+        "fallbackFeedback": "Divide by 3 to isolate the square: (x−2)²=4. Take the root: x−2=±2. The larger solution is x=4."
       }
     },
     {
