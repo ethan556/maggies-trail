@@ -163,6 +163,7 @@ export type VariantForm =
   | "addX"
   | "addSquare"
   | "subX"
+  | "subX2"
   | "subConst"
   | "subFlip"
   | "mulHigh"
