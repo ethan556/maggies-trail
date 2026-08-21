@@ -50,10 +50,14 @@ const labels = (svg: SVGSVGElement, testId: string) => Array.from(svg.querySelec
 afterEach(cleanup);
 
 describe("S253 shared number-line portfolio boundary", () => {
-  it("pins exactly 493 authored and remedial consumers", () => {
+  it("pins exactly 494 authored and remedial consumers", () => {
+    // 493 → 494 (hops 430 → 431): commit a78d6a3 (S320-IMPL-A5-kcw-02-04, contract
+    // S320_ASSESS_A5.md, verified KEEP by S321-V1-kcw-02-04) converted
+    // number-writing-k/kcw-02-04/ch1 subitizeFlash → numberLineHop (no denom, no
+    // hopSizeTargets, so the sub-counts are untouched). See S326_RECONCILE_R3.md.
     expect(PLACES).toHaveLength(63);
-    expect(HOPS).toHaveLength(430);
-    expect(PLACES.length + HOPS.length).toBe(493);
+    expect(HOPS).toHaveLength(431);
+    expect(PLACES.length + HOPS.length).toBe(494);
     expect(PLACES.filter(({ widget }) => widget.fractionDen !== undefined)).toHaveLength(16);
     expect(HOPS.filter(({ widget }) => widget.denom !== undefined)).toHaveLength(5);
     expect(HOPS.filter(({ widget }) => widget.hopSizeTargets !== undefined)).toHaveLength(1);
@@ -92,7 +96,7 @@ describe("S253 shared number-line portfolio boundary", () => {
     expect(defects).toEqual([]);
   }, 60_000);
 
-  it("renders all 430 hop lines with true hop structure, complete scales, and stable controls", () => {
+  it("renders all 431 hop lines with true hop structure, complete scales, and stable controls", () => {
     const defects: string[] = [];
     for (const { where, widget } of HOPS) {
       const before = JSON.stringify(widget);

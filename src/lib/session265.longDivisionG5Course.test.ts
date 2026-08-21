@@ -27,7 +27,7 @@ const expectedIds = ["g5l-01-01", "g5l-01-02", "g5l-02-01", "g5l-02-02", "g5l-03
 const exactFigures = new Map([["g5l-01-01/c2", "dop-estimate-quotient"], ["g5l-02-02/c1", "dop-long-division"]]);
 const expectedI2Prompts = new Map([
   ["g5l-01-01", "714 ÷ 21"], ["g5l-01-02", "40s fit in 360"], ["g5l-02-01", "672 ÷ 28"],
-  ["g5l-02-02", "756 by 27"], ["g5l-03-01", "5 × 26 = 130"], ["g5l-03-02", "Quotient 18, divisor 27, remainder 13"]
+  ["g5l-02-02", "756 by 27"], ["g5l-03-01", "subtracting 104 from the 119"], ["g5l-03-02", "Quotient 18, divisor 27, remainder 13"]
 ]);
 
 function step(lesson: Lesson, id: string): Step {
@@ -107,8 +107,11 @@ describe("S265 long-division-g5 source implementation", () => {
 
     const adjustment = step(lessons[4], "i2").widget;
     slider(adjustment);
-    expect(adjustment.target).toBe(4 * 26);
-    expect(adjustment.target).toBeLessThan(119);
+    /* PROGRESSION-g5l-03-01 (laneA-s318-prog.jsonl): i2 redesigned to ask for the REMAINDER after
+     * the corrected digit (119 − 4×26 = 15), not i1's corrected-product job. Remainder must stay
+     * below the 26 divisor — the lesson's "never a negative remainder" teaching point. */
+    expect(adjustment.target).toBe(119 - 4 * 26);
+    expect(adjustment.target).toBeLessThan(26);
 
     const check = step(lessons[5], "i2").widget;
     slider(check);

@@ -79,11 +79,11 @@ const progressionContracts = [
 const nonPermittedHashes: Record<string, string> = {
   "fa-01-01": "51f7667d969e554a674aba3d59b7fbcd969bb45ce183f54e09ce55969b9d23bd",
   "fa-02-01": "4d7727cbfd05fea67b55ac93dbc635dfc0f628d0fa48020c6dd04adf2a417774",
-  "fa-02-02": "34953402403b30f9bbdc19cb02728cd27970b15e44330eec85dcbf63e821f34c",
+  "fa-02-02": "3a828a6dbc61690d1d1b685939e4cbf6a4f54f57af472f2015c0535a4f604392",
   "fa-03-01": "ff31cc6255ba7ef733c2e54355effd8d6caaf02f02e9844295f42ea78e7d4a9c",
   "fa-03-02": "b49e597f28fe7a47dd1ae28274e9ff72e4ef0745a796967c79825e9f19d59eeb",
   "fa-03-03": "f5c67ab8a28bdadf6dbe2c01ef7619dfab180b5a05057ae21da80ad21ccfd070",
-  "fa-04-02": "ee289c3c09654919acbf13d83dcee8f177b07856c6928ba5ab0c728acfb22d22",
+  "fa-04-02": "afa55e1282e33e30386d3ec35a6330752bd3aba8e3881482e2180c6e3438e773",
 };
 
 function nonPermittedHash(lesson: RawLesson) {

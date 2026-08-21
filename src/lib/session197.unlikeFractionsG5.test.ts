@@ -170,7 +170,12 @@ describe("S197 unlike-fractions-g5 — routes re-derived, trap survival proven",
             const nums = (w.prompt.match(/(\d+)\/(\d+)/g) ?? []).map((x) => Number(x.split("/")[0]));
             expect(nums.length).toBeGreaterThanOrEqual(2);
             const subtracting = w.prompt.includes("were available");
-            const expected = subtracting ? nums[0] - nums[1] : nums[0] + nums[1];
+            // "short of a whole" items (S323-P4 g5u-03-01/k3 rewrite) subtract from the implicit
+            // whole den/den, so the gap is den − num — still re-derived from the prompt text only
+            const dens = (w.prompt.match(/(\d+)\/(\d+)/g) ?? []).map((x) => Number(x.split("/")[1]));
+            const expected = /short of a whole/i.test(w.prompt)
+              ? dens[0] - nums[0]
+              : subtracting ? nums[0] - nums[1] : nums[0] + nums[1];
             expect(expected,
               `${lesson.id}/${s.id}: "were available" flips this route to subtraction — prompt and answer disagree`)
               .toBe(w.answer);

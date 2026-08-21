@@ -280,7 +280,13 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
       expect(widget.prompt).toMatch(/reasonable|estimate/i);
       expect(widget.prompt).not.toMatch(/slide (?:the )?total|test.*213/i);
       expect(widget.successFeedback).toMatch(/broad.*not an exact answer/i);
-      expect(widget.successFeedback).toContain("exact quotient is 213");
+      /* S319-EARLY-g4m-02-04 replaced i2's duplicate 852÷4 slider with 636÷4 (=159); re-derive the
+       * exact quotient from each step's own prompt instead of pinning i1's 213 for both. */
+      const division = widget.prompt.match(/(\d[\d,]*) ÷ (\d+)/);
+      expect(division, `${partialQuotients.id}/${id}: prompt states its division`).toBeTruthy();
+      expect(widget.successFeedback).toContain(
+        `exact quotient is ${Number(division![1].replace(/,/g, "")) / Number(division![2])}`,
+      );
     }
 
     const fourDigit = lessons.find((lesson) => lesson.id === "g4m-03-01")!;
@@ -306,7 +312,13 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
       const widget = WidgetSpec.parse(facts.steps.find((current) => current.id === id)!.widget);
       expect(widget.type).toBe("estimateSlider");
       if (widget.type !== "estimateSlider") continue;
-      expect(widget.lowFeedback).toContain("3 hundreds");
+      /* S319-EARLY-g4m-02-03 replaced i2's duplicate 936÷3 slider with 828÷4; re-derive each
+       * step's hundreds-per-group truth (hundreds digit ÷ divisor) from its own prompt. */
+      const division = widget.prompt.match(/(\d)(\d)(\d) ÷ (\d)/);
+      expect(division, `${facts.id}/${id}: prompt states its division`).toBeTruthy();
+      expect(widget.lowFeedback).toContain(
+        `${Math.floor(Number(division![1]) / Number(division![4]))} hundreds`,
+      );
       expect(widget.lowFeedback).not.toMatch(/one hundred per group/i);
     }
 

@@ -46,9 +46,11 @@ describe("S279 Exponential Functions source implementation", () => {
 
   it("retains only the exact generic decay-rate visual for the verified 80-to-40-to-20 source contract", () => {
     const target = step("exp-02-03", "c3");
-    expect(target.body).toContain("Losing 50% from 80");
+    // S318-FIGA-exp-02-03-c3: body minimally paraphrased (same 50/80/40/20 claim) to rotate its
+    // stale blocklist binding key; pins follow the signed wording.
+    expect(target.body).toContain("Losing 50% from a start of 80");
     expect(target.body).toContain("D(x) = 80 · (1/2)ˣ");
-    expect(target.body).toContain("80, 40, 20");
+    expect(target.body).toContain("80, then 40, then 20");
     expect(target.figure).toBe("exp-decay-50");
     expect(FIGURE_IDS.has("exp-decay-50")).toBe(true);
 

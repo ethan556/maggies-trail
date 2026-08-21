@@ -294,3 +294,48 @@ Projected end state after that round: queue ≈ 300–500, essentially only CLOS
 schema 1840/1840 · pedagogy 1711/1711 · CML strict · registration · tsc clean · diff-check clean.
 (Full vitest/build NOT re-run after the S320 impl wave — the limit hit first; next session must run
 the full suite + build before deploying. Known-green at the S319 commit.)
+
+# S322–S326 addendum (2026-08-21, sixth–tenth aggressive rounds — session close)
+
+## Queue: 1,735 → 749 open rows (P0 41 → 25 → all remaining P0s are documented long-horizon classes)
+Honest chain state at close: 749 rows / 25 P0 (CLOSURE_LEDGER 12 — needs human visual review;
+QUESTION_DIVERSITY 10 — needs multi-engine design; V4_PROGRAMME_PHASE 3). Ledger: 3,011
+disposition records; SOURCE_SEAL_MATCH end-to-end after every append.
+
+## What landed (all independently verified)
+- S322: 331 lessons assessed (11 assessors), 40 fixer lessons (dupfix/v2fix), GraphZoomW
+  curvature, monomial-distribute-area adoption. Appended 295 records.
+- S323: all 128 LESSON_REVISION_IMPLEMENTATION rows implemented (8 packets + engineering:
+  SequenceReasoningW choice-mode seededShuffle; Mult3GroupsAdjustCars figure for mult-04-04).
+  111 KEEP / 14 ESCALATE (src-blocked, precisely specified).
+- S324: both engineering packets discharged ALL 16 escalations — 12 new registered figures
+  (fair-shares/how-many-groups df3 family, g2l read-landing/gap/missing-jump, pc arc-length/
+  integrand-speed/motion-vectors, vec-matrix-row-recipe), SyDilationParallel k=1.8 truth fix,
+  legitimate re-pins across 9 test files (all old→new values recomputed with each test's own
+  algorithm; documented in S324_ENGFIG.md / S324_ENGPIN.md). Independent verification: V1 31/44
+  clean + 13 findings; V2 30/30 clean; V3 37/38 + 1 finding; V-ENG 16/16 clean, pin audit LEGITIMATE.
+- S325: all 14 verifier findings fixed (FA 7, FB 7) + 2 main-loop pedagogy-gate corrections
+  (g5d-01-05 reachable 387; g2n-02-03 generic-opener reword).
+- S326: platform-red reconciliation of all 55 new-vs-baseline vitest reds (R1/R2/R3):
+  stale pins re-pinned with signed-authority citations, 7 real regressions fixed (incl. 13
+  S320-dedup choice-order regressions restored, g1 solver oracle extended, 4 dead variant
+  declarations removed, figure-text blocklist +2 via sanctioned path), precache manifest
+  re-pinned to final counts (queue 749, decisions 3011).
+
+## Gates at close
+- validate:content 1840/1840; lint:pedagogy 1711/1711; figure-text-alignment 0 violations;
+  vis01 3573/3573 RENDERS; gen-figure-ids idempotent at 2029; viewport parity ≤261 held.
+- FULL vitest: 301 failed / 15,444 passed — vs 318-red documented baseline: 23 baseline reds
+  FIXED, zero unadjudicated new reds (the 6 residual "new-vs-baseline" rows are proven
+  byte-identical reds at true clean HEAD a78d6a3; the stored baseline logs were cut at 06a9bb1).
+  List + adjudications: S325_NEW_PLATFORM_REDS.txt, S326_RECONCILE_R1/R2/R3.md.
+- npm run build: EXIT 0 (production build green).
+
+## Remaining documented debt (unchanged classes)
+~295 platform reds (content/generator pin classes, inventoried); CLOSURE_LEDGER 27 rows (12 P0)
+awaiting human visual review; generated-CHOICE 252 rows awaiting per-tag replay tool; QD 10
+extend/multi-engine design; V4_PHASE 7; STANDARDS 2 (held per programme rule); variants FLOOR
+5842<5900 (pre-existing at HEAD — either implement 4 missing forms or take a variants-lane
+ruling on the floor); asv-surface-vs-volume label collision (pre-existing, fix suggestion in
+S326_RECONCILE_R3.md); figureTextAlignment sentinel now vacuous-red because the corpus is fully
+clean (test-side pin decision needed).

@@ -16,7 +16,7 @@ const normalized = (prompt: string) => prompt.toLowerCase().replace(/[-−+]?\d+
 const expectedFigures: Record<string, [string, string]> = {
   "g3w-01-01": ["mb-multistep", "mb-multistep"], "g3w-01-02": ["dop-grouping", "mult3-equal-groups"],
   "g3w-01-03": ["mb-multistep", "g3w-subtract-once"], "g3w-01-04": ["mult3-fair-shares", "g3w-share-then-add"],
-  "g3w-02-01": ["ee-variable", "mult3-missing-factor"], "g3w-02-02": ["dop-order-matters", "dop-word-expr"],
+  "g3w-02-01": ["ee-variable", "mult3-missing-factor-6x7"], "g3w-02-02": ["dop-order-matters", "dop-word-expr"],
   "g3w-02-03": ["g3w-subtract-once", "mb-multistep"], "g3w-02-04": ["mmt-estimate", "mmt-estimate-catch"],
   "g3w-03-01": ["pv3-round-ten", "mult3-estimate"], "g3w-03-02": ["mmt-estimate-catch", "mb-multistep"],
   "g3w-03-03": ["g3w-relevant-information", "mult3-equal-groups"], "g3w-03-04": ["dop-word-expr", "g3w-multiply-then-add"],

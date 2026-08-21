@@ -150,7 +150,9 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k2", engine: "numberLineHop",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "Without computing exactly, is 5 ÷ 1/3 bigger or smaller than 5?",
-    servedAnswer: "a|Bigger — dividing by a fraction under 1 always increases the number",
+    // Re-pinned: signed S319-MID-ns-01-01-k2-label-length (verified S319-V2)
+    // shortened the correct label 67 -> 44 chars to close the length leak (S326-R1).
+    servedAnswer: "a|Bigger — a fraction under 1 grows the answer",
     servedWrongPaths: [
       "b|Smaller — division always shrinks a number|That's true for dividing by numbers BIGGER than 1, but 1/3 is small — dividing by it grows the number instead.",
       "c|The same — 5 divided by anything stays near 5|Only dividing by exactly 1 keeps a number the same. Dividing by 1/3 (a small fraction) makes it much bigger: 15."
@@ -205,11 +207,13 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k1", engine: "columnCalc",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "In 63 − 38, the 6 becomes a 5 and the 3 becomes 13. What happened?",
-    servedAnswer: "a|One ten traded down into 10 ones — 63 repackaged as 5 tens, 13 ones",
+    // Re-pinned: signed S317-PV-pv-03-03 rebalanced k1 labels (67/38/47/29 ->
+    // 50/38/47/37) to close the course-wide length leak (S326-R1 reconcile).
+    servedAnswer: "a|One ten traded down into 10 ones — 5 tens, 13 ones",
     servedWrongPaths: [
       "b|A 1 was moved from the 6 over to the 3|It LOOKS like a little 1 hopped over — but a whole TEN moved, and it became ten ones on landing. That's why 3 jumps all the way to 13, not 4.",
       "c|The 6 shrank because subtraction shrinks things|The 6 shrank because it PAID for the trade — one of its tens broke into ones. Subtraction itself hasn't even started yet.",
-      "d|It's a mistake — 63 became 53|Count all of it: 5 tens (50) plus 13 ones = 63 exactly. The repackaged number is untouched."
+      "d|It's a mistake — 63 somehow became 53|Count all of it: 5 tens (50) plus 13 ones = 63 exactly. The repackaged number is untouched."
     ]
   },
   {

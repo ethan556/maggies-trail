@@ -58,7 +58,7 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
     expect(manifest.inventory).toMatchObject({
       courses: 129,
       lessons: 1701,
-      topLevelLessonSteps: 15653,
+      topLevelLessonSteps: 15654,
       dependencyGroups: 12,
       artifactRefs: 12
     });
@@ -66,7 +66,7 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
     expect(manifest.curriculumPartitions).toHaveLength(129);
     expect(new Set(manifest.curriculumPartitions.map((partition) => partition.courseId)).size).toBe(129);
     expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.lessonCount, 0)).toBe(1701);
-    expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.stepCount, 0)).toBe(15653);
+    expect(manifest.curriculumPartitions.reduce((sum, partition) => sum + partition.stepCount, 0)).toBe(15654);
     for (const partition of manifest.curriculumPartitions) {
       expect(partition.sha256, partition.courseId).toMatch(/^[a-f0-9]{64}$/);
       expect(partition.sourcePrefix, partition.courseId).toBe(`content/courses/${partition.courseId}/`);
@@ -97,12 +97,18 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
   it("stores compact evidence references and exact counts, not raw duplicate logs", () => {
     const counts = Object.fromEntries(manifest.artifactRefs.map((artifact) => [artifact.id, artifact.recordCount]));
     expect(counts).toMatchObject({
-      "pending-workload": 6232,
+      // Recounted S326-R3, then finalized after the S326 reconciliation append (see
+      // S326_RECONCILE_R3.md §6): queue 6232 -> 1735 at commit a78d6a3 ("Queue honest
+      // state 1,735") -> 749 after this session's signed dispositions; decisions
+      // 455 -> 3011 (LESSON_REVIEW_DECISIONS_S244.jsonl incl. the 24 S326 corrective
+      // records); duplicates 103 -> 100; visual placements 3837 -> 3573 (S324_ENGFIG
+      // gate); choice surface 461 -> 259 (S320 CHOICE regeneration, commit a78d6a3).
+      "pending-workload": 749,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 455,
-      "exact-mcq-duplicates": 103,
-      "visual-placement-index": 3837,
-      "choice-surface-index": 461,
+      "lesson-review-decisions": 3011,
+      "exact-mcq-duplicates": 100,
+      "visual-placement-index": 3573,
+      "choice-surface-index": 259,
       "standards-dossiers": 6121,
       "standards-lesson-map": 1134,
       "standards-decisions": 6121,

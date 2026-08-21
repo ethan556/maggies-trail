@@ -91,6 +91,47 @@ const ORDER = [
   "laneB-s321-F4-dispositions.jsonl",
   "laneB-s321-F7-dispositions.jsonl",
   "laneB-s321-F9-dispositions.jsonl",
+  "laneV-s321-impl123-dispositions.jsonl",
+  "laneV-s321-impl456-dispositions.jsonl",
+  "laneV-s321-impl78-dispositions.jsonl",
+  // S322 resumption wave (2026-08-20, sixth session round). laneB-s321-F3/F10 remain
+  // excluded: superseded by the complete laneB-s322-F3/F10 re-runs below.
+  "laneB-s322-F1-dispositions.jsonl",
+  "laneB-s322-F2-dispositions.jsonl",
+  "laneB-s322-F3-dispositions.jsonl",
+  "laneB-s322-F5-dispositions.jsonl",
+  "laneB-s322-F6-dispositions.jsonl",
+  "laneB-s322-F8-dispositions.jsonl",
+  "laneB-s322-F10-dispositions.jsonl",
+  "laneB-s322-F11-dispositions.jsonl",
+  "laneB-s322-F12-dispositions.jsonl",
+  "laneB-s322-F13-dispositions.jsonl",
+  "laneB-s322-F14-dispositions.jsonl",
+  "laneA-s322-dupfix.jsonl",
+  "laneA-s322-v2fix.jsonl",
+  "laneA-s322-eng.jsonl",
+  // S323 implementation wave (2026-08-21): 8 content fix packets + engineering.
+  "laneA-s323-P1.jsonl",
+  "laneA-s323-P2.jsonl",
+  "laneA-s323-P3.jsonl",
+  "laneA-s323-P4.jsonl",
+  "laneA-s323-P5.jsonl",
+  "laneA-s323-P6.jsonl",
+  "laneA-s323-P7.jsonl",
+  "laneA-s323-P8.jsonl",
+  "laneA-s323-eng.jsonl",
+  // S324 wave (2026-08-21): escalation-discharge engineering + independent verification.
+  "laneA-s324-engfig.jsonl",
+  "laneA-s324-engpin.jsonl",
+  "laneV-s324-V1.jsonl",
+  "laneV-s324-V3.jsonl",
+  // S325 wave (2026-08-21): corrections for the S324 verifier findings.
+  "laneA-s325-FA.jsonl",
+  "laneA-s325-FB.jsonl",
+  "laneA-s325-mainloop.jsonl",
+  // S326 wave (2026-08-21): platform-red reconciliation corrective dispositions.
+  "laneA-s326-R1.jsonl",
+  "laneA-s326-R3.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 

@@ -39,7 +39,9 @@ describe("S290 proportional-relationships figure truth and choice repair", () =>
     }
     const markdown = step("pr-04-02", "c2");
     expect(markdown.figure).toBe("pr-markdown");
-    expect(hash(markdown.body)).toBe("5ab34fff9213e03749a6823da212d41027b14bbd114a870a3b019dddc65a3c3a");
+    // S318-FIGA-pr-04-02-c2: body gained the multiplier-form equivalence "… the same as multiplying
+    // $80 × 0.95" for exact numeric parity with pr-markdown's registered claim; seal re-pinned.
+    expect(hash(markdown.body)).toBe("197d5b7a1e293fd195db58a223cf7dc5eeac39b260796178e00cef86856c0741");
   });
 
   it("preserves the service-fee evaluator while removing the answer-length cue", () => {

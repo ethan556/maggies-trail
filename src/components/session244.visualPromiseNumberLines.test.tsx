@@ -41,11 +41,20 @@ const numberLinePacket = [
   ["g2l-02-01", "k3", "g2l-choice-add-33-20", "33 + 20"],
   ["g2l-02-02", "k3", "g2l-choice-gap-54-34", "54 and 34"],
   ["g2l-03-01", "k1", "g2l-choice-add-44-20", "44 + 20"],
-  ["g2l-03-01", "k3", "g2l-choice-add-45-20", "45 + 20"],
   ["g2l-03-01", "rem-g2l-show-sum-k", "g2l-choice-add-44-20", "44 + 20"],
-  ["g2l-03-02", "k1", "g2l-choice-gap-53-33", "53 and 33"],
   ["g2l-03-02", "rem-g2l-show-diff-k", "g2l-choice-gap-53-33", "53 and 33"],
-  ["g2l-03-03", "k3", "g2l-choice-gap-43-33", "43 and 33"],
+] as const;
+
+/**
+ * S324 (F5 §49–§51): g2l-03-01/k3, g2l-03-02/k1, and g2l-03-03/k3 no longer run
+ * the which-drawing candidate template — each now binds a single-line
+ * "read the drawing" figure whose asked-for quantity is drawn as "?".
+ * The session308 choice-order test pins their new prompts/options/figures.
+ */
+const readDrawingPacket = [
+  ["g2l-03-01", "k3", "g2l-read-landing-45-20", "45 + 20", ["45", "+10", "?"]],
+  ["g2l-03-02", "k1", "g2l-read-gap-53-33", "33 and 53", ["33", "53", "?"]],
+  ["g2l-03-03", "k3", "g2l-read-missing-jump-33-43", "start at 33", ["33", "43", "?"]],
 ] as const;
 
 describe("S244 visual-promise number-line packet", () => {
@@ -73,7 +82,9 @@ describe("S244 visual-promise number-line packet", () => {
       expect(target.widget?.type).toBe("mcq");
       expect(target.widget?.prompt).toContain("Which drawing");
       expect(target.widget?.prompt).toContain(promptMath);
-      expect(target.widget?.options?.map((option) => option.label)).toEqual([
+      // S308 shuffled option order (session308.numberLineG2ChoiceOrder pins the
+      // exact arrangement), so the lettered labels are asserted as a set.
+      expect([...(target.widget?.options?.map((option) => option.label) ?? [])].sort()).toEqual([
         "Drawing A",
         "Drawing B",
         "Drawing C",
@@ -84,9 +95,34 @@ describe("S244 visual-promise number-line packet", () => {
     },
   );
 
+  it.each(readDrawingPacket)(
+    "%s/%s binds its replaced check to a single read-the-drawing figure",
+    (lessonId, stepId, figureId, promptMath) => {
+      const target = findStep(lesson("number-line-g2", lessonId), stepId);
+      expect(target.kind).toBe("check");
+      expect(target.figure).toBe(figureId);
+      expect(FIGURE_IDS.has(figureId)).toBe(true);
+      expect(target.widget?.type).toBe("mcq");
+      expect(target.widget?.prompt).toContain(promptMath);
+      expect(target.widget?.options?.filter((option) => option.correct)).toHaveLength(1);
+      expect(target.widget?.options?.find((option) => option.correct)?.id).toBe("o0");
+    },
+  );
+
+  it("renders every read-the-drawing figure as one accessible line with its asked-for quantity unlabeled", () => {
+    for (const [, , figureId, , fragments] of readDrawingPacket) {
+      const markup = renderToStaticMarkup(FIGURES[figureId]());
+      expect(markup).toContain('role="img"');
+      expect(markup).toMatch(/<title>A single number-line drawing/);
+      for (const fragment of fragments) {
+        expect(markup, `${figureId} shows ${fragment}`).toContain(`>${fragment}</text>`);
+      }
+    }
+  });
+
   it("renders every distinct candidate set as an accessible, lettered number-line comparison", () => {
     const ids = [...new Set(numberLinePacket.map(([, , figureId]) => figureId))];
-    expect(ids).toHaveLength(6);
+    expect(ids).toHaveLength(4);
     for (const id of ids) {
       const markup = renderToStaticMarkup(FIGURES[id]());
       expect(markup).toContain('role="img"');

@@ -6,6 +6,7 @@ import { FIGURES } from "./figures";
 const AXES: Record<string, number> = {
   "g2l-choice-add-33-20": 4, "g2l-choice-add-44-20": 4, "g2l-choice-add-45-20": 4,
   "g2l-choice-gap-54-34": 4, "g2l-choice-gap-53-33": 4, "g2l-choice-gap-43-33": 4,
+  "g2l-read-landing-45-20": 1, "g2l-read-gap-53-33": 1, "g2l-read-missing-jump-33-43": 1,
   "number-line-jumps": 1, "double-number-line": 2, "negative-number-line": 1,
   "solution-ray": 1, "number-line-between-integers": 2, "integer-jump": 1,
   "inequality-flip": 1, "probability-line": 1, "kc-ten-hops-to-100": 1,
@@ -18,6 +19,7 @@ const AXES: Record<string, number> = {
 const DIRECTIONS: Record<string, { count: number; direction?: "left" | "right" }> = {
   "g2l-choice-add-33-20": { count: 5 }, "g2l-choice-add-44-20": { count: 5 }, "g2l-choice-add-45-20": { count: 5 },
   "g2l-choice-gap-54-34": { count: 1, direction: "right" }, "g2l-choice-gap-53-33": { count: 1, direction: "right" }, "g2l-choice-gap-43-33": { count: 1, direction: "right" },
+  "g2l-read-landing-45-20": { count: 2, direction: "right" }, "g2l-read-missing-jump-33-43": { count: 1, direction: "right" },
   "number-line-jumps": { count: 3, direction: "right" }, "solution-ray": { count: 1, direction: "right" },
   "integer-jump": { count: 1, direction: "right" }, "inequality-flip": { count: 1, direction: "left" },
   "kc-ten-hops-to-100": { count: 10, direction: "right" }, "count-on-hops": { count: 3, direction: "right" },

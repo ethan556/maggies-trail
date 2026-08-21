@@ -21,12 +21,12 @@ across **65** lessons.
 
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
-| K-2 | 187 | 216 | 7 | 0 | 410 |
+| K-2 | 202 | 201 | 7 | 0 | 410 |
 | 3-5 | 274 | 144 | 1 | 0 | 419 |
-| 6-8 | 147 | 96 | 2 | 0 | 245 |
+| 6-8 | 145 | 98 | 2 | 0 | 245 |
 | HS | 199 | 355 | 73 | 0 | 627 |
 
-**K–8 targets** — Tier A 608/200–250 ✓ · Tier B 456/200–300 ✓.
+**K–8 targets** — Tier A 621/200–250 ✓ · Tier B 443/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
@@ -111,4 +111,4 @@ across **65** lessons.
 | 9 | ks-03-02 — Heavier, Lighter, Holds More | Kindergarten: Shapes & Sorting (G0) | C | 22/39 | prediction formal transfer adapt | — | 54 |
 | 10 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | C | 23/39 | prediction contrast formal transfer | — | 2 |
 
-Totals: 1701 lessons · A 807 · B 811 · C 83 · D 0.
+Totals: 1701 lessons · A 820 · B 798 · C 83 · D 0.

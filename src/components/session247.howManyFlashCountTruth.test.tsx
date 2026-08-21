@@ -20,7 +20,10 @@ const EXPECTED: ReadonlyMap<string, {
   ["khm-03-05/k2", { count: 3, arrangement: "dice", form: "countObjectsFlash" }],
   ["khm-03-05/ch1", { count: 4, arrangement: "dice", form: "countObjectsFlash" }],
   ["khm-03-06/k2", { count: 4, arrangement: "tenFrame", form: "countReadFlash" }],
-  ["khm-03-06/ch1", { count: 4, arrangement: "tenFrame", form: "countReadFlash" }],
+  // Re-pinned count 4 -> 6: signed S319-EARLY-khm-03-06 (verified S319-V2) broke
+  // ch1's identical-stimulus duplication of k2 by retargeting the flash to 6
+  // (options [5,6,7,8], commonPicks/feedback recomputed). S326-R1 reconcile.
+  ["khm-03-06/ch1", { count: 6, arrangement: "tenFrame", form: "countReadFlash" }],
 ] as const);
 
 const lessons = LESSON_IDS.map((lessonId) => Lesson.parse(JSON.parse(readFileSync(join(COURSE, `${lessonId}.json`), "utf8"))));

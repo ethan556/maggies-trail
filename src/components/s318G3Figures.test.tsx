@@ -206,7 +206,7 @@ describe("S318 lane A (G3 mult/div): only the 19 named placements were touched",
   it("every other figure/concept.figure key in the 16 touched lesson files is unchanged", () => {
     const expected: Record<string, { courseDir: string; steps: Record<string, string | undefined> }> = {
       "df3-01-04": { courseDir: "division-fluency-g3", steps: { c1: "mult3-missing-factor-6x7", c2: "mult3-fact-family", "rem-g3d-div67-c": "mult3-missing-factor-6x5" } },
-      "df3-02-01": { courseDir: "division-fluency-g3", steps: { c1: "mult3-missing-factor-8x9", c2: "mult3-divide-by-nine", "rem-g3d-div89-c": "mult3-divide-by-nine" } },
+      "df3-02-01": { courseDir: "division-fluency-g3", steps: { c1: "mult3-missing-factor-8x9", c2: "mult3-divide-by-nine", "rem-g3d-div89-c": "mult3-divide-by-nine-54-over-9" } },
       "df3-02-03": { courseDir: "division-fluency-g3", steps: { c1: "mult3-missing-factor-7x8", c2: "mult3-fact-family", "rem-g3d-think-mult-c": "mult3-missing-factor-7x7" } },
       "df3-02-04": { courseDir: "division-fluency-g3", steps: { c1: "mult3-missing-factor-6x9", c2: "mult3-fact-family", "rem-g3d-missing-c": "mult3-missing-factor-8x7" } },
       "df3-03-03": { courseDir: "division-fluency-g3", steps: { c1: "mult3-fact-family", c2: "mult3-array", "rem-g3d-mixed-c": "mult3-fact-family-5x7" } },

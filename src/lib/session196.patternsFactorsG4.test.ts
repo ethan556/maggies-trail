@@ -166,7 +166,13 @@ describe("S196 patterns-factors-g4 — routes re-derived, widget contracts held"
            * with a coincidence rather than with the mathematics. Those two steps are single-fact
            * items (rule 7) and no longer declare a variant, so nothing in THIS lesson pair reaches
            * the form; the shape it now generates is asserted in `solveG4` and in the variant gate. */
-          if (f === "mbPatternsNumeric") expect(n[n.length - 1] * (n[1] / n[0])).toBe(w.answer);
+          /* S323-P7 (g4p-03-04/k2): prompts may now STATE the rule ("multiply by k") ahead of the
+           * sequence, putting k first among the prompt's numbers — re-derive the multiplier from
+           * the stated rule when present, else from the sequence's first ratio, prompt-only. */
+          if (f === "mbPatternsNumeric") {
+            const rule = w.prompt.match(/rule is "multiply by (\d+)"/);
+            expect(n[n.length - 1] * (rule ? Number(rule[1]) : n[1] / n[0])).toBe(w.answer);
+          }
           if (f === "mbTimesAsManyNumeric") expect(n[0] * n[1]).toBe(w.answer);
 
           const vals = w.commonErrors.map((e) => e.value);

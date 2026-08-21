@@ -18,18 +18,18 @@
       "body": "Count the choice sequences directly.",
       "widget": {
         "type": "treeDiagram",
-        "prompt": "Each of 3 brackets offers 2 choices, a or b. Set the tree to 3 stages of 2 and read the total number of paths.",
-        "stage1Label": "Brackets",
-        "stage2Label": "Choices per bracket",
-        "targetA": 3,
-        "targetB": 2,
+        "prompt": "For (a + b)³, group the brackets: the FIRST bracket offers 2 choices (a or b), and the LAST TWO brackets together offer 2 × 2 = 4 combined choices. Set the tree to 2 by 4 and read the total number of paths.",
+        "stage1Label": "First bracket",
+        "stage2Label": "Last two brackets combined",
+        "targetA": 2,
+        "targetB": 4,
         "maxA": 6,
         "maxB": 6,
         "aStart": 1,
         "bStart": 1,
-        "successFeedback": "8 paths — and 2³ = 8 is exactly the sum of row 3 (1 + 3 + 3 + 1). Every path is one term before like terms are collected.",
-        "lowFeedback": "Not enough paths yet — raise the number of brackets or the choices per bracket.",
-        "highFeedback": "Too many paths — three brackets of two choices is what (a + b)³ offers."
+        "successFeedback": "2 × 4 = 8 paths — the same 8 as 2³, and exactly the sum of row 3 (1 + 3 + 3 + 1). Every path is one term before like terms are collected.",
+        "lowFeedback": "Not enough paths yet — the first bracket gives 2 choices, and the last two brackets give 2 × 2 = 4 combined.",
+        "highFeedback": "Too many paths — 2 choices times 4 combined choices is all that (a + b)³ offers."
       },
       "predict": {
         "prompt": "In (a + b)⁴, the coefficient of a²b² counts what?",
@@ -155,13 +155,13 @@
           },
           {
             "id": "o2",
-            "label": "Because addition is commutative",
+            "label": "Because addition is commutative, so a²b² and b²a² count as one term",
             "correct": false,
             "feedback": "Commutativity explains why a²b² and b²a² are the same term, not why the COUNTS mirror."
           },
           {
             "id": "o3",
-            "label": "Because every row starts and ends with 1",
+            "label": "Because every row starts and ends with 1, so the two edges always agree",
             "correct": false,
             "feedback": "That is a consequence of the symmetry, not its cause."
           }

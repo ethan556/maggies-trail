@@ -9,8 +9,8 @@ type RawStep = { id: string; kind: string; body?: string; narration?: string; fi
 type RawLesson = { id: string; courseId: string; steps: RawStep[] };
 const directory = path.join(process.cwd(), "content", "courses", "solving-equations", "lessons");
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
-const figureBody = "One move breaks the pattern: **multiplying or dividing by a negative flips the inequality**. Solve −2x < 6 by dividing by −2 — and the `<` becomes `>`: **x > −3**. The number line mirrors across zero, so the direction reverses.";
-const figureNarration = "One move breaks the pattern: multiplying or dividing by a negative flips the inequality. Solve negative two x less than six by dividing by negative two — and the less-than becomes greater-than: x greater than negative three. The number line mirrors across zero, so the direction reverses.";
+const figureBody = "One move breaks the pattern: **multiplying or dividing by a negative flips the inequality**. Solve −3x < 9 by dividing by −3 — and the `<` becomes `>`: **x > −3**. The number line mirrors across zero, so the direction reverses.";
+const figureNarration = "One move breaks the pattern: multiplying or dividing by a negative flips the inequality. Solve negative three x less than nine by dividing by negative three — and the less-than becomes greater-than: x greater than negative three. The number line mirrors across zero, so the direction reverses.";
 
 async function load(id: string) { return JSON.parse(await readFile(path.join(directory, `${id}.json`), "utf8")) as RawLesson; }
 function step(current: RawLesson, id: string) { const found = current.steps.find((entry) => entry.id === id); if (!found) throw new Error(`${current.id}/${id} missing`); return found; }

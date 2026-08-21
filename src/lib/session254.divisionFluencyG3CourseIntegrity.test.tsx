@@ -14,10 +14,10 @@ const lessons = readdirSync(dir).filter((name) => name.endsWith(".json")).sort()
 const normalized = (prompt: string) => prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ").trim();
 const allSteps = (lesson: RawLesson) => [...lesson.steps, ...(lesson.remedials ?? []).flatMap((route) => [route.concept, route.check].filter((entry): entry is RawStep => Boolean(entry)))];
 const expectedFigures: Record<string, [string, string]> = {
-  "df3-01-01": ["mult3-fair-shares", "mult3-fact-family"], "df3-01-02": ["mult3-how-many-groups", "mult3-fact-family"],
-  "df3-01-03": ["mult3-double-double", "mult3-fact-family"], "df3-01-04": ["mult3-missing-factor", "mult3-fact-family"],
-  "df3-02-01": ["mult3-missing-factor", "mult3-divide-by-nine"], "df3-02-02": ["mult3-divide-by-ten", "mult3-divide-by-ten"],
-  "df3-02-03": ["mult3-missing-factor", "mult3-fact-family"], "df3-02-04": ["mult3-missing-factor", "mult3-fact-family"],
+  "df3-01-01": ["mult3-fair-shares-16-over-2", "mult3-fact-family"], "df3-01-02": ["mult3-how-many-groups-21-over-3", "mult3-fact-family"],
+  "df3-01-03": ["mult3-double-double", "mult3-fact-family"], "df3-01-04": ["mult3-missing-factor-6x7", "mult3-fact-family"],
+  "df3-02-01": ["mult3-missing-factor-8x9", "mult3-divide-by-nine"], "df3-02-02": ["mult3-divide-by-ten", "mult3-divide-by-ten"],
+  "df3-02-03": ["mult3-missing-factor-7x8", "mult3-fact-family"], "df3-02-04": ["mult3-missing-factor-6x9", "mult3-fact-family"],
   "df3-03-01": ["mult3-divide-one-self", "mult3-divide-one-self"], "df3-03-02": ["mult3-divide-by-zero", "mult3-divide-by-zero"],
   "df3-03-03": ["mult3-fact-family", "mult3-array"], "df3-03-04": ["mult3-which-op", "mult3-fair-shares"],
 };

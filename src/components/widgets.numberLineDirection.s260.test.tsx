@@ -51,9 +51,12 @@ const numeric = (node: Element, name: string) => Number(node.getAttribute(name))
 afterEach(cleanup);
 
 describe("S260 system-wide runtime number-line direction and clipping contract", () => {
-  it("pins all 502 authored runtime consumers", () => {
+  it("pins all 503 authored runtime consumers", () => {
+    // 502 → 503: commit a78d6a3 (S320-IMPL-A5-kcw-02-04, contract S320_ASSESS_A5.md, verified
+    // KEEP by S321-V1-kcw-02-04) converted number-writing-k/kcw-02-04/ch1 subitizeFlash →
+    // numberLineHop; recounted with this file's own corpus() — see S326_RECONCILE_R3.md.
     const counts = Object.fromEntries([...TYPES].map((type) => [type, CASES.filter(({ widget }) => widget.type === type).length]));
-    expect(counts).toEqual({ numberLinePlace: 63, numberLineHop: 430, numberLineRay: 4, doubleNumberLine: 5 });
+    expect(counts).toEqual({ numberLinePlace: 63, numberLineHop: 431, numberLineRay: 4, doubleNumberLine: 5 });
   });
 
   it("keeps axes, direction heads, labels, and ARIA inside every responsive viewBox", () => {

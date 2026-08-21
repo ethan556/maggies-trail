@@ -9,7 +9,9 @@ const directory = join(process.cwd(), "content", "courses", "number-writing-k", 
 const lessons = readdirSync(directory).filter((file) => file.endsWith(".json")).sort().map((file) => Lesson.parse(JSON.parse(readFileSync(join(directory, file), "utf8"))));
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 const expectedInventoryHash = "46d758095792f4248990bd83976075b8664be3ed24504ac9b0e830a2b3bf39f7";
-const expectedSemanticHash = "8c4ee1de13aad5ec14b4c57df97cdefc6f492da415392ef893baa7d7585e2f78";
+// Re-pinned: signed S322-kcw-03-04 changed k2 from the 6-dots duplicate of
+// kcw-01-02/k2 to a truthful 16-dots pattern (S326-R1 reconcile).
+const expectedSemanticHash = "cac7918d46533a6acbf61eb2cce9e5ce98d1f1c845fa44544fa68450a5a4708f";
 
 describe("S313 Kindergarten Number Writing choice-order repair", () => {
   it("removes the fixed-answer position while preserving the complete semantic and evaluator contract", () => {

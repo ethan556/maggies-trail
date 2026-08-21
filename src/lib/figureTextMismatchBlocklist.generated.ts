@@ -203,6 +203,7 @@ export const FIGURE_TEXT_MISMATCH_BLOCKLIST: ReadonlySet<string> = new Set([
   "f5bc9b9a",
   "f5f2c1ba",
   "f6fae945",
+  "f731297d",
   "f7cec5d0",
   "f7f02cd6",
   "f8c8e0c1",
@@ -211,5 +212,6 @@ export const FIGURE_TEXT_MISMATCH_BLOCKLIST: ReadonlySet<string> = new Set([
   "fc2f439c",
   "fd22ead2",
   "fe4968ae",
-  "fecb00f3"
+  "fecb00f3",
+  "ff2324cb"
 ]);

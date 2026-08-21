@@ -28,23 +28,23 @@
         "highFeedback": "The sum is over π/2. The LEFT rule overshoots for the same reason in reverse — each wedge is measured at its fat end. Raise the count and it will settle."
       },
       "predict": {
-        "prompt": "What changes when the number of volume slices increases?",
+        "prompt": "What changes when the number of area wedges increases?",
         "options": [
           {
             "id": "thinner",
-            "label": "Slices become thinner and the estimate usually improves"
+            "label": "Wedges become thinner and the estimate usually improves"
           },
           {
             "id": "larger",
-            "label": "Every slice becomes larger"
+            "label": "Every wedge becomes larger"
           },
           {
             "id": "formula",
-            "label": "The cross-section formula is no longer needed"
+            "label": "The ½r²·dθ wedge rule is no longer needed"
           }
         ],
         "outcomeId": "thinner",
-        "reveal": "Refinement reduces slice thickness while preserving the same cross-section rule, bringing the sum closer to the limiting volume."
+        "reveal": "Refinement narrows each wedge's angle while preserving the same ½r²·dθ wedge rule, bringing the sum closer to the limiting area."
       },
       "cml": {
         "stage": "construct",
@@ -73,23 +73,23 @@
         "translationTo": "symbolic",
         "counterfactualPrompt": "Change the controlling quantity in this sliceSum away from the successful state. Which invariant remains true, and which visible consequence changes?",
         "explanation": {
-          "prompt": "Why does a slice sum become a volume integral?",
+          "prompt": "Why does a wedge sum become an area integral?",
           "options": [
             {
               "id": "limit",
-              "label": "Each cross-sectional area is multiplied by thickness, and refinement takes the sum to a limit.",
+              "label": "Each wedge contributes its triangle area ½r²·dθ, and refinement takes the sum to a limit.",
               "correct": true,
               "feedback": "Exactly—this identifies the governing mechanism rather than only the final pattern."
             },
             {
               "id": "base",
-              "label": "Only the base area is needed.",
+              "label": "Only the outer arc length is needed.",
               "correct": false,
               "feedback": "That describes an appearance or shortcut, not the invariant that makes the relationship hold."
             },
             {
               "id": "count",
-              "label": "The number of slices itself is the volume.",
+              "label": "The number of wedges itself is the area.",
               "correct": false,
               "feedback": "The live model contradicts that claim when its control is changed."
             }
@@ -119,19 +119,19 @@
           },
           {
             "id": "o2",
-            "label": "Because you sweep only half the circle.",
+            "label": "Because a polar sweep only ever covers half of the full circle's angle.",
             "correct": false,
             "feedback": "The ½ appears whatever the sweep. Integrate all the way round and it is still there."
           },
           {
             "id": "o3",
-            "label": "To avoid double-counting the region.",
+            "label": "To cancel the double-counting where neighbouring wedges overlap each other.",
             "correct": false,
             "feedback": "Nothing is counted twice. Each wedge covers its own slice of angle, and the ½ comes from the wedge's SHAPE."
           },
           {
             "id": "o4",
-            "label": "Because r is squared.",
+            "label": "Because r is squared, so a ½ must balance the extra power of r.",
             "correct": false,
             "feedback": "The r² is the two lengths of the triangle. The ½ is separate — it is what makes a triangle half of a rectangle."
           }
@@ -264,7 +264,7 @@
         "id": "rc1",
         "kind": "concept",
         "body": "Picture one thin wedge, running from the origin out to the curve. It is a triangle. Its two straight sides are both r, and its base is the little arc r·dθ. So its area is ½·r·(r dθ) = ½r²dθ — and you add those up.",
-        "figure": "dr-power-rule-pattern"
+        "figure": "pc-polar-wedge"
       },
       "check": {
         "id": "rk1",

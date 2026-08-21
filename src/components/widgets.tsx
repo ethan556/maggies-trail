@@ -2970,12 +2970,24 @@ function GraphZoomW({ spec, value, onChange, disabled, tone }: WProps<TGraphZoom
   const set = (z: number, v: "limit-exists" | "no-limit" | null) => onChange({ zoom: z, verdict: v });
 
   const SLOPE = 1;
+  // Honest local curvature (S322): a differentiable function is only a straight line in the
+  // LIMIT — away from `a` it is its tangent line PLUS a remainder that a real, twice-
+  // differentiable function carries. Modelling that remainder as CURVE*(x-a)^2 (any nonzero
+  // second derivative looks like this to first order) means: (1) it passes through the anchor
+  // exactly (d=0 zeroes it, so f(a) and the hole/dot marker are untouched), and (2) as the
+  // window narrows with each zoom step (`w` below, driven entirely by the existing `zoom` state
+  // and `spec.a` — no new field, no randomness), d shrinks LINEARLY while the remainder shrinks
+  // QUADRATICALLY, so the rendered curve straightens on its own — the same reason any smooth
+  // curve looks straight once you zoom in far enough. `jump` keeps its two genuinely-straight
+  // branches (a jump is not claimed to locally straighten), and `infinite` keeps its own
+  // already-nonlinear 1/d^2 blow-up — neither is touched.
+  const CURVE = 0.15;
   const f = (x: number): number | null => {
     const d = x - spec.a;
     if (spec.behaviour === "infinite") return Math.abs(d) < 1e-9 ? null : 1 / (d * d);
     if (spec.behaviour === "jump") return d < 0 ? spec.leftValue + SLOPE * d : spec.rightValue + SLOPE * d;
     if (Math.abs(d) < 1e-9) return spec.behaviour === "removable" ? null : spec.fAtA;
-    return spec.leftValue + SLOPE * d;
+    return spec.leftValue + SLOPE * d + CURVE * d * d;
   };
 
   // the window shrinks by half per magnification — around (a, centre)
@@ -4598,10 +4610,22 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
 }
 
 
-function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSequenceBuild>) {
+function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TSequenceBuild>) {
   const state = value && typeof value === "object" && !Array.isArray(value)
     ? value as { explored?: string[]; numeric?: number | ""; choiceId?: string }
     : {};
+  /* Authored choice order overwhelmingly lists the correct claim first, so displaying
+   * spec.choices as authored lets a learner pass by always pressing the first button — the same
+   * mastery-integrity bug fixed across the lab widgets in S316 (see McqW's comment for the full
+   * rationale). Shuffle DISPLAY ORDER ONLY, seeded exactly like the siblings: grading
+   * (evaluate.ts) looks the pick up by `choice.id` and compares `choice.claim` to
+   * `truth.answerClaim`, never a position, so this cannot change what's correct or which
+   * feedback fires. spec.choices is absent in numeric mode; seededShuffle([]) is a harmless
+   * no-op there, and the hook must run unconditionally anyway (Rules of Hooks). */
+  const orderedChoices = useMemo(
+    () => { const choices = spec.choices ?? []; return seededShuffle(choices, seed ?? choices.map((choice) => choice.id).join("|")); },
+    [seed, spec.choices]
+  );
   const truth = sequenceReasoningTruth(spec);
   const validKeys = new Set(truth.stages.map((stage) => stage.key));
   const explored = Array.isArray(state.explored) ? state.explored.filter((key) => validKeys.has(key)) : [];
@@ -4651,7 +4675,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
       <p className={`rounded-xl border px-3 py-2 text-center text-sm font-extrabold ${requiredReady ? "border-leaf/40 bg-leaf/10 text-leaf-ink" : "border-ink/15 bg-white text-ink/65"}`} aria-live="polite">{explored.length} of {Math.max(spec.requiredExplorations, (spec.requiredStageKeys ?? []).length)} required states inspected</p>
     </section>
     {spec.answerMode === "numeric" && <label className="grid gap-1 text-sm font-bold text-ink/75"><span>exact result</span><input type="number" disabled={disabled} value={state.numeric ?? ""} onChange={(event)=>onChange({...state,numeric:event.target.value===""?"":Number(event.target.value)})} className="min-h-11 rounded-xl border-2 border-sky/40 bg-white px-3 text-lg font-black tabular-nums" /></label>}
-    {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2">{(spec.choices ?? []).map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"sequence-claim",dir:choice.claim===truth.answerClaim?"toward":"away",state:{task:spec.task,choice:choice.id}});onChange({...state,choiceId:choice.id})}} className={`min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold ${selected?.id===choice.id?"border-sky bg-sky/10 ring-2 ring-sky":"border-ink/15 bg-white hover:border-sky/50"}`}><MathProse text={choice.label} /></button>)}</div>}
+    {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"sequence-claim",dir:choice.claim===truth.answerClaim?"toward":"away",state:{task:spec.task,choice:choice.id}});onChange({...state,choiceId:choice.id})}} className={`min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold ${selected?.id===choice.id?"border-sky bg-sky/10 ring-2 ring-sky":"border-ink/15 bg-white hover:border-sky/50"}`}><MathProse text={choice.label} /></button>)}</div>}
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : spec.answerMode === "numeric" && typeof state.numeric === "number" ? `Entered ${state.numeric}.` : "No final answer selected."}</p>
     {tone === "info" && ((spec.answerMode === "choice" && selected && selected.id !== correctChoice?.id) || (spec.answerMode === "numeric" && typeof state.numeric === "number" && truth.answerNumber !== undefined && Math.abs(state.numeric-truth.answerNumber)>spec.tolerance)) && <GhostChip testid="sequence-reasoning-ghost">exact route: {truth.stages.map(stage=>stage.value).join("; ")}</GhostChip>}
   </div>;

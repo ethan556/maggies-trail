@@ -9,7 +9,10 @@ const directory = join(process.cwd(), "content", "courses", "measure-length-g1",
 const lessons = readdirSync(directory).filter((file) => file.endsWith(".json")).sort().map((file) => Lesson.parse(JSON.parse(readFileSync(join(directory, file), "utf8"))));
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 const expectedInventoryHash = "3aadd34a6d836b0b5296f5c319364da196a62fd0347fa0f8433008a85b662bbd";
-const expectedSemanticHash = "c21a1988503088f1a39473b2934e6d2c97be91637e1d5a5b76f4cd136e189e00";
+// Re-pinned: signed S320-IMPL-g1m-03-01 (k1 9-cubes/ribbon -> 11-blocks/scarf) and
+// S320-IMPL-g1m-03-03 (k1 12-cubes/stick -> 15-blocks/rope; k3 8-cubes/ribbon ->
+// 10-blocks/belt) dedup rewrites, verified S321-V1 (S326-R1 reconcile).
+const expectedSemanticHash = "eb4926d51a190b66119006f5903de65af5f26b12cd293c8ce6db520e729b4421";
 
 describe("S314 Grade 1 Measurement choice-order repair", () => {
   it("removes the fixed-answer position while preserving the complete semantic and evaluator contract", () => {

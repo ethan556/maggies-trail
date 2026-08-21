@@ -16,7 +16,7 @@ const sourceContracts = [
     figure: "frac-three-fourths",
     body: "The bar is split into four equal pieces, and three are shaded: 3/4. Each shaded piece is one unit fourth.",
     figureTitle: "Three fourths shaded.",
-    nonCopyHash: "d469552451800b62603fe1c73bbe3eebb3c7733966f8c4f05728cf7a79a5f3e2",
+    nonCopyHash: "78d18bfb5c8507fc2e1acac2f7e96194249d62c388a0bbff570b07ef49ef6358",
   },
   {
     lessonId: "g3f-01-05",
@@ -24,7 +24,7 @@ const sourceContracts = [
     figure: "mc-ruler-eighths",
     body: "This ruler marks 6/8, which is the same length as 3/4. Count the six equal jumps from zero to the marked tick.",
     figureTitle: "Reading eighths: 6/8 = 3/4 inch.",
-    nonCopyHash: "5e50b9a9cb587861212c54ad6b62c68dcc84226ce6966784a3706439df1da861",
+    nonCopyHash: "e6f62bd8f55678b6b2771a05b4f5e77361ecfeef611c0e4d40bdffc8efafe1e6",
   },
   {
     lessonId: "g3f-02-01",
@@ -32,7 +32,7 @@ const sourceContracts = [
     figure: "frac-numline-unit",
     body: "This fourths line marks 1/4 after one equal jump from zero. On any fraction line, count equal spaces rather than tick marks.",
     figureTitle: "Locating one fourth on the number line.",
-    nonCopyHash: "2cfc9aea2a8157846183c61b8bdc0c7eabe817269e2010689ac5463ca44789f0",
+    nonCopyHash: "e242ad02c59d410c84d1bcc319314fe8e39c200fa472c206408a37a45d4b6f11",
   },
   {
     lessonId: "g3f-02-02",
@@ -40,7 +40,7 @@ const sourceContracts = [
     figure: "thirds-compare",
     body: "Halves, thirds, and fourths cut the same whole into more equal pieces. More equal pieces make each piece smaller.",
     figureTitle: "Three identical circles split into halves, thirds, and fourths, showing that more equal parts makes each piece smaller.",
-    nonCopyHash: "6189227bd2337aa79baa3701d4d4fa52c807af8c462e7c81c1624e0ce438e765",
+    nonCopyHash: "4b8dc11b070db6ad28490b2b2bb4dd9599b126dd7d7b016c9a5948f602a769ec",
   },
 ] as const;
 

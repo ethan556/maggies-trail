@@ -32,7 +32,7 @@ The letter tier uses lesson-level maxima for triage. These measures keep the den
 
 | band | causal widget steps | exploration causal coverage | lessons with causal spine |
 |---|---:|---:|---:|
-| K–2 | 1012/2531 (40.0%) | 735/890 (82.6%) | 405/410 (98.8%) |
+| K–2 | 1013/2531 (40.0%) | 735/890 (82.6%) | 405/410 (98.8%) |
 | G3–5 | 726/2543 (28.5%) | 630/851 (74.0%) | 404/419 (96.4%) |
 | G6–8 | 508/1551 (32.8%) | 327/566 (57.8%) | 232/245 (94.7%) |
 | HS | 613/3644 (16.8%) | 550/1202 (45.8%) | 503/627 (80.2%) |
@@ -105,7 +105,7 @@ The strict whole-corpus text scan found **47** candidates where a graded answer 
 - mmt-05-03/i3 [numeric] — One more X-count. A line plot shows 2 x's above the number 3 and 1 x above the number 4. How many data points are at 3?
 - mmt-05-03/k3 [numeric] — A bigger X-count. A line plot shows 10 x's above the number 6 and 1 x above the number 7. How many data points are at 6?
 - g4v-02-03/k2 [mcq] — Apply without the opening model: A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?
-- g4v-03-04/k1 [mcq] — A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?
+- g4v-03-04/k1 [mcq] — A bar diagram shows 5 equal parts of 300 m, with 80 m crossed off the end. What does it record?
 - md-03-02/k1 [mcq] — Which bar wins? A bar graph of books read: Mon 4, Tue 7, Wed 7, Thu 2. Which statement is TRUE?
 - md-03-02/k2 [numeric] — Read between the lines. A bar graph's scale climbs by 2s (0, 2, 4, 6). The soccer bar stops exactly halfway between the 4-line and the 6-line. How many votes?
 - md-03-03/k1 [numeric] — How many more? A bar graph shows: dogs 8, cats 6, fish 3, birds 5. How many MORE dogs than fish?

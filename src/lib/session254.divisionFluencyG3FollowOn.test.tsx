@@ -102,7 +102,7 @@ describe("S254 division-fluency-g3 follow-on closure", () => {
 
     const byId = new Map(lessons.map((lesson) => [lesson.id, lesson]));
     const figures = (id: string) => byId.get(id)!.steps.filter((entry) => entry.kind === "concept").map((entry) => entry.figure);
-    expect(figures("df3-02-01")).toEqual(["mult3-missing-factor", "mult3-divide-by-nine"]);
+    expect(figures("df3-02-01")).toEqual(["mult3-missing-factor-8x9", "mult3-divide-by-nine"]);
     expect(figures("df3-02-02")).toEqual(["mult3-divide-by-ten", "mult3-divide-by-ten"]);
     expect(figures("df3-03-01")).toEqual(["mult3-divide-one-self", "mult3-divide-one-self"]);
     expect(figures("df3-03-02")).toEqual(["mult3-divide-by-zero", "mult3-divide-by-zero"]);

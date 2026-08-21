@@ -94,8 +94,17 @@ describe("S194 length-problems-g2 — three route shapes re-derived by the REAL 
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveG2(s.variant.form, w.prompt);
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          // Signed PROGRESSION-g2p-02-02 (S318 PROG lane, verified S318-V2-g2p-02-02)
+          // rewrote k2/ch1 as three-addend leg sums (15+12+9=36, 40+15+9=64, both
+          // hand-verified) that no registered form derives; their variant declarations
+          // were withdrawn with the rewrite. Ratchet: withdrawn steps stay withdrawn,
+          // every other numeric still re-derives via its declared form (S326-R1).
+          if (lesson.id === "g2p-02-02" && (s.id === "k2" || s.id === "ch1")) {
+            expect(s.variant, `${lesson.id}/${s.id} signed as pool-withdrawn`).toBeUndefined();
+          } else {
+            const derived = solveG2(s.variant.form, w.prompt);
+            expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          }
           expect(evaluate(w, w.answer).correct).toBe(true);
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);

@@ -71,7 +71,11 @@ function solvePrompt(form,input){const p=input.split('||'),prompt=p[0],raw=p.sli
  case'Smg1HalvesNumeric':return 2;case'Smg1FourthsNumeric':return 4;case'Smg1HalvesFourthsNumeric':return 2;
  case'Smg1HalvesMcq':return exact(options,'A half');case'Smg1FourthsMcq':return exact(options,'A fourth');case'Smg1HalvesFourthsMcq':return exact(options,'A fourth');
  case'Smg1LengthDifferenceNumeric':return n[0]-n[1];
- case'Smg1ShapeSidesNumeric':{const sh=prompt.match(/a (triangle|square|rectangle|circle)/)[1],tab={triangle:{sides:3,corners:3},square:{sides:4,corners:4},rectangle:{sides:4,corners:4},circle:{sides:0,corners:0}};return tab[sh][prompt.includes('corners')?'corners':'sides']}
+ /* S326-R1: shape table extended with hexagon (6 sides/6 corners) and the article
+    matcher widened to 'one <shape>' — covers the signed S320-IMPL-A13-g1s-01-03
+    hexagon retarget and S320-IMPL-A13-g1s-03-02 decompose reframe; verified against
+    every Smg1ShapeSidesNumeric prompt in the corpus. */
+ case'Smg1ShapeSidesNumeric':{const sh=prompt.match(/(?:a|one) (triangle|square|rectangle|circle|hexagon)/)[1],tab={triangle:{sides:3,corners:3},square:{sides:4,corners:4},rectangle:{sides:4,corners:4},circle:{sides:0,corners:0},hexagon:{sides:6,corners:6}};return tab[sh][prompt.includes('corners')?'corners':'sides']}
  case'Smg1ShapeSidesMcq':{const sides=n[0],corners=n[1],map={'3,3':'Triangle','0,0':'Circle'};return exact(options,map[`${sides},${corners}`])}
  case'Smg1SolidPartsNumeric':{const sh=prompt.match(/a (cube|cone|cylinder|sphere)/)[1],tab={cube:{faces:6,edges:12},cone:{faces:1,edges:1},cylinder:{faces:2,edges:2},sphere:{faces:0,edges:0}};return tab[sh][prompt.includes('flat faces')?'faces':'edges']}
  case'Smg1SolidPartsMcq':return exact(options,'Cube');

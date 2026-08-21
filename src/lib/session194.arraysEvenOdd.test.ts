@@ -45,9 +45,23 @@ describe("S194 arrays-even-odd-g2 — course shape and generator reuse", () => {
         expect(registered.has(s.variant.form), `${lesson.id}/${s.id}: ${s.variant.form} NOT registered`).toBe(true);
       }
     }
-    expect(declared).toBeGreaterThan(25);
+    // Re-pinned 32 -> exactly 25: signed S318 PROG (g2a-02-03, verified
+    // S318-V2-g2a-02-03) and s323-P6 (g2a-01-02/g2a-02-02/g2a-03-03) replaced
+    // duplicate/regressive items with scenario- and repeated-sum-specific rewrites
+    // that no registered generator form regenerates, withdrawing 7 declarations
+    // (see POOL_WITHDRAWN below for the numeric ones). Exact pin ratchets both ways.
+    expect(declared).toBe(25);
   });
 });
+
+// Signed variant withdrawals on NUMERIC checks (S318 PROG + s323-P6, S326-R1
+// reconcile): these five repeated-sum array prompts are hand-verified truthful
+// (7*4=28, 5*4=20, 18+6+6=30, 6*4=24, 21+7+7=35) but not derivable by any
+// registered g2-add-subtract-100 form, so they are pool-withdrawn by design.
+// Every other numeric check must still carry a solver-derivable variant.
+const POOL_WITHDRAWN = new Set([
+  "g2a-02-02/ch1", "g2a-02-03/k2", "g2a-02-03/ch1", "g2a-03-03/k3", "g2a-03-03/ch1",
+]);
 
 describe("S194 arrays-even-odd-g2 — REAL-solver re-derivation across widget kinds", () => {
   for (const file of readdirSync(join(DIR, "lessons")).sort()) {
@@ -94,8 +108,13 @@ describe("S194 arrays-even-odd-g2 — REAL-solver re-derivation across widget ki
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveG2(s.variant.form, w.prompt);
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          if (POOL_WITHDRAWN.has(`${lesson.id}/${s.id}`)) {
+            // Ratchet: a withdrawn step must stay withdrawn (no half-declared state).
+            expect(s.variant, `${lesson.id}/${s.id} signed as pool-withdrawn`).toBeUndefined();
+          } else {
+            const derived = solveG2(s.variant.form, w.prompt);
+            expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          }
           expect(evaluate(w, w.answer).correct).toBe(true);
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);

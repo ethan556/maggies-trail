@@ -167,32 +167,41 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Another missing leg.",
+      "body": "Spot the error.",
       "conceptTag": "tm-pythagorean-apply",
       "explanationVariants": [
-        "a = √(10² − 6²) = √(100 − 36) = √64 = 8.",
-        "Subtract for a leg then root: √64 = 8."
+        "c = √(7² + 24²) = √(49 + 576) = √625 = 25; adding the legs (7 + 24 = 31) skips the squaring and the root entirely.",
+        "Square each leg, add, then root: √625 = 25, not the sum of the legs."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A right triangle has hypotenuse 10 and one leg 6. What is the other leg?",
-        "answer": 8,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A learner is asked for the hypotenuse of a right triangle with legs 7 and 24, and answers 31 by computing 7 + 24. What went wrong?",
+        "options": [
           {
-            "value": 16,
-            "feedback": "For a LEG, SUBTRACT: √(100 − 36) = √64 = 8, don't add."
+            "id": "o0",
+            "label": "The legs must be squared and added before taking the square root, not added directly",
+            "correct": true,
+            "feedback": "Correct — c = √(7² + 24²) = √625 = 25; adding the legs directly skips both squaring and the root."
           },
           {
-            "value": 64,
-            "feedback": "That's the leg squared — take the square root: √64 = 8."
+            "id": "o1",
+            "label": "Nothing — 31 is correct",
+            "correct": false,
+            "feedback": "31 is just the sum of the legs, not the hypotenuse; check with c = √(7² + 24²) = 25."
+          },
+          {
+            "id": "o2",
+            "label": "The legs should have been subtracted, not added",
+            "correct": false,
+            "feedback": "Subtracting finds a missing leg from the hypotenuse; here both legs are known, so square and add them, then take the root."
+          },
+          {
+            "id": "o3",
+            "label": "The square root should have been taken before squaring",
+            "correct": false,
+            "feedback": "Squaring happens first — square each leg, add the squares, then take one square root of that sum."
           }
-        ],
-        "fallbackFeedback": "a = √(10² − 6²) = √(100 − 36) = √64 = 8."
-      },
-      "variant": {
-        "gen": "pythagorean",
-        "form": "legFromHyp"
+        ]
       }
     },
     {

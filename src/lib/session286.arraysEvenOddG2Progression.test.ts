@@ -11,7 +11,7 @@ const lessons = files.map((file) => Lesson.parse(JSON.parse(readFileSync(join(di
 const expectedSecondJobs = {
   "g2a-01-01": { type: "oddEvenPairs", prompt: "Pair up 15 counters. Odd or even?", answer: "odd" },
   "g2a-01-02": { type: "oddEvenPairs", prompt: "18 ends in 8. Is it odd or even?", answer: "even" },
-  "g2a-01-03": { type: "oddEvenPairs", prompt: "Pair up 14 counters. Odd or even?", answer: "even" },
+  "g2a-01-03": { type: "oddEvenPairs", prompt: "Pair up 12 counters. Odd or even?", answer: "even" },
   "g2a-01-04": { type: "oddEvenPairs", prompt: "Pair up 13 counters. Odd or even?", answer: "odd" },
   "g2a-02-01": { type: "tapDiagram", prompt: "Tap the counter in row 3, column 1.", correct: ["r3c1"] },
   "g2a-02-02": { type: "tapDiagram", prompt: "Tap every counter in the RIGHT column.", correct: ["r1c4", "r2c4", "r3c4"] },

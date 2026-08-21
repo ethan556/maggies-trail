@@ -146,7 +146,9 @@ describe("S249 number-writing-k whole-course repair", () => {
       const widget = WidgetSpec.parse(step.widget);
       return widget.type === "subitizeFlash" ? [{ lessonId: lesson.id, stepId: step.id, widget }] : [];
     }));
-    expect(flashes).toHaveLength(5);
+    // Re-pinned 5 -> 4: signed S320-IMPL-A5-kcw-02-04 swapped kcw-02-04/ch1's
+    // off-topic subitizeFlash(count=7) for a numberLineHop targeting 18.
+    expect(flashes).toHaveLength(4);
     for (const { lessonId, stepId, widget } of flashes) {
       expect(widget.successFeedback, `${lessonId}/${stepId}`).toContain(String(widget.count));
       expect(widget.missFeedback, `${lessonId}/${stepId}`).toContain(String(widget.count));

@@ -2,19 +2,19 @@
 
 ## Executive summary
 
-- **The live backlog is 1,735, 12,712 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `e2393c10c56b2d4a4c4133d7fc432fb3d6d50ede7e8410f11024069bd3d333ef` at commit `ae399cc6`.
-- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 123 primary portfolios: 106 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 14.11× fewer context scopes without deleting or auto-closing a single task.
+- **The live backlog is 749, 13,698 below the 14,447-row reference.** The authoritative CSV passes uniqueness, completeness and priority-domain checks and is sealed by SHA-256 `e3e53b71049379e1bc2593f049065a89178cb110e407d6b4d8991c5e93fc17a5` at commit `a78d6a3e`.
+- **The queue is using the wrong unit of work.** Every row can be assigned exactly once to 103 primary portfolios: 86 course portfolios, 1 standards parent-family portfolio, 14 generator domains and 2 shared programme/engine portfolios. The 2 exact standards codes and 57 exact generator tags remain required subgroups. That is 7.27× fewer context scopes without deleting or auto-closing a single task.
 - **The fastest safe path is course-first, cause-first and evidence-last.** Read each course once, emit all semantic contracts, implement file-disjoint causes, run deterministic evidence once, and obtain an independent verdict. Standards use a separate exact-code cache and retain edge-level decisions.
 
 ## Dataset and grain
 
-The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 1735/1735 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
+The source is `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`: one row per currently open closure obligation. The compiler verifies 749/749 unique work IDs, 0 missing required records, and 0 invalid priority values. The portfolio CSV is a derived execution view; the queue remains the source of truth.
 
-## The breakthrough: 1,735 rows become 123 claimable portfolios
+## The breakthrough: 749 rows become 103 claimable portfolios
 
 | Portfolio class | Queue rows | Primary scopes | Rows per scope | P0 rows | Maximum scope |
 |---|---:|---:|---:|---:|---:|
-| COURSE_PORTFOLIO | 1,533 | 106 | 14.46 | 20 | 46 |
+| COURSE_PORTFOLIO | 547 | 86 | 6.36 | 10 | 36 |
 | GENERATOR_DOMAIN_PORTFOLIO | 166 | 14 | 11.86 | 0 | 46 |
 | PROGRAM_SHARED_PORTFOLIO | 34 | 2 | 17 | 15 | 27 |
 | STANDARD_FAMILY_PORTFOLIO | 2 | 1 | 2 | 0 | 2 |
@@ -23,32 +23,32 @@ This is a context-loading optimization, not a quality shortcut. A portfolio owns
 
 ## One course read should drive every local decision
 
-The 106 course portfolios cover 1,533 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
+The 86 course portfolios cover 547 source-local rows. A course assessor reads the full lesson set once and emits lesson/visual/language dispositions, progression and choice jobs, math and figure requirements, revision contracts and standards evidence summaries. Implementers receive only exact owned files and deltas.
 
 Top closure-leverage course portfolios:
 
 | Course | Rows | P0 | Lessons | Workstreams |
 |---|---:|---:|---:|---|
-| functions-and-sequences | 46 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| linear-functions | 45 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| solving-equations | 39 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| shapes-build-k | 36 | 0 | 12 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| measure-compare-k | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | place-value-1000 | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | radicals-and-exponents | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| rational-number-operations | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| teen-numbers-k | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
 | tens-and-ones | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| volume-measurement | 36 | 0 | 12 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| the-real-number-system | 35 | 0 | 9 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| number-line-g2 | 34 | 0 | 9 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| shapes-and-sorting-k | 33 | 6 | 9 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, QUESTION_DIVERSITY_AND_TRANSFER, VISUAL_FIRST_REPRESENTATION |
-| compose-shapes-g1 | 33 | 0 | 9 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| shapes-shares-g2 | 31 | 0 | 9 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| patterns-factors-g4 | 31 | 0 | 10 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| length-problems-g2 | 30 | 0 | 8 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
-| inequalities-and-regions | 30 | 0 | 9 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
-| compare-numbers-k | 30 | 0 | 10 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| shapes-build-k | 18 | 0 | 10 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| length-problems-g2 | 18 | 0 | 8 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| volume-problems-g5 | 17 | 0 | 5 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| long-division-g5 | 15 | 0 | 6 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| measure-compare-k | 15 | 0 | 5 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| arrays-even-odd-g2 | 14 | 0 | 7 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| multistep-g4 | 12 | 0 | 4 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| teen-numbers-k | 12 | 0 | 4 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| vectors-matrices | 10 | 0 | 9 | CHOICE_SURFACE_INTEGRITY, LESSON_PROGRESSION_AND_DUPLICATION |
+| functions-and-sequences | 10 | 0 | 10 | LESSON_PROGRESSION_AND_DUPLICATION |
+| function-analysis | 9 | 0 | 7 | CHOICE_SURFACE_INTEGRITY, LESSON_PROGRESSION_AND_DUPLICATION |
+| compose-shapes-g1 | 9 | 0 | 7 | CHOICE_SURFACE_INTEGRITY, GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| exponential-functions | 9 | 0 | 9 | LESSON_PROGRESSION_AND_DUPLICATION |
+| proportional-relationships | 9 | 0 | 9 | LESSON_PROGRESSION_AND_DUPLICATION |
+| solving-equations | 9 | 0 | 7 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, LESSON_PROGRESSION_AND_DUPLICATION, VISUAL_FIRST_REPRESENTATION |
+| number-writing-k | 9 | 0 | 3 | GRADE_LANGUAGE_REVIEW, LESSON_COMPLETE_DISPOSITION, VISUAL_FIRST_REPRESENTATION |
+| the-real-number-system | 8 | 0 | 7 | CHOICE_SURFACE_INTEGRITY, LESSON_PROGRESSION_AND_DUPLICATION |
 
 ## Standards: cache the official source, never the verdict
 
@@ -80,12 +80,12 @@ All 166 generator rows compile into 14 coherent grade/course domains while retai
 - **Math rendering:** 0 rows compile into 0 symbol × surface × source contracts. Repair the renderer boundary once, then verify every dependent field and screen-reader string.
 - **Illustrations:** 0 rows compile into 0 figure+course contracts and 0 write batches capped at 20 placements. The 0 live `count-on-hops` placements require typed semantic figure specifications, not bespoke pictures.
 - **Generators:** 166 generated rows compile into 14 parent domains, 57 required exact-tag contracts and 57 tag-bounded microbatches. Reuse domain context, but run the prompt-only oracle, deterministic replay and verdict independently per tag.
-- **Progression and choices:** 181 progression rows are 49 course contracts; 252 choice rows are 96 authored-course or generator contracts.
+- **Progression and choices:** 175 progression rows are 48 course contracts; 252 choice rows are 96 authored-course or generator contracts.
 
 ## Optimized operating sequence
 
 1. **Freeze and compile.** Require queue SHA, base commit, contract hash and owned files in every portfolio. Reject stale claims automatically.
-2. **Assessment cohort.** Review 3 courses concurrently with four active agents, or 6 with eight active agents. One assessor owns one course. The 65 remaining course reviews become 22 three-assessor cohorts or 11 six-assessor cohorts.
+2. **Assessment cohort.** Review 3 courses concurrently with four active agents, or 6 with eight active agents. One assessor owns one course. The 30 remaining course reviews become 10 three-assessor cohorts or 5 six-assessor cohorts.
 3. **Contract fan-out.** Convert course findings into small, file-disjoint write packets: 5–12 lessons, one generator family, one math boundary, or at most 20 illustration placements.
 4. **Deterministic evidence cohort.** Luna workers run schema, pedagogy, duplication, parity, seed, renderer and accessibility gates once per changed dependency partition; raw logs stay outside model context.
 5. **Independent verdict cohort.** Assessors read the contract, diff, rendered state and unseen samples before the producer narrative. P0 and novel mathematics receive full semantic review; contract-identical mechanical rows receive representative plus unseen-sample review.
@@ -102,7 +102,7 @@ All 166 generator rows compile into 14 coherent grade/course domains while retai
 
 ## Measured disposition leverage
 
-All 1,294 current signed lesson reviews resolved 3,882 generic disposition rows and left 35 implementation or escalation rows. If the same 2.7% revision-required rate held—a planning scenario, not a forecast—the remaining 407 reviews would resolve 1,221 generic rows, create about 11 implementation rows and reduce the queue by about 1,210 net rows before those fixes are completed.
+All 1,609 current signed lesson reviews resolved 4,827 generic disposition rows and left 0 implementation or escalation rows. If the same 0% revision-required rate held—a planning scenario, not a forecast—the remaining 92 reviews would resolve 276 generic rows, create about 0 implementation rows and reduce the queue by about 276 net rows before those fixes are completed.
 
 ## Immediate next waves
 
@@ -110,17 +110,17 @@ All 1,294 current signed lesson reviews resolved 3,882 generic disposition rows 
 2. Start renderer-boundary canaries, then expand through the 0 live exact boundary contracts.
 3. Build one typed semantic-figure canary for three different `count-on-hops` concepts; scale across the 0 live placements only if value, visible model, explanation and accessible description remain synchronized.
 4. Begin exact-code standards batches only after course evidence summaries are current; keep the existing 2 partial edges open.
-5. Implement or adjudicate the 35 current revision/escalation packets before reviewing their courses again.
+5. Implement or adjudicate the 0 current revision/escalation packets before reviewing their courses again.
 
 ## Further questions
 
 - Which exact semantic figure families can replace `count-on-hops` without recreating a generic illustration under a new name?
 - Which standards authorities permit stable direct-source retrieval in the execution environment, and which need a separately cached official snapshot?
-- Does the revision-required rate remain near the observed 2.7% once less risky courses are reviewed? Recalculate after every 100 decisions.
+- Does the revision-required rate remain near the observed 0% once less risky courses are reviewed? Recalculate after every 100 decisions.
 
 ## Caveats and assumptions
 
 - Portfolio compression reduces repeated reading and orchestration; it does not constitute closure evidence.
 - Standards remain the largest semantic workload. Source caching saves tokens, but no benchmark is approved by analogy.
-- The disposition scenario is based on all 1,294 current reviewed lessons and is deliberately labeled as a scenario.
+- The disposition scenario is based on all 1,609 current reviewed lessons and is deliberately labeled as a scenario.
 - Shared renderer and semantic-figure scaling stops on any learner-visible mathematical, accessibility or state-synchronization failure.

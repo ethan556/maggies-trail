@@ -48,7 +48,7 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'faBenchmarkOrderNumeric': {const sorted=[...fs].sort((a,b)=>a.num/a.den-b.num/b.den);return sorted[1].den;}
   case 'faBenchmarkOrderRational': {const [a,b]=[w.left,w.right],d=a.num*b.den-b.num*a.den;return d<0?'lt':d>0?'gt':'eq';}
   case 'faLikeDenomWordMcq': return option(w,x=>x.startsWith('It stays '));
-  case 'faLikeDenomWordNumeric': {const [a,b]=fs;return p.includes('were available')?a.num-b.num:a.num+b.num;}
+  case 'faLikeDenomWordNumeric': {const [a,b]=fs;if(/short of a whole/i.test(p))return a.den-a.num;return p.includes('were available')?a.num-b.num:a.num+b.num;}
   case 'faImproperToMixedNumeric': return Math.floor(fs[0].num/fs[0].den);
   case 'faMixedToImproperNumeric': {const m=p.match(/Convert (\d+) (\d+)\/(\d+)/);return +m[1]*+m[3]+ +m[2];}
   case 'faMixedAddSubMixed': case 'faWholeTimesFractionMixed': return mixedTruth(w);
@@ -124,7 +124,7 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'mbInterpretRemaindersMcq': return exact(w,String(Math.ceil(ns[0]/ns[1])));
   case 'mbInterpretRemaindersNumeric': return Math.ceil(ns[0]/ns[1]);
   case 'mbPatternsMcq': return exact(w,`Multiply by ${ns[1]/ns[0]}`);
-  case 'mbPatternsNumeric': return ns[ns.length-1]*(ns[1]/ns[0]);
+  case 'mbPatternsNumeric': {const m=p.match(/rule is "multiply by (\d+)"/);if(m)return ns[ns.length-1]*+m[1];return ns[ns.length-1]*(ns[1]/ns[0]);}
   case 'mbMultiStepNumeric': return ns[0]*ns[1]-ns[2];
 
   // Place value and algorithms

@@ -26,7 +26,8 @@ function expectWidgetAnswerContract(widget: Widget | undefined) {
 describe("S268 Measure, Money & Time source-local repair", () => {
   it("uses graph figures that match the taught representation and an exact clock explanation", async () => {
     expect((await get("mmt-03-02", "c2")).figure).toBe("mmt-biggest-first");
-    expect((await get("mmt-03-02", "c2")).body).toContain("25, 50, 75");
+    // S318-FIGA-RISK-mmt-03-02: body spells the coin values the way the figure title does
+    expect((await get("mmt-03-02", "c2")).body).toContain("twenty-five, fifty, seventy-five");
     expect((await get("mmt-04-03", "c1")).body).toContain("3:20");
     expect((await get("mmt-04-03", "c1")).figure).toBe("five-minute-clock");
     expect((await get("mmt-05-01", "c1")).figure).toBe("mmt-picture-graph");

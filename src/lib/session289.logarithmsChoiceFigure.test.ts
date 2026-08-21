@@ -41,7 +41,9 @@ describe("S289 Logarithms figure and MCQ parity repair", () => {
   it("retains the exact logarithmic ladder binding only for its matching source claim", () => {
     const source = step("lg-05-03", "c1");
     expect(source.figure).toBe("log-scale-ladder");
-    expect(hash(source.body)).toBe("d0a12bd7edaeb243184f8d4d5d2a31ee1237b0b616c0c7e1cd7dff7edc143477");
+    // S318-FIGA-lg-05-03-c1: body gained the ladder's missing rungs (magnitude 3, ×1000) to reach
+    // exact numeric parity with the figure's registered claim; seal re-pinned to the signed text.
+    expect(hash(source.body)).toBe("4e6d4f6dc59869bfbe8cebbbc6ba0d9c2d364bacc31f16f1c5faee6d40e0b218");
   });
 
   it("keeps evaluators and feedback while closing all eight choice-length leaks", () => {

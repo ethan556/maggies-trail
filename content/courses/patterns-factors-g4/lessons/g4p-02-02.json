@@ -205,27 +205,27 @@
       "body": "",
       "conceptTag": "g4pf-sieve",
       "explanationVariants": [
-        "Survivors are prime.",
-        "Two is the first survivor."
+        "Even multiples went first.",
+        "Nine is the first fresh crossing."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What is the smallest prime number?",
-        "answer": 2,
+        "prompt": "The 3-pass crosses out 6, 9, 12, 15, and so on. Which is the smallest number it crosses out that the 2-pass had NOT already removed?",
+        "answer": 9,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 1,
-            "feedback": "1 has only ONE factor — itself — while a prime needs exactly two, so 1 is neither prime nor composite."
+            "value": 6,
+            "feedback": "6 is even, so the 2-pass had already crossed it out — the 3-pass adds nothing new there."
           },
           {
             "value": 3,
-            "feedback": "3 is prime, but a smaller one comes before it and is the only even prime there is."
+            "feedback": "3 is the sieve number itself and survives as a prime; the pass crosses out its MULTIPLES beyond it."
           }
         ],
-        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
-        "successFeedback": "Correct — 2."
+        "fallbackFeedback": "Go through the 3-pass landings in order — 6, 9, 12 — and ask of each: is it even?",
+        "successFeedback": "Correct — 9. Every earlier landing of the 3-pass is even and was already gone."
       },
       "hints": [
         "Count the factor pairs.",
