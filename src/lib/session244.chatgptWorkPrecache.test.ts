@@ -164,9 +164,18 @@ describe("S244 ChatGPT Work V4 content-addressed precache", () => {
       // using REVISE had correctly but unintentionally opened 7 LESSON_REVISION_IMPLEMENTATION
       // rows, which the KEEP correction closed). Duplicates and visual placements unchanged;
       // topLevelLessonSteps unchanged (redesigns rewrote existing steps in place).
+      // CL-P1-048 live re-measurement (same session, same directive): the ledger row's own
+      // "697/3,293" framing traces to a composite detector superseded by S242's
+      // scripts/audit/mcq-leakage.mts, never revisited after that supersession. Fresh run found
+      // only 5 live findings across 5,237 measured MCQ items; 4 got a safe mechanical label
+      // trim (fn-02-02/k3, fn-03-02/k3, g2p-02-01/k2, pr-04-03/k2), 1 (rns-03-02/ch1) was
+      // reviewed and correctly kept as a legitimate reasoning-comparison item. Decisions
+      // 3650 -> 3655 (5 new records, all KEEP). Queue total unaffected -- MCQ leakage isn't a
+      // consolidator workstream, this is a CLOSURE_LEDGER-only disposition. Duplicates, visual
+      // placements, and topLevelLessonSteps unchanged (label-only edits, no prompt/step changes).
       "pending-workload": 114,
       "lesson-review-cards": 1701,
-      "lesson-review-decisions": 3650,
+      "lesson-review-decisions": 3655,
       "exact-mcq-duplicates": 100,
       "visual-placement-index": 3573,
       "choice-surface-index": 0,

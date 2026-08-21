@@ -988,3 +988,92 @@ screenshot gallery, accessible-state/mobile-control extensions) — were only a 
 row-by-row fresh-evidence investigation like the two above, so none of them were written into
 `CLOSURE_LEDGER.md` this round; they remain exactly the menu described in the previous section of
 this addendum, for the user to prioritize rather than something this session built unilaterally.
+
+# S330 second post-recon addendum (2026-08-21, same session, user said "complete tasks" after the
+above addendum was reported done)
+
+Picked the next concrete, safely-scoped, no-secrets-required item off the menu rather than guess
+across the many legitimately-open threads (K-8/HS content review, engine accessibility/mobile work,
+performance profiling, the 18 partially-actionable CLOSURE_LEDGER findings): `CL-P1-048` ("MCQ
+blind-guess leakage"), because it had by far the clearest, most-precedented, most mechanically
+verifiable next step of anything open. That choice surfaced a genuine finding of its own before any
+content was touched.
+
+## CL-P1-048's own detector turned out to be stale
+
+`CL-P1-048`'s numbers ("697 of 3,293... 572 remaining" as of S231) come from a composite
+`blind_guess_test` in `MCQ_DISTRACTOR_AUDIT.csv`. `scripts/audit/mcq-leakage.mts` — built in a later
+session (S242) — explicitly deprecated that detector: its own header says *"A composite verdict
+cannot be worked: it says an item is guessable without saying WHY... this program has already been
+slowed twice by counts that were true when written."* It splits the old composite into five
+independently-scored, named tells and re-measures the live corpus every run — no stale queue file to
+fall behind. `CL-P1-048` was never revisited after that supersession, the same class of staleness
+`CL-P1-040` already caught for the S146–S150 Python audits: a session built a better tool, and the
+ledger row about the old one was never updated to point at it.
+
+## Full-corpus re-measurement: 5,237 items, 5 findings
+
+Ran `mcq-leakage.mts` fresh: **5,237 MCQ items measured (2,564 authored + 2,673 generated), the
+entire current corpus, not a sample — only 5 items carried any tell.** This is not "692 got fixed
+since S231" — the old 572-row figure was never trustworthy at row-count granularity, per its own
+successor's documentation. It is a full, accurate, current re-measurement that happens to find very
+little live leakage. Each of the 5 was read individually and judged on its own terms, not
+batch-edited:
+
+- **`fn-02-02#k3`, `fn-03-02#k3`** (matched nth-term/geometric-term catch-the-mistake steps): the
+  correct option's label carried a full parenthetical justification while both wrong options were
+  bare, unreasoned assertions — the tool's own documented "length-answer-explains-itself" pattern,
+  mechanically repairable. Trimmed each correct label to the bare claim; the existing `feedback`
+  field already carried the identical reasoning, untouched.
+- **`g2p-02-01#k2`**: the correct option was the only one of four citing a specific number+unit
+  ("32 cm") — an odd-one-out-of-form tell, a genuinely different cause from the length pair above.
+  Generalized the label to "the bigger piece alone" (same comparison, no number); the concrete
+  arithmetic stays, unchanged, in feedback and an existing hint.
+- **`pr-04-03#k2`**: pure grammatical-form asymmetry — a full clause ("They're the same percent
+  decrease") competing against two short noun phrases, with no inline reasoning in any option.
+  Trimmed to "Same percent decrease," same meaning, better parallelism.
+- **`rns-03-02#ch1`**: read and explicitly **kept unedited**. This challenge is a reasoning-comparison
+  task by design ("a classmate's reasoning went wrong somewhere"); all four options already carry
+  parallel inline reasoning, and the correct one is longer only because the true justification cites
+  two tenths-level brackets instead of one wrong, simpler idea. This is exactly the "prose against
+  prose" case the tool's own header says needs human misconception-family judgment, not a mechanical
+  rewrite — and on that judgment, it's fine as authored. Editing it to be shorter would have meant
+  deleting real mathematical content for no pedagogical gain.
+
+**Verification, same rigor as the first addendum:** a temporary vitest harness ran `Lesson.parse` +
+`lintLesson` + `evaluate()` against all 4 edited steps' correct option and every distractor — clean,
+then deleted. Re-ran `mcq-leakage.mts` on the edited files: the exact 4 tells cleared, zero new tells
+anywhere in the 5,237-item corpus. A targeted regression sweep (every test file mentioning any of the
+4 touched lesson ids: `sequenceGeometricTerm.s119.test.tsx`, `session194.lengthProblems.test.ts`,
+`session296.lengthProblemsG2InteractiveRepair.test.ts`, `session244.chatgptWorkPrecache.test.ts`) —
+39/39 pass. A `git stash` A/B of the exact same 4-file batch on pre-edit HEAD confirmed the only
+behavioral difference is the expected precache re-pin (a harmless `EnvironmentTeardownError` from
+katex's dynamic import racing multi-file teardown showed up in one batched run and not its isolated
+rerun, on **both** pre- and post-edit HEAD — a pooling artifact, unrelated to this round's edits, not
+a masked regression).
+
+## Disposition, chain, and CLOSURE_LEDGER
+
+5 signed `KEEP` dispositions (`reports/closure/cowork-staging/laneA-s330-mcqleakage.jsonl`) — 4 for
+already-implemented-and-verified fixes, 1 for the reviewed-and-justified original — written correctly
+as `KEEP` from the start this time (no repeat of the earlier REVISE/KEEP correction dance). Appended
+via `append-s316-dispositions.mjs` (dry-run then `--write`, 0 problems). Full derivation chain
+re-run: `staleCount: 0`, `SOURCE_SEAL_MATCH`. Decisions 3650 → 3655. `pending-workload` stays 114 —
+MCQ leakage isn't a tracked consolidator workstream, so this is a `CLOSURE_LEDGER`-only disposition,
+not a queue-count change. `session244.chatgptWorkPrecache.test.ts` re-pinned accordingly.
+
+`CLOSURE_LEDGER.md` gets a new dated section, and this time — unlike `CL-P1-031`/`CL-P0-003`, which
+genuinely lack the browser-level evidence their own conditions require — `CL-P1-048` is marked
+**CLOSED**: the full current corpus (not a sample) has been measured under the accurate superseding
+detector, every finding individually read and dispositioned, and zero un-reviewed findings remain.
+
+## Proportionality note on the final gate
+
+This round's edits are 4 MCQ option-label trims — no widget-shape, correctness, or logic change. Gate
+evidence gathered: schema/lint/evaluate (all 4, direct), the leakage detector (before/after, whole
+corpus), the full derivation chain (clean), and a 4-file targeted regression sweep with a `git stash`
+A/B (39/39, one explained delta). A fresh 30-minute full `vitest run` was deliberately **not** run
+again on top of that — the marginal evidence it would add is small relative to its cost for a change
+this narrow, and running one anyway would itself repeat the "pace too slow" pattern this session has
+already been corrected on once. Noting the judgment call explicitly rather than silently skipping or
+silently over-doing verification.

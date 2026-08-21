@@ -244,3 +244,58 @@ speak to either way; it is not rescored by this entry.)
 | CL-P1-031 | P1 | Release-environment provenance | The semantic/test/build legs of this row's closure condition now have same-session current-tree evidence; the browser leg — the specific reason this row has stayed open since S221 — was attempted and could not be obtained in this sandbox. | **OPEN — SEMANTIC/TEST/BUILD LEGS CURRENT, BROWSER LEG UNOBTAINABLE HERE** | `/tmp/typecheck-s330-postrecon.log` (0 diagnostics), `/tmp/build-s330-postrecon.log` (exit 0), `/tmp/vitest-s330-postrecon-full.log` reconciled zero-new-failures against `/tmp/vitest-s330-full.log`. Playwright attempt log: two hung runs, no captures produced. Close when a Playwright-capable environment (or a sandbox where the Next dev server does not hang under Playwright) runs the existing `e2e/` suite against this seal. |
 | CL-P0-003 | P0 | Onboarding/placement | This row's own reopen trigger is "full tests/browser show a regression." The "tests" half now has current-tree confirmation of zero new regressions anywhere in the suite (one pre-existing, unrelated onboarding-area failure is unchanged from before this session, per above). The "browser" half — real `/placement` and `/onboarding` route navigation, persistence-across-navigation, and accessibility-tree checks — was attempted via the same Playwright run as CL-P1-031 and could not be obtained. | **CLOSED-SOURCE / RUNTIME REPROVE OPEN (unchanged) — TESTS REFRESHED, BROWSER LEG UNOBTAINABLE HERE** | Same typecheck/build/vitest evidence as CL-P1-031, plus the fresh build's confirmation that both `/placement` and `/onboarding` compile and prerender cleanly. No route/persistence/accessibility regression appears in the current-tree test evidence. Close (or definitively reopen) only once genuine browser-level route/persistence/accessibility evidence is captured — this pass did not produce it. |
 
+## Session 330 MCQ-leakage detector supersession (CL-P1-048)
+
+`CL-P1-048`'s own recorded numbers ("697 of 3,293... trigger correct-option length or punctuation
+leakage heuristics", last updated S231 at "125/697 REMEDIATED... regenerated queue has 572 rows")
+trace to a composite `blind_guess_test` verdict in the now-superseded `MCQ_DISTRACTOR_AUDIT.csv`.
+`scripts/audit/mcq-leakage.mts`, built in a later session (S242, tagged in its own header), explicitly
+replaced that detector — its own comment explains why: *"A composite verdict cannot be worked: it
+says an item is guessable without saying WHY... this program has already been slowed twice by counts
+that were true when written. So this measures the live corpus, and it scores each leak SEPARATELY."*
+It splits the old composite into five independently-scored, named tells (length, lone-justification
+qualifier, absolutes-in-distractors-only, grammar/stem-completion, odd-one-out-of-form) and is a
+read-only, no-`--write`-needed measurer of the CURRENT corpus each time it runs. `CL-P1-048` was never
+revisited after this supersession — the same class of staleness `CL-P1-040` already named for the
+S146–S150 Python audits, caught here for the same underlying reason: a session built a better tool
+and the ledger row describing the old one's queue was never updated to point at it.
+
+Ran `scripts/audit/mcq-leakage.mts` fresh against the full current corpus: **5,237 MCQ items measured
+(2,564 authored + 2,673 generated) — every authored and generated MCQ surface, not a sample — with
+only 5 items carrying any tell.** This is not "692 of the old 697 got fixed since S231" — the old
+composite figure was never trustworthy at row-count granularity (that is exactly what its own successor
+tool's header says). It is a full, current, more precise re-measurement that happens to find very
+little live leakage. Each of the 5 was read individually, not mechanically batch-edited:
+
+- `fn-02-02#k3` and `fn-03-02#k3` (a matched nth-term/geometric-term catch-the-mistake pair): the
+  correct option's label carried a full parenthetical justification while both wrong options were
+  bare assertions with zero reasoning — the tool's documented "length-answer-explains-itself" pattern.
+  Fixed by trimming each correct label to the bare claim, unchanged feedback already carrying the
+  full reasoning.
+- `g2p-02-01#k2`: the correct option was the only one of four citing a specific number+unit ("32 cm"),
+  an odd-one-out-of-form tell. Fixed by generalizing the label to "the bigger piece" — same comparison,
+  no number — with the concrete arithmetic already present, unchanged, in feedback and a hint.
+- `pr-04-03#k2`: pure grammatical-form asymmetry (a full clause against two short noun phrases, no
+  inline reasoning in any option). Fixed by trimming the label to match the others' register, with no
+  meaning change.
+- `rns-03-02#ch1`: reviewed and explicitly KEPT, not edited. This challenge is a reasoning-comparison
+  task by design ("a classmate's reasoning went wrong somewhere — find the correct one"); all four
+  options already carry parallel inline reasoning, and the correct option is longer only because the
+  true justification requires citing two tenths-level brackets instead of one wrong, simpler idea.
+  This is precisely the "prose against prose" case the tool's own header carves out as requiring human
+  misconception-family judgment rather than a mechanical rewrite, and on that judgment it is fine as
+  authored.
+
+Every fix was verified against live runtime code (`Lesson.parse`, `lintLesson`, `evaluate()` for the
+correct option and every distractor) via a temporary vitest harness, then confirmed by re-running
+`mcq-leakage.mts` on the edited files: the exact 4 tells cleared, zero new tells anywhere in the
+corpus. A 4-file targeted regression sweep (every test file referencing any of the 4 touched lesson
+ids) passes with a `git stash` A/B confirming the only behavioral difference pre/post-edit is the
+expected precache re-pin. Full derivation chain re-run clean (`staleCount: 0`, `SOURCE_SEAL_MATCH`).
+5 signed dispositions recorded (all `KEEP` — 4 for already-verified fixes, 1 for the reviewed-and-
+justified original), `reports/closure/cowork-staging/laneA-s330-mcqleakage.jsonl`.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-048 | P1 | MCQ blind-guess leakage | The row's "697/3,293" composite-detector framing is superseded by S242's cause-separated `mcq-leakage.mts`. Full-corpus re-measurement under the accurate tool: 5 findings across 5,237 measured items, not a sample. All 5 individually reviewed; 4 had a safe mechanical fix, 1 is a legitimate reasoning-comparison item correctly left as authored. | **CLOSED — RE-MEASURED UNDER SUPERSEDING DETECTOR, 5/5 REVIEWED, 4/5 FIXED, 1/5 JUSTIFIED KEEP** | `scripts/audit/mcq-leakage.mts` run on current tree: 0 findings remain that weren't individually reviewed and dispositioned. 5 signed ledger records, evidence and rationale above. `reports/mcq/MCQ_LEAKAGE_INDEX.csv` is the live artifact (regenerate with `--write` to reproduce). | Reopen if `mcq-leakage.mts` flags a new item on the current corpus (new authored content, or a distractor/label edit that reintroduces a tell), or if a future misconception-family review overturns the `rns-03-02/ch1` KEEP judgment. |
+

@@ -234,6 +234,15 @@ const ORDER = [
   // already-completed, already-verified fix. Same reviewedBasisHash throughout (no further
   // content change).
   "laneA-s330-postrecon-progression-fix.jsonl",
+  // CL-P1-048 live re-measurement (2026-08-21, same user directive "complete ALL tasks"): the
+  // CLOSURE_LEDGER row's own "697/3,293, 572 remaining" framing traces to a composite detector
+  // (MCQ_DISTRACTOR_AUDIT.csv) that S242's scripts/audit/mcq-leakage.mts explicitly superseded
+  // with a 5-separated-cause measurement -- CL-P1-048 was never revisited after that supersession.
+  // Fresh run found only 5 live findings across the whole corpus (5,237 MCQ items measured). 4
+  // were genuine label-length/unit leaks with a safe mechanical fix (move/trim, no new authored
+  // content); 1 (rns-03-02/ch1) was reviewed and correctly left alone as a legitimate reasoning-
+  // comparison item where the length asymmetry is the actual pedagogy, not a leak.
+  "laneA-s330-mcqleakage.jsonl",
 ];
 // Explicitly EXCLUDED (set aside by the S316 adjudication): laneAV-g1, laneAV-g2-g3, laneAV-g4-g5.
 
