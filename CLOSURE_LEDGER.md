@@ -13,7 +13,7 @@
 | CL-P0-007 | P0 | Lesson interaction coverage | Operational audit finds 72 acquisition + 9 transfer lessons with zero A/B interaction. Weak concept lessons can drag the median experience. | 81 candidates | Human re-read ranked queue; reuse existing engines; protect retrieval. | **OPEN** | baseline | `PREMIUM_INTERACTION_PRIORITY.csv`; 39 mechanical CHANGE candidates, but no automatic authorization. | Close only when every important candidate is changed or formally justified KEEP/REFUSE. |
 | CL-P0-008 | P0 | HS premium density | Fresh tier compiler found A365/B204/C57/D1 across 627 HS lessons. | HS/calc | Fresh necessity audit, then targeted existing-engine upgrades / justified advanced gaps. | **OPEN — PROGRESS** | S224 W04 | Batch 1: A366/B205/C56/D0; `ep-02-01` D→B and `dr-03-02` C→A. Continue classification of 56 C lessons. | HS conceptual density no longer materially trails K–8. |
 | CL-P0-009 | P0 | State-aware adaptation | 63/127 engines have adapt=0; multiple high-use manipulatives lack process evidence. | high-use engines | Meaningful event/state contracts and deterministic intervention loop. | **OPEN** | baseline | Capability registry census. | Important manip emits HOW-the-learner-reasoned evidence and intervention is state-grounded. |
-| CL-P1-010 | P1 | Accessible state | describeState exists for 84/127; 13 high-use/spatial manipulatives lack it. | 13 priority engines | Add exact state descriptions derived from evaluator/model state. | **OPEN** | baseline | Direct `describeState.ts` branch + authored-use scan. | High-use spatial engine has no equivalent nonvisual state. |
+| CL-P1-010 | P1 | Accessible state | describeState exists for 104/129 (was 90/129 pre-S330); the 14 high-use/spatial manipulatives named by a fresh re-application of this row's own rule now all have it. 25 lower-priority/self-narrating types remain without a case — not in this row's original scope. | 14 priority engines (fresh count; row said 13 against a stale 127-registry baseline) | Add exact state descriptions derived from evaluator/model state. | **CLOSED — S330, 14/14 BUILT + TESTED** | S330 | See "Session 330 fourth post-recon addendum" below. | Any of the 14 engines' description drifts from its renderer's own numbers, or a reveal-gate check (tone "info" / `showTarget`) stops matching its widget's own ghost. |
 | CL-P1-011 | P1 | Mobile | `systemsExplore`, `matrixTransform`, `compassConstruct` have mobile=1. | 3 engines | Real-device/touch + alternative-control repair. | **OPEN** | baseline | Registry census. | Any important engine remains mobile=1 or fails device gate. |
 | CL-P1-012 | P1 | dCL visual polish | Known overlap label can collide with bracket. | 7 judge steps / 3 authored lessons currently activated | Reposition label with breakpoint/SR parity tests. | **OPEN** | S218 handover | S218 Fable QA polish note. | Collision observed at any supported viewport/zoom. |
 | CL-P0-013 | P0 | dCL causal misconception | Judge overlay answers wrong conclusion but cannot yet let learner manipulate distributions until their claim becomes true. | relevant distribution lessons | Decide judge vs explore demand; implement only if learner retains the conclusion-making work. | **OPEN — DESIGN DECISION** | S218 handover | Do not drag if it leaks the judge answer. | Close by justified implementation or documented REFUSE. |
@@ -298,4 +298,74 @@ justified original), `reports/closure/cowork-staging/laneA-s330-mcqleakage.jsonl
 | ID | Priority | Area | Finding | Status | Evidence / next action |
 |---|---|---|---|---|---|
 | CL-P1-048 | P1 | MCQ blind-guess leakage | The row's "697/3,293" composite-detector framing is superseded by S242's cause-separated `mcq-leakage.mts`. Full-corpus re-measurement under the accurate tool: 5 findings across 5,237 measured items, not a sample. All 5 individually reviewed; 4 had a safe mechanical fix, 1 is a legitimate reasoning-comparison item correctly left as authored. | **CLOSED — RE-MEASURED UNDER SUPERSEDING DETECTOR, 5/5 REVIEWED, 4/5 FIXED, 1/5 JUSTIFIED KEEP** | `scripts/audit/mcq-leakage.mts` run on current tree: 0 findings remain that weren't individually reviewed and dispositioned. 5 signed ledger records, evidence and rationale above. `reports/mcq/MCQ_LEAKAGE_INDEX.csv` is the live artifact (regenerate with `--write` to reproduce). | Reopen if `mcq-leakage.mts` flags a new item on the current corpus (new authored content, or a distractor/label edit that reintroduces a tell), or if a future misconception-family review overturns the `rns-03-02/ch1` KEEP judgment. |
+
+## Session 330 third post-recon addendum — CL-P1-059 and CL-P1-015 were already done
+
+User asked to prioritize across CL-P0-008, CL-P1-057/059/015, and CL-P1-010. Investigating all four
+before touching anything found that two of them are not open work at all — they were fully closed in
+S247/S248, and the ledger prose was simply never updated past an earlier checkpoint. `S319_DETECTOR_
+REFRESH.md` (line ~104-109) even noticed the live queue already showed 0 rows for the exploration
+workstream and explicitly declined to close it, because it only cross-checked `reports/closure/
+S316-318_*.md` and never looked in `reports/eng/`, where the actual S247/S248 evidence lives — a
+documented process blind spot, not a disagreement about the facts. Independently verified before
+writing either row below: `PREMIUM_ENGINE_EXPLORATION_AUDIT_S235.csv` is 127/127
+`exploration_decision=KEEP_WITH_EXPLORATION_REGRESSION` (fresh `python3 csv.DictReader` count, not
+trusted from prose); `PREMIUM_INTERACTION_PRIORITY.csv` has 0 `AUDIT-OPEN`/`AUDIT-NEXT` rows (fresh
+`grep -c`); and all three cited test files run green on the current tree (`session248.
+engineReversiblePlayAudit.test.ts` + `session247.engineDispositionPostVerdict.test.tsx` +
+`session248.engineReversiblePlay.test.tsx`, 37/37 pass, this session).
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-059 | P1 | Engine-specific play depth | The row's "OPEN — 17 ENGINE FAMILIES" describes the S235 checkpoint. S247 closed the 3 "existing-disposition" engines (`compassConstruct`, `systemsExplore`, `matrixTransform` — `reports/eng/S247_ENGINE_DISPOSITION_CLOSURE.md`); S248 closed the 17 REMEDIATE_ENGINE_PLAY rows (`reports/eng/S248_ENGINE_REVERSIBLE_PLAY_CLOSURE.md`: "17/17 contract rows... zero remaining REMEDIATE_ENGINE_PLAY rows"). The fix was evidentiary, not a UI change: regression tests proving each engine's existing native control (text input, radio group, arrow buttons) is technically reversible — no lesson JSON, evaluator, or grading path changed. | **CLOSED — S247/S248 (this addendum only updates the ledger to say so)** | `PREMIUM_ENGINE_EXPLORATION_AUDIT_S235.csv` 127/127 `KEEP_WITH_EXPLORATION_REGRESSION` (fresh count, this session). `session248.engineReversiblePlayAudit.test.ts` asserts the `REMEDIATE_ENGINE_PLAY` filter is empty; `session248.engineReversiblePlay.test.tsx` fires real DOM events proving round-trip reversibility per engine. All green, this session. **Important scope note, not this row's concern:** this closure is about *reversibility* (can a learner change and un-change an answer), a different axis from CL-P1-057's *manipulation quality* — the same engines can be (and are) simultaneously KEEP here and REDESIGN there; do not read this closure as touching CL-P1-057. | Reopen if any engine's exploration contract regresses (a lesson change removes the native control the reversibility proof relies on), per the standing `session248.engineReversiblePlayAudit.test.ts` gate. |
+| CL-P1-015 | P1 | Advanced engines | The row's "4/7 CLOSED... nested rules, error propagation, and growth race remain" describes an S225 checkpoint. S247 formally dispositioned all three remaining gaps (`reports/pedagogy/S247_INTERACTION_NECESSITY_DISPOSITIONS.md`) — not "still open," but decided: `dr-04-02` (nested rules) **REFUSE** — `derivativeRuleLab`'s chain mode coordinates only two local rates, this lesson needs three nested layers inside a product, and substituting the lab would misrepresent required rule order; existing layer figure/structure MCQ/staged decomposition/numeric check stay. `dc-03-02` (error propagation) **KEEP, no build** — 3 existing `exactNumberLab` states (absolute/percentage/reverse-tolerance error) plus a staged relative-error derivation already cover it; a 4th would duplicate the relationship (explicit caveat in the source doc: the separate exact-number answer-signalling debt is NOT waived by this KEEP). `exp-04-03` (growth race) **KEEP, no build** — `expLogExplore`'s base slider is already causal, and 3 concept figures already show overtaking/difference-vs-ratio evidence; a standalone race engine would duplicate it. | **CLOSED — 7/7 DISPOSITIONED (4 built earlier + 3 REFUSE/KEEP-no-build at S247), NOT "3 REMAIN"** | `reports/pedagogy/S247_INTERACTION_NECESSITY_DISPOSITIONS.md` (quoted above). `reports/closure/S319_ASSESS_CA_DR.md:202` independently corroborates the `dr-04-02` REFUSE from an unrelated later content audit ("nested chains, implicit circle slope -0.75 verified"). `PREMIUM_INTERACTION_PRIORITY.csv` has 0 `AUDIT-OPEN`/`AUDIT-NEXT` rows (fresh grep, this session); the live consolidated queue has 0 `INTERACTION_NECESSITY_REVIEW` rows. | Reopen only if a future session proposes new evidence that one of the 3 REFUSE/KEEP dispositions was wrong (e.g. a concrete demonstration that the named duplication concern doesn't actually hold), not merely by re-flagging the same lessons. |
+
+## Session 330 fourth post-recon addendum — CL-P1-010, the 14 high-use spatial manipulatives
+
+Re-applied this row's own rule (high-use ≥20 authored steps, spatial `manip`≥2 in
+`scripts/engine-capabilities.json`, no `describeState.ts` case) against the CURRENT 129-type registry
+rather than trusting the row's stale "84/127, 13 engines" prose. Fresh result: 90/129 had a case, 39
+did not, and 14 of those 39 meet the high-use-spatial threshold: `slider`, `tapDiagram`,
+`baseTenCompose`, `lengthCompare`, `numberLinePlace`, `hundredthsGrid`, `barBuilder`, `clockSet`,
+`volumeBuilder`, `algebraTiles`, `columnCalc`, `numberLineHop`, `tenFrame`, `fractionBar`.
+
+Built a real `describeState.ts` `case` for all 14 — not a stub. Each reads only `spec` + `value` (+
+`tone` for the reveal gate) and reuses the SAME exported helper its renderer computes its own numbers
+from (`hopLabel`, `prismVolume`, `roundSolidCoef` from `schema.ts`; `algebraTilesCanonicalModel` from
+`mmip/algebraTilesModel.ts` for the one engine whose state needs real model derivation, not just field
+reads) — the established house rule that the spoken description can never drift from the picture,
+because it is never a reimplemented formula. Every case was checked BY HAND against its renderer's own
+reveal-ghost gating before being written, not assumed: `hundredthsGrid`/`lengthCompare`(align)/
+`numberLinePlace`/`clockSet`/`barBuilder`/`baseTenCompose`/`slider`/`volumeBuilder`/`tapDiagram`/
+`tenFrame`/`numberLineHop`(landing mode) each reveal a withheld target ONLY under the identical
+`tone === "info"` gate their own ghost uses (verified per-engine by reading the renderer source, not
+inferred); `fractionBar` reveals only under the identical authored `spec.showTarget` flag (a different,
+non-tone gate its OWN aria-label uses — matched exactly rather than assumed to be tone-gated);
+`lengthCompare`(pick mode), `numberLineHop`(hop-size/GCF mode), and `algebraTiles` never reveal at any
+tone, because their renderers have no numeric reveal-ghost either — parity means the same task, not an
+easier one, the same principle the existing `numberLineRay` case documents. 10 of the 14
+(`tapDiagram`, `baseTenCompose`, `numberLinePlace`, `barBuilder`, `clockSet`, `volumeBuilder`,
+`columnCalc`, `numberLineHop`, `tenFrame`) also lacked a `WIDGET_ACTIONS` entry; added a specific,
+hand-verified one for 9 of the 10 (each checked against the actual rendered controls — sliders,
+stepper buttons, radio-style buttons), and left `algebraTiles` on the existing generic default
+(honest and independently true for every registered type per the keyboard-gate registry-coverage
+test, `widgets.keyboard.test.tsx`) rather than assert an unverified specific claim about its
+cell-tap/row-sweep interactions.
+
+Also caught, while writing this: the length/no-throw check surfaced 7 of the 14 cases producing a
+too-short description on a fresh/zeroed sample (e.g. `algebraTiles` at "0x, 0", `clockSet` at
+"12:00") — all 7 were strengthened with genuinely useful bound/frame context (authored ranges,
+column/cell counts) rather than arbitrary padding, then re-verified.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-010 | P1 | Accessible state | 14 high-use spatial manipulatives had no `describeState` case, so the entire on-demand accessibility panel (description + "how to change it" + "previous model") never entered the DOM for any of them — not a smaller gap than the description alone, the whole panel. | **CLOSED — 14/14 BUILT, HAND-VERIFIED AGAINST EACH RENDERER, AND TESTED** | `grep -c 'case "' src/lib/describeState.ts` = 104 (was 90). `npx tsc --noEmit` clean. 18 new `describeState.test.tsx` cases (one per engine, each asserting both the plain state text and the reveal-gate boundary at tone "info" / `showTarget`) plus the existing `widgets.a11yAudit.s44.test.tsx` registry-coverage sweep (every registered kind's `actionsFor` length/keyword check; every dense kind's `describeWidgetState(spec, null)` length check, `dense` count only grew) and `widgets.keyboard.test.tsx` (148 tests, unaffected) — 326/326 across the full targeted batch (`describeState.test.tsx` ×52, `describeState.signChart.s237.test.ts`, `widgets.a11yAudit.s44.test.tsx` ×4, `widgets.keyboard.test.tsx` ×148, plus 8 pre-existing per-engine regression files touching these 14 types). | Reopen if a future renderer change to any of these 14 engines' reveal-ghost gating, value shape, or bound fields is not mirrored here — the drift the shared-helper reuse is meant to prevent. |
+
+**Unrelated finding, not acted on here:** `evaluate.algebraTilesArea.s212.test.ts` and
+`schema.algebraTilesArea.s211.test.ts` both hard-assert exactly 28 authored `algebraTiles` instances;
+the current tree has 29. Confirmed via `git stash` A/B (stashing only this session's `describeState.ts`
+edit) that this mismatch pre-dates and is unrelated to this addendum's work — some earlier session
+added a 29th `algebraTiles` lesson without updating these two count guards. No CL- row currently owns
+this; flagging it here rather than silently fixing a hardcoded test count under a different task's
+banner.
 

@@ -27,6 +27,10 @@ import {
   taylorFn,
   taylorPartial, traceSlopeAt, traceSecondAt } from "./evaluate";
 import { sequenceReasoningTruth } from "./schema";
+/** CL-P1-010 (S330): shared, already-exported pure helpers reused so the 14 spatial-manipulative
+ * descriptions below can never disagree with the numbers their own renderers compute. */
+import { hopLabel, prismVolume, roundSolidCoef } from "./schema";
+import { algebraTilesCanonicalModel } from "./mmip/algebraTilesModel";
 /** numeric's live preview: the SAME resolver the renderer draws from, so the spoken sentence
  * and the drawn partition bar can never disagree (see the rotationLab note below). */
 import { numericPreviewParts, plotDataParts } from "./schema";
@@ -1301,6 +1305,220 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       // function does not receive; parity means the same task, not an easier one).
       return `${relationView.text}. ${line.sentence}`;
     }
+    /* ── CL-P1-010 (S330): the 14 high-use spatial manipulatives that had no case at all, so the
+       whole accessible-state panel (description + "how to change it" + "previous model") never
+       entered the DOM for them. Each case below reads only spec + value (+ tone for the reveal
+       gate), reusing the exact exported helper the matching renderer computes its numbers from —
+       never a reimplemented formula — and reveals a withheld target/answer ONLY where that
+       widget's own reveal-ghost already does, under the identical `tone === "info"` (or, for
+       fractionBar, the identical `spec.showTarget`) gate. Where a widget has NO reveal ghost at
+       all (lengthCompare's pick mode; numberLineHop's hop-size mode), this never reveals either —
+       parity means the same task, not an easier one, exactly as the numberLineRay case above. */
+    case "slider": {
+      const v = typeof value === "number" ? value : spec.start;
+      const total = spec.groupSize ? spec.groupSize * v : null;
+      const quantity = spec.unitLabel ? `your value, in ${spec.unitLabel}` : spec.groupSize ? "the number of groups" : "your value";
+      const built = spec.groupSize
+        ? `${v} group${v === 1 ? "" : "s"}, ${total} in all`
+        : spec.unitLabel
+          ? `${v} ${spec.unitLabel}`
+          : `${v}`;
+      const reveal =
+        tone === "info" && v !== spec.target
+          ? ` Target: ${spec.groupSize ? `${spec.target} × ${spec.groupSize} = ${spec.target * spec.groupSize}` : spec.target}${spec.unitLabel ? ` ${spec.unitLabel}` : ""}.`
+          : "";
+      return `A slider sets ${quantity}, ranging from ${spec.min} to ${spec.max} in steps of ${spec.step}. Currently: ${built}.${reveal}`;
+    }
+    case "tapDiagram": {
+      const sel = new Set(Array.isArray(value) ? (value as string[]) : []);
+      const listed = spec.hotspots.map((h) => `${h.label}${sel.has(h.id) ? " (selected)" : ""}`).join(", ");
+      const good = spec.hotspots.filter((h) => h.correct);
+      const matches = sel.size === good.length && good.every((h) => sel.has(h.id));
+      const reveal = tone === "info" && !matches ? ` Correct: ${good.map((h) => h.label).join(", ")}.` : "";
+      return `${spec.mode === "selectOne" ? "Choose one" : "Choose all that apply"}: ${listed}.${reveal}`;
+    }
+    case "baseTenCompose": {
+      const raw = value && typeof value === "object" ? (value as { hundreds?: number; tens?: number; ones?: number }) : null;
+      const hundreds = raw?.hundreds ?? 0, tens = raw?.tens ?? 0, ones = raw?.ones ?? 0;
+      const total = hundreds * 100 + tens * 10 + ones;
+      const parts = [
+        hundreds > 0 ? `${hundreds} hundred${hundreds === 1 ? "" : "s"}` : null,
+        `${tens} ten${tens === 1 ? "" : "s"}`,
+        `${ones} one${ones === 1 ? "" : "s"}`
+      ].filter(Boolean).join(", ");
+      const sh = Math.floor(spec.target / 100), st = Math.floor(spec.target / 10) % 10, so = spec.target % 10;
+      const ok = spec.requireStandard ? hundreds === sh && tens === st && ones === so : total === spec.target;
+      const reveal =
+        tone === "info" && !ok
+          ? ` ${spec.requireStandard
+              ? sh > 0
+                ? `Standard build: ${sh} hundreds, ${st} tens, ${so} ones.`
+                : `Standard build: ${st} tens, ${so} ones.`
+              : `The blocks must total ${spec.target}.`}`
+          : "";
+      const bounds = `up to ${spec.maxTens} tens, ${spec.maxOnes} ones${spec.maxHundreds > 0 ? `, ${spec.maxHundreds} hundreds` : ""}`;
+      return `A base-ten tray (${bounds}): currently ${parts}, total ${total}.${reveal}`;
+    }
+    case "lengthCompare": {
+      const unit = spec.unitLabel ? ` ${spec.unitLabel}` : "";
+      if (spec.mode === "difference") {
+        const [a, b] = spec.items;
+        const longer = a.length >= b.length ? a : b;
+        const shorter = a.length >= b.length ? b : a;
+        const gap = longer.length - shorter.length;
+        const count = typeof value === "number" ? value : 0;
+        const reveal = tone === "info" && count !== spec.targetDifference ? ` The overhang is ${gap}${unit}.` : "";
+        return `${longer.label} is ${longer.length}${unit} and ${shorter.label} is ${shorter.length}${unit}. Your count so far: ${count}.${reveal}`;
+      }
+      if (spec.mode === "align") {
+        const av =
+          value && typeof value === "object"
+            ? (value as { offsets?: Record<string, number>; picked?: string | null })
+            : null;
+        const offsets = av?.offsets ?? Object.fromEntries(spec.items.map((i) => [i.id, i.startOffset]));
+        const aligned = spec.items.every((i) => (offsets[i.id] ?? i.startOffset) === 0);
+        const picked = typeof av?.picked === "string" && av.picked.length > 0 ? av.picked : null;
+        const pickedLabel = picked ? spec.items.find((i) => i.id === picked)?.label ?? picked : null;
+        const reveal =
+          tone === "info" && picked !== spec.answerId
+            ? ` Correct answer: ${spec.items.find((i) => i.id === spec.answerId)?.label ?? spec.answerId}.`
+            : "";
+        const rows = spec.items.map((i) => {
+          const off = offsets[i.id] ?? i.startOffset;
+          return `${i.label} is ${i.length}${unit}, starting end ${off === 0 ? "on the start line" : `${off}${unit} past the start line`}`;
+        });
+        return `${rows.join("; ")}. ${aligned ? "Starting ends are lined up." : "Starting ends are not lined up yet."}${pickedLabel ? ` You picked ${pickedLabel}.` : " Nothing picked yet."}${reveal}`;
+      }
+      // pick mode: v1 semantics, no reveal ghost in the renderer, so none here either.
+      const picked = typeof value === "string" ? value : null;
+      const pickedLabel = picked ? spec.items.find((i) => i.id === picked)?.label ?? picked : null;
+      const rows = spec.items.map((i) => `${i.label} is ${i.length}${unit}`);
+      return `${rows.join("; ")}.${pickedLabel ? ` You picked ${pickedLabel}.` : " Nothing picked yet."}`;
+    }
+    case "numberLinePlace": {
+      const den = spec.fractionDen;
+      const nl = (v: number) => (den === undefined ? String(Number(v.toFixed(4))).replace(/^-/, "−") : hopLabel(Math.round(v), den));
+      const v = typeof value === "number" ? value : spec.start;
+      const dist = spec.showDistanceFromZero && den === undefined ? ` Distance from zero: ${nl(Math.abs(v))}.` : "";
+      const reveal = tone === "info" && v !== spec.target ? ` Target: ${nl(spec.target)}.` : "";
+      return `A number line from ${nl(spec.min)} to ${nl(spec.max)}, in steps of ${nl(spec.step)}. Marker currently at ${nl(v)}.${dist}${reveal}`;
+    }
+    case "hundredthsGrid": {
+      const total = spec.mode === "tenths" ? 10 : 100;
+      const n = typeof value === "number" ? value : spec.prefilled;
+      const dec = (n / total).toFixed(spec.mode === "tenths" ? 1 : 2);
+      const reveal = tone === "info" && n !== spec.target ? ` Target: ${spec.target} of ${total}.` : "";
+      const locked = spec.prefilled > 0 ? `, ${spec.prefilled} of them locked in` : "";
+      return `A ${spec.mode} grid with ${total} cells. ${n} are shaded so far${locked}${spec.showDecimal ? `, which is ${dec}` : ""}.${reveal}`;
+    }
+    case "barBuilder": {
+      const heights = Array.isArray(value) ? (value as number[]) : spec.categories.map(() => 0);
+      const built = spec.categories.map((cat, i) => `${cat}: ${heights[i] ?? 0}`).join(", ");
+      const matches = heights.length === spec.target.length && heights.every((x, i) => x === spec.target[i]);
+      const reveal = tone === "info" && !matches ? ` Target counts: ${spec.target.join(", ")}.` : "";
+      return `A ${spec.histogram ? "histogram" : "bar chart"} with ${spec.categories.length} categories, scaled 0 to ${spec.maxVal}. Current heights — ${built}.${reveal}`;
+    }
+    case "clockSet": {
+      const val = value && typeof value === "object" ? (value as { hour?: number; minute?: number }) : null;
+      const hour = val?.hour ?? 12, minute = val?.minute ?? 0;
+      const mm = String(minute).padStart(2, "0");
+      const ok = hour === spec.targetHour && minute === spec.targetMinute;
+      const reveal = tone === "info" && !ok ? ` Target: ${spec.targetHour}:${String(spec.targetMinute).padStart(2, "0")}.` : "";
+      return `A clock face with hour and minute hands, currently showing ${hour}:${mm}.${reveal}`;
+    }
+    case "volumeBuilder": {
+      const round = spec.solid === "cylinder" || spec.solid === "cone" || spec.solid === "sphere";
+      if (round) {
+        const isSphere = spec.solid === "sphere";
+        const val = value && typeof value === "object" ? (value as { r?: number; h?: number }) : null;
+        const r = val?.r ?? spec.rStart;
+        const h = val?.h ?? spec.hStart;
+        const c = roundSolidCoef(spec.solid as "cylinder" | "cone" | "sphere", r, isSphere ? 1 : h);
+        const coefText = c.den === 1 ? `${c.num}π` : `${c.num}/${c.den}π`;
+        const hit = c.den === 1 && c.num === spec.targetVolume;
+        const reveal = tone === "info" && !hit ? ` The solid must hold ${spec.targetVolume}π.` : "";
+        const bounds = `radius up to ${spec.rMax}${isSphere ? "" : `, height up to ${spec.hMax}`}`;
+        return `A ${spec.solid} (${bounds}), currently radius ${r}${isSphere ? "" : ` and height ${h}`}. Volume ${coefText}.${reveal}`;
+      }
+      const val = value && typeof value === "object" ? (value as { l?: number; w?: number; h?: number }) : null;
+      const l = val?.l ?? spec.lStart;
+      const w = val?.w ?? spec.wStart;
+      const h = val?.h ?? spec.hStart;
+      const volume = prismVolume(l, w, h, spec.denomL);
+      const lengthText = spec.denomL ? hopLabel(l, spec.denomL) : String(l);
+      const reveal = tone === "info" && volume !== spec.targetVolume ? ` The box must hold ${spec.targetVolume} cubes.` : "";
+      const bounds = `up to ${spec.lMax} by ${spec.wMax} by ${spec.hMax}`;
+      return `A box (${bounds}), currently ${lengthText} long, ${w} wide, ${h} tall. Volume ${volume}.${reveal}`;
+    }
+    case "algebraTiles": {
+      // The SAME canonical model AlgebraTilesW derives its mat/expression from — never a
+      // reimplemented net-count formula — so a framed rectangle, a zero pair, or a partial
+      // distribution is described from exactly what the picture is currently showing.
+      const model = algebraTilesCanonicalModel(spec);
+      const st = model.normalize(value);
+      const views = model.views(st);
+      const sq = views.mat.netSquare, x = views.mat.netX, c = views.mat.netConst;
+      if (views.mat.framed && views.mat.edges) {
+        const filled = views.area ? `${views.area.filledCount} of ${views.area.cells.length} cells filled in` : "no tiles placed yet";
+        return `A tile board with a rectangle ${views.mat.edges.width} by ${views.mat.edges.height} drawn on it; its tiles stay inside the rectangle. ${filled}.`;
+      }
+      const terms = [sq !== 0 ? `${sq} x²` : null, `${x} x`, `${c}`].filter(Boolean);
+      return `A tile board with square, x, and unit tiles for building an algebra expression. On the mat right now: ${terms.join(", ")}.`;
+    }
+    case "columnCalc": {
+      const val =
+        value && typeof value === "object"
+          ? (value as { written?: (number | null)[]; value?: number | null; complete?: boolean })
+          : null;
+      // Column count comes from the OPERANDS, not from `written` — a fresh value (null, before
+      // any tap) must still describe the problem's real width instead of reading as empty.
+      const n = spec.op === "add" ? Math.max(String(spec.a).length, String(spec.b).length) : String(spec.a).length;
+      const written = Array.isArray(val?.written) ? val!.written! : [];
+      const filled = written.filter((d) => d !== null).length;
+      const symbol = spec.op === "add" ? "plus" : spec.op === "subtract" ? "minus" : "times";
+      const progress = val?.complete
+        ? `Every column is worked out; the built total reads ${val.value}.`
+        : `${filled} of ${n} column${n === 1 ? "" : "s"} worked out so far, right to left.`;
+      return `Column work for ${spec.a} ${symbol} ${spec.b}, ${n} column${n === 1 ? "" : "s"} wide. ${progress}`;
+    }
+    case "numberLineHop": {
+      const den = spec.denom;
+      const nl = (v: number) => (den === undefined ? String(Number(v.toFixed(4))).replace(/^-/, "−") : hopLabel(Math.round(v), den));
+      if (spec.hopSizeTargets) {
+        const targets = spec.hopSizeTargets;
+        const lo = spec.hopSizeMin ?? 1;
+        const h = typeof value === "number" ? value : lo;
+        const hits = (t: number) => (t - spec.start) % h === 0;
+        // Hop-size mode has no reveal ghost in the renderer (the GCF answer is never drawn), so
+        // this states only what is already visible: the stride and each target's hit/miss.
+        return `A number line from ${nl(spec.min)} to ${nl(spec.max)}, start ${nl(spec.start)}. Current stride: ${nl(h)}. ${targets.map((t) => `${nl(t)} ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`;
+      }
+      const chosen = typeof value === "number" ? value : null;
+      const landing = spec.start + (spec.direction === "back" ? -1 : 1) * spec.hop * spec.hops;
+      const reveal = tone === "info" && chosen !== landing ? ` Target landing: ${nl(landing)}.` : "";
+      const hopFrame = `a hop of size ${nl(spec.hop)}, moving ${spec.direction === "back" ? "back" : "forward"} ${spec.hops} time${spec.hops === 1 ? "" : "s"}`;
+      if (chosen === null) return `A number line from ${nl(spec.min)} to ${nl(spec.max)}. Start at ${nl(spec.start)}, with ${hopFrame}. No hop made yet.${reveal}`;
+      const dirWord = chosen - spec.start < 0 ? "back" : "forward";
+      return `A number line from ${nl(spec.min)} to ${nl(spec.max)}. From ${nl(spec.start)}, moved ${dirWord} to land on ${nl(chosen)}.${reveal}`;
+    }
+    case "tenFrame": {
+      const total = typeof value === "number" ? value : spec.preFilled;
+      const reveal = tone === "info" && total !== spec.target ? ` Target: ${spec.target}.` : "";
+      return `A ten-frame with 10 cells; ${total} are currently filled${spec.preFilled > 0 ? ` (${spec.preFilled} of them locked in already)` : ""}.${reveal}`;
+    }
+    case "fractionBar": {
+      const val = value && typeof value === "object" ? (value as { n?: number; d?: number }) : null;
+      const n = val?.n ?? spec.numStart;
+      const d = val?.d ?? spec.denStart;
+      // `showTarget` (an authoring flag, not a runtime tone) is the SAME gate the renderer's own
+      // aria-label uses — a lesson that names the target in its prompt hides the reference bar,
+      // so this must stay hidden here too rather than reveal it at tone "info".
+      const built =
+        spec.notation === "words"
+          ? `${n} of ${d} equal parts are shaded`
+          : `${n} of ${d} equal parts are shaded, the fraction ${d > 0 ? fractionText(n, d) : `${n}/${d}`}`;
+      return `A fraction bar split into ${d} equal part${d === 1 ? "" : "s"}. Currently ${built}.${spec.showTarget ? ` Target: ${spec.targetNum}/${spec.targetDen}.` : ""}`;
+    }
     default:
       return null;
   }
@@ -1355,7 +1573,19 @@ const WIDGET_ACTIONS: Partial<Record<TWidget["type"], string>> = {
   conditionalTableLab: "Conditional mode uses row or column condition buttons and table-cell buttons. Read mode keeps the table fixed and uses exact claim buttons; highlighted cells and margins show the count or denominator used.",
   conicLocusLab: "One labelled slider changes eccentricity; arrow keys move among circle, ellipse, parabola, and hyperbola cases while the focus-directrix ratio and locus update.",
   derivativeRuleLab: "Product mode uses one labelled slider. Chain, quotient, and substitution modes use two labelled sliders; all live terms and linked representations update.",
-  relatedRatesLab: "One labelled slider moves the ladder foot; arrow keys change x while the height and vertical rate update under the fixed-length invariant."
+  relatedRatesLab: "One labelled slider moves the ladder foot; arrow keys change x while the height and vertical rate update under the fixed-length invariant.",
+  // CL-P1-010 (S330): the 9 of the 14 newly-described engines whose exact keyboard-parity control
+  // was confirmed by hand against the renderer (algebraTiles is left on the honest generic default
+  // below — its cell-tap and row-sweep interactions were not individually re-verified here).
+  tapDiagram: "Each hotspot is a labelled button; Tab between them and press Enter or Space to select it. Selecting one replaces the choice in select-one mode, or toggles it on or off in select-all mode.",
+  baseTenCompose: "Hundreds, tens, and ones each have a labelled +/− stepper button pair. Labelled exchange buttons (e.g., 10 ones → 1 ten) trade between columns without changing the total.",
+  numberLinePlace: "Drag the marker, or use the labelled marker slider — arrow keys move it by one step; the readout speaks the new position.",
+  barBuilder: "Bar display: each category has a labelled slider. Tally or pictograph display: each category has add and remove stepper buttons instead.",
+  clockSet: "Drag either clock hand, or use the two labelled hour and minute sliders — arrow keys move each by its step.",
+  volumeBuilder: "Each dimension (radius/height, or length/width/height) has a labelled slider; arrow keys move it by one step. A dimension the problem already gives you shows as a fixed readout instead of a slider.",
+  columnCalc: "Each unresolved column, waiting carry, and breakable digit is a labelled button — press to work out that column, include the carry, or break a ten. Undo and Reset buttons are also provided.",
+  numberLineHop: "Landing mode: press a labelled button under the line for the landing you choose. Hop-size mode: use the labelled stride slider — arrow keys move it by one.",
+  tenFrame: "Each of the 10 frame cells is a labelled toggle button — press to fill up to it or empty back to it."
 };
 
 export function actionsFor(type: TWidget["type"]): string {
