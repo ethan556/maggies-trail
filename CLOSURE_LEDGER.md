@@ -1216,4 +1216,70 @@ and a future session doing HUMAN content review should expect to see them.
 search was made this session for a FOURTH such report beyond these three; the honest assumption is there may
 be one, not that three is confirmed exhaustive.
 
+## Session 330 fifteenth post-recon addendum — round-2 final gate, 3 more red files traced and fixed
+
+The isolated full `vitest run` (Task #31, `Test Files 16 failed | 711 passed (727)` on first pass) accounted
+for the known 11-file backlog plus the fourteenth addendum's `session244` finding — 12 of 16 — with 3 files
+outside every prior list. Each traced to a specific, checkable cause before touching anything, per this
+ledger's own evidence discipline; committed together as `ff5db64` after the second's fix chain fully resolved.
+
+**`session261.vis03SingletonClosure` / `session290.dataLinePlotsG2VisualRepair` — a genuine regression from
+Task #28's own commit, not a pre-existing item.** `git log` on `g2g-03-01.json` showed exactly one session-330
+touch: `5fdbbe1` (Task #28's 63-file backlog close), which added `figure: "single-scale-graph"` to step `c2`.
+Investigated rather than assumed safe to revert: `SingleScaleGraph` (`src/components/figures.tsx:12653`) is a
+zero-argument, fully static component — `bars = [3, 6, 4]` for `labels = ["cats", "dogs", "birds"]`, one fixed
+SVG, no per-lesson data. `session290`'s own first test declares the complete 7-item audited allowlist of
+captions this figure may legitimately pair with; `c2`'s actual text ("Cats have 3 votes and birds have 4
+votes... 3 plus 4, or 7") is not one of the 7, and independently, `session261`'s VIS-03 list explicitly pins
+this exact position to `undefined` as a deliberate prior fail-close. Confirmed via direct
+`isFigureTextAligned()` calls that the addition was genuinely misaligned (returns `false`), not a stale test.
+Fixed by deleting the one added field; `git diff c5af1f1 -- g2g-03-01.json` is empty, confirming exact
+byte-restoration of pre-session state. This was a real, if narrow, correctness bug — a learner reaching this
+step would have seen a graph asserting "dogs = 6" beside prose that never mentions dogs, for a step the app's
+own prior audit had deliberately left unillustrated for lack of a matching figure.
+
+**`session249.mathRenderingRootCause` (`ep-01-01`, `exponents-polynomials`) — a genuine, pre-existing
+`authoredMathParts` parser edge case, confirmed unrelated to this session.** `git log` on `ep-01-01.json`
+showed no session-330 commit at all before this fix. Direct, isolated calls to `authoredMathParts("(2^5 ·
+2^2) / 2^3 = ...", { includeArithmetic: true })` reproduced the bug outside any test harness: the fraction
+parser scopes the denominator of `(A) / B^n` to just `B`, dropping the trailing `^n`, leaving a bare `^3` as
+unrendered residue — the exact "raw caret" shape the leak index flags. Chose a content-level fix over a
+parser fix: dropped the mathematically redundant outer parentheses (`2^5 · 2^2 / 2^3`, meaning-unchanged since
+`·` and `/` are same-precedence left-to-right), verified residue-free by direct re-invocation before editing
+the file, applied to both the flagged `explanationVariants[0]` and `widget.prompt`. A parser fix would target
+the actual root cause and protect any FUTURE lesson using the same shape, but touching shared math-rendering
+infrastructure this late in a long session, for one currently-affected instance, carried more regression
+surface than this gate's evidence-gathering scope justified — flagged here, not silently left for a future
+session to rediscover from scratch.
+
+**Second, previously-masked assertion in the same test — a genuine gap in a prior review, not a new
+judgment call.** `zeroIndexes` is a plain `for` loop with one `expect()` per file; the leak-index failure
+above meant the loop never reached `MATH_DECIMAL_FRACTION_POLICY_INDEX.csv`, which — once reached — also had 3
+rows, previously invisible behind the first failure. All 3 are `esn-03-02` (scientific-notation) feedback
+strings with long decimal expansions: `0.4 × 10⁻⁷ = 0.00000004`, `0.4 × 10⁻⁶ = 0.0000004` (both re-verified by
+hand: `0.4×10⁻⁷ = 4×10⁻⁸ = 0.00000004` exactly; `0.4×10⁻⁶ = 4×10⁻⁷ = 0.0000004` exactly), and "0.0000406 needs
+the decimal to move 5 places" (re-counted by hand: `0.0000406 → 4.06` is 5 places, exact). None is a rounded
+approximation — CLAUDE.md rule 6's actual target ("invented rounding... no prompt states a convention") does
+not apply to any of them. `scripts/audit/math-presentation-detectors.ts`'s own `EXACT_LONG_DECIMAL_FIELDS`
+set already carries a dozen sibling entries for this SAME lesson with this SAME stated reasoning ("Exact
+terminating decimals used to teach scientific-notation conversion. The digits are the mathematical value, not
+an approximation.") — a prior review pass had already established the standard and applied it across most of
+`esn-03-02`, just missed these 3 (two nested inside `widget.options[N].feedback`, one inside
+`widget.commonBuilds[N].feedback` — easy to miss scanning by hand, unlike the more visible `prompt`/
+`explanationVariants` fields already covered). Added all 3 to the existing set with a comment citing this
+addendum, rather than rewording pedagogically load-bearing feedback (the entire point of these strings is
+showing the decimal expansion) to dodge a heuristic that was correctly built to catch a different failure
+mode.
+
+**Verification.** `npx tsx scripts/audit/math-presentation-indexes.mts` and
+`npx tsx scripts/audit/graph-figure-labeling-inventory-s252.mts` regenerated after both content edits (same
+self-regenerating-report mechanism as the fourteenth addendum, a new trigger). All 9 math-presentation
+indexes now read 0 rows; `session249`/`session261`/`session290`/`session245`/`session252`/`content.test.ts`:
+29/29. `node scripts/cml-lint.mjs .`: 0 errors, same 1 pre-existing waived warning. `npx tsc --noEmit`: clean,
+exit 0.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) | Round-2 gate's isolated full run found 16 red files: the known 11-file backlog (unchanged, still correctly flagged not fixed) plus 5 newly surfaced by this gate specifically — `session244.lessonReviewCards` (fourteenth addendum) and these 3 (fifteenth addendum). Two of the three were genuine regressions from this session's OWN already-committed Task #28 work; one was a genuinely pre-existing, session-330-unrelated parser edge case plus a masked review gap. | **ALL 5 GATE-DISCOVERED ISSUES FIXED AND RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED (still correctly flagged, not this session's to force-fix)** | Every fix traced to a specific root cause with direct tool evidence (git log, isolated function calls, hand-verified arithmetic) before editing, not pattern-matched from the failure message alone. See fourteenth addendum for `session244`; this addendum for the other 3. This row tracks the LINUX full-suite state specifically and does not close the pre-existing CL-P1-033 row above (that row's own open condition is a WINDOWS re-run, a different axis entirely). | A second, clean full-suite pass would give single-run confirmation rather than the per-file targeted re-verification this addendum relies on; not run again this session given the ~21-minute cost of the first pass and the strength of the targeted evidence already gathered. Future sessions editing lesson content should budget for the possibility that a full-suite gate surfaces more than the known-11 baseline, as this one did twice.
+
 
