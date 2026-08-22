@@ -1368,6 +1368,77 @@ still gain.
 
 | ID | Priority | Area | Finding | Status | Evidence / next action |
 |---|---|---|---|---|---|
-| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) — SUPERSEDES the row above | Two full isolated passes this session found, combined, 7 files beyond the known 11-file backlog: `session244.lessonReviewCards` (x2, fourteenth + this addendum), `session261`/`session290`/`session249` (fifteenth addendum), `figureTextAlignment`/`session254` (this addendum). | **ALL 7 GATE-DISCOVERED ISSUES ACROSS BOTH PASSES FIXED AND INDIVIDUALLY RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED** | Every fix traced to a specific root cause with direct tool evidence (git log, git diff between run trees, a standalone corpus-scan script independent of the test it verifies, isolated function calls, hand-verified arithmetic) before editing — none pattern-matched from a failure message alone. | A third full-suite pass, after this addendum's commit (`759cfcd`), has not been run. Two-for-two so far: every full pass this session has found something targeted checks missed. A future session should not assume a targeted-only re-check is sufficient after ANY further content or generated-report edit on this branch — budget for a full pass before calling a round done.
+| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) — SUPERSEDED by the seventeenth addendum below | Two full isolated passes this session found, combined, 7 files beyond the known 11-file backlog: `session244.lessonReviewCards` (x2, fourteenth + sixteenth addenda), `session261`/`session290`/`session249` (fifteenth addendum), `figureTextAlignment`/`session254` (sixteenth addendum). | **ALL 7 GATE-DISCOVERED ISSUES ACROSS BOTH PASSES FIXED AND INDIVIDUALLY RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED** | Every fix traced to a specific root cause with direct tool evidence (git log, git diff between run trees, a standalone corpus-scan script independent of the test it verifies, isolated function calls, hand-verified arithmetic) before editing — none pattern-matched from a failure message alone. | Superseded: the seventeenth addendum's third pass ran clean. See that addendum for the closing state of this row.
+
+## Session 330 seventeenth post-recon addendum — round-2 final gate, third full pass runs clean; production build verified
+
+Ran the third full isolated pass the sixteenth addendum said was still owed, right after committing `1c2d7be`
+(`/tmp/full_vitest_s330_final3.log`, 1279.65s): `Test Files 11 failed | 716 passed (727)`, `Tests 13 failed |
+15787 passed | 1 skipped (15801)`. The 11 failed files are EXACTLY the known pre-existing backlog —
+`ProfileClient.avatar`, `SiteNav.avatar`, `widgets.labelCollision.s237`, `content.gradeVocabulary.s237`,
+`content.numericPreview.s237` (2 tests), `session244.chatgptWorkPrecache`, `session244.stemAndFeedbackIntegrity`,
+`session255.dataLinePlotsG2FollowOn`, `session258.fractionMultiplyG4Supersession` (2 tests),
+`variants.delivery.s242`, `variants.resolver` — zero surprises, nothing from either the fifteenth or sixteenth
+addendum's fix list recurred. This is the single clean confirmatory run the fifteenth addendum's table row
+called "the strongest remaining piece of evidence this row could still gain," now obtained rather than assumed.
+
+**The katex/`EnvironmentTeardownError` unhandled-error pair from the FIRST full pass, investigated and
+closed as benign.** The first pass's log (`/tmp/full_vitest_s330_final.log`) had 2 "Unhandled Errors":
+`EnvironmentTeardownError: Cannot load '/node_modules/katex/dist/katex.mjs' ... after the environment was torn
+down` originating from `src/components/QuizShell.progress.test.tsx`, via the callstack
+`renderMath.ts → SvgLatexSurface.tsx → FigureView.tsx → widgets.tsx → WidgetView.testshim.tsx → QuizShell.tsx →
+QuizShell.progress.test.tsx`. Vitest's own message states this plainly: "This is not a bug in Vitest" — a lazy
+`import katex from "katex"` resolving after that test file's jsdom environment had already torn down, a timing
+race rather than a logic defect. Checked rather than assumed benign: (1) `QuizShell.progress.test.tsx` itself
+never appears with a `❯`/`FAIL` marker in ANY of the three full-pass logs — its own assertions pass every time,
+confirming the race never flips a real test result; (2) the SAME error did not recur in either the second or
+third full pass (`grep -ci "EnvironmentTeardownError" full_vitest_s330_final2.log full_vitest_s330_final3.log`
+→ both 0) — consistent with a worker-scheduling-dependent race on this sandbox's 2 cores, not a deterministic
+defect; (3) fixing it would mean changing either `QuizShell.progress.test.tsx`'s async cleanup or `renderMath.ts`'s
+katex import strategy, shared infrastructure, for a artifact that has never once affected a test outcome across
+three full runs. Left as-is and documented rather than silently dropped: a genuinely pre-existing,
+non-deterministic, non-blocking test-environment timing artifact, not a bug in this session's or any prior
+session's work.
+
+**Production build — failed on first run, a genuine 8th issue, an actual bug from this session's own Task #28
+commit that three full vitest passes never could have caught.** `npm run build` (`next build`) run after the
+third vitest pass, no longer contending for this sandbox's 2 cores: `BUILD_EXIT=1`, `Failed to compile`.
+Vitest doesn't run ESLint, so none of the three full-suite passes — clean as all three ultimately were — were
+ever capable of catching this; it needed the build step specifically. `grep "  Error:" /tmp/build_output.log`
+(filtered to actual `Error:` lines, distinct from this codebase's large pre-existing pool of non-blocking
+`Warning:` lines) isolated exactly 3, all in one file: `./src/lib/session198.howManyK.test.ts:185-187`, all
+`'m'/'m2'/'m3' is never reassigned. Use 'const' instead. prefer-const`. `git log` on that file shows exactly
+one session-330 commit: `5fdbbe1` — Task #28's own 63-file backlog close. Read the surrounding block before
+touching it: inside the `kCountFromHop` branch, `m`, `m2`, and `m3` are each assigned once from a `.match()`
+call and read only inside the `if (m) {...} else if (m2) {...} else if (m3) {...}` chain that immediately
+follows — never reassigned. Deliberately left one visually-similar neighbor alone: the `kSeqNextHop` branch a
+few lines down also declares `let m`, but THAT one genuinely is reassigned inside an `else if` condition
+(`else if ((m = w.prompt.match(...)))`) — ESLint's own error list correctly excluded it, and so did this fix.
+Changed exactly the 3 flagged declarations from `let` to `const`; `npx vitest run
+src/lib/session198.howManyK.test.ts` still 21/21 green (a `const`-vs-`let` swap with no reassignment anywhere
+in scope cannot change runtime behavior, and this confirms it didn't). Re-ran `npm run build`: `BUILD_EXIT=0`,
+full route table printed, zero `Error:` lines, no new warnings beyond this codebase's existing baseline pool.
+
+This is the 8th genuine issue this round's final-gate work found and fixed with direct evidence, not the 7 the
+two vitest-only passes above account for — and a reminder that "the full vitest suite is green" and "the app
+builds" are two different claims requiring two different checks; this session's own earlier working assumption
+that a clean vitest run was sufficient evidence for delivery was itself incomplete until this build step ran.
+
+**Final state of CL-P1-033 (current full Vitest, this Linux sandbox) and the production build.** Known 11-file
+vitest backlog: unchanged, still correctly flagged rather than force-fixed (each already has its own specific
+evidence trail in the ledger above — 2 product decisions, 1 reviewed-ledger disposition conflict, 1 disclosed
+UX tradeoff, 1 genuine count regression, 5 content-authoring gaps, 2 generator-authoring gaps — see the
+pre-round-2 addenda for detail). Everything this round's own two full-gate vitest passes surfaced beyond that
+backlog (7 files) is fixed and individually re-verified, confirmed by one clean third vitest pass with zero
+recurrence, AND the production build — which no vitest pass could ever have exercised — is now separately
+fixed and verified clean too (8 total issues this round's final-gate work found and closed with direct
+evidence). `npx tsc --noEmit`: clean. `node scripts/cml-lint.mjs .`: 0 errors, 1 pre-existing waived warning.
+`npm run build`: exit 0, verified on the SECOND attempt after fixing the `session198.howManyK.test.ts` bug
+this addendum found on the first.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) | Round-2's two fix passes (fifteenth + sixteenth addenda) closed 7 files a full-suite gate surfaced beyond the known 11-file backlog. A third full pass, run after both, came back with exactly the known 11 failing files and nothing else. | **CLOSED FOR THIS ROUND: CLEAN THIRD PASS OBTAINED, ZERO RECURRENCE, ZERO SURPRISES. KNOWN 11-FILE BACKLOG CORRECTLY UNCHANGED.** | `/tmp/full_vitest_s330_final3.log`: `11 failed \| 716 passed (727)` files, `13 failed \| 15787 passed \| 1 skipped (15801)` tests — exact match to the pre-round-2 baseline. This row tracks the LINUX full-suite state specifically and does not close the separate pre-existing CL-P1-033 row several addenda above (that row's own open condition is a WINDOWS-specific re-run). | None for this round. A future session touching `content/courses/**/lessons/*.json` or any generated `reports/**` file should still budget for a full-suite gate before calling its own work done — this round needed three full passes, not one, to reach a clean state, and targeted checks alone missed real issues twice.
+| CL-P1-058 | P1 | Production build (`npm run build`) | A separate axis from vitest entirely — first run after this round's vitest work came back `BUILD_EXIT=1`, `Failed to compile`, from 3 genuine `prefer-const` ESLint errors in `session198.howManyK.test.ts`, introduced by this session's OWN Task #28 commit (`5fdbbe1`) and invisible to all three vitest passes (vitest does not run ESLint). | **FIXED AND RE-VERIFIED** | `let m/m2/m3` → `const` for the 3 flagged declarations only (a visually similar 4th `let m` a few lines down in a different branch genuinely IS reassigned and was correctly left alone — checked, not assumed). `npx vitest run session198.howManyK.test.ts`: 21/21 green, unchanged. Second `npm run build`: exit 0, full route table, zero errors. | None. Future sessions should treat "vitest is clean" and "the build is clean" as two separate, both-required pieces of evidence — this round nearly delivered on the strength of the first alone.
 
 

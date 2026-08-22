@@ -182,9 +182,9 @@ describe("S198 how-many-k — solver round-trips and widget contracts", () => {
             if (f === "kCountFromHop") {
               // Two alternate authored phrasings state the same start+hop story with the hop
               // count spelled as a word, in either sentence order.
-              let m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
-              let m2 = w.prompt.match(/known group of (\d+) gets (\w+) new counters/i);
-              let m3 = w.prompt.match(/^(\w+) newcomers join a known group of (\d+)/i);
+              const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
+              const m2 = w.prompt.match(/known group of (\d+) gets (\w+) new counters/i);
+              const m3 = w.prompt.match(/^(\w+) newcomers join a known group of (\d+)/i);
               if (m) {
                 expect(Number(m[1]) + Number(m[2])).toBe(land);
               } else if (m2) {
