@@ -42,7 +42,13 @@ const nonPermittedHashes: Record<string, string> = {
   "g4x-01-02": "a0904f5e7ca9147cf222e383ff54fc4da799e2350670b239e41e8835bb6c6a1f",
   "g4x-01-03": "846e56ed4c7760ca1db14153bc6d15de234617c4f36afc2dc5c402145c04b670",
   "g4x-01-04": "4c293818c350527f50f468cabc767c5f266595ea6ded9930926395e78146b812",
-  "g4x-02-01": "dcfc51a86dcea60a2d3f41bd24c95d18e957e66211c1d0ee4f32c717f1978eb4",
+  // Re-pinned: commit 5fdbbe1 (S330, CLOSURE_LEDGER.md eighth post-recon addendum) removed a dead
+  // commonErrors entry (value 5) from g4x-02-01's numeric widget and folded its message into
+  // highFeedback instead — a change outside this lesson's one declared withheld placement
+  // (VIS-g4x-02-01-rem-g4x-line-model-c-fa-repeated-add, a different, remedial-route step), so the
+  // fail-close hash correctly moved. Re-verified via independent re-derivation (not copied from the
+  // failing assertion) before re-pinning.
+  "g4x-02-01": "2f72f7cde55080dbcb1b4f0082a32d7928c5ea243b6a8937255b038a58b19061",
   "g4x-02-02": "c135ee74fdbfe7aed1e3644ac6694901cfc0499c0ffbb6c5c140778f2db328c8",
   "g4x-02-03": "c473e1db6459f012bc13f4e6c4fe5c6f211432222a6f6d49e8ed23d5afff550a",
   "g4x-02-04": "f824d1be57d460454d054d97e312274bbf0b38fc37ed52bf3eb0b04912498a5b",
