@@ -916,4 +916,56 @@ staleness item, not a new one, called out here only so it is not mistaken for so
 |---|---|---|---|---|---|
 | CL-P1-057 | P1 | Engine/lab premium quality | `subitizeFlash` (18 authored uses, priority_product 135) was the honesty-check table's own flagged lead: `a11y=2` marked "ambiguous, leaning score." | **A11Y SCORE CORRECTED, S330 — REDESIGN STATUS UNCHANGED (2/15 REDESIGN FAMILIES BUILT SO FAR: `pointEntry`, `fractionEntry`)** | `a11y` 2→3 in `scripts/engine-capabilities.json`, verified directly against `SubitizeFlashW`'s already-correct source (no code changed); every other axis re-checked and left as-is, each cited above. This does NOT move `subitizeFlash` off the REDESIGN list — `premium-rebuild-baseline-s226.mjs`'s decision rule keys REDESIGN on `manip`/`conseq` alone (both still below threshold), never `a11y`. REDESIGN count stays **13/15 remaining**, unchanged by this fix. `npx tsc --noEmit` clean; `engineCapabilities.test.ts` 5/5; zero side-effect diff on `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` (detail above). An unactioned observation is on record for a future session: `subitizeFlash`'s fixed-stimulus/MCQ-response shape (grouped with `numeric`/`mcq` in `cml-audit.mjs`'s own `ASSESSMENT` set) may make its low `manip`/`conseq` architecturally-foundational rather than a gap, the way this document already treats `numeric`/`mcq` — but this has not been put through the same explicit adjudication `SESSION207_EXECUTION_REPORT.md`'s table gave six other engines, so it is not treated as settled here. | Reopen if a future `SubitizeFlashW` change removes or narrows the base-render `aria-label`. Otherwise: before starting a REDESIGN build on any of the remaining 13 rows, check whether it is assessment-shaped like `subitizeFlash` (in which case its REDESIGN classification itself may warrant question, not a build) versus genuinely under-built the way `pointEntry`/`fractionEntry` were — `PREMIUM_ENGINE_PRIORITY.csv`'s `priority_product` ranks urgency, not which of these two cases applies.
 
+## Session 330 eleventh post-recon addendum — CL-P1-057, full accounting of the remaining 13 REDESIGN rows (no build; navigation only)
+
+**Purpose.** Before starting a fourth REDESIGN unit or moving to another task, this addendum enumerates all 13
+rows the ninth/tenth addenda left as "remaining," rather than picking the next one by `priority_product` alone
+the way their own "next action" cells framed it. `PREMIUM_ENGINE_PRIORITY.csv`'s 15 REDESIGN rows minus the 2
+built (`pointEntry`, `fractionEntry`): `matchPairs`(500) `exactNumberLab`(500) `dragBucket`(500)
+`buildExpression`(500) `dragOrder`(400) `numeric`(375) `mcq`(375) `steppedReveal`(300) `rationalCompare`(180)
+`placeCompare`(180) `subitizeFlash`(135, addressed above) `fractionCompare`(60) `absValueLine`(60).
+
+**Fresh read of each row's actual `manip`/`conseq` scores** (`scripts/engine-capabilities.json`, run this
+session, not carried forward from memory):
+
+- 10 sit at `manip=1`: `matchPairs`, `exactNumberLab`, `dragBucket`, `buildExpression`, `dragOrder`,
+  `steppedReveal`, `rationalCompare`, `placeCompare`, `fractionCompare`, `absValueLine`.
+  `docs/CAPABILITY_AXES.md` (manip section, opening lines) states plainly: *"S207 individually adjudicated
+  every engine currently at `manip=1` against this text and lifted none"* (`SESSION207_EXECUTION_REPORT.md`
+  §3) — a blanket statement covering all 10, not a name-by-name list of exactly six. **This corrects the
+  tenth addendum's own looser "six engines… adjudicates by name" phrasing**, written before this count was
+  actually run against current source; the real population is 10 and the citation is blanket, not a roster
+  of six. Of these 10, 9 also already clear `conseq≥2` (`exactNumberLab` conseq=3; the rest conseq=2) —
+  `manip=1` alone is their entire REDESIGN reason, and that specific axis has already been through S207's
+  individual review. `steppedReveal` is the exception: `conseq=1` too, and conseq carries no equivalent
+  blanket-adjudication citation — a genuinely open, if narrow, single-axis question (below).
+- 2 sit at `manip=0, conseq=0`: `numeric`, `mcq` — the sixth addendum's own "architecturally foundational,
+  not a bounded redesign for one session" finding (3293–4665 authored uses each), unrevisited and unchanged
+  by anything since.
+- 1, `subitizeFlash`, was this session's own unit: `manip=0, conseq=1`, `a11y` corrected 2→3 (tenth addendum
+  above), `manip`/`conseq` left as an explicitly unactioned observation.
+
+**Conclusion: every one of the 13 remaining rows already carries a documented disposition.** 12 rest on a
+`manip=1`-or-`0` finding a prior unit already adjudicated as deliberate rather than a gap (S207's blanket
+review, or the sixth addendum's own `numeric`/`mcq` reasoning), and the 13th (`subitizeFlash`) was this
+session's own unit, above. None of the 13 is a `pointEntry`/`fractionEntry`-shaped "fully decorative, gated,
+`aria-hidden`" case waiting to be found — those were the two genuine, previously-undiagnosed gaps this
+session's own audit surfaced, and both are now built. Picking a "next candidate" by `priority_product` alone
+would mean re-opening an already-adjudicated `manip=1` finding without new evidence — exactly what this
+ledger's "no score changed to produce or avoid" discipline warns against.
+
+**The one narrow thread actually left open: `steppedReveal`'s `conseq=1`.** Unlike its `manip=1` (S207-
+covered), no equivalent citation adjudicates its `conseq`. This is a `subitizeFlash`-shaped question —
+possibly a quick source-verification, possibly a genuine small gap, possibly correct as scored — not
+investigated by this addendum, and left for whichever session takes it up next rather than guessed at here.
+
+**No code, score, or test changed by this addendum** — accounting only, run against already-committed data.
+Given this and the standing directive to make genuine progress across the full task list rather than
+continuing to deepen one task past its evidence, this session is moving to CL-P0-008 next rather than opening
+a fourth REDESIGN unit.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-057 | P1 | Engine/lab premium quality | Full accounting of the 13 REDESIGN rows remaining after `pointEntry`/`fractionEntry` (built) and `subitizeFlash` (a11y-corrected): 10 rest on `manip=1`, blanket-adjudicated deliberate by S207 (`SESSION207_EXECUTION_REPORT.md` §3); 2 (`numeric`/`mcq`) are the sixth addendum's own architecturally-foundational finding; 1 (`subitizeFlash`) is this session's own unit. | **TRIAGED TO EXHAUSTION FOR THIS SESSION — 2/15 BUILT, 1/15 SCORE-CORRECTED, 12/13 REMAINING ROWS ALREADY DISPOSED BY PRIOR ADJUDICATION** | No further REDESIGN build is evidence-indicated among the 13 remaining rows without new information. One narrow open thread: `steppedReveal`'s `conseq=1` lacks the blanket adjudication its `manip=1` has — a small, `subitizeFlash`-shaped verification, not a build, and the only genuinely unresolved question in the set. | Before any future session builds a REDESIGN unit off `PREMIUM_ENGINE_PRIORITY.csv`'s `priority_product` ranking alone, re-read this accounting first — a high `priority_product` does not mean unadjudicated, and 12 of the 13 remaining rows are high-`priority_product` precisely because they're high-`authored_uses`, not because they're unexamined. `steppedReveal`'s `conseq` is the one lead worth a fresh look.
+
 
