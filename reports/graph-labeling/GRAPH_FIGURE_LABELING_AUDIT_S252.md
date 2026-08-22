@@ -1,6 +1,6 @@
 # Graph and figure labeling audit — S252
 
-Source hash: `bab8dd9d324ccb5365a8b08b53fb9466b27f88ee1c4c8e29fa934b78dddb2eec`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
+Source hash: `f1ca36f686cf4e7c34242ffdec4d3b75aff24c876cb448e59c71481139a0fd32`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
 
 ## Exact inventory
 

@@ -43,6 +43,7 @@ import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, 
   rotationLabMapsOntoSelf,
   numericPreviewParts,
   partitionBarDrawable,
+  MAX_PREVIEW_WHOLES,
   plotDataParts,
   barDataParts
 } from "@/lib/schema";
@@ -727,10 +728,14 @@ function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDat
  * bar). ROLE.active sky for filled cells, #fff for the remainder, ink hairlines between.
  * Extracted verbatim from FractionEntryW so the two previews cannot drift into two different
  * pictures of the same fraction. Callers gate on `partitionBarDrawable` first; the bar has
- * only `total` cells, so a count past the whole simply fills them all. */
+ * only `total` cells, so a count past the whole simply fills them all.
+ * `aria-hidden` unconditionally — NumericW nests this inside its own `aria-hidden` wrapper
+ * (redundant, harmless), and FractionEntryW (S330/CL-P1-057) no longer does: its wrapper
+ * carries a live `role="img"`/`aria-label` instead, so the decorative cells underneath must
+ * hide themselves rather than rely on an ancestor that isn't hidden anymore. */
 function PartitionBar({ shaded, total }: { shaded: number; total: number }): ReactElement {
   return (
-    <svg viewBox="0 0 120 18" className="h-4 w-28">
+    <svg aria-hidden="true" viewBox="0 0 120 18" className="h-4 w-28">
       {Array.from({ length: total }, (_, k) => (
         <rect
           key={k}
@@ -908,19 +913,46 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
   const pvW = spec.allowWhole ? (() => { const n = Number(rawW.trim()); return Number.isInteger(n) && n >= 0 ? n : 0; })() : 0;
   const pvN = (() => { const n = Number(rawN.trim()); return Number.isInteger(n) && n >= 0 ? n : null; })();
   const pvD = (() => { const n = Number(rawD.trim()); return Number.isInteger(n) && n >= 1 ? n : null; })();
-  // The cap is now `partitionBarDrawable` (schema.ts) — the same predicate numeric's bar and
-  // its spoken description use. Same gate, stated in full: den <= 20 and num <= den * 2, on
+  // S330 (CL-P1-057). Used to render only once BOTH numerator AND denominator had parsed —
+  // `docs/CAPABILITY_AXES.md`'s conseq=1 "Not earned by" clause names exactly this shape,
+  // "gated to one narrow state" — and the wrapper was `aria-hidden`, the SAME document's named
+  // conseq=1/a11y=2 example for this engine, verbatim. The denominator is the one true
+  // precondition (a bar has no shape without a part-count to cut into); the numerator now
+  // defaults to 0 — an empty bar — until typed, the same "start from a neutral default instead
+  // of nothing" move S330's `pointEntry` redesign made for its own mini-grid (that engine's own
+  // CL-P1-057 addendum). `partitionBarDrawable` still runs on (numerator-or-0, denominator), so
+  // a too-large NUMERATOR still honestly skips the bar exactly as before — only the
+  // denominator-typed-alone case is new. The cap is `partitionBarDrawable` (schema.ts), the same
+  // predicate numeric's bar and its spoken description use: den <= 20 and num <= den * 2, on
   // values the parses above already forced to be non-negative integers with den >= 1.
-  const showPreview = pvN !== null && pvD !== null && partitionBarDrawable(pvN, pvD) && pvW <= 6 && (pvW > 0 || pvN > 0);
-  const previewBar = showPreview ? (
-    <div className="flex flex-wrap items-center justify-center gap-2" aria-hidden="true">
-      {sign === -1 && <span className="text-xl font-extrabold text-ink">−</span>}
+  const pvShaded = pvN ?? 0;
+  const showPreview = pvD !== null && pvW <= MAX_PREVIEW_WHOLES && partitionBarDrawable(pvShaded, pvD);
+  // Spoken once, on the wrapper — the container carries the live `role="img"`/`aria-label`,
+  // every decorative shape underneath stays `aria-hidden` (PartitionBar hides itself; the sign
+  // glyph and whole-unit rects do too here) — not the OLD split, where the whole block was
+  // `aria-hidden` and nothing spoke for it at all. `describeState.ts`'s fractionEntry branch
+  // used to carry a comment calling this "the standing fractionEntry/pointEntry gap": neither
+  // engine had a spoken twin for its own live preview. `pointEntry` closed its half with a label
+  // directly on its SVG rather than a separate narrated panel sentence; this closes the other
+  // half the same way. Describes exactly what is DRAWN, not the raw typed numerator — shading
+  // is capped at `pvD` cells because that is all `PartitionBar` can honestly fill (an entry past
+  // one whole bar-worth, e.g. 5/2 with no whole field used, still only lights every cell once).
+  const previewShadedCells = pvD !== null ? Math.min(pvShaded, pvD) : 0;
+  const previewLabel =
+    showPreview && pvD !== null
+      ? `${sign === -1 ? "Negative. " : ""}The bar is cut into ${pvD} equal ${pvD === 1 ? "part" : "parts"}; ` +
+        `${previewShadedCells} ${previewShadedCells === 1 ? "part is" : "parts are"} shaded` +
+        `${pvW > 0 ? `, plus ${pvW} whole ${pvW === 1 ? "bar" : "bars"}` : ""}.`
+      : "";
+  const previewBar = showPreview && pvD !== null ? (
+    <div className="flex flex-wrap items-center justify-center gap-2" role="img" aria-label={previewLabel}>
+      {sign === -1 && <span aria-hidden="true" className="text-xl font-extrabold text-ink">−</span>}
       {Array.from({ length: pvW }, (_, k) => (
-        <svg key={`w${k}`} viewBox="0 0 40 18" className="h-4 w-9">
+        <svg key={`w${k}`} aria-hidden="true" viewBox="0 0 40 18" className="h-4 w-9">
           <rect x={1} y={1} width={38} height={16} rx={3} fill={PALETTE.sky} stroke={PALETTE.ink} strokeWidth={1.4} />
         </svg>
       ))}
-      {pvD !== null && pvN !== null && pvN + pvD > 0 && <PartitionBar shaded={pvN} total={pvD} />}
+      <PartitionBar shaded={pvShaded} total={pvD} />
     </div>
   ) : null;
   // The plot the prompt DESCRIBES (display-only; see PlotDataSpec) — the same block `numeric`

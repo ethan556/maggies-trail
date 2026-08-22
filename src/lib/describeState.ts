@@ -160,8 +160,11 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       // A plain numeric entry narrates itself — one labelled text field — so this stays null
       // for every step that declares no `previewDenominator`, and those steps get no panel,
       // exactly as before. When the field IS set the widget draws a partition bar that is
-      // aria-hidden (the fractionEntry/pointEntry previews have no spoken twin at all — the
-      // known gap this branch exists NOT to repeat), so the same fraction is spoken here.
+      // aria-hidden — the one of this trio still genuinely gapped this way; `pointEntry`'s own
+      // mini-grid and `fractionEntry`'s own preview bar closed the identical gap at the source
+      // instead (a live `role="img"`/`aria-label` directly on the renderer, S330's `pointEntry`
+      // and `fractionEntry` CL-P1-057 redesigns) rather than by this branch growing a twin for
+      // them — so the same fraction is spoken here, for `numeric` alone.
       //
       // Resolved through `numericPreviewParts`, the SAME function the renderer draws from, so
       // the sentence cannot claim a bar the screen does not show. The answer is never stated:
@@ -202,8 +205,14 @@ export function describeWidgetState(spec: TWidget, value: unknown, tone?: string
       // otherwise have no route to the dataset the question is about. Same `plotDataParts` call
       // the renderer draws from, so the sentence cannot claim a plot the screen does not show.
       //
-      // The learner's own entry bar still has no spoken twin here — that is the standing
-      // fractionEntry/pointEntry gap, unchanged and deliberately not widened by this branch.
+      // The learner's own entry bar used to have no spoken twin anywhere — the standing
+      // fractionEntry/pointEntry gap this comment named for several sessions. Closed for both
+      // engines now (S330, CL-P1-057), but not by widening this branch: `FractionEntryW`'s own
+      // preview carries a live `role="img"`/`aria-label` directly, the same mechanism
+      // `PointEntryW`'s mini-grid uses, so the drawn picture and its description can never drift
+      // apart the way a duplicate description living here would risk. This branch still exists
+      // for the one thing it always covered — the plot the prompt describes — and does not grow
+      // a second description of the entry bar on top of the one the renderer already gives it.
       const plot = plotDataParts(spec);
       if (!plot) return null;
       return `A line plot with ${plotStacksPhrase(plot.labels, plot.counts, plot.glyph)}.`;

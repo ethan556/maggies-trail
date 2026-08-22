@@ -693,4 +693,141 @@ cause (content that actually changed, a widget-state contract that actually chan
 **Net:** 63/74 resolved and verified stable, 11/74 correctly flagged with specific evidence rather than
 force-fixed or silently deferred again, plus one coverage gap closed during the verification pass itself.
 
+## Session 330 ninth post-recon addendum — CL-P1-057, `fractionEntry` (2 of 15 REDESIGN families)
+
+Continuing down `PREMIUM_ENGINE_PRIORITY.csv`'s REDESIGN list per the sixth addendum's own closing
+instruction. `fractionEntry` row: `fractionEntry,46,4,0,1,1,0,2,2,2,5,4,3,4,240,REDESIGN` —
+`authored_uses=46` (more blast radius than `pointEntry`'s 18, still well short of the 175+ rows the sixth
+addendum ruled out), and, unlike most of the remaining REDESIGN rows, a genuine, well-scoped gap rather
+than a deliberately-pinned design decision. Checked first: `SESSION207_EXECUTION_REPORT.md`'s own table of
+`manip`-axis verdicts (quoted in full by `docs/CAPABILITY_AXES.md` lines 81-89) explicitly adjudicates
+`dragOrder`/`absValueLine`/`placeCompare`/`rationalCompare`/`fractionCompare`/`steppedReveal` as **deliberate
+design decisions, not gaps** — `rationalCompare`'s row states the refusal outright: "sized bars would
+print the answer and delete the graded reasoning." `fractionEntry` is not on that table. `docs/
+CAPABILITY_AXES.md` line 79-81 names it directly instead, as its own `conseq=1` example ("a value-vs-form
+distinction gates its reveal ghost, but there is no rendered fraction") and again at line 150 as one of the
+seven `a11y=2` members, with `pointEntry`'s now-fixed mini-grid cited as "the clean case" of the same
+pattern. `describeState.ts`'s own `fractionEntry` case comment (pre-existing, several sessions old) called
+this "the standing fractionEntry/pointEntry gap" outright.
+
+**What was actually there:** unlike the documentation's summary ("no rendered fraction"), `FractionEntryW`
+already drew a live preview — a `PartitionBar` (whole units as full sky bars, the fraction as a den-partition
+with `num` cells shaded), added in an earlier session and shared with `numeric`'s own preview via the same
+component. But it rendered only once BOTH numerator AND denominator had parsed (`docs/CAPABILITY_AXES.md`'s
+own conseq=1 "Not earned by" clause: "gated to one narrow state"), and the whole block was
+`aria-hidden="true"` — the exact `pointEntry`-shaped gap the documentation and the code comment both named.
+
+**Built (S330):** the denominator alone is now the gate — a bar has no shape without a part-count to cut
+into, so it is the one true structural precondition; the numerator defaults to 0 (an empty bar) until
+typed, the same "start from a neutral default instead of nothing" move the `pointEntry` redesign made for
+its own mini-grid. The wrapper now carries a live `role="img"` and a computed `aria-label` ("The bar is cut
+into N equal parts; K part(s) is/are shaded, plus W whole bar(s)."; "Negative. " prefixed under
+`allowNegative`) instead of hiding; every decorative child (the sign glyph, each whole-unit rect,
+`PartitionBar` itself) is `aria-hidden="true"` so the state is spoken once, not twice — `PartitionBar` now
+hides itself unconditionally rather than relying on an ancestor wrapper, which is redundant-but-harmless for
+`numeric`'s unrelated, untouched usage (still wrapped in its own `aria-hidden` div) and load-bearing for
+`fractionEntry`'s new one. The label describes exactly what is DRAWN, not the raw typed numerator: shading
+is capped at the denominator's own cell count, so an entry past one bar's worth (e.g. 3/2 with no whole
+field used) is spoken as "2 of 2 shaded," never a count the picture cannot show — the same "cannot claim a
+bar the screen does not show" rule `describeState.ts`'s numeric branch already lives by, applied here to the
+renderer's own label instead of a separate spoken panel. Grading is completely untouched: `emit()`,
+`evaluate()`, and every one of the 46 authored lessons are unaffected — this is a presentation-only change to
+an already-DISPLAY-ONLY preview.
+
+**Deliberately not attempted:** a drag/tap-based construction of the fraction itself (which could have
+earned `manip`, the way `pointEntry`'s drag did). Declined for a concrete reason, not caution alone: every
+sibling engine `pointEntry`'s `manip` 0→2 leaned on (`systemsExplore`, `argandExplore`, `quadraticExplore`,
+`dilationExplore`) already drags a point directly in its own coordinate space — an established, four-times
+precedented gesture. No engine in this codebase currently lets a learner build a fraction by tapping
+partition cells or dragging a divider; inventing that interaction from zero (cell-tap semantics, its
+interplay with `allowWhole`/`allowNegative`, whether it writes back to the typed fields or only reads from
+them) is real UX design work, not a bounded evidence-driven fix — exactly the kind of scope this session's
+own discipline says to flag rather than force. `manip` stays 0, honestly.
+
+**Score update, `scripts/engine-capabilities.json`** (was `manip 0, conseq 1, err 1, adapt 0, a11y 2,
+mobile 2, polish 2`), justified against `docs/CAPABILITY_AXES.md`'s own text per axis:
+- `conseq` 1→2: level 2 is *"a genuine mathematical representation renders and updates live as the learner
+  acts... Examples: fractionBar, rationalCompare..."* — the preview now renders live as soon as its one true
+  precondition (the denominator) is known, not gated to "both fields complete," and is a first-class visible
+  output. Both level-1 disqualifiers the documentation named for this exact engine — hidden from meaning,
+  gated to one narrow state — are now false, the same two disqualifiers `pointEntry`'s own conseq fix
+  removed.
+- `a11y` 2→3: level 3 is *"the interface additionally exposes the STATE of a visual/graphical model to
+  assistive tech — role=\"img\" with a state-dependent aria-label."* `fractionEntry` was one of the
+  document's own seven named level-2 members and the "Not earned by" clause for level 3 names `pointEntry`'s
+  pre-fix state as the disqualifying pattern verbatim — `fractionEntry`'s pre-fix preview matched it exactly
+  (a visual model, hidden rather than described). Both conditions are now false.
+- `manip` unchanged at 0: per "Deliberately not attempted" above — typing a value, however the preview
+  around it changes, still does not earn this axis by the axis's own text.
+- `err` unchanged at 1: `docs/CAPABILITY_AXES.md` line 106 names `fractionEntry` explicitly, alongside
+  `mcq`/`numeric`/`pointEntry`/`radicalCheck`, as already carrying a reveal-ghost chip and staying at 1 by
+  prior explicit refusal ("tone decoration is presentation, not a new err-teach mechanism… which these
+  static surfaces still do not have," `SESSION207_EXECUTION_REPORT.md` §2e). This session did not touch
+  `fe-ghost` or add any diagnosed-misconception mechanism, so the refusal still applies verbatim.
+- `adapt` unchanged at 0: no `onEvent` wiring was added; `FractionEntryW` still never invokes it, matching
+  `engineCapabilities.test.ts`'s CONSISTENCY check exactly.
+- `mobile` unchanged at 2: this axis tracks touch-target size and whether a fine-drag control has a discrete
+  alternative (`docs/CAPABILITY_AXES.md`'s own framing). Nothing about the input fields changed, and no drag
+  was added — level 2's "the default baseline" applies exactly as before.
+- `polish` unchanged at 2: level 2 is *"state changes SNAP rather than settle — no dedicated motion."* The
+  preview still appears/updates with no easing or keyframe; no authored motion was added this round.
+
+**Test evidence.** `npx tsc --noEmit`: clean. Rewrote the `widgets.fractionEntry.test.tsx` "live preview"
+describe block (the one section whose assertions targeted the exact gated-and-hidden behavior being
+replaced) to pin the new contract: `role="img"`/`aria-label` content on the existing two tests, plus five
+new cases — an empty bar the instant the denominator alone is known, no bar at all with only a numerator
+typed (there is no shape to draw yet), the sign prefix with its own glyph hidden from the accessibility
+tree (scoped past the negative-sign BUTTON, which renders the identical glyph as its own accessible name),
+and the drawn-picture-not-raw-number cap on an over-full entry. All values hand-derived from the actual
+`partitionBarDrawable`/`PartitionBar` source before running, not copied from output; two arithmetic slips
+in the first draft (an 5/2 case that `partitionBarDrawable` actually rejects outright, since 5 > 2×2; an
+unscoped glyph query that matched the sign toggle button too) were caught by the run itself and corrected.
+File total: 30/30. Broader sweep, all green: `engineCapabilities.test.ts`, `describeState.test.tsx`,
+`describeState.signChart.s237.test.ts`, `widgets.a11yAudit.s44.test.tsx`, `widgets.accessibleParity.
+s237.test.tsx`, `widgets.answerSurface.tone.s206.test.tsx`, `widgets.keyboard.test.tsx` (233/233);
+`session248.engineReversiblePlay.test.tsx`, `widgets.plotData.s237.test.tsx`, `content.plotData.
+s237.test.ts`, `content.widgets.audit.test.ts`, `evaluate.learnerAnswer.test.ts`, `widgetIntegrity.
+graphs.s241.test.ts` (133/133); `variants.test.ts` (4001/4001) and `variants.resolver.test.ts` (only its
+own pre-existing, already-documented "232 is-FRESH failures" gap from the eighth addendum above — confirmed
+unrelated, see below). `content.numericPreview.s237.test.ts`'s 2 failures are likewise that same addendum's
+already-flagged 109-vs-111 drop, not a new regression.
+
+**Side-effect check, same discipline as `pointEntry`'s `tm-01-03` discovery.** Regenerating `node
+scripts/flagship-tier.mjs` and `node scripts/audit/excellence-backlog-s126.mjs` (both needed to check
+whether this conseq/a11y change moved any lesson's tier, the way `pointEntry`'s `manip` change moved
+`tm-01-03`) surfaced a diff neither script's committed output had caught up to yet: `df3-03-02` (division by
+zero) moved C22→D24, `ks-03-03` B24→B27, `mmt-05-02` B27→B29, `sp-03-02` gained prediction-eligibility,
+`ks-02-03` lost it. **None of this is caused by `fractionEntry`.** Verified by git-stash A/B on BOTH
+scripts independently (stash `scripts/engine-capabilities.json` + `widgets.tsx` + `describeState.ts` +
+`widgets.fractionEntry.test.tsx`, regenerate against the committed tree, diff byte-for-byte against the
+same regeneration with the stash popped): both reports come out identical with or without this session's
+fractionEntry work. The real cause is that neither report had been regenerated since the EIGHTH addendum's
+already-committed content changes landed (S330's `df3-03-02` predict-block addition; the shapes/measure/
+sampling `variant`-declaration cleanups) — this addendum's regen run is the first time either script has
+looked at that already-shipped content, not a new effect of today's work. `df3-03-02`'s C→D move specifically
+is `flagship-tier.mjs`'s own D-tier rule (`predictSteps.length > 0 && manip===0 && conseq<=1`) seeing, for
+the first time, a predict step glued onto a widget with no manipulable model behind it — independently
+reaching the exact conclusion this session's own `CML_WAIVERS.json prediction-not-causal` waiver already
+reached and explained (division by zero has no possible manipulative representation; see the eighth
+addendum's waiver entry and `EXCELLENCE_BACKLOG_S126.json`'s own unchanged `"intentional-assessment"`
+disposition and its full rationale for this lesson, neither of which this regen altered — only the derived
+score/tier numbers moved). Not a new open item; no new CL- row opened for it, per the same "no silent score
+change under a different task's banner" discipline the sixth addendum modeled for `slopeTriangle`.
+`df3-03-02` is Grade 3, not HS, so CL-P0-008's count is unaffected. Regenerated and committed alongside this
+work: `FLAGSHIP_TIERS.md`, `EXCELLENCE_BACKLOG_S126.{json,md,csv}` (now current against both this session's
+already-committed content and today's `fractionEntry` fix — final totals **A 837 · B 791 · C 72 · D 1**,
+`K–8 A 628 B 445`), and `reports/math-presentation/*.csv` (9 files) + `reports/graph-labeling/
+{GRAPH_FIGURE_LABELING_AUDIT_S252.md, GRAPH_FIGURE_LABELING_INVENTORY_S252.json}`, whose own source-seal
+tests (`session245.mathPresentationSourceSeal.test.ts`, `session252.graphFigureLabelingInventory.test.ts`)
+went stale from this session's `widgets.tsx`/`describeState.ts` edits, exactly the known "self-regenerating
+report" pattern the eighth addendum above documents — re-running their generators (`npx tsx scripts/audit/
+math-presentation-indexes.mts`, `npx tsx scripts/audit/graph-figure-labeling-inventory-s252.mts`) and
+re-verifying the full 74-file backlog list confirmed a clean return to the exact same 63/74 stable state
+(11 failed | 63 passed, 13 failed | 8317 passed | 1 skipped — byte-identical to the eighth addendum's own
+final numbers), with no new or missing failures.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-057 | P1 | Engine/lab premium quality | `fractionEntry` (46 authored uses, `PREMIUM_ENGINE_PRIORITY.csv` REDESIGN row, priority_product 240) had a live preview bar that already existed but rendered only once both numerator and denominator parsed, and was `aria-hidden` — `docs/CAPABILITY_AXES.md`'s own named conseq=1/a11y=2 example, and `describeState.ts`'s own comment called it "the standing fractionEntry/pointEntry gap." | **2/15 REDESIGN FAMILIES BUILT, S330 (`pointEntry`, `fractionEntry`)** | The bar now shows as soon as the denominator alone is known (numerator defaults to an empty 0), and carries a live `role="img"`/`aria-label` describing exactly what is drawn instead of hiding. `conseq` 1→2, `a11y` 2→3 in `scripts/engine-capabilities.json`, each justified against `docs/CAPABILITY_AXES.md`'s own text; `manip` deliberately left at 0 (no established sibling precedent for a drag/tap fraction-construction gesture, unlike `pointEntry`'s four coordinate-drag siblings); `err`/`adapt`/`mobile`/`polish` unchanged, each cited. 396+ tests green across targeted batches (detail above); `npx tsc --noEmit` clean; the full 74-file backlog list re-confirmed stable at 63/74 after two self-regenerating reports were caught stale and re-run. Side-effect check (same discipline as `pointEntry`'s `tm-01-03` finding) found a `df3-03-02` C→D tier shift and three other lesson-report deltas, all independently verified via git-stash A/B to predate and be unrelated to this fix — pure catch-up on already-committed content, not a new effect; `df3-03-02`'s move is a second, independent instrument reaching the same conclusion this session's own CML waiver already reached, not a new open item. 13/15 REDESIGN families remain, ranked by `priority_product` in `PREMIUM_ENGINE_PRIORITY.csv`. `subitizeFlash` (18 authored uses, priority_product 135) is a promising next candidate — `docs/CAPABILITY_AXES.md`'s own "honesty check" table already flags its `a11y=2` as "ambiguous, leaning score" (its dot pattern may already carry a live `role="img"`/`aria-label` in current source, unlike `fractionEntry`'s pre-fix state — worth verifying against actual code before assuming a build is even needed, rather than a score correction). | Reopen if a future renderer change to `FractionEntryW`'s preview gate or label construction is not mirrored in `widgets.fractionEntry.test.tsx`'s "live preview" block. Otherwise, continue down the REDESIGN list — `subitizeFlash` first, per the note above — weighing blast radius against priority_product and checking `SESSION207_EXECUTION_REPORT.md`'s manip-axis table for a prior deliberate-decision adjudication before assuming a gap exists.
+
 

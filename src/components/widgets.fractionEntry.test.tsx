@@ -282,6 +282,12 @@ describe("fractionEntry — signed extension", () => {
 });
 
 describe("fractionEntry live preview (ROLE.active)", () => {
+  // S330 (CL-P1-057). This preview used to render only once BOTH numerator AND denominator had
+  // parsed, and the whole block was `aria-hidden="true"` — the exact "gated to one narrow
+  // state" + "hidden from meaning" shape `docs/CAPABILITY_AXES.md` names as fractionEntry's own
+  // conseq=1/a11y=2 example (the same document names `pointEntry`'s pre-S330 mini-grid as the
+  // parallel case). The redesign: the denominator alone is now enough to show an (empty) bar,
+  // and the wrapper carries a live `role="img"`/`aria-label` instead of hiding.
   it("shows a den-partition bar with num cells sky-shaded once the fraction is typed", () => {
     mount(mixedSpec);
     fireEvent.change(screen.getByRole("textbox", { name: "numerator" }), { target: { value: "1" } });
@@ -290,6 +296,9 @@ describe("fractionEntry live preview (ROLE.active)", () => {
     expect(rects.length).toBe(2);
     expect(rects[0].getAttribute("fill")).toBe("#2E7CD6");
     expect(rects[1].getAttribute("fill")).toBe("#fff");
+    const preview = screen.getByRole("img", { name: /cut into 2 equal parts/ });
+    expect(preview.getAttribute("aria-hidden")).toBeNull();
+    expect(preview.getAttribute("aria-label")).toBe("The bar is cut into 2 equal parts; 1 part is shaded.");
   });
   it("mixed entries add one full sky bar per whole unit", () => {
     mount(mixedSpec);
@@ -298,11 +307,53 @@ describe("fractionEntry live preview (ROLE.active)", () => {
     fireEvent.change(screen.getByRole("textbox", { name: "denominator" }), { target: { value: "4" } });
     const svgs = document.querySelectorAll("svg");
     expect(svgs.length).toBe(3); // 2 whole bars + 1 partition bar
+    expect(screen.getByRole("img").getAttribute("aria-label")).toBe(
+      "The bar is cut into 4 equal parts; 1 part is shaded, plus 2 whole bars."
+    );
   });
   it("skips the preview for denominators a bar can't honestly partition", () => {
     mount(mixedSpec);
     fireEvent.change(screen.getByRole("textbox", { name: "numerator" }), { target: { value: "41" } });
     fireEvent.change(screen.getByRole("textbox", { name: "denominator" }), { target: { value: "333" } });
     expect(document.querySelectorAll("svg").length).toBe(0);
+    expect(screen.queryByRole("img")).toBeNull();
+  });
+  it("shows an empty bar as soon as the denominator alone is known — a learner can start from the grid, not only confirm a finished guess", () => {
+    mount(lowestSpec);
+    expect(screen.queryByRole("img")).toBeNull();
+    fireEvent.change(screen.getByRole("textbox", { name: "denominator" }), { target: { value: "5" } });
+    const preview = screen.getByRole("img", { name: "The bar is cut into 5 equal parts; 0 parts are shaded." });
+    const rects = preview.querySelectorAll("rect");
+    expect(rects.length).toBe(5);
+    expect(Array.from(rects).every((r) => r.getAttribute("fill") === "#fff")).toBe(true);
+  });
+  it("a numerator typed before any denominator shows nothing yet — there is no shape to draw", () => {
+    mount(lowestSpec);
+    fireEvent.change(screen.getByRole("textbox", { name: "numerator" }), { target: { value: "3" } });
+    expect(screen.queryByRole("img")).toBeNull();
+  });
+  it("the sign toggle prefixes the label and hides its own glyph from the accessibility tree", () => {
+    const signedSpec = WidgetSpec.parse({
+      type: "fractionEntry", prompt: "p", allowNegative: true, answerSign: -1, answerNum: 1, answerDen: 4,
+      commonEntries: [{ sign: -1, num: 3, den: 4, feedback: "f" }], fallbackFeedback: "fb"
+    }) as TWidget;
+    mount(signedSpec);
+    fireEvent.click(screen.getByRole("button", { name: "negative sign" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "denominator" }), { target: { value: "4" } });
+    const preview = screen.getByRole("img");
+    expect(preview.getAttribute("aria-label")).toBe("Negative. The bar is cut into 4 equal parts; 0 parts are shaded.");
+    // Scoped to the preview itself: the negative-sign BUTTON also renders the same glyph as its
+    // own accessible text, so an unscoped query would match both.
+    const glyph = preview.querySelector("span");
+    expect(glyph?.textContent).toBe("−");
+    expect(glyph?.getAttribute("aria-hidden")).toBe("true");
+  });
+  it("the label describes the drawn picture, not the raw typed numerator, once it exceeds the bar", () => {
+    // 3/2 with no whole field used: PartitionBar has only 2 cells, so it draws (and the label
+    // says) a fully-shaded bar — never "3 of 2", a count the picture cannot show.
+    mount(lowestSpec);
+    fireEvent.change(screen.getByRole("textbox", { name: "numerator" }), { target: { value: "3" } });
+    fireEvent.change(screen.getByRole("textbox", { name: "denominator" }), { target: { value: "2" } });
+    expect(screen.getByRole("img").getAttribute("aria-label")).toBe("The bar is cut into 2 equal parts; 2 parts are shaded.");
   });
 });

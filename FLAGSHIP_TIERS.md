@@ -22,23 +22,24 @@ across **65** lessons.
 | Band | A | B | C | D | lessons |
 | --- | --: | --: | --: | --: | --: |
 | K-2 | 206 | 204 | 0 | 0 | 410 |
-| 3-5 | 274 | 144 | 1 | 0 | 419 |
-| 6-8 | 147 | 98 | 0 | 0 | 245 |
+| 3-5 | 274 | 144 | 0 | 1 | 419 |
+| 6-8 | 148 | 97 | 0 | 0 | 245 |
 | HS | 209 | 346 | 72 | 0 | 627 |
 
-**K–8 targets** — Tier A 627/200–250 ✓ · Tier B 446/200–300 ✓.
+**K–8 targets** — Tier A 628/200–250 ✓ · Tier B 445/200–300 ✓.
 
 ## Load-bearing K–8 concepts with no experience above Tier C
 
-- g3d-zero (best: C in df3-03-02)
+- g3d-zero (best: D in df3-03-02)
 
-## One honest gate from Tier A — prediction-eligible (40 K–8 lessons)
+## One honest gate from Tier A — prediction-eligible (41 K–8 lessons)
 
 | lesson | course (grade) | total | focus domains | eligibility evidence |
 |---|---|--:|---|---|
 | sp-02-02 — Visual Overlap and What It Means | Grade 7: Sampling & Probability (G7) | 30/39 | probability; data distributions | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | pr-03b-01 — Writing the Equation y = kx | Grade 7: Proportional Relationships (G7) | 28/39 | ratios & proportions; equations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | sp-02b-01 — MAD as a Ruler | Grade 7: Sampling & Probability (G7) | 28/39 | multiplication decomposition; probability | 1 exploratory step expose a manipulable cause-and-effect state that can support prediction before action. |
+| sp-03-02 — Estimating Probability from Trials | Grade 7: Sampling & Probability (G7) | 28/39 | place-value estimation; probability | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01-02 — Multiplying and Dividing Powers of Ten | Grade 8: Exponents, Roots & Scientific Notation (G8) | 32/39 | multiplication decomposition | 3 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01-03 — Powers of Ten and Place Value | Grade 8: Exponents, Roots & Scientific Notation (G8) | 32/39 | place-value estimation | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | g7-01-03 — How Area Scales | Grade 7: Geometry (G7) | 32/39 | geometry & transformations | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
@@ -75,13 +76,13 @@ across **65** lessons.
 | esn-01b-02 — A Power of a Power | Grade 8: Exponents, Roots & Scientific Notation (G8) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | esn-01b-03 — Zero and Negative Exponents | Grade 8: Exponents, Roots & Scientific Notation (G8) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 | ns-04b-01 — Signs, and What a Flip Does to Them | The Number System (G6) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
-| ks-02-03 — Build with Shapes | Kindergarten: Shapes & Sorting (G0) | 28/39 | — | 2 exploratory steps expose a manipulable cause-and-effect state that can support prediction before action. |
 
-## Honest Tier-B ceilings — prediction would be redundant or unsafe (9)
+## Honest Tier-B ceilings — prediction would be redundant or unsafe (10)
 
 | lesson | course (grade) | total | status | reason |
 |---|---|--:|---|---|
 | mmt-02-01 — Estimating Before You Measure | Grade 2: Measurement, Money & Time (G2) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
+| mmt-05-02 — Reading a Bar Graph | Grade 2: Measurement, Money & Time (G2) | 29/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | dpv-03-01 — Lining Up the Places | Powers of Ten & Decimals (G5) | 32/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rr-05-03 — Ratios Capstone | Ratios & Rates (G6) | 30/39 | redundant | Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship. |
 | rno-04-03 — All Four Operations with Rational Numbers | Grade 7: Rational Number Operations (G7) | 31/39 | unsafe | The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface. |
@@ -95,6 +96,6 @@ across **65** lessons.
 
 | # | lesson | course (grade) | tier | total | gaps | focus domains | priority |
 |--:|---|---|---|--:|---|---|--:|
-| 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | C | 22/39 | prediction manip conseq adapt | division meaning | 75 |
+| 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | D | 24/39 | manip conseq adapt | division meaning | 85 |
 
-Totals: 1701 lessons · A 836 · B 792 · C 73 · D 0.
+Totals: 1701 lessons · A 837 · B 791 · C 72 · D 1.
