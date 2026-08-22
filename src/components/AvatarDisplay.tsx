@@ -15,7 +15,38 @@
  * never touches the `/_next/image` optimizer either way.
  */
 import Image from "next/image";
-import { AVATAR_PLACEHOLDER_SRC, getAvatarSrc, type AvatarSize } from "@/lib/avatars";
+import {
+  AVATAR_PLACEHOLDER_SRC,
+  DEFAULT_AVATAR_CUSTOMIZATION,
+  getAvatar,
+  getAvatarSrc,
+  type AvatarCustomization,
+  type AvatarSize
+} from "@/lib/avatars";
+
+export type AvatarPlacement =
+  | "navigation"
+  | "dense-list"
+  | "summary"
+  | "trail"
+  | "completion"
+  | "profile"
+  | "picker";
+
+/**
+ * Hard visual-space budgets for learner identity. These are deliberately small: identity may
+ * orient or celebrate, but it must never compete with mathematics. `picker` is the sole fill
+ * context and is already confined to the explicit profile/onboarding chooser.
+ */
+export const AVATAR_PLACEMENT_MAX_PX: Readonly<Record<AvatarPlacement, number>> = {
+  navigation: 24,
+  "dense-list": 36,
+  summary: 48,
+  trail: 48,
+  completion: 56,
+  profile: 80,
+  picker: 256
+};
 
 export interface AvatarDisplayProps {
   /** A Profile.avatarId or a manifest id being previewed. Absent/invalid/disabled all fall
@@ -23,6 +54,12 @@ export interface AvatarDisplayProps {
   avatarId?: string;
   /** 256 = grid/picker size, 512 = profile size (OPTIMIZATION_PLAN_V3.md:151). */
   size?: AvatarSize;
+  /** The product surface using the avatar. Required so layout remains within its space budget. */
+  placement: AvatarPlacement;
+  /** Requested rendered edge for fixed images. It is clamped to the placement budget. */
+  displaySize?: number;
+  /** Restrained overlay choices. They never alter the underlying reviewed portrait pixels. */
+  customization?: AvatarCustomization;
   /** Fill mode for a positioned parent that already owns the aspect ratio (picker tiles).
    *  Fixed width/height otherwise (standalone previews). */
   fill?: boolean;
@@ -39,14 +76,103 @@ export interface AvatarDisplayProps {
 export function AvatarDisplay({
   avatarId,
   size = 256,
+  placement,
+  displaySize,
+  customization = DEFAULT_AVATAR_CUSTOMIZATION,
   fill = false,
   sizes = "(max-width: 640px) 30vw, (max-width: 768px) 22vw, 140px",
   alt = "",
   className = ""
 }: AvatarDisplayProps) {
-  const src = (avatarId && getAvatarSrc(avatarId, size)) || AVATAR_PLACEHOLDER_SRC;
-  if (fill) {
-    return <Image src={src} alt={alt} fill sizes={sizes} unoptimized className={className} />;
-  }
-  return <Image src={src} alt={alt} width={size} height={size} unoptimized className={className} />;
+  const resolvedSrc = avatarId && getAvatarSrc(avatarId, size);
+  const src = resolvedSrc || AVATAR_PLACEHOLDER_SRC;
+  const renderedSize = Math.max(
+    1,
+    Math.min(
+      displaySize ?? AVATAR_PLACEMENT_MAX_PX[placement],
+      AVATAR_PLACEMENT_MAX_PX[placement]
+    )
+  );
+  const avatarKind = avatarId ? getAvatar(avatarId)?.kind : undefined;
+  const accentColor = {
+    none: undefined,
+    navy: "#0D1B2A",
+    orange: "#F08A24",
+    teal: "#197C78",
+    violet: "#7357A8"
+  }[customization.accent];
+  const showGlasses = Boolean(resolvedSrc && avatarKind === "human" && customization.glasses !== "none");
+  const badgeText = { none: "", trail: "◆", star: "★", pi: "π" }[customization.badge];
+  const showBadge = Boolean(resolvedSrc && badgeText && (fill || renderedSize >= 32));
+  const image = fill ? (
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        unoptimized
+        className={className}
+        data-avatar-placement={placement}
+        data-avatar-max-px={AVATAR_PLACEMENT_MAX_PX[placement]}
+      />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      width={renderedSize}
+      height={renderedSize}
+      unoptimized
+      className={className}
+      data-avatar-placement={placement}
+      data-avatar-max-px={AVATAR_PLACEMENT_MAX_PX[placement]}
+    />
+  );
+
+  return (
+    <span
+      className={fill ? "absolute inset-0" : "relative inline-flex shrink-0"}
+      style={
+        fill
+          ? { borderRadius: "9999px", boxShadow: accentColor ? `inset 0 0 0 3px ${accentColor}` : undefined }
+          : {
+              width: renderedSize,
+              height: renderedSize,
+              borderRadius: "9999px",
+              boxShadow: accentColor ? `inset 0 0 0 2px ${accentColor}` : undefined
+            }
+      }
+      data-avatar-customized={showGlasses || showBadge || Boolean(accentColor) ? "true" : "false"}
+    >
+      {image}
+      {showGlasses && (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 100 100"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+        >
+          {customization.glasses === "round" ? (
+            <>
+              <circle cx="36" cy="47" r="12" fill="none" stroke="#18222D" strokeWidth="4" />
+              <circle cx="64" cy="47" r="12" fill="none" stroke="#18222D" strokeWidth="4" />
+            </>
+          ) : (
+            <>
+              <rect x="24" y="37" width="24" height="19" rx="5" fill="none" stroke="#18222D" strokeWidth="4" />
+              <rect x="52" y="37" width="24" height="19" rx="5" fill="none" stroke="#18222D" strokeWidth="4" />
+            </>
+          )}
+          <path d="M48 45 Q50 42 52 45 M22 43 L13 40 M78 43 L87 40" fill="none" stroke="#18222D" strokeWidth="4" strokeLinecap="round" />
+        </svg>
+      )}
+      {showBadge && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-[3%] right-[3%] flex h-[28%] w-[28%] items-center justify-center rounded-full bg-ink font-extrabold leading-none text-paper shadow-e1 dark:bg-paper dark:text-ink"
+          style={{ fontSize: fill ? undefined : Math.max(7, Math.round(renderedSize * 0.17)) }}
+        >
+          {badgeText}
+        </span>
+      )}
+    </span>
+  );
 }

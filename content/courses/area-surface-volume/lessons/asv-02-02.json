@@ -15,25 +15,55 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "The rectangle part.",
+      "body": "Combine the two visible pieces.",
       "conceptTag": "composite-triangle",
       "widget": {
-        "type": "numeric",
-        "prompt": "A house's rectangular walls are 8 wide and 5 tall. What is the wall area?",
-        "answer": 40,
-        "tolerance": 0,
-        "unit": "square units",
-        "commonErrors": [
+        "type": "compositeAreaLab",
+        "prompt": "The house has 8-by-5 rectangular walls and a triangular roof with base 8 and height 3. Choose the total area.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "value": 20,
-            "feedback": "20 applies the TRIANGLE's ×1/2 to a rectangle by mistake. Rectangles don't halve: 8 × 5 = 40."
+            "id": "walls",
+            "label": "rectangular walls",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 8,
+            "height": 5
           },
           {
-            "value": 13,
-            "feedback": "13 adds 8 + 5. Rectangle area multiplies: 8 × 5 = 40."
+            "id": "roof",
+            "label": "triangular roof",
+            "shape": "triangle",
+            "operation": "add",
+            "base": 8,
+            "height": 3
           }
         ],
-        "fallbackFeedback": "8 × 5 = 40."
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
+          {
+            "id": "whole-house",
+            "label": "52 square units",
+            "value": 52,
+            "feedback": "Correct. The walls cover 40 square units and the roof covers 12, so the whole house covers 52."
+          },
+          {
+            "id": "walls-only",
+            "label": "40 square units",
+            "value": 40,
+            "feedback": "40 is the wall area only. The triangular roof adds another 1/2 × 8 × 3 = 12 square units."
+          },
+          {
+            "id": "unhalved-roof",
+            "label": "64 square units",
+            "value": 64,
+            "feedback": "64 treats the triangular roof like a full 8-by-3 rectangle. The roof is half of that rectangle, so it adds 12, not 24."
+          }
+        ],
+        "fallbackFeedback": "Walls: 8 × 5 = 40. Roof: 1/2 × 8 × 3 = 12. Add the pieces: 52 square units.",
+        "successFeedback": "52 square units. The diagram keeps both pieces visible, and total area is wall area plus roof area."
       },
       "predict": {
         "prompt": "A house shape is a rectangle with a triangle roof. To get the whole area, do you ADD the two pieces or MULTIPLY them?",

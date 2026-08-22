@@ -34,25 +34,6 @@
           }
         ],
         "fallbackFeedback": "5 × 2 × 3 = 30 cubic units."
-      },
-      "predict": {
-        "prompt": "The bottom layer holds 5 × 2 = 10 cubes, and the box is 3 tall. It will hold…",
-        "options": [
-          {
-            "id": "layers",
-            "label": "Three full layers of 10"
-          },
-          {
-            "id": "add",
-            "label": "10 cubes plus 3 more for the height"
-          },
-          {
-            "id": "flat",
-            "label": "Still 10 — height doesn't add cubes"
-          }
-        ],
-        "outcomeId": "layers",
-        "reveal": "The height counts identical LAYERS, each a full copy of the 10-cube floor: 10 + 10 + 10 = 30. That's why the formula multiplies all three dimensions — l × w builds one layer, × h stacks it."
       }
     },
     {
@@ -138,6 +119,25 @@
       "kind": "interactive",
       "body": "Work backwards.",
       "conceptTag": "volume-formula",
+      "predict": {
+        "prompt": "The 5-by-4 base holds 20 cubes in each layer. Before you build, what height should make exactly 60 cubes?",
+        "options": [
+          {
+            "id": "three",
+            "label": "3 layers high"
+          },
+          {
+            "id": "twelve",
+            "label": "12 layers high"
+          },
+          {
+            "id": "fifty-five",
+            "label": "55 layers high"
+          }
+        ],
+        "outcomeId": "three",
+        "reveal": "The model reaches 60 cubes at height 3 because each layer adds 20 cubes: 20 + 20 + 20 = 60. Dividing by the whole base area, 60 ÷ 20, finds the number of layers."
+      },
       "widget": {
         "type": "volumeBuilder",
         "prompt": "A box has volume 60, a length of 5, and a width of 4. What is its height? Set the height until the box holds 60 cubes.",

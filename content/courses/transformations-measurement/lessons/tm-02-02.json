@@ -198,42 +198,38 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Dilate with factor 2.",
+      "body": "Work backward to the original point.",
       "conceptTag": "tm-dilation",
       "explanationVariants": [
-        "Factor 2 doubles each coordinate: (1, 5) → (2, 10).",
-        "Multiply both by 2: (2, 10)."
+        "Undo a factor-2 dilation by dividing: (10, 14) → (5, 7).",
+        "Divide each coordinate by the factor 2 to recover the original point."
       ],
       "widget": {
         "type": "pointEntry",
-        "prompt": "Dilate (1, 5) by a scale factor of 2 from the origin. What is the image?",
+        "prompt": "A dilation by a scale factor of 2 from the origin sends a point to (10, 14). What was the original point?",
         "answer": [
-          2,
-          10
+          5,
+          7
         ],
         "delimiter": "paren",
         "commonEntries": [
           {
             "values": [
-              3,
-              7
+              20,
+              28
             ],
-            "feedback": "Dilation MULTIPLIES, not adds — (1×2, 5×2) = (2, 10)."
+            "feedback": "That DOUBLES the image again — undoing a dilation means dividing by the factor: 10 ÷ 2 = 5, 14 ÷ 2 = 7."
           },
           {
             "values": [
-              2,
-              5
+              8,
+              12
             ],
-            "feedback": "BOTH coordinates double: (2, 10), not just the x."
+            "feedback": "Undoing a dilation divides, it doesn't subtract: 10 ÷ 2 = 5, 14 ÷ 2 = 7."
           }
         ],
-        "fallbackFeedback": "Dilation MULTIPLIES each coordinate by the factor 2.",
-        "successFeedback": "Right — double each coordinate: (2, 10)."
-      },
-      "variant": {
-        "gen": "point-transform",
-        "form": "dilate"
+        "fallbackFeedback": "Divide each coordinate by the factor: 10 ÷ 2 = 5, 14 ÷ 2 = 7.",
+        "successFeedback": "Right — divide by the factor to undo the dilation: (5, 7)."
       }
     },
     {

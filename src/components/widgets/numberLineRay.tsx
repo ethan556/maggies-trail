@@ -35,6 +35,7 @@
 
 import { useCallback, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { MathProse } from "@/components/math/MathText";
+import { NumberLineAxis, NumberLineDirectionHead } from "@/components/NumberLineSvgPrimitives";
 import { PALETTE } from "@/lib/palette";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import type { TNumberLineRay } from "@/lib/schema";
@@ -363,19 +364,14 @@ export function NumberLineRayW({ spec, value, onChange, disabled, tone, onEvent,
         <svg
           ref={svgRef}
           viewBox={`0 0 ${VW} ${VH}`}
+          preserveAspectRatio="xMidYMid meet"
           className="w-full rounded-2xl border border-ink/10 bg-white"
           role="img"
           data-testid="nlr-line"
           aria-label={`${line.sentence} ${solution.boundarySentence}`}
         >
-          <defs>
-            <marker id="nlr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill={PALETTE.sky} />
-            </marker>
-          </defs>
-
-          {/* the axis */}
-          <line x1={8} y1={AXIS_Y} x2={VW - 8} y2={AXIS_Y} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.5} />
+          {/* the axis: inset continuation heads cannot clip at responsive widths */}
+          <NumberLineAxis x1={8} x2={VW - 8} y={AXIS_Y} color={PALETTE.ink} opacity={0.45} strokeWidth={1.5} testId="nlr-axis" />
           {line.ticks.map((tick) => (
             <g key={tick.text}>
               <line x1={axisX(tick.t)} y1={AXIS_Y - 5} x2={axisX(tick.t)} y2={AXIS_Y + 5} stroke={PALETTE.ink} strokeOpacity={0.45} />
@@ -397,8 +393,9 @@ export function NumberLineRayW({ spec, value, onChange, disabled, tone, onEvent,
             stroke={PALETTE.sky}
             strokeWidth={6}
             strokeLinecap="butt"
-            markerEnd="url(#nlr-arrow)"
+
           />
+          <NumberLineDirectionHead x={rayTo} y={AXIS_Y} direction={rayTo < rayFrom ? "left" : "right"} color={PALETTE.sky} size={8} testId="nlr-ray-direction" />
 
           {/* the endpoint: shape AND a gap AND words — three channels, none of them colour */}
           <circle

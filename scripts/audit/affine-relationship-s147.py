@@ -3,7 +3,8 @@ import json,hashlib,copy,math
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'scripts/audit/baselines/s147'
-S146_HASHES=json.loads((ROOT/'SESSION146_LESSON_HASHES.json').read_text())['files']
+# S329 / CL-P1-040 — narrow UTF-8/POSIX-path/newline normalization, same pattern as S146's fix.
+S146_HASHES=json.loads((ROOT/'SESSION146_LESSON_HASHES.json').read_text(encoding='utf-8'))['files']
 TARGETS={
 'bv-02-03':ROOT/'content/courses/bivariate-statistics/lessons/bv-02-03.json',
 'fg-03-02':ROOT/'content/courses/functions-g8/lessons/fg-03-02.json',
@@ -52,7 +53,7 @@ def old_answer(w):
  raise AssertionError(w['type'])
 errors=[];records=[];main=remedial=0
 for lid,path in TARGETS.items():
- before=json.loads((BASE/f'{lid}.json').read_text());after=json.loads(path.read_text());bs=surfaces(before);as_=surfaces(after)
+ before=json.loads((BASE/f'{lid}.json').read_text(encoding='utf-8'));after=json.loads(path.read_text(encoding='utf-8'));bs=surfaces(before);as_=surfaces(after)
  if [(k,i) for k,i,_,_ in bs]!=[(k,i) for k,i,_,_ in as_]:errors.append(f'{lid}: surface order/id drift')
  for (kind,sid,bstep,bw),(_,_,astep,w) in zip(bs,as_):
   if w.get('type')!='affineRelationshipLab':errors.append(f'{lid}/{sid}: fallback {w.get("type")}');continue
@@ -75,9 +76,9 @@ for lid,path in TARGETS.items():
  if normalized!=before:errors.append(f'{lid}: non-widget authored content drift')
 changed=[]
 for p in (ROOT/'content/courses').glob('*/lessons/*.json'):
- rel=p.relative_to(ROOT).as_posix();cur=hashlib.sha256(p.read_bytes()).hexdigest()
+ rel=p.relative_to(ROOT).as_posix();cur=hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
  if S146_HASHES.get(rel)!=cur:changed.append(rel)
-expected_changed={str(p.relative_to(ROOT)) for p in TARGETS.values()}
+expected_changed={p.relative_to(ROOT).as_posix() for p in TARGETS.values()}
 # S183: counting-to-100-k, the first K5-expansion course — 18 NEW lessons (no prior baseline; created by the course factory)
 # S191: Batch A completion — two new G1 courses built entirely on PRE-EXISTING generator
 # families (g1-add-subtract; + unknown-letter for equations-unknowns-g1). New files only;
@@ -189,10 +190,10 @@ allowed_later |= S205J_AUTHORIZED
 S210_S218_AUTHORIZED={'content/courses/expressions-equations/lessons/ee-05-02.json','content/courses/polygons-quadrilaterals/lessons/pq-05-03.json','content/courses/similarity/lessons/sy-02-03.json','content/courses/systems-equations/lessons/se-01-03.json','content/courses/two-step-equations/lessons/tse-01-01.json','content/courses/two-step-equations/lessons/tse-04-01.json','content/courses/two-step-equations/lessons/tse-04-02.json','content/courses/vectors-matrices/lessons/vec-05-03.json'}  # S220 closure maintenance: eight later lesson changes already individually authorized by content-change-proof-s151c.mjs (S210–S218).
 allowed_later |= S210_S218_AUTHORIZED
 if set(changed)!=expected_changed|allowed_later:errors.append(f'changed lesson set mismatch: {changed}')
-report={'session':147,'engine':'affineRelationshipLab','targetLessons':list(TARGETS),'experienceCount':len(records),'mainExperiences':main,'remedialExperiences':remedial,'changedLessonFiles':sorted(expected_changed),'allowedLaterSessionChanges':sorted(allowed_later),'variantDeclarationsPreserved':all(r['variantPreserved'] for r in records),'records':records,'baselineHashes':{lid:hashlib.sha256((BASE/f'{lid}.json').read_bytes()).hexdigest() for lid in TARGETS},'errors':errors,'passed':len(records)==35 and main==30 and remedial==5 and not errors}
-(ROOT/'AFFINE_RELATIONSHIP_S147.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'session':147,'engine':'affineRelationshipLab','targetLessons':list(TARGETS),'experienceCount':len(records),'mainExperiences':main,'remedialExperiences':remedial,'changedLessonFiles':sorted(expected_changed),'allowedLaterSessionChanges':sorted(allowed_later),'variantDeclarationsPreserved':all(r['variantPreserved'] for r in records),'records':records,'baselineHashes':{lid:hashlib.sha256((BASE/f'{lid}.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest() for lid in TARGETS},'errors':errors,'passed':len(records)==35 and main==30 and remedial==5 and not errors}
+(ROOT/'AFFINE_RELATIONSHIP_S147.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
 md=['# Affine Relationship Audit — Session 147','',f"**Result:** {'PASS' if report['passed'] else 'FAIL'} — {len(records)}/35 experiences; {main} main, {remedial} remedial.",'','## Exact closure','']+[f'- `{x}`' for x in TARGETS]+['','## Preservation','',f"- Variant declarations preserved: **{report['variantDeclarationsPreserved']}**",f'- Changed lesson files: **{len(changed)}**','- Prompts, answers, misconception feedback, ordering, IDs, and non-widget authored content are checked against sealed baselines.','','## Errors','']+([f'- {e}' for e in errors] if errors else ['- None.'])
-(ROOT/'AFFINE_RELATIONSHIP_S147.md').write_text('\n'.join(md)+'\n')
+(ROOT/'AFFINE_RELATIONSHIP_S147.md').write_text('\n'.join(md)+'\n',encoding='utf-8',newline='\n')
 if not report['passed']:
  print('\n'.join(errors));raise SystemExit(1)
 print(f'affine relationship authored audit passed: {len(records)}/35; main {main}; remedial {remedial}; changed lessons {len(changed)}')

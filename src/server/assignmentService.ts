@@ -33,6 +33,7 @@ import { randomBytes } from "node:crypto";
 import type { DB } from "@/server/db";
 import { audit, canTouchLearner, type SessionInfo } from "@/server/authService";
 import { canAdminOrg } from "@/server/institutionService";
+import { scoreDeliveryProvider } from "@/server/scoreDelivery";
 import manifest from "../../content/curriculum-manifest.json";
 
 const nowIso = () => new Date().toISOString();
@@ -240,9 +241,6 @@ export function recomputeClassAssignments(db: DB, classroomId: string): void {
        finished_at = excluded.finished_at, score = excluded.score, computed_at = excluded.computed_at`
   );
   const prior = db.prepare("SELECT status FROM assignment_status WHERE assignment_id = ? AND learner_id = ?");
-  const enqueueScore = db.prepare(
-    "INSERT INTO lms_outbox (kind, target, payload, created_at) VALUES ('ags-score', ?, ?, ?)"
-  );
   const tx = db.transaction(() => {
     for (const a of assignments) {
       const lessons = lessonsFor(a.kind as AssignmentKind, a.ref_id);
@@ -254,9 +252,14 @@ export function recomputeClassAssignments(db: DB, classroomId: string): void {
         const nowFinished = s.status === "on-time" || s.status === "late";
         const wasFinished = before?.status === "on-time" || before?.status === "late";
         if (nowFinished && !wasFinished && a.external_source === "lti" && a.external_id) {
-          enqueueScore.run(
+          // S331: queueing goes through the env-selected score-delivery provider
+          // (src/server/scoreDelivery.ts, SCORE_DELIVERY_PROVIDER=queue|ags-live).
+          // The default provider performs the identical lms_outbox INSERT this
+          // code always did, inside this same transaction.
+          scoreDeliveryProvider.enqueue(
+            db,
             a.external_id,
-            JSON.stringify({
+            {
               assignmentId: a.id,
               learnerId,
               resourceLinkId: a.external_id,
@@ -265,7 +268,7 @@ export function recomputeClassAssignments(db: DB, classroomId: string): void {
               activityProgress: "Completed",
               gradingProgress: "FullyGraded",
               finishedAt: s.finishedAt
-            }),
+            },
             at
           );
         }

@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Every unknown so far lives inside one fact family: two parts and a whole. Naming the family turns any unknown into a known fact.",
-      "narration": "Every unknown so far lives inside one fact family: two parts and a whole. Naming the family turns any unknown into a known fact."
+      "figure": "fact-family",
+      "body": "A fact family uses the same two parts and whole. The picture links 8 + 5 = 13 with 13 − 5 = 8.",
+      "narration": "A fact family uses the same two parts and whole. The picture links 8 + 5 = 13 with 13 − 5 = 8."
     },
     {
       "id": "i1",
@@ -133,9 +133,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "For 5 + __ = 12, the family is 5, 7, 12 — and the family member 12 − 5 = 7 hands over the answer directly.",
-      "narration": "For 5 + __ = 12, the family is 5, 7, 12 — and the family member 12 − 5 = 7 hands over the answer directly."
+      "figure": "as-fact-family",
+      "body": "For 5 + ? = 12, use 12 − 5 = 7. The picture shows another family: 6, 7, and 13.",
+      "narration": "For 5 + ? = 12, use 12 − 5 = 7. The picture shows another family: 6, 7, and 13."
     },
     {
       "id": "i2",
@@ -144,16 +144,16 @@
       "conceptTag": "g1e-fact-family",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Use the family 5, 7, 12 on 5 + __ = 12: start at 12 and count back 5. Where do you land?",
+        "prompt": "Use a new fact family for 6 + __ = 14. Start at 14 and count back 6. Where do you land?",
         "min": 5,
-        "max": 14,
-        "start": 12,
+        "max": 16,
+        "start": 14,
         "hop": 1,
-        "hops": 5,
+        "hops": 6,
         "direction": "back",
         "commonLandings": [],
-        "missFeedback": "Start at 12 and count back 5: you land on 7.",
-        "successFeedback": "Landed on 7 — the family fact 12 − 5 = 7 solved the unknown in one step."
+        "missFeedback": "Start at fourteen and make six hops back.",
+        "successFeedback": "You landed on 8. The family fact 14 − 6 = 8 solves the blank."
       },
       "cml": {
         "stage": "construct",
@@ -192,12 +192,6 @@
         "prompt": "Which addition fact helps solve 12 − 4?",
         "options": [
           {
-            "id": "o0",
-            "label": "4 + 8 = 12",
-            "correct": true,
-            "feedback": "Correct — addition checks the related subtraction fact."
-          },
-          {
             "id": "o1",
             "label": "12 + 4 = 16",
             "correct": false,
@@ -214,6 +208,12 @@
             "label": "8 + 12 = 20",
             "correct": false,
             "feedback": "This does not rebuild the original whole from its two parts."
+          },
+          {
+            "id": "o0",
+            "label": "4 + 8 = 12",
+            "correct": true,
+            "feedback": "Correct — addition checks the related subtraction fact."
           }
         ]
       },
@@ -260,7 +260,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 6, 5, 11: 11 − 6 = ?",
+        "prompt": "Fact family 6, 5, 11: 11 − 6 = ? Use the matching addition fact.",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -320,7 +320,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 5, 6, 11: 11 − 5 = ?",
+        "prompt": "Fact family 5, 6, 11: 11 − 5 = ? Name the missing family member.",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -387,8 +387,9 @@
       "concept": {
         "id": "rem-g1e-fact-family-c",
         "kind": "concept",
-        "body": "For 5 + __ = 12, the family is 5, 7, 12 — and the family member 12 − 5 = 7 hands over the answer directly.",
-        "narration": "For 5 + __ = 12, the family is 5, 7, 12 — and the family member 12 − 5 = 7 hands over the answer directly."
+        "body": "The number bond and equations use the same three numbers. An addition fact can help solve its matching subtraction fact.",
+        "narration": "The number bond and equations use the same three numbers. An addition fact can help solve its matching subtraction fact.",
+        "figure": "fact-family"
       },
       "check": {
         "id": "rem-g1e-fact-family-k",
@@ -401,22 +402,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Fact family 5, 4, 9: 9 − 5 = ?",
-          "answer": 4,
+          "prompt": "Use the matching addition fact: Fact family 4, 7, 11; 11 − 4 = ?",
+          "answer": 7,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 5,
-              "feedback": "That subtracts the other part. The missing partner is 4."
+              "value": 4,
+              "feedback": "Four is the part being removed. The other family part is the answer."
             },
             {
-              "value": 9,
-              "feedback": "That repeats the whole instead of removing 5."
+              "value": 15,
+              "feedback": "Adding eleven and four leaves the fact family instead of finding the missing part."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — the value 4 makes the statement true."
+          "fallbackFeedback": "Think: four plus what makes eleven?",
+          "successFeedback": "Correct — 4 + 7 = 11, so 11 − 4 = 7."
         }
       }
     }

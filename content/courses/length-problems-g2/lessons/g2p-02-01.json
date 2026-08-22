@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Joining lengths end to end ADDS them: a 34 cm piece and a 25 cm piece make one 59 cm stretch.",
       "narration": "Joining lengths end to end ADDS them: a 34 cm piece and a 25 cm piece make one 59 cm stretch."
     },
@@ -138,31 +137,30 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "The joined length has no seams — where one piece stops the next begins, and the far end reads the sum.",
       "narration": "The joined length has no seams — where one piece stops the next begins, and the far end reads the sum."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Partition the second piece in fives.",
       "conceptTag": "g2p-add-lengths",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Join a 34 cm piece and a 20 cm piece: from 34, two ten-hops for the second piece.",
+        "prompt": "Join a 34 cm piece and a 20 cm piece: from 34, make four five-hops for the second piece.",
         "min": 20,
         "max": 70,
         "start": 34,
-        "hop": 10,
-        "hops": 2,
+        "hop": 5,
+        "hops": 4,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 36,
-            "feedback": "Two centimeters of the second piece placed — the whole 20 must join."
+            "value": 39,
+            "feedback": "One five of the second piece is placed — keep adding five until all 20 cm join."
           }
         ],
-        "missFeedback": "Each hop is 10. From 34, 2 hops land on 54.",
+        "missFeedback": "Each hop is 5. From 34, 4 hops land on 54.",
         "successFeedback": "54 — the second piece laid end to end carries the far end to the joined total."
       },
       "cml": {
@@ -194,32 +192,43 @@
       "body": "",
       "conceptTag": "g2p-add-lengths",
       "explanationVariants": [
-        "Order of joining is free.",
-        "The total cannot tell."
+        "A joined total must beat every piece alone.",
+        "Check: does the total outgrow the bigger piece?"
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "26 + 32 = ? (the two ribbon pieces joined end to end, in cm)",
-        "answer": 58,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie joins a 26 cm ribbon piece to a 32 cm ribbon piece and says the joined total is 30 cm. Does that make sense?",
+        "options": [
           {
-            "value": 62,
-            "feedback": "That found how much longer one piece is — joining end to end ADDS the lengths."
+            "id": "o0",
+            "label": "No — the total is shorter than the bigger piece alone",
+            "correct": true,
+            "feedback": "Correct — joining end to end can only add length: 26 + 32 = 58, longer than either piece alone. 30 cm is impossible."
           },
           {
-            "value": 68,
-            "feedback": "A phantom ten crept in; each piece contributes exactly its own length."
+            "id": "o1",
+            "label": "Yes — a joined total can come out shorter than a piece",
+            "correct": false,
+            "feedback": "A total cannot shrink below either piece — 26 + 32 must reach 58, never dip below 32."
+          },
+          {
+            "id": "o2",
+            "label": "Yes — if the two pieces overlap when they are joined",
+            "correct": false,
+            "feedback": "Pieces placed end to end do not overlap — each contributes its own full length to the total."
+          },
+          {
+            "id": "o3",
+            "label": "Unclear — only a ruler could settle it",
+            "correct": false,
+            "feedback": "A ruler cannot rescue this: a total shorter than one of its own parts is impossible no matter who measures it."
           }
-        ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 58."
+        ]
       },
       "hints": [
-        "Place the pieces end to end.",
-        "The total is the far end.",
-        "Every piece counts once."
+        "Compare the total to the bigger piece.",
+        "Joining can only add length, never remove it.",
+        "A believable total is never smaller than a part."
       ],
       "cml": {
         "stage": "construct",
@@ -242,10 +251,6 @@
         "transferFamily": "length-problems-g2:g2p-add-lengths",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "Add2DigitNumeric"
       }
     },
     {
@@ -263,7 +268,7 @@
         "options": [
           {
             "id": "o0",
-          "label": "Jump 34 then 20 to land on 54",
+            "label": "Jump 34 then 20 to land on 54",
             "correct": true,
             "feedback": "Correct — lengths chain head to tail on the line, and the landing reads the joined total."
           },
@@ -318,35 +323,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more, for the road — this time, three pieces join.",
       "conceptTag": "g2p-add-lengths",
       "explanationVariants": [
-        "Longer pieces, same seam-free join.",
-        "Add and read the end."
+        "Three pieces end to end: 25 + 23 + 15 = 63.",
+        "Add all three lengths, one after another."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "25 + 23 = ? (the two ribbon pieces joined end to end, in cm)",
-        "answer": 48,
+        "prompt": "25 + 23 + 15 = ? (three ribbon pieces joined end to end, in cm)",
+        "answer": 63,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 2,
-            "feedback": "That found how much longer one piece is — joining end to end ADDS the lengths."
+            "value": 48,
+            "feedback": "That only added two of the three pieces — all three ribbon pieces join end to end: 25 + 23 + 15 = 63."
           },
           {
-            "value": 58,
+            "value": 73,
             "feedback": "A phantom ten crept in; each piece contributes exactly its own length."
           }
         ],
         "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 48."
+        "successFeedback": "Correct — 63."
       },
       "hints": [
-        "Place the pieces end to end.",
-        "The total is the far end.",
-        "Every piece counts once."
+        "Place all three pieces end to end.",
+        "Add the first two, then add the third.",
+        "25 + 23 = 48, then 48 + 15 = 63."
       ],
       "cml": {
         "stage": "construct",
@@ -369,10 +374,6 @@
         "transferFamily": "length-problems-g2:g2p-add-lengths",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "Add2DigitNumeric"
       }
     },
     {
@@ -407,22 +408,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "25 + 13 = ? (the two ribbon pieces joined end to end, in cm)",
-          "answer": 38,
+          "prompt": "Maggie tapes a 21 cm stick to a 14 cm stick, end to end. How long is the taped stick?",
+          "answer": 35,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 12,
-              "feedback": "That found how much longer one piece is — joining end to end ADDS the lengths."
+              "value": 7,
+              "feedback": "That found how much longer one stick is — taping end to end ADDS the lengths."
             },
             {
-              "value": 48,
-              "feedback": "A phantom ten crept in; each piece contributes exactly its own length."
+              "value": 45,
+              "feedback": "A phantom ten crept in; each stick adds exactly its own length."
             }
           ],
           "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-          "successFeedback": "Correct — 38."
+          "successFeedback": "Correct — 35."
         }
       }
     }

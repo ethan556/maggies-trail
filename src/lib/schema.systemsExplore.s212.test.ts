@@ -13,7 +13,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { SystemsExploreSpec, WidgetSpec, systemsExploreEditErrors, widgetIntegrityErrors, type TWidget } from "@/lib/schema";
 import { SAMPLES } from "@/components/widgetSamples";
 
@@ -66,9 +66,9 @@ const CLASSIC_KEYS = [
 
 describe("systemsExplore: the S212 fields are additive", () => {
   it("finds every authored spec, and knows which have opted in", () => {
-    expect(SPECS.length).toBe(6);
-    expect(classic()).toHaveLength(5);
-    expect(opted().map((s) => s.file.split("/").pop())).toEqual(["se-01-03.json"]);
+    expect(SPECS.length).toBe(7);
+    expect(classic()).toHaveLength(6);
+    expect(opted().map((s) => basename(s.file))).toEqual(["se-01-03.json"]);
   });
 
   it("parses each CLASSIC authored spec to exactly the classic key set, with no new field materialised", () => {

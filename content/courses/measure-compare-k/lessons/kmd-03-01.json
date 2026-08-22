@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "ks-sort-count",
       "body": "Sorting asks ONE question of every object — red or not? round or not? — and the answers build the groups.",
       "narration": "Sorting asks ONE question of every object — red or not? round or not? — and the answers build the groups."
     },
@@ -59,7 +59,7 @@
           }
         ],
         "missFeedback": "Count each group first; the comparison is between the three counts, not the shapes' sizes.",
-        "successFeedback": "Yes — a circle is round all the way, like a coin or a clock."
+        "successFeedback": "Right — 9 squares matches the question."
       },
       "variant": {
         "gen": "g0-shapes-sorting",
@@ -117,16 +117,16 @@
         "prompt": "You sort a yellow sock first by color and then by kind. Where does it go each time?",
         "options": [
           {
-            "id": "o0",
-            "label": "Yellow group first, then clothing group",
-            "correct": true,
-            "feedback": "Correct — the first rule reads its color (yellow), the second reads what it is (clothing); same object, two homes."
-          },
-          {
             "id": "o1",
             "label": "The same group both times",
             "correct": false,
             "feedback": "Changing the sorting rule can move one object into a different group."
+          },
+          {
+            "id": "o0",
+            "label": "Yellow group first, then clothing group",
+            "correct": true,
+            "feedback": "Correct — the first rule reads its color (yellow), the second reads what it is (clothing); same object, two homes."
           },
           {
             "id": "o2",
@@ -177,7 +177,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Change the rule and the groups change: a red sock joins the red pile under a color rule, the clothing pile under a kind rule.",
       "narration": "Change the rule and the groups change: a red sock joins the red pile under a color rule, the clothing pile under a kind rule."
     },
@@ -193,7 +192,7 @@
           "w": 3,
           "h": 1
         },
-        "prompt": "Tap the group with the greatest number of shapes.",
+        "prompt": "The rule is 'circles.' Tap the group that belongs in the circle group.",
         "hotspots": [
           {
             "id": "g0",
@@ -203,7 +202,7 @@
             "icon": "🔺",
             "count": 6,
             "correct": false,
-            "feedback": "6 is fewer than the greatest group, which contains 9 shapes."
+            "feedback": "Triangles do not match the circle rule."
           },
           {
             "id": "g1",
@@ -212,7 +211,8 @@
             "label": "9 squares",
             "icon": "◼️",
             "count": 9,
-            "correct": true
+            "correct": false,
+            "feedback": "Squares do not match the circle rule."
           },
           {
             "id": "g2",
@@ -221,12 +221,12 @@
             "label": "2 circles",
             "icon": "⚪",
             "count": 2,
-            "correct": false,
-            "feedback": "2 is fewer than the greatest group, which contains 9 shapes."
+            "correct": true,
+            "feedback": "These are circles, so this group matches the rule."
           }
         ],
-        "missFeedback": "Count each group first; the comparison is between the three counts, not the shapes' sizes.",
-        "successFeedback": "Yes — a circle is round all the way, like a coin or a clock."
+        "missFeedback": "Test each group with the one rule: are these shapes circles?",
+        "successFeedback": "Yes — the circle rule sends the 2 circles into this group."
       },
       "variant": {
         "gen": "g0-shapes-sorting",
@@ -269,26 +269,26 @@
         "prompt": "What makes a sort a SORT, instead of just piles?",
         "options": [
           {
-            "id": "o0",
-            "label": "One rule that every object is tested against",
-            "correct": true,
-            "feedback": "Correct — a sort asks one question of everything: red or not, big or small; the rule builds the piles."
-          },
-          {
             "id": "o1",
-            "label": "Making the piles equal",
+            "label": "Equal-sized piles decide the groups",
             "correct": false,
             "feedback": "The rule decides the pile sizes; equal piles are a coincidence, not the goal."
           },
           {
             "id": "o2",
-            "label": "Pretty arrangements",
+            "label": "A neat pattern decides every group",
             "correct": false,
             "feedback": "A sort can be messy on the table and perfect in its rule."
           },
           {
+            "id": "o0",
+            "label": "One clear rule tests every object",
+            "correct": true,
+            "feedback": "Correct — a sort asks one question of everything: red or not, big or small; the rule builds the piles."
+          },
+          {
             "id": "o3",
-            "label": "Speed",
+            "label": "Fast sorting decides every group",
             "correct": false,
             "feedback": "A slow sort with one clear rule is still a sort; a fast jumble is not."
           }
@@ -333,7 +333,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 3 and count on 4. Tap where you land.",
+        "prompt": "One sorted group has 3 shapes and another has 4. Count on 4 to find the 7 shapes in both groups.",
         "min": 1,
         "max": 9,
         "start": 3,
@@ -351,7 +351,7 @@
           }
         ],
         "missFeedback": "Count 4 on from 3: you land on 7.",
-        "successFeedback": "3 shapes and 4 more make 7 — counting finishes what sorting starts.",
+        "successFeedback": "Three shapes and four shapes make 7 across the two sorted groups.",
         "lowFeedback": "Short of the landing — all 4 counts are needed to reach 7.",
         "highFeedback": "Past the landing — the count-on stops after 4 numbers, on 7."
       },
@@ -401,12 +401,6 @@
         "prompt": "You sort a green sock first by color and then by kind. Where does it go each time?",
         "options": [
           {
-            "id": "o0",
-            "label": "Green group first, then clothing group",
-            "correct": true,
-            "feedback": "Correct — the first rule reads its color (green), the second reads what it is (clothing); same object, two homes."
-          },
-          {
             "id": "o1",
             "label": "The same group both times",
             "correct": false,
@@ -423,6 +417,12 @@
             "label": "It cannot be sorted twice",
             "correct": false,
             "feedback": "Any object answers many questions at once; each rule simply asks a different one."
+          },
+          {
+            "id": "o0",
+            "label": "Green group first, then clothing group",
+            "correct": true,
+            "feedback": "Correct — the first rule reads its color (green), the second reads what it is (clothing); same object, two homes."
           }
         ]
       },
@@ -490,13 +490,13 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "You sort a yellow sock first by color and then by kind. Where does it go each time?",
+          "prompt": "You sort a blue sock first by color and then by kind. Where does it go each time?",
           "options": [
             {
               "id": "o0",
-              "label": "Yellow group first, then clothing group",
+              "label": "Blue group first, then clothing group",
               "correct": true,
-              "feedback": "Correct — the first rule reads its color (yellow), the second reads what it is (clothing); same object, two homes."
+              "feedback": "Correct — the first rule reads its color (blue), the second reads what it is (clothing); same object, two homes."
             },
             {
               "id": "o1",
@@ -506,7 +506,7 @@
             },
             {
               "id": "o2",
-              "label": "clothing group first, then Yellow group",
+              "label": "clothing group first, then Blue group",
               "correct": false,
               "feedback": "That swaps the rules' order — color was the FIRST rule asked for, kind the second."
             },

@@ -1,373 +1,357 @@
 {
- "id": "mult-04-04",
- "slug": "two-step-problems",
- "title": "Two-Step Problems",
- "courseId": "multiplication-division",
- "chapterId": "ch4-word-problems",
- "minutes": 7,
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "body": "Big problems are two small ones **standing in a row** — the first answer feeds the second step. The skill isn't the arithmetic; it's the **plan**: what must you find FIRST before the second step is even possible?",
-   "figure": "mult3-which-op"
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "A plan has an order — build it before you compute.",
-   "conceptTag": "two-step",
-   "widget": {
-    "type": "dragOrder",
-    "prompt": "Ella buys 3 packs of 4 pencils, then gives 5 pencils away. Put the solution plan in order.",
-    "items": [
-     {
-      "id": "p3",
-      "label": "Give away: 12 − 5 = 7"
-     },
-     {
-      "id": "p1",
-      "label": "Read the story: 3 packs of 4, then 5 leave"
-     },
-     {
-      "id": "p4",
-      "label": "Answer: Ella keeps 7 pencils"
-     },
-     {
-      "id": "p2",
-      "label": "Count all pencils: 3 × 4 = 12"
-     }
-    ],
-    "correctOrder": [
-     "p1",
-     "p2",
-     "p3",
-     "p4"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "p3",
-      "second": "p2",
-      "feedback": "The give-away landed before the counting — but you can't give pencils from a pile you haven't counted. Find the total first."
-     }
-    ],
-    "missFeedback": "Every plan runs: read → find the first pile (multiply the packs) → change it (give some away) → answer.",
-    "successFeedback": "Read, build the pile, change the pile, answer. Step one always feeds step two."
-   },
-   "predict": {
-    "prompt": "Ella buys 3 packs of 4 pencils, then gives 5 away. Which operation comes FIRST?",
-    "options": [
-     {
-      "id": "mult",
-      "label": "Multiply: 3 × 4"
-     },
-     {
-      "id": "sub",
-      "label": "Subtract: take the 5 away"
-     },
-     {
-      "id": "either",
-      "label": "Either order — same answer"
-     }
-    ],
-    "outcomeId": "mult",
-    "reveal": "You can't give away pencils you haven't counted: first 3 × 4 = 12, then 12 − 5 = 7. The story sets the order — subtracting first would mean taking 5 from a single pack of 4."
-   }
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Loose items are the classic step-two trap.",
-   "conceptTag": "two-step",
-   "explanationVariants": [
-    "The boxes are equal groups (2 × 6 = 12); the 3 loose eggs join ONCE at the end: 12 + 3 = 15.",
-    "Plan it: build the boxed pile first, then add the strays. Loose eggs never lived inside the boxes."
-   ],
-   "widget": {
-    "type": "mcq",
-    "prompt": "Sam has 2 boxes of 6 eggs, plus 3 loose eggs. Which plan counts his eggs?",
-    "options": [
-     {
-      "id": "a",
-      "label": "2 × 6 first, then + 3",
-      "correct": true,
-      "feedback": "Boxed eggs: 12. Loose eggs join once: 15. The strays are added at the end, not multiplied."
-     },
-     {
-      "id": "b",
-      "label": "2 + 6 first, then × 3",
-      "feedback": "That adds the box count to one box's eggs, then triples it (24). The boxes are equal groups — they multiply."
-     },
-     {
-      "id": "c",
-      "label": "2 × 6 × 3",
-      "feedback": "That multiplies the loose eggs into every box (36). The 3 strays sit OUTSIDE the boxes — they join once."
-     },
-     {
-      "id": "d",
-      "label": "6 + 3 first, then × 2",
-      "feedback": "That glues the 3 loose eggs into BOTH boxes (18). But only 6 live in each box — the strays are added once, at the end."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "two-step-order",
-    "form": "whichPlan"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "The biggest two-step trap: aiming step two at the **wrong pile** — subtracting rows instead of items, or changing every group instead of the whole. After step one, say out loud what your new pile is. THEN act on it.",
-   "figure": "mult3-estimate"
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Name the pile before the cars leave it.",
-   "conceptTag": "two-step",
-   "explanationVariants": [
-    "Step one: the lot holds 5 × 8 = 40 cars. Step two: 6 leave the WHOLE lot — 40 − 6 = 34.",
-    "The 6 cars drive out of the full 40, not out of one row: 34 remain."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "A parking lot has 5 rows with 8 cars in each. Then 6 cars drive away. How many cars remain?",
-    "answer": 34,
-    "tolerance": 0,
-    "unit": "cars",
-    "commonErrors": [
-     {
-      "value": 40,
-      "feedback": "40 is the full lot — step one done! Six cars then leave it. Subtract from the whole pile."
-     },
-     {
-      "value": 46,
-      "feedback": "46 ADDS the 6 leaving cars. Departures shrink the pile — the second step subtracts."
-     },
-     {
-      "value": 2,
-      "feedback": "2 subtracts the 6 from a single ROW of 8. The cars leave the WHOLE lot of 40, not one row."
-     }
-    ],
-    "fallbackFeedback": "Two steps: fill the lot (5 × 8), name that pile, then let 6 leave it."
-   },
-   "variant": {
-    "gen": "two-step-arith",
-    "form": "timesThenLess"
-   }
-  },
-  {
-   "id": "i2",
-   "kind": "interactive",
-   "body": "Chain both operations in one build.",
-   "conceptTag": "two-step",
-   "widget": {
-    "type": "buildExpression",
-    "prompt": "4 shelves hold 7 books each; then 3 books are borrowed. Build the whole plan as one expression.",
-    "tokens": [
-     {
-      "id": "t4",
-      "label": "4"
-     },
-     {
-      "id": "tx",
-      "label": "×"
-     },
-     {
-      "id": "t7",
-      "label": "7"
-     },
-     {
-      "id": "tm",
-      "label": "−"
-     },
-     {
-      "id": "t3",
-      "label": "3"
-     },
-     {
-      "id": "tp",
-      "label": "+"
-     }
-    ],
-    "correct": [
-     "t4",
-     "tx",
-     "t7",
-     "tm",
-     "t3"
-    ],
-    "acceptAlso": [
-     [
-      "t7",
-      "tx",
-      "t4",
-      "tm",
-      "t3"
-     ]
-    ],
-    "commonBuilds": [
-     {
-      "sequence": [
-       "t4",
-       "tx",
-       "t7",
-       "tp",
-       "t3"
-      ],
-      "feedback": "Borrowed books LEAVE the shelves — the chain's second link subtracts, not adds."
-     },
-     {
-      "sequence": [
-       "t4",
-       "tp",
-       "t7",
-       "tm",
-       "t3"
-      ],
-      "feedback": "4 + 7 joins the shelf count to one shelf's books. The shelves are equal groups — step one multiplies them."
-     }
-    ],
-    "reusable": false,
-    "missFeedback": "Step one builds the pile (4 shelves × 7 books); step two removes the 3 borrowed. Chain them with −.",
-    "successFeedback": "4 × 7 − 3 = 28 − 3 = 25 books still shelved. One expression, two steps."
-   }
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "Not every problem needs two steps — spot the one that does.",
-   "conceptTag": "two-step",
-   "explanationVariants": [
-    "Riding kids = all kids minus the sick ones: 6 × 5 = 30, then 30 − 4 = 26. Two piles, two steps.",
-    "The other stories finish in one move — one multiplication, one division, or one addition."
-   ],
-   "widget": {
-    "type": "mcq",
-    "prompt": "Which problem needs TWO steps?",
-    "options": [
-     {
-      "id": "a",
-      "label": "6 vans each carry 5 kids; 4 kids stay home sick. How many kids ride?",
-      "correct": true,
-      "feedback": "Build the pile (6 × 5 = 30), then remove the sick 4: 26 riders. First answer feeds the second step."
-     },
-     {
-      "id": "b",
-      "label": "6 vans each carry 5 kids. How many kids ride?",
-      "feedback": "One move: 6 × 5 = 30. Nothing changes the pile afterward — no second step."
-     },
-     {
-      "id": "c",
-      "label": "6 kids meet 5 kids at the park",
-      "feedback": "One join: 6 + 5 = 11. Two numbers, one step."
-     },
-     {
-      "id": "d",
-      "label": "30 kids share 6 vans equally",
-      "feedback": "One split: 30 ÷ 6 = 5 per van. The total is known and nothing follows the split."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "two-step-order",
-    "form": "whichNeedsTwo"
-   }
-  },
-  {
-   "id": "ch1",
-   "kind": "challenge",
-   "body": "Split, then read very carefully.",
-   "conceptTag": "two-step",
-   "hints": [
-    "Step one is a split: which slot is missing for the cabins?",
-    "32 ÷ 4 = 8 kids in each cabin.",
-    "Each cabin's 8 includes exactly 1 leader — how many are NOT leaders?"
-   ],
-   "explanationVariants": [
-    "Cabin size first: 32 ÷ 4 = 8. Then per cabin: 8 − 1 = 7 non-leaders.",
-    "The leader comes out of ONE cabin's 8, not out of the whole 32: each cabin keeps 7 non-leaders."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "A camp has 32 kids split equally into 4 cabins. Each cabin elects 1 leader. How many kids in each cabin are NOT leaders?",
-    "answer": 7,
-    "tolerance": 0,
-    "unit": "kids",
-    "commonErrors": [
-     {
-      "value": 8,
-      "feedback": "8 is a full cabin — step one done! But 1 of each cabin's 8 becomes the leader. Subtract that one."
-     },
-     {
-      "value": 28,
-      "feedback": "28 subtracts the 4 cabins from the 32 kids. The 4 isn't kids leaving — it's how many ways the camp splits."
-     },
-     {
-      "value": 4,
-      "feedback": "4 subtracts the CABIN count from a cabin of 8. Only 1 leader leaves each cabin's count, not 4."
-     }
-    ],
-    "fallbackFeedback": "Two steps: split 32 into 4 cabins, name the new pile (one cabin), then remove its 1 leader."
-   },
-   "variant": {
-    "gen": "two-step-arith",
-    "form": "shareThenLeader"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "You chain steps like a pro.",
-   "takeaways": [
-    "Plan first: step one's answer is step two's starting pile.",
-    "Say the new pile out loud before acting on it.",
-    "One expression can carry the whole chain: build, then change."
-   ],
-   "teaser": "the final power: catching answers that can't possibly be right — before anyone else does."
-  }
- ],
- "remedials": [
-  {
-   "conceptTag": "two-step",
-   "concept": {
-    "id": "rem-ts-c",
-    "kind": "concept",
-    "body": "Quick rewind. Cover the second half of the story with your hand. Solve what's left — that's step one. Now uncover: the story changes YOUR new pile, not the original numbers. 3 bags of 5, then 2 eaten: first 3 × 5 = 15, then 15 − 2."
-   },
-   "check": {
-    "id": "rem-ts-k",
-    "kind": "check",
-    "body": "",
-    "conceptTag": "two-step",
-    "explanationVariants": [
-     "Count the whole pile first: 3 × 5 = 15 apples. The eating comes after.",
-     "Cover \"2 eaten\": what remains is a one-step equal-groups count — 3 × 5."
-    ],
-    "widget": {
-     "type": "mcq",
-     "prompt": "3 bags of 5 apples; then 2 apples are eaten. What is STEP ONE?",
-     "options": [
-      {
-       "id": "a",
-       "label": "3 × 5",
-       "correct": true,
-       "feedback": "Build the pile first: 15 apples. Then the eating changes that pile."
+  "id": "mult-04-04",
+  "slug": "two-step-problems",
+  "title": "Two-Step Problems",
+  "courseId": "multiplication-division",
+  "chapterId": "ch4-word-problems",
+  "minutes": 7,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Big problems are two small ones **standing in a row** — the first answer feeds the second step. The skill isn't the arithmetic; it's the **plan**: what must you find FIRST before the second step is even possible?",
+      "figure": "mult3-groups-adjust-cars"
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Collapse the story expression in the order the events happen.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "evalOrder",
+        "prompt": "Ella has 3 packs of 4 pencils and gives away 5. Tap the operation that must happen first in 3 × 4 − 5.",
+        "tokens": [
+          "3",
+          "×",
+          "4",
+          "−",
+          "5"
+        ],
+        "target": 7,
+        "commonResults": [
+          {
+            "value": -3,
+            "feedback": "That subtracts 5 from one pack before counting all 3 packs. Build the 12-pencil pile first."
+          }
+        ],
+        "fallbackFeedback": "First find 3 × 4 = 12. Then take away 5.",
+        "successFeedback": "The expression becomes 12 − 5, then 7. Multiplication builds the pile before subtraction changes it."
       },
-      {
-       "id": "b",
-       "label": "5 − 2",
-       "feedback": "That eats from one bag before the apples are even counted. First find the whole pile, then subtract from it."
-      },
-      {
-       "id": "c",
-       "label": "3 + 2",
-       "feedback": "That mixes the bag count with the eaten apples — two numbers from different steps. Start by counting the bags' apples."
+      "predict": {
+        "prompt": "Ella buys 3 packs of 4 pencils, then gives 5 away. Which operation comes FIRST?",
+        "options": [
+          {
+            "id": "mult",
+            "label": "Multiply: 3 × 4"
+          },
+          {
+            "id": "sub",
+            "label": "Subtract: take the 5 away"
+          },
+          {
+            "id": "either",
+            "label": "Either order — same answer"
+          }
+        ],
+        "outcomeId": "mult",
+        "reveal": "You can't give away pencils you haven't counted: first 3 × 4 = 12, then 12 − 5 = 7. The story sets the order — subtracting first would mean taking 5 from a single pack of 4."
       }
-     ]
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Loose items are the classic step-two trap.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "The boxes are equal groups (2 × 6 = 12); the 3 loose eggs join ONCE at the end: 12 + 3 = 15.",
+        "Plan it: build the boxed pile first, then add the strays. Loose eggs never lived inside the boxes."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Sam has 2 boxes of 6 eggs, plus 3 loose eggs. Which plan counts his eggs?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2 × 6 first, then + 3",
+            "correct": true,
+            "feedback": "Boxed eggs: 12. Loose eggs join once: 15. The strays are added at the end, not multiplied."
+          },
+          {
+            "id": "b",
+            "label": "2 + 6 first, then × 3",
+            "feedback": "That adds the box count to one box's eggs, then triples it (24). The boxes are equal groups — they multiply."
+          },
+          {
+            "id": "c",
+            "label": "2 × 6 × 3",
+            "feedback": "That multiplies the loose eggs into every box (36). The 3 strays sit OUTSIDE the boxes — they join once."
+          },
+          {
+            "id": "d",
+            "label": "6 + 3 first, then × 2",
+            "feedback": "That glues the 3 loose eggs into BOTH boxes (18). But only 6 live in each box — the strays are added once, at the end."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "two-step-order",
+        "form": "whichPlan"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Choose each operation from the story's structure. First multiply rows × items to build the whole item total; then subtract items from that total. Subtracting rows or changing every group would act on the wrong quantity.",
+      "figure": "mult3-groups-adjust-cars",
+      "narration": "Choose each operation from the story's structure. First multiply rows × items to build the whole item total; then subtract items from that total. Subtracting rows or changing every group would act on the wrong quantity."
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Name the pile before the cars leave it.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "Step one: the lot holds 5 × 8 = 40 cars. Step two: 6 leave the WHOLE lot — 40 − 6 = 34.",
+        "The 6 cars drive out of the full 40, not out of one row: 34 remain."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A parking lot has 5 rows with 8 cars in each. Then 6 cars drive away. How many cars remain?",
+        "answer": 34,
+        "tolerance": 0,
+        "unit": "cars",
+        "commonErrors": [
+          {
+            "value": 40,
+            "feedback": "40 is the full lot — step one done! Six cars then leave it. Subtract from the whole pile."
+          },
+          {
+            "value": 46,
+            "feedback": "46 ADDS the 6 leaving cars. Departures shrink the pile — the second step subtracts."
+          },
+          {
+            "value": 2,
+            "feedback": "2 subtracts the 6 from a single ROW of 8. The cars leave the WHOLE lot of 40, not one row."
+          }
+        ],
+        "fallbackFeedback": "Two steps: fill the lot (5 × 8), name that pile, then let 6 leave it."
+      },
+      "variant": {
+        "gen": "two-step-arith",
+        "form": "timesThenLess"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Chain both operations in one build.",
+      "conceptTag": "two-step",
+      "widget": {
+        "type": "buildExpression",
+        "prompt": "4 shelves hold 7 books each; then 3 books are borrowed. Build the whole plan as one expression.",
+        "tokens": [
+          {
+            "id": "t4",
+            "label": "4"
+          },
+          {
+            "id": "tx",
+            "label": "×"
+          },
+          {
+            "id": "t7",
+            "label": "7"
+          },
+          {
+            "id": "tm",
+            "label": "−"
+          },
+          {
+            "id": "t3",
+            "label": "3"
+          },
+          {
+            "id": "tp",
+            "label": "+"
+          }
+        ],
+        "correct": [
+          "t4",
+          "tx",
+          "t7",
+          "tm",
+          "t3"
+        ],
+        "acceptAlso": [
+          [
+            "t7",
+            "tx",
+            "t4",
+            "tm",
+            "t3"
+          ]
+        ],
+        "commonBuilds": [
+          {
+            "sequence": [
+              "t4",
+              "tx",
+              "t7",
+              "tp",
+              "t3"
+            ],
+            "feedback": "Borrowed books LEAVE the shelves — the chain's second link subtracts, not adds."
+          },
+          {
+            "sequence": [
+              "t4",
+              "tp",
+              "t7",
+              "tm",
+              "t3"
+            ],
+            "feedback": "4 + 7 joins the shelf count to one shelf's books. The shelves are equal groups — step one multiplies them."
+          }
+        ],
+        "reusable": false,
+        "missFeedback": "Step one builds the pile (4 shelves × 7 books); step two removes the 3 borrowed. Chain them with −.",
+        "successFeedback": "4 × 7 − 3 = 28 − 3 = 25 books still shelved. One expression, two steps."
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Not every problem needs two steps — spot the one that does.",
+      "conceptTag": "two-step",
+      "explanationVariants": [
+        "Riding kids = all kids minus the sick ones: 6 × 5 = 30, then 30 − 4 = 26. Two piles, two steps.",
+        "The other stories finish in one move — one multiplication, one division, or one addition."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "Which plan needs the result of one operation before a second operation can begin?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Find van riders, then subtract absences.",
+            "correct": true,
+            "feedback": "Build the pile (6 × 5 = 30), then remove the sick 4: 26 riders. First answer feeds the second step."
+          },
+          {
+            "id": "b",
+            "label": "Find the total van riders by multiplying.",
+            "feedback": "One move: 6 × 5 = 30. Nothing changes the pile afterward — no second step."
+          },
+          {
+            "id": "c",
+            "label": "Find total friends by adding once.",
+            "feedback": "One join: 6 + 5 = 11. Two numbers, one step."
+          },
+          {
+            "id": "d",
+            "label": "Find riders per van by dividing once.",
+            "feedback": "One split: 30 ÷ 6 = 5 per van. The total is known and nothing follows the split."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "two-step-order",
+        "form": "whichNeedsTwo"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Split, then read very carefully.",
+      "conceptTag": "two-step",
+      "hints": [
+        "Step one is a split: which slot is missing for the cabins?",
+        "32 ÷ 4 = 8 kids in each cabin.",
+        "Each cabin's 8 includes exactly 1 leader — how many are NOT leaders?"
+      ],
+      "explanationVariants": [
+        "Cabin size first: 32 ÷ 4 = 8. Then per cabin: 8 − 1 = 7 non-leaders.",
+        "The leader comes out of ONE cabin's 8, not out of the whole 32: each cabin keeps 7 non-leaders."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A camp has 32 kids split equally into 4 cabins. Each cabin elects 1 leader. How many kids in each cabin are NOT leaders?",
+        "answer": 7,
+        "tolerance": 0,
+        "unit": "kids",
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "8 is a full cabin — step one done! But 1 of each cabin's 8 becomes the leader. Subtract that one."
+          },
+          {
+            "value": 28,
+            "feedback": "28 subtracts the 4 cabins from the 32 kids. The 4 isn't kids leaving — it's how many ways the camp splits."
+          },
+          {
+            "value": 4,
+            "feedback": "4 subtracts the CABIN count from a cabin of 8. Only 1 leader leaves each cabin's count, not 4."
+          }
+        ],
+        "fallbackFeedback": "Two steps: split 32 into 4 cabins, name the new pile (one cabin), then remove its 1 leader."
+      },
+      "variant": {
+        "gen": "two-step-arith",
+        "form": "shareThenLeader"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "You chain steps like a pro.",
+      "takeaways": [
+        "Plan first: step one's answer is step two's starting pile.",
+        "Say the new pile out loud before acting on it.",
+        "One expression can carry the whole chain: build, then change."
+      ],
+      "teaser": "the final power: catching answers that can't possibly be right — before anyone else does."
     }
-   }
-  }
- ]
+  ],
+  "remedials": [
+    {
+      "conceptTag": "two-step",
+      "concept": {
+        "id": "rem-ts-c",
+        "kind": "concept",
+        "body": "Quick rewind. Cover the second half of the story with your hand. Solve what's left — that's step one. Now uncover: the story changes YOUR new pile, not the original numbers. 3 bags of 5, then 2 eaten: first 3 × 5 = 15, then 15 − 2."
+      },
+      "check": {
+        "id": "rem-ts-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "two-step",
+        "explanationVariants": [
+          "Count the whole pile first: 3 × 5 = 15 apples. The eating comes after.",
+          "Cover \"2 eaten\": what remains is a one-step equal-groups count — 3 × 5."
+        ],
+        "widget": {
+          "type": "mcq",
+          "prompt": "3 bags of 5 apples; then 2 apples are eaten. What is STEP ONE?",
+          "options": [
+            {
+              "id": "a",
+              "label": "3 × 5",
+              "correct": true,
+              "feedback": "Build the pile first: 15 apples. Then the eating changes that pile."
+            },
+            {
+              "id": "b",
+              "label": "5 − 2",
+              "feedback": "That eats from one bag before the apples are even counted. First find the whole pile, then subtract from it."
+            },
+            {
+              "id": "c",
+              "label": "3 + 2",
+              "feedback": "That mixes the bag count with the eaten apples — two numbers from different steps. Start by counting the bags' apples."
+            }
+          ]
+        }
+      }
+    }
+  ]
 }

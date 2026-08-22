@@ -38,13 +38,13 @@ describe("LeaderboardClient own-row avatar — real manifest, everything disable
     }
   });
 
-  it("still falls back to the placeholder on the user's row for a chosen-but-disabled real manifest id", async () => {
+  it("shows a chosen released avatar on the user's row", async () => {
     const p = progressStore.load();
     p.avatarId = "avatar-301";
     progressStore.save(p);
     const { container } = render(<LeaderboardClient />);
     await screen.findAllByRole("listitem");
     const userRow = container.querySelector('[aria-current="true"]');
-    expect(userRow!.querySelector("img")?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+    expect(userRow!.querySelector("img")?.getAttribute("src")).toBe("/avatars/avatar-301-256.webp");
   });
 });

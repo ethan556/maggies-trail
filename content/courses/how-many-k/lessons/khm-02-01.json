@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-last-word-total",
       "body": "Counting's biggest secret: the last number said is not just the last toy's name — it tells how many are in the WHOLE group.",
       "narration": "Counting's biggest secret: the last number said is not just the last toy's name — it tells how many are in the WHOLE group."
     },
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-five-shells-total",
       "body": "Count five shells and the word “five” belongs to all of them together. That is what “how many” asks for.",
       "narration": "Count five shells and the word “five” belongs to all of them together. That is what “how many” asks for."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-cardinality",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count 5 shells, then show the group's number with counters.",
-        "target": 5,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Show why the last count word answers how many.",
+        "items": [
           {
-            "count": 1,
-            "feedback": "One names only the final shell; the question asks about the whole group."
+            "id": "stage-3",
+            "label": "Use five for the whole group"
           },
           {
-            "count": 4,
-            "feedback": "The count did not stop at 4 — one more shell took the count to 5."
+            "id": "stage-2",
+            "label": "Say five last"
+          },
+          {
+            "id": "stage-1",
+            "label": "Count all five shells"
           }
         ],
-        "missFeedback": "Count the shells one by one; the number you end on is the group's number.",
-        "successFeedback": "Five — the last word of the count names the whole group at once."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Count all five shells, then Say five last, then Use five for the whole group.",
+        "successFeedback": "Yes — the final count word names the whole set."
       },
       "cml": {
         "stage": "construct",

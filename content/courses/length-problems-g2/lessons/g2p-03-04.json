@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Before trusting an answer, test it against the story: totals must outgrow their parts, gaps must fit inside the longer piece, and ruler spans cannot beat their end marks.",
       "narration": "Before trusting an answer, test it against the story: totals must outgrow their parts, gaps must fit inside the longer piece, and ruler spans cannot beat their end marks."
     },
@@ -39,7 +38,7 @@
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
         "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "successFeedback": "Correct — the computed gap bar is longer. That shows the result cannot be a reasonable gap."
       },
       "predict": {
         "prompt": "A computed difference comes out LONGER than the longer object. Possible?",
@@ -90,31 +89,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Two trail legs of 32 m and 25 m give a computed total of 30 m. Reasonable?",
+        "prompt": "Maggie computes that a 52 m rope is 61 m longer than a 35 m rope. Reasonable?",
         "options": [
           {
             "id": "o0",
-            "label": "No because 30 is less than the 32 m part",
+            "label": "No — the gap must fit inside the longer 52 m rope",
             "correct": true,
-            "feedback": "Correct — joining 32 with anything positive lands past 32; a 30 m total contradicts its own first leg."
+            "feedback": "Correct — the real gap is 52 − 35 = 17 m; a gap can never be longer than the longer rope itself."
           },
           {
             "id": "o1",
-            "label": "Reasonable — totals vary",
+            "label": "No — the gap should be exactly 87 m",
             "correct": false,
-            "feedback": "Totals obey their parts: 32 + 25 must reach 57, never dip below 32."
+            "feedback": "87 comes from ADDING 52 + 35; a gap asks how far apart they are: 52 − 35 = 17 m."
           },
           {
             "id": "o2",
-            "label": "Reasonable if the legs overlap",
+            "label": "Yes — 61 m is more, and longer means more",
             "correct": false,
-            "feedback": "Trail legs walked one after another do not overlap — each adds its full distance."
+            "feedback": "The gap tells how much EXTRA the longer rope has: only 17 m — it must fit inside the 52."
           },
           {
             "id": "o3",
-            "label": "Only a ruler could tell",
+            "label": "Yes — any gap can sit between two ropes",
             "correct": false,
-            "feedback": "Sense-checking needs no tools here — part-vs-total logic already rules 30 out."
+            "feedback": "Gaps obey their parts: from 52 m and 35 m, the gap can only be 52 − 35 = 17 m."
           }
         ]
       },
@@ -149,36 +148,35 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Sense-checking costs seconds and catches the classic slips — added marks, skipped legs, reversed steps — before they ever leave your page.",
       "narration": "Sense-checking costs seconds and catches the classic slips — added marks, skipped legs, reversed steps — before they ever leave your page."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Check the picture before trusting the result.",
       "conceptTag": "g2p-reasonable",
       "widget": {
         "type": "lengthCompare",
         "mode": "align",
-        "prompt": "A suspicious result, drawn: the 'computed gap' towers over the item it should fit inside. Which bar is longer?",
+        "prompt": "A bar placed farther right can look longer. Align the starts, then decide which bar is actually longer.",
         "items": [
           {
             "id": "top",
             "label": "computed gap",
-            "length": 9,
-            "startOffset": 2
+            "length": 9
           },
           {
             "id": "bottom",
             "label": "longer item",
-            "length": 6
+            "length": 6,
+            "startOffset": 5
           }
         ],
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
-        "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "missFeedback": "Now the starts are lined up — the computed gap bar reaches farther, so this cannot be a reasonable gap.",
+        "successFeedback": "Correct — the computed gap bar is longer. That shows the result cannot be a reasonable gap."
       },
       "cml": {
         "stage": "construct",
@@ -274,31 +272,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Two trail legs of 32 m and 25 m give a computed total of 30 m. Reasonable?",
+        "prompt": "Maggie walks two trail legs, first 18 m then 24 m, and says the whole trip totals 42 m. Does that check out?",
         "options": [
           {
             "id": "o0",
-            "label": "No because 30 is less than the 32 m part",
+            "label": "Yes — 18 + 24 is exactly 42, more than either leg",
             "correct": true,
-            "feedback": "Correct — joining 32 with anything positive lands past 32; a 30 m total contradicts its own first leg."
+            "feedback": "Correct — a real total must exceed both single legs, and 18 + 24 does equal 42 m exactly."
           },
           {
             "id": "o1",
-            "label": "Reasonable — totals vary",
+            "label": "No — two trail legs can never be added together",
             "correct": false,
-            "feedback": "Totals obey their parts: 32 + 25 must reach 57, never dip below 32."
+            "feedback": "Legs walked one after another do add their full distances; that is exactly how a trail total forms."
           },
           {
             "id": "o2",
-            "label": "Reasonable if the legs overlap",
+            "label": "No — 42 m seems too large for two short legs",
             "correct": false,
-            "feedback": "Trail legs walked one after another do not overlap — each adds its full distance."
+            "feedback": "A total bigger than either single part is expected, not suspicious — that is what joining two legs produces."
           },
           {
             "id": "o3",
-            "label": "Only a ruler could tell",
+            "label": "Reasonable only if a ruler re-measures the trail",
             "correct": false,
-            "feedback": "Sense-checking needs no tools here — part-vs-total logic already rules 30 out."
+            "feedback": "Sense-checking needs no ruler here — comparing the total to its parts already confirms 42 m."
           }
         ]
       },
@@ -422,31 +420,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Two trail legs of 32 m and 25 m give a computed total of 30 m. Reasonable?",
+          "prompt": "Maggie joins a 26 cm strip and a 15 cm strip, then writes 24 cm as the total. Does that make sense?",
           "options": [
             {
               "id": "o0",
-              "label": "No because 30 is less than the 32 m part",
+              "label": "No — 24 cm is smaller than the 26 cm strip",
               "correct": true,
-              "feedback": "Correct — joining 32 with anything positive lands past 32; a 30 m total contradicts its own first leg."
+              "feedback": "Correct — joining 26 with anything more lands past 26; a 24 cm total contradicts its own first strip."
             },
             {
               "id": "o1",
-              "label": "Reasonable — totals vary",
+              "label": "No — the total must be exactly 31 cm",
               "correct": false,
-              "feedback": "Totals obey their parts: 32 + 25 must reach 57, never dip below 32."
+              "feedback": "26 + 15 makes 41, not 31 — a ten went missing. And even without the sum, 24 cannot beat 26."
             },
             {
               "id": "o2",
-              "label": "Reasonable if the legs overlap",
+              "label": "Yes — 24 cm is bigger than the 15 cm strip",
               "correct": false,
-              "feedback": "Trail legs walked one after another do not overlap — each adds its full distance."
+              "feedback": "Beating one strip is not enough — a joined total must pass BOTH strips, and 24 trails 26."
             },
             {
               "id": "o3",
-              "label": "Only a ruler could tell",
+              "label": "Yes — a written total can come out any size",
               "correct": false,
-              "feedback": "Sense-checking needs no tools here — part-vs-total logic already rules 30 out."
+              "feedback": "Totals obey their parts: 26 + 15 must land past 26, never below it."
             }
           ]
         }

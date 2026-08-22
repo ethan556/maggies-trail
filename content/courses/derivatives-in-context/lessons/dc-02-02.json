@@ -9,8 +9,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "A 10-foot ladder leans against a wall. The foot is dragged away at 2 ft/s. How fast is the top sliding **down**?\n\nThe relation is Pythagoras: **x² + y² = 100**, where x is the distance from the wall and y the height on it.\n\nBoth x and y change with time. The 100 does not.",
-      "figure": "dr-implicit-circle"
+      "body": "A 10-foot ladder leans against a wall. The foot is dragged away at 2 ft/s. How fast is the top sliding **down**?\n\nThe relation is Pythagoras: **x² + y² = 100**, where x is the distance from the wall and y the height on it.\n\nBoth x and y change with time. The 100 does not."
     },
     {
       "id": "k1",
@@ -222,7 +221,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Later in the slide.",
+      "body": "Slide farther and watch the downward rate accelerate.",
       "conceptTag": "dc-ladder",
       "hints": [
         "Now x = 8, so find y first: y² = 100 − 64 = 36, so y = 6.",
@@ -234,29 +233,18 @@
         "As the ladder flattens, y shrinks and x/y grows — so the top accelerates downward without the foot going any faster at all. That is the whole reason the problem is interesting."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Same ladder, same dx/dt = 2. Find dy/dt when x = 8, to three decimals.",
-        "answer": -2.667,
-        "tolerance": 0.01,
-        "commonErrors": [
-          {
-            "value": -1.5,
-            "feedback": "That was the answer at x = 6. At x = 8 the height is only 6, so dy/dt = −(8/6)(2) ≈ −2.667: the top is falling FASTER."
-          },
-          {
-            "value": 2.667,
-            "feedback": "The magnitude is right; the sign must be negative, because the top is descending."
-          },
-          {
-            "value": -1.333,
-            "feedback": "That is −(x/y)(dx/dt) with the fraction inverted or the rate dropped. It is −(8/6)(2) ≈ −2.667."
-          }
-        ],
-        "fallbackFeedback": "y = 6, so dy/dt = −(8/6)(2) = −8/3 ≈ −2.667 ft/s — faster than before, with the foot moving at the same speed."
-      },
-      "variant": {
-        "gen": "g13-derivatives-in-context",
-        "form": "derivatives-in-context__dc-ladder__numeric"
+        "type": "relatedRatesLab",
+        "model": "ladder",
+        "framing": "rates",
+        "prompt": "Keep the 10-foot ladder and dx/dt = 2 ft/s fixed. Slide the foot to x = 8 and read the coupled height and vertical rate.",
+        "ladderLength": 10,
+        "horizontalRate": 2,
+        "targetX": 8,
+        "startX": 3,
+        "requiredMoves": 4,
+        "successFeedback": "At x = 8 the height is 6 and dy/dt = −(8/6)(2) = −8/3 ≈ −2.667 ft/s. The foot still moves at 2 ft/s, but the top now falls faster because x/y has grown.",
+        "explorationFeedback": "Pause at several positions and compare dy/dt. The fixed length couples the height and rate even though dx/dt stays constant.",
+        "positionFeedback": "Move the foot to x = 8 while the ladder remains 10 feet long."
       }
     },
     {

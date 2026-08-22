@@ -161,38 +161,41 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another percent decrease.",
+      "body": "Compare two percent drops.",
       "conceptTag": "pr-percent-change",
       "explanationVariants": [
-        "(30−40)÷40×100 = −25%.",
-        "Divide the change by the original: −25%."
+        "(8−10)÷10×100 = −20%, and (80−100)÷100×100 = −20% — the same percent despite very different dollar amounts.",
+        "A bigger dollar drop isn't automatically a bigger percent drop."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A price falls from 40 to 30. What is the percent change?",
-        "answer": -25,
-        "tolerance": 0.01,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A $10 price drops to $8. A $100 price drops to $80. Which is the bigger PERCENT decrease?",
+        "options": [
           {
-            "value": 25,
-            "feedback": "The price FELL, so the change should be negative: (30−40)÷40×100 = −25%."
+            "id": "a",
+            "label": "The $10 → $8 drop",
+            "correct": false,
+            "feedback": "Check both: (8−10)÷10×100 = −20%, and (80−100)÷100×100 = −20%. They match — a smaller drop doesn't mean a smaller percent."
           },
           {
-            "value": 10,
-            "feedback": "10 is the raw change, not the percent. Divide by the ORIGINAL: (30−40)÷40×100 = −25%."
+            "id": "b",
+            "label": "The $100 → $80 drop",
+            "correct": false,
+            "feedback": "$20 is a bigger raw drop than $2, but percent compares to the ORIGINAL: (80−100)÷100×100 = −20%, the same as (8−10)÷10×100 = −20%."
+          },
+          {
+            "id": "c",
+            "label": "Same percent decrease",
+            "correct": true,
+            "feedback": "Right — both are −20%. A bigger dollar drop doesn't mean a bigger percent drop; what matters is the change relative to its own original value."
           }
-        ],
-        "fallbackFeedback": "(30−40)÷40×100 = −25%."
-      },
-      "variant": {
-        "gen": "pr-percent-change-g7",
-        "form": "percentDecrease"
+        ]
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger percent increase.",
+      "body": "Another percent increase.",
       "conceptTag": "pr-percent-change",
       "explanationVariants": [
         "(60−50)÷50×100 = 20%.",
@@ -223,38 +226,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A full multistep problem.",
+      "body": "A steeper multistep problem — this time, find the new price.",
       "conceptTag": "pr-percent-change",
       "explanationVariants": [
-        "(90−75)÷75×100 = 20%.",
-        "Divide the change by the original: 20%."
+        "30% of 40 is 12, so the new price is 40 + 12 = 52.",
+        "First find the increase (12), then add it to the original: 52."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A price rises from 75 to 90. What is the percent change?",
-        "answer": 20,
+        "prompt": "A $40 price rises by 30%. What is the new price?",
+        "answer": 52,
         "tolerance": 0.01,
         "commonErrors": [
           {
-            "value": 15,
-            "feedback": "15 is the raw change, not the percent. Divide by the ORIGINAL: 15÷75×100 = 20%."
+            "value": 12,
+            "feedback": "12 is just the increase, not the new price. Add it back to the original: 40 + 12 = 52."
           },
           {
-            "value": 16.67,
-            "feedback": "That divides by the NEW value (90) instead of the original (75): 15÷75×100=20%."
+            "value": 70,
+            "feedback": "That treats 30% as $30. Find 30% of 40 first (12), then add: 40 + 12 = 52."
           }
         ],
-        "fallbackFeedback": "(90−75)÷75×100 = 20%."
+        "fallbackFeedback": "30% of 40 is 12, so the new price is 40 + 12 = 52."
       },
       "hints": [
-        "Change = new − old = 90 − 75 = 15.",
-        "Divide by the ORIGINAL: 15 ÷ 75.",
-        "15 ÷ 75 × 100 = 20%."
-      ],
-      "variant": {
-        "gen": "pr-percent-change-g7",
-        "form": "percentIncrease"
-      }
+        "First find 30% of the original price: 30% of 40 = 12.",
+        "That 12 is the increase, not the final answer.",
+        "Add the increase back to the original: 40 + 12 = 52."
+      ]
     },
     {
       "id": "r1",

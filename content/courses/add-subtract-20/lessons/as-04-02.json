@@ -17,76 +17,39 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each side to its amount.",
+   "body": "Make both sides weigh the same.",
    "conceptTag": "equal-sign",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each addition to the amount it equals.",
-    "left": [
-     {
-      "id": "e1",
-      "label": "6 + 4"
-     },
-     {
-      "id": "e2",
-      "label": "7 + 2"
-     },
-     {
-      "id": "e3",
-      "label": "3 + 5"
-     }
-    ],
-    "right": [
-     {
-      "id": "v10",
-      "label": "10"
-     },
-     {
-      "id": "v9",
-      "label": "9"
-     },
-     {
-      "id": "v8",
-      "label": "8"
-     }
-    ],
-    "pairs": {
-     "e1": "v10",
-     "e2": "v9",
-     "e3": "v8"
-    },
-    "pairErrors": [
-     {
-      "left": "e2",
-      "right": "v8",
-      "feedback": "7 + 2 is 9, not 8. The = links each side to its SAME amount."
-     }
-    ],
-    "missFeedback": "Add each pair, then link it to the equal amount.",
-    "successFeedback": "Each side matched its amount — that's what = means!"
+    "type": "balanceScale",
+    "a": 1,
+    "b": 3,
+    "c": 5,
+    "xMin": 0,
+    "xMax": 5,
+    "xStart": 0,
+    "prompt": "Slide x until x + 3 weighs the same as 5.",
+    "successFeedback": "x = 2 makes both pans weigh 5. The equal sign says the two sides have the same amount.",
+    "lowFeedback": "The x + 3 pan is too light. Make x a little bigger.",
+    "highFeedback": "The x + 3 pan is too heavy. Make x a little smaller."
    },
    "predict": {
-    "prompt": "In 5 = 2 + 3, is the equal sign an instruction to DO something, or a claim that both sides match?",
+    "prompt": "When x is 2, what should the scale show for 2 + 3 and 5?",
     "options": [
      {
-      "id": "claim",
-      "label": "A claim — both sides are the same amount"
+      "id": "level",
+      "label": "The pans balance"
      },
      {
-      "id": "do",
-      "label": "An instruction — now compute"
+      "id": "left-low",
+      "label": "The left pan is lower"
      },
      {
-      "id": "arrow",
-      "label": "An arrow pointing at the answer"
+      "id": "right-low",
+      "label": "The right pan is lower"
      }
     ],
-    "outcomeId": "claim",
-    "reveal": "The equal sign is a balance, not a command — it says the two sides weigh the same. That's why the answer can sit on EITHER side."
-   },
-   "variant": {
-    "gen": "match-sum",
-    "form": "mixedSums"
+    "outcomeId": "level",
+    "reveal": "2 + 3 and 5 are the same amount, so the pans balance. That is exactly what the equal sign promises."
    }
   },
   {
@@ -103,15 +66,15 @@
     "prompt": "True or false: 10 = 6 + 4",
     "options": [
      {
+      "id": "b",
+      "label": "False — the answer must come after the =",
+      "feedback": "A common idea, but = doesn't mean 'answer next'. It means SAME AS, so 10 = 6 + 4 is true."
+     },
+     {
       "id": "a",
       "label": "True — both sides are 10",
       "correct": true,
       "feedback": "Yes — 6 + 4 is 10, and 10 is 10. The = means same amount, either way round."
-     },
-     {
-      "id": "b",
-      "label": "False — the answer must come after the =",
-      "feedback": "A common idea, but = doesn't mean 'answer next'. It means SAME AS, so 10 = 6 + 4 is true."
      }
     ]
    },
@@ -202,15 +165,15 @@
     "prompt": "True or false: 3 + 4 = 4 + 3",
     "options": [
      {
+      "id": "b",
+      "label": "False — the order is different",
+      "feedback": "Order doesn't change the amount: 3 + 4 and 4 + 3 both make 7, so it's true."
+     },
+     {
       "id": "a",
       "label": "True — both are 7",
       "correct": true,
       "feedback": "Yes — 3 + 4 is 7 and 4 + 3 is 7. Same amount, so it's true."
-     },
-     {
-      "id": "b",
-      "label": "False — the order is different",
-      "feedback": "Order doesn't change the amount: 3 + 4 and 4 + 3 both make 7, so it's true."
      }
     ]
    },
@@ -271,7 +234,7 @@
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Make both sides the same: 8 + 2 = 7 + ?",
+    "prompt": "The left side 8 + 2 has value 10. What number makes 7 + ? have the same value?",
     "answer": 3,
     "tolerance": 0,
     "commonErrors": [

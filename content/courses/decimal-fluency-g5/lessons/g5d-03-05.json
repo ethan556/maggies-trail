@@ -10,18 +10,18 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Multi-step decimal problems chain everything: compute in the smallest place, keep the digits honest, and place the point once at the end.",
-      "narration": "Multi-step decimal problems chain everything: compute in the smallest place, keep the digits honest, and place the point once at the end."
+      "figure": "mb-multistep",
+      "body": "A multi-step problem happens in order: first multiply, then subtract the discount. Estimate first so you can check the final answer is reasonable.",
+      "narration": "A multi-step problem happens in order: first multiply, then subtract the discount. Estimate first so you can check the final answer is reasonable."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the first model.",
       "conceptTag": "g5dc-multistep",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "4 items at 1.25 each, then 0.80 off — slide to estimate the total.",
+        "prompt": "Four items at $1.25 each, then $0.80 off — slide to estimate the total.",
         "min": 0.1,
         "max": 40,
         "start": 0.1,
@@ -38,15 +38,15 @@
         "successFeedback": "About 4.20 — 500 hundredths built, 80 removed, placing as 4.20."
       },
       "predict": {
-        "prompt": "4 at 1.25 then 0.80 off — total?",
+        "prompt": "Four items at $1.25 each, then a $0.80 discount — what is the total?",
         "options": [
           {
             "id": "420",
-            "label": "4.20"
+            "label": "$4.20"
           },
           {
             "id": "580",
-            "label": "5.80"
+            "label": "$5.80"
           }
         ],
         "outcomeId": "420",
@@ -78,7 +78,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "",
+      "body": "Read or explain the representation.",
       "conceptTag": "g5dc-multistep",
       "explanationVariants": [
         "Build, then adjust.",
@@ -138,22 +138,22 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Estimate before and check after. With decimals the estimate is not a luxury — it is what proves the point landed where it belongs.",
-      "narration": "Estimate before and check after. With decimals the estimate is not a luxury — it is what proves the point landed where it belongs."
+      "figure": "dop-pad-borrow",
+      "body": "After multiplying, pad and trade across the columns to subtract the discount, exactly as in any decimal subtraction. Then compare the final result with the estimate.",
+      "narration": "After multiplying, pad and trade across the columns to subtract the discount, exactly as in any decimal subtraction. Then compare the final result with the estimate."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Check a classmate's claim with the model.",
       "conceptTag": "g5dc-multistep",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "4 items at 1.25 each, then 0.80 off — slide to estimate the total.",
+        "prompt": "A classmate claims six $0.85 items minus a $1.20 discount should total about $3.90. Slide to test that claim.",
         "min": 0.1,
         "max": 40,
         "start": 0.1,
-        "target": 4.2,
+        "target": 3.9,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
@@ -161,9 +161,9 @@
           20,
           40
         ],
-        "lowFeedback": "Too low — four items at over a dollar each already pass four dollars.",
-        "highFeedback": "Too high — four times 1.25 is 5.00, and the discount only reduces it.",
-        "successFeedback": "About 4.20 — 500 hundredths built, 80 removed, placing as 4.20."
+        "lowFeedback": "Too low — six items at under a dollar each already pass three dollars before any discount.",
+        "highFeedback": "Too high — six times 0.85 is 5.10, and the discount only reduces it.",
+        "successFeedback": "About $3.90 — 510 hundredths built, 120 removed, placing as 3.90."
       },
       "cml": {
         "stage": "construct",
@@ -191,7 +191,7 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "",
+      "body": "Apply the idea in a new form.",
       "conceptTag": "g5dc-multistep",
       "explanationVariants": [
         "Equal prices multiply.",
@@ -251,7 +251,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Check a likely misconception.",
       "conceptTag": "g5dc-multistep",
       "explanationVariants": [
         "Estimate, then verify.",
@@ -259,31 +259,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A student computes 3.6 × 4 and gets 1.44. What does an estimate reveal?",
+        "prompt": "A subtotal is about $5 before a small discount. Which total is reasonable?",
         "options": [
           {
             "id": "o0",
-            "label": "Wrong — the product should be near 14",
+            "label": "$4.20",
             "correct": true,
-            "feedback": "Correct — the digits are right but the point is two places off; estimating catches exactly that."
+            "feedback": "Correct — $4.20 is close to $5 but lower after the discount."
           },
           {
             "id": "o1",
-            "label": "It is right — the digits 144 are correct",
+            "label": "$0.42",
             "correct": false,
-            "feedback": "Correct digits in the wrong place still give the wrong amount, and this one is ten times too small."
+            "feedback": "A small discount cannot collapse $5 to under half a dollar — $0.42 is ten times too small, the mark of a decimal point slid one place left."
           },
           {
             "id": "o2",
-            "label": "Wrong — 4 × 4 = 16, so the answer must be 16",
+            "label": "$420.00",
             "correct": false,
-            "feedback": "Rounding 3.6 up to 4 gives an estimate NEAR the answer, not the answer itself. 14.4 sits comfortably inside that neighbourhood; a rounded estimate is never the target to hit exactly."
+            "feedback": "$420.00 is about a hundred times the subtotal — a discount lowers a bill; it can never multiply it."
           },
           {
             "id": "o3",
-            "label": "It is wrong — the answer should be 144",
+            "label": "$42.00",
             "correct": false,
-            "feedback": "144 is the hundredths count; as an amount that would be 14.4, which is where the point belongs."
+            "feedback": "$42.00 is about ten times the $5 subtotal — after a small discount the total must sit a little BELOW $5, not far above it."
           }
         ]
       },
@@ -318,7 +318,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g5dc-multistep",
       "explanationVariants": [
         "Longer chains, same order.",
@@ -326,7 +326,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: 6 items at 39 each, then 102 off. How many hundredths remain?",
+        "prompt": "For 6 items at 39 hundredths each, subtract 102 hundredths. What remains?",
         "answer": 132,
         "tolerance": 0,
         "unit": "",
@@ -378,7 +378,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Summarize multi-step decimal problems.",
       "takeaways": [
         "Compute in the smallest place.",
         "Place the point once, at the end.",
@@ -393,8 +393,8 @@
       "concept": {
         "id": "rem-g5dc-multistep-c",
         "kind": "concept",
-        "body": "Estimate before and check after. With decimals the estimate is not a luxury — it is what proves the point landed where it belongs.",
-        "narration": "Estimate before and check after. With decimals the estimate is not a luxury — it is what proves the point landed where it belongs."
+        "body": "Keep decimal points aligned at each addition or subtraction step. Then compare the final result with the estimate.",
+        "narration": "Keep decimal points aligned at each addition or subtraction step. Then compare the final result with the estimate."
       },
       "check": {
         "id": "rem-g5dc-multistep-k",
@@ -407,21 +407,21 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Working in hundredths: 6 items at 44 each, then 118 off. How many hundredths remain?",
+          "prompt": "Six stickers cost $0.44 each, and a coupon takes $1.18 off the bill. Build the subtotal in hundredths first, then remove the coupon's 118 hundredths. How many hundredths are left to pay?",
           "answer": 146,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 264,
-              "feedback": "That reported the total before the discount; the 118 still has to come off."
+              "feedback": "That stopped at the subtotal — six stickers at 44 hundredths each — before the coupon's 118 came off."
             },
             {
               "value": 382,
-              "feedback": "A discount reduces the bill, so the last step subtracts."
+              "feedback": "That added the coupon onto the bill; a coupon reduces what is paid, so the last step subtracts."
             }
           ],
-          "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
+          "fallbackFeedback": "First multiply to build the subtotal in hundredths, then subtract the coupon's 118 hundredths from it.",
           "successFeedback": "Correct — 146."
         }
       }

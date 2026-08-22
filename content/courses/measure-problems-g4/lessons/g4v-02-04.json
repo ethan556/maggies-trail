@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "g4v-groups-adjust-time",
       "body": "Time intervals work the same way: five shifts of 30 minutes is 150 minutes, and finishing 20 minutes early leaves 130.",
       "narration": "Time intervals work the same way: five shifts of 30 minutes is 150 minutes, and finishing 20 minutes early leaves 130."
     },
@@ -21,7 +21,7 @@
       "conceptTag": "g4v-interval",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Five shifts of 30 minutes — hop one shift at a time.",
+        "prompt": "Five shifts of 30 minutes \u2014 hop one shift at a time.",
         "min": 0,
         "max": 240,
         "start": 0,
@@ -35,13 +35,13 @@
           },
           {
             "value": 180,
-            "feedback": "Six hops overshoot — five shifts of 30 minutes is 150."
+            "feedback": "Six hops overshoot \u2014 five shifts of 30 minutes is 150."
           }
         ],
         "missFeedback": "Each shift is 30 minutes, so five reach 150.",
-        "successFeedback": "150 minutes — five shift-hops of 30 minutes each, which is two and a half hours.",
-        "lowFeedback": "Short of the landing — each shift is 30 minutes, so five reach 150.",
-        "highFeedback": "Past the landing — five shifts of 30 minutes stops exactly at 150."
+        "successFeedback": "150 minutes \u2014 five shift-hops of 30 minutes each, which is two and a half hours.",
+        "lowFeedback": "Short of the landing \u2014 each shift is 30 minutes, so five reach 150.",
+        "highFeedback": "Past the landing \u2014 five shifts of 30 minutes stops exactly at 150."
       },
       "predict": {
         "prompt": "Five 30-minute shifts, answer wanted in hours. Which moment to convert keeps the work cleaner?",
@@ -62,12 +62,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "diagram",
@@ -103,11 +103,11 @@
           },
           {
             "value": 49,
-            "feedback": "Adding a shift count to a shift length mixes two different quantities — 4 shifts OF 45 minutes multiply."
+            "feedback": "Adding a shift count to a shift length mixes two different quantities \u2014 4 shifts OF 45 minutes multiply."
           }
         ],
-        "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 167."
+        "fallbackFeedback": "Multiply to build the equal-group total, then subtract the one stated adjustment.",
+        "successFeedback": "Correct \u2014 167."
       },
       "hints": [
         "Build the total first.",
@@ -118,12 +118,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "symbolic",
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "When the answer is wanted in hours, convert AFTER building the total — one conversion at the end beats several along the way.",
-      "narration": "When the answer is wanted in hours, convert AFTER building the total — one conversion at the end beats several along the way."
+      "figure": "rr-chain",
+      "body": "When the answer is wanted in hours, convert AFTER building the total \u2014 one conversion at the end beats several along the way.",
+      "narration": "When the answer is wanted in hours, convert AFTER building the total \u2014 one conversion at the end beats several along the way."
     },
     {
       "id": "i2",
@@ -155,38 +155,38 @@
       "conceptTag": "g4v-interval",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Five shifts of 30 minutes — hop one shift at a time.",
+        "prompt": "Model a second interval: four shifts of 45 minutes. Hop one shift at a time.",
         "min": 0,
-        "max": 240,
+        "max": 270,
         "start": 0,
-        "hop": 30,
-        "hops": 5,
+        "hop": 45,
+        "hops": 4,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 120,
-            "feedback": "Four hops reach 120 minutes; there are five shifts."
+            "value": 135,
+            "feedback": "Three hops represent three shifts; four shifts needs one more hop."
           },
           {
-            "value": 180,
-            "feedback": "Six hops overshoot — five shifts of 30 minutes is 150."
+            "value": 225,
+            "feedback": "Five hops overshoot; four shifts total 180 minutes."
           }
         ],
-        "missFeedback": "Each shift is 30 minutes, so five reach 150.",
-        "successFeedback": "150 minutes — five shift-hops of 30 minutes each, which is two and a half hours.",
-        "lowFeedback": "Short of the landing — each shift is 30 minutes, so five reach 150.",
-        "highFeedback": "Past the landing — five shifts of 30 minutes stops exactly at 150."
+        "missFeedback": "Four equal hops of 45 minutes land at 180 minutes.",
+        "successFeedback": "180 minutes \u2014 four shift-hops of 45 minutes each.",
+        "lowFeedback": "This landing is short of four complete shifts.",
+        "highFeedback": "This landing is past four complete shifts."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "symbolic",
@@ -211,13 +211,13 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"A crew works 5 shifts of 30 minutes, then converts the total to hours.\" What is the correct ORDER?",
+        "prompt": "Apply without the opening model: \"A crew works 5 shifts of 30 minutes, then converts the total to hours.\" What is the correct ORDER?",
         "options": [
           {
             "id": "o0",
             "label": "Multiply to find 150 minutes, then divide by 60",
             "correct": true,
-            "feedback": "Correct — build the total in one unit first, then convert it once; 150 minutes is 2.5 hours."
+            "feedback": "Correct \u2014 build the total in one unit first, then convert it once; 150 minutes is 2.5 hours."
           },
           {
             "id": "o1",
@@ -235,7 +235,7 @@
             "id": "o3",
             "label": "Multiply 150 by 60",
             "correct": false,
-            "feedback": "Hours are BIGGER than minutes, so the number must shrink — that means dividing."
+            "feedback": "Hours are BIGGER than minutes, so the number must shrink \u2014 that means dividing."
           }
         ]
       },
@@ -248,12 +248,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "symbolic",
@@ -278,7 +278,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A hike measures 360 minutes, and each hour is 60 minutes. Compute 360 ÷ 60.",
+        "prompt": "Retrieve or diagnose in a new form: A hike measures 360 minutes, and each hour is 60 minutes. Compute 360 \u00f7 60.",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -293,7 +293,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 6."
+        "successFeedback": "Correct \u2014 6."
       },
       "hints": [
         "Which unit is smaller?",
@@ -304,12 +304,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "symbolic",
@@ -338,7 +338,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A trail crew works 5 shifts of 20 minutes and finishes 34 minutes early. How many minutes?",
+        "prompt": "Transfer to a final context: A trail crew works 5 shifts of 20 minutes and finishes 34 minutes early. How many minutes?",
         "answer": 66,
         "tolerance": 0,
         "unit": "",
@@ -349,11 +349,11 @@
           },
           {
             "value": 25,
-            "feedback": "Adding a shift count to a shift length mixes two different quantities — 5 shifts OF 20 minutes multiply."
+            "feedback": "Adding a shift count to a shift length mixes two different quantities \u2014 5 shifts OF 20 minutes multiply."
           }
         ],
-        "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 66."
+        "fallbackFeedback": "Multiply to build the equal-group total, then subtract the one stated adjustment.",
+        "successFeedback": "Correct \u2014 66."
       },
       "hints": [
         "Build the total first.",
@@ -364,12 +364,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v interval.",
+        "actionGoal": "Build a time total from equal shifts, adjust it once, and convert only if requested.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v interval."
+          "Equal shifts multiply; finishing early subtracts once from the total."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Adding the shift count to the minutes per shift."
         ],
         "representations": [
           "symbolic",
@@ -405,8 +405,9 @@
       "concept": {
         "id": "rem-g4v-interval-c",
         "kind": "concept",
-        "body": "When the answer is wanted in hours, convert AFTER building the total — one conversion at the end beats several along the way.",
-        "narration": "When the answer is wanted in hours, convert AFTER building the total — one conversion at the end beats several along the way."
+        "body": "When the answer is wanted in hours, convert AFTER building the total \u2014 one conversion at the end beats several along the way.",
+        "narration": "When the answer is wanted in hours, convert AFTER building the total \u2014 one conversion at the end beats several along the way.",
+        "figure": "rr-chain"
       },
       "check": {
         "id": "rem-g4v-interval-k",
@@ -415,26 +416,26 @@
         "conceptTag": "g4v-interval",
         "explanationVariants": [
           "Build the total minutes.",
-          "Then adjust."
+          "Then convert to hours."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A trail crew works 4 shifts of 45 minutes and finishes 13 minutes early. How many minutes?",
-          "answer": 167,
+          "prompt": "A crew works 9 shifts of 20 minutes, then converts the total to hours. How many hours is that?",
+          "answer": 3,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 180,
-              "feedback": "That is the planned time; the crew finished 13 minutes before it was used up."
+              "feedback": "180 is the total in minutes; hours still needs one more step \u2014 divide by 60."
             },
             {
-              "value": 49,
-              "feedback": "Adding a shift count to a shift length mixes two different quantities — 4 shifts OF 45 minutes multiply."
+              "value": 10800,
+              "feedback": "That multiplied by 60. Hours are BIGGER than minutes, so the number must shrink \u2014 divide instead."
             }
           ],
-          "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-          "successFeedback": "Correct — 167."
+          "fallbackFeedback": "Multiply to build the total minutes first, then convert to hours once at the end.",
+          "successFeedback": "Correct \u2014 3."
         }
       }
     }

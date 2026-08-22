@@ -15,62 +15,60 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "A multiplication context.",
+      "body": "Estimate the power-of-ten scale before calculating the exact total.",
       "widget": {
-        "type": "mcq",
-        "prompt": "A beehive has 3 × 10⁴ bees, and the colony needs 2 × 10² grams of honey per bee each year. How much honey does the colony need in total?",
-        "options": [
+        "type": "placeValueTransformLab",
+        "task": "exponentChain",
+        "answerMode": "numeric",
+        "prompt": "For (3 × 10⁴)(2 × 10²), step through 4 + 2 and enter the exponent of the product's power of 10.",
+        "values": [
+          4,
+          2
+        ],
+        "exponentOps": [
+          "add"
+        ],
+        "choices": [],
+        "numericErrors": [
           {
-            "id": "a",
-            "label": "6 × 10⁶ grams",
-            "correct": true,
-            "feedback": "Right — total = count × rate: (3×10⁴)×(2×10²) = 6×10⁶ grams."
+            "value": 8,
+            "feedback": "Eight multiplies the exponents. Multiplying powers with the same base requires 4 + 2."
           },
           {
-            "id": "b",
-            "label": "5 × 10⁶ grams",
-            "correct": false,
-            "feedback": "That adds the coefficients instead of multiplying them for a total-from-rate problem — multiply: 3×2=6."
-          },
-          {
-            "id": "c",
-            "label": "6 × 10⁸ grams",
-            "correct": false,
-            "feedback": "Check the exponent addition — 4+2=6, not 8."
-          },
-          {
-            "id": "d",
-            "label": "6 × 10⁴ grams",
-            "correct": false,
-            "feedback": "This is a multiplication (count × rate), not the count alone — 4+2=6, giving 6×10⁶."
+            "value": 4,
+            "feedback": "Keeping only the 10⁴ exponent ignores the second factor's 10² — both must combine: 4 + 2 = 6."
           }
-        ]
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "The exponent is 6, so the scale is millions. Multiplying 3 × 2 gives the exact total 6 × 10⁶ grams.",
+        "explorationFeedback": "Inspect the starting exponent and the addition stage before checking.",
+        "fallbackFeedback": "The total multiplies 10⁴ by 10², so add the exponents: 4 + 2 = 6."
       },
       "predict": {
-        "prompt": "Total honey = (3 × 10⁴ bees) × (2 × 10² grams each). Will the answer's size be near 10⁶ or near 10²?",
+        "prompt": "For (3 × 10⁴)(2 × 10²), which power of 10 sets the product's scale?",
         "options": [
           {
             "id": "six",
-            "label": "Near 10⁶"
+            "label": "10⁶, because 4 + 2 = 6"
           },
           {
             "id": "two",
-            "label": "Near 10²"
+            "label": "10², because it is the second factor"
           },
           {
             "id": "eight",
-            "label": "Near 10⁸"
+            "label": "10⁸, because 4 × 2 = 8"
           }
         ],
         "outcomeId": "six",
-        "reveal": "The powers add: 4 + 2 makes 10⁶, and the fronts multiply: 3 × 2 = 6, so about 6 × 10⁶ — millions of grams. Estimating the exponent first keeps real-world answers honest."
+        "reveal": "The powers combine as 10⁴ × 10² = 10⁶, and the coefficients multiply to 6. The result is 6 × 10⁶ grams, so the scale is millions."
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Precision matters too: don't report more digits than the original data supports. If a measurement is only known to one significant digit (like 3 × 10⁴), the answer shouldn't pretend to be more precise than that.",
-      "figure": "esn-add-sci"
+      "body": "Precision matters too: don't report more digits than the original data supports. If a measurement is only known to one significant digit (like 3 × 10⁴), the answer shouldn't pretend to be more precise than that."
     },
     {
       "id": "k1",

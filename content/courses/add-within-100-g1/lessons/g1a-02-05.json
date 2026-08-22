@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Subtracting a multiple of ten changes only the tens digit, the same way adding one does — just in the other direction.",
-      "narration": "Subtracting a multiple of ten changes only the tens digit, the same way adding one does — just in the other direction."
+      "figure": "tno-count-down-tens",
+      "body": "Subtracting three tens from 65 moves through 55 and 45 to 35. The ones digit stays five.",
+      "narration": "Subtracting three tens from 65 moves through 55 and 45 to 35. The ones digit stays five."
     },
     {
       "id": "i1",
@@ -95,7 +95,7 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+        "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
         "successFeedback": "Correct — 47 − 10 = 37."
       },
       "hints": [
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Because the ones digit is untouched, subtracting ten is as fast as adding ten.",
-      "narration": "Because the ones digit is untouched, subtracting ten is as fast as adding ten."
+      "figure": "tno-move-tens-digit",
+      "body": "On the shown 50–60–70 path, plus ten moves one step right and minus ten moves one step left.",
+      "narration": "On the shown 50–60–70 path, plus ten moves one step right and minus ten moves one step left."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-sub-tens",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 67. Take away one ten. Where do you land?",
-        "min": 55,
-        "max": 69,
-        "start": 67,
-        "hop": 1,
-        "hops": 10,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 67 and count back 10: you land on 57.",
-        "successFeedback": "Landed on 57 — the tens digit went down by one; the ones stayed at 7."
+        "type": "tapDiagram",
+        "prompt": "Eighty-four loses two tens. Tap the result.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "54",
+            "icon": "54",
+            "count": 1,
+            "correct": false,
+            "feedback": "54 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "64",
+            "icon": "64",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — subtracting two tens changes 84 to 64 and keeps the four ones."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "74",
+            "icon": "74",
+            "count": 1,
+            "correct": false,
+            "feedback": "74 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — subtracting two tens changes 84 to 64 and keeps the four ones."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "86 − 10 = ?",
+        "prompt": "What number is one ten less than 86?",
         "answer": 76,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 86 − 10 = 76."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 76."
       },
       "hints": [
         "Subtracting a ten changes only the tens digit.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "39 + 10 = ?",
+        "prompt": "Which number is one ten more than 39?",
         "answer": 49,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 39 + 10 = 49."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 49."
       },
       "hints": [
         "Subtracting a ten changes only the tens digit.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "73 + 10 = ?",
+        "prompt": "A counter at 73 moves forward ten spaces. Where does it land?",
         "answer": 83,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 73 + 10 = 83."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 83."
       },
       "hints": [
         "Subtracting a ten changes only the tens digit.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "47 − 10 = ?",
-          "answer": 37,
+          "prompt": "Build 63 with ten-rods and one-cubes. Take away 1 ten-rod. What number do you have now?",
+          "answer": 53,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 46,
-              "feedback": "That changes by one instead of ten."
+              "value": 62,
+              "feedback": "That takes away one one-cube instead of one ten-rod."
             },
             {
-              "value": 47,
-              "feedback": "That leaves the number unchanged."
+              "value": 63,
+              "feedback": "That leaves the number unchanged, forgetting to remove a ten-rod."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 47 − 10 = 37."
+          "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
+          "successFeedback": "Correct — 63 with one ten-rod removed leaves 53."
         }
       }
     }

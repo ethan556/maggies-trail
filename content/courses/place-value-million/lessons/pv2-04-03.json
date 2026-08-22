@@ -9,8 +9,8 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "Sometimes the place you'd normally break from is itself a **zero** — and zero has nothing to lend. When that happens, reach one place FURTHER left. If that's zero too, keep reaching until you find a digit that isn't zero, break IT, and every zero you passed through becomes a 9 along the way.",
-      "figure": "pv3-borrow-zero"
+      "body": "The diagram shows 4,002 − 1,357 = 2,645. The ones need a ten, but the tens and hundreds are both zero, so the regrouping chain reaches the 4 thousands. Each zero it passes receives 10, lends 1 onward, and becomes 9. The same rule works across any number of zeros.",
+      "figure": "pv4-borrow-chain"
     },
     {
       "id": "i1",
@@ -40,25 +40,6 @@
         ],
         "continueFeedback": "Keep tracing the chain past each zero.",
         "successFeedback": "40,052 − 18,675 = 21,377 — the break reached past two zeros, turning both into 9s along the way."
-      },
-      "predict": {
-        "prompt": "Borrowing when the very next column holds a ZERO — does the borrow just stop there?",
-        "options": [
-          {
-            "id": "chain",
-            "label": "No — it chains left until a nonzero digit"
-          },
-          {
-            "id": "stop",
-            "label": "Yes — you can't borrow from 0"
-          },
-          {
-            "id": "right",
-            "label": "Borrow from the right instead"
-          }
-        ],
-        "outcomeId": "chain",
-        "reveal": "A zero has nothing to lend, so it borrows too — the request relays leftward until someone can pay, and the zeros become nines along the way."
       }
     },
     {
@@ -102,7 +83,7 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Two separate borrow spots.",
+      "body": "Correct an early borrow-chain error.",
       "conceptTag": "subtract-across-zeros",
       "explanationVariants": [
         "500,203 has one small chain near the ones and another chain near the front — working through both carefully gives 412,747.",
@@ -110,7 +91,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What is 500,203 − 87,456?",
+        "prompt": "A student gets 413,747 for 500,203 − 87,456. What difference should replace that result?",
         "answer": 412747,
         "tolerance": 0,
         "unit": "",
@@ -176,11 +157,11 @@
           {
             "left": "n40052",
             "right": "z2",
-            "feedback": "For the tens column of 40,052, the hundreds digit is already 5 (nonzero) — no chain needed there; that 2-zero chain belongs to a different column's borrow."
+            "feedback": "For 40,052, the ones column's borrow resolves immediately at the tens digit, which is already 5 (nonzero) — no chain needed there; a 2-zero chain belongs to a different column's borrow."
           }
         ],
         "missFeedback": "Count the zero digits between the place needing a break and the first nonzero digit to its left.",
-        "successFeedback": "703 has one zero (tens) to pass through; 5,003 has two (hundreds and tens); reaching hundreds from tens in 40,052 needs none — 5 is already there."
+        "successFeedback": "703 has one zero (tens) to pass through; 5,003 has two (hundreds and tens); in 40,052, the ones column's borrow resolves immediately at the tens digit — 5 is already there, so 0 zeros are passed."
       }
     },
     {
@@ -188,6 +169,25 @@
       "kind": "interactive",
       "body": "Run the chain yourself.",
       "conceptTag": "subtract-across-zeros",
+      "predict": {
+        "prompt": "Before you work the columns in 6,002 - 1,348, how far left must the first borrow travel?",
+        "options": [
+          {
+            "id": "thousands",
+            "label": "All the way to the 6 thousands"
+          },
+          {
+            "id": "tens",
+            "label": "Only as far as the 0 tens"
+          },
+          {
+            "id": "hundreds",
+            "label": "Only as far as the 0 hundreds"
+          }
+        ],
+        "outcomeId": "thousands",
+        "reveal": "The column model confirms that both zero columns have nothing to lend, so the chain reaches the 6 thousands. On the way back, each zero receives ten and passes one on."
+      },
       "widget": {
         "type": "columnCalc",
         "prompt": "Work 6,002 − 1,348 one column at a time. The ones are short, and the two columns to their left are both zeros — reach past them.",
@@ -244,7 +244,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "The four-zero chain.",
+      "body": "Audit a four-zero borrow chain.",
       "conceptTag": "subtract-across-zeros",
       "hints": [
         "600,004 has FOUR zeros in a row between its first digit and its last.",
@@ -257,7 +257,7 @@
       ],
       "widget": {
         "type": "columnCalc",
-        "prompt": "What is 600,004 − 235,478? Tap each column to work it out; tap a top digit to break a ten when you need one.",
+        "prompt": "A student says 600,004 − 235,478 = 365,474. Use the columns to correct the missed zero-chain. Tap a top digit to break a ten when you need one.",
         "op": "subtract",
         "a": 600004,
         "b": 235478,

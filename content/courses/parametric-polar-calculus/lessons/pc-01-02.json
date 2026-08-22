@@ -10,7 +10,7 @@
    "id": "c1",
    "kind": "concept",
    "body": "How long is a curve? Cut it into tiny straight pieces and add them up — the oldest trick in the book, and it works here too.\n\nOne tiny piece moves dx across and dy up, so by **Pythagoras** its length is √(dx² + dy²). Factor out dt:\n\n**L = ∫ √((dx/dt)² + (dy/dt)²) dt**\n\nEvery arc length is a Riemann sum of tiny hypotenuses.",
-   "figure": "dr-tangent-line"
+   "figure": "pc-arc-length-hypotenuses"
   },
   {
    "id": "k1",
@@ -111,7 +111,7 @@
    "id": "c2",
    "kind": "concept",
    "body": "The speed is the integrand.\n\n√((dx/dt)² + (dy/dt)²) is exactly the **speed** of the point tracing the curve — the magnitude of its velocity vector.\n\nSo arc length is **∫ speed dt**, which is the total distance travelled. That is the same sentence as C5's ∫|v| dt, one dimension up.",
-   "figure": "dr-derivative-as-function"
+   "figure": "pc-integrand-speed"
   },
   {
    "id": "k3",
@@ -134,19 +134,19 @@
      },
      {
       "id": "o2",
-      "label": "The slope of the curve.",
+      "label": "The SLOPE of the curve — the ratio of the two rates of change.",
       "correct": false,
       "feedback": "The slope is the RATIO of the two rates. This is their Pythagorean combination, which is a magnitude, not a direction."
      },
      {
       "id": "o3",
-      "label": "The acceleration.",
+      "label": "The ACCELERATION of the point — how quickly its velocity changes.",
       "correct": false,
       "feedback": "Acceleration needs SECOND derivatives. These are first derivatives, so this is a velocity magnitude."
      },
      {
       "id": "o4",
-      "label": "The area under the curve.",
+      "label": "The AREA under the curve — the integral of y with respect to x.",
       "correct": false,
       "feedback": "Every term inside that root is a LENGTH per unit time, so the whole expression is a speed. An area would need a length times a length, and there is none here."
      }
@@ -160,41 +160,37 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "A speed you can read off.",
+   "body": "Run the speed idea backward.",
    "conceptTag": "pc-arc-length",
    "hints": [
-    "dx/dt = 6 and dy/dt = 8, both constant.",
-    "So the speed is √(36 + 64) = 10, constant for the whole journey.",
-    "Distance = speed × time, and t runs from 0 to 2."
+    "dx/dt = 8 and dy/dt = 15, both constant — that fixes the speed.",
+    "Speed = √(64 + 225) = 17, constant for the whole journey.",
+    "Distance = speed × time, so solve 51 = 17t for t."
    ],
    "explanationVariants": [
-    "The speed is a constant 10, and the journey lasts 2 units of t, so L = 20.",
-    "When the speed is constant the integral is just multiplication — and this is another 3-4-5 triangle, scaled by 2."
+    "The constant speed is √(8² + 15²) = 17. Distance = speed × time, so 51 = 17t gives t = 3.",
+    "Same relationship as before, run in reverse: instead of time → distance, this asks distance → time."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "x = 6t, y = 8t, for t from 0 to 2. Find the arc length.",
-    "answer": 20,
+    "prompt": "A point moves with x = 8t, y = 15t. It travels 51 units of arc length. What value of t does that take?",
+    "answer": 3,
     "tolerance": 0,
     "commonErrors": [
      {
-      "value": 10,
-      "feedback": "That is the SPEED. It must be multiplied by the elapsed t, which runs from 0 to 2: L = 20."
+      "value": 867,
+      "feedback": "That multiplies distance by speed instead of dividing — solve 51 = 17t for t: t = 51/17 = 3."
      },
      {
-      "value": 28,
-      "feedback": "That is 6(2) + 8(2) — adding the legs rather than taking the hypotenuse. Use Pythagoras: √(12² + 16²) = 20."
+      "value": 6.375,
+      "feedback": "That divides by only the x-rate, 8. The actual speed combines both rates: √(8² + 15²) = 17, so t = 51/17 = 3."
      },
      {
-      "value": 14,
-      "feedback": "That is 6 + 8. The speed is √(36 + 64) = 10, and the journey lasts 2 units of t."
+      "value": 3.4,
+      "feedback": "That divides by only the y-rate, 15. The actual speed combines both rates: √(8² + 15²) = 17, so t = 3."
      }
     ],
-    "fallbackFeedback": "Speed √(36 + 64) = 10, for 2 units of t: L = 20."
-   },
-   "variant": {
-    "gen": "g13-parametric-polar-calculus",
-    "form": "parametric-polar-calculus__pc-arc-length__numeric"
+    "fallbackFeedback": "Speed = √(64 + 225) = 17 (constant). Solve 51 = 17t: t = 3."
    }
   },
   {
@@ -216,7 +212,7 @@
     "id": "rc1",
     "kind": "concept",
     "body": "Each tiny piece of the curve is a right triangle: dx across, dy up, and the piece of arc as the hypotenuse. Its length is √(dx² + dy²). Add up the hypotenuses and you have the length of the curve.",
-    "figure": "dr-tangent-line"
+    "figure": "pc-arc-length-hypotenuses"
    },
    "check": {
     "id": "rk1",

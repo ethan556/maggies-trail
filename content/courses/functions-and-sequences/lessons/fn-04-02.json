@@ -161,100 +161,93 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Arithmetic, sixth term.",
+      "body": "Arithmetic, a steeper step.",
       "conceptTag": "fn-choose-formula",
       "explanationVariants": [
-        "a_1 = 4, d = 3, so a_6 = 4 + 5·3 = 19.",
-        "Five steps of 3 from 4: 19."
+        "a_1 = 5, d = 7, so a_6 = 5 + 5·7 = 40.",
+        "Five steps of 7 from 5: 5 + 35 = 40."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "For 4, 7, 10, 13, ... (arithmetic), what is the 6th term?",
-        "answer": 19,
+        "prompt": "For 5, 12, 19, 26, ... (arithmetic), what is the 6th term?",
+        "answer": 40,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 22,
-            "feedback": "Take (6 − 1) = 5 steps of 3: 4 + 15 = 19, not 4 + 6·3."
+            "value": 47,
+            "feedback": "Take (6 − 1) = 5 steps of 7: 5 + 35 = 40, not 5 + 6·7."
           },
           {
-            "value": 18,
-            "feedback": "a_1 = 4, d = 3, so a_6 = 4 + 15 = 19."
+            "value": 38,
+            "feedback": "a_1 = 5, d = 7, so a_6 = 5 + 35 = 40."
           }
         ],
-        "fallbackFeedback": "a_6 = 4 + 15 = 19."
-      },
-      "variant": {
-        "gen": "a1-functions-sequences",
-        "form": "fn-choose-formula__numeric"
+        "fallbackFeedback": "a_6 = 5 + 35 = 40."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Geometric, fifth term.",
+      "body": "Catch the wrong formula.",
       "conceptTag": "fn-choose-formula",
       "explanationVariants": [
-        "a_1 = 1, r = 5, so a_5 = 1 · 5⁴ = 625.",
-        "Four factors of 5 from 1: 625."
+        "The ratio is constant (5 each time), so it's geometric: a_5 = 1 · 5⁴ = 625, not 17.",
+        "Constant ratio (×5) means geometric, not arithmetic — the arithmetic guess (17) is far off from the true 625."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "For 1, 5, 25, 125, ... (geometric), what is the 5th term?",
-        "answer": 625,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "For 1, 5, 25, 125, ... a student assumes it's arithmetic with d = 4 (from 5 − 1) and gets a_5 = 1 + 4·4 = 17. What is the actual 5th term?",
+        "options": [
           {
-            "value": 3125,
-            "feedback": "Use r^(5 − 1) = 5⁴, not 5⁵: 1 · 625 = 625."
+            "id": "a",
+            "label": "625 — the sequence is geometric (r = 5), not arithmetic",
+            "correct": true,
+            "feedback": "Right — check the ratio: 5÷1=5, 25÷5=5, 125÷25=5, all constant. It's geometric: a_5 = 1 · 5⁴ = 625, nowhere near 17."
           },
           {
-            "value": 125,
-            "feedback": "125 is the 4th term (already listed). The 5th is 1 · 5⁴ = 625."
+            "id": "b",
+            "label": "17 — the student's answer is correct",
+            "feedback": "The differences (4, 20, 100) aren't constant, so it's NOT arithmetic. The ratio IS constant (5 each time): a_5 = 1 · 5⁴ = 625."
+          },
+          {
+            "id": "c",
+            "label": "125 — just continue the pattern shown",
+            "feedback": "125 is already the 4th term (already listed). One more factor of 5: 125 · 5 = 625."
           }
-        ],
-        "fallbackFeedback": "a_5 = 1 · 5⁴ = 625."
-      },
-      "variant": {
-        "gen": "a1-functions-sequences",
-        "form": "fn-choose-formula__numeric"
+        ]
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Geometric, seventh term.",
+      "body": "Classify it yourself this time.",
       "conceptTag": "fn-choose-formula",
       "explanationVariants": [
-        "a_1 = 2, r = 2, so a_7 = 2 · 2⁶ = 128.",
-        "Six factors of 2 from 2: 128."
+        "The ratio is constant (12÷3=4, 48÷12=4, 192÷48=4): geometric. a_6 = 3 · 4⁵ = 3072.",
+        "No label this time — check ratio vs difference. Ratio wins (constant 4), so a_6 = 3 · 4⁵ = 3072."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "For 2, 4, 8, 16, ... (geometric), what is the 7th term?",
-        "answer": 128,
+        "prompt": "For 3, 12, 48, 192, ..., what is the 6th term?",
+        "answer": 3072,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 256,
-            "feedback": "Use r^(7 − 1) = 2⁶, not 2⁷: 2 · 64 = 128."
+            "value": 48,
+            "feedback": "This sequence isn't arithmetic — the differences (9, 36, 144) aren't constant. Check the RATIO instead: 12 ÷ 3 = 4, 48 ÷ 12 = 4 — constant, so it's geometric. a_6 = 3 · 4⁵ = 3072."
           },
           {
-            "value": 64,
-            "feedback": "64 is the 6th term. The 7th is 2 · 2⁶ = 128."
+            "value": 12288,
+            "feedback": "Use r^(6 − 1) = 4⁵, not 4⁶: 3 · 1024 = 3072, not 3 · 4096."
           }
         ],
-        "fallbackFeedback": "a_7 = 2 · 2⁶ = 128."
+        "fallbackFeedback": "The ratio is constant at 4, so a_6 = 3 · 4⁵ = 3072."
       },
       "hints": [
-        "It's geometric with a_1 = 2, r = 2.",
-        "Use exponent (7 − 1) = 6: 2⁶ = 64.",
-        "2 · 64 = 128."
-      ],
-      "variant": {
-        "gen": "a1-functions-sequences",
-        "form": "fn-choose-formula__numeric"
-      }
+        "This time the type isn't given — check both: is the difference constant, or the ratio?",
+        "12÷3=4, 48÷12=4: the ratio is constant. It's geometric.",
+        "a_6 = 3 · 4⁵ = 3072."
+      ]
     },
     {
       "id": "r1",

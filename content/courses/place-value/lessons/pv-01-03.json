@@ -9,74 +9,68 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "To compare two numbers, **walk the spots left to right** — hundreds first. The first spot where the digits differ settles it, instantly. 452 vs 449: hundreds tie (4 = 4), tens differ (5 > 4) — done, 452 wins. Whatever the ones say afterward can't change it.",
+      "body": "To compare two numbers, **walk the spots left to right** — hundreds first. The first spot where the digits differ settles it, instantly. 342 vs 328: hundreds tie (3 = 3), tens differ (4 > 2) — done, 342 wins. Whatever the ones say afterward can't change it.",
       "figure": "pv3-compare"
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Put the left-to-right walk to work.",
+      "body": "Open the first place that decides the comparison.",
       "conceptTag": "compare-numbers",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Order these from smallest to largest: 89, 401, 98, 140.",
-        "items": [
+        "type": "placeValueTransformLab",
+        "task": "compare",
+        "answerMode": "choice",
+        "prompt": "Line up 98 and 401. Open the place chart, then choose the true comparison.",
+        "values": [
+          98,
+          401
+        ],
+        "choices": [
           {
-            "id": "n401",
-            "label": "401"
+            "id": "less",
+            "label": "98 < 401",
+            "claim": "relation:lt",
+            "feedback": "Yes. 98 has 0 hundreds, while 401 has 4 hundreds."
           },
           {
-            "id": "n89",
-            "label": "89"
+            "id": "greater",
+            "label": "98 > 401",
+            "claim": "relation:gt",
+            "feedback": "The 9 is in the tens place. It cannot outweigh 4 hundreds."
           },
           {
-            "id": "n140",
-            "label": "140"
-          },
-          {
-            "id": "n98",
-            "label": "98"
+            "id": "equal",
+            "label": "98 = 401",
+            "claim": "relation:eq",
+            "feedback": "The place charts are different at the hundreds place, so the numbers are not equal."
           }
         ],
-        "correctOrder": [
-          "n89",
-          "n98",
-          "n140",
-          "n401"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "n98",
-            "second": "n89",
-            "feedback": "98 slipped in front of 89 — but their TENS differ first: 8 tens vs 9 tens, so 89 is the smaller one."
-          },
-          {
-            "first": "n401",
-            "second": "n140",
-            "feedback": "401 landed before 140 — check the hundreds first: 4 hundreds beat 1 hundred, so 401 is the bigger of the two."
-          }
-        ],
-        "missFeedback": "Two-digit numbers first (compare their tens), then the three-digit ones (compare their hundreds).",
-        "successFeedback": "89 < 98 < 140 < 401 — every decision came from the first spot that differed."
+        "numericErrors": [],
+        "requiredExplorations": 1,
+        "tolerance": 0,
+        "explorationFeedback": "Open the hundreds stage before choosing the comparison.",
+        "fallbackFeedback": "Compare the greatest place first: 0 hundreds is less than 4 hundreds.",
+        "successFeedback": "98 < 401. Any 3-digit number has at least 1 hundred, so it is greater than every 2-digit number."
       },
       "predict": {
-        "prompt": "Can a 2-digit number ever beat a 3-digit number?",
+        "prompt": "Can a 2-digit whole number be greater than a 3-digit whole number?",
         "options": [
           {
             "id": "no",
-            "label": "No — more digits always wins"
+            "label": "No — 100 is already greater than 99"
           },
           {
             "id": "yes",
-            "label": "Yes — if its digits are big"
+            "label": "Yes — large digits can outweigh one more place"
           },
           {
             "id": "some",
-            "label": "Sometimes"
+            "label": "Sometimes — the digits decide"
           }
         ],
         "outcomeId": "no",
-        "reveal": "A third digit means the hundreds place is occupied — even 100 outranks 99. Big digits can't rescue a number from a missing place."
+        "reveal": "The greatest 2-digit whole number is 99, and the least 3-digit whole number is 100. Therefore, every 3-digit whole number is greater."
       }
     },
     {
@@ -94,23 +88,23 @@
         "options": [
           {
             "id": "a",
-            "label": "401 — its hundreds digit wins (4 > 3), and the 99 can't catch up",
+            "label": "401 — the hundreds digit wins: 4 beats 3",
             "correct": true,
             "feedback": "One glance at the first spot: 4 beats 3. Everything to the right is too small to matter."
           },
           {
             "id": "b",
-            "label": "399 — it's full of big digits",
+            "label": "399 — it's packed with big-looking digits",
             "feedback": "Nines LOOK big, but they sit in cheap spots. Two nines together are worth 99 — less than the single hundreds step 401 has extra."
           },
           {
             "id": "c",
-            "label": "They're basically equal",
+            "label": "They're basically equal, just a small gap",
             "feedback": "Close, but comparison has no 'basically' — the hundreds spot differs, so 401 is strictly bigger, by 2."
           },
           {
             "id": "d",
-            "label": "You must subtract them to be sure",
+            "label": "You must subtract them to know for sure",
             "feedback": "Subtracting works but wastes effort — the leftmost differing spot settles every comparison in one look."
           }
         ]
@@ -123,7 +117,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "**Why can't later spots fight back?** Because one hundreds step is worth 100, and the tens and ones together can reach at most 99. Each spot outweighs everything to its right, combined. That's the whole reason the left-to-right walk works.",
+      "body": "The figure shows why **later places cannot overturn the first difference**: 342 > 328 because the hundreds tie and 4 tens > 2 tens. More generally, one step in a place is worth more than every possible digit to its right combined. That is why comparison works from left to right.",
       "figure": "pv3-compare"
     },
     {
@@ -141,18 +135,18 @@
         "options": [
           {
             "id": "a",
-            "label": "She compared tens before hundreds — 312's 3 hundreds win first",
+            "label": "She compared tens before hundreds — 312 wins",
             "correct": true,
             "feedback": "The walk starts at the LEFT. Hundreds differ (3 > 2), so 312 wins before the 7 gets a say."
           },
           {
             "id": "b",
-            "label": "Nothing — she's right",
+            "label": "Nothing — she's right about the two numbers",
             "feedback": "Check the hundreds: 275 has two, 312 has three. A whole extra hundred beats any tens digit."
           },
           {
             "id": "c",
-            "label": "She should have compared the ones first",
+            "label": "She should have compared the ones digit first",
             "feedback": "Starting at the RIGHT is even worse — the cheapest spot speaks first. Comparison walks from the most valuable spot down."
           },
           {

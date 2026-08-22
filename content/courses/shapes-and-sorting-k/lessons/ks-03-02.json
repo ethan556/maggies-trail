@@ -322,51 +322,140 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Balance it.",
+      "body": "Sort the weight clues.",
       "conceptTag": "ks-heavier-lighter",
       "explanationVariants": [
         "A level seesaw means the two sides weigh the same — equal weight.",
         "Level means balanced: equal."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Two bags sit on a seesaw and it stays perfectly LEVEL. What does that mean?",
-        "options": [
+        "type": "dragBucket",
+        "prompt": "Put each seesaw clue in the right group.",
+        "buckets": [
           {
-            "id": "a",
-            "label": "The bags weigh the same",
-            "correct": true,
-            "feedback": "Yes — level means balanced: equal weight."
+            "id": "heavier",
+            "label": "Heavier"
           },
           {
-            "id": "b",
-            "label": "The left bag is heavier",
-            "correct": false,
-            "feedback": "Heavier would tip its side DOWN — level means equal."
+            "id": "lighter",
+            "label": "Lighter"
           },
           {
-            "id": "c",
-            "label": "The right bag is heavier",
-            "correct": false,
-            "feedback": "Heavier tips down — level means the bags are equal."
-          },
-          {
-            "id": "d",
-            "label": "The seesaw is stuck",
-            "correct": false,
-            "feedback": "Nothing is stuck — level is what EQUAL looks like."
+            "id": "same",
+            "label": "Same weight"
           }
-        ]
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "the rock's side goes down",
+            "bucketId": "heavier",
+            "feedback": "The down side is heavier."
+          },
+          {
+            "id": "d2",
+            "label": "the balloon's side goes up",
+            "bucketId": "lighter",
+            "feedback": "The up side is lighter."
+          },
+          {
+            "id": "d3",
+            "label": "two bags keep the seesaw level",
+            "bucketId": "same",
+            "feedback": "Level means the weights are the same."
+          }
+        ],
+        "missFeedback": "Down means heavier, up means lighter, and level means the same.",
+        "successFeedback": "Right — the seesaw gives a clue about every weight."
       },
       "hints": [
         "Heavier tips its side down.",
         "This seesaw is not tipping at all.",
         "No tip means the weights are equal."
+      ]
+    },
+    {
+      "id": "ch2",
+      "kind": "challenge",
+      "body": "Weight clue, or holding clue?",
+      "conceptTag": "ks-heavier-lighter",
+      "explanationVariants": [
+        "Seesaw clues (a side going down or up) are about WEIGHT — heavier or lighter. Pouring clues (room left over or spilling over) are about HOLDING — more or less.",
+        "Two different properties give two different kinds of clues: a tipping seesaw always tells you about weight, while leftover room or an overflow always tells you about how much something holds."
       ],
-      "variant": {
-        "gen": "g0-shapes-sorting",
-        "form": "shapeWeightMcq"
-      }
+      "widget": {
+        "type": "dragBucket",
+        "prompt": "Some clues are about WEIGHT. Some are about how much something HOLDS. Sort each clue into the right group.",
+        "buckets": [
+          {
+            "id": "heavier",
+            "label": "Heavier"
+          },
+          {
+            "id": "lighter",
+            "label": "Lighter"
+          },
+          {
+            "id": "more",
+            "label": "Holds more"
+          },
+          {
+            "id": "less",
+            "label": "Holds less"
+          }
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "a dog's side of the seesaw goes down",
+            "bucketId": "heavier",
+            "feedback": "Down on a seesaw means heavier — this is a WEIGHT clue."
+          },
+          {
+            "id": "d2",
+            "label": "a kitten's side of the seesaw goes up",
+            "bucketId": "lighter",
+            "feedback": "Up on a seesaw means lighter — this is a WEIGHT clue."
+          },
+          {
+            "id": "d3",
+            "label": "an elephant toy's side of the seesaw goes down against a mouse toy",
+            "bucketId": "heavier",
+            "feedback": "Down on a seesaw means heavier — the elephant toy is the heavier WEIGHT clue here."
+          },
+          {
+            "id": "d4",
+            "label": "a big block feels lighter than a tiny stone when you lift them",
+            "bucketId": "lighter",
+            "feedback": "Big does not mean heavy — this WEIGHT clue says the block is the lighter one."
+          },
+          {
+            "id": "d5",
+            "label": "a pitcher still has water left after filling one small glass all the way",
+            "bucketId": "more",
+            "feedback": "Water left over after filling the glass is a HOLDING clue — the pitcher holds more."
+          },
+          {
+            "id": "d6",
+            "label": "a teacup overflows before the teapot it is filled from is even half empty",
+            "bucketId": "less",
+            "feedback": "Overflowing long before the teapot is empty is a HOLDING clue — the teacup holds less."
+          },
+          {
+            "id": "d7",
+            "label": "a small cup spills over before a big jug is even a quarter full",
+            "bucketId": "less",
+            "feedback": "Spilling over so early is a HOLDING clue — the small cup holds less than the jug."
+          }
+        ],
+        "missFeedback": "First decide: is this clue about WEIGHT (a seesaw tipping) or about HOLDING (pouring, leftover room, or overflow)? Then pick the direction.",
+        "successFeedback": "Yes — sorted by both kinds of clue: weight clues into heavier or lighter, and holding clues into holds more or holds less."
+      },
+      "hints": [
+        "First ask: is this clue about weight, or about how much something holds?",
+        "A seesaw tipping down or up is always a weight clue.",
+        "Leftover room after pouring means holds more; spilling or overflowing early means holds less."
+      ]
     },
     {
       "id": "r1",

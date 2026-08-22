@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-long-division",
       "body": "The standard algorithm counts the same groups, but fixes the batches by place value — one digit at a time, largest place first.",
       "narration": "The standard algorithm counts the same groups, but fixes the batches by place value — one digit at a time, largest place first."
     },
@@ -90,7 +90,7 @@
         "options": [
           {
             "id": "o0",
-          "label": "It uses fixed place value batches",
+            "label": "It uses fixed place value batches",
             "correct": true,
             "feedback": "Correct — same counting of groups, but the batches are chosen for you, which is why it is compact and less forgiving."
           },
@@ -145,18 +145,17 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "That makes it compact and quick, and also less forgiving: a digit placed one column out is wrong by a factor of ten.",
       "narration": "That makes it compact and quick, and also less forgiving: a digit placed one column out is wrong by a factor of ten."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Locate the first quotient digit by place value in a new division, before any later digit is calculated.",
       "conceptTag": "g5ld-standard",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "Dividing 552 by 24, the first digit sits in the tens place — slide to what it is worth.",
+        "prompt": "Dividing 756 by 27, the first quotient digit sits in the tens place — slide to what it is worth.",
         "min": 2,
         "max": 200,
         "start": 2,
@@ -168,9 +167,9 @@
           101,
           200
         ],
-        "lowFeedback": "Too low — the first digit stands for whole tens of groups, not single ones.",
-        "highFeedback": "Too high — the tens digit here is 2, so it is worth twenty groups.",
-        "successFeedback": "20 — the leading 2 sits in the tens place, standing for twenty groups of 24."
+        "lowFeedback": "Too low — the first quotient digit stands for whole tens of groups, not single ones.",
+        "highFeedback": "Too high — the tens digit is 2, so it represents twenty groups before the ones digit is found.",
+        "successFeedback": "20 — the leading 2 represents twenty groups of 27, the first place-value batch in 756 ÷ 27."
       },
       "cml": {
         "stage": "construct",
@@ -261,43 +260,43 @@
       "body": "",
       "conceptTag": "g5ld-standard",
       "explanationVariants": [
-        "Both methods agree.",
-        "Different batching."
+        "The algorithm fixes the columns.",
+        "Free choice only in partial quotients."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "In partial quotients, why may you take 20 groups of 24 before taking 3 more?",
+        "prompt": "Why does the standard algorithm's first quotient digit have to sit in a specific place-value column?",
         "options": [
           {
             "id": "o0",
-            "label": "Groups may be removed in batches and totalled",
+            "label": "The column decides how many groups that digit stands for",
             "correct": true,
-            "feedback": "Correct — the quotient counts groups, and counting them 20 at a time then 3 at a time gives the same 23."
+            "feedback": "Correct — a digit's column is worth ten times as much as the one to its right, so the wrong column means the wrong number of groups."
           },
           {
             "id": "o1",
-            "label": "Because 20 is always the right first step",
+            "label": "You may put it in any column you like",
             "correct": false,
-            "feedback": "The first batch is whatever is convenient; a different dividend would call for a different one."
+            "feedback": "Free choice belongs to partial quotients; the standard algorithm fixes each digit's column by place value."
           },
           {
             "id": "o2",
-            "label": "Because the standard algorithm requires it",
+            "label": "It makes no difference to the answer",
             "correct": false,
-            "feedback": "The standard algorithm fixes the batches by place value; partial quotients deliberately does not."
+            "feedback": "Sliding a digit one column over changes its value tenfold — the answer would be wrong."
           },
           {
             "id": "o3",
-            "label": "You may not — the batches must be equal",
+            "label": "It only matters when the divisor has one digit",
             "correct": false,
-            "feedback": "Unequal batches are the whole advantage of the method, provided they are totalled at the end."
+            "feedback": "Place value fixes the column for any divisor, one digit or more."
           }
         ]
       },
       "hints": [
-        "Take convenient batches.",
-        "Total them at the end.",
-        "Same groups either way."
+        "Each digit's column fixes its size.",
+        "A column over is ten times off.",
+        "Partial quotients allows free choice; the standard algorithm does not."
       ],
       "cml": {
         "stage": "construct",
@@ -325,15 +324,15 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Same algorithm, a bigger job.",
       "conceptTag": "g5ld-standard",
       "explanationVariants": [
         "Harder divisors, same method.",
-        "Digit by digit."
+        "Digit by digit, whatever the setting."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 1260 ÷ 36 — a two-digit divisor that divides evenly.",
+        "prompt": "A shipment of 1260 bolts is packed into boxes of 36. How many boxes does the shipment fill?",
         "answer": 35,
         "tolerance": 0,
         "unit": "",
@@ -414,11 +413,11 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "How does the standard algorithm differ from partial quotients?",
+          "prompt": "A student switches from partial quotients to the standard algorithm to solve the same division problem. What actually changes?",
           "options": [
             {
               "id": "o0",
-            "label": "It uses fixed place value batches",
+              "label": "It uses fixed place value batches",
               "correct": true,
               "feedback": "Correct — same counting of groups, but the batches are chosen for you, which is why it is compact and less forgiving."
             },

@@ -1,4 +1,4 @@
-export type StandardsReviewStatus = 'ready-for-human-review' | 'approve' | 'reject';
+export type StandardsReviewStatus = 'candidate' | 'partial' | 'approved' | 'rejected';
 
 export interface OfficialStandardsSource {
   id: string;
@@ -48,6 +48,8 @@ export interface StandardsEvidenceDossier {
     reviewedAt: string | null;
     notes: string | null;
     officialTextSnapshot: string | null;
+    officialSourceUrl: string | null;
+    claimBoundary: string | null;
     approvedDepth: string | null;
   };
   dossierHash: string;

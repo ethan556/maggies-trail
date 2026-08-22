@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "koa-take-away-removal",
       "body": "Taking away removes objects from a group. What is left is always less than what you started with.",
       "narration": "Taking away removes objects from a group. What is left is always less than what you started with."
     },
@@ -86,7 +86,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Take some away.",
+      "body": "Sketch, cross out, then count.",
       "conceptTag": "koa-take-away",
       "explanationVariants": [
         "7 take away 3 leaves 4.",
@@ -108,8 +108,8 @@
             "feedback": "That counts the cookies eaten, not the ones left on the plate."
           }
         ],
-        "fallbackFeedback": "Start at 7 and count back 3.",
-        "successFeedback": "Correct — 7 take away 3 leaves 4."
+        "fallbackFeedback": "Model the known groups and the change before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
         "Count back from 7.",
@@ -146,7 +146,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "koa-take-away-removal",
       "body": "Count what remains, not what was removed — those are two different numbers.",
       "narration": "Count what remains, not what was removed — those are two different numbers."
     },
@@ -197,32 +197,32 @@
       "body": "Take some away.",
       "conceptTag": "koa-take-away",
       "explanationVariants": [
-        "9 take away 4 leaves 5.",
-        "Crossing off 4 of the 9 leaves 5."
+        "A quick sketch shows 9 cookies with 4 crossed out, so 5 stay.",
+        "Count only the cookies that are not crossed out: 5."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "There are 9 cookies. You eat 4. How many cookies are left?",
+        "prompt": "Start with 9 cookies. Cross out 4 in a quick sketch. How many are still on the plate?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 9,
-            "feedback": "That is how many there were BEFORE eating. 4 are gone now."
+            "feedback": "That counts every cookie before the crossing out. Count only the plain cookies that stay."
           },
           {
             "value": 4,
-            "feedback": "That counts the cookies eaten, not the ones left on the plate."
+            "feedback": "That counts the crossed-out cookies. The question asks for the cookies that stay."
           }
         ],
-        "fallbackFeedback": "Start at 9 and count back 4.",
-        "successFeedback": "Correct — 9 take away 4 leaves 5."
+        "fallbackFeedback": "Model the known groups and the change before answering.",
+        "successFeedback": "Correct — the represented quantities give 5."
       },
       "hints": [
-        "Count back from 9.",
-        "Take away 4.",
-        "9 − 4 = 5."
+        "Draw 9 circles.",
+        "Cross out 4 circles.",
+        "Count the 5 plain circles."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -254,35 +254,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Take some away.",
+      "body": "Check Ava's answer.",
       "conceptTag": "koa-take-away",
       "explanationVariants": [
-        "6 take away 2 leaves 4.",
-        "Crossing off 2 of the 6 leaves 4."
+        "Ava counted the 2 cookies eaten. The question asks for the 4 that stay.",
+        "Six cookies split into 2 eaten and 4 left."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "There are 6 cookies. You eat 2. How many cookies are left?",
+        "prompt": "Ava has 6 cookies and eats 2. Ava says 2 are left. How many are really left?",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 6,
-            "feedback": "That is how many there were BEFORE eating. 2 are gone now."
+            "feedback": "That is the starting group. Two cookies leave the group, so fewer than 6 remain."
           },
           {
             "value": 2,
-            "feedback": "That counts the cookies eaten, not the ones left on the plate."
+            "feedback": "That repeats Ava's mix-up: 2 were eaten. Count the other cookies that remain."
           }
         ],
-        "fallbackFeedback": "Start at 6 and count back 2.",
-        "successFeedback": "Correct — 6 take away 2 leaves 4."
+        "fallbackFeedback": "Model the known groups and the change before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
-        "Count back from 6.",
-        "Take away 2.",
-        "6 − 2 = 4."
+        "Show the 6 cookies.",
+        "Move away the 2 that Ava ate.",
+        "Count the 4 cookies that stay."
       ],
       "variant": {
         "gen": "k0-add-subtract",
@@ -314,39 +314,50 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Take some away.",
+      "body": "Match a new story to a number sentence.",
       "conceptTag": "koa-take-away",
       "explanationVariants": [
-        "10 take away 6 leaves 4.",
-        "Crossing off 6 of the 10 leaves 4."
+        "Six birds leave a group of 10, so the subtraction sentence is 10 minus 6 equals 4.",
+        "The story changes from cookies to birds, but taking away still uses subtraction."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "There are 10 cookies. You eat 6. How many cookies are left?",
-        "answer": 4,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "10 birds sit in a tree. Then 6 birds fly away. Which number sentence shows how many birds stay?",
+        "options": [
           {
-            "value": 10,
-            "feedback": "That is how many there were BEFORE eating. 6 are gone now."
+            "id": "o1",
+            "label": "10 − 6 = 4",
+            "correct": true,
+            "feedback": "Yes. Start with 10, take away the 6 that fly, and 4 stay."
           },
           {
-            "value": 6,
-            "feedback": "That counts the cookies eaten, not the ones left on the plate."
+            "id": "o2",
+            "label": "10 + 6 = 16",
+            "correct": false,
+            "feedback": "A plus sign would show birds arriving. These 6 birds fly away."
+          },
+          {
+            "id": "o3",
+            "label": "6 − 4 = 2",
+            "correct": false,
+            "feedback": "The story starts with 10 birds, so the sentence must start with 10."
+          },
+          {
+            "id": "o4",
+            "label": "10 − 4 = 6",
+            "correct": false,
+            "feedback": "This takes away the birds that stay. The story says 6 birds fly away."
           }
-        ],
-        "fallbackFeedback": "Start at 10 and count back 6.",
-        "successFeedback": "Correct — 10 take away 6 leaves 4."
+        ]
       },
       "hints": [
-        "Count back from 10.",
-        "Take away 6.",
-        "10 − 6 = 4."
+        "Find the starting number: 10.",
+        "Find the number that flies away: 6.",
+        "Choose 10 minus 6 equals 4."
       ],
       "variant": {
         "gen": "k0-add-subtract",
-        "form": "KoaTakeAwayNumeric"
+        "form": "KoaWriteSubMcq"
       },
       "cml": {
         "stage": "construct",
@@ -398,27 +409,27 @@
         "body": "",
         "conceptTag": "koa-take-away",
         "explanationVariants": [
-          "7 take away 3 leaves 4.",
-          "Crossing off 3 of the 7 leaves 4."
+          "Five counters with 2 moved away leave 3 counters.",
+          "The counters that stay, not the counters moved, tell the answer."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "There are 7 cookies. You eat 3. How many cookies are left?",
-          "answer": 4,
+          "prompt": "Put 5 counters in a row. Slide 2 counters away. How many counters stay?",
+          "answer": 3,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 7,
-              "feedback": "That is how many there were BEFORE eating. 3 are gone now."
+              "value": 5,
+              "feedback": "That is the starting row. Two counters have moved away, so count the shorter row."
             },
             {
-              "value": 3,
-              "feedback": "That counts the cookies eaten, not the ones left on the plate."
+              "value": 2,
+              "feedback": "That counts the counters you moved. The question asks for the counters that stay."
             }
           ],
-          "fallbackFeedback": "Start at 7 and count back 3.",
-          "successFeedback": "Correct — 7 take away 3 leaves 4."
+          "fallbackFeedback": "Model the known groups and the change before answering.",
+          "successFeedback": "Correct — the represented quantities give 3."
         }
       }
     }

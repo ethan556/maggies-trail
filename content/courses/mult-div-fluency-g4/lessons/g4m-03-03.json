@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The same remainder answers different questions differently. Six full vans with five hikers left over means seven vans are needed — the leftover still has to travel.",
-      "narration": "The same remainder answers different questions differently. Six full vans with five hikers left over means seven vans are needed — the leftover still has to travel."
+      "figure": "dop-remainder",
+      "body": "The diagram compares two valid interpretations of 27 ÷ 4. Sharing gives 6 remainder 3, but carrying everyone requires 7 buses because the leftover people still need a whole place.",
+      "narration": "The diagram compares two valid interpretations of 27 ÷ 4. Sharing gives 6 remainder 3, but carrying everyone requires 7 buses because the leftover people still need a whole place."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the model and describe what its values show.",
       "conceptTag": "g4m-interpret-remainder",
       "widget": {
         "type": "numberLineHop",
@@ -60,23 +60,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
-          "diagram",
+          "number-line",
           "symbolic"
         ],
-        "translationFrom": "diagram",
+        "translationFrom": "number-line",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       }
     },
     {
@@ -104,7 +104,7 @@
             "feedback": "3 is the leftover group of hikers, not the number of vans."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Find the number of full groups and the leftover. Because every person needs a whole van place, add one van whenever the remainder is greater than zero.",
         "successFeedback": "Correct — 14."
       },
       "hints": [
@@ -116,23 +116,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
-          "symbolic",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -142,58 +142,58 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Ask what the story wants: full groups only, the leftover itself, or enough groups for everyone. The arithmetic is identical; the answer is not.",
-      "narration": "Ask what the story wants: full groups only, the leftover itself, or enough groups for everyone. The arithmetic is identical; the answer is not."
+      "figure": "mb-remainder",
+      "body": "When objects are shared equally, anything left over is the remainder. The context tells whether to report it, keep it, or use another whole group.",
+      "narration": "When objects are shared equally, anything left over is the remainder. The context tells whether to report it, keep it, or use another whole group."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Test the claim with the model.",
       "conceptTag": "g4m-interpret-remainder",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "53 hikers, vans of 8. Hop by eights to see how many FULL vans fill.",
+        "prompt": "A classmate claims 6 buses can carry all 44 passengers when each bus holds 7. Show 6 full hops to test the claim.",
         "min": 0,
-        "max": 64,
+        "max": 56,
         "start": 0,
-        "hop": 8,
+        "hop": 7,
         "hops": 6,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 56,
-            "feedback": "Seven hops pass 53; only six vans fill completely."
+            "value": 49,
+            "feedback": "Seven hops pass 44; only six buses fill completely."
           },
           {
-            "value": 40,
-            "feedback": "Five hops leave thirteen waiting, which is more than one vanful."
+            "value": 35,
+            "feedback": "Five hops leave nine waiting, which is more than one busful."
           }
         ],
-        "missFeedback": "Each hop is 8. From 0, 6 hops land on 48.",
-        "successFeedback": "48 after six hops — six full vans, and five hikers still waiting for a seventh."
+        "missFeedback": "Each hop is 7. From 0, 6 hops land on 42.",
+        "successFeedback": "42 after six hops — six full buses, and two passengers still waiting for a seventh."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
-          "symbolic",
+          "number-line",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "number-line",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       }
     },
     {
@@ -207,31 +207,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "53 pencils are shared into packs of 8. The answer 6 R 5 can mean different things. Which question needs 7?",
+        "prompt": "For 53 pencils packed 8 per box, which question is answered by 7?",
         "options": [
           {
             "id": "o0",
-            "label": "How many packs are needed so every pencil is packed?",
+            "label": "How many boxes hold all the pencils?",
             "correct": true,
-            "feedback": "Correct — the 5 leftover pencils still need a pack, so the partial group rounds UP to 7."
+            "feedback": "Correct — six boxes hold 48 pencils, so a seventh box is needed for the remaining five."
           },
           {
             "id": "o1",
-            "label": "How many FULL packs are there?",
+            "label": "How many boxes are completely full?",
             "correct": false,
-            "feedback": "That is 6 — full packs ignore the leftover entirely."
+            "feedback": "Only six boxes are completely full; the seventh box is needed but not filled."
           },
           {
             "id": "o2",
-            "label": "How many pencils are left over?",
+            "label": "How many pencils remain unpacked?",
             "correct": false,
-            "feedback": "That is 5, the remainder itself, not a count of packs."
+            "feedback": "Five pencils remain after six full boxes, so this question is answered by 5 rather than 7."
           },
           {
             "id": "o3",
-            "label": "How many pencils in each pack?",
+            "label": "How many pencils fit in one box?",
             "correct": false,
-            "feedback": "That is 8, the divisor — it was given, not computed."
+            "feedback": "Each box holds 8 pencils; seven is the number of boxes needed, not the box capacity."
           }
         ]
       },
@@ -244,23 +244,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       }
     },
     {
@@ -274,7 +274,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "48 hikers ride vans holding 5 each. How many vans are needed?",
+        "prompt": "Five people fit in each van. What is the least number of vans needed for 48 people?",
         "answer": 10,
         "tolerance": 0,
         "unit": "",
@@ -288,7 +288,7 @@
             "feedback": "3 is the leftover group of hikers, not the number of vans."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Find the number of full groups and the leftover. Because every person needs a whole van place, add one van whenever the remainder is greater than zero.",
         "successFeedback": "Correct — 10."
       },
       "hints": [
@@ -300,23 +300,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
-          "symbolic",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -326,7 +326,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g4m-interpret-remainder",
       "explanationVariants": [
         "Full groups versus needed groups.",
@@ -348,7 +348,7 @@
             "feedback": "36 is how many full groups formed; the remainder is what is left over after them."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Multiply the stated quotient by the divisor, then subtract that product from the dividend. The leftover is the remainder, and it must be less than the divisor.",
         "successFeedback": "Correct — 5."
       },
       "hints": [
@@ -360,23 +360,20 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m interpret remainder.",
+        "actionGoal": "Interpret the quotient and remainder in context, then decide whether the question requires the full groups, the leftover, or one additional container.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m interpret remainder decomposable at all."
+          "The division relationship stays fixed; when whole containers must hold everyone and the remainder is positive, the needed-container answer is quotient + 1."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Always dropping the remainder, always rounding up, or confusing leftovers with the number of groups ignores what the context asks."
         ],
         "representations": [
-          "symbolic",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
-        "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-interpret-remainder",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the same numbers described full boxes instead of boxes needed for every item, how would the reported answer change?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -386,7 +383,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Explain the strategy in one clear sentence.",
       "takeaways": [
         "The remainder's meaning depends on the question.",
         "Full groups, leftover, or rounded up.",
@@ -401,13 +398,13 @@
       "concept": {
         "id": "rem-g4m-interpret-remainder-c",
         "kind": "concept",
-        "body": "Ask what the story wants: full groups only, the leftover itself, or enough groups for everyone. The arithmetic is identical; the answer is not.",
-        "narration": "Ask what the story wants: full groups only, the leftover itself, or enough groups for everyone. The arithmetic is identical; the answer is not."
+        "body": "The equal-groups diagram separates full groups from leftovers. Read the question before deciding whether to keep the remainder, report it, or increase the whole-number answer by one.",
+        "narration": "The equal-groups diagram separates full groups from leftovers. Read the question before deciding whether to keep the remainder, report it, or increase the whole-number answer by one."
       },
       "check": {
         "id": "rem-g4m-interpret-remainder-k",
         "kind": "check",
-        "body": "",
+        "body": "Use the scaffold, then solve the check.",
         "conceptTag": "g4m-interpret-remainder",
         "explanationVariants": [
           "Everyone must ride.",
@@ -415,7 +412,7 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "120 hikers ride vans holding 9 each. How many vans are needed?",
+          "prompt": "120 hikers ride vans holding 9 each. Draw 13 full groups and one partial group, then decide how many vans are needed.",
           "answer": 14,
           "tolerance": 0,
           "unit": "",
@@ -429,7 +426,7 @@
               "feedback": "3 is the leftover group of hikers, not the number of vans."
             }
           ],
-          "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+          "fallbackFeedback": "Find the number of full groups and the leftover. Because every person needs a whole van place, add one van whenever the remainder is greater than zero.",
           "successFeedback": "Correct — 14."
         }
       }

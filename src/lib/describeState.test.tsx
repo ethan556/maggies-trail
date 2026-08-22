@@ -432,3 +432,226 @@ describe("numberLineRay", () => {
     expect(reversed).toContain("3 not included");
   });
 });
+
+describe("CL-P1-010 (S330): the 14 high-use spatial manipulatives", () => {
+  it("slider narrates the current value and unit, withholding the target until tone info", () => {
+    const spec = {
+      type: "slider", prompt: "p", min: 0, max: 10, step: 1, start: 2, target: 7, visual: "numberline",
+      unitLabel: "cm", lowFeedback: "l", highFeedback: "h", successFeedback: "s"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, 4)!;
+    expect(plain).toContain("4 cm");
+    expect(plain).not.toContain("7"); // the target must not leak at the default tone
+    const revealed = describeWidgetState(spec, 4, "info")!;
+    expect(revealed).toContain("Target: 7 cm");
+    expect(describeWidgetState(spec, 7, "info")!).not.toContain("Target"); // arrival: nothing left to reveal
+  });
+
+  it("tapDiagram lists hotspots and selection, revealing the correct set only at tone info when wrong", () => {
+    const spec = {
+      type: "tapDiagram", prompt: "p", mode: "selectAll", canvas: { w: 4, h: 3},
+      hotspots: [
+        { id: "a", x: 10, y: 10, label: "Basket A", icon: "🍎", count: 2, correct: true },
+        { id: "b", x: 50, y: 50, label: "Basket B", icon: "🍎", count: 3, correct: false }
+      ],
+      missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, ["b"])!;
+    expect(plain).toContain("Basket A");
+    expect(plain).toContain("Basket B (selected)");
+    expect(plain).not.toContain("Correct:");
+    expect(describeWidgetState(spec, ["b"], "info")!).toContain("Correct: Basket A");
+    expect(describeWidgetState(spec, ["a"], "info")!).not.toContain("Correct:"); // already right: nothing to reveal
+  });
+
+  it("baseTenCompose reflects the built columns and reveals the standard build only when wrong at info", () => {
+    const spec = {
+      type: "baseTenCompose", prompt: "p", target: 34, requireStandard: true, maxHundreds: 0, maxTens: 9, maxOnes: 20,
+      missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, { tens: 2, ones: 9 })!;
+    expect(plain).toContain("2 tens, 9 ones, total 29");
+    expect(plain).not.toContain("Standard build");
+    expect(describeWidgetState(spec, { tens: 2, ones: 9 }, "info")!).toContain("Standard build: 3 tens, 4 ones");
+    expect(describeWidgetState(spec, { tens: 3, ones: 4 }, "info")!).not.toContain("Standard build"); // correct: silent
+  });
+
+  it("lengthCompare: pick mode never reveals (parity — the renderer has no ghost there either)", () => {
+    const spec = {
+      type: "lengthCompare", prompt: "p", mode: "pick", unitLabel: "cm",
+      items: [{ id: "a", label: "Pencil", length: 5 }, { id: "b", label: "Eraser", length: 3 }],
+      answerId: "a", missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    expect(describeWidgetState(spec, "b", "info")!).not.toContain("Correct answer");
+    expect(describeWidgetState(spec, "b", "info")!).toContain("You picked Eraser");
+  });
+
+  it("lengthCompare: align mode reveals the answer only at info while misaligned or wrong", () => {
+    const spec = {
+      type: "lengthCompare", prompt: "p", mode: "align", unitLabel: "cm",
+      items: [
+        { id: "a", label: "Ribbon A", length: 5, startOffset: 2 },
+        { id: "b", label: "Ribbon B", length: 7, startOffset: 0 }
+      ],
+      answerId: "b", missFeedback: "m", successFeedback: "s", unalignedFeedback: "u"
+    } as unknown as TWidget;
+    const misaligned = describeWidgetState(spec, { offsets: { a: 2, b: 0 }, picked: null }, "info")!;
+    expect(misaligned).toContain("not lined up yet");
+    expect(misaligned).toContain("Correct answer: Ribbon B");
+    const aligned = describeWidgetState(spec, { offsets: { a: 0, b: 0 }, picked: "b" }, "info")!;
+    expect(aligned).toContain("lined up");
+    expect(aligned).not.toContain("Correct answer"); // right pick, aligned: nothing left to reveal
+  });
+
+  it("lengthCompare: difference mode states both lengths but only the overhang at info", () => {
+    const spec = {
+      type: "lengthCompare", prompt: "p", mode: "difference", unitLabel: "clips",
+      items: [{ id: "a", label: "Pencil", length: 5 }, { id: "b", label: "Eraser", length: 3 }],
+      answerId: "a", targetDifference: 2, missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, 0)!;
+    expect(plain).toContain("Pencil is 5 clips and Eraser is 3 clips");
+    expect(plain).not.toContain("overhang is");
+    expect(describeWidgetState(spec, 0, "info")!).toContain("The overhang is 2 clips");
+    expect(describeWidgetState(spec, 2, "info")!).not.toContain("overhang is"); // correct count: silent
+  });
+
+  it("numberLinePlace states the marker position and reveals the target only at info", () => {
+    const spec = {
+      type: "numberLinePlace", prompt: "p", min: -5, max: 5, step: 1, tickStep: 1, target: 3, start: 0,
+      lowFeedback: "l", highFeedback: "h", successFeedback: "s"
+    } as unknown as TWidget;
+    expect(describeWidgetState(spec, -2)!).toContain("Marker currently at −2");
+    expect(describeWidgetState(spec, -2)!).not.toContain("Target");
+    expect(describeWidgetState(spec, -2, "info")!).toContain("Target: 3");
+  });
+
+  it("hundredthsGrid states the shaded count and reveals the target only at info", () => {
+    const spec = {
+      type: "hundredthsGrid", prompt: "p", mode: "hundredths", target: 47, prefilled: 0, showDecimal: true,
+      successFeedback: "s", lowFeedback: "l", highFeedback: "h"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, 30)!;
+    expect(plain).toContain("30 are shaded");
+    expect(plain).toContain("0.30");
+    expect(plain).not.toContain("Target");
+    expect(describeWidgetState(spec, 30, "info")!).toContain("Target: 47 of 100");
+  });
+
+  it("barBuilder states the built heights and reveals the target counts only at info", () => {
+    const spec = {
+      type: "barBuilder", prompt: "p", categories: ["Cats", "Dogs"], target: [3, 5], maxVal: 10,
+      successFeedback: "s", partialFeedback: "p"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, [1, 1])!;
+    expect(plain).toContain("Cats: 1, Dogs: 1");
+    expect(plain).not.toContain("Target counts");
+    expect(describeWidgetState(spec, [1, 1], "info")!).toContain("Target counts: 3, 5");
+    expect(describeWidgetState(spec, [3, 5], "info")!).not.toContain("Target counts"); // matched: silent
+  });
+
+  it("clockSet states the current time and reveals the target only at info", () => {
+    const spec = {
+      type: "clockSet", prompt: "p", targetHour: 4, targetMinute: 15,
+      successFeedback: "s", hourFeedback: "h", minuteFeedback: "m"
+    } as unknown as TWidget;
+    expect(describeWidgetState(spec, { hour: 2, minute: 30 })!).toContain("showing 2:30");
+    expect(describeWidgetState(spec, { hour: 2, minute: 30 })!).not.toContain("Target");
+    expect(describeWidgetState(spec, { hour: 2, minute: 30 }, "info")!).toContain("Target: 4:15");
+  });
+
+  it("volumeBuilder (prism) states the built box and reveals the target only at info", () => {
+    const spec = {
+      type: "volumeBuilder", prompt: "p", targetVolume: 60, lMax: 6, wMax: 6, hMax: 6, solid: "prism",
+      successFeedback: "s", lowFeedback: "l", highFeedback: "h"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, { l: 2, w: 2, h: 2 })!;
+    expect(plain).toContain("Volume 8");
+    expect(plain).not.toContain("must hold");
+    expect(describeWidgetState(spec, { l: 2, w: 2, h: 2 }, "info")!).toContain("must hold 60 cubes");
+  });
+
+  it("volumeBuilder (round) reports the exact π-multiple volume and reveals the target only at info", () => {
+    const spec = {
+      type: "volumeBuilder", prompt: "p", targetVolume: 36, solid: "cylinder", rMax: 6, hMax: 6,
+      successFeedback: "s", lowFeedback: "l", highFeedback: "h"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, { r: 3, h: 4 })!;
+    expect(plain).toContain("Volume 36π");
+    expect(plain).not.toContain("must hold");
+    expect(describeWidgetState(spec, { r: 2, h: 4 }, "info")!).toContain("must hold 36π");
+  });
+
+  it("algebraTiles reflects the net tiles through the SAME canonical model the renderer uses, and never states the target", () => {
+    const spec = {
+      type: "algebraTiles", prompt: "p", targetX: 2, targetConst: -3,
+      successFeedback: "s", xFeedback: "x", constFeedback: "c"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, { x: 2, c: -3 })!;
+    expect(plain).toContain("2 x");
+    expect(plain).toContain("-3");
+    // Parity with the renderer's own aria-label, which never prints targetX/targetConst either —
+    // not even at tone "info" (algebraTiles has no numeric reveal-ghost).
+    expect(describeWidgetState(spec, { x: 0, c: 0 }, "info")!).not.toMatch(/target/i);
+  });
+
+  it("columnCalc tracks worked-out columns without ever stating the true total", () => {
+    const spec = {
+      type: "columnCalc", prompt: "p", op: "add", a: 48, b: 27,
+      fallbackFeedback: "f", successFeedback: "s"
+    } as unknown as TWidget;
+    const fresh = describeWidgetState(spec, null)!;
+    expect(fresh).toContain("48 plus 27");
+    expect(fresh).toContain("0 of 2 columns worked out");
+    const partial = describeWidgetState(spec, { written: [5, null] })!;
+    expect(partial).toContain("1 of 2 columns worked out");
+    expect(partial).not.toContain("75"); // the true sum is never stated outright
+  });
+
+  it("numberLineHop (landing mode) reveals the target landing only at tone info", () => {
+    const spec = {
+      type: "numberLineHop", prompt: "p", min: 0, max: 20, start: 4, hop: 3, hops: 2, direction: "forward",
+      missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    expect(describeWidgetState(spec, null)!).not.toContain("Target landing");
+    expect(describeWidgetState(spec, null, "info")!).toContain("Target landing: 10");
+    expect(describeWidgetState(spec, 10, "info")!).not.toContain("Target landing"); // landed: nothing left
+  });
+
+  it("numberLineHop (hop-size / GCF mode) never reveals the stride answer — the renderer has no ghost there", () => {
+    const spec = {
+      type: "numberLineHop", prompt: "p", min: 0, max: 20, start: 0, hops: 1,
+      hopSizeTargets: [8, 12], hopSizeMin: 1, hopSizeMax: 12,
+      missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    const d = describeWidgetState(spec, 4, "info")!;
+    expect(d).toContain("Current stride: 4");
+    expect(d).toContain("8 landed on");
+    expect(d).toContain("12 landed on");
+    expect(d).not.toMatch(/target/i); // the GCF (4) is never named as "the answer"
+  });
+
+  it("tenFrame states the fill count and reveals the target only at info", () => {
+    const spec = {
+      type: "tenFrame", prompt: "p", target: 8, preFilled: 3,
+      missFeedback: "m", successFeedback: "s"
+    } as unknown as TWidget;
+    const plain = describeWidgetState(spec, 5)!;
+    expect(plain).toContain("5 are currently filled");
+    expect(plain).toContain("3 of them locked in already");
+    expect(plain).not.toContain("Target");
+    expect(describeWidgetState(spec, 5, "info")!).toContain("Target: 8");
+  });
+
+  it("fractionBar reveals the target only when the lesson authors showTarget — never by tone", () => {
+    const hidden = {
+      type: "fractionBar", prompt: "p", targetNum: 1, targetDen: 2, showTarget: false,
+      successFeedback: "s", lowFeedback: "l", highFeedback: "h"
+    } as unknown as TWidget;
+    expect(describeWidgetState(hidden, { n: 1, d: 4 }, "info")!).not.toContain("Target"); // authored hidden: info tone does not override it
+    const shown = { ...hidden, showTarget: true } as unknown as TWidget;
+    const plain = describeWidgetState(shown, { n: 1, d: 4 })!; // no tone at all — showTarget alone governs
+    expect(plain).toContain("1 of 4 equal parts");
+    expect(plain).toContain("Target: 1/2");
+  });
+});

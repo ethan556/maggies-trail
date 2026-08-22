@@ -147,18 +147,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "cos θ (since sin90° = 1, cos90° = 0)",
+            "label": "cos θ — sin 90° = 1 survives; cos 90° = 0 vanishes.",
             "correct": true,
             "feedback": "Right — the formula collapses: 1·cosθ − 0·sinθ = cos θ, proving the cofunction identity."
           },
           {
             "id": "o2",
-            "label": "sin θ",
+            "label": "sin θ, if the cofunction relation is reversed.",
             "feedback": "Check the constants: sin90° = 1 multiplies cos θ, and cos90° = 0 kills the sin θ term. Result: cos θ."
           },
           {
             "id": "o3",
-            "label": "1 − sin θ",
+            "label": "1 − sin θ, if the subtraction formula is misread.",
             "feedback": "The formula is a difference of PRODUCTS, not of terms: 1·cosθ − 0·sinθ = cos θ."
           }
         ]
@@ -174,34 +174,30 @@
       "body": "Combine both tools.",
       "conceptTag": "ti-tan-cofunction",
       "explanationVariants": [
-        "tan 15° = tan(45° − 30°) = (1 − 1/√3)/(1 + 1/√3) = 2 − √3 ≈ 0.268.",
-        "The difference flips both signs: numerator minus, denominator plus. 2 − √3 ≈ 0.27."
+        "(2 + √3)(2 − √3) = 2² − (√3)² = 4 − 3 = 1 — a difference of squares, so the √3 terms cancel exactly.",
+        "75° and 15° are complementary (they sum to 90°); tan 75° = 2 + √3 and tan 15° = 2 − √3 multiply to exactly 1, no decimals needed."
       ],
       "hints": [
-        "Split: 15° = 45° − 30°.",
-        "Difference → numerator (tan45 − tan30), denominator (1 + tan45·tan30).",
-        "(1 − 1/√3)/(1 + 1/√3) rationalizes to 2 − √3."
+        "You already have both closed forms from this lesson: tan 75° = 2 + √3, tan 15° = 2 − √3.",
+        "Multiply them directly — don't convert to decimals first: (2 + √3)(2 − √3).",
+        "That's a difference of squares: 2² − (√3)² = 4 − 3."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Evaluate tan 15° to three decimals.",
-        "answer": 0.268,
-        "tolerance": 0.005,
+        "prompt": "From this lesson, tan 75° = 2 + √3 and tan 15° = 2 − √3. What is tan 75° × tan 15°, exactly?",
+        "answer": 1,
+        "tolerance": 0,
         "commonErrors": [
           {
-            "value": 3.732,
-            "feedback": "3.732 = tan 75° — the reciprocal-ish partner. tan 15° = 2 − √3 ≈ 0.268."
+            "value": 4,
+            "feedback": "4 ADDS the two values (2+√3 and 2−√3 sum to 4) instead of multiplying them. The PRODUCT is (2+√3)(2−√3) = 4 − 3 = 1."
           },
           {
-            "value": 0.577,
-            "feedback": "0.577 = tan 30° = 1/√3. tan 15° is smaller: 2 − √3 ≈ 0.268."
+            "value": 3.732,
+            "feedback": "3.732 is tan 75° alone — this asks for the product WITH tan 15° too: (2+√3)(2−√3) = 4 − 3 = 1."
           }
         ],
-        "fallbackFeedback": "(1 − 1/√3)/(1 + 1/√3) = 2 − √3 ≈ 0.268."
-      },
-      "variant": {
-        "gen": "g12-trig-identities-equations",
-        "form": "trig-identities-equations__ti-tan-cofunction__numeric"
+        "fallbackFeedback": "(2 + √3)(2 − √3) = 2² − (√3)² = 4 − 3 = 1."
       }
     },
     {

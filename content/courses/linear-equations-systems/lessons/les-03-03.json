@@ -15,55 +15,42 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Different slopes cross.",
+      "body": "Move a point to the one location shared by two lines with different slopes.",
       "widget": {
-        "type": "mcq",
-        "prompt": "How many solutions does the system y = 2x + 1 and y = 3x − 1 have?",
-        "options": [
-          {
-            "id": "a",
-            "label": "One solution",
-            "correct": true,
-            "feedback": "Right — different slopes (2 and 3) mean the lines cross exactly once."
-          },
-          {
-            "id": "b",
-            "label": "No solution",
-            "correct": false,
-            "feedback": "The no-solution case needs PARALLEL lines (equal slopes) — here the slopes differ (2 vs 3), so they cross once."
-          },
-          {
-            "id": "c",
-            "label": "Infinitely many",
-            "correct": false,
-            "feedback": "That needs the SAME line twice — here the slopes differ, so just one crossing."
-          },
-          {
-            "id": "d",
-            "label": "Two solutions",
-            "correct": false,
-            "feedback": "Two straight lines cross at most once — different slopes give exactly one solution."
-          }
-        ]
+        "type": "systemsExplore",
+        "prompt": "Drag the point to the intersection of y = 2x + 1 and y = 3x − 1. The point must satisfy both equations.",
+        "m1": 2,
+        "b1": 1,
+        "m2": 3,
+        "b2": -1,
+        "xMin": 0,
+        "xMax": 5,
+        "yMin": 0,
+        "yMax": 8,
+        "xStart": 0,
+        "yStart": 0,
+        "successFeedback": "The lines meet at (2, 5). That one point satisfies both equations, so the system has exactly one solution.",
+        "offLine1Feedback": "The point is not on y = 2x + 1 yet. Match its y-value to twice x plus 1.",
+        "offLine2Feedback": "The point is not on y = 3x − 1 yet. Match its y-value to three times x minus 1."
       },
       "predict": {
-        "prompt": "Two lines with DIFFERENT slopes — how many times can they cross?",
+        "prompt": "How many times can two nonparallel straight lines intersect?",
         "options": [
           {
             "id": "once",
-            "label": "Exactly once"
+            "label": "Exactly one time"
           },
           {
             "id": "never",
-            "label": "Never"
+            "label": "No times at all"
           },
           {
             "id": "twice",
-            "label": "Twice"
+            "label": "Exactly two times"
           }
         ],
         "outcomeId": "once",
-        "reveal": "Different tilts guarantee the lines drift together and apart at different rates — they meet at one single point and never again."
+        "reveal": "Different slopes make the lines approach and then separate at different rates. They share one intersection, which is the system's single solution."
       }
     },
     {

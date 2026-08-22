@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "ks-size-trick",
       "body": "Objects hide many amounts at once: how LONG, how HEAVY, how MUCH they hold. Each amount is an attribute, and each can be measured.",
       "narration": "Objects hide many amounts at once: how LONG, how HEAVY, how MUCH they hold. Each amount is an attribute, and each can be measured."
     },
@@ -31,10 +31,10 @@
         "targetUnitSize": 1,
         "startUnitSize": 1,
         "requiredPlacements": 4,
-        "successFeedback": "4 equal blocks cover the ribbon exactly — same start, no gaps, no overlaps: that number IS its length.",
+        "successFeedback": "4 equal blocks cover the ribbon exactly — same start, no gaps, no overlaps: that count names its length in blocks.",
         "alignFeedback": "Line up zero with the object's starting end before measuring.",
         "gapOverlapFeedback": "The blocks must touch end to end — no spaces and no covering the same part twice.",
-        "unitFeedback": "Every block must be the same size, or the count means nothing."
+        "unitFeedback": "Use same-size blocks so every count names the same unit."
       },
       "predict": {
         "prompt": "Measuring the ribbon's LENGTH — which tool fits?",
@@ -88,16 +88,16 @@
         "prompt": "A pencil can be measured in more than one way. Which list is right?",
         "options": [
           {
-            "id": "o0",
-            "label": "Its length AND its weight",
-            "correct": true,
-            "feedback": "Correct — one object carries many measurable attributes; each question needs its own tool."
-          },
-          {
             "id": "o1",
             "label": "Only its length",
             "correct": false,
             "feedback": "Length is one attribute of the pencil, but a scale would find its weight too."
+          },
+          {
+            "id": "o0",
+            "label": "Its length AND its weight",
+            "correct": true,
+            "feedback": "Correct — one object carries many measurable attributes; each question needs its own tool."
           },
           {
             "id": "o2",
@@ -109,7 +109,7 @@
             "id": "o3",
             "label": "Nothing — pencils aren't measurable",
             "correct": false,
-            "feedback": "Every object answers measurement questions: how long, how heavy, how much it holds."
+            "feedback": "A pencil can be measured for length and weight; different attributes need different tools."
           }
         ]
       },
@@ -144,7 +144,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "ks-seesaw",
       "body": "Pick the attribute first, then the tool: a ruler for length, a seesaw for weight, a scoop for what fits inside.",
       "narration": "Pick the attribute first, then the tool: a ruler for length, a seesaw for weight, a scoop for what fits inside."
     },
@@ -155,20 +155,20 @@
       "conceptTag": "kmd-attributes",
       "widget": {
         "type": "unitRuler",
-        "prompt": "Measure the ribbon. Align zero with its start, then place 4 one-unit blocks with no gaps or overlaps.",
+        "prompt": "Repair the measurement: line zero up with the badge's start, then cover its full length with 5 equal blocks.",
         "objectStart": 0,
-        "objectEnd": 4,
+        "objectEnd": 5,
         "allowedUnitSizes": [
           1,
           2
         ],
         "targetUnitSize": 1,
         "startUnitSize": 1,
-        "requiredPlacements": 4,
-        "successFeedback": "4 equal blocks cover the ribbon exactly — same start, no gaps, no overlaps: that number IS its length.",
+        "requiredPlacements": 5,
+        "successFeedback": "The repaired measure uses one start and 5 equal, gap-free blocks, so the badge is 5 blocks long.",
         "alignFeedback": "Line up zero with the object's starting end before measuring.",
         "gapOverlapFeedback": "The blocks must touch end to end — no spaces and no covering the same part twice.",
-        "unitFeedback": "Every block must be the same size, or the count means nothing."
+        "unitFeedback": "Use same-size blocks so every count names the same unit."
       },
       "cml": {
         "stage": "construct",
@@ -280,26 +280,26 @@
         "prompt": "Which question does a seesaw answer, and which does a ruler answer?",
         "options": [
           {
-            "id": "o0",
-            "label": "Seesaw: which is heavier. Ruler: which is longer",
-            "correct": true,
-            "feedback": "Correct — each tool compares ONE attribute; swapping them answers the wrong question."
-          },
-          {
             "id": "o1",
-            "label": "Both answer which is longer",
+            "label": "Seesaw: longer; ruler: heavier",
             "correct": false,
             "feedback": "A seesaw never reports length — it tilts by weight alone."
           },
           {
             "id": "o2",
-            "label": "Both answer which is heavier",
+            "label": "Both tools compare only length",
             "correct": false,
             "feedback": "A ruler never reports weight — it counts length units alone."
           },
           {
+            "id": "o0",
+            "label": "Seesaw: heavier; ruler: longer",
+            "correct": true,
+            "feedback": "Correct — each tool compares ONE attribute; swapping them answers the wrong question."
+          },
+          {
             "id": "o3",
-            "label": "Neither answers anything",
+            "label": "Both tools compare only weight",
             "correct": false,
             "feedback": "Each is a comparison machine: the seesaw for weight, the ruler for length."
           }
@@ -347,12 +347,6 @@
         "prompt": "Two bags sit on a seesaw and it stays level. What does that show?",
         "options": [
           {
-            "id": "o0",
-            "label": "The bags weigh the same",
-            "correct": true,
-            "feedback": "Correct — a level seesaw means neither side wins; the weights are equal."
-          },
-          {
             "id": "o1",
             "label": "The left bag is heavier",
             "correct": false,
@@ -369,6 +363,12 @@
             "label": "The seesaw is stuck",
             "correct": false,
             "feedback": "Nothing is stuck — balance is the seesaw's way of reporting equal weights."
+          },
+          {
+            "id": "o0",
+            "label": "The bags weigh the same",
+            "correct": true,
+            "feedback": "Correct — a level seesaw means neither side wins; the weights are equal."
           }
         ]
       },
@@ -436,7 +436,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "A pencil can be measured in more than one way. Which list is right?",
+          "prompt": "A pencil hides more than one amount to measure, not just its length. Which list names what you can measure?",
           "options": [
             {
               "id": "o0",
@@ -460,7 +460,7 @@
               "id": "o3",
               "label": "Nothing — pencils aren't measurable",
               "correct": false,
-              "feedback": "Every object answers measurement questions: how long, how heavy, how much it holds."
+              "feedback": "A pencil can be measured for length and weight; different attributes need different tools."
             }
           ]
         }

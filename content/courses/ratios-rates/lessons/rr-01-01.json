@@ -15,29 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Read the bowl.",
+      "body": "Keep the named quantities in their stated order as the group scales.",
       "conceptTag": "ratio-language",
       "widget": {
-        "type": "mcq",
-        "prompt": "A fruit bowl follows the pattern: 3 apples for every 2 oranges. What is the ratio of apples to oranges?",
-        "options": [
-          {
-            "id": "a",
-            "label": "3 : 2",
-            "correct": true,
-            "feedback": "Right — apples were named first, so their number comes first: 3 : 2."
-          },
-          {
-            "id": "b",
-            "label": "2 : 3",
-            "feedback": "That's the numbers in swapped order — 2 : 3 says 2 apples for every 3 oranges. The question asked apples first."
-          },
-          {
-            "id": "c",
-            "label": "5 : 3",
-            "feedback": "The 5 counts ALL the fruit (3 + 2) — that's a part-to-whole comparison. Apples to oranges compares the two parts: 3 : 2."
-          }
-        ]
+        "type": "ratioTable",
+        "prompt": "The columns say apples first and oranges second. Scale 3 apples : 2 oranges to the row with 6 apples.",
+        "colA": "apples",
+        "colB": "oranges",
+        "rows": [
+          [
+            3,
+            2
+          ]
+        ],
+        "askA": 6,
+        "targetB": 4,
+        "bMax": 10,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "6 apples pair with 4 oranges. The column order preserves apples : oranges = 3 : 2 as both quantities double.",
+        "lowFeedback": "Too few oranges. Doubling 3 apples to 6 means doubling 2 oranges as well.",
+        "highFeedback": "Too many oranges. Keep the apples-to-oranges relationship at 3 : 2."
       },
       "hints": [
         "Which quantity was asked for first?",

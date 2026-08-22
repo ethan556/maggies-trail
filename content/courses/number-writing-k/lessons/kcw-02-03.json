@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-eleven-twelve",
       "body": "Eleven and twelve are the tricky teens: their names hide the ten. No “teen” sound — yet 11 and 12 still write ten-and-one, ten-and-two.",
       "narration": "Eleven and twelve are the tricky teens: their names hide the ten. No “teen” sound — yet 11 and 12 still write ten-and-one, ten-and-two."
     },
@@ -21,27 +21,27 @@
       "conceptTag": "kcw-write-11-12",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 2. Tap where you land.",
-        "min": 8,
-        "max": 14,
-        "start": 10,
+        "prompt": "Start at 13 and count on 2. Tap where you land.",
+        "min": 11,
+        "max": 17,
+        "start": 13,
         "hop": 1,
         "hops": 2,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 11,
-            "feedback": "11 stops one complete hop too soon. Continue the final 1-unit hop to reach 12."
+            "value": 14,
+            "feedback": "14 stops one complete hop too soon. Continue the final 1-unit hop to reach 15."
           },
           {
-            "value": 13,
-            "feedback": "13 goes one complete hop too far. Count just 2 hops from 10 to land on 12."
+            "value": 16,
+            "feedback": "16 goes one complete hop too far. Count just 2 hops from 13 to land on 15."
           }
         ],
-        "missFeedback": "Count 2 on from 10: you land on 12.",
-        "successFeedback": "10 and 2 more is 12 — the teen numeral writes exactly that: 1 ten, 2 ones.",
-        "lowFeedback": "Short of the landing — all 2 counts past ten are needed to reach 12.",
-        "highFeedback": "Past the landing — the count-on stops after 2 numbers, on 12."
+        "missFeedback": "Count 2 on from 13: you land on 15.",
+        "successFeedback": "13 and 2 more is 15 — the teen numeral writes exactly that: 1 ten, 5 ones.",
+        "lowFeedback": "Short of the landing — all 2 counts past 13 are needed to reach 15.",
+        "highFeedback": "Past the landing — the count-on stops after 2 numbers, on 15."
       },
       "predict": {
         "prompt": "Does eleven contain a full ten, though its name hides it?",
@@ -95,28 +95,28 @@
         "prompt": "12 and 21 use the same two digits. Same number?",
         "options": [
           {
-            "id": "o0",
-            "label": "No — position gives each digit its job",
-            "correct": true,
-            "feedback": "Correct — in 12 the 1 is a ten; in 21 the 2 is two tens. Order is meaning."
+            "id": "o1",
+            "label": "Yes; digits match",
+            "correct": false,
+            "feedback": "Matching digits do not guarantee the same number; their places determine their values."
           },
           {
-            "id": "o1",
-            "label": "Yes — same digits, same number",
-            "correct": false,
-            "feedback": "Swap the digits and the tens digit changes: twelve becomes twenty-one."
+            "id": "o0",
+            "label": "No; places changed",
+            "correct": true,
+            "feedback": "Correct — 12 has one ten and two ones, while 21 has two tens and one one."
           },
           {
             "id": "o2",
-            "label": "Only on Tuesdays",
+            "label": "Only when counting",
             "correct": false,
-            "feedback": "Place value never takes a day off; position always assigns the jobs."
+            "feedback": "Place value does not change with the activity; 12 and 21 remain different."
           },
           {
             "id": "o3",
-            "label": "12 is bigger",
+            "label": "12 is always larger",
             "correct": false,
-            "feedback": "21 holds two full tens against 12's one — the swap made it BIGGER."
+            "feedback": "21 is greater than 12, but size is not the reason their values differ; the digit places are."
           }
         ]
       },
@@ -151,38 +151,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-name-vs-numeral",
       "body": "Trust the numeral over the name: the leading 1 says the ten is there, whatever the word sounds like.",
       "narration": "Trust the numeral over the name: the leading 1 says the ten is there, whatever the word sounds like."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-11-12",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 2. Tap where you land.",
-        "min": 8,
-        "max": 14,
-        "start": 10,
-        "hop": 1,
-        "hops": 2,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "Which numeral means one ten and two extra ones? Tap it.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 11,
-            "feedback": "11 stops one complete hop too soon. Continue the final 1-unit hop to reach 12."
+            "id": "card-11",
+            "x": 20,
+            "y": 50,
+            "label": "numeral 11",
+            "icon": "11",
+            "count": 1,
+            "correct": false,
+            "feedback": "11 names a different amount. Read the target again, then match it exactly."
           },
           {
-            "value": 13,
-            "feedback": "13 goes one complete hop too far. Count just 2 hops from 10 to land on 12."
+            "id": "card-12",
+            "x": 50,
+            "y": 50,
+            "label": "numeral 12",
+            "icon": "12",
+            "count": 1,
+            "correct": true,
+            "feedback": "12 shows one ten and two ones even though its name does not say teen."
+          },
+          {
+            "id": "card-21",
+            "x": 80,
+            "y": 50,
+            "label": "numeral 21",
+            "icon": "21",
+            "count": 1,
+            "correct": false,
+            "feedback": "21 names a different amount. Read the target again, then match it exactly."
           }
         ],
-        "missFeedback": "Count 2 on from 10: you land on 12.",
-        "successFeedback": "10 and 2 more is 12 — the teen numeral writes exactly that: 1 ten, 2 ones.",
-        "lowFeedback": "Short of the landing — all 2 counts past ten are needed to reach 12.",
-        "highFeedback": "Past the landing — the count-on stops after 2 numbers, on 12."
+        "missFeedback": "Compare the numeral with the amount or place-value clue before choosing.",
+        "successFeedback": "12 shows one ten and two ones even though its name does not say teen."
       },
       "cml": {
         "stage": "construct",
@@ -218,27 +237,27 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 2. Tap where you land.",
+        "prompt": "Start at 10 and make 3 one-unit hops. Where do you land?",
         "min": 8,
-        "max": 14,
+        "max": 15,
         "start": 10,
         "hop": 1,
-        "hops": 2,
+        "hops": 3,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 11,
-            "feedback": "11 stops one complete hop too soon. Continue the final 1-unit hop to reach 12."
+            "value": 12,
+            "feedback": "12 stops one complete hop too soon. Continue the final 1-unit hop to reach 13."
           },
           {
-            "value": 13,
-            "feedback": "13 goes one complete hop too far. Count just 2 hops from 10 to land on 12."
+            "value": 14,
+            "feedback": "14 goes one complete hop too far. Count just 3 hops from 10 to land on 13."
           }
         ],
-        "missFeedback": "Count 2 on from 10: you land on 12.",
-        "successFeedback": "10 and 2 more is 12 — the teen numeral writes exactly that: 1 ten, 2 ones.",
-        "lowFeedback": "Short of the landing — all 2 counts past ten are needed to reach 12.",
-        "highFeedback": "Past the landing — the count-on stops after 2 numbers, on 12."
+        "missFeedback": "Count 3 on from 10: you land on 13.",
+        "successFeedback": "10 and 3 more is 13 — the teen numeral writes exactly that: 1 ten, 3 ones.",
+        "lowFeedback": "Short of the landing — all 3 counts past ten are needed to reach 13.",
+        "highFeedback": "Past the landing — the count-on stops after 3 numbers, on 13."
       },
       "hints": [
         "Teens open with 1.",
@@ -286,12 +305,6 @@
         "prompt": "A group shows 12 dots. Which numeral names that amount?",
         "options": [
           {
-            "id": "o0",
-            "label": "12",
-            "correct": true,
-            "feedback": "Correct — the numeral 12 is the written name for a group of exactly 12."
-          },
-          {
             "id": "o1",
             "label": "13",
             "correct": false,
@@ -302,6 +315,12 @@
             "label": "11",
             "correct": false,
             "feedback": "11 promises fewer dots than the group holds; the count reaches 12."
+          },
+          {
+            "id": "o0",
+            "label": "12",
+            "correct": true,
+            "feedback": "Correct — the numeral 12 is the written name for a group of exactly 12."
           },
           {
             "id": "o3",
@@ -440,7 +459,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "12 and 21 use the same two digits. Same number?",
+          "prompt": "Someone writes 21 by mixing up the digits in 12. Did they write the same number?",
           "options": [
             {
               "id": "o0",

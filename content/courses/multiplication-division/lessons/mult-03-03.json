@@ -89,7 +89,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "5 × 8 = ?",
+        "prompt": "Start at 5 and double exactly three times. Enter the final number in the doubling chain.",
         "answer": 40,
         "tolerance": 0,
         "commonErrors": [
@@ -116,44 +116,24 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "The chain shows every stop on the way to ×8.",
+      "body": "Build the array reached after three doublings.",
       "conceptTag": "double-double",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "3 × 8 by doubling: put the chain in order, starting from 3.",
-        "items": [
-          {
-            "id": "n12",
-            "label": "12"
-          },
-          {
-            "id": "n3",
-            "label": "3"
-          },
-          {
-            "id": "n24",
-            "label": "24"
-          },
-          {
-            "id": "n6",
-            "label": "6"
-          }
-        ],
-        "correctOrder": [
-          "n3",
-          "n6",
-          "n12",
-          "n24"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "n24",
-            "second": "n12",
-            "feedback": "24 landed before 12 — but 24 is 12's double, the chain's last stop. Each link doubles the one before."
-          }
-        ],
-        "missFeedback": "Start at 3 and double each time: 3, 6, 12, 24.",
-        "successFeedback": "3 → 6 → 12 → 24. Three doublings: the stops are 3 × 2, 3 × 4, and 3 × 8."
+        "type": "areaModel",
+        "prompt": "Start with 3 × 4, then double the number of columns. Build the 3-by-8 array.",
+        "targetArea": 24,
+        "wMax": 8,
+        "hMax": 8,
+        "wStart": 3,
+        "hStart": 4,
+        "requireFactors": {
+          "w": 3,
+          "h": 8
+        },
+        "factorFeedback": "Use side lengths 3 and 8. The lesson is tracking how three doublings make 8 copies of 3.",
+        "lowFeedback": "The array has fewer than 24 squares. Double the 4-copy side to 8.",
+        "highFeedback": "The array has more than 24 squares. Use exactly 3 rows and 8 columns, or turn that array.",
+        "successFeedback": "The 3-by-8 array has 24 squares. Doubling 3 three times makes 3 × 8: 3 → 6 → 12 → 24."
       },
       "predict": {
         "prompt": "Doubling 3 three times (3 → 6 → 12 → 24) is the same as multiplying 3 by…",

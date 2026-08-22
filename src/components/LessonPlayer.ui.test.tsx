@@ -227,7 +227,7 @@ describe("completion consolidation", () => {
     fireEvent.click(screen.getAllByRole("button", { name: /Plate with 3 cookies/ })[1]);
     fireEvent.click(btn(/^Check$/));
     fireEvent.click(btn(/^Continue$/));
-    fireEvent.click(screen.getByRole("radio", { name: /^3 × 5$/ }));
+    fireEvent.click(screen.getByRole("radio", { name: /^3 times 5$/ }));
     fireEvent.click(btn(/^Check$/));
     fireEvent.click(btn(/^Continue$/));
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "5" } });
@@ -268,13 +268,17 @@ describe("math-first active shell", () => {
     expect(document.querySelector(".lesson-trail-shell--active")).toBeTruthy();
     expect(document.querySelector(".trail-atmosphere")).toBeNull();
     expect(screen.getByRole("heading", { level: 1, name: "Tier Test Trail" })).toBeTruthy();
-    expect(screen.getByRole("img", { name: "Step 1 of 8" })).toBeTruthy();
+    expect(
+      screen.getByRole("group", { name: "Step 1 of 8; completed items can be opened in read-only review" })
+    ).toBeTruthy();
     expect(document.querySelector(".trail-waypoint")).toBeNull();
     expect(document.querySelector(".trail-clearing-label")).toBeNull();
 
     fireEvent.click(btn(/^Continue$/));
     expect((mainEl().dataset.stepKind)).toBe("interactive");
-    expect(screen.getByRole("img", { name: "Step 2 of 8" })).toBeTruthy();
+    expect(
+      screen.getByRole("group", { name: "Step 2 of 8; completed items can be opened in read-only review" })
+    ).toBeTruthy();
     expect(document.querySelector(".trail-clearing-label")).toBeNull();
     expect(document.querySelector(".trail-action-dock")).toBeTruthy();
   });

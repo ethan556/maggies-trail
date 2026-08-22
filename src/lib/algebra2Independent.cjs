@@ -26,10 +26,13 @@ function solveRaw(form,input){const {prompt:p,visible:v,options}=split(input),q=
  if(concept==='ft-inverse-rule'){const m=q.match(/f\(x\)=(-?\d+)x ([+-]) (\d+)/),a=+m[1],d=(m[2]==='-'?-1:1)*+m[3];return opt(options,`f^-1(x)=(x ${d<0?'+':'-'} ${Math.abs(d)})/${a}`);}
  if(concept==='ft-inverse-undo'){if(surface==='mcq'){const m=q.match(/f\((-?\d+)\)=(-?\d+)/);return opt(options,m[1])}const m=q.match(/g\(x\)=(-?\d+)x ([+-]) (\d+).*g\^-1\((-?\d+)\)/),a=+m[1],d=(m[2]==='-'?-1:1)*+m[3],y=+m[4];return(y-d)/a;}
  // Logarithms
+ // Re-pinned: GRB-02 (S331) — these numeric routes now round to the precision each PROMPT
+ // states ("to three decimals", "to hundredths", "to tenths"), matching the generator, which
+ // stores answers at the stated convention instead of a 10-decimal float.
  if(concept==='lg-cob'){const m=q.match(/log_(\d+)\((\d+)\)/),base=+m[1],n=+m[2];if(surface==='numeric')return round(Math.log(n)/Math.log(base));return opt(options,`log(${n}) / log(${base})`);}
  if(concept==='lg-define'){const m=q.match(/log_(\d+)\((\d+)\)(?:=(\d+))?/),base=+m[1],n=+m[2],power=round(Math.log(n)/Math.log(base));if(surface==='numeric')return power;return opt(options,`${base}^${power} = ${n}`);}
- if(concept==='lg-e-solve'){if(surface==='numeric'){const m=q.match(/(\d+)e\^x=(\d+)/);return round(Math.log(+m[2]/+m[1]))}const m=q.match(/(\d+) ln\(x\)=(\d+)/),power=+m[2]/+m[1];return opt(options,`x = e^${power}`);}
- if(concept==='lg-e'){if(surface==='numeric')return round(Math.exp(z[0]));return opt(options,/Faster than 2\^x but slower than 3\^x/);}
+ if(concept==='lg-e-solve'){if(surface==='numeric'){const m=q.match(/(\d+)e\^x=(\d+)/);return round(Math.log(+m[2]/+m[1]),3)}const m=q.match(/(\d+) ln\(x\)=(\d+)/),power=+m[2]/+m[1];return opt(options,`x = e^${power}`);}
+ if(concept==='lg-e'){if(surface==='numeric')return round(Math.exp(z[0]),3);return opt(options,/Faster than 2\^x but slower than 3\^x/);}
  if(concept==='lg-evaluate'){const m=q.match(/log_(\d+)\(([^)]+)\)/),base=+m[1],arg=m[2].includes('/')?eval(m[2]):+m[2],ans=round(Math.log(arg)/Math.log(base));return surface==='numeric'?ans:opt(options,String(ans));}
  if(concept==='lg-exp-solve'){const m=q.match(/(?:(\d+)\*)?(\d+)\^x=(\d+)/),coef=+(m[1]||1),base=+m[2],rhs=+m[3];if(surface==='numeric')return round(Math.log(rhs/coef)/Math.log(base));return opt(options,new RegExp(`log_${base}\(${rhs}\)`));}
  if(concept==='lg-expand-condense'){const m=q.match(/(\d+)log_(\d+)\(([^)]+)\) - log_\2\(([^)]+)\)/);if(surface==='mcq'){const power=+m[1],base=+m[2];return opt(options,new RegExp(`log_${base}\(x\^${power}\/y\)`))}const mm=q.match(/(\d+)log_(\d+)\((\d+)\) \+ log_\2\((\d+)\)/),coef=+mm[1],base=+mm[2],a=+mm[3],d=+mm[4];return coef*Math.log(a)/Math.log(base)+Math.log(d)/Math.log(base);}
@@ -125,14 +128,14 @@ function solveRaw(form,input){const {prompt:p,visible:v,options}=split(input),q=
  if(concept==='si-study-type'){if(surface==='matchPairs')return{'Randomized experiment':'Causal effect','Random sample observational study':'Population association','Convenience survey':'Sample description only','Census':'Exact population description'};return opt(options,'Observational study');}
  // Trigonometric functions
  if(concept==='tf-amp-period'){const m=q.match(/y=(\d+)sin\(x\) ([+-]) (\d+)/),A=+m[1],k=(m[2]==='-'?-1:1)*+m[3];return k-A;}
- if(concept==='tf-arc-length'){const m=q.match(/radius (\d+).*pi\/(\d+)/),r=+m[1],d=+m[2];return r*Math.PI/d;}
- if(concept==='tf-exact-values'){const m=q.match(/Find (sin|cos|tan) (\d+)/),fn=m[1],ang=+m[2]*Math.PI/180;return round(fn==='sin'?Math.sin(ang):fn==='cos'?Math.cos(ang):Math.tan(ang));}
- if(concept==='tf-identity'){if(surface==='mcq')return opt(options,/Both 0.8 and -0.8/);const m=q.match(/sin theta=([\d.]+)/),sine=+m[1];return Math.sqrt(1-sine*sine);}
- if(concept==='tf-inverse'){const m=q.match(/opposite side (\d+) and adjacent side (\d+)/),opp=+m[1],adj=+m[2];return 180/Math.PI*Math.atan(opp/adj);}
+ if(concept==='tf-arc-length'){const m=q.match(/radius (\d+).*pi\/(\d+)/),r=+m[1],d=+m[2];return round(r*Math.PI/d,2);}
+ if(concept==='tf-exact-values'){const m=q.match(/Find (sin|cos|tan) (\d+)/),fn=m[1],ang=+m[2]*Math.PI/180;return round(fn==='sin'?Math.sin(ang):fn==='cos'?Math.cos(ang):Math.tan(ang),2);}
+ if(concept==='tf-identity'){if(surface==='mcq')return opt(options,/Both 0.8 and -0.8/);const m=q.match(/sin theta=([\d.]+)/),sine=+m[1];return round(Math.sqrt(1-sine*sine),3);}
+ if(concept==='tf-inverse'){const m=q.match(/opposite side (\d+) and adjacent side (\d+)/),opp=+m[1],adj=+m[2];return round(180/Math.PI*Math.atan(opp/adj),1);}
  if(concept==='tf-model'){if(surface==='mcq')return opt(options,/starts at the minimum height/);const m=q.match(/h\(t\)=(\d+)-(\d+)cos\(2pi\s*t\/(\d+)\).*h\((\d+)\)/),mid=+m[1],A=+m[2],T=+m[3],t=+m[4];return mid-A*Math.cos(2*Math.PI*t/T);}
  if(concept==='tf-ratios'){if(surface==='dragBucket'){const out={};for(const i of v.items)out[i.label]=/Across|Does not touch/.test(i.label)?'Opposite':/right angle|Longest/.test(i.label)?'Hypotenuse':'Adjacent';return out}const m=q.match(/In a (\d+)-(\d+)-(\d+)/),opp=+m[1],adj=+m[2];return adj;}
  if(concept==='tf-reference'){const a=z[0]%360;return a<=90?a:a<180?180-a:a<270?a-180:360-a;}
- if(concept==='tf-solve-sides'){const m=q.match(/length (\d+).*at (\d+)/),h=+m[1],ang=+m[2];return h*Math.sin(ang*Math.PI/180);}
+ if(concept==='tf-solve-sides'){const m=q.match(/length (\d+).*at (\d+)/),h=+m[1],ang=+m[2];return round(h*Math.sin(ang*Math.PI/180),2);}
  if(concept==='tf-transform-period'){
    /* S242. The generator BUILDS a symbolic label from integer arithmetic. This route goes the other
     * way: it EVALUATES each printed option numerically and takes the one nearest the period computed

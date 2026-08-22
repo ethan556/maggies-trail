@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The column algorithm is the area model written compactly: each place of the top number is multiplied by the single digit, and the pieces stack up.",
-      "narration": "The column algorithm is the area model written compactly: each place of the top number is multiplied by the single digit, and the pieces stack up."
+      "figure": "dop-standard-algo",
+      "body": "A standard algorithm multiplies one place at a time. Regroup a full bundle into the next place before continuing.",
+      "narration": "A standard algorithm multiplies one place at a time. Regroup a full bundle into the next place before continuing."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the model and describe what its values show.",
       "conceptTag": "g4m-4x1",
       "widget": {
         "type": "columnCalc",
@@ -35,8 +35,8 @@
             "feedback": "One carry never joined the column above it, so the product is a whole hundred short."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include."
+        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
+        "successFeedback": "1342 × 3 = 4026. The proposed product rebuilds every place correctly."
       },
       "predict": {
         "prompt": "Multiplying 1,342 × 3, how many columns get multiplied?",
@@ -62,7 +62,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -82,8 +82,8 @@
       "body": "",
       "conceptTag": "g4m-4x1",
       "explanationVariants": [
-        "Every place multiplies.",
-        "None is skipped."
+        "Track each factor's place value.",
+        "The basic-fact product may add a trailing zero."
       ],
       "widget": {
         "type": "numeric",
@@ -94,20 +94,20 @@
         "commonErrors": [
           {
             "value": 150,
-            "feedback": "That is only the tens piece (30 × 5). The ones piece 2 × 5 still has to be added on."
+            "feedback": "That is only 30 × 5. Add the ones partial product, 2 × 5, as well."
           },
           {
             "value": 10,
-            "feedback": "That is only the ones piece. The 30 in 32 contributes 30 × 5 as well."
+            "feedback": "That is only 2 × 5. Add the tens partial product, 30 × 5, as well."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Split the two-digit factor into tens and ones, multiply each part by the one-digit factor, then add the partial products.",
         "successFeedback": "Correct — 160."
       },
       "hints": [
-        "Multiply place by place.",
-        "Carry what overflows.",
-        "The carry must land."
+        "Split the two-digit factor into tens and ones.",
+        "Multiply each part by the one-digit factor.",
+        "Add the two partial products."
       ],
       "cml": {
         "stage": "construct",
@@ -118,7 +118,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -139,33 +139,33 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Nothing new is happening — the partial products are still there, just written above one another instead of side by side.",
-      "narration": "Nothing new is happening — the partial products are still there, just written above one another instead of side by side."
+      "figure": "dop-partial-products",
+      "body": "An area model splits a factor by place value. The partial products from every region combine to make the product.",
+      "narration": "An area model splits a factor by place value. The partial products from every region combine to make the product."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Test the claim with the model.",
       "conceptTag": "g4m-4x1",
       "widget": {
         "type": "columnCalc",
-        "prompt": "Work 1,342 × 3 in columns. Tap each column to multiply it.",
+        "prompt": "A classmate claims 2,153 × 4 = 8,612. Work from ones through thousands to test the claim.",
         "op": "multiply",
-        "a": 1342,
-        "b": 3,
+        "a": 2153,
+        "b": 4,
         "commonResults": [
           {
-            "value": 3026,
-            "feedback": "3,026 stranded the carry out of the hundreds — a column keeps one digit and hands the rest upward."
+            "value": 8412,
+            "feedback": "8,412 stranded the carry out of the tens — a column keeps one digit and hands the rest upward."
           },
           {
-            "value": 3926,
-            "feedback": "One carry never joined the column above it, so the product is a whole hundred short."
+            "value": 8602,
+            "feedback": "One carry never joined the column above it, so the product is ten short."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include."
+        "fallbackFeedback": "Multiply from the ones place toward the left. Regroup every full bundle into the next place, then include it in that column's product.",
+        "successFeedback": "2153 × 4 = 8612. The proposed product rebuilds every place correctly."
       },
       "cml": {
         "stage": "construct",
@@ -176,7 +176,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -196,32 +196,32 @@
       "body": "",
       "conceptTag": "g4m-4x1",
       "explanationVariants": [
-        "Columns hold one digit.",
-        "Overflow carries."
+        "Track each factor's place value.",
+        "The basic-fact product may add a trailing zero."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Use an area model for 48 × 6. What is the product?",
+        "prompt": "Add the partial products 40 × 6 and 8 × 6. What is 48 × 6?",
         "answer": 288,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
             "value": 240,
-            "feedback": "That is only the tens piece (40 × 6). The ones piece 8 × 6 still has to be added on."
+            "feedback": "That is only 40 × 6. Add the ones partial product, 8 × 6, as well."
           },
           {
             "value": 48,
-            "feedback": "That is only the ones piece. The 40 in 48 contributes 40 × 6 as well."
+            "feedback": "That treats 48 as the product. Multiply both 40 and 8 by 6, then add the partial products."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Split the two-digit factor into tens and ones, multiply each part by the one-digit factor, then add the partial products.",
         "successFeedback": "Correct — 288."
       },
       "hints": [
-        "Multiply place by place.",
-        "Carry what overflows.",
-        "The carry must land."
+        "Split the two-digit factor into tens and ones.",
+        "Multiply each part by the one-digit factor.",
+        "Add the two partial products."
       ],
       "cml": {
         "stage": "construct",
@@ -232,7 +232,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -256,8 +256,8 @@
       "body": "",
       "conceptTag": "g4m-4x1",
       "explanationVariants": [
-        "Places scale the fact.",
-        "Zeros stay honest."
+        "Track each factor's place value.",
+        "The basic-fact product may add a trailing zero."
       ],
       "widget": {
         "type": "numeric",
@@ -268,20 +268,20 @@
         "commonErrors": [
           {
             "value": 270,
-            "feedback": "That dropped a zero. Each factor's zeros survive into the product — count them all."
+            "feedback": "This result is one place too small. Scale by the factors' place values, including any zero created by the basic-fact product."
           },
           {
             "value": 27000,
-            "feedback": "That is one zero too many; multiply the basic fact first, then attach only the zeros the factors carry."
+            "feedback": "This result is one place too large. Scale only by the factors' actual place values, while keeping any zero created by the basic-fact product."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Multiply the nonzero digits, then scale by the factors' place values. Check whether the basic-fact product itself ends in zero before writing the final product.",
         "successFeedback": "Correct — 2700."
       },
       "hints": [
-        "Use the basic fact.",
-        "Then attach the tens.",
-        "Count every zero."
+        "Name each factor's place value.",
+        "Multiply the nonzero digits.",
+        "Scale the product by those place values."
       ],
       "cml": {
         "stage": "construct",
@@ -292,7 +292,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -313,15 +313,15 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g4m-4x1",
       "explanationVariants": [
-        "Four digits, same rule.",
-        "Place by place."
+        "Track each factor's place value.",
+        "The basic-fact product may add a trailing zero."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Use an area model for 15 × 3. What is the product?",
+        "prompt": "A theater sets 15 seats in each of 3 rows. How many seats are arranged?",
         "answer": 45,
         "tolerance": 0,
         "unit": "",
@@ -335,13 +335,13 @@
             "feedback": "That is only the ones piece. The 10 in 15 contributes 10 × 3 as well."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Split the two-digit factor into tens and ones, multiply each part by the one-digit factor, then add the partial products.",
         "successFeedback": "Correct — 45."
       },
       "hints": [
-        "Multiply place by place.",
-        "Carry what overflows.",
-        "The carry must land."
+        "Split the two-digit factor into tens and ones.",
+        "Multiply each part by the one-digit factor.",
+        "Add the two partial products."
       ],
       "cml": {
         "stage": "construct",
@@ -352,7 +352,7 @@
           "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m 4x1 decomposable at all."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Skipping a place, losing a regrouped bundle, or treating a placeholder zero as a counting rule changes the value of a partial product."
         ],
         "representations": [
           "symbolic",
@@ -373,7 +373,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Explain the strategy in one clear sentence.",
       "takeaways": [
         "Every place gets multiplied.",
         "Columns hold one digit each.",
@@ -388,36 +388,36 @@
       "concept": {
         "id": "rem-g4m-4x1-c",
         "kind": "concept",
-        "body": "Nothing new is happening — the partial products are still there, just written above one another instead of side by side.",
-        "narration": "Nothing new is happening — the partial products are still there, just written above one another instead of side by side."
+        "body": "The area model keeps the hidden place values visible: 23 × 4 is 20 × 4 plus 3 × 4. The column algorithm records those same partial products in a more compact layout.",
+        "narration": "The area model keeps the hidden place values visible: 23 × 4 is 20 × 4 plus 3 × 4. The column algorithm records those same partial products in a more compact layout."
       },
       "check": {
         "id": "rem-g4m-4x1-k",
         "kind": "check",
-        "body": "",
+        "body": "Use the scaffold, then solve the check.",
         "conceptTag": "g4m-4x1",
         "explanationVariants": [
-          "Every place multiplies.",
-          "None is skipped."
+          "Track each factor's place value.",
+          "The basic-fact product may add a trailing zero."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Use an area model for 32 × 5. What is the product?",
+          "prompt": "Use partial products to find 32 × 5. What is the product?",
           "answer": 160,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 150,
-              "feedback": "That is only the tens piece (30 × 5). The ones piece 2 × 5 still has to be added on."
+              "feedback": "That is only 30 × 5. Add the ones partial product, 2 × 5, as well."
             },
             {
               "value": 10,
-              "feedback": "That is only the ones piece. The 30 in 32 contributes 30 × 5 as well."
+              "feedback": "That is only 2 × 5. Add the tens partial product, 30 × 5, as well."
             }
           ],
-          "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
-          "successFeedback": "Correct — 160."
+          "fallbackFeedback": "Split 32 into 30 and 2. Multiply each part by 5, then add the partial products.",
+          "successFeedback": "Correct — 30 × 5 plus 2 × 5 is 160."
         }
       }
     }

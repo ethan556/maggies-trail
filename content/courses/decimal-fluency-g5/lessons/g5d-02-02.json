@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Multiplying two decimals multiplies the digits and ADDS the decimal places: tenths times tenths gives hundredths.",
-      "narration": "Multiplying two decimals multiplies the digits and ADDS the decimal places: tenths times tenths gives hundredths."
+      "figure": "dop-decimal-grid",
+      "body": "The overlapping grid shows 0.3 × 0.4 = 0.12. Tenths times tenths make hundredths.",
+      "narration": "The overlapping grid shows 0.3 × 0.4 = 0.12. Tenths times tenths make hundredths."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the first model.",
       "conceptTag": "g5dc-mult-decimal",
       "widget": {
         "type": "estimateSlider",
@@ -78,7 +78,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "",
+      "body": "Read or explain the representation.",
       "conceptTag": "g5dc-mult-decimal",
       "explanationVariants": [
         "Add the places.",
@@ -86,31 +86,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Computing 0.4 × 0.3 in hundredths gives 12. Where does the point go?",
+        "prompt": "In the area grid for 0.4 × 0.3, what does the overlap represent?",
         "options": [
           {
             "id": "o0",
-            "label": "0.12 — two decimal places",
+            "label": "Twelve hundredths, or 0.12.",
             "correct": true,
-            "feedback": "Correct — tenths times tenths gives hundredths, so the product carries two decimal places."
+            "feedback": "Correct — the 12 overlapping cells are 12 of 100 equal cells, or 0.12."
           },
           {
             "id": "o1",
-            "label": "1.2 — one decimal place",
+            "label": "Twelve tenths, or 1.2.",
             "correct": false,
-            "feedback": "That counts only one factor's place. Each factor contributes its own, so the product has two."
+            "feedback": "That counts the 12 cells as if each were a full column (a tenth) rather than a single cell (a hundredth) — 12 tenths would fill more than one whole square."
           },
           {
             "id": "o2",
-            "label": "12 — no decimal places",
+            "label": "Twelve wholes, or 12.",
             "correct": false,
-            "feedback": "Multiplying two numbers below one cannot produce twelve; the product must be smaller than either factor."
+            "feedback": "That treats each of the 12 cells as one whole unit, but on a hundredths grid every cell is only one hundredth of the whole square."
           },
           {
             "id": "o3",
-            "label": "0.012 — three decimal places",
+            "label": "Twelve thousandths, or 0.012.",
             "correct": false,
-            "feedback": "Three places would need a thousandth somewhere; one tenth times one tenth reaches only hundredths."
+            "feedback": "That pushes the count one place too far right; the grid has only 100 cells, so the smallest piece it shows is a hundredth, not a thousandth."
           }
         ]
       },
@@ -145,22 +145,22 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "0.4 × 0.3 is 4 × 3 = 12 in the smallest place, and since each factor carried one place, the product carries two: 0.12.",
-      "narration": "0.4 × 0.3 is 4 × 3 = 12 in the smallest place, and since each factor carried one place, the product carries two: 0.12."
+      "figure": "dop-count-places",
+      "body": "Multiply the digits first. Then count the decimal places in both factors to place the point in the product.",
+      "narration": "Multiply the digits first. Then count the decimal places in both factors to place the point in the product."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Check a classmate's claim with the model.",
       "conceptTag": "g5dc-mult-decimal",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "0.4 × 0.3 — slide to estimate the product.",
+        "prompt": "A classmate claims 0.6 × 0.7 lands near 4.2. Slide to test whether that is reasonable.",
         "min": 0.01,
         "max": 2,
         "start": 0.01,
-        "target": 0.12,
+        "target": 0.42,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
@@ -168,9 +168,24 @@
           1,
           2
         ],
-        "lowFeedback": "Too low — twelve hundredths is more than a hundredth or two.",
-        "highFeedback": "Too high — multiplying two numbers below one gives a result smaller than either of them.",
-        "successFeedback": "0.12 — from 4 × 3 = 12, with two decimal places because each factor carried one."
+        "lowFeedback": "Too low — six tenths of seven tenths lands close to four tenths, not near zero.",
+        "highFeedback": "Too high — multiplying two numbers below one gives a result smaller than either of them, so 4.2 is ten times too big.",
+        "successFeedback": "0.42 — from 6 × 7 = 42, with two decimal places because each factor carried one. The classmate's 4.2 was missing a decimal place."
+      },
+      "predict": {
+        "prompt": "A classmate says 0.6 × 0.7 = 4.2 because 6 × 7 = 42. What went wrong?",
+        "options": [
+          {
+            "id": "dropped",
+            "label": "Two decimal places were dropped from the product"
+          },
+          {
+            "id": "correct",
+            "label": "Nothing — that is correct"
+          }
+        ],
+        "outcomeId": "dropped",
+        "reveal": "Each factor carries one decimal place, so the product 42 must carry two: 0.42, not 4.2."
       },
       "cml": {
         "stage": "construct",
@@ -198,7 +213,7 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "",
+      "body": "Apply the idea in a new form.",
       "conceptTag": "g5dc-mult-decimal",
       "explanationVariants": [
         "Multiply the digits.",
@@ -206,22 +221,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: compute 44 × 8.",
-        "answer": 352,
-        "tolerance": 0,
+        "prompt": "Multiply 0.6 and 0.9. What is the product?",
+        "answer": 0.54,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 52,
-            "feedback": "Adding mixes an amount with a repeat count — 8 copies of 44 hundredths multiply."
+            "value": 5.4,
+            "feedback": "That has only one decimal place. Each of the two factors carries one place, so the product needs two: 0.54, not 5.4."
           },
           {
-            "value": 308,
-            "feedback": "That is one copy short; 8 copies means 8 of them, not 7."
+            "value": 1.5,
+            "feedback": "That is the SUM of 0.6 and 0.9. The question asks for the product, which multiplies rather than combines them."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 352."
+        "successFeedback": "Correct — 0.54."
       },
       "hints": [
         "Count the places.",
@@ -249,16 +264,12 @@
         "transferFamily": "decimal-fluency-g5:g5dc-mult-decimal",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g4-multiply",
-        "form": "mbMultiplyTensNumeric"
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Check a likely misconception.",
       "conceptTag": "g5dc-mult-decimal",
       "explanationVariants": [
         "Below one shrinks.",
@@ -266,31 +277,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Computing 0.4 × 0.3 in hundredths gives 12. Where does the point go?",
+        "prompt": "Why does 0.4 × 0.3 have two decimal places?",
         "options": [
           {
             "id": "o0",
-            "label": "0.12 — two decimal places",
+            "label": "Each factor contributes one place.",
             "correct": true,
-            "feedback": "Correct — tenths times tenths gives hundredths, so the product carries two decimal places."
+            "feedback": "Correct — one decimal place from each factor gives two places in the product."
           },
           {
             "id": "o1",
-            "label": "1.2 — one decimal place",
+            "label": "Every product uses hundredths.",
             "correct": false,
-            "feedback": "That counts only one factor's place. Each factor contributes its own, so the product has two."
+            "feedback": "Not every decimal product lands in hundredths — a factor with two decimal places would push the product further right. The place count depends on the factors, not a fixed rule."
           },
           {
             "id": "o2",
-            "label": "12 — no decimal places",
+            "label": "The product has two digits.",
             "correct": false,
-            "feedback": "Multiplying two numbers below one cannot produce twelve; the product must be smaller than either factor."
+            "feedback": "12 happens to have two digits, but that is a coincidence of this example — 4 × 3 also equals 12 with zero decimal places when neither factor is a decimal."
           },
           {
             "id": "o3",
-            "label": "0.012 — three decimal places",
+            "label": "The factors are both below 1.",
             "correct": false,
-            "feedback": "Three places would need a thousandth somewhere; one tenth times one tenth reaches only hundredths."
+            "feedback": "Being below 1 controls the SIZE of the product, not the number of decimal places; two decimal places come from each factor contributing one."
           }
         ]
       },
@@ -325,7 +336,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g5dc-mult-decimal",
       "explanationVariants": [
         "Estimate guards the point.",
@@ -333,31 +344,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Before computing 4.9 × 6, which estimate is most useful?",
+        "prompt": "Without exact calculation, where should 1.8 × 0.4 lie?",
         "options": [
           {
             "id": "o0",
-            "label": "5 × 6 = 30, so a little under 30",
+            "label": "Between 0 and 1.",
             "correct": true,
-            "feedback": "Correct — 4.9 is just under 5, so six of them land just under 30."
+            "feedback": "Correct — multiplying 1.8 by a positive number below 1 makes a smaller positive result."
           },
           {
             "id": "o1",
-            "label": "4 × 6 = 24",
+            "label": "Between 1.8 and 4.",
             "correct": false,
-            "feedback": "Rounding 4.9 down to 4 throws away nearly a whole unit, six times over."
+            "feedback": "Multiplying by 0.4, a number below 1, shrinks 1.8 rather than growing it into that range."
           },
           {
             "id": "o2",
-            "label": "About 3, since 4.9 is close to 5 and 5 ÷ 6 is under 1",
+            "label": "Between 10 and 20.",
             "correct": false,
-            "feedback": "That divides instead of multiplying; the operation must survive the estimate."
+            "feedback": "That range would fit multiplying 1.8 by something well above 10, not by 0.4."
           },
           {
             "id": "o3",
-            "label": "About 300",
+            "label": "Exactly at 4.",
             "correct": false,
-            "feedback": "That is off by a factor of ten — five sixes is thirty, not three hundred."
+            "feedback": "4 would come from a factor near 2.2, not 0.4; multiplying by a number below 1 makes the result smaller than 1.8."
           }
         ]
       },
@@ -392,7 +403,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Summarize multiplying two decimals.",
       "takeaways": [
         "Multiply the digits.",
         "Add the decimal places.",
@@ -407,8 +418,8 @@
       "concept": {
         "id": "rem-g5dc-mult-decimal-c",
         "kind": "concept",
-        "body": "0.4 × 0.3 is 4 × 3 = 12 in the smallest place, and since each factor carried one place, the product carries two: 0.12.",
-        "narration": "0.4 × 0.3 is 4 × 3 = 12 in the smallest place, and since each factor carried one place, the product carries two: 0.12."
+        "body": "Multiply the digits first. Then count the decimal places in both factors to place the point in the product.",
+        "narration": "Multiply the digits first. Then count the decimal places in both factors to place the point in the product."
       },
       "check": {
         "id": "rem-g5dc-mult-decimal-k",
@@ -425,7 +436,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "0.12 — two decimal places",
+              "label": "0.12 — two decimal places",
               "correct": true,
               "feedback": "Correct — tenths times tenths gives hundredths, so the product carries two decimal places."
             },

@@ -21,6 +21,7 @@ import { basecampHref, dominantAction, waypointHref } from "./worldNav";
 import { Instruments } from "./Instruments";
 import { ReturnPaths } from "./ReturnPaths";
 import type { WorldInstrument, WorldLandmark } from "./worldTypes";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 
 function freezeDayLabel(day: string): string {
   const [year, month, date] = day.split("-").map(Number);
@@ -112,14 +113,28 @@ export function Trailhead({
 
       <div data-primary-action>
         <Surface border className="mt-4 rounded-card p-5" elevation="e1">
-          <p className="text-sm text-content-2">
-            {hydrated && loc && locLandmark
-              ? `You're on ${courseNames[loc.courseId] ?? loc.courseId} — ${locLandmark.name}.`
-              : "You haven't walked a trail in this region yet."}
-          </p>
-          <h2 className="mt-2 text-xl font-extrabold">
-            {action.kind === "explore" ? "Choose where to go next" : courseNames[action.courseId] ?? action.courseId}
-          </h2>
+          <div className="flex items-center gap-3">
+            {profile && (
+              <AvatarDisplay
+                avatarId={profile.avatarId}
+                customization={profile.avatarCustomization}
+                size={256}
+                placement="trail"
+                displaySize={48}
+                className="h-12 w-12 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
+              />
+            )}
+            <div>
+              <p className="text-sm text-content-2">
+                {hydrated && loc && locLandmark
+                  ? `You're on ${courseNames[loc.courseId] ?? loc.courseId} — ${locLandmark.name}.`
+                  : "You haven't walked a trail in this region yet."}
+              </p>
+              <h2 className="mt-1 text-xl font-extrabold">
+                {action.kind === "explore" ? "Choose where to go next" : courseNames[action.courseId] ?? action.courseId}
+              </h2>
+            </div>
+          </div>
           <div className="mt-4">
             {action.kind === "explore" ? (
               <LinkButton href="/atlas" size="lg">{action.label}</LinkButton>

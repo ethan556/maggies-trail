@@ -112,12 +112,12 @@ function TwoStepStoryNumeric(r) {
       [start + spent + gained, `The first step took ${spent} away — adding it counts what was lost as if it were still there.`]]) };
 }
 function AddThenMultiplyNumeric(r) {
-  // step one is stated in prose; the graded step is the multiplication, first two numbers
   const groups = pick(r, 3, 8), each = pick(r, 4, 9);
   const ans = groups * each;
   const [g, item] = choose(r, KIT);
+  const singularGroup = g.replace(/s$/, "");
   return { gen: "g3-mult-fluency", form: "MultMixedSmallNumeric",
-    prompt: `After the extra one arrived there are ${groups} ${g}, each holding ${each} ${item}. So ${groups} × ${each} = ?`,
+    prompt: `There were ${groups - 1} ${g}. One more ${singularGroup} arrived. Each ${singularGroup} holds ${each} ${item}. How many ${item} are there now?`,
     answer: ans,
     traps: traps2(ans, [
       [groups + each, `That added the two numbers; ${groups} groups OF ${each} calls for multiplication.`],
@@ -130,7 +130,7 @@ function MultiplyThenSubtractNumeric(r) {
   const ans = total - taken;
   must(ans > 0, "multiply-then-subtract must leave a positive remainder");
   return { gen: "g2-add-subtract-100", form: "TwoStepTradeNumeric",
-    prompt: `A shelf held ${total} markers. Students took ${taken}, then a teacher returned 0 more. How many markers remain?`,
+    prompt: `${groups} shelves hold ${each} markers each. Students take ${taken} markers. How many markers remain?`,
     answer: ans,
     traps: traps2(ans, [
       [total + taken, `Taking markers away lowers the count; adding treats a loss like a gain.`],

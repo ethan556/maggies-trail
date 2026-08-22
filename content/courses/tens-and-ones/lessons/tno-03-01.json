@@ -33,12 +33,12 @@
         "prompt": "One hop of ten forward from 34 — what changes, what stays?",
         "options": [
           {
-            "id": "tens",
-            "label": "Tens digit changes, ones stays: 44"
-          },
-          {
             "id": "both",
             "label": "Both digits change"
+          },
+          {
+            "id": "tens",
+            "label": "Tens digit changes, ones stays: 44"
           },
           {
             "id": "ones",
@@ -140,122 +140,110 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Ten less again.",
+      "body": "Find the missing subtrahend.",
       "widget": {
         "type": "numeric",
-        "prompt": "48 - 10 = ?",
-        "answer": 38,
+        "prompt": "48 − ? = 38. What number was subtracted?",
+        "answer": 10,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 47,
-            "feedback": "Subtracting 10 changes the tens, not the ones: 48 − 10 = 38."
+            "value": 86,
+            "feedback": "That adds 48 and 38 together. The number subtracted is the DIFFERENCE: 48 − 38 = 10."
           },
           {
-            "value": 58,
-            "feedback": "That's 10 more. Subtracting 10 makes the tens go down: 48 − 10 = 38."
+            "value": 1,
+            "feedback": "The tens digit went down by 1, but the actual number subtracted is a whole ten: 10, not 1."
           }
         ],
-        "fallbackFeedback": "4 tens → 3 tens, so 38."
+        "fallbackFeedback": "48 − 38 = 10, so 10 was subtracted."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Ten more.",
+      "body": "Find the missing addend.",
       "conceptTag": "tno-ten-more-less",
       "explanationVariants": [
-        "2 tens → 3 tens, ones stay 5: 35.",
-        "Adding 10 moves the tens up by 1: 25 → 35."
+        "35 − 25 = 10, so 10 was added.",
+        "Find the gap between the two numbers."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "25 + 10 = ?",
-        "answer": 35,
+        "prompt": "25 + ? = 35. What number was added?",
+        "answer": 10,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 26,
-            "feedback": "Adding 10 changes the tens, not the ones: 25 + 10 = 35."
+            "value": 60,
+            "feedback": "That adds 25 and 35 together. The number added is the DIFFERENCE: 35 − 25 = 10."
           },
           {
-            "value": 15,
-            "feedback": "That's 10 less. Adding 10 makes the tens go up: 25 + 10 = 35."
+            "value": 1,
+            "feedback": "The tens digit went up by 1, but the actual number added is a whole ten: 10, not 1."
           }
         ],
-        "fallbackFeedback": "2 tens → 3 tens, so 35."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenMoreLessNumeric"
+        "fallbackFeedback": "35 − 25 = 10, so 10 was added."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Ten less.",
+      "body": "Work backward to the starting number.",
       "conceptTag": "tno-ten-more-less",
       "explanationVariants": [
-        "8 tens → 7 tens, ones stay 0: 70.",
-        "Subtracting 10 moves the tens down by 1: 80 → 70."
+        "Undo the −10 by adding: 70 + 10 = 80.",
+        "Work backward from the result to find the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "80 - 10 = ?",
-        "answer": 70,
+        "prompt": "After subtracting 10, the result is 70. What number did we start with?",
+        "answer": 80,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 79,
-            "feedback": "Subtracting 10 changes the tens, not the ones: 80 − 10 = 70."
+            "value": 60,
+            "feedback": "That subtracts 10 again instead of undoing the subtraction. Undo by adding: 70 + 10 = 80."
           },
           {
-            "value": 90,
-            "feedback": "That's 10 more. Subtracting 10 makes the tens go down: 80 − 10 = 70."
+            "value": 71,
+            "feedback": "That only undoes one, not one ten. Adding a full ten back to 70 gives 80."
           }
         ],
-        "fallbackFeedback": "8 tens → 7 tens, so 70."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenMoreLessNumeric"
+        "fallbackFeedback": "Undo the −10 by adding: 70 + 10 = 80."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Crossing to a new ten.",
+      "body": "Work backward to the starting number.",
       "conceptTag": "tno-ten-more-less",
       "explanationVariants": [
-        "1 ten → 2 tens, ones stay 9: 29.",
-        "Adding 10 moves the tens up by 1: 19 → 29."
+        "Undo the +10 by subtracting: 29 − 10 = 19.",
+        "Work backward from the result to find the start."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "19 + 10 = ?",
-        "answer": 29,
+        "prompt": "After adding 10, the result is 29. What number did we start with?",
+        "answer": 19,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 20,
-            "feedback": "Adding 10 adds a whole ten, not 1. The tens go 1 → 2 and the 9 stays: 29."
+            "value": 39,
+            "feedback": "That adds 10 again instead of undoing the add. Undo by subtracting: 29 − 10 = 19."
           },
           {
-            "value": 9,
-            "feedback": "That's 10 less. Adding 10 makes the tens go up: 19 + 10 = 29."
+            "value": 28,
+            "feedback": "That only undoes one, not one ten. Subtracting a full ten from 29 gives 19."
           }
         ],
-        "fallbackFeedback": "1 ten → 2 tens, ones stay 9, so 29."
+        "fallbackFeedback": "Undo the +10 by subtracting: 29 − 10 = 19."
       },
       "hints": [
-        "Adding 10 adds one whole ten.",
-        "The ones digit (9) stays the same.",
-        "1 ten → 2 tens, so 29."
-      ],
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenMoreLessNumeric"
-      }
+        "Work backward: undo the +10 by subtracting 10.",
+        "29 − 10 = 19.",
+        "Check: 19 + 10 = 29."
+      ]
     },
     {
       "id": "r1",
@@ -283,25 +271,25 @@
         "body": "",
         "conceptTag": "tno-ten-more-less",
         "explanationVariants": [
-          "3 tens → 4 tens, ones stay 4: 44.",
-          "Adding 10 moves the tens up by 1: 34 → 44."
+          "7 tens → 8 tens, ones stay 6: 86.",
+          "Hopping ten more moves the tens digit up by 1: 76 → 86."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "34 + 10 = ?",
-          "answer": 44,
+          "prompt": "You start at 76 on the number line and hop ten more. Where do you land?",
+          "answer": 86,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 35,
-              "feedback": "Adding 10 changes the tens, not the ones: 44."
+              "value": 77,
+              "feedback": "Hopping ten more moves the tens digit, not the ones: 76 + 10 = 86."
             },
             {
-              "value": 24,
-              "feedback": "That's 10 less; adding 10 gives 44."
+              "value": 66,
+              "feedback": "That hops ten LESS, not ten more. Hopping ten more from 76 lands on 86."
             }
           ],
-          "fallbackFeedback": "3 tens → 4 tens, so 44."
+          "fallbackFeedback": "7 tens → 8 tens, so 86."
         }
       }
     }

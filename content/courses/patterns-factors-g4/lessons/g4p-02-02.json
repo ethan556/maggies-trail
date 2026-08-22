@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "The sieve finds every prime in a range by elimination: cross out the multiples of 2, then 3, then 5, and whatever survives is prime.",
       "narration": "The sieve finds every prime in a range by elimination: cross out the multiples of 2, then 3, then 5, and whatever survives is prime."
     },
@@ -151,38 +150,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2.",
       "narration": "Only PRIMES need to be sieve numbers. The multiples of 4 vanished with the multiples of 2, because 4 is itself built from 2."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Run a different sieve pass and explain the equally spaced composite landings it removes.",
       "conceptTag": "g4pf-sieve",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Run the multiples-of-3 pass: count by 3s from 0 and watch which numbers get crossed out.",
+        "prompt": "Run the multiples-of-5 pass: count by 5s from 0 through 25.",
         "min": 0,
         "max": 30,
         "start": 0,
-        "hop": 3,
-        "hops": 6,
+        "hop": 5,
+        "hops": 5,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 15,
-            "feedback": "Five hops reach 15; the sixth landing is the one being tested."
-          },
-          {
-            "value": 21,
-            "feedback": "Seven hops overshoot — the sixth multiple of 3 is 18."
+            "value": 20,
+            "feedback": "20 is four hops of 5. Continue one more equal hop to reach 25."
           }
         ],
-        "missFeedback": "Each hop covers 3, so six of them reach 18.",
-        "successFeedback": "18 — and every landing on the way (3, 6, 9, 12, 15) is crossed out as a multiple of 3.",
-        "lowFeedback": "Short of the landing — each hop covers 3, so six of them reach 18.",
-        "highFeedback": "Past the landing — six hops of 3 stop exactly on 18."
+        "missFeedback": "The fifth equal hop of 5 lands on 25; those non-prime multiples are removed by this sieve pass.",
+        "successFeedback": "25 — the fifth multiple of 5. It is crossed out because it has factors besides 1 and itself."
       },
       "cml": {
         "stage": "construct",
@@ -213,27 +205,27 @@
       "body": "",
       "conceptTag": "g4pf-sieve",
       "explanationVariants": [
-        "Survivors are prime.",
-        "Two is the first survivor."
+        "Even multiples went first.",
+        "Nine is the first fresh crossing."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What is the smallest prime number?",
-        "answer": 2,
+        "prompt": "The 3-pass crosses out 6, 9, 12, 15, and so on. Which is the smallest number it crosses out that the 2-pass had NOT already removed?",
+        "answer": 9,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 1,
-            "feedback": "1 has only ONE factor — itself — while a prime needs exactly two, so 1 is neither prime nor composite."
+            "value": 6,
+            "feedback": "6 is even, so the 2-pass had already crossed it out — the 3-pass adds nothing new there."
           },
           {
             "value": 3,
-            "feedback": "3 is prime, but a smaller one comes before it and is the only even prime there is."
+            "feedback": "3 is the sieve number itself and survives as a prime; the pass crosses out its MULTIPLES beyond it."
           }
         ],
-        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
-        "successFeedback": "Correct — 2."
+        "fallbackFeedback": "Go through the 3-pass landings in order — 6, 9, 12 — and ask of each: is it even?",
+        "successFeedback": "Correct — 9. Every earlier landing of the 3-pass is even and was already gone."
       },
       "hints": [
         "Count the factor pairs.",
@@ -274,31 +266,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "In a sieve you cross out multiples of 2, then 3, then 5. Why is 4 never used as a crossing-out number?",
+        "prompt": "After the 2-, 3-, and 5-passes of a sieve, why can 7 remain uncrossed?",
         "options": [
           {
             "id": "o0",
-            "label": "Every multiple of 4 is even",
+            "label": "No earlier sieve number divides 7 exactly",
             "correct": true,
-            "feedback": "Correct — 4 is itself composite, so its multiples are also multiples of its factor 2 and are gone already."
+            "feedback": "Correct — 7 is not a multiple of 2, 3, or 5, so those composite-removing passes do not cross it out."
           },
           {
             "id": "o1",
-            "label": "Because 4 has no multiples",
+            "label": "Every odd number remains",
             "correct": false,
-            "feedback": "4 has infinitely many multiples; the point is they were already removed by an earlier pass."
+            "feedback": "Odd composite numbers such as 9 and 15 are crossed out by the 3- and 5-passes."
           },
           {
             "id": "o2",
-            "label": "Because 4 is prime",
+            "label": "7 is a multiple of 5",
             "correct": false,
-            "feedback": "4 is composite — it is 2 × 2 — which is exactly why it is skipped as a sieve number."
+            "feedback": "7 ÷ 5 leaves a remainder, so 7 is not a multiple of 5."
           },
           {
             "id": "o3",
-            "label": "Because 4 is too small to matter",
+            "label": "The sieve skips all numbers below 10",
             "correct": false,
-            "feedback": "Size is not the reason; 5 is used and 4 is not, because only PRIMES add new crossings."
+            "feedback": "The sieve starts with small numbers; it crosses out 4, 6, 8, and 9 before reaching 10."
           }
         ]
       },

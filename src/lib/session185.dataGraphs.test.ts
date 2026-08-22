@@ -172,6 +172,17 @@ describe("S185 data-graphs-g1 — the 12 built lessons re-derived from disk", ()
     "dgr1-03-03": ["barBuilder:pictograph", "barBuilder:pictograph"],
     "dgr1-03-04": ["graphRead:tally", "barBuilder:bar"],
   };
+  // dgr1-01-03/ch1, dgr1-02-03/k3, dgr1-02-04/k3: redesigned by S327_FIX_PG4 and
+  // S329_PROGRESSION_PGE (reports/closure/S327_FIX_PG4.md "dgr1-02-03"/"dgr1-02-04",
+  // S329_PROGRESSION_PGE.md "dgr1-01-03") into content no registered g1-data generator
+  // produces -- an addition "taller" bar-compare (no generator emits "taller", only
+  // GdBarCompareNumeric's "shorter") and a "how many more to the next five-group" question
+  // (neither GdTallySinglesNumeric nor any other form computes 5 - leftover). Both reports'
+  // own stated policy is to strip a variant rather than leave one that can't reproduce the
+  // authored content on replay. Math re-verified independently here (13 = 2*5+3, so 2 more
+  // closes the third group; 5+4=9; 6+2=8) via the widgetIntegrityErrors/evaluate checks
+  // below, which still run unconditionally -- only the solver cross-check is skipped.
+  const NO_VARIANT_BY_DESIGN = new Set(["dgr1-01-03/ch1", "dgr1-02-03/k3", "dgr1-02-04/k3"]);
   for (const file of files) {
     const lesson = JSON.parse(readFileSync(join(dir, "lessons", file), "utf8"));
     it(`${lesson.id}: A-tier shape, S185 engine displays, every graded step independently re-derived`, () => {
@@ -206,11 +217,16 @@ describe("S185 data-graphs-g1 — the 12 built lessons re-derived from disk", ()
         }
       }
       for (const s of lesson.steps.filter((x: { kind: string }) => x.kind === "check" || x.kind === "challenge")) {
-        expect(s.variant?.gen).toBe("g1-data");
+        const exempt = NO_VARIANT_BY_DESIGN.has(`${lesson.id}/${s.id}`);
+        if (exempt) {
+          expect(s.variant).toBeUndefined();
+        } else {
+          expect(s.variant?.gen).toBe("g1-data");
+        }
         const w = WidgetSpec.parse(s.widget) as TWidget;
         expect(widgetIntegrityErrors(w)).toEqual([]);
         if (w.type === "numeric") {
-          expect(solvePrompt(s.variant.form, w.prompt)).toBe(w.answer);
+          if (!exempt) expect(solvePrompt(s.variant.form, w.prompt)).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
           for (const e of w.commonErrors) {
             expect(e.value).not.toBe(w.answer);
@@ -219,7 +235,7 @@ describe("S185 data-graphs-g1 — the 12 built lessons re-derived from disk", ()
         } else if (w.type === "mcq") {
           const labels = w.options.map((o) => o.label);
           const correct = w.options.find((o) => o.correct)!;
-          expect(solvePrompt(s.variant.form, `${w.prompt}||${labels.join(";;")}`)).toBe(correct.label);
+          if (!exempt) expect(solvePrompt(s.variant.form, `${w.prompt}||${labels.join(";;")}`)).toBe(correct.label);
           expect(evaluate(w, correct.id).correct).toBe(true);
         }
         expect(s.hints).toHaveLength(3);

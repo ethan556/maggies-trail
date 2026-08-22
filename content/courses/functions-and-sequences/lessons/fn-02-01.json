@@ -161,99 +161,88 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "A bigger step.",
+      "body": "Find the missing middle term.",
       "conceptTag": "fn-common-diff",
       "explanationVariants": [
-        "9 − 2 = 7, so d = 7.",
-        "The terms rise by 7 each step, so d = 7."
+        "d = 24 − 18 = 6, so the missing term is 6 + 6 = 12.",
+        "The two known later terms give d = 6; add one step to the first term: 6 + 6 = 12."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the sequence 2, 9, 16, 23, what is the common difference?",
-        "answer": 7,
+        "prompt": "The arithmetic sequence 6, __, 18, 24 is missing its second term. What is it?",
+        "answer": 12,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 9,
-            "feedback": "9 is the second term. The difference is 9 − 2 = 7."
+            "value": 15,
+            "feedback": "That's the average of 6 and 24 — but those aren't adjacent terms. Use the two later terms you know (18 and 24) to find d = 6, then add: 6 + 6 = 12."
           },
           {
-            "value": 2,
-            "feedback": "2 is the first term, not the step. Subtract: 9 − 2 = 7."
+            "value": 0,
+            "feedback": "d = 24 − 18 = 6, but that steps AWAY from the first term if subtracted: 6 + 6 = 12, not 6 − 6."
           }
         ],
-        "fallbackFeedback": "9 − 2 = 7, so d = 7."
-      },
-      "variant": {
-        "gen": "fn-arith-seq"
+        "fallbackFeedback": "Find d from the two known later terms: 24 − 18 = 6. Then add one step to the first term: 6 + 6 = 12."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Extend a rising sequence.",
+      "body": "Only two terms this time.",
       "conceptTag": "fn-common-diff",
       "explanationVariants": [
-        "d = 3, so the next term is 14 + 3 = 17.",
-        "Add the step 3: 14 + 3 = 17."
+        "d = 11 − 8 = 3, so the 5th term is 11 + 2·3 = 17.",
+        "The step is 3; from the 3rd term, two more steps reach the 5th: 11 + 6 = 17."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the sequence 5, 8, 11, 14, what is the next term?",
+        "prompt": "An arithmetic sequence has 2nd term 8 and 3rd term 11. What is the 5th term?",
         "answer": 17,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 15,
-            "feedback": "The common difference is 3, not 1: 14 + 3 = 17."
+            "value": 14,
+            "feedback": "That's the 4th term (11 + 3). The 5th term needs one more step: 14 + 3 = 17."
           },
           {
-            "value": 20,
-            "feedback": "Add one step of 3, not two: 14 + 3 = 17."
+            "value": 23,
+            "feedback": "That uses 5 steps from the 2nd term, but 2nd to 5th is only 3 steps: 8 + 3·3 = 17."
           }
         ],
-        "fallbackFeedback": "14 + 3 = 17."
-      },
-      "variant": {
-        "gen": "fn-arith-seq",
-        "form": "nextUp"
+        "fallbackFeedback": "Find d = 11 − 8 = 3, then step twice more from the 3rd term: 11 + 2·3 = 17."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A decreasing sequence's next term.",
+      "body": "Go backward this time.",
       "conceptTag": "fn-common-diff",
       "explanationVariants": [
-        "d = 92 − 100 = −8, so the next term is 76 + (−8) = 68.",
-        "The terms drop by 8 each step: 76 − 8 = 68."
+        "Going backward reverses the step: 100 + 8 = 108.",
+        "d = −8, so before 100 the term was 100 − (−8) = 108."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the sequence 100, 92, 84, 76, what is the next term?",
-        "answer": 68,
+        "prompt": "In the sequence 100, 92, 84, 76, what term comes right BEFORE 100?",
+        "answer": 108,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 84,
-            "feedback": "That's going the wrong way. The sequence decreases by 8: 76 − 8 = 68."
+            "value": 92,
+            "feedback": "That continues FORWARD (100 − 8). To go backward — before the sequence started — reverse the step: 100 + 8 = 108."
           },
           {
-            "value": 60,
-            "feedback": "The step is 8, not 16: subtract one step, 76 − 8 = 68."
+            "value": 116,
+            "feedback": "That reverses two steps instead of one. Only one step back from 100: 100 + 8 = 108."
           }
         ],
-        "fallbackFeedback": "d = −8, so 76 − 8 = 68."
+        "fallbackFeedback": "d = −8 going forward, so going backward adds 8: 100 + 8 = 108."
       },
       "hints": [
         "Find d: 92 − 100 = −8.",
-        "Add d to the last term: 76 + (−8).",
-        "76 − 8 = 68."
-      ],
-      "variant": {
-        "gen": "fn-arith-seq",
-        "form": "nextDown"
-      }
+        "Going backward reverses the step, so add instead of subtract.",
+        "100 + 8 = 108."
+      ]
     },
     {
       "id": "r1",

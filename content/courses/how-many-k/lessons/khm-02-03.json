@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-any-order-same-total",
       "body": "Count the same toys left-to-right, right-to-left, or hopping about — the answer never moves. Order is the counter's choice; the amount is not.",
       "narration": "Count the same toys left-to-right, right-to-left, or hopping about — the answer never moves. Order is the counter's choice; the amount is not."
     },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-both-directions-five",
       "body": "As long as every toy is counted exactly once, the pairing ends at the same last number from any direction.",
       "narration": "As long as every toy is counted exactly once, the pairing ends at the same last number from any direction."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-order-irrelevance",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Count 5 toys from the RIGHT this time — show what the count ends on.",
-        "target": 5,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The same five toys are counted from opposite ends. Which result must both paths reach?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "four",
+            "x": 20,
+            "y": 50,
+            "label": "both reach 4",
+            "icon": "4",
             "count": 4,
-            "feedback": "Counting from the right skips nothing; all five toys still get numbers."
+            "correct": false,
+            "feedback": "Five toys counted once cannot total four."
           },
           {
+            "id": "five",
+            "x": 50,
+            "y": 50,
+            "label": "both reach 5",
+            "icon": "5",
+            "count": 5,
+            "correct": true,
+            "feedback": "Direction changes the path, not the total of five."
+          },
+          {
+            "id": "six",
+            "x": 80,
+            "y": 50,
+            "label": "both reach 6",
+            "icon": "6",
             "count": 6,
-            "feedback": "That imagines the new direction re-dealing numbers — but each of the 5 toys still receives exactly one, so the count cannot grow."
+            "correct": false,
+            "feedback": "Five toys counted once cannot total six."
           }
         ],
-        "missFeedback": "Start from either side; give each toy one number and the count ends at 5.",
-        "successFeedback": "Five again — direction changed, the pairing did not."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Direction changes the path, not the total of five."
       },
       "cml": {
         "stage": "construct",

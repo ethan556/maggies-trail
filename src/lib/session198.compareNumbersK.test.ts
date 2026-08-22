@@ -41,6 +41,10 @@ const lessons = readdirSync(join(DIR, "lessons")).sort()
 const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
 const landOf = (w: { direction: string; start: number; hop: number; hops: number }) =>
   w.direction === "back" ? w.start - w.hop * w.hops : w.start + w.hop * w.hops;
+// Mirrors g0Independent.cjs's own ONE_WORDS: some hop prompts spell a count as a word.
+const ONE_WORDS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
 
 describe("S198 compare-numbers-k — course shape and recipe", () => {
   it("grade K, 3 chapters sized 4/4/4, files match course.json", () => {
@@ -125,7 +129,11 @@ describe("S198 compare-numbers-k — surface contracts and solver round-trips", 
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S306 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session306.compareNumbersKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           const fb = w.options.map((o) => o.feedback);
           expect(new Set(fb).size).toBe(fb.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);
@@ -149,14 +157,28 @@ describe("S198 compare-numbers-k — surface contracts and solver round-trips", 
           }
           if (s.variant?.form === "kSeqBeforeHop") {
             expect(w.direction).toBe("back");
-            const m = w.prompt.match(/^What number comes right before (\d+)\?/);
-            expect(m, `${lesson.id}/${s.id}: kSeqBeforeHop prompt shape`).toBeTruthy();
-            expect(Number(m![1]) - 1, `${lesson.id}/${s.id}: back-hop landing must be N−1`).toBe(land);
+            let m = w.prompt.match(/^What number comes right before (\d+)\?/);
+            if (m) {
+              expect(Number(m[1]) - 1, `${lesson.id}/${s.id}: back-hop landing must be N−1`).toBe(land);
+            } else if ((m = w.prompt.match(/^Use one back-step from (\d+) to identify its smaller neighbour/))) {
+              expect(Number(m[1]) - 1, `${lesson.id}/${s.id}: back-hop landing must be N−1`).toBe(land);
+            } else if ((m = w.prompt.match(/^Start at (\d+) and take (\w+) back-steps?\. Which lesser number is the landing\?/i))) {
+              expect(Number(m[1]) - ONE_WORDS[m[2].toLowerCase()],
+                `${lesson.id}/${s.id}: back-hop landing must be N minus the stated back-step count`).toBe(land);
+            } else {
+              expect.fail(`${lesson.id}/${s.id}: kSeqBeforeHop prompt shape unrecognized: ${w.prompt}`);
+            }
           }
           if (s.variant?.form === "kSeqNextHop") {
-            const m = w.prompt.match(/^What number comes right after (\d+)\?/);
-            expect(m).toBeTruthy();
-            expect(Number(m![1]) + 1).toBe(land);
+            let m = w.prompt.match(/^What number comes right after (\d+)\?/);
+            if (m) {
+              expect(Number(m[1]) + 1, `${lesson.id}/${s.id}: next-hop landing must be N+1`).toBe(land);
+            } else if ((m = w.prompt.match(/^Begin at (\d+) and take (\w+) steps?\. Which greater number is the landing\?/i))) {
+              expect(Number(m[1]) + ONE_WORDS[m[2].toLowerCase()],
+                `${lesson.id}/${s.id}: next-hop landing must be N plus the stated step count`).toBe(land);
+            } else {
+              expect.fail(`${lesson.id}/${s.id}: kSeqNextHop prompt shape unrecognized: ${w.prompt}`);
+            }
           }
           if (s.variant?.form === "kCountFromHop") {
             const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
@@ -192,7 +214,15 @@ describe("S198 compare-numbers-k — surface contracts and solver round-trips", 
         if (w.type === "tenFrame") {
           expect(w.target).toBeGreaterThanOrEqual(1);
           expect(w.target).toBeLessThanOrEqual(10);
-          expect(w.commonCounts.length).toBeGreaterThanOrEqual(2);
+          // kcm-02-01/i2 and kcm-03-02/i2 are down to a single trap on purpose: each originally
+          // carried a second commonCounts entry equal to the widget's own target, which
+          // evaluate.ts's tenFrame `v===target` short-circuit makes unreachable dead data (flagged
+          // S320-A11-kcm-02-01/kcm-03-02, the dead entry's removal verified correct by
+          // S321-V1-kcm-02-01 in LESSON_REVIEW_DECISIONS_S244.jsonl). Every other tenFrame in this
+          // course still carries 2 live traps, so the floor stays 2 everywhere else.
+          const singleTrapOk =
+            (lesson.id === "kcm-02-01" || lesson.id === "kcm-03-02") && s.id === "i2";
+          expect(w.commonCounts.length).toBeGreaterThanOrEqual(singleTrapOk ? 1 : 2);
           for (const t of w.commonCounts) {
             expect(t.count).not.toBe(w.target);
             expect(t.feedback.length).toBeGreaterThanOrEqual(25);

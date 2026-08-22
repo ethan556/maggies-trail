@@ -77,6 +77,66 @@
    "figure": "pv1000-order-list"
   },
   {
+   "id": "i2a",
+   "kind": "interactive",
+   "body": "Inspect one pair before sorting the whole set.",
+   "conceptTag": "pv1000-order-mixed",
+   "widget": {
+    "type": "placeValueTransformLab",
+    "task": "decidingPlace",
+    "answerMode": "choice",
+    "prompt": "Line up 267 and 627. Inspect the first place that decides their order.",
+    "values": [
+     267,
+     627
+    ],
+    "choices": [
+     {
+      "id": "hundreds",
+      "label": "Hundreds place",
+      "claim": "place:2",
+      "feedback": "Yes. The hundreds are 2 and 6, so 267 must come before 627."
+     },
+     {
+      "id": "tens",
+      "label": "Tens place",
+      "claim": "place:1",
+      "feedback": "Start with the hundreds, where 2 and 6 already differ."
+     },
+     {
+      "id": "ones",
+      "label": "Ones place",
+      "claim": "place:0",
+      "feedback": "The ones do not speak first. Compare the hundreds before moving right."
+     }
+    ],
+    "requiredExplorations": 1,
+    "successFeedback": "The hundreds decide: 2 hundreds is less than 6 hundreds, so 267 comes before 627.",
+    "explorationFeedback": "Open the hundreds stage before choosing the deciding place.",
+    "fallbackFeedback": "Compare from left to right. The first difference is 2 hundreds versus 6 hundreds.",
+    "tolerance": 0
+   },
+   "predict": {
+    "prompt": "267 and 627 use the same digits in different places. Which place should you compare first?",
+    "options": [
+     {
+      "id": "tens",
+      "label": "Tens"
+     },
+     {
+      "id": "hundreds",
+      "label": "Hundreds"
+     },
+     {
+      "id": "ones",
+      "label": "Ones"
+     }
+    ],
+    "outcomeId": "hundreds",
+    "reveal": "The aligned chart opens at the hundreds: 2 hundreds versus 6 hundreds. That first difference puts 267 before 627."
+   }
+  },
+  {
    "id": "i2",
    "kind": "interactive",
    "body": "Order a whole set at once — same digits, different spots.",
@@ -126,25 +186,6 @@
     ],
     "missFeedback": "Sort by hundreds first (the 2-hundreds pair before the 6-hundreds pair), then let tens order each pair: 267, 276, 627, 672.",
     "successFeedback": "267 < 276 < 627 < 672 — hundreds split the pairs, tens ordered within. Same digits, four different sizes."
-   },
-   "predict": {
-    "prompt": "All four numbers use only the digits 2, 6, and 7. What will decide their order?",
-    "options": [
-     {
-      "id": "hundreds",
-      "label": "The hundreds spot — the biggest spot speaks first"
-     },
-     {
-      "id": "digits",
-      "label": "The biggest digit anywhere in the number"
-     },
-     {
-      "id": "ones",
-      "label": "The ones spot — start where adding starts"
-     }
-    ],
-    "outcomeId": "hundreds",
-    "reveal": "Place beats digit size: 276 sits below 627 even though both use the very same digits, because 2 hundreds can't touch 6 hundreds. Only when hundreds tie do the tens get a vote — comparison scans left to right, the opposite end from addition."
    }
   },
   {
@@ -183,7 +224,7 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "A comparison with the ones spot deciding.",
+   "body": "A comparison with the ones spot deciding, in a real-world setting.",
    "conceptTag": "pv1000-order-mixed",
    "explanationVariants": [
     "Hundreds and tens match; ones decide: 6 < 9, so 456 < 459.",
@@ -191,7 +232,7 @@
    ],
    "widget": {
     "type": "mcq",
-    "prompt": "Compare 456 and 459: <, =, or >?",
+    "prompt": "A classroom raised $456. Another classroom raised $459. Compare the totals: <, =, or >?",
     "options": [
      {
       "id": "a",
@@ -210,10 +251,6 @@
       "feedback": "Hundreds and tens match, but the ones differ (6 vs 9) — not equal."
      }
     ]
-   },
-   "variant": {
-    "gen": "g2-place-value-1000",
-    "form": "Pv1000OrderMixedMcq"
    }
   },
   {
@@ -250,7 +287,7 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "A full mixed challenge.",
+   "body": "A full mixed challenge, in a real-world setting.",
    "conceptTag": "pv1000-order-mixed",
    "explanationVariants": [
     "Hundreds match (7=7); tens decide: 9 > 2, so 792 > 725.",
@@ -258,7 +295,7 @@
    ],
    "widget": {
     "type": "mcq",
-    "prompt": "Compare 792 and 725: <, =, or >?",
+    "prompt": "A theater sold 792 tickets on Friday and 725 tickets on Saturday. Compare the two nights: <, =, or >?",
     "options": [
      {
       "id": "a",
@@ -282,11 +319,7 @@
     "Compare the hundreds digit first: 7 = 7, tied.",
     "Move to the tens digit: 9 vs 2.",
     "9 > 2, so 792 > 725."
-   ],
-   "variant": {
-    "gen": "g2-place-value-1000",
-    "form": "Pv1000OrderMixedMcq"
-   }
+   ]
   },
   {
    "id": "r1",
@@ -314,28 +347,28 @@
     "body": "",
     "conceptTag": "pv1000-order-mixed",
     "explanationVariants": [
-     "Hundreds and tens match; ones decide: 456 < 459.",
+     "Hundreds and tens match; ones decide: 623 < 628.",
      "The ones spot breaks the tie."
     ],
     "widget": {
      "type": "mcq",
-     "prompt": "Compare 456 and 459: <, =, or >?",
+     "prompt": "A bakery sold 623 muffins on Monday and 628 muffins on Tuesday. Compare the two days: <, =, or >?",
      "options": [
       {
        "id": "a",
        "label": "<",
        "correct": true,
-       "feedback": "Yes — 456 < 459."
+       "feedback": "Yes — hundreds (6=6) and tens (2=2) match, so ones decide: 3 < 8, meaning 623 < 628."
       },
       {
        "id": "b",
        "label": ">",
-       "feedback": "6 < 9 in ones, so 456 < 459."
+       "feedback": "Hundreds and tens are tied. Check the ones: 3 < 8, so 623 < 628, not >."
       },
       {
        "id": "c",
        "label": "=",
-       "feedback": "Ones differ (6 vs 9) — not equal."
+       "feedback": "Hundreds and tens match, but the ones differ (3 vs 8) — not equal."
       }
      ]
     }

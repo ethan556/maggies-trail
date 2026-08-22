@@ -78,38 +78,23 @@
           },
           {
             "id": "o2",
-            "label": "a translation",
+            "label": "a translation, sliding the figure sideways",
             "correct": false,
             "feedback": "A slide moves every point the same amount — gaps between points never change, so it's rigid."
           },
           {
             "id": "o3",
-            "label": "a rotation",
+            "label": "a rotation about the center point",
             "correct": false,
             "feedback": "Turning a figure carries it around like a solid plate — every distance rides along unchanged: rigid."
           },
           {
             "id": "o4",
-            "label": "a reflection",
+            "label": "a reflection across a mirror line",
             "correct": false,
             "feedback": "A mirror flips orientation but the image is the same size, point for point — reflections are rigid."
           }
         ]
-      },
-      "predict": {
-        "prompt": "A dilation with scale factor 2 is about to face the rigid-motion test. Will lengths survive it?",
-        "options": [
-          {
-            "id": "no",
-            "label": "No — every length doubles"
-          },
-          {
-            "id": "yes",
-            "label": "Yes — the shape stays similar, so it passes"
-          }
-        ],
-        "outcomeId": "no",
-        "reveal": "Rigid means every distance is preserved EXACTLY. A factor-2 dilation doubles every length: angles survive, so the image stays similar — but similar is not congruent, and 'keeps the shape' is not the test. It fails."
       }
     },
     {
@@ -225,6 +210,25 @@
       "id": "i3",
       "kind": "interactive",
       "body": "What every member preserves.",
+      "predict": {
+        "prompt": "Before you move the triangle, what should remain unchanged throughout any rigid motion?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Side lengths and angle measures"
+          },
+          {
+            "id": "lengths-only",
+            "label": "Side lengths, but not angle measures"
+          },
+          {
+            "id": "screen-position",
+            "label": "Coordinates and screen position"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "The model can slide or reflect the triangle while every side length and angle measure stays fixed. Coordinates and orientation may change, but the figure's size and shape do not."
+      },
       "widget": {
         "type": "transformExplore",
         "shape": [

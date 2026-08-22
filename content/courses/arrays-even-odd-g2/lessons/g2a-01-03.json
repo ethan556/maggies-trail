@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A double like 7 + 7 pairs every counter with its twin across the groups — so a double can never leave a leftover.",
       "narration": "A double like 7 + 7 pairs every counter with its twin across the groups — so a double can never leave a leftover."
     },
@@ -129,7 +128,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Doubles are the even numbers wearing their construction on their sleeve: two equal groups, zero leftovers.",
       "narration": "Doubles are the even numbers wearing their construction on their sleeve: two equal groups, zero leftovers."
     },
@@ -140,12 +138,12 @@
       "conceptTag": "g2a-doubles-even",
       "widget": {
         "type": "oddEvenPairs",
-        "prompt": "Pair up 16 counters. Odd or even?",
-        "n": 16,
+        "prompt": "Pair up 12 counters. Odd or even?",
+        "n": 12,
         "mode": "pair",
         "answer": "even",
-        "oddFeedback": "16 pairs up completely (8 pairs, 0 left). No leftover means even.",
-        "successFeedback": "Yes — 16 makes 8 pairs with none left over."
+        "successFeedback": "Yes — 12 makes 6 pairs with none left over.",
+        "oddFeedback": "12 pairs up completely (6 pairs, 0 left). No leftover means even."
       },
       "cml": {
         "stage": "construct",
@@ -304,30 +302,41 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more, for the road — but this time, check the PARTS, not just the sum.",
       "conceptTag": "g2a-doubles-even",
       "explanationVariants": [
-        "Bigger doubles, same twin-pairing.",
-        "Still even, every time."
+        "9 + 9 joins two EQUAL groups; 8 + 6 does not.",
+        "Landing on an even number is not enough — the parts must match."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "9 + 9 = ?",
-        "answer": 18,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie lines up 9 + 9 and 8 + 6. Both add up to an even number. Which one is a DOUBLE?",
+        "options": [
           {
-            "value": 19,
-            "feedback": "A double pairs perfectly, so it can never land on an odd number like that."
+            "id": "o0",
+            "label": "9 + 9, because both parts are the same number",
+            "correct": true,
+            "feedback": "Correct — 9 + 9 joins two EQUAL groups of 9. Equal parts are what make a double."
           },
           {
-            "value": 16,
-            "feedback": "One of the 9s came up short — count both groups in full."
+            "id": "o1",
+            "label": "8 + 6, because it also lands on an even number",
+            "correct": false,
+            "feedback": "8 + 6 = 14 is even, but 8 and 6 are not equal — landing on an even number does not make an addition a double."
+          },
+          {
+            "id": "o2",
+            "label": "Both, because every even sum comes from a double",
+            "correct": false,
+            "feedback": "Not every even sum is a double — 8 + 6 is even, but its two parts are not equal."
+          },
+          {
+            "id": "o3",
+            "label": "Neither, because 9 + 9 is odd",
+            "correct": false,
+            "feedback": "9 + 9 = 18, which is even, not odd — doubles always land on an even number."
           }
-        ],
-        "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
-        "successFeedback": "Correct — 18."
+        ]
       },
       "hints": [
         "Two equal groups, one join.",
@@ -355,10 +364,6 @@
         "transferFamily": "arrays-even-odd-g2:g2a-doubles-even",
         "delayed": true,
         "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "DoublesNumeric"
       }
     },
     {

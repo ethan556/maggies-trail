@@ -27,25 +27,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "A control group — most colds resolve in a week anyway, so 90% may be no better than nothing.",
+        "label": "A comparable control group.",
             "correct": true,
             "feedback": "Right. \"Compared with what?\" is the first question any causal claim must answer."
           },
           {
             "id": "o2",
-            "label": "A larger sample, so the 90% is more precise.",
+        "label": "A larger, more precise sample.",
             "correct": false,
             "feedback": "Precision on a meaningless number is still meaningless. Without a comparison arm, 90% recovery has nothing to be better *than*."
           },
           {
             "id": "o3",
-            "label": "A longer study, so the effect has time to appear.",
+        "label": "A longer treatment period.",
             "correct": false,
             "feedback": "Time would not help: whatever the recovery rate turns out to be, you still cannot say the remedy caused it without a comparison."
           },
           {
             "id": "o4",
-            "label": "Nothing — 90% is clearly a strong result.",
+        "label": "Nothing; 90% is conclusive.",
             "correct": false,
             "feedback": "It looks strong until you learn that around 90% of untreated colds also resolve in a week. Then the remedy has done nothing at all."
           }
@@ -74,6 +74,21 @@
         "successFeedback": "6 endings: 2 arms × 3 checkpoints. The tree is symmetric because the coin, not the volunteer, chose the arm — that symmetry is what makes the comparison fair.",
         "lowFeedback": "Fewer endings than the design has. Every arm is measured at every checkpoint.",
         "highFeedback": "More endings than the design has. There are 2 arms and 3 checkpoints, nothing more."
+      },
+      "predict": {
+        "prompt": "Before you build the tree: 2 arms, each measured at 3 checkpoints. How many distinct endings will the finished tree have?",
+        "options": [
+          {
+            "id": "five",
+            "label": "5 — add them: 2 arms + 3 checkpoints"
+          },
+          {
+            "id": "six",
+            "label": "6 — every arm meets every checkpoint"
+          }
+        ],
+        "outcomeId": "six",
+        "reveal": "6 endings: 2 arms × 3 checkpoints — every arm is measured at every checkpoint, so the branch counts multiply. Adding 2 + 3 = 5 would count the branch choices along the way, not the complete paths."
       },
       "cml": {
         "stage": "construct",
@@ -165,25 +180,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "The drug caused improvement in these volunteers — but they are not a random sample, so extending the size of the effect to everyone is a further leap.",
+        "label": "The drug caused improvement in these volunteers.",
             "correct": true,
             "feedback": "Right. The assignment coin was flipped; the sampling coin was not. Cause: yes. Generalisation: not automatically."
           },
           {
             "id": "o2",
-            "label": "Nothing — the volunteers self-selected, so the study is worthless.",
+        "label": "The self-selected sample supports no conclusion.",
             "correct": false,
             "feedback": "Self-selection into the study is a limit on generalising, not a break in the causal logic. Within these 200, the coin still balanced the arms."
           },
           {
             "id": "o3",
-            "label": "The drug works for the whole population, since assignment was random.",
+        "label": "The drug caused improvement in everyone.",
             "correct": false,
             "feedback": "The assignment coin buys cause, not reach. To speak about the whole population you would need to have sampled from it at random."
           },
           {
             "id": "o4",
-            "label": "Only that the drug is associated with improvement.",
+        "label": "The drug was only associated with improvement.",
             "correct": false,
             "feedback": "That undersells it. Because the arms were built by coin, the improvement cannot be blamed on a lurking variable — this is stronger than association."
           }
@@ -214,25 +229,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "Random assignment — the students sorted themselves, so the groups differ in motivation as well as in app use.",
+        "label": "Random assignment was missing.",
             "correct": true,
             "feedback": "Right. There is a control group, but it was not built by coin, so the comparison is contaminated from the start."
           },
           {
             "id": "o2",
-            "label": "Replication — 300 per group is too few.",
+        "label": "Replication was insufficient.",
             "correct": false,
             "feedback": "300 per arm is ample. The problem is not the number of students; it is how they got into their arms."
           },
           {
             "id": "o3",
-            "label": "A control group — there is nothing to compare against.",
+        "label": "A control group was missing.",
             "correct": false,
             "feedback": "There is a comparison group: the 300 who did not opt in. The trouble is that it is not comparable, because it was self-selected."
           },
           {
             "id": "o4",
-            "label": "Blinding — the students knew they were using an app.",
+        "label": "Blinding was missing.",
             "correct": false,
             "feedback": "Blinding is impossible here (you cannot hide an app from its user) and it is not the fatal flaw. Self-selection is."
           }
@@ -285,7 +300,7 @@
             },
             {
               "id": "o2",
-              "label": "Random assignment.",
+              "label": "Random assignment — as if patients chose their own arm instead of a coin flip.",
               "correct": false,
               "feedback": "The patients WERE assigned at random here. The open leak is that they all know their arm."
             }

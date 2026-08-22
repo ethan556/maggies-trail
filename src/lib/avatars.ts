@@ -1,9 +1,9 @@
 /**
  * WS-J — Student avatar & identity system: canonical manifest + resolution service.
  *
- * NO PRODUCTION ART YET. Every entry in `AVATARS` below is concept-only: an id, a deterministic
- * (future) filename pair, an age band, and `enabled: false`. No file exists on disk at those
- * paths, and none should ever be created by cropping or reusing
+ * NO PRODUCTION ART ENABLED. S243 established a premium art direction with independent renders,
+ * but independent review kept the release allowlist closed until a coherent, consistently framed
+ * canary batch passes. No asset may be created by cropping or reusing
  * `design-reference/ws-j-avatar-board-*.png` — those boards are commissioning references only
  * (`OPTIMIZATION_PLAN_V3.md:141`: "A student never selects a quadrant of a board, and no board
  * crop is ever claimed as final art"). See `AVATAR_CONCEPT_LEDGER.md` for what each anchored
@@ -27,24 +27,24 @@
  * outright it "cannot verify quality (that is FABLE-Q's job, from pixels)". Standing proof
  * that no mechanical gate substitutes for reading the contact sheet.
  *
- * Matching the boards needs a real image model, not a programmatic renderer. See
- * AVATAR_PROMPT_PACK.md for the 60 render-ready prompts, style-locked to those boards.
+ * S243 used independent image-model renders and a cross-band contact-sheet review to avoid that
+ * failure. See `avatar-prompts.json` and `AVATAR_PROMPT_PACK.md` for the 60 style-locked prompts.
  *
  * This module owns avatar identity end to end: the manifest shape, the deterministic
  * id → file-path derivation, and every read used elsewhere to resolve an id to a real, currently
  * shippable asset. Nothing outside this file should construct an avatar path by hand.
  *
- * Deliberately NOT in this pass (see the WS-J research report, "What this pass skips"):
- * `Profile.avatarId` in `./progress.ts` and the corresponding merge/validation lines in
- * `./sync.ts` are not added yet — both are hot, deeply-tested shared files with a concurrent
- * implementation wave already touching adjacent code, so the field addition is left as a small,
- * isolated follow-up (mirroring the existing `displayName` LWW pattern in `sync.ts`) rather than
- * risking a collision here. No picker component, no propagation to any render surface, no
- * service-worker precache — this file is the standalone foundation those land on.
+ * `Profile.avatarId`, sync/merge validation, the shared picker/display components, and propagation
+ * to profile, navigation, onboarding, leaderboard, dashboard, and family surfaces are implemented.
  *
  * No race/ethnicity field. No gender field. No inferred identity, ever
  * (`OPTIMIZATION_PLAN_V3.md:146`).
  */
+
+import {
+  getMathSymbolAvatar,
+  type MathSymbolAvatarDefinition
+} from "./mathSymbolAvatars";
 
 /** The four age-aware collections, preserving the concept boards' maturity range. */
 export type AgeBand = "early" | "explorer" | "adventurer" | "summit";
@@ -75,13 +75,39 @@ export interface AvatarDefinition {
    *  reordering avatars later never renumbers an existing id (see AVATAR_ART_PRODUCTION_SPEC.md
    *  §5's per-band filename blocks). */
   order: number;
-  /** True only once real production art (AVATAR_ART_PRODUCTION_SPEC.md-compliant) exists at both
-   *  `src256` and `src512` on disk. Every entry below is `false` — see the file banner. */
+  /** True only once reviewed production art exists at both `src256` and `src512` on disk. */
   enabled: boolean;
 }
 
 /** `256` = grid/picker size, `512` = profile size (`OPTIMIZATION_PLAN_V3.md:151`). */
 export type AvatarSize = 256 | 512;
+
+export type AvatarGlasses = "none" | "round" | "rectangular";
+export type AvatarAccent = "none" | "navy" | "orange" | "teal" | "violet";
+export type AvatarBadge = "none" | "trail" | "star" | "pi";
+
+/** Restrained, reversible adornments only. Portrait pixels, skin and hair are never recolored. */
+export interface AvatarCustomization {
+  glasses: AvatarGlasses;
+  accent: AvatarAccent;
+  badge: AvatarBadge;
+}
+
+export const DEFAULT_AVATAR_CUSTOMIZATION: AvatarCustomization = {
+  glasses: "none",
+  accent: "none",
+  badge: "none"
+};
+
+export function isAvatarCustomization(value: unknown): value is AvatarCustomization {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const candidate = value as Record<string, unknown>;
+  return (
+    ["none", "round", "rectangular"].includes(String(candidate.glasses)) &&
+    ["none", "navy", "orange", "teal", "violet"].includes(String(candidate.accent)) &&
+    ["none", "trail", "star", "pi"].includes(String(candidate.badge))
+  );
+}
 
 const AVATAR_DIR = "/avatars";
 
@@ -91,9 +117,25 @@ function avatarSrc(id: string, size: AvatarSize): string {
   return `${AVATAR_DIR}/${id}-${size}.webp`;
 }
 
-/** Every declared avatar today is concept-only — `enabled` is hardcoded false here so a future
- *  edit can never accidentally declare a new id as already shipped; flipping it to true is a
- *  deliberate, separate act tied to real files landing on disk. */
+/** Release allowlist. Keep candidates out until their independent source, contact-sheet review,
+ *  and both production exports pass. The asset validator enforces exact file parity, so adding an
+ *  id here without its approved 256/512 pair fails closed. */
+export const ENABLED_AVATAR_IDS: readonly string[] = [
+  "avatar-001", "avatar-002", "avatar-003", "avatar-004", "avatar-005", "avatar-006",
+  "avatar-007", "avatar-008", "avatar-009", "avatar-010", "avatar-011", "avatar-012",
+  "avatar-101", "avatar-102", "avatar-103", "avatar-104", "avatar-105", "avatar-106",
+  "avatar-107", "avatar-108", "avatar-109", "avatar-110", "avatar-111", "avatar-112",
+  "avatar-201", "avatar-202", "avatar-203", "avatar-204", "avatar-205", "avatar-206",
+  "avatar-207", "avatar-208", "avatar-209", "avatar-210", "avatar-211", "avatar-212",
+  "avatar-301", "avatar-302", "avatar-303", "avatar-304", "avatar-305", "avatar-306",
+  "avatar-307", "avatar-308", "avatar-309", "avatar-310", "avatar-311", "avatar-312",
+  "avatar-401", "avatar-402", "avatar-403", "avatar-404", "avatar-405", "avatar-406",
+  "avatar-407", "avatar-408", "avatar-409", "avatar-410", "avatar-411", "avatar-412",
+];
+const ENABLED_AVATAR_ID_SET = new Set(ENABLED_AVATAR_IDS);
+
+/** Every declared avatar begins concept-only. Shipping is a separate, reviewable allowlist edit,
+ *  never an incidental consequence of declaring a new manifest slot. */
 function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: number): AvatarDefinition {
   return {
     id,
@@ -102,7 +144,7 @@ function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: num
     ageBand,
     kind,
     order,
-    enabled: false
+    enabled: ENABLED_AVATAR_ID_SET.has(id)
   };
 }
 
@@ -112,8 +154,8 @@ function defineAvatar(id: string, ageBand: AgeBand, kind: AvatarKind, order: num
  * plus 44 net-new expansion concepts that bring every human band to its ~12 target and stand up
  * the symbol collection for the first time — 4 more `early`, 8 more `explorer`, 8 more
  * `adventurer`, all 12 `summit` (zero board anchors existed for this band — see finding 1), and
- * all 12 `symbol` (zero board anchors existed for any symbol — see finding 4). None of the 60 is
- * production-ready; every single entry below is `enabled: false`. See
+ * all 12 `symbol` (zero board anchors existed for any symbol — see finding 4). S243 produced four
+ * art-direction candidates, but independent review kept the release allowlist closed. See
  * `AVATAR_CONCEPT_LEDGER.md`'s "Expansion concept tables" section for the full trait rationale
  * behind each of the 44 net-new entries — hairstyle, accessories, clothing, expression only, never
  * race, ethnicity, or an invented name, matching the original 16's register exactly.
@@ -190,7 +232,7 @@ export const AVATARS: AvatarDefinition[] = [
   // C04: very long wavy dark hair; turquoise earrings + pendant; patterned rust-red top
   defineAvatar("avatar-204", "adventurer", "human", 4),
   // ---- adventurer expansion — net-new, no board source (P2) ----
-  // short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee
+  // short natural coils with a subtle side part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee
   defineAvatar("avatar-205", "adventurer", "human", 5),
   // two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket
   defineAvatar("avatar-206", "adventurer", "human", 6),
@@ -248,27 +290,27 @@ export const AVATARS: AvatarDefinition[] = [
   // that `ageBand`, per the manifest-shape test. ----
   // Maggie mark medallion — the twin-peaks-and-trail icon as a dimensional badge, deep navy on warm ivory with a summit-orange star accent [ageBand: adventurer]
   defineAvatar("avatar-401", "adventurer", "symbol", 13),
-  // compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks [ageBand: summit]
+  // function summit — a rising curve cresting into a peak, with one orange point at the crest [ageBand: summit]
   defineAvatar("avatar-402", "summit", "symbol", 13),
-  // summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc [ageBand: early]
+  // first step — one navy boot print with a short dotted orange path continuing ahead [ageBand: early]
   defineAvatar("avatar-403", "early", "symbol", 13),
-  // owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze [ageBand: early]
+  // counting cairn — three balanced trail stones, with the topmost stone orange [ageBand: early]
   defineAvatar("avatar-404", "early", "symbol", 14),
-  // fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze [ageBand: early]
+  // shape sprout — a seedling whose two leaves are a triangle and a circle [ageBand: early]
   defineAvatar("avatar-405", "early", "symbol", 15),
-  // constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines [ageBand: summit]
+  // proof lantern — a navy lantern casting a widening cone of orange light [ageBand: summit]
   defineAvatar("avatar-406", "summit", "symbol", 14),
-  // topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory [ageBand: summit]
+  // infinity trail — one winding path looping into a continuous figure eight [ageBand: summit]
   defineAvatar("avatar-407", "summit", "symbol", 15),
-  // trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc [ageBand: explorer]
+  // fraction bridge — evenly spaced planks read as equal parts of one span [ageBand: explorer]
   defineAvatar("avatar-408", "explorer", "symbol", 13),
-  // compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy [ageBand: explorer]
+  // pattern peak — repeating ridgeline peaks step upward in a steady rhythm [ageBand: explorer]
   defineAvatar("avatar-409", "explorer", "symbol", 14),
-  // mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile [ageBand: adventurer]
+  // data ridge — a mountain profile doubles as a rising bar sequence [ageBand: adventurer]
   defineAvatar("avatar-410", "adventurer", "symbol", 14),
-  // acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark [ageBand: explorer]
+  // coordinate compass — crossed axes, an upper-right needle and an orange origin [ageBand: explorer]
   defineAvatar("avatar-411", "explorer", "symbol", 15),
-  // lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph [ageBand: adventurer]
+  // algebra knot — two trail ropes form one clean symmetric continuous loop [ageBand: adventurer]
   defineAvatar("avatar-412", "adventurer", "symbol", 15)
 ];
 
@@ -293,8 +335,8 @@ export function gradeToAgeBand(grade: number): AgeBand {
 /** Look up a manifest entry by id, enabled or not. Returns `undefined` for an unknown id. Use this
  *  for inspection/admin purposes; use `isValidAvatarId`/`getAvatarSrc` on any path that renders to
  *  a learner, since those two gate on `enabled` and this one deliberately does not. */
-export function getAvatar(id: string): AvatarDefinition | undefined {
-  return AVATARS.find((a) => a.id === id);
+export function getAvatar(id: string): AvatarDefinition | MathSymbolAvatarDefinition | undefined {
+  return AVATARS.find((a) => a.id === id) ?? getMathSymbolAvatar(id);
 }
 
 /** True only for an id that names a manifest entry AND is `enabled`. This is the gate every
@@ -302,7 +344,7 @@ export function getAvatar(id: string): AvatarDefinition | undefined {
  *  pulled after a QA rejection) fails validation exactly like an id that never existed, so a
  *  caller's fallback logic doesn't need two separate cases. */
 export function isValidAvatarId(id: string): boolean {
-  return AVATARS.some((a) => a.id === id && a.enabled);
+  return Boolean(getAvatar(id)?.enabled);
 }
 
 /** Resolve an id + size to an image path — but only if that id is currently valid
@@ -315,17 +357,13 @@ export function getAvatarSrc(id: string, size: AvatarSize): string | undefined {
   return avatar && (size === 256 ? avatar.src256 : avatar.src512);
 }
 
-/** Every currently-enabled avatar in a band, in display order. (Today: always `[]`, for every
- *  band — the honest state of a manifest with zero enabled entries. See
- *  AVATAR_ART_PRODUCTION_SPEC.md §8.) */
+/** Every currently-enabled avatar in a band, in display order. */
 export function getAvatarsForAgeBand(band: AgeBand): AvatarDefinition[] {
   return AVATARS.filter((a) => a.ageBand === band && a.enabled).sort((a, b) => a.order - b.order);
 }
 
 /** The grade-appropriate default: the first enabled avatar (by `order`) in that grade's band.
- *  Returns `undefined` while the band has no enabled entries — which is every band today — so
- *  callers fall through the rest of the `OPTIMIZATION_PLAN_V3.md:147` chain (retained legacy
- *  image → generated initials → default Maggie mark) exactly as they would for any other miss. */
+ * Returns `undefined` for a future band with no approved art, preserving the normal fallback chain. */
 export function getDefaultAvatarForGrade(grade: number): AvatarDefinition | undefined {
   return getAvatarsForAgeBand(gradeToAgeBand(grade))[0];
 }
@@ -335,6 +373,6 @@ export function getDefaultAvatarForGrade(grade: number): AvatarDefinition | unde
  * file (`<title>` + an XML comment). NOT a member of `AVATARS`, never returned by `getAvatarSrc`
  * or validated by `isValidAvatarId`, and never to be offered as a selectable option by any future
  * picker UI. Exists only so a render path has something honest to show before a learner has
- * chosen, or after a stored id is invalidated, while the manifest has zero enabled entries.
+ * chosen or after a stored id is invalidated.
  */
 export const AVATAR_PLACEHOLDER_SRC = `${AVATAR_DIR}/placeholder-neutral.svg`;

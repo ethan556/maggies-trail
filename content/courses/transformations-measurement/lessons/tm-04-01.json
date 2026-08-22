@@ -9,13 +9,13 @@
   {
    "id": "c1",
    "kind": "concept",
-   "body": "In a right triangle, name the two short sides (the **legs**) a and b, and the long side opposite the right angle (the **hypotenuse**) c. The **Pythagorean theorem** says a² + b² = c². Build a square on each side to see why.",
+   "body": "In a right triangle, name the two sides that form the right angle (the **legs**) a and b, and the side opposite the right angle (the **hypotenuse**) c. The **Pythagorean theorem** says a² + b² = c². Compare two equal outer squares, each with side length a + b, as the same four right triangles are rearranged.",
    "figure": "pythagorean-proof"
   },
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Read the areas.",
+   "body": "Check one example, then return to the general proof.",
    "widget": {
     "type": "geometricConstraintLab",
     "task": "pythagoreanArea",
@@ -24,22 +24,22 @@
      "legB": 4,
      "target": "cSquared"
     },
-    "prompt": "Why does a² + b² = c²? Look at the squares on a 3-4-5 triangle.",
+    "prompt": "For a right triangle with legs 3 and 4, what is c²? This checks one example; the rearrangement diagram gives the general proof.",
     "tolerance": 0,
     "choices": [],
     "numericErrors": [],
     "authoredStages": [
      {
-      "title": "Leg squares",
-      "body": "The square on the leg of length 3 has area 9; the square on the leg of length 4 has area 16."
+      "title": "Example leg squares",
+      "body": "In this example, the square on the leg of length 3 has area 9, and the square on the leg of length 4 has area 16."
      },
      {
-      "title": "Add them",
-      "body": "Together the two leg-squares cover 9 + 16 = 25 units of area."
+      "title": "Example area sum",
+      "body": "For this triangle, the two leg-square areas add to 9 + 16 = 25 square units."
      },
      {
-      "title": "Hypotenuse square",
-      "body": "The square on the hypotenuse (length 5) has area 25 — exactly the combined leg-squares. So a² + b² = c²."
+      "title": "Verify this case",
+      "body": "So c² = 25 and c = 5 for this 3-4-5 triangle. This verifies one case; it does not by itself prove the theorem for every right triangle."
      }
     ],
     "requiredStageKeys": [
@@ -48,63 +48,64 @@
      "pyth:identity"
     ],
     "requiredExplorations": 3,
-    "successFeedback": "Exactly — the two leg-squares' areas add up to the hypotenuse-square's area.",
-    "explorationFeedback": "Reveal the next step.",
-    "fallbackFeedback": "Reveal the next step.",
+    "successFeedback": "Correct for this example: c² = 9 + 16 = 25. The general rearrangement proves the relationship for any right triangle.",
+    "explorationFeedback": "Reveal the next example step.",
+    "fallbackFeedback": "Reveal the next example step.",
     "answerMode": "explore"
    }
   },
   {
    "id": "c2",
    "kind": "concept",
-   "body": "That area picture is the proof: for ANY right triangle, the squares built on the two legs have areas a² and b², and together they exactly fill the square built on the hypotenuse, whose area is c². So a² + b² = c² always holds.",
+   "body": "The rearrangement diagram is the general proof. Both outer squares have side length a + b, and each contains the same four congruent right triangles with legs a and b. In the first arrangement, the area left over is the square c². In the second, the area left over is the two squares a² and b². Subtracting the same four triangles from equal outer squares leaves equal areas, so a² + b² = c² for every right triangle.",
    "figure": "pythagorean-proof"
   },
   {
    "id": "k1",
    "kind": "check",
-   "body": "Compute c² from the legs.",
+   "body": "Run the identity in reverse: find a missing leg.",
    "conceptTag": "tm-pythagorean-why",
-   "variant": {
-    "gen": "g8-tm-pythagorean-why",
-    "form": "tmPythCSquaredA"
-   },
    "explanationVariants": [
-    "The leg-squares are 6² = 36 and 8² = 64; together c² = 36 + 64 = 100.",
-    "Add the squares of the legs: 36 + 64 = 100 = c²."
+    "Square both known sides and subtract: 10² − 6² = 100 − 36 = 64, so the missing leg is √64 = 8.",
+    "Reverse the identity: hypotenuse-square minus known-leg-square gives the missing leg-square, 64, so the leg is 8."
    ],
    "widget": {
     "type": "geometricConstraintLab",
     "task": "pythagoreanArea",
     "pythagorean": {
      "legA": 6,
-     "legB": 8,
-     "target": "cSquared"
+     "hypotenuse": 10,
+     "target": "legLength"
     },
-    "prompt": "A right triangle has legs 6 and 8. What is c² (the area of the hypotenuse square)?",
+    "prompt": "A right triangle has one leg of length 6 and hypotenuse 10. What is the length of the other leg?",
     "tolerance": 0,
     "choices": [],
     "numericErrors": [
      {
-      "value": 14,
-      "feedback": "That added the legs (6+8), not their squares — c² = 6² + 8² = 36 + 64 = 100."
+      "value": 4,
+      "feedback": "That subtracted the LENGTHS (10 − 6) — the identity subtracts the AREAS: 10² − 6² = 64, then √64 = 8."
      },
      {
-      "value": 48,
-      "feedback": "That multiplied the legs — c² is the SUM of their squares: 36 + 64 = 100."
+      "value": 64,
+      "feedback": "That's the missing leg's squared AREA (10² − 6² = 64) — take the square root: √64 = 8."
      }
     ],
     "authoredStages": [],
     "requiredStageKeys": [
-     "pyth:leg-squares",
-     "pyth:sum",
-     "pyth:identity"
+     "pyth:hyp-square",
+     "pyth:leg-square",
+     "pyth:subtract",
+     "pyth:square-root"
     ],
-    "requiredExplorations": 3,
-    "successFeedback": "c² = 6² + 8² = 36 + 64 = 100.",
+    "requiredExplorations": 4,
+    "successFeedback": "10² − 6² = 100 − 36 = 64, and √64 = 8.",
     "explorationFeedback": "Inspect every required geometric constraint before checking.",
-    "fallbackFeedback": "c² = 6² + 8² = 36 + 64 = 100.",
+    "fallbackFeedback": "Square the hypotenuse and the known leg, subtract, then take the square root: 10² − 6² = 64, √64 = 8.",
     "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "g8-tm-pythagorean-why",
+    "form": "tmPythMissingLeg"
    }
   },
   {
@@ -124,25 +125,25 @@
     "choices": [
      {
       "id": "a",
-      "label": "The side opposite the right angle (the longest side)",
+      "label": "The longest side, opposite the right angle",
       "feedback": "Right — the hypotenuse is always opposite the right angle and is the longest side.",
       "claim": "pyth:hypotenuse-opposite-right"
      },
      {
       "id": "b",
-      "label": "The shortest side",
+      "label": "The shortest of the three sides",
       "feedback": "The hypotenuse is the LONGEST side, opposite the right angle — not the shortest.",
       "claim": "misconception:b"
      },
      {
       "id": "c",
-      "label": "Either of the two legs",
+      "label": "Either side forming the right angle",
       "feedback": "The legs are the two sides FORMING the right angle — the hypotenuse is the third side, opposite it.",
       "claim": "misconception:c"
      },
      {
       "id": "d",
-      "label": "The side along the bottom",
+      "label": "Whichever side sits along the bottom",
       "feedback": "Position on the page doesn't matter — the hypotenuse is the side opposite the right angle.",
       "claim": "misconception:d"
      }
@@ -164,15 +165,11 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "Confirm the identity.",
+   "body": "Find a classmate's error.",
    "conceptTag": "tm-pythagorean-why",
-   "variant": {
-    "gen": "g8-tm-pythagorean-why",
-    "form": "tmPythCSquaredB"
-   },
    "explanationVariants": [
-    "Legs 5 and 12: 25 + 144 = 169, and 13² = 169, so a² + b² = c² checks.",
-    "5² + 12² = 169 = 13², confirming the theorem."
+    "The classmate added the legs (5 + 12 = 17) instead of adding their square areas; the correct c² is 25 + 144 = 169.",
+    "5² + 12² = 169 = 13², confirming the theorem — the classmate skipped the squaring step."
    ],
    "widget": {
     "type": "geometricConstraintLab",
@@ -182,7 +179,7 @@
      "legB": 12,
      "target": "cSquared"
     },
-    "prompt": "A right triangle has legs 5 and 12. What is c² = 5² + 12²?",
+    "prompt": "A right triangle has legs 5 and 12. A classmate wrote c² = 5 + 12 = 17. What is the correct value of c²?",
     "tolerance": 0,
     "choices": [],
     "numericErrors": [
@@ -206,6 +203,10 @@
     "explorationFeedback": "Inspect every required geometric constraint before checking.",
     "fallbackFeedback": "c² = 5² + 12² = 25 + 144 = 169 (and indeed 13² = 169).",
     "answerMode": "numeric"
+   },
+   "variant": {
+    "gen": "g8-tm-pythagorean-why",
+    "form": "tmPythClassmateSum"
    }
   },
   {
@@ -350,7 +351,7 @@
     "body": "",
     "conceptTag": "tm-pythagorean-why",
     "explanationVariants": [
-     "Legs 3 and 4: c² = 9 + 16 = 25.",
+     "The classmate multiplied the legs (3 × 4 = 12) instead of adding their square areas; the correct c² is 9 + 16 = 25.",
      "Add the squares: 3² + 4² = 9 + 16 = 25."
     ],
     "widget": {
@@ -361,7 +362,7 @@
       "legB": 4,
       "target": "cSquared"
      },
-     "prompt": "A right triangle has legs 3 and 4. What is c² = 3² + 4²?",
+     "prompt": "A right triangle has legs 3 and 4. A classmate wrote c² = 3 × 4 = 12. What is the correct value of c²?",
      "tolerance": 0,
      "choices": [],
      "numericErrors": [

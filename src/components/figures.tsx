@@ -1,4 +1,28 @@
 import type { JSX } from "react";
+import { SvgMathText } from "./math/SvgMathText";
+import { NumberLineAxis, NumberLineDirectionHead } from "./NumberLineSvgPrimitives";
+import {
+  KoaActOutAJoin,
+  KoaAdditionSentence,
+  KoaAddWithDrawing,
+  KoaAddWithFingers,
+  KoaJoinTwoGroups,
+} from "./figures/koaJoinFigures";
+import {
+  KoaCountBackLeft,
+  KoaSubtractionActOut,
+  KoaSubtractionCrossOut,
+  KoaSubtractionSentence,
+  KoaTakeAwayRemoval,
+} from "./figures/koaSubtractionFigures";
+import {
+  AsvCoordinateCompositeSetup,
+  AsvCoordinateCompositeSum,
+  AsvCoordinateRectangleArea,
+  AsvCoordinateRightTriangleLegs,
+} from "./figures/coordinateAreaFigures";
+import { NUMBER_WRITING_FIGURES } from "./figures/numberWritingFigures";
+import { HOW_MANY_FIGURES } from "./figures/howManyFigures";
 /**
  * Named concept figures — small inline SVGs rendered above concept-step bodies.
  * Design rules (DESIGN.md): ink/paper/sky/tangerine/leaf tokens only; borders over
@@ -223,13 +247,14 @@ function BoxLayers() {
     return cells;
   };
   return (
-    <svg viewBox="0 0 220 130" role="img" className="mx-auto w-full max-w-xs">
-      <title>A box built from unit cubes: a base layer of 3 by 2 cubes, stacked 3 layers high; the highlighted bottom layer shows the base.</title>
-      {layer(96 - 2 * h)}
-      {layer(96 - h)}
-      {layer(96, true)}
-      <text x={158} y={118} fontSize={10} fontWeight={700} fill={TANGERINE}>base layer: 3 × 2</text>
-      <text x={158} y={40} fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>3 layers tall</text>
+    <svg viewBox="0 0 300 170" role="img" className="mx-auto w-full max-w-xs">
+      <title>A box built from unit cubes: a base layer of 3 by 2 cubes, stacked 4 layers high; the highlighted bottom layer shows the base.</title>
+      {layer(136 - 3 * h)}
+      {layer(136 - 2 * h)}
+      {layer(136 - h)}
+      {layer(136, true)}
+      <text x={158} y={158} fontSize={10} fontWeight={700} fill={TANGERINE}>base layer: 3 × 2</text>
+      <text x={158} y={26} fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>4 layers tall</text>
     </svg>
   );
 }
@@ -741,6 +766,35 @@ function AsvBoxesFit() {
   );
 }
 
+/** Grade 6 area-surface-volume figure: outside (surface area, square units) vs inside (volume, cubic units) on one 2×2×1 box. */
+function AsvSurfaceVsVolume() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="A 2 by 2 by 1 box split to contrast its outside and inside: its 6 outside faces give 16 square units of surface area, while the 4 unit cubes packed inside give 4 cubic units of volume.">
+      <title>Surface area covers the outside in square units; volume fills the inside in cubic units — same 2×2×1 box, two different questions.</title>
+      <text x="105" y="14" fontSize="10" fontWeight="800" fill={INK} textAnchor="middle">outside (surface area) vs inside (volume)</text>
+      <g>
+        <path d="M 16 66 L 52 66 L 66 54 L 30 54 Z" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1.3} />
+        <path d="M 16 66 L 16 82 L 52 82 L 52 66 Z" fill={SKY} opacity={0.55} stroke={INK} strokeWidth={1.3} />
+        <path d="M 52 66 L 66 54 L 66 70 L 52 82 Z" fill={SKY} opacity={0.28} stroke={INK} strokeWidth={1.3} />
+        <text x="48" y="100" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">6 faces</text>
+        {/* S238. y=100/112 left a fontSize-10 line's own box (9.8 above baseline, 2.8 below) 0.6
+            units taller than the 12-unit row gap — the two labels touched at every render, not
+            just this one instance. 114 buys the pair the clearance the row height was missing,
+            same fix on both stacks below, and still clears the viewBox floor at y=120. */}
+        <text x="48" y="114" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">= 16 sq units</text>
+      </g>
+      <g>
+        <rect x={128} y={54} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={148} y={54} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={128} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <rect x={148} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
+        <text x="160" y="100" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">4 unit cubes</text>
+        <text x="160" y="114" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">= 4 cu units</text>
+      </g>
+    </svg>
+  );
+}
+
 function RrScale() {
   return (
     <svg viewBox="0 0 210 104" role="img" aria-label="A ratio of 2 to 3 stays the same as the groups scale: 2 to 3, then 4 to 6, then 6 to 9, each keeping the same relationship.">
@@ -781,20 +835,19 @@ function RrTools() {
   );
 }
 
-/** Grade 6 ratios-rates figure: Better buy: compare price per pound. */
+/** Grade 6 ratios-rates figure: Better buy: compare the lesson's two juice prices per ounce. */
 function RrBetterBuy() {
   return (
-    <svg viewBox="0 0 210 96" role="img" aria-label="Comparing two deals by unit price: 6 dollars for 3 pounds is 2 dollars per pound, beating 10 dollars for 4 pounds at 2 dollars 50 per pound.">
-      <title>Better buy: compare price per pound.</title>
-      <text x="16" y="30" fontSize="12" fill={INK}>$6 / 3 lb = <tspan fontWeight="700" fill={LEAF}>$2.00/lb</tspan> ✓</text>
-      <text x="16" y="58" fontSize="12" fill={INK}>$10 / 4 lb = <tspan fontWeight="700" fill={BERRY}>$2.50/lb</tspan></text>
-      <text x="105" y="82" fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">lower per-unit price wins</text>
+    <svg viewBox="0 0 258 108" role="img" className="mx-auto w-full max-w-sm" aria-label="Comparing the lesson's two juice deals by unit price: 3 dollars for 12 ounces is 25 cents per ounce. 4 dollars for 20 ounces is 20 cents per ounce, so the 20-ounce bottle wins.">
+      <title>3 dollars divided by 12 ounces equals 25 cents per ounce. 4 dollars divided by 20 ounces equals 20 cents per ounce. Twenty cents per ounce is lower.</title>
+      <text x="18" y="33" fontSize="13" fill={INK}>$3 ÷ 12 oz = <tspan fontWeight="700" fill={LEAF}>25¢/oz</tspan> ✓</text>
+      <text x="18" y="64" fontSize="13" fill={INK}>$4 ÷ 20 oz = <tspan fontWeight="700" fill={BERRY}>20¢/oz</tspan></text>
+      <text x="129" y="92" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">lower per-unit price wins</text>
     </svg>
   );
 }
 
-/** Grade 6 ratios-rates figure: Rates predict: at 60 mph, 3 h → 180 mi. */
-function RrPredict() {
+/** Grade 6 ratios-rates figure: Rates predict: at 60 mph, 3 h → 180 mi. */function RrPredict() {
   return (
     <svg viewBox="0 0 210 92" role="img" aria-label="A unit rate predicts ahead: at 60 miles per hour, 2 hours covers 120 miles and 3 hours covers 180 miles.">
       <title>Rates predict: at 60 mph, 3 h → 180 mi.</title>
@@ -1177,11 +1230,11 @@ function RnoSameSign() {
     <svg viewBox="0 0 210 76" role="img" aria-label="Adding same-sign integers on a number line: from negative 3 jump 5 more to the left to reach negative 8, since both are negative the magnitudes add.">
       <title>Same signs add: −3 + (−5) = −8.</title>
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">−3 + (−5) = −8</text>
-      <line x1="24" y1="50" x2="196" y2="50" stroke={INK} strokeWidth="2"/>
+      <NumberLineAxis x1={24} x2={196} y={50} color={INK} testId="static-number-line-axis" />
       <line x1="24.0" y1="47" x2="24.0" y2="53" stroke={INK} strokeWidth="1"/><text x="24.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-10</text><line x1="38.3" y1="47" x2="38.3" y2="53" stroke={INK} strokeWidth="1"/><line x1="52.7" y1="47" x2="52.7" y2="53" stroke={INK} strokeWidth="1"/><text x="52.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-8</text><line x1="67.0" y1="47" x2="67.0" y2="53" stroke={INK} strokeWidth="1"/><text x="67.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-7</text><line x1="81.3" y1="47" x2="81.3" y2="53" stroke={INK} strokeWidth="1"/><text x="81.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-6</text><line x1="95.7" y1="47" x2="95.7" y2="53" stroke={INK} strokeWidth="1"/><text x="95.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-5</text><line x1="110.0" y1="47" x2="110.0" y2="53" stroke={INK} strokeWidth="1"/><text x="110.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-4</text><line x1="124.3" y1="47" x2="124.3" y2="53" stroke={INK} strokeWidth="1"/><text x="124.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-3</text><line x1="138.7" y1="47" x2="138.7" y2="53" stroke={INK} strokeWidth="1"/><text x="138.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-2</text><line x1="153.0" y1="47" x2="153.0" y2="53" stroke={INK} strokeWidth="1"/><text x="153.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-1</text><line x1="167.3" y1="47" x2="167.3" y2="53" stroke={INK} strokeWidth="1"/><text x="167.3" y="66" fontSize="10" fill={INK} textAnchor="middle">0</text><line x1="181.7" y1="47" x2="181.7" y2="53" stroke={INK} strokeWidth="1"/><text x="181.7" y="66" fontSize="10" fill={INK} textAnchor="middle">1</text><line x1="196.0" y1="47" x2="196.0" y2="53" stroke={INK} strokeWidth="1"/><text x="196.0" y="66" fontSize="10" fill={INK} textAnchor="middle">2</text>
       <circle cx="124.3" cy="50" r="4" fill={SKY}/>
       <circle cx="52.7" cy="50" r="5" fill={BERRY}/>
-      <path d="M 124.3 40 Q 88.5 28 52.7 40" fill="none" stroke={TANGERINE} strokeWidth="1.6"/>
+      <path data-number-line-direction="left" d="M 124.3 40 Q 88.5 28 52.7 40 M 52.7 40 L 58.7 36 M 52.7 40 L 58.7 44" fill="none" stroke={TANGERINE} strokeWidth="1.6"/>
       <text x="88.5" y="34" fontSize="10" fill={TANGERINE} textAnchor="middle">−5</text>
     </svg>
   );
@@ -1193,11 +1246,11 @@ function RnoOppositesCancel() {
     <svg viewBox="0 0 210 76" role="img" aria-label="Opposite integers cancel: starting at 5 and jumping 5 to the left lands on zero, so a number plus its opposite is zero.">
       <title>Opposites cancel: 5 + (−5) = 0.</title>
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">5 + (−5) = 0</text>
-      <line x1="24" y1="50" x2="196" y2="50" stroke={INK} strokeWidth="2"/>
+      <NumberLineAxis x1={24} x2={196} y={50} color={INK} testId="static-number-line-axis" />
       <line x1="24.0" y1="47" x2="24.0" y2="53" stroke={INK} strokeWidth="1"/><text x="24.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-6</text><line x1="38.3" y1="47" x2="38.3" y2="53" stroke={INK} strokeWidth="1"/><text x="38.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-5</text><line x1="52.7" y1="47" x2="52.7" y2="53" stroke={INK} strokeWidth="1"/><text x="52.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-4</text><line x1="67.0" y1="47" x2="67.0" y2="53" stroke={INK} strokeWidth="1"/><text x="67.0" y="66" fontSize="10" fill={INK} textAnchor="middle">-3</text><line x1="81.3" y1="47" x2="81.3" y2="53" stroke={INK} strokeWidth="1"/><text x="81.3" y="66" fontSize="10" fill={INK} textAnchor="middle">-2</text><line x1="95.7" y1="47" x2="95.7" y2="53" stroke={INK} strokeWidth="1"/><text x="95.7" y="66" fontSize="10" fill={INK} textAnchor="middle">-1</text><line x1="110.0" y1="47" x2="110.0" y2="53" stroke={INK} strokeWidth="1"/><text x="110.0" y="66" fontSize="10" fill={INK} textAnchor="middle">0</text><line x1="124.3" y1="47" x2="124.3" y2="53" stroke={INK} strokeWidth="1"/><text x="124.3" y="66" fontSize="10" fill={INK} textAnchor="middle">1</text><line x1="138.7" y1="47" x2="138.7" y2="53" stroke={INK} strokeWidth="1"/><text x="138.7" y="66" fontSize="10" fill={INK} textAnchor="middle">2</text><line x1="153.0" y1="47" x2="153.0" y2="53" stroke={INK} strokeWidth="1"/><text x="153.0" y="66" fontSize="10" fill={INK} textAnchor="middle">3</text><line x1="167.3" y1="47" x2="167.3" y2="53" stroke={INK} strokeWidth="1"/><text x="167.3" y="66" fontSize="10" fill={INK} textAnchor="middle">4</text><line x1="181.7" y1="47" x2="181.7" y2="53" stroke={INK} strokeWidth="1"/><text x="181.7" y="66" fontSize="10" fill={INK} textAnchor="middle">5</text><line x1="196.0" y1="47" x2="196.0" y2="53" stroke={INK} strokeWidth="1"/><text x="196.0" y="66" fontSize="10" fill={INK} textAnchor="middle">6</text>
       <circle cx="181.7" cy="50" r="4" fill={SKY}/>
       <circle cx="110.0" cy="50" r="5" fill={LEAF}/>
-      <path d="M 181.7 40 Q 145.8 28 110.0 40" fill="none" stroke={BERRY} strokeWidth="1.6"/>
+      <path data-number-line-direction="left" d="M 181.7 40 Q 145.8 28 110.0 40 M 110 40 L 116 36 M 110 40 L 116 44" fill="none" stroke={BERRY} strokeWidth="1.6"/>
       <text x="145.8" y="34" fontSize="10" fill={BERRY} textAnchor="middle">−5</text>
     </svg>
   );
@@ -1222,11 +1275,11 @@ function RnoChangeSign() {
     <svg viewBox="0 0 210 76" role="img" aria-label="A falling value gives a negative change: going from 10 down to 4, the change is 4 minus 10 equals negative 6.">
       <title>Falling value: change = 4 − 10 = −6.</title>
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">from 10 to 4</text>
-      <line x1="24" y1="50" x2="196" y2="50" stroke={INK} strokeWidth="2"/>
+      <NumberLineAxis x1={24} x2={196} y={50} color={INK} testId="static-number-line-axis" />
       <line x1="24.0" y1="47" x2="24.0" y2="53" stroke={INK} strokeWidth="1"/><text x="24.0" y="66" fontSize="10" fill={INK} textAnchor="middle">0</text><line x1="38.3" y1="47" x2="38.3" y2="53" stroke={INK} strokeWidth="1"/><text x="38.3" y="66" fontSize="10" fill={INK} textAnchor="middle">1</text><line x1="52.7" y1="47" x2="52.7" y2="53" stroke={INK} strokeWidth="1"/><text x="52.7" y="66" fontSize="10" fill={INK} textAnchor="middle">2</text><line x1="67.0" y1="47" x2="67.0" y2="53" stroke={INK} strokeWidth="1"/><text x="67.0" y="66" fontSize="10" fill={INK} textAnchor="middle">3</text><line x1="81.3" y1="47" x2="81.3" y2="53" stroke={INK} strokeWidth="1"/><text x="81.3" y="66" fontSize="10" fill={INK} textAnchor="middle">4</text><line x1="95.7" y1="47" x2="95.7" y2="53" stroke={INK} strokeWidth="1"/><text x="95.7" y="66" fontSize="10" fill={INK} textAnchor="middle">5</text><line x1="110.0" y1="47" x2="110.0" y2="53" stroke={INK} strokeWidth="1"/><text x="110.0" y="66" fontSize="10" fill={INK} textAnchor="middle">6</text><line x1="124.3" y1="47" x2="124.3" y2="53" stroke={INK} strokeWidth="1"/><text x="124.3" y="66" fontSize="10" fill={INK} textAnchor="middle">7</text><line x1="138.7" y1="47" x2="138.7" y2="53" stroke={INK} strokeWidth="1"/><text x="138.7" y="66" fontSize="10" fill={INK} textAnchor="middle">8</text><line x1="153.0" y1="47" x2="153.0" y2="53" stroke={INK} strokeWidth="1"/><text x="153.0" y="66" fontSize="10" fill={INK} textAnchor="middle">9</text><line x1="167.3" y1="47" x2="167.3" y2="53" stroke={INK} strokeWidth="1"/><text x="167.3" y="66" fontSize="10" fill={INK} textAnchor="middle">10</text><line x1="181.7" y1="47" x2="181.7" y2="53" stroke={INK} strokeWidth="1"/><text x="181.7" y="66" fontSize="10" fill={INK} textAnchor="middle">11</text><line x1="196.0" y1="47" x2="196.0" y2="53" stroke={INK} strokeWidth="1"/><text x="196.0" y="66" fontSize="10" fill={INK} textAnchor="middle">12</text>
       <circle cx="167.3" cy="50" r="4" fill={SKY}/>
       <circle cx="81.3" cy="50" r="4" fill={TANGERINE}/>
-      <path d="M 167.3 40 Q 124.3 28 81.3 40" fill="none" stroke={BERRY} strokeWidth="1.6"/>
+      <path data-number-line-direction="left" d="M 167.3 40 Q 124.3 28 81.3 40 M 81.3 40 L 87.3 36 M 81.3 40 L 87.3 44" fill="none" stroke={BERRY} strokeWidth="1.6"/>
       <text x="124.3" y="34" fontSize="10" fontWeight="700" fill={BERRY} textAnchor="middle">−6</text>
     </svg>
   );
@@ -2001,7 +2054,7 @@ function IntLine({ lo, hi, jumps, land, landLabel, y = 58 }: { lo: number; hi: n
   const mids = (jumps ?? []).map((j) => (px(j.from) + px(j.to)) / 2);
   return (
     <g>
-      <line x1={x0} y1={y} x2={x1} y2={y} stroke={INK} strokeWidth={1.8} />
+      <NumberLineAxis x1={x0} x2={x1} y={y} color={INK} strokeWidth={1.8} testId="int-line-axis" />
       {ticks.map((v) => (
         <g key={v}>
           <line x1={px(v)} y1={y - 5} x2={px(v)} y2={y + 5} stroke={INK} strokeWidth={1} />
@@ -2018,6 +2071,7 @@ function IntLine({ lo, hi, jumps, land, landLabel, y = 58 }: { lo: number; hi: n
         return (
           <g key={i}>
             <path d={`M ${px(j.from)} ${y - 8} Q ${midX} ${y - 24} ${px(j.to)} ${y - 8}`} fill="none" stroke={j.color} strokeWidth={1.6} />
+            <NumberLineDirectionHead x={px(j.to)} y={y - 8} direction={j.to < j.from ? "left" : "right"} color={j.color} size={5} testId="int-line-direction" />
             <text x={lx} y={y - 26} fontSize="10" fontWeight="700" fill={j.color} textAnchor="middle">{j.label}</text>
           </g>
         );
@@ -2231,7 +2285,7 @@ function Rno7AddDiffLine() {
   return (
     <svg viewBox="0 0 210 100" role="img" aria-label="Adding different signs on a number line: from zero jump right five, then left eight, landing at negative three because the bigger jump wins.">
       <title>5 + (−8) = −3: opposite jumps, bigger wins.</title>
-      <text x="105" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">5 + (−8): jump opposite ways</text>
+      <text x="105" y="16" fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">5 + (−8): jump opposite ways</text>
       <IntLine lo={-6} hi={7} jumps={[{from:0,to:5,color:SKY,label:"+5"},{from:5,to:-3,color:BERRY,label:"−8"}]} land={-3} landLabel="−3" />
     </svg>
   );
@@ -2321,7 +2375,7 @@ function Rno7CountNegatives() {
 /** Grade 7 rational-number-ops figure: 3.25 − (−1.5) = 3.25 + 1.5 = 4.75. */
 function Rno7SignedDecimal() {
   return (
-    <svg viewBox="0 0 210 94" role="img" aria-label="Subtracting a negative decimal: three point two five minus negative one point five becomes plus one point five, giving four point seven five.">
+    <svg viewBox="0 0 210 94" role="img" aria-label="Subtracting a negative decimal: 3.25 minus negative 1.5 becomes plus 1.5, giving 4.75.">
       <title>3.25 − (−1.5) = 3.25 + 1.5 = 4.75.</title>
       <text x="105" y="34" fontSize="13" fill={INK} textAnchor="middle">3.25 − (−1.5)</text>
       <text x="105" y="58" fontSize="13" fill={INK} textAnchor="middle">= 3.25 + 1.5</text>
@@ -2330,6 +2384,64 @@ function Rno7SignedDecimal() {
   );
 }
 
+/** Exact subtraction rewrite used by rno-02-01. */
+function Rno7SubtractAsOppositeFiveThree() {
+  return (
+    <svg viewBox="0 0 210 94" role="img" aria-label="Five minus three is rewritten as five plus negative three, which equals two.">
+      <title>5 − 3 = 5 + (−3) = 2.</title>
+      <text x="105" y="30" fontSize="14" fontWeight="700" fill={INK} textAnchor="middle">5 − 3</text>
+      <text x="105" y="55" fontSize="13" fill={INK} textAnchor="middle">= 5 + (−3)</text>
+      <text x="105" y="80" fontSize="15" fontWeight="700" fill={LEAF} textAnchor="middle">= 2</text>
+    </svg>
+  );
+}
+
+/** Exact rising-change number line used by rno-02-02. */
+function Rno7ChangeRiseLine() {
+  const x = (value: number) => 24 + ((value + 4) / 10) * 172;
+  return (
+    <svg viewBox="0 0 220 102" role="img" aria-label="A temperature rises from negative three to five. The change is five minus negative three, which equals positive eight, shown by a rightward jump.">
+      <title>Rise from −3 to 5: 5 − (−3) = 8.</title>
+      <text x="110" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">−3 → 5 is a rise of 8</text>
+      <NumberLineAxis x1={24} x2={196} y={62} color={INK} testId="rno7-change-rise-axis" />
+      {[-4, -3, 0, 5, 6].map((value) => (
+        <g key={value}>
+          <line x1={x(value)} y1="56" x2={x(value)} y2="68" stroke={INK} strokeWidth="1" />
+          <text x={x(value)} y="84" fontSize="10" fill={INK} textAnchor="middle">{value}</text>
+        </g>
+      ))}
+      <path d={`M ${x(-3)} 50 Q ${x(1)} 26 ${x(5)} 50`} fill="none" stroke={LEAF} strokeWidth="2" />
+      <NumberLineDirectionHead x={x(5)} y={50} direction="right" color={LEAF} size={5} testId="rno7-change-rise-direction" />
+      <circle cx={x(-3)} cy="62" r="4" fill={SKY} /><circle cx={x(5)} cy="62" r="5" fill={TANGERINE} />
+      <text x={x(1)} y="31" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">+8</text>
+    </svg>
+  );
+}
+
+/** Symbolic subtract-negative rule used by rno-02-03. */
+function Rno7SubtractNegative() {
+  return (
+    <svg viewBox="0 0 210 94" role="img" aria-label="Subtracting a negative becomes adding the positive opposite: a minus negative b equals a plus b.">
+      <title>a − (−b) = a + b.</title>
+      <text x="105" y="34" fontSize="15" fontWeight="700" fill={INK} textAnchor="middle">a − (−b)</text>
+      <path d="M 78 43 Q 105 62 132 43" fill="none" stroke={BERRY} strokeWidth="1.6" />
+      <NumberLineDirectionHead x={132} y={43} direction="right" color={BERRY} size={5} testId="rno7-subtract-negative-rewrite" />
+      <text x="105" y="78" fontSize="16" fontWeight="700" fill={LEAF} textAnchor="middle">= a + b</text>
+    </svg>
+  );
+}
+
+/** Exact different-sign decimal addition used by rno-04-02. */
+function Rno7SignedDecimalAddition() {
+  return (
+    <svg viewBox="0 0 210 94" role="img" aria-label="Negative 2.5 plus 1.75 equals negative 0.75. Different signs mean subtract the magnitudes and keep the sign of the larger magnitude.">
+      <title>−2.5 + 1.75 = −0.75.</title>
+      <text x="105" y="30" fontSize="14" fontWeight="700" fill={INK} textAnchor="middle">−2.5 + 1.75</text>
+      <text x="105" y="55" fontSize="12" fill={BERRY} textAnchor="middle">2.5 − 1.75 = 0.75</text>
+      <text x="105" y="80" fontSize="15" fontWeight="700" fill={LEAF} textAnchor="middle">= −0.75</text>
+    </svg>
+  );
+}
 function Tse7DistributeNeg() {
   return (
     <svg viewBox="0 0 210 108" role="img" aria-label="Distributing a negative: negative two times the group x minus six sends negative two to each term, giving negative two x plus twelve, since two negatives make a positive.">
@@ -2433,7 +2545,7 @@ function Tse7IneqLine() {
       {[-1,0,1,2,3,4].map((v,i)=>{const x=24+i*34;return <g key={v}><line x1={x} y1="49" x2={x} y2="59" stroke={INK} strokeWidth={1.2}/><text x={x} y="74" fontSize="10" fill={INK} textAnchor="middle">{v}</text></g>;})}
       <line x1="126" y1="54" x2="196" y2="54" stroke={BERRY} strokeWidth={4} opacity={0.5}/>
       <circle cx="126" cy="54" r="6" fill="#ffffff" stroke={BERRY} strokeWidth={2}/>
-      <path d="M 190 48 l 8 6 l -8 6" fill="none" stroke={BERRY} strokeWidth={2}/>
+      <path d="M 190 48 l 8 6 l -8 6" fill="none" stroke={BERRY} strokeWidth={2} data-number-line-direction="right"/>
     </svg>
   );
 }
@@ -2636,10 +2748,10 @@ function McLengthLadder() {
   return (
     <svg viewBox="0 0 210 104" role="img" aria-label="The metric length ladder: 10 millimeters make a centimeter, 100 centimeters make a meter, and 1000 meters make a kilometer.">
       <title>The length ladder: mm, cm, m, km.</title>
-      <text x="105" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">each step multiplies</text>
-      <text x="30" y="40" fontSize="12" fill={INK}>mm</text><text x="70" y="40" fontSize="11" fill={BERRY}>×10 →</text><text x="130" y="40" fontSize="12" fill={INK}>cm</text>
-      <text x="30" y="64" fontSize="12" fill={INK}>cm</text><text x="70" y="64" fontSize="11" fill={BERRY}>×100 →</text><text x="130" y="64" fontSize="12" fill={INK}>m</text>
-      <text x="30" y="88" fontSize="12" fill={INK}>m</text><text x="70" y="88" fontSize="11" fill={BERRY}>×1000 →</text><text x="130" y="88" fontSize="12" fill={INK}>km</text>
+      <text x="105" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">equal lengths</text>
+      <text x="105" y="40" fontSize="12" fill={INK} textAnchor="middle">10 mm <tspan fill={BERRY} fontWeight="700">=</tspan> 1 cm</text>
+      <text x="105" y="64" fontSize="12" fill={INK} textAnchor="middle">100 cm <tspan fill={BERRY} fontWeight="700">=</tspan> 1 m</text>
+      <text x="105" y="88" fontSize="12" fill={INK} textAnchor="middle">1000 m <tspan fill={BERRY} fontWeight="700">=</tspan> 1 km</text>
     </svg>
   );
 }
@@ -2863,6 +2975,23 @@ function LaTriangleSum() {
   );
 }
 
+/** Grade 8 lines-angles figure (S316): a right triangle synchronized to 90°, 35°, and the
+ * inferred 55° — the exact worked example in tm-03-02's c2 body, which no prior figure showed
+ * as an actual three-vertex right triangle with a marked right angle. */
+function TmRightTriangleAngleSum() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="A right triangle: one angle is a marked right angle of 90 degrees, a second angle is 35 degrees, and the third angle is the inferred 55 degrees, since 90 plus 35 plus 55 equals 180.">
+      <title>A right triangle: 90°, 35°, and the inferred 55°.</title>
+      <polygon points="40,95 40,25 175,95" fill={SKY} fillOpacity={0.18} stroke={INK} strokeWidth={1.6}/>
+      <rect x="40" y="83" width="12" height="12" fill="none" stroke={INK} strokeWidth={1.4}/>
+      <text x="58" y="90" fontSize="11" fontWeight="700" fill={INK}>90°</text>
+      <text x="140" y="90" fontSize="11" fontWeight="700" fill={BERRY}>35°</text>
+      <text x="48" y="40" fontSize="11" fontWeight="700" fill={LEAF}>55° (inferred)</text>
+      <text x="105" y="112" textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>90° + 35° + 55° = 180°</text>
+    </svg>
+  );
+}
+
 /** Grade 4 lines-angles figure: A line of symmetry folds the halves to match. */
 function LaSymmetry() {
   return (
@@ -3027,6 +3156,83 @@ function MbMultistep() {
   );
 }
 
+/** Grade 3 word-problem figure: build equal groups, then subtract one loss from the whole. */
+function G3wSubtractOnce() {
+  return (
+    <svg viewBox="0 0 250 124" role="img" aria-label="Five equal groups of four make twenty. Three are crossed off once from the whole, leaving seventeen. The three are not removed from every group.">
+      <title>Build 5 groups of 4, then subtract 3 once: 20 − 3 = 17.</title>
+      <text x="125" y="15" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">5 groups of 4 make 20</text>
+      {Array.from({ length: 5 }, (_, group) => (
+        <g key={group} transform={`translate(${15 + group * 46},25)`}>
+          <rect width="38" height="28" rx="6" fill={SKY} fillOpacity={0.1} stroke={SKY} strokeWidth={1} />
+          {Array.from({ length: 4 }, (_, dot) => <circle key={dot} cx={10 + (dot % 2) * 18} cy={9 + Math.floor(dot / 2) * 11} r="3.4" fill={SKY} />)}
+        </g>
+      ))}
+      <text x="125" y="72" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">20 total → remove 3 once</text>
+      <rect x="25" y="80" width="170" height="20" rx="4" fill={LEAF} fillOpacity={0.22} stroke={INK} strokeWidth={1.1} />
+      <rect x="195" y="80" width="30" height="20" rx="4" fill={BERRY} fillOpacity={0.14} stroke={BERRY} strokeWidth={1.2} strokeDasharray="3 2" />
+      <line x1="198" y1="82" x2="222" y2="98" stroke={BERRY} strokeWidth={1.5} />
+      <line x1="222" y1="82" x2="198" y2="98" stroke={BERRY} strokeWidth={1.5} />
+      <text x="125" y="119" fontSize="12" fontWeight="700" fill={LEAF} textAnchor="middle">20 − 3 = 17</text>
+    </svg>
+  );
+}
+
+/** Grade 3 word-problem figure: share first, then add to every share. */
+function G3wShareThenAdd() {
+  return (
+    <svg viewBox="0 0 250 122" role="img" aria-label="Eighteen shared among three bags gives six in each bag. Two more are added to every bag, so each bag has eight. Adding two to the total would be a different story.">
+      <title>Share 18 among 3, then add 2 to each share: 18 ÷ 3 + 2 = 8 each.</title>
+      <text x="125" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">18 ÷ 3 = 6 in each bag</text>
+      {Array.from({ length: 3 }, (_, group) => (
+        <g key={group} transform={`translate(${17 + group * 78},27)`}>
+          <rect width="60" height="49" rx="9" fill={SKY} fillOpacity={0.08} stroke={INK} strokeWidth={1.1} />
+          {Array.from({ length: 6 }, (_, dot) => <circle key={`b${dot}`} cx={12 + (dot % 3) * 17} cy={13 + Math.floor(dot / 3) * 17} r="3.5" fill={SKY} />)}
+          <circle cx="47" cy="13" r="3.8" fill={TANGERINE} />
+          <circle cx="47" cy="31" r="3.8" fill={TANGERINE} />
+          <text x="30" y="46" fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">6 + 2 = 8</text>
+        </g>
+      ))}
+      <text x="125" y="96" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">+2 goes into every bag</text>
+      <text x="125" y="115" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">(18 ÷ 3) + 2 = 8 each</text>
+    </svg>
+  );
+}
+
+/** Grade 3 word-problem figure: select only quantities relevant to the question. */
+function G3wRelevantInformation() {
+  return (
+    <svg viewBox="0 0 250 112" role="img" aria-label="A story has three red bags and four blue bags with six marbles in each blue bag. The three red bags are crossed out as extra information. Four and six are used to find twenty-four blue marbles.">
+      <title>Use 4 blue bags and 6 marbles per blue bag; 3 red bags is extra information.</title>
+      <text x="125" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">Blue bags: how many marbles?</text>
+      <g><rect x="14" y="28" width="62" height="36" rx="7" fill={BERRY} fillOpacity={0.12} stroke={BERRY} /><text x="45" y="43" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">3 red bags</text><text data-label-role="extra-information" x="45" y="58" fontSize="10" fontWeight="700" fill={INK} textAnchor="middle">extra</text><line data-testid="g3w-extra-crossout" x1="18" y1="31" x2="72" y2="48" stroke={BERRY} strokeWidth={1.5} /></g>
+      <rect x="88" y="28" width="68" height="36" rx="7" fill={SKY} fillOpacity={0.12} stroke={SKY} strokeWidth={1.2} /><text x="122" y="58" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">4 blue bags</text>
+      <rect x="168" y="28" width="68" height="36" rx="7" fill={TANGERINE} fillOpacity={0.14} stroke={TANGERINE} strokeWidth={1.2} /><text x="202" y="43" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">6 marbles</text><text x="202" y="57" fontSize="10" fill={INK} textAnchor="middle">in each</text>
+      <text x="125" y="88" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">use only 4 and 6</text>
+      <text x="125" y="107" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">4 × 6 = 24 blue marbles</text>
+    </svg>
+  );
+}
+
+/** Grade 3 word-problem figure: multiply equal groups, then add once. */
+function G3wMultiplyThenAdd() {
+  return (
+    <svg viewBox="0 0 250 112" role="img" aria-label="Five equal groups of six make thirty. Four more are then added once to the total, making thirty-four. The expression is five times six in parentheses plus four.">
+      <title>Multiply 5 × 6 first, then add 4 once: (5 × 6) + 4 = 34.</title>
+      <text x="125" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">equal groups first</text>
+      {Array.from({ length: 5 }, (_, group) => (
+        <g key={group} transform={`translate(${12 + group * 40},26)`}>
+          <rect width="34" height="31" rx="6" fill={SKY} fillOpacity={0.1} stroke={SKY} />
+          {Array.from({ length: 6 }, (_, dot) => <circle key={dot} cx={8 + (dot % 3) * 9} cy={8 + Math.floor(dot / 3) * 13} r="2.8" fill={SKY} />)}
+        </g>
+      ))}
+      <text x="217" y="46" fontSize="15" fontWeight="700" fill={TANGERINE}>+4</text>
+      <path d="M 205 61 L 229 61" stroke={TANGERINE} strokeWidth={3} strokeLinecap="round" />
+      <text x="125" y="79" fontSize="11" fill={INK} textAnchor="middle">5 × 6 = 30, then four join the whole once</text>
+      <text x="125" y="103" fontSize="14" fontWeight="700" fill={LEAF} textAnchor="middle">(5 × 6) + 4 = 34</text>
+    </svg>
+  );
+}
 function DpvLadderBelow() {
   return (
     <svg viewBox="0 0 210 104" role="img" aria-label="The place-value ladder continued below one: ones, then tenths, hundredths, and thousandths, each rung one tenth of the one above.">
@@ -3046,6 +3252,27 @@ function DpvHundredthsGrid() {
       {Array.from({length:10},(_,r)=>Array.from({length:10},(_,c)=>{const col0=c===0;const cell=r===0&&c===2;return <rect key={`${r}-${c}`} x={70+c*7} y={20+r*7} width={7} height={7} fill={col0?SKY:(cell?BERRY:"#ffffff")} fillOpacity={col0?0.4:(cell?0.8:1)} stroke={INK} strokeWidth={0.4}/>;}))}
       <text x="30" y="60" fontSize="10" fontWeight="700" fill={SKY}>0.1</text>
       <text x="150" y="30" fontSize="10" fontWeight="700" fill={BERRY}>0.01</text>
+    </svg>
+  );
+}
+
+/** Grade 4 decimals-place-value figure: tenths on a 0-to-1 number line, with 0.4 marked four steps from 0. */
+function DpvTenthsNumberLine() {
+  const x0 = 24, x1 = 196;
+  const px = (n: number) => x0 + (n / 10) * (x1 - x0);
+  return (
+    <svg viewBox="0 0 210 84" role="img" aria-label="A number line from 0 to 1 split into ten equal tenth-steps, with a mark at 0.4 four steps from 0.">
+      <title>0.4 is four tenth-steps from 0 on the walk from 0 to 1.</title>
+      <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">0 to 1, ten tenth-steps</text>
+      <line x1={x0} y1="54" x2={x1} y2="54" stroke={INK} strokeWidth={2} />
+      {Array.from({ length: 11 }, (_, i) => {
+        const big = i === 0 || i === 10;
+        return <line key={i} x1={px(i)} y1={big ? 47 : 50} x2={px(i)} y2={big ? 61 : 58} stroke={INK} strokeWidth={big ? 1.6 : 1} />;
+      })}
+      <text x={px(0)} y="74" fontSize="11" fill={INK} textAnchor="middle">0</text>
+      <text x={px(10)} y="74" fontSize="11" fill={INK} textAnchor="middle">1</text>
+      <circle cx={px(4)} cy="54" r="5" fill={BERRY} />
+      <text x={px(4)} y="40" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">0.4</text>
     </svg>
   );
 }
@@ -3688,6 +3915,33 @@ function DopLongDivision() {
   );
 }
 
+/** Grade 4 partial quotients: 852 ÷ 4 as two exact, convenient chunks. */
+function G4mPartialQuotients852Over4() {
+  return (
+    <svg
+      viewBox="0 0 320 142"
+      role="img"
+      aria-label="Partial quotients for 852 divided by 4: 200 groups of 4 make 800, leaving 52; 13 groups of 4 make 52, leaving 0; 200 plus 13 equals 213."
+      className="mx-auto w-full max-w-sm"
+    >
+      <title>Partial quotients: 852 ÷ 4 = 213; 200 × 4 = 800; 852 − 800 = 52; 13 × 4 = 52; 200 + 13 = 213.</title>
+      <text x="160" y="20" fontSize="16" fontWeight="700" fill={INK} textAnchor="middle">852 ÷ 4</text>
+      <rect x="10" y="34" width="138" height="64" rx="10" fill={SKY} fillOpacity={0.14} stroke={INK} strokeWidth="1.5" />
+      <text x="79" y="54" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">Step 1: 200 groups</text>
+      <text x="79" y="74" fontSize="11" fill={INK} textAnchor="middle">200 × 4 = 800</text>
+      <text x="79" y="90" fontSize="11" fill={INK} textAnchor="middle">852 − 800 = 52 left</text>
+      <path d="M 151 66 H 168" fill="none" stroke={INK} strokeWidth="1.5" />
+      <path d="M 168 66 l-5 -4 M 168 66 l-5 4" fill="none" stroke={INK} strokeWidth="1.5" />
+      <rect x="172" y="34" width="138" height="64" rx="10" fill={LEAF} fillOpacity={0.14} stroke={INK} strokeWidth="1.5" />
+      <text x="241" y="54" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">Step 2: 13 groups</text>
+      <text x="241" y="74" fontSize="11" fill={INK} textAnchor="middle">13 × 4 = 52</text>
+      <text x="241" y="90" fontSize="11" fill={INK} textAnchor="middle">52 − 52 = 0 left</text>
+      <line x1="84" y1="111" x2="236" y2="111" stroke={INK} strokeWidth="1" opacity="0.35" />
+      <text x="160" y="132" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">partial quotients: 200 + 13 = 213</text>
+    </svg>
+  );
+}
+
 /** Grade 5 decimal/operations figure: A remainder means different things. */
 function DopRemainder() {
   return (
@@ -3803,6 +4057,56 @@ function Mult3FairShares() {
   );
 }
 
+/**
+ * Grade 3 mult/div figure: parameterized fair-shares division fact.
+ * S318 fix (mult-02-01 c2): `mult3-fair-shares` is a fixed 12÷3=4 exemplar
+ * (matching this lesson's own c1); c2 teaches a distinct worked example
+ * (15 grapes shared among 5 friends), so this reusable, typed-prop helper
+ * lets that placement bind its own real numbers without touching the
+ * original component or its other bindings. Viewbox width scales with the
+ * group count so `EqualGroups`'s fixed per-group spacing still fits.
+ */
+function Mult3FairSharesExample({ total, groups }: { total: number; groups: number }) {
+  const per = total / groups;
+  const caption = `${total} shared into ${groups} groups → ${per} each`;
+  /* S324: width also covers the caption's measured span (chars × fontSize × 0.72em,
+   * the S260 containment estimate) so few-group instantiations (e.g. 16÷2) keep
+   * every numeral inside the viewBox. The only prior binding, 15-over-5, already
+   * exceeds that span (340 > 260), so its render is byte-identical. */
+  const ringsWidth = Math.max(210, groups * 62 + 30);
+  const width = Math.max(ringsWidth, Math.ceil(caption.length * 11 * 0.72) + 8);
+  /* Rings are re-centered only when the caption (not the ring row) sets the
+   * width, so every pre-S324 instantiation keeps its exact prior markup. */
+  const offset = width > ringsWidth ? (width - (groups * 62 - 18)) / 2 - 14 : 0;
+  const rings = <EqualGroups groups={groups} per={per} fill={TANGERINE} />;
+  return (
+    <svg viewBox={`0 0 ${width} 108`} role="img" aria-label={`${total} dots dealt fairly into ${groups} rings, ${per} in each, showing ${total} divided by ${groups} equals ${per}.`}>
+      <title>{`Fair shares: ${total} ÷ ${groups} = ${per} each.`}</title>
+      <text x={width / 2} y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">{caption}</text>
+      {offset > 0 ? <g transform={`translate(${offset},0)`}>{rings}</g> : rings}
+      <text x={width / 2} y="98" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">{`${total} ÷ ${groups} = ${per}`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 mult/div figure: mult-02-01's own c2 worked example, 15 grapes shared among 5 friends. */
+function Mult3FairShares15Over5() {
+  return <Mult3FairSharesExample total={15} groups={5} />;
+}
+
+/** df3-01-01 c1 (the lesson's own halving fact, per its c2: 2 × 8 = 16, so 16 ÷ 2 = 8): 16 ÷ 2 = 8. */
+function Mult3FairShares16Over2() {
+  return <Mult3FairSharesExample total={16} groups={2} />;
+}
+/** df3-01-01 remedial concept's own worked example ("Twelve shared equally between 2 groups makes 6"): 12 ÷ 2 = 6. */
+function Mult3FairShares12Over2() {
+  return <Mult3FairSharesExample total={12} groups={2} />;
+}
+/** df3-01-02 remedial concept's own worked example ("Eighteen can be split into 3 equal groups of 6" — the fair-shares reading, matching its check's "share 18 counters among 3 groups"): 18 ÷ 3 = 6. */
+function Mult3FairShares18Over3() {
+  return <Mult3FairSharesExample total={18} groups={3} />;
+}
+
 /** Grade 3 mult/div figure: How many groups: 12 ÷ 4 = 3. */
 function Mult3HowManyGroups() {
   return (
@@ -3815,6 +4119,39 @@ function Mult3HowManyGroups() {
   );
 }
 
+/**
+ * Grade 3 mult/div figure: parameterized "how many groups" division fact.
+ * S324 fix (df3-01-02 c1): `mult3-how-many-groups` is a fixed 12÷4=3 exemplar
+ * (wrong divisor for the Dividing-by-3 lesson bound to it); this reusable,
+ * typed-prop helper follows the Mult3FairSharesExample pattern so a placement
+ * can bind its own real numbers without touching the original component or
+ * its other bindings. `size` is the size of each group, so total ÷ size rings
+ * of `size` dots are drawn. Viewbox width scales with the ring count so
+ * `EqualGroups`'s fixed per-group spacing still fits.
+ */
+function Mult3HowManyGroupsExample({ total, size }: { total: number; size: number }) {
+  const count = total / size;
+  const caption = `${total} split into groups of ${size} → ${count} groups`;
+  const ringsWidth = Math.max(210, count * 62 + 30);
+  /* Width also covers the caption's measured span (chars × fontSize × 0.72em,
+   * the S260 containment estimate); rings re-center when the caption wins. */
+  const width = Math.max(ringsWidth, Math.ceil(caption.length * 11 * 0.72) + 8);
+  const offset = width > ringsWidth ? (width - (count * 62 - 18)) / 2 - 14 : 0;
+  const rings = <EqualGroups groups={count} per={size} fill={SKY} />;
+  return (
+    <svg viewBox={`0 0 ${width} 108`} role="img" aria-label={`${total} dots split into rings of ${size} each, making ${count} rings, showing ${total} divided by ${size} equals ${count} groups.`}>
+      <title>{`How many groups: ${total} ÷ ${size} = ${count}.`}</title>
+      <text x={width / 2} y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">{caption}</text>
+      {offset > 0 ? <g transform={`translate(${offset},0)`}>{rings}</g> : rings}
+      <text x={width / 2} y="98" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">{`${total} ÷ ${size} = ${count}`}</text>
+    </svg>
+  );
+}
+/** df3-01-02 c1 (the lesson's own leading fact, matching its i1/k1): 21 ÷ 3 = 7 groups. */
+function Mult3HowManyGroups21Over3() {
+  return <Mult3HowManyGroupsExample total={21} size={3} />;
+}
+
 /** Grade 3 mult/div figure: Division finds the missing factor. */
 function Mult3MissingFactor() {
   return (
@@ -3825,6 +4162,56 @@ function Mult3MissingFactor() {
       <text x="105" y="88" fontSize="15" fontWeight="700" fill={BERRY} textAnchor="middle">▢ = 3</text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 mult/div figure: parameterized "division finds the missing factor" fact.
+ * S318 fix: `mult3-missing-factor` is a fixed 4×▢=12 exemplar; several
+ * division-fluency-g3 and word-problems-g3 lessons teach their own distinct
+ * missing-factor facts, so this reusable, typed-prop helper lets each
+ * placement bind its own real numbers without touching the original
+ * component or its other bindings. Title stays generic (no digits) so the
+ * renderer-derived numeric-claims map does not gate every future body
+ * against these exact digits — the same convention the fixed original uses.
+ */
+function Mult3MissingFactorExample({ a, b }: { a: number; b: number }) {
+  const product = a * b;
+  return (
+    <svg viewBox="0 0 210 100" role="img" aria-label={`A multiplication with a missing factor, ${a} times a box equals ${product}, and the matching division ${product} divided by ${a} equals ${b} finds it.`}>
+      <title>Division finds the missing factor.</title>
+      <text x="105" y="40" fontSize="16" fontWeight="700" fill={INK} textAnchor="middle">{`${a} × ▢ = ${product}`}</text>
+      <text x="105" y="66" fontSize="12" fill={INK} textAnchor="middle">{`so ▢ = ${product} ÷ ${a}`}</text>
+      <text x="105" y="88" fontSize="15" fontWeight="700" fill={BERRY} textAnchor="middle">{`▢ = ${b}`}</text>
+    </svg>
+  );
+}
+/** df3-01-04 c1 (chapter's own leading fact) and g3w-02-01 c2 ("6 × n = 42"): 6 × 7 = 42. */
+function Mult3MissingFactor6x7() {
+  return <Mult3MissingFactorExample a={6} b={7} />;
+}
+/** df3-01-04 remedial concept's own worked example: 6 × 5 = 30. */
+function Mult3MissingFactor6x5() {
+  return <Mult3MissingFactorExample a={6} b={5} />;
+}
+/** df3-02-01 c1 (chapter's own leading fact, matching its i1/predict): 8 × 9 = 72. */
+function Mult3MissingFactor8x9() {
+  return <Mult3MissingFactorExample a={8} b={9} />;
+}
+/** df3-02-03 c1's own worked example ("56 ÷ 7 asks 7 × ? = 56"): 7 × 8 = 56. */
+function Mult3MissingFactor7x8() {
+  return <Mult3MissingFactorExample a={7} b={8} />;
+}
+/** df3-02-03 remedial concept's own worked example ("49 ÷ 7 is 7 × ? = 49"): 7 × 7 = 49. */
+function Mult3MissingFactor7x7() {
+  return <Mult3MissingFactorExample a={7} b={7} />;
+}
+/** df3-02-04 c1's own worked example ("6 × ? = 54 or 54 ÷ ? = 9"): 6 × 9 = 54. */
+function Mult3MissingFactor6x9() {
+  return <Mult3MissingFactorExample a={6} b={9} />;
+}
+/** df3-02-04 remedial concept's own worked example ("8 × ? = 56"): 8 × 7 = 56. */
+function Mult3MissingFactor8x7() {
+  return <Mult3MissingFactorExample a={8} b={7} />;
 }
 
 /** Grade 3 mult/div figure: A fact family from 3, 4, and 12. */
@@ -3844,6 +4231,36 @@ function Mult3FactFamily() {
   );
 }
 
+/**
+ * Grade 3 mult/div figure: parameterized fact-family triangle.
+ * S318 fix (df3-03-03 remedial): `mult3-fact-family` is a fixed 3/4/12
+ * exemplar; that remedial concept teaches its own fact (5 × 7 = 35), so this
+ * reusable, typed-prop helper lets it bind its own real numbers without
+ * touching the original component or its other bindings. Title stays in the
+ * same comma-list style as the original (no operators/equals), so it is not
+ * newly admitted to the renderer-derived numeric-claims map.
+ */
+function Mult3FactFamilyExample({ a, b }: { a: number; b: number }) {
+  const product = a * b;
+  return (
+    <svg viewBox="0 0 230 104" role="img" aria-label={`A fact-family triangle with ${product} at the top and ${a} and ${b} at the corners, generating two multiplications and two divisions.`}>
+      <title>{`A fact family from ${a}, ${b}, and ${product}.`}</title>
+      <polygon points="105,22 60,86 150,86" fill="none" stroke={INK} strokeWidth={1.6} />
+      <text x="105" y="36" fontSize="15" fontWeight="700" fill={BERRY} textAnchor="middle">{product}</text>
+      <text x="58" y="92" fontSize="14" fontWeight="700" fill={SKY} textAnchor="middle">{a}</text>
+      <text x="152" y="92" fontSize="14" fontWeight="700" fill={LEAF} textAnchor="middle">{b}</text>
+      <text x="172" y="44" fontSize="10" fill={INK}>{`${a}×${b}=${product}`}</text>
+      <text x="172" y="59" fontSize="10" fill={INK}>{`${b}×${a}=${product}`}</text>
+      <text x="172" y="74" fontSize="10" fill={INK}>{`${product}÷${a}=${b}`}</text>
+      <text x="172" y="89" fontSize="10" fill={INK}>{`${product}÷${b}=${a}`}</text>
+    </svg>
+  );
+}
+/** df3-03-03 remedial concept's own worked example ("Use the matching multiplication fact: 5 × 7 = 35"). */
+function Mult3FactFamily5x7() {
+  return <Mult3FactFamilyExample a={5} b={7} />;
+}
+
 /** Grade 3 mult/div figure: Special rules: ×1, ×0, and ÷1. */
 function Mult3Special() {
   return (
@@ -3856,6 +4273,186 @@ function Mult3Special() {
   );
 }
 
+/** Grade 3 division figure: use seven groups of ten, then remove one from each group. */
+function Mult3DivideByNine() {
+  return (
+    <svg viewBox="0 0 230 120" role="img" aria-label="Seven rows begin with ten dots each. One dot is removed from every row, leaving seven rows of nine, or sixty-three dots. Therefore sixty-three divided by nine equals seven.">
+      <title>Seven groups of 10 minus one from each group makes seven groups of 9.</title>
+      <text x="115" y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">7 × 10 = 70; remove 7 → 7 × 9 = 63</text>
+      {Array.from({ length: 7 }, (_, row) => Array.from({ length: 10 }, (_, col) => (
+        <circle key={`${row}-${col}`} cx={20 + col * 18} cy={29 + row * 10} r={3.2}
+          fill={col === 9 ? "none" : SKY} stroke={col === 9 ? BERRY : INK}
+          strokeWidth={col === 9 ? 1.4 : 0.55} strokeDasharray={col === 9 ? "2 1" : undefined} />
+      )))}
+      <text x="115" y="112" fontSize="12" fontWeight="700" fill={LEAF} textAnchor="middle">63 ÷ 9 = 7 groups</text>
+    </svg>
+  );
+}
+
+/**
+ * Grade 3 division figure: parameterized ÷9 rows-of-ten-minus-one visual.
+ * S324 fix (df3-02-01 remedial): `mult3-divide-by-nine` is a fixed 63÷9=7
+ * exemplar; that remedial concept teaches its own fact (54 ÷ 9 = 6), so this
+ * reusable, typed-prop helper lets it bind its own real numbers without
+ * touching the original component or its other bindings. The title keeps the
+ * family's number-word-count style with only the shared 10/9 digits, so it
+ * asserts no arithmetic equality and is not admitted to the renderer-derived
+ * numeric-claims map (same convention as the fixed original).
+ */
+function Mult3DivideByNineExample({ groups }: { groups: number }) {
+  const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+  const word = WORDS[groups] ?? String(groups);
+  const total = groups * 9;
+  const tens = groups * 10;
+  const caption = `${groups} × 10 = ${tens}; remove ${groups} → ${groups} × 9 = ${total}`;
+  /* Width covers the caption's measured span (chars × fontSize × 0.72em, the
+   * S260 containment estimate); the dot grid is centered under it. */
+  const width = Math.max(230, Math.ceil(caption.length * 11 * 0.72) + 8);
+  const dotOffset = (width - 230) / 2;
+  return (
+    <svg viewBox={`0 0 ${width} 120`} role="img" aria-label={`${word[0].toUpperCase()}${word.slice(1)} rows begin with ten dots each. One dot is removed from every row, leaving ${word} rows of nine, or ${total} dots. Therefore ${total} divided by nine equals ${word}.`}>
+      <title>{`${word[0].toUpperCase()}${word.slice(1)} groups of 10 minus one from each group makes ${word} groups of 9.`}</title>
+      <text x={width / 2} y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">{caption}</text>
+      <g transform={`translate(${dotOffset},0)`}>
+        {Array.from({ length: groups }, (_, row) => Array.from({ length: 10 }, (_, col) => (
+          <circle key={`${row}-${col}`} cx={20 + col * 18} cy={29 + row * 10} r={3.2}
+            fill={col === 9 ? "none" : SKY} stroke={col === 9 ? BERRY : INK}
+            strokeWidth={col === 9 ? 1.4 : 0.55} strokeDasharray={col === 9 ? "2 1" : undefined} />
+        )))}
+      </g>
+      <text x={width / 2} y="112" fontSize="12" fontWeight="700" fill={LEAF} textAnchor="middle">{`${total} ÷ 9 = ${groups} groups`}</text>
+    </svg>
+  );
+}
+/** df3-02-01 remedial concept's own worked example ("Six groups of 9 make 54, so 54 ÷ 9 = 6"): 54 ÷ 9 = 6. */
+function Mult3DivideByNine54Over9() {
+  return <Mult3DivideByNineExample groups={6} />;
+}
+
+/** Grade 3 division figure: seventy is seven complete tens. */
+function Mult3DivideByTen() {
+  return (
+    <svg viewBox="0 0 230 112" role="img" aria-label="Seven base-ten rods are shown. Each rod is one group of ten, so seventy divided into groups of ten makes seven groups.">
+      <title>Seventy divided by ten is seven because seventy contains seven tens.</title>
+      <text x="115" y="15" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">70 = 7 tens</text>
+      {Array.from({ length: 7 }, (_, rod) => (
+        <g key={rod} transform={`translate(${12 + rod * 31},28)`}>
+          <rect width="25" height="48" rx="3" fill={SKY} fillOpacity={0.18} stroke={INK} strokeWidth={1} />
+          {Array.from({ length: 10 }, (_, unit) => (
+            <rect key={unit} x={4 + (unit % 2) * 9} y={4 + Math.floor(unit / 2) * 8} width="7" height="6" rx="1" fill={LEAF} />
+          ))}
+        </g>
+      ))}
+      <text x="115" y="101" fontSize="12" fontWeight="700" fill={BERRY} textAnchor="middle">70 ÷ 10 = 7 groups of ten</text>
+    </svg>
+  );
+}
+
+/** Grade 3 division figure: compare dividing by one with dividing a nonzero number by itself. */
+function Mult3DivideOneSelf() {
+  return (
+    <svg viewBox="0 0 230 112" role="img" aria-label="Two panels show eight divided by one equals eight because one group holds all eight, and eight divided by eight equals one because one complete group of eight can be made.">
+      <title>Dividing by one and dividing a nonzero number by itself.</title>
+      <rect x="8" y="12" width="102" height="78" rx="9" fill={SKY} fillOpacity={0.08} stroke={SKY} />
+      <rect x="120" y="12" width="102" height="78" rx="9" fill={LEAF} fillOpacity={0.08} stroke={LEAF} />
+      <text x="59" y="31" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">8 ÷ 1 = 8</text>
+      <text x="171" y="31" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">8 ÷ 8 = 1</text>
+      <text x="59" y="56" fontSize="10" fill={INK} textAnchor="middle">one group</text>
+      <text x="171" y="56" fontSize="10" fill={INK} textAnchor="middle">one group of 8</text>
+      <text x="59" y="77" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">8 in the group</text>
+      <text x="171" y="77" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">1 group</text>
+      <text x="115" y="105" fontSize="10" fill={BERRY} textAnchor="middle">The self-division rule is only for nonzero numbers.</text>
+    </svg>
+  );
+}
+
+/** Grade 3 division figure: division by zero fails its inverse multiplication check. */
+function Mult3DivideByZero() {
+  return (
+    <svg viewBox="0 0 230 112" role="img" aria-label="The inverse question for seven divided by zero is zero times what number equals seven. Examples show that zero times any number is zero, never seven, so seven divided by zero is undefined.">
+      <title>Seven divided by zero is undefined because zero times no number equals seven.</title>
+      <text x="115" y="20" fontSize="13" fontWeight="700" fill={INK} textAnchor="middle">7 ÷ 0 asks: 0 × ? = 7</text>
+      <text x="115" y="47" fontSize="11" fill={SKY} textAnchor="middle">0 × 1 = 0   ·   0 × 5 = 0   ·   0 × 100 = 0</text>
+      <line x1="42" y1="60" x2="188" y2="60" stroke={BERRY} strokeWidth={1.4} />
+      <text x="115" y="80" fontSize="12" fill={INK} textAnchor="middle">No number makes 0 × ? equal 7.</text>
+      <text x="115" y="103" fontSize="14" fontWeight="700" fill={BERRY} textAnchor="middle">7 ÷ 0 is undefined</text>
+    </svg>
+  );
+}
+
+/** Grade 3 multiplication figure: multiplying seven ones by ten makes seven tens. */
+function Mult3TimesTenPlaceValue() {
+  return (
+    <svg viewBox="0 0 280 132" role="img" aria-label="Seven ones multiplied by ten become seven tens, so seven times ten equals seventy. The place-value chart shows seven in the tens place and zero in the ones place.">
+      <title>Seven ones times ten become seven tens: 7 × 10 = 70.</title>
+      <text x={53} y={18} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>7 ones</text>
+      {Array.from({ length: 7 }, (_, index) => <rect key={index} x={18 + (index % 4) * 18} y={30 + Math.floor(index / 4) * 18} width={12} height={12} rx={2} fill={TANGERINE} fillOpacity={0.65} stroke={INK} />)}
+      <text x={108} y={53} textAnchor="middle" fontSize={14} fontWeight={800} fill={BERRY}>× 10 →</text>
+      <rect x={151} y={18} width={106} height={70} rx={7} fill={SKY} fillOpacity={0.08} stroke={INK} />
+      <line x1={204} y1={18} x2={204} y2={88} stroke={INK} />
+      <line x1={151} y1={43} x2={257} y2={43} stroke={INK} />
+      <text x={178} y={36} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>tens</text>
+      <text x={231} y={36} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>ones</text>
+      <text x={178} y={73} textAnchor="middle" fontSize={24} fontWeight={900} fill={LEAF}>7</text>
+      <text x={231} y={73} textAnchor="middle" fontSize={24} fontWeight={900} fill={TANGERINE}>0</text>
+      <text x={140} y={113} textAnchor="middle" fontSize={13} fontWeight={900} fill={INK}>7 × 10 = 70 = 7 tens</text>
+    </svg>
+  );
+}
+
+/** Grade 3 multiplication figure: the zero in seventy records an empty ones place. */
+function Mult3TimesTenEmptyOnes() {
+  return (
+    <svg viewBox="0 0 280 132" role="img" aria-label="A place-value chart shows seventy as seven tens and zero ones. The empty ones column explains that the zero records an empty ones place rather than being tacked onto seven.">
+      <title>In 70, the zero records zero ones.</title>
+      <text x={140} y={17} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>70 means 7 tens and 0 ones</text>
+      <rect x={30} y={28} width={220} height={70} rx={8} fill={SKY} fillOpacity={0.07} stroke={INK} strokeWidth={1.4} />
+      <line x1={140} y1={28} x2={140} y2={98} stroke={INK} />
+      <line x1={30} y1={53} x2={250} y2={53} stroke={INK} />
+      <text x={85} y={46} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>tens</text>
+      <text x={195} y={46} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>ones</text>
+      <text x={85} y={83} textAnchor="middle" fontSize={25} fontWeight={900} fill={LEAF}>7</text>
+      <rect x={170} y={61} width={50} height={27} rx={5} fill="none" stroke={BERRY} strokeWidth={1.5} strokeDasharray="4 3" />
+      <text x={195} y={83} textAnchor="middle" fontSize={24} fontWeight={900} fill={BERRY}>0</text>
+      <text x={140} y={119} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>0 holds the empty ones place</text>
+    </svg>
+  );
+}
+
+/** Grade 3 multiplication figure: a three-by-three array has equal row and column counts. */
+function Mult3SquareArray() {
+  return (
+    <svg viewBox="0 0 260 142" role="img" aria-label="A square array has three rows and three columns, nine equal tiles in all. Equal side counts make the array square, so three times three equals nine.">
+      <title>A 3 by 3 square array contains 9 tiles.</title>
+      <text x={130} y={16} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>equal sides make a square</text>
+      {Array.from({ length: 3 }, (_, row) => Array.from({ length: 3 }, (_, col) => <rect key={`${row}-${col}`} x={78 + col * 25} y={29 + row * 25} width={22} height={22} rx={3} fill={SKY} fillOpacity={0.48} stroke={INK} />))}
+      <text x={63} y={65} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF} transform="rotate(-90 63 65)">3 rows</text>
+      <text x={110} y={119} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>3 columns</text>
+      <text x={198} y={68} textAnchor="middle" fontSize={14} fontWeight={900} fill={BERRY}>3 × 3 = 9</text>
+      <text x={198} y={87} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>same height</text>
+      <text x={198} y={101} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>and width</text>
+    </svg>
+  );
+}
+
+/** Grade 3 multiplication figure: grow a three-square to a four-square with an odd border. */
+function Mult3NextSquareGrowth() {
+  return (
+    <svg viewBox="0 0 280 148" role="img" aria-label="A three-by-three square has nine blue tiles. Adding a new row of four orange tiles and a new column of three orange tiles makes a four-by-four square with sixteen tiles. The seven new tiles show nine plus seven equals sixteen.">
+      <title>Grow 3 × 3 to 4 × 4 by adding a row of 4 and a column of 3.</title>
+      <text x={140} y={16} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>grow 3 × 3 into 4 × 4</text>
+      {Array.from({ length: 4 }, (_, row) => Array.from({ length: 4 }, (_, col) => {
+        const old = row < 3 && col < 3;
+        return <rect key={`${row}-${col}`} x={47 + col * 24} y={29 + row * 24} width={21} height={21} rx={3} fill={old ? SKY : TANGERINE} fillOpacity={old ? 0.45 : 0.72} stroke={INK} />;
+      }))}
+      <text x={95} y={140} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>new row: 4 tiles</text>
+      <text x={175} y={63} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>new column:</text>
+      <text x={175} y={77} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>3 more tiles</text>
+      <text x={225} y={104} textAnchor="middle" fontSize={13} fontWeight={900} fill={BERRY}>9 + 7 = 16</text>
+      <text x={225} y={124} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>one larger square</text>
+    </svg>
+  );
+}
 /** Grade 3 mult/div figure: Times two is doubling: 5 and 5 make 10. */
 function Mult3Double() {
   return (
@@ -3888,6 +4485,20 @@ function Mult3DoubleDouble() {
       <text x="105" y="34" fontSize="13" fill={INK} textAnchor="middle">4 × 6:  double 6 → <tspan fontWeight="700" fill={SKY}>12</tspan></text>
       <text x="105" y="60" fontSize="13" fill={INK} textAnchor="middle">double 12 → <tspan fontWeight="700" fill={BERRY}>24</tspan></text>
       <text x="105" y="84" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">double twice = × 4</text>
+    </svg>
+  );
+}
+
+/** Grade 3 mult/div figure: Times eight is double-double-double (S316 semantic ×8 rebuild —
+ * mult3-double-double stops at 4 × 6 = 24 and cannot represent the ×8 lesson's extra doubling. */
+function Mult3DoubleDoubleDouble() {
+  return (
+    <svg viewBox="0 0 210 120" role="img" aria-label="Multiplying by eight by doubling three times: six doubles to twelve, twelve doubles to twenty-four, then twenty-four doubles to forty-eight.">
+      <title>Times eight is double-double-double: 6 → 12 → 24 → 48.</title>
+      <text x="105" y="26" fontSize="13" fill={INK} textAnchor="middle">8 × 6:  double 6 → <tspan fontWeight="700" fill={SKY}>12</tspan></text>
+      <text x="105" y="50" fontSize="13" fill={INK} textAnchor="middle">double 12 → <tspan fontWeight="700" fill={LEAF}>24</tspan></text>
+      <text x="105" y="74" fontSize="13" fill={INK} textAnchor="middle">double 24 → <tspan fontWeight="700" fill={BERRY}>48</tspan></text>
+      <text x="105" y="100" fontSize="11" fontWeight="700" fill={TANGERINE} textAnchor="middle">double three times = × 8</text>
     </svg>
   );
 }
@@ -3932,6 +4543,26 @@ function Mult3WhichOp() {
   );
 }
 
+/**
+ * mult-04-04 c1/c2 (S323, per the S321_ASSESS_F9 / S322_V2_F479 contract): the lesson's own
+ * two-step worked example — k2's parking-lot story. Five equal rows of 8 cars build the whole
+ * item total FIRST (5 × 8 = 40), then 6 cars are crossed off ONCE from the end of the whole
+ * bar, never from inside every row: (5 × 8) − 6 = 34. Reuses the typed
+ * `EqualGroupsEndAdjustBar` helper (defined with the S316 measure-problems-g4 figures below),
+ * whose end-of-bar cross-off is exactly c2's "subtract items from that total — not from every
+ * group" structure. Replaces the generic `mult3-which-op` chooser, which showed no two-step
+ * chain (the S322 fail-close). Title uses number words, not digits, following the mult3-family
+ * convention so the renderer-derived numeric-claims map does not gate future bodies.
+ */
+function Mult3GroupsAdjustCars() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of five equal rows of eight cars: multiplying five rows by eight cars builds the whole total of forty cars first; then six cars, crossed off once at the end of the whole bar, are subtracted from that total, leaving thirty-four cars.</title>
+      <EqualGroupsEndAdjustBar groups={5} perGroup={8} adjustment={6} suffix=" cars" />
+    </svg>
+  );
+}
+
 /** Grade 3 mult/div figure: Estimate to check the answer. */
 function Mult3Estimate() {
   return (
@@ -3944,13 +4575,47 @@ function Mult3Estimate() {
   );
 }
 
-/** Grade 3 mult/div figure: Patterns in the addition table. */
+/**
+ * Grade 3 mult/div figure: parameterized "estimate with a nearby friendly
+ * fact" check. S318 fix (mult-04-05 c2): `mult3-estimate` is a fixed
+ * 4×19≈80/exact-76 exemplar; c2 teaches its own worked example (6 × 9,
+ * rounded to 6 × 10 = 60), so this reusable, typed-prop helper lets that
+ * placement bind its own real numbers without touching the original
+ * component or its other bindings. Title stays generic (no digits), the
+ * same convention the fixed original uses.
+ */
+function Mult3EstimateExample({ a, bExact, bRound }: { a: number; bExact: number; bRound: number }) {
+  const estimate = a * bRound;
+  const exact = a * bExact;
+  return (
+    <svg viewBox="0 0 210 100" role="img" aria-label={`Checking an answer by estimating: ${a} times ${bExact} is about ${a} times ${bRound}, which is ${estimate}, so an exact answer near ${exact} makes sense.`}>
+      <title>Estimate to check the answer.</title>
+      <text x="105" y="34" fontSize="13" fill={INK} textAnchor="middle">{`${a} × ${bExact} ≈ ${a} × ${bRound} = `}<tspan fontWeight="700" fill={LEAF}>{estimate}</tspan></text>
+      <text x="105" y="60" fontSize="13" fill={INK} textAnchor="middle">{`exact ${exact} is close to ${estimate} ✓`}</text>
+      <text x="105" y="84" fontSize="11" fontWeight="700" fill={BERRY} textAnchor="middle">does the answer make sense?</text>
+    </svg>
+  );
+}
+/** mult-04-05 c2's own worked example: 6 × 9 estimated by 6 × 10 = 60, exact 54. */
+function Mult3Estimate6x9() {
+  return <Mult3EstimateExample a={6} bExact={9} bRound={10} />;
+}
+
+/**
+ * Grade 3 mult/div figure: Patterns in the addition table.
+ * S322 fix (mult-05-01 c1/c2): previously highlighted the anti-diagonal
+ * (r+c===3, constant sum), which matched neither c1's text nor k1's
+ * fold-reasoning check — both are about the MAIN doubles diagonal (r===c)
+ * and its mirror-fold. Confirmed no other lesson binds this figure id, so
+ * the shared component is safe to correct in place rather than forking.
+ */
 function Mult3AddTable() {
   return (
-    <svg viewBox="0 0 210 112" role="img" aria-label="A small addition table where each diagonal holds the same sum, showing the staircase pattern of sums.">
-      <title>Patterns in the addition table.</title>
-      <text x="105" y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">addition table: diagonals share a sum</text>
-      {Array.from({length:4},(_,r)=>Array.from({length:4},(_,c)=>(<g key={`${r}-${c}`}><rect x={40+c*32} y={22+r*20} width={32} height={20} fill={(r+c)===3?TANGERINE:"#ffffff"} fillOpacity={(r+c)===3?0.4:1} stroke={INK} strokeWidth={0.8}/><text x={56+c*32} y={36+r*20} fontSize="10" fill={INK} textAnchor="middle">{r+c+2}</text></g>)))}
+    <svg viewBox="0 0 210 122" role="img" aria-label="A small addition table with the doubles diagonal highlighted, where the row number equals the column number, and the table mirrors across it.">
+      <title>Patterns in the addition table: the doubles diagonal.</title>
+      <text x="105" y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">addition table: doubles sit on the diagonal</text>
+      {Array.from({length:4},(_,r)=>Array.from({length:4},(_,c)=>(<g key={`${r}-${c}`}><rect x={40+c*32} y={22+r*20} width={32} height={20} fill={r===c?LEAF:"#ffffff"} fillOpacity={r===c?0.4:1} stroke={INK} strokeWidth={0.8}/><text x={56+c*32} y={36+r*20} fontSize="10" fill={INK} textAnchor="middle">{r+c+2}</text></g>)))}
+      <text x="105" y="112" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">the table mirrors across this diagonal</text>
     </svg>
   );
 }
@@ -3958,11 +4623,11 @@ function Mult3AddTable() {
 /** Grade 3 mult/div figure: Reading the multiplication table. */
 function Mult3MultTable() {
   return (
-    <svg viewBox="0 0 210 122" role="img" aria-label="A small multiplication table with the product of four and six highlighted at twenty-four, showing how the table is read.">
+    <svg viewBox="0 0 210 122" role="img" aria-label="A small multiplication table with the diagonal square fact four times four highlighted at sixteen, showing how rows and columns are read.">
       <title>Reading the multiplication table.</title>
       <text x="105" y="14" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">rows × columns fill the table</text>
       {Array.from({length:4},(_,r)=>Array.from({length:4},(_,c)=>{const prod=(r+2)*(c+2);const hl=(r===2&&c===2);return <g key={`${r}-${c}`}><rect x={40+c*32} y={22+r*20} width={32} height={20} fill={hl?LEAF:"#ffffff"} fillOpacity={hl?0.4:1} stroke={INK} strokeWidth={0.8}/><text x={56+c*32} y={36+r*20} fontSize="10" fill={INK} textAnchor="middle">{prod}</text></g>;}))}
-      <text x="105" y="112" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">4 × 6 = 24 (highlighted)</text>
+      <text x="105" y="112" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">4 × 4 = 16 (highlighted square fact)</text>
     </svg>
   );
 }
@@ -4036,8 +4701,10 @@ function Md3Elapsed() {
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">8:40 to 9:20</text>
       <Pv3NumLine lo={40} hi={80} step={20} mark={40} markLabel="8:40" target={80} targetLabel="9:20" />
       <path d="M 50 46 Q 78 30 106 46" fill="none" stroke={TANGERINE} strokeWidth={1.6} />
+      <NumberLineDirectionHead x={106} y={46} direction="right" color={TANGERINE} size={5} testId="md3-elapsed-direction" />
       <text x="78" y="32" fontSize="10" fill={TANGERINE} textAnchor="middle">+20</text>
       <path d="M 112 46 Q 140 30 168 46" fill="none" stroke={TANGERINE} strokeWidth={1.6} />
+      <NumberLineDirectionHead x={168} y={46} direction="right" color={TANGERINE} size={5} testId="md3-elapsed-direction" />
       <text x="140" y="32" fontSize="10" fill={TANGERINE} textAnchor="middle">+20</text>
       <text x="105" y="96" fontSize="11" fontWeight="700" fill={LEAF} textAnchor="middle">40 minutes total</text>
     </svg>
@@ -4098,6 +4765,100 @@ function Md3Pictograph() {
       <text x="16" y="76" fontSize="11" fill={INK} textAnchor="start">3 full + half = 3×2 + 1 = 7</text>
     </svg>
   );
+}
+
+/**
+ * Exact pictograph data for assessed prompts. These intentionally show the key and
+ * marks only — never the total the learner is being asked to find. They make the
+ * given data inspectable without turning a check into an answer reveal.
+ */
+function Md3QuestionPictograph({
+  kind,
+  keyValue,
+  unit,
+  full,
+  half = false
+}: {
+  kind: "star" | "apple" | "book";
+  keyValue: number;
+  unit: string;
+  full: number;
+  half?: boolean;
+}) {
+  const noun = kind === "star" ? "star" : kind === "apple" ? "apple" : "book";
+  const plural = full === 1 ? noun : `${noun}s`;
+  const rowLabel = `${full} full ${plural}${half ? ` and one half-${noun}` : ""}`;
+  const aria = `Pictograph question data: each ${noun} is worth ${keyValue} ${unit}. The row has ${rowLabel}. No total is shown.`;
+  const start = 108;
+  const gap = 38;
+  const markX = (index: number) => start + index * gap;
+  const Star = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const path = "M0 -15 L3.5 -5 L14.5 -5 L5.5 1.5 L9 12 L0 6 L-9 12 L-5.5 1.5 L-14.5 -5 L-3.5 -5 Z";
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 15} y="39" width="15" height="30" /></clipPath></defs>}
+        <path d={path} transform={`translate(${x} 54)`} fill={TANGERINE} fillOpacity={halfMark ? 0.14 : 0.24} />
+        {halfMark && <path d={path} transform={`translate(${x} 54)`} fill={TANGERINE} clipPath={`url(#${clipId})`} />}
+        <path d={path} transform={`translate(${x} 54)`} fill="none" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      </g>
+    );
+  };
+  const Apple = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 14} y="38" width="14" height="31" /></clipPath></defs>}
+        <circle cx={x} cy="55" r="13" fill={BERRY} fillOpacity={halfMark ? 0.14 : 0.22} />
+        {halfMark && <circle cx={x} cy="55" r="13" fill={BERRY} clipPath={`url(#${clipId})`} />}
+        <circle cx={x} cy="55" r="13" fill="none" stroke={INK} strokeWidth="1.5" />
+        <path d={`M${x} 42q0-8 5-10`} fill="none" stroke={INK} strokeWidth="1.5" strokeLinecap="round" />
+        <path d={`M${x + 4} 35q6-4 8 1q-5 3-8-1Z`} fill={LEAF} stroke={INK} strokeWidth="1" />
+      </g>
+    );
+  };
+  const Book = ({ x, halfMark = false }: { x: number; halfMark?: boolean }) => {
+    const clipId = `md3-question-${kind}-${keyValue}-half`;
+    return (
+      <g>
+        {halfMark && <defs><clipPath id={clipId}><rect x={x - 12} y="38" width="12" height="32" /></clipPath></defs>}
+        <rect x={x - 12} y="40" width="24" height="29" rx="2" fill={SKY} fillOpacity={halfMark ? 0.14 : 0.24} />
+        {halfMark && <rect x={x - 12} y="40" width="24" height="29" rx="2" fill={SKY} clipPath={`url(#${clipId})`} />}
+        <rect x={x - 12} y="40" width="24" height="29" rx="2" fill="none" stroke={INK} strokeWidth="1.5" />
+        <line x1={x - 6} y1="47" x2={x + 6} y2="47" stroke={INK} strokeWidth="1.2" />
+        <line x1={x - 6} y1="53" x2={x + 6} y2="53" stroke={INK} strokeWidth="1.2" />
+      </g>
+    );
+  };
+  const Mark = kind === "star" ? Star : kind === "apple" ? Apple : Book;
+
+  return (
+    <svg viewBox="0 0 300 116" role="img" aria-label={aria} className="mx-auto w-full max-w-md">
+      <title>{aria}</title>
+      <rect x="10" y="10" width="280" height="96" rx="12" fill="#FAFBF5" stroke={INK} strokeOpacity="0.16" />
+      <text x="24" y="32" fontSize="12" fontWeight="800" fill={INK}>Key: each {kind === "star" ? "★" : kind === "apple" ? "apple" : "book"} = {keyValue} {unit}</text>
+      <text x="24" y="59" fontSize="12" fontWeight="800" fill={INK}>Row</text>
+      {Array.from({ length: full }).map((_, index) => <Mark key={index} x={markX(index)} />)}
+      {half && <Mark x={markX(full)} halfMark />}
+      <text x="24" y="91" fontSize="11" fontWeight="700" fill={INK}>{rowLabel}</text>
+    </svg>
+  );
+}
+
+function Md3PictographFourApples() {
+  return <Md3QuestionPictograph kind="apple" keyValue={2} unit="votes" full={4} />;
+}
+
+function Md3PictographThreeApples() {
+  return <Md3QuestionPictograph kind="apple" keyValue={2} unit="votes" full={3} />;
+}
+
+function Md3PictographThreeAndHalfStars() {
+  return <Md3QuestionPictograph kind="star" keyValue={10} unit="points" full={3} half />;
+}
+
+function Md3PictographThreeAndHalfBooks() {
+  return <Md3QuestionPictograph kind="book" keyValue={4} unit="books" full={3} half />;
 }
 
 /** Grade 3 measurement figure: A scaled bar graph: read the gridline value. */
@@ -4333,6 +5094,70 @@ function Pv3RoundHundred() {
       <title>349 rounds to 300, not 400.</title>
       <text x="105" y="18" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">349 → nearest hundred</text>
       <Pv3NumLine lo={300} hi={400} step={50} mark={349} markLabel="349" target={300} targetLabel="closer → 300" />
+    </svg>
+  );
+}
+
+/**
+ * Reusable two-addend estimate figure: rounds two players to friendly numbers each with a
+ * labeled direction (never color alone), then combines the rounded pair with the stated
+ * operation. Backs both pv3-estimate-add-pair and pv3-estimate-sub-pair below.
+ */
+function Pv3EstimatePairFigure({
+  a,
+  aRounded,
+  aDir,
+  b,
+  bRounded,
+  bDir,
+  op,
+  result,
+}: {
+  a: number;
+  aRounded: number;
+  aDir: "up" | "down";
+  b: number;
+  bRounded: number;
+  bDir: "up" | "down";
+  op: "+" | "−";
+  result: number;
+}) {
+  return (
+    <>
+      <text x="105" y="16" fontSize="11" fontWeight="700" fill={INK} textAnchor="middle">
+        round each player, then {op === "+" ? "add" : "subtract"}
+      </text>
+      <text x="24" y="42" fontSize="13" fontWeight="700" fill={INK} textAnchor="start">{a}</text>
+      <text x="60" y="42" fontSize="13" fill={INK} textAnchor="middle">→</text>
+      <text x="88" y="42" fontSize="13" fontWeight="700" fill={SKY} textAnchor="middle">{aRounded}</text>
+      <text x="150" y="42" fontSize="10" fill={SKY} textAnchor="start">rounds {aDir}</text>
+      <text x="24" y="66" fontSize="13" fontWeight="700" fill={INK} textAnchor="start">{b}</text>
+      <text x="60" y="66" fontSize="13" fill={INK} textAnchor="middle">→</text>
+      <text x="88" y="66" fontSize="13" fontWeight="700" fill={LEAF} textAnchor="middle">{bRounded}</text>
+      <text x="150" y="66" fontSize="10" fill={LEAF} textAnchor="start">rounds {bDir}</text>
+      <text x="105" y="94" fontSize="13" fontWeight="700" fill={TANGERINE} textAnchor="middle">
+        {aRounded} {op} {bRounded} = {result}
+      </text>
+    </>
+  );
+}
+
+/** Grade 3 place value figure: estimate 289 + 512 by rounding each addend to its nearest hundred first: about 800. */
+function Pv3EstimateAddPair() {
+  return (
+    <svg viewBox="0 0 210 106" role="img" aria-label="Estimating 289 plus 512 by rounding each number to the nearest hundred first: 289 rounds up to 300, 512 rounds down to 500, and the friendly sum 300 plus 500 equals 800.">
+      <title>Round two addends, then add: 289 and 512 give about 800.</title>
+      <Pv3EstimatePairFigure a={289} aRounded={300} aDir="up" b={512} bRounded={500} bDir="down" op="+" result={800} />
+    </svg>
+  );
+}
+
+/** Grade 3 place value figure: guard 512 − 289 by rounding each number to its nearest hundred first: about 200. */
+function Pv3EstimateSubPair() {
+  return (
+    <svg viewBox="0 0 210 106" role="img" aria-label="Checking 512 minus 289 with a guard estimate: 512 rounds down to 500, 289 rounds up to 300, and the friendly difference 500 minus 300 equals 200.">
+      <title>Round two players, then subtract: 512 and 289 give a guard of about 200.</title>
+      <Pv3EstimatePairFigure a={512} aRounded={500} aDir="down" b={289} bRounded={300} bDir="up" op="−" result={200} />
     </svg>
   );
 }
@@ -4791,6 +5616,96 @@ function FracCompareWholes() {
   );
 }
 
+/**
+ * Grade 3 fractions figure: parameterized same-denominator comparison.
+ * S317 fix (fr-04-01): `frac-compare-same-denom` is a fixed 2/5-vs-3/5
+ * exemplar built for fr-04-03; this reusable, typed-prop helper lets a
+ * lesson's own worked example (not that fixed pair) get its own figure
+ * without touching the original component or its other bindings.
+ */
+function FracCompareSameDenomExample({
+  den,
+  leftNum,
+  rightNum,
+  objectLabel,
+  leftColor = SKY,
+  rightColor = BERRY,
+}: {
+  den: number;
+  leftNum: number;
+  rightNum: number;
+  objectLabel: string;
+  leftColor?: string;
+  rightColor?: string;
+}) {
+  const winnerNum = Math.max(leftNum, rightNum);
+  const loserNum = Math.min(leftNum, rightNum);
+  return (
+    <svg
+      viewBox="0 0 210 104"
+      role="img"
+      aria-label={`Two bars in ${den}ths showing ${objectLabel}: the top shades ${leftNum} of ${den}, the bottom shades ${rightNum} of ${den}; with equal-size pieces, more shaded pieces means the larger fraction.`}
+    >
+      <title>{`Same denominator: ${winnerNum}/${den} has more shaded pieces than ${loserNum}/${den}.`}</title>
+      <text x="16" y="16" fontSize="11" fontWeight="700" fill={leftColor}>{`${leftNum}/${den}`}</text>
+      <FractionBar parts={den} shaded={leftNum} y={22} color={leftColor} />
+      <text x="16" y="62" fontSize="11" fontWeight="700" fill={rightColor}>{`${rightNum}/${den}`}</text>
+      <FractionBar parts={den} shaded={rightNum} y={54} color={rightColor} />
+      <text x="105" y="94" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">{`${winnerNum}/${den} > ${loserNum}/${den}`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 fractions figure: fr-04-01's own worked example, 3/8 vs 5/8 of one cake. */
+function FracCompareSameDenomCake() {
+  return <FracCompareSameDenomExample den={8} leftNum={3} rightNum={5} objectLabel="one cake" />;
+}
+
+/**
+ * Grade 3 fractions figure: parameterized same-numerator comparison.
+ * S317 fix (fr-04-02): `frac-compare-same-numer` is a fixed 1/3-vs-1/4
+ * exemplar built for fr-04-03; this reusable, typed-prop helper lets a
+ * lesson's own worked example (not that fixed pair) get its own figure
+ * without touching the original component or its other bindings.
+ */
+function FracCompareSameNumerExample({
+  num,
+  leftDen,
+  rightDen,
+  objectLabel,
+  leftColor = LEAF,
+  rightColor = TANGERINE,
+}: {
+  num: number;
+  leftDen: number;
+  rightDen: number;
+  objectLabel: string;
+  leftColor?: string;
+  rightColor?: string;
+}) {
+  const winnerDen = Math.min(leftDen, rightDen);
+  const loserDen = Math.max(leftDen, rightDen);
+  return (
+    <svg
+      viewBox="0 0 210 104"
+      role="img"
+      aria-label={`Two bars each with ${num} of their parts shaded for ${objectLabel}: the top split into ${leftDen} has ${leftDen < rightDen ? "a bigger" : "a smaller"} shaded piece than the bottom split into ${rightDen}; fewer parts means bigger pieces.`}
+    >
+      <title>{`Same numerator: ${num}/${winnerDen} has bigger pieces than ${num}/${loserDen}.`}</title>
+      <text x="16" y="16" fontSize="11" fontWeight="700" fill={leftColor}>{`${num}/${leftDen}`}</text>
+      <FractionBar parts={leftDen} shaded={num} y={22} color={leftColor} />
+      <text x="16" y="62" fontSize="11" fontWeight="700" fill={rightColor}>{`${num}/${rightDen}`}</text>
+      <FractionBar parts={rightDen} shaded={num} y={54} color={rightColor} />
+      <text x="105" y="94" fontSize="12" fontWeight="700" fill={INK} textAnchor="middle">{`${num}/${winnerDen} > ${num}/${loserDen} (bigger pieces)`}</text>
+    </svg>
+  );
+}
+
+/** Grade 3 fractions figure: fr-04-02's own worked example, 2/3 vs 2/8 of the same bar. */
+function FracCompareSameNumerBrownies() {
+  return <FracCompareSameNumerExample num={2} leftDen={3} rightDen={8} objectLabel="the same pan" />;
+}
+
 function FractionAreaModel() {
   const s = 96, ox = 60, oy = 14, cw = s / 2, rh = s / 3;
   return (
@@ -4850,27 +5765,323 @@ function AngleTypes() {
 
 
 /** mult-01-04's exact picture: three hops of 4 along a 0–12 number line, landing on 4, 8, 12. */
+type G2CandidateLinePanel = {
+  caption: string;
+  marks: number[];
+  jumps?: Array<{ from: number; to: number; label: string }>;
+  gap?: [number, number];
+  note?: string;
+};
+
+/**
+ * Four honest number-line candidates for the Grade 2 representation checks.
+ * Every panel shares one scale, so distance remains mathematical evidence rather
+ * than decoration. The lettered panels keep shuffled MCQ options concise.
+ */
+function G2CandidateNumberLines(
+  props:
+    | { kind: "add"; start: number; amount: 20 }
+    | { kind: "gap"; high: number; low: number },
+) {
+  const isAdd = props.kind === "add";
+  const answer = isAdd ? props.start + props.amount : props.high - props.low;
+  const panels: G2CandidateLinePanel[] = isAdd
+    ? [
+        {
+          caption: `start ${props.start} • +10 • +10`,
+          marks: [props.start, props.start + 10, answer],
+          jumps: [
+            { from: props.start, to: props.start + 10, label: "+10" },
+            { from: props.start + 10, to: answer, label: "+10" },
+          ],
+        },
+        {
+          caption: `start ${props.amount} • +${props.start}`,
+          marks: [props.amount, answer],
+          jumps: [{ from: props.amount, to: answer, label: `+${props.start}` }],
+        },
+        {
+          caption: `start ${props.start} • −10 • −10`,
+          marks: [props.start - props.amount, props.start - 10, props.start],
+          jumps: [
+            { from: props.start, to: props.start - 10, label: "−10" },
+            { from: props.start - 10, to: props.start - props.amount, label: "−10" },
+          ],
+        },
+        {
+          caption: "two marks • no jumps",
+          marks: [props.amount, props.start],
+        },
+      ]
+    : [
+        {
+          caption: "count the gap",
+          marks: [props.low, props.high],
+          gap: [props.low, props.high],
+        },
+        {
+          caption: `start ${props.high} • +${props.low}`,
+          marks: [props.high, props.high + props.low],
+          jumps: [{ from: props.high, to: props.high + props.low, label: `+${props.low}` }],
+        },
+        {
+          caption: "one mark only",
+          marks: [answer],
+        },
+        {
+          caption: "add the endpoint labels",
+          marks: [props.low, props.high],
+          note: `${props.low} + ${props.high}`,
+        },
+      ];
+  const maxValue = isAdd ? answer : props.high + props.low;
+  const panelWidth = 198;
+  const panelHeight = 116;
+  const lineWidth = 150;
+  const lineY = 70;
+  const xFor = (panelX: number, value: number) => panelX + 28 + (value / maxValue) * lineWidth;
+  const letters = ["A", "B", "C", "D"];
+  const title = isAdd
+    ? `Four number-line drawings labeled A through D. Drawing A starts at ${props.start} and makes two forward hops of ten to ${answer}. Drawing B starts at ${props.amount} and makes one forward hop of ${props.start} to ${answer}. Drawing C starts at ${props.start} and makes two backward hops of ten to ${props.start - props.amount}. Drawing D marks ${props.amount} and ${props.start} with no jumps.`
+    : `Four number-line drawings labeled A through D. Drawing A marks ${props.low} and ${props.high} and highlights the gap between them. Drawing B starts at ${props.high} and jumps forward ${props.low}. Drawing C shows only one mark at ${answer}. Drawing D marks ${props.low} and ${props.high} but adds the endpoint labels.`;
+
+  return (
+    <svg viewBox="0 0 420 250" role="img" className="mx-auto w-full max-w-lg">
+      <title>{title}</title>
+      {panels.map((panel, index) => {
+        const panelX = index % 2 === 0 ? 8 : 214;
+        const panelY = index < 2 ? 7 : 127;
+        const y = panelY + lineY;
+        const marks = [...new Set(panel.marks)].sort((a, b) => a - b);
+        return (
+          <g key={letters[index]}>
+            <rect x={panelX} y={panelY} width={panelWidth} height={panelHeight} rx={12} fill="white" stroke={INK} strokeWidth={1.2} opacity={0.98} />
+            <circle cx={panelX + 17} cy={panelY + 17} r={11} fill={INK} />
+            <text x={panelX + 17} y={panelY + 21} textAnchor="middle" fontSize={11} fontWeight={900} fill="white">
+              {letters[index]}
+            </text>
+            {panel.note && (
+              <text x={panelX + 112} y={panelY + 28} textAnchor="middle" fontSize={11} fontWeight={900} fill={BERRY}>
+                {panel.note}
+              </text>
+            )}
+            {panel.gap && (
+              <line
+                x1={xFor(panelX, panel.gap[0])}
+                y1={y}
+                x2={xFor(panelX, panel.gap[1])}
+                y2={y}
+                stroke={LEAF}
+                strokeWidth={8}
+                strokeLinecap="round"
+                opacity={0.28}
+              />
+            )}
+            <NumberLineAxis x1={panelX + 28} x2={panelX + 178} y={y} color={INK} strokeWidth={1.8} testId="g2-candidate-axis" />
+            <line x1={panelX + 28} y1={y - 4} x2={panelX + 28} y2={y + 4} stroke={INK} strokeWidth={1.2} />
+            <text x={panelX + 28} y={y + 17} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+              0
+            </text>
+            {marks.map((value) => (
+              <g key={value}>
+                <line x1={xFor(panelX, value)} y1={y - 6} x2={xFor(panelX, value)} y2={y + 6} stroke={INK} strokeWidth={1.6} />
+                <circle cx={xFor(panelX, value)} cy={y} r={3.4} fill={panel.gap ? LEAF : SKY} />
+                <text x={xFor(panelX, value)} y={y + 18} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+                  {value}
+                </text>
+              </g>
+            ))}
+            {panel.jumps?.map((jump, jumpIndex) => {
+              const fromX = xFor(panelX, jump.from);
+              const toX = xFor(panelX, jump.to);
+              const direction = toX > fromX ? 1 : -1;
+              const midX = (fromX + toX) / 2;
+              const arcTop = panelY + 38 - jumpIndex * 2;
+              return (
+                <g key={`${jump.from}-${jump.to}`}>
+                  <path d={`M ${fromX} ${y - 5} Q ${midX} ${arcTop} ${toX} ${y - 5}`} fill="none" stroke={TANGERINE} strokeWidth={2.2} strokeLinecap="round" />
+                  <polygon
+
+                    data-number-line-direction={direction > 0 ? "right" : "left"}
+                    points={`${toX},${y - 5} ${toX - direction * 7},${y - 9} ${toX - direction * 7},${y - 1}`}
+                    fill={TANGERINE}
+                  />
+                  <text x={midX} y={arcTop - 3} textAnchor="middle" fontSize={10} fontWeight={900} fill={TANGERINE}>
+                    {jump.label}
+                  </text>
+                </g>
+              );
+            })}
+            <text x={panelX + panelWidth / 2} y={panelY + 108} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+              {panel.caption}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function G2Add33Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={33} amount={20} />;
+}
+function G2Add44Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={44} amount={20} />;
+}
+function G2Add45Plus20Candidates() {
+  return <G2CandidateNumberLines kind="add" start={45} amount={20} />;
+}
+function G2Gap54Minus34Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={54} low={34} />;
+}
+function G2Gap53Minus33Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={53} low={33} />;
+}
+function G2Gap43Minus33Candidates() {
+  return <G2CandidateNumberLines kind="gap" high={43} low={33} />;
+}
+
+type G2ReadLineMark = { value: number; label?: string };
+type G2ReadLineJump = { from: number; to: number; label: string };
+
+/**
+ * S324 (F5 §49–§51): one finished number-line drawing for the Grade 2
+ * "read the drawing" checks that replaced repeated which-drawing templates.
+ * Unlike G2CandidateNumberLines' four candidates, this renders a single
+ * honest drawing with one quantity left unlabeled ("?") so the learner
+ * computes it instead of picking a panel. Shares the family's 0-anchored
+ * scale, hop-arc, and gap-band conventions.
+ */
+function G2ReadNumberLine({ maxValue, marks, jumps, gap, gapLabel, caption, title, ariaLabel }: {
+  maxValue: number;
+  marks: G2ReadLineMark[];
+  jumps?: G2ReadLineJump[];
+  gap?: [number, number];
+  gapLabel?: string;
+  caption: string;
+  title: string;
+  ariaLabel: string;
+}) {
+  const lineY = 88;
+  const axisX1 = 36;
+  const axisX2 = 396;
+  const xFor = (value: number) => axisX1 + (value / maxValue) * (axisX2 - axisX1);
+  return (
+    <svg viewBox="0 0 420 150" role="img" className="mx-auto w-full max-w-lg" aria-label={ariaLabel}>
+      <title>{title}</title>
+      {gap && (
+        <>
+          <line x1={xFor(gap[0])} y1={lineY} x2={xFor(gap[1])} y2={lineY} stroke={LEAF} strokeWidth={9} strokeLinecap="round" opacity={0.28} />
+          {gapLabel && (
+            <text x={(xFor(gap[0]) + xFor(gap[1])) / 2} y={lineY - 16} textAnchor="middle" fontSize={14} fontWeight={900} fill={LEAF}>
+              {gapLabel}
+            </text>
+          )}
+        </>
+      )}
+      <NumberLineAxis x1={axisX1} x2={axisX2} y={lineY} color={INK} strokeWidth={1.8} testId="g2-read-line-axis" />
+      <line x1={axisX1} y1={lineY - 4} x2={axisX1} y2={lineY + 4} stroke={INK} strokeWidth={1.2} />
+      <text x={axisX1} y={lineY + 17} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>0</text>
+      {marks.map((mark) => (
+        <g key={mark.value}>
+          <line x1={xFor(mark.value)} y1={lineY - 6} x2={xFor(mark.value)} y2={lineY + 6} stroke={INK} strokeWidth={1.6} />
+          <circle cx={xFor(mark.value)} cy={lineY} r={3.4} fill={gap ? LEAF : SKY} />
+          <text x={xFor(mark.value)} y={lineY + 18} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+            {mark.label ?? mark.value}
+          </text>
+        </g>
+      ))}
+      {jumps?.map((jump) => {
+        const fromX = xFor(jump.from);
+        const toX = xFor(jump.to);
+        const direction = toX > fromX ? 1 : -1;
+        const midX = (fromX + toX) / 2;
+        const arcTop = lineY - 34;
+        return (
+          <g key={`${jump.from}-${jump.to}`}>
+            <path d={`M ${fromX} ${lineY - 5} Q ${midX} ${arcTop} ${toX} ${lineY - 5}`} fill="none" stroke={TANGERINE} strokeWidth={2.2} strokeLinecap="round" />
+            <polygon
+              data-number-line-direction={direction > 0 ? "right" : "left"}
+              points={`${toX},${lineY - 5} ${toX - direction * 7},${lineY - 9} ${toX - direction * 7},${lineY - 1}`}
+              fill={TANGERINE}
+            />
+            <text x={midX} y={arcTop - 3} textAnchor="middle" fontSize={11} fontWeight={900} fill={TANGERINE}>
+              {jump.label}
+            </text>
+          </g>
+        );
+      })}
+      <text x={210} y={138} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>
+        {caption}
+      </text>
+    </svg>
+  );
+}
+
+/** g2l-03-01 k3 (S324, F5 §49): 45 + 20 drawn correctly with the landing mark left as "?". */
+function G2ReadLanding45Plus20() {
+  return (
+    <G2ReadNumberLine
+      maxValue={65}
+      marks={[{ value: 45 }, { value: 55 }, { value: 65, label: "?" }]}
+      jumps={[
+        { from: 45, to: 55, label: "+10" },
+        { from: 55, to: 65, label: "+10" },
+      ]}
+      caption="start 45 • +10 • +10 • landing ?"
+      title="A single number-line drawing starts at 45 and makes two forward hops of ten; the landing mark is left unlabeled for the reader."
+      ariaLabel="A number line starting at 45 with two forward hops of ten drawn as arcs; the mark where the second hop lands is labeled with a question mark."
+    />
+  );
+}
+
+/** g2l-03-02 k1 (S324, F5 §50): marks at 33 and 53 with the shaded gap's length left as "?". */
+function G2ReadGap53Minus33() {
+  return (
+    <G2ReadNumberLine
+      maxValue={63}
+      marks={[{ value: 33 }, { value: 53 }]}
+      gap={[33, 53]}
+      gapLabel="?"
+      caption="marks at 33 and 53 • shaded gap ?"
+      title="A single number-line drawing marks 33 and 53 and shades the distance between them; the gap's length is left unlabeled for the reader."
+      ariaLabel="A number line with marks at 33 and 53; the stretch between them is shaded and labeled with a question mark asking for its length."
+    />
+  );
+}
+
+/** g2l-03-03 k3 (S324, F5 §51): start 33, landing 43, with the one jump between them left as "?". */
+function G2ReadMissingJump33To43() {
+  return (
+    <G2ReadNumberLine
+      maxValue={53}
+      marks={[{ value: 33 }, { value: 43 }]}
+      jumps={[{ from: 33, to: 43, label: "?" }]}
+      caption="start 33 • landing 43 • jump ?"
+      title="A single number-line drawing marks a start of 33 and a landing of 43 with one forward jump between them left unlabeled for the reader."
+      ariaLabel="A number line with a start mark at 33 and a landing mark at 43; the single forward jump connecting them is labeled with a question mark."
+    />
+  );
+}
+
 function NumberLineJumps() {
   const ox = 24, oy = 78, u = 22; // 0..12 across
   const X = (n: number) => ox + n * u;
   const hop = (a: number, b: number) => (
-    <path
+    <>
+      <path
       d={`M ${X(a)} ${oy - 4} Q ${X((a + b) / 2)} ${oy - 40} ${X(b)} ${oy - 4}`}
       fill="none"
       stroke={TANGERINE}
       strokeWidth={2.5}
-      markerEnd="url(#hopArrow)"
     />
+      <NumberLineDirectionHead x={X(b)} y={oy - 4} direction={b < a ? "left" : "right"} color={TANGERINE} size={6} testId="number-line-jumps-direction" />
+    </>
   );
   return (
     <svg viewBox="0 0 320 110" role="img" className="mx-auto w-full max-w-sm">
       <title>A number line from 0 to 12 with three equal hops of 4: the hops land on 4, 8, and 12, showing 3 times 4 equals 12.</title>
-      <defs>
-        <marker id="hopArrow" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-          <polygon points="0 0, 7 3.5, 0 7" fill={TANGERINE} />
-        </marker>
-      </defs>
-      <line x1={X(0) - 8} y1={oy} x2={X(12) + 12} y2={oy} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={X(0) - 8} x2={X(12) + 12} y={oy} color={INK} testId="number-line-jumps-axis" />
       {Array.from({ length: 13 }, (_, n) => (
         <g key={n}>
           <line x1={X(n)} y1={oy - 4} x2={X(n)} y2={oy + 4} stroke={INK} strokeWidth={n % 4 === 0 ? 2 : 1} />
@@ -4892,6 +6103,67 @@ function NumberLineJumps() {
       </text>
     </svg>
   );
+}
+
+/**
+ * Grade 3 mult/div figure: parameterized equal-hop number line.
+ * S318 fix (mult-02-03 c2): `number-line-jumps` is a fixed 3-hops-of-4
+ * exemplar; c2 teaches its own worked example — skip-counting to check a
+ * division fact (35 ÷ 5, seven hops of 5) — so this reusable, typed-prop
+ * helper lets that placement bind its own real numbers without touching the
+ * original component or its other bindings. Unit spacing and tick/label
+ * density scale with the landing spot so any (hops, hopLength) pair stays
+ * legible inside the viewBox.
+ */
+function NumberLineJumpsExample({ hops, hopLength }: { hops: number; hopLength: number }) {
+  const landing = hops * hopLength;
+  const ox = 24, oy = 78;
+  const u = Math.min(22, 260 / landing);
+  const width = Math.round(ox + landing * u + 20);
+  const X = (n: number) => ox + n * u;
+  const hop = (a: number, b: number) => (
+    <>
+      <path
+        d={`M ${X(a)} ${oy - 4} Q ${X((a + b) / 2)} ${oy - 40} ${X(b)} ${oy - 4}`}
+        fill="none"
+        stroke={TANGERINE}
+        strokeWidth={2.5}
+      />
+      <NumberLineDirectionHead x={X(b)} y={oy - 4} direction="right" color={TANGERINE} size={6} testId="number-line-jumps-example-direction" />
+    </>
+  );
+  const tickEvery = landing <= 12 ? 1 : landing <= 20 ? 2 : landing <= 40 ? 5 : 10;
+  const labelEvery = landing <= 12 ? 2 : tickEvery;
+  const jumpPoints = Array.from({ length: hops }, (_, i) => (i + 1) * hopLength);
+  return (
+    <svg viewBox={`0 0 ${width} 110`} role="img" className="mx-auto w-full max-w-sm" aria-label={`A number line from 0 to ${landing} with ${hops} equal hops of ${hopLength}: the hops land on ${jumpPoints.join(", ")}, showing ${hops} times ${hopLength} equals ${landing}.`}>
+      <title>{`A number line with ${hops} equal hops of ${hopLength} landing on ${landing}, showing ${hops} times ${hopLength} equals ${landing}.`}</title>
+      <NumberLineAxis x1={X(0) - 8} x2={X(landing) + 12} y={oy} color={INK} testId="number-line-jumps-example-axis" />
+      {Array.from({ length: landing + 1 }, (_, n) => (
+        <g key={n}>
+          {n % tickEvery === 0 && <line x1={X(n)} y1={oy - 4} x2={X(n)} y2={oy + 4} stroke={INK} strokeWidth={n % hopLength === 0 ? 2 : 1} />}
+          {n % labelEvery === 0 && (
+            <text x={X(n)} y={oy + 17} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+              {n}
+            </text>
+          )}
+        </g>
+      ))}
+      {jumpPoints.map((n, i) => (
+        <g key={n}>{hop(i === 0 ? 0 : jumpPoints[i - 1], n)}</g>
+      ))}
+      {jumpPoints.map((n) => (
+        <circle key={n} cx={X(n)} cy={oy} r={4} fill={SKY} />
+      ))}
+      <text x={X(landing / 2)} y={oy + 32} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>
+        {`${hops} hops of ${hopLength} → lands on ${landing}`}
+      </text>
+    </svg>
+  );
+}
+/** mult-02-03 c2's own worked example ("35 ÷ 5: count 5, 10, ... — seven hops, so the answer is 7"): 7 hops of 5 = 35. */
+function NumberLineJumps7x5() {
+  return <NumberLineJumpsExample hops={7} hopLength={5} />;
 }
 
 /** pv2-01-01's ladder: ones up to millions, every rung ×10 — exactly the lesson's seven named rungs. */
@@ -5157,8 +6429,8 @@ function DoubleNumberLine() {
       <title>A double number line: laps on top marked 0, 4, 8, 12 and minutes below marked 0, 6, 12, 18 — aligned marks are equivalent pairs, like 8 laps with 12 minutes.</title>
       <text x={ox - 8} y={topY + 4} textAnchor="end" fontSize={10} fontWeight={800} fill={SKY}>laps</text>
       <text x={ox - 8} y={botY + 4} textAnchor="end" fontSize={10} fontWeight={800} fill={TANGERINE}>minutes</text>
-      <line x1={ox} y1={topY} x2={ox + 3 * u + 14} y2={topY} stroke={SKY} strokeWidth={2} />
-      <line x1={ox} y1={botY} x2={ox + 3 * u + 14} y2={botY} stroke={TANGERINE} strokeWidth={2} />
+      <NumberLineAxis x1={ox} x2={ox + 3 * u + 14} y={topY} color={SKY} testId="figure-double-top-axis" />
+      <NumberLineAxis x1={ox} x2={ox + 3 * u + 14} y={botY} color={TANGERINE} testId="figure-double-bottom-axis" />
       {laps.map((v, i) => (
         <g key={`t${i}`}>
           <line x1={ox + i * u} y1={topY - 5} x2={ox + i * u} y2={topY + 5} stroke={INK} strokeWidth={1.5} />
@@ -5310,9 +6582,7 @@ function NegativeNumberLine() {
   return (
     <svg viewBox="0 0 320 84" role="img" className="mx-auto w-full max-w-md">
       <title>A number line from negative 5 to positive 5, with zero in the center; negative numbers sit to the left of zero and positive numbers to the right.</title>
-      <line x1={px(-5)} y1={y} x2={px(5)} y2={y} stroke={INK} strokeWidth={2} />
-      <polygon points={`${px(-5) - 8},${y} ${px(-5) - 2},${y - 4} ${px(-5) - 2},${y + 4}`} fill={INK} />
-      <polygon points={`${px(5) + 8},${y} ${px(5) + 2},${y - 4} ${px(5) + 2},${y + 4}`} fill={INK} />
+      <NumberLineAxis x1={px(-5) - 8} x2={px(5) + 8} y={y} color={INK} testId="negative-number-line-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={px(n)} y1={y - 6} x2={px(n)} y2={y + 6} stroke={n === 0 ? INK : INK} strokeWidth={n === 0 ? 2.5 : 1.25} />
@@ -5456,7 +6726,7 @@ function SolutionRay() {
   return (
     <svg viewBox="0 0 320 90" role="img" className="mx-auto w-full max-w-md">
       <title>A number line showing the solutions to x greater than 5: an open circle at 5 (not included) with a ray extending right through 6, 7, 8, and beyond.</title>
-      <line x1={px(0)} y1={y} x2={px(8)} y2={y} stroke={INK} strokeWidth={1.5} opacity={0.4} />
+      <NumberLineAxis x1={px(0)} x2={px(8)} y={y} color={INK} strokeWidth={1.5} opacity={0.4} testId="solution-ray-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={px(n)} y1={y - 4} x2={px(n)} y2={y + 4} stroke={INK} strokeWidth={1} opacity={0.4} />
@@ -5464,7 +6734,7 @@ function SolutionRay() {
         </g>
       ))}
       <line x1={px(5)} y1={y} x2={px(8.4)} y2={y} stroke={SKY} strokeWidth={3.5} />
-      <polygon points={`${px(8.4)},${y} ${px(8.4) - 8},${y - 5} ${px(8.4) - 8},${y + 5}`} fill={SKY} />
+      <polygon data-number-line-direction="right" points={`${px(8.4)},${y} ${px(8.4) - 8},${y - 5} ${px(8.4) - 8},${y + 5}`} fill={SKY} />
       <circle cx={px(5)} cy={y} r={6} fill="white" stroke={SKY} strokeWidth={3} />
       <text x={px(5)} y={y - 14} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>open — 5 not included</text>
     </svg>
@@ -5472,18 +6742,32 @@ function SolutionRay() {
 }
 
 
-/** asv-01-01's image: a triangle inside its enclosing rectangle, half shaded to show area = 1/2 base x height. */
+/**
+ * asv-01-01's image: a triangle inside its enclosing rectangle, half shaded to show area = 1/2 base x height.
+ *
+ * CL-P1-051 fix (S329): the old `viewBox="0 0 240 130"` was too narrow for its own right-side
+ * "height" label (modelled box x:[216..263.52], clipRight margin -23.52 against a 240-wide
+ * viewBox — the SVG's own overflow:hidden root clips it, independent of screen width) and its
+ * center caption sat ON the hypotenuse (modelled caption box x:[15.16..244.84] y:[74.22..88.08]
+ * vs the hypotenuse segment (40,110)-(200,20), which crosses that box — confirmed with a
+ * Liang-Barsky segment/rect test). Widening the viewBox to 280x160 clears the height-label clip
+ * (new margin +16.48) and moving the caption below the whole figure — same "summary caption
+ * under the shape" placement `LShapeDecompose`/`PrismNet` already use — puts its whole box at
+ * y:[137.22..151.08], entirely below the shape's y<=110 extent, so the hypotenuse cannot cross
+ * it (mathematically, not just empirically). All three labels keep zero pairwise collisions
+ * under textBoxes.testkit.ts's exact box model. See reports/closure/S329_CLOSURE_CL2.md.
+ */
 function TriangleHalfRectangle() {
   const ox = 40, oy = 20, w = 160, h = 90;
   return (
-    <svg viewBox="0 0 240 130" role="img" className="mx-auto w-full max-w-sm">
+    <svg viewBox="0 0 280 160" role="img" className="mx-auto w-full max-w-sm">
       <title>A triangle sits inside a rectangle of the same base and height; the triangle covers exactly half the rectangle's area.</title>
       <rect x={ox} y={oy} width={w} height={h} fill="none" stroke={INK} strokeWidth={1.5} strokeDasharray="4 3" opacity={0.5} />
       <polygon points={`${ox},${oy + h} ${ox + w},${oy + h} ${ox + w},${oy}`} fill={SKY} opacity={0.25} />
       <polygon points={`${ox},${oy + h} ${ox + w},${oy + h} ${ox + w},${oy}`} fill="none" stroke={SKY} strokeWidth={2.5} />
       <text x={ox + w / 2} y={oy + h + 20} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>base</text>
       <text x={ox + w + 16} y={oy + h / 2} fontSize={11} fontWeight={700} fill={INK}>height</text>
-      <text x={ox + w / 2 + 10} y={oy + h / 2 + 20} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>
+      <text x={140} y={oy + h + 38} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>
         triangle = half the rectangle
       </text>
     </svg>
@@ -5902,7 +7186,7 @@ function CountOnHops() {
         where a green dot lands. The caption reads four plus three equals seven.
       </title>
       <style>{css}</style>
-      <line x1={X(0) - 6} y1={oy} x2={X(10) + 6} y2={oy} stroke="#22314F" strokeWidth={2} />
+      <NumberLineAxis x1={X(0) - 6} x2={X(10) + 6} y={oy} color="#22314F" testId="early-hop-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={X(n)} y1={oy - 4} x2={X(n)} y2={oy + 4} stroke="#22314F" strokeWidth={1.5} />
@@ -5921,6 +7205,9 @@ function CountOnHops() {
           stroke="#FF8A3D"
           strokeWidth={2.5}
         />
+      ))}
+      {hops.map(([, b], i) => (
+        <NumberLineDirectionHead key={"co-head-" + i} x={X(b)} y={oy - 4} direction="right" color="#FF8A3D" size={5} testId="count-on-direction" />
       ))}
       <circle cx={X(4)} cy={oy} r={6} fill="#2E7CD6" />
       <circle className="co-land" style={{ animationDelay: "1.35s" }} cx={X(7)} cy={oy} r={6} fill="#2FA36B" />
@@ -6037,7 +7324,7 @@ function CountOnSmall() {
       <style>{css}</style>
       {rows.map((r, ri) => (
         <g key={ri}>
-          <line x1={X(4) - 6} y1={r.y} x2={X(r.end) + 6} y2={r.y} stroke="#22314F" strokeWidth={1.6} />
+          <NumberLineAxis x1={X(4) - 6} x2={X(r.end) + 6} y={r.y} color="#22314F" strokeWidth={1.6} testId="count-on-small-axis" />
           {Array.from({ length: r.add }).map((_, i) => {
             const a = 4 + i;
             const b = a + 1;
@@ -6047,6 +7334,9 @@ function CountOnSmall() {
                 fill="none" stroke="#FF8A3D" strokeWidth={2.2} />
             );
           })}
+          {Array.from({ length: r.add }).map((_, i) => (
+            <NumberLineDirectionHead key={"cs-head-" + i} x={X(5 + i)} y={r.y - 3} direction="right" color="#FF8A3D" size={4.5} testId="count-on-small-direction" />
+          ))}
           <circle cx={X(4)} cy={r.y} r={5} fill="#2E7CD6" />
           <circle cx={X(r.end)} cy={r.y} r={5} fill="#2FA36B" />
           <text x={X(r.end) + 22} y={r.y + 4} fontSize={12} fontWeight={800} fill="#22314F">
@@ -6080,14 +7370,16 @@ function BiggerFirst() {
       <title>Two number lines to add three plus eight. Starting at three takes eight hops; starting at eight takes only three hops. Both land on eleven. Start with the bigger number for fewer hops.</title>
       <style>{css}</style>
       {/* slow way: start at 3, 8 hops */}
-      <line x1={X(0)} y1={38} x2={X(11) + 4} y2={38} stroke="#22314F" strokeWidth={1.6} />
+      <NumberLineAxis x1={X(0)} x2={X(11) + 4} y={38} color="#22314F" strokeWidth={1.6} testId="bigger-first-slow-axis" />
       {hopRow(38, 3, 8, "#FF8A3D")}
+      {Array.from({ length: 8 }, (_, i) => <NumberLineDirectionHead key={"bf-slow-" + i} x={X(4 + i)} y={35} direction="right" color="#FF8A3D" size={4} testId="bigger-first-slow-direction" />)}
       <circle cx={X(3)} cy={38} r={5} fill="#2E7CD6" />
       <circle cx={X(11)} cy={38} r={5} fill="#2FA36B" />
       <text x={X(0)} y={20} fontSize={11} fontWeight={800} fill="#22314F">start at 3: 8 hops (slow)</text>
       {/* fast way: start at 8, 3 hops */}
-      <line x1={X(0)} y1={98} x2={X(11) + 4} y2={98} stroke="#22314F" strokeWidth={1.6} />
+      <NumberLineAxis x1={X(0)} x2={X(11) + 4} y={98} color="#22314F" strokeWidth={1.6} testId="bigger-first-fast-axis" />
       {hopRow(98, 8, 3, "#2FA36B")}
+      {Array.from({ length: 3 }, (_, i) => <NumberLineDirectionHead key={"bf-fast-" + i} x={X(9 + i)} y={95} direction="right" color="#2FA36B" size={4} testId="bigger-first-fast-direction" />)}
       <circle cx={X(8)} cy={98} r={5} fill="#2E7CD6" />
       <circle cx={X(11)} cy={98} r={5} fill="#2FA36B" />
       <text x={X(0)} y={80} fontSize={11} fontWeight={800} fill="#22314F">start at 8: 3 hops (fast)</text>
@@ -6116,7 +7408,7 @@ function CountBackHops() {
     <svg viewBox="0 0 264 96" role="img" className="mx-auto w-full max-w-sm">
       <title>A number line from 0 to 10. A blue dot on 7 hops left three times — to 6, 5, then 4 — where a green dot lands. The caption reads seven minus three equals four.</title>
       <style>{css}</style>
-      <line x1={X(0) - 6} y1={oy} x2={X(10) + 6} y2={oy} stroke="#22314F" strokeWidth={2} />
+      <NumberLineAxis x1={X(0) - 6} x2={X(10) + 6} y={oy} color="#22314F" testId="early-hop-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={X(n)} y1={oy - 4} x2={X(n)} y2={oy + 4} stroke="#22314F" strokeWidth={1.5} />
@@ -6126,7 +7418,7 @@ function CountBackHops() {
       {hops.map(([a, b], i) => (
         <g key={i} className="cb-hop" style={{ animationDelay: `${0.3 + i * 0.35}s` }}>
           <path d={`M ${X(a)} ${oy - 4} Q ${X((a + b) / 2)} ${oy - 34} ${X(b)} ${oy - 4}`} fill="none" stroke="#FF8A3D" strokeWidth={2.5} />
-          <path d={`M ${X(b)} ${oy - 4} l 5 -5 m -5 5 l 5 5`} fill="none" stroke="#FF8A3D" strokeWidth={2.2} />
+          <path data-number-line-direction="left" d={`M ${X(b)} ${oy - 4} l 5 -5 m -5 5 l 5 5`} fill="none" stroke="#FF8A3D" strokeWidth={2.2} />
         </g>
       ))}
       <circle cx={X(7)} cy={oy} r={6} fill="#2E7CD6" />
@@ -6792,6 +8084,47 @@ function DistributeArea() {
 }
 
 /**
+ * monomial-distribute-area: 3x(x + 4) as a 3x-tall rectangle split into an x-wide part and a
+ * 4-wide part — area 3x·x = 3x² and 3x·4 = 12x, total 3x² + 12x. Distinct from distribute-area
+ * (a plain-constant multiplier): here the multiplier is itself the monomial 3x, so one sub-area
+ * is a square of x² and the coefficient on that term is the SAME 3 that multiplies the 4 — the
+ * two areas are also told apart by shape/hatch, not colour alone. The two sub-areas light in
+ * turn; reduced-motion gated.
+ */
+function MonomialDistributeArea() {
+  const css = `@media (prefers-reduced-motion: no-preference){.mda-a{animation:mda-in .5s ease-out .4s backwards}.mda-b{animation:mda-in .5s ease-out .9s backwards}@keyframes mda-in{from{opacity:0}to{opacity:1}}}`;
+  return (
+    <svg viewBox="0 0 300 146" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        A rectangle three x tall and x plus four wide splits into two parts: one three x by x
+        square, solid-filled, with area three x times x equals three x squared; one three x by
+        four rectangle, cross-hatched, with area three x times four equals twelve x. So three x
+        times the quantity x plus four equals three x squared plus twelve x.
+      </title>
+      <style>{css}</style>
+      <defs>
+        <pattern id="mda-hatch" width={6} height={6} patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width={6} height={6} fill="#FFE9D6" />
+          <line x1={0} y1={0} x2={0} y2={6} stroke="#FF8A3D" strokeWidth={1.4} />
+        </pattern>
+      </defs>
+      <rect className="mda-a" x={60} y={26} width={70} height={62} fill="#EAF2FC" stroke="#2E7CD6" strokeWidth={1.6} />
+      <rect className="mda-b" x={130} y={26} width={90} height={62} fill="url(#mda-hatch)" stroke="#FF8A3D" strokeWidth={1.6} />
+      <text className="mda-a" x={95} y={62} textAnchor="middle" fontSize={13} fontWeight={800} fill="#2E7CD6">3x·x</text>
+      <text className="mda-a" x={95} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill="#2E7CD6">= 3x²</text>
+      <text className="mda-b" x={175} y={62} textAnchor="middle" fontSize={13} fontWeight={800} fill="#FF8A3D">3x·4</text>
+      <text className="mda-b" x={175} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill="#FF8A3D">= 12x</text>
+      <text x={95} y={18} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">x</text>
+      <text x={175} y={18} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">4</text>
+      <text x={44} y={62} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">3x</text>
+      <text x={150} y={108} textAnchor="middle" fontSize={12} fontWeight={800} fill="#22314F">3x(x + 4) = 3x² + 12x</text>
+      <text x={150} y={122} textAnchor="middle" fontSize={11} fontWeight={800} fill="#22314F">the 3x reaches BOTH parts</text>
+      <text x={150} y={138} textAnchor="middle" fontSize={10} fontWeight={700} fill="#22314F">solid = 3x·x, hatched = 3x·4</text>
+    </svg>
+  );
+}
+
+/**
  * fraction-undo: x/3 + 2 = 7 as a machine (÷3 then +2) reversed: 7 → −2 → 5 → ×3 → 15.
  * Reverse arrows light in sequence; reduced-motion gated.
  */
@@ -6856,7 +8189,7 @@ function DecimalShift() {
   const css = `@media (prefers-reduced-motion: no-preference){.ds-out{animation:ds-a .6s ease-out .5s backwards}@keyframes ds-a{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}}`;
   return (
     <svg viewBox="0 0 320 112" role="img" className="mx-auto w-full max-w-md">
-      <title>The equation zero point five x plus one point two equals three point seven. Multiplying every term by ten shifts each decimal point one place: five x plus twelve equals thirty-seven, so x equals five.</title>
+      <title>The equation 0.5x + 1.2 = 3.7. Multiplying every term by 10 shifts each decimal point 1 place: 5x + 12 = 37, so x = 5.</title>
       <style>{css}</style>
       <text x={110} y={30} textAnchor="middle" fontSize={16} fontWeight={800} fill="#22314F">0.5x + 1.2 = 3.7</text>
       <rect x={216} y={16} width={44} height={20} rx={10} fill="#FF8A3D" />
@@ -6866,6 +8199,31 @@ function DecimalShift() {
         <text x={238} y={66} textAnchor="middle" fontSize={14} fontWeight={800} fill="#2FA36B">→ x = 5</text>
       </g>
       <text x={160} y={100} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">×10 shifts EVERY decimal one place — no term left behind</text>
+    </svg>
+  );
+}
+
+/**
+ * decimal-shift-divide: 1.5 ÷ 0.5, with both numbers ×10 so the divisor becomes
+ * whole: 15 ÷ 5 = 3. Same "shift both, together" idea as DecimalShift, but for
+ * long division instead of equation-clearing — the two figures render different
+ * fixed numbers because they illustrate different worked examples. Digits shift
+ * together; reduced-motion gated.
+ */
+function DecimalShiftDivide() {
+  const css = `@media (prefers-reduced-motion: no-preference){.dsd-out{animation:dsd-a .6s ease-out .5s backwards}@keyframes dsd-a{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}}`;
+  return (
+    <svg viewBox="0 0 320 112" role="img" className="mx-auto w-full max-w-md">
+      <title>1.5 divided by 0.5. Shifting both numbers one place right makes the divisor a whole number: 15 divided by 5 equals 3.</title>
+      <style>{css}</style>
+      <text x={110} y={30} textAnchor="middle" fontSize={16} fontWeight={800} fill="#22314F">1.5 ÷ 0.5</text>
+      <rect x={196} y={16} width={44} height={20} rx={10} fill="#FF8A3D" />
+      <text x={218} y={30} textAnchor="middle" fontSize={11} fontWeight={800} fill="white">×10 both</text>
+      <g className="dsd-out">
+        <text x={110} y={66} textAnchor="middle" fontSize={16} fontWeight={800} fill="#2E7CD6">15 ÷ 5</text>
+        <text x={218} y={66} textAnchor="middle" fontSize={14} fontWeight={800} fill="#2FA36B">= 3</text>
+      </g>
+      <text x={160} y={100} textAnchor="middle" fontSize={12} fontWeight={700} fill="#22314F">×10 shifts BOTH numbers one place — the quotient stays the same</text>
     </svg>
   );
 }
@@ -7256,7 +8614,7 @@ function NumberLineBetweenIntegers() {
   return (
     <svg viewBox="0 0 300 190" role="img" className="mx-auto w-full max-w-sm">
       <title>A number line showing an unknown value between two consecutive whole numbers n and n+1; a zoomed-in strip below shows the same interval split into tenths, narrowing down closer to exactly where the value sits.</title>
-      <line x1={20} y1={40} x2={280} y2={40} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={20} x2={280} y={40} color={INK} testId="between-integers-overview-axis" />
       <line x1={90} y1={32} x2={90} y2={48} stroke={INK} strokeWidth={2.5} />
       <text x={90} y={22} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>n</text>
       <line x1={210} y1={32} x2={210} y2={48} stroke={INK} strokeWidth={2.5} />
@@ -7265,7 +8623,7 @@ function NumberLineBetweenIntegers() {
       <text x={150} y={62} textAnchor="middle" fontSize={11} fontWeight={700} fill={BERRY}>?</text>
       <path d="M90 48 L60 90 M210 48 L240 90" stroke={INK} strokeWidth={1} strokeDasharray="3 3" opacity={0.5} fill="none" />
       <rect x={45} y={90} width={210} height={62} rx={8} fill="#F7F4EE" stroke={INK} strokeWidth={1.4} />
-      <line x1={60} y1={132} x2={240} y2={132} stroke={INK} strokeWidth={1.6} />
+      <NumberLineAxis x1={60} x2={240} y={132} color={INK} strokeWidth={1.6} testId="between-integers-zoom-axis" />
       {Array.from({ length: 11 }, (_, i) => {
         const x = 60 + i * 18;
         return <line key={i} x1={x} y1={127} x2={x} y2={137} stroke={INK} strokeWidth={i % 10 === 0 ? 2 : 1} />;
@@ -7669,27 +9027,67 @@ function TransversalAngles() {
   );
 }
 
-/** Why a² + b² = c²: a right triangle with a square built on each side. The two smaller
- *  leg-squares' areas add up to the big hypotenuse-square's area — the visual proof. */
+/** General rearrangement proof of a² + b² = c² using two equal (a+b)-squares. */
 function PythagoreanProof() {
   return (
-    <svg viewBox="0 0 300 150" role="img" className="mx-auto w-full max-w-sm">
-      <title>A 3-4-5 right triangle with a square drawn on each side. The square on the leg of length 3 has area 9, the square on the leg of length 4 has area 16, and the square on the hypotenuse of length 5 has area 25. Since 9 plus 16 equals 25, the two leg-squares' areas add up to the hypotenuse-square's area.</title>
-      {/* right triangle: legs 3 (up) and 4 (right), vertices scaled */}
-      <polygon points="120,90 120,42 184,90" fill={SKY} opacity={0.25} stroke={INK} strokeWidth={1.6} />
-      <rect x={120} y={90} width={16} height={16} fill="none" stroke={INK} strokeWidth={1} />
-      {/* square on left leg (a=3, area 9) */}
-      <rect x={88} y={42} width={32} height={48} fill={LEAF} opacity={0.5} stroke={LEAF} strokeWidth={1.4} />
-      <text x={104} y={70} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>9</text>
-      {/* square on bottom leg (b=4, area 16) */}
-      <rect x={120} y={90} width={64} height={40} fill={TANGERINE} opacity={0.45} stroke={TANGERINE} strokeWidth={1.4} />
-      <text x={152} y={114} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>16</text>
-      {/* square on hypotenuse (c=5, area 25) drawn outward */}
-      <polygon points="120,42 184,90 156,138 92,90" fill={BERRY} opacity={0.28} stroke={BERRY} strokeWidth={1.4} />
-      <text x={138} y={96} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>25</text>
-      <text x={228} y={70} fontSize={12} fontWeight={800} fill={INK}>9 + 16</text>
-      <text x={228} y={90} fontSize={12} fontWeight={800} fill={BERRY}>= 25</text>
-      <text x={150} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>a² + b² = c²</text>
+    <svg
+      viewBox="0 0 300 180"
+      role="img"
+      aria-label="General rearrangement proof: equal outer squares with the same four right triangles leave c squared in one arrangement and a squared plus b squared in the other."
+      className="mx-auto w-full max-w-sm"
+      data-proof="rearrangement"
+      data-outer-side="a+b"
+      data-congruent-triangles="4"
+      data-left-remainder="c²"
+      data-right-remainder="a²+b²"
+    >
+      <title>General rearrangement proof of the Pythagorean theorem</title>
+      <desc>Two equal outer squares each have side length a plus b and contain the same four congruent right triangles with legs a and b. In the first arrangement the remaining region is a square of area c squared. In the second arrangement the remaining regions are squares of areas a squared and b squared. Removing equal triangle areas from equal outer squares proves that a squared plus b squared equals c squared.</desc>
+
+      <text x={65} y={11} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>leftover c²</text>
+      <text x={235} y={11} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>leftover a²+b²</text>
+
+      {/* First (a+b)-square: four congruent right triangles surround a true c-by-c square. */}
+      <g data-arrangement="c-squared">
+        <rect x={10} y={28} width={110} height={110} rx={2} fill="none" stroke={INK} strokeWidth={1.7} data-shape="outer-square" data-side="a+b" />
+        <polygon points="10,28 52,28 10,96" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="52,28 120,28 120,70" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="120,70 120,138 78,138" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="78,138 10,138 10,96" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon
+          points="52,28 120,70 78,138 10,96"
+          fill={BERRY}
+          opacity={0.32}
+          stroke={BERRY}
+          strokeWidth={1.8}
+          data-shape="square"
+          data-side="c"
+          data-area="c²"
+        />
+        <text x={65} y={88} textAnchor="middle" fontSize={15} fontWeight={900} fill={BERRY}>c²</text>
+        <text x={31} y={25} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>a</text>
+        <text x={86} y={25} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>b</text>
+      </g>
+
+      <text x={150} y={88} textAnchor="middle" fontSize={18} fontWeight={900} fill={INK}>=</text>
+
+      {/* Second equal (a+b)-square: the same triangles leave true a- and b-squares. */}
+      <g data-arrangement="a-squared-plus-b-squared">
+        <rect x={180} y={28} width={110} height={110} rx={2} fill="none" stroke={INK} strokeWidth={1.7} data-shape="outer-square" data-side="a+b" />
+        <rect x={180} y={28} width={42} height={42} fill={LEAF} opacity={0.38} stroke={LEAF} strokeWidth={1.4} data-shape="square" data-side="a" data-area="a²" />
+        <rect x={222} y={70} width={68} height={68} fill={TANGERINE} opacity={0.34} stroke={TANGERINE} strokeWidth={1.4} data-shape="square" data-side="b" data-area="b²" />
+        <polygon points="222,28 290,28 290,70" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="222,28 290,70 222,70" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="180,70 222,70 180,138" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <polygon points="222,70 222,138 180,138" fill={SKY} opacity={0.4} stroke={INK} strokeWidth={1} />
+        <text x={201} y={53} textAnchor="middle" fontSize={13} fontWeight={900} fill={LEAF}>a²</text>
+        <text x={256} y={108} textAnchor="middle" fontSize={14} fontWeight={900} fill={TANGERINE}>b²</text>
+        <text x={201} y={25} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>a</text>
+        <text x={256} y={25} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>b</text>
+      </g>
+
+      <text x={150} y={154} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={INK}>equal outer squares − the same four triangles</text>
+      <text x={150} y={174} textAnchor="middle" fontSize={13} fontWeight={900} fill={BERRY}>a² + b² = c²</text>
     </svg>
   );
 }
@@ -11453,7 +12851,7 @@ function IntegerJump() {
   return (
     <svg viewBox="0 0 340 100" role="img" className="mx-auto w-full max-w-md">
       <title>A number line jump starting at negative four and landing at five, a jump of nine spaces to the right, showing negative four plus nine equals five.</title>
-      <line x1={px(-6)} y1={y} x2={px(6)} y2={y} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={px(-6)} x2={px(6)} y={y} color={INK} testId="integer-jump-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={px(n)} y1={y - 6} x2={px(n)} y2={y + 6} stroke={INK} strokeWidth={n === 0 ? 2.5 : 1} />
@@ -11461,16 +12859,12 @@ function IntegerJump() {
             fill={n < 0 ? SKY : n > 0 ? TANGERINE : INK}>{n}</text>
         </g>
       ))}
-      <path d={`M ${px(start)} ${y - 10} Q ${(px(start) + px(end)) / 2} ${y - 40}, ${px(end)} ${y - 10}`}
-        fill="none" stroke={LEAF} strokeWidth={2.5} markerEnd="url(#arrowhead-ij)" />
-      <defs>
-        <marker id="arrowhead-ij" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-          <polygon points="0,0 8,4 0,8" fill={LEAF} />
-        </marker>
-      </defs>
+      <path d={`M ${px(start)} ${y - 10} Q ${(px(start) + px(end)) / 2} ${y - 28}, ${px(end)} ${y - 10}`}
+        fill="none" stroke={LEAF} strokeWidth={2.5} />
+      <NumberLineDirectionHead x={px(end)} y={y - 10} direction="right" color={LEAF} size={7} testId="integer-jump-direction" />
       <circle cx={px(start)} cy={y} r={4} fill={SKY} stroke={INK} strokeWidth={1} />
       <circle cx={px(end)} cy={y} r={4} fill={TANGERINE} stroke={INK} strokeWidth={1} />
-      <text x={(px(start) + px(end)) / 2} y={y - 44} textAnchor="middle" fontSize={11} fontWeight={700} fill={LEAF}>+9</text>
+      <text x={(px(start) + px(end)) / 2} y={12} textAnchor="middle" fontSize={11} fontWeight={700} fill={LEAF}>+9</text>
     </svg>
   );
 }
@@ -11529,7 +12923,7 @@ function InequalityFlip() {
   return (
     <svg viewBox="0 0 320 90" role="img" className="mx-auto w-full max-w-md">
       <title>A number line showing the solution x less than 4 as an open circle at four with an arrow extending left, the result of dividing an inequality by a negative number and flipping its direction.</title>
-      <line x1={px(-6)} y1={y} x2={px(6)} y2={y} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={px(-6)} x2={px(6)} y={y} color={INK} testId="integer-jump-axis" />
       {ticks.map((n) => (
         <g key={n}>
           <line x1={px(n)} y1={y - 5} x2={px(n)} y2={y + 5} stroke={INK} strokeWidth={n === 0 ? 2 : 1} />
@@ -11538,7 +12932,7 @@ function InequalityFlip() {
       ))}
       <circle cx={px(4)} cy={y} r={5} fill="white" stroke={BERRY} strokeWidth={2} />
       <line x1={px(4)} y1={y} x2={px(-6)} y2={y} stroke={BERRY} strokeWidth={3} />
-      <polygon points={`${px(-6) - 6},${y} ${px(-6)},${y - 4} ${px(-6)},${y + 4}`} fill={BERRY} />
+      <polygon data-number-line-direction="left" points={`${px(-6) - 6},${y} ${px(-6)},${y - 4} ${px(-6)},${y + 4}`} fill={BERRY} />
       <text x={px(4)} y={22} textAnchor="middle" fontSize={11} fontWeight={700} fill={BERRY}>x &lt; 4</text>
     </svg>
   );
@@ -11704,7 +13098,7 @@ function ProbabilityLine() {
   return (
     <svg viewBox="0 0 260 90" role="img" className="mx-auto w-full max-w-md">
       <title>A probability number line from zero to one, labeled impossible at zero, unlikely near one quarter, an even chance at one half, likely near three quarters, and certain at one.</title>
-      <line x1={px(0)} y1={y} x2={px(1)} y2={y} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={px(0)} x2={px(1)} y={y} color={INK} testId="probability-line-axis" />
       {/* S238 wave 10: five likelihood words cannot share one row on a 200-unit line —
           they alternate between two rows, and the leftmost anchors inward off the edge. */}
       {marks.map((m, i) => (
@@ -11863,14 +13257,14 @@ function PraPipeline() {
         <rect x="10" y="24" width="78" height="64" rx="10" fill="none" stroke={SKY} strokeWidth={2} />
         <text x="49" y="48" fontSize={12} fontWeight={700} fill={SKY} textAnchor="middle">1. LIST</text>
         <text x="49" y="102" fontSize={10} fill={INK} textAnchor="middle">candidates ±p/q</text>
-        
+
       </g>
       <VectorArrow x1={88} y1={56} x2={95} y2={56} color={INK} />
       <g>
         <rect x="97" y="24" width="78" height="64" rx="10" fill="none" stroke={TANGERINE} strokeWidth={2} />
         <text x="136" y="48" fontSize={12} fontWeight={700} fill={TANGERINE} textAnchor="middle">2. TEST</text>
         <text x="136" y="115" fontSize={10} fill={INK} textAnchor="middle">find f(c) = 0</text>
-        
+
       </g>
       <VectorArrow x1={175} y1={56} x2={183} y2={56} color={INK} />
       <g>
@@ -11884,7 +13278,7 @@ function PraPipeline() {
         <rect x="272" y="24" width="78" height="64" rx="10" fill="none" stroke={BERRY} strokeWidth={2} />
         <text x="311" y="48" fontSize={12} fontWeight={700} fill={BERRY} textAnchor="middle">4. FINISH</text>
         <text x="311" y="102" fontSize={10} fill={INK} textAnchor="middle">solve the quadratic</text>
-        
+
       </g>
     </svg>
   );
@@ -12282,7 +13676,9 @@ function PpNthRoots() {
       <path d="M 178.0 105.0 L 76.0 46.1 L 76.0 163.9 Z" fill={TANGERINE} fillOpacity={0.12} stroke={TANGERINE} strokeWidth={1.5} />
       <circle cx="178.0" cy="105.0" r="5" fill={BERRY} /><circle cx="76.0" cy="46.1" r="5" fill={BERRY} /><circle cx="76.0" cy="163.9" r="5" fill={BERRY} />
       <text x="186.0" y="109.0" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="start">2</text><text x="68.0" y="50.1" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="end">−1+i√3</text><text x="68.0" y="167.9" fontSize="10" fontWeight="600" fill="#0f172a" textAnchor="end">−1−i√3</text>
-      <text x="30" y="204" fontSize="10" fill={INK}>3 roots · 120° apart · radius 8^(1/3) = 2</text>
+      <SvgMathText x={30} y={204} anchor="start" width={245} height={18} fontSize={10} color={INK}
+        tex="3\\text{ roots}\\cdot120^\\circ\\text{ apart}\\cdot\\sqrt[3]{8}=2"
+        fallback="3 roots · 120° apart · radius ∛8 = 2" />
     </svg>
   );
 }
@@ -13189,6 +14585,28 @@ function BvRatesNotCounts() {
 }
 
 /* ===== counting-to-20-k concept figures (visual-density, early reading) ===== */
+function KmdCapacitySameScoop() {
+  const scoop = (x: number, y: number, fill: string, key: string) => (
+    <g key={key}>
+      <ellipse cx={x} cy={y} rx={9} ry={4} fill={fill} opacity={0.8} stroke={INK} strokeWidth={1} />
+      <path d={`M ${x + 8} ${y} L ${x + 18} ${y - 5}`} fill="none" stroke={INK} strokeWidth={2} strokeLinecap="round" />
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 300 150" role="img" className="mx-auto w-full max-w-sm">
+      <title>Two containers tested with the same scoop. The cup holds four equal scoops and the jug holds six equal scoops, so the jug holds more.</title>
+      <text x={150} y={16} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>same scoop for both</text>
+      <path d="M 28 42 L 92 42 L 84 112 Q 60 126 36 112 Z" fill="#DCEBFB" stroke={INK} strokeWidth={2} />
+      <path d="M 184 34 L 258 34 L 250 112 Q 221 130 192 112 Z" fill="#FCE3D0" stroke={INK} strokeWidth={2} />
+      {[0, 1, 2, 3].map((index) => scoop(30 + (index % 2) * 28, 58 + Math.floor(index / 2) * 25, SKY, `cup-${index}`))}
+      {[0, 1, 2, 3, 4, 5].map((index) => scoop(190 + (index % 3) * 25, 52 + Math.floor(index / 3) * 27, TANGERINE, `jug-${index}`))}
+      <text x={60} y={142} textAnchor="middle" fontSize={12} fontWeight={800} fill={SKY}>cup: 4 scoops</text>
+      <text x={221} y={142} textAnchor="middle" fontSize={12} fontWeight={800} fill={TANGERINE}>jug: 6 scoops — more</text>
+      <path d="M 110 80 L 166 80" stroke={INK} strokeWidth={2} markerEnd="url(#kmd-cap-arrow)" />
+      <defs><marker id="kmd-cap-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={INK} /></marker></defs>
+    </svg>
+  );
+}
 function KcDotsLast() {
   return (
     <svg viewBox="0 0 260 90" role="img" className="mx-auto w-full max-w-xs">
@@ -13299,6 +14717,53 @@ function KcByTens() {
       <title>Counting by tens: groups of ten make ten, twenty, thirty, forty.</title>
       {[10,20,30,40].map((n,i)=>(<g key={i}><rect x={16+i*62} y={20} width={48} height={30} rx={6} fill={SKY} opacity={0.2} stroke={SKY} strokeWidth={2} /><text x={40+i*62} y={41} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>{n}</text></g>))}
       <text x={130} y={78} textAnchor="middle" fontSize={12} fontWeight={700} fill={TANGERINE}>10, 20, 30, 40</text>
+    </svg>
+  );
+}
+
+/** Kindergarten skip-counting as ten equal spatial moves, not a row of numeral cards. */
+function KcTenHopsTo100() {
+  const X = (n: number) => 20 + n * 2.76;
+  const landings = Array.from({ length: 11 }, (_, index) => index * 10);
+  return (
+    <svg viewBox="0 0 320 122" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        A number line from zero to one hundred with ten equal hops of ten. The hops land on ten,
+        twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, then one hundred.
+      </title>
+      <text x={160} y={14} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>
+        every giant hop adds 10
+      </text>
+      <NumberLineAxis x1={X(0) - 7} x2={X(100) + 7} y={82} color={INK} testId="ten-hops-axis" />
+      {landings.map((n) => (
+        <g key={n}>
+          <line x1={X(n)} y1={76} x2={X(n)} y2={88} stroke={INK} strokeWidth={n === 0 || n === 100 ? 2.5 : 1.5} />
+          <circle cx={X(n)} cy={82} r={n === 0 || n === 100 ? 5 : 3.5} fill={n === 100 ? LEAF : n === 0 ? INK : SKY} />
+          <text x={X(n)} y={104} textAnchor="middle" fontSize={10} fontWeight={n === 0 || n === 100 ? 900 : 700} fill={INK}>
+            {n}
+          </text>
+        </g>
+      ))}
+      {landings.slice(0, -1).map((from, index) => {
+        const to = from + 10;
+        const lift = index % 2 === 0 ? 34 : 42;
+        return (
+          <path
+            key={from}
+            d={`M ${X(from) + 3} 76 Q ${(X(from) + X(to)) / 2} ${lift} ${X(to) - 3} 76`}
+            fill="none"
+            stroke={index % 2 === 0 ? TANGERINE : SKY}
+            strokeWidth={2.2}
+            strokeLinecap="round"
+          />
+        );
+      })}
+      {landings.slice(1).map((to, index) => (
+        <NumberLineDirectionHead key={"ten-hop-head-" + to} x={X(to) - 3} y={76} direction="right" color={index % 2 === 0 ? TANGERINE : SKY} size={4.5} testId="ten-hop-direction" />
+      ))}
+      <text x={160} y={119} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>
+        ten ten-hops reach 100
+      </text>
     </svg>
   );
 }
@@ -13662,9 +15127,9 @@ function C120SkipFrom7() {
   return (
     <svg viewBox="0 0 260 80" role="img" className="mx-auto w-full max-w-sm">
       <title>Skip-counting by tens can start anywhere: from seven, jump to seventeen, twenty-seven, thirty-seven, forty-seven — each jump is a ten.</title>
-      <line x1={16} y1={54} x2={250} y2={54} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={16} x2={250} y={54} color={INK} testId="c120-skip-axis" />
       {[7,17,27,37,47].map((n,i)=>(<g key={i}><circle cx={26+i*56} cy={54} r={4} fill={SKY} /><text x={26+i*56} y={72} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>{n}</text></g>))}
-      {[0,1,2,3].map(i=>(<path key={i} d={`M ${26+i*56} 48 Q ${54+i*56} 22 ${82+i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2} markerEnd="url(#c120s-a)" />))}
+      {[0,1,2,3].map(i=>(<path key={i} data-number-line-direction="right" d={`M ${26+i*56} 48 Q ${54+i*56} 22 ${82+i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2} markerEnd="url(#c120s-a)" />))}
       <defs><marker id="c120s-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={TANGERINE} /></marker></defs>
       <text x={130} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>+10 each jump</text>
     </svg>
@@ -13756,9 +15221,9 @@ function AsHopsAdd() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Counting on is adding: three hops forward from five reaches eight, so three hops means three more.</title>
-      <line x1={16} y1={54} x2={224} y2={54} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={16} x2={224} y={54} color={INK} testId="as-hop-axis" />
       {[5,6,7,8].map((n,i)=>(<g key={i}><circle cx={40+i*56} cy={54} r={5} fill={i===0?INK:i===3?LEAF:SKY} /><text x={40+i*56} y={72} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>{n}</text></g>))}
-      {[0,1,2].map(i=>(<path key={i} d={`M ${40+i*56} 48 Q ${68+i*56} 22 ${96+i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2.5} markerEnd="url(#ash-a)" />))}
+      {[0,1,2].map(i=>(<path key={i} data-number-line-direction="right" d={`M ${40+i*56} 48 Q ${68+i*56} 22 ${96+i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2.5} markerEnd="url(#ash-a)" />))}
       <defs><marker id="ash-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={TANGERINE} /></marker></defs>
       <text x={120} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>5 + 3 = 8</text>
     </svg>
@@ -13847,9 +15312,9 @@ function AsCountBack() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Counting back for nine minus three: do not count the start, so hop from eight to seven to six. The answer is six.</title>
-      <line x1={16} y1={54} x2={224} y2={54} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={16} x2={224} y={54} color={INK} testId="as-hop-axis" />
       {[6,7,8,9].map((n,i)=>(<g key={i}><circle cx={40+i*56} cy={54} r={5} fill={n===9?INK:n===6?BERRY:SKY} /><text x={40+i*56} y={72} textAnchor="middle" fontSize={14} fontWeight={800} fill={n===9?INK:n===6?BERRY:SKY}>{n}</text></g>))}
-      {[0,1,2].map(i=>(<path key={i} d={`M ${208-i*56} 48 Q ${180-i*56} 22 ${152-i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2.5} markerEnd="url(#asb-a)" />))}
+      {[0,1,2].map(i=>(<path key={i} data-number-line-direction="left" d={`M ${208-i*56} 48 Q ${180-i*56} 22 ${152-i*56} 48`} fill="none" stroke={TANGERINE} strokeWidth={2.5} markerEnd="url(#asb-a)" />))}
       <defs><marker id="asb-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={TANGERINE} /></marker></defs>
       <text x={120} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>9 − 3 = 6</text>
     </svg>
@@ -13859,9 +15324,9 @@ function AsCountUp() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Finding a difference by counting up from the smaller to the bigger: from eight to twelve is four hops, so the difference is four.</title>
-      <line x1={16} y1={54} x2={224} y2={54} stroke={INK} strokeWidth={2} />
+      <NumberLineAxis x1={16} x2={224} y={54} color={INK} testId="as-hop-axis" />
       {[8,9,10,11,12].map((n,i)=>(<g key={i}><circle cx={30+i*45} cy={54} r={5} fill={n===8||n===12?TANGERINE:SKY} /><text x={30+i*45} y={72} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>{n}</text></g>))}
-      {[0,1,2,3].map(i=>(<path key={i} d={`M ${30+i*45} 48 Q ${52+i*45} 24 ${75+i*45} 48`} fill="none" stroke={LEAF} strokeWidth={2.5} markerEnd="url(#asu-a)" />))}
+      {[0,1,2,3].map(i=>(<path key={i} data-number-line-direction="right" d={`M ${30+i*45} 48 Q ${52+i*45} 24 ${75+i*45} 48`} fill="none" stroke={LEAF} strokeWidth={2.5} markerEnd="url(#asu-a)" />))}
       <defs><marker id="asu-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill={LEAF} /></marker></defs>
       <text x={120} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>4 hops = difference 4</text>
     </svg>
@@ -15295,6 +16760,70 @@ function MmtGraphSubtraction() {
   );
 }
 
+function G2gSharedUnitCompare() {
+  const ticks = [0, 1, 2, 3, 4, 5, 6];
+  return (
+    <svg viewBox="0 0 280 138" role="img" className="mx-auto w-full max-w-sm">
+      <title>Two ribbons start at zero on matching centimeter rulers. One ribbon reaches four centimeters and the other reaches six, so using the same unit makes their lengths fair to compare.</title>
+      {[{ y: 42, end: 4, color: SKY, label: "4 cm" }, { y: 96, end: 6, color: TANGERINE, label: "6 cm" }].map((row) => (
+        <g key={row.y}>
+          <line x1={30} y1={row.y} x2={246} y2={row.y} stroke={INK} strokeWidth={1.5} />
+          {ticks.map((tick) => <g key={tick}><line x1={30 + tick * 34} y1={row.y - 5} x2={30 + tick * 34} y2={row.y + 5} stroke={INK} strokeWidth={1.2} /><text x={30 + tick * 34} y={row.y + 17} textAnchor="middle" fontSize={10} fill={INK}>{tick}</text></g>)}
+          <rect x={30} y={row.y - 20} width={row.end * 34} height={12} rx={5} fill={row.color} fillOpacity={0.75} stroke={INK} strokeWidth={0.9} />
+          <text x={260} y={row.y - 10} textAnchor="middle" fontSize={10} fontWeight={800} fill={row.color}>{row.label}</text>
+        </g>
+      ))}
+      <text x={140} y={132} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>same centimeter spaces → fair comparison</text>
+    </svg>
+  );
+}
+
+function G2gRecordRepeats() {
+  const entries = [5, 6, 6, 7];
+  return (
+    <svg viewBox="0 0 280 128" role="img" className="mx-auto w-full max-w-sm">
+      <title>A measurement record contains four separate entries: five, six, six, and seven centimeters. The repeated six is kept twice and becomes two tally marks.</title>
+      <text x={22} y={20} fontSize={11} fontWeight={800} fill={INK}>record every ribbon</text>
+      {entries.map((value, index) => <g key={index}><rect x={22 + index * 56} y={30} width={44} height={34} rx={7} fill={index === 1 || index === 2 ? TANGERINE : SKY} fillOpacity={0.24} stroke={INK} strokeWidth={1} /><text x={44 + index * 56} y={52} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>{value} cm</text></g>)}
+      <path d="M 56 78 H 224" fill="none" stroke={INK} strokeWidth={1.2} markerEnd="url(#g2g-record-arrow)" />
+      <defs><marker id="g2g-record-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill={INK} /></marker></defs>
+      <text x={140} y={98} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>6 cm: ||</text>
+      <text x={140} y={118} textAnchor="middle" fontSize={10} fontWeight={700} fill={LEAF}>two ribbons → two entries</text>
+    </svg>
+  );
+}
+
+function G2gBarGap() {
+  const y0 = 112, unit = 14;
+  return (
+    <svg viewBox="0 0 260 150" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar graph shows cats at three votes and dogs at six votes. A bracket marks the three-vote gap from the top of the cats bar to the top of the dogs bar.</title>
+      {[0, 1, 2, 3, 4, 5, 6].map((tick) => <g key={tick}><line x1={34} y1={y0 - tick * unit} x2={220} y2={y0 - tick * unit} stroke={INK} strokeOpacity={tick ? 0.18 : 0.8} /><text x={27} y={y0 - tick * unit + 3} textAnchor="end" fontSize={10} fill={INK}>{tick}</text></g>)}
+      <rect x={58} y={y0 - 3 * unit} width={42} height={3 * unit} fill={SKY} fillOpacity={0.75} stroke={INK} />
+      <rect x={132} y={y0 - 6 * unit} width={42} height={6 * unit} fill={TANGERINE} fillOpacity={0.72} stroke={INK} />
+      <text x={79} y={130} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>cats 3</text><text x={153} y={130} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>dogs 6</text>
+      <path d={`M 190 ${y0 - 6 * unit} h 9 M 195 ${y0 - 6 * unit} V ${y0 - 3 * unit} M 190 ${y0 - 3 * unit} h 9`} fill="none" stroke={LEAF} strokeWidth={2} />
+      <text x={226} y={y0 - 4.5 * unit + 4} textAnchor="middle" fontSize={11} fontWeight={800} fill={LEAF}>gap 3</text>
+    </svg>
+  );
+}
+
+function G2gDisplayChoice() {
+  return (
+    <svg viewBox="0 0 300 142" role="img" className="mx-auto w-full max-w-md">
+      <title>Measurements use a line plot with X marks above number values, while named categories use separate bars. The kind of data determines the display.</title>
+      <text x={75} y={18} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>measurements</text>
+      <line x1={18} y1={102} x2={132} y2={102} stroke={INK} strokeWidth={1.4} />
+      {[4,5,6].map((value, index) => <g key={value}><line x1={40 + index * 35} y1={97} x2={40 + index * 35} y2={107} stroke={INK} /><text x={40 + index * 35} y={120} textAnchor="middle" fontSize={10} fill={INK}>{value}</text></g>)}
+      {[{x:40,n:1},{x:75,n:3},{x:110,n:1}].flatMap((stack) => Array.from({length:stack.n},(_,i)=><text key={`${stack.x}-${i}`} x={stack.x} y={90-i*21} textAnchor="middle" fontSize={15} fontWeight={900} fill={SKY}>×</text>))}
+      <text x={75} y={136} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>line plot</text>
+      <line x1={164} y1={112} x2={284} y2={112} stroke={INK} strokeWidth={1.4} />
+      {[{x:182,h:42,label:"A"},{x:225,h:72,label:"B"},{x:268,h:54,label:"C"}].map((bar)=><g key={bar.label}><rect x={bar.x-13} y={112-bar.h} width={26} height={bar.h} fill={TANGERINE} fillOpacity={0.7} stroke={INK}/><text x={bar.x} y={126} textAnchor="middle" fontSize={10} fill={INK}>{bar.label}</text></g>)}
+      <text x={225} y={18} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>named choices</text>
+      <text x={225} y={140} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>bar graph</text>
+    </svg>
+  );
+}
 /* ===== shapes-shares-g2 concept figures (visual-density, early reading) ===== */
 function Ssg2NameBySides() {
   return (
@@ -15618,6 +17147,42 @@ function VmBaseLayers() {
     </svg>
   );
 }
+/** vm-04-01's own base-layer figure (S320, additive): a house-style twin of BoxLayers (which
+ *  renders asv-05-01's independently owned 3×2×4 example) built for THIS lesson's actual
+ *  numbers, so c1's "4-by-3 base, 5 layers, 60 cubes" prose never again drifts from what
+ *  renders beside it. */
+function VmSixtyCubeBox() {
+  const w = 26, d = 12, h = 20; // cube face metrics (BoxLayers convention)
+  const cols = 4, rows = 3, layerCount = 5, x0 = 26, bottomY = 160;
+  const cube = (cx: number, cy: number, accent = false) => (
+    <g stroke={INK} strokeWidth={1.25}>
+      <polygon points={`${cx},${cy} ${cx + w},${cy} ${cx + w + d},${cy - d} ${cx + d},${cy - d}`} fill={accent ? "#FFE3CC" : "#F0F3F7"} />
+      <polygon points={`${cx},${cy} ${cx + w},${cy} ${cx + w},${cy + h} ${cx},${cy + h}`} fill={accent ? "#FFD1AB" : "white"} />
+      <polygon points={`${cx + w},${cy} ${cx + w + d},${cy - d} ${cx + w + d},${cy - d + h} ${cx + w},${cy + h}`} fill={accent ? "#F5B076" : "#DCE4EE"} />
+    </g>
+  );
+  const layer = (baseY: number, accent = false) => {
+    const cells: JSX.Element[] = [];
+    for (let row = rows - 1; row >= 0; row--) {
+      for (let col = 0; col < cols; col++) {
+        cells.push(<g key={`${baseY}-${row}-${col}`}>{cube(x0 + col * w + row * d, baseY - row * d, accent)}</g>);
+      }
+    }
+    return cells;
+  };
+  const layerEls = Array.from({ length: layerCount }, (_, i) => layerCount - 1 - i).map((i) => (
+    <g key={i}>{layer(bottomY - i * h, i === 0)}</g>
+  ));
+  return (
+    <svg viewBox="0 0 380 200" role="img" className="mx-auto w-full max-w-sm">
+      <title>A box built from unit cubes: the base layer is 4 by 3 cubes, stacked 5 layers high, for 60 cubes in all; the highlighted bottom layer shows the base.</title>
+      {layerEls}
+      <text x={190} y={22} fontSize={10} fontWeight={700} fill={TANGERINE}>5 layers tall</text>
+      <text x={190} y={92} fontSize={11} fontWeight={700} fill={INK}>base layer: 4 × 3 = 12</text>
+      <text x={190} y={176} fontSize={13} fontWeight={800} fill={LEAF}>12 × 5 = 60 cubes</text>
+    </svg>
+  );
+}
 function VmFormulaLWH() {
   return (
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
@@ -15682,6 +17247,81 @@ function VmLShape() {
       <text x={64} y={78} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>box 1</text>
       <text x={115} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>box 2</text>
       <text x={100} y={104} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>cut, then add</text>
+    </svg>
+  );
+}
+
+/**
+ * g5v-03-01 (S328, closes S327-A4's ESCALATE): the lesson's own defining action — a
+ * rectangular notch cut from one corner of a full rectangular block, then subtracted —
+ * had no visual anywhere (neither barBuilder widget ever renders the notch; it is only
+ * narrated in feedback text). This is deliberately RECTANGULAR and unit-cube-registered
+ * (not sg-subtracting's circle/pricing register) and ADDITIVE-free (not vm-l-shape's or
+ * vm-add-volumes' "cut into two boxes and add" method, which is the wrong operation for
+ * this lesson). Numbers (48, 15, 33) are a fresh illustrative instance distinct from every
+ * worked pair already in this lesson (i1 30−8=22, i2 28−6=22, k2 24−16=8, ch1 36−24=12,
+ * remedial 28−6=22) so binding this to c1 — which sits before i1's predict-before-reveal
+ * question ("A 5-by-6 block with an 8-cube notch — volume? 22 or 38") — cannot hand the
+ * learner that answer; the dashed corner is drawn "removed" (white fill, dashed BERRY
+ * stroke), following sg-subtracting's own "outer minus removed" convention, so this reads
+ * as a same-family, register-corrected sibling rather than an unrelated new idiom.
+ */
+function VmNotchBlock() {
+  return (
+    <svg
+      viewBox="0 0 220 140"
+      role="img"
+      className="mx-auto w-full max-w-xs"
+      aria-label="A rectangular block with a rectangular notch cut from its top-right corner. The full block holds 48 unit cubes. The notch is drawn white with a dashed outline to show it is now empty space, removing 15 unit cubes. The remaining solid holds 48 minus 15, which is 33, unit cubes."
+    >
+      <title>Subtract the notch from the full block: 48 − 15 = 33 unit cubes remain.</title>
+      <rect x={25} y={25} width={140} height={70} fill={SKY} opacity={0.25} stroke={INK} strokeWidth={1.8} />
+      <rect x={110} y={25} width={55} height={35} fill="white" stroke={BERRY} strokeWidth={1.8} strokeDasharray="4 3" />
+      <text x={70} y={80} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>full block: 48</text>
+      <text x={137} y={46} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>notch: 15</text>
+      <text x={110} y={120} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>48 − 15 = 33 remain</text>
+    </svg>
+  );
+}
+
+/**
+ * g5v-03-03 (S328, closes S327-A4's ESCALATE): the lesson's central claim — that two
+ * differently-proportioned rectangular solids can hold the same volume — was only ever
+ * asserted in feedback prose (i1/i2's successFeedback); no widget shows the two solids
+ * side by side, and neither concept step carried a figure. Bound only to c2 (whose own
+ * sentence, "different shapes can hold identical volumes," is exactly this claim); NOT
+ * bound to c1, which precedes i1's own predict-before-reveal question ("A is 20×3 and B
+ * is 12×5. Which is larger? Equal — both 60, or A") — using the lesson's real numbers
+ * here would hand that answer away before the learner commits to a prediction. By the
+ * time c2 renders, i1 has already completed and its own successFeedback has already
+ * stated "60 — and B is also 60" in words, so drawing that same, already-revealed pair
+ * here adds the missing picture without previewing anything still ahead (i2's 14×4/7×8
+ * pair is untouched). Solid A (base 20, 3 layers) renders wide-and-short; Solid B (base
+ * 12, 5 layers) renders narrow-and-tall, sharing one ground line, so the different
+ * proportions are the whole visual point.
+ */
+function VmEqualVolumesCompare() {
+  return (
+    <svg
+      viewBox="0 0 280 170"
+      role="img"
+      className="mx-auto w-full max-w-md"
+      aria-label="Solid A, a wide short stack with base 20 and 3 layers, stands beside Solid B, a narrower taller stack with base 12 and 5 layers, both resting on the same ground line. Both hold exactly 60 unit cubes: 20 times 3 equals 60, and 12 times 5 also equals 60."
+    >
+      <title>Two differently shaped solids share one volume: 20 × 3 = 12 × 5 = 60.</title>
+      <rect x={35} y={70} width={100} height={36} fill={SKY} opacity={0.3} stroke={INK} strokeWidth={1.6} />
+      <line x1={35} y1={82} x2={135} y2={82} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={35} y1={94} x2={135} y2={94} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <rect x={175} y={46} width={60} height={60} fill={TANGERINE} opacity={0.3} stroke={INK} strokeWidth={1.6} />
+      <line x1={175} y1={58} x2={235} y2={58} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={70} x2={235} y2={70} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={82} x2={235} y2={82} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={175} y1={94} x2={235} y2={94} stroke={INK} strokeWidth={1} opacity={0.5} />
+      <line x1={30} y1={106} x2={240} y2={106} stroke={INK} strokeWidth={1.8} />
+      <text x={85} y={55} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>base 20 × 3 layers</text>
+      <text x={205} y={32} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>base 12 × 5 layers</text>
+      <text x={155} y={80} textAnchor="middle" fontSize={18} fontWeight={900} fill={INK}>=</text>
+      <text x={140} y={130} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>20 × 3 = 12 × 5 = 60</text>
     </svg>
   );
 }
@@ -17447,7 +19087,8 @@ function RadDenomRoot() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
       <title>Roots as exponents: the denominator picks the root, so one-fourth means the fourth root and one-fifth the fifth root.</title>
-      <text x={120} y={34} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>a^(1/n) = ⁿ√a</text>
+      <SvgMathText x={120} y={34} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="a^{1/n}=\\sqrt[n]{a}" fallback="a¹⁄ⁿ = ⁿ√a" />
       <text x={120} y={60} textAnchor="middle" fontSize={12} fontWeight={700} fill={SKY}>denominator = root index</text>
     </svg>
   );
@@ -17456,7 +19097,8 @@ function RadPerfectPower() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>This works for any perfect power: thirty-two to the one-fifth is two, because two to the fifth is thirty-two.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={15} fontWeight={800} fill={INK}>32^(1/5) = <tspan fill={LEAF}>2</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={15} fontWeight={800} color={INK}
+        tex="32^{1/5}=2" fallback="⁵√32 = 2" />
     </svg>
   );
 }
@@ -17464,7 +19106,8 @@ function RadPowerRoot() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Taking the root first keeps arithmetic easy: twenty-seven to the two-thirds is the cube root of twenty-seven squared, which is three squared, nine.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>27^(2/3) = (∛27)² = <tspan fill={LEAF}>9</tspan></text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="27^{2/3}=(\\sqrt[3]{27})^2=9" fallback="27²⁄³ = (∛27)² = 9" />
     </svg>
   );
 }
@@ -17483,7 +19126,8 @@ function RadNegRational() {
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>Negative rational exponents combine all three parts: the root from the denominator, the power from the numerator, and the reciprocal from the sign.</title>
       <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>root · power · reciprocal</text>
-      <text x={120} y={56} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>a^(−m/n) = 1 / (ⁿ√a)^m</text>
+      <SvgMathText x={120} y={56} width={220} height={28} fontSize={13} fontWeight={800} color={SKY}
+        tex="a^{-m/n}=\\frac{1}{(\\sqrt[n]{a})^m}" fallback="a⁻ᵐ⁄ⁿ = 1 ÷ (ⁿ√a)ᵐ" />
     </svg>
   );
 }
@@ -17571,7 +19215,8 @@ function EpQuotientRule() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Dividing subtracts: in a to the m over a to the n, cancel matching factors so the exponent is m minus n.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>aᵐ / aⁿ = <tspan fill={SKY}>a^(m−n)</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="\\frac{a^m}{a^n}=a^{m-n}" fallback="aᵐ ÷ aⁿ = aᵐ⁻ⁿ" />
     </svg>
   );
 }
@@ -17595,7 +19240,8 @@ function EpNegativeExp() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>A negative exponent means reciprocal: a to the negative n is one over a to the n; flip the base.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={16} fontWeight={800} fill={INK}>a^(−n) = 1 / aⁿ</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={16} fontWeight={800} color={INK}
+        tex="a^{-n}=\\frac{1}{a^n}" fallback="a⁻ⁿ = 1 ÷ aⁿ" />
     </svg>
   );
 }
@@ -17603,7 +19249,8 @@ function EpNegFromDivision() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Negative exponents also appear from division when the bottom exponent is bigger than the top.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>x²/x⁵ = x^(−3) = 1/x³</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="\\frac{x^2}{x^5}=x^{-3}=\\frac{1}{x^3}" fallback="x² ÷ x⁵ = x⁻³ = 1 ÷ x³" />
     </svg>
   );
 }
@@ -17856,7 +19503,7 @@ function ExpKeepThird() {
 function ExpGrow50() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
-      <title>Growing fifty percent means the base is one plus one-half, so growing fifty percent from sixteen uses sixteen times one point five to the x.</title>
+      <title>Growing 50% means the base is 1 + 1/2, so growing 50% from 16 uses 16 times 1.5 to the x.</title>
       <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>+50% → base 1.5</text>
     </svg>
   );
@@ -17864,7 +19511,7 @@ function ExpGrow50() {
 function ExpDecay50() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
-      <title>For decay, subtract the percent: losing fifty percent from eighty uses eighty times zero point five to the x.</title>
+      <title>For decay, subtract the percent: losing 50% from 80 uses 80 times 0.5 to the x.</title>
       <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={BERRY}>−50% → base 0.5</text>
     </svg>
   );
@@ -18116,7 +19763,8 @@ function FnGeomExponent() {
   return (
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>The exponent is n minus one: the fourth term uses r cubed, because the first term uses no factors of r.</title>
-      <text x={120} y={30} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>aₙ = a₁ · r^(n−1)</text>
+      <SvgMathText x={120} y={30} width={210} height={26} fontSize={14} fontWeight={800} color={INK}
+        tex="a_n=a_1\\cdot r^{n-1}" fallback="aₙ = a₁ · rⁿ⁻¹" />
       <text x={120} y={56} textAnchor="middle" fontSize={12} fontWeight={800} fill={SKY}>4th term uses r³</text>
     </svg>
   );
@@ -20355,7 +22003,8 @@ function ReRationalExponent() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Eight to the two-thirds is the cube root of eight, squared, which is four; now the base can be a variable.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>8^(2/3) = (∛8)² = <tspan fill={LEAF}>4</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="8^{2/3}=(\\sqrt[3]{8})^2=4" fallback="8²⁄³ = (∛8)² = 4" />
     </svg>
   );
 }
@@ -20363,7 +22012,8 @@ function ReOtherWay() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Going the other way is just as mechanical: x to the four-fifths is the fifth root of x to the fourth.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>x^(4/5) = ⁵√(x⁴)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="x^{4/5}=\\sqrt[5]{x^4}" fallback="x⁴⁄⁵ = ⁵√(x⁴)" />
     </svg>
   );
 }
@@ -20371,7 +22021,8 @@ function ReExponentRules() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Every exponent rule from Algebra 1 survives with fractions: add exponents when multiplying like bases.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>x^(1/2)·x^(1/3) = x^(5/6)</text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="x^{1/2}\\cdot x^{1/3}=x^{5/6}" fallback="x¹⁄² · x¹⁄³ = x⁵⁄⁶" />
     </svg>
   );
 }
@@ -20379,7 +22030,8 @@ function RePowerOfPower() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Power of a power is the workhorse: x to the sixth, all to the one-third, multiplies the exponents to give x squared.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>(x⁶)^(1/3) = <tspan fill={LEAF}>x²</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="(x^6)^{1/3}=x^2" fallback="(x⁶)¹⁄³ = x²" />
     </svg>
   );
 }
@@ -20387,7 +22039,8 @@ function ReVariableRadical() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Exponent form makes variable radicals mechanical: the square root of x to the sixth is x to the six-halves, which is x cubed.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>√(x⁶) = x^(6/2) = <tspan fill={LEAF}>x³</tspan></text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="\\sqrt{x^6}=x^{6/2}=x^3" fallback="√(x⁶) = x⁶⁄² = x³" />
     </svg>
   );
 }
@@ -20539,7 +22192,8 @@ function ReReciprocalCancel() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Reciprocal exponents cancel: to undo a two-thirds power, raise to the three-halves power.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>(  )^(2/3) undone by ^(3/2)</text>
+      <SvgMathText x={120} y={38} width={225} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="(\\square)^{2/3}\\text{ undone by }(\\square)^{3/2}" fallback="(□)²⁄³ undone by (□)³⁄²" />
     </svg>
   );
 }
@@ -20547,7 +22201,8 @@ function ReReciprocalCheck() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Check the reciprocal arithmetic: x to the three-halves, all to the two-thirds, has exponent one, giving x.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>(x^(3/2))^(2/3) = <tspan fill={LEAF}>x</tspan></text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="(x^{3/2})^{2/3}=x" fallback="(x³⁄²)²⁄³ = x" />
     </svg>
   );
 }
@@ -20564,7 +22219,8 @@ function ReOddNumerator() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Odd numerators keep signs, so they stay single-answer: x to the three-fifths gives one solution.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>x^(3/5): single answer</text>
+      <SvgMathText x={120} y={38} width={210} height={26} fontSize={12} fontWeight={800} color={LEAF}
+        tex="x^{3/5}\\colon\\text{ single answer}" fallback="x³⁄⁵: single answer" />
     </svg>
   );
 }
@@ -20739,7 +22395,7 @@ function LgBothSides() {
 function LgEConstant() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
-      <title>Why care about one weird constant: e is the base of continuous growth, about two point seven one eight.</title>
+      <title>Why care about a weird constant: e is the base of continuous growth, about 2.718.</title>
       <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>e ≈ 2.718 (continuous growth)</text>
     </svg>
   );
@@ -20757,7 +22413,8 @@ function LgLnUndo() {
     <svg viewBox="0 0 240 70" role="img" className="mx-auto w-full max-w-xs">
       <title>Natural log and e to the x undo each other in both directions: l n of e to the x is x, and e to the l n x is x.</title>
       <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>ln(eˣ) = x</text>
-      <text x={120} y={56} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>e^(ln x) = x</text>
+      <SvgMathText x={120} y={56} width={210} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="e^{\\ln x}=x" fallback="eˡⁿˣ = x" />
     </svg>
   );
 }
@@ -20781,15 +22438,17 @@ function LgContinuousModel() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>The all-purpose continuous model: amount equals principal times e to the rate times time.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={15} fontWeight={800} fill={INK}>A = P·e^(rt)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={15} fontWeight={800} color={INK}
+        tex="A=P\\cdot e^{rt}" fallback="A = P·eʳᵗ" />
     </svg>
   );
 }
 function LgAnatomy() {
   return (
     <svg viewBox="0 0 240 80" role="img" className="mx-auto w-full max-w-xs">
-      <title>Read the anatomy: in A equals three hundred times e to the zero point zero eight t, the start is three hundred and the rate is eight percent.</title>
-      <text x={120} y={30} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>A = 300·e^(0.08t)</text>
+      <title>Read the anatomy: in A = 300 times e to the 0.08t, the start is 300 and the rate is 8%.</title>
+      <SvgMathText x={120} y={30} width={220} height={26} fontSize={13} fontWeight={800} color={INK}
+        tex="A=300\\cdot e^{0.08t}" fallback="A = 300·e⁰·⁰⁸ᵗ" />
       <text x={120} y={56} textAnchor="middle" fontSize={11} fontWeight={800} fill={SKY}>start 300 · rate 8%</text>
     </svg>
   );
@@ -20809,7 +22468,8 @@ function LgFractionalHalfLife() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Fractional half-lives run through the formula's exponent: raise one-half to the number of half-lives elapsed.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>N = N₀·(½)^(t/h)</text>
+      <SvgMathText x={120} y={38} width={220} height={28} fontSize={13} fontWeight={800} color={INK}
+        tex="N=N_0\\cdot(\\frac12)^{t/h}" fallback="N = N₀·(½)ᵗ⁄ʰ" />
     </svg>
   );
 }
@@ -21254,7 +22914,8 @@ function SrGeomToExplicit() {
   return (
     <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
       <title>Geometric rules convert the same way, with factors instead of hops: a n equals a one times r to the n minus one.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={14} fontWeight={800} fill={INK}>aₙ = a₁·r^(n−1)</text>
+      <SvgMathText x={120} y={38} width={210} height={28} fontSize={14} fontWeight={800} color={INK}
+        tex="a_n=a_1\\cdot r^{n-1}" fallback="aₙ = a₁·rⁿ⁻¹" />
     </svg>
   );
 }
@@ -21969,9 +23630,10 @@ function TiPowerReduction() {
 }
 function TiDoubleProve() {
   return (
-    <svg viewBox="0 0 240 60" role="img" className="mx-auto w-full max-w-xs">
-      <title>Double-angle identities solve and prove: sine two theta over sine theta simplifies to two cosine theta.</title>
-      <text x={120} y={38} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>sin 2θ / sin θ = 2 cos θ</text>
+    <svg viewBox="0 0 240 76" role="img" className="mx-auto w-full max-w-xs">
+      <title>On the common domain where sine theta is not zero, sine two theta over sine theta simplifies to two cosine theta. Inputs where sine theta is zero remain excluded.</title>
+      <text x={120} y={31} textAnchor="middle" fontSize={12} fontWeight={800} fill={INK}>sin 2θ / sin θ = 2 cos θ</text>
+      <text x={120} y={55} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>only where sin θ ≠ 0</text>
     </svg>
   );
 }
@@ -22195,7 +23857,7 @@ function CoDirectrixLocation() {
 function CoCometEccentric() {
   return (
     <svg viewBox="0 0 200 110" role="img" className="mx-auto w-full max-w-xs">
-      <title>Comets show the other extreme: Halley's Comet has eccentricity about zero point nine seven, a very elongated ellipse.</title>
+      <title>Comets show the other extreme: Halley's Comet has eccentricity about 0.97, a very elongated ellipse.</title>
       <ellipse cx={110} cy={55} rx={80} ry={20} fill="none" stroke={SKY} strokeWidth={1.8} />
       <circle cx={38} cy={55} r={5} fill={TANGERINE} /><text x={38} y={40} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>Sun</text>
       <text x={110} y={98} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>Halley: e ≈ 0.97</text>
@@ -23102,6 +24764,37 @@ function VecMatrixRowDot() {
     </svg>
   );
 }
+
+/**
+ * S324 (S316-VM-vec-04-01 contract): the distinct c2 visual — the matrix as a
+ * machine of two row recipes, with each row color-matched to the output
+ * component it builds. Symbolic letters only (no digits), so the title
+ * asserts no numeric claim.
+ */
+function VecMatrixRowRecipe() {
+  return (
+    <svg viewBox="0 0 300 130" role="img" className="mx-auto w-full max-w-sm">
+      <title>A two by two matrix as two row recipes: the top row dotted with the vector makes the new x, and the bottom row dotted with the vector makes the new y.</title>
+      <text x={150} y={14} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>two row recipes make the two outputs</text>
+      <path d="M 32 38 L 26 38 L 26 94 L 32 94" fill="none" stroke={INK} strokeWidth={1.6} />
+      <path d="M 90 38 L 96 38 L 96 94 L 90 94" fill="none" stroke={INK} strokeWidth={1.6} />
+      <rect x={30} y={44} width={62} height={20} rx={4} fill={SKY} fillOpacity={0.16} />
+      <rect x={30} y={72} width={62} height={20} rx={4} fill={TANGERINE} fillOpacity={0.16} />
+      <text x={61} y={58} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>a  b</text>
+      <text x={61} y={86} textAnchor="middle" fontSize={13} fontWeight={800} fill={TANGERINE}>c  d</text>
+      <path d="M 110 38 L 104 38 L 104 94 L 110 94" fill="none" stroke={INK} strokeWidth={1.4} />
+      <path d="M 134 38 L 140 38 L 140 94 L 134 94" fill="none" stroke={INK} strokeWidth={1.4} />
+      <text x={122} y={58} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>x</text>
+      <text x={122} y={86} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>y</text>
+      <text x={154} y={72} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>=</text>
+      <path d="M 172 38 L 166 38 L 166 94 L 172 94" fill="none" stroke={INK} strokeWidth={1.6} />
+      <path d="M 286 38 L 292 38 L 292 94 L 286 94" fill="none" stroke={INK} strokeWidth={1.6} />
+      <text x={229} y={58} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>ax + by</text>
+      <text x={229} y={86} textAnchor="middle" fontSize={13} fontWeight={800} fill={TANGERINE}>cx + dy</text>
+      <text x={150} y={116} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} fillOpacity={0.85}>top row → new x • bottom row → new y</text>
+    </svg>
+  );
+}
 function VecDeterminant() {
   return (
     <svg viewBox="0 0 200 120" role="img" className="mx-auto w-full max-w-xs">
@@ -23769,7 +25462,7 @@ function CprRowVsColumn() {
 function CprMultiplicationArea() {
   return (
     <svg viewBox="0 0 300 170" role="img" className="mx-auto w-full max-w-sm">
-      <title>A unit square. Half its width is the bus riders, and two fifths of that strip's height are the ones who play a sport, so the shaded rectangle has area zero point two — the joint probability.</title>
+      <title>A unit square. Half its width is the bus riders, and two fifths of that strip's height are the ones who play a sport, so the shaded rectangle has area 0.2 — the joint probability.</title>
       <rect x={40} y={30} width={200} height={100} fill="white" stroke={INK} strokeWidth={1} />
       <rect x={40} y={30} width={100} height={100} fill={SKY} opacity={0.18} />
       <rect x={40} y={30} width={100} height={40} fill={TANGERINE} opacity={0.7} stroke={TANGERINE} strokeWidth={1} />
@@ -25034,6 +26727,100 @@ function CaMvtParallel() {
   );
 }
 
+/** The +C family: F, F+3, F+6 stacked vertically — identical tangent slope at every matching x, only the height differs. */
+function CaPlusCFamily() {
+  const cx = 170, ux = 34, uy = 14, baseY = 172;
+  const g = (t: number) => 0.3 * t * t;
+  const curve = (C: number) => {
+    const pts: string[] = [];
+    for (let t = -3.2; t <= 3.2 + 1e-9; t += 0.2) {
+      pts.push(`${pts.length ? "L" : "M"}${(cx + t * ux).toFixed(1)},${(baseY - (g(t) + C) * uy).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  const xTag = 1.6;
+  const slope = 0.6 * xTag;
+  const tangent = (C: number, color: string) => {
+    const y0 = g(xTag) + C;
+    const dx = 0.9;
+    const x1 = xTag - dx, x2 = xTag + dx;
+    const y1 = y0 - slope * dx, y2 = y0 + slope * dx;
+    return <line x1={cx + x1 * ux} y1={baseY - y1 * uy} x2={cx + x2 * ux} y2={baseY - y2 * uy} stroke={color} strokeWidth={2.2} strokeDasharray="4 3" />;
+  };
+  const labelY = (C: number) => baseY - (g(xTag) + C) * uy - 10;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>A curve shown together with two vertical shifts of itself, all sharing the same shape. At the same x-value on every copy the tangent line has the identical slope — only the height differs, which is exactly what the plus C in an antiderivative family means.</title>
+      <path d={curve(0)} fill="none" stroke={SKY} strokeWidth={2.4} strokeLinecap="round" />
+      <path d={curve(3)} fill="none" stroke={LEAF} strokeWidth={2.4} strokeLinecap="round" />
+      <path d={curve(6)} fill="none" stroke={TANGERINE} strokeWidth={2.4} strokeLinecap="round" />
+      {tangent(0, SKY)}
+      {tangent(3, LEAF)}
+      {tangent(6, TANGERINE)}
+      <text x={296} y={labelY(0)} textAnchor="end" fontSize={11} fontWeight={800} fill={SKY}>F</text>
+      <text x={296} y={labelY(3)} textAnchor="end" fontSize={11} fontWeight={800} fill={LEAF}>F + 3</text>
+      <text x={296} y={labelY(6)} textAnchor="end" fontSize={11} fontWeight={800} fill={TANGERINE}>F + 6</text>
+      <text x={170} y={18} textAnchor="middle" fontSize={11.5} fontWeight={700} fill={INK}>same slope everywhere — only the height differs</text>
+    </svg>
+  );
+}
+
+/** Open-top box setup: a 12×12 sheet with side-x corner squares cut, folded into a base-(12−2x), height-x box. */
+function CaOpenBoxSetup() {
+  const s = 96, ox = 18, oy = 26, cut = 22;
+  const bx = 210, by = 150, bw = 90, bh = 46, bd = 26;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>Left: a flat 12 by 12 sheet with a square of side x cut from each of its four corners, and dashed fold lines marking an inner square of side 12 minus 2x. Right: the same sheet folded up into an open-top box with that base and height x, giving volume V equals x times the quantity 12 minus 2x, squared, for x between 0 and 6.</title>
+      <g>
+        <rect x={ox} y={oy} width={s} height={s} fill="none" stroke={INK} strokeWidth={1.8} />
+        <rect x={ox} y={oy} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + s - cut} y={oy} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox} y={oy + s - cut} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + s - cut} y={oy + s - cut} width={cut} height={cut} fill={BERRY} opacity={0.22} stroke={BERRY} strokeWidth={1} />
+        <rect x={ox + cut} y={oy + cut} width={s - 2 * cut} height={s - 2 * cut} fill={SKY} opacity={0.12} stroke={SKY} strokeWidth={1.4} strokeDasharray="4 3" />
+        <text x={ox + cut / 2} y={oy + cut / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>x</text>
+        <text x={ox + s / 2} y={oy - 8} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>12</text>
+        <text x={ox} y={oy + s / 2 + 4} textAnchor="end" fontSize={11} fontWeight={800} fill={INK}>12</text>
+        <text x={ox + s / 2} y={oy + s / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={700} fill={SKY}>12 − 2x</text>
+      </g>
+      <g>
+        <path d={`M ${bx} ${by} L ${bx} ${by - bh} L ${bx + bw} ${by - bh} L ${bx + bw} ${by} Z`} fill="white" stroke={INK} strokeWidth={1.5} />
+        <path d={`M ${bx + bw} ${by} L ${bx + bw + bd} ${by - bd} L ${bx + bw + bd} ${by - bd - bh} L ${bx + bw} ${by - bh} Z`} fill={TANGERINE} opacity={0.2} stroke={INK} strokeWidth={1.5} />
+        <path d={`M ${bx} ${by - bh} L ${bx + bd} ${by - bd - bh} L ${bx + bw + bd} ${by - bd - bh} L ${bx + bw} ${by - bh} Z`} fill="none" stroke={SKY} strokeWidth={1.8} />
+        <line x1={bx - 8} y1={by} x2={bx - 8} y2={by - bh} stroke={LEAF} strokeWidth={2.2} />
+        <text x={bx - 18} y={by - bh / 2 + 4} textAnchor="middle" fontSize={10} fontWeight={800} fill={LEAF}>x</text>
+        <text x={bx + bw / 2} y={by + 16} textAnchor="middle" fontSize={10} fontWeight={700} fill={SKY}>base: 12 − 2x</text>
+      </g>
+      <text x={170} y={182} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>V = x(12 − 2x)², 0 &lt; x &lt; 6</text>
+    </svg>
+  );
+}
+
+/** Fence-against-a-wall setup: the wall is free, two runs of length x are perpendicular to it, one run of length 100−2x is parallel to it. */
+function CaFenceAgainstWall() {
+  const left = 60, right = 260, top = 40, bottom = 130;
+  return (
+    <svg viewBox="0 0 340 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>A rectangular pen against a wall: the wall forms the top side for free, two fence runs of length x form the left and right sides, and one fence run of length 100 minus 2x forms the bottom side, parallel to the wall, using a total of 2x plus y equals 100 metres of fence.</title>
+      <line x1={left - 12} y1={top} x2={right + 12} y2={top} stroke={INK} strokeWidth={6} strokeLinecap="round" />
+      {Array.from({ length: 12 }, (_, i) => {
+        const x = left - 8 + (i * (right - left + 16)) / 11;
+        return <line key={i} x1={x} y1={top - 10} x2={x + 8} y2={top + 2} stroke={INK} strokeWidth={1.4} opacity={0.5} />;
+      })}
+      <text x={170} y={top - 16} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>wall (free — no fence)</text>
+      <rect x={left} y={top} width={right - left} height={bottom - top} fill={SKY} opacity={0.1} stroke="none" />
+      <line x1={left} y1={top} x2={left} y2={bottom} stroke={TANGERINE} strokeWidth={3} />
+      <line x1={right} y1={top} x2={right} y2={bottom} stroke={TANGERINE} strokeWidth={3} />
+      <line x1={left} y1={bottom} x2={right} y2={bottom} stroke={LEAF} strokeWidth={3} />
+      <text x={left - 18} y={(top + bottom) / 2} textAnchor="middle" fontSize={12} fontWeight={800} fill={TANGERINE} transform={`rotate(-90 ${left - 18} ${(top + bottom) / 2})`}>x</text>
+      <text x={right + 18} y={(top + bottom) / 2} textAnchor="middle" fontSize={12} fontWeight={800} fill={TANGERINE} transform={`rotate(-90 ${right + 18} ${(top + bottom) / 2})`}>x</text>
+      <text x={170} y={bottom + 22} textAnchor="middle" fontSize={12} fontWeight={800} fill={LEAF}>y = 100 − 2x</text>
+      <text x={170} y={172} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>2x + y = 100 · A = x(100 − 2x)</text>
+    </svg>
+  );
+}
+
 function DcSpeedingUpSigns() {
   const cells = [
     { v: "+", a: "+", w: "SPEEDING UP", c: LEAF, s: "forward, and faster" },
@@ -25105,6 +26892,45 @@ function IaStripToDisc() {
   );
 }
 
+/** Area between crossing curves: the subtraction order changes exactly at the crossing. */
+function IaTopBottomSwap() {
+  return (
+    <svg viewBox="0 0 300 178" role="img" className="mx-auto w-full max-w-md">
+      <title>
+        Two curves cross in the middle of a region. On the left the blue curve is above the orange
+        curve, while on the right the orange curve is above the blue curve. A dashed line through
+        the crossing marks where the integral must split so each strip remains top minus bottom.
+      </title>
+      <text x={150} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>
+        when the curves cross, TOP and BOTTOM swap
+      </text>
+      <path d="M 24 42 Q 87 63 150 88 Q 87 113 24 136 Z" fill={SKY} fillOpacity={0.12} />
+      <path d="M 150 88 Q 213 113 276 136 L 276 42 Q 213 63 150 88 Z" fill={TANGERINE} fillOpacity={0.12} />
+      <path d="M 24 42 Q 150 88 276 136" fill="none" stroke={SKY} strokeWidth={3} />
+      <path d="M 24 136 Q 150 88 276 42" fill="none" stroke={TANGERINE} strokeWidth={3} />
+      <line x1={150} y1={25} x2={150} y2={148} stroke={BERRY} strokeWidth={1.6} strokeDasharray="5 4" />
+      <circle cx={150} cy={88} r={4.5} fill={BERRY} />
+      <text x={150} y={165} textAnchor="middle" fontSize={10} fontWeight={800} fill={BERRY}>
+        split at the crossing
+      </text>
+      <line x1={77} y1={61} x2={77} y2={117} stroke={LEAF} strokeWidth={5} strokeLinecap="round" />
+      <line x1={223} y1={61} x2={223} y2={117} stroke={LEAF} strokeWidth={5} strokeLinecap="round" />
+      <text x={75} y={31} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>
+        blue − orange
+      </text>
+      <text x={225} y={31} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>
+        orange − blue
+      </text>
+      <text x={75} y={146} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+        top − bottom
+      </text>
+      <text x={225} y={146} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>
+        top − bottom
+      </text>
+    </svg>
+  );
+}
+
 function PcPolarWedge() {
   const CX = 92, CY = 128, R = 82;
   const t0 = 0.62, t1 = 0.92;
@@ -25139,6 +26965,120 @@ function PcPolarWedge() {
       <text x={150} y={158} textAnchor="middle" fontSize={10} fill={INK} fillOpacity={0.75}>
         lose the ½ and a circle will catch you: ∫½(2)²dθ over a full turn is 4π = πr²
       </text>
+    </svg>
+  );
+}
+
+/**
+ * S324 (S322-F8 pc-01-02 contract): arc length as a sum of tiny hypotenuses.
+ * A curve cut into straight chords, with one chord magnified as the
+ * dx/dy/hypotenuse right triangle the lesson's c1 and remedial describe.
+ * Title is word-only (no digits), so it asserts no numeric claim.
+ */
+function PcArcLengthHypotenuses() {
+  const P = (t: number) => [20 + 160 * t, 128 - 88 * t - 40 * t * (1 - t)] as const;
+  const smooth = Array.from({ length: 41 }, (_, i) => P(i / 40))
+    .map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`)
+    .join(" L ");
+  const joints = [0, 0.25, 0.5, 0.75, 1].map((t) => P(t));
+  return (
+    <svg viewBox="0 0 320 150" role="img" className="mx-auto w-full max-w-md">
+      <title>A curve cut into small straight chords, with one chord magnified as a right triangle: dx across, dy up, and the chord as the hypotenuse of length the square root of dx squared plus dy squared. Adding the chords gives the arc length.</title>
+      <text x={160} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>one tiny piece: dx across, dy up</text>
+      <path d={`M ${smooth}`} fill="none" stroke={INK} strokeWidth={2} strokeOpacity={0.35} />
+      {joints.slice(0, -1).map(([x, y], i) => {
+        const [nx, ny] = joints[i + 1];
+        const zoomed = i === 2;
+        return (
+          <g key={i}>
+            <line x1={x} y1={y} x2={nx} y2={ny} stroke={zoomed ? TANGERINE : SKY} strokeWidth={zoomed ? 3 : 2.2} />
+            <circle cx={x} cy={y} r={3} fill={SKY} stroke={INK} strokeWidth={0.6} />
+          </g>
+        );
+      })}
+      <circle cx={joints[4][0]} cy={joints[4][1]} r={3} fill={SKY} stroke={INK} strokeWidth={0.6} />
+      <line x1={120} y1={64} x2={240} y2={88} stroke={TANGERINE} strokeWidth={0.9} strokeDasharray="3 3" strokeOpacity={0.7} />
+      <line x1={210} y1={120} x2={288} y2={120} stroke={INK} strokeWidth={2} />
+      <line x1={288} y1={120} x2={288} y2={64} stroke={INK} strokeWidth={2} />
+      <line x1={210} y1={120} x2={288} y2={64} stroke={TANGERINE} strokeWidth={3} />
+      <text x={249} y={134} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>dx</text>
+      <text x={293} y={96} fontSize={11} fontWeight={800} fill={INK}>dy</text>
+      <text x={240} y={58} textAnchor="middle" fontSize={11} fontWeight={800} fill={TANGERINE}>√(dx² + dy²)</text>
+      <text x={110} y={146} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} fillOpacity={0.8}>add up the hypotenuses</text>
+    </svg>
+  );
+}
+
+/**
+ * S324 (S322-F8 pc-01-02 contract): the arc-length integrand is the speed.
+ * A point tracing the curve carries a tangent velocity arrow; the magnitude
+ * of that arrow is the integrand, so arc length is the integral of speed.
+ */
+function PcIntegrandSpeed() {
+  const P = (t: number) => [20 + 160 * t, 108 - 72 * t - 34 * t * (1 - t)] as const;
+  const smooth = Array.from({ length: 41 }, (_, i) => P(i / 40))
+    .map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`)
+    .join(" L ");
+  const [px, py] = P(0.5);
+  // tangent direction at t = 0.5: (160, −72) normalized, scaled to 46
+  const [tx, ty] = [160, -72];
+  const norm = Math.hypot(tx, ty);
+  const [vx, vy] = [px + (tx / norm) * 46, py + (ty / norm) * 46];
+  return (
+    <svg viewBox="0 0 320 150" role="img" className="mx-auto w-full max-w-md">
+      <title>A point tracing the curve with its tangent velocity arrow. The arc-length integrand, the square root of dx by dt squared plus dy by dt squared, is the length of that arrow — the speed — so arc length is the integral of speed with respect to time.</title>
+      <text x={160} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>the arc-length integrand IS the speed</text>
+      <path d={`M ${smooth}`} fill="none" stroke={INK} strokeWidth={2} strokeOpacity={0.55} />
+      <circle cx={px} cy={py} r={4} fill={TANGERINE} stroke={INK} strokeWidth={0.8} />
+      <line x1={px} y1={py} x2={vx} y2={vy} stroke={TANGERINE} strokeWidth={2.6} />
+      <polygon points={`${vx},${vy} ${vx - 9},${vy - 1} ${vx - 4},${vy + 7}`} fill={TANGERINE} />
+      <text x={vx + 6} y={vy - 2} fontSize={12} fontWeight={800} fill={TANGERINE}>v</text>
+      <text x={160} y={118} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>√((dx/dt)² + (dy/dt)²) = |v| = speed</text>
+      <text x={160} y={140} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>L = ∫ speed dt — the distance travelled</text>
+    </svg>
+  );
+}
+
+/**
+ * S324 (S322-F8 pc-03-01 contract): motion as a vector. A moving point on a
+ * parametric path carries its position vector r(t) from the origin, its
+ * tangent velocity vector v, and its inward-bending acceleration vector a;
+ * the speed is the length of v.
+ */
+function PcMotionVectors() {
+  const ox = 40, oy = 130;
+  const E = (theta: number) => [150 + 80 * Math.cos(theta), 70 - 38 * Math.sin(theta)] as const;
+  const trace = Array.from({ length: 33 }, (_, i) => E(-0.2 + (i * 2.4) / 32))
+    .map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`)
+    .join(" L ");
+  const theta = 0.9;
+  const [px, py] = E(theta);
+  const vDir = [-80 * Math.sin(theta), -38 * Math.cos(theta)] as const;
+  const vNorm = Math.hypot(vDir[0], vDir[1]);
+  const [vx, vy] = [px + (vDir[0] / vNorm) * 44, py + (vDir[1] / vNorm) * 44];
+  const aDir = [150 - px, 70 - py] as const;
+  const aNorm = Math.hypot(aDir[0], aDir[1]);
+  const [ax, ay] = [px + (aDir[0] / aNorm) * 34, py + (aDir[1] / aNorm) * 34];
+  return (
+    <svg viewBox="0 0 320 150" role="img" className="mx-auto w-full max-w-md">
+      <title>A moving point on a curved path with three arrows: the position vector r of t reaching from the origin to the point, the velocity vector v tangent to the path, and the acceleration vector a bending the path inward. The speed is the length of the velocity vector.</title>
+      <text x={160} y={13} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>the moving point carries three vectors</text>
+      <line x1={ox} y1={oy} x2={ox + 34} y2={oy} stroke={INK} strokeWidth={1} strokeOpacity={0.45} />
+      <line x1={ox} y1={oy} x2={ox} y2={oy - 34} stroke={INK} strokeWidth={1} strokeOpacity={0.45} />
+      <circle cx={ox} cy={oy} r={3} fill={INK} />
+      <path d={`M ${trace}`} fill="none" stroke={INK} strokeWidth={2} strokeOpacity={0.45} />
+      <line x1={ox} y1={oy} x2={px} y2={py} stroke={SKY} strokeWidth={2.4} />
+      <polygon points={`${px},${py} ${px - 10},${py + 1} ${px - 5},${py + 8}`} fill={SKY} />
+      <circle cx={px} cy={py} r={4} fill={SKY} stroke={INK} strokeWidth={0.8} />
+      <line x1={px} y1={py} x2={vx} y2={vy} stroke={TANGERINE} strokeWidth={2.6} />
+      <polygon points={`${vx},${vy} ${vx + 2},${vy + 9} ${vx - 8},${vy + 4}`} fill={TANGERINE} />
+      <line x1={px} y1={py} x2={ax} y2={ay} stroke={BERRY} strokeWidth={2.2} />
+      <polygon points={`${ax},${ay} ${ax + 8},${ay - 4} ${ax + 3},${ay + 6}`} fill={BERRY} />
+      <text x={104} y={80} fontSize={12} fontWeight={800} fill={SKY}>r(t)</text>
+      <text x={vx - 14} y={vy + 4} fontSize={12} fontWeight={800} fill={TANGERINE}>v</text>
+      <text x={ax + 6} y={ay + 16} fontSize={12} fontWeight={800} fill={BERRY}>a</text>
+      <text x={224} y={30} fontSize={10} fontWeight={700} fill={TANGERINE}>speed = |v|</text>
+      <text x={160} y={146} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>v = ⟨x′, y′⟩   a = ⟨x″, y″⟩</text>
     </svg>
   );
 }
@@ -26008,22 +27948,30 @@ function BtCrossTerms() {
 }
 function BtTermCountGrows() {
   return (
-    <svg viewBox="0 0 300 110" role="img" className="mx-auto w-full max-w-sm">
-      <title>Raising the power adds a term each time: the square has three terms, the cube four, the fourth power five — n plus one in general.</title>
-      {[["n = 2", 3], ["n = 3", 4], ["n = 4", 5]].map(([lab, k], i) => (
-        <g key={i}>
-          <text x={26} y={30 + i * 28} fontSize={10} fontWeight={800} fill={INK}>{lab as string}</text>
-          {Array.from({ length: k as number }, (_, j) => (
-            <rect key={j} x={72 + j * 26} y={20 + i * 28} width={20} height={14} rx={3} fill={SKY} opacity={0.25} stroke={SKY} strokeWidth={1.1} />
-          ))}
-          <text x={236} y={31 + i * 28} fontSize={10} fontWeight={800} fill={LEAF}>{k as number} terms</text>
-        </g>
-      ))}
-      <text x={150} y={100} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>(a + b)ⁿ expands into n + 1 terms</text>
+    <svg viewBox="0 0 420 226" role="img" className="mx-auto w-full max-w-md">
+      <title>Expanding a binomial: for n equals 2, the terms are a squared, 2ab, and b squared; for n equals 3, the terms are a cubed, 3a squared b, 3ab squared, and b cubed; for n equals 4, there are five terms. In general, a plus b to the n has n plus 1 terms.</title>
+      {[
+        { n: 2, terms: ["a²", "2ab", "b²"] },
+        { n: 3, terms: ["a³", "3a²b", "3ab²", "b³"] },
+        { n: 4, terms: ["a⁴", "4a³b", "6a²b²", "4ab³", "b⁴"] },
+      ].map(({ n, terms }, row) => {
+        const top = 10 + row * 66;
+        return (
+          <g key={n} data-binomial-row={n}>
+            <text x={24} y={top + 13} fontSize={12} fontWeight={800} fill={INK}>n = {n} · {terms.length} terms</text>
+            {terms.map((term, column) => (
+              <g key={term} data-binomial-term={term}>
+                <rect x={24 + column * 72} y={top + 22} width={66} height={27} rx={5} fill={SKY} opacity={0.28} stroke={SKY} strokeWidth={1.2} />
+                <text x={57 + column * 72} y={top + 40} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>{term}</text>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+      <text data-binomial-caption="true" x={210} y={219} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>(a + b)ⁿ has n + 1 terms</text>
     </svg>
   );
-}
-function BtPascalTriangle() {
+}function BtPascalTriangle() {
   const rows = [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]];
   return (
     <svg viewBox="0 0 300 130" role="img" className="mx-auto w-full max-w-sm">
@@ -26256,7 +28204,7 @@ function EvReadingShape() {
 function EvLongRunAverage() {
   return (
     <svg viewBox="0 0 300 110" role="img" className="mx-auto w-full max-w-sm">
-      <title>Expected value is the long-run average: for a fair die the six equally likely faces average to three point five, a value the die itself can never show.</title>
+      <title>Expected value is the long-run average: for a fair die the 6 equally likely faces average to 3.5, a value the die itself can never show.</title>
       {[1, 2, 3, 4, 5, 6].map((v, i) => (
         <g key={v}>
           <rect x={20 + i * 44} y={22} width={34} height={28} rx={5} fill={SKY} opacity={0.16} stroke={SKY} strokeWidth={1.1} />
@@ -26706,6 +28654,47 @@ function Sa7UnitsCheck() {
     </svg>
   );
 }
+
+/** Grade 7 surface-area figure (S316): a square pyramid's net — one square base and four
+ * triangular faces unfolded, five faces in all. Every registered sa7-* figure before this one
+ * was prism/box-only despite the lesson title promising pyramids (sa7-01-03's k3/ch1). Dimension-
+ * free so it stays accurate for k3's face-count question regardless of which numbers ch1 draws. */
+function Sa7PyramidParts() {
+  return (
+    <svg viewBox="-20 0 260 160" role="img" className="mx-auto w-full max-w-sm" aria-label="A square pyramid unfolded into a net: one square base in the center with four triangular faces attached to its four edges, five faces in all.">
+      <title>A square pyramid has one square base and four triangular faces — five faces in all.</title>
+      <polygon points="90,60 130,60 130,100 90,100" fill={SKY} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 130,60 110,25" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,100 130,100 110,135" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 90,100 55,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="130,60 130,100 165,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <text x={110} y={84} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>base</text>
+      <text x={110} y={150} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>4 triangular faces</text>
+      <text x={110} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={INK}>1 square + 4 triangles = 5 faces</text>
+    </svg>
+  );
+}
+
+/** Grade 7 surface-area figure (S316): the same square-pyramid net, dimensioned to exactly match
+ * sa7-01-03's ch1 challenge (base edge 6, slant height 5): base 36, four triangles of 15 each,
+ * total 96. */
+function Sa7PyramidNetTotal() {
+  return (
+    <svg viewBox="0 0 220 168" role="img" className="mx-auto w-full max-w-sm" aria-label="A square pyramid unfolded into a net: the square base has edge 6, giving area 36; each of the four triangular faces has base 6 and slant height 5, giving area 15, for 60 in total across all four; the whole net totals 96 square units.">
+      <title>Square pyramid net: base edge 6, slant height 5 — 36 plus four 15s make 96.</title>
+      <polygon points="90,60 130,60 130,100 90,100" fill={SKY} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 130,60 110,25" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,100 130,100 110,135" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="90,60 90,100 55,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <polygon points="130,60 130,100 165,80" fill={TANGERINE} fillOpacity={0.28} stroke={INK} strokeWidth={1.2} />
+      <text x={110} y={76} textAnchor="middle" fontSize={10} fontWeight={800} fill={INK}>edge 6</text>
+      <text x={110} y={92} textAnchor="middle" fontSize={10} fontWeight={800} fill={SKY}>area 36</text>
+      <text x={110} y={45} textAnchor="middle" fontSize={10} fontWeight={800} fill={TANGERINE}>slant 5, area 15</text>
+      <text x={110} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill={BERRY}>36 + 4×15 = 96</text>
+      <text x={110} y={155} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.8}>base edge 6, slant height 5</text>
+    </svg>
+  );
+}
 function BvResidualGap() {
   return (
     <S200Plane title="Real points do not sit on the line: each one misses by a vertical gap called its residual.">
@@ -26813,7 +28802,7 @@ function SiNormalCurve() {
 function SiEmpiricalRule() {
   return (
     <svg viewBox="0 0 300 128" role="img" className="mx-auto w-full max-w-sm">
-      <title>Every normal curve keeps the same promise: about sixty-eight percent of values within one standard deviation, ninety-five within two, and ninety-nine point seven within three.</title>
+      <title>Every normal curve keeps the same promise: about 68% of values within 1 standard deviation, 95% within 2, and 99.7% within 3.</title>
       <line x1={24} y1={88} x2={286} y2={88} stroke={INK} strokeWidth={1.3} />
       <path d="M34 88 C90 88 100 24 155 24 C210 24 220 88 276 88" fill="none" stroke={INK} strokeWidth={1.8} />
       <path d="M116 88 C130 74 140 24 155 24 C170 24 180 74 194 88 Z" fill={LEAF} opacity={0.3} />
@@ -26961,6 +28950,7 @@ function DdMadDistances() {
         return (
           <g key={i}>
             <line x1={px(v)} y1={yy} x2={px(mean)} y2={yy} stroke={TANGERINE} strokeWidth={2} />
+            {v !== mean && <NumberLineDirectionHead x={px(mean)} y={yy} direction={v < mean ? "right" : "left"} color={TANGERINE} size={4} testId="dd-mad-distance-direction" />}
             <circle cx={px(v)} cy={yy} r={5} fill={SKY} />
             <text x={(px(v) + px(mean)) / 2} y={yy - 4} textAnchor="middle" fontSize={10} fontWeight={700} fill={TANGERINE}>{Math.abs(v - mean)}</text>
           </g>
@@ -27351,7 +29341,7 @@ function Pr7PercentError() {
 function Pr7ErrorVsSize() {
   return (
     <svg viewBox="0 0 300 150" role="img" className="mx-auto w-full max-w-sm">
-      <title>The same two-unit error compared against a measurement of ten and a measurement of one thousand: twenty percent error versus zero point two percent error.</title>
+      <title>The same 2-unit error compared against a measurement of 10 and a measurement of 1,000: 20% error versus 0.2% error.</title>
       <text x={150} y={16} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>the same 2-unit miss, two different measurements</text>
       <rect x={16} y={34} width={128} height={92} rx={6} fill={BERRY} fillOpacity={0.09} stroke={BERRY} strokeWidth={1.5} />
       <text x={76} y={54} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>actual 10, off by 2</text>
@@ -27733,21 +29723,35 @@ function FnaPropertiesAnywhere() {
 }
 
 function SyDilationParallel() {
+  /* S324 truth fix, ordered by the signed S319-F-sy-06-01 contract
+   * (reports/closure/S319_ASSESS_SIM_GF.md, sy-06-01 §1): the old hardcoded
+   * image (200,30)–(260,30) implied k≈2.667 in x but ≈1.667 in y for A (and
+   * 2.2 vs 1.667 for B) — no single dilation factor, so the dashed rays
+   * missed the original endpoints. The image is now computed from one k
+   * (img = O + k·(pt − O), mirroring DilationScale), making the rays pass
+   * exactly through each original endpoint. This edit to an existing
+   * component is the contract-sanctioned exception to the additive-only rule. */
+  const ox = 40, oy = 130, k = 1.8;
+  const A = { x: 100, y: 70 };
+  const B = { x: 140, y: 70 };
+  const img = (p: { x: number; y: number }) => ({ x: ox + k * (p.x - ox), y: oy + k * (p.y - oy) });
+  const A2 = img(A); // (148, 22)
+  const B2 = img(B); // (220, 22)
   return (
     <svg viewBox="0 0 300 150" role="img" className="mx-auto w-full max-w-sm">
       <title>A center point with a segment not passing through it; rays from the center through each endpoint extend to a larger, dashed segment that runs exactly parallel to the original.</title>
       <text x={150} y={16} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>miss the center → image runs parallel</text>
-      <circle cx={40} cy={130} r={4} fill={INK} />
-      <text x={40} y={144} textAnchor="middle" fontSize={10} fill={INK}>center</text>
-      <line x1={100} y1={70} x2={140} y2={70} stroke={SKY} strokeWidth={2.4} />
-      <circle cx={100} cy={70} r={3.5} fill={SKY} />
-      <circle cx={140} cy={70} r={3.5} fill={SKY} />
-      <path d="M40 130 L200 30" stroke={INK} strokeWidth={1} strokeDasharray="2 3" opacity={0.5} />
-      <path d="M40 130 L260 30" stroke={INK} strokeWidth={1} strokeDasharray="2 3" opacity={0.5} />
-      <line x1={200} y1={30} x2={260} y2={30} stroke={TANGERINE} strokeWidth={2.4} strokeDasharray="5 3" />
-      <circle cx={200} cy={30} r={3.5} fill={TANGERINE} />
-      <circle cx={260} cy={30} r={3.5} fill={TANGERINE} />
-      <text x={296} y={40} textAnchor="end" fontSize={10} fontWeight={700} fill={TANGERINE}>image</text>
+      <circle cx={ox} cy={oy} r={4} fill={INK} />
+      <text x={ox} y={144} textAnchor="middle" fontSize={10} fill={INK}>center</text>
+      <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={SKY} strokeWidth={2.4} />
+      <circle cx={A.x} cy={A.y} r={3.5} fill={SKY} />
+      <circle cx={B.x} cy={B.y} r={3.5} fill={SKY} />
+      <path d={`M${ox} ${oy} L${A2.x} ${A2.y}`} stroke={INK} strokeWidth={1} strokeDasharray="2 3" opacity={0.5} />
+      <path d={`M${ox} ${oy} L${B2.x} ${B2.y}`} stroke={INK} strokeWidth={1} strokeDasharray="2 3" opacity={0.5} />
+      <line x1={A2.x} y1={A2.y} x2={B2.x} y2={B2.y} stroke={TANGERINE} strokeWidth={2.4} strokeDasharray="5 3" />
+      <circle cx={A2.x} cy={A2.y} r={3.5} fill={TANGERINE} />
+      <circle cx={B2.x} cy={B2.y} r={3.5} fill={TANGERINE} />
+      <text x={296} y={32} textAnchor="end" fontSize={10} fontWeight={700} fill={TANGERINE}>image</text>
       <text x={120} y={58} fontSize={10} fontWeight={700} fill={SKY}>original</text>
     </svg>
   );
@@ -27786,7 +29790,332 @@ function CrLinearVsQuadratic() {
   );
 }
 
+/* ---------------------------------------------------------------------------
+ * S316 measure-problems-g4 main-route figure rebuild.
+ * Eight main-route (c1/c2) figures in measure-problems-g4 were static
+ * components depicting a scenario other than the one the lesson's own prose
+ * states (see reports/closure/S316_G4V_FIGURE_REBUILD.md). These replacements
+ * are built from small typed-prop helpers so the same relationship (equal
+ * groups adjusted once, at the end vs. inside every group) can be reused by
+ * future lessons with different numbers, instead of one-off hardcodes.
+ * ------------------------------------------------------------------------ */
+
+/** A conversion-table helper: two labeled columns, N rows of (a, b) pairs, and a caption naming the constant factor. Reusable for any two-unit table. */
+function ConversionTableRows({
+  leftLabel,
+  rightLabel,
+  leftFill,
+  rightFill,
+  rows,
+  factorCaption,
+}: {
+  leftLabel: string;
+  rightLabel: string;
+  leftFill: string;
+  rightFill: string;
+  rows: Array<[number, number]>;
+  factorCaption: string;
+}) {
+  const ox = 88, oy = 22, cw = 62, rh = 24;
+  return (
+    <>
+      <text x={ox + cw / 2} y={oy - 6} textAnchor="middle" fontSize={10} fontWeight={800} fill={leftFill}>{leftLabel}</text>
+      <text x={ox + cw + cw / 2} y={oy - 6} textAnchor="middle" fontSize={10} fontWeight={800} fill={rightFill}>{rightLabel}</text>
+      {rows.map(([a, b], i) => (
+        <g key={i}>
+          <rect x={ox} y={oy + i * rh} width={cw} height={rh} fill={i === 0 ? "#EAF2FC" : "white"} stroke={INK} strokeWidth={1.25} />
+          <rect x={ox + cw} y={oy + i * rh} width={cw} height={rh} fill={i === 0 ? "#FFE9D6" : "white"} stroke={INK} strokeWidth={1.25} />
+          <text x={ox + cw / 2} y={oy + i * rh + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>{a}</text>
+          <text x={ox + cw + cw / 2} y={oy + i * rh + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>{b}</text>
+        </g>
+      ))}
+      <text x={ox + cw} y={oy + rows.length * rh + 20} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK} opacity={0.75}>{factorCaption}</text>
+    </>
+  );
+}
+
+/** g4v-01-02 c1: replaces the flour/milk ratio-table figure with the lesson's actual meter/centimeter conversion table: 1 m = 100 cm, 2 m = 200 cm, 3 m = 300 cm. */
+function G4vMeterCmTable() {
+  return (
+    <svg viewBox="0 0 300 136" role="img" className="mx-auto w-full max-w-xs">
+      <title>A conversion table for meters and centimeters: 1 meter is 100 centimeters, 2 meters is 200 centimeters, and 3 meters is 300 centimeters — every row is the meter count times 100.</title>
+      <ConversionTableRows
+        leftLabel="meters"
+        rightLabel="centimeters"
+        leftFill={SKY}
+        rightFill={TANGERINE}
+        rows={[[1, 100], [2, 200], [3, 300]]}
+        factorCaption="every row: meters × 100 = centimeters"
+      />
+    </svg>
+  );
+}
+
+/** g4v-02-01 c1: replaces the plain one-liter jug with a jug marked in four liter bands, each labeled with its milliliter equivalent, showing the 1,000 mL factor. */
+function G4vLiterMlJug() {
+  const x0 = 78, x1 = 140, yTop = 14, yBot = 128;
+  const bandH = (yBot - yTop) / 4;
+  const levels = [1, 2, 3, 4];
+  return (
+    <svg viewBox="-25 0 270 148" role="img" className="mx-auto w-full max-w-xs">
+      <title>A liter jug divided into four equal bands: 1 liter equals 1,000 milliliters, 2 liters equals 2,000 milliliters, 3 liters equals 3,000 milliliters, and 4 liters equals 4,000 milliliters — the same factor of 1,000 in every band.</title>
+      <rect x={x0} y={yTop} width={x1 - x0} height={yBot - yTop} fill={SKY} fillOpacity={0.12} stroke={INK} strokeWidth={2} />
+      {levels.slice(1).map((L) => (
+        <line key={L} x1={x0} y1={yBot - (L - 1) * bandH} x2={x1} y2={yBot - (L - 1) * bandH} stroke={INK} strokeWidth={1} opacity={0.5} />
+      ))}
+      {levels.map((L) => (
+        <text key={L} x={x1 + 8} y={yBot - (L - 0.5) * bandH + 4} fontSize={10} fontWeight={700} fill={INK}>
+          {L} L = {L * 1000} mL
+        </text>
+      ))}
+      <text x={(x0 + x1) / 2} y={144} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>every liter is 1,000 milliliters</text>
+    </svg>
+  );
+}
+
+/** g4v-02-02 c1: replaces the clock frozen at 3:00 with a clock ringed in 60 ticks, stating both time factors the lesson teaches: 1 hour = 60 minutes and 1 minute = 60 seconds. */
+function G4vClock60() {
+  const cx = 100, cy = 66, r = 48;
+  const ticks = Array.from({ length: 60 }, (_, i) => i);
+  return (
+    <svg viewBox="0 0 200 176" role="img" className="mx-auto w-full max-w-xs">
+      <title>A clock face ringed with sixty minute-and-second tick marks, five thickened for every hour number: one hour equals sixty minutes, and one minute equals sixty seconds.</title>
+      <circle cx={cx} cy={cy} r={r} fill={SKY} fillOpacity={0.08} stroke={INK} strokeWidth={2} />
+      {ticks.map((i) => {
+        const a = (i / 60) * 2 * Math.PI - Math.PI / 2;
+        const major = i % 5 === 0;
+        const rInner = major ? r - 9 : r - 4;
+        return (
+          <line
+            key={i}
+            x1={cx + r * Math.cos(a)}
+            y1={cy + r * Math.sin(a)}
+            x2={cx + rInner * Math.cos(a)}
+            y2={cy + rInner * Math.sin(a)}
+            stroke={INK}
+            strokeWidth={major ? 1.6 : 0.8}
+            opacity={major ? 1 : 0.55}
+          />
+        );
+      })}
+      <text x={cx} y={cy + 5} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK} opacity={0.7}>60 ticks</text>
+      <text x={cx} y={140} textAnchor="middle" fontSize={13} fontWeight={800} fill={SKY}>1 hour = 60 minutes</text>
+      <text x={cx} y={160} textAnchor="middle" fontSize={13} fontWeight={800} fill={LEAF}>1 minute = 60 seconds</text>
+    </svg>
+  );
+}
+
+/**
+ * Reusable equal-groups bar with ONE adjustment removed once from the END of the whole bar
+ * (never from every group). Typed on the groups, the value per group, the amount removed, and
+ * a unit suffix, so any equal-groups-then-subtract-once lesson can reuse it with new numbers.
+ */
+function EqualGroupsEndAdjustBar({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * perGroup;
+  const result = total - adjustment;
+  const boxW = Math.min(38, Math.floor(230 / groups));
+  const gap = 2;
+  const startX = 16;
+  const boxesEndX = startX + groups * (boxW + gap) - gap;
+  const crossX = boxesEndX + 6;
+  return (
+    <>
+      <text x={150} y={15} fontSize={11} fontWeight={700} fill={INK} textAnchor="middle">
+        {groups} equal parts of {perGroup}{suffix}
+      </text>
+      {Array.from({ length: groups }, (_, i) => (
+        <rect key={i} x={startX + i * (boxW + gap)} y={22} width={boxW} height={26} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+      ))}
+      <path d={`M ${startX} 52 L ${startX} 58 L ${boxesEndX} 58 L ${boxesEndX} 52`} fill="none" stroke={INK} strokeWidth={1.2} />
+      <text x={(startX + boxesEndX) / 2} y={70} fontSize={10} fontWeight={700} fill={INK} textAnchor="middle">
+        {groups} × {perGroup} = {total}{suffix}
+      </text>
+      <rect x={crossX} y={22} width={26} height={26} fill={BERRY} fillOpacity={0.16} stroke={BERRY} strokeWidth={1.2} strokeDasharray="3 2" />
+      <line x1={crossX + 2} y1={24} x2={crossX + 24} y2={46} stroke={BERRY} strokeWidth={1.4} />
+      <line x1={crossX + 24} y1={24} x2={crossX + 2} y2={46} stroke={BERRY} strokeWidth={1.4} />
+      <text x={crossX + 13} y={62} fontSize={10} fontWeight={700} fill={BERRY} textAnchor="middle">−{adjustment}</text>
+      <text x={150} y={92} fontSize={12} fontWeight={700} fill={LEAF} textAnchor="middle">
+        ({groups} × {perGroup}) − {adjustment} = {result}{suffix}
+      </text>
+    </>
+  );
+}
+
+/** g4v-02-03 c2 / g4v-03-04 c1: the lesson's own worked example — 6 equal 400 m laps, 150 m crossed off the end once: (6 × 400) − 150 = 2,250 m. Replaces the unrelated 18+24−15 two-step-bar. */
+function G4vGroupsAdjustDistance() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of six equal 400-meter laps, with 150 meters crossed off once at the end of the whole bar: six times 400 minus 150 equals 2,250 meters.</title>
+      <EqualGroupsEndAdjustBar groups={6} perGroup={400} adjustment={150} suffix=" m" />
+    </svg>
+  );
+}
+
+/** g4v-02-04 c1: the lesson's own worked example — 5 shifts of 30 minutes, 20 minutes finished early once: (5 × 30) − 20 = 130 minutes. Replaces the unrelated fixed 8:40–9:20 elapsed-time figure. */
+function G4vGroupsAdjustTime() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of five equal 30-minute shifts, with 20 minutes crossed off once at the end of the whole bar: five times 30 minus 20 equals 130 minutes.</title>
+      <EqualGroupsEndAdjustBar groups={5} perGroup={30} adjustment={20} suffix=" min" />
+    </svg>
+  );
+}
+
+/** g4v-03-01 c1: the lesson's own worked example — 9 passes at 25 dollars, a 40-dollar voucher removed once: (9 × 25) − 40 = 185 dollars. Replaces the unrelated 23-cent dimes/pennies coin-total figure. */
+function G4vGroupsAdjustMoney() {
+  return (
+    <svg viewBox="0 0 300 100" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of nine equal 25-dollar passes, with a 40-dollar voucher crossed off once at the end of the whole bar: nine times 25 minus 40 equals 185 dollars.</title>
+      <EqualGroupsEndAdjustBar groups={9} perGroup={25} adjustment={40} suffix=" dollars" />
+    </svg>
+  );
+}
+
+/** g4v-03-02 c1: replaces the five-pencil line plot with the lesson's actual eight quarter-inch marks, grouped four at a time into two whole inches. */
+function G4vQuarterInchPlot() {
+  const axisY = 140, ox = 60, step = 13;
+  const y = (i: number) => axisY - 18 - i * step;
+  return (
+    <svg viewBox="0 0 220 195" role="img" className="mx-auto w-full max-w-sm">
+      <title>A line plot in quarter-inches with eight X marks stacked above the 1/4-inch tick on a number line from 0 to 1 inch. Grouped four at a time — the bottom four and the top four — the eight quarter-inch marks rebuild two whole inches.</title>
+      <text x={110} y={16} textAnchor="middle" fontSize={11} fontWeight={700} fill={INK}>8 quarter-inch marks</text>
+      <line x1={20} y1={axisY} x2={190} y2={axisY} stroke={INK} strokeWidth={2} />
+      {[
+        [20, "0"],
+        [60, "1/4"],
+        [100, "1/2"],
+        [140, "3/4"],
+        [180, "1"],
+      ].map(([x, label]) => (
+        <g key={label}>
+          <line x1={x as number} y1={axisY - 4} x2={x as number} y2={axisY + 4} stroke={INK} strokeWidth={1.5} />
+          <text x={x as number} y={axisY + 18} textAnchor="middle" fontSize={10} fontWeight={700} fill={INK}>{label}</text>
+        </g>
+      ))}
+      {Array.from({ length: 8 }, (_, i) => (
+        <text key={i} x={ox} y={y(i)} textAnchor="middle" fontSize={10} fontWeight={800} fill={i < 4 ? SKY : LEAF}>✕</text>
+      ))}
+      <line x1={ox - 16} y1={(y(3) + y(4)) / 2} x2={ox + 16} y2={(y(3) + y(4)) / 2} stroke={INK} strokeWidth={1} strokeDasharray="2 2" opacity={0.5} />
+      <text x={ox + 40} y={(y(0) + y(3)) / 2 + 4} fontSize={10} fontWeight={700} fill={SKY} textAnchor="start">4 marks = 1 in</text>
+      <text x={ox + 40} y={(y(4) + y(7)) / 2 + 4} fontSize={10} fontWeight={700} fill={LEAF} textAnchor="start">4 marks = 1 in</text>
+      <text x={110} y={182} textAnchor="middle" fontSize={12} fontWeight={700} fill={INK}>8 ÷ 4 = 2 inches total</text>
+    </svg>
+  );
+}
+
+/**
+ * Compact equal-groups-end-adjust bar (no captions besides the equation) sized for use as one
+ * panel of a two-panel contrast figure. Same relationship as EqualGroupsEndAdjustBar.
+ */
+function EqualGroupsEndAdjustCompact({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * perGroup;
+  const result = total - adjustment;
+  const boxW = Math.min(30, Math.floor(200 / groups));
+  const gap = 3;
+  const startX = 10;
+  const boxesEndX = startX + groups * (boxW + gap) - gap;
+  return (
+    <>
+      {Array.from({ length: groups }, (_, i) => (
+        <rect key={i} x={startX + i * (boxW + gap)} y={0} width={boxW} height={22} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+      ))}
+      <rect x={boxesEndX + 6} y={0} width={20} height={22} fill={BERRY} fillOpacity={0.18} stroke={BERRY} strokeWidth={1.1} strokeDasharray="2 2" />
+      <line x1={boxesEndX + 8} y1={2} x2={boxesEndX + 24} y2={20} stroke={BERRY} strokeWidth={1.2} />
+      <line x1={boxesEndX + 24} y1={2} x2={boxesEndX + 8} y2={20} stroke={BERRY} strokeWidth={1.2} />
+      <text x={150} y={40} fontSize={11} fontWeight={700} fill={LEAF} textAnchor="middle">
+        ({groups} × {perGroup}) − {adjustment} = {result}{suffix}
+      </text>
+    </>
+  );
+}
+
+/**
+ * Equal-groups bar with the SAME adjustment removed once from INSIDE every group (contrast
+ * against EqualGroupsEndAdjustCompact, which removes it once from the end of the whole bar).
+ */
+function EqualGroupsInsideAdjustBar({ groups, perGroup, adjustment, suffix = "" }: { groups: number; perGroup: number; adjustment: number; suffix?: string }) {
+  const total = groups * (perGroup - adjustment);
+  const boxW = Math.min(46, Math.floor(230 / groups));
+  const gap = 4;
+  const startX = 20;
+  return (
+    <>
+      {Array.from({ length: groups }, (_, i) => {
+        const bx = startX + i * (boxW + gap);
+        const cutW = Math.max(6, boxW * (adjustment / perGroup));
+        return (
+          <g key={i}>
+            <rect x={bx} y={0} width={boxW} height={26} fill={SKY} fillOpacity={0.25} stroke={INK} strokeWidth={1} />
+            <rect x={bx + boxW - cutW} y={0} width={cutW} height={26} fill={BERRY} fillOpacity={0.32} stroke={BERRY} strokeWidth={1} strokeDasharray="2 2" />
+          </g>
+        );
+      })}
+      <text x={150} y={44} fontSize={11} fontWeight={700} fill={LEAF} textAnchor="middle">
+        {groups} × ({perGroup} − {adjustment}) = {total}{suffix}
+      </text>
+    </>
+  );
+}
+
+/**
+ * g4v-03-04 c2: contrasts the lesson's two structures with its own worked numbers — an END
+ * adjustment removed once from the whole bar (6 × 400 − 150 = 2,250 m, from k1) against an
+ * INSIDE adjustment removed once from every group (4 × (300 − 50) = 1,000 m, from k3). Replaces
+ * the reused two-step-bar, which showed only the end-subtraction case.
+ */
+function G4vEndVsInsideAdjust() {
+  return (
+    <svg viewBox="-60 0 420 190" role="img" className="mx-auto w-full max-w-sm">
+      <title>Two bar diagrams contrasted. Top: six equal 400-meter parts with 150 meters crossed off once at the end of the whole bar — six times 400 minus 150 equals 2,250 meters. Bottom: four equal 300-meter parts, each with 50 meters crossed off inside the part — four times the quantity 300 minus 50 equals 1,000 meters. The same kind of numbers, cut in a different place, give a different total.</title>
+      <text x={150} y={12} fontSize={11} fontWeight={800} fill={INK} textAnchor="middle">crossed off at the END (once)</text>
+      <g transform="translate(0,20)">
+        <EqualGroupsEndAdjustCompact groups={6} perGroup={400} adjustment={150} suffix=" m" />
+      </g>
+      <line x1={20} y1={82} x2={280} y2={82} stroke={INK} strokeWidth={1} opacity={0.25} />
+      <text x={150} y={100} fontSize={11} fontWeight={800} fill={INK} textAnchor="middle">crossed off INSIDE every part</text>
+      <g transform="translate(0,110)">
+        <EqualGroupsInsideAdjustBar groups={4} perGroup={300} adjustment={50} suffix=" m" />
+      </g>
+      <text x={150} y={172} fontSize={10} fontWeight={700} fill={BERRY} textAnchor="middle">same kind of numbers, different total: 2,250 m vs. 1,000 m</text>
+    </svg>
+  );
+}
+
+/* --- S316 follow-up: 3 more measure-problems-g4 figure defects found by a second verification
+ * pass, closed with the helpers above (see reports/closure/S316_G4V_FIGURE_REBUILD.md §2). --- */
+
+/** g4v-01-03 c2: replaces the imperial rr-conversion figure ("12 in = 1 ft") with a metric conversion table stating this lesson's own two worked examples (4 m = 400 cm, from i1; 6 m = 600 cm, from i2) and both directions of the factor, matching c1's "runs both ways" claim. New rows (4, 6) rather than a reuse of g4v-meter-cm-table's (1, 2, 3) rows, because this lesson never states 1 m/2 m/3 m — its own numbers are 4 and 6. */
+function G4vLengthConversionBothWays() {
+  return (
+    <svg viewBox="0 0 300 120" role="img" className="mx-auto w-full max-w-xs">
+      <title>A conversion table for meters and centimeters running both ways: 4 meters is 400 centimeters and 6 meters is 600 centimeters, since meters times 100 gives centimeters going down, and centimeters divided by 100 gives meters back going up.</title>
+      <ConversionTableRows
+        leftLabel="meters"
+        rightLabel="centimeters"
+        leftFill={SKY}
+        rightFill={TANGERINE}
+        rows={[[4, 400], [6, 600]]}
+        factorCaption="down: × 100 · up: ÷ 100"
+      />
+    </svg>
+  );
+}
+
+/** g4v-03-04 remedial: replaces the reused two-step-bar (18 + 24 − 15, an unequal-addend JOIN story) with the remedial's own worked example — 5 equal 200 m parts, 30 m crossed off INSIDE every part once: 5 × (200 − 30) = 850 m — which is the remedial check's own correct answer, o0. The old figure showed an end-of-bar adjustment on unrelated numbers, contradicting the inside-every-group answer it was meant to illustrate. */
+function G4vGroupsInsideAdjustDiagram() {
+  return (
+    <svg viewBox="0 0 300 64" role="img" className="mx-auto w-full max-w-sm">
+      <title>A bar diagram of five equal 200-meter parts, each with 30 meters crossed off inside the part: five times the quantity 200 minus 30 equals 850 meters.</title>
+      <g transform="translate(0,8)">
+        <EqualGroupsInsideAdjustBar groups={5} perGroup={200} adjustment={30} suffix=" m" />
+      </g>
+    </svg>
+  );
+}
+
 export const FIGURES: Record<string, () => JSX.Element> = {
+  ...HOW_MANY_FIGURES,
+  ...NUMBER_WRITING_FIGURES,
   "cpr-event-as-set": CprEventAsSet,
   "cpr-union-intersection": CprUnionIntersection,
   "cpr-complement-bar": CprComplementBar,
@@ -27828,9 +30157,16 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "in-ftc-slope-is-height": InFtcSlopeIsHeight,
   "ca-first-derivative-story": CaFirstDerivativeStory,
   "ca-mvt-parallel": CaMvtParallel,
+  "ca-plus-c-family": CaPlusCFamily,
+  "ca-open-box-setup": CaOpenBoxSetup,
+  "ca-fence-against-wall": CaFenceAgainstWall,
   "dc-speeding-up-signs": DcSpeedingUpSigns,
   "ia-strip-to-disc": IaStripToDisc,
+  "ia-top-bottom-swap": IaTopBottomSwap,
   "pc-polar-wedge": PcPolarWedge,
+  "pc-arc-length-hypotenuses": PcArcLengthHypotenuses,
+  "pc-integrand-speed": PcIntegrandSpeed,
+  "pc-motion-vectors": PcMotionVectors,
   "sc-taylor-hug-peel": ScTaylorHugPeel,
   "de-slope-field-threads": DeSlopeFieldThreads,
   "dc-lhopital-tangents": DcLhopitalTangents,
@@ -27880,6 +30216,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "vec-parallel-cos": VecParallelCos,
   "vec-projection": VecProjection,
   "vec-matrix-row-dot": VecMatrixRowDot,
+  "vec-matrix-row-recipe": VecMatrixRowRecipe,
   "vec-determinant": VecDeterminant,
   "vec-inverse": VecInverse,
   "vec-system-matrix": VecSystemMatrix,
@@ -28644,6 +30981,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "vm-count-cubes": VmCountCubes,
   "vm-slice-layers": VmSliceLayers,
   "vm-base-layers": VmBaseLayers,
+  "vm-sixty-cube-box": VmSixtyCubeBox,
   "vm-formula-lwh": VmFormulaLWH,
   "vm-units-cubed": VmUnitsCubed,
   "vm-base-height": VmBaseHeight,
@@ -28651,6 +30989,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "vm-add-volumes": VmAddVolumes,
   "vm-no-overlap": VmNoOverlap,
   "vm-l-shape": VmLShape,
+  "vm-notch-block": VmNotchBlock,
+  "vm-equal-volumes-compare": VmEqualVolumesCompare,
 
   "cg-order-matters": CgOrderMatters,
   "cg-plot-walk": CgPlotWalk,
@@ -28874,6 +31214,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "ks-sort-count": KsSortCount,
   "ks-count-groups": KsCountGroups,
 
+  "kmd-capacity-same-scoop": KmdCapacitySameScoop,
   "kc-dots-last": KcDotsLast,
   "kc-one-per-dot": KcOnePerDot,
   "kc-symbol-3": KcSymbol3,
@@ -28885,6 +31226,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "kc-teen-14": KcTeen14,
   "kc-to-20": KcTo20,
   "kc-by-tens": KcByTens,
+  "kc-ten-hops-to-100": KcTenHopsTo100,
   "kc-add-on": KcAddOn,
   "kc-take-away": KcTakeAway,
   "kc-break-apart": KcBreakApart,
@@ -28945,6 +31287,16 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "fna-cubic-behavior": FnaCubicBehavior,
   "fna-piecewise": FnaPiecewise,
   "ten-frame-make-ten": TenFrameMakeTen,
+  "koa-join-two-groups": KoaJoinTwoGroups,
+  "koa-add-with-fingers": KoaAddWithFingers,
+  "koa-add-with-drawing": KoaAddWithDrawing,
+  "koa-act-out-a-join": KoaActOutAJoin,
+  "koa-addition-sentence": KoaAdditionSentence,
+  "koa-take-away-removal": KoaTakeAwayRemoval,
+  "koa-subtraction-cross-out": KoaSubtractionCrossOut,
+  "koa-subtraction-act-out": KoaSubtractionActOut,
+  "koa-subtraction-sentence": KoaSubtractionSentence,
+  "koa-count-back-left": KoaCountBackLeft,
   "count-on-hops": CountOnHops,
   "count-on-small": CountOnSmall,
   "bigger-first": BiggerFirst,
@@ -28977,9 +31329,11 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "undo-machine": UndoMachine,
   "both-sides-scale": BothSidesScale,
   "distribute-area": DistributeArea,
+  "monomial-distribute-area": MonomialDistributeArea,
   "fraction-undo": FractionUndo,
   "lcd-clear": LcdClear,
   "decimal-shift": DecimalShift,
+  "decimal-shift-divide": DecimalShiftDivide,
   "formula-rearrange": FormulaRearrange,
   "flip-arrow": FlipArrow,
   "quad-family-tree": QuadFamilyTree,
@@ -29078,6 +31432,10 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "rno7-div-undoes": Rno7DivUndoes,
   "rno7-count-negatives": Rno7CountNegatives,
   "rno7-signed-decimal": Rno7SignedDecimal,
+  "rno7-subtract-opposite-five-three": Rno7SubtractAsOppositeFiveThree,
+  "rno7-change-rise-line": Rno7ChangeRiseLine,
+  "rno7-subtract-negative": Rno7SubtractNegative,
+  "rno7-signed-decimal-addition": Rno7SignedDecimalAddition,
   "tse7-combine-like": Tse7CombineLike,
   "tse7-order-dist-combine": Tse7OrderDistCombine,
   "tse7-two-step-order": Tse7TwoStepOrder,
@@ -29174,6 +31532,10 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "asv-height": AsvHeight,
   "ns-flip-multiply": NsFlipMultiply,
   "dd-stat-question": DdStatQuestion,
+  "g2g-shared-unit-compare": G2gSharedUnitCompare,
+  "g2g-record-repeats": G2gRecordRepeats,
+  "g2g-bar-gap": G2gBarGap,
+  "g2g-display-choice": G2gDisplayChoice,
   "dd-data-answers": DdDataAnswers,
   "dd-pipeline": DdPipeline,
   "dd-shape": DdShape,
@@ -29190,9 +31552,14 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "asv-subtract": AsvSubtract,
   "asv-coord-length": AsvCoordLength,
   "asv-coord-area": AsvCoordArea,
+  "asv-coordinate-rectangle-area": AsvCoordinateRectangleArea,
+  "asv-coordinate-right-triangle-legs": AsvCoordinateRightTriangleLegs,
+  "asv-coordinate-composite-setup": AsvCoordinateCompositeSetup,
+  "asv-coordinate-composite-sum": AsvCoordinateCompositeSum,
   "asv-tri-prism": AsvTriPrism,
   "asv-frac-volume": AsvFracVolume,
   "asv-boxes-fit": AsvBoxesFit,
+  "asv-surface-vs-volume": AsvSurfaceVsVolume,
   "rr-equivalent": RrEquivalent,
   "rr-tools": RrTools,
   "rr-better-buy": RrBetterBuy,
@@ -29225,6 +31592,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "la-perpendicular": LaPerpendicular,
   "la-triangle-angles": LaTriangleAngles,
   "la-triangle-sum": LaTriangleSum,
+  "tm-right-triangle-90-35-55": TmRightTriangleAngleSum,
   "la-symmetry": LaSymmetry,
   "la-symmetry-regular": LaSymmetryRegular,
   "la-symmetry-letters": LaSymmetryLetters,
@@ -29236,7 +31604,12 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "mb-remainder": MbRemainder,
   "mb-pattern": MbPattern,
   "mb-multistep": MbMultistep,
+  "g3w-subtract-once": G3wSubtractOnce,
+  "g3w-share-then-add": G3wShareThenAdd,
+  "g3w-relevant-information": G3wRelevantInformation,
+  "g3w-multiply-then-add": G3wMultiplyThenAdd,
   "dpv-hundredths-grid": DpvHundredthsGrid,
+  "dpv-tenths-number-line": DpvTenthsNumberLine,
   "dpv-place-names": DpvPlaceNames,
   "dpv-expanded": DpvExpanded,
   "dpv-words": DpvWords,
@@ -29280,6 +31653,7 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "dop-two-by-two": DopTwoByTwo,
   "dop-estimate-quotient": DopEstimateQuotient,
   "dop-long-division": DopLongDivision,
+  "g4m-partial-quotients-852-4": G4mPartialQuotients852Over4,
   "dop-remainder": DopRemainder,
   "dop-line-up": DopLineUp,
   "dop-pad-borrow": DopPadBorrow,
@@ -29288,17 +31662,42 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "mult3-array": Mult3Array,
   "mult3-flip": Mult3Flip,
   "mult3-fair-shares": Mult3FairShares,
+  "mult3-fair-shares-15-over-5": Mult3FairShares15Over5,
+  "mult3-fair-shares-16-over-2": Mult3FairShares16Over2,
+  "mult3-fair-shares-12-over-2": Mult3FairShares12Over2,
+  "mult3-fair-shares-18-over-3": Mult3FairShares18Over3,
   "mult3-how-many-groups": Mult3HowManyGroups,
+  "mult3-how-many-groups-21-over-3": Mult3HowManyGroups21Over3,
   "mult3-missing-factor": Mult3MissingFactor,
+  "mult3-missing-factor-6x7": Mult3MissingFactor6x7,
+  "mult3-missing-factor-6x5": Mult3MissingFactor6x5,
+  "mult3-missing-factor-8x9": Mult3MissingFactor8x9,
+  "mult3-missing-factor-7x8": Mult3MissingFactor7x8,
+  "mult3-missing-factor-7x7": Mult3MissingFactor7x7,
+  "mult3-missing-factor-6x9": Mult3MissingFactor6x9,
+  "mult3-missing-factor-8x7": Mult3MissingFactor8x7,
   "mult3-fact-family": Mult3FactFamily,
+  "mult3-fact-family-5x7": Mult3FactFamily5x7,
   "mult3-special": Mult3Special,
+  "mult3-divide-by-nine": Mult3DivideByNine,
+  "mult3-divide-by-nine-54-over-9": Mult3DivideByNine54Over9,
+  "mult3-divide-by-ten": Mult3DivideByTen,
+  "mult3-divide-one-self": Mult3DivideOneSelf,
+  "mult3-divide-by-zero": Mult3DivideByZero,
+  "mult3-times-ten-place-value": Mult3TimesTenPlaceValue,
+  "mult3-times-ten-empty-ones": Mult3TimesTenEmptyOnes,
+  "mult3-square-array": Mult3SquareArray,
+  "mult3-next-square-growth": Mult3NextSquareGrowth,
   "mult3-double": Mult3Double,
   "mult3-fives": Mult3Fives,
   "mult3-double-double": Mult3DoubleDouble,
+  "mult3-double-double-double": Mult3DoubleDoubleDouble,
   "mult3-nines": Mult3Nines,
   "mult3-break-apart": Mult3BreakApart,
   "mult3-which-op": Mult3WhichOp,
+  "mult3-groups-adjust-cars": Mult3GroupsAdjustCars,
   "mult3-estimate": Mult3Estimate,
+  "mult3-estimate-6x9": Mult3Estimate6x9,
   "mult3-add-table": Mult3AddTable,
   "mult3-mult-table": Mult3MultTable,
   "mult3-even-odd": Mult3EvenOdd,
@@ -29310,6 +31709,10 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "md3-kilo": Md3Kilo,
   "md3-liter": Md3Liter,
   "md3-pictograph": Md3Pictograph,
+  "md3-pictograph-four-apples": Md3PictographFourApples,
+  "md3-pictograph-three-apples": Md3PictographThreeApples,
+  "md3-pictograph-three-and-half-stars": Md3PictographThreeAndHalfStars,
+  "md3-pictograph-three-and-half-books": Md3PictographThreeAndHalfBooks,
   "md3-bargraph": Md3BarGraph,
   "md3-lineplot": Md3LinePlot,
   "md3-area-grid": Md3AreaGrid,
@@ -29326,6 +31729,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "pv3-trade-down": Pv3TradeDown,
   "pv3-round-ten": Pv3RoundTen,
   "pv3-round-hundred": Pv3RoundHundred,
+  "pv3-estimate-add-pair": Pv3EstimateAddPair,
+  "pv3-estimate-sub-pair": Pv3EstimateSubPair,
   "pv3-halfway": Pv3Halfway,
   "pv3-jump": Pv3Jump,
   "pv3-regroup": Pv3Regroup,
@@ -29358,10 +31763,22 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "frac-equiv-half": FracEquivHalf,
   "frac-whole-disguise": FracWholeDisguise,
   "frac-compare-same-denom": FracCompareSameDenom,
+  "frac-compare-same-denom-cake": FracCompareSameDenomCake,
   "frac-compare-same-numer": FracCompareSameNumer,
+  "frac-compare-same-numer-brownies": FracCompareSameNumerBrownies,
   "frac-compare-wholes": FracCompareWholes,
   "angle-types": AngleTypes,
+  "g2l-choice-add-33-20": G2Add33Plus20Candidates,
+  "g2l-choice-add-44-20": G2Add44Plus20Candidates,
+  "g2l-choice-add-45-20": G2Add45Plus20Candidates,
+  "g2l-choice-gap-54-34": G2Gap54Minus34Candidates,
+  "g2l-choice-gap-53-33": G2Gap53Minus33Candidates,
+  "g2l-choice-gap-43-33": G2Gap43Minus33Candidates,
+  "g2l-read-landing-45-20": G2ReadLanding45Plus20,
+  "g2l-read-gap-53-33": G2ReadGap53Minus33,
+  "g2l-read-missing-jump-33-43": G2ReadMissingJump33To43,
   "number-line-jumps": NumberLineJumps,
+  "number-line-jumps-7x5": NumberLineJumps7x5,
   "place-value-ladder": PlaceValueLadder,
   "times-as-many": TimesAsMany,
   "decimal-tenths": DecimalTenths,
@@ -29633,6 +32050,8 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "sa7-many-correct-cuts": Sa7ManyCorrectCuts,
   "sa7-three-questions-one-crate": Sa7ThreeQuestionsOneCrate,
   "sa7-units-check": Sa7UnitsCheck,
+  "sa7-pyramid-parts": Sa7PyramidParts,
+  "sa7-pyramid-net-total": Sa7PyramidNetTotal,
   "bv-residual-gap": BvResidualGap,
   "bv-residual-sign": BvResidualSign,
   "bv-residual-plot-diagnoses": BvResidualPlotDiagnoses,
@@ -29687,5 +32106,15 @@ export const FIGURES: Record<string, () => JSX.Element> = {
   "fna-properties-anywhere": FnaPropertiesAnywhere,
   "sy-dilation-parallel": SyDilationParallel,
   "cr-circle-scaling": CrCircleScaling,
-  "cr-linear-vs-quadratic": CrLinearVsQuadratic
+  "cr-linear-vs-quadratic": CrLinearVsQuadratic,
+  "g4v-meter-cm-table": G4vMeterCmTable,
+  "g4v-liter-ml-jug": G4vLiterMlJug,
+  "g4v-clock-60": G4vClock60,
+  "g4v-groups-adjust-distance": G4vGroupsAdjustDistance,
+  "g4v-groups-adjust-time": G4vGroupsAdjustTime,
+  "g4v-groups-adjust-money": G4vGroupsAdjustMoney,
+  "g4v-quarter-inch-plot": G4vQuarterInchPlot,
+  "g4v-end-vs-inside-adjust": G4vEndVsInsideAdjust,
+  "g4v-length-both-ways-table": G4vLengthConversionBothWays,
+  "g4v-groups-inside-adjust-diagram": G4vGroupsInsideAdjustDiagram
 };

@@ -135,23 +135,21 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Purely imaginary times purely imaginary.",
+      "body": "Watch two imaginary directions produce a negative real product.",
       "widget": {
-        "type": "numeric",
-        "prompt": "What is 3i · 5i (as a real number)?",
-        "answer": -15,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 15,
-            "feedback": "3 · 5 = 15 is right, but i · i = i² = −1 flips it: −15."
-          },
-          {
-            "value": 8,
-            "feedback": "The dot means MULTIPLY: 3 · 5 · i² = −15, not 3 + 5."
-          }
-        ],
-        "fallbackFeedback": "3i · 5i = 15i² = −15 — two imaginaries multiply to a real."
+        "type": "argandExplore",
+        "mode": "multiply",
+        "mulRe": 0,
+        "mulIm": 3,
+        "targetRe": -15,
+        "targetIm": 0,
+        "reStart": 0,
+        "imStart": 1,
+        "gridMax": 6,
+        "prompt": "The fixed multiplier is 3i. Move z until z × 3i lands at −15 on the real axis.",
+        "successFeedback": "z = 5i. The first factor points up; multiplying by 3i turns it another quarter-turn and stretches it by 3, landing at −15. Symbolically, 5i · 3i = 15i² = −15.",
+        "realFeedback": "The product has not reached −15 on the real axis. Multiplication by 3i turns z a quarter-turn and triples its length.",
+        "imagFeedback": "The real part is right, but the product must have imaginary part 0. Put z on the imaginary axis so the second quarter-turn lands on the real axis."
       }
     },
     {

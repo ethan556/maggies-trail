@@ -15,62 +15,60 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Apply the multiply rule.",
+      "body": "Build the exponent chain before multiplying the coefficients.",
       "widget": {
-        "type": "mcq",
-        "prompt": "(3 × 10⁴) × (2 × 10³) = ?",
-        "options": [
+        "type": "placeValueTransformLab",
+        "task": "exponentChain",
+        "answerMode": "numeric",
+        "prompt": "For 10⁴ × 10³, step through the exponent chain and enter the exponent of the product.",
+        "values": [
+          4,
+          3
+        ],
+        "exponentOps": [
+          "add"
+        ],
+        "choices": [],
+        "numericErrors": [
           {
-            "id": "a",
-            "label": "6 × 10⁷",
-            "correct": true,
-            "feedback": "Right — multiply coefficients (3×2=6), add exponents (4+3=7)."
+            "value": 12,
+            "feedback": "Twelve multiplies the exponents. Multiplying equal bases combines all factors, so count 4 + 3 instead."
           },
           {
-            "id": "b",
-            "label": "6 × 10¹²",
-            "correct": false,
-            "feedback": "That multiplies the exponents instead of adding — the rule is ADD: 4+3=7."
-          },
-          {
-            "id": "c",
-            "label": "5 × 10⁷",
-            "correct": false,
-            "feedback": "That adds the coefficients instead of multiplying — 3×2=6, not 3+2=5."
-          },
-          {
-            "id": "d",
-            "label": "6 × 10⁶",
-            "correct": false,
-            "feedback": "Check the exponent addition — 4+3=7, not 6."
+            "value": 4,
+            "feedback": "Keeping only the larger exponent loses the three additional factors of 10."
           }
-        ]
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "The exponents add to 7, so 10⁴ × 10³ = 10⁷. Multiplying the coefficients then gives 6 × 10⁷.",
+        "explorationFeedback": "Inspect the starting exponent and the addition stage before checking.",
+        "fallbackFeedback": "Write out four factors of 10 followed by three more, then count all seven factors."
       },
       "predict": {
-        "prompt": "Multiplying powers of ten — do the exponents MULTIPLY or ADD?",
+        "prompt": "When powers of 10 are multiplied, how do their exponents combine?",
         "options": [
           {
             "id": "add",
-            "label": "They add"
+            "label": "Add the exponents"
           },
           {
             "id": "multiply",
-            "label": "They multiply"
+            "label": "Multiply the exponents"
           },
           {
             "id": "bigger",
-            "label": "Keep only the bigger one"
+            "label": "Keep only the larger exponent"
           }
         ],
         "outcomeId": "add",
-        "reveal": "10⁴ × 10³ stacks four tens with three more — seven tens in a row. Multiplying the exponents would claim 10¹² — a trillion, not ten million. Multiplying the bases means ADDING their exponents."
+        "reveal": "Four factors of 10 followed by three more make seven factors in all. Therefore 10⁴ × 10³ = 10⁷, so the exponents add."
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Sometimes the coefficients multiply to 10 or more — then you must RENORMALIZE, shifting the extra factor of 10 into the exponent. (4×10⁵) × (3×10⁶) = 12 × 10¹¹, but 12 isn't between 1 and 10 — shift it: 12 × 10¹¹ = 1.2 × 10¹².",
-      "figure": "esn-multiply-sci"
+      "body": "Sometimes the coefficients multiply to 10 or more — then you must RENORMALIZE, shifting the extra factor of 10 into the exponent. (4×10⁵) × (3×10⁶) = 12 × 10¹¹, but 12 isn't between 1 and 10 — shift it: 12 × 10¹¹ = 1.2 × 10¹²."
     },
     {
       "id": "k1",
@@ -409,7 +407,7 @@
               "t1",
               "t2"
             ],
-            "feedback": "That adds the coefficients instead of multiplying (7+6=13→1.3×10¹²... check again: multiplying gives 7×6=42, not 13)."
+            "feedback": "That adds the coefficients instead of multiplying: 7+6=13, not 7×6=42. Even renormalized (13×10¹⁰ = 1.3×10¹¹), that's still the wrong approach — multiplying gives 42×10¹⁰, which renormalizes to 4.2×10¹¹."
           }
         ],
         "reusable": false,

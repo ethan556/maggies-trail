@@ -15,55 +15,62 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Classify by the leftover.",
+      "body": "Cancel matching variable terms and classify the statement that remains.",
       "widget": {
-        "type": "mcq",
-        "prompt": "You solve an equation and reach x = 7. How many solutions?",
-        "options": [
+        "type": "equationOutcomeLab",
+        "mode": "classify",
+        "answerMode": "outcome",
+        "prompt": "Compare 4x + 3 and 4x + 8. Cancel the matching 4x terms, then classify the equation.",
+        "leftDisplay": "4x + 3",
+        "rightDisplay": "4x + 8",
+        "leftCoeff": 4,
+        "leftConstant": 3,
+        "rightCoeff": 4,
+        "rightConstant": 8,
+        "relation": "eq",
+        "choices": [
           {
             "id": "a",
-            "label": "One solution",
-            "correct": true,
-            "feedback": "Right — a real value for x means exactly one solution."
+            "label": "No solution",
+            "outcome": "none",
+            "feedback": "Correct. The variables cancel and leave 3 = 8, a false statement for every x."
           },
           {
             "id": "b",
-            "label": "No solution",
-            "correct": false,
-            "feedback": "You found an actual x-value (7), so there IS a solution — exactly one."
+            "label": "Exactly one solution",
+            "outcome": "one",
+            "feedback": "A one-solution equation leaves a value of x to isolate. Here the variables cancel and 3 = 8 is false for every x."
           },
           {
             "id": "c",
-            "label": "Infinitely many",
-            "correct": false,
-            "feedback": "A single value like x = 7 is one solution, not infinitely many — that would need the x to cancel into a true statement."
-          },
-          {
-            "id": "d",
-            "label": "It depends on x",
-            "correct": false,
-            "feedback": "x = 7 pins it down to exactly one solution, no dependence."
+            "label": "Infinitely many solutions",
+            "outcome": "infinite",
+            "feedback": "Infinitely many solutions require a true leftover such as 3 = 3. Here the leftover is false."
           }
-        ]
+        ],
+        "requiredMoves": 1,
+        "explorationFeedback": "Cancel the equal variable terms and inspect the two constants that remain.",
+        "fallbackFeedback": "Subtract 4x from both sides. The result 3 = 8 is false, so no x can satisfy the equation.",
+        "successFeedback": "The equation has no solution because equal variable terms leave the contradiction 3 = 8."
       },
       "predict": {
-        "prompt": "Which ending signals an equation with NO solution — 'x = 7' or '0 = 5'?",
+        "prompt": "Which simplified result shows that an equation has no solution?",
         "options": [
           {
             "id": "false",
-            "label": "0 = 5 — a false statement"
+            "label": "0 = 5, a false statement"
           },
           {
             "id": "x7",
-            "label": "x = 7"
+            "label": "x = 7, one specific value"
           },
           {
             "id": "true",
-            "label": "7 = 7"
+            "label": "7 = 7, a true statement"
           }
         ],
         "outcomeId": "false",
-        "reveal": "When the x's vanish and what's left is FALSE, no number could ever fix it — zero solutions. A leftover truth like 7 = 7 means every number works instead."
+        "reveal": "If the variable terms cancel and leave a false statement, no value can repair the contradiction. A true leftover instead means every value works."
       }
     },
     {

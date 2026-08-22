@@ -22,36 +22,36 @@
         "type": "equationOutcomeLab",
         "mode": "transform",
         "answerMode": "sequence",
-        "prompt": "Solve x/4 − 3 = 2. Drag the steps into order.",
-        "leftDisplay": "x/4 − 3",
-        "rightDisplay": "2",
-        "leftCoeff": 0.25,
-        "leftConstant": -3,
+        "prompt": "Solve x/3 − 2 = 4. Drag the steps into order.",
+        "leftDisplay": "x/3 − 2",
+        "rightDisplay": "4",
+        "leftCoeff": 0.3333333333333333,
+        "leftConstant": -2,
         "rightCoeff": 0,
-        "rightConstant": 2,
+        "rightConstant": 4,
         "relation": "eq",
         "variable": "x",
         "choices": [],
         "operations": [
           {
             "id": "q-add",
-            "label": "add 3 to both sides → x/4 = 5",
+            "label": "add 2 to both sides → x/3 = 6",
             "kind": "addConstant",
-            "value": 3,
-            "feedback": "Undo the −3 first (add 3), then undo the ÷4 (multiply by 4)."
+            "value": 2,
+            "feedback": "Undo the −2 first (add 2), then undo the ÷3 (multiply by 3)."
           },
           {
             "id": "q-mul",
-            "label": "multiply both sides by 4 → x = 20",
+            "label": "multiply both sides by 3 → x = 18",
             "kind": "scale",
-            "value": 4,
-            "feedback": "Multiplying first works only if the ×4 hits EVERY term — the −3 becomes −12. Cleaner here: add 3 first, then multiply."
+            "value": 3,
+            "feedback": "Multiplying first works only if the ×3 hits EVERY term — the −2 becomes −6. Cleaner here: add 2 first, then multiply."
           },
           {
             "id": "q-chk",
-            "label": "check: 20/4 − 3 = 2 ✓",
+            "label": "check: 18/3 − 2 = 4 ✓",
             "kind": "normalize",
-            "feedback": "Undo the −3 first (add 3), then undo the ÷4 (multiply by 4)."
+            "feedback": "Undo the −2 first (add 2), then undo the ÷3 (multiply by 3)."
           }
         ],
         "correctOrder": [
@@ -63,8 +63,8 @@
         "numericErrors": [],
         "tolerance": 0,
         "explorationFeedback": "Apply the same legal operation to both sides and inspect how the variable and constants move.",
-        "fallbackFeedback": "Undo the −3 first (add 3), then undo the ÷4 (multiply by 4).",
-        "successFeedback": "Add, multiply, check — x = 20."
+        "fallbackFeedback": "Undo the −2 first (add 2), then undo the ÷3 (multiply by 3).",
+        "successFeedback": "Add, multiply, check — x = 18."
       }
     },
     {
@@ -121,11 +121,11 @@
         "left": [
           {
             "id": "e1",
-            "label": "x/4 − 3 = 2"
+            "label": "x/5 + 2 = 6"
           },
           {
             "id": "e2",
-            "label": "x/5 + 1 = 4"
+            "label": "x/3 + 2 = 7"
           },
           {
             "id": "e3",
@@ -155,12 +155,12 @@
           {
             "left": "e1",
             "right": "z15",
-            "feedback": "x/4 − 3 = 2 → x/4 = 5 → x = 20. (x = 15 belongs to x/5 + 1 = 4.)"
+            "feedback": "x/5 + 2 = 6 → x/5 = 4 → x = 20. (x = 15 belongs to x/3 + 2 = 7.)"
           },
           {
             "left": "e3",
             "right": "z20",
-            "feedback": "x/2 + 3 = 9 → x/2 = 6 → x = 12. (x = 20 belongs to x/4 − 3 = 2.)"
+            "feedback": "x/2 + 3 = 9 → x/2 = 6 → x = 12. (x = 20 belongs to x/5 + 2 = 6.)"
           }
         ],
         "missFeedback": "Isolate the fraction first, then multiply by the denominator.",
@@ -247,33 +247,33 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Full reverse!",
+      "body": "Full reverse — the constant leads this time.",
       "conceptTag": "fraction-eq",
       "explanationVariants": [
-        "x/5 + 1 = 4: subtract 1 (x/5 = 3), multiply by 5 (x = 15).",
-        "Backward: 4 − 1 = 3, and 3 × 5 = 15."
+        "9 + x/4 = 3: subtract 9 (x/4 = 3 − 9 = −6), multiply by 4 (x = −24).",
+        "Backward through the machine: 3 − 9 = −6, and −6 × 4 = −24."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Solve for x: x/5 + 1 = 4",
-        "answer": 15,
+        "prompt": "Solve for x: 9 + x/4 = 3",
+        "answer": -24,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 3,
-            "feedback": "3 is x/5, not x — a FIFTH of x is 3, so x = 15."
+            "value": 24,
+            "feedback": "The order flipped: it's 3 − 9 = −6, not 9 − 3 = 6. x/4 = −6, so x = −24."
           },
           {
-            "value": 19,
-            "feedback": "The ×5 skipped the constant: clearing first gives x + 5 = 20 (the 1 becomes 5 too), so x = 15."
+            "value": -6,
+            "feedback": "−6 is x/4, not x — multiply by 4: x = −24."
           }
         ],
-        "fallbackFeedback": "x/5 = 3 after subtracting, so x = 15."
+        "fallbackFeedback": "x/4 = −6 after subtracting, so x = −24."
       },
       "hints": [
-        "Undo the +1 first.",
-        "x/5 = 3.",
-        "x = 15."
+        "Subtract 9 from both sides — careful with the order: 3 − 9, not 9 − 3.",
+        "x/4 = −6.",
+        "Multiply by 4: x = −24."
       ],
       "variant": {
         "gen": "a1-solving-equations",

@@ -104,45 +104,26 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "More terms will not save you.",
+      "body": "Approach the convergence wall from outside.",
       "conceptTag": "sc-radius",
       "explanationVariants": [
         "Outside the radius, each new term is BIGGER than the last, so adding terms makes the polynomial worse, not better. No number of terms can rescue it.",
         "This is the crucial difference from ordinary approximation error: inside the radius more terms always help; outside, they actively hurt."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "At x = 2, the series 1 + x + x² + … has terms 1, 2, 4, 8, … What happens if you add more terms?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "It gets WORSE — each term is bigger than the last, so the sum runs away.",
-            "correct": true,
-            "feedback": "Right, and that is what makes the radius a hard boundary rather than a soft one. Outside it, more terms actively hurt."
-          },
-          {
-            "id": "o2",
-            "label": "It slowly improves.",
-            "correct": false,
-            "feedback": "The terms are DOUBLING. Every one you add pushes the sum further from the true value of 1/(1 − 2) = −1."
-          },
-          {
-            "id": "o3",
-            "label": "It converges to −1 eventually.",
-            "correct": false,
-            "feedback": "−1 is the value of the FUNCTION there, and the series has no way of reaching it. The two have simply parted company."
-          },
-          {
-            "id": "o4",
-            "label": "It stays the same.",
-            "correct": false,
-            "feedback": "Each new term adds a larger amount than the one before, so the partial sums climb without bound."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "g13-series-convergence",
-        "form": "series-convergence__sc-radius__mcq"
+        "type": "taylorApprox",
+        "fn": "geometric",
+        "mode": "radius",
+        "atX": 1,
+        "tolerance": 0.01,
+        "targetN": 4,
+        "nStart": 0,
+        "targetXTenths": 10,
+        "xStart": 15,
+        "prompt": "Start outside the geometric series' safe region and pull x inward. Stop at the first boundary where the terms no longer grow.",
+        "successFeedback": "At x = 1 the terms stop shrinking but do not yet grow. This visible boundary is the radius of convergence.",
+        "lowFeedback": "You are inside the interval, where powers of x shrink. Move outward toward the boundary.",
+        "highFeedback": "You are still outside the interval, where powers of x grow. Move inward toward x = 1."
       }
     },
     {
@@ -174,10 +155,6 @@
           }
         ],
         "fallbackFeedback": "The ratio test needs |x| < 1, so the radius is exactly 1."
-      },
-      "variant": {
-        "gen": "g13-series-convergence",
-        "form": "series-convergence__sc-radius__numeric"
       }
     },
     {
@@ -201,25 +178,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "However big x is, the (n + 1) eventually outruns it — so the ratio goes to 0 for every x.",
+            "label": "For any fixed x, n + 1 eventually dominates it, so the ratio tends to zero",
             "correct": true,
             "feedback": "Right. Even at x = 1000, once n passes 1000 the terms start collapsing. The factorials always win in the end."
           },
           {
             "id": "o2",
-            "label": "Because eˣ is always positive.",
+            "label": "eˣ stays positive for every real input, so its series must converge",
             "correct": false,
             "feedback": "Sign has nothing to do with it. 1/(1 − x) is positive near 0 too, and it still has a finite radius."
           },
           {
             "id": "o3",
-            "label": "Because e is irrational.",
+            "label": "The irrational base e makes the terms shrink faster than powers",
             "correct": false,
             "feedback": "Irrationality is irrelevant. What matters is the factorial in the denominator, which crushes the terms."
           },
           {
             "id": "o4",
-            "label": "It is not infinite — the radius is 1.",
+            "label": "The ratio is always below 1 because the radius is exactly one",
             "correct": false,
             "feedback": "Try the widget at any x you like: the eˣ polynomial keeps hugging. The factorials mean it never gives up."
           }
@@ -288,8 +265,7 @@
       "concept": {
         "id": "rc1",
         "kind": "concept",
-        "body": "Look at the terms at the x you care about. **Shrinking?** The series converges there and more terms help. **Growing?** It has given up, and no number of terms will bring it back. The boundary between the two is the radius.",
-        "figure": "dr-power-rule-pattern"
+        "body": "Look at the terms at the x you care about. **Shrinking?** The series converges there and more terms help. **Growing?** It has given up, and no number of terms will bring it back. The boundary between the two is the radius."
       },
       "check": {
         "id": "rk1",
@@ -306,7 +282,7 @@
           "options": [
             {
               "id": "o1",
-              "label": "No — the terms are growing, so it diverges.",
+              "label": "No — it diverges.",
               "correct": true,
               "feedback": "Right. Terms that grow can never be summed, and no number of them will help."
             },

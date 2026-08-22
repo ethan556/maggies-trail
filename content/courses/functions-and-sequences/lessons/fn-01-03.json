@@ -113,23 +113,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Reach beyond the table.",
+      "body": "Does the rule stop at the table's edge?",
       "widget": {
-        "type": "numeric",
-        "prompt": "For f(x) = 2x, what is f(20)?",
-        "answer": 40,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "The table only shows f(1) = 2, f(2) = 4, f(3) = 6. A student says f(20) is unknown because 20 never appears in the table. Which is correct?",
+        "options": [
           {
-            "value": 22,
-            "feedback": "2x means 2 times x, not 2 + x: 2·20 = 40."
+            "id": "a",
+            "label": "f(20) = 40 — the rule f(x) = 2x works for every input, not just the ones shown",
+            "correct": true,
+            "feedback": "Yes — a rule isn't limited to the inputs a table happens to show. f(x) = 2x gives f(20) = 2 × 20 = 40 for any input."
           },
           {
-            "value": 42,
-            "feedback": "You added the 2 rather than multiplying by it. f(20) = 2 × 20 = 40."
+            "id": "b",
+            "label": "The student is right — you can only evaluate inputs that appear in the table",
+            "feedback": "A table only shows a few examples of the rule; the rule itself works for every input, including ones never listed. f(20) = 2 × 20 = 40."
+          },
+          {
+            "id": "c",
+            "label": "f(20) = 22 — since 20 is far outside the table, just add the pattern's difference",
+            "feedback": "The rule multiplies, it doesn't add: f(20) = 2 × 20 = 40, not 20 + 2."
           }
-        ],
-        "fallbackFeedback": "f(20) = 2·20 = 40."
+        ]
       }
     },
     {

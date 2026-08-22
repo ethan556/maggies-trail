@@ -253,23 +253,23 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What slope is perpendicular to y = 4x + 1?",
+        "prompt": "A graphed line climbs 4 up for every 1 right. A second line must cross it at a right angle. What slope does the second line need?",
         "options": [
           {
             "id": "a",
             "label": "-1/4",
             "correct": true,
-            "feedback": "Yes — flip 4 to 1/4 and negate: −1/4, and 4·(−1/4) = −1."
+            "feedback": "Yes — trade the climb for a gentle drop: run 4 right, fall 1. That is flip-and-negate, and 4·(−1/4) = −1."
           },
           {
             "id": "b",
             "label": "1/4",
-            "feedback": "You flipped but didn't negate. Perpendicular needs the sign change: −1/4."
+            "feedback": "You flipped but didn't negate. A slope of 1/4 still climbs, so the crossing is not a right angle: −1/4."
           },
           {
             "id": "c",
             "label": "-4",
-            "feedback": "You negated but didn't flip. Flip 4 to 1/4 first: −1/4."
+            "feedback": "You negated but didn't flip. A slope of −4 is just as steep, mirrored. Flip 4 to 1/4 first: −1/4."
           }
         ]
       },
@@ -281,35 +281,59 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Flip a small fraction.",
+      "body": "The full build: flip, negate, then find b.",
       "conceptTag": "parallel-perpendicular",
       "explanationVariants": [
-        "Flip 1/3 to 3, then negate: −3. Check: (1/3)·(−3) = −1.",
-        "The negative reciprocal of 1/3 is −3."
+        "Perpendicular slope −3, then b = y₁ − m·x₁ = 1 − (−3)·2 = 7.",
+        "Flip 1/3 to 3 and negate for −3; the point (2, 1) then pays for b = 7."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "A line is perpendicular to y = (1/3)x + 2. What is the perpendicular line's slope?",
+        "prompt": "Write the perpendicular: a line crosses y = (1/3)x + 2 at a right angle and passes through (2, 1). What is its b?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
+            "id": "y",
+            "label": "the point's y-coordinate",
+            "value": 1
+          },
+          {
             "id": "m",
             "label": "the given slope",
             "value": 0.3333333333333333
+          },
+          {
+            "id": "x",
+            "label": "the point's x-coordinate",
+            "value": 2
           }
         ],
         "approxFormula": {
-          "op": "negate",
-          "arg": {
-            "op": "divide",
+          "op": "subtract",
+          "left": {
+            "op": "const",
+            "id": "y"
+          },
+          "right": {
+            "op": "multiply",
             "left": {
-              "op": "lit",
-              "value": 1
+              "op": "negate",
+              "arg": {
+                "op": "divide",
+                "left": {
+                  "op": "lit",
+                  "value": 1
+                },
+                "right": {
+                  "op": "const",
+                  "id": "m"
+                }
+              }
             },
             "right": {
               "op": "const",
-              "id": "m"
+              "id": "x"
             }
           }
         },
@@ -318,12 +342,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 3,
-            "feedback": "You flipped 1/3 to 3 but didn't negate. Perpendicular needs the sign change: −3."
+            "value": 1,
+            "feedback": "That's y₁. The perpendicular slope is −3, so b = 1 − (−3)·2 = 7."
           },
           {
-            "value": 2,
-            "feedback": "2 is the given line's y-intercept, not a slope. Flip and negate 1/3: −3."
+            "value": -5,
+            "feedback": "That used slope +3 (flipped but not negated), or added m·x₁. The perpendicular slope is −3, and the formula subtracts: b = 1 − (−6) = 7."
           }
         ],
         "choices": [],
@@ -331,13 +355,13 @@
         "requiredStageKeys": [],
         "requiredExplorations": 1,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "Flip 1/3 to 3, then negate: −3 (and 1/3 · −3 = −1).",
-        "successFeedback": "Flip 1/3 to 3, then negate: −3 (and 1/3 · −3 = −1)."
+        "fallbackFeedback": "Perpendicular slope −3, then b = y₁ − m·x₁ = 1 − (−3)·2 = 1 + 6 = 7.",
+        "successFeedback": "Perpendicular slope −3, then b = y₁ − m·x₁ = 1 − (−3)·2 = 1 + 6 = 7 — the line is y = −3x + 7."
       },
       "hints": [
-        "Reciprocal first: flip 1/3 to 3.",
-        "Then change the sign for perpendicular.",
-        "The slope is −3, and (1/3)·(−3) = −1."
+        "Flip 1/3 to 3, then negate: the slope is −3.",
+        "Now the point pays for b: b = y₁ − m·x₁.",
+        "b = 1 − (−3)·2 = 1 + 6 = 7."
       ],
       "variant": {
         "gen": "a1-linear-functions",

@@ -15,44 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Group first.",
+      "body": "Collapse the ungrouped expression first, then compare it with the grouped version.",
       "conceptTag": "grouping-symbols",
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "What is (2 + 3) × 4?",
-        "task": "groupedEvaluate",
-        "values": [],
-        "group": {
-          "a": 2,
-          "b": 3,
-          "c": 4,
-          "innerOp": "add",
-          "outerOp": "multiply",
-          "groupSide": "left"
-        },
-        "requiredExplorations": 2,
-        "requiredStageKeys": [
-          "group:inner",
-          "group:outer"
+        "type": "evalOrder",
+        "prompt": "Evaluate 2 + 3 × 4. Tap the operation that must happen first.",
+        "tokens": [
+          "2",
+          "+",
+          "3",
+          "×",
+          "4"
         ],
-        "answerUnit": "",
-        "tolerance": 0,
-        "choices": [],
-        "numericErrors": [
+        "target": 14,
+        "commonResults": [
           {
-            "value": 14,
-            "feedback": "14 ignores the parentheses and multiplies first. The parentheses force 2 + 3 = 5 first, then 5 × 4 = 20."
-          },
-          {
-            "value": 24,
-            "feedback": "24 doesn't match. Inside the parentheses first: 2 + 3 = 5, then 5 × 4 = 20."
+            "value": 20,
+            "feedback": "20 comes from adding first. Without parentheses, multiply 3 × 4 first, then add 2."
           }
         ],
-        "authoredStages": [],
-        "explorationFeedback": "Inspect every required exact-number state before checking.",
-        "fallbackFeedback": "Do the parentheses first: 2 + 3 = 5, then 5 × 4 = 20.",
-        "answerMode": "numeric",
-        "successFeedback": "Do the parentheses first: 2 + 3 = 5, then 5 × 4 = 20."
+        "fallbackFeedback": "Multiply first: 3 × 4 = 12. Then add 2 to make 14.",
+        "successFeedback": "The ungrouped expression is 14. Parentheses around 2 + 3 would change the first move and make 20."
       },
       "hints": [
         "Do what's inside the parentheses first.",
@@ -64,23 +47,23 @@
         "The grouping overrides the multiply-first rule."
       ],
       "predict": {
-        "prompt": "Parentheses drop into 2 + 3 × 4, making (2 + 3) × 4. The value will…",
+        "prompt": "In 2 + 3 × 4, which operation must happen first?",
         "options": [
           {
-            "id": "rise",
-            "label": "Rise to 20 — the whole sum gets multiplied"
+            "id": "multiply",
+            "label": "Multiply 3 × 4"
           },
           {
-            "id": "same",
-            "label": "Stay 14 — parentheses just clarify"
+            "id": "add",
+            "label": "Add 2 + 3"
           },
           {
-            "id": "fall",
-            "label": "Drop below 14"
+            "id": "together",
+            "label": "Do both together"
           }
         ],
-        "outcomeId": "rise",
-        "reveal": "Without parentheses only the 3 meets the × 4: 2 + 12 = 14. Grouping first sends the whole 5 through: 5 × 4 = 20. Parentheses aren't decoration — they reroute which numbers an operation touches."
+        "outcomeId": "multiply",
+        "reveal": "Without parentheses, multiplication comes first: 2 + 12 = 14. Parentheses around 2 + 3 would force the addition first and change the value to 20."
       }
     },
     {
@@ -283,7 +266,7 @@
         "numericErrors": [
           {
             "value": 8,
-            "feedback": "8 ignores the parentheses (that's 9 − 3÷2 = 9 − 1.5... no). Group first: 9 − 3 = 6, then 6 ÷ 2 = 3."
+            "feedback": "8 groups correctly (9 − 3 = 6) but adds instead of dividing outside the parentheses (6 + 2 = 8). The outer operation here is ÷: 6 ÷ 2 = 3."
           },
           {
             "value": 6,

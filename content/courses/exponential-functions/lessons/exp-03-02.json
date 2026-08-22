@@ -86,23 +86,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Scale it away.",
+      "body": "Catch the mistake.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 5 · 2^x = 40.",
-        "answer": 3,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A student solves 4 · 2^x = 32 by ignoring the coefficient and solving 2^x = 32 directly, getting x = 5. What is the actual value of x?",
+        "options": [
           {
-            "value": 8,
-            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "Right — divide out the 4 first: 32 ÷ 4 = 8, then 2^x = 8 gives x = 3. Skipping the division changes the equation you're solving."
           },
           {
-            "value": 35,
-            "feedback": "Divide by 5, don't subtract it: 40/5 = 8 = 2³, so x = 3."
+            "id": "b",
+            "label": "5",
+            "feedback": "That solves 2^x = 32 without dividing out the coefficient first. Divide by 4 first: 2^x = 8, so x = 3."
+          },
+          {
+            "id": "c",
+            "label": "8",
+            "feedback": "8 is 2^x after dividing (32 ÷ 4 = 8) — that's not x itself. Finish the job: 8 = 2³, so x = 3."
           }
-        ],
-        "fallbackFeedback": "40/5 = 8 = 2³, so x = 3."
+        ]
       }
     },
     {
@@ -114,54 +119,59 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Your turn.",
+      "body": "Which change moves x?",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 4 · 3^x = 36.",
-        "answer": 2,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "In 3 · 2^x = 24, if the coefficient 3 were changed to 6 (so 6 · 2^x = 24), would x increase, decrease, or stay the same?",
+        "options": [
           {
-            "value": 9,
-            "feedback": "9 is 3ˣ after dividing — finish: 9 = 3², so x = 2."
+            "id": "a",
+            "label": "Decrease",
+            "correct": true,
+            "feedback": "Yes — dividing by the bigger coefficient 6 leaves less for the power to reach: 24 ÷ 6 = 4 = 2², so x drops from 3 to 2."
           },
           {
-            "value": 32,
-            "feedback": "Divide by 4, don't subtract it: 36/4 = 9 = 3², so x = 2."
+            "id": "b",
+            "label": "Increase",
+            "feedback": "A bigger coefficient leaves LESS for the power to cover (24 ÷ 6 = 4, versus 24 ÷ 3 = 8), so x gets smaller, not bigger."
+          },
+          {
+            "id": "c",
+            "label": "Stay the same",
+            "feedback": "Changing the coefficient changes what's left after dividing (8 versus 4), so x changes too: it drops from 3 to 2."
           }
-        ],
-        "fallbackFeedback": "36/4 = 9 = 3², so x = 2."
+        ]
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Bigger coefficient.",
+      "body": "Framed as 'find the power' instead of 'find x'.",
       "conceptTag": "exp-coeff-equation",
       "explanationVariants": [
-        "Divide by 7: 56/7 = 8 = 2³, so x = 3.",
-        "8 = 2³, so after dividing out the 7, x = 3."
+        "Divide by 5: 1280/5 = 256 = 4⁴, so the power is 4.",
+        "256 = 4⁴, so after dividing out the 5, x = 4."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "Solve 7 · 2^x = 56.",
+        "prompt": "5 times a mystery power of 4 equals 1280. What is that power?",
         "task": "exponentSolve",
         "values": [],
-        "esCoef": 7,
-        "esBaseNum": 2,
+        "esCoef": 5,
+        "esBaseNum": 4,
         "esBaseDen": 1,
-        "esRhsNum": 56,
+        "esRhsNum": 1280,
         "esRhsDen": 1,
         "answerMode": "numeric",
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 8,
-            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+            "value": 256,
+            "feedback": "256 is 4^x after dividing by 5 — finish the job: 256 = 4⁴, so the power is 4."
           },
           {
-            "value": 49,
-            "feedback": "Divide by 7, don't subtract it: 56/7 = 8 = 2³, so x = 3."
+            "value": 6400,
+            "feedback": "That multiplies 1280 by 5 instead of dividing. 1280 ÷ 5 = 256 = 4⁴, so the power is 4."
           }
         ],
         "choices": [],
@@ -174,8 +184,8 @@
         ],
         "requiredExplorations": 4,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "56/7 = 8 = 2³, so x = 3.",
-        "successFeedback": "56/7 = 8 = 2³, so x = 3."
+        "fallbackFeedback": "1280/5 = 256 = 4⁴, so the power is 4.",
+        "successFeedback": "1280/5 = 256 = 4⁴, so the power is 4."
       },
       "variant": {
         "gen": "exp-solve"
@@ -184,32 +194,32 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Base five.",
+      "body": "Divide first, this time spelled out as steps.",
       "conceptTag": "exp-coeff-equation",
       "explanationVariants": [
-        "Divide by 2: 50/2 = 25 = 5², so x = 2.",
-        "25 = 5², so after dividing out the 2, x = 2."
+        "Divide by 3: 75/3 = 25 = 5², so x = 2.",
+        "25 = 5², so after dividing out the 3, x = 2."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "Solve 2 · 5^x = 50.",
+        "prompt": "3 · 5^x = 75. Divide out the 3 first — then what power of 5 is left, and what is x?",
         "task": "exponentSolve",
         "values": [],
-        "esCoef": 2,
+        "esCoef": 3,
         "esBaseNum": 5,
         "esBaseDen": 1,
-        "esRhsNum": 50,
+        "esRhsNum": 75,
         "esRhsDen": 1,
         "answerMode": "numeric",
         "tolerance": 0,
         "numericErrors": [
           {
             "value": 25,
-            "feedback": "25 is 5ˣ after dividing — finish: 25 = 5², so x = 2."
+            "feedback": "25 is 5^x after dividing by 3 — finish the job: 25 = 5², so x = 2."
           },
           {
-            "value": 48,
-            "feedback": "Divide by 2, don't subtract it: 50/2 = 25 = 5², so x = 2."
+            "value": 72,
+            "feedback": "Divide by 3, don't subtract it: 75 ÷ 3 = 25 = 5², so x = 2."
           }
         ],
         "choices": [],
@@ -222,8 +232,8 @@
         ],
         "requiredExplorations": 4,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "50/2 = 25 = 5², so x = 2.",
-        "successFeedback": "50/2 = 25 = 5², so x = 2."
+        "fallbackFeedback": "75/3 = 25 = 5², so x = 2.",
+        "successFeedback": "75/3 = 25 = 5², so x = 2."
       },
       "variant": {
         "gen": "exp-solve"
@@ -232,55 +242,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Put it together.",
+      "body": "Solve for the coefficient instead.",
       "conceptTag": "exp-coeff-equation",
       "explanationVariants": [
-        "Divide by 6: 48/6 = 8 = 2³, so x = 3.",
-        "8 = 2³, so after dividing out the 6, x = 3."
+        "4³ = 64, and 320 ÷ 64 = 5.",
+        "Isolate a by dividing by the full power: 320 ÷ 64 = 5."
       ],
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "Solve 6 · 2^x = 48.",
-        "task": "exponentSolve",
-        "values": [],
-        "esCoef": 6,
-        "esBaseNum": 2,
-        "esBaseDen": 1,
-        "esRhsNum": 48,
-        "esRhsDen": 1,
-        "answerMode": "numeric",
+        "type": "numeric",
+        "prompt": "In a · 4^3 = 320, what is a?",
+        "answer": 5,
         "tolerance": 0,
-        "numericErrors": [
+        "commonErrors": [
           {
-            "value": 8,
-            "feedback": "8 is 2ˣ after dividing — finish: 8 = 2³, so x = 3."
+            "value": 80,
+            "feedback": "4³ = 64, not just 4. Divide by the full power: 320 ÷ 64 = 5."
           },
           {
-            "value": 42,
-            "feedback": "Divide by 6, don't subtract it: 48/6 = 8 = 2³, so x = 3."
+            "value": 1280,
+            "feedback": "Isolate a by dividing, not multiplying: 320 ÷ 64 = 5."
           }
         ],
-        "choices": [],
-        "authoredStages": [],
-        "requiredStageKeys": [
-          "exp:base",
-          "exp:isolate",
-          "exp:power",
-          "exp:read"
-        ],
-        "requiredExplorations": 4,
-        "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "48/6 = 8 = 2³, so x = 3.",
-        "successFeedback": "48/6 = 8 = 2³, so x = 3."
+        "fallbackFeedback": "320 ÷ 64 = 5."
       },
       "hints": [
-        "Divide both sides by 6 first.",
-        "48/6 = 8; now solve 2ˣ = 8.",
-        "8 = 2³, so x = 3."
-      ],
-      "variant": {
-        "gen": "exp-solve"
-      }
+        "First compute 4³ = 64.",
+        "Then divide: 320 ÷ 64.",
+        "a = 5."
+      ]
     },
     {
       "id": "r1",

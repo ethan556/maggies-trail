@@ -6,10 +6,12 @@ import { seededShuffle } from "@/lib/prng";
 import { drawFreshVariant, rememberDraw } from "@/lib/antiRepeat";
 import { recommendBand } from "@/lib/difficulty";
 import QuizShell, { type QuizSummary, type Servable } from "@/components/QuizShell";
+import { AppIcon } from "@/components/ui";
 import { localDateStr, onMiss, xpFor } from "@/lib/engine";
 import { awardNewBadges, type BadgeDef } from "@/lib/achievements";
 import { applyXp, bump, progressStore } from "@/lib/progress";
 import { applyResult } from "@/lib/mastery";
+import { CompletionIdentity } from "@/components/CompletionIdentity";
 
 export interface PracticeItem extends Servable {
   conceptTag: string;
@@ -179,10 +181,19 @@ export default function PracticeClient({
     <div
       className={`rounded-card border-2 p-5 ${perfect ? "border-leaf bg-leaf/5" : "border-ink/10 bg-white dark:border-paper/10 dark:bg-dusk"}`}
     >
+      <CompletionIdentity
+        avatarId={progressStore.load().avatarId}
+        customization={progressStore.load().avatarCustomization}
+      />
       <h2 className="text-lg font-extrabold">
         {mode === "testout"
           ? passed
-            ? `Chapter cleared — ${summary.firstTry}/${summary.total}! 🚀`
+            ? (
+                <>
+                  Chapter cleared — {summary.firstTry}/{summary.total}!{" "}
+                  <AppIcon name="icon-205" size={20} className="inline-block align-text-bottom" />
+                </>
+              )
             : `${summary.firstTry} of ${summary.total} — the bar is ${PASS_BAR}`
           : perfect
             ? "Clean sweep!"
@@ -190,7 +201,8 @@ export default function PracticeClient({
       </h2>
       {stage.badges.map((b) => (
         <p key={b.id} className="mt-2 rounded-card border-2 border-tangerine bg-tangerine/10 px-3 py-2 text-sm font-extrabold">
-          {b.icon} Badge earned: {b.name} — <span className="font-normal">{b.desc}</span>
+          <AppIcon name={b.icon} size={18} className="mr-1 inline-block align-text-bottom" />
+          Badge earned: {b.name} — <span className="font-normal">{b.desc}</span>
         </p>
       ))}
       <p className="mt-2 text-sm text-ink/70 dark:text-paper/70">

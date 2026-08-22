@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "A double adds a number to itself. Doubles are the first facts worth knowing on sight, because so many other facts lean on them.",
-      "narration": "A double adds a number to itself. Doubles are the first facts worth knowing on sight, because so many other facts lean on them."
+      "figure": "doubles-mirror",
+      "body": "A double joins matching groups, so a known group determines its equal partner and the combined total.",
+      "narration": "A double joins matching groups, so a known group determines its equal partner and the combined total."
     },
     {
       "id": "i1",
@@ -105,8 +105,8 @@
             "feedback": "That is one short of the double. Count on 6 from 6 to reach 12."
           }
         ],
-        "fallbackFeedback": "A double adds the same number to itself.",
-        "successFeedback": "Correct — double 6 is 12."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 12."
       },
       "hints": [
         "Add the number to itself.",
@@ -144,24 +144,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "Two equal groups: 6 and 6 make 12. No counting from one — the answer is remembered whole.",
-      "narration": "Two equal groups: 6 and 6 make 12. No counting from one — the answer is remembered whole."
+      "figure": "as100-doubles",
+      "body": "The doubles pattern links neighboring facts and supports quick recall without recounting every item.",
+      "narration": "The doubles pattern links neighboring facts and supports quick recall without recounting every item."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A bigger double.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-doubles",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Fill the frame to show double 5.",
-        "target": 10,
-        "preFilled": 5,
-        "addColor": "tangerine",
-        "commonCounts": [],
-        "missFeedback": "Count the dots already there, then add just enough to reach 10.",
-        "successFeedback": "5 and 5 makes 10 — a full frame."
+        "type": "tapDiagram",
+        "prompt": "Two equal rows hold seven counters each. Tap their combined total.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "12",
+            "icon": "12",
+            "count": 1,
+            "correct": false,
+            "feedback": "12 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "14",
+            "icon": "14",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — two groups of seven make fourteen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "16",
+            "icon": "16",
+            "count": 1,
+            "correct": false,
+            "feedback": "16 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — two groups of seven make fourteen."
       },
       "cml": {
         "stage": "construct",
@@ -197,7 +230,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 + 8 = ?",
+        "prompt": "Two equal teams have eight players each. How many players are there?",
         "answer": 16,
         "tolerance": 0,
         "unit": "",
@@ -211,8 +244,8 @@
             "feedback": "That is one short of the double. Count on 8 from 8 to reach 16."
           }
         ],
-        "fallbackFeedback": "A double adds the same number to itself.",
-        "successFeedback": "Correct — double 8 is 16."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 16."
       },
       "hints": [
         "Add the number to itself.",
@@ -258,7 +291,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 + 7 = ?",
+        "prompt": "Which total belongs to a pair of sevens?",
         "answer": 14,
         "tolerance": 0,
         "unit": "",
@@ -272,8 +305,8 @@
             "feedback": "That is one short of the double. Count on 7 from 7 to reach 14."
           }
         ],
-        "fallbackFeedback": "A double adds the same number to itself.",
-        "successFeedback": "Correct — double 7 is 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "Add the number to itself.",
@@ -319,7 +352,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 + 9 = ?",
+        "prompt": "Nine is mirrored by another nine. Find the combined amount.",
         "answer": 18,
         "tolerance": 0,
         "unit": "",
@@ -333,8 +366,8 @@
             "feedback": "That is one short of the double. Count on 9 from 9 to reach 18."
           }
         ],
-        "fallbackFeedback": "A double adds the same number to itself.",
-        "successFeedback": "Correct — double 9 is 18."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 18."
       },
       "hints": [
         "Add the number to itself.",
@@ -396,27 +429,27 @@
         "body": "",
         "conceptTag": "g2f-doubles",
         "explanationVariants": [
-          "Double 6 is 12.",
-          "6 + 6 = 12 — the same number twice."
+          "Double 5 is 10.",
+          "5 + 5 = 10 — the same number twice."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "6 + 6 = ?",
-          "answer": 12,
+          "prompt": "Two vases hold 5 flowers each. How many flowers are there in all?",
+          "answer": 10,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 6,
-              "feedback": "That names one addend instead of doubling it — a double adds 6 to itself."
+              "value": 5,
+              "feedback": "That names one addend instead of doubling it — a double adds 5 to itself."
             },
             {
-              "value": 11,
-              "feedback": "That is one short of the double. Count on 6 from 6 to reach 12."
+              "value": 9,
+              "feedback": "That is one short of the double. Count on 5 from 5 to reach 10."
             }
           ],
-          "fallbackFeedback": "A double adds the same number to itself.",
-          "successFeedback": "Correct — double 6 is 12."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 10."
         }
       }
     }

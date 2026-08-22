@@ -15,76 +15,33 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Sort by family.",
+   "body": "Open an angle just beyond a square corner.",
    "conceptTag": "angle-classification",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each angle into its family.",
-    "buckets": [
-     {
-      "id": "acute",
-      "label": "Acute (< 90°)",
-      "icon": "◣"
-     },
-     {
-      "id": "right",
-      "label": "Right (= 90°)",
-      "icon": "◻️"
-     },
-     {
-      "id": "obtuse",
-      "label": "Obtuse (90°–180°)",
-      "icon": "◭"
-     },
-     {
-      "id": "straight",
-      "label": "Straight (= 180°)",
-      "icon": "➖"
-     }
-    ],
-    "items": [
-     {
-      "id": "a1",
-      "label": "45°",
-      "bucketId": "acute",
-      "feedback": "45 is less than 90 — acute."
-     },
-     {
-      "id": "a2",
-      "label": "90°",
-      "bucketId": "right",
-      "feedback": "Exactly 90 — a right angle."
-     },
-     {
-      "id": "a3",
-      "label": "120°",
-      "bucketId": "obtuse",
-      "feedback": "120 is between 90 and 180 — obtuse."
-     },
-     {
-      "id": "a4",
-      "label": "180°",
-      "bucketId": "straight",
-      "feedback": "Exactly 180 — a straight angle."
-     }
-    ],
-    "missFeedback": "Compare the degree number to 90 and 180 to find its family.",
-    "successFeedback": "45° acute, 90° right, 120° obtuse, 180° straight — each compared to the two benchmarks."
+    "type": "angleMeasure",
+    "prompt": "Open the rays to 110°. Watch the angle move past the 90° right-angle mark.",
+    "targetAngle": 110,
+    "angleStart": 80,
+    "angleStep": 5,
+    "commonAngles": [],
+    "successFeedback": "110° is wider than 90° and narrower than 180°, so it is obtuse.",
+    "lowFeedback": "The angle is still below 110°. Open it wider.",
+    "highFeedback": "The angle is above 110°. Bring the ray back."
    },
    "predict": {
     "prompt": "An angle just slightly WIDER than a square corner — acute or obtuse?",
     "options": [
      {
       "id": "obtuse",
-      "label": "Obtuse"
+      "label": "Obtuse angle"
      },
      {
       "id": "acute",
-      "label": "Acute"
+      "label": "Acute angle"
      },
      {
       "id": "right",
-      "label": "Still a right angle"
+      "label": "Right angle"
      }
     ],
     "outcomeId": "obtuse",

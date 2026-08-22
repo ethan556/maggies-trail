@@ -32,14 +32,14 @@ describe("authored math shorthand", () => {
     ]);
   });
 
-  it("recognizes fractions and roots while leaving already-presented Unicode superscripts alone", () => {
+  it("recognizes fractions, roots, and authored Unicode-script expressions", () => {
     const parts = authoredMathParts("Compare 1/2 × 8 = 4, sqrt(9), √(−36), and (2⁴)².", { includeArithmetic: true });
     expect(parts.filter((part) => part.tex).map((part) => part.tex)).toEqual([
       "\\frac{1}{2} \\times  8 = 4",
       "\\sqrt{9}",
-      "\\sqrt{-36}"
+      "\\sqrt{-36}",
+      "(2^{4})^{2}"
     ]);
-    expect(parts.at(-1)?.text).toContain("(2⁴)²");
   });
 
   it("renders compact arithmetic and equality runs without swallowing prose", () => {
@@ -148,7 +148,7 @@ describe("WS-G calculus shorthand — integrals", () => {
       "So the definite integral is defined as ∫ₐᵇ f(x) dx = limit of the Riemann sums as n → ∞",
       { includeArithmetic: true }
     );
-    expect(riemann.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f(x) dx"]);
+    expect(riemann.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f(x) dx", "∞"]);
   });
 });
 
@@ -226,19 +226,15 @@ describe("WS-G calculus shorthand — limits", () => {
 });
 
 describe("WS-G calculus shorthand — what it refuses", () => {
-  it("leaves an operator whose operand is an English word entirely as prose", () => {
-    // ia-01-01, pc-01-02, in-01-03, sr-02-03. The corpus deliberately puts word-placeholders in
-    // the operator's own brackets. Typesetting them would set `top` as t·o·p in math italic, so
-    // the whole island is dropped and the characters stay exactly as authored.
-    for (const text of [
-      "**Area = ∫ₐᵇ (top − bottom) dx**",
-      "So arc length is ∫ speed dt, the total distance.",
-      "∫ (rate) dt = the total change",
-      "and the whole integral collapses into ∫ (something in u) du",
-      "How many terms does Σ from k = 3 to 11 of (anything) have?"
-    ]) {
-      expect(authoredMathParts(text).filter((part) => part.tex), text).toEqual([]);
-    }
+  it("renders the operator glyph but refuses an arbitrary English integrand", () => {
+    // The universal glyph policy renders the explicit integral sign, while the conservative
+    // calculus grammar still refuses to turn the neighbouring English words into variables.
+    expect(authoredMathParts(
+      "The model writes ∫ total distance dt.",
+    ).filter((part) => part.tex).map((part) => part.source)).toEqual(["∫"]);
+    expect(authoredMathParts(
+      "How many terms does Σ from k = 3 to 11 of (anything) have?",
+    ).filter((part) => part.tex)).toEqual([]);
   });
 
   it("still converts a single-letter operand — the guard rejects words, not variables", () => {
@@ -250,23 +246,27 @@ describe("WS-G calculus shorthand — what it refuses", () => {
     ]);
   });
 
-  it("leaves a bare operator alone — the symbol on its own is prose about the symbol", () => {
-    for (const text of [
-      "The ∫ is a stretched S for 'sum'.",
-      "If lim from the left is 1 and lim from the right is 3"
-    ]) {
-      expect(authoredMathParts(text), text).toEqual([{ text }]);
-    }
+  it("renders an explicit operator glyph while leaving a spelled-out operator as prose", () => {
+    expect(authoredMathParts("The ∫ is a stretched S for 'sum'.")).toEqual([
+      { text: "The " },
+      { text: "", source: "∫", tex: "\\int " },
+      { text: " is a stretched S for 'sum'." },
+    ]);
+    const prose = "If lim from the left is 1 and lim from the right is 3";
+    expect(authoredMathParts(prose)).toEqual([{ text: prose }]);
   });
 
-  it("refuses bounds written with an improvised script character", () => {
-    // in-01-03 authors ∫ᵦᵃ with U+1D66 (subscript GREEK BETA) and ∫꜀ᵇ with U+A700 (a Chinese
-    // tone mark) because Unicode has no subscript b or c. Decoding a guess would be inventing
-    // content; emitting a bare `\int` would tear the bounds off the operator. So neither
-    // converts, and the authoring defect stays visible for a human to fix.
+  it("normalises the two corpus-proven legacy lower-bound glyphs only after an integral", () => {
+    // in-01-03 is the sole corpus source of modifier beta and the tone letter. Unicode has no
+    // Latin subscript b or c; inside this exact integral-bound position the adjoining equations
+    // prove the intended bound, so the renderer repairs them without admitting general aliases.
     const parts = authoredMathParts("∫ₐᵇ f = −∫ᵦᵃ f (running backwards flips the sign)");
-    expect(parts.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f"]);
-    expect(parts.at(-1)?.text).toContain("∫ᵦᵃ");
+    expect(parts.filter((part) => part.tex).map((part) => part.source)).toEqual(["∫ₐᵇ f", "∫ᵦᵃ f"]);
+    expect(parts.filter((part) => part.tex).map((part) => part.tex)).toEqual([
+      "\\int_{a}^{b} f",
+      "\\int_{b}^{a} f"
+    ]);
+    expect(powerShorthandToTex("∫꜀ᵇ f")).toBe("\\int_{c}^{b} f");
   });
 
   it("never lets an island cross a newline", () => {

@@ -7,7 +7,7 @@ import { WidgetRenderer, type StageTone } from "./widgets";
 
 function scaledFixture(): TScaledCircleLab {
   const parsed = WidgetSpec.parse({
-    type: "scaledCircleLab", prompt: "Scale the fountain.", drawingRadius: 3, scale: 2, realRadius: 6, ask: "realRadius",
+    type: "scaledCircleLab", prompt: "Scale the fountain.", drawingRadius: 3, scale: 2, drawingUnit: "cm", realRadius: 6, realUnit: "m", ask: "realRadius",
     choices: [
       { id: "correct", label: "6 m", value: 6, feedback: "correct" },
       { id: "drawing", label: "3 m", value: 3, feedback: "drawing only" },
@@ -58,12 +58,12 @@ describe("Session 137 geometry-roundup visual interactions", () => {
     expect(screen.getByText("Selected 3 m.")).toBeTruthy();
   });
 
-  it("emits toward and away process evidence from scaled-circle claims", () => {
+  it("keeps pre-check process evidence neutral for scaled-circle claims", () => {
     const onEvent=vi.fn(); render(<Harness spec={scaledFixture()} onEvent={onEvent}/>);
     fireEvent.click(screen.getByRole("button",{name:"3 m"}));
     fireEvent.click(screen.getByRole("button",{name:"6 m"}));
-    expect(onEvent).toHaveBeenNthCalledWith(1,expect.objectContaining({control:"circle-claim",dir:"away"}));
-    expect(onEvent).toHaveBeenNthCalledWith(2,expect.objectContaining({control:"circle-claim",dir:"toward"}));
+    expect(onEvent).toHaveBeenNthCalledWith(1,expect.objectContaining({control:"circle-claim",dir:"neutral"}));
+    expect(onEvent).toHaveBeenNthCalledWith(2,expect.objectContaining({control:"circle-claim",dir:"neutral"}));
   });
 
   it("requires hinge exploration, communicates flat failure without color alone, and keeps exact claims native", () => {

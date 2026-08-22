@@ -15,21 +15,26 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Which is greater?",
+      "body": "Move rightward from the smaller negative to the greater one.",
       "conceptTag": "compare-negatives",
       "widget": {
-        "type": "rationalCompare",
-        "prompt": "Which is greater: -2 or -5?",
-        "left": {
-          "value": "-2"
-        },
-        "right": {
-          "value": "-5"
-        },
-        "answer": "gt",
-        "ltFeedback": "-5 has the bigger DIGIT, but it sits farther LEFT — deeper into the negatives — so it's actually smaller. -2 is greater.",
-        "eqFeedback": "They're different points on the line: -2 is right of -5, so -2 is greater.",
-        "successFeedback": "Right — -2 is farther right on the line (closer to zero), so it's greater than -5."
+        "type": "numberLinePlace",
+        "prompt": "The marker starts at -5. Drag it to the greater number in the pair -5 and -2.",
+        "min": -10,
+        "max": 2,
+        "step": 1,
+        "tickStep": 1,
+        "target": -2,
+        "start": -5,
+        "commonPlacements": [
+          {
+            "value": -5,
+            "feedback": "-5 is the starting point and the smaller number. Greater means move right on the number line."
+          }
+        ],
+        "successFeedback": "The move from -5 to -2 goes right, so -2 is greater. The direction rule does not change for negative numbers.",
+        "lowFeedback": "This point is left of -2, so it is smaller. Move right toward the greater number.",
+        "highFeedback": "This point is right of -2, but it is not one of the two numbers being compared."
       },
       "hints": [
         "Picture both on the line.",
@@ -135,7 +140,7 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Order them low to high.",
+      "body": "Locate the smallest value before ordering the rest.",
       "conceptTag": "compare-negatives",
       "predict": {
         "prompt": "0, -5, -1, -8 from smallest to largest. Where does -8 go?",
@@ -157,41 +162,31 @@
         "reveal": "First. On the line, -8 sits farthest LEFT, and left means smaller. The digit 8 being large is exactly what pushes it further from zero in the negative direction — bigger digit, smaller number."
       },
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Arrange these from SMALLEST to largest: 0, -5, -1, -8.",
-        "items": [
+        "type": "numberLinePlace",
+        "prompt": "Among 0, -5, -1, and -8, place the marker at the smallest value. This will be the first number in the order.",
+        "min": -10,
+        "max": 1,
+        "step": 1,
+        "tickStep": 1,
+        "target": -8,
+        "start": 0,
+        "commonPlacements": [
           {
-            "id": "z",
-            "label": "0"
+            "value": 0,
+            "feedback": "Every negative value lies left of 0, so 0 cannot be the smallest in this set."
           },
           {
-            "id": "n5",
-            "label": "-5"
+            "value": -1,
+            "feedback": "-1 is the negative closest to zero, making it the greatest negative here, not the smallest."
           },
           {
-            "id": "n1",
-            "label": "-1"
-          },
-          {
-            "id": "n8",
-            "label": "-8"
+            "value": -5,
+            "feedback": "-5 is left of -1 but still right of -8. Keep moving left to the smallest point."
           }
         ],
-        "correctOrder": [
-          "n8",
-          "n5",
-          "n1",
-          "z"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "z",
-            "second": "n8",
-            "feedback": "0 isn't the smallest — every negative is less than 0. The smallest here is -8, the deepest negative."
-          }
-        ],
-        "missFeedback": "Smallest means farthest LEFT on the line: -8, then -5, then -1, then 0. The bigger the digit on a negative, the smaller the number.",
-        "successFeedback": "Ordered — deepest negative first, zero last. Bigger negative digit means smaller value."
+        "successFeedback": "-8 is farthest left, so it comes first. Reading left to right gives -8, -5, -1, 0.",
+        "lowFeedback": "This point lies left of every number in the set. Choose one of the four stated values.",
+        "highFeedback": "The smallest of the stated values is farther left."
       }
     },
     {

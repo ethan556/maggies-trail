@@ -4601,3 +4601,183 @@ under-parameterised backlog). GENERATOR_MATH_PRESENTATION_AUDIT: 0 rows. MCQ gen
 leaks: 0. Gates at close: 4 shards green (5642/4354/2461/1473 +1 skipped), variants gate
 3996/3996, schema 1840/1840, pedagogy 1711/1711, registration consistent, build EXIT:0,
 sweep 102,281 samples / 0 throws.
+
+
+## S243 (2026-08-17, implementation branch on base 0cedbac) — V4 evidence canaries, not full programme completion
+
+**Declarations added: 0. Authored lesson files changed: 0. Production avatars enabled: 0.**
+This session reviewed the V4 programme and audit findings against the live repository, then landed
+bounded generator, audit, public-UX, question-choice, and owned-icon canaries. It did not implement
+the whole V4 programme. `CLAUDE.md` rule 1 still prohibits changing authored lesson prose, authored
+options, or authored lesson structure without an explicit owner override.
+
+### Generator-language canary (Grade K)
+
+- `g0-counting` addition/subtraction stories no longer generate a zero-action event such as an
+  adult adding or removing 0 objects. Joining/separating branches now draw a consequential positive
+  action; zero remains in the forms that actually teach zero.
+- Generated K.OA stories name an actor, use simpler complete stems, agree singular/plural nouns and
+  verbs, and use four mathematically parallel numeric/action options instead of filler such as
+  “A different choice” or “There is not enough information.”
+- The cat-removal drawing form now guarantees `removed < starting group`; three-colour counter
+  prompts and feedback use `counter`/`counters` correctly. The independent parser accepts both.
+- Evidence: the new language sweep plus the complete variant gate passed **4,001/4,001**; the
+  independent review then extended variant coverage to **7,126/7,126**.
+
+### Choice-order canary
+
+- All nine authored `distributionCompareLab` judge moments placed the supported conclusion first.
+  Judge options now use a deterministic seed shuffle of display order while grading and feedback
+  continue to use stable option IDs. Numeric measure choices stay in semantic numeric order.
+- The canary proves that the key moves across positions, a seed is stable through retry/rerender,
+  diagnostics survive the shuffle, and DOM order remains native keyboard order.
+
+### Public UX and navigation canaries
+
+- The homepage proof strip now server-renders the canonical **129 courses / 1,701 lessons** on its
+  first frame; it no longer flashes or exposes `0 courses / 0 lessons` before observation/hydration.
+- The catalogue now has accessible level filters: All, K–2, Grades 3–5, Grades 6–8,
+  Algebra 1 & Geometry, and Algebra 2–Calculus. Filtering also scopes search; the pressed state,
+  live summary, keyboard-sized buttons, and “Find my level” route are explicit.
+- Basecamp now says “Course overview” and “Start course”; prerequisites are labelled
+  “Recommended prerequisites (approach trails),” explicitly optional, and show Started/Not started
+  rather than contradicting direct entry with a closed-approach warning.
+- Local production-build browser evidence: the homepage showed **129/1,701**; the Grades 3–5
+  filter hid K and G6 courses and scoped a fractions search; the absolute-value-piecewise basecamp
+  showed the new overview/start/prerequisite language and `Not started` state.
+
+### Owned icon and avatar work
+
+- Achievement definitions now carry typed owned `AppIcon` IDs instead of platform emoji. Profile,
+  practice, review, and test-out surfaces render those icons; profile badge list items expose
+  earned/locked accessible names and visible status.
+- Four independently generated premium art-direction candidates (`avatar-001`, `avatar-101`,
+  `avatar-201`, `avatar-301`) are retained only under
+  `reports/avatar-candidates/s243-precanary/`, with 256/512 WebP exports, measurements, and an
+  unapproved contact sheet. Independent review rejected inconsistent head scale/eye line and a
+  one-choice-per-band picker cohort. **Status: PRE-CANARY / NON-SHIPPING.** The production
+  allowlist is empty, `public/avatars/` still ships only the honest placeholder, and all 60 concepts
+  remain disabled.
+- Prompt/manifest, filename, enabled/file-pair, WebP/dimension, opacity, warm-ivory-corner,
+  duplicate, and orphan checks were added. Local browser evidence showed 15 disabled placeholder
+  choices and the honest “on the way” caption; no candidate was selectable.
+
+### Repetition/representation scoring canary
+
+- Flagship contrast no longer awards credit merely because the same concept tag repeats. It now
+  requires distinct representation signatures (generator + form, with prompt duplication checks)
+  unless the engine intrinsically compares cases. A challenge earns transfer only when it moves the
+  same concept onto a genuinely different representation.
+- The stricter scorer exposed **83** K–8 C/D lessons. The bounded derived classifier classified
+  **83/83** with **0 unreviewed**: 72 `multi-engine`, 11 `extend`, all 83 `partial`
+  representation coverage, and 15 honest prediction ceilings. It is deliberately narrow; unrelated
+  future backlog drift still fails. Evidence: representation scorer **10/10** and excellence
+  backlog **4/4**.
+
+### CML portability and the governance blocker
+
+- `cml-lint.mjs` now resolves its own directory with `fileURLToPath(import.meta.url)` and normalizes
+  report paths, so Windows no longer constructs `C:\\C:\\...` or emits separator-dependent output.
+- Strict CML remains **0 errors / 200 warnings** within ceilings: 161
+  `prediction-not-causal` and 39 `flagship-response-heavy`.
+- No CML waiver was reduced. Of the 161 prediction warnings, 18 are sequencing cases and **143
+  have no manipulative step anywhere**. Moving authored steps or adding one lesson-specific surface
+  changes authored lesson structure and is blocked by rule 1 until the owner grants an explicit,
+  narrow authoring override. This is the main blocker to the requested visual-first V4 lesson
+  conversion; it is not evidence that V4 is complete.
+
+### Validation at close — truthful red/green split
+
+Green focused and build gates: integrated packet **84/84** after a harness correction; later core
+packet **45/45** plus scorer **10/10**; Grade-K language + full variants **4,001/4,001**;
+independent variant review **7,126/7,126**; excellence backlog **4/4**; typecheck **EXIT 0**;
+schema **1,840/1,840**; pedagogy **1,711/1,711**; registration consistent; production build
+**EXIT 0**. Schema/pedagogy used an `os.userInfo`-patched tsx CJS loader because the Windows tsx
+CLI exited with ENOMEM before project code loaded. Native validation reported only three known
+generated artifacts: `node_modules`, `.next`, and `tsconfig.tsbuildinfo`.
+
+The mandatory four shards are **not green**, so this batch must not be called landed:
+
+- shard 1: **5,651 passed / 6 failed**
+- shard 2: **4,346 passed / 7 failed**
+- shard 3: **2,459 passed / 5 failed**
+- shard 4: **1,461 passed / 5 failed / 1 skipped**
+
+The 23 failures cluster in Windows separator assumptions (systems/algebra/avatar fence), Windows
+temporary-directory EPERM (authz/bad-JSON), a CRLF/path false positive in the focus-visible
+scanner, one accessible-parity timeout, and installed `nanoid` **3.3.17** below the lock/test target
+**3.3.18**. Shard-1 excellence failures caused by the stricter scorer were subsequently reconciled
+and its focused **4/4** gate passes. These environment/non-regression findings are recorded, not
+silently converted into a green full suite.
+
+### Deployment evidence boundary
+
+The exact supplied Vercel deployment remained behind Vercel authentication, and the connector
+could not resolve the project. The canonical public deployment was reviewed for the original
+defects, and the changed routes were verified locally against the production build. No exact-preview
+or production deployment claim is made.
+
+## Session 246 — Grade 10 conditional-probability numeric assurance
+
+- Repaired all eight numeric forms under `g10-conditional-probability`: overlap count, joint,
+  marginal, complement, conditional, reversal, union, and independence/exclusivity.
+- The overlap form now has ten coherent states spanning union and intersection unknowns. The seven
+  remaining forms use eight bounded table/event states apiece, with varied quantities, answers,
+  contexts, and applicable reasoning jobs.
+- Independent routes now recompute answers from printed quantities for every repaired form. They do
+  not read generator state or trust the keyed answer.
+- Misconception values are independently distinct from the answer and one another. Numeric prompts
+  explicitly state the rounding convention when a non-terminating decimal can occur.
+- No lesson declaration or authored lesson prose changed.
+
+Gate catches and evidence:
+
+- The original resolver failure moved from `cpr-01-03/k2` to `cpr-02-02/k1`, then to
+  `cpr-02-02/k2`; each exposed the next static numeric form. Repairing the family moved the
+  frontier entirely out of conditional probability to `co-01-01/k1` in Grade 12 conics.
+- Focused S246 properties and the conditional portion of the real resolver pass.
+- Full generator regression: **4,001/4,001 PASS**.
+- Typecheck: PASS. Schema: **1,840/1,840**. Pedagogy: **1,711/1,711**.
+- The normal tsx CLI again failed before project code with `uv_os_get_passwd ENOMEM`; schema and
+  pedagogy passed through the established in-process TypeScript route.
+
+Next: repair `g12-conic-sections@conic-sections__co-parabola-def__numeric` without weakening the
+freshness gate, then continue resolver-led family assurance.
+
+## Session 246 continuation — Grade 12 conic numeric assurance
+
+- `co-parabola-def` now emits eight exact focus/directrix/on-curve states spanning horizontal and
+  vertical parabolas. Its independent route derives the perpendicular distance from the printed
+  directrix and point coordinates.
+- `co-hyp-ecc` now emits eight horizontal/vertical hyperbolas built from exact Pythagorean
+  `(a,b,c)` states. It rounds `c/a` only under the prompt’s explicit two-decimal instruction.
+- Focused properties, schema parsing, deterministic replay, independent answers, and trap
+  distinctness pass. Full generator regression plus S246 tests: **4,004/4,004 PASS**.
+- The resolver frontier moved out of conics to `cp-02-01/k2` in `g10-constructions-proof`.
+- No lesson declaration or authored prose changed.
+
+## Session 246 continuation — Grade 10 constructions/proof numeric assurance
+
+- Repaired all ten numeric forms under `g10-constructions-proof`, covering 14 live consumers.
+- Replaced fixed or two/three-row pools with genuine mathematical state variation across
+  perpendiculars, parallels, regular polygons, proof/counterexample tasks, converses, transversal
+  angle relationships, and vertical-angle transfer.
+- Removed the learner-facing route to the stale perpendicular feedback that incorrectly invoked
+  Thales' theorem. Every new fallback and misconception explanation now names the governing
+  construction relationship.
+- Independent prompt parsers recompute every generated answer without sharing case tables.
+- Focused family assurance passes; full S246 generator regression is **4,012/4,012**; typecheck,
+  schema **1,840/1,840**, pedagogy **1,711/1,711**, and strict CML **0/0** pass.
+- The real resolver now advances to `cx-01-03/k2` in the separate `g10-coordinate-proofs` family.
+- No lesson declaration or authored lesson prose changed.
+
+## Cowork S316 (2026-08-20) — variant bindings affected by signed content revisions
+
+No new generators. Variant keys REMOVED where signed lesson revisions legitimately outgrew the
+declared generator's template (leaving them would regenerate mismatched content): g3f-01-04/k3
+(Ssg2GridApplyNumeric), g5d-01-01/k3 (Pv1000AddTradeNumeric), mmt-05-03 k1+k3 (g2 line-plot gen
+never emits plotData), plus removals inside fractions-deeper-g3 documented in
+S316_LANEA_G2_G3_REVISION_IMPLEMENTATION.md. Flagged-not-removed (content diversified; needs new
+generator forms): ee-01-02/k3, ee-01-03/ch1, ee-04-02/k3, ee-04-03/ch1, pr-03-01 k3/ch1,
+tm-04-01/tm-04-03/tm-05-01/mult-01-03/mb-05-02 steps per S316_LANEA_MIXED report. These are
+generator debt: a future variants session should author new forms and re-declare.

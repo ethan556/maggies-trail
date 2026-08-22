@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "On the hundred chart, moving up one row subtracts ten — the mirror of moving down to add ten.",
-      "narration": "On the hundred chart, moving up one row subtracts ten — the mirror of moving down to add ten."
+      "figure": "chart-down-ten",
+      "body": "The chart shows 34 directly above 44. Moving down adds ten, so reversing that move—from 44 up to 34—subtracts ten.",
+      "narration": "The chart shows 34 directly above 44. Moving down adds ten, so reversing that move—from 44 up to 34—subtracts ten."
     },
     {
       "id": "i1",
@@ -95,7 +95,7 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+        "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
         "successFeedback": "Correct — 75 + 10 = 85."
       },
       "hints": [
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The chart makes the ten-at-a-time subtraction visible as an upward move, one row at a time.",
-      "narration": "The chart makes the ten-at-a-time subtraction visible as an upward move, one row at a time."
+      "figure": "tno-count-down-tens",
+      "body": "Move upward through chart rows to count backward.",
+      "narration": "Move upward through chart rows to count backward."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-chart-sub",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "On the hundred chart, hop up one row from 58 (subtract ten).",
-        "min": 46,
-        "max": 60,
-        "start": 58,
-        "hop": 1,
-        "hops": 10,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 58 and count back 10: you land on 48.",
-        "successFeedback": "Landed on 48 — moving up one row on the chart subtracts ten."
+        "type": "tapDiagram",
+        "prompt": "A chart marker moves up two rows from 54. Tap its new number.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "24",
+            "icon": "24",
+            "count": 1,
+            "correct": false,
+            "feedback": "24 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "34",
+            "icon": "34",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — two rows upward subtract twenty: 54 becomes 34."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "44",
+            "icon": "44",
+            "count": 1,
+            "correct": false,
+            "feedback": "44 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — two rows upward subtract twenty: 54 becomes 34."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "33 − 10 = ?",
+        "prompt": "What number sits one chart row above 33?",
         "answer": 23,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 33 − 10 = 23."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 23."
       },
       "hints": [
         "Up one row on the chart means subtract ten.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "83 + 10 = ?",
+        "prompt": "Which number is one chart row below 83?",
         "answer": 93,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 83 + 10 = 93."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 93."
       },
       "hints": [
         "Up one row on the chart means subtract ten.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "44 − 10 = ?",
+        "prompt": "Move one row up from 44. What number do you reach?",
         "answer": 34,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 44 − 10 = 34."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 34."
       },
       "hints": [
         "Up one row on the chart means subtract ten.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "75 + 10 = ?",
-          "answer": 85,
+          "prompt": "Build 58 with ten-rods and one-cubes. Add 1 more ten-rod. What number do you have now?",
+          "answer": 68,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 76,
-              "feedback": "That changes by one instead of ten."
+              "value": 59,
+              "feedback": "That adds one one-cube instead of one ten-rod."
             },
             {
-              "value": 75,
-              "feedback": "That leaves the number unchanged."
+              "value": 58,
+              "feedback": "That leaves the number unchanged, forgetting the new ten-rod."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 75 + 10 = 85."
+          "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
+          "successFeedback": "Correct — 58 plus one ten-rod builds 68."
         }
       }
     }

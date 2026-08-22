@@ -127,32 +127,32 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Measure another moderate gap.",
+      "body": "Right at the edge between overlap and separation.",
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 36. Group B has a mean of 24. The variability measure is 4. How many variability-units apart are the means?",
+        "prompt": "Two teams' practice times average 26 and 20 minutes, with a variability measure of 5 minutes. How many variability-units apart are the team averages?",
         "mode": "measure",
-        "meanA": 36,
-        "meanB": 24,
-        "variability": 4,
-        "answer": 3,
+        "meanA": 26,
+        "meanB": 20,
+        "variability": 5,
+        "answer": 1.2,
         "tolerance": 0,
         "measureChoices": [
           {
-            "value": 12,
-            "feedback": "That's just the raw gap (36−24). Divide by the variability measure: 12÷4=3."
+            "value": 6,
+            "feedback": "That's just the raw gap (26−20). Divide by the variability measure: 6÷5=1.2."
           },
           {
-            "value": 3,
-            "feedback": "(36−24)÷4 = 3 variability-units."
+            "value": 1.2,
+            "feedback": "(26−20)÷5 = 1.2 variability-units."
           },
           {
-            "value": 4,
-            "feedback": "That's the variability measure itself, not the gap in units. (36−24)÷4=3."
+            "value": 5,
+            "feedback": "That's the variability measure itself, not the gap in units. (26−20)÷5=1.2."
           }
         ],
-        "fallbackFeedback": "(36−24)÷4 = 3 variability-units.",
-        "successFeedback": "(36−24)÷4 = 3 variability-units."
+        "fallbackFeedback": "(26−20)÷5 = 1.2 variability-units.",
+        "successFeedback": "(26−20)÷5 = 1.2 variability-units — just over the 'near 1' threshold where heavy overlap starts to fade into real separation."
       }
     },
     {
@@ -197,41 +197,37 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A gap-in-units for a clearly-separated case.",
+      "body": "A big raw gap doesn't always mean a big standardized gap.",
       "conceptTag": "sp-overlap-gap",
       "explanationVariants": [
-        "(72−48)÷6=4, a large gap suggesting little overlap.",
-        "A big gap-in-units means the groups are clearly separated."
+        "(940−900)÷50=0.8 — a big raw gap doesn't guarantee a big standardized gap if the variability is also large.",
+        "Always divide by the variability measure before judging how separated two groups are."
       ],
       "widget": {
         "type": "distributionCompareLab",
-        "prompt": "Group A has a mean of 72. Group B has a mean of 48. The variability measure is 6. How many variability-units apart are the means?",
+        "prompt": "A factory's two production lines average 940 and 900 units per day. Their variability measure is 50 units. How many variability-units apart are the two lines' averages?",
         "mode": "measure",
-        "meanA": 72,
-        "meanB": 48,
-        "variability": 6,
-        "answer": 4,
+        "meanA": 940,
+        "meanB": 900,
+        "variability": 50,
+        "answer": 0.8,
         "tolerance": 0,
         "measureChoices": [
           {
-            "value": 24,
-            "feedback": "That's just the raw gap (72−48). Divide by the variability measure: 24÷6=4."
+            "value": 40,
+            "feedback": "That's just the raw gap (940−900). Divide by the variability measure: 40÷50=0.8."
           },
           {
-            "value": 4,
-            "feedback": "(72−48)÷6 = 4 variability-units."
+            "value": 0.8,
+            "feedback": "(940−900)÷50 = 0.8 — even though the raw gap (40) looks big, dividing by the large variability measure (50) gives a small standardized gap."
           },
           {
-            "value": 6,
-            "feedback": "That's the variability measure itself, not the gap in units. (72−48)÷6=4."
+            "value": 50,
+            "feedback": "That's the variability measure itself, not the gap in units. (940−900)÷50=0.8."
           }
         ],
-        "fallbackFeedback": "(72−48)÷6 = 4 variability-units.",
-        "successFeedback": "(72−48)÷6 = 4 variability-units."
-      },
-      "variant": {
-        "gen": "g7-sp-gap-units",
-        "form": "spGapOverlapB"
+        "fallbackFeedback": "(940−900)÷50 = 0.8 — a large raw gap can still mean a small standardized gap if the variability measure is also large.",
+        "successFeedback": "(940−900)÷50 = 0.8 variability-units — even a 40-unit raw gap counts as a small standardized gap when the variability measure is 50."
       }
     },
     {

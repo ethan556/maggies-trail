@@ -119,10 +119,10 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Match the pieces.",
+      "body": "Read the line from a table instead of an equation.",
       "widget": {
         "type": "affineRelationshipLab",
-        "prompt": "Break down the line of best fit y = 3x + 1.",
+        "prompt": "A table of paired data gives (0, 1), (1, 4), (2, 7). Break down the line of best fit these points define.",
         "task": "exploreParameters",
         "lines": [
           {
@@ -130,9 +130,22 @@
             "label": "Line of best fit",
             "m": 3,
             "b": 1,
-            "sourceKind": "equation",
-            "sourceText": "y = 3x + 1",
-            "tablePoints": []
+            "sourceKind": "table",
+            "sourceText": "(0, 1), (1, 4), (2, 7)",
+            "tablePoints": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                2,
+                7
+              ]
+            ]
           }
         ],
         "rateGoal": "greater",
@@ -148,27 +161,27 @@
         "authoredStages": [
           {
             "title": "Slope",
-            "body": "The 3 in front of x is the slope: y rises 3 for every 1 that x increases."
+            "body": "From x = 0 to x = 1, y goes from 1 to 4 — a rise of 3. Each step of 1 in x raises y by 3, so the slope is 3."
           },
           {
             "title": "Intercept",
-            "body": "The +1 is the y-intercept: when x = 0, y = 1."
+            "body": "The row where x = 0 shows y = 1 directly — that starting value is the y-intercept."
           },
           {
             "title": "Together",
-            "body": "So y = 3x + 1 rises steeply (slope 3) starting from a height of 1 on the up-axis."
+            "body": "The table's steady rise of 3 per row and its starting value of 1 at x = 0 are exactly y = 3x + 1 — the same line, read from a table instead of an equation."
           }
         ],
         "explorationFeedback": "Reveal the next step.",
         "fallbackFeedback": "Reveal the next step.",
         "answerMode": "explore",
-        "successFeedback": "Exactly — the coefficient of x is the slope; the constant is the intercept."
+        "successFeedback": "Exactly — the table's steady rise gives the slope; its value at x = 0 gives the intercept."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "A negative slope.",
+      "body": "Diagnose a classmate's misreading.",
       "conceptTag": "bv-which-line",
       "explanationVariants": [
         "In y = −2x + 20, the slope is −2 — the line falls, matching a negative association.",
@@ -176,7 +189,7 @@
       ],
       "widget": {
         "type": "affineRelationshipLab",
-        "prompt": "A line of best fit is y = −2x + 20. What is its slope?",
+        "prompt": "A line of best fit is y = −2x + 20. A classmate says the slope is 20, since that's the number without a variable attached. What is the actual slope?",
         "task": "readSlope",
         "lines": [
           {
@@ -204,7 +217,7 @@
           },
           {
             "value": 20,
-            "feedback": "That's the intercept — the slope is the coefficient of x: −2."
+            "feedback": "That repeats the classmate's error — 20 is the intercept, not the slope. The slope is the coefficient of x: −2."
           }
         ],
         "pointErrors": [],
@@ -212,7 +225,7 @@
         "explorationFeedback": "Inspect every designated affine state before checking.",
         "fallbackFeedback": "In y = −2x + 20, the slope is the coefficient of x: −2.",
         "answerMode": "numeric",
-        "successFeedback": "In y = −2x + 20, the slope is the coefficient of x: −2."
+        "successFeedback": "The classmate mixed up the two parameters — 20 is the intercept. The slope is the coefficient of x: −2."
       },
       "variant": {
         "gen": "line-of-fit"
@@ -294,58 +307,63 @@
       "body": "Read both pieces at once.",
       "conceptTag": "bv-which-line",
       "explanationVariants": [
-        "In y = 5x, the slope is 5 and the intercept is 0 (the line passes through the origin).",
-        "y = 5x has slope 5 and intercept 0."
+        "Using both parameters of y = 4x + 2: 4(3) + 2 = 14, which matches the point's y-value, so (3, 14) lies on the line.",
+        "The slope 4 and the intercept 2 must both be used together: 4(3) + 2 = 14."
       ],
       "widget": {
         "type": "affineRelationshipLab",
-        "prompt": "A line of best fit is y = 5x. What is its y-intercept?",
-        "task": "readIntercept",
+        "prompt": "A line of best fit is y = 4x + 2. Does the point (3, 14) lie on this line?",
+        "task": "verifyPoint",
         "lines": [
           {
             "id": "fit",
             "label": "Line of best fit",
-            "m": 5,
-            "b": 0,
+            "m": 4,
+            "b": 2,
             "sourceKind": "equation",
-            "sourceText": "y = 5x",
+            "sourceText": "y = 4x + 2",
             "tablePoints": []
           }
         ],
         "targetLineId": "fit",
+        "candidatePoint": [
+          3,
+          14
+        ],
         "rateGoal": "greater",
-        "requiredExplorations": 1,
+        "requiredExplorations": 2,
         "requiredStageKeys": [
+          "line:fit:slope",
           "line:fit:intercept"
         ],
         "tolerance": 0,
-        "choices": [],
-        "numericErrors": [
+        "choices": [
           {
-            "value": 5,
-            "feedback": "That's the slope — with no constant added, the intercept is 0."
+            "id": "yes",
+            "label": "Yes — it lies on the line",
+            "claim": "point:yes",
+            "feedback": "Right — using both the slope 4 and the intercept 2: 4(3) + 2 = 14, matching the point's y-value."
           },
           {
-            "value": 1,
-            "feedback": "There's no constant term, so the line passes through the origin: intercept 0."
+            "id": "no",
+            "label": "No — it does not lie on the line",
+            "claim": "point:no",
+            "feedback": "Check both parameters together: 4(3) + 2 = 14, which matches the given y-value of 14 — so the point DOES lie on the line."
           }
         ],
+        "numericErrors": [],
         "pointErrors": [],
         "authoredStages": [],
         "explorationFeedback": "Inspect every designated affine state before checking.",
-        "fallbackFeedback": "y = 5x is y = 5x + 0, so the y-intercept is 0 — the line passes through the origin.",
-        "answerMode": "numeric",
-        "successFeedback": "y = 5x is y = 5x + 0, so the y-intercept is 0 — the line passes through the origin."
+        "fallbackFeedback": "Substitute x = 3 into both the slope and the intercept: 4(3) + 2 = 14.",
+        "answerMode": "choice",
+        "successFeedback": "Right — 4(3) + 2 = 14 uses the slope and the intercept together, and it matches the point exactly."
       },
       "hints": [
-        "Write y = 5x in the form y = mx + b.",
-        "There's no constant added, so b = 0.",
-        "The y-intercept is 0 — the line passes through the origin."
-      ],
-      "variant": {
-        "gen": "line-of-fit",
-        "form": "interceptZero"
-      }
+        "Substitute x = 3 into y = 4x + 2, using both the slope and the intercept.",
+        "4(3) + 2 = 14.",
+        "That matches the point's y-value of 14, so the point lies on the line."
+      ]
     },
     {
       "id": "r1",

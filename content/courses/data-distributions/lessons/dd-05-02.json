@@ -15,25 +15,32 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "See how far the mean drifted.",
+      "body": "Build the distribution and see the outlier pull away.",
       "conceptTag": "summary-choice",
       "widget": {
-        "type": "numeric",
-        "prompt": "Allowances 10, 12, 12, 14, 14, 16, 18, 64. The mean is 20. How many of the eight values sit BELOW the mean?",
-        "answer": 7,
-        "tolerance": 0,
-        "unit": "values",
-        "commonErrors": [
-          {
-            "value": 4,
-            "feedback": "Half-below is what a MEDIAN promises. The outlier dragged the mean to 20, so 10, 12, 12, 14, 14, 16, and 18 — seven values — all sit below it."
-          },
-          {
-            "value": 8,
-            "feedback": "Not quite all — the 64 sits above the mean of 20. The other seven values fall below it."
-          }
+        "type": "dotPlot",
+        "prompt": "Build the allowance distribution 10, 12, 12, 14, 14, 16, 18, 64. The mean is 20; notice how many dots remain to its left.",
+        "values": [
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          64
         ],
-        "fallbackFeedback": "Only the 64 exceeds 20; the other seven allowances sit below the mean — a 'typical value' describing almost nobody."
+        "target": [
+          1,
+          2,
+          2,
+          1,
+          1,
+          0,
+          1
+        ],
+        "maxPerValue": 3,
+        "successFeedback": "Seven dots sit below 20, while the single 64 sits far to the right. One extreme value can pull the mean above almost the whole cluster.",
+        "partialFeedback": "Place one dot for each allowance. Repeated values need repeated dots, and the 64 belongs far from the main cluster."
       },
       "predict": {
         "prompt": "The mean allowance is 20, but one value is 64. Can MOST of the values sit BELOW the mean?",

@@ -2,6 +2,8 @@
 
 import { Fragment, type PointerEvent as ReactPointerEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import FigureView from "@/components/FigureView";
+import { NumberLineAxis } from "@/components/NumberLineSvgPrimitives";
+import { SvgLatexSurface } from "@/components/math/SvgLatexSurface";
 import { FIGURE_IDS } from "@/components/figureIds";
 import { isFigureTextAligned } from "@/lib/figureTextAlignment";
 import { PALETTE } from "@/lib/palette";
@@ -33,14 +35,17 @@ import { gridScales, integers, linScale, samplePolyline } from "@/components/plo
 import { glideStyle } from "@/lib/motion";
 import { seededShuffle } from "@/lib/prng";
 import { snapToStep, useSvgDrag } from "@/components/useSvgDrag";
-import { MathDisplay, MathProse } from "@/components/math/MathText";
+import { accessibleMathText, MathDisplay, MathInline, MathProse } from "@/components/math/MathText";
+import { SvgMathText } from "@/components/math/SvgMathText";
 import { extraneousCandidates, signChartCuts, signChartSigns, signChartValueAt } from "@/lib/evaluate";
-import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
+import { altitudeMeans, binomialExpand, circleScaleReadouts, fmOutput, fmStage, geometricTerm, sequenceReasoningTruth, hopLabel, prismEdgeLength, prismVolume, rootsFormCoefs, rootsFormDiscriminant, hopSizeAnswer, roundSolidCoef, shapePartCount, triangleConstraintModel, ucTransferGeometry, midsegmentLength, triangleRatio, ucGhostPoint, ucWaveY , dotPlotLabel, distributionGapUnits, distributionOverlapFraction, trialProbabilityClaimCount, trialProbabilityEquivalent, compoundEventTotal, compoundEventFavourable, compoundEventChoiceCorrect, compositeAreaChoiceCorrect, compositeAreaPieceArea, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, scaledCircleMeasurementSpoken, scaledCircleMeasurementText, scaledCircleScaleUnitSpoken, scaledCircleScaleUnitText, percentChangeAmount, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformApply, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, shapeHierarchyChoiceEvidence, shapeHierarchyTriangleLabels, triangleClosureChoiceCorrect, triangleClosureForms, triangleClosureSpan, triangleClosureTargetAngle, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueDigitAt, placeValueExponentLabel, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintAnswerStageKeys, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, affineLineValue, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientRationalKey, quotientRationalDisplay, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningTruth, graphStoryChoiceCorrect, graphStoryTruth,
   rotationLabImage,
   rotationLabMapsOntoSelf,
   numericPreviewParts,
   partitionBarDrawable,
-  plotDataParts
+  MAX_PREVIEW_WHOLES,
+  plotDataParts,
+  barDataParts
 } from "@/lib/schema";
 import { moveRelation, type ProcessEvent } from "@/lib/processEvents";
 import {
@@ -284,8 +289,6 @@ export type StageTone = "neutral" | "success" | "error" | "info";
  *  needs. `widgets.labelCollision.s237.test.tsx` re-derives the same boxes from the rendered
  *  attributes and fails on any overlap. */
 const LABEL_EM = 0.72;
-/** Height of a label's box as a multiple of its font size — ascender to descender. */
-const LABEL_LINE = 1.26;
 /** Minimum clear space between two drawn labels, in viewBox units. */
 const LABEL_GAP = 2;
 const labelHalfWidth = (text: string, fontSize: number) => (text.length * fontSize * LABEL_EM) / 2;
@@ -322,6 +325,77 @@ function niceTicks(min: number, max: number, opts?: { target?: number; ends?: bo
 }
 /** A tick's printed form: an exact value, never a rounded stand-in (rule A10). */
 const tickText = (v: number) => String(Number(v.toFixed(4)));
+/** Conventional number-line scale shared by placement, landing, and hop-size modes. The visible
+ * label step is always on a 1-2-5 ladder; endpoints and an in-range origin are then added exactly
+ * once. Minor ticks use the next useful ladder rung and never exceed a bounded 121 marks. */
+type NumberLineScaleMark = { value: number; label: string; major: boolean };
+const numberLinePlainLabel = (value: number, denominator?: number) =>
+  denominator === undefined ? tickText(value).replace(/^-/, "−") : hopLabel(Math.round(value), denominator);
+const numberLineNiceStep = (span: number, target: number) => {
+  const raw = span / Math.max(2, target);
+  const magnitude = 10 ** Math.floor(Math.log10(Math.max(raw, Number.EPSILON)));
+  return ([1, 2, 5, 10].map((factor) => factor * magnitude).find((step) => step >= raw - 1e-9) ?? 10 * magnitude);
+};
+function numberLineScalePlan(min: number, max: number, denominator?: number, authoredMinorStep = 1): NumberLineScaleMark[] {
+  const lo = Math.min(min, max), hi = Math.max(min, max), span = hi - lo;
+  if (!(span > 0)) return [{ value: lo, label: numberLinePlainLabel(lo, denominator), major: true }];
+  const latticeStep = denominator !== undefined ? 1 : authoredMinorStep < 1 ? authoredMinorStep : 1;
+  const majorStep = latticeStep < 1
+    ? numberLineNiceStep(span, 8)
+    : span <= 10 ? 1 : span <= 20 ? 2 : numberLineNiceStep(span, 8);
+  const minorStep = span / latticeStep <= 101 ? latticeStep : numberLineNiceStep(span, 12);
+  const values = new Map<number, boolean>();
+  const add = (value: number, major: boolean) => {
+    const rounded = Number(value.toFixed(6));
+    if (rounded < lo - 1e-9 || rounded > hi + 1e-9) return;
+    values.set(rounded, Boolean(values.get(rounded)) || major);
+  };
+  add(lo, true); add(hi, true);
+  if (lo <= 0 && hi >= 0) add(0, true);
+  for (let value = Math.ceil(lo / minorStep - 1e-9) * minorStep; value <= hi + 1e-9; value += minorStep) add(value, false);
+  for (let value = Math.ceil(lo / majorStep - 1e-9) * majorStep; value <= hi + 1e-9; value += majorStep) {
+    // S241 (post-interaction). lo/hi are already guaranteed major above; when the majorStep
+    // ladder doesn't divide the span evenly (min:0, max:36, the default tickStep:4 → majorStep
+    // 5 here), the ladder's last rung can land one unit short of hi (…, 30, 35) and both labels
+    // are then drawn a single unit apart — g3w-03-04's own axis ("35"/"36") measured 5.6×1.9
+    // units of overlap out of a 316px line. Same half-step endpoint-crowding rule niceTicks
+    // already applies with `ends: true` (line ~323): an interior rung within half a major step
+    // of an endpoint yields to the endpoint's own label instead of doubling up beside it.
+    const interior = value - lo > 1e-9 && hi - value > 1e-9;
+    if (interior && Math.min(value - lo, hi - value) < majorStep / 2 - 1e-9) continue;
+    add(value, true);
+  }
+  return [...values].sort(([a], [b]) => a - b).map(([value, major]) => ({
+    value,
+    label: numberLinePlainLabel(value, denominator),
+    major,
+  }));
+}
+const numberLineAxisTitle = (axisLabel: string | undefined, unit: string | undefined, fraction: boolean) => {
+  const label = axisLabel ?? (fraction ? "Fraction" : "Position");
+  return unit ? `${label} (${unit})` : label;
+};
+
+/** SVG-native stacked fraction label. The parent SVG owns the accessible state sentence, so this
+ * group is aria-hidden while data-label keeps visible/ARIA parity machine-checkable. */
+function NumberLineSvgLabel({ x, y, label, testId, viewWidth = 360 }: { x: number; y: number; label: string; testId: string; viewWidth?: number }) {
+  const estimatedHalfWidth = Math.max(5, labelHalfWidth(label, 10));
+  const safeX = Math.min(viewWidth - 8 - estimatedHalfWidth, Math.max(8 + estimatedHalfWidth, x));
+  const match = label.match(/^(−?)(?:(\d+) )?(\d+)\/(\d+)$/);
+  if (!match) return <text data-testid={testId} data-label={label} aria-hidden="true" x={safeX} y={y} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.76}>{label}</text>;
+  const [, sign, whole, numerator, denominator] = match;
+  const prefix = `${sign}${whole ? `${whole} ` : ""}`;
+  const prefixWidth = prefix.length * 5.5;
+  const fractionX = safeX + prefixWidth / 2;
+  return (
+    <g data-testid={testId} data-label={label} aria-hidden="true">
+      {prefix && <text x={safeX - 7} y={y + 1} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.76}>{prefix.trim()}</text>}
+      <text x={fractionX} y={y - 5} fontSize={8} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.78}>{numerator}</text>
+      <line data-testid="nl-fraction-bar" x1={fractionX - 5} y1={y - 2} x2={fractionX + 5} y2={y - 2} stroke={PALETTE.ink} strokeOpacity={0.76} strokeWidth={0.8} />
+      <text x={fractionX} y={y + 7} fontSize={8} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.78}>{denominator}</text>
+    </g>
+  );
+}
 /** Boxes standing for everything OUTSIDE the viewBox, so an s238Seat search treats the canvas edge
  * as an obstacle and a label that would clip simply takes another seat (rule B2). */
 function s238Walls(w: number, h: number): S238Box[] {
@@ -402,10 +476,13 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
   // and `fractionEntry` draw, resolved through the same function, placed the same way: prompt,
   // plot, then the options. A spec without `plotData` renders exactly as it always has.
   const plot = plotDataParts(spec);
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec) — same placement as `plot`.
+  const bars = barDataParts(spec);
   return (
-    <div role="radiogroup" aria-label={spec.prompt} className="grid gap-3">
+    <div role="radiogroup" aria-label={accessibleMathText(spec.prompt)} className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
+      {bars && <BarChartFigure parts={bars} />}
       {ordered.map((o) => {
         const selected = value === o.id;
         const ghost = reveal && o.correct;
@@ -416,7 +493,7 @@ function McqW({ spec, value, onChange, disabled, seed, tone }: WProps<TMcq>) {
             type="button"
             role="radio"
             aria-checked={selected}
-            aria-label={o.label}
+            aria-label={accessibleMathText(o.label)}
             disabled={disabled}
             onClick={() => onChange(o.id)}
             className={`pressable flex min-h-11 items-center gap-3 rounded-card border-2 px-4 py-3 text-left text-base transition-colors motion-reduce:transition-none ${
@@ -532,15 +609,162 @@ function LinePlotFigure({ parts }: { parts: NonNullable<ReturnType<typeof plotDa
   );
 }
 
+/** "1st"/"2nd"/"3rd"/"4th"… — the English ordinal suffix for a non-negative integer gridline
+ * count, shared by `barGridlinePosition` below. */
+function ordinalWord(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
+}
+
+/** Describes a bar's height by its POSITION relative to the axis gridlines — an ORDINAL gridline
+ * count only, never a gridline's own numeric label — so the sentence repeats zero information
+ * beyond what the category itself already states. Backs `valueLabels: "none"` (`BarDataSpec`,
+ * S317 round 2): used only where the bar's own value IS the graded/un-stated quantity a check
+ * exists to test (md-03-02 `i1`'s match-the-value-to-the-line task; `ch1`'s un-stated Bar-B
+ * height), so the accessible description must demand the SAME derivation — count gridlines
+ * against the labelled scale — a sighted learner performs by eye, rather than handing the number
+ * over as a flat "category: value" fact. */
+function barGridlinePosition(category: string, value: number, scaleStep: number): string {
+  const steps = value / scaleStep;
+  const nearest = Math.round(steps);
+  if (Math.abs(steps - nearest) < 1e-6) {
+    return nearest === 0
+      ? `${category} sits at the baseline (zero).`
+      : `${category} ends on the ${ordinalWord(nearest)} gridline above zero.`;
+  }
+  const lo = Math.floor(steps);
+  const hi = lo + 1;
+  const frac = steps - lo;
+  const loLabel = lo === 0 ? "the baseline" : `the ${ordinalWord(lo)} gridline`;
+  const hiLabel = `the ${ordinalWord(hi)} gridline`;
+  const between = Math.abs(frac - 0.5) < 1e-6 ? "halfway between" : "between";
+  return `${category} ends ${between} ${loLabel} and ${hiLabel} above zero.`;
+}
+
+/** The bar graph a prompt DESCRIBES, drawn — the bar-chart analogue of `LinePlotFigure`, shared
+ * by `numeric`, `mcq`, `matchPairs`, `dragOrder`, and `dragBucket` through their optional
+ * `barData` block (see `BarDataSpec`, schema.ts; S317).
+ *
+ * Unlike `LinePlotFigure`, this figure is NOT `aria-hidden`: `role="img"` plus a `<title>` and a
+ * full `aria-label` carry the same category/value/scale facts a sighted learner reads off the
+ * bars and axis, so the picture and what a screen reader hears can never disagree (drawn from
+ * the SAME `barDataParts` call the caller resolves).
+ *
+ * `valueLabels` (S317 round 2; independent verification, `S317_BATCH1_VERIFICATION.md` md-03-02):
+ * "all" (default) prints every bar's own value above the bar and states it plainly as
+ * "category: value" in the aria-label — a non-colour cue, correct whenever the prompt already
+ * states every value in prose, so charting the identical numbers adds no new leak. "none" omits
+ * the per-bar numeric text entirely (category labels and the labelled axis still render) and
+ * describes each bar's height by POSITION instead (`barGridlinePosition`) — for the rare step
+ * where the bar's own value is the un-stated, graded quantity a check exists to test, so the
+ * chart must not hand it over as a flat fact. */
+function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDataParts>> }): ReactElement {
+  const { categories, values, title, axisLabel, scaleStep, axisMax, valueLabels } = parts;
+  const showValues = valueLabels !== "none";
+  // BASE_H is the historical H = 220; baseY stays derived from IT, not from the final H, so the
+  // chart area's pixel geometry is byte-identical whenever the category labels fit on one row —
+  // the canvas only grows BELOW the axis, for the extra label rows (S331, see `catLabelPlan`).
+  const W = 320, BASE_H = 220, padX = 46, padTop = 30, baseY = BASE_H - 40;
+  const barW = (W - 2 * padX) / categories.length;
+  const hScale = linScale(0, axisMax, baseY, padTop);
+  const ticks: number[] = [];
+  for (let g = 0; g <= axisMax + 1e-9; g += scaleStep) ticks.push(Number(tickText(g)));
+  const chartTitle = title ?? "Bar graph";
+  const unitSuffix = axisLabel ? ` ${axisLabel}` : "";
+  const spoken =
+    `${chartTitle}${axisLabel ? `, ${axisLabel}` : ""}. Scale in steps of ${tickText(scaleStep)} up to ${tickText(axisMax)}. ` +
+    (showValues
+      ? categories.map((c, i) => `${c}: ${tickText(values[i])}${unitSuffix}`).join("; ") + "."
+      : categories.map((c, i) => barGridlinePosition(c, values[i], scaleStep)).join(" "));
+  const catFont = Math.max(7, Math.min(10, Math.floor(((barW - 4) / (Math.max(1, ...categories.map((c) => c.length)) * 5.5)) * 2) / 2));
+  /* S331 — WHAT THE 7-FLOOR COULD NOT DO ALONE. Same failure mode BarBuilderW had, same repair
+   * (`catLabelPlan` there): the size floor is a legibility promise, which means past ~7 columns a
+   * category name can be WIDER than its own column (eight 6-char names at the floor size 7 are
+   * 30.24 units wide against a 28.5-unit column, the S237 testkit's own box model) — an overlap no
+   * font this side of the floor can clear. So fix the geometry, not the font: labels greedily pack
+   * onto as many rows as they need, opening a new row only when the last label on every existing
+   * row would sit closer than 1 unit. Rows are 10 units apart, the canvas grows below the axis to
+   * hold them (`H` below), and every layout that fits on one row keeps its exact current baseline
+   * (row 0 is y = baseY + 13, byte-identical to what this figure always drew). */
+  const catRows: number[] = [];
+  const catLabelPlan = categories.map((c, i) => {
+    // The same arithmetic the bar itself uses below (x + w / 2), kept expression-identical so a
+    // one-row layout's category x cannot drift by a floating-point ulp from what it always was.
+    const cx = padX + i * barW + barW * 0.18 + (barW * 0.64) / 2;
+    const half = labelHalfWidth(c, catFont);
+    let row = catRows.findIndex((rightEdge) => cx - half >= rightEdge + 1);
+    if (row < 0) {
+      row = catRows.length;
+      catRows.push(Number.NEGATIVE_INFINITY);
+    }
+    catRows[row] = cx + half;
+    return { x: cx, y: baseY + 13 + row * 10 };
+  });
+  const H = BASE_H + Math.max(0, catRows.length - 1) * 10;
+  return (
+    <svg
+      data-testid="bar-chart-figure"
+      viewBox={`0 0 ${W} ${H}`}
+      className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white"
+      role="img"
+      aria-label={spoken}
+    >
+      <title>{chartTitle}</title>
+      <text data-testid="bar-chart-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{chartTitle}</text>
+      {ticks.map((g) => (
+        <g key={g}>
+          <line data-testid="bar-chart-grid" x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={0.16} />
+          <line data-testid="bar-chart-tick" x1={padX - 5} y1={hScale(g)} x2={padX} y2={hScale(g)} stroke={PALETTE.ink} strokeWidth={1.4} />
+          <text data-testid="bar-chart-tick-value" x={padX - 8} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.72}>{tickText(g)}</text>
+        </g>
+      ))}
+      {categories.map((c, i) => {
+        const inset = barW * 0.18;
+        const x = padX + i * barW + inset;
+        const w = barW * 0.64;
+        const top = hScale(values[i]);
+        return (
+          <g key={c}>
+            <rect data-testid="bar-chart-bar" x={x} y={top} width={w} height={Math.max(0, baseY - top)} rx={2} fill={PALETTE.sky} stroke={PALETTE.ink} strokeOpacity={0.3} strokeWidth={1} />
+            {showValues && (
+              <text data-testid="bar-chart-value" x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{tickText(values[i])}</text>
+            )}
+            {/* x/y come from `catLabelPlan`: the x is the same bar-centre x + w/2 always was, and
+                the y keeps this figure's exact baseline whenever one row fits (see plan above). */}
+            <text data-testid="bar-chart-category" x={catLabelPlan[i].x} y={catLabelPlan[i].y} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>
+          </g>
+        );
+      })}
+      <line x1={padX} y1={padTop} x2={padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+      <line x1={padX} y1={baseY} x2={W - padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+      {axisLabel && (
+        <text data-testid="bar-chart-axis-label" x={12} y={(padTop + baseY) / 2} transform={`rotate(-90 12 ${(padTop + baseY) / 2})`} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>
+          {axisLabel}
+        </text>
+      )}
+    </svg>
+  );
+}
+
 /** ONE den-partition bar with `shaded` cells filled — the shared drawing behind every live
  * "what you just typed" preview (fractionEntry's fraction part, numeric's fixed-denominator
  * bar). ROLE.active sky for filled cells, #fff for the remainder, ink hairlines between.
  * Extracted verbatim from FractionEntryW so the two previews cannot drift into two different
  * pictures of the same fraction. Callers gate on `partitionBarDrawable` first; the bar has
- * only `total` cells, so a count past the whole simply fills them all. */
+ * only `total` cells, so a count past the whole simply fills them all.
+ * `aria-hidden` unconditionally — NumericW nests this inside its own `aria-hidden` wrapper
+ * (redundant, harmless), and FractionEntryW (S330/CL-P1-057) no longer does: its wrapper
+ * carries a live `role="img"`/`aria-label` instead, so the decorative cells underneath must
+ * hide themselves rather than rely on an ancestor that isn't hidden anymore. */
 function PartitionBar({ shaded, total }: { shaded: number; total: number }): ReactElement {
   return (
-    <svg viewBox="0 0 120 18" className="h-4 w-28">
+    <svg aria-hidden="true" viewBox="0 0 120 18" className="h-4 w-28">
       {Array.from({ length: total }, (_, k) => (
         <rect
           key={k}
@@ -587,10 +811,14 @@ function NumericW({ spec, value, onChange, disabled, tone }: WProps<TNumeric>) {
   // directly under the prompt that names it and above the box — prompt, then plot, then answer.
   // A spec without `plotData` resolves to null here and renders exactly as it always has.
   const plot = plotDataParts(spec);
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). Same placement rule as
+  // `plot` above: prompt, chart, then the answer field. Absent barData renders exactly as before.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       {plot && <LinePlotFigure parts={plot} />}
+      {bars && <BarChartFigure parts={bars} />}
       {/* S238 — the control names WHAT IT TAKES, not the task. The whole prompt sentence as
           the input's accessible name was the last class-B naming instance recorded in the S238
           batch-3 log: the prompt is already on screen and read in document order, so repeating
@@ -714,19 +942,46 @@ function FractionEntryW({ spec, value, onChange, disabled, tone }: WProps<TFract
   const pvW = spec.allowWhole ? (() => { const n = Number(rawW.trim()); return Number.isInteger(n) && n >= 0 ? n : 0; })() : 0;
   const pvN = (() => { const n = Number(rawN.trim()); return Number.isInteger(n) && n >= 0 ? n : null; })();
   const pvD = (() => { const n = Number(rawD.trim()); return Number.isInteger(n) && n >= 1 ? n : null; })();
-  // The cap is now `partitionBarDrawable` (schema.ts) — the same predicate numeric's bar and
-  // its spoken description use. Same gate, stated in full: den <= 20 and num <= den * 2, on
+  // S330 (CL-P1-057). Used to render only once BOTH numerator AND denominator had parsed —
+  // `docs/CAPABILITY_AXES.md`'s conseq=1 "Not earned by" clause names exactly this shape,
+  // "gated to one narrow state" — and the wrapper was `aria-hidden`, the SAME document's named
+  // conseq=1/a11y=2 example for this engine, verbatim. The denominator is the one true
+  // precondition (a bar has no shape without a part-count to cut into); the numerator now
+  // defaults to 0 — an empty bar — until typed, the same "start from a neutral default instead
+  // of nothing" move S330's `pointEntry` redesign made for its own mini-grid (that engine's own
+  // CL-P1-057 addendum). `partitionBarDrawable` still runs on (numerator-or-0, denominator), so
+  // a too-large NUMERATOR still honestly skips the bar exactly as before — only the
+  // denominator-typed-alone case is new. The cap is `partitionBarDrawable` (schema.ts), the same
+  // predicate numeric's bar and its spoken description use: den <= 20 and num <= den * 2, on
   // values the parses above already forced to be non-negative integers with den >= 1.
-  const showPreview = pvN !== null && pvD !== null && partitionBarDrawable(pvN, pvD) && pvW <= 6 && (pvW > 0 || pvN > 0);
-  const previewBar = showPreview ? (
-    <div className="flex flex-wrap items-center justify-center gap-2" aria-hidden="true">
-      {sign === -1 && <span className="text-xl font-extrabold text-ink">−</span>}
+  const pvShaded = pvN ?? 0;
+  const showPreview = pvD !== null && pvW <= MAX_PREVIEW_WHOLES && partitionBarDrawable(pvShaded, pvD);
+  // Spoken once, on the wrapper — the container carries the live `role="img"`/`aria-label`,
+  // every decorative shape underneath stays `aria-hidden` (PartitionBar hides itself; the sign
+  // glyph and whole-unit rects do too here) — not the OLD split, where the whole block was
+  // `aria-hidden` and nothing spoke for it at all. `describeState.ts`'s fractionEntry branch
+  // used to carry a comment calling this "the standing fractionEntry/pointEntry gap": neither
+  // engine had a spoken twin for its own live preview. `pointEntry` closed its half with a label
+  // directly on its SVG rather than a separate narrated panel sentence; this closes the other
+  // half the same way. Describes exactly what is DRAWN, not the raw typed numerator — shading
+  // is capped at `pvD` cells because that is all `PartitionBar` can honestly fill (an entry past
+  // one whole bar-worth, e.g. 5/2 with no whole field used, still only lights every cell once).
+  const previewShadedCells = pvD !== null ? Math.min(pvShaded, pvD) : 0;
+  const previewLabel =
+    showPreview && pvD !== null
+      ? `${sign === -1 ? "Negative. " : ""}The bar is cut into ${pvD} equal ${pvD === 1 ? "part" : "parts"}; ` +
+        `${previewShadedCells} ${previewShadedCells === 1 ? "part is" : "parts are"} shaded` +
+        `${pvW > 0 ? `, plus ${pvW} whole ${pvW === 1 ? "bar" : "bars"}` : ""}.`
+      : "";
+  const previewBar = showPreview && pvD !== null ? (
+    <div className="flex flex-wrap items-center justify-center gap-2" role="img" aria-label={previewLabel}>
+      {sign === -1 && <span aria-hidden="true" className="text-xl font-extrabold text-ink">−</span>}
       {Array.from({ length: pvW }, (_, k) => (
-        <svg key={`w${k}`} viewBox="0 0 40 18" className="h-4 w-9">
+        <svg key={`w${k}`} aria-hidden="true" viewBox="0 0 40 18" className="h-4 w-9">
           <rect x={1} y={1} width={38} height={16} rx={3} fill={PALETTE.sky} stroke={PALETTE.ink} strokeWidth={1.4} />
         </svg>
       ))}
-      {pvD !== null && pvN !== null && pvN + pvD > 0 && <PartitionBar shaded={pvN} total={pvD} />}
+      <PartitionBar shaded={pvShaded} total={pvD} />
     </div>
   ) : null;
   // The plot the prompt DESCRIBES (display-only; see PlotDataSpec) — the same block `numeric`
@@ -821,27 +1076,68 @@ function PointEntryW({ spec, value, onChange, disabled, onEvent, tone }: WProps<
     if (complete) onChange(nums as number[]);
     else onChange(null);
   };
-  // Live mini-grid of the LEARNER's tuple (ROLE.active = sky, axes = ink): a dot
-  // for a point, an origin arrow for a vector — sign and quadrant become visible
-  // as they type. Draws only the learner's own entry; 2-slot tuples only.
-  const pv = spec.answer.length === 2 ? raws.map(parse) : [];
-  const pvOk = pv.length === 2 && pv.every((n) => typeof n === "number" && !Number.isNaN(n));
-  const [px, py] = pvOk ? (pv as number[]) : [0, 0];
-  const R = pvOk ? Math.max(Math.abs(px), Math.abs(py), 1) + 1 : 0;
+  // Live mini-grid: a dot for a point, an origin arrow for a vector. Always
+  // rendered (S330/CL-P1-057) — before both slots parse it shows the origin,
+  // so a learner can START from the grid instead of only confirming a typed
+  // guess after the fact. The visible range is fixed from the AUTHORED
+  // tuples (the answer plus every commonEntries decoy, longest axis plus a
+  // margin) rather than the learner's own entry, so the axes never rescale
+  // under a mid-drag pointer — only the point on the grid moves, never the
+  // frame around it.
+  const only2D = spec.answer.length === 2;
+  const numOr0 = (n: number | null) => (typeof n === "number" && !Number.isNaN(n) ? n : 0);
+  const decoyMags = spec.commonEntries.flatMap((e) => e.values.slice(0, 2).map((n) => Math.abs(n)));
+  const R = only2D ? Math.max(3, Math.abs(spec.answer[0]), Math.abs(spec.answer[1]), ...decoyMags) + 2 : 1;
+  const clampToGrid = (v: number) => Math.max(-R, Math.min(R, v));
+  const px = clampToGrid(numOr0(parse(raws[0])));
+  const py = only2D ? clampToGrid(numOr0(parse(raws[1]))) : 0;
   const S = 96, C = S / 2;
   const sx = (x: number) => C + (x / R) * (C - 8);
   const sy = (y: number) => C - (y / R) * (C - 8);
-  const miniGrid = pvOk ? (
-    <svg viewBox={`0 0 ${S} ${S}`} className="mx-auto h-24 w-24" aria-hidden="true">
+  // Drag is a REDUNDANT input (useSvgDrag contract): the typed fields above stay the
+  // keyboard-parity path and the only route the accessibility tree sees, so every drag
+  // update is routed through the SAME emit() the typed onChange already uses — grading
+  // cannot tell, and does not care, which input produced the tuple.
+  const svgRef = useRef<SVGSVGElement>(null);
+  const placeAt = (nx: number, ny: number) => {
+    const next = raws.slice();
+    next[0] = String(nx);
+    next[1] = String(ny);
+    setRaws(next);
+    emit(next);
+  };
+  const drag = useSvgDrag({
+    svgRef,
+    viewW: S,
+    viewH: S,
+    disabled,
+    onDrag: (vx, vy) => {
+      const nx = snapToStep(((vx - C) / (C - 8)) * R, -R, R, 1);
+      const ny = snapToStep(((C - vy) / (C - 8)) * R, -R, R, 1);
+      if (nx !== px || ny !== py) placeAt(nx, ny);
+    }
+  });
+  const signed = (n: number) => (n < 0 ? `−${-n}` : `${n}`);
+  const miniGrid = only2D ? (
+    <svg
+      ref={svgRef}
+      viewBox={`0 0 ${S} ${S}`}
+      className="mx-auto h-24 w-24"
+      role="img"
+      aria-label={`${spec.delimiter === "angle" ? "Vector" : "Point"} plot: ${lb}${signed(px)}, ${signed(py)}${rb}${disabled ? "" : ". Drag to move it."}`}
+    >
       <line x1={2} y1={C} x2={S - 2} y2={C} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.5} />
       <line x1={C} y1={2} x2={C} y2={S - 2} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.5} />
       {spec.delimiter === "angle" ? (
-        <g>
+        <g aria-hidden="true">
           <line x1={C} y1={C} x2={sx(px)} y2={sy(py)} stroke={tone === "error" ? PALETTE.berry : PALETTE.sky} strokeWidth={2.4} />
           <circle cx={sx(px)} cy={sy(py)} r={3.4} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} />
         </g>
       ) : (
-        <circle cx={sx(px)} cy={sy(py)} r={4.2} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} stroke="#fff" strokeWidth={1.2} />
+        <circle aria-hidden="true" cx={sx(px)} cy={sy(py)} r={4.2} fill={tone === "error" ? PALETTE.berry : PALETTE.sky} stroke="#fff" strokeWidth={1.2} />
+      )}
+      {!disabled && (
+        <rect className="mt-drag-hit" data-testid="pe-drag" aria-hidden="true" x={0} y={0} width={S} height={S} {...drag.handleProps} />
       )}
     </svg>
   ) : null;
@@ -1043,13 +1339,13 @@ function PlaceCompareW({ spec, value, onChange, disabled, tone }: WProps<TPlaceC
       </div>
       {spec.placeLabels && (
         <p className="text-center text-xs font-semibold text-ink/70" aria-hidden="true">
-          {showDecide && deciding !== null
+          <MathProse text={showDecide && deciding !== null
             ? `look at the ${placeName(deciding)} place`
             : showConfirm && deciding !== null
               ? `the ${placeName(deciding)} place decided it`
               : showAllEqual
                 ? "every place matches"
-                : "\u00a0"}
+                : "\u00a0"} />
         </p>
       )}
       <div className="flex items-center justify-center gap-3" role="radiogroup" aria-label="comparison symbol">
@@ -1520,7 +1816,7 @@ function ElapsedTimeW({ spec, value, onChange, disabled, tone }: WProps<TElapsed
         <text x={238} y={124} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.berry}>finish {hhmm(endHour, endMin)}</text>
         <line x1={116} y1={62} x2={184} y2={62} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
         <text x={150} y={54} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>{dur}</text>
-      
+
         {/* Reveal ghost: the asked-for duration and the finish it produces —
             mirrors evaluate (elapsed === targetMinutes). */}
         {tone === "info" && elapsed !== spec.targetMinutes && (() => {
@@ -1564,6 +1860,7 @@ function DistanceGridW({ spec, value, onChange, disabled, tone }: WProps<TDistan
   const dx = Math.abs(x - ax), dy = Math.abs(y - ay);
   const dist = Math.sqrt(dx * dx + dy * dy);
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
+
 
   // WS-C (S239): the MOVING POINT is the learner's object — the legs and the hypotenuse are
   // consequences of where it sits. A press or sweep carries the point to the integer lattice
@@ -1695,16 +1992,44 @@ function TreeDiagramW({ spec, value, onChange, disabled, tone }: WProps<TTreeDia
 
 /* ---------------- ScaledCircleLab (plan scale ↔ real radius ↔ circle formula) ---------------- */
 
-function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TScaledCircleLab>) {
+function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TScaledCircleLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const correct = spec.choices.find((choice) => scaledCircleChoiceCorrect(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const target = scaledCircleTarget(spec);
+  const showTarget = tone === "info";
+  const hasScaleChain = spec.drawingRadius !== undefined && spec.scale !== undefined;
+  const hideRealRadius = !showTarget && (hasScaleChain || spec.ask === "realRadius");
   const askLabel = spec.ask === "realRadius" ? "real radius" : spec.ask === "circumferenceCoef" ? "coefficient in C = ?π" : "coefficient in A = ?π";
-  const formula = spec.ask === "realRadius"
-    ? `${spec.drawingRadius} × ${spec.scale} = ${spec.realRadius}`
-    : spec.ask === "circumferenceCoef"
-      ? `2 × ${spec.realRadius} = ${target}`
-      : `${spec.realRadius} × ${spec.realRadius} = ${target}`;
+  const drawingRadiusText = spec.drawingRadius === undefined ? "" : scaledCircleMeasurementText(spec.drawingRadius, spec.drawingUnit);
+  const drawingRadiusSpoken = spec.drawingRadius === undefined ? "" : scaledCircleMeasurementSpoken(spec.drawingRadius, spec.drawingUnit);
+  const scaleUnitText = scaledCircleScaleUnitText(spec.drawingUnit, spec.realUnit);
+  const scaleUnitSpoken = scaledCircleScaleUnitSpoken(spec.drawingUnit, spec.realUnit, spec.scale);
+  const answerPower = spec.ask === "areaCoef" ? 2 : 1;
+  const hiddenAnswerText = scaledCircleMeasurementText("?", spec.realUnit, answerPower);
+  const targetText = scaledCircleMeasurementText(target, spec.realUnit, answerPower);
+  const scaleFormula = hasScaleChain
+    ? `${drawingRadiusText} × ${spec.scale}${scaleUnitText} = ${showTarget ? scaledCircleMeasurementText(spec.realRadius, spec.realUnit) : scaledCircleMeasurementText("?", spec.realUnit)}`
+    : null;
+  const radiusTerm = hasScaleChain && !showTarget ? "real radius" : scaledCircleMeasurementText(spec.realRadius, spec.realUnit);
+  const circleFormula = spec.ask === "circumferenceCoef"
+    ? `2 × ${radiusTerm} = ${showTarget ? targetText : hiddenAnswerText}`
+    : spec.ask === "areaCoef"
+      ? `${radiusTerm} × ${radiusTerm} = ${showTarget ? targetText : hiddenAnswerText}`
+      : scaleFormula ?? `drawing radius × scale = ${showTarget ? target : "?"}`;
+  const realRadiusText = hideRealRadius
+    ? scaledCircleMeasurementText("?", spec.realUnit)
+    : scaledCircleMeasurementText(spec.realRadius, spec.realUnit);
+  const realCircleDescription = hideRealRadius
+    ? hasScaleChain
+      ? spec.ask === "realRadius"
+        ? "Real circle. Its radius is the value to calculate from the drawing radius and scale."
+        : `Real circle. Calculate its radius from the drawing radius and scale before finding the ${askLabel}.`
+      : "Real circle. Its radius is the value to calculate."
+    : `Real circle radius ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}.`;
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
@@ -1713,38 +2038,42 @@ function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WP
         {spec.drawingRadius !== undefined && spec.scale !== undefined ? <>
           <section className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center">
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Drawing</p>
-            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Drawing circle radius ${spec.drawingRadius} centimeters.`}>
+            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Drawing circle radius ${drawingRadiusSpoken}.`}>
               <circle cx="70" cy="55" r="38" fill={PALETTE.sky} fillOpacity={0.12} stroke={PALETTE.sky} strokeWidth={3}/>
               <line x1="70" y1="55" x2="108" y2="55" stroke={PALETTE.sky} strokeWidth={3}/>
               <circle cx="70" cy="55" r="4" fill={PALETTE.ink}/>
-              <text x="89" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.drawingRadius} cm</text>
+              <text x="89" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{drawingRadiusText}</text>
             </svg>
           </section>
-          <div className="rounded-full border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center font-black text-tangerine-ink" aria-label={`multiply by scale ${spec.scale}`}>× {spec.scale}<span aria-hidden="true"> →</span></div>
+          <div className="rounded-full border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center font-black text-tangerine-ink" aria-label={`multiply by scale ${spec.scale}${scaleUnitSpoken}`}>× {spec.scale}{scaleUnitText}<span aria-hidden="true"> →</span></div>
           <section className="rounded-xl border border-leaf/30 bg-leaf/5 p-3 text-center">
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Real circle</p>
-            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={`Real circle radius ${spec.realRadius} meters.`}>
+            <svg viewBox="0 0 140 110" className="mx-auto w-full max-w-[150px]" role="img" aria-label={realCircleDescription}>
               <circle cx="70" cy="55" r="43" fill={PALETTE.leaf} fillOpacity={0.12} stroke={PALETTE.leaf} strokeWidth={3}/>
               <line x1="70" y1="55" x2="113" y2="55" stroke={PALETTE.leaf} strokeWidth={3}/>
               <circle cx="70" cy="55" r="4" fill={PALETTE.ink}/>
-              <text x="91" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.realRadius} m</text>
+              <text x="91" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{realRadiusText}</text>
             </svg>
           </section>
         </> : <section className="sm:col-span-3 rounded-xl border border-leaf/30 bg-leaf/5 p-3 text-center">
-          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Given real circle</p>
-          <svg viewBox="0 0 170 110" className="mx-auto w-full max-w-[180px]" role="img" aria-label={`Circle radius ${spec.realRadius} meters.`}>
+          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">{spec.ask === "realRadius" ? "Real circle" : "Given real circle"}</p>
+          <svg viewBox="0 0 170 110" className="mx-auto w-full max-w-[180px]" role="img" aria-label={spec.ask === "realRadius" ? realCircleDescription : `Circle radius ${scaledCircleMeasurementSpoken(spec.realRadius, spec.realUnit)}.`}>
             <circle cx="85" cy="55" r="43" fill={PALETTE.leaf} fillOpacity={0.12} stroke={PALETTE.leaf} strokeWidth={3}/>
             <line x1="85" y1="55" x2="128" y2="55" stroke={PALETTE.leaf} strokeWidth={3}/>
-            <circle cx="85" cy="55" r="4" fill={PALETTE.ink}/><text x="106" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{spec.realRadius} m</text>
+            <circle cx="85" cy="55" r="4" fill={PALETTE.ink}/><text x="106" y="48" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{realRadiusText}</text>
           </svg>
         </section>}
       </div>
-      <div className="rounded-xl border-2 border-ink/10 bg-paper p-3 text-center">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">{askLabel}</p>
-        <p className="mt-1 text-xl font-black tabular-nums text-ink">{formula}</p>
+      <div className="rounded-xl border-2 border-ink/10 bg-paper p-3 text-center" data-testid="scl-derivation" data-result-visible={showTarget ? "true" : "false"}>
+        {hasScaleChain && spec.ask !== "realRadius" && <>
+          <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">First, find the real radius</p>
+          <p className="mt-1 text-xl font-black tabular-nums text-ink">{scaleFormula}</p>
+        </>}
+        <p className={`${hasScaleChain && spec.ask !== "realRadius" ? "mt-3 " : ""}text-xs font-extrabold uppercase tracking-wide text-ink/60`}>{askLabel}</p>
+        <p className="mt-1 text-xl font-black tabular-nums text-ink">{circleFormula}</p>
       </div>
-      <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "circle-claim", dir: scaledCircleChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, ask: spec.ask } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
+      <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the circle claim">
+        {orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "circle-claim", dir: "neutral", state: { choice: choice.id, ask: spec.ask } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
       </div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No circle claim selected."}</p>
       {tone === "info" && selected && !scaledCircleChoiceCorrect(spec, selected) && <GhostChip testid="scl-ghost">correct claim: {correct.label}</GhostChip>}
@@ -1754,7 +2083,7 @@ function ScaledCircleLabW({ spec, value, onChange, disabled, tone, onEvent }: WP
 
 /* ---------------- TriangleClosureLab (hinge span ↔ strict triangle inequality) ---------------- */
 
-function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TTriangleClosureLab>) {
+function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TTriangleClosureLab>) {
   const state = value && typeof value === "object" ? value as { angle?: number; moves?: number; choice?: string } : {};
   const angle = typeof state.angle === "number" ? state.angle : spec.angleStart;
   const moves = state.moves ?? 0;
@@ -1764,14 +2093,18 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
   const span = triangleClosureSpan(a, b, angle);
   const forms = triangleClosureForms(spec.sides);
   const targetAngle = triangleClosureTargetAngle(spec.sides);
+  const settled = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const closesHere = forms && Math.abs(span - c) < 0.35;
   const flatHere = !forms && Math.abs(a + b - c) < 1e-9 && angle === 180;
   const cx=145, cy=130, scale=Math.min(75/Math.max(a,b,c), 9);
   const ax=cx-a*scale, ay=cy;
   const rad=angle*Math.PI/180, bx=cx+b*scale*Math.cos(rad), by=cy-b*scale*Math.sin(rad);
   const move = (next:number) => {
-    const before=Math.abs(span-c), after=Math.abs(triangleClosureSpan(a,b,next)-c);
-    onEvent?.({ control: "hinge-angle", dir: after < before ? "toward" : after > before ? "away" : "neutral", state:{angle:next,moves:moves+1} });
+    onEvent?.({ control: "hinge-angle", dir: "neutral", state:{angle:next,moves:moves+1} });
     onChange({ angle: next, moves: moves+1, choice: state.choice });
   };
   const optionClass = (active:boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
@@ -1790,7 +2123,7 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
       <svg ref={svgRef} viewBox="0 0 290 165" className="mx-auto w-full max-w-md" role="img" aria-label={`Beams ${a}, ${b}, and ${c}. Frame currently opened to ${angle} degrees. Endpoint span ${span.toFixed(1)}.`}>
         <line x1={ax} y1={ay} x2={cx} y2={cy} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
         <line x1={cx} y1={cy} x2={bx} y2={by} stroke={PALETTE.sky} strokeWidth={8} strokeLinecap="round"/>
-        <line x1={ax} y1={ay} x2={bx} y2={by} stroke={closesHere ? PALETTE.leaf : flatHere ? PALETTE.berry : PALETTE.tangerine} strokeWidth={4} strokeDasharray="7 5"/>
+        <line x1={ax} y1={ay} x2={bx} y2={by} stroke={settled ? (closesHere ? PALETTE.leaf : flatHere ? PALETTE.berry : PALETTE.tangerine) : PALETTE.tangerine} strokeWidth={4} strokeDasharray="7 5"/>
         <circle cx={cx} cy={cy} r={7} fill={PALETTE.ink}/>
         <text x={(ax+cx)/2} y={cy+18} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{a}</text>
         <text x={(cx+bx)/2+6} y={(cy+by)/2-5} textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{b}</text>
@@ -1806,20 +2139,20 @@ function TriangleClosureLabW({ spec, value, onChange, disabled, tone, onEvent }:
       <div className="grid gap-1 text-center">
         <p className="text-sm font-bold text-ink/60">endpoint span</p>
         <p className="text-2xl font-black tabular-nums">{span.toFixed(1)} <span className="text-base text-ink/55">vs {c}</span></p>
-        <p className={`font-extrabold ${closesHere ? "text-leaf-ink" : flatHere ? "text-berry" : "text-tangerine-ink"}`}>{closesHere ? "✓ closes with area" : flatHere ? "✕ flat line — not a triangle" : span < c ? "gap remains" : "span passes the target"}</p>
+        <p className={`font-extrabold ${settled ? (closesHere ? "text-leaf-ink" : flatHere ? "text-berry" : "text-tangerine-ink") : "text-ink/70"}`}>{settled && closesHere ? "✓ closes with area" : settled && flatHere ? "✕ flat line — not a triangle" : span < c ? "gap remains" : span > c ? "span passes the comparison beam" : "endpoints meet"}</p>
       </div>
     </div>
     <label className="grid gap-1 text-sm font-bold text-ink/70"><span>hinge angle: <span className="tabular-nums text-ink">{angle}°</span> · moves {moves}/{spec.requiredMoves}</span><input type="range" min={0} max={180} step={spec.angleStep} value={angle} disabled={disabled} aria-label="hinge angle" aria-valuetext={`${angle} degrees, endpoint span ${span.toFixed(1)}`} onChange={(e)=>move(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <div className="grid gap-2 sm:grid-cols-2">{spec.choices.map(choice=><button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id===choice.id)} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"frame-claim",dir:triangleClosureChoiceCorrect(spec,choice)?"toward":"away",state:{choice:choice.id,angle,moves}});onChange({angle,moves,choice:choice.id});}}><MathProse text={choice.label} /></button>)}</div>
+    <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map(choice=><button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id===choice.id)} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"frame-claim",dir:"neutral",state:{choice:choice.id,angle,moves}});onChange({angle,moves,choice:choice.id});}}><MathProse text={choice.label} /></button>)}</div>
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No frame claim selected."}</p>
-    {targetAngle !== null && <p className="text-center text-xs font-bold text-ink/55">A non-flat closure exists near {targetAngle.toFixed(1)}°.</p>}
+    {settled && targetAngle !== null && <p className="text-center text-xs font-bold text-ink/55">A non-flat closure exists near {targetAngle.toFixed(1)}°.</p>}
     {tone === "info" && selected && !triangleClosureChoiceCorrect(spec,selected) && <GhostChip testid="tcl-ghost">correct claim: {correct.label}</GhostChip>}
   </div>;
 }
 
 /* ---------------- CompoundEventLab (stage product ↔ sample space ↔ exact claim) ---------------- */
 
-function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TCompoundEventLab>) {
+function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TCompoundEventLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const total = compoundEventTotal(spec);
   const favourable = compoundEventFavourable(spec);
@@ -1836,6 +2169,14 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
     return rows;
   }, [spec]);
   const correct = spec.choices.find((choice) => compoundEventChoiceCorrect(spec, choice))!;
+  // Stage outcomes and sample-space cells are the givens. Their counts, product and exact
+  // probability are derived answers, so keep those values out of visual and spoken pre-check
+  // surfaces. A retry remains a real second attempt; a correct or revealed answer may explain it.
+  const showDerived = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   const probabilityText = `${favFactors.join(" × ")} / ${factors.join(" × ")} = ${favourable}/${total}`;
   return (
@@ -1858,7 +2199,14 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
         </div>
         <div className="rounded-xl border border-ink/10 bg-paper p-2">
           <p className="text-sm font-extrabold text-ink/70">Complete ordered sample space</p>
-          <div className="mt-2 grid gap-1" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${total > 48 ? 34 : 48}px, 1fr))` }} role="img" aria-label={`${total} ordered outcomes${spec.mode === "probability" ? `, ${favourable} favourable` : ""}.`}>
+          <div
+            className="mt-2 grid gap-1"
+            style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${total > 48 ? 34 : 48}px, 1fr))` }}
+            role="img"
+            aria-label={showDerived
+              ? `${total} ordered outcomes${spec.mode === "probability" ? `, ${favourable} favourable` : ""}.`
+              : `Ordered sample space. ${spec.mode === "probability" ? "Favourable combinations are marked for you to count." : "Count the combinations to find its size."}`}
+          >
             {combinations.map((combo, index) => (
               <span key={index} className={`flex min-h-9 items-center justify-center rounded-md border px-1 text-center text-[10px] font-extrabold sm:text-xs ${combo.favourable && spec.mode === "probability" ? "border-leaf bg-leaf/15 text-leaf-ink" : "border-ink/15 bg-white text-ink/65"}`}>
                 <span aria-hidden="true" className="mr-1">{combo.favourable && spec.mode === "probability" ? "✓" : "○"}</span>{combo.labels.join("·")}
@@ -1866,21 +2214,19 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
             ))}
           </div>
         </div>
-        {/* S237 NOTE — NOT CHANGED, needs a curriculum ruling. This panel prints the graded
-            answer during active work: count mode shows "6 x 5 = 30" beside a prompt asking "How
-            many total outfits?" with 30 among the choices (sp-04-03). Gating it behind
-            tone === "info" was tried and REVERTED, because two existing gates
-            (widgets.compoundEvent.s133.test.tsx) deliberately pin this readout as visible, and
-            weakening them to fit is exactly what the closure rules forbid. Tracked in
-            ANSWER_ON_SCREEN_AUDIT_S237.md. */}
-        <div className="grid gap-1 rounded-xl border-2 border-ink/10 bg-white p-3 text-center">
+        <div className="grid gap-1 rounded-xl border-2 border-ink/10 bg-white p-3 text-center" data-testid="cel-derived-readout" data-revealed={showDerived || undefined}>
           <p className="text-sm font-bold text-ink/60">Sample-space size</p>
-          <p className="text-xl font-black tabular-nums text-ink">{factors.join(" × ")} = {total}</p>
-          {spec.mode === "probability" && <><p className="mt-1 text-sm font-bold text-ink/60">Favourable outcomes / all outcomes</p><p className="text-xl font-black tabular-nums text-leaf-ink">{probabilityText}</p></>}
+          <p className="text-xl font-black tabular-nums text-ink">{factors.join(" × ")} = {showDerived ? total : "?"}</p>
+          {spec.mode === "probability" && <>
+            <p className="mt-1 text-sm font-bold text-ink/60">Favourable outcomes / all outcomes</p>
+            <p className={`text-xl font-black tabular-nums ${showDerived ? "text-leaf-ink" : "text-ink/70"}`}>
+              {showDerived ? probabilityText : "Count the marked combinations, then compare with all combinations."}
+            </p>
+          </>}
         </div>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "claim", dir: compoundEventChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, mode: spec.mode } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
+        {orderedChoices.map((choice) => <button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "claim", dir: "neutral", state: { choice: choice.id, mode: spec.mode } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}
       </div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No claim selected."}</p>
       {tone === "info" && selected && !compoundEventChoiceCorrect(spec, selected) && <GhostChip testid="cel-ghost">correct claim: {correct.label}</GhostChip>}
@@ -1890,9 +2236,13 @@ function CompoundEventLabW({ spec, value, onChange, disabled, tone, onEvent }: W
 
 /* ---------------- CompositeAreaLab (decomposition ↔ signed piece ledger ↔ exact claim) ---------------- */
 
-function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TCompositeAreaLab>) {
+function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TCompositeAreaLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const correct = spec.choices.find((choice) => compositeAreaChoiceCorrect(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const target = compositeAreaTarget(spec);
   const formula = (piece: TCompositeAreaLab["pieces"][number]) => {
     if (piece.shape === "rectangle") return `${piece.width} × ${piece.height}`;
@@ -1948,7 +2298,7 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
       {spec.target.kind === "piece" && <p className="mt-1 text-sm font-bold text-ink/70">The requested claim is one highlighted piece, not the whole ledger.</p>}
       <p className="mt-2 text-sm font-bold text-ink/70">Choose the exact area claim that this geometry supports.</p>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "area-claim", dir: compositeAreaChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, target } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
+    <div className="grid gap-2 sm:grid-cols-3">{orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "area-claim", dir: compositeAreaChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, target } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No area claim selected."}</p>
     {tone === "info" && selected && !compositeAreaChoiceCorrect(spec, selected) && <GhostChip testid="cal-ghost">correct claim: {correct.label}</GhostChip>}
   </div>;
@@ -1972,10 +2322,14 @@ function CompositeAreaLabW({ spec, value, onChange, disabled, tone, onEvent }: W
  * `|selected − answer| <= tolerance`, `atTarget` matches every field of the fractionGrid spec — and
  * each engine carries GRADED placements: 7, 12 and 4 respectively, 23 in all. The other flagged
  * sites are recorded in `ACC01_COLOUR_ONLY_CUE.md` with the reason each was left alone. */
-function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<TTrialProbabilityLab>) {
+function TrialProbabilityLabW({ spec, value, onChange, disabled, tone, seed }: WProps<TTrialProbabilityLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const accepted = selected ? trialProbabilityEquivalent(spec, selected) : false;
   const correct = spec.choices.find((choice) => trialProbabilityEquivalent(spec, choice))!;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const claim = selected ? trialProbabilityClaimCount(spec, selected) : null;
   const maxClaim = Math.max(spec.total, ...(spec.choices.map((choice) => trialProbabilityClaimCount(spec, choice))));
   const axisMax = Math.max(spec.total, Math.ceil(maxClaim));
@@ -2060,7 +2414,7 @@ function TrialProbabilityLabW({ spec, value, onChange, disabled, tone }: WProps<
         </svg>
       </div>
       <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the probability fraction">
-        {spec.choices.map((choice) => (
+        {orderedChoices.map((choice) => (
           <button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id === choice.id} onClick={() => onChange(choice.id)} className={optionClass(selected?.id === choice.id)}>
             <span className="block text-lg font-extrabold tabular-nums"><MathProse text={choice.label} /></span>
             <span className="block text-xs font-semibold text-ink/60">projects to {fmt(trialProbabilityClaimCount(spec, choice))} of the same {spec.total}</span>
@@ -2729,12 +3083,24 @@ function GraphZoomW({ spec, value, onChange, disabled, tone }: WProps<TGraphZoom
   const set = (z: number, v: "limit-exists" | "no-limit" | null) => onChange({ zoom: z, verdict: v });
 
   const SLOPE = 1;
+  // Honest local curvature (S322): a differentiable function is only a straight line in the
+  // LIMIT — away from `a` it is its tangent line PLUS a remainder that a real, twice-
+  // differentiable function carries. Modelling that remainder as CURVE*(x-a)^2 (any nonzero
+  // second derivative looks like this to first order) means: (1) it passes through the anchor
+  // exactly (d=0 zeroes it, so f(a) and the hole/dot marker are untouched), and (2) as the
+  // window narrows with each zoom step (`w` below, driven entirely by the existing `zoom` state
+  // and `spec.a` — no new field, no randomness), d shrinks LINEARLY while the remainder shrinks
+  // QUADRATICALLY, so the rendered curve straightens on its own — the same reason any smooth
+  // curve looks straight once you zoom in far enough. `jump` keeps its two genuinely-straight
+  // branches (a jump is not claimed to locally straighten), and `infinite` keeps its own
+  // already-nonlinear 1/d^2 blow-up — neither is touched.
+  const CURVE = 0.15;
   const f = (x: number): number | null => {
     const d = x - spec.a;
     if (spec.behaviour === "infinite") return Math.abs(d) < 1e-9 ? null : 1 / (d * d);
     if (spec.behaviour === "jump") return d < 0 ? spec.leftValue + SLOPE * d : spec.rightValue + SLOPE * d;
     if (Math.abs(d) < 1e-9) return spec.behaviour === "removable" ? null : spec.fAtA;
-    return spec.leftValue + SLOPE * d;
+    return spec.leftValue + SLOPE * d + CURVE * d * d;
   };
 
   // the window shrinks by half per magnification — around (a, centre)
@@ -2840,6 +3206,10 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
   const shown = expLogReadout(spec.mode, base, spec.x);
   const goal = expLogReadout(spec.mode, spec.targetBase, spec.x);
   const fmt = (v: number | null) => (v === null ? "undefined" : Math.abs(v) >= 1000 ? "huge" : Number(v.toFixed(2)).toString());
+  const exponentFallback = String(spec.x).replace(/[0-9-]/g, (character) => ({
+    "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵",
+    "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": "⁻",
+  })[character] ?? character);
 
   const M = Math.max(spec.x, goal ?? 4, 4) * 1.12;
   const W = 300, H = 210, PAD = 30;
@@ -2905,7 +3275,8 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         {spec.showMirror && (
           <>
             <line x1={X(0)} y1={Y(0)} x2={X(M)} y2={Y(M)} stroke={PALETTE.ink} strokeWidth={1} strokeDasharray="4 3" strokeOpacity={0.45} />
-            <text x={X(M) - 22} y={Y(M) + 14} fontSize={10} fill={PALETTE.ink} fillOpacity={0.6}>y = x</text>
+            <SvgMathText x={X(M) - 22} y={Y(M) + 14} width={52} height={18} fontSize={10}
+              color={PALETTE.ink} opacity={0.6} tex="y=x" fallback="y = x" />
             {partner && <path d={partner} fill="none" stroke={PALETTE.leaf} strokeWidth={2} strokeOpacity={0.85} />}
           </>
         )}
@@ -2916,9 +3287,11 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         <text x={X(spec.x)} y={H - 12} textAnchor="middle" fontSize={10} fill={PALETTE.ink} fillOpacity={0.75}>
           {spec.x}
         </text>
-        <text x={PAD + 4} y={20} fontSize={11} fontWeight={700} fill={PALETTE.sky}>
-          {spec.mode === "exponential" ? `y = ${base}^x` : `y = log_${base}(x)`}
-        </text>
+        <SvgMathText x={PAD + 4} y={20} anchor="start" width={112} height={22} fontSize={11}
+          color={PALETTE.sky}
+          tex={spec.mode === "exponential" ? `y=${base}^{x}` : `y=\\log_{${base}}(x)`}
+          fallback={spec.mode === "exponential" ? `y = ${base}ˣ` : `y = log base ${base} of x`}
+          testId="exp-log-equation" />
         {spec.showMirror && (
           <text x={PAD + 4} y={34} fontSize={10} fontWeight={700} fill={PALETTE.leaf}>
             its mirror across y = x
@@ -2953,7 +3326,10 @@ function ExpLogExploreW({ spec, value, onChange, disabled, tone }: WProps<TExpLo
         )}
       <AxisCaptions w={W} h={H} /></svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
-        {spec.mode === "exponential" ? `${base}^${spec.x}` : `log base ${base} of ${spec.x}`} = {fmt(shown)}
+        <MathInline
+          tex={spec.mode === "exponential" ? `${base}^{${spec.x}}` : `\\log_{${base}}(${spec.x})`}
+          fallback={spec.mode === "exponential" ? `${base}${exponentFallback}` : `log base ${base} of ${spec.x}`}
+        /> = {fmt(shown)}
         <span className="ml-2 text-sm font-semibold text-ink/70">goal {fmt(goal)}</span>
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
@@ -3178,7 +3554,15 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
    * than the numerals being dropped — the scale is the thing that must not disappear.
    */
   const TICK_FS = 9;
-  const axisTicks = niceTicks(-G, G, { target: 3, ends: true, integer: true });
+  // G, ±targetRe/Im, mulRe/Im, reStart/imStart and the drag's own integer-lattice snap are all
+  // whole numbers (schema), so G is always an integer — `niceTicks`'s general "nice round span"
+  // ladder was overkill here and, worse, wrong for this rule: rule A9 wants exactly the two
+  // extents plus the origin, never an in-between landmark. niceTicks(target:3) reaches that by
+  // accident only when G happens to be a multiple of its own computed step (e.g. G=5 → step 5,
+  // the inner ticks land exactly on ±G and get deduped away); cn-03-02/i2's G=15 (step 10) instead
+  // kept −10/10 as genuine in-between ticks, printing 5 numerals where rule A9 wants 3. The extents
+  // are already the exact numbers rule A9 asks for, so state them directly.
+  const axisTicks = [-G, 0, G];
   const reTickY = Y(0) + 13, imTickX = X(0) - 5;
   const tickBoxes: S238Box[] = [
     ...axisTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), X(v), reTickY, "middle", TICK_FS)),
@@ -4262,7 +4646,7 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="mx-auto w-full max-w-md" role="img"
         aria-label={
           arith
             ? `Terms starting at ${spec.first} rising by ${v}. Term ${spec.atPosition} is ${nth}.`
@@ -4347,10 +4731,22 @@ function SequenceDialW({ spec, value, onChange, disabled, tone, onEvent }: WProp
 }
 
 
-function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSequenceBuild>) {
+function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TSequenceBuild>) {
   const state = value && typeof value === "object" && !Array.isArray(value)
     ? value as { explored?: string[]; numeric?: number | ""; choiceId?: string }
     : {};
+  /* Authored choice order overwhelmingly lists the correct claim first, so displaying
+   * spec.choices as authored lets a learner pass by always pressing the first button — the same
+   * mastery-integrity bug fixed across the lab widgets in S316 (see McqW's comment for the full
+   * rationale). Shuffle DISPLAY ORDER ONLY, seeded exactly like the siblings: grading
+   * (evaluate.ts) looks the pick up by `choice.id` and compares `choice.claim` to
+   * `truth.answerClaim`, never a position, so this cannot change what's correct or which
+   * feedback fires. spec.choices is absent in numeric mode; seededShuffle([]) is a harmless
+   * no-op there, and the hook must run unconditionally anyway (Rules of Hooks). */
+  const orderedChoices = useMemo(
+    () => { const choices = spec.choices ?? []; return seededShuffle(choices, seed ?? choices.map((choice) => choice.id).join("|")); },
+    [seed, spec.choices]
+  );
   const truth = sequenceReasoningTruth(spec);
   const validKeys = new Set(truth.stages.map((stage) => stage.key));
   const explored = Array.isArray(state.explored) ? state.explored.filter((key) => validKeys.has(key)) : [];
@@ -4369,7 +4765,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
   const termColor = (spec.task ?? "").startsWith("geometric") ? "border-tangerine/50 bg-tangerine/10 text-tangerine-ink" : "border-sky/45 bg-sky/10 text-sky-ink";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label={`Sequence workbench. ${truth.terms.length} visible terms. ${explored.length} exact states inspected.`}>
+    <section className="grid gap-3 rounded-2xl border border-ink/15 bg-paper p-4" aria-label="Sequence workbench for inspecting the term pattern and exact states.">
       {truth.terms.length > 0 && <div className="grid gap-2">
         <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">term structure</p>
         <div className="flex flex-wrap items-center gap-2" role="list" aria-label="sequence terms">
@@ -4400,7 +4796,7 @@ function SequenceReasoningW({ spec, value, onChange, disabled, tone, onEvent }: 
       <p className={`rounded-xl border px-3 py-2 text-center text-sm font-extrabold ${requiredReady ? "border-leaf/40 bg-leaf/10 text-leaf-ink" : "border-ink/15 bg-white text-ink/65"}`} aria-live="polite">{explored.length} of {Math.max(spec.requiredExplorations, (spec.requiredStageKeys ?? []).length)} required states inspected</p>
     </section>
     {spec.answerMode === "numeric" && <label className="grid gap-1 text-sm font-bold text-ink/75"><span>exact result</span><input type="number" disabled={disabled} value={state.numeric ?? ""} onChange={(event)=>onChange({...state,numeric:event.target.value===""?"":Number(event.target.value)})} className="min-h-11 rounded-xl border-2 border-sky/40 bg-white px-3 text-lg font-black tabular-nums" /></label>}
-    {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2">{(spec.choices ?? []).map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"sequence-claim",dir:choice.claim===truth.answerClaim?"toward":"away",state:{task:spec.task,choice:choice.id}});onChange({...state,choiceId:choice.id})}} className={`min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold ${selected?.id===choice.id?"border-sky bg-sky/10 ring-2 ring-sky":"border-ink/15 bg-white hover:border-sky/50"}`}><MathProse text={choice.label} /></button>)}</div>}
+    {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selected?.id===choice.id} onClick={()=>{onEvent?.({control:"sequence-claim",dir:choice.claim===truth.answerClaim?"toward":"away",state:{task:spec.task,choice:choice.id}});onChange({...state,choiceId:choice.id})}} className={`min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold ${selected?.id===choice.id?"border-sky bg-sky/10 ring-2 ring-sky":"border-ink/15 bg-white hover:border-sky/50"}`}><MathProse text={choice.label} /></button>)}</div>}
     <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : spec.answerMode === "numeric" && typeof state.numeric === "number" ? `Entered ${state.numeric}.` : "No final answer selected."}</p>
     {tone === "info" && ((spec.answerMode === "choice" && selected && selected.id !== correctChoice?.id) || (spec.answerMode === "numeric" && typeof state.numeric === "number" && truth.answerNumber !== undefined && Math.abs(state.numeric-truth.answerNumber)>spec.tolerance)) && <GhostChip testid="sequence-reasoning-ghost">exact route: {truth.stages.map(stage=>stage.value).join("; ")}</GhostChip>}
   </div>;
@@ -4810,12 +5206,29 @@ function CompassConstructW({ spec, value, onChange, disabled, tone }: WProps<TCo
           <>the compass steps round {Number(steps.toFixed(2))} times</>
         )}
       </p>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): the compass used to offer only the arm DRAG plus this continuous range —
+          both fine-motor on touch. The house −/range/+ stepper (44px buttons, same pattern as
+          systemsExplore's line controls and slopeTriangle) adds the discrete tap path. The drag
+          snaps to `snapToStep(raw, 1, 12, 1)` — the integer radii 1..12 — and these buttons walk
+          exactly that lattice, so every radius the drag can reach is reachable by taps alone. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>the compass radius</span>
-        <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
-          aria-label="how wide the compass is opened" aria-valuetext={`${r}`}
-          onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || r - 1 < 1} aria-label="Close the compass by 1"
+            onClick={() => onChange(r - 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
+            aria-label="how wide the compass is opened" aria-valuetext={`${r}`}
+            onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || r + 1 > 12} aria-label="Open the compass by 1"
+            onClick={() => onChange(r + 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
           {tone === "info" && (() => { const gv = typeof value === "number" ? value : null; if (gv === spec.target) return null; return (<GhostChip testid="cmp-ghost">compass radius: {spec.target}</GhostChip>); })()}
       </div>
   );
@@ -5017,13 +5430,29 @@ function ClassicalConstructW({
           <span className="text-berry-ink">{cfg.shortfall}</span>
         )}
       </p>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): same discrete tap path as the perp/hex branch above — the classical
+          modes have no drag surface at all, so this range was their ONLY control, and a bare
+          continuous slider is itself a fine-motor gesture on touch. Buttons walk the same 1..12
+          integer lattice the range moves on. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>the compass radius</span>
-        <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
-          aria-label="how wide the compass is opened"
-          aria-valuetext={`${r}; ${reach ? "the arcs cross" : "the arcs do not reach"}`}
-          onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || r - 1 < 1} aria-label="Close the compass by 1"
+            onClick={() => onChange(r - 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
+            aria-label="how wide the compass is opened"
+            aria-valuetext={`${r}; ${reach ? "the arcs cross" : "the arcs do not reach"}`}
+            onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || r + 1 > 12} aria-label="Open the compass by 1"
+            onClick={() => onChange(r + 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -6613,6 +7042,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
   const amount = (spec.whole * pct) / 100;
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
 
+
   // One setter for both inputs, so a drag emits the same process evidence a slider move does.
   const setPct = (next: number) => {
     if (next === pct) return;
@@ -6702,7 +7132,7 @@ function PercentBarW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
 
 /* ---------------- PercentChangeLab (base ↔ percent change ↔ final price) ---------------- */
 
-function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TPercentChangeLab>) {
+function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TPercentChangeLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const amount = percentChangeAmount(spec);
   const target = percentChangeTarget(spec);
@@ -6713,6 +7143,15 @@ function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: W
   const sign = spec.direction === "markup" ? "+" : "−";
   const directionLabel = spec.direction === "markup" ? "add the markup" : "subtract the markdown";
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
+  // S316. Same mastery-integrity bug McqW documents above: authored content overwhelmingly
+  // lists the correct final-price claim first, so rendering spec.choices unshuffled let a
+  // learner clear this step by always pressing the first button. Shuffle DISPLAY ORDER ONLY —
+  // evaluate.ts (percentChangeLab case) looks the choice up by `choice.id`, never by index, so
+  // this cannot change which choice is correct or which feedback fires.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [spec.choices, seed]
+  );
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
@@ -6751,7 +7190,7 @@ function PercentChangeLabW({ spec, value, onChange, disabled, tone, onEvent }: W
         </p>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => (
+        {orderedChoices.map((choice) => (
           <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
             onClick={() => {
               onEvent?.({ control: "final-price-claim", dir: percentChangeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, value: choice.value, direction: spec.direction } });
@@ -6777,7 +7216,14 @@ const equationSideText=(coeff:number,constant:number,variable:string)=>{
   if(Math.abs(constant)>1e-9){const abs=Math.abs(constant),term=String(abs);if(!parts.length)parts.push(constant<0?`−${term}`:term);else parts.push(`${constant<0?"−":"+"} ${term}`)}
   return parts.length?parts.join(" "):"0";
 };
-function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TEquationOutcomeLab>) {
+function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TEquationOutcomeLab>) {
+  // Hook must run unconditionally on every render (this component early-returns for
+  // mode==="transform" below, so the memo cannot live past that branch). spec.choices defaults
+  // to [] for transform mode; seededShuffle([]) is a harmless no-op in that case.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   if(spec.mode==="transform"){
     const state=value&&typeof value==="object"&&!Array.isArray(value)?value as {stageIds?:string[];numeric?:number|""}:{};
     const stageIds=Array.isArray(state.stageIds)?state.stageIds:[];
@@ -6829,14 +7275,14 @@ function EquationOutcomeLabW({ spec, value, onChange, disabled, tone, onEvent }:
         {(!spec.choices?.length || tone === "info") && <p className="text-center text-sm font-bold">{truthText}</p>}
         {selected && <p className="rounded-xl border border-sky/30 bg-sky/5 p-3 text-center font-extrabold" aria-live="polite">Your claim: {selected.label}</p>}
       </section>
-      <div className="grid gap-2 sm:grid-cols-2">{spec.choices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "equation-outcome-claim", dir: equationOutcomeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, outcome: choice.outcome, truth } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
+      <div className="grid gap-2 sm:grid-cols-2">{orderedChoices.map((choice) => <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id} onClick={() => { onEvent?.({ control: "equation-outcome-claim", dir: equationOutcomeChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, outcome: choice.outcome, truth } }); onChange(choice.id); }}><MathProse text={choice.label} /></button>)}</div>
       <p className="sr-only" aria-live="polite">{selected ? `Selected ${selected.label}.` : "No equation-outcome claim selected."}</p>
       {tone === "info" && selected && !equationOutcomeChoiceCorrect(spec, selected) && <GhostChip testid="eol-ghost">correct outcome: {spec.choices.find((choice) => equationOutcomeChoiceCorrect(spec, choice))?.label}</GhostChip>}
     </div>
   );
 }
 
-function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSignedFractionLab>) {
+function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TSignedFractionLab>) {
   const selected = typeof value === "string" ? spec.choices.find((choice) => choice.id === value) : undefined;
   const truth = signedFractionTruth(spec);
   const correct = spec.choices.find((choice) => signedFractionChoiceCorrect(spec, choice))!;
@@ -6850,11 +7296,16 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
     </section>
   );
   const usesKeptDivisor = selected?.path === "keptDivisor";
-  const rightUsed = spec.operation === "divide" && !usesKeptDivisor ? { ...spec.right, num: spec.right.den, den: spec.right.num } : spec.right;
+  const rightUsed = spec.operation === "divide" ? { ...spec.right, num: spec.right.den, den: spec.right.num } : spec.right;
   const numeratorWork = `${spec.left.num} × ${rightUsed.num}`;
   const denominatorWork = `${spec.left.den} × ${rightUsed.den}`;
   const expectedSign = truth.sign < 0 ? "negative" : "positive";
   const chosenSign = selected ? (selected.sign < 0 ? "negative" : "positive") : "not chosen";
+  const settled = tone === "success" || tone === "info";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const optionClass = (active: boolean) => `min-h-11 rounded-xl border-2 px-3 py-2 text-left font-extrabold transition-colors motion-reduce:transition-none ${active ? "border-sky bg-sky/10 ring-2 ring-sky" : "border-ink/15 bg-white hover:border-sky/50"}`;
   return (
     <div className="grid gap-4">
@@ -6868,32 +7319,32 @@ function SignedFractionLabW({ spec, value, onChange, disabled, tone, onEvent }: 
         <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="font-extrabold">Sign channel</p>
-            <p className="text-sm font-bold">{spec.left.sign === spec.right.sign ? "same signs" : "different signs"} → <span className="text-leaf-ink">{expectedSign}</span></p>
+            <p className="text-sm font-bold">{spec.left.sign === spec.right.sign ? "same signs" : "different signs"} → <span className={settled ? "text-leaf-ink" : "text-ink/60"}>{settled ? expectedSign : "work out the result sign"}</span></p>
           </div>
-          {selected && <p className={`rounded-lg border-2 px-3 py-2 text-sm font-bold ${chosenSign === expectedSign ? "border-leaf bg-leaf/10 text-leaf-ink" : "border-berry bg-berry/10 text-berry-ink"}`}>Your claim uses a {chosenSign} sign.</p>}
+          {selected && <p className={`rounded-lg border-2 px-3 py-2 text-sm font-bold ${settled ? (chosenSign === expectedSign ? "border-leaf bg-leaf/10 text-leaf-ink" : "border-berry bg-berry/10 text-berry-ink") : "border-ink/15 bg-white text-ink/70"}`}>Your claim uses a {chosenSign} sign.</p>}
         </section>
         {spec.operation === "divide" && (
-          <section className={`rounded-xl border-2 p-3 ${usesKeptDivisor ? "border-berry bg-berry/10" : "border-leaf/50 bg-leaf/10"}`}>
+          <section className={`rounded-xl border-2 p-3 ${settled && usesKeptDivisor ? "border-berry bg-berry/10" : settled ? "border-leaf/50 bg-leaf/10" : "border-ink/15 bg-paper"}`}>
             <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Division transform</p>
-            <p className="mt-1 text-lg font-black tabular-nums">{frac(spec.right)} <span aria-hidden="true">→</span> {usesKeptDivisor ? <span className="text-berry-ink">kept unchanged</span> : <span className="text-leaf-ink">reciprocal {frac({ ...spec.right, num: spec.right.den, den: spec.right.num })}</span>}</p>
+            <p className="mt-1 text-lg font-black tabular-nums">{frac(spec.right)} <span aria-hidden="true">→</span> <span className={settled ? "text-leaf-ink" : "text-ink"}>reciprocal {frac({ ...spec.right, num: spec.right.den, den: spec.right.num })}</span></p>
           </section>
         )}
-        <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3" role="img" aria-label={`Numerators ${numeratorWork}; denominators ${denominatorWork}; expected ${expectedSign} result. ${selected ? `Selected ${selected.label}.` : "No claim selected."}`}>
+        <section className="grid gap-2 rounded-xl border border-ink/10 bg-paper p-3" role="img" aria-label={`Numerators ${numeratorWork}; denominators ${denominatorWork}. ${settled ? `The result sign is ${expectedSign}. ` : "Work out the result sign. "}${selected ? `Selected ${selected.label}.` : "No claim selected."}`}>
           <p className="text-xs font-extrabold uppercase tracking-wide text-ink/60">Magnitude channel</p>
           <div className="mx-auto grid min-w-44 text-center text-xl font-black tabular-nums">
             <span className="border-b-2 border-ink px-3 pb-1">{numeratorWork}</span>
             <span className="px-3 pt-1">{denominatorWork}</span>
           </div>
-          {selected?.path === "unreduced" && <p className="rounded-lg border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center text-sm font-bold text-tangerine-ink">Equivalent magnitude, but not lowest terms: {selected.label} → {correct.label}</p>}
-          {selected?.path === "magnitudeError" && <p className="rounded-lg border-2 border-dashed border-berry bg-berry/10 px-3 py-2 text-center text-sm font-bold text-berry-ink">This magnitude does not follow the shown numerator/denominator products.</p>}
+          {settled && selected?.path === "unreduced" && <p className="rounded-lg border-2 border-dashed border-tangerine bg-tangerine/10 px-3 py-2 text-center text-sm font-bold text-tangerine-ink">Equivalent magnitude, but not lowest terms: {selected.label} → {correct.label}</p>}
+          {settled && selected?.path === "magnitudeError" && <p className="rounded-lg border-2 border-dashed border-berry bg-berry/10 px-3 py-2 text-center text-sm font-bold text-berry-ink">This magnitude does not follow the shown numerator/denominator products.</p>}
         </section>
         <p className="rounded-xl border border-sky/25 bg-sky/5 p-3 text-center text-xl font-black tabular-nums" aria-live="polite">Your exact claim: {selected?.label ?? "choose below"}</p>
       </div>
       <div className="grid gap-2 sm:grid-cols-3">
-        {spec.choices.map((choice) => (
-          <button key={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
+        {orderedChoices.map((choice) => (
+          <button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} className={optionClass(selected?.id === choice.id)} aria-pressed={selected?.id === choice.id}
             onClick={() => {
-              onEvent?.({ control: "signed-fraction-claim", dir: signedFractionChoiceCorrect(spec, choice) ? "toward" : "away", state: { choice: choice.id, path: choice.path, operation: spec.operation } });
+              onEvent?.({ control: "signed-fraction-claim", dir: "neutral", state: { choice: choice.id, path: choice.path, operation: spec.operation } });
               onChange(choice.id);
             }}><MathProse text={choice.label} /></button>
         ))}
@@ -7884,7 +8335,7 @@ function stInitFor(spec: TSlopeTriangle, run: number, rise: number): TriangleCan
   };
 }
 
-function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlopeTriangle>) {
+function SlopeTriangleW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TSlopeTriangle>) {
   const v: STVal =
     value && typeof value === "object" && typeof (value as STVal).run === "number"
       ? (value as STVal)
@@ -7934,6 +8385,11 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
       if (!coalesced) gestureRun.current = { key: gestureKey, from: before };
     }
     stage(equationMorphPlan(tx), sentence);
+    onEvent?.({
+      control: "slope-triangle-legs",
+      dir: "neutral",
+      state: { run: leRatToNumber(after.run), rise: leRatToNumber(after.rise) }
+    });
     onChange({ run: leRatToNumber(after.run), rise: leRatToNumber(after.rise) });
   };
 
@@ -7944,6 +8400,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
     const state = graph.undo();
     if (!state) return;
     stage(reverse ?? (NO_MORPH as MorphPlan<TriangleTarget>), "Stepped back to the triangle before that move.");
+    onEvent?.({ control: "slope-triangle-undo", dir: "neutral", state: { run: leRatToNumber(state.canonical.run), rise: leRatToNumber(state.canonical.rise) } });
     onChange({ run: leRatToNumber(state.canonical.run), rise: leRatToNumber(state.canonical.rise) });
   };
 
@@ -8001,6 +8458,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   // The readout is the model's own naming of the state, including the two boundary states.
   const slopeText = slope.kind === "slope" ? slope.ratioText : slope.text;
   const hits = verdict.passes;
+  const settled = tone === "success" || tone === "info";
   const atStart = legValue.run === spec.runStart && legValue.rise === spec.riseStart;
 
   // S238 — NO TWO LABELS MAY OVERLAP, for any learner-reachable triangle. 25 of the
@@ -8078,7 +8536,7 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
     <div className="grid gap-3" ref={rootRef}>
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white" role="img"
-        aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}, and its line ${hits ? "passes through" : "misses"} B.`}>
+        aria-label={`A grid with point A at ${spec.ax}, ${spec.ay} and point B at ${spec.bx}, ${spec.by}. The built triangle has run ${legs.runText} and rise ${legs.riseText}.${settled ? ` Its line ${hits ? "passes through" : "misses"} B.` : " Compare its tip with point B."}`}>
         {ticks.map((g) => (
           <g key={g}>
             <line x1={sx(g)} y1={sy(-G)} x2={sx(g)} y2={sy(G)} stroke={PALETTE.ink} strokeOpacity={g === 0 ? 0.3 : 0.07} />
@@ -8129,8 +8587,8 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
       )}</svg>
       <p className="text-center text-xl font-extrabold tabular-nums" aria-live="polite">
         slope = rise {"÷"} run = {slopeText}
-        <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${hits ? "bg-leaf/15 text-leaf-ink" : "bg-ink/8 text-ink/70"}`}>
-          {hits ? "✓ passes through B" : "misses B"}
+        <span className={`ml-2 rounded-pill px-2 py-0.5 text-xs font-bold ${settled && hits ? "bg-leaf/15 text-leaf-ink" : settled ? "bg-berry/10 text-berry-ink" : "bg-ink/8 text-ink/70"}`}>
+          {settled ? (hits ? "✓ passes through B" : "misses B") : "compare the tip with B"}
         </span>
       </p>
       {/* What the last move did, plus any clamp — visually hidden, so an authored lesson looks
@@ -8158,132 +8616,117 @@ function SlopeTriangleW({ spec, value, onChange, disabled, tone }: WProps<TSlope
   );
 }
 
-/** proportionalReasoningLab — one normalized pair model for unit rates, predictions,
- * proportionality tests, constants, percent, and discount chains. Every exploration control is a
- * native button and every numeric response is a labelled input, so the complete lab is keyboard
- * reachable without relying on colour. */
+/** proportionalReasoningLab — every Normalize row asks the learner to produce a
+ * unit rate. The widget verifies that intermediate invariant without displaying
+ * it, then unlocks the final proportional claim. Optional build stages remain
+ * available as scaffolds after the learner has established the unit rate. */
 type ProportionalReasoningState = {
   revealed?: string[];
   numeric?: number | "";
   choiceId?: string;
+  unitRates?: Record<string, number | "">;
+  verifiedUnitRates?: string[];
+  unitRateStatus?: Record<string, "correct" | "retry">;
 };
 
-function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TProportionalReasoningLab>) {
+function ProportionalReasoningLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TProportionalReasoningLab>) {
   const v = (value && typeof value === "object" ? value : {}) as ProportionalReasoningState;
   const revealed = Array.isArray(v.revealed) ? v.revealed : [];
   const validExplorationKeys = new Set(proportionalReasoningExplorationKeys(spec));
   const validRevealed = [...new Set(revealed.filter((key) => validExplorationKeys.has(key)))];
   const truth = proportionalReasoningTruth(spec);
   const fmt = (n: number) => Number(n.toFixed(6)).toString();
+  const rateKeys = truth.series.flatMap((series) => series.pairs.map((_, index) => `${series.id}:${index}`));
+  const validRateKeys = new Set(rateKeys);
+  const expectedRates = new Map<string, number>();
+  truth.series.forEach((series) => series.pairs.forEach((_, index) => expectedRates.set(`${series.id}:${index}`, series.rates[index]!)));
+  const rawUnitRates = v.unitRates && typeof v.unitRates === "object" && !Array.isArray(v.unitRates) ? v.unitRates : {};
+  const unitRates = Object.fromEntries(Object.entries(rawUnitRates).filter(([, rate]) => typeof rate === "number" || rate === "")) as Record<string, number | "">;
+  const rawStatus = v.unitRateStatus && typeof v.unitRateStatus === "object" && !Array.isArray(v.unitRateStatus) ? v.unitRateStatus : {};
+  const unitRateStatus = Object.fromEntries(Object.entries(rawStatus).filter(([, status]) => status === "correct" || status === "retry")) as Record<string, "correct" | "retry">;
+  const verified = new Set((Array.isArray(v.verifiedUnitRates) ? v.verifiedUnitRates : []).filter((key): key is string => typeof key === "string" && validRateKeys.has(key)));
+  const verifiedRateKeys = rateKeys.filter((key) => {
+    const rate = unitRates[key]; const expected = expectedRates.get(key);
+    return verified.has(key) && typeof rate === "number" && Number.isFinite(rate) && typeof expected === "number" && Math.abs(rate - expected) <= 1e-6;
+  });
+  const ratesReady = verifiedRateKeys.length === rateKeys.length;
   const reveal = (key: string) => {
-    if (disabled || !validExplorationKeys.has(key) || validRevealed.includes(key)) return;
+    if (disabled || !ratesReady || !validExplorationKeys.has(key) || validRevealed.includes(key)) return;
     onEvent?.({ control: "reveal", dir: "toward", state: { key } });
     onChange({ ...v, revealed: [...validRevealed, key] });
   };
-  const setNumeric = (raw: string) => {
+  const setUnitRate = (key: string, raw: string) => {
+    if (disabled || !validRateKeys.has(key)) return;
     const next = raw === "" ? "" : Number(raw);
-    const target = truth.answerNumber;
-    if (typeof next === "number" && typeof target === "number" && typeof v.numeric === "number") {
-      onEvent?.({ control: "numeric", dir: Math.abs(next - target) < Math.abs(v.numeric - target) ? "toward" : "away", state: { value: next } });
-    }
+    const nextStatus = { ...unitRateStatus }; delete nextStatus[key];
+    onChange({ ...v, unitRates: { ...unitRates, [key]: next }, verifiedUnitRates: verifiedRateKeys.filter((item) => item !== key), unitRateStatus: nextStatus });
+  };
+  const verifyUnitRate = (key: string) => {
+    if (disabled || !validRateKeys.has(key)) return;
+    const rate = unitRates[key]; const expected = expectedRates.get(key);
+    const correct = typeof rate === "number" && Number.isFinite(rate) && typeof expected === "number" && Math.abs(rate - expected) <= 1e-6;
+    onEvent?.({ control: "unit-rate", dir: correct ? "toward" : "away", state: { key, value: rate } });
+    onChange({ ...v, unitRates, verifiedUnitRates: correct ? [...new Set([...verifiedRateKeys, key])] : verifiedRateKeys.filter((item) => item !== key), unitRateStatus: { ...unitRateStatus, [key]: correct ? "correct" : "retry" } });
+  };
+  const setNumeric = (raw: string) => {
+    if (!ratesReady) return;
+    const next = raw === "" ? "" : Number(raw); const target = truth.answerNumber;
+    if (typeof next === "number" && typeof target === "number" && typeof v.numeric === "number") onEvent?.({ control: "numeric", dir: Math.abs(next - target) < Math.abs(v.numeric - target) ? "toward" : "away", state: { value: next } });
     onChange({ ...v, numeric: next });
   };
   const setChoice = (choiceId: string) => {
+    if (!ratesReady) return;
     const choice = spec.choices.find((c) => c.id === choiceId);
-    onEvent?.({ control: "choice", dir: choice && proportionalReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId } });
-    onChange({ ...v, choiceId });
+    onEvent?.({ control: "choice", dir: choice && proportionalReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId } }); onChange({ ...v, choiceId });
   };
   const correctChoice = spec.choices.find((choice) => proportionalReasoningChoiceCorrect(spec, choice));
-  const answerText = spec.answerMode === "numeric"
-    ? `${fmt(truth.answerNumber ?? NaN)}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}`
-    : correctChoice?.label ?? "the derived proportional claim";
+  const answerText = spec.answerMode === "numeric" ? `${fmt(truth.answerNumber ?? NaN)}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}` : correctChoice?.label ?? "the derived proportional claim";
   const showPipeline = ["predictOutput", "predictInput", "scaleRatio", "percentOf", "discount", "cheaperThenPredict"].includes(spec.task);
-  return (
-    <div className="grid gap-4">
-      <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
-        {truth.series.map((series) => (
-          <section key={series.id} className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label={series.label}>
-            <h4 className="font-extrabold">{series.label}</h4>
-            <div className="mt-2 overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
-                <thead><tr><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.xLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.yLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">Normalize</th></tr></thead>
-                <tbody>{series.pairs.map(([x,y],index) => {
-                  const key=`${series.id}:${index}`;
-                  const open=revealed.includes(key);
-                  return <tr key={key}>
-                    <td className="px-2 py-1.5 tabular-nums">{fmt(x)}</td>
-                    <td className="px-2 py-1.5 tabular-nums">{fmt(y)}</td>
-                    <td className="px-2 py-1.5"><button type="button" disabled={disabled} onClick={()=>reveal(key)}
-                      aria-label={`Normalize ${series.label} row ${index+1} to one ${spec.xLabel}`}
-                      className="pressable min-h-11 rounded-card border-2 border-sky/35 px-3 py-2 text-xs font-extrabold text-sky-ink disabled:opacity-45">
-                      {open ? `${fmt(y)} ÷ ${fmt(x)} = ${fmt(series.rates[index]!)}` : `Show ${spec.yLabel} per 1 ${spec.xLabel}`}
-                    </button></td>
-                  </tr>;
-                })}</tbody>
-              </table>
-            </div>
-            <p className="mt-2 text-xs font-semibold text-ink/65" aria-live="polite">
-              {series.pairs.every((_, index) => revealed.includes(`${series.id}:${index}`))
-                ? (series.proportional ? "The inspected row multipliers agree." : "The inspected row multipliers do not all agree.")
-                : `Inspect ${series.pairs.length - series.pairs.filter((_, index) => revealed.includes(`${series.id}:${index}`)).length} more row${series.pairs.length - series.pairs.filter((_, index) => revealed.includes(`${series.id}:${index}`)).length === 1 ? "" : "s"} before drawing a conclusion.`}
-            </p>
-          </section>
-        ))}
-      </div>
-      {showPipeline && (
-        <div className="rounded-2xl border border-ink/15 bg-ink/[0.03] p-3" aria-label="Proportional target chain">
-          <div className="flex flex-wrap gap-2">
-            {typeof spec.targetInput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.xLabel}: {fmt(spec.targetInput)}</span>}
-            {typeof spec.targetOutput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.yLabel}: {fmt(spec.targetOutput)}</span>}
-            {typeof spec.percent === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">percent stage: {fmt(spec.percent)}%</span>}
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {truth.stages.map((stage,index) => {
-              const key=`stage:${index}`; const open=revealed.includes(key);
-              return <button key={key} type="button" disabled={disabled} onClick={()=>reveal(key)}
-                aria-label={`Reveal proportional stage ${index+1}: ${stage.label}`}
-                className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">
-                {open ? (tone!=="info"&&stageRevealsAnswer(stage.value,truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index+1}: ${stage.label}`}
-              </button>;
-            })}
-          </div>
-        </div>
-      )}
-      <p className="text-sm font-bold text-ink/65" aria-live="polite">
-        {explorationProgress(validRevealed.length, spec.requiredExplorations, "proportional check", "completed")}
-      </p>
-      {spec.answerMode === "numeric" ? (
-        <label className="grid gap-1 font-bold">
-          <span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span>
-          <input type="number" inputMode="decimal" disabled={disabled} value={v.numeric ?? ""} onChange={(e)=>setNumeric(e.target.value)}
-            aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`}
-            className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
-        </label>
-      ) : (
-        <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">
-          {spec.choices.map((choice) => {
-            const picked=v.choiceId===choice.id;
-            return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>setChoice(choice.id)}
-              className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}>
-              <MathProse text={choice.label} />
-            </button>;
-          })}
-        </div>
-      )}
-      {tone === "info" && <GhostChip testid="prl-ghost">Correct proportional result: {answerText}</GhostChip>}
-    </div>
+  // S316. Same mastery-integrity bug McqW documents above: authored content overwhelmingly
+  // lists the correct proportional conclusion first, so rendering spec.choices unshuffled let a
+  // learner clear this step by always pressing the first button. Shuffle DISPLAY ORDER ONLY —
+  // evaluate.ts (proportionalReasoningLab case) looks the choice up by `choice.id`, never by
+  // index, so this cannot change which choice is correct or which feedback fires. Memoized on
+  // the seed + choice identity, matching McqW.
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [spec.choices, seed]
   );
+  return <div className="grid gap-4">
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Proportional quantity models">
+      {truth.series.map((series) => <section key={series.id} className="rounded-2xl border border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10" aria-label={series.label}>
+        <h4 className="font-extrabold">{series.label}</h4><div className="mt-2 overflow-x-auto"><table className="w-full border-collapse text-sm">
+          <thead><tr><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.xLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">{spec.yLabel}</th><th className="border-b border-ink/15 px-2 py-1 text-left">Normalize: enter unit rate</th></tr></thead>
+          <tbody>{series.pairs.map(([x, y], index) => {
+            const key = `${series.id}:${index}`; const rowVerified = verifiedRateKeys.includes(key); const status = unitRateStatus[key];
+            return <tr key={key}><td className="px-2 py-1.5 tabular-nums">{fmt(x)}</td><td className="px-2 py-1.5 tabular-nums">{fmt(y)}</td><td className="min-w-56 px-2 py-1.5"><div className="flex flex-wrap items-center gap-2">
+              <input type="number" inputMode="decimal" disabled={disabled} value={unitRates[key] ?? ""} onChange={(event) => setUnitRate(key, event.target.value)} aria-label={`Enter unit rate for ${series.label} row ${index + 1} in ${spec.yLabel} per 1 ${spec.xLabel}`} className="min-h-11 w-28 rounded-card border-2 border-ink/20 bg-white px-3 py-2 font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
+              <button type="button" disabled={disabled || typeof unitRates[key] !== "number" || !Number.isFinite(unitRates[key] as number)} onClick={() => verifyUnitRate(key)} aria-label={`Check unit rate for ${series.label} row ${index + 1}`} className="pressable min-h-11 rounded-card border-2 border-sky/35 px-3 py-2 text-xs font-extrabold text-sky-ink disabled:opacity-45">Check unit rate</button>
+            </div><p className={`mt-1 text-xs font-semibold ${rowVerified ? "text-leaf-ink" : status === "retry" ? "text-berry-ink" : "text-ink/65"}`} aria-live="polite">{rowVerified ? "Unit rate checked." : status === "retry" ? `Not yet. Divide ${fmt(y)} ${spec.yLabel} by ${fmt(x)} ${spec.xLabel}.` : `Enter ${spec.yLabel} per 1 ${spec.xLabel}.`}</p></td></tr>;
+          })}</tbody></table></div>
+      </section>)}
+    </div>
+    {showPipeline && <div className="rounded-2xl border border-ink/15 bg-ink/[0.03] p-3" aria-label="Proportional target chain"><div className="flex flex-wrap gap-2">
+      {typeof spec.targetInput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.xLabel}: {fmt(spec.targetInput)}</span>}{typeof spec.targetOutput === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">target {spec.yLabel}: {fmt(spec.targetOutput)}</span>}{typeof spec.percent === "number" && <span className="rounded-pill border border-ink/15 px-3 py-1.5 text-sm font-bold">percent stage: {fmt(spec.percent)}%</span>}
+    </div><div className="mt-3 flex flex-wrap gap-2">{truth.stages.map((stage, index) => { const key = `stage:${index}`; const open = revealed.includes(key); return <button key={key} type="button" disabled={disabled || !ratesReady} onClick={() => reveal(key)} aria-label={`Reveal proportional stage ${index + 1}: ${stage.label}`} className="pressable min-h-11 rounded-card border-2 border-leaf/35 px-3 py-2 text-sm font-extrabold text-leaf-ink disabled:opacity-45">{open ? (tone !== "info" && stageRevealsAnswer(stage.value, truth) ? `${stage.label}: ${STAGE_HELD}` : `${stage.label}: ${fmt(stage.value)}`) : `Build stage ${index + 1}: ${stage.label}`}</button>; })}</div></div>}
+    <p className="text-sm font-bold text-ink/65" aria-live="polite">{ratesReady ? "All unit rates are checked. Use the constant rate to solve the question." : `Unit-rate checks: ${verifiedRateKeys.length} of ${rateKeys.length} verified. Complete each Normalize row to unlock your answer.`}</p>
+    {spec.answerMode === "numeric" ? <label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit ? ` (${spec.answerUnit})` : ""}</span><input type="number" inputMode="decimal" disabled={disabled || !ratesReady} value={v.numeric ?? ""} onChange={(e) => setNumeric(e.target.value)} aria-label={`Enter answer${spec.answerUnit ? ` in ${spec.answerUnit}` : ""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" /></label> : <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the proportional conclusion">{orderedChoices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled || !ratesReady} aria-pressed={picked} onClick={() => setChoice(choice.id)} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>; })}</div>}
+    {tone === "info" && <GhostChip testid="prl-ghost">Correct proportional result: {answerText}</GhostChip>}
+  </div>;
 }
-
 
 /** placeValueTransformLab — one keyboard-complete place-value workspace. The source numbers stay
  * visible while derived stages are deliberately closed until the learner opens them. That prevents
  * the renderer from announcing the rounded value, quotient, exponent, or winning comparison before
  * the learner has inspected the relevant base-ten positions. */
 type PlaceValueTransformState={revealed?:string[];numeric?:number|"";choiceId?:string};
-function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TPlaceValueTransformLab>){
+function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TPlaceValueTransformLab>){
   const v=(value&&typeof value==="object"?value:{}) as PlaceValueTransformState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(placeValueTransformExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter((key)=>allowed.has(key)))];
   const truth=placeValueTransformTruth(spec);
@@ -8311,11 +8754,11 @@ function PlaceValueTransformLabW({spec,value,onChange,disabled,tone,onEvent}:WPr
       {spec.task==="placeExponent"&&<p className="mt-3 rounded-card bg-ink/[0.04] p-3 text-center font-extrabold">Locate the {placeValueExponentLabel(spec.targetExponent??0)} place on the base-ten ladder.</p>}
     </section>
     <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label={isExponentChain?"Inspect the exponent contributions":"Build the place-value reasoning chain"}>
-      {truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key);const stageTitle=isExponentChain?(index===0?"First factor group":`After group ${index+1}`):stage.label;return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-label={`Inspect stage ${index+1}: ${stageTitle}`} className="pressable min-h-12 rounded-card border-2 border-leaf/35 px-4 py-3 text-left text-sm font-extrabold text-leaf-ink disabled:opacity-45"><span className="block text-xs uppercase tracking-wide text-ink/60">{stageTitle}</span>{open?<span className="mt-1 block text-base tabular-nums">{stageBody(true,stage,truth,tone,"",undefined)}</span>:<span className="mt-1 block">Inspect this stage</span>}</button>})}
+      {truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key);const stageTitle=isExponentChain?(index===0?"First factor group":`After group ${index+1}`):stage.label;return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-label={`Inspect stage ${index+1}: ${accessibleMathText(stageTitle)}`} className="pressable min-h-12 rounded-card border-2 border-leaf/35 px-4 py-3 text-left text-sm font-extrabold text-leaf-ink disabled:opacity-45"><span className="block text-xs uppercase tracking-wide text-ink/60"><MathProse text={stageTitle} /></span>{open?<span className="mt-1 block text-base tabular-nums"><MathProse text={stageBody(true,stage,truth,tone,"",undefined)} includeArithmetic /></span>:<span className="mt-1 block">Inspect this stage</span>}</button>})}
     </div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, isExponentChain?"exponent stage":"base-ten stage", "inspected")}</p>
     {spec.answerMode==="numeric"?<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={(e)=>onChange({...v,numeric:e.target.value===""?"":Number(e.target.value)})} aria-label={isExponentChain?"Enter exponent answer":`Enter place-value answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>:
-      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the place-value conclusion">{spec.choices.map((choice)=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:placeValueTransformChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the place-value conclusion">{orderedChoices.map((choice)=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:placeValueTransformChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {tone==="info"&&<GhostChip testid="pvtl-ghost">Correct place-value result: {answerText}</GhostChip>}
   </div>;
 }
@@ -8376,30 +8819,115 @@ function PointSetDiagram({spec}:{spec:TPointSetReasoningLab}){const target=spec.
   const distinctXs=[...new Set(spec.sets.flatMap(set=>set.points.map(point=>point.x)))].sort((a,b)=>a-b);
   const keptXs:number[]=[];{let lastX1=-Infinity;for(const xv of distinctXs){const w=String(xv).length*11*0.72;const x0=sx(xv)-w/2;if(x0>=lastX1+4){keptXs.push(xv);lastX1=x0+w}}}
   return <svg viewBox="0 0 440 180" className="h-auto w-full" role="img" aria-label={`One-dimensional point sets from ${min} to ${max}. ${spec.sets.map(set=>`${set.label}: ${set.points.map(point=>point.x).join(", ")}`).join(". ")}.`}><rect x="1" y="1" width="438" height="178" rx="18" fill="currentColor" opacity=".03"/><line x1="35" y1="115" x2="405" y2="115" stroke="currentColor" strokeWidth="4"/>{spec.sets.map((set,row)=>set.points.map((point,index)=><circle key={`${set.id}-${point.id}`} cx={sx(point.x)} cy={100-row*35-(index%3)*7} r="7" fill="currentColor" opacity={row?0.55:1}/>))}{keptXs.map(xv=><text key={xv} x={sx(xv)} y="145" textAnchor="middle" fontSize="11" fontWeight="800">{xv}</text>)}<text x="220" y="170" textAnchor="middle" fontSize="13" fontWeight="900">{spec.xLabel}</text></svg>}
-function PointSetReasoningLabW({spec,value,onChange,disabled,tone}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open point-set stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this point-set state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: {answerText}</GhostChip>}</div>}
+function PointSetReasoningLabW({spec,value,onChange,disabled,tone,seed}:WProps<TPointSetReasoningLab>){const v=(value&&typeof value==="object"?value:{}) as PointSetReasoningState,allowed=new Set(pointSetReasoningExplorationKeys(spec)),revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))],truth=pointSetReasoningTruth(spec),reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onChange({...v,revealed:[...revealed,key]})},correctChoice=spec.choices.find(choice=>pointSetReasoningChoiceCorrect(spec,choice)),answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the point-set conclusion":"the completed point-set exploration";const orderedChoices=useMemo(()=>seededShuffle(spec.choices,seed??spec.choices.map(choice=>choice.id).join("|")),[seed,spec.choices]);return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><PointSetDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Point-set reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this point-set state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open point-set stage ${index+1}: ${accessibleMathText(stage.label)}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>onChange({...v,numeric:event.target.value===""?"":Number(event.target.value)})} aria-label={`Enter point-set answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the point-set conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>onChange({...v,choiceId:choice.id})} className={`pressable min-h-12 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this point-set exploration.</p>}{tone==="info"&&<GhostChip testid="psr-ghost">Correct point-set result: <MathProse text={answerText} includeArithmetic /></GhostChip>}</div>}
 
 /** geometricConstraintLab — six geometry domains rendered from one exact quantity/relation state. */
 type GeometricConstraintState={revealed?:string[];numeric?:number|"";choiceId?:string};
-function GeometricConstraintDiagram({spec}: {spec:TGeometricConstraintLab}){
+function GeometricConstraintDiagram({spec,tone,revealed=[]}: {spec:TGeometricConstraintLab;tone?:StageTone;revealed?:readonly string[]}){
   const W=440,H=250;
-  if(spec.task==="coordinateProof"&&spec.coordinateProof){const m=spec.coordinateProof,points=m.points;const xs=points.map(p=>p.x),ys=points.map(p=>p.y),minX=Math.min(-1,...xs),maxX=Math.max(1,...xs),minY=Math.min(-1,...ys),maxY=Math.max(1,...ys),pad=30,sx=(x:number)=>pad+(x-minX)/(maxX-minX||1)*(W-2*pad),sy=(y:number)=>H-pad-(y-minY)/(maxY-minY||1)*(H-2*pad);const byId=new Map(points.map(p=>[p.id,p]));return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate proof model ${m.kind}. ${points.map(p=>`${p.label} at ${p.x}, ${p.y}`).join(". ")}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/><line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="2" opacity=".65"/><line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke={PALETTE.tangerine} strokeWidth="2" opacity=".65"/>{m.segments?.map(([aId,bId],index)=>{const a=byId.get(aId),b=byId.get(bId);return a&&b?<line key={`${aId}-${bId}`} x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={index%2?PALETTE.berry:PALETTE.leaf} strokeWidth="4" strokeDasharray={index%2?"8 5":undefined}/>:null})}{m.segment&&(()=>{const a=byId.get(m.segment.a),b=byId.get(m.segment.b);return a&&b?<line x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>:null})()}{["triangleCertificate","symmetricPlacement","boxAdvantage","shoelaceArea","radicalPerimeter"].includes(m.kind)&&points.length>=3&&<polygon points={points.map(p=>`${sx(p.x)},${sy(p.y)}`).join(" ")} fill={PALETTE.leaf} fillOpacity=".10" stroke={PALETTE.berry} strokeWidth="4"/>}{m.circle&&<circle cx={sx(m.circle.h)} cy={sy(m.circle.k)} r={Math.abs(sx(m.circle.h+m.circle.r)-sx(m.circle.h))} fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/>}{m.line&&<line x1={sx(minX)} y1={sy(m.line.m*minX+m.line.b)} x2={sx(maxX)} y2={sy(m.line.m*maxX+m.line.b)} stroke={PALETTE.berry} strokeWidth="4"/>}{points.map(p=><g key={p.id}><circle cx={sx(p.x)} cy={sy(p.y)} r="7" fill={PALETTE.tangerine} stroke="white" strokeWidth="2"/><text x={sx(p.x)+9} y={sy(p.y)-9} fontSize="12" fontWeight="900">{p.label} ({p.x}, {p.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.sky}>horizontal differences</text><text x="15" y="125" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.tangerine} transform="rotate(-90 15 125)">vertical differences</text></svg>}
-  if(spec.task==="perimeterMissing"&&spec.perimeter){const m=spec.perimeter;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`${m.shape} perimeter model with total ${m.perimeter}, known sides ${m.knownSides.join(", ")}, and ${m.unknownMultiplicity} equal unknown side${m.unknownMultiplicity===1?"":"s"}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{m.shape==="triangle"?<polygon points="220,30 70,210 370,210" fill="none" stroke="currentColor" strokeWidth="5"/>:<rect x="90" y="45" width="260" height="160" rx="5" fill="none" stroke="currentColor" strokeWidth="5"/>}<text x="220" y="235" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text>{m.knownSides.map((side,index)=><text key={index} x={m.shape==="triangle"?[135,305,220][index%3]:[220,365,220,75][index%4]} y={m.shape==="triangle"?[115,115,200][index%3]:[38,130,225,130][index%4]} textAnchor="middle" fontSize="15" fontWeight="900">{side}</text>)}<text x="220" y="130" textAnchor="middle" fontSize="24" fontWeight="900">?</text></svg>}
-  if(spec.task==="coordinateArea"&&spec.coordinate){const pieces=spec.coordinate.pieces;const minX=Math.min(...pieces.map(p=>p.x)),maxX=Math.max(...pieces.map(p=>p.x+p.width)),minY=Math.min(...pieces.map(p=>p.y)),maxY=Math.max(...pieces.map(p=>p.y+p.height));const sx=(x:number)=>35+(x-minX)/(maxX-minX||1)*360,sy=(y:number)=>215-(y-minY)/(maxY-minY||1)*175;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate area model with ${pieces.length} labelled piece${pieces.length===1?"":"s"}; attached pieces add and notches subtract.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{Array.from({length:7},(_,i)=><line key={`v${i}`} x1={35+i*60} y1="25" x2={35+i*60} y2="215" stroke="currentColor" opacity=".08"/>)}{Array.from({length:5},(_,i)=><line key={`h${i}`} x1="35" y1={35+i*45} x2="395" y2={35+i*45} stroke="currentColor" opacity=".08"/>)}{pieces.map(piece=>piece.kind==="rectangle"?<g key={piece.id}><rect x={sx(piece.x)} y={sy(piece.y+piece.height)} width={Math.abs(sx(piece.x+piece.width)-sx(piece.x))} height={Math.abs(sy(piece.y)-sy(piece.y+piece.height))} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={(sx(piece.x)+sx(piece.x+piece.width))/2} y={(sy(piece.y)+sy(piece.y+piece.height))/2} textAnchor="middle" fontSize="13" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>:<g key={piece.id}><polygon points={`${sx(piece.x)},${sy(piece.y)} ${sx(piece.x+piece.width)},${sy(piece.y)} ${sx(piece.x)},${sy(piece.y+piece.height)}`} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={sx(piece.x+piece.width*.28)} y={sy(piece.y+piece.height*.28)} fontSize="12" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>)}</svg>}
-  if(spec.task==="scaledArea"&&spec.scale){const m=spec.scale,dw=m.drawingWidth??Math.sqrt(m.drawingArea??1),dh=m.drawingHeight??Math.sqrt(m.drawingArea??1);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Area dilation model. Drawing dimensions ${dw} by ${dh}; each length scales by ${m.lengthScale}, so area scales by ${m.lengthScale} squared.`}><rect x="45" y="75" width="110" height="80" fill="none" stroke="currentColor" strokeWidth="4"/><text x="100" y="180" textAnchor="middle" fontSize="13" fontWeight="900">drawing {geometricConstraintTruth(spec).stages.find(s=>s.key==="scale:drawing-area")?.value??"1 square unit"}</text><path d="M175 115 H255" stroke="currentColor" strokeWidth="3" markerEnd="url(#gcl-arrow)"/><defs><marker id="gcl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><text x="215" y="100" textAnchor="middle" fontSize="14" fontWeight="900">× {m.lengthScale} each way</text><rect x="280" y="45" width="120" height="140" fill="none" stroke="currentColor" strokeWidth="5"/><text x="340" y="210" textAnchor="middle" fontSize="13" fontWeight="900">area factor {m.lengthScale}²</text></svg>}
-  if(spec.task==="angleCrossing"&&spec.angle){const a=spec.angle;return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Two lines cross. One angle and its vertical partner are ${a.knownAngle} degrees; adjacent angles are ${180-a.knownAngle} degrees.`}><line x1="55" y1="215" x2="385" y2="35" stroke="currentColor" strokeWidth="5"/><line x1="55" y1="35" x2="385" y2="215" stroke="currentColor" strokeWidth="5"/><circle cx="220" cy="125" r="5" fill="currentColor"/><text x="220" y="70" textAnchor="middle" fontSize="18" fontWeight="900">{a.knownAngle}°</text><text x="220" y="200" textAnchor="middle" fontSize="18" fontWeight="900">vertical = {a.knownAngle}°</text><text x="340" y="130" textAnchor="middle" fontSize="15" fontWeight="900">adjacent = {180-a.knownAngle}°</text></svg>}
-  if(spec.task==="aaSimilarity"&&spec.aa){const a=spec.aa;const complete=(xs:readonly number[])=>xs.length===2?[...xs,180-xs[0]-xs[1]]:[...xs];const A=complete(a.anglesA),B=complete(a.anglesB);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Paired triangles. Triangle A angles ${A.join(", ")} degrees. Triangle B angles ${B.join(", ")} degrees.`}><polygon points="45,205 180,205 100,55" fill="none" stroke="currentColor" strokeWidth="5"/><polygon points="245,205 405,205 335,70" fill="none" stroke="currentColor" strokeWidth="5" strokeDasharray="10 5"/><text x="110" y="235" textAnchor="middle" fontSize="14" fontWeight="900">A: {A.join("°, ")}°</text><text x="325" y="235" textAnchor="middle" fontSize="14" fontWeight="900">B: {B.join("°, ")}°</text></svg>}
-  const p=spec.pythagorean;const areaA=p?.legAreaA??((p?.legA??3)**2),areaB=p?.legAreaB??((p?.legB??4)**2);return <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Right triangle with square areas ${areaA} and ${areaB} on the legs; the hypotenuse square has their combined area.`}><polygon points="120,200 120,70 300,200" fill="none" stroke="currentColor" strokeWidth="5"/><rect x="35" y="70" width="80" height="130" fill="none" stroke="currentColor" strokeWidth="3"/><rect x="120" y="202" width="180" height="38" fill="none" stroke="currentColor" strokeWidth="3"/><text x="75" y="140" textAnchor="middle" fontSize="16" fontWeight="900">area {areaA}</text><text x="210" y="228" textAnchor="middle" fontSize="16" fontWeight="900">area {areaB}</text><text x="260" y="105" textAnchor="middle" fontSize="15" fontWeight="900">hypotenuse square = {areaA+areaB}</text><path d="M120 184 h16 v16" fill="none" stroke="currentColor" strokeWidth="3"/></svg>;
+  const showDerived=tone==="info",opened=new Set(revealed),exploring=spec.answerMode==="explore";
+  if(spec.task==="coordinateProof"&&spec.coordinateProof){
+    const m=spec.coordinateProof,points=m.points;
+    const kindLabel:{[K in typeof m.kind]:string}={segmentPartition:"segment partition",lineRelation:"line relation",vectorRotation:"vector rotation",triangleCertificate:"triangle certificate",symmetricPlacement:"symmetric placement",radicalPerimeter:"exact-radical perimeter",boxAdvantage:"bounding-box area",shoelaceArea:"shoelace area",circleLineIntersection:"circle and line intersection",segmentLength:"segment length"};
+    if(m.kind==="radicalPerimeter"&&m.sideRadicands?.length){
+      const labels=m.sideRadicands.map(value=>`√${value}`);
+      return <svg data-testid="gcl-coordinate-proof" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Square perimeter model with side measures ${labels.join(", ")}. The exact perimeter remains to simplify.`}><rect x="105" y="30" width="230" height="190" fill={PALETTE.leaf} fillOpacity=".08" stroke={PALETTE.berry} strokeWidth="5"/><text x="220" y="24" textAnchor="middle" fontSize="15" fontWeight="900">{labels[0]}</text><text x="350" y="128" textAnchor="middle" fontSize="15" fontWeight="900">{labels[1]??labels[0]}</text><text x="220" y="242" textAnchor="middle" fontSize="15" fontWeight="900">{labels[2]??labels[0]}</text><text x="90" y="128" textAnchor="middle" fontSize="15" fontWeight="900">{labels[3]??labels[0]}</text></svg>;
+    }
+    const sourceXs=points.map(point=>point.x),sourceYs=points.map(point=>point.y);
+    if(m.circle){sourceXs.push(m.circle.h-m.circle.r,m.circle.h+m.circle.r);sourceYs.push(m.circle.k-m.circle.r,m.circle.k+m.circle.r)}
+    const minX=Math.min(-1,...sourceXs),maxX=Math.max(1,...sourceXs);
+    if(m.line)sourceYs.push(m.line.m*minX+m.line.b,m.line.m*maxX+m.line.b);
+    const minY=Math.min(-1,...sourceYs),maxY=Math.max(1,...sourceYs),pad=30,plotW=W-2*pad,plotH=H-2*pad,unit=Math.min(plotW/(maxX-minX||1),plotH/(maxY-minY||1)),x0=pad+(plotW-(maxX-minX)*unit)/2,y0=pad+(plotH-(maxY-minY)*unit)/2;
+    const sx=(x:number)=>x0+(x-minX)*unit,sy=(y:number)=>y0+(maxY-y)*unit,byId=new Map(points.map(point=>[point.id,point]));
+    const vectorOrigin=m.kind==="vectorRotation"?points.find(point=>point.x===0&&point.y===0)??points[0]:undefined,vectorEnd=vectorOrigin&&m.vector?points.find(point=>point.x===vectorOrigin.x+m.vector![0]&&point.y===vectorOrigin.y+m.vector![1]):undefined;
+    const visiblePoints=m.kind==="vectorRotation"&&!showDerived?points.filter(point=>point.id===vectorOrigin?.id||point.id===vectorEnd?.id):points;
+    const sourceDescription=[
+      visiblePoints.length?`Points ${visiblePoints.map(point=>`${point.label} at ${point.x}, ${point.y}`).join("; ")}`:"",
+      m.span?`given segment ${m.span.a} to ${m.span.b}`:"",
+      m.segment?`given partition ${m.segment.a} through ${m.segment.p} to ${m.segment.b}`:"",
+      m.vector?`given displacement (${m.vector[0]}, ${m.vector[1]})`:"",
+      m.circle?`circle centre (${m.circle.h}, ${m.circle.k}) and radius ${m.circle.r}`:"",
+      m.line?`line y = ${m.line.m}x + ${m.line.b}`:"",
+    ].filter(Boolean).join(". ");
+    const span=m.span?{a:byId.get(m.span.a),b:byId.get(m.span.b)}:undefined;
+    return <svg data-testid="gcl-coordinate-proof" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate proof model for ${kindLabel[m.kind]}. ${sourceDescription}.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/><line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="2" opacity=".65"/><line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke={PALETTE.tangerine} strokeWidth="2" opacity=".65"/>{m.segments?.map(([aId,bId],index)=>{const a=byId.get(aId),b=byId.get(bId);return a&&b?<line key={`${aId}-${bId}`} x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={index%2?PALETTE.berry:PALETTE.leaf} strokeWidth="4" strokeDasharray={index%2?"8 5":undefined}/>:null})}{m.segment&&(()=>{const a=byId.get(m.segment.a),b=byId.get(m.segment.b);return a&&b?<line x1={sx(a.x)} y1={sy(a.y)} x2={sx(b.x)} y2={sy(b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>:null})()}{span?.a&&span.b&&<line data-testid="gcl-span" x1={sx(span.a.x)} y1={sy(span.a.y)} x2={sx(span.b.x)} y2={sy(span.b.y)} stroke={PALETTE.leaf} strokeWidth="5"/>}{m.kind==="vectorRotation"&&vectorOrigin&&visiblePoints.filter(point=>point.id!==vectorOrigin.id).map((point,index)=><line data-testid="gcl-vector" key={point.id} x1={sx(vectorOrigin.x)} y1={sy(vectorOrigin.y)} x2={sx(point.x)} y2={sy(point.y)} stroke={index?PALETTE.berry:PALETTE.leaf} strokeWidth="5"/>)}{["triangleCertificate","symmetricPlacement","boxAdvantage","shoelaceArea"].includes(m.kind)&&points.length>=3&&<polygon points={points.map(point=>`${sx(point.x)},${sy(point.y)}`).join(" ")} fill={PALETTE.leaf} fillOpacity=".10" stroke={PALETTE.berry} strokeWidth="4"/>}{m.kind==="boxAdvantage"&&showDerived&&points.length>=3&&<rect data-testid="gcl-bounding-box" x={sx(Math.min(...points.map(point=>point.x)))} y={sy(Math.max(...points.map(point=>point.y)))} width={Math.abs(sx(Math.max(...points.map(point=>point.x)))-sx(Math.min(...points.map(point=>point.x))))} height={Math.abs(sy(Math.min(...points.map(point=>point.y)))-sy(Math.max(...points.map(point=>point.y))))} fill="none" stroke={PALETTE.tangerine} strokeWidth="3" strokeDasharray="8 5"/>}{m.circle&&<circle data-testid="gcl-circle" cx={sx(m.circle.h)} cy={sy(m.circle.k)} r={Math.abs(sx(m.circle.h+m.circle.r)-sx(m.circle.h))} fill={PALETTE.sky} fillOpacity=".08" stroke={PALETTE.sky} strokeWidth="4"/>}{m.line&&<line data-testid="gcl-line" x1={sx(minX)} y1={sy(m.line.m*minX+m.line.b)} x2={sx(maxX)} y2={sy(m.line.m*maxX+m.line.b)} stroke={PALETTE.berry} strokeWidth="4"/>}{visiblePoints.map(point=><g key={point.id}><circle cx={sx(point.x)} cy={sy(point.y)} r="7" fill={PALETTE.tangerine} stroke="white" strokeWidth="2"/><text x={sx(point.x)+9} y={sy(point.y)-9} fontSize="12" fontWeight="900">{point.label} ({point.x}, {point.y})</text></g>)}<text x="220" y="242" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.sky}>horizontal differences</text><text x="15" y="125" textAnchor="middle" fontSize="12" fontWeight="900" fill={PALETTE.tangerine} transform="rotate(-90 15 125)">vertical differences</text></svg>;
+  }
+  if(spec.task==="perimeterMissing"&&spec.perimeter){
+    const m=spec.perimeter;
+    if(m.shape==="triangle"){
+      const labels=[...m.knownSides,...Array.from({length:m.unknownMultiplicity},()=>"?")].slice(0,3);
+      return <svg data-testid="gcl-perimeter" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Triangle perimeter model with total ${m.perimeter}, known sides ${m.knownSides.join(", ")}, and ${m.unknownMultiplicity} equal unknown side${m.unknownMultiplicity===1?"":"s"}.`}><polygon points="220,30 70,210 370,210" fill="none" stroke="currentColor" strokeWidth="5"/>{labels.map((label,index)=><text key={index} x={[135,305,220][index]!} y={[115,115,200][index]!} textAnchor="middle" fontSize="16" fontWeight="900">{label}</text>)}<text x="220" y="242" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text></svg>;
+    }
+    const labels=m.unknownMultiplicity===2&&m.knownSides.length>=2?[String(m.knownSides[0]),"?",String(m.knownSides[1]),"?"]:Array.from({length:4},(_,index)=>m.knownSides[index]===undefined?"?":String(m.knownSides[index]));
+    return <svg data-testid="gcl-perimeter" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`${m.shape} perimeter model with total ${m.perimeter}. Opposite known sides ${m.knownSides.join(" and ")||"none"}; ${m.unknownMultiplicity} equal unknown sides are marked with question marks.`}><rect x="90" y="45" width="260" height="160" rx="5" fill="none" stroke="currentColor" strokeWidth="5"/>{labels.map((label,index)=><text key={index} x={[220,365,220,75][index]!} y={[38,130,225,130][index]!} textAnchor="middle" fontSize="16" fontWeight="900">{label}</text>)}<text x="220" y="135" textAnchor="middle" fontSize="14" fontWeight="900">Perimeter = {m.perimeter}</text></svg>;
+  }
+  if(spec.task==="coordinateArea"&&spec.coordinate){const pieces=spec.coordinate.pieces;const minX=Math.min(...pieces.flatMap(piece=>[piece.x,piece.x+piece.width])),maxX=Math.max(...pieces.flatMap(piece=>[piece.x,piece.x+piece.width])),minY=Math.min(...pieces.flatMap(piece=>[piece.y,piece.y+piece.height])),maxY=Math.max(...pieces.flatMap(piece=>[piece.y,piece.y+piece.height]));const sx=(x:number)=>35+(x-minX)/(maxX-minX||1)*360,sy=(y:number)=>215-(y-minY)/(maxY-minY||1)*175,pieceSummary=pieces.map(piece=>`${piece.operation} ${piece.label}, ${piece.kind==="rightTriangle"?"right triangle":"rectangle"}, from (${piece.x}, ${piece.y}) to (${piece.x+piece.width}, ${piece.y+piece.height})`).join(". ");return <svg data-testid="gcl-coordinate-area" viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate area model. ${pieceSummary}. Areas remain to calculate.`}><rect x="1" y="1" width={W-2} height={H-2} rx="18" fill="currentColor" opacity=".03"/>{Array.from({length:7},(_,i)=><line key={`v${i}`} x1={35+i*60} y1="25" x2={35+i*60} y2="215" stroke="currentColor" opacity=".08"/>)}{Array.from({length:5},(_,i)=><line key={`h${i}`} x1="35" y1={35+i*45} x2="395" y2={35+i*45} stroke="currentColor" opacity=".08"/>)}{pieces.map(piece=>piece.kind==="rectangle"?<g key={piece.id}><rect x={sx(piece.x)} y={sy(piece.y+piece.height)} width={Math.abs(sx(piece.x+piece.width)-sx(piece.x))} height={Math.abs(sy(piece.y)-sy(piece.y+piece.height))} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={(sx(piece.x)+sx(piece.x+piece.width))/2} y={(sy(piece.y)+sy(piece.y+piece.height))/2} textAnchor="middle" fontSize="13" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>:<g key={piece.id}><polygon points={`${sx(piece.x)},${sy(piece.y)} ${sx(piece.x+piece.width)},${sy(piece.y)} ${sx(piece.x)},${sy(piece.y+piece.height)}`} fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray={piece.operation==="subtract"?"9 6":undefined}/><text x={sx(piece.x+piece.width*.28)} y={sy(piece.y+piece.height*.28)} fontSize="12" fontWeight="900">{piece.operation==="subtract"?"subtract ":"add "}{piece.label}</text></g>)}<text x="35" y="235" textAnchor="middle" fontSize="11" fontWeight="800">x {minX}</text><text x="395" y="235" textAnchor="middle" fontSize="11" fontWeight="800">x {maxX}</text><text x="18" y="215" textAnchor="middle" fontSize="11" fontWeight="800">y {minY}</text><text x="18" y="40" textAnchor="middle" fontSize="11" fontWeight="800">y {maxY}</text></svg>}
+  if(spec.task==="scaledArea"&&spec.scale){
+    const m=spec.scale,drawingArea=m.drawingArea??((m.drawingWidth??1)*(m.drawingHeight??1)),factor=m.lengthScale*m.lengthScale,realArea=drawingArea*factor;
+    const drawingGiven=m.drawingWidth!==undefined&&m.drawingHeight!==undefined?`${m.drawingWidth} by ${m.drawingHeight}`:`area ${drawingArea}`;
+    const showFactor=showDerived||(exploring&&opened.has("scale:area-factor")),showReal=showDerived||(exploring&&opened.has("scale:real-area"));
+    const result=`area factor ${showFactor?factor:"left to calculate"}; real area ${showReal?realArea:"left to calculate"}`;
+    return <svg data-testid="gcl-diagram" data-derived-visible={showReal?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Area dilation model. Drawing ${drawingGiven}; each length uses scale factor ${m.lengthScale}. ${result}.`}><rect x="45" y="75" width="110" height="80" fill="none" stroke="currentColor" strokeWidth="4"/><text x="100" y="180" textAnchor="middle" fontSize="13" fontWeight="900">drawing {drawingGiven}</text><path d="M175 115 H255" stroke="currentColor" strokeWidth="3" markerEnd="url(#gcl-arrow)"/><defs><marker id="gcl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><text x="215" y="100" textAnchor="middle" fontSize="14" fontWeight="900">lengths × {m.lengthScale}</text><rect x="280" y="45" width="120" height="140" fill="none" stroke="currentColor" strokeWidth="5"/><text x="340" y="210" textAnchor="middle" fontSize="13" fontWeight="900">{showReal?`factor ${factor}; area ${realArea}`:showFactor?`factor ${factor}; area ?`:"real area ?"}</text></svg>;
+  }
+  if(spec.task==="angleCrossing"&&spec.angle){
+    const a=spec.angle,adjacent=180-a.knownAngle;
+    const showVertical=showDerived||(exploring&&opened.has("angle:vertical")),showAdjacent=showDerived||(exploring&&opened.has("angle:adjacent"));
+    return <svg data-testid="gcl-diagram" data-derived-visible={showVertical&&showAdjacent?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Two lines cross. One marked angle is ${a.knownAngle} degrees. The vertical angle is ${showVertical?`${a.knownAngle} degrees`:"left to determine"}; adjacent angles are ${showAdjacent?`${adjacent} degrees`:"left to determine"}.`}><line x1="55" y1="215" x2="385" y2="35" stroke="currentColor" strokeWidth="5"/><line x1="55" y1="35" x2="385" y2="215" stroke="currentColor" strokeWidth="5"/><circle cx="220" cy="125" r="5" fill="currentColor"/><text x="220" y="70" textAnchor="middle" fontSize="18" fontWeight="900">{a.knownAngle}°</text><text x="220" y="200" textAnchor="middle" fontSize="18" fontWeight="900">vertical = {showVertical?`${a.knownAngle}°`:"?"}</text><text x="340" y="130" textAnchor="middle" fontSize="15" fontWeight="900">adjacent = {showAdjacent?`${adjacent}°`:"?"}</text></svg>;
+  }
+  if(spec.task==="aaSimilarity"&&spec.aa){
+    const a=spec.aa,complete=(xs:readonly number[])=>xs.length===2?[...xs,180-xs[0]-xs[1]]:[...xs],showA=showDerived||(exploring&&opened.has("aa:complete-a")),showB=showDerived||(exploring&&opened.has("aa:complete-b")),shown=(xs:readonly number[],show:boolean)=>show?complete(xs).map(String):[...xs.map(String),...(xs.length===2?["?"]:[])],A=shown(a.anglesA,showA),B=shown(a.anglesB,showB);
+    return <svg data-testid="gcl-diagram" data-derived-visible={showA&&showB?"true":"false"} viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Paired triangles. Triangle A angles ${A.join(", ")} degrees. Triangle B angles ${B.join(", ")} degrees.${showA&&showB?" Completed angles are revealed.":" Missing angles and the similarity conclusion remain to determine."}`}><polygon points="45,205 180,205 100,55" fill="none" stroke="currentColor" strokeWidth="5"/><polygon points="245,205 405,205 335,70" fill="none" stroke="currentColor" strokeWidth="5" strokeDasharray="10 5"/><text x="110" y="235" textAnchor="middle" fontSize="14" fontWeight="900">A: {A.join("°, ")}°</text><text x="325" y="235" textAnchor="middle" fontSize="14" fontWeight="900">B: {B.join("°, ")}°</text></svg>;
+  }
+  const p=spec.pythagorean!;
+  const truth=geometricConstraintTruth(spec),areaA=p.legAreaA??(p.legA!==undefined?p.legA*p.legA:undefined),areaB=p.legAreaB??(p.legB!==undefined?p.legB*p.legB:undefined);
+  const givenA=p.legAreaA!==undefined?`square area ${p.legAreaA}`:p.legA!==undefined?`leg length ${p.legA}`:"unknown leg";
+  const givenB=p.legAreaB!==undefined?`square area ${p.legAreaB}`:p.legB!==undefined?`leg length ${p.legB}`:"unknown leg";
+  const showLegSquares=showDerived||(exploring&&opened.has("pyth:leg-squares")),targetStage=p.target==="length"||p.target==="legLength"?"pyth:square-root":p.target==="cSquared"?"pyth:identity":"pyth:identity",showTarget=showDerived||(exploring&&opened.has(targetStage));
+  const shownA=showLegSquares&&areaA!==undefined?`area ${areaA}`:p.legAreaA!==undefined?`area ${p.legAreaA}`:p.legA!==undefined?`side ${p.legA}`:"?";
+  const shownB=showLegSquares&&areaB!==undefined?`area ${areaB}`:p.legAreaB!==undefined?`area ${p.legAreaB}`:p.legB!==undefined?`side ${p.legB}`:"?";
+  const targetText=showTarget?(p.target==="legLength"?`missing leg = ${truth.answerNumber}`:p.target==="length"?`hypotenuse = ${truth.answerNumber}`:p.target==="cSquared"?`hypotenuse square = ${truth.answerNumber}`:p.target==="areaMeaning"?"squared terms are square areas":"hypotenuse is opposite the right angle"):(p.hypotenuse!==undefined?`hypotenuse ${p.hypotenuse}; target ?`:"target ?");
+  return <svg data-testid="gcl-diagram" data-derived-visible={showTarget?"true":"false"} viewBox={`0 0 ${W} 310`} className="h-auto w-full" role="img" aria-label={`Right triangle with two square tiles on its legs, not to scale. Given ${givenA}; ${givenB}${p.hypotenuse!==undefined?`; hypotenuse length ${p.hypotenuse}`:""}. ${showTarget?`Revealed result: ${targetText}.`:"Derived square areas and the target remain to calculate."}`}><polygon points="155,145 155,45 295,145" fill="none" stroke="currentColor" strokeWidth="5"/><rect data-testid="gcl-leg-square-a" x="55" y="45" width="100" height="100" fill={PALETTE.sky} fillOpacity=".08" stroke="currentColor" strokeWidth="3"/><rect data-testid="gcl-leg-square-b" x="155" y="145" width="140" height="140" fill={PALETTE.leaf} fillOpacity=".08" stroke="currentColor" strokeWidth="3"/><text x="105" y="100" textAnchor="middle" fontSize="16" fontWeight="900">{shownA}</text><text x="225" y="220" textAnchor="middle" fontSize="16" fontWeight="900">{shownB}</text><text x="315" y="75" textAnchor="middle" fontSize="14" fontWeight="900">{targetText}</text><path d="M155 129 h16 v16" fill="none" stroke="currentColor" strokeWidth="3"/><text x="375" y="298" textAnchor="middle" fontSize="11" fontWeight="800">not to scale</text></svg>;
 }
-function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TGeometricConstraintLab>){
-  const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;const allowed=new Set(geometricConstraintExplorationKeys(spec));const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];const truth=geometricConstraintTruth(spec);const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"toward",state:{key}});onChange({...v,revealed:[...revealed,key]})};const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec}/></section><div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open geometric constraint stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this geometric constraint.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div><p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "geometric state", "inspected")}</p>{spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}{spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:geometricConstraintChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}{spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}{tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}</div>;
+const GEOMETRIC_CONSTRAINT_HELD="Open — finish this conclusion yourself, then check your answer.";
+function GeometricConstraintLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TGeometricConstraintLab>){
+  const v=(value&&typeof value==="object"?value:{}) as GeometricConstraintState;
+  const allowed=new Set(geometricConstraintExplorationKeys(spec));
+  const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
+  const truth=geometricConstraintTruth(spec);
+  const answerStageKeys=new Set(geometricConstraintAnswerStageKeys(spec));
+  const orderedChoices=useMemo(
+    ()=>seededShuffle(spec.choices,seed??spec.choices.map(choice=>choice.id).join("|")),
+    [seed,spec.choices]
+  );
+  const reveal=(key:string)=>{if(disabled||!allowed.has(key)||revealed.includes(key))return;onEvent?.({control:"reveal",dir:"neutral",state:{key}});onChange({...v,revealed:[...revealed,key]})};
+  const correctChoice=spec.choices.find(choice=>geometricConstraintChoiceCorrect(spec,choice));
+  const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="choice"?correctChoice?.label??truth.answerClaim??"the geometric constraint conclusion":"the completed geometry exploration";
+  return <div className="grid gap-4">
+    <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+    <section className="rounded-2xl border-2 border-ink/15 bg-white p-3 shadow-sm dark:bg-ink/10"><GeometricConstraintDiagram spec={spec} tone={tone} revealed={revealed}/></section>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Geometry constraint reasoning stages">{truth.stages.map((stage,index)=>{
+      const open=revealed.includes(stage.key),authored=spec.authoredStages[index],held=spec.answerMode!=="explore"&&tone!=="info"&&(answerStageKeys.has(stage.key)||stageRevealsAnswer(stage.value,truth));
+      const title=held?"Complete the conclusion":authored?.title??stage.label;
+      const body=!open?"Closed — activate to inspect this geometric constraint.":held?GEOMETRIC_CONSTRAINT_HELD:authored?.body??stage.value;
+      return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${accessibleMathText(title)}: ${accessibleMathText(String(body))}`:`Open geometric constraint stage ${index+1}: ${accessibleMathText(title)}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={title} /></span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite"><MathProse text={String(body)} includeArithmetic /></span>{open&&authored&&!held&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>;
+    })}</div>
+    <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length,spec.requiredExplorations,"geometric state","inspected")}</p>
+    {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value,next=raw===""?"":Number(raw);if(typeof next==="number")onEvent?.({control:"numeric",dir:"neutral",state:{value:next}});onChange({...v,numeric:next});}} aria-label={`Enter geometry answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
+    {spec.answerMode==="choice"&&<><div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the geometry conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:"neutral",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div><p className="sr-only" aria-live="polite">{v.choiceId?`Selected ${accessibleMathText(spec.choices.find(choice=>choice.id===v.choiceId)?.label??v.choiceId)}.`:"No geometry conclusion selected."}</p></>}
+    {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required geometric states to complete this exploration.</p>}
+    {tone==="info"&&<GhostChip testid="gcl-ghost">Correct geometry result: {answerText}</GhostChip>}
+  </div>;
 }
 
 /** exactNumberLab — one exact ordered-number workbench. Every task keeps its own learner action,
  * while the displayed stages and grading share the same rational/radical truth state. */
 type ExactNumberState={revealed?:string[];numeric?:number|"";choiceId?:string;relation?:"lt"|"eq"|"gt"};
-function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExactNumberLab>){
+function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TExactNumberLab>){
   const v=(value&&typeof value==="object"?value:{}) as ExactNumberState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(exactNumberExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
   const truth=exactNumberTruth(spec);
@@ -8409,8 +8937,8 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
   const answerText=spec.answerMode==="numeric"?`${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`:spec.answerMode==="relation"?(truth.answerRelation==="lt"?"<":truth.answerRelation==="gt"?">":"="):correctChoice?.label??truth.answerClaim??"the exact-number conclusion";
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums">{sourceText}</p></section>
-    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open exact-number stage ${index+1}: ${stage.label}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">{stageBody(open,stage,truth,tone,"Closed — activate to derive this exact state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
+    <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact number source state"><p className="text-xs font-black uppercase tracking-wide text-ink/55">Exact source</p><p className="mt-1 break-words text-lg font-black tabular-nums"><MathProse text={sourceText} includeArithmetic /></p></section>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact number reasoning stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this exact state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} onClick={()=>reveal(stage.key)} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open exact-number stage ${index+1}: ${accessibleMathText(stage.label)}`} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "exact state", "inspected")}</p>
     {/* S205K — the magnitude rail: exactNumberLab's manipulation surface for numeric mode.
       * The candidate answer becomes a thing the learner DRAGS along a number line where the
@@ -8456,7 +8984,7 @@ function ExactNumberLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TExa
       </div>;
     })()}
     {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter exact-number answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
-    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact-number conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:exactNumberChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact-number conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:exactNumberChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {spec.answerMode==="relation"&&<div className="grid grid-cols-3 gap-2" role="group" aria-label="Choose the exact relation">{([['lt','<'],['eq','='],['gt','>']] as const).map(([id,label])=><button key={id} type="button" disabled={disabled} aria-pressed={v.relation===id} onClick={()=>onChange({...v,relation:id})} className={`pressable min-h-14 rounded-card border-2 text-2xl font-black ${v.relation===id?"border-sky bg-sky/10":"border-ink/20 hover:border-sky/60"}`}>{label}</button>)}</div>}
     {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/8 p-3 text-sm font-bold">Open the required exact states to complete this exploration.</p>}
     {tone==="info"&&<GhostChip testid="enl-ghost">Correct exact-number result: {answerText}</GhostChip>}
@@ -8485,8 +9013,12 @@ type AffineRelationshipState={revealed?:string[];numeric?:number|"";choiceId?:st
  *   · The candidate point, the source cards, every answer control and the reveal ghost are
  *     unchanged. No new affordance was added this window.
  */
-function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WProps<TAffineRelationshipLab>){
+function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent,seed}:WProps<TAffineRelationshipLab>){
   const v=(value&&typeof value==="object"?value:{}) as AffineRelationshipState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed=new Set(affineRelationshipExplorationKeys(spec));
   const revealed=[...new Set((Array.isArray(v.revealed)?v.revealed:[]).filter(key=>allowed.has(key)))];
   const truth=affineRelationshipTruth(spec);
@@ -8539,7 +9071,7 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="grid gap-3 rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Affine relationship source representations">
-      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label}</p><p className="mt-1 font-extrabold">{line.sourceText}</p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
+      <div className="grid gap-2 sm:grid-cols-2">{spec.lines.map((line,index)=><article key={line.id} className="rounded-card border border-ink/15 p-3"><p className="text-xs font-black uppercase tracking-wide text-ink/55">{line.label}</p><p className="mt-1 font-extrabold"><MathProse text={line.sourceText} includeArithmetic /></p>{line.tablePoints.length>0&&<p className="mt-1 text-xs font-bold text-ink/60">Points: {line.tablePoints.map(([x,y])=>`(${x}, ${y})`).join(" · ")}</p>}<p className="sr-only">Line style {index+1} of {spec.lines.length}.</p></article>)}</div>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Coordinate plot of ${spec.lines.map(line=>line.label).join(", ")}; each line also has a distinct dash pattern and text label.`}>
         <rect x="0" y="0" width={W} height={H} rx="16" fill="currentColor" opacity="0.03"/>
         {xMin<=0&&xMax>=0&&<line x1={sx(0)} y1={pad} x2={sx(0)} y2={H-pad} stroke="currentColor" opacity="0.35"/>}{yMin<=0&&yMax>=0&&<line x1={pad} y1={sy(0)} x2={W-pad} y2={sy(0)} stroke="currentColor" opacity="0.35"/>}
@@ -8578,10 +9110,10 @@ function AffineRelationshipLabW({spec,value,onChange,disabled,tone,onEvent}:WPro
         })()}
       <AxisCaptions w={W} h={H} /></svg>
     </section>
-    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index];return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}`:`Open affine stage ${index+1}: ${stage.label}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold">{authored?.title??stage.label}</span><span className="mt-1 block text-sm font-semibold text-ink/70">{stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body)}</span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}</button>})}</div>
+    <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Affine derivation stages">{truth.stages.map((stage,index)=>{const open=revealed.includes(stage.key),authored=spec.authoredStages[index],body=stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body);return <button key={stage.key} type="button" disabled={disabled} aria-expanded={open} aria-label={open?`${accessibleMathText(stage.label)}: ${accessibleMathText(body)}`:`Open affine stage ${index+1}: ${accessibleMathText(stage.label)}`} onClick={()=>reveal(stage.key)} className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open?"border-leaf/45 bg-leaf/8":"border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}><span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index+1}</span><span className="mt-1 block font-extrabold"><MathProse text={authored?.title??stage.label} /></span><span className="mt-1 block text-sm font-semibold text-ink/70"><MathProse text={body} includeArithmetic /></span>{open&&authored&&!(tone!=="info"&&stageRevealsAnswer(stage.value,truth))&&<span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}</button>})}</div>
     <p className="text-sm font-bold text-ink/65" aria-live="polite">{explorationProgress(revealed.length, spec.requiredExplorations, "affine stage", "inspected")}</p>
     {spec.answerMode==="numeric"&&<label className="grid gap-1 font-bold"><span>Your answer{spec.answerUnit?` (${spec.answerUnit})`:""}</span><input type="number" inputMode="decimal" disabled={disabled} value={v.numeric??""} onChange={event=>{const raw=event.target.value;const next=raw===""?"":Number(raw);const target=truth.answerNumber;if(typeof next==="number"&&typeof target==="number"){const prevNumeric=typeof v.numeric==="number"?v.numeric:null;onEvent?.({control:"numeric",dir:prevNumeric===null||Math.abs(next-target)<Math.abs(prevNumeric-target)?"toward":"away",state:{value:next}});}onChange({...v,numeric:next});}} aria-label={`Enter affine answer${spec.answerUnit?` in ${spec.answerUnit}`:""}`} className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10"/></label>}
-    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the affine conclusion">{spec.choices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:affineRelationshipChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
+    {spec.answerMode==="choice"&&<div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the affine conclusion">{orderedChoices.map(choice=>{const picked=v.choiceId===choice.id;return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked} onClick={()=>{onEvent?.({control:"choice",dir:affineRelationshipChoiceCorrect(spec,choice)?"toward":"away",state:{choiceId:choice.id}});onChange({...v,choiceId:choice.id})}} className={`pressable min-h-14 rounded-card border-2 px-4 py-3 text-left text-sm font-extrabold ${picked?"border-sky bg-sky/10 text-sky-ink":"border-ink/20 hover:border-sky/60 dark:border-paper/25"} disabled:opacity-45`}><MathProse text={choice.label} /></button>})}</div>}
     {spec.answerMode==="point"&&<fieldset className="grid gap-2"><legend className="font-bold">Enter the ordered pair (x, y)</legend><div className="grid grid-cols-2 gap-2"><label className="grid gap-1 text-sm font-bold"><span>x-coordinate</span><input type="number" inputMode="decimal" disabled={disabled} value={point[0]} onChange={event=>setPoint(0,event.target.value)} aria-label="Enter affine x-coordinate" className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold dark:bg-ink/10"/></label><label className="grid gap-1 text-sm font-bold"><span>y-coordinate</span><input type="number" inputMode="decimal" disabled={disabled} value={point[1]} onChange={event=>setPoint(1,event.target.value)} aria-label="Enter affine y-coordinate" className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold dark:bg-ink/10"/></label></div></fieldset>}
     {spec.answerMode==="explore"&&<p className="rounded-card border border-leaf/30 bg-leaf/5 p-3 text-sm font-bold">Open the required stages to complete this parameter exploration.</p>}
     {tone==="info"&&<GhostChip testid="arl-ghost">Correct affine result: {answerText}</GhostChip>}
@@ -8597,8 +9129,12 @@ type QuotientReasoningState = {
   choiceId?: string;
   fraction?: { whole?: number | ""; num?: number | ""; den?: number | "" };
 };
-function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TQuotientReasoningLab>) {
+function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TQuotientReasoningLab>) {
   const v = (value && typeof value === "object" ? value : {}) as QuotientReasoningState;
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const allowed = new Set(quotientReasoningExplorationKeys(spec));
   const revealed = [...new Set((Array.isArray(v.revealed) ? v.revealed : []).filter((key) => allowed.has(key)))];
   const truth = quotientReasoningTruth(spec);
@@ -8633,23 +9169,23 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <section className="rounded-2xl border-2 border-ink/15 bg-white p-4 shadow-sm dark:bg-ink/10" aria-label="Exact quotient source">
       <p className="text-xs font-black uppercase tracking-wide text-ink/55">Source state</p>
-      <p className="mt-1 break-words text-2xl font-black tabular-nums">{source}</p>
-      
+      <p className="mt-1 break-words text-2xl font-black tabular-nums"><MathProse text={source} includeArithmetic /></p>
+
     </section>
     <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Exact quotient derivation stages">
       {truth.stages.map((stage, index) => {
         const open = revealed.includes(stage.key);
         const authored = spec.authoredStages[index];
         return <button key={stage.key} type="button" disabled={disabled} onClick={() => reveal(stage.key)}
-          aria-label={open ? `${stage.label}: ${stageBody(true,stage,truth,tone,"",undefined)}` : `Open quotient stage ${index + 1}: ${stage.label}`}
+          aria-label={open ? `${accessibleMathText(stage.label)}: ${accessibleMathText(stageBody(true,stage,truth,tone,"",undefined))}` : `Open quotient stage ${index + 1}: ${accessibleMathText(stage.label)}`}
           aria-expanded={open}
           className={`pressable min-h-14 rounded-card border-2 p-3 text-left ${open ? "border-leaf/45 bg-leaf/8" : "border-sky/35 bg-sky/5 hover:border-sky/70"} disabled:opacity-45`}>
           <span className="block text-xs font-black uppercase tracking-wide text-ink/55">Stage {index + 1}</span>
-          <span className="mt-1 block font-extrabold">{stage.label}</span>
+          <span className="mt-1 block font-extrabold"><MathProse text={stage.label} /></span>
           <span className="mt-1 block text-sm font-semibold text-ink/70" aria-live="polite">
-            {stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body)}
+            <MathProse text={stageBody(open,stage,truth,tone,"Closed — activate to derive this state.",authored?.body)} includeArithmetic />
           </span>
-          {open && authored && !(tone!=="info"&&stageRevealsAnswer(stage.value,truth)) && <span className="mt-1 block text-xs font-bold text-ink/55">Exact state: {stage.value}</span>}
+          {open && authored && !(tone!=="info"&&stageRevealsAnswer(stage.value,truth)) && <span className="mt-1 block text-xs font-bold text-ink/55">Exact state: <MathProse text={String(stage.value)} includeArithmetic /></span>}
         </button>;
       })}
     </div>
@@ -8671,7 +9207,7 @@ function QuotientReasoningLabW({ spec, value, onChange, disabled, tone, onEvent 
         className="min-h-12 rounded-card border-2 border-ink/20 bg-white px-4 py-2 text-lg font-extrabold tabular-nums focus:border-sky focus:outline-none focus:ring-2 focus:ring-sky/25 dark:bg-ink/10" />
     </label>}
     {spec.answerMode === "choice" && <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the exact quotient conclusion">
-      {spec.choices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
+      {orderedChoices.map((choice) => { const picked = v.choiceId === choice.id; return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
         onClick={() => {
               onEvent?.({ control: "choice", dir: quotientReasoningChoiceCorrect(spec, choice) ? "toward" : "away", state: { choiceId: choice.id } });
               onChange({ ...v, choiceId: choice.id });
@@ -8748,8 +9284,12 @@ function GraphStoryPlot({ spec, kinds, labels, ghost = false, testid }: {
   );
 }
 
-function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraphStoryLab>) {
+function GraphStoryLabW({ spec, value, onChange, disabled, tone, seed }: WProps<TGraphStoryLab>) {
   const selectedChoice = spec.mode === "read" && typeof value === "string" ? value : "";
+  const orderedChoices = useMemo(
+    () => seededShuffle(spec.choices, seed ?? spec.choices.map((choice) => choice.id).join("|")),
+    [seed, spec.choices]
+  );
   const segmentIds = spec.mode === "build" && value && typeof value === "object" && Array.isArray((value as {segmentIds?:unknown}).segmentIds)
     ? (value as {segmentIds:string[]}).segmentIds : [];
   const bankById = new Map(spec.bank.map((segment) => [segment.id, segment]));
@@ -8771,7 +9311,7 @@ function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraph
       </div>
       {spec.mode === "read" ? (
         <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Choose the claim supported by the graph">
-          {spec.choices.map((choice) => {
+          {orderedChoices.map((choice) => {
             const picked = selectedChoice === choice.id;
             return <button key={choice.id} type="button" disabled={disabled} aria-pressed={picked}
               onClick={() => onChange(choice.id)}
@@ -8821,13 +9361,19 @@ function GraphStoryLabW({ spec, value, onChange, disabled, tone }: WProps<TGraph
  * neutral. Nothing is graded until Check, so a wrong marker position is an allowed, visible state. */
 function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead>) {
   const picked = value && typeof (value as { picked?: number }).picked === "number" ? (value as { picked: number }).picked : null;
-  const ticks = Array.from({ length: spec.scaleMax + 1 }, (_, i) => i);
-  const W = 340, rowH = 26;
+  const answerTicks = Array.from({ length: spec.scaleMax + 1 }, (_, i) => i);
+  const barSteps = Math.ceil(spec.scaleMax / spec.unitValue);
+  const barTicks = Array.from({ length: barSteps + 1 }, (_, i) => i);
+  const W = 340, barTop = 24, barBase = barTop + barSteps * 12, barH = barBase + 42;
+  const barY = (step: number) => barBase - step * 12;
+  const title = spec.title ?? `${spec.categoryLabel} ${spec.mode === "bar" ? "bar chart" : spec.mode === "tally" ? "tally chart" : "picture graph"}`;
+  const valueAxisLabel = spec.valueAxisLabel ?? `Number of ${spec.unitNounPlural}`;
   const set = (n: number) => { if (!disabled) onChange({ picked: n }); };
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <div className="mx-auto w-full max-w-md rounded-2xl border border-ink/10 bg-white p-3">
+        <p className="mb-1 text-center text-sm font-extrabold text-ink">{title}</p>
         <p className="mb-2 text-sm font-extrabold text-ink/70">{spec.categoryLabel}</p>
         {spec.mode === "tally" ? (
           // Tally marks in five-groups: four verticals, the fifth a diagonal gate. Real strokes,
@@ -8884,25 +9430,36 @@ function GraphReadW({ spec, value, onChange, disabled, tone }: WProps<TGraphRead
             )}
           </div>
         ) : (
-          <svg viewBox={`0 0 ${W} ${(spec.scaleMax + 1) * 12 + 16}`} className="w-full" role="img"
-            aria-label={`Bar graph for ${spec.categoryLabel}: the bar reaches ${spec.drawn} on the scale, each gridline standing for ${spec.unitValue}.`}>
-            {ticks.map((t) => (
+          <svg viewBox={`0 0 ${W} ${barH}`} className="w-full" role="img"
+            aria-label={`${title}. ${valueAxisLabel} from 0 to ${barSteps * spec.unitValue}. ${spec.categoryLabel} reaches ${spec.drawn * spec.unitValue} ${spec.unitNounPlural}.`}>
+            <text x={W / 2} y={12} fontSize="11" fontWeight="800" textAnchor="middle" fill={PALETTE.ink}>{title}</text>
+            {barTicks.map((t) => (
               <g key={t}>
-                <line x1={34} y1={8 + (spec.scaleMax - t) * 12} x2={W - 8} y2={8 + (spec.scaleMax - t) * 12}
+                <line data-testid="gread-grid" x1={48} y1={barY(t)} x2={W - 8} y2={barY(t)}
                   stroke={PALETTE.ink} strokeOpacity={t % 5 === 0 ? 0.3 : 0.12} strokeWidth="1" />
-                <text x={28} y={11 + (spec.scaleMax - t) * 12} fontSize="9" fontWeight="700" textAnchor="end"
-                  fill={PALETTE.ink} fillOpacity=".6">{t}</text>
+                <line data-testid="gread-tick" x1={44} y1={barY(t)} x2={48} y2={barY(t)} stroke={PALETTE.ink} strokeWidth="1.4" />
+                <text x={40} y={barY(t) + 3} fontSize="9" fontWeight="700" textAnchor="end"
+                  fill={PALETTE.ink} fillOpacity=".7">{t * spec.unitValue}</text>
               </g>
             ))}
-            <rect x={70} y={8 + (spec.scaleMax - spec.drawn) * 12} width={90} height={spec.drawn * 12}
+            <line x1={48} y1={barTop} x2={48} y2={barBase} stroke={PALETTE.ink} strokeWidth="1.6" />
+            <line x1={48} y1={barBase} x2={W - 8} y2={barBase} stroke={PALETTE.ink} strokeWidth="1.6" />
+            <text x={12} y={(barTop + barBase) / 2} transform={`rotate(-90 12 ${(barTop + barBase) / 2})`} fontSize="9" fontWeight="700" textAnchor="middle" fill={PALETTE.ink}>{valueAxisLabel}</text>
+            <rect x={78} y={barY(spec.drawn)} width={90} height={spec.drawn * 12}
               fill={PALETTE.ink} fillOpacity=".8" rx={2} />
+            <text x={123} y={barBase + 15} fontSize="10" fontWeight="700" textAnchor="middle" fill={PALETTE.ink}>{spec.categoryLabel}</text>
           </svg>
+        )}
+        {spec.mode === "picture" && (
+          <p data-testid="gread-key" className="mt-1 text-center text-xs font-bold text-ink/70">
+            Key: each {spec.icon} = {spec.unitValue} {spec.unitValue === 1 ? spec.unitNoun : spec.unitNounPlural}
+          </p>
         )}
       </div>
       {/* The value scale: one 44px-plus target per number, so a G2 thumb can hit it. */}
       <div className="flex flex-wrap justify-center gap-1.5" role="group"
         aria-label={`Choose how many ${spec.unitNounPlural} the graph shows`}>
-        {ticks.map((n) => {
+        {answerTicks.map((n) => {
           const on = picked === n;
           return (
             <button key={n} type="button" disabled={disabled} onClick={() => set(n)} aria-pressed={on}
@@ -9124,7 +9681,7 @@ function EvalOrderW({ spec, value, onChange, disabled, tone }: WProps<TEvalOrder
       <div
         className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-ink/10 px-3 py-4"
         role="group"
-        aria-label={`Expression: ${reading}`}
+        aria-label={`Expression: ${accessibleMathText(reading)}`}
       >
         {tokens.map((t, i) =>
           isEvalOp(t) ? (
@@ -9404,10 +9961,10 @@ function DoubleNumberLineW({ spec, value, onChange, disabled, tone, onEvent }: W
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img"
-        aria-label={`Paired lines; your entry at the marked tick is ${fmt(top)}.`}>
-        <line x1={pad - 8} y1={topY} x2={W - pad + 8} y2={topY} stroke={PALETTE.sky} strokeWidth={2} />
-        <line x1={pad - 8} y1={botY} x2={W - pad + 8} y2={botY} stroke={PALETTE.tangerine} strokeWidth={2} />
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="mx-auto w-full max-w-md" role="img"
+        aria-label={`Paired number lines run from smaller values on the left to larger values on the right; your entry at the marked tick is ${fmt(top)}.`}>
+        <NumberLineAxis x1={pad - 8} x2={W - pad + 8} y={topY} color={PALETTE.sky} testId="dnl-top-axis" />
+        <NumberLineAxis x1={pad - 8} x2={W - pad + 8} y={botY} color={PALETTE.tangerine} testId="dnl-bottom-axis" />
         <text x={4} y={10} fontSize={9} fontWeight={800} fill={PALETTE.sky}>{spec.topLabel}</text>
         <text x={4} y={botY + 34} fontSize={9} fontWeight={800} fill={PALETTE.tangerine}>{spec.bottomLabel}</text>
         {ticks.map((t) => {
@@ -9475,6 +10032,45 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
     onChange({ m: nm, b: nb });
   };
   const fmt = (n: number) => String(Math.round(n * 100) / 100);
+  const title = spec.title ?? "Scatter plot with line of fit";
+  const xAxisLabel = spec.xAxisLabel ?? "x";
+  const yAxisLabel = spec.yAxisLabel ?? "y";
+  const pointSummary = spec.points.map(([px, py]) => `(${fmt(px)}, ${fmt(py)})`).join(", ");
+  /* S317 (bv-05-03 fail-close, `reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl`
+   * S247-BV-bv-05-03-OLS-SUPERSESSION). `mse` above (line ~9792) sums each squared residual and
+   * DIVIDES BY `spec.points.length` — that is the MEAN of the squared residuals, not their sum,
+   * and `evaluate.ts`'s `scatterFit` case computes and grades the identical mean-squared formula
+   * against `spec.tolerance`. The old visible readout called this quantity "miss" with no unit —
+   * neither "mean" nor "sum" — while every scatterFit lesson's learner-facing text (e.g.
+   * bv-05-03's "their squared sum, 0.70, is the smallest possible") talks about the SUM of squared
+   * residuals (SSE), a different number (SSE = MSE × n). Relabelling "miss" as literally "SSE"
+   * would be false — the formula computed and graded here is the mean, not the sum — so per the
+   * signed rationale's own reopenCondition ("names its displayed quantity as mean squared
+   * residual... or displays SSE consistently") the fix taken is to NAME the metric correctly
+   * (mean squared residual / MSE) rather than change what is computed or graded. The math is
+   * unchanged: `mse`, `mseOf`, and every `setMB`/`evaluate.ts` call below and in evaluate.ts are
+   * byte-identical to before this comment.
+   *
+   * Per-point residuals (visible already as the thin berry whiskers in the SVG below) are now
+   * spoken too, so the accessible description carries the same residual/metric state a sighted
+   * learner reads off the picture — the reopenCondition's other ask ("SVG/state accessibility
+   * description communicates the data points, residual evidence, and current scored fit
+   * metric"). */
+  const residuals = spec.points.map(([px, py]) => py - (m * px + b));
+  const residualSummary = spec.points
+    .map(([px, py], i) => `(${fmt(px)}, ${fmt(py)}) residual ${residuals[i] >= 0 ? "+" : "−"}${fmt(Math.abs(residuals[i]))}`)
+    .join(", ");
+  const withinTolerance = mse <= spec.tolerance;
+  // S237 (accessible/visible parity). spec.tolerance is the literal grading threshold
+  // (evaluate.ts's scatterFit case: mse <= spec.tolerance), and nothing on screen ever prints it —
+  // a sighted learner only sees `sf-mse-readout` turn leaf-green at pass, with no numeral to read
+  // past that color cue. Speaking "the target tolerance of 2.2" here handed screen-reader-only
+  // users the exact pass threshold sighted learners never get: the class of leak
+  // widgets.accessibleParity.s237.test.tsx exists to catch. The pass/fail STATE stays spoken —
+  // that is the color cue's verbal equivalent, and dropping it would leave blind learners worse
+  // off than sighted ones, which the gate also forbids — only the withheld NUMBER is removed.
+  const metricSummary =
+    `Mean squared residual (MSE): ${fmt(mse)}, ${withinTolerance ? "at or under" : "above"} the target tolerance.`;
 
   // Direct manipulation: two handles RIDE the trend line, accent-matched to
   // their sliders — the sky handle LIFTS the whole line (changes b, slope
@@ -9516,8 +10112,13 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
    * the reference line is still drawn where the scale is read from).
    */
   const TICK_FS = 9;
-  const xTicks = niceTicks(spec.xMin, spec.xMax, { target: 4, ends: true });
-  const yTicks = niceTicks(spec.yMin, spec.yMax, { target: 4, ends: true });
+  const containsZeroX = spec.xMin <= 0 && spec.xMax >= 0;
+  const containsZeroY = spec.yMin <= 0 && spec.yMax >= 0;
+  const showsOrigin = containsZeroX && containsZeroY;
+  const withOrigin = (ticks: number[], hasZero: boolean) =>
+    [...new Set(hasZero ? [...ticks, 0] : ticks)].sort((a, b) => a - b);
+  const xTicks = withOrigin(niceTicks(spec.xMin, spec.xMax, { target: 4, ends: true }), containsZeroX);
+  const yTicks = withOrigin(niceTicks(spec.yMin, spec.yMax, { target: 4, ends: true }), containsZeroY);
   const axisX = sx(Math.min(Math.max(0, spec.xMin), spec.xMax));
   const axisY = sy(Math.min(Math.max(0, spec.yMin), spec.yMax));
   const xTickY = sy(spec.yMin) + 14;
@@ -9529,36 +10130,41 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
       { x: sx(v), y: xTickY, anchor: "middle" },
       { x: sx(v) + 3, y: xTickY, anchor: "end" },
       { x: sx(v) - 3, y: xTickY, anchor: "start" }
-    ], [s238Box("x", W - 4, H - 4, "end", 11), s238Box("y", 4, 12, "start", 11)])
+    ], [s238Box(xAxisLabel, W - 4, H - 4, "end", 11), s238Box(yAxisLabel, 4, 12, "start", 11)])
   }));
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="sf-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`Scatter with a trend line, y equals ${fmt(m)} x plus ${fmt(b)}.`}>
+        role="img" aria-label={`${title}. ${xAxisLabel} from ${fmt(spec.xMin)} to ${fmt(spec.xMax)}; ${yAxisLabel} from ${fmt(spec.yMin)} to ${fmt(spec.yMax)}. Points: ${pointSummary}. Current line: y equals ${fmt(m)} x ${b >= 0 ? "plus" : "minus"} ${fmt(Math.abs(b))}. Residuals: ${residualSummary}. ${metricSummary}`}>
         <style>{`.sf-line{transition:none}@media (prefers-reduced-motion: no-preference){.sf-line{transition:all .16s ease-out}}`}</style>
-        {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
-        {integers(spec.yMin, spec.yMax).map((g) => <line key={`y${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.06} />)}
+        <g data-testid="sf-minor-grid" aria-hidden="true">
+          {integers(spec.xMin, spec.xMax).map((g) => <line key={`x${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.055} strokeWidth={0.7} />)}
+          {integers(spec.yMin, spec.yMax).map((g) => <line key={`y${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.055} strokeWidth={0.7} />)}
+        </g>
+        <g data-testid="sf-major-grid" aria-hidden="true">
+          {xTicks.map((g) => <line key={`xm${g}`} x1={sx(g)} y1={sy(spec.yMin)} x2={sx(g)} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.13} strokeWidth={0.9} />)}
+          {yTicks.map((g) => <line key={`ym${g}`} x1={sx(spec.xMin)} y1={sy(g)} x2={sx(spec.xMax)} y2={sy(g)} stroke={PALETTE.ink} strokeOpacity={0.13} strokeWidth={0.9} />)}
+        </g>
         <g data-testid="sf-ticks" aria-hidden="true">
-          <line x1={sx(spec.xMin)} y1={axisY} x2={sx(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-          <line x1={axisX} y1={sy(spec.yMin)} x2={axisX} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
+          <line data-testid="sf-x-axis" x1={sx(spec.xMin)} y1={axisY} x2={sx(spec.xMax)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
+          <line data-testid="sf-y-axis" x1={axisX} y1={sy(spec.yMin)} x2={axisX} y2={sy(spec.yMax)} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
+          <path data-testid="sf-axis-arrows" d={`M ${sx(spec.xMax)} ${axisY} l -6 -3 M ${sx(spec.xMax)} ${axisY} l -6 3 M ${axisX} ${sy(spec.yMax)} l -3 6 M ${axisX} ${sy(spec.yMax)} l 3 6`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={1.35} />
           {xTickSeats.map(({ v, seat }) => (
             <Fragment key={`xt${v}`}>
-              <line x1={sx(v)} y1={sy(spec.yMin)} x2={sx(v)} y2={sy(spec.yMin) + 4} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-              <text x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              <line data-testid="sf-x-tick" x1={sx(v)} y1={axisY - 3.5} x2={sx(v)} y2={axisY + 3.5} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.15} />
+              {!(showsOrigin && v === 0) && <text data-testid="sf-x-tick-value" x={seat.x} y={seat.y} textAnchor={seat.anchor} fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.75}>{tickText(v)}</text>}
             </Fragment>
           ))}
           {yTicks.map((v) => (
             <Fragment key={`yt${v}`}>
-              <line x1={sx(spec.xMin)} y1={sy(v)} x2={sx(spec.xMin) + 4} y2={sy(v)} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.2} />
-              {/* Anchored INSIDE the left edge: the widest authored y value is "140", and outside
-                  the 18-unit pad that label would start at x = −4 and lose its first digit. */}
-              <text x={sx(spec.xMin) + 6} y={sy(v) - 3} textAnchor="start" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.7}>{tickText(v)}</text>
+              <line data-testid="sf-y-tick" x1={axisX - 3.5} y1={sy(v)} x2={axisX + 3.5} y2={sy(v)} stroke={PALETTE.ink} strokeOpacity={0.55} strokeWidth={1.15} />
+              <text data-testid="sf-y-tick-value" x={sx(spec.xMin) + 6} y={sy(v) - 3} textAnchor="start" fontSize={TICK_FS} fontWeight={700} fill={PALETTE.ink} fillOpacity={0.75}>{tickText(v)}</text>
             </Fragment>
           ))}
-        </g>
-        {/* Reveal ghost: the least-squares line, dashed — the canonical member
+        </g>        {/* Reveal ghost: the least-squares line, dashed — the canonical member
             of evaluate's accept set (mse ≤ tolerance). Residual whiskers stay
             attached to the learner's line so the contrast reads as "your tilt
             vs the balancing tilt", not as a replacement. */}
@@ -9574,7 +10180,7 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
             <g data-testid="scf-ghost" aria-hidden="true">
               <line x1={sx(spec.xMin)} y1={sy(gm * spec.xMin + gb)} x2={sx(spec.xMax)} y2={sy(gm * spec.xMax + gb)}
                 stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="7 5" />
-              <text x={sx(spec.xMax) - 4} y={sy(gm * spec.xMax + gb) - 6} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>best fit</text>
+              <text x={sx(spec.xMax) - 4} y={Math.max(12, Math.min(H - 12, sy(gm * spec.xMax + gb) - 6))} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>best fit</text>
             </g>
           );
         })()}
@@ -9592,10 +10198,23 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
             <circle className="mt-drag-hit" data-testid="sf-drag-m" cx={sx(xB)} cy={sy(m * xB + b)} r={16} aria-hidden="true" {...dragTilt.handleProps} />
           </>
         )}
-      <AxisCaptions w={W} h={H} /></svg>
+      <AxisCaptions w={W} h={H} x={xAxisLabel} y={yAxisLabel} /></svg>
+      <p data-testid="sf-visible-points" className="text-center text-xs font-bold leading-relaxed text-ink/65">
+        Plotted points: {pointSummary}
+      </p>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         y = {fmt(m)}x {b >= 0 ? "+" : "−"} {fmt(Math.abs(b))}
-        <span className={`ml-3 text-sm ${mse <= spec.tolerance ? "text-leaf-ink" : "text-ink/70"}`}>miss = {fmt(mse)}</span>
+        <span data-testid="sf-mse-readout" className={`ml-3 text-sm ${withinTolerance ? "text-leaf-ink" : "text-ink/70"}`}>
+          mean squared residual (MSE) = {fmt(mse)}
+        </span>
+      </p>
+      {/* S317 — the residual/metric state visually associated with the picture above (the berry
+          whiskers) as actual text, not only inside the on-demand a11y panel: a sighted learner
+          already reads "miss/MSE" and the whisker lengths off the SVG without opening anything,
+          so a non-visual learner gets the same residual values and pass/fail state here, always
+          present, right under the readout it describes. */}
+      <p data-testid="sf-residual-readout" className="text-center text-xs font-bold leading-relaxed text-ink/65">
+        Residuals: {residualSummary}
       </p>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>slope m = <span className="tabular-nums text-ink">{fmt(m)}</span></span>
@@ -9711,6 +10330,8 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
   const markedNum = ms.reduce((a, c, i) => a + c * spec.values[i], 0);
   const maxStack = Math.max(...given);
   const lbl = (i: number) => dotPlotLabel(spec.values[i], spec.denominator);
+  const title = spec.title ?? "Line plot";
+  const axisLabel = spec.axisLabel ?? "Value";
   const toggle = (i: number, k: number) => {
     if (disabled) return;
     // Tapping the k-th X marks up through it; tapping the top marked X unmarks it.
@@ -9722,13 +10343,14 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
       <div
         className="mx-auto w-full max-w-sm rounded-2xl border border-ink/10 bg-white px-3 pb-2 pt-3"
         role="group"
-        aria-label={`Line plot: ${spec.values.map((v, i) => `${given[i]} X above ${lbl(i)}`).join(", ")}. Tap X's to count them.`}
+        aria-label={`${title}. ${axisLabel}: ${spec.values.map((v, i) => `${given[i]} X above ${lbl(i)}`).join(", ")}. Tap X's to count them.`}
       >
+        <p className="mb-1 text-center text-sm font-extrabold text-ink">{title}</p>
         <div className="grid" style={{ gridTemplateColumns: `repeat(${spec.values.length}, 1fr)` }}>
           {spec.values.map((v, i) => (
             <div
               key={v}
-              className={`flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg pb-1 ${
+              className={`flex flex-col-reverse items-center justify-start gap-0.5 rounded-lg border-l border-ink/10 pb-1 ${
                 tone === "info" && i === ask && ms[i] !== given[i] ? "outline-dashed outline-2 outline-tangerine" : ""
               }`}
               data-testid={tone === "info" && i === ask && ms[i] !== given[i] ? "dpr-ghost" : undefined}
@@ -9757,9 +10379,13 @@ function DotPlotReadW({ spec, value, onChange, disabled, tone }: WProps<TDotPlot
         </div>
         <div className="grid border-t-2 border-ink" style={{ gridTemplateColumns: `repeat(${spec.values.length}, 1fr)` }}>
           {spec.values.map((v, i) => (
-            <span key={v} className="pt-1 text-center text-sm font-extrabold tabular-nums text-ink/80">{lbl(i)}</span>
+            <span key={v} className="pt-0 text-center text-sm font-extrabold tabular-nums text-ink/80">
+              <span data-testid="dpr-tick" className="mx-auto block h-2 w-px bg-ink" aria-hidden="true" />
+              {lbl(i)}
+            </span>
           ))}
         </div>
+        <p className="mt-1 text-center text-xs font-bold text-ink/70">{axisLabel}</p>
       </div>
       <p className="text-center text-base font-extrabold tabular-nums" aria-live="polite">
         counted: {markedCount}
@@ -9785,21 +10411,27 @@ function DotPlotBuildW({ spec, value, onChange, disabled, tone }: WProps<TDotPlo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 300, H = 190, pad = 24, baseY = H - 26;
+  const W = 320, H = 220, pad = 32, baseY = H - 42;
   const sx = linScale(Math.min(...spec.values), Math.max(...spec.values), pad, W - pad);
   const gap = 15, dotR = 5.5;
+  const title = spec.title ?? "Dot plot";
+  const axisLabel = spec.axisLabel ?? "Value";
+  const lbl = (i: number) => dotPlotLabel(spec.values[i], spec.denominator);
   const setCount = (i: number, v: number) => onChange(cs.map((c, j) => (j === i ? v : c)));
 
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Dot plot: ${spec.values.map((v, i) => `${v} has ${cs[i]}`).join(", ")}.`}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`${title}. ${axisLabel}: ${spec.values.map((v, i) => `${lbl(i)} has ${cs[i]} dots`).join(", ")}.`}>
         <style>{`.dp-dot{transition:none}@media (prefers-reduced-motion: no-preference){.dp-dot{transition:opacity .12s ease-out}}`}</style>
-        <line x1={pad - 6} y1={baseY} x2={W - pad + 6} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <text data-testid="dp-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
+        <line x1={pad} y1={baseY} x2={W - pad} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <path data-testid="dp-arrow" d={`M ${pad} ${baseY} l 7 -4 M ${pad} ${baseY} l 7 4 M ${W - pad} ${baseY} l -7 -4 M ${W - pad} ${baseY} l -7 4`} fill="none" stroke={PALETTE.ink} strokeWidth={1.5} />
         {spec.values.map((v, i) => (
           <g key={v}>
-            <line x1={sx(v)} y1={baseY - 3} x2={sx(v)} y2={baseY + 3} stroke={PALETTE.ink} strokeWidth={1.5} />
-            <text x={sx(v)} y={baseY + 16} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{v}</text>
+            <line data-testid="dp-grid" x1={sx(v)} y1={24} x2={sx(v)} y2={baseY} stroke={PALETTE.ink} strokeOpacity={0.1} />
+            <line data-testid="dp-tick" x1={sx(v)} y1={baseY - 4} x2={sx(v)} y2={baseY + 4} stroke={PALETTE.ink} strokeWidth={1.5} />
+            <text x={sx(v)} y={baseY + 16} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{lbl(i)}</text>
             {Array.from({ length: cs[i] }, (_, k) => (
               <circle className="dp-dot" key={k} cx={sx(v)} cy={baseY - dotR - 2 - k * gap} r={dotR} fill={PALETTE.sky} />
             ))}
@@ -9825,17 +10457,18 @@ function DotPlotBuildW({ spec, value, onChange, disabled, tone }: WProps<TDotPlo
           </g>
         ))}
         {tone === "info" && !cs.every((c, i) => c === spec.target[i]) && (
-          <text data-testid="dpx-target-note" aria-hidden="true" x={W - pad} y={14} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
+          <text data-testid="dpx-target-note" aria-hidden="true" x={W - pad} y={28} textAnchor="end" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>
             dashed = target height
           </text>
         )}
+        <text x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{axisLabel}</text>
       </svg>
       <div className="grid gap-2">
         {spec.values.map((v, i) => (
           <label key={v} className="grid grid-cols-[3.5rem_1fr] items-center gap-2 text-sm font-bold text-ink/70">
-            <span>at {v}</span>
+            <span>at {lbl(i)}</span>
             <input type="range" min={0} max={spec.maxPerValue} step={1} value={cs[i]} disabled={disabled}
-              aria-label={`dots above ${v}`} aria-valuetext={`${cs[i]} at ${v}`}
+              aria-label={`dots above ${lbl(i)}`} aria-valuetext={`${cs[i]} at ${lbl(i)}`}
               onChange={(e) => setCount(i, Number(e.target.value))} className="h-11 w-full accent-sky" />
           </label>
         ))}
@@ -9855,10 +10488,25 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 320, H = 130, pad = 22, midY = 58;
+  // S241 (post-interaction). axisY was H-30: with the tick numerals at axisY+16 (their box
+  // reaching axisY+18.8) and the axis caption anchored at H-3 (its box starting at H-12.8), the
+  // two rows are only H-30+18.8 vs H-12.8 apart — a constant 1.6-unit overlap at every axis, for
+  // every authored value, wherever a nice tick's numeral happens to land under the centred
+  // caption (dm-01-01's "80" under "Value" is one instance of many). H-36 buys the tick row the
+  // clearance it was missing without moving the caption, the plot (midY-relative) or the drag
+  // math (onDrag here reads only vx, never axisY — widgets.drag.test.tsx's boxPlot cases are
+  // untouched by this).
+  const W = 320, H = 190, pad = 30, midY = 90, axisY = H - 36;
   const sx = linScale(spec.axisMin, spec.axisMax, pad, W - pad);
   const boxL = sx(Math.min(cur.q1, cur.q3)), boxR = sx(Math.max(cur.q1, cur.q3));
-  const rows: Array<[keyof typeof start, string]> = [["min", "minimum"], ["q1", "first quartile Q1"], ["med", "median"], ["q3", "third quartile Q3"], ["max", "maximum"]];
+  const rows: Array<[keyof typeof start, string]> = [["min", "set minimum"], ["q1", "set Q1 lower quartile"], ["med", "set median"], ["q3", "set Q3 upper quartile"], ["max", "set maximum"]];
+  const title = spec.title ?? "Box plot";
+  const axisLabel = spec.axisLabel ?? "Value";
+  const axisTicks = niceTicks(spec.axisMin, spec.axisMax, { target: 6, ends: true });
+  const landmarks: Array<{ key: keyof typeof start; short: string }> = [
+    { key: "min", short: "min" }, { key: "q1", short: "Q1" }, { key: "med", short: "median" },
+    { key: "q3", short: "Q3" }, { key: "max", short: "max" },
+  ];
   const set = (k: keyof typeof start, v: number) => onChange({ ...cur, [k]: v });
 
   // WS-C (S239): the FIVE-NUMBER SKELETON is the learner's object — whisker caps, box edges and
@@ -9903,14 +10551,26 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
           the image should describe the SHAPE that is drawn. So this now speaks box-plot geometry
           (box, centre line, whiskers) and reports the same five numbers, while reusing none of the
           control names. Honest, standard vocabulary, and no collision. */}
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`Box-and-whisker plot on an axis from ${spec.axisMin} to ${spec.axisMax}. The box runs ${Math.min(cur.q1, cur.q3)} to ${Math.max(cur.q1, cur.q3)}, its centre line at ${cur.med}, with whiskers reaching ${cur.min} and ${cur.max}.`}>
-        <line x1={pad - 6} y1={H - 18} x2={W - pad + 6} y2={H - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
-        {[spec.axisMin, Math.round((spec.axisMin + spec.axisMax) / 2), spec.axisMax].map((t) => (
+      <p className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl" role="img" aria-label={`${title}. ${axisLabel} from ${spec.axisMin} to ${spec.axisMax}. Minimum ${cur.min}; Q1 lower quartile ${cur.q1}; median ${cur.med}; Q3 upper quartile ${cur.q3}; maximum ${cur.max}.`}>
+        {axisTicks.map((t) => (
           <g key={t}>
-            <line data-testid="bp-tick" x1={sx(t)} y1={H - 18} x2={sx(t)} y2={H - 13} stroke={PALETTE.ink} strokeOpacity={0.45} strokeWidth={1.5} />
-            <text x={sx(t)} y={H - 5} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{t}</text>
+            <line data-testid="bp-grid" x1={sx(t)} y1={38} x2={sx(t)} y2={axisY} stroke={PALETTE.ink} strokeOpacity={0.1} />
+            <line data-testid="bp-tick" x1={sx(t)} y1={axisY - 4} x2={sx(t)} y2={axisY + 4} stroke={PALETTE.ink} strokeOpacity={0.65} strokeWidth={1.5} />
+            <text x={sx(t)} y={axisY + 16} fontSize={10} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.68}>{tickText(t)}</text>
           </g>
         ))}
+        <line x1={pad} y1={axisY} x2={W - pad} y2={axisY} stroke={PALETTE.ink} strokeWidth={1.5} />
+        <path data-testid="bp-arrow" d={`M ${pad} ${axisY} l 7 -4 M ${pad} ${axisY} l 7 4 M ${W - pad} ${axisY} l -7 -4 M ${W - pad} ${axisY} l -7 4`} fill="none" stroke={PALETTE.ink} strokeWidth={1.5} />
+        {landmarks.map(({ key, short }, index) => {
+          const seat = pad + (index * (W - 2 * pad)) / 4;
+          return (
+            <g key={`label-${key}`} data-testid="bp-landmark-label">
+              <line x1={seat} y1={30} x2={sx(cur[key])} y2={midY - 18} stroke={PALETTE.ink} strokeOpacity={0.3} />
+              <text x={seat} y={24} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink}>{short} {cur[key]}</text>
+            </g>
+          );
+        })}
         {/* whiskers */}
         <line x1={sx(cur.min)} y1={midY} x2={boxL} y2={midY} stroke={PALETTE.ink} strokeWidth={1.5} />
         <line x1={boxR} y1={midY} x2={sx(cur.max)} y2={midY} stroke={PALETTE.ink} strokeWidth={1.5} />
@@ -9939,6 +10599,7 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
             );
           })()}
         {!disabled && <rect className="mt-drag-hit" data-testid="bpl-drag" x={pad - 10} y={midY - 26} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
+        <text x={W / 2} y={H - 3} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{axisLabel}</text>
       </svg>
       {/* (c) These rows printed the bare key — "min q1 med q3 max" — and no number. The five values
           the learner is setting appeared NOWHERE in visible text: not on the sliders, not on the
@@ -9961,11 +10622,37 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
 /* ---------------- AreaModel (fixed grid counting OR width × height construction) ---------------- */
 
 /* ---------------- DistributionCompareLab (standardized gap ↔ visible overlap) ---------------- */
-function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TDistributionCompareLab>) {
+function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEvent, seed }: WProps<TDistributionCompareLab>) {
   const gap = distributionGapUnits(spec);
   const overlap = distributionOverlapFraction(gap);
   const selectedMeasure = spec.mode === "measure" && typeof value === "number" ? value : null;
   const selectedJudge = spec.mode === "judge" && typeof value === "string" ? value : null;
+  /* S243 choice-order canary. The authored corpus puts the supported conclusion first in all nine
+   * distributionCompareLab judge moments. Shuffle DISPLAY ORDER only, using stable option IDs and
+   * the question seed, so position cannot leak correctness while grading/feedback keep using IDs.
+   * S320-A3: measure choices carry the SAME defect (20 of 21 authored instances put the correct
+   * choice at index 1) — evaluate.ts grades measure mode strictly by `choice.value` (never
+   * position, see evaluate.ts's "distributionCompareLab" case), so there is no ordered-semantics
+   * argument for leaving these unshuffled; each button already prints its own value/label
+   * regardless of position. Shuffle DISPLAY ORDER only, keyed by value, mirroring orderedJudgeOptions. */
+  const orderedJudgeOptions = useMemo(
+    () => spec.mode === "judge"
+      ? seededShuffle(
+          spec.judgeOptions,
+          `distributionCompareLab:judge:${seed ?? spec.judgeOptions.map((option) => option.id).join("|")}`
+        )
+      : [],
+    [seed, spec]
+  );
+  const orderedMeasureChoices = useMemo(
+    () => spec.mode === "measure"
+      ? seededShuffle(
+          spec.measureChoices,
+          `distributionCompareLab:measure:${seed ?? spec.measureChoices.map((choice) => String(choice.value)).join("|")}`
+        )
+      : [],
+    [seed, spec]
+  );
   const W = 520, H = 230, left = 34, right = W - 34, baseY = 150;
   const span = Math.max(7, gap + 6);
   const xMin = -span / 2, xMax = span / 2;
@@ -10025,17 +10712,38 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
               by the evidence itself, not only by feedback text (the placeCompare precedent: the
               model illuminates the deciding structure at error). Computed from the same gap/overlap
               every other part of this widget uses — no second derivation. Nothing here marks WHICH
-              option is correct at retry; the quantities are structure, not the answer. */}
+              option is correct at retry; the quantities are structure, not the answer.
+
+              CL-P1-012 fix (S329): "overlap ≈ N%" used to sit at y=baseY-74=76, directly below the
+              gap bracket (the two ticks at y:[58,70] plus the y=64 bar). Modelled with
+              textBoxes.testkit.ts's exact box (0.72em/char, 0.98em ascent, 0.28em descent), that
+              label's box was y:[65.2..79.1] — its top 4.8 units into the ticks' y-range — and for
+              every authored gap <= ~1 variability-unit (the SMALL-gap "overlap dominates" judge
+              cases this bracket exists to teach: sp-02-02/i1 gap 0.4, sp-02-02/k2 + rem-soj-k gap
+              0.3, sp-02-03/k3 gap 0.2, si-03-03/i1 gap 1 — 5 of the current corpus's 10 judge
+              instances across sp-02-01/sp-02-02/sp-02-03/si-03-03) the means sit close enough that
+              BOTH tick lines fall inside the label's wide x-span too, so the ticks visually pierce
+              the text (Liang-Barsky segment/rect check: true for both ticks at every gap <= 1,
+              false for gap >= 2.5 — verified against every gapUnits value in the current authored
+              corpus, not just the two synthetic widgets.labelCollision.s237.test.tsx cases). There
+              is no gap between the bracket (bottom 70) and the hatch fill it would otherwise sit
+              against (top 82) big enough to hold an 11px label without touching one or the other,
+              so the label moves ABOVE the bracket instead, stacked over "gap ≈" with a 6+ unit
+              margin on every side (see reports/closure/S329_CLOSURE_CL2.md) — clear of the ticks,
+              clear of "gap ≈", and clear of the hatch, for every authored gap. Visual stacking
+              order carries no accessibility meaning here: the svg root's own aria-label already
+              states "gap ... apart. ... overlap is about ...%" in that order regardless of where
+              either <text> paints. */}
           {spec.mode === "judge" && (tone === "error" || tone === "info") && (
             <g data-testid="dcl-evidence">
               <line x1={X(aMean)} y1={64} x2={X(bMean)} y2={64} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
               <line x1={X(aMean)} y1={58} x2={X(aMean)} y2={70} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
               <line x1={X(bMean)} y1={58} x2={X(bMean)} y2={70} stroke={tone === "error" ? PALETTE.berry : PALETTE.tangerine} strokeWidth={2.5} />
+              <text x={(X(aMean) + X(bMean)) / 2} y={34} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
+                overlap ≈ {Math.round(overlap * 100)}%
+              </text>
               <text x={(X(aMean) + X(bMean)) / 2} y={54} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
                 gap ≈ {fmt(gap)} variability-unit{gap === 1 ? "" : "s"}
-              </text>
-              <text x={(X(aMean) + X(bMean)) / 2} y={baseY - 74} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone === "error" ? PALETTE.berry : PALETTE.tangerine}>
-                overlap ≈ {Math.round(overlap * 100)}%
               </text>
             </g>
           )}
@@ -10070,7 +10778,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
       </div>
       {spec.mode === "measure" ? (
         <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the number of variability-units between the means">
-          {spec.measureChoices.map((choice) => (
+          {orderedMeasureChoices.map((choice) => (
             <button key={choice.value} type="button" disabled={disabled} aria-pressed={selectedMeasure === choice.value} onClick={() => { onEvent?.({ control: "measure", dir: spec.answer !== undefined && Math.abs(choice.value - spec.answer) <= spec.tolerance ? "toward" : "away", state: { value: choice.value } }); onChange(choice.value); }} className={optionClass(selectedMeasure === choice.value)}>
               <span className="block text-base font-extrabold tabular-nums">{choice.label ?? fmt(choice.value)}</span>
               <span className="block text-xs font-semibold text-ink/60">variability-unit{choice.value === 1 ? "" : "s"}</span>
@@ -10079,7 +10787,7 @@ function DistributionCompareLabW({ spec, value, onChange, disabled, tone, onEven
         </div>
       ) : (
         <div className="grid gap-2" role="group" aria-label="Choose the conclusion supported by the overlap">
-          {spec.judgeOptions.map((option) => {
+          {orderedJudgeOptions.map((option) => {
             /* S218: the mcq option-surface grammar, previously absent from judge mode. At reveal
                (info) the correct option carries the dashed-tangerine ghost and a differing pick the
                berry "yours" contrast; at retry (error) the berry cue sits on the learner's own pick
@@ -12426,33 +13134,24 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 300, H = 200, padX = 30, padTop = 12, baseY = H - 26;
+  // BASE_H is the historical H = 230; baseY stays derived from IT, not from the final H, so the
+  // chart area's pixel geometry (which useSvgDrag and widgets.drag.test.tsx pin) is byte-identical
+  // whenever the category labels fit on one row — the canvas only grows BELOW the axis, for the
+  // extra label rows (S331, see `catLabelPlan`).
+  const W = 320, BASE_H = 230, padX = 48, padTop = 28, baseY = BASE_H - 42;
   const barW = (W - 2 * padX) / spec.categories.length;
   const hScale = linScale(0, spec.maxVal, baseY, padTop);
   const gridVals = [];
   for (let g = 0; g <= spec.maxVal; g += spec.step) gridVals.push(g);
-  /** S237b — THE Y AXIS COULD NOT BE READ. `maxVal` and `step` are authored data, so the number of
-   *  gridlines is data-driven: g5d-01-01/i1 asks for bars of 40 and 25 with `maxVal: 45, step: 1`,
-   *  which put 46 labels into a 162px column — 3.5px apart, in a 9px font. Every label overprinted
-   *  its neighbours (574 colliding pairs in the authored corpus, all from this engine).
-   *  The GRIDLINES still draw at every step — the chart keeps its resolution. Only labels that
-   *  cannot clear the previously drawn one are dropped, top value first so the axis always states
-   *  its ceiling, then downward. */
-  const axisLabelled = (() => {
-    const MIN_GAP = Math.ceil(9 * LABEL_LINE) + 1; // 13: one 9px label's full height, plus air
-    const top = gridVals[gridVals.length - 1];
-    const bottom = gridVals[0];
-    const keep = new Set<number>([top, bottom]); // the ceiling and the baseline always state themselves
-    let lastY = hScale(top);
-    const floorY = hScale(bottom);
-    for (const g of [...gridVals].reverse().slice(1)) {
-      const y = hScale(g);
-      if (y - lastY < MIN_GAP || floorY - y < MIN_GAP) continue;
-      lastY = y;
-      keep.add(g);
-    }
-    return keep;
-  })();
+
+  const standardAxisLabels = new Set(niceTicks(0, spec.maxVal, { target: 6, ends: true }));
+  const title = spec.title ?? (spec.histogram ? "Frequency distribution" : "Bar chart");
+  const xAxisLabel = spec.axisLabel ?? (spec.histogram ? "Value interval" : "Category");
+  const yAxisLabel = spec.valueAxisLabel ?? "Frequency";
+  const parsedBins = spec.categories.map((category) => category.match(/^\s*(−?-?\d+(?:\.\d+)?)\s*[–—-]\s*(−?-?\d+(?:\.\d+)?)\s*$/));
+  const histogramEdges = spec.histogram && parsedBins.every(Boolean)
+    ? [Number(parsedBins[0]![1].replace("−", "-")), ...parsedBins.map((match) => Number(match![2].replace("−", "-")) + 1)]
+    : null;
   /** S237b — a category name is authored text and the column it sits under is 240/n units wide, so
    *  whether two names touch is data-driven: g4s-01-01 puts "Pack 1"…"Pack 8" under 34-unit
    *  columns. The label shrinks to fit its own column rather than being clipped or dropped — a bar
@@ -12462,6 +13161,35 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     const fit = (barW - LABEL_GAP) / (longest * LABEL_EM);
     return Math.max(7, Math.min(spec.histogram ? 8 : 10, Math.floor(fit * 2) / 2));
   })();
+  /* S331 — WHAT THE 7-FLOOR COULD NOT DO ALONE, AND THE ROW THAT FIXES IT. The floor above is a
+   * legibility promise ("below 7 it stops being text"), which means past ~7 columns the fit
+   * calculation loses to the floor and a name can be WIDER than its own column: eight "Pack N"
+   * columns give barW 28 against a 30.24-unit label (6 chars × 7 × 0.72em, the S237 testkit's own
+   * measured box model), a guaranteed 2.2-unit overlap no font this side of the floor can clear.
+   * Same discipline as HopLandingW's `labelPlan` and the S329 geometry fixes: fix the geometry.
+   * Labels greedily pack onto as many rows as they need — a label opens a new row only when the
+   * last label on every existing row would sit closer than 1 unit (comfortably above the collision
+   * model's 0.5-unit eps, and BELOW the 1.76-unit clearance the seven-column g4s-01-01 layout
+   * already has, so every layout that fits today keeps its single row byte-for-byte). Rows are 10
+   * units apart; multi-row can only ever happen at the floor size 7 (a fit-derived size proves
+   * width + GAP <= barW by construction), and 10 > 7 × 1.26em box height, so stacked rows clear
+   * each other. The canvas grows below the axis to hold the extra rows (`H` below); nothing is
+   * ever dropped or clipped. */
+  const catRows: number[] = [];
+  const catLabelPlan = spec.histogram
+    ? []
+    : spec.categories.map((c, i) => {
+        const cx = padX + i * barW + barW / 2;
+        const half = labelHalfWidth(c, catFont);
+        let row = catRows.findIndex((rightEdge) => cx - half >= rightEdge + 1);
+        if (row < 0) {
+          row = catRows.length;
+          catRows.push(Number.NEGATIVE_INFINITY);
+        }
+        catRows[row] = cx + half;
+        return { x: cx, y: baseY + 13 + row * 10 };
+      });
+  const H = BASE_H + Math.max(0, catRows.length - 1) * 10;
   const setBar = (i: number, v: number) => onChange(hs.map((h, j) => (j === i ? v : h)));
 
   // WS-C (S238): the bar itself DRAGS. Press or sweep anywhere in the chart area and the bar
@@ -12514,7 +13242,9 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
       <div className="grid gap-4">
         <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
         <div className="grid gap-2" role="img"
-          aria-label={`${spec.display === "tally" ? "Tally chart" : "Picture graph"}: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+          aria-label={`${spec.title ?? (spec.display === "tally" ? "Tally chart" : "Picture graph")}: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+          <p className="text-center text-sm font-extrabold text-ink">{spec.title ?? (spec.display === "tally" ? "Tally chart" : "Picture graph")}</p>
+          {spec.display === "pictograph" && <p data-testid="bb-key" className="text-center text-xs font-bold text-ink/70">Key: each {spec.icon} = 1 count</p>}
           {spec.categories.map((c, i) => (
             <div key={c} className={`flex min-h-11 items-center gap-3 rounded-lg border px-3 py-1 ${done(i) ? "border-leaf/60 bg-leaf/10" : "border-ink/15 bg-white"}`}>
               <span className="w-16 shrink-0 truncate text-sm font-bold text-ink/80">{c}</span>
@@ -12547,13 +13277,23 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
   return (
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`Bar chart: ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`${title}. ${xAxisLabel}; ${yAxisLabel} from 0 to ${spec.maxVal}. ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
         <style>{`.bb-bar{transition:none}@media (prefers-reduced-motion: no-preference){.bb-bar{transition:y .16s ease-out,height .16s ease-out}}`}</style>
+        {/* S241 (post-interaction). y=14 put the title's descent box within 1.9 units of a
+            per-bar count label the instant a bar reaches maxVal (count label sits at
+            hScale(maxVal)-3 = padTop-3, fixed regardless of which bar or lesson). Raising the
+            title to y=11 clears every ceiling-state count label with margin, and is independent
+            of padTop/baseY/hScale — the pixel geometry useSvgDrag and widgets.drag.test.tsx pin
+            for the drag gesture is untouched. */}
+        <text data-testid="bb-title" x={W / 2} y={11} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
         {gridVals.map((g) => (
           <g key={g}>
-            <line x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={0.1} />
-            {axisLabelled.has(g) && (
-              <text x={padX - 5} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.5}>{g}</text>
+            <line data-testid="bb-grid" x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={standardAxisLabels.has(g) ? 0.22 : 0.09} />
+            {standardAxisLabels.has(g) && (
+              <>
+                <line data-testid="bb-tick" x1={padX - 5} y1={hScale(g)} x2={padX} y2={hScale(g)} stroke={PALETTE.ink} strokeWidth={1.4} />
+                <text x={padX - 8} y={hScale(g) + 3} fontSize={9} textAnchor="end" fill={PALETTE.ink} fillOpacity={0.72}>{g}</text>
+              </>
             )}
           </g>
         ))}
@@ -12566,17 +13306,26 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
           return (
             <g key={c}>
               <rect className="bb-bar" x={x} y={top} width={w} height={baseY - top} rx={spec.histogram ? 0 : 2}
-                fill={done ? PALETTE.leaf : PALETTE.sky} stroke={spec.histogram ? "#fff" : "none"} strokeWidth={spec.histogram ? 1 : 0} />
+                fill={done ? PALETTE.leaf : PALETTE.sky} stroke="none" />
               <text x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{hs[i]}</text>
               {/* S237b — 11, not 14: at 14 the category row's descenders ran into the axis caption
-                  two rows below (dd-02-02's "10–19" bins against "minutes read"). */}
-              <text x={x + w / 2} y={baseY + 11} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{c}</text>
+                  two rows below (dd-02-02's "10–19" bins against "minutes read"). S331: the y now
+                  comes from `catLabelPlan`, which keeps this exact baseline whenever one row fits
+                  and staggers onto lower rows only when the 7-unit font floor forces a name wider
+                  than its column (8+ named columns). */}
+              {!spec.histogram && <text x={catLabelPlan[i].x} y={catLabelPlan[i].y} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>}
             </g>
           );
         })}
-        {spec.axisLabel && (
-          <text x={W / 2} y={H - 2} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.55}>{spec.axisLabel}</text>
-        )}
+        {histogramEdges?.map((edge, index) => (
+          <g key={`edge-${edge}`}>
+            <line data-testid="hist-edge-tick" x1={padX + index * barW} y1={baseY} x2={padX + index * barW} y2={baseY + 5} stroke={PALETTE.ink} strokeWidth={1.4} />
+            <text x={padX + index * barW} y={baseY + 15} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{edge}</text>
+          </g>
+        ))}
+        <text x={W / 2} y={H - 4} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{xAxisLabel}</text>
+        <text x={12} y={(padTop + baseY) / 2} transform={`rotate(-90 12 ${(padTop + baseY) / 2})`} fontSize={9} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{yAxisLabel}</text>
+        <line x1={padX} y1={padTop} x2={padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
         <line x1={padX} y1={baseY} x2={W - padX} y2={baseY} stroke={PALETTE.ink} strokeWidth={1.5} />
         {!disabled && (
           <rect
@@ -12994,9 +13743,6 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Process evidence: each meaningful move reports whether it headed toward,
-  // away from, or past the target. The engine only names the relation; the
-  // player's classifier decides if a pattern is worth a gentle cue.
   const place = (next: number) => {
     if (next !== v) {
       const dir = moveRelation(v, next, spec.target);
@@ -13005,55 +13751,21 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
     onChange(next);
   };
 
-  const W = 320, pad = 20, y = 46;
+  const W = 360, H = 118, pad = 22, lineY = 58;
   const sx = linScale(spec.min, spec.max, pad, W - pad);
-  const ticks: number[] = [];
-  for (let t = spec.min; t <= spec.max + 1e-9; t += spec.tickStep) ticks.push(Math.round(t * 1e6) / 1e6);
-  // Fraction line: authored in jump units (0..den), rendered as 0..1 with UNLABELED
-  // interior ticks (labeling each tick with its fraction would print the answer on
-  // the line) and a positional readout ("mark 2 of 6") — the mark↔fraction
-  // correspondence stays the learner's to supply.
-  const fmtNum = (n: number) => (Number.isInteger(n) ? String(n) : String(Math.round(n * 1e6) / 1e6));
   const den = spec.fractionDen;
-  const tickLabel = (t: number): string | null => {
-    if (den === undefined) return fmtNum(t);
-    if (t === 0) return "0";
-    if (t === den) return "1";
-    return null;
-  };
-  const fmt = (n: number) => (den !== undefined ? `mark ${fmtNum(n)} of ${den}` : fmtNum(n));
-  /** S237b — THE SAME COLLISION numberLineHop had, from the same cause: a label per tick, with the
-   *  tick count coming from authored data. ns-04-01/e1 and ns-05-01/i1 run −10…10 with
-   *  `tickStep: 1`, which is 21 labels across 280px — "−10" is 20 units wide and its neighbour
-   *  "−9" starts 14 units away, so the two overprint. TICK MARKS still draw at every step; the
-   *  ENDS always keep their labels (they state the line's range) and an interior label is dropped
-   *  when it cannot clear the last one drawn. */
-  const labelledTicks = (() => {
-    const keep = new Set<number>();
-    if (ticks.length === 0) return keep;
-    const half = (t: number) => ((tickLabel(t) ?? "").length * 11 * LABEL_EM) / 2;
-    const first = ticks[0];
-    const last = ticks[ticks.length - 1];
-    keep.add(first);
-    keep.add(last);
-    let end = sx(first) + half(first) + LABEL_GAP;
-    const lastStart = sx(last) - half(last) - LABEL_GAP;
-    for (const t of ticks.slice(1, -1)) {
-      const x = sx(t);
-      if (x - half(t) < end || x + half(t) > lastStart) continue;
-      end = x + half(t) + LABEL_GAP;
-      keep.add(t);
-    }
-    return keep;
-  })();
+  const scale = numberLineScalePlan(spec.min, spec.max, den, spec.tickStep);
+  const majorScale = scale.filter((mark) => mark.major);
+  const title = spec.title ?? "Number line";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, den !== undefined);
+  const fmt = (n: number) => numberLinePlainLabel(n, den);
+  const scaleSentence = majorScale.map((mark) => mark.label).join(", ");
 
-  // Direct manipulation: press or drag anywhere on the line and the marker
-  // snaps there (same value lattice as the slider, which stays the keyboard path).
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useSvgDrag({
     svgRef,
     viewW: W,
-    viewH: 72,
+    viewH: H,
     disabled,
     onDrag: (vx) => {
       const raw = spec.min + ((vx - pad) / (W - 2 * pad)) * (spec.max - spec.min);
@@ -13062,106 +13774,66 @@ function NumberLinePlaceW({ spec, value, onChange, disabled, tone, onEvent }: WP
   });
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="nlp-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${W} 72`}
-        className="mx-auto w-full max-w-md"
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="xMidYMid meet"
+        className="mx-auto w-full max-w-lg"
         role="img"
-        aria-label={
-          den !== undefined
-            ? `Number line from 0 to 1 split into ${den} equal jumps; your marker is at ${fmt(v)}.`
-            : `Number line; your marker is at ${fmt(v)}.`
-        }
+        aria-label={`${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${scaleSentence}. Marker at ${fmt(v)}${spec.showDistanceFromZero && den === undefined ? `; distance from zero ${numberLinePlainLabel(Math.abs(v))}` : ""}.`}
       >
         <style>{`.nl-mk{transition:none}@media (prefers-reduced-motion: no-preference){.nl-mk{transition:all .16s ease-out}}`}</style>
-        <line x1={pad} y1={y} x2={W - pad} y2={y} stroke={PALETTE.ink} strokeWidth={2} />
-        {ticks.map((t) => (
-          <g key={t}>
-            <line x1={sx(t)} y1={y - 5} x2={sx(t)} y2={y + 5} stroke={PALETTE.ink} strokeWidth={t === 0 || t === den ? 2.5 : 1.5} />
-            {tickLabel(t) !== null && labelledTicks.has(t) && (
-              <text x={sx(t)} y={y + 20} fontSize={11} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.7}>{tickLabel(t)}</text>
-            )}
+        <g data-testid="nlp-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => (
+            <line key={`guide-${mark.value}`} x1={sx(mark.value)} y1={24} x2={sx(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />
+          ))}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlp-axis" arrowTestId="nlp-arrows" />
+
+        {scale.map((mark) => (
+          <g key={mark.value} data-testid={mark.major ? "nlp-major-tick" : "nlp-minor-tick"}>
+            <line x1={sx(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={sx(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
+            {mark.major && <NumberLineSvgLabel x={sx(mark.value)} y={lineY + 22} label={mark.label} testId="nlp-label" />}
           </g>
         ))}
-        {/* The learner's marker is their ACTIVE construction (ROLE.active = sky);
-            success confirms the relationship in leaf. Berry stays reserved for the
-            error cue below — the thing to repair, not the learner's own hand. */}
         <g className="nl-mk">
-          <line x1={sx(v)} y1={y - 16} x2={sx(v)} y2={y + 6} stroke={tone === "success" ? PALETTE.leaf : PALETTE.sky} strokeWidth={2} />
-          <circle data-testid="nlp-marker" cx={sx(v)} cy={y - 18} r={drag.dragging ? 8 : 6} fill={tone === "success" ? PALETTE.leaf : PALETTE.sky} />
+          <line x1={sx(v)} y1={lineY - 17} x2={sx(v)} y2={lineY + 7} stroke={tone === "success" ? PALETTE.leaf : PALETTE.sky} strokeWidth={2} />
+          <circle data-testid="nlp-marker" cx={sx(v)} cy={lineY - 19} r={drag.dragging ? 8 : 6} fill={tone === "success" ? PALETTE.leaf : PALETTE.sky} />
         </g>
-        {/* Error demonstration: on a miss the line itself points the way — a small
-            chevron beside the learner's marker aims toward the target (direction
-            only, matching the authored low/high feedback; never the distance). */}
         {tone === "error" && v !== spec.target && (() => {
           const dir = spec.target > v ? 1 : -1;
           const bx = sx(v) + dir * 14;
-          return (
-            <path
-              data-testid="nlp-cue"
-              aria-hidden="true"
-              d={`M ${bx} ${y - 24} l ${dir * 8} 6 l ${-dir * 8} 6`}
-              fill="none"
-              stroke={PALETTE.berry}
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          );
+          return <path data-testid="nlp-cue" aria-hidden="true" d={`M ${bx} ${lineY - 25} l ${dir * 8} 6 l ${-dir * 8} 6`} fill="none" stroke={PALETTE.berry} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />;
         })()}
-        {/* Reveal ghost: the target position, dashed, contrasted with where the
-            learner's marker stayed. */}
         {tone === "info" && v !== spec.target && (
           <g data-testid="nlp-ghost" aria-hidden="true">
-            <line x1={sx(spec.target)} y1={y - 16} x2={sx(spec.target)} y2={y + 6} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
-            <circle cx={sx(spec.target)} cy={y - 18} r={6} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.2} />
-            <text x={sx(spec.target)} y={y - 30} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>
-              target
-            </text>
+            <line x1={sx(spec.target)} y1={lineY - 17} x2={sx(spec.target)} y2={lineY + 7} stroke={PALETTE.tangerine} strokeWidth={2} strokeDasharray="4 3" />
+            <circle cx={sx(spec.target)} cy={lineY - 19} r={6} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.2} />
+            <text x={sx(spec.target)} y={lineY - 31} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.tangerine}>target</text>
           </g>
         )}
-        {!disabled && (
-          <rect
-            className="mt-drag-hit"
-            data-testid="nlp-drag"
-            x={pad - 10}
-            y={y - 30}
-            width={W - 2 * pad + 20}
-            height={52}
-            aria-hidden="true"
-            {...drag.handleProps}
-          />
-        )}
+        {!disabled && <rect className="mt-drag-hit" data-testid="nlp-drag" x={pad - 10} y={lineY - 31} width={W - 2 * pad + 20} height={52} aria-hidden="true" {...drag.handleProps} />}
+        <text data-testid="nlp-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
       <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">{fmt(v)}</p>
       {spec.showDistanceFromZero && den === undefined && (
-        // Position and distance, side by side and deliberately not the same number. The marker's
-        // sign lives in the first readout; its magnitude in the second. That gap IS absolute value.
-        <p
-          className="text-center text-base font-bold text-ink/70 tabular-nums"
-          aria-live="polite"
-          data-testid="nlp-distance"
-        >
-          distance from 0: <span className="text-ink">{fmtNum(Math.abs(v))}</span>
+        <p className="text-center text-base font-bold text-ink/70 tabular-nums" aria-live="polite" data-testid="nlp-distance">
+          distance from 0: <span className="text-ink">{numberLinePlainLabel(Math.abs(v))}</span>
         </p>
       )}
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>marker</span>
         <input type="range" min={spec.min} max={spec.max} step={spec.step} value={v} disabled={disabled}
           aria-label="marker position"
-          aria-valuetext={
-            spec.showDistanceFromZero && den === undefined
-              ? `${fmt(v)}, distance from zero ${fmtNum(Math.abs(v))}`
-              : fmt(v)
-          }
+          aria-valuetext={spec.showDistanceFromZero && den === undefined ? `${fmt(v)}, distance from zero ${numberLinePlainLabel(Math.abs(v))}` : fmt(v)}
           onChange={(e) => place(Number(e.target.value))} className="h-11 w-full accent-sky" />
       </label>
     </div>
   );
 }
-
 /* ---------------- FunctionMachine (input → rule → output) ---------------- */
 
 function FunctionMachineW({ spec, value, onChange, disabled, onEvent, tone }: WProps<TFunctionMachine>) {
@@ -14049,18 +14721,48 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
             : `These are the same line written twice — ${relation.reason}. ${pairViews.solutionSet.sentence}`}
         </p>
       )}
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): the answer POINT used to be reachable only by the SVG drag or these two
+          CONTINUOUS ranges — both fine-motor gestures on touch. The house stepper pattern (the same
+          −/range/+ row the line controls below and slopeTriangle already use, 44px buttons) adds a
+          discrete tap path. The drag snaps to the integer lattice (`snapToStep(…, 1)`), and these
+          buttons step that same lattice across the same [min,max] bounds, so every state the drag
+          can reach is one tap run away — same setter (`place`), same process events, no new state. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>x = <span className="tabular-nums text-ink">{x}</span></span>
-        <input type="range" min={spec.xMin} max={spec.xMax} step={1} value={x} disabled={disabled}
-          aria-label="point x" aria-valuetext={`x ${x}`}
-          onChange={(e) => place(Number(e.target.value), y, "x")} className="h-11 w-full accent-sky" />
-      </label>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || x - 1 < spec.xMin} aria-label="Decrease point x"
+            onClick={() => place(x - 1, y, "x")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={spec.xMin} max={spec.xMax} step={1} value={x} disabled={disabled}
+            aria-label="point x" aria-valuetext={`x ${x}`}
+            onChange={(e) => place(Number(e.target.value), y, "x")} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || x + 1 > spec.xMax} aria-label="Increase point x"
+            onClick={() => place(x + 1, y, "x")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>y = <span className="tabular-nums text-ink">{y}</span></span>
-        <input type="range" min={spec.yMin} max={spec.yMax} step={1} value={y} disabled={disabled}
-          aria-label="point y" aria-valuetext={`y ${y}`}
-          onChange={(e) => place(x, Number(e.target.value), "y")} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }} />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || y - 1 < spec.yMin} aria-label="Decrease point y"
+            onClick={() => place(x, y - 1, "y")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-tangerine/40 text-lg font-black text-tangerine-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={spec.yMin} max={spec.yMax} step={1} value={y} disabled={disabled}
+            aria-label="point y" aria-valuetext={`y ${y}`}
+            onChange={(e) => place(x, Number(e.target.value), "y")} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }} />
+          <button type="button" disabled={disabled || y + 1 > spec.yMax} aria-label="Increase point y"
+            onClick={() => place(x, y + 1, "y")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-tangerine/40 text-lg font-black text-tangerine-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
       {editable && (
         <>
           {/* What the last line move did, plus any clamp — visually hidden, so the picture is
@@ -14462,7 +15164,7 @@ function QuadraticVertexW({ spec, value, onChange, disabled, tone, onEvent }: WP
     <div className="grid gap-4">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-xl rounded-card border border-ink/10 bg-white"
-        role="img" aria-label={`Parabola y = ${aText}(x ${hSign})² ${kSign}, vertex at (${h}, ${k})${spec.showParent ? ", with the parent y = x² dashed behind it" : ""}.`}>
+        role="img" aria-label={accessibleMathText(`Parabola y = ${aText}(x ${hSign})² ${kSign}, vertex at (${h}, ${k})${spec.showParent ? ", with the parent y = x² dashed behind it" : ""}.`)}>
         <style>{`.qe-curve,.qe-vtx{transition:none}@media (prefers-reduced-motion: no-preference){.qe-curve,.qe-vtx{transition:all .18s cubic-bezier(.22,1,.36,1)}}`}</style>
         {gridLines.map((g) => (
           <g key={g}>
@@ -14856,7 +15558,7 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
           </>
         )}
       <AxisCaptions w={W} h={H} /></svg>
-      <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
+      <p data-testid="le-equation" className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
         y = {eq.slopeText}x {eqTail}
       </p>
       {/* What the last edit did, in words — including a snap or a clamp, which used to happen
@@ -15211,9 +15913,13 @@ function DragOrderW({ spec, value, onChange, disabled, tone }: WProps<TDragOrder
     [next[i], next[j]] = [next[j], next[i]];
     onChange(next);
   };
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec) — same block `numeric`
+  // and `mcq` draw. A spec without `barData` renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       {/* Live consequence (s48): for value orderings the claim is PLOTTED —
           each slot's value drawn rank-by-size, so a correct size order reads as
           a clean staircase and a misplaced value as a visible zigzag. For
@@ -15357,9 +16063,13 @@ function DragBucketW({ spec, value, onChange, disabled, seed, tone }: WProps<TDr
   const place = (itemId: string, bucketId: string) =>
     onChange({ ...placed, [itemId]: bucketId });
   const bucketLabel = (id: string) => spec.buckets.find((b) => b.id === id)?.label ?? id;
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). A spec without `barData`
+  // renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       {orderedItems.map((it) => (
         <div key={it.id} className="rounded-card border-2 border-ink/15 bg-white p-3">
           <p className="mb-2 font-semibold"><MathProse text={it.label} /></p>
@@ -15453,9 +16163,13 @@ function MatchPairsW({ spec, value, onChange, disabled, seed, tone }: WProps<TMa
   const usedRight = new Set(Object.values(links));
   const rightLabel = (id: string) => spec.right.find((r) => r.id === id)?.label ?? id;
   const leftLabel = (id: string) => spec.left.find((x) => x.id === id)?.label ?? id;
+  // The bar graph the prompt DESCRIBES (display-only; see BarDataSpec). A spec without `barData`
+  // renders exactly as it always has.
+  const bars = barDataParts(spec);
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      {bars && <BarChartFigure parts={bars} />}
       <p className="text-sm text-ink/70">Tap one on the left, then its match on the right. Tap a numbered one to unlink.</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="grid content-start gap-2">
@@ -15796,7 +16510,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
    * target whose edges belonged to its neighbour.
    */
   const PP_MAX_CELL = "2.75rem"; // 44px — the tap-target ceiling, never a floor-and-ceiling both
-  const cellCol = spec.yLabels ? 2 : 1; // the first cell column; column 1 is the y-label band
+  const cellCol = 2; // the first cell column; column 1 is the required y-label band
   const rowOf = (y: number) => spec.rows - y + 1; // y counts from the bottom, grid rows from the top
   // Reveal ghost: dashed rings on every TARGET cell whenever the selection is
   // not yet the exact target set — the correct pattern shown against the
@@ -15820,38 +16534,45 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
    * already include "0" show their origin, and a categorical grid ("Hundreds / Tens / Ones") has
    * no origin to mark: printing one there would be a number about nothing.
    */
-  const numericBand = (labels?: string[]) =>
-    labels !== undefined && labels.length > 0 && labels.every((l) => l.trim() !== "" && Number.isFinite(Number(l)));
+  const numericBand = (labels: string[]) =>
+    labels.length > 0 && labels.every((l) => Number.isFinite(Number(l)));
   const showOrigin =
     numericBand(spec.xLabels) && numericBand(spec.yLabels) &&
-    Number(spec.xLabels![0]) === 1 && Number(spec.yLabels![0]) === 1;
+    Number(spec.xLabels[0]) === 1 && Number(spec.yLabels[0]) === 1;
+  const title = spec.title ?? "Coordinate plotting grid";
+  const xAxisLabel = spec.xAxisLabel ?? "x";
+  const yAxisLabel = spec.yAxisLabel ?? "y";
+  const xScale = spec.xLabels;
+  const yScale = spec.yLabels;
+  const markedSummary = pts.length ? pts.map((p) => `(${xScale[p.x - 1]}, ${yScale[p.y - 1]})`).join(", ") : "none";
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
+      <p data-testid="pp-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <p data-testid="pp-y-axis-label" className="text-center text-xs font-bold text-ink/70">{yAxisLabel} ↑</p>
       {/* ONE grid, no gaps: the y band, the cells, the x band and the connect overlay are all
           placed on the same tracks, so no layer can drift out of alignment with another. The
           separation between cells is padding INSIDE each button, which keeps the tap target
           equal to the track pitch. */}
       <div
         className="relative grid w-full justify-center"
-        style={{ gridTemplateColumns: `${spec.yLabels ? "auto " : ""}repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
+        role="group"
+        aria-label={`${title}. ${xAxisLabel}: ${xScale.join(", ")}. ${yAxisLabel}: ${yScale.join(", ")}. Marked points: ${markedSummary}.`}
+        style={{ gridTemplateColumns: `auto repeat(${spec.cols}, minmax(0, ${PP_MAX_CELL}))` }}
       >
         <style>{`@media (prefers-reduced-motion: no-preference){.pp-dot{animation:pp-pop .18s ease-out backwards}.pp-line{stroke-dasharray:100;animation:pp-draw .6s ease-out backwards}}@keyframes pp-pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}@keyframes pp-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}`}</style>
-        {spec.yLabels && (
-          // `display: contents` so the spans are items of the grid ABOVE: each label shares its
-          // row track with the cells it names, at any cell size.
-          <div aria-hidden="true" style={{ display: "contents" }}>
-            {rows.map((y) => (
-              <span
-                key={y}
-                className="flex items-center justify-end pr-1 text-xs font-bold text-ink/70"
-                style={{ gridColumn: 1, gridRow: rowOf(y) }}
-              >
-                {spec.yLabels?.[y - 1] ?? y}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* `display: contents` keeps every y label on the same row track as its cells. */}
+        <div aria-hidden="true" style={{ display: "contents" }}>
+          {rows.map((y) => (
+            <span
+              key={y}
+              className="flex items-center justify-end pr-1 text-xs font-bold text-ink/70"
+              style={{ gridColumn: 1, gridRow: rowOf(y) }}
+            >
+              {spec.yLabels[y - 1]}
+            </span>
+          ))}
+        </div>
         {showOrigin && (
           // The corner where the two label bands meet IS (0, 0): column 1 of the x-label row.
           <span
@@ -15873,7 +16594,7 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
                 type="button"
                 disabled={disabled}
                 aria-pressed={marked}
-                aria-label={`${spec.xLabels?.[x - 1] ?? `column ${x}`}, ${spec.yLabels?.[y - 1] ?? `row ${y}`}`}
+                aria-label={`${spec.xLabels[x - 1]}, ${spec.yLabels[y - 1]}`}
                 onClick={() => toggle(x, y)}
                 style={{ gridColumn: cellCol + xi, gridRow: rowOf(y) }}
                 className="group relative aspect-square w-full min-w-0 p-0.5 disabled:opacity-70"
@@ -15922,20 +16643,43 @@ function PlotPointW({ spec, value, onChange, disabled, tone, onEvent }: WProps<T
             />
           </svg>
         )}
-        {spec.xLabels && (
-          <div aria-hidden="true" style={{ display: "contents" }}>
-            {Array.from({ length: spec.cols }, (_, i) => (
-              <span
-                key={i}
-                className="pt-1 text-center text-xs font-bold text-ink/70"
-                style={{ gridColumn: cellCol + i, gridRow: spec.rows + 1 }}
-              >
-                {spec.xLabels?.[i] ?? i + 1}
-              </span>
-            ))}
-          </div>
-        )}
+        <svg
+          data-testid="pp-graph-paper"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          viewBox={`0 0 ${spec.cols} ${spec.rows}`}
+          preserveAspectRatio="none"
+          style={{ gridColumn: `${cellCol} / span ${spec.cols}`, gridRow: `1 / span ${spec.rows}` }}
+        >
+          <g data-testid="pp-minor-grid">
+            {Array.from({ length: Math.max(0, spec.cols - 1) }, (_, i) => <line key={`mv${i}`} x1={i + 1} y1={0} x2={i + 1} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.07} strokeWidth={0.025} />)}
+            {Array.from({ length: Math.max(0, spec.rows - 1) }, (_, i) => <line key={`mh${i}`} x1={0} y1={i + 1} x2={spec.cols} y2={i + 1} stroke={PALETTE.ink} strokeOpacity={0.07} strokeWidth={0.025} />)}
+          </g>
+          <g data-testid="pp-major-grid">
+            {Array.from({ length: spec.cols }, (_, i) => <line key={`gv${i}`} x1={i + 0.5} y1={0} x2={i + 0.5} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.15} strokeWidth={0.035} />)}
+            {Array.from({ length: spec.rows }, (_, i) => <line key={`gh${i}`} x1={0} y1={i + 0.5} x2={spec.cols} y2={i + 0.5} stroke={PALETTE.ink} strokeOpacity={0.15} strokeWidth={0.035} />)}
+          </g>
+          <g data-testid="pp-axes">
+            <line x1={0} y1={spec.rows} x2={spec.cols} y2={spec.rows} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            <line x1={0} y1={spec.rows} x2={0} y2={0} stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            <path data-testid="pp-axis-arrows" d={`M ${spec.cols} ${spec.rows} l -0.18 -0.1 M ${spec.cols} ${spec.rows} l -0.18 0.1 M 0 0 l -0.1 0.18 M 0 0 l 0.1 0.18`} fill="none" stroke={PALETTE.ink} strokeOpacity={0.62} strokeWidth={0.055} />
+            {Array.from({ length: spec.cols }, (_, i) => <line data-testid="pp-x-tick" key={`tx${i}`} x1={i + 0.5} y1={spec.rows - 0.08} x2={i + 0.5} y2={spec.rows} stroke={PALETTE.ink} strokeWidth={0.045} />)}
+            {Array.from({ length: spec.rows }, (_, i) => <line data-testid="pp-y-tick" key={`ty${i}`} x1={0} y1={i + 0.5} x2={0.08} y2={i + 0.5} stroke={PALETTE.ink} strokeWidth={0.045} />)}
+          </g>
+        </svg>
+        <div aria-hidden="true" style={{ display: "contents" }}>
+          {Array.from({ length: spec.cols }, (_, i) => (
+            <span
+              key={i}
+              className="pt-1 text-center text-xs font-bold text-ink/70"
+              style={{ gridColumn: cellCol + i, gridRow: spec.rows + 1 }}
+            >
+              {spec.xLabels[i]}
+            </span>
+          ))}
+        </div>
       </div>
+      <p data-testid="pp-x-axis-label" className="text-center text-xs font-bold text-ink/70">{xAxisLabel} →</p>
     </div>
   );
 }
@@ -16032,7 +16776,7 @@ function SteppedRevealW({ spec, value, onChange, disabled }: WProps<TSteppedReve
             <p className="text-sm font-bold uppercase tracking-wide text-sky-ink">{p.title}</p>
           </div>
           {p.figure && FIGURE_IDS.has(p.figure) && isFigureTextAligned(p.figure, p.body ?? "") && (
-            <div className="my-2 overflow-hidden rounded-lg border border-ink/10 bg-white">
+            <div className="my-2 overflow-visible rounded-lg border border-ink/10 bg-white">
               <FigureView id={p.figure} context={p.body ?? ""} />
             </div>
           )}
@@ -16433,9 +17177,14 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const W = 360, H = 132, pad = 22, lineY = 68;
   const span = spec.max - spec.min || 1;
-  const xOf = (n: number) => 16 + (288 * (n - spec.min)) / span;
-  // Every place this stride actually lands, inside the line.
+  const xOf = (n: number) => pad + ((W - 2 * pad) * (n - spec.min)) / span;
+  const scale = numberLineScalePlan(spec.min, spec.max, spec.denom);
+  const majorScale = scale.filter((mark) => mark.major);
+  const fmt = (n: number) => numberLinePlainLabel(n, spec.denom);
+  const title = spec.title ?? "Hop-size number line";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, spec.denom !== undefined);
   const landings: number[] = [];
   for (let k = 0; spec.start + k * h <= spec.max; k++) landings.push(spec.start + k * h);
   const hits = (t: number) => (t - spec.start) % h === 0;
@@ -16452,52 +17201,45 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox="0 0 320 104" className="w-full" role="img"
-        aria-label={`A stride of ${h} from ${spec.start}. ${targets.map((t) => `${t} is ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`}>
-        <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
-        {/* every landing this stride makes */}
-        {landings.map((n) => (
-          <circle key={`l${n}`} data-testid="nlh-landing" cx={xOf(n)} cy={64} r={3.5} fill="#2E7CD6" fillOpacity={0.75} />
+      <p data-testid="nlh-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="w-full" role="img"
+        aria-label={`${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${majorScale.map((mark) => mark.label).join(", ")}. A stride of ${fmt(h)} from ${fmt(spec.start)}. ${targets.map((t) => `${fmt(t)} is ${hits(t) ? "landed on" : "missed"}`).join("; ")}.`}>
+        <g data-testid="nlh-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => <line key={`guide-${mark.value}`} x1={xOf(mark.value)} y1={25} x2={xOf(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />)}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlh-axis" arrowTestId="nlh-arrows" />
+
+        {scale.map((mark) => {
+          const wholeFraction = spec.denom !== undefined && mark.value % spec.denom === 0;
+          return (
+            <g key={mark.value} data-testid={mark.major ? "nlh-major-tick" : "nlh-minor-tick"}>
+              <line x1={xOf(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={xOf(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={wholeFraction ? 2 : mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
+            </g>
+          );
+        })}
+        {majorScale.map((mark) => (
+          <NumberLineSvgLabel key={`label-${mark.value}`} x={xOf(mark.value)} y={lineY + 22} label={mark.label} testId="nlh-label" />
         ))}
-        {/* the marks that must be hit: leaf when landed on, berry when skipped */}
-        {targets.map((t) => (
+        {landings.map((n) => <circle key={`l${n}`} data-testid="nlh-landing" cx={xOf(n)} cy={lineY} r={3.5} fill={PALETTE.sky} fillOpacity={0.75} />)}
+        {targets.map((t, index) => (
           <g key={`t${t}`}>
-            <line x1={xOf(t)} y1={50} x2={xOf(t)} y2={78} stroke={hits(t) ? PALETTE.leaf : PALETTE.berry} strokeWidth={3} />
-            <text x={xOf(t)} y={94} textAnchor="middle" fontSize={11} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>
-              {t}
-            </text>
-            <text x={xOf(t)} y={44} textAnchor="middle" fontSize={10} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>
-              {hits(t) ? "hit" : "skipped"}
-            </text>
+            <line x1={xOf(t)} y1={lineY - 15} x2={xOf(t)} y2={lineY + 10} stroke={hits(t) ? PALETTE.leaf : PALETTE.berry} strokeWidth={3} />
+            <text x={xOf(t)} y={36 - index * 12} textAnchor="middle" fontSize={10} fontWeight={800} fill={hits(t) ? PALETTE.leaf : PALETTE.berry}>{fmt(t)}: {hits(t) ? "hit" : "skipped"}</text>
           </g>
         ))}
-        <circle cx={xOf(spec.start)} cy={64} r={5} fill="#2E7CD6" />
-        {tone === "info" && answer !== null && h !== answer && (
-          <g data-testid="nlh-size-ghost" aria-hidden="true">
-            <text x={160} y={16} textAnchor="middle" fontSize={11} fontWeight={800} fill="#FF8A3D">
-              the largest stride hitting every mark is {answer}
-            </text>
-          </g>
-        )}
+        <circle cx={xOf(spec.start)} cy={lineY} r={5} fill={PALETTE.sky} />
+        {tone === "info" && answer !== null && h !== answer && <text data-testid="nlh-size-ghost" aria-hidden="true" x={W / 2} y={14} textAnchor="middle" fontSize={11} fontWeight={800} fill={PALETTE.tangerine}>largest working stride: {fmt(answer)}</text>}
+        <text data-testid="nlh-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
       <div className="grid grid-cols-2 gap-2">
-        <LabReadout label="stride" value={`${h}`} tone={allHit ? "good" : "neutral"} stage={tone} signalsCorrect />
+        <LabReadout label="stride" value={fmt(h)} tone={allHit ? "good" : "neutral"} stage={tone} signalsCorrect />
         <LabReadout label="marks hit" value={`${targets.filter(hits).length} of ${targets.length}`} tone={allHit ? "good" : "warn"} stage={tone} signalsCorrect />
       </div>
       <label className="grid gap-1 text-sm font-bold text-ink/70">
         <span>hop size</span>
-        <input
-          type="range"
-          min={lo}
-          max={hi}
-          step={1}
-          value={h}
-          disabled={disabled}
-          aria-label="hop size"
-          aria-valuetext={`stride ${h}; lands on ${targets.filter(hits).length} of ${targets.length} marks`}
-          onChange={(e) => set(Number(e.target.value))}
-          className="h-11 w-full accent-sky"
-        />
+        <input type="range" min={lo} max={hi} step={1} value={h} disabled={disabled}
+          aria-label={`${axisTitle} hop size`} aria-valuetext={`stride ${fmt(h)}; lands on ${targets.filter(hits).length} of ${targets.length} marks`}
+          onChange={(e) => set(Number(e.target.value))} className="h-11 w-full accent-sky" />
       </label>
       <p role="status" aria-live="polite" className="text-center text-base font-bold text-ink/70">
         {allHit ? "This stride lands on every mark — can a bigger one still do it?" : "This stride skips at least one mark."}
@@ -16505,268 +17247,150 @@ function HopSizeW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNu
     </div>
   );
 }
-
 function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<TNumberLineHop>) {
-  // Process evidence: each tap is a landing choice measured against the true
-  // landing (start ± hop·hops). A first tap is compared from the marked start.
   const landing = spec.start + (spec.direction === "back" ? -1 : 1) * spec.hop * spec.hops;
-  // Tap choices are the positions a HOP can actually reach from the start
-  // (start + k·hop, both directions, inside [min, max]) plus every authored
-  // trap landing — so anticipated wrong taps stay tappable even off the
-  // lattice. For hop = 1 this is every integer, exactly as before; for the
-  // authored count-by-tens steps it collapses 101 buttons to eleven. A
-  // kindergartner choosing among 101 targets was a defect, not a design.
-  const ticks = (() => {
+  const choices = (() => {
     const set = new Set<number>([spec.start]);
     for (let k = 1; spec.start + k * spec.hop <= spec.max; k++) set.add(spec.start + k * spec.hop);
     for (let k = 1; spec.start - k * spec.hop >= spec.min; k++) set.add(spec.start - k * spec.hop);
-    for (const c of spec.commonLandings) if (c.value >= spec.min && c.value <= spec.max) set.add(c.value);
+    for (const common of spec.commonLandings) if (common.value >= spec.min && common.value <= spec.max) set.add(common.value);
     return [...set].sort((a, b) => a - b);
   })();
   const chosen = typeof value === "number" ? value : null;
+  const W = 360, pad = 22, lineY = 66;
   const span = spec.max - spec.min || 1;
-  const xOf = (n: number) => 16 + (288 * (n - spec.min)) / span;
-  /** S237. Unit ruler under the choice ticks — see the comment at the render site. Whole units
-   *  only; on a fractional lattice the whole numbers are the landmarks the question is posed in.
-   *  Thinned to <= 12 labels so they stay readable in a 288px viewBox. */
-  const scaleTicks = useMemo(() => {
-    const first = Math.ceil(spec.min);
-    const last = Math.floor(spec.max);
-    const count = Math.max(1, last - first + 1);
-    // S237. Strides snap to a 1-2-5-10 ladder, not to count/N. Dividing gave a 0-100 line ticks
-    // every 3 and labels at 9, 18, 27 … — arithmetically even, and meaningless to read a position
-    // off. A ruler is only useful if its landmarks are the ones a learner already counts in.
-    const LADDER = [1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000];
-    const pick = (limit: number) => LADDER.find((k) => count / k <= limit) ?? LADDER[LADDER.length - 1];
-    const stride = pick(40);
-    const labelStride = Math.max(stride, pick(12));
-    const raw: number[] = [];
-    // Anchor on a multiple of the stride so labels land on round numbers, not on wherever min fell.
-    for (let n = Math.ceil(first / stride) * stride; n <= last; n += stride) raw.push(n);
-    return raw.map((n) => ({
-      n,
-      labelled: n % labelStride === 0 || n === first || n === last || n === spec.start,
-    }));
-  }, [spec.min, spec.max, spec.start]);
-  /** S237b — WHERE EVERY LABEL GOES. Reported from the running app: g3w-01-02/i1 (0…60, hops of 7,
-   *  authored trap landings 8 and 28) printed `78 10`, `221`, `2830`, `4042`, `490`. Two separate
-   *  causes, both fixed here.
-   *
-   *  1. THE RULER AND THE CHOICES SHARED ONE BASELINE (y = 86). They mean different things — the
-   *     scale of the line versus the positions a hop can reach — so the ruler now has its own row
-   *     BELOW the choice labels, and the viewBox grows to fit whatever is drawn. Suppression alone
-   *     would not have been enough: `28` and `30` are different numbers 9.6 units apart, and no
-   *     rule that keeps both can put them on one line.
-   *  2. A RULER LABEL NEXT TO A CHOICE LABEL IS REDUNDANT ANYWAY. Where a choice tick already names
-   *     a position, a fainter copy of a neighbouring round number a few units away reads as noise
-   *     even on its own row, so it is dropped once the two boxes come within a label's clearance.
-   *     The ruler's TICK MARKS always stay — the line keeps its scale; only duplicate text goes.
-   *
-   *  Choice labels can also collide with EACH OTHER, which is the rest of `78`: an authored trap
-   *  landing (8) sits one unit from a lattice landing (7). Those stagger onto a second row rather
-   *  than being dropped, because every one of them is tappable and its position is the answer.
-   *  A label with no free row is left undrawn — its tick still marks the spot and the radio button
-   *  below still names it — but on the authored corpus that case never arises. */
-  const labelPlan = useMemo(() => {
-    const ROW_GAP = Math.ceil(11 * LABEL_LINE) + 1; // 15: one 11px label, plus air
-    const ROWS = [86, 86 + ROW_GAP];
-    const xAt = (n: number) => 16 + (288 * (n - spec.min)) / span;
-    const rowEnd = ROWS.map(() => -Infinity);
-    const choice = new Map<number, { label: string; fontSize: number; x: number; y: number }>();
-    for (const n of ticks) {
-      const isWhole = !spec.denom || n % spec.denom === 0;
-      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
-      const fontSize = spec.denom && !isWhole ? 9 : 11;
-      const x = xAt(n);
-      const half = labelHalfWidth(label, fontSize);
-      const row = rowEnd.findIndex((end) => x - half >= end);
-      if (row < 0) continue;
-      rowEnd[row] = x + half + LABEL_GAP;
-      choice.set(n, { label, fontSize, x, y: ROWS[row] });
-    }
-    const lastRow = Math.max(ROWS[0], ...[...choice.values()].map((c) => c.y));
-    const rulerY = lastRow + ROW_GAP;
-    const drawn = [...choice.values()];
-    const ruler: { n: number; x: number; label: string }[] = [];
-    let rulerEnd = -Infinity;
-    for (const { n, labelled } of scaleTicks) {
-      if (!labelled) continue;
-      // On a rational lattice `n` counts DENOM-ths, so printing it raw would name 7 sixths "7".
-      // Every authored denom step hops by 1, so each of these positions is also a choice and the
-      // label is suppressed below — but a generator that hops by 2 would have printed the wrong
-      // number, and a scale that lies is worse than no scale.
-      const label = spec.denom ? hopLabel(n, spec.denom) : String(n);
-      const x = xAt(n);
-      const half = labelHalfWidth(label, 9);
-      if (drawn.some((c) => Math.abs(c.x - x) < half + labelHalfWidth(c.label, c.fontSize) + LABEL_GAP)) continue;
-      if (x - half < rulerEnd) continue;
-      rulerEnd = x + half + LABEL_GAP;
-      ruler.push({ n, x, label });
-    }
-    // A SINGLE surviving ruler label is not a scale — it is a stray number. Once suppression has
-    // removed the labels that duplicated a choice, one leftover (the reported case left only `60`,
-    // alone on its own row under a line already numbered 0..56) reads as unrelated to the line
-    // rather than as its end. A scale needs two reference points to be one; below that the tick
-    // marks carry the scale by themselves, which is what they did before any label existed.
-    const scale = ruler.length >= 2 ? ruler : [];
-    return { choice, ruler: scale, rulerY, height: (scale.length > 0 ? rulerY : lastRow) + 8 };
-  }, [ticks, scaleTicks, spec.denom, spec.min, span]);
-  // S119: ONE ARC PER HOP, not per unit. The previous version drew
-  // `|chosen - start|` arcs each spanning a single unit, so a count-by-tens
-  // lesson with three hops of ten drew THIRTY arcs — and the hop count is the
-  // entire thing those lessons teach. 18 shipped steps had hop > 1.
-  // An off-lattice tap (an authored trap landing that is not a whole number of
-  // hops from the start) cannot be shown as whole hops, so it draws a single
-  // arc spanning the whole distance rather than a misleading partial count.
+  const xOf = (n: number) => pad + ((W - 2 * pad) * (n - spec.min)) / span;
+  const fmt = (n: number) => numberLinePlainLabel(n, spec.denom);
+  const scale = numberLineScalePlan(spec.min, spec.max, spec.denom);
+  const majorScale = scale.filter((mark) => mark.major);
+  const title = spec.title ?? "Number-line hops";
+  const axisTitle = numberLineAxisTitle(spec.axisLabel, spec.unit, spec.denom !== undefined);
+  const majorValues = new Set(majorScale.map((mark) => mark.value));
+  const labelRows: number[] = [];
+  const labelPlan = [...new Set([...majorScale.map((mark) => mark.value), ...choices])]
+    .sort((a, b) => a - b)
+    .map((point) => {
+      const label = fmt(point);
+      const x = xOf(point);
+      const half = labelHalfWidth(label, 10) + LABEL_GAP;
+      let row = labelRows.findIndex((rightEdge) => x - half >= rightEdge);
+      if (row < 0) {
+        row = labelRows.length;
+        labelRows.push(Number.NEGATIVE_INFINITY);
+      }
+      labelRows[row] = x + half;
+      return { value: point, label, x, y: lineY + 22 + row * 15, major: majorValues.has(point) };
+    });
+  const H = Math.max(132, lineY + 22 + Math.max(0, labelRows.length - 1) * 15 + 34);
+  const safeWordX = (rawX: number, word: string, fontSize: number) => {
+    const half = labelHalfWidth(word, fontSize);
+    return Math.min(W - 8 - half, Math.max(8 + half, rawX));
+  };
+
   const delta = chosen !== null ? chosen - spec.start : 0;
   const stepDir = delta < 0 ? -1 : 1;
   const onLattice = delta !== 0 && Math.abs(delta) % spec.hop === 0;
   const arcCount = delta === 0 ? 0 : onLattice ? Math.abs(delta) / spec.hop : 1;
   const arcSpan = onLattice ? spec.hop : Math.abs(delta);
-  const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
-  /* S242 (D-23). This drawing was `role="group"` named "Number line" — a static name that says the
-   * same thing before and after the learner acts, on the one surface whose entire content IS the
-   * hops. Its own sibling HopSizeW already emits `role="img"` with a state sentence ("A stride of 4
-   * from 0. 8 is landed on; 12 is landed on."), so the pattern needed no invention, only applying.
-   * `role="group"` is also wrong on its own terms: the SVG holds no focusable children to group.
-   * Numbers go through the same `hopLabel`/`denom` formatter the ruler uses, so a rational lattice
-   * narrates "1 1/2" rather than the raw count of halves. */
-  const say = (n: number) => (spec.denom ? hopLabel(n, spec.denom) : String(n));
   const hopWord = arcCount === 1 ? "hop" : "hops";
   const dirWord = stepDir < 0 ? "back" : "forward";
-  const stateLabel =
-    chosen === null
-      ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Start marked at ${say(spec.start)}. No hop made yet.`
-      : delta === 0
-        ? `Number line from ${say(spec.min)} to ${say(spec.max)}. Still on the start at ${say(spec.start)} — no hop made.`
-        : onLattice
-          ? `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, ${arcCount} ${hopWord} of ${say(arcSpan)} ${dirWord}, landing on ${say(chosen)}.`
-          : `Number line from ${say(spec.min)} to ${say(spec.max)}. From ${say(spec.start)}, one jump of ${say(arcSpan)} ${dirWord} to ${say(chosen)}, which is not a whole number of ${say(spec.hop)}-sized hops.`;
+  const scaleDescription = `${title}. ${axisTitle} from ${fmt(spec.min)} to ${fmt(spec.max)}. Scale labels: ${majorScale.map((mark) => mark.label).join(", ")}. Choice positions: ${choices.map(fmt).join(", ")}.`;
+  const stateLabel = chosen === null
+    ? `${scaleDescription} Start at ${fmt(spec.start)}. No hop made yet.`
+    : delta === 0
+      ? `${scaleDescription} Still at the start, ${fmt(spec.start)}; no hop made.`
+      : onLattice
+        ? `${scaleDescription} From ${fmt(spec.start)}, ${arcCount} ${hopWord} of ${fmt(arcSpan)} ${dirWord}, landing on ${fmt(chosen)}.`
+        : `${scaleDescription} From ${fmt(spec.start)}, one jump of ${fmt(arcSpan)} ${dirWord} to ${fmt(chosen)}, not a whole number of ${fmt(spec.hop)}-sized hops.`;
+  const css = `@media (prefers-reduced-motion: no-preference){.nlh-hop{animation:nlh-in .3s ease-out backwards}@keyframes nlh-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}`;
+
   return (
     <div className="grid gap-3">
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-      <svg viewBox={`0 0 320 ${labelPlan.height}`} className="w-full" role="img" aria-label={stateLabel}>
+      <p data-testid="nlh-title" className="text-center text-sm font-extrabold text-ink">{title}</p>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" className="w-full" role="img" aria-label={stateLabel}>
         <style>{css}</style>
-        <line x1={16} y1={64} x2={304} y2={64} stroke="#22314F" strokeWidth={2} />
-        {/* S237. The line used to tick ONLY the tappable choices, so everything between them was
-            blank: "9 + 9: start at 9, make one hop of 9" drew a mark at 9 and marks at 17/18/19
-            with nothing in between, and the hop could not be COUNTED — which is the entire job of
-            a number line at this grade. A full unit scale now underlies the choice ticks: minor
-            marks at every unit, labels thinned to stay legible at 288px, and min/max/start always
-            labelled. Choice ticks still draw on top, taller and bolder, so what is tappable stays
-            obvious. Nothing here is interactive and nothing is graded — it is the ruler. */}
-        {scaleTicks.map(({ n }) => (
-          <line key={`sc-${n}`} aria-hidden="true" x1={xOf(n)} y1={59} x2={xOf(n)} y2={69} stroke="#22314F" strokeWidth={1} strokeOpacity={0.4} />
-        ))}
-        {/* The ruler's own row, below every choice label — see labelPlan. */}
-        {labelPlan.ruler.map(({ n, x, label }) => (
-          <text key={`sl-${n}`} aria-hidden="true" x={x} y={labelPlan.rulerY} textAnchor="middle" fontSize={9} fontWeight={600} fill="#22314F" fillOpacity={0.55}>
-            {label}
-          </text>
-        ))}
-        {/* hop arcs from start to the chosen landing, with a direction arrowhead */}
-        {Array.from({ length: arcCount }).map((_, i) => {
-          const a = spec.start + stepDir * i * arcSpan;
-          const b = a + stepDir * arcSpan;
-          const x1 = xOf(a);
-          const x2 = xOf(b);
-          const mid = (x1 + x2) / 2;
-          // arrowhead points in the travel direction (left for backward/subtraction)
-          const head = stepDir < 0 ? `M ${x2} 64 l 6 -5 m -6 5 l 6 5` : `M ${x2} 64 l -6 -5 m 6 5 l -6 5`;
+        <g data-testid="nlh-ruled-scale" aria-hidden="true">
+          {majorScale.map((mark) => <line key={`guide-${mark.value}`} x1={xOf(mark.value)} y1={24} x2={xOf(mark.value)} y2={lineY + 8} stroke={PALETTE.ink} strokeOpacity={0.1} />)}
+        </g>
+        <NumberLineAxis x1={pad} x2={W - pad} y={lineY} color={PALETTE.ink} testId="nlh-axis" arrowTestId="nlh-arrows" />
+
+        {scale.map((mark) => {
+          const wholeFraction = spec.denom !== undefined && mark.value % spec.denom === 0;
           return (
-            <g key={i} className="nlh-hop" data-testid="nlh-arc" style={{ animationDelay: `${i * 0.12}s` }}>
-              <path d={`M ${x1} 64 Q ${mid} 36 ${x2} 64`} fill="none" stroke="#2E7CD6" strokeWidth={2.5} />
-              <path d={head} fill="none" stroke="#2E7CD6" strokeWidth={2.2} strokeLinecap="round" />
+            <g key={mark.value} data-testid={mark.major ? "nlh-major-tick" : "nlh-minor-tick"}>
+              <line x1={xOf(mark.value)} y1={lineY - (mark.major ? 7 : 4)} x2={xOf(mark.value)} y2={lineY + (mark.major ? 7 : 4)} stroke={PALETTE.ink} strokeWidth={wholeFraction ? 2 : mark.major ? 1.6 : 1} strokeOpacity={mark.major ? 0.82 : 0.45} />
             </g>
           );
         })}
-        {ticks.map((n) => {
-          const isStart = n === spec.start;
-          const isChosen = n === chosen;
-          // On a rational lattice the whole numbers are the landmarks the question is posed in,
-          // so they carry taller ticks and bolder labels; the fractional positions between them
-          // are the hops. On an integer line (no denom) every tick is a whole number and this
-          // reduces to exactly the previous rendering.
-          const isWhole = !spec.denom || n % spec.denom === 0;
-          const placed = labelPlan.choice.get(n);
+        {labelPlan.map((mark) => (
+          <NumberLineSvgLabel key={`label-${mark.value}`} x={mark.x} y={mark.y} label={mark.label} testId={mark.major ? "nlh-label" : "nlh-choice-label"} />
+        ))}
+        {Array.from({ length: arcCount }).map((_, index) => {
+          const from = spec.start + stepDir * index * arcSpan;
+          const to = from + stepDir * arcSpan;
+          const x1 = xOf(from), x2 = xOf(to), mid = (x1 + x2) / 2;
+          const head = stepDir < 0 ? `M ${x2} ${lineY} l 6 -5 m -6 5 l 6 5` : `M ${x2} ${lineY} l -6 -5 m 6 5 l -6 5`;
           return (
-            <g key={n}>
-              <line
-                x1={xOf(n)}
-                y1={isWhole ? 54 : 59}
-                x2={xOf(n)}
-                y2={isWhole ? 74 : 69}
-                stroke="#22314F"
-                strokeWidth={isWhole ? 2 : 1.2}
-                strokeOpacity={isWhole ? 1 : 0.55}
-              />
-              {placed && (
-                <text
-                  x={placed.x}
-                  y={placed.y}
-                  textAnchor="middle"
-                  fontSize={placed.fontSize}
-                  fontWeight={isStart || isWhole ? 800 : 600}
-                  fill="#22314F"
-                  fillOpacity={isWhole ? 1 : 0.7}
-                >
-                  {placed.label}
-                </text>
-              )}
-              {isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" fillOpacity={0.55} />}
-              {isChosen && !isStart && <circle cx={xOf(n)} cy={64} r={6} fill="#2E7CD6" />}
+            <g key={index} className="nlh-hop" data-testid="nlh-arc" style={{ animationDelay: `${index * 0.12}s` }}>
+              <path d={`M ${x1} ${lineY} Q ${mid} 31 ${x2} ${lineY}`} fill="none" stroke={PALETTE.sky} strokeWidth={2.5} />
+              <path d={head} fill="none" stroke={PALETTE.sky} strokeWidth={2.2} strokeLinecap="round" data-number-line-direction={stepDir < 0 ? "left" : "right"} />
             </g>
           );
         })}
-        {/* Reveal ghost: the true landing, dashed tangerine — hops are the learner's
-            (sky); tangerine stays reserved for the target. */}
-        {tone === "info" && chosen !== landing && (
-          <g data-testid="nlh-ghost" aria-hidden="true">
-            <circle cx={xOf(landing)} cy={64} r={9} fill="none" stroke="#FF8A3D" strokeWidth={2.4} strokeDasharray="4 3" />
-            <text x={xOf(landing)} y={48} textAnchor="middle" fontSize={10} fontWeight={800} fill="#FF8A3D">
-              target
-            </text>
-          </g>
-        )}
+        {choices.map((n) => {
+          const isStart = n === spec.start, isChosen = n === chosen;
+          return (
+            <g key={n} data-testid="nlh-choice-tick">
+              <line x1={xOf(n)} y1={lineY - 9} x2={xOf(n)} y2={lineY + 9} stroke={PALETTE.ink} strokeWidth={isStart || isChosen ? 2.2 : 1.4} strokeOpacity={isStart || isChosen ? 0.9 : 0.6} />
+              {isStart && <circle cx={xOf(n)} cy={lineY} r={6} fill={PALETTE.sky} fillOpacity={0.55} />}
+              {isChosen && !isStart && <circle cx={xOf(n)} cy={lineY} r={6} fill={PALETTE.sky} />}
+            </g>
+          );
+        })}
+        <text x={safeWordX(xOf(spec.start), "start", 9)} y={18} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>start</text>
+        {chosen !== null && chosen !== spec.start && <text x={safeWordX(xOf(chosen), "landing", 9)} y={47} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>landing</text>}
+        {tone === "info" && chosen !== landing && (() => {
+          const targetX = safeWordX(xOf(landing), "target", 10);
+          // S241 (post-interaction). "landing" (the learner's own choice) and this reveal ghost's
+          // "target" word both sit at y=47; on a trap landing close to the true one (g3w-01-02/i1:
+          // trap 28 vs landing 35, 7 units apart on a 0-60 line) the two words are each wider than
+          // their separation and print on top of each other. Same fix as labelPlan's row-packing
+          // just above — measured with the same labelHalfWidth the test model uses — but with only
+          // ever two words in this register, a single alternate row (above "start", clear of the
+          // ghost circle at lineY) is enough; it never needs labelPlan's general N-row search.
+          const crowdsLanding = chosen !== null && chosen !== spec.start &&
+            Math.abs(targetX - safeWordX(xOf(chosen), "landing", 9)) <
+              labelHalfWidth("landing", 9) + labelHalfWidth("target", 10) + LABEL_GAP;
+          return (
+            <g data-testid="nlh-ghost" aria-hidden="true">
+              <circle cx={xOf(landing)} cy={lineY} r={9} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="4 3" />
+              <text x={targetX} y={crowdsLanding ? 32 : 47} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>target</text>
+            </g>
+          );
+        })()}
+        <text data-testid="nlh-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
-      {/* selection via native buttons — keyboard + touch, ≥44px targets */}
-      <div role="radiogroup" aria-label="Choose where you land" className="flex flex-wrap justify-center gap-1.5">
-        {ticks.map((n) => (
-          <button
-            key={n}
-            type="button"
-            role="radio"
-            aria-checked={chosen === n}
-            aria-label={`Land on ${spec.denom ? hopLabel(n, spec.denom) : n}`}
-            disabled={disabled}
+      <div role="radiogroup" aria-label={`Choose where you land on ${axisTitle}`} className="flex flex-wrap justify-center gap-1.5">
+        {choices.map((n) => (
+          <button key={n} type="button" role="radio" aria-checked={chosen === n} aria-label={`Land on ${fmt(n)}`} disabled={disabled}
             onClick={() => {
               const dir = moveRelation(chosen ?? spec.start, n, landing);
-              // Arrival is silent (success is not noise); every real move
-              // carries its position for the strategy layer.
               if (dir) onEvent?.({ control: "landing", dir, state: { pos: n } });
               onChange(n);
             }}
-            className={`min-h-11 min-w-11 rounded-card border-2 text-base font-bold tabular-nums transition-colors motion-reduce:transition-none ${
-              chosen === n ? "border-sky bg-cta text-white" : n === spec.start ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/25 enabled:hover:border-sky/60"
-            } disabled:opacity-40`}
-          >
-            {spec.denom ? hopLabel(n, spec.denom) : n}
+            className={`min-h-11 min-w-11 rounded-card border-2 text-base font-bold tabular-nums transition-colors motion-reduce:transition-none ${chosen === n ? "border-sky bg-cta text-white" : n === spec.start ? "border-sky bg-sky/10 text-sky-ink" : "border-ink/25 enabled:hover:border-sky/60"} disabled:opacity-40`}>
+            {fmt(n)}
           </button>
         ))}
       </div>
       <p role="status" aria-live="polite" className="text-center text-base font-bold text-ink/70">
-        start at <span className="text-sky-ink">{spec.denom ? hopLabel(spec.start, spec.denom) : spec.start}</span>
-        {chosen !== null && (
-          <>
-            {" "}
-            → land on <span className="text-sky-ink tabular-nums">{spec.denom ? hopLabel(chosen, spec.denom) : chosen}</span>
-          </>
-        )}
+        start at <span className="text-sky-ink">{fmt(spec.start)}</span>
+        {chosen !== null && <> {"→"} land on <span className="text-sky-ink tabular-nums">{fmt(chosen)}</span></>}
       </p>
     </div>
   );
 }
-
 /* ---------------- G1–G2: Base-ten compose (tens rods + ones) ---------------- */
 
 /** Hoisted (s46): defined per-render this remounted its buttons on EVERY value
@@ -17067,7 +17691,12 @@ function LengthPickAlignW({ spec, value, onChange, disabled, tone }: WProps<TLen
           viewBox={`0 0 ${AW} ${AH}`}
           className="mx-auto w-full max-w-md"
           role="img"
-          aria-label={`${spec.items.length} bars behind a start line. ${
+          // S237 (accessible/visible parity). This used to lead with "${spec.items.length} bars"
+          // — a bare item count nothing on screen ever prints (a sighted learner sees N bars, but
+          // no numeral names N). Every bar's own label and length is still spoken below (each gets
+          // a range input or radio button naming it), so nothing about the bars themselves is lost
+          // — only the incidental count leads with a number the visible picture withholds.
+          aria-label={`Bars behind a start line. ${
             aligned ? "Starting ends lined up — the compare is fair." : "Starting ends not lined up yet."
           }`}
         >
@@ -18473,8 +19102,8 @@ function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = fa
   // greyscale, low vision, and a screen reader alike.
   const mark = shown === "good" ? "✓" : shown === "warn" ? "!" : "";
   const spoken = shown === "good" ? "on target" : shown === "warn" ? "needs attention" : "";
-  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={`${label}: ${value}${spoken ? `, ${spoken}` : ""}`}>
-    <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65">{label}</div>
+  return <div className={`rounded-xl border px-3 py-2 text-center ${cls}`} aria-label={accessibleMathText(`${label}: ${value}${spoken ? `, ${spoken}` : ""}`)}>
+    <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-65"><MathProse text={label} includeArithmetic /></div>
     {/* THE VALUE KEEPS ITS OWN ELEMENT. Prefixing the mark into the same text node made the value
       * read as "✓ -14", and two tests that assert on the exact readout — one of them named "keeps
       * reversal visible as a signed consequence rather than color alone", which is this same
@@ -18484,7 +19113,7 @@ function LabReadout({ label, value, tone = "neutral", stage, signalsCorrect = fa
       * announcing it at all. */}
     <div className="text-base font-black tabular-nums">
       {mark && <span aria-hidden="true">{mark} </span>}
-      <span>{value}</span>
+      <span><MathProse text={value} includeArithmetic /></span>
     </div>
   </div>;
 }
@@ -18569,7 +19198,8 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent,tone}:WPro
   useEffect(()=>{if(!v)onChange({criterion,angle,flipped:false,moves:0});/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
   const rad=angle*Math.PI/180,a=spec.sideA,b=spec.sideB,ssaRatio=b*Math.sin(rad)/a,clamped=Math.min(1,Math.max(-1,ssaRatio)),B1=Math.asin(clamped),B2=Math.PI-B1,C1=Math.PI-rad-B1,C2=Math.PI-rad-B2;
   const candidateCount=criterion==='SSA'?(ssaRatio>1+1e-9?0:C2>1e-9?2:1):1,ambiguous=candidateCount===2,unique=candidateCount===1;
-  const set=(n:Partial<{criterion:Criterion;angle:number;flipped:boolean;constraintBroken:boolean}>)=>{const nc=n.criterion??criterion,na=n.angle??angle,nf=n.flipped??flipped;if(nc!==criterion)onEvent?.({control:'criterion',dir:nc===spec.targetCriterion?'toward':'away'});if(na!==angle){const d=moveRelation(angle,na,spec.targetAngle);if(d)onEvent?.({control:'angle',dir:d});}if(nf!==flipped)onEvent?.({control:'candidate',dir:ambiguous?'toward':'neutral'});onChange({criterion:nc,angle:na,flipped:nf,moves:moves+1,constraintBroken:n.constraintBroken??broken})};
+  const settled=tone==='success'||tone==='info';
+  const set=(n:Partial<{criterion:Criterion;angle:number;flipped:boolean;constraintBroken:boolean}>)=>{const nc=n.criterion??criterion,na=n.angle??angle,nf=n.flipped??flipped;if(nc!==criterion)onEvent?.({control:'criterion',dir:'neutral',state:{criterion:nc}});if(na!==angle)onEvent?.({control:'angle',dir:'neutral',state:{angle:na}});if(nf!==flipped)onEvent?.({control:'candidate',dir:'neutral',state:{visible:nf?1:0}});if(n.constraintBroken!==undefined&&n.constraintBroken!==broken)onEvent?.({control:'constraint-lock',dir:'neutral',state:{broken:n.constraintBroken?1:0}});onChange({criterion:nc,angle:na,flipped:nf,moves:moves+1,constraintBroken:n.constraintBroken??broken})};
   const scale=18,c1=Math.max(2,a*Math.sin(C1)/Math.max(.08,Math.sin(rad))),c2=Math.max(2,a*Math.sin(Math.max(.01,C2))/Math.max(.08,Math.sin(rad)));
   const Ax=45,Ay=185,Cx=Ax+b*scale*Math.cos(rad),Cy=Ay-b*scale*Math.sin(rad),B1x=Ax+c1*scale,B2x=Ax+c2*scale;
   const secondX=ambiguous?B2x:B1x;
@@ -18587,19 +19217,19 @@ function TriangleConstraintLabW({spec,value,onChange,disabled,onEvent,tone}:WPro
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg ref={svgRef} viewBox="0 0 380 230" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`${criterion} givens leave ${candidateCount===0?'no triangle':candidateCount===1?'one unique triangle':'two noncongruent triangles'} at angle ${angle} degrees.`}>
       <path d={`M ${Ax} ${Ay} L ${B1x} ${Ay} L ${Cx} ${Cy} Z`} fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="5" strokeLinejoin="round"/>
-      <path d={`M ${Ax} ${Ay} L ${secondX} ${Ay} L ${Cx} ${Cy} Z`} fill="none" stroke={ambiguous?PALETTE.tangerine:PALETTE.leaf} strokeWidth="4" strokeDasharray={ambiguous?'9 6':'none'} strokeLinejoin="round" opacity={flipped||!ambiguous?1:.38}/>
+      <path d={`M ${Ax} ${Ay} L ${secondX} ${Ay} L ${Cx} ${Cy} Z`} fill="none" stroke={ambiguous?PALETTE.tangerine:settled?PALETTE.leaf:PALETTE.sky} strokeWidth="4" strokeDasharray={ambiguous?'9 6':'none'} strokeLinejoin="round" opacity={flipped||!ambiguous?1:.38}/>
       <path d={`M ${Ax+26} ${Ay} A 26 26 0 0 0 ${Ax+26*Math.cos(rad)} ${Ay-26*Math.sin(rad)}`} fill="none" stroke={PALETTE.ink} strokeWidth="2"/>
       <text x={Ax+32} y={Ay-12} fontSize="12" fontWeight="900" fill={PALETTE.ink}>{angle}°</text>
-      <text x="190" y="24" textAnchor="middle" fontWeight="900" fill={unique?PALETTE.leaf:PALETTE.tangerine}>{candidateCount===0?'givens are inconsistent':unique?'constraints lock one triangle':'ambiguous case: two triangles fit'}</text>
-      {model.midsegment&&(()=>{const P=(p:[number,number]):[number,number]=>[Ax+p[0]*scale,Ay-p[1]*scale];const f=P(model.midsegment.from),t=P(model.midsegment.to);const mA=P(model.vertices[1]),mB=P(model.vertices[2]);return <g data-testid="tcl-midsegment"><line x1={f[0]} y1={f[1]} x2={t[0]} y2={t[1]} stroke={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry} strokeWidth="4"/><circle cx={f[0]} cy={f[1]} r="4" fill={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry}/><circle cx={t[0]} cy={t[1]} r="4" fill={model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry}/><line x1={mA[0]} y1={mA[1]} x2={mB[0]} y2={mB[1]} stroke={PALETTE.ink} strokeOpacity=".35" strokeWidth="2" strokeDasharray="4 3"/></g>})()}
+      <text x="190" y="24" textAnchor="middle" fontWeight="900" fill={settled&&unique?PALETTE.leaf:PALETTE.tangerine}>{candidateCount===0?'givens are inconsistent':unique?'constraints lock one triangle':'ambiguous case: two triangles fit'}</text>
+      {model.midsegment&&(()=>{const P=(p:[number,number]):[number,number]=>[Ax+p[0]*scale,Ay-p[1]*scale];const f=P(model.midsegment.from),t=P(model.midsegment.to);const mA=P(model.vertices[1]),mB=P(model.vertices[2]);const midColor=settled?(model.midsegment.isMidpoints?PALETTE.leaf:PALETTE.berry):model.midsegment.isMidpoints?PALETTE.sky:PALETTE.tangerine;return <g data-testid="tcl-midsegment"><line x1={f[0]} y1={f[1]} x2={t[0]} y2={t[1]} stroke={midColor} strokeWidth="4"/><circle cx={f[0]} cy={f[1]} r="4" fill={midColor}/><circle cx={t[0]} cy={t[1]} r="4" fill={midColor}/><line x1={mA[0]} y1={mA[1]} x2={mB[0]} y2={mB[1]} stroke={PALETTE.ink} strokeOpacity=".35" strokeWidth="2" strokeDasharray="4 3"/></g>})()}
       <text x="190" y="215" textAnchor="middle" fontSize="12" fontWeight="800" fill={PALETTE.ink}>{criterion}: {unique?'0 degrees of freedom':'1 unresolved choice'}</text>
       {!disabled&&<rect className="mt-drag-hit" data-testid="tcl-drag" x={0} y={0} width={380} height={200} aria-hidden="true" {...drag.handleProps}/>}
     </svg>
-    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
+    {spec.constraint&&<div className="grid grid-cols-2 gap-2" data-testid="tcl-constraint"><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (left)':'midsegment'} value={spec.constraint==='isoscelesLegs'?`${baseAngle.toFixed(1)}\u00b0`:`${(model.midsegment?.length??0).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label={spec.constraint==='isoscelesLegs'?'base angle (right)':'half the base'} value={spec.constraint==='isoscelesLegs'?`${otherBase.toFixed(1)}\u00b0`:`${((model.midsegment?.base??0)/2).toFixed(2)}`} tone={locked?'good':'warn'} stage={tone} signalsCorrect /></div>}<p data-testid="tcl-anglesum" className="text-center text-xs font-bold text-ink/60">angles {model.angles.map(a=>a.toFixed(1)).join('° + ')}° = {(model.angles[0]+model.angles[1]+model.angles[2]).toFixed(1)}°</p>{spec.constraint&&<button type="button" data-testid="tcl-lock" disabled={disabled} aria-pressed={locked} onClick={()=>set({constraintBroken:!broken})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${settled?(locked?'border-leaf bg-leaf/10 text-leaf-ink':'border-berry bg-berry/10 text-berry-ink'):locked?'border-sky bg-sky/10 text-sky-ink':'border-tangerine bg-tangerine/10 text-tangerine-ink'}`}>{locked?(spec.constraint==='isoscelesLegs'?'The legs are locked equal — release them':'The join is locked to the midpoints — release it'):(spec.constraint==='isoscelesLegs'?'Released: the base angles have come apart — lock them again':'Released: the join is no longer the midsegment — lock it again')}</button>}<div className="grid grid-cols-3 gap-2"><LabReadout label="criterion" value={criterion} tone={criterion===spec.targetCriterion?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="candidates" value={String(candidateCount)} tone={unique?'good':'warn'} stage={tone} signalsCorrect /><LabReadout label="experiments" value={`${moves}/${spec.requiredMoves}`} tone={moves>=spec.requiredMoves?'good':'neutral'}/></div>
     <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">{criteria.map(c=><button key={c} type="button" disabled={disabled} aria-pressed={criterion===c} onClick={()=>set({criterion:c,flipped:false})} className={`min-h-11 rounded-xl border-2 font-extrabold ${criterion===c?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{c}</button>)}</div>
     <label className="grid gap-1 text-sm font-bold"><span>Change the included/given angle</span><input aria-label="triangle constraint angle" type="range" min="20" max="140" step={spec.angleStep} value={angle} disabled={disabled} onChange={e=>set({angle:Number(e.target.value)})} className="h-11 w-full accent-sky"/></label>
-    <button type="button" disabled={disabled} onClick={()=>set({flipped:!flipped})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${ambiguous?'border-tangerine bg-tangerine/10':'border-leaf bg-leaf/10'}`}>{candidateCount===0?'No triangle satisfies these SSA givens':ambiguous?(flipped?'Hide the second valid triangle':'Reveal the second valid triangle'):'Try to make a different triangle — it collapses onto the first'}</button>
-    {targetReady&&<p className="rounded-xl border border-leaf/30 bg-leaf/10 p-3 text-sm font-bold text-leaf-ink">The chosen givens leave no geometric freedom: a congruence criterion is a uniqueness guarantee.</p>}
+    <button type="button" disabled={disabled} onClick={()=>set({flipped:!flipped})} className={`min-h-12 rounded-xl border-2 px-4 font-extrabold ${ambiguous?'border-tangerine bg-tangerine/10':settled?'border-leaf bg-leaf/10':'border-sky bg-sky/10'}`}>{candidateCount===0?'No triangle satisfies these SSA givens':ambiguous?(flipped?'Hide the second valid triangle':'Reveal the second valid triangle'):'Try to make a different triangle — it collapses onto the first'}</button>
+    {settled&&targetReady&&<p className="rounded-xl border border-leaf/30 bg-leaf/10 p-3 text-sm font-bold text-leaf-ink">The chosen givens leave no geometric freedom: a congruence criterion is a uniqueness guarantee.</p>}
   </div>;
 }
 type TtriangleCriterion='SSS'|'SAS'|'ASA'|'AAS'|'HL'|'SSA';
@@ -18719,14 +19349,16 @@ function SamplingBiasLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TSa
 
 function shapePoints(sides:number,right:number,equal:number,parallel:number){if(sides===3)return [[50,180],[150,35],[260,180]];if(sides===4){if(right===4&&equal===4)return [[70,45],[235,45],[235,195],[70,195]];if(right===4)return [[50,65],[270,65],[270,185],[50,185]];if(equal===4)return [[160,35],[275,120],[160,205],[45,120]];if(parallel===1)return [[85,55],[235,55],[280,190],[40,190]];return [[45,70],[260,45],[285,185],[75,205]]}const cx=160,cy=125,r=95;return Array.from({length:sides},(_,i)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/sides),cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/sides)])}
 
-function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<TShapeHierarchyLab>){
+function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone,seed}:WProps<TShapeHierarchyLab>){
   const selectedId=typeof value==="string"?value:null;
   const selected=spec.choices.find((choice)=>choice.id===selectedId)??null;
   const correct=spec.choices.find((choice)=>shapeHierarchyChoiceCorrect(spec,choice))!;
-  const choose=(id:string)=>{const choice=spec.choices.find((candidate)=>candidate.id===id);if(!choice)return;onEvent?.({control:"shape-claim",dir:shapeHierarchyChoiceCorrect(spec,choice)?"toward":"away",kind:"efficient",state:{claim:choice.claim}});onChange(id)};
+  const showEvidence=tone==="success"||tone==="info";
+  const orderedChoices=useMemo(()=>seededShuffle(spec.choices,seed??spec.choices.map((choice)=>choice.id).join("|")),[seed,spec.choices]);
+  const choose=(id:string)=>{const choice=spec.choices.find((candidate)=>candidate.id===id);if(!choice)return;onEvent?.({control:"shape-claim",dir:"neutral",kind:"efficient",state:{claim:choice.claim}});onChange(id)};
   const highlighted=new Set(selected?.highlightNodeIds??[]);
-  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{spec.choices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block"><MathProse text={choice.label} /></span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{EVIDENCE_KIND[choice.evidenceKind] ?? choice.evidenceKind}</span></button>)}</div>;
-  const evidence=selected?<div data-testid="sh-evidence" className={`rounded-2xl border-2 p-4 ${shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{EVIDENCE_KIND[selected.evidenceKind] ?? selected.evidenceKind} evidence</div><p className="font-bold">{selected.evidenceText}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to open the evidence it would need.</div>;
+  const choiceButtons=<div className="grid gap-2 sm:grid-cols-3">{orderedChoices.map((choice)=><button key={choice.id} data-choice-id={choice.id} type="button" disabled={disabled} aria-pressed={selectedId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-14 rounded-xl border-2 px-3 py-2 text-sm font-extrabold transition-colors motion-reduce:transition-none ${selectedId===choice.id?"border-sky bg-sky/10 shadow-sm":"border-ink/15 bg-white hover:border-sky/50"}`}><span className="block"><MathProse text={choice.label} /></span><span className="mt-1 block text-[10px] font-bold uppercase tracking-wide text-ink/55">{EVIDENCE_KIND[choice.evidenceKind] ?? choice.evidenceKind}</span></button>)}</div>;
+  const evidence=selected?<div data-testid="sh-evidence" data-revealed={showEvidence||undefined} className={`rounded-2xl border-2 p-4 ${showEvidence?(shapeHierarchyChoiceCorrect(spec,selected)?"border-leaf/45 bg-leaf/5":"border-berry/35 bg-berry/5"):"border-ink/15 bg-white"}`}><div className="mb-1 text-xs font-extrabold uppercase tracking-wide">{EVIDENCE_KIND[selected.evidenceKind] ?? selected.evidenceKind} evidence</div><p className="font-bold">{showEvidence?shapeHierarchyChoiceEvidence(spec,selected):"Build your claim from the fixed givens, then check it."}</p></div>:<div className="rounded-2xl border border-dashed border-ink/25 p-4 text-sm font-bold text-ink/65">Select a claim to show the kind of evidence it needs.</div>;
   const reveal=tone==="info"&&selectedId!==correct.id?<GhostChip testid="shlab-ghost">Evidence-backed answer: {correct.label}</GhostChip>:null;
   if(spec.mode==="triangle"){
     const sides=spec.triangleSides,angles=spec.triangleAngles;
@@ -18749,7 +19381,7 @@ function ShapeHierarchyLabW({spec,value,onChange,disabled,onEvent,tone}:WProps<T
     const claim=selected?.claim??null;
     const verdict=claim?.startsWith("always")?"always":claim?.startsWith("sometimes")?"sometimes":claim?.startsWith("never")?"never":claim;
     const relationDiagram=verdict?<svg viewBox="0 0 420 210" className="w-full" role="img" aria-label={`Selected verdict ${claim} for ${spec.subjectLabel} compared with ${spec.predicateLabel}.`}>{verdict==="always"?<><circle cx="215" cy="105" r="86" fill={PALETTE.tangerine} fillOpacity=".08" stroke={PALETTE.tangerine} strokeWidth="4"/><circle cx="215" cy="105" r="45" fill={PALETTE.sky} fillOpacity=".18" stroke={PALETTE.sky} strokeWidth="4"/><text x="215" y="101" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.subjectLabel}</text><text x="215" y="183" textAnchor="middle" fontWeight="900" fill={PALETTE.ink}>{spec.predicateLabel}</text></>:verdict==="sometimes"?<><circle cx="170" cy="105" r="72" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="250" cy="105" r="72" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><text x="125" y="108" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="108" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="210" y="198" textAnchor="middle" fontSize="12" fontWeight="900">overlap needs an example AND a counterexample</text></>:<><circle cx="125" cy="105" r="62" fill={PALETTE.sky} fillOpacity=".16" stroke={PALETTE.sky} strokeWidth="4"/><circle cx="295" cy="105" r="62" fill={PALETTE.tangerine} fillOpacity=".12" stroke={PALETTE.tangerine} strokeWidth="4"/><line x1="205" y1="35" x2="205" y2="175" stroke={PALETTE.berry} strokeWidth="5" strokeDasharray="10 7"/><text x="125" y="109" textAnchor="middle" fontWeight="900">{spec.subjectLabel}</text><text x="295" y="109" textAnchor="middle" fontWeight="900">{spec.predicateLabel}</text><text x="205" y="198" textAnchor="middle" fontSize="12" fontWeight="900">a blocker keeps the families apart</text></>}</svg>:<div className="grid min-h-52 place-items-center rounded-2xl border border-dashed border-ink/25 bg-white p-6 text-center font-bold text-ink/60">Choose always, sometimes, or never to build the corresponding relationship model.</div>;
-    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3"><LabReadout label="example" value={spec.witness??"not required"}/><LabReadout label="counterexample" value={spec.counterexample??"not required"}/><LabReadout label="blocker" value={spec.blocker??"not required"}/></div>{evidence}{reveal}</div>;
+    return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="rounded-2xl border border-ink/10 bg-white p-3">{relationDiagram}</div>{choiceButtons}<div className="grid gap-2 sm:grid-cols-3" data-testid="sh-verdict-evidence"><LabReadout label="example" value={showEvidence?(spec.witness??"not required"):"test the claim with a fitting example"}/><LabReadout label="counterexample" value={showEvidence?(spec.counterexample??"not required"):"look for an example that breaks the claim"}/><LabReadout label="blocker" value={showEvidence?(spec.blocker??"not required"):"look for a rule that keeps the groups apart"}/></div>{evidence}{reveal}</div>;
   }
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><div className="grid gap-2 rounded-2xl border border-ink/10 bg-white p-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">{spec.nodes.map((node,index)=><Fragment key={node.id}><div className={`rounded-xl border-2 p-3 text-center ${highlighted.has(node.id)?"border-sky bg-sky/10":"border-ink/15"}`}><div className="font-black">{node.label}</div><div className="mt-1 text-xs font-bold text-ink/65">{node.attributes.join(" · ")||"family node"}</div></div>{index<spec.nodes.length-1&&<div className="grid place-items-center text-2xl font-black text-tangerine" aria-hidden="true">↓</div>}</Fragment>)}</div>{spec.propertyLabel&&<div className="rounded-xl border-2 border-dashed border-tangerine/60 bg-tangerine/5 p-3 text-center font-extrabold">property riding the path: {spec.propertyLabel}</div>}{choiceButtons}{evidence}{reveal}</div>;
 }
@@ -18760,19 +19392,27 @@ function UnitRulerW({spec,value,onChange,disabled,onEvent}:WProps<TUnitRuler>){
   const v=value&&typeof value==='object'?value as {zeroAligned:boolean;unitSize:number;placements:number;spacing:'exact'|'gap'|'overlap'}:null;
   const st=v??{zeroAligned:false,unitSize:spec.startUnitSize,placements:0,spacing:'exact' as const};
   useEffect(()=>{if(!v)onChange(st);/* eslint-disable-next-line react-hooks/exhaustive-deps */},[]);
-  const length=spec.objectEnd-spec.objectStart,covered=st.placements*st.unitSize,delta=st.spacing==='gap'?0.15:st.spacing==='overlap'?-0.15:0;
-  const finish=(st.zeroAligned?spec.objectStart:0)+covered+Math.max(0,st.placements-1)*delta;
+  const length=spec.objectEnd-spec.objectStart,unitsSum=st.placements*st.unitSize,delta=st.spacing==='gap'?0.15:st.spacing==='overlap'?-0.15:0;
+  // "Align zero" moves the measurement origin to 0 (the ruler's zero mark) — mirroring the real
+  // action of sliding the object so its start touches the ruler's zero. The unit track and the
+  // object bar always share this same origin so alignment is visible, not just numerically true.
+  const origin=st.zeroAligned?0:spec.objectStart;
+  // Physical span covered from the origin, including any gap/overlap slack between units — this
+  // is what "covered" and the finish marker describe, not the absolute axis coordinate.
+  const covered=unitsSum+Math.max(0,st.placements-1)*delta;
+  const finish=origin+covered;
+  const done=st.zeroAligned&&st.spacing==='exact'&&covered===length;
   const set=(n:Partial<typeof st>)=>onChange({...st,...n});const W=380,H=190,x=(n:number)=>24+n*16;
   const maxPlacements=Math.min(20,Math.max(spec.requiredPlacements+2,...(spec.commonPlacements ?? []).map((c)=>c.placements)));
   const place=()=>{const next=Math.min(maxPlacements,st.placements+1);onEvent?.({control:'iterate-unit',dir:next<=spec.requiredPlacements?'toward':'away',state:{placements:next}});set({placements:next})};
   const remove=()=>{const next=Math.max(0,st.placements-1);onEvent?.({control:'iterate-unit',dir:st.placements>spec.requiredPlacements?'toward':'away',state:{placements:next}});set({placements:next})};
   const chooseUnit=(u:number)=>{onEvent?.({control:'unit-size',dir:u===spec.targetUnitSize?'toward':'away',state:{unitSize:u}});set({unitSize:u,placements:0})};
   const chooseSpacing=(k:typeof st.spacing)=>{onEvent?.({control:'spacing',dir:k==='exact'?'toward':'away',state:{spacing:k}});set({spacing:k})};
-  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(spec.objectStart)} y1="52" x2={x(spec.objectEnd)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(spec.objectStart)+x(spec.objectEnd))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=(st.zeroAligned?spec.objectStart:0)+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={finish===spec.objectEnd&&st.spacing==='exact'?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
+  return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p><svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={`Object from ${spec.objectStart} to ${spec.objectEnd}; ${st.placements} units placed with ${st.spacing} spacing; measured finish ${finish.toFixed(1)}.`}><line x1={x(0)} y1="145" x2={x(20)} y2="145" stroke={PALETTE.ink} strokeWidth="3"/>{Array.from({length:21},(_,i)=><g key={i}><line x1={x(i)} y1="138" x2={x(i)} y2="152" stroke={PALETTE.ink}/><text x={x(i)} y="170" textAnchor="middle" fontSize="10">{i}</text></g>)}<line x1={x(origin)} y1="52" x2={x(origin+length)} y2="52" stroke={PALETTE.tangerine} strokeWidth="12" strokeLinecap="round"/><text x={(x(origin)+x(origin+length))/2} y="34" textAnchor="middle" fontWeight="900" fill={PALETTE.tangerine}>object</text>{Array.from({length:st.placements},(_,i)=>{const start=origin+i*st.unitSize+i*delta;return <rect key={i} x={x(start)} y="82" width={Math.max(4,st.unitSize*16)} height="28" rx="5" fill={PALETTE.sky} fillOpacity=".75" stroke={PALETTE.sky}/>})}<line x1={x(finish)} y1="76" x2={x(finish)} y2="118" stroke={done?PALETTE.leaf:PALETTE.berry} strokeWidth="3"/><text x={x(finish)} y="128" textAnchor="middle" fontSize="10" fontWeight="900" fill={done?PALETTE.leaf:PALETTE.berry}>finish {finish.toFixed(1)}</text></svg>
     <div className="grid grid-cols-3 gap-2"><button type="button" disabled={disabled} onClick={()=>{onEvent?.({control:'zero',dir:'toward',kind:'efficient'});set({zeroAligned:true,placements:0})}} className={`min-h-12 rounded-xl border-2 font-extrabold ${st.zeroAligned?'border-leaf bg-leaf/10':'border-ink/15 bg-white'}`}>Align zero</button><button type="button" disabled={disabled||st.placements===0} onClick={remove} className="min-h-12 rounded-xl border-2 border-ink/15 bg-white font-extrabold disabled:text-ink/30">Remove unit</button><button type="button" disabled={disabled||st.placements>=maxPlacements} onClick={place} className="min-h-12 rounded-xl bg-cta font-extrabold text-white disabled:opacity-50">Place unit</button></div>
     <div className="grid grid-cols-3 gap-2">{spec.allowedUnitSizes.map(u=><button type="button" key={u} disabled={disabled} onClick={()=>chooseUnit(u)} aria-pressed={st.unitSize===u} className={`min-h-11 rounded-xl border-2 font-bold ${st.unitSize===u?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>unit {u}</button>)}</div>
     <div className="grid grid-cols-3 gap-2">{(['exact','gap','overlap'] as const).map(k=><button type="button" key={k} disabled={disabled} onClick={()=>chooseSpacing(k)} aria-pressed={st.spacing===k} className={`min-h-11 rounded-xl border-2 text-sm font-bold ${st.spacing===k?'border-sky bg-sky/10':'border-ink/15 bg-white'}`}>{k}</button>)}</div>
-    <div className="grid grid-cols-3 gap-2"><LabReadout label="true length" value={String(length)} tone="good"/><LabReadout label="units placed" value={`${st.placements}/${spec.requiredPlacements}`} tone={st.placements===spec.requiredPlacements?'good':st.placements>spec.requiredPlacements?'warn':'neutral'}/><LabReadout label="covered" value={finish.toFixed(1)} tone={finish===spec.objectEnd&&st.spacing==='exact'?'good':'neutral'}/></div></div>}
+    <div className="grid grid-cols-3 gap-2"><LabReadout label="true length" value={String(length)} tone="good"/><LabReadout label="units placed" value={`${st.placements}/${spec.requiredPlacements}`} tone={st.placements===spec.requiredPlacements?'good':st.placements>spec.requiredPlacements?'warn':'neutral'}/><LabReadout label="covered" value={covered.toFixed(1)} tone={done?'good':'neutral'}/></div></div>}
 
 
 /* ---------------- Session 95–96 advanced causal laboratories ---------------- */
@@ -18853,6 +19493,7 @@ function ConditionalTableReadW({ spec, value, onChange, disabled, onEvent, tone 
   const grand = spec.counts.reduce((a,b)=>a+b,0);
   const isRelative = metric.startsWith("relative");
   const isDenominatorCell = (r:number,c:number) => metric === "relativeWhole" || (metric === "relativeRow" && r === row) || (metric === "relativeCol" && c === col);
+  const isAdditiveCell = (r:number,c:number) => metric === "grandTotal" || (metric === "rowTotal" && r === row) || (metric === "colTotal" && c === col);
   const choose = (id: string) => {
     const candidate = spec.answerChoices.find((choice) => choice.id === id);
     if (!candidate) return;
@@ -18860,17 +19501,41 @@ function ConditionalTableReadW({ spec, value, onChange, disabled, onEvent, tone 
     onChange(id);
   };
   const metricLabel = metric === "cell" ? "cell count" : metric === "rowTotal" ? "row total" : metric === "colTotal" ? "column total" : metric === "grandTotal" ? "grand total" : metric === "relativeWhole" ? "percent of everyone" : metric === "relativeRow" ? `percent of ${spec.rowLabels[row]}` : `percent of ${spec.colLabels[col]}`;
+  const targetIntersection = `${spec.rowLabels[row]} and ${spec.colLabels[col]}`;
+  const tablePath = metric === "cell" ? `${targetIntersection} cell`
+    : metric === "rowTotal" ? `${spec.rowLabels[row]} row`
+      : metric === "colTotal" ? `${spec.colLabels[col]} column`
+        : metric === "grandTotal" ? "all four cells"
+          : metric === "relativeWhole" ? `${targetIntersection} out of everyone`
+            : metric === "relativeRow" ? `${targetIntersection} out of the ${spec.rowLabels[row]} row`
+              : `${targetIntersection} out of the ${spec.colLabels[col]} column`;
+  const calculation = metric === "cell" ? "read the intersection"
+    : metric === "rowTotal" ? "add across the row"
+      : metric === "colTotal" ? "add down the column"
+        : metric === "grandTotal" ? "add all four counts"
+          : metric === "relativeWhole" ? "target cell ÷ whole-table total × 100"
+            : metric === "relativeRow" ? "target cell ÷ row total × 100"
+              : "target cell ÷ column total × 100";
+  // The table's four interior counts are the givens. Every margin is derived from them, and for
+  // seven authored count questions one of those margins IS the graded answer. Keep the relational
+  // path visible before Check, but reveal computed margins and the substituted calculation only in
+  // the explicit reveal phase. A wrong attempt therefore remains a reasoning opportunity.
+  const showDerived = tone === "info";
+  const totalCell = (total: number, label: string, className = "", key?: string|number) => <td key={key} className={`rounded-xl px-3 py-4 font-black tabular-nums ${className}`}>
+    {showDerived ? <span>{total}</span> : <><span aria-hidden="true">?</span><span className="sr-only">{label}; work it out from the given counts</span></>}
+  </td>;
   return <div className="grid gap-4">
     <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <div className="overflow-x-auto rounded-2xl border border-ink/15 bg-white p-3">
       <table className="w-full border-separate border-spacing-2 text-center text-sm">
-        <thead><tr><th></th>{spec.colLabels.map((label,c)=><th key={label} className={`rounded-lg px-2 py-2 ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>)}<th>Total</th></tr></thead>
-        <tbody>{spec.rowLabels.map((label,r)=><tr key={label}><th className={`rounded-lg px-2 py-2 ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>{[0,1].map(c=>{const exact=r===row&&c===col;const denom=isRelative&&isDenominatorCell(r,c);return <td key={c} className={`rounded-xl border-2 px-3 py-4 text-lg font-black tabular-nums ${exact?"border-tangerine bg-tangerine/15":denom?"border-dashed border-sky bg-sky/10":"border-ink/10"}`}><span>{cellCount(r,c)}</span>{exact&&<span className="sr-only"> target intersection</span>}{denom&&!exact&&<span className="sr-only"> denominator group</span>}</td>})}<td className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":""}`}>{rowTotal(r)}</td></tr>)}
-        <tr><th>Total</th>{[0,1].map(c=><td key={c} className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":""}`}>{colTotal(c)}</td>)}<td className={`rounded-xl px-3 py-4 font-black tabular-nums ${metric==="grandTotal"?"border-2 border-tangerine bg-tangerine/10":metric==="relativeWhole"?"border-2 border-dashed border-sky bg-sky/10":""}`}>{grand}</td></tr></tbody>
+        <caption className="sr-only">{showDerived ? "Two-way table of given counts with the computed totals revealed." : "Two-way table of given counts. Totals stay yours to calculate until the answer is revealed."}</caption>
+        <thead><tr><th scope="col"></th>{spec.colLabels.map((label,c)=><th scope="col" key={label} className={`rounded-lg px-2 py-2 ${metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>)}<th scope="col">Total</th></tr></thead>
+        <tbody>{spec.rowLabels.map((label,r)=><tr key={label}><th scope="row" className={`rounded-lg px-2 py-2 ${metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"bg-ink/[0.04]"}`}>{label}</th>{[0,1].map(c=>{const exact=r===row&&c===col;const denom=isRelative&&isDenominatorCell(r,c);const additive=isAdditiveCell(r,c);const targetsCell=(metric==="cell"||isRelative)&&exact;return <td key={c} className={`rounded-xl border-2 px-3 py-4 text-lg font-black tabular-nums ${targetsCell?"border-tangerine bg-tangerine/15":additive?"border-tangerine/60 bg-tangerine/10":denom?"border-dashed border-sky bg-sky/10":"border-ink/10"}`}><span>{cellCount(r,c)}</span>{targetsCell&&<span className="sr-only"> target intersection</span>}{additive&&<span className="sr-only"> included in the total to calculate</span>}{denom&&!exact&&<span className="sr-only"> included in the reference group</span>}</td>})}{totalCell(rowTotal(r),`${label} row total`,metric==="rowTotal"&&r===row?"border-2 border-tangerine bg-tangerine/10":metric==="relativeRow"&&r===row?"border-2 border-dashed border-sky bg-sky/10":"")}</tr>)}
+        <tr><th scope="row">Total</th>{[0,1].map(c=>totalCell(colTotal(c),`${spec.colLabels[c]} column total`,metric==="colTotal"&&c===col?"border-2 border-tangerine bg-tangerine/10":metric==="relativeCol"&&c===col?"border-2 border-dashed border-sky bg-sky/10":"",c))}{totalCell(grand,"grand total",metric==="grandTotal"?"border-2 border-tangerine bg-tangerine/10":metric==="relativeWhole"?"border-2 border-dashed border-sky bg-sky/10":"")}</tr></tbody>
       </table>
     </div>
-    <div className="grid gap-2 sm:grid-cols-3"><LabReadout label="asked relationship" value={metricLabel}/><LabReadout label="numerator / count" value={String(truth.numerator)} tone="warn"/><LabReadout label={isRelative?"denominator":"derived value"} value={isRelative?String(truth.denominator):String(truth.value)} tone="good"/></div>
-    {isRelative && <p className="rounded-xl border border-sky/25 bg-sky/5 p-3 text-center text-sm font-bold"><span className="text-tangerine-ink">◆ numerator {truth.numerator}</span> ÷ <span className="text-sky-ink">▧ denominator {truth.denominator}</span> × 100</p>}
+    <div className="grid gap-2 sm:grid-cols-3" data-testid="ct-read-relationship"><LabReadout label="asked relationship" value={metricLabel}/><LabReadout label="table path" value={tablePath}/><LabReadout label="calculation to make" value={calculation}/></div>
+    {showDerived && <p data-testid="ct-read-answer" className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-center text-sm font-bold">{isRelative ? <><span className="text-tangerine-ink">numerator {truth.numerator}</span> ÷ <span className="text-sky-ink">denominator {truth.denominator}</span> × 100 = <span className="font-black">{truth.value}%</span></> : <>The {metricLabel} is <span className="font-black">{truth.value}</span>.</>}</p>}
     <div className="grid gap-2 sm:grid-cols-3" role="group" aria-label="Choose the table claim">{spec.answerChoices.map((choice)=><button key={choice.id} type="button" disabled={disabled} aria-pressed={choiceId===choice.id} onClick={()=>choose(choice.id)} className={`min-h-12 rounded-xl border-2 px-3 text-sm font-extrabold ${choiceId===choice.id?"border-sky bg-sky/10":"border-ink/15 bg-white"}`}><MathProse text={choice.label} /></button>)}</div>
     {tone === "info" && choiceId && Math.abs((spec.answerChoices.find(c=>c.id===choiceId)?.value ?? NaN)-truth.value)>1e-9 && <p data-testid="ct-read-ghost" aria-hidden="true" className="mx-auto rounded-xl border-2 border-dashed border-tangerine/70 bg-tangerine/5 px-4 py-2 text-center text-sm font-extrabold text-tangerine-ink">target: {spec.answerChoices.find(c=>Math.abs(c.value-truth.value)<1e-9)?.label}</p>}
   </div>;
@@ -19014,7 +19679,7 @@ function DerivativeRuleLabW({ spec, value, onChange, disabled, onEvent, tone }: 
         onKeyDown={e=>{if(!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"].includes(e.key))return;e.preventDefault();const next=e.key==="Home"?1:e.key==="End"?6:Math.max(1,Math.min(6,power+(["ArrowRight","ArrowUp"].includes(e.key)?1:-1)));set({outerRate:next},'outer-rate',spec.targetOuterRate);}}
         className="h-11 w-full accent-tangerine"/></label>
       <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">The 2x dx becomes du. A constant may remain out front; an x may not. Substitution is valid only when the u-world contains u and constants — no x.</p>
-      {tone==='info'&&!solved&&<GhostChip testid="dr-ghost">asked: factor {spec.targetInnerRate}, power {spec.targetOuterRate} → ∫u^{spec.targetOuterRate} du</GhostChip>}
+      {tone==='info'&&!solved&&<GhostChip testid="dr-ghost">asked: factor {spec.targetInnerRate}, power {spec.targetOuterRate} → <MathInline tex={`\\int u^{${spec.targetOuterRate}}\\,du`} fallback={`integral of u to power ${spec.targetOuterRate}`} /></GhostChip>}
     </div>;
   }
   const product=st.innerRate*st.outerRate;
@@ -19068,7 +19733,7 @@ function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }:
   }});
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
     <svg ref={svgRef} viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img"
-      aria-label={`A ${sphere?"balloon":"disc"} of radius ${r} growing at dr/dt = ${rate}. Its ${sphere?"volume":"area"} is ${sizeText} and ${rateLabel} is ${rateText}.`}>
+      aria-label={accessibleMathText(`A ${sphere?"balloon":"disc"} of radius ${r} growing at dr/dt = ${rate}. Its ${sphere?"volume":"area"} is ${sizeText} and ${rateLabel} is ${rateText}.`)}>
       <style>{`.rrg{transition:none}@media (prefers-reduced-motion: no-preference){.rrg{transition:r .16s ease-out}}`}</style>
       {/* Concentric past-radii rings make GROWTH visible: the disc the learner had, still faint. */}
       {Array.from({length:r-1},(_,i)=>i+1).map(k=><circle key={k} cx={cx} cy={cy} r={k*U} fill="none" stroke={PALETTE.ink} strokeOpacity={0.12} strokeWidth={1}/>)}
@@ -19091,11 +19756,11 @@ function RelatedRatesGrowthW({ spec, value, onChange, disabled, onEvent, tone }:
       <LabReadout label={sizeLabel} value={sizeText}/>
       <LabReadout label={rateLabel} value={`${sphere?`4π·${r}²·${rate}`:`2π·${r}·${rate}`} = ${rateText}`} tone="warn"/>
     </div>
-    <label className="grid gap-1 text-sm font-bold"><span>Grow the radius — dr/dt stays {rate}; watch what {rateLabel} does</span>
+    <label className="grid gap-1 text-sm font-bold"><span><MathProse text={`Grow the radius — dr/dt stays ${rate}; watch what ${rateLabel} does`} /></span>
       <input aria-label="radius" type="range" min="1" max={rMax} step="1" value={st.x} disabled={disabled} onChange={e=>setR(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{sphere
+    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold"><MathProse text={sphere
       ?"Differentiate V = 4/3·πr³: the chain rule brings the exponent down — dV/dt = 4πr²·dr/dt. The rate itself grows with the SQUARE of the radius."
-      :"Differentiate A = πr²: the chain rule turns the square into a doubling — dA/dt = 2πr·dr/dt. The bigger the disc, the faster the area runs."}</p></div>;
+      :"Differentiate A = πr²: the chain rule turns the square into a doubling — dA/dt = 2πr·dr/dt. The bigger the disc, the faster the area runs."} /></p></div>;
 }
 
 function RelatedRatesLabW(props: WProps<TRelatedRatesLab>) {
@@ -19112,7 +19777,7 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
   const setX=(next:number)=>{const d=moveRelation(st.x,next,spec.targetX);if(d)onEvent?.({control:'ladder-foot',dir:d,kind:'efficient'});onChange({x:next,moves:st.moves+1})};
   const sx=(n:number)=>70+n*(250/L), sy=(n:number)=>220-n*(180/L);
   return <div className="grid gap-4"><p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
-    <svg viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={spec.framing==="slope"?`A point on the circle x² + y² = ${L}² sits at x ${x.toFixed(1)}, y ${y.toFixed(2)}; the slope dy/dx there is ${verticalRate.toFixed(2)}.`:`A ${L}-unit ladder has foot x ${x.toFixed(1)}, height y ${y.toFixed(2)}, and vertical rate ${verticalRate.toFixed(2)}.`}><line x1="70" y1="20" x2="70" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1="70" y1="220" x2="355" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1={sx(0)} y1={sy(y)} x2={sx(x)} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="10" strokeLinecap="round"/><circle cx={sx(x)} cy={sy(0)} r="9" fill={PALETTE.tangerine}/><circle cx={sx(0)} cy={sy(y)} r="9" fill={PALETTE.leaf}/><path d="M 70 202 h 18 v 18" fill="none" stroke={PALETTE.berry} strokeWidth="3"/><text x="205" y="242" textAnchor="middle" fontSize="12" fontWeight="900">x² + y² = {L}²</text>
+    <svg viewBox="0 0 390 250" className="w-full rounded-2xl border border-ink/10 bg-white" role="img" aria-label={accessibleMathText(spec.framing==="slope"?`A point on the circle x² + y² = ${L}² sits at x ${x.toFixed(1)}, y ${y.toFixed(2)}; the slope dy/dx there is ${verticalRate.toFixed(2)}.`:`A ${L}-unit ladder has foot x ${x.toFixed(1)}, height y ${y.toFixed(2)}, and vertical rate ${verticalRate.toFixed(2)}.`)}><line x1="70" y1="20" x2="70" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1="70" y1="220" x2="355" y2="220" stroke={PALETTE.ink} strokeWidth="7"/><line x1={sx(0)} y1={sy(y)} x2={sx(x)} y2={sy(0)} stroke={PALETTE.sky} strokeWidth="10" strokeLinecap="round"/><circle cx={sx(x)} cy={sy(0)} r="9" fill={PALETTE.tangerine}/><circle cx={sx(0)} cy={sy(y)} r="9" fill={PALETTE.leaf}/><path d="M 70 202 h 18 v 18" fill="none" stroke={PALETTE.berry} strokeWidth="3"/><text x="205" y="242" textAnchor="middle" fontSize="12" fontWeight="900">x² + y² = {L}²</text>
     {/* Reveal ghost: the ladder AT the target foot position, dashed — mirrors
         evaluate (x === targetX). Same invariant length; only the configuration
         the question asks about is ghosted in. */}
@@ -19128,8 +19793,8 @@ function RelatedRatesLadderW({ spec, value, onChange, disabled, onEvent, tone }:
       );
     })()}<AxisCaptions w={390} h={250} /></svg>
     <div className="grid grid-cols-3 gap-2"><LabReadout label="x" value={x.toFixed(1)} tone={st.x===spec.targetX?'good':'neutral'} stage={tone} signalsCorrect /><LabReadout label="y" value={y.toFixed(2)}/><LabReadout label={spec.framing==="slope"?"dy/dx":"dy/dt"} value={verticalRate.toFixed(2)} tone="warn"/></div>
-    <label className="grid gap-1 text-sm font-bold"><span>{spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"}</span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
-    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold">{spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."}</p></div>;
+    <label className="grid gap-1 text-sm font-bold"><span><MathProse text={spec.framing==="slope"?"Slide the point along the circle x² + y² = L²":"Slide the ladder foot while its length stays fixed"} /></span><input aria-label="ladder foot position" type="range" min="1" max={L-1} step="1" value={st.x} disabled={disabled} onChange={e=>setX(Number(e.target.value))} className="h-11 w-full accent-sky"/></label>
+    <p className="rounded-xl border border-leaf/25 bg-leaf/5 p-3 text-sm font-bold"><MathProse text={spec.framing==="slope"?"Differentiate the relation implicitly: 2x + 2y·(dy/dx) = 0, so dy/dx = −x/y — read straight off the point’s position.":"Differentiate the invariant: 2x·dx/dt + 2y·dy/dt = 0. As the foot moves away, the top moves down at a position-dependent rate."} /></p></div>;
 }
 
 export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
@@ -19148,7 +19813,7 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
     }
   }, [described]);
   return (
-    <div
+    <SvgLatexSurface><div
       data-tone={tone}
       className={`stage lesson-stage rounded-card p-3 transition-shadow duration-200 ease-out motion-reduce:transition-none sm:p-5 ${STAGE_TONE_RING[tone]}`}
     >
@@ -19156,18 +19821,18 @@ export function WidgetRenderer(props: WProps<TWidget> & { tone?: StageTone }) {
       {described !== null && (
         <details className="mt-3 rounded-card border border-ink/15 bg-ink/[0.03] px-3 py-2" data-testid="a11y-panel">
           <summary className="flex min-h-11 cursor-pointer items-center text-sm font-bold text-ink/70">Describe this model</summary>
-          <p className="mt-1 text-sm leading-relaxed text-ink/80">{described}</p>
+          <p className="mt-1 text-sm leading-relaxed text-ink/80"><MathProse text={described} includeArithmetic /></p>
           <p className="mt-2 text-sm font-bold text-ink/70">How to change it</p>
           <p className="text-sm leading-relaxed text-ink/80">{actionsFor(rest.spec.type)}</p>
           {lastDescribed !== null && (
             <>
               <p className="mt-2 text-sm font-bold text-ink/70">Previous model</p>
-              <p className="text-sm leading-relaxed text-ink/70">{lastDescribed}</p>
+              <p className="text-sm leading-relaxed text-ink/70"><MathProse text={lastDescribed} includeArithmetic /></p>
             </>
           )}
         </details>
       )}
-    </div>
+    </div></SvgLatexSurface>
   );
 }
 

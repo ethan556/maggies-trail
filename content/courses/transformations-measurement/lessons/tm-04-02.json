@@ -80,8 +80,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "To find a missing LEG instead, subtract: a = √(c² − b²). If the hypotenuse is 13 and one leg is 5, then a = √(169 − 25) = √144 = 12. Subtract because the hypotenuse-square is the biggest.",
-      "figure": "tm-missing-leg"
+      "body": "To find a missing LEG instead, subtract: a = √(c² − b²). If the hypotenuse is 13 and one leg is 5, then a = √(169 − 25) = √144 = 12. Subtract because the hypotenuse-square is the biggest."
     },
     {
       "id": "k1",
@@ -138,62 +137,68 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another hypotenuse.",
+      "body": "Now find a leg, graded this time.",
       "conceptTag": "tm-pythagorean-apply",
       "explanationVariants": [
-        "c = √(8² + 15²) = √(64 + 225) = √289 = 17.",
-        "Add leg-squares then root: √289 = 17."
+        "21² + b² = 29², so b = √(841 − 441) = √400 = 20.",
+        "Subtract leg-square from hyp-square, then root: √400 = 20."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A right triangle has legs 8 and 15. What is the hypotenuse?",
-        "answer": 17,
+        "prompt": "One leg of a right triangle is 21 and the hypotenuse is 29. What is the length of the other leg?",
+        "answer": 20,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 23,
-            "feedback": "That added the legs — use √(64 + 225) = √289 = 17."
+            "value": 50,
+            "feedback": "For a LEG, SUBTRACT: √(29² − 21²) = √(841 − 441) = √400 = 20, don't add."
           },
           {
-            "value": 289,
-            "feedback": "That's c² — take the square root: √289 = 17."
+            "value": 400,
+            "feedback": "That's the leg squared — take the square root: √400 = 20."
           }
         ],
-        "fallbackFeedback": "c = √(8² + 15²) = √(64 + 225) = √289 = 17."
-      },
-      "variant": {
-        "gen": "pythagorean"
+        "fallbackFeedback": "21² + b² = 29², so b = √(841 − 441) = √400 = 20."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Another missing leg.",
+      "body": "Spot the error.",
       "conceptTag": "tm-pythagorean-apply",
       "explanationVariants": [
-        "a = √(10² − 6²) = √(100 − 36) = √64 = 8.",
-        "Subtract for a leg then root: √64 = 8."
+        "c = √(7² + 24²) = √(49 + 576) = √625 = 25; adding the legs (7 + 24 = 31) skips the squaring and the root entirely.",
+        "Square each leg, add, then root: √625 = 25, not the sum of the legs."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A right triangle has hypotenuse 10 and one leg 6. What is the other leg?",
-        "answer": 8,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A learner is asked for the hypotenuse of a right triangle with legs 7 and 24, and answers 31 by computing 7 + 24. What went wrong?",
+        "options": [
           {
-            "value": 16,
-            "feedback": "For a LEG, SUBTRACT: √(100 − 36) = √64 = 8, don't add."
+            "id": "o0",
+            "label": "Square each leg, add the squares, then root — don't just add the legs",
+            "correct": true,
+            "feedback": "Correct — c = √(7² + 24²) = √625 = 25; adding the legs directly skips both squaring and the root."
           },
           {
-            "value": 64,
-            "feedback": "That's the leg squared — take the square root: √64 = 8."
+            "id": "o1",
+            "label": "Nothing is wrong — 31 is a correct hypotenuse for legs 7 and 24",
+            "correct": false,
+            "feedback": "31 is just the sum of the legs, not the hypotenuse; check with c = √(7² + 24²) = 25."
+          },
+          {
+            "id": "o2",
+            "label": "The legs should have been subtracted, then rooted, not added",
+            "correct": false,
+            "feedback": "Subtracting finds a missing leg from the hypotenuse; here both legs are known, so square and add them, then take the root."
+          },
+          {
+            "id": "o3",
+            "label": "The square root should have been taken before the legs were squared",
+            "correct": false,
+            "feedback": "Squaring happens first — square each leg, add the squares, then take one square root of that sum."
           }
-        ],
-        "fallbackFeedback": "a = √(10² − 6²) = √(100 − 36) = √64 = 8."
-      },
-      "variant": {
-        "gen": "pythagorean",
-        "form": "legFromHyp"
+        ]
       }
     },
     {

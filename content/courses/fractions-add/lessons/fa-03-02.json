@@ -9,59 +9,35 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "Subtracting works the same way, in reverse. The pieces are still the same size — you're just taking some away. 5/6 (five sixths) minus 1/6 (one sixth) leaves 4/6: **4/6.** Subtract the numerators; the denominator — the piece size — never changes.",
-      "figure": "fa-subtract-like"
+      "body": "Subtracting works the same way, in reverse. The pieces are still the same size — you're just taking some away. 5/6 (five sixths) minus 1/6 (one sixth) leaves 4/6: **4/6.** Subtract the numerators; the denominator — the piece size — never changes."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Match the difference.",
+      "body": "Take away eighths while the piece size stays fixed.",
       "conceptTag": "subtract-like-denom",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Match each subtraction to its correct difference.",
-        "left": [
+        "type": "fractionBar",
+        "prompt": "Start at 5/8. Take away 2 eighth-size pieces and build the result.",
+        "targetNum": 3,
+        "targetDen": 8,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 5,
+        "denStart": 8,
+        "showTarget": false,
+        "commonFractions": [
           {
-            "id": "e1",
-            "label": "7/9 − 2/9"
-          },
-          {
-            "id": "e2",
-            "label": "8/11 − 3/11"
-          },
-          {
-            "id": "e3",
-            "label": "6/7 − 2/7"
+            "num": 3,
+            "den": 6,
+            "feedback": "Three sixths changes the piece size. The story starts and ends with eighths."
           }
         ],
-        "right": [
-          {
-            "id": "r1",
-            "label": "5/9"
-          },
-          {
-            "id": "r2",
-            "label": "5/11"
-          },
-          {
-            "id": "r3",
-            "label": "4/7"
-          }
-        ],
-        "pairs": {
-          "e1": "r1",
-          "e2": "r2",
-          "e3": "r3"
-        },
-        "pairErrors": [
-          {
-            "left": "e3",
-            "right": "r2",
-            "feedback": "5/11 belongs to 8/11 − 3/11. 6/7 − 2/7 subtracts only the numerators (6−2=4), keeping the denominator at 7: 4/7."
-          }
-        ],
-        "missFeedback": "Subtract only the top numbers; the bottom number stays exactly as it was.",
-        "successFeedback": "7/9−2/9=5/9, 8/11−3/11=5/11, 6/7−2/7=4/7 — the denominator never moved."
+        "successFeedback": "Five eighths minus two eighths leaves three eighths. The denominator stays 8 because the piece size did not change.",
+        "lowFeedback": "Too little remains. Remove exactly two of the five eighths.",
+        "highFeedback": "Too much remains. Remove two eighth-size pieces."
       },
       "predict": {
         "prompt": "Subtracting 5/8 − 2/8 — do the DENOMINATORS get subtracted too?",
@@ -117,8 +93,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Just like with adding, subtracting the denominators too doesn't make sense here — you'd be claiming the pieces vanished. Taking 4 tenths away from 9 tenths still leaves pieces that are tenths; only the count of pieces shrinks, from 9 down to 5.",
-      "figure": "fa-subtract-like"
+      "body": "Just like with adding, subtracting the denominators too doesn't make sense here — you'd be claiming the pieces vanished. Taking 4 tenths away from 9 tenths still leaves pieces that are tenths; only the count of pieces shrinks, from 9 down to 5."
     },
     {
       "id": "k2",
@@ -135,23 +110,23 @@
         "options": [
           {
             "id": "a",
-            "label": "Priya subtracted the denominators too — the pieces stayed tenths, so the answer is 5/10",
+            "label": "Priya changed the denominator; the difference is 5/10.",
             "correct": true,
             "feedback": "The denominator names piece size, which never changes here. Only the numerators subtract: 9−4=5, giving 5/10."
           },
           {
             "id": "b",
-            "label": "Nothing — 5/0 is correct",
+            "label": "Priya should make both denominators zero first.",
             "feedback": "A denominator of 0 isn't even a valid fraction. Subtracting same-size tenths keeps the denominator at 10: 5/10."
           },
           {
             "id": "c",
-            "label": "Priya should have divided the numerators",
+            "label": "Priya should divide the numerators before subtracting.",
             "feedback": "Dividing isn't the operation here — subtracting fractions with the same denominator just subtracts the numerators: 9−4=5, giving 5/10."
           },
           {
             "id": "d",
-            "label": "The numerator should have been 9−10",
+            "label": "Priya should subtract 9 minus 10 before using tenths.",
             "feedback": "The numerators are 9 and 4 as given — only they subtract (9−4=5). The denominator stays 10, unchanged."
           }
         ]

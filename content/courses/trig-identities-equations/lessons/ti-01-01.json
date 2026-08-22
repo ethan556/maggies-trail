@@ -100,37 +100,21 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Backwards too.",
+      "body": "Anchor the general solution to its repeated point.",
       "conceptTag": "ti-general",
       "explanationVariants": [
         "k = −1 gives π/6 − 2π = −11π/6 ≈ −5.76 — negative angles are members too; sin(−11π/6) = 1/2 ✓.",
         "The ladder runs both directions: every integer k, including negatives."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Which value belongs to the family x = π/6 + 2πk?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "π/6 − 2π (k = −1)",
-            "correct": true,
-            "feedback": "Right — negative k just spins backwards; the sine is still 1/2 there."
-          },
-          {
-            "id": "o2",
-            "label": "π/6 + π",
-            "feedback": "Adding HALF a turn lands at 7π/6, where sin = −1/2. The family steps by FULL turns 2π."
-          },
-          {
-            "id": "o3",
-            "label": "5π/6",
-            "feedback": "5π/6 solves the equation but belongs to the OTHER family (5π/6 + 2πk) — the twin, not this ladder."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "g12-trig-identities-equations",
-        "form": "trig-identities-equations__ti-general__mcq"
+        "type": "unitCircleExplore",
+        "targetAngle": 30,
+        "angleStart": 210,
+        "angleStep": 15,
+        "prompt": "Rotate to 30° and identify the point that every angle 30° + 360°k must revisit.",
+        "successFeedback": "The point at 30° is revisited after every full turn. In radians, that family is π/6 + 2πk.",
+        "lowFeedback": "Rotate toward the first-quadrant point 30° above the positive x-axis.",
+        "highFeedback": "You have passed 30°. Rotate back to the first-quadrant point."
       }
     },
     {
@@ -185,18 +169,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "x = π/3 + 2πk or x = 5π/3 + 2πk",
+            "label": "x = π/3 + 2πk or x = 5π/3 + 2πk; both cosine branches.",
             "correct": true,
             "feedback": "Right — cosine's twin pair (x₁ and 2π − x₁), each carrying its own 2πk ladder."
           },
           {
             "id": "o2",
-            "label": "x = π/3 + 2πk only",
+            "label": "x = π/3 + 2πk; it names only one cosine branch.",
             "feedback": "That misses half the answers — 5π/3, 11π/3, … all have cosine 1/2 too. Two families."
           },
           {
             "id": "o3",
-            "label": "x = π/3 + πk",
+            "label": "x = π/3 + πk; it includes angles where cosine is −1/2.",
             "feedback": "Stepping by π flips the sign every step: π/3 + π = 4π/3 has cosine −1/2. Full turns only: 2πk, two families."
           }
         ]

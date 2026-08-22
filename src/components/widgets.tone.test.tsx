@@ -796,7 +796,10 @@ const sbArith = WidgetSpec.parse({
 });
 const ppSpec = WidgetSpec.parse({
   type: "plotPoint", prompt: "Mark 3 dots in the Cat column.",
-  cols: 3, rows: 4, xLabels: ["Cat", "Dog", "Fish"],
+  // yLabels is required (one label per row track — see schema.ts PlotPointSpec); this fixture
+  // predates that requirement. "1".."4" keeps the labels numerically identical to row position,
+  // matching no assertion in this file that depends on their text.
+  cols: 3, rows: 4, xLabels: ["Cat", "Dog", "Fish"], yLabels: ["1", "2", "3", "4"],
   targets: [{ x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 3 }],
   pointErrors: [{ x: 2, y: 1, feedback: "That dot sits in the Dog column." }],
   missFeedback: "Stack 3 dots in the Cat column.", successFeedback: "s"

@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-teens-pattern",
       "body": "From 13 to 19 the pattern is plain: the ones digit climbs 3, 4, 5, 6, 7, 8, 9 while the front 1 never moves.",
       "narration": "From 13 to 19 the pattern is plain: the ones digit climbs 3, 4, 5, 6, 7, 8, 9 while the front 1 never moves."
     },
@@ -21,7 +21,7 @@
       "conceptTag": "kcw-write-13-19",
       "widget": {
         "type": "tenFrame",
-        "prompt": "A full group of 10 is already shown. Add the extra dots needed to make 16.",
+        "prompt": "Sixteen is a full ten plus 6 more. Tap 6 dots to show the 'more' part.",
         "target": 6,
         "preFilled": 0,
         "addColor": "tangerine",
@@ -39,7 +39,7 @@
             "feedback": "7 adds 1 too many. Remove the extra so the frame shows exactly 6."
           }
         ],
-        "missFeedback": "The ten is already made; add only the ones. Stop when the frame shows 6.",
+        "missFeedback": "Tap the dots one at a time. Stop when the frame shows exactly 6 — that's the 'more' part of 16.",
         "successFeedback": "Ten and 6 — the numeral 16 writes those two pieces side by side."
       },
       "variant": {
@@ -95,31 +95,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 13 dots. Which numeral names that amount?",
+        "prompt": "Thirteen is one ten plus how many extra ones?",
         "options": [
           {
-            "id": "o0",
-            "label": "13",
-            "correct": true,
-            "feedback": "Correct — the numeral 13 is the written name for a group of exactly 13."
-          },
-          {
             "id": "o1",
-            "label": "14",
+            "label": "4",
             "correct": false,
-            "feedback": "14 promises more dots than the group holds; the count stops at 13."
+            "feedback": "One ten and 4 extra ones would make 14, not 13."
           },
           {
             "id": "o2",
-            "label": "12",
+            "label": "2",
             "correct": false,
-            "feedback": "12 promises fewer dots than the group holds; the count reaches 13."
+            "feedback": "One ten and 2 extra ones make 12; thirteen needs one more extra one."
           },
           {
             "id": "o3",
-            "label": "15",
+            "label": "5",
             "correct": false,
-            "feedback": "15 promises more dots than the group holds; the count stops at 13."
+            "feedback": "One ten and 5 extra ones would make 15; count only the 3 extras in thirteen."
+          },
+          {
+            "id": "o0",
+            "label": "3",
+            "correct": true,
+            "feedback": "Correct — thirteen is one full ten and 3 extra ones."
           }
         ]
       },
@@ -158,41 +158,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-ten-plus-extra",
       "body": "Write any of them the same way — a 1 for the ten, then the extras' own digit beside it.",
       "narration": "Write any of them the same way — a 1 for the ten, then the extras' own digit beside it."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-13-19",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "A full group of 10 is already shown. Add the extra dots needed to make 16.",
-        "target": 6,
-        "preFilled": 0,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Build a teen numeral from the amount sixteen.",
+        "items": [
           {
-            "count": 0,
-            "feedback": "0 leaves 6 dots still missing. Continue until the frame shows exactly 6."
+            "id": "stage-3",
+            "label": "Write 6 in the ones place"
           },
           {
-            "count": 5,
-            "feedback": "5 leaves 1 dot still missing. Continue until the frame shows exactly 6."
+            "id": "stage-2",
+            "label": "Count six extra ones"
           },
           {
-            "count": 7,
-            "feedback": "7 adds 1 too many. Remove the extra so the frame shows exactly 6."
+            "id": "stage-1",
+            "label": "Write 1 for the ten"
           }
         ],
-        "missFeedback": "The ten is already made; add only the ones. Stop when the frame shows 6.",
-        "successFeedback": "Ten and 6 — the numeral 16 writes those two pieces side by side."
-      },
-      "variant": {
-        "gen": "g0-counting",
-        "form": "countTeenFrame"
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Write 1 for the ten, then Count six extra ones, then Write 6 in the ones place.",
+        "successFeedback": "Yes — the ten first and six extras make 16."
       },
       "cml": {
         "stage": "construct",
@@ -293,31 +298,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What do the numerals 13 through 19 all share?",
+        "prompt": "Which written pattern belongs to every numeral from 13 through 19?",
         "options": [
           {
-            "id": "o0",
-            "label": "A 1 in front — the full ten each teen carries",
-            "correct": true,
-            "feedback": "Correct — every teen numeral opens with 1 because every teen contains exactly one ten."
+            "id": "o1",
+            "label": "They end with 1",
+            "correct": false,
+            "feedback": "Their ending digits change from 3 through 9; they do not all end with 1."
           },
           {
-            "id": "o1",
-            "label": "A 9 somewhere",
-            "correct": false,
-            "feedback": "Only 19 holds a 9; the shared mark is the leading 1, the written ten."
+            "id": "o0",
+            "label": "They begin with 1",
+            "correct": true,
+            "feedback": "Correct — every numeral from 13 through 19 begins with 1 for one full ten."
           },
           {
             "id": "o2",
-            "label": "Round shapes",
+            "label": "They use one digit",
             "correct": false,
-            "feedback": "Shape varies; the pattern is positional — the tens place says 1 throughout."
+            "feedback": "Each numeral from 13 through 19 uses two digits."
           },
           {
             "id": "o3",
-            "label": "Nothing at all",
+            "label": "They all end alike",
             "correct": false,
-            "feedback": "Line them up and the leading 1 repeats — the teens wear their ten openly."
+            "feedback": "The ending digits are different because they count different extra ones."
           }
         ]
       },
@@ -355,38 +360,37 @@
       "body": "One more, for the road.",
       "conceptTag": "kcw-write-13-19",
       "explanationVariants": [
-        "Quick teen reading.",
-        "Row of five, then extras."
+        "Quick teen counting.",
+        "Count on past ten."
       ],
       "widget": {
-        "type": "subitizeFlash",
-        "prompt": "Look at the ten-frame flash and choose the matching numeral.",
-        "count": 7,
-        "arrangement": "tenFrame",
-        "flashMs": 1400,
-        "options": [
-          6,
-          7,
-          8,
-          9
-        ],
-        "commonPicks": [
+        "type": "numberLineHop",
+        "prompt": "Make 8 one-unit hops forward from 10. Tap the teen number where you land.",
+        "min": 8,
+        "max": 20,
+        "start": 10,
+        "hop": 1,
+        "hops": 8,
+        "direction": "forward",
+        "commonLandings": [
           {
-            "value": 6,
-            "feedback": "6 misses 1 of the visible dots. Group the dots, then count the full group as 7."
+            "value": 17,
+            "feedback": "17 stops one complete hop too soon. Continue the final 1-unit hop to reach 18."
           },
           {
-            "value": 8,
-            "feedback": "8 counts 1 extra. Touch each dot once in your mind — the group holds 7."
+            "value": 19,
+            "feedback": "19 goes one complete hop too far. Count just 8 hops from 10 to land on 18."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Count 8 on from 10: you land on 18.",
+        "successFeedback": "10 and 8 more is 18 — the teen numeral writes exactly that: 1 ten, 8 ones.",
+        "lowFeedback": "Short of the landing — all 8 counts past ten are needed to reach 18.",
+        "highFeedback": "Past the landing — the count-on stops after 8 numbers, on 18."
       },
       "hints": [
-        "The numeral records the count.",
-        "Last number said, first mark written.",
-        "Match mark to amount."
+        "Teens open with 1.",
+        "The 1 is a ten.",
+        "Ones digit counts extras."
       ],
       "cml": {
         "stage": "construct",
@@ -411,8 +415,8 @@
         "counterfactualPrompt": "If one more thing joined the group, which single mark of the numeral would have to change?"
       },
       "variant": {
-        "gen": "g0-counting",
-        "form": "countReadFlash"
+        "gen": "k0-count-100",
+        "form": "kCountFromHop"
       }
     },
     {

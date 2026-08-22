@@ -31,6 +31,21 @@
         "lowFeedback": "The ceiling is under 8 — the terms shrink too fast, so the pile stops short.",
         "highFeedback": "The ceiling is over 8 — the terms shrink too slowly. As r approaches 1 the ceiling escapes altogether."
       },
+      "predict": {
+        "prompt": "The ratio dial starts at r = 0.9. Before you touch it: at that ratio, does the forever-sum's ceiling sit ABOVE the 8 you are aiming for, or BELOW it?",
+        "options": [
+          {
+            "id": "above",
+            "label": "Above 8"
+          },
+          {
+            "id": "below",
+            "label": "Below 8 — the terms still shrink, so the pile stays small"
+          }
+        ],
+        "outcomeId": "above",
+        "reveal": "Above — far above. At r = 0.9 the terms DO shrink, but too slowly: each keeps 90% of the last, and the ceiling sits at 40, five times the target. As r approaches 1 the ceiling escapes altogether, so you must bring the ratio DOWN to make the sum settle on 8."
+      },
       "cml": {
         "stage": "construct",
         "flagship": false,
@@ -71,25 +86,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "It diverges — you are adding lumps of a fixed size forever, so the pile can never settle.",
+            "label": "It diverges because nonzero-size terms keep forcing finite jumps in the sums",
             "correct": true,
             "feedback": "Right, and it is the cheapest check in the subject. Always run it first."
           },
           {
             "id": "o2",
-            "label": "It converges.",
+            "label": "It converges because repeated terms can cancel each other out",
             "correct": false,
             "feedback": "The opposite. If the terms never fade, the partial sums keep taking finite jumps forever and no ceiling can hold them."
           },
           {
             "id": "o3",
-            "label": "Nothing can be said.",
+            "label": "No conclusion follows until a comparison test is chosen",
             "correct": false,
             "feedback": "Something very definite can: divergence. It is the CONVERSE that says nothing — terms going to zero does not guarantee convergence."
           },
           {
             "id": "o4",
-            "label": "It converges only if the terms are positive.",
+            "label": "It converges when the nonzero terms are all positive",
             "correct": false,
             "feedback": "Sign is irrelevant here. Terms that do not fade to zero kill any series, positive or not."
           }
@@ -165,25 +180,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "If |aₙ₊₁/aₙ| settles below 1, the tail eventually behaves like a geometric series with that ratio — and those converge.",
+            "label": "A settled ratio below 1 makes the tail shrink like a convergent geometric series",
             "correct": true,
             "feedback": "Right. It is the geometric test with the requirement loosened: the ratio no longer has to be CONSTANT, only to settle."
           },
           {
             "id": "o2",
-            "label": "Because every series is secretly geometric.",
+            "label": "Every series has one fixed geometric ratio after enough terms",
             "correct": false,
             "feedback": "Very few are. The point is that the TAIL behaves geometrically once the ratio has settled, which is enough to build a ceiling over the pile."
           },
           {
             "id": "o3",
-            "label": "Because the terms go to zero.",
+            "label": "Terms approaching zero alone force any series to converge",
             "correct": false,
             "feedback": "The harmonic series has terms going to zero and diverges. The ratio test asks something stronger: how FAST they shrink."
           },
           {
             "id": "o4",
-            "label": "It does not — it only works for positive terms.",
+            "label": "It applies only when every term is positive and decreasing",
             "correct": false,
             "feedback": "It uses ABSOLUTE values precisely so that signs cannot interfere. It works for any series."
           }
@@ -214,25 +229,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "No — the terms tend to 1, not 0, so by the nth-term test it diverges.",
+            "label": "No—the terms approach 1 rather than 0, so the nth-term test says diverge",
             "correct": true,
             "feedback": "Right, and it took one line. Always run the cheap test first."
           },
           {
             "id": "o2",
-            "label": "Yes — the terms are all less than 1.",
+            "label": "Yes—the terms stay below 1, so their total can settle",
             "correct": false,
             "feedback": "Being less than 1 is not enough; they must FADE TO ZERO. These climb toward 1, so you are adding roughly 1 forever."
           },
           {
             "id": "o3",
-            "label": "Yes, by the ratio test.",
+            "label": "Yes—the ratio eventually drops below 1 and proves convergence",
             "correct": false,
             "feedback": "The ratio here settles at exactly 1, which is the inconclusive case — and in any case the nth-term test has already killed it."
           },
           {
             "id": "o4",
-            "label": "It depends on where you start summing.",
+            "label": "It depends on where the series starts, because early terms control the sum",
             "correct": false,
             "feedback": "Convergence is a question about the TAIL, and no starting point can rescue terms that do not fade."
           }

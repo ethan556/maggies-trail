@@ -18,6 +18,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Badge, Button, EmptyState, Notice, SectionHeader, StatTile, Surface } from "@/components/ui";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
 import type { PickerCourse } from "./page";
 
 type ProgressStatus = "not-started" | "in-progress" | "on-time" | "late";
@@ -36,6 +37,7 @@ type Tier = 1 | 2 | 3;
 type LearnerTier = {
   learnerId: string;
   name: string;
+  avatarId?: string;
   tier: Tier;
   reasons: Array<{ code: string; detail: string }>;
   attempted: number;
@@ -45,7 +47,7 @@ type LearnerTier = {
   focusTags: string[];
 };
 type TierCounts = { tier1: number; tier2: number; tier3: number; total: number };
-type Group = { tag: string; members: Array<{ learnerId: string; name: string; tier: Tier }>; urgency: Tier };
+type Group = { tag: string; members: Array<{ learnerId: string; name: string; avatarId?: string; tier: Tier }>; urgency: Tier };
 type Insights = { tiers: LearnerTier[]; groups: Group[]; counts: TierCounts; generatedFor: string };
 type Intervention = {
   id: string;
@@ -412,7 +414,16 @@ function TierSection({ insights }: { insights: Insights | null }) {
               className={`border-l-4 p-3 ${t.tier === 1 ? "border-l-leaf" : t.tier === 2 ? "border-l-tangerine" : "border-l-berry"}`}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="font-bold">{t.name}</span>
+                <span className="flex items-center gap-2 font-bold">
+                  <AvatarDisplay
+                    avatarId={t.avatarId}
+                    size={256}
+                    placement="dense-list"
+                    displaySize={36}
+                    className="h-9 w-9 shrink-0 rounded-full ring-1 ring-ink/10 dark:ring-paper/15"
+                  />
+                  {t.name}
+                </span>
                 <Badge tone={TIER_TONE[t.tier]}>
                   Tier {t.tier} · {TIER_LABEL[t.tier]}
                 </Badge>
@@ -467,7 +478,16 @@ function GroupsSection({ groups }: { groups: Group[] }) {
               <ul className="mt-2 space-y-1">
                 {g.members.map((m) => (
                   <li key={m.learnerId} className="flex items-center justify-between text-sm">
-                    <span>{m.name}</span>
+                    <span className="flex items-center gap-2">
+                      <AvatarDisplay
+                        avatarId={m.avatarId}
+                        size={256}
+                        placement="dense-list"
+                        displaySize={28}
+                        className="h-7 w-7 shrink-0 rounded-full ring-1 ring-ink/10 dark:ring-paper/15"
+                      />
+                      {m.name}
+                    </span>
                     <span
                       role="img"
                       aria-label={`Tier ${m.tier}`}

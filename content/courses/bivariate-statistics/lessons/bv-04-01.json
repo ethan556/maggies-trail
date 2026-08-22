@@ -318,16 +318,16 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Fill a missing total.",
+      "body": "Find a missing cell from a total.",
       "conceptTag": "bv-read-table",
       "explanationVariants": [
-        "The cat column is 10 children + 15 adults = 25.",
-        "Add the two cat cells: 10 + 15 = 25."
+        "The child row totals 30; 20 of those chose dogs, so 30 − 20 = 10 chose cats.",
+        "Subtract the known cell from the row total to find the missing cell: 30 − 20 = 10."
       ],
       "widget": {
         "type": "conditionalTableLab",
         "mode": "read",
-        "prompt": "Cats were chosen by 10 children and 15 adults. What is the cat column total?",
+        "prompt": "The child row totals 30, and 20 children chose dogs. How many children chose cats?",
         "rowLabels": [
           "child",
           "adult"
@@ -346,41 +346,37 @@
         "targetCell": "r0c1",
         "startCondition": "col0",
         "requiredSwitches": 1,
-        "readMetric": "colTotal",
+        "readMetric": "cell",
         "answerChoices": [
           {
             "id": "c0",
-            "label": "25",
-            "value": 25,
-            "feedback": "The cat column total is 10 + 15 = 25."
+            "label": "10",
+            "value": 10,
+            "feedback": "Right — 30 total children minus 20 dog-choosers leaves 10 who chose cats."
           },
           {
             "id": "c1",
-            "label": "15",
-            "value": 15,
-            "feedback": "Add BOTH cat cells: 10 + 15 = 25, not just the adults."
+            "label": "20",
+            "value": 20,
+            "feedback": "That repeats the dog count — the missing CAT count is 30 − 20 = 10."
           },
           {
             "id": "c2",
             "label": "50",
             "value": 50,
-            "feedback": "That's everyone — the CAT column is 10 + 15 = 25."
+            "feedback": "That's the grand total, not the missing cell — 30 − 20 = 10 chose cats."
           }
         ],
-        "successFeedback": "The cat column total is 10 + 15 = 25.",
+        "successFeedback": "Right — 30 total children minus 20 dog-choosers leaves 10 who chose cats.",
         "explorationFeedback": "Select one exact claim from the drawn table.",
         "conditionFeedback": "Use the highlighted row, column, or whole-table denominator.",
         "cellFeedback": "Use the tangerine intersection cell as the numerator or requested count."
       },
       "hints": [
-        "Find the two cells in the cat column: children and adults.",
-        "They are 10 (children) and 15 (adults).",
-        "Add them: 10 + 15 = 25."
-      ],
-      "variant": {
-        "gen": "two-way-table",
-        "form": "columnTotal"
-      }
+        "The child row total is 30.",
+        "20 of those children chose dogs.",
+        "Subtract: 30 − 20 = 10 chose cats."
+      ]
     },
     {
       "id": "r1",

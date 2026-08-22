@@ -15,57 +15,38 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Order the steps.",
+      "body": "Gather the variable terms, then finish the equivalent balance one move at a time.",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Solve 5x + 2 = 3x + 10. Drag the steps into order.",
-        "items": [
-          {
-            "id": "s2",
-            "label": "Subtract 2 from both sides: 2x = 8"
-          },
-          {
-            "id": "s3",
-            "label": "Divide both sides by 2: x = 4"
-          },
-          {
-            "id": "s1",
-            "label": "Subtract 3x from both sides: 2x + 2 = 10"
-          }
-        ],
-        "correctOrder": [
-          "s1",
-          "s2",
-          "s3"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "s2",
-            "second": "s1",
-            "feedback": "Collect the x-terms FIRST — subtract 3x before touching the constants."
-          }
-        ],
-        "missFeedback": "Collect x-terms first, then the constants, then divide.",
-        "successFeedback": "Right — 3x off both sides, then solve 2x + 2 = 10 to get x = 4."
+        "type": "solveBalance",
+        "prompt": "Subtract 2x from both sides of 4x + 3 = 2x + 11. The balance is now 2x + 3 = 11. Remove equal units, then split into two equal groups.",
+        "a": 2,
+        "b": 3,
+        "c": 11,
+        "relation": "eq",
+        "successFeedback": "The balance ends at x = 4. Subtracting 2x first gathered the variables without changing which value makes both sides equal.",
+        "unbalancedFeedback": "The pans no longer match. Every removal or split must affect both sides equally.",
+        "notIsolatedFeedback": "The balance is still true, but x is not alone yet. Remove the three units, then split the remaining tiles equally.",
+        "missFeedback": "Return to 2x + 3 = 11. Remove 3 from both sides, then divide both sides into two groups.",
+        "unexpandedFeedback": "The equation is already expanded. Work with the equal tile groups on both pans."
       },
       "predict": {
-        "prompt": "Solving 5x + 2 = 3x + 10 — what's the first USEFUL move?",
+        "prompt": "For 4x + 3 = 2x + 11, which first move gathers the x-terms on one side?",
         "options": [
           {
             "id": "gather",
-            "label": "Gather the x-terms on one side"
+            "label": "Subtract 2x from both sides"
           },
           {
             "id": "divide",
-            "label": "Divide everything right away"
+            "label": "Divide both sides by 4 immediately"
           },
           {
             "id": "answer",
-            "label": "Guess x and check"
+            "label": "Change only the left side"
           }
         ],
         "outcomeId": "gather",
-        "reveal": "With x's living on both sides, nothing simplifies until they're collected — subtract 3x and the equation finally has one unknown territory. Divide everything by 5 first and you trade clean terms for fractions — x + 2/5 = 3x/5 + 2 — with x still stranded on both sides."
+        "reveal": "Subtracting 2x from both sides preserves the balance and changes the equation to 2x + 3 = 11. The variables are now gathered on one side for the remaining steps."
       }
     },
     {
@@ -108,23 +89,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Take the smaller x-term.",
+      "body": "This time, the x lands on the right.",
       "widget": {
         "type": "numeric",
-        "prompt": "Solve for x: 7x + 3 = 4x + 15",
-        "answer": 4,
+        "prompt": "Solve for x: 4x + 2 = 6x − 10",
+        "answer": 6,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 6,
-            "feedback": "That subtracted 3 from 15 first — collect x-terms first: take 4x off both sides to get 3x+3=15, then x=4."
+            "value": -4,
+            "feedback": "That subtracted 10 instead of adding it — the −10 must be undone by ADDING 10 to both sides: 2x=12, then x=6."
           },
           {
-            "value": 2,
-            "feedback": "Check the steps — 4x off both sides gives 3x+3=15, then 3x=12, so x=4."
+            "value": 12,
+            "feedback": "That's 2x, not x — after 2x=12, divide both sides by 2 to get x=6."
           }
         ],
-        "fallbackFeedback": "Subtract 4x: 3x + 3 = 15. Subtract 3: 3x = 12. Divide by 3: x = 4."
+        "fallbackFeedback": "Subtract 4x: 2 = 2x − 10. Add 10: 2x = 12. Divide by 2: x = 6."
       }
     },
     {
@@ -142,7 +123,7 @@
         "options": [
           {
             "id": "a",
-            "label": "To keep both sides equal — the balance must stay level",
+            "label": "To keep both sides equal",
             "correct": true,
             "feedback": "Right — changing only one side would break the equality."
           },
@@ -174,32 +155,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger case.",
+      "body": "Subtraction on both sides.",
       "conceptTag": "les-isolate-variable",
       "explanationVariants": [
-        "Subtract 5x: 4x+4=24. Subtract 4: 4x=20. Divide by 4: x=5.",
-        "Collect x on the left (4x), then solve down to x=5."
+        "Subtract 4x: 4x − 5 = −25. Add 5: 4x = −20. Divide by 4: x = −5.",
+        "Collect x on the left (4x), undo the −5, then divide — the answer is negative: x = −5."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Solve for x: 9x + 4 = 5x + 24",
-        "answer": 5,
+        "prompt": "Solve for x: 8x − 5 = 4x − 25",
+        "answer": -5,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 7,
-            "feedback": "That subtracted 4 from 24 first — collect x-terms first: 5x off both sides gives 4x+4=24, then x=5."
+            "value": 5,
+            "feedback": "That's the right size but the wrong sign — collect x-terms first: subtract 4x to get 4x − 5 = −25, then add 5 and divide by 4 to land on x = −5, not 5."
           },
           {
-            "value": 3.11,
-            "feedback": "Check the steps — 5x off both sides gives 4x+4=24, then 4x=20, so x=5."
+            "value": -20,
+            "feedback": "That's 4x, not x — after 4x = −20, divide both sides by 4 to get x = −5."
           }
         ],
-        "fallbackFeedback": "Subtract 5x: 4x + 4 = 24. Subtract 4: 4x = 20. Divide by 4: x = 5."
-      },
-      "variant": {
-        "gen": "g8-les-isolate-variable",
-        "form": "lesIsolateB"
+        "fallbackFeedback": "Subtract 4x: 4x − 5 = −25. Add 5: 4x = −20. Divide by 4: x = −5."
       }
     },
     {

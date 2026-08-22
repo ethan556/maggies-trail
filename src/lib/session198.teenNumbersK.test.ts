@@ -12,11 +12,30 @@ const { solvePrompt: solveG0 } = require2("./g0Independent.cjs");
 
 /** S198 — teen-numbers-k (K.NBT.A.1), Batch G course 3/6. Zero new generator code.
  *
- *  THE COURSE'S CENTRAL CONTRACT, pinned hard here: countTeenFrame renders the completed ten
- *  separately and its `target` is the ONES — so a frame whose prompt says "make 1X" MUST carry
- *  target = X, not X+10. A target of the full teen would ask the learner to build ten extra
- *  dots and grade the correct ten-and-ones answer as wrong. Every teen frame in the course is
- *  checked for prompt↔target agreement, and traps are checked to sit one-off from the ones.
+ *  THE COURSE'S CENTRAL CONTRACT, pinned hard here: a tenFrame widget renders exactly one
+ *  10-cell grid (TenFrameW, src/components/widgets.tsx) and the schema caps `target` at 10 with
+ *  `preFilled` required to be strictly less than `target` (TenFrameSpec, src/lib/schema.ts) — so
+ *  it can NEVER render a separately-shown completed ten plus a teen-sized total; every teen frame
+ *  in this course starts empty (`preFilled: 0`) and its `target` is the ONES digit (1-9), not the
+ *  full teen. A target of the full teen would ask the learner to build ten extra dots and grade
+ *  the correct ten-and-ones answer as wrong. Every teen frame in the course is checked for this
+ *  target/preFilled agreement, that building `target` dots actually grades correct, and that
+ *  traps sit one-off from the ones.
+ *
+ *  S327/S328 update: earlier drafts of this test also required every tenFrame prompt to match
+ *  `/make (\d+)\.$/` and derived "the teen" from that captured number. That regex enshrined the
+ *  literal wording of a corpus-wide authored-prompt bug (S327 finding, S328 root-cause fix in
+ *  `g0Variants.ts`'s `countTeenFrame`): prompts like "A full group of 10 is already shown. Add the
+ *  extra dots needed to make 16." falsely claimed the single-frame widget had a locked ten already
+ *  on screen, which `preFilled: 0` never renders. Once that prose was corrected (here and in every
+ *  sibling lesson) to stop making that visual-state claim, prompts legitimately stopped ending in
+ *  "make <teen>." — some no longer restate the teen number in the prompt at all (e.g. "A teen has
+ *  one full ten and six loose dots. Build only the loose part."). The regex-based check is
+ *  replaced below with the structural/semantic invariant it was really standing in for:
+ *  preFilled===0, target in the valid 1-9 ones range, and `evaluate(widget, widget.target).correct`
+ *  — the same grading-correctness check session253's course-integrity test already uses for this
+ *  exact scenario. This is *not* a relaxation: a target/preFilled regression is still caught, now
+ *  independent of which of the corpus's many accepted authored-prompt phrasings is used.
  *
  *  Solver round-trips: countDecomposeMcq's correct label is the pair that does NOT sum to N
  *  (the inverted question is exactly where an authored "valid split" answer would silently
@@ -40,6 +59,10 @@ const lessons = readdirSync(join(DIR, "lessons")).sort()
 const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
 const landOf = (w: { direction: string; start: number; hop: number; hops: number }) =>
   w.direction === "back" ? w.start - w.hop * w.hops : w.start + w.hop * w.hops;
+// Mirrors g0Independent.cjs's own ONE_WORDS: one hop prompt spells its count as a word.
+const ONE_WORDS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
 const pairSum = (label: string) =>
   [...label.matchAll(/\d+/g)].map((m) => Number(m[0])).reduce((a, b) => a + b, 0);
 
@@ -106,15 +129,16 @@ describe("S198 teen-numbers-k — teen-frame contract and solver round-trips", (
         expect(widgetIntegrityErrors(w)).toEqual([]);
 
         if (w.type === "tenFrame") {
-          // target is the ONES: "make 1X" must mean target === X
-          const m = w.prompt.match(/make (\d+)\.$/);
-          expect(m, `${lesson.id}/${s.id}: teen frame prompt must end in "make <teen>."`).toBeTruthy();
-          const teen = Number(m![1]);
-          expect(teen).toBeGreaterThanOrEqual(11);
-          expect(teen).toBeLessThanOrEqual(19);
-          expect(w.target,
-            `${lesson.id}/${s.id}: target must be the ONES (teen−10), not the full teen — a full-teen target grades the correct ten-and-ones answer as wrong`)
-            .toBe(teen - 10);
+          // S328: target is the ONES (1-9), the frame always starts empty in this course, and
+          // building exactly `target` dots must grade correct — see the file docstring for why
+          // this replaced an older regex that matched one specific (now-retired, false-claim)
+          // prompt phrasing rather than the underlying target/preFilled invariant.
+          expect(w.preFilled, `${lesson.id}/${s.id}: every teen frame in this course starts empty`).toBe(0);
+          expect(w.target, `${lesson.id}/${s.id}: teen-frame target must be the ones digit`).toBeGreaterThanOrEqual(1);
+          expect(w.target, `${lesson.id}/${s.id}: teen-frame target must be the ones digit`).toBeLessThanOrEqual(9);
+          expect(evaluate(w, w.target).correct,
+            `${lesson.id}/${s.id}: building exactly target dots must grade correct — a full-teen target would grade the correct ten-and-ones answer as wrong`)
+            .toBe(true);
           expect(w.commonCounts.length).toBeGreaterThanOrEqual(2);
           for (const t of w.commonCounts) {
             expect(t.count).not.toBe(w.target);
@@ -128,13 +152,19 @@ describe("S198 teen-numbers-k — teen-frame contract and solver round-trips", (
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S307 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session307.teenNumbersKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           expect(new Set(w.options.map((o) => o.feedback)).size).toBe(w.options.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);
 
           if (s.variant?.form === "countDecomposeMcq") {
             // independent arithmetic: the correct label is the pair NOT summing to N
-            const n = Number(w.prompt.match(/split of (\d+)\?/)![1]);
+            const nm = w.prompt.match(/split of (\d+)\?/) ?? w.prompt.match(/fails to make (\d+)\?/);
+            expect(nm, `${lesson.id}/${s.id}: countDecomposeMcq prompt shape unrecognized: ${w.prompt}`).toBeTruthy();
+            const n = Number(nm![1]);
             expect(pairSum(correct[0].label),
               `${lesson.id}/${s.id}: the NOT-a-split answer must fail to sum to ${n}`).not.toBe(n);
             for (const o of w.options.filter((x) => !x.correct)) {
@@ -174,8 +204,16 @@ describe("S198 teen-numbers-k — teen-frame contract and solver round-trips", (
             expect(Number(w.prompt.match(/after (\d+)\?/)![1]) + 1).toBe(land);
           }
           if (s.variant?.form === "kCountFromHop") {
-            const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./)!;
-            expect(Number(m[1]) + Number(m[2])).toBe(land);
+            const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
+            if (m) {
+              expect(Number(m[1]) + Number(m[2])).toBe(land);
+            } else {
+              // "Use [word] one-steps from [word] to reach the point that names N." states the
+              // same start+hop story with both numbers spelled as words.
+              const m2 = w.prompt.match(/^Use (\w+) one-steps from (\w+) to reach the point that names (\d+)/i);
+              expect(m2, `${lesson.id}/${s.id}: kCountFromHop prompt shape unrecognized: ${w.prompt}`).toBeTruthy();
+              expect(ONE_WORDS[m2![2].toLowerCase()] + ONE_WORDS[m2![1].toLowerCase()]).toBe(land);
+            }
           }
         }
       }

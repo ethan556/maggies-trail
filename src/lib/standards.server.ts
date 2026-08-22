@@ -34,6 +34,7 @@ export interface MasteryInfrastructureMetrics {
   officialSourceRegistryCount: number;
   reviewReadyEdges: number;
   humanApprovedEdges: number;
+  humanPartialEdges: number;
   humanRejectedEdges: number;
   edgesNeedingExactBenchmark: number;
   certifiedExactPracticeObjectives: number;

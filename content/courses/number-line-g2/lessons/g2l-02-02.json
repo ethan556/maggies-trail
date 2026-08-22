@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Subtraction is the same walk, reversed: start at the bigger number, jump backward, land on the difference.",
       "narration": "Subtraction is the same walk, reversed: start at the bigger number, jump backward, land on the difference."
     },
@@ -138,32 +137,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "63 − 20 is two ten-jumps toward zero — the line makes taking away as visible as adding on.",
       "narration": "63 − 20 is two ten-jumps toward zero — the line makes taking away as visible as adding on."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Transfer backward tens-jumps to a different starting mark and distance.",
       "conceptTag": "g2l-jump-sub",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Show 63 − 20: two ten-hops BACKWARD from 63.",
-        "min": 30,
-        "max": 70,
-        "start": 63,
+        "prompt": "Show 81 − 30: take three ten-hops backward from 81.",
+        "min": 40,
+        "max": 90,
+        "start": 81,
         "hop": 10,
-        "hops": 2,
+        "hops": 3,
         "direction": "back",
         "commonLandings": [
           {
-            "value": 53,
-            "feedback": "One backward ten so far — the subtraction asks for two."
+            "value": 71,
+            "feedback": "That is only one backward ten. The subtraction asks for all three tens."
           }
         ],
-        "missFeedback": "Each hop is 10, going backward. From 63, 2 hops land on 43.",
-        "successFeedback": "43 — two tens walked back toward zero, landing on the difference."
+        "missFeedback": "Subtract by moving backward. Three ten-hops from 81 land on 51.",
+        "successFeedback": "51 — three backward tens make the difference visible."
       },
       "cml": {
         "stage": "construct",
@@ -191,35 +189,35 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "",
+      "body": "How many hops this time?",
       "conceptTag": "g2l-jump-sub",
       "explanationVariants": [
-        "Each backward ten shrinks by ten.",
-        "Stop on the difference."
+        "The walk drops from 74 to 34, a distance of 40 — that is 4 ten-hops.",
+        "Divide the total drop by ten to count the hops: 40 ÷ 10 = 4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "62 − 40 = ? (jumping backward by tens)",
-        "answer": 22,
+        "prompt": "Jumping backward by tens, 74 lands on 34. How many ten-hops was that?",
+        "answer": 4,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 32,
-            "feedback": "The jumps went FORWARD — subtracting walks the line toward zero."
+            "value": 40,
+            "feedback": "40 is how far the walk traveled, not how many ten-hops that took — 40 ÷ 10 = 4 hops."
           },
           {
-            "value": 12,
-            "feedback": "One backward jump too many; stop when the jumps equal 40."
+            "value": 34,
+            "feedback": "34 is where the walk landed, not how many hops it took — from 74 down to 34 is 4 ten-hops."
           }
         ],
-        "fallbackFeedback": "Walk the line: find the start mark, take the jumps one at a time, and read the mark you land on.",
-        "successFeedback": "Correct — 22."
+        "fallbackFeedback": "Find the total distance (74 − 34), then divide by ten to count the ten-hops.",
+        "successFeedback": "Correct — 4 ten-hops."
       },
       "hints": [
         "Subtraction walks toward zero.",
-        "Same jumps, other direction.",
-        "The landing is the answer."
+        "Find the total drop, then count it in tens.",
+        "74 down to 34 is a drop of 40 — how many tens is that?"
       ],
       "cml": {
         "stage": "construct",
@@ -242,10 +240,6 @@
         "transferFamily": "number-line-g2:g2l-jump-sub",
         "delayed": true,
         "counterfactualPrompt": "Which change — start, jump size, or direction — would move the landing, and which would leave it alone?"
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SubtractByPlaceNumeric"
       }
     },
     {
@@ -253,35 +247,36 @@
       "kind": "check",
       "body": "",
       "conceptTag": "g2l-jump-sub",
+      "figure": "g2l-choice-gap-54-34",
       "explanationVariants": [
         "A difference can be a walk OR a gap.",
         "Both drawings agree."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which line drawing shows 54 − 34 as a GAP?",
+        "prompt": "Which drawing shows the gap between 54 and 34?",
         "options": [
           {
-            "id": "o0",
-            "label": "Marks at 34 and 54; count the space between",
-            "correct": true,
-            "feedback": "Correct — the difference is the distance separating the two marks, hopped and counted."
-          },
-          {
             "id": "o1",
-            "label": "Start at 54, jump forward 34",
+            "label": "Drawing B",
             "correct": false,
             "feedback": "Forward jumps grow the number; a difference either walks BACK or measures the gap."
           },
           {
             "id": "o2",
-            "label": "One mark at 20, nothing else",
+            "label": "Drawing C",
             "correct": false,
             "feedback": "That mark is the ANSWER, but a drawing of the difference must show where it came from."
           },
           {
+            "id": "o0",
+            "label": "Drawing A",
+            "correct": true,
+            "feedback": "Correct — the difference is the distance separating the two marks, hopped and counted."
+          },
+          {
             "id": "o3",
-            "label": "Marks at 34 and 54; add the two labels",
+            "label": "Drawing D",
             "correct": false,
             "feedback": "Adding the endpoints measures no distance at all — the gap between them is the difference."
           }
@@ -318,35 +313,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "A walk that lands below ten.",
       "conceptTag": "g2l-jump-sub",
       "explanationVariants": [
-        "Longer walks back, same idea.",
-        "Direction carries the minus."
+        "A long enough backward walk can land in the ones.",
+        "Direction still carries the minus, even close to zero."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "65 − 40 = ? (jumping backward by tens)",
-        "answer": 25,
+        "prompt": "58 − 50 = ? (jumping backward by tens)",
+        "answer": 8,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 35,
+            "value": 108,
             "feedback": "The jumps went FORWARD — subtracting walks the line toward zero."
           },
           {
-            "value": 15,
-            "feedback": "One backward jump too many; stop when the jumps equal 40."
+            "value": 5,
+            "feedback": "5 is how many ten-hops you took, not where you landed — the landing itself is the answer, 8."
           }
         ],
         "fallbackFeedback": "Walk the line: find the start mark, take the jumps one at a time, and read the mark you land on.",
-        "successFeedback": "Correct — 25."
+        "successFeedback": "Correct — 8."
       },
       "hints": [
         "Subtraction walks toward zero.",
         "Same jumps, other direction.",
-        "The landing is the answer."
+        "The landing is the answer, not the hop count."
       ],
       "cml": {
         "stage": "construct",

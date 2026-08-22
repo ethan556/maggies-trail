@@ -13,58 +13,44 @@
    "figure": "line-intercepts"
   },
   {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Interpret the slope.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "A phone-plan cost fits y = 2x + 10, where x is gigabytes used and y is dollars. What does the slope 2 mean?",
-    "options": [
-     {
-      "id": "a",
-      "label": "Each extra gigabyte adds $2 to the cost",
-      "correct": true,
-      "feedback": "Right — the slope is the cost added per gigabyte: $2 each."
-     },
-     {
-      "id": "b",
-      "label": "The plan costs $2 total",
-      "correct": false,
-      "feedback": "That's not the slope's meaning — $2 is the cost PER extra gigabyte."
-     },
-     {
-      "id": "c",
-      "label": "The plan starts at $2",
-      "correct": false,
-      "feedback": "The starting cost is the intercept (10) — the slope 2 is the cost per gigabyte."
-     },
-     {
-      "id": "d",
-      "label": "You get 2 gigabytes free",
-      "correct": false,
-      "feedback": "The slope is a rate: $2 added per gigabyte, not free data."
-     }
-    ]
-   },
-   "predict": {
-    "prompt": "The plan costs y = 2x + 10. If you used ZERO gigabytes, which number would you still pay?",
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Use separate slope and intercept controls to build the phone-plan model.",
+      "widget": {
+        "type": "lineExplore",
+        "prompt": "Build y = 2x + 10 for a plan with a $10 starting fee and $2 added per gigabyte.",
+        "targetSlope": 2,
+        "targetIntercept": 10,
+        "slopeMin": 0,
+        "slopeMax": 4,
+        "interceptMin": 0,
+        "interceptMax": 12,
+        "slopeStart": 0,
+        "interceptStart": 2,
+        "gridMax": 14,
+        "successFeedback": "y = 2x + 10. The line starts at $10 when x = 0, then rises $2 for each additional gigabyte.",
+        "slopeFeedback": "The rate is off. Each step of 1 gigabyte must raise the cost by $2.",
+        "interceptFeedback": "The rate is right, but the starting fee is not. At zero gigabytes, the plan still costs $10."
+      },
+      "predict": {
+        "prompt": "For y = 2x + 10, which amount remains when zero gigabytes are used?",
     "options": [
      {
       "id": "ten",
-      "label": "The 10"
+            "label": "$10, the starting fee"
      },
      {
       "id": "two",
-      "label": "The 2"
+            "label": "$2, the rate per gigabyte"
      },
      {
       "id": "zero",
-      "label": "Nothing — $0"
+            "label": "$0, because no data was used"
      }
     ],
     "outcomeId": "ten",
-    "reveal": "At x = 0 the 2x term vanishes and the 10 remains — the intercept is the cost of just having the plan, before any usage."
-   }
+        "reveal": "At x = 0, the 2x term becomes 0 and the 10 remains. The intercept is the fixed starting fee; the slope is the added cost per gigabyte."
+      }
   },
   {
    "id": "c2",
@@ -319,19 +305,19 @@
       },
       {
        "id": "b",
-       "label": "The starting value at x = 0",
+       "label": "The starting value of y where x equals 0",
        "correct": false,
        "feedback": "That's the intercept (8) — the slope 5 is the per-unit change."
       },
       {
        "id": "c",
-       "label": "The total cost",
+       "label": "The total cost of the whole plan added up",
        "correct": false,
        "feedback": "The slope is a rate, not a total: 5 per unit of x."
       },
       {
        "id": "d",
-       "label": "The value at x = 5",
+       "label": "The value that y takes when x equals 5",
        "correct": false,
        "feedback": "The slope is the change per unit of x (5), not a value at a specific x."
       }

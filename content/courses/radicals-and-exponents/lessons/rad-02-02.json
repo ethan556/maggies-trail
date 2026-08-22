@@ -9,48 +9,47 @@
   {
    "id": "c1",
    "kind": "concept",
-   "figure": "radical-factor",
    "body": "Multiply radicals by multiplying the radicands: √a · √b = √(ab). So √2 · √3 = √6. When the product is a perfect square, it becomes a whole number: √2 · √8 = √16 = 4."
   },
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Multiply to a whole number.",
+   "body": "Build the radicand product as a rectangle, then take its square root.",
    "widget": {
-    "type": "numeric",
-    "prompt": "√2 · √8 = ?",
-    "answer": 4,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 10,
-      "feedback": "Multiply the radicands, don't add them: √(2 · 8) = √16 = 4."
-     },
-     {
-      "value": 16,
-      "feedback": "√16 isn't 16 — take the root: √16 = 4."
-     }
-    ],
-    "fallbackFeedback": "√2 · √8 = √16 = 4."
+    "type": "areaModel",
+    "prompt": "Build a 2-by-8 rectangle to multiply the radicands in √2 · √8. Then read the square root of its 16 unit squares.",
+    "targetArea": 16,
+    "wMax": 8,
+    "hMax": 8,
+    "wStart": 2,
+    "hStart": 2,
+    "requireFactors": {
+     "w": 2,
+     "h": 8
+    },
+    "factorFeedback": "The area is 16, but the sides must show the original radicands 2 and 8. Build 2 × 8, not a different factor pair.",
+    "successFeedback": "The 2-by-8 rectangle has area 16. Therefore √2 · √8 = √16 = 4.",
+    "lowFeedback": "The rectangle has fewer than 16 squares. Keep one side at 2 and extend the other side to 8.",
+    "highFeedback": "The rectangle has more than 16 squares. Return to the exact radicand product 2 × 8."
    },
    "predict": {
-    "prompt": "√2 · √8 — two irrational numbers. Their product will be…",
+    "prompt": "Before building the rectangle, what kind of number is √2 · √8?",
     "options": [
      {
       "id": "whole",
-      "label": "A whole number — the radicands merge"
+      "label": "A whole number — 2 × 8 makes 16"
      },
      {
       "id": "irr",
-      "label": "Irrational — irrationals stay irrational"
+      "label": "An irrational number — radicals never simplify"
      },
      {
       "id": "sixteen",
-      "label": "Exactly 16"
+      "label": "Exactly 16 — stop before taking the root"
      }
     ],
     "outcomeId": "whole",
-    "reveal": "The product rule merges the insides: √2 · √8 = √16 = 4 — the root of the product, not the product itself. Two irrationals can land square on a whole number whenever their radicands multiply to a perfect square."
+    "reveal": "The rectangle makes the product radicand visible: 2 × 8 = 16. Taking the remaining square root gives √16 = 4, so two irrational factors can produce a whole number."
    }
   },
   {
@@ -130,7 +129,7 @@
      },
      {
       "value": 16,
-      "feedback": "Only the outside numbers make the coefficient: 2 · 4 = 8. The 6 is the radicand."
+      "feedback": "That doubles the correct coefficient. Multiply the outside numbers once: 2 · 4 = 8, not 8 × 2."
      }
     ],
     "fallbackFeedback": "2 · 4 = 8, so 8√6."
@@ -167,30 +166,30 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "Perfect-square product.",
+   "body": "A banner's area.",
    "conceptTag": "rad-multiply",
    "explanationVariants": [
-    "√5 · √20 = √100 = 10.",
-    "Multiply the radicands: 5 · 20 = 100, and √100 = 10."
+    "√7 · √28 = √196 = 14.",
+    "Multiply the radicands: 7 · 28 = 196, and √196 = 14."
    ],
    "widget": {
     "type": "exactNumberLab",
-    "prompt": "√5 · √20 = ?",
+    "prompt": "A rectangular banner has side lengths √7 feet and √28 feet. What is its area in simplest form?",
     "task": "radicalProduct",
     "targetRadicand": 1,
     "values": [
      {
       "id": "left",
-      "label": "√5",
+      "label": "√7",
       "kind": "root",
-      "radicand": 5,
+      "radicand": 7,
       "coefficient": 1
      },
      {
       "id": "right",
-      "label": "√20",
+      "label": "√28",
       "kind": "root",
-      "radicand": 20,
+      "radicand": 28,
       "coefficient": 1
      }
     ],
@@ -198,12 +197,12 @@
     "tolerance": 0,
     "numericErrors": [
      {
-      "value": 25,
-      "feedback": "Multiply the radicands, don't add: √(5 · 20) = √100 = 10."
+      "value": 35,
+      "feedback": "Multiply the radicands, don't add: √(7 · 28) = √196 = 14."
      },
      {
-      "value": 100,
-      "feedback": "√100 isn't 100 — take the root: √100 = 10."
+      "value": 196,
+      "feedback": "√196 isn't 196 — take the root: √196 = 14."
      }
     ],
     "choices": [],
@@ -211,8 +210,8 @@
     "requiredStageKeys": [],
     "requiredExplorations": 1,
     "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "√5 · √20 = √100 = 10.",
-    "successFeedback": "√5 · √20 = √100 = 10."
+    "fallbackFeedback": "√7 · √28 = √196 = 14.",
+    "successFeedback": "√7 · √28 = √196 = 14."
    },
    "variant": {
     "gen": "a1-radicals",
@@ -277,30 +276,30 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Multiply, then simplify.",
+   "body": "A photo's area.",
    "conceptTag": "rad-multiply",
    "explanationVariants": [
-    "√3 · √6 = √18, and √18 = 3√2, so a = 3.",
-    "√18 = √9 · √2 = 3√2, giving a = 3."
+    "√10 · √15 = √150, and √150 = 5√6, so a = 5.",
+    "√150 = √25 · √6 = 5√6, giving a = 5."
    ],
    "widget": {
     "type": "exactNumberLab",
-    "prompt": "√3 · √6 = a√2 after simplifying. What is a?",
+    "prompt": "A photo's dimensions are √10 inches by √15 inches. Its area simplifies to a√6 square inches. What is a?",
     "task": "radicalProduct",
-    "targetRadicand": 2,
+    "targetRadicand": 6,
     "values": [
      {
       "id": "left",
-      "label": "√3",
+      "label": "√10",
       "kind": "root",
-      "radicand": 3,
+      "radicand": 10,
       "coefficient": 1
      },
      {
       "id": "right",
-      "label": "√6",
+      "label": "√15",
       "kind": "root",
-      "radicand": 6,
+      "radicand": 15,
       "coefficient": 1
      }
     ],
@@ -308,12 +307,12 @@
     "tolerance": 0,
     "numericErrors": [
      {
-      "value": 18,
-      "feedback": "√3 · √6 = √18, and √18 = 3√2, so a = 3 (not 18)."
+      "value": 150,
+      "feedback": "√10 · √15 = √150, and √150 = 5√6, so a = 5 (not 150)."
      },
      {
-      "value": 2,
-      "feedback": "2 is the radicand left over. The coefficient from √18 = 3√2 is 3."
+      "value": 6,
+      "feedback": "6 is the radicand left over. The coefficient from √150 = 5√6 is 5."
      }
     ],
     "choices": [],
@@ -321,13 +320,13 @@
     "requiredStageKeys": [],
     "requiredExplorations": 1,
     "explorationFeedback": "Inspect the required exact-number states before checking.",
-    "fallbackFeedback": "√3 · √6 = √18 = 3√2, so a = 3.",
-    "successFeedback": "√3 · √6 = √18 = 3√2, so a = 3."
+    "fallbackFeedback": "√10 · √15 = √150 = 5√6, so a = 5.",
+    "successFeedback": "√10 · √15 = √150 = 5√6, so a = 5."
    },
    "hints": [
-    "Multiply the radicands: √3 · √6 = √18.",
-    "Simplify √18 = √9 · √2 = 3√2.",
-    "So a = 3."
+    "Multiply the radicands: √10 · √15 = √150.",
+    "Simplify √150 = √25 · √6 = 5√6.",
+    "So a = 5."
    ],
    "variant": {
     "gen": "a1-radicals",
@@ -360,25 +359,25 @@
     "body": "",
     "conceptTag": "rad-multiply",
     "explanationVariants": [
-     "√3 · √12 = √36 = 6.",
-     "3 · 12 = 36 under the root, and √36 = 6."
+     "√3 · √27 = √81 = 9.",
+     "3 · 27 = 81 under the root, and √81 = 9."
     ],
     "widget": {
      "type": "numeric",
-     "prompt": "√3 · √12 = ?",
-     "answer": 6,
+     "prompt": "A rectangular sticker measures √3 inches by √27 inches. What is its area in square inches?",
+     "answer": 9,
      "tolerance": 0,
      "commonErrors": [
       {
-       "value": 15,
-       "feedback": "Multiply the radicands, don't add: √36 = 6."
+       "value": 30,
+       "feedback": "Multiply the radicands, don't add: √(3 · 27) = √81 = 9, not 3 + 27."
       },
       {
-       "value": 36,
-       "feedback": "You stopped at the product under the radical. The root still has to be taken: √36 = 6."
+       "value": 81,
+       "feedback": "You stopped at the product under the radical. The root still has to be taken: √81 = 9."
       }
      ],
-     "fallbackFeedback": "√3 · √12 = √36 = 6."
+     "fallbackFeedback": "√3 · √27 = √81 = 9."
     }
    }
   }

@@ -15,62 +15,57 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Match exponents, then add.",
+      "body": "Rewrite the smaller term using the same power of 10 before combining coefficients.",
       "widget": {
-        "type": "mcq",
-        "prompt": "(2.5 × 10⁴) + (3 × 10³) = ?",
-        "options": [
+        "type": "placeValueTransformLab",
+        "task": "evaluatePowerTen",
+        "answerMode": "numeric",
+        "prompt": "Rewrite 3 × 10³ as 0.3 × 10⁴. Explore the place shift, then enter the shared value of both forms.",
+        "values": [
+          0.3
+        ],
+        "targetExponent": 4,
+        "choices": [],
+        "numericErrors": [
           {
-            "id": "a",
-            "label": "2.8 × 10⁴",
-            "correct": true,
-            "feedback": "Right — rewrite 3×10³ as 0.3×10⁴, then add: 2.5+0.3=2.8."
+            "value": 30000,
+            "feedback": "That treats 0.3 as 3. Multiplying 0.3 by 10⁴ gives 3,000, not 30,000."
           },
           {
-            "id": "b",
-            "label": "5.5 × 10⁴",
-            "correct": false,
-            "feedback": "That adds the coefficients directly without matching exponents first — rewrite 3×10³ as 0.3×10⁴ before adding."
-          },
-          {
-            "id": "c",
-            "label": "2.8 × 10³",
-            "correct": false,
-            "feedback": "The matched exponent should be the BIGGER one, 4, not 3."
-          },
-          {
-            "id": "d",
-            "label": "5.5 × 10⁷",
-            "correct": false,
-            "feedback": "That adds the exponents like multiplying — addition doesn't combine exponents that way."
+            "value": 300,
+            "feedback": "That shifts only three places. The form 0.3 × 10⁴ equals 3,000."
           }
-        ]
+        ],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "successFeedback": "Both 3 × 10³ and 0.3 × 10⁴ equal 3,000.",
+        "explorationFeedback": "Inspect the coefficient and all four place shifts before checking.",
+        "fallbackFeedback": "Move the decimal in 0.3 four places to the right: 0.3 × 10⁴ = 3,000."
       },
       "predict": {
-        "prompt": "Adding two scientific-notation numbers — can you just add the exponents like when multiplying?",
+        "prompt": "Before adding scientific-notation numbers, what must be true of their powers of 10?",
         "options": [
           {
             "id": "no",
-            "label": "No — match the powers first"
+            "label": "The powers must match"
           },
           {
             "id": "yes",
-            "label": "Yes — exponents add here too"
+            "label": "The exponents should be added"
           },
           {
             "id": "front",
-            "label": "Add the fronts, keep the bigger power"
+            "label": "The coefficients can combine without rewriting"
           }
         ],
         "outcomeId": "no",
-        "reveal": "Addition needs like units — both numbers must speak the same power of ten before their fronts can combine. The exponent shortcut belongs to multiplication only."
+        "reveal": "Addition combines like place-value units. Rewrite both terms with the same power of 10, then add their coefficients; adding exponents is a multiplication rule."
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "body": "The same rule applies to subtraction: convert to matching exponents first. (5×10⁶) − (2×10⁵): rewrite 2×10⁵ as 0.2×10⁶, then subtract: 5 − 0.2 = 4.8, giving 4.8 × 10⁶.",
-      "figure": "esn-add-sci"
+      "body": "The same rule applies to subtraction: convert to matching exponents first. (5×10⁶) − (2×10⁵): rewrite 2×10⁵ as 0.2×10⁶, then subtract: 5 − 0.2 = 4.8, giving 4.8 × 10⁶."
     },
     {
       "id": "k1",

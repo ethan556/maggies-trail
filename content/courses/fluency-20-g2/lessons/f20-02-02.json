@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "Sums into the teens lean hardest on make-ten, because both addends are large enough to cross it.",
-      "narration": "Sums into the teens lean hardest on make-ten, because both addends are large enough to cross it."
+      "figure": "make-ten-bridge",
+      "body": "For a sum that crosses ten, split an addend to complete ten before joining what remains.",
+      "narration": "For a sum that crosses ten, split an addend to complete ten before joining what remains."
     },
     {
       "id": "i1",
@@ -108,8 +108,8 @@
             "feedback": "That finds the difference between 9 and 6 instead of their total."
           }
         ],
-        "fallbackFeedback": "Start at the bigger number and count on — or make ten first, then add what is left.",
-        "successFeedback": "Correct — 9 + 6 = 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 15."
       },
       "hints": [
         "Start from the bigger number.",
@@ -147,27 +147,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "9 + 6: give 1 to the 9, and 5 are left. Ten and 5 is 15.",
-      "narration": "9 + 6: give 1 to the 9, and 5 are left. Ten and 5 is 15."
+      "figure": "as-make-ten-any",
+      "body": "The same make-ten bridge works for different addends because the total amount is preserved.",
+      "narration": "The same make-ten bridge works for different addends because the total amount is preserved."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Another crossing.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-sums-16",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 8 and hop forward 6.",
-        "min": 0,
-        "max": 20,
-        "start": 8,
-        "hop": 1,
-        "hops": 6,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 8 and make 6 hops right, one number at a time.",
-        "successFeedback": "Six hops on from 8 lands on 14."
+        "type": "tapDiagram",
+        "prompt": "Nine needs one to complete ten. Tap what remains from a group of six.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "4",
+            "icon": "4",
+            "count": 1,
+            "correct": false,
+            "feedback": "4 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "5",
+            "icon": "5",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — one completes ten and five remain."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "6",
+            "icon": "6",
+            "count": 1,
+            "correct": false,
+            "feedback": "6 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — one completes ten and five remain."
       },
       "cml": {
         "stage": "construct",
@@ -203,7 +233,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 + 6 = ?",
+        "prompt": "Bridge through ten to add eight and six.",
         "answer": 14,
         "tolerance": 0,
         "unit": "",
@@ -217,8 +247,8 @@
             "feedback": "That finds the difference between 8 and 6 instead of their total."
           }
         ],
-        "fallbackFeedback": "Start at the bigger number and count on — or make ten first, then add what is left.",
-        "successFeedback": "Correct — 8 + 6 = 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "Start from the bigger number.",
@@ -264,7 +294,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 + 7 = ?",
+        "prompt": "Recall the double made by two sevens.",
         "answer": 14,
         "tolerance": 0,
         "unit": "",
@@ -278,8 +308,8 @@
             "feedback": "That finds the difference between 7 and 7 instead of their total."
           }
         ],
-        "fallbackFeedback": "Start at the bigger number and count on — or make ten first, then add what is left.",
-        "successFeedback": "Correct — 7 + 7 = 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "Start from the bigger number.",
@@ -325,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 + 5 = ?",
+        "prompt": "Nine gives one to make ten. Combine the five left over.",
         "answer": 14,
         "tolerance": 0,
         "unit": "",
@@ -339,8 +369,8 @@
             "feedback": "That finds the difference between 9 and 5 instead of their total."
           }
         ],
-        "fallbackFeedback": "Start at the bigger number and count on — or make ten first, then add what is left.",
-        "successFeedback": "Correct — 9 + 5 = 14."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 14."
       },
       "hints": [
         "Start from the bigger number.",
@@ -402,27 +432,27 @@
         "body": "",
         "conceptTag": "g2f-sums-16",
         "explanationVariants": [
-          "9 and 6 together make 15.",
-          "9 + 6 = 15, and addition commutes, so 6 + 9 is the same total."
+          "7 and 9 together make 16.",
+          "7 + 9 = 16, and addition commutes, so 9 + 7 is the same total."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "9 + 6 = ?",
-          "answer": 15,
+          "prompt": "A box holds 7 red pencils and 9 blue pencils. How many pencils are there in all?",
+          "answer": 16,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 14,
-              "feedback": "That stops one count short. Count on 6 from 9 and land on 15."
+              "value": 15,
+              "feedback": "That stops one count short. Count on 9 from 7 and land on 16."
             },
             {
-              "value": 3,
-              "feedback": "That finds the difference between 9 and 6 instead of their total."
+              "value": 2,
+              "feedback": "That finds the difference between 7 and 9 instead of their total."
             }
           ],
-          "fallbackFeedback": "Start at the bigger number and count on — or make ten first, then add what is left.",
-          "successFeedback": "Correct — 9 + 6 = 15."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 16."
         }
       }
     }

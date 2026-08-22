@@ -9,74 +9,60 @@
   {
    "id": "c1",
    "kind": "concept",
-   "body": "To multiply a big number, break it apart — the same trick you used for area. **6 × 34** splits 34 into 30 + 4, making two rectangles: 6 × 30 and 6 × 4. Multiply each, then add: 180 + 24 = 204. A hard problem becomes two easy ones you already know.",
-   "figure": "mb-break-area"
+   "body": "To multiply a big number, break it apart — the same trick you used for area. **6 × 34** splits 34 into 30 + 4, making two rectangles: 6 × 30 and 6 × 4. Multiply each, then add: 180 + 24 = 204. A hard problem becomes two easy ones you already know."
   },
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Build the split.",
+   "body": "Split one large rectangle into tens and ones without losing a group.",
    "conceptTag": "area-model-1digit",
    "widget": {
-    "type": "buildExpression",
-    "prompt": "Break 6 × 34 into two easier products. Build: 6 × 30 + 6 × 4.",
-    "tokens": [
+    "type": "compositeAreaLab",
+    "prompt": "Split 6 × 34 into a 6-by-30 rectangle and a 6-by-4 rectangle. Choose the total area.",
+    "scene": "piece-ledger",
+    "pieces": [
      {
-      "id": "t6a",
-      "label": "6"
+      "id": "tens",
+      "label": "6 by 30 piece",
+      "shape": "rectangle",
+      "operation": "add",
+      "width": 6,
+      "height": 30
      },
      {
-      "id": "t30",
-      "label": "× 30"
-     },
-     {
-      "id": "tp",
-      "label": "+"
-     },
-     {
-      "id": "t6b",
-      "label": "6"
-     },
-     {
-      "id": "t4",
-      "label": "× 4"
-     },
-     {
-      "id": "t34",
-      "label": "× 34"
+      "id": "ones",
+      "label": "6 by 4 piece",
+      "shape": "rectangle",
+      "operation": "add",
+      "width": 6,
+      "height": 4
      }
     ],
-    "correct": [
-     "t6a",
-     "t30",
-     "tp",
-     "t6b",
-     "t4"
-    ],
-    "acceptAlso": [
-     [
-      "t6b",
-      "t4",
-      "tp",
-      "t6a",
-      "t30"
-     ]
-    ],
-    "commonBuilds": [
+    "target": {
+     "kind": "total"
+    },
+    "choices": [
      {
-      "sequence": [
-       "t6a",
-       "t30",
-       "tp",
-       "t6b",
-       "t34"
-      ],
-      "feedback": "The second piece should be 6 × 4, not 6 × 34 — you already pulled the 30 out, so only the 4 ones are left."
+      "id": "whole",
+      "label": "204 squares",
+      "value": 204,
+      "feedback": "Both pieces together cover 180 + 24 = 204 squares."
+     },
+     {
+      "id": "tens-only",
+      "label": "180 squares",
+      "value": 180,
+      "feedback": "That counts only 6 × 30. Add the 6 × 4 piece too."
+     },
+     {
+      "id": "one-six",
+      "label": "198 squares",
+      "value": 198,
+      "feedback": "That keeps the 6 on only one piece. Both 30 and 4 need six rows."
      }
     ],
-    "reusable": false,
-    "missFeedback": "Split 34 into 30 and 4, and multiply 6 by each part: 6 × 30 + 6 × 4.",
-    "successFeedback": "6 × 30 + 6 × 4 — two rectangles from one. Now 180 + 24 = 204."
+    "fallbackFeedback": "Find both areas, 6 × 30 and 6 × 4, then add them.",
+    "successFeedback": "The pieces rebuild 6 × 34: 180 + 24 = 204. Both pieces keep the factor 6."
    },
    "predict": {
     "prompt": "Breaking 6 × 34 into 6 × 30 + 6 × 4: why must BOTH pieces keep the 6?",
@@ -137,8 +123,7 @@
   {
    "id": "c2",
    "kind": "concept",
-   "body": "The split always follows place value: pull the number apart into its tens and its ones, multiply each by the single digit, then add the pieces. **4 × 23** → 4 × 20 + 4 × 3 → 80 + 12 → 92. Tens piece plus ones piece — never leave one out.",
-   "figure": "mb-break-area"
+   "body": "The split always follows place value: pull the number apart into its tens and its ones, multiply each by the single digit, then add the pieces. **4 × 23** → 4 × 20 + 4 × 3 → 80 + 12 → 92. Tens piece plus ones piece — never leave one out."
   },
   {
    "id": "k2",
@@ -243,23 +228,23 @@
     "options": [
      {
       "id": "a",
-      "label": "8 × 6 = 48 — she still needs the ones rectangle (total 208)",
+        "label": "The 8 × 6 rectangle",
       "correct": true,
       "feedback": "The ones piece 8 × 6 = 48 was missing. 160 + 48 = 208, the full product."
      },
      {
       "id": "b",
-      "label": "Nothing — 160 is the answer",
+        "label": "The 8 × 20 rectangle",
       "feedback": "160 covers only 8 × 20. The ones rectangle 8 × 6 = 48 is still owed: 208."
      },
      {
       "id": "c",
-      "label": "8 × 2 = 16",
+        "label": "The 8 × 2 rectangle",
       "feedback": "The tens piece is already counted as 160 (8 × 20). What's left is the ONES: 8 × 6 = 48."
      },
      {
       "id": "d",
-      "label": "26 × 26",
+        "label": "The 26 × 26 rectangle",
       "feedback": "Only the single digit 8 multiplies each part. The missing piece is 8 × 6 = 48, giving 208."
      }
     ]

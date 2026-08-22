@@ -10,7 +10,7 @@
       "id": "c1",
       "kind": "concept",
       "figure": "five-minute-clock",
-      "body": "Check the minute hand first: at 12, it's \":00\". Anywhere else, skip-count its position by 5s. Then read the hour from the short hand."
+      "body": "On this clock, the minute hand points to 4, so 4 × 5 = 20 minutes. The short hand is between 3 and 4, so the time is 3:20. For any other clock, skip-count the minute hand by 5s, then read the hour from the short hand."
     },
     {
       "id": "e1",
@@ -272,40 +272,35 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Another mixed reading.",
+      "body": "Read the hands instead of setting them.",
       "widget": {
-        "type": "clockSet",
-        "prompt": "Set the clock to show 1:00.",
-        "targetHour": 1,
-        "targetMinute": 0,
-        "minuteStep": 5,
-        "successFeedback": "Yes — minute hand at 12 means on the hour: 1:00.",
-        "hourFeedback": "The hour comes from the short hand, which is at 1: 1:00.",
-        "minuteFeedback": "The minute hand at 12 means \":00\", not \":12\"."
+        "type": "mcq",
+        "prompt": "Reading the hands: minute hand at 5, hour hand just past 9. What time is it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "9:05",
+            "feedback": "The minute hand's number is counted by 5s: 5 × 5 = 25, not 5."
+          },
+          {
+            "id": "b",
+            "label": "9:25",
+            "correct": true,
+            "feedback": "Yes — 5 five-minute marks is 25 minutes, and the short hand says 9."
+          },
+          {
+            "id": "c",
+            "label": "5:09",
+            "feedback": "The long hand gives minutes, not the hour. The short hand is just past 9."
+          },
+          {
+            "id": "d",
+            "label": "10:25",
+            "feedback": "The short hand has not reached 10 yet. It is still 9:25."
+          }
+        ]
       },
-      "conceptTag": "mmt-time-mixed",
-      "cml": {
-        "stage": "construct",
-        "flagship": false,
-        "kernel": "spatial-invariance",
-        "actionGoal": "Manipulate the model and track how it represents time mixed.",
-        "invariants": [
-          "The manipulated model and the mathematical relationship for time mixed must stay consistent."
-        ],
-        "misconceptions": [
-          "Changing a visible feature without preserving the relationship that defines time mixed."
-        ],
-        "representations": [
-          "concrete",
-          "symbolic"
-        ],
-        "translationFrom": "concrete",
-        "translationTo": "symbolic",
-        "fadeLevel": 0,
-        "transferFamily": "measure-money-time:mmt-time-mixed",
-        "delayed": true,
-        "counterfactualPrompt": "What change would make the model stop representing the same mathematical relationship?"
-      }
+      "conceptTag": "mmt-time-mixed"
     },
     {
       "id": "k2",
@@ -394,26 +389,43 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A full mixed challenge.",
+      "body": "Read the hands before setting one yourself.",
       "conceptTag": "mmt-time-mixed",
       "explanationVariants": [
-        "Hour 9, minute hand at 9 (45 minutes): 9:45.",
-        "9×5=45, so 9:45."
+        "Hour just past 2, minute hand at 8 (40 minutes): 2:40.",
+        "8×5=40, so 2:40."
       ],
       "widget": {
-        "type": "clockSet",
-        "prompt": "Set the clock to show 9:45.",
-        "targetHour": 9,
-        "targetMinute": 45,
-        "minuteStep": 5,
-        "successFeedback": "Yes — hour 9, minute hand at 9 (9×5=45 minutes): 9:45.",
-        "hourFeedback": "Use the smaller number: 9, not 10.",
-        "minuteFeedback": "The minute hand at 9 means 9×5=45 minutes, not 9 minutes."
+        "type": "mcq",
+        "prompt": "The minute hand points to 8. The short hand is just past 2. What time is it?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2:08",
+            "feedback": "The minute hand's number is counted by 5s: 8 × 5 = 40, not 8."
+          },
+          {
+            "id": "b",
+            "label": "2:40",
+            "correct": true,
+            "feedback": "Yes — 8 five-minute marks is 40 minutes, and the short hand says 2."
+          },
+          {
+            "id": "c",
+            "label": "8:10",
+            "feedback": "The long hand gives minutes, not the hour. The short hand is just past 2."
+          },
+          {
+            "id": "d",
+            "label": "3:40",
+            "feedback": "The short hand has not reached 3 yet. It is still 2:40."
+          }
+        ]
       },
       "hints": [
-        "Check the minute hand first: it's at 9, not 12.",
-        "Skip-count: 9 × 5 = 45 minutes.",
-        "The hour hand has passed 9, so the time is 9:45."
+        "Check the minute hand first: it's at 8, not 12.",
+        "Skip-count: 8 × 5 = 40 minutes.",
+        "The hour hand is just past 2, so the time is 2:40."
       ],
       "cml": {
         "stage": "construct",

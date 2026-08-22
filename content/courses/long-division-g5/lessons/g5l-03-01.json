@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Trial digits with a two-digit divisor are guesses, and guessing too high is routine: if 4 × 24 = 96 exceeds the 88 available, lower the digit to 3.",
       "narration": "Trial digits with a two-digit divisor are guesses, and guessing too high is routine: if 4 × 24 = 96 exceeds the 88 available, lower the digit to 3."
     },
@@ -145,32 +144,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder.",
       "narration": "Adjusting is part of the method, not a sign of failure. The algorithm never leaves a negative remainder."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "After adjusting the trial digit, find the remainder that is left over — and confirm it never goes negative or matches the divisor.",
       "conceptTag": "g5ld-adjust",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "4 × 24 = 96 overshoots the 88 available — slide to what 3 × 24 gives.",
+        "prompt": "The trial digit was lowered to 4, giving 4 × 26 = 104. Slide to what remains after subtracting 104 from the 119 available.",
         "min": 5,
-        "max": 200,
+        "max": 100,
         "start": 5,
-        "target": 72,
+        "target": 15,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
           5,
-          103,
-          200
+          26,
+          100
         ],
-        "lowFeedback": "Too low — three twenty-fours already pass seventy.",
-        "highFeedback": "Too high — three twenty-fours is seventy-two, comfortably under eighty-eight.",
-        "successFeedback": "72 — which fits inside 88, leaving 16 for the next step."
+        "lowFeedback": "Too low — 119 minus 104 leaves a bit more than that.",
+        "highFeedback": "Too high — 119 minus 104 is only fifteen.",
+        "successFeedback": "15 — that remainder is safely less than the 26 divisor, so the lowered digit fits correctly."
       },
       "cml": {
         "stage": "construct",
@@ -321,43 +319,43 @@
       "body": "One more, for the road.",
       "conceptTag": "g5ld-adjust",
       "explanationVariants": [
-        "Only that digit changes.",
-        "Earlier steps stand."
+        "Test every candidate digit.",
+        "The remainder must stay under the divisor."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+        "prompt": "For 217 ÷ 34, which trial digit is correct for the first step: 5, 6, 7, or 8?",
         "options": [
           {
             "id": "o0",
-            "label": "Lower the digit to 3 and multiply again",
+            "label": "6 — 6×34=204 fits, 7×34=238 doesn't",
             "correct": true,
-            "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
+            "feedback": "Correct — 6 × 34 = 204 fits inside 217, and 7 × 34 = 238 overshoots, so 6 is the largest digit that works."
           },
           {
             "id": "o1",
-            "label": "Subtract anyway and carry a negative",
+            "label": "5 — 5×34=170 fits, but 6 fits too",
             "correct": false,
-            "feedback": "The algorithm never leaves a negative remainder; the digit must be reduced instead."
+            "feedback": "5 does fit, but its remainder of 217 − 170 = 47 is larger than the 34 divisor, so a bigger digit still fits."
           },
           {
             "id": "o2",
-            "label": "Start the whole division again",
+            "label": "7 — 7×34=238 overshoots 217",
             "correct": false,
-            "feedback": "Only this digit is wrong; the earlier steps are unaffected."
+            "feedback": "7 × 34 = 238, which is larger than the 217 available — that overshoots and cannot be used."
           },
           {
             "id": "o3",
-            "label": "Round 88 up to 96",
+            "label": "8 — 8×34=272 overshoots by far",
             "correct": false,
-            "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
+            "feedback": "8 × 34 = 272, far past the 217 available — the digit must be lowered, not raised."
           }
         ]
       },
       "hints": [
-        "Take convenient batches.",
-        "Total them at the end.",
-        "Same groups either way."
+        "Multiply each candidate digit by the divisor.",
+        "The product must not exceed the dividend.",
+        "The leftover remainder must stay below the divisor."
       ],
       "cml": {
         "stage": "construct",
@@ -414,11 +412,11 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "You try 4 as a digit, but 4 × 24 = 96 exceeds the 88 available. What now?",
+          "prompt": "A trial digit of 6 makes 6 × 19 = 114, but only 97 is available to subtract from. What is the correct next move?",
           "options": [
             {
               "id": "o0",
-              "label": "Lower the digit to 3 and multiply again",
+              "label": "Lower the digit to 5 and multiply again",
               "correct": true,
               "feedback": "Correct — an overshoot means the trial digit was too big, and adjusting down is a normal part of the method."
             },
@@ -436,7 +434,7 @@
             },
             {
               "id": "o3",
-              "label": "Round 88 up to 96",
+              "label": "Round 97 up to 114",
               "correct": false,
               "feedback": "Changing the dividend changes the problem; the trial digit is what must move."
             }

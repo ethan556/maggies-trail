@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-456-amount",
       "body": "Next come 4, 5, and 6. New shapes, same promise: each mark names its own amount, one more than the mark before.",
       "narration": "Next come 4, 5, and 6. New shapes, same promise: each mark names its own amount, one more than the mark before."
     },
@@ -90,16 +90,16 @@
         "prompt": "6 and 9 look like the same shape turned around. What tells them apart?",
         "options": [
           {
-            "id": "o0",
-            "label": "Which way up the loop sits",
-            "correct": true,
-            "feedback": "Correct — 6 carries its loop at the bottom, 9 at the top; orientation IS the difference."
-          },
-          {
             "id": "o1",
             "label": "Their colour",
             "correct": false,
             "feedback": "Numerals have no fixed colour; only the shape and its orientation distinguish them."
+          },
+          {
+            "id": "o0",
+            "label": "Which way up the loop sits",
+            "correct": true,
+            "feedback": "Correct — 6 carries its loop at the bottom, 9 at the top; orientation IS the difference."
           },
           {
             "id": "o2",
@@ -146,33 +146,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-six-nine-orientation",
       "body": "Watch 6 — its loop sits at the bottom. Turned over it turns into 9, a different promise entirely.",
       "narration": "Watch 6 — its loop sits at the bottom. Turned over it turns into 9, a different promise entirely."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-456",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Build the amount the numeral 5 promises.",
-        "target": 5,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Put the writing moves in order for a correctly oriented 6.",
+        "items": [
           {
-            "count": 4,
-            "feedback": "Four leaves one square of the row empty; the mark 5 asks for the full row."
+            "id": "stage-3",
+            "label": "Close the bottom loop"
           },
           {
-            "count": 6,
-            "feedback": "Six spills past the row; the mark 5 stops at five."
+            "id": "stage-2",
+            "label": "Curve down"
+          },
+          {
+            "id": "stage-1",
+            "label": "Start at the top"
           }
         ],
-        "missFeedback": "The numeral fixes the count: exactly five, no more, no fewer.",
-        "successFeedback": "Five — a full row of the frame, and the mark 5 names exactly it."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Start at the top, then Curve down, then Close the bottom loop.",
+        "successFeedback": "Yes — closing the loop at the bottom distinguishes 6 from 9."
       },
       "cml": {
         "stage": "construct",
@@ -208,14 +221,8 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 6 dots. Which numeral names that amount?",
+        "prompt": "A six-dot card needs a written label. Which numeral belongs on it?",
         "options": [
-          {
-            "id": "o0",
-            "label": "6",
-            "correct": true,
-            "feedback": "Correct — the numeral 6 is the written name for a group of exactly 6."
-          },
           {
             "id": "o1",
             "label": "7",
@@ -227,6 +234,12 @@
             "label": "5",
             "correct": false,
             "feedback": "5 promises fewer dots than the group holds; the count reaches 6."
+          },
+          {
+            "id": "o0",
+            "label": "6",
+            "correct": true,
+            "feedback": "Correct — the numeral 6 is the written name for a group of exactly 6."
           },
           {
             "id": "o3",
@@ -344,14 +357,8 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Kai counts her blocks: 1, 2, 3, 4, 5, 6. How many blocks does she have?",
+        "prompt": "Leo finishes counting six blocks. Which numeral should he record?",
         "options": [
-          {
-            "id": "o0",
-            "label": "6",
-            "correct": true,
-            "feedback": "Correct — the last number said, 6, is the one the numeral must record."
-          },
           {
             "id": "o1",
             "label": "7",
@@ -369,6 +376,12 @@
             "label": "8",
             "correct": false,
             "feedback": "That runs two past the count; the written numeral copies the last word said, 6."
+          },
+          {
+            "id": "o0",
+            "label": "6",
+            "correct": true,
+            "feedback": "Correct — the last number said, 6, is the one the numeral must record."
           }
         ]
       },

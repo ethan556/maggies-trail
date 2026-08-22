@@ -1,0 +1,31 @@
+/** S310 — source-local Radical Functions MCQ choice-parity repair. */
+import { createHash } from "node:crypto";
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const directory = path.join(root, "content", "courses", "radical-functions", "lessons");
+const check = process.argv.includes("--check");
+const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+const sourceJson = (value) => JSON.stringify(value).replace(/[^\x20-\x7e]/g, (character) => `\\u${character.codePointAt(0).toString(16).padStart(4, "0")}`);
+const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const maskedContract = (widget) => { const copy = JSON.parse(JSON.stringify(widget)); for (const option of copy.options) option.label = "__LABEL__"; return copy; };
+const choices = Object.freeze([
+  { workId: "CHOICE-0212", lessonId: "re-04-01", stepId: "k3", kind: "check", contractHash: "d869f5e0b051904e3a9da08c4685f272bc864d2e15aaef8ee0493e33ee8c59ff", labels: [["o1", "none — a principal root is never negative", "No solutions; a square root has no negative output."], ["o2", "one: x = 3", "One solution, x = 3, after squaring both sides."], ["o3", "one: x = −5", "One solution, x = −5, from a negative radicand."], ["o4", "two: x = 3 and x = −5", "Two solutions, x = 3 and x = −5, after squaring."]] },
+  { workId: "CHOICE-0213", lessonId: "re-04-03", stepId: "i2", kind: "interactive", contractHash: "11bf21c87702fccf9420a2faec1ec3204259709673901966784434c23709e384", labels: [["o1", "cubing preserves signs — different numbers stay different", "Cubing is one-to-one, so unequal values stay unequal."], ["o2", "cube roots have no domain limits", "Cube roots accept all real inputs without exclusions."], ["o3", "cubing is the same as squaring twice", "Cubing behaves like an even power and erases a sign."], ["o4", "it can — you must always check", "Cubing can create roots, so every answer needs checking."]] },
+  { workId: "CHOICE-0214", lessonId: "re-04-03", stepId: "k3", kind: "check", contractHash: "469f03eba6922e0975d7dd9f7d1b82ee7e6159a9d5f389584cacf2777910b317", labels: [["o1", "the 4th power: x + 2 = 16", "Raise to the fourth power, giving x + 2 = 16."], ["o2", "the 2nd power", "Raise to the second power, as for a square root."], ["o3", "the 1/4 power", "Raise to the one-fourth power, repeating the root."], ["o4", "the 4th root", "Take the fourth root again, keeping the radical form."]] },
+  { workId: "CHOICE-0215", lessonId: "re-05-02", stepId: "k3", kind: "check", contractHash: "2e11e3c4dbfb222c06a9337721df048a6c94b2816e1d64a15f745987592a6294", labels: [["o1", "none — an even-numerator power is never negative", "No real solutions; x^(2/3) cannot be negative."], ["o2", "one: x = −8", "One solution, x = −8, after applying the exponent."], ["o3", "two: x = ±8", "Two solutions, x = ±8, after applying the exponent."], ["o4", "one: x = 8", "One solution, x = 8, after applying the exponent."]] },
+]);
+const files = new Map();
+async function source(lessonId) { const file = path.join(directory, `${lessonId}.json`); if (!files.has(file)) files.set(file, await readFile(file, "utf8")); return [file, files.get(file)]; }
+function lesson(text) { return JSON.parse(text); }
+function findStep(raw, stepId) { const found = raw.steps.find((entry) => entry.id === stepId); if (!found) throw new Error(`missing ${raw.id}/${stepId}`); return found; }
+function replaceOnce(text, pattern, replacement, label) { let count = 0; const updated = text.replace(pattern, (...matches) => { count += 1; return replacement.replace(/\$(\d+)/g, (_, index) => String(matches[Number(index)] ?? "")); }); if (count !== 1) throw new Error(`${label}: expected one raw source match, found ${count}`); return updated; }
+for (const target of choices) { const [, text] = await source(target.lessonId); const step = findStep(lesson(text), target.stepId); const widget = step.widget; if (step.kind !== target.kind || !widget || widget.type !== "mcq" || !Array.isArray(widget.options)) throw new Error(`${target.workId}: expected ${target.kind} MCQ`); if (hash(maskedContract(widget)) !== target.contractHash) throw new Error(`${target.workId}: non-label contract drift`); if (widget.options.map((option) => option.id).join(",") !== "o1,o2,o3,o4" || widget.options.filter((option) => option.correct).map((option) => option.id).join(",") !== "o1") throw new Error(`${target.workId}: option or correct-answer drift`); for (const [optionId, before, after] of target.labels) { const option = widget.options.find((candidate) => candidate.id === optionId); if (!option || (option.label !== before && option.label !== after)) throw new Error(`${target.workId}/${optionId}: label drift`); } }
+let changed = 0;
+for (const target of choices) { const [file] = await source(target.lessonId); let text = files.get(file); for (const [optionId, before, after] of target.labels) { if (findStep(lesson(text), target.stepId).widget.options.find((option) => option.id === optionId).label === after) continue; const unicodeLiteral = JSON.stringify(before); const beforeLiteral = text.includes(unicodeLiteral) ? unicodeLiteral : sourceJson(before); const afterLiteral = beforeLiteral === unicodeLiteral ? JSON.stringify(after) : sourceJson(after); const pattern = new RegExp(`(\\{\\s*"id"\\s*:\\s*"${escape(target.stepId)}"[\\s\\S]*?"id"\\s*:\\s*"${escape(optionId)}"\\s*,\\s*"label"\\s*:\\s*)${escape(beforeLiteral)}`); text = replaceOnce(text, pattern, `$1${afterLiteral}`, `${target.workId}/${optionId}`); changed += 1; } files.set(file, text); }
+if (check && changed) throw new Error(`S310 needs ${changed} source repair(s)`);
+if (!check && changed) for (const [file, text] of files) await writeFile(file, text);
+const packetSeal = createHash("sha256").update([...files].sort(([a], [b]) => a.localeCompare(b)).map(([file, text]) => `${path.basename(file)}\0${text}`).join("\n")).digest("hex");
+console.log(JSON.stringify({ course: "radical-functions", choiceRows: choices.length, labelEdits: changed, current: changed === 0, packetSeal }, null, 2));

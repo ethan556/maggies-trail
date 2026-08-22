@@ -100,51 +100,33 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "What changed, and what did not?",
+      "body": "Test the sample-size claim with a new population.",
       "conceptTag": "si-sampling-dist",
       "explanationVariants": [
         "The centre stayed on 60% at every sample size. Only the width changed — bigger samples make a tighter pile.",
         "Sample size buys precision, never accuracy. The pile was already aimed at the truth."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Going from n = 10 to n = 160, what happened to the pile?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "It stayed centred on 60% and got much narrower.",
-            "correct": true,
-            "feedback": "Right — and that is the whole payoff of a bigger sample. It does not aim better; it shakes less."
-          },
-          {
-            "id": "o2",
-            "label": "It moved closer to 60%.",
-            "correct": false,
-            "feedback": "It was already centred on 60% at n = 10 — the dots just sprayed further from it. The centre had nowhere to move to."
-          },
-          {
-            "id": "o3",
-            "label": "It got narrower and also more biased.",
-            "correct": false,
-            "feedback": "Nothing about the method changed, so no bias was introduced. Only the spread moved."
-          },
-          {
-            "id": "o4",
-            "label": "It got narrower, so individual polls are now guaranteed to be right.",
-            "correct": false,
-            "feedback": "Narrower means most polls land close, not that any of them is exact. Even at n = 160 you saw dots several points from 60%."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "a2-statistics",
-        "form": "si-sampling-dist__mcq"
+        "type": "sampleSim",
+        "prompt": "Simulate polls when the true support is 45%. Choose the sample size whose estimates form the tightest pile, then run 16 polls.",
+        "populationP": 0.45,
+        "sizes": [
+          20,
+          80,
+          320
+        ],
+        "targetSize": 320,
+        "requiredDraws": 16,
+        "seed": 83,
+        "successFeedback": "n = 320 produces the tightest sampling distribution. The centre stays near 45%; increasing n reduces the spread.",
+        "wrongSizeFeedback": "The pile is wider at this sample size. Increase n and compare the same population again.",
+        "moreDrawsFeedback": "Run all 16 polls so the pile's width is visible."
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "body": "The width does not fall in step with n. It falls with **√n**.\n\nQuadruple the sample and you halve the wobble. Go from 400 people to 1600 and the spread halves — from 1600 to 6400 it halves again.\n\nThat is why national polls stop at about a thousand people: the next halving costs four times as much.",
+      "body": "Spread falls with **√n**, not one-for-one. In the figure, **n=10** is about **±31** points; quadrupling to **n=40** halves it to about **±16**. At **n=100**, it is about **±10**. Each halving costs four times as much data.",
       "figure": "si-sampling-dist-sizes"
     },
     {
@@ -247,19 +229,19 @@
           },
           {
             "id": "o2",
-            "label": "Yes — with 5000 people the sample must become representative.",
+            "label": "Yes — with 5000 people, the sample must finally become representative of renters too.",
             "correct": false,
             "feedback": "Renters are still excluded at 5000. Size cannot conjure people who were never eligible to be picked."
           },
           {
             "id": "o3",
-            "label": "Yes — the margin of error will be tiny.",
+            "label": "Yes — the margin of error will be tiny, so the estimate has to be trustworthy.",
             "correct": false,
             "feedback": "It will be, and it will be measuring the wrong thing: the wobble, not the lean."
           },
           {
             "id": "o4",
-            "label": "Partly — bias falls as n rises, just slowly.",
+            "label": "Partly — bias falls as n rises, just slowly, the same way variability does.",
             "correct": false,
             "feedback": "Bias does not fall with n at all. It is a property of the method, and 5000 draws from a broken frame are still 5000 draws from a broken frame."
           }

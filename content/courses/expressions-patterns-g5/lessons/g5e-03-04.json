@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "cg-pair-terms",
       "body": "Given the pairs, the relationship can be recovered: divide the second coordinate by the first and the rule's factor appears.",
       "narration": "Given the pairs, the relationship can be recovered: divide the second coordinate by the first and the rule's factor appears."
     },
@@ -171,18 +171,17 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "For (3, 12) the factor is 4, and it holds for every pair the rules produce — one division reveals a claim about all of them.",
       "narration": "For (3, 12) the factor is 4, and it holds for every pair the rules produce — one division reveals a claim about all of them."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Recover a different factor from two points.",
       "conceptTag": "g5e-relationship",
       "widget": {
         "type": "plotPoint",
-        "prompt": "These pairs come from one rule. Plot (1, 3) and (2, 6) and read the factor.",
+        "prompt": "These pairs come from one rule. Plot (2, 4) and (3, 6), then read the factor.",
         "cols": 8,
         "rows": 8,
         "xLabels": [
@@ -207,28 +206,28 @@
         ],
         "targets": [
           {
-            "x": 1,
-            "y": 3
+            "x": 2,
+            "y": 4
           },
           {
-            "x": 2,
+            "x": 3,
             "y": 6
           }
         ],
         "pointErrors": [
           {
-            "x": 1,
+            "x": 4,
             "y": 2,
-            "feedback": "(1, 2) would give a factor of 2; check what 3 ÷ 1 actually gives."
+            "feedback": "That reverses (2, 4); the input is the first coordinate."
           },
           {
-            "x": 2,
-            "y": 4,
-            "feedback": "(2, 4) gives a factor of 2, but the second pair here is (2, 6)."
+            "x": 3,
+            "y": 3,
+            "feedback": "That would use a factor of 1. The second coordinate should be twice the first."
           }
         ],
         "missFeedback": "Go across to the first coordinate and up to the second, then mark the cell.",
-        "successFeedback": "Both pairs sit on the same path, and 3 ÷ 1 = 6 ÷ 2 = 3 — the rule multiplies by 3.",
+        "successFeedback": "Both pairs have second ÷ first = 2, so the rule multiplies by 2.",
         "connectTargets": true
       },
       "cml": {
@@ -325,31 +324,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "The pattern 3, 9, 27 grows. What is the rule?",
+        "prompt": "The pairs (2, 6) and (4, 12) come from one multiply rule. What is its factor?",
         "options": [
           {
             "id": "o0",
             "label": "Multiply by 3",
             "correct": true,
-            "feedback": "Correct — each term is 3 times the one before, which is why the gaps widen as it runs."
+            "feedback": "Correct — 6 ÷ 2 and 12 ÷ 4 both equal 3, so one factor fits both pairs."
           },
           {
             "id": "o1",
-            "label": "Add 6",
+            "label": "Multiply by 2",
             "correct": false,
-            "feedback": "Adding 6 fits the FIRST step only; the next gap is larger, so no constant addition works."
+            "feedback": "A factor of 2 would pair 2 with 4, not with the shown output of 6."
           },
           {
             "id": "o2",
-            "label": "Multiply by 4",
+            "label": "Add 4",
             "correct": false,
-            "feedback": "Multiplying by 4 would overshoot 9 straight away — check the first step."
+            "feedback": "Adding 4 fits the first pair only; 4 + 4 is not the shown output 12."
           },
           {
             "id": "o3",
-            "label": "Add 18",
+            "label": "Add 8",
             "correct": false,
-            "feedback": "18 is the SECOND gap, not a constant step — the first gap was only 6."
+            "feedback": "Adding 8 fits the second pair only; it does not turn 2 into 6."
           }
         ]
       },
@@ -396,7 +395,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 24 ÷ 6 — recovering the rule's factor from the ordered pair (6, 24).",
+        "prompt": "Compute 24 ÷ 6 to recover the factor for the trail-map point (6, 24).",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -477,22 +476,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Compute 24 ÷ 3 — recovering the rule's factor from the ordered pair (3, 24).",
-          "answer": 8,
+          "prompt": "Compute 8 ÷ 2 to recover the factor from the ordered pair (2, 8).",
+          "answer": 4,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 21,
-              "feedback": "Subtracting finds a gap, not a factor; the rule here multiplies, so divide to undo it."
+              "value": 6,
+              "feedback": "Subtracting finds the gap between the coordinates, not the multiplication factor."
             },
             {
-              "value": 24,
-              "feedback": "24 is the OUTPUT; the rule is what turns 3 into it."
+              "value": 8,
+              "feedback": "Eight is the output; divide it by the input 2 to identify the rule."
             }
           ],
           "fallbackFeedback": "Resolve the groupings first, then the higher-ranking operations, then work left to right.",
-          "successFeedback": "Correct — 8."
+          "successFeedback": "Correct — the rule multiplies the first coordinate by 4."
         }
       }
     }

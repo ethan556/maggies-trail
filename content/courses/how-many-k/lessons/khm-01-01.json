@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-toy-one-to-one",
       "body": "Counting is a pairing game: touch one toy, say one number. Every toy gets a number, and no toy gets two.",
       "narration": "Counting is a pairing game: touch one toy, say one number. Every toy gets a number, and no toy gets two."
     },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-touch-tracks-count",
       "body": "The touch is what keeps the pairing honest — it marks which toys already have their number.",
       "narration": "The touch is what keeps the pairing honest — it marks which toys already have their number."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-one-to-one",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Four toys to count. Place ONE counter for each toy.",
-        "target": 4,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Which record proves that every one of four toys was counted exactly once?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "skip",
+            "x": 20,
+            "y": 50,
+            "label": "3 marks",
+            "icon": "✓✓✓",
             "count": 3,
-            "feedback": "One toy still has no counter — a toy without a counter is a toy without a number."
+            "correct": false,
+            "feedback": "Three marks leave one toy without a count."
           },
           {
+            "id": "exact",
+            "x": 50,
+            "y": 50,
+            "label": "4 marks",
+            "icon": "✓✓✓✓",
+            "count": 4,
+            "correct": true,
+            "feedback": "Four toys and four marks show one-to-one counting."
+          },
+          {
+            "id": "repeat",
+            "x": 80,
+            "y": 50,
+            "label": "5 marks",
+            "icon": "✓✓✓✓✓",
             "count": 5,
-            "feedback": "That is one counter too many; some toy has been counted twice."
+            "correct": false,
+            "feedback": "Five marks mean one of four toys was counted twice."
           }
         ],
-        "missFeedback": "Place one counter at a time, saying the next number as you do.",
-        "successFeedback": "Four counters, four toys — every toy has exactly one number."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Four toys and four marks show one-to-one counting."
       },
       "cml": {
         "stage": "construct",
@@ -436,31 +460,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Why do we touch each toy while counting?",
+          "prompt": "Zara counts 5 blocks but forgets to touch one of them. What happens to her count?",
           "options": [
             {
               "id": "o0",
-              "label": "So every toy gets exactly one number",
+              "label": "It comes out one too small",
               "correct": true,
-              "feedback": "Correct — touching pairs each toy with one number, so nothing is skipped and nothing is counted twice."
+              "feedback": "Correct — a skipped block gets no number, so the last number said falls one short of the true total."
             },
             {
               "id": "o1",
-              "label": "To make the counting louder",
+              "label": "It comes out one too big",
               "correct": false,
-              "feedback": "Volume does not change the count; the touch is what keeps numbers and toys paired."
+              "feedback": "Skipping means one FEWER number gets said, not one more — the count falls short, not over it."
             },
             {
               "id": "o2",
-              "label": "Because toys like being touched",
+              "label": "It comes out exactly right",
               "correct": false,
-              "feedback": "The touch is for the counter, not the toy — it marks which toys already have a number."
+              "feedback": "A skipped block never gets paired with a number, so the final count cannot come out right."
             },
             {
               "id": "o3",
-              "label": "To move the toys into a line",
+              "label": "It does not matter at all",
               "correct": false,
-              "feedback": "Counting works in any arrangement; the touch pairs, it does not tidy."
+              "feedback": "Every block needs its own touch and its own number — skipping even one breaks the pairing."
             }
           ]
         }

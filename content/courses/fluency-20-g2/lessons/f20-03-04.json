@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "When one part is hidden, the family still decides it: the total minus the known part gives the rest.",
-      "narration": "When one part is hidden, the family still decides it: the total minus the known part gives the rest."
+      "figure": "bar-part-whole",
+      "body": "A part-whole bar makes the hidden part visible as the difference between the whole and known part.",
+      "narration": "A part-whole bar makes the hidden part visible as the difference between the whole and known part."
     },
     {
       "id": "i1",
@@ -108,8 +108,8 @@
             "feedback": "That adds 7 again instead of finding what fills the gap to 15."
           }
         ],
-        "fallbackFeedback": "What joins 7 to reach 15?",
-        "successFeedback": "Correct — 7 + 8 = 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Count on from 7.",
@@ -147,27 +147,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "7 + ? = 15 is the same question as 15 − 7.",
-      "narration": "7 + ? = 15 is the same question as 15 − 7."
+      "figure": "as-part-whole",
+      "body": "The missing addend and the related subtraction answer name the same unknown part.",
+      "narration": "The missing addend and the related subtraction answer name the same unknown part."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Close another gap.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-missing",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 9 and hop forward until you reach 16.",
-        "min": 0,
-        "max": 20,
-        "start": 9,
-        "hop": 1,
-        "hops": 7,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 9 and make 7 hops right, one number at a time.",
-        "successFeedback": "Seven hops on from 9 reaches 16, so the missing part is 7."
+        "type": "tapDiagram",
+        "prompt": "A whole of seventeen has a known part of eight. Tap the hidden part.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "8",
+            "icon": "8",
+            "count": 1,
+            "correct": false,
+            "feedback": "8 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "9",
+            "icon": "9",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — eight plus nine makes seventeen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "10",
+            "icon": "10",
+            "count": 1,
+            "correct": false,
+            "feedback": "10 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — eight plus nine makes seventeen."
       },
       "cml": {
         "stage": "construct",
@@ -203,7 +233,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 + ? = 15",
+        "prompt": "A whole of fifteen contains a known part of six. Find the missing part.",
         "answer": 9,
         "tolerance": 0,
         "unit": "",
@@ -217,8 +247,8 @@
             "feedback": "That adds 6 again instead of finding what fills the gap to 15."
           }
         ],
-        "fallbackFeedback": "What joins 6 to reach 15?",
-        "successFeedback": "Correct — 6 + 9 = 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 9."
       },
       "hints": [
         "Count on from 6.",
@@ -264,7 +294,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 + ? = 13",
+        "prompt": "Eight joins an unknown part to make thirteen. What is unknown?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -278,8 +308,8 @@
             "feedback": "That adds 8 again instead of finding what fills the gap to 13."
           }
         ],
-        "fallbackFeedback": "What joins 8 to reach 13?",
-        "successFeedback": "Correct — 8 + 5 = 13."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 5."
       },
       "hints": [
         "Count on from 8.",
@@ -325,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 + ? = 16",
+        "prompt": "The whole is sixteen and one part is nine. Name the other part.",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -339,8 +369,8 @@
             "feedback": "That adds 9 again instead of finding what fills the gap to 16."
           }
         ],
-        "fallbackFeedback": "What joins 9 to reach 16?",
-        "successFeedback": "Correct — 9 + 7 = 16."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Count on from 9.",
@@ -407,7 +437,7 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "7 + ? = 15",
+          "prompt": "A vase holds 15 flowers when full and already has 7 in it. How many more are needed to fill it?",
           "answer": 8,
           "tolerance": 0,
           "unit": "",
@@ -421,8 +451,8 @@
               "feedback": "That adds 7 again instead of finding what fills the gap to 15."
             }
           ],
-          "fallbackFeedback": "What joins 7 to reach 15?",
-          "successFeedback": "Correct — 7 + 8 = 15."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 8."
         }
       }
     }

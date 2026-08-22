@@ -15,47 +15,65 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Solve a savings-goal inequality.",
+   "body": "Transform the inequality while its full solution ray stays visible.",
    "widget": {
-    "type": "mcq",
-    "prompt": "Solve: 5x + 20 ≥ 50",
-    "options": [
+    "type": "numberLineRay",
+    "prompt": "The savings goal simplifies to 5x ≥ 30. Divide both sides by 5 and keep the same qualifying weeks shaded.",
+    "variable": "x",
+    "start": {
+     "coeff": { "n": 5, "d": 1 },
+     "constant": { "n": 30, "d": 1 },
+     "relation": "gt",
+     "inclusive": true
+    },
+    "window": {
+     "min": { "n": 0, "d": 1 },
+     "max": { "n": 12, "d": 1 },
+     "tickStep": { "n": 1, "d": 1 }
+    },
+    "step": { "n": 1, "d": 1 },
+    "outOfRange": "clamp",
+    "offLattice": "snap",
+    "transforms": [
      {
-      "id": "a",
-      "label": "x ≥ 6",
-      "correct": true,
-      "feedback": "Yes — subtract 20 (5x≥30), divide by 5 (positive, no flip): x≥6."
+      "id": "divide-five",
+      "factor": { "n": 1, "d": 5 },
+      "label": "÷ 5 on both sides"
      },
      {
-      "id": "b",
-      "label": "x ≤ 6",
-      "feedback": "Dividing by a POSITIVE 5 never flips the direction: x≥6, not x≤6."
-     },
-     {
-      "id": "c",
-      "label": "x ≥ 30",
-      "feedback": "That's only the first step (5x≥30). Finish by dividing by 5: x≥6."
+      "id": "multiply-five",
+      "factor": { "n": 5, "d": 1 },
+      "label": "× 5 on both sides"
      }
-    ]
+    ],
+    "target": {
+     "coeff": { "n": 1, "d": 1 },
+     "constant": { "n": 6, "d": 1 },
+     "relation": "gt",
+     "inclusive": true
+    },
+    "requireSolvedForm": true,
+    "successFeedback": "x ≥ 6. The endpoint 6 and every value to its right work, so the answer is a range of possible week counts.",
+    "fallbackFeedback": "Test 5 and 6 in 5x + 20 ≥ 50, then make the same division on both sides."
    },
    "predict": {
-    "prompt": "The answer to an inequality like this — a single number, or a whole RANGE?",
+    "prompt": "Before you transform the inequality, what kind of answer should the number line show?",
     "options": [
      {
       "id": "range",
-      "label": "A range — every qualifying value"
+      "label": "A ray containing every qualifying value"
      },
      {
       "id": "one",
-      "label": "One number"
+      "label": "One isolated number"
      },
      {
       "id": "two",
-      "label": "Exactly two numbers"
+      "label": "Exactly two possible numbers"
      }
     ],
     "outcomeId": "range",
-    "reveal": "Inequalities describe thresholds, and infinitely many numbers clear a threshold — the solution is a region of the line, not a point on it."
+    "reveal": "An inequality describes a threshold. Here 6 weeks reaches the goal, and every larger week count also works, so the solution is a ray rather than one point."
    }
   },
   {
@@ -261,7 +279,7 @@
   {
    "id": "k3",
    "kind": "check",
-   "body": "One more negative-coefficient story.",
+   "body": "Translate the sign flip into context.",
    "conceptTag": "tse-inequality-realworld",
    "explanationVariants": [
     "Add 5 (-2x>10), divide by -2 and FLIP: x<-5.",
@@ -269,7 +287,7 @@
    ],
    "widget": {
     "type": "buildExpression",
-    "prompt": "Solve: -2x - 5 > 5",
+    "prompt": "A cooling model −2x − 5 > 5 has a negative rate. Solve it and enter the qualifying x-values.",
     "tokens": [
      {
       "id": "t0",

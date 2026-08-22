@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Brackets and braces nest, and they resolve from the INSIDE OUT: the innermost grouping is always the first thing computed.",
       "narration": "Brackets and braces nest, and they resolve from the INSIDE OUT: the innermost grouping is always the first thing computed."
     },
@@ -88,31 +87,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "In 2 × [3 + (4 × 2)], which part is computed first?",
+        "prompt": "Which sequence correctly evaluates 3 × [2 + (5 − 1)]?",
         "options": [
           {
             "id": "o0",
-            "label": "(4 × 2), the innermost grouping",
+            "label": "5 − 1, then 2 + 4, then 3 × 6",
             "correct": true,
-            "feedback": "Correct — grouping symbols resolve from the inside out, so the parentheses go before the brackets."
+            "feedback": "Correct — finish the parentheses, then the square brackets, then the outside multiplication."
           },
           {
             "id": "o1",
-            "label": "2 × 3, reading left to right",
+            "label": "3 × 2, then 5 − 1, then add",
             "correct": false,
-            "feedback": "The grouping symbols outrank left-to-right reading; nothing outside them can start first."
+            "feedback": "The outside multiplication must wait until the entire square bracket has a value."
           },
           {
             "id": "o2",
-            "label": "3 + 4, ignoring the inner brackets",
+            "label": "2 + 5, then subtract 1, then multiply",
             "correct": false,
-            "feedback": "That splits the inner grouping apart — 4 is bound to the 2 beside it, not to the 3."
+            "feedback": "That breaks apart the inner parentheses instead of treating 5 − 1 as one quantity."
           },
           {
             "id": "o3",
-            "label": "The outer 2 × [ … ] , since it is written first",
+            "label": "Add every number, then multiply by 3",
             "correct": false,
-            "feedback": "Written order does not decide; the outer product needs the bracket's value before it can act."
+            "feedback": "The subtraction sign cannot be replaced by addition; each symbol keeps its meaning."
           }
         ]
       },
@@ -147,32 +146,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "In 2 × [3 + (4 × 2)] the parentheses go first, then the bracket, then the outer product. Nothing outside can start until what is inside has a value.",
       "narration": "In 2 × [3 + (4 × 2)] the parentheses go first, then the bracket, then the outer product. Nothing outside can start until what is inside has a value."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Resolve a different nested expression from the inside out.",
       "conceptTag": "g5e-brackets",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Build [3 + (4 × 2)] as one quantity: the inner product is 8, so the bracket holds 11.",
+        "prompt": "Build [5 + (3 × 2)] as one quantity: show the inner product, the 5, and the bracket total.",
         "categories": [
-          "Inner 4 × 2",
-          "The 3",
+          "Inner 3 × 2",
+          "The 5",
           "Bracket total"
         ],
         "target": [
-          8,
-          3,
+          6,
+          5,
           11
         ],
         "maxVal": 14,
         "step": 1,
-        "successFeedback": "11 — the inner product resolves to 8, the 3 joins it, and the bracket becomes a single quantity.",
-        "partialFeedback": "Build the inner product first at 8, the standalone 3, then their total at 11.",
+        "successFeedback": "11 — the inner product becomes 6, then 5 joins it to complete the bracket.",
+        "partialFeedback": "Start with 3 × 2 = 6. Then show 5 and the total of 11.",
         "display": "bar",
         "histogram": false
       },
@@ -337,7 +335,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Compute 9 × 4 − 25, multiplying before subtracting.",
+        "prompt": "A workshop makes 9 trays of 4 parts, then uses 25 parts. Compute 9 × 4 − 25 to find what remains.",
         "answer": 11,
         "tolerance": 0,
         "unit": "",
@@ -418,31 +416,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "In 2 × [3 + (4 × 2)], which part is computed first?",
+          "prompt": "What should you calculate first in 4 + [2 × (6 − 1)]?",
           "options": [
             {
               "id": "o0",
-              "label": "(4 × 2), the innermost grouping",
+              "label": "6 − 1",
               "correct": true,
-              "feedback": "Correct — grouping symbols resolve from the inside out, so the parentheses go before the brackets."
+              "feedback": "Correct — the innermost parentheses must have a value before the bracket can be completed."
             },
             {
               "id": "o1",
-              "label": "2 × 3, reading left to right",
+              "label": "4 + 2",
               "correct": false,
-              "feedback": "The grouping symbols outrank left-to-right reading; nothing outside them can start first."
+              "feedback": "That crosses into the square bracket before resolving what is inside it."
             },
             {
               "id": "o2",
-              "label": "3 + 4, ignoring the inner brackets",
+              "label": "2 × 6",
               "correct": false,
-              "feedback": "That splits the inner grouping apart — 4 is bound to the 2 beside it, not to the 3."
+              "feedback": "The 6 is still part of the unfinished subtraction inside the parentheses."
             },
             {
               "id": "o3",
-              "label": "The outer 2 × [ … ] , since it is written first",
+              "label": "4 + 1",
               "correct": false,
-              "feedback": "Written order does not decide; the outer product needs the bracket's value before it can act."
+              "feedback": "The outer 4 waits until the whole square bracket is resolved."
             }
           ]
         }

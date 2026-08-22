@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A missing length hides inside a whole: whole minus the known part reveals it, because the parts must rebuild the whole.",
       "narration": "A missing length hides inside a whole: whole minus the known part reveals it, because the parts must rebuild the whole."
     },
@@ -92,7 +91,7 @@
         "unit": "",
         "commonErrors": [
           {
-            "value": 40,
+            "value": 102,
             "feedback": "That stretched the trail LONGER — the remaining part is what the whole still owes after the first stretch."
           },
           {
@@ -138,32 +137,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "If the trail is 75 m and the first stretch is 40, the rest can only be 35 — nothing else re-assembles to 75.",
       "narration": "If the trail is 75 m and the first stretch is 40, the rest can only be 35 — nothing else re-assembles to 75."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Rebuild the whole with five-unit hops.",
       "conceptTag": "g2p-missing-length",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Rebuild the whole: the known 40 m stretch is walked; hop the missing part's tens toward 75.",
+        "prompt": "Rebuild the whole: the known 40 m stretch is walked; hop the missing part in six fives toward 75.",
         "min": 30,
         "max": 90,
         "start": 40,
-        "hop": 10,
-        "hops": 3,
+        "hop": 5,
+        "hops": 6,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 50,
-            "feedback": "One ten of the missing stretch — keep walking until the whole is rebuilt."
+            "value": 45,
+            "feedback": "One five of the missing stretch is walked — keep moving until the whole is rebuilt."
           }
         ],
-        "missFeedback": "Each hop is 10. From 40, 3 hops land on 70.",
-        "successFeedback": "70 — three tens of the missing part walked; five more meters would complete the 75 m whole."
+        "missFeedback": "Each hop is 5. From 40, 6 hops land on 70.",
+        "successFeedback": "70 — six fives of the missing part walked; five more meters would complete the 75 m whole."
       },
       "cml": {
         "stage": "construct",
@@ -194,32 +192,32 @@
       "body": "",
       "conceptTag": "g2p-missing-length",
       "explanationVariants": [
-        "Check by re-joining the parts.",
-        "They must hit the whole."
+        "Join the two known stretches.",
+        "Together they rebuild the whole trail."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "The whole trail runs 57 meters and the first stretch covers 35 meters. How many meters remain?",
-        "answer": 22,
+        "prompt": "Maggie walks the first stretch of a trail, 35 meters, then the remaining stretch, 22 meters, to reach the end. How long is the whole trail?",
+        "answer": 57,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 92,
-            "feedback": "That stretched the trail LONGER — the remaining part is what the whole still owes after the first stretch."
+            "value": 13,
+            "feedback": "That subtracts one stretch from the other — the two stretches join end to end to make the whole trail: 35 + 22 = 57."
           },
           {
-            "value": 17,
-            "feedback": "Five meters of trail went missing; the parts must rebuild the whole exactly."
+            "value": 67,
+            "feedback": "A phantom ten crept in; each stretch contributes exactly its own length: 35 + 22 = 57."
           }
         ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 22."
+        "fallbackFeedback": "The parts rebuild the whole: join the two known stretches to find the whole trail.",
+        "successFeedback": "Correct — 57."
       },
       "hints": [
-        "Whole minus the known part.",
-        "The parts rebuild the whole.",
-        "Check by re-joining."
+        "Two stretches join to make the whole trail.",
+        "Add the first stretch and the remaining stretch.",
+        "Check: subtracting one stretch back should return the other."
       ],
       "cml": {
         "stage": "construct",
@@ -242,10 +240,6 @@
         "transferFamily": "length-problems-g2:g2p-missing-length",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-measure-money-time",
-        "form": "MmtLengthDifferenceNumeric"
       }
     },
     {
@@ -318,26 +312,26 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more — new numbers, new story.",
       "conceptTag": "g2p-missing-length",
       "explanationVariants": [
-        "Bigger wholes, same rebuild.",
-        "Subtract, then verify."
+        "Same subtraction, a new scenario.",
+        "Whole minus the piece already used."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "The whole trail runs 62 meters and the first stretch covers 43 meters. How many meters remain?",
+        "prompt": "A ribbon is 62 cm long in total. Maria has already used 43 cm of it for a bow. How many centimeters of ribbon are left?",
         "answer": 19,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 29,
-            "feedback": "That stretched the trail LONGER — the remaining part is what the whole still owes after the first stretch."
+            "value": 105,
+            "feedback": "That adds the used piece back on top — the leftover ribbon can only be what remains AFTER removing the piece already used."
           },
           {
             "value": 14,
-            "feedback": "Five meters of trail went missing; the parts must rebuild the whole exactly."
+            "feedback": "Five centimeters of ribbon went missing; the used piece and the leftover must rebuild the whole ribbon exactly."
           }
         ],
         "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
@@ -407,22 +401,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "The whole trail runs 66 meters and the first stretch covers 36 meters. How many meters remain?",
-          "answer": 30,
+          "prompt": "A hiking path is 84 meters long. The first section covers 52 meters. How many meters of path remain?",
+          "answer": 32,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 40,
-              "feedback": "That stretched the trail LONGER — the remaining part is what the whole still owes after the first stretch."
+              "value": 136,
+              "feedback": "That stretched the path LONGER — the remaining section is what the whole still owes after the first section."
             },
             {
-              "value": 25,
-              "feedback": "Five meters of trail went missing; the parts must rebuild the whole exactly."
+              "value": 27,
+              "feedback": "Five meters of path went missing; the sections must rebuild the whole path exactly."
             }
           ],
           "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-          "successFeedback": "Correct — 30."
+          "successFeedback": "Correct — 32."
         }
       }
     }

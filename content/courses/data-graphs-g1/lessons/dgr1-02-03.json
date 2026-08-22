@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "bar-compare",
       "body": "A bar graph grows one solid bar per category. The bar's top touches its count on the number scale.",
       "narration": "A bar graph grows one solid bar per category. The bar's top touches its count on the number scale."
     },
@@ -144,7 +143,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "bar-compare",
       "body": "Bars trade pictures for height: taller bar, bigger count, no counting needed once the scale is read.",
       "narration": "Bars trade pictures for height: taller bar, bigger count, no counting needed once the scale is read."
     },
@@ -201,29 +199,29 @@
       "body": "Find the biggest count.",
       "conceptTag": "g1d-build-bar",
       "explanationVariants": [
-        "6 is the biggest count, so Cats got the most.",
-        "Compare the three counts: Cats's 6 wins."
+        "8 is the biggest count, so Blue got the most.",
+        "Compare the three counts: Blue's 8 wins."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Votes: Cats 6, Dogs 3, Fish 5. Which got the MOST votes?",
+        "prompt": "Votes: Red 5, Blue 8, Green 3. Which got the MOST votes?",
         "options": [
           {
             "id": "o0",
-            "label": "Fish",
-            "feedback": "Fish got 5 votes, and 6 is bigger. The most votes means the biggest count.",
-            "correct": false
-          },
-          {
-            "id": "o1",
-            "label": "Cats",
-            "feedback": "Correct — 6 is the biggest count, so Cats got the most votes.",
+            "label": "Blue",
+            "feedback": "Correct — 8 is the biggest count, so Blue got the most votes.",
             "correct": true
           },
           {
+            "id": "o1",
+            "label": "Red",
+            "feedback": "Red got 5 votes, and 8 is bigger. The most votes means the biggest count.",
+            "correct": false
+          },
+          {
             "id": "o2",
-            "label": "Dogs",
-            "feedback": "Dogs got 3 votes, and 6 is bigger. The most votes means the biggest count.",
+            "label": "Green",
+            "feedback": "Green got 3 votes, and 8 is bigger. The most votes means the biggest count.",
             "correct": false
           }
         ]
@@ -231,7 +229,7 @@
       "hints": [
         "Most means the biggest count.",
         "Compare the three numbers.",
-        "Cats with 6."
+        "Blue with 8."
       ],
       "variant": {
         "gen": "g1-data",
@@ -263,39 +261,35 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Shorter by how much?",
+      "body": "Taller by how much?",
       "conceptTag": "g1d-build-bar",
       "explanationVariants": [
-        "2 shorter than 7 is 5.",
-        "Shorter bars reach smaller numbers: 7 − 2 = 5."
+        "4 taller than 5 is 9.",
+        "Taller bars reach bigger numbers: 5 + 4 = 9."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "On a bar graph, the Dogs bar reaches 7. The Cats bar is 2 shorter. How tall is the Cats bar?",
-        "answer": 5,
+        "prompt": "On a bar graph, the Cats bar reaches 5. The Dogs bar is 4 taller. How tall is the Dogs bar?",
+        "answer": 9,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 9,
-            "feedback": "That makes the Cats bar TALLER by 2. \"Shorter\" means the bar reaches a smaller number."
+            "value": 1,
+            "feedback": "That makes the Dogs bar SHORTER by 4. \"Taller\" means the bar reaches a bigger number."
           },
           {
-            "value": 7,
-            "feedback": "That is the Dogs bar's height. The Cats bar is 2 below it."
+            "value": 5,
+            "feedback": "That is the Cats bar's height. The Dogs bar is 4 above it."
           }
         ],
-        "fallbackFeedback": "Shorter means a smaller number — subtract the difference from the taller bar's height."
+        "fallbackFeedback": "Taller means a bigger number — add the difference to the shorter bar's height."
       },
       "hints": [
-        "Shorter means smaller.",
-        "Subtract the difference.",
-        "7 − 2 = 5."
+        "Taller means bigger.",
+        "Add the difference.",
+        "5 + 4 = 9."
       ],
-      "variant": {
-        "gen": "g1-data",
-        "form": "GdBarCompareNumeric"
-      },
       "cml": {
         "stage": "construct",
         "flagship": false,
@@ -322,38 +316,38 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Shorter by how much?",
+      "body": "Add the whole graph.",
       "conceptTag": "g1d-build-bar",
       "explanationVariants": [
-        "3 shorter than 8 is 5.",
-        "Shorter bars reach smaller numbers: 8 − 3 = 5."
+        "4, 5, and 3 add up to 12 votes in all.",
+        "Every category counts toward the total: 4 + 5 + 3 = 12."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "On a bar graph, the Dogs bar reaches 8. The Cats bar is 3 shorter. How tall is the Cats bar?",
-        "answer": 5,
+        "prompt": "Votes: Cats 4, Dogs 5, Fish 3. How many votes in all?",
+        "answer": 12,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 11,
-            "feedback": "That makes the Cats bar TALLER by 3. \"Shorter\" means the bar reaches a smaller number."
+            "value": 9,
+            "feedback": "That adds only the first two categories and leaves out Fish. \"In all\" means every category counts toward the total."
           },
           {
-            "value": 8,
-            "feedback": "That is the Dogs bar's height. The Cats bar is 3 below it."
+            "value": 5,
+            "feedback": "That is the biggest single category, not the total. Add all three counts together."
           }
         ],
-        "fallbackFeedback": "Shorter means a smaller number — subtract the difference from the taller bar's height."
+        "fallbackFeedback": "Add every category together: 4 + 5 + 3 = 12."
       },
       "hints": [
-        "Shorter means smaller.",
-        "Subtract the difference.",
-        "8 − 3 = 5."
+        "\"In all\" means add every category.",
+        "Add all three counts.",
+        "4 + 5 + 3 = 12."
       ],
       "variant": {
         "gen": "g1-data",
-        "form": "GdBarCompareNumeric"
+        "form": "GdTotalNumeric"
       },
       "cml": {
         "stage": "construct",

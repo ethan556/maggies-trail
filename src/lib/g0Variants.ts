@@ -12,6 +12,7 @@ type FormHandler = (rand: Rand, band: Band) => Variant;
 const pick = (rand: Rand, lo: number, hi: number): number => lo + Math.floor(rand() * (hi - lo + 1));
 const choose = <T>(rand: Rand, xs: readonly T[]): T => xs[pick(rand, 0, xs.length - 1)];
 const bandHi = (band: Band, support: number, core: number, stretch: number) => band === "support" ? support : band === "stretch" ? stretch : core;
+const counted = (n: number, singular: string, plural: string) => `${n} ${n === 1 ? singular : plural}`;
 
 function shuffled<T>(rand: Rand, xs: readonly T[]): T[] {
   const out = [...xs];
@@ -36,13 +37,9 @@ const mcq = (
 ): Variant => {
   const seen = new Set<string>([correct[0]]);
   const unique = wrong.filter(([label]) => !seen.has(label) && seen.add(label));
-  for (const fallback of [
-    ["A different choice", "That choice does not match the counting, shape, position, or comparison shown in the question."],
-    ["There is not enough information", "The picture words and quantities provide enough information to decide the answer."],
-  ] as Array<[string, string]>) {
-    if (unique.length >= 3) break;
-    if (!seen.has(fallback[0])) { seen.add(fallback[0]); unique.push(fallback); }
-  }
+  // Do not pad a choice set with generic filler. Two or three meaningful,
+  // misconception-derived distractors are stronger than a fourth non-answer.
+  if (unique.length < 1) throw new Error(`MCQ ${tag} needs at least one genuine distractor`);
   const options = shuffled(rand, [
     { label: correct[0], feedback: correct[1], correct: true },
     ...unique.slice(0, 3).map(([label, feedback]) => ({ label, feedback, correct: false })),
@@ -269,17 +266,33 @@ const countHandlers: Record<string, FormHandler> = {
     if (three) {
       const a = pick(rand, 1, 3), b = pick(rand, 1, 3), c = pick(rand, 1, Math.max(1, 10 - a - b));
       const ans = a + b + c;
-      return mcq(rand, "g0-counting", `A jar has ${a} red counters, ${b} blue counters, and ${c} green counters. How many counters are in the jar altogether?`,
+      const colorCounters = (n: number, color: string) => `${n} ${color} ${n === 1 ? "counter" : "counters"}`;
+      return mcq(rand, "g0-counting", `A jar has ${colorCounters(a, "red")}, ${colorCounters(b, "blue")}, and ${colorCounters(c, "green")}. How many counters are in the jar altogether?`,
         [String(ans), `Correct — combining all three groups gives ${a} + ${b} + ${c} = ${ans} counters.`],
-        [[String(a + b), `That combines only the red and blue groups. The ${c} green counters must be included too.`], [String(b + c), `That combines only two color groups. Include the ${a} red counters as well.`], [String(ans + 1), `That total counts one extra counter. Adding each group once gives ${ans}.`]]);
+        [
+          [String(a + b), `That combines only the red and blue groups. The ${colorCounters(c, "green")} must be included too.`],
+          [String(b + c), `That combines only the blue and green groups. Include the ${colorCounters(a, "red")} as well.`],
+          [String(a + c), `That combines only the red and green groups. Include the ${colorCounters(b, "blue")} as well.`],
+          [String(Math.max(a, b, c)), `${Math.max(a, b, c)} counts only the largest color group. The question asks for all three groups together.`],
+          [String(ans - 1), `${ans - 1} stops one count too soon. Count every counter in all three color groups.`],
+          ...(ans < 10 ? [[String(ans + 1), `${ans + 1} counts one counter twice. Counting each counter once gives ${ans}.`] as [string, string]] : []),
+        ]);
     }
     const a = pick(rand, 1, bandHi(band, 6, 8, 9));
-    const b = rand() < 0.25 ? 0 : pick(rand, 1, 10 - a);
+    // A zero-action story is not an addition situation a child can model. Zero has its own
+    // explicit form below; this form always shows a consequential joining event.
+    const b = pick(rand, 1, 10 - a);
     const ans = a + b;
-    const birds = (n: number) => `${n} ${n === 1 ? "bird" : "birds"}`;
-    return mcq(rand, "g0-counting", `There are ${birds(a)} on a fence and ${birds(b)} more land. How many birds are there now?`,
-      [String(ans), `Correct — putting the groups together gives ${a} + ${b} = ${birds(ans)}.`],
-      [[String(a), `${a} counts only the birds that were there first. Include the ${birds(b)} that landed.`], [String(b), `${b} counts only the new birds. The original group of ${a} must remain in the total.`], [String(Math.min(10, ans + 1)), `That total counts one bird too many. Count both groups once to get ${ans}.`]]);
+    const birds = (n: number) => counted(n, "bird", "birds");
+    return mcq(rand, "g0-counting", `Maya sees ${birds(a)} on a fence. Then ${birds(b)} ${b === 1 ? "joins" : "join"} the group. How many birds are on the fence now?`,
+      [String(ans), `Correct — putting the two groups together gives ${a} + ${b} = ${birds(ans)}.`],
+      [
+        [String(a), `${a} counts only the birds that were there first. Include the ${birds(b)} that joined them.`],
+        [String(b), `${b} counts only the birds that joined. Include the original group of ${birds(a)} too.`],
+        [String(Math.abs(a - b)), `${Math.abs(a - b)} is the difference between the groups. This story joins the groups, so add instead.`],
+        [String(ans - 1), `${ans - 1} stops one count too soon. Count every bird in both groups to reach ${ans}.`],
+        ...(ans < 10 ? [[String(ans + 1), `${ans + 1} counts one bird twice. Count each bird once to reach ${ans}.`] as [string, string]] : []),
+      ]);
   },
   countAddLine: (rand, band) => {
     const hops = pick(rand, 1, bandHi(band, 3, 4, 5));
@@ -385,12 +398,21 @@ const countHandlers: Record<string, FormHandler> = {
     })));
   },
   countSubtractMcq: (rand, band) => {
-    const start = pick(rand, 1, bandHi(band, 7, 9, 10));
-    const take = rand() < 0.3 ? 0 : rand() < 0.3 ? start : pick(rand, 1, start);
+    const start = pick(rand, 3, bandHi(band, 7, 9, 10));
+    // Keep zero-action language in countZeroTap/KoaZeroFactNumeric, where zero is the concept.
+    const take = pick(rand, 1, start);
     const ans = start - take;
-    return mcq(rand, "g0-counting", `You have ${start} stickers and give away ${take}. How many stickers are left?`,
-      [String(ans), `Correct — taking away ${take} from ${start} leaves ${ans} stickers.`],
-      [[String(start), `${start} is the starting amount. It is the answer only when nothing is taken away.`], [String(take), `${take} is the amount given away, not the amount that remains.`], [String(Math.min(10, start + take)), `That puts the groups together, but the story asks you to take stickers away.`]]);
+    const stickers = (n: number) => counted(n, "sticker", "stickers");
+    const wrong: Array<[string, string]> = [
+      [String(start), `${start} is the starting amount. Nora gives ${stickers(take)} away, so the amount must change.`],
+      [String(take), `${take} is the amount Nora gives away, not the amount she still has.`],
+      [String(ans + 1), `${ans + 1} stops one sticker too soon while counting back. Take away all ${take} to reach ${ans}.`],
+      ...(ans > 0 ? [[String(ans - 1), `${ans - 1} takes away one sticker too many. Count back exactly ${take} from ${start}.`] as [string, string]] : []),
+      ...(start + take <= 10 ? [[String(start + take), `${start + take} adds the two amounts. Giving stickers away makes the starting group smaller.`] as [string, string]] : []),
+      [String(start - 1), `${start - 1} takes away only one sticker. Nora gives away ${take}, so count back that many.`],
+    ];
+    return mcq(rand, "g0-counting", `Nora has ${stickers(start)}. She gives ${stickers(take)} to a friend. How many stickers does Nora have left?`,
+      [String(ans), `Correct — taking away ${take} from ${start} leaves ${stickers(ans)}.`], wrong);
   },
   countSubtractLine: (rand, band) => {
     const start = pick(rand, bandHi(band, 6, 8, 10) - 2, bandHi(band, 7, 9, 10));
@@ -399,7 +421,16 @@ const countHandlers: Record<string, FormHandler> = {
   },
   countTeenFrame: (rand, band) => {
     const extra = pick(rand, 1, bandHi(band, 4, 7, 9)), teen = 10 + extra;
-    return tenFrame("g0-counting", `A full group of 10 is already shown. Add the extra dots needed to make ${teen}.`, extra, 0, "tangerine");
+    // S328: the frame renders a single 10-cell grid (TenFrameW, widgets.tsx) and the schema caps
+    // target at 10 with preFilled required to be < target (schema.ts TenFrameSpec / tenFrame
+    // widget check) — so preFilled can never be 10 here. With preFilled=0 the frame starts fully
+    // EMPTY; it never shows a locked ten. The prompt must not claim otherwise (previously: "A full
+    // group of 10 is already shown"). State the ten-and-more decomposition as a math fact about the
+    // teen number instead of a claim about the widget's rendered state, then ask for only the
+    // achievable, already-honest target range (0..extra) — mirroring shapeSortFrame's pattern.
+    const dots = extra === 1 ? "dot" : "dots";
+    const that = extra === 1 ? "that" : "those";
+    return tenFrame("g0-counting", `${teen} is a full ten and ${extra} more. Tap to build ${that} ${extra} extra ${dots}.`, extra, 0, "tangerine");
   },
 };
 
@@ -576,7 +607,7 @@ function family(tag: string, label: string, forms: readonly string[], handlers: 
  * voice: short, concrete, one idea per sentence. */
 const K100_FORMS = [
   "kSeqNextHop", "kSeqNextMcq", "kSeqBeforeHop", "kSeqMissingMcq", "kDecadeCrossHop",
-  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensOrderDrag",
+  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensBackMcq", "kTensOrderDrag",
   "kChartRowMcq", "kChartMissingMcq", "kCountFromHop", "kCountBackHop", "kSeqOrderDrag",
 ] as const;
 const kCap = (band: Band, support: number, core: number, stretch: number) => bandHi(band, support, core, stretch);
@@ -633,6 +664,22 @@ const k100Handlers: Record<string, FormHandler> = {
   kTensBackHop: (r, b) => {
     const t = pick(r, 3, kCap(b, 5, 8, 10)) * 10;
     return numberLine("k0-count-100", `Count back by tens from ${t}. Hop one ten back and tap where you land.`, Math.max(0, t - 20), Math.min(100, t + 10), t, 10, 1, "back");
+  },
+  // Added for k100-02-05/k3, whose authored widget is an mcq (options 20/30/21/10 for "what
+  // comes before 40?") but which declared the numberLine-producing kTensBackHop -- a genuine
+  // pre-existing (S318) widget-surface mismatch the resolver contract catches. kTensNextMcq
+  // above is the mirror of this: same trap shape (off-by-one, wrong direction, no change),
+  // reflected for "back" instead of "next".
+  kTensBackMcq: (r, b) => {
+    // Cap held to 9 (not kTensBackHop's 10): unlike the numberLine widget above, which clamps its
+    // drawn max via Math.min(100, t + 10), this MCQ prints the t+10 trap as a raw option label with
+    // no clamp point -- at t=100 that trap would read 110, breaking the K.CC.A.1 0..100 ceiling.
+    const t = pick(r, 3, kCap(b, 5, 8, 9)) * 10;
+    return mcq(r, "k0-count-100", `Counting back by tens — what comes before ${t}?`,
+      [String(t - 10), `Yes — one ten before ${t} is ${t - 10}.`],
+      [[String(t - 1), `That is just one less. Counting BACK by TENS goes back a whole ten: ${t - 10}.`],
+       [String(t + 10), `That goes forward a ten. Counting back by tens gives ${t - 10}.`],
+       [String(t), `That stays still. One ten before ${t} is ${t - 10}.`]]);
   },
   kTensOrderDrag: (r, b) => {
     const t0 = pick(r, 1, kCap(b, 2, 4, 6)) * 10;
@@ -747,28 +794,28 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
   },
   KoaFingersNumeric: (r) => {
     const a = kpick(r, 1, 5), b = kpick(r, 1, 5);
-    return koaNum(`Hold up ${a} fingers on one hand and ${b} on the other. How many fingers are up?`, a + b,
+    return koaNum(`Hold up ${counted(a, "finger", "fingers")} on one hand and ${counted(b, "finger", "fingers")} on the other. How many fingers are up?`, a + b,
       [[a, `That counts one hand only. Count the fingers on BOTH hands.`],
        [10 - (a + b), `That counts the fingers still DOWN. The question asks how many are up.`]],
-      `Correct — ${a} fingers and ${b} fingers make ${a + b}.`);
+      `Correct — ${counted(a, "finger", "fingers")} and ${counted(b, "finger", "fingers")} make ${a + b}.`);
   },
   KoaDrawingsNumeric: (r) => {
     const a = kpick(r, 2, 5), b = kpick(r, 1, Math.min(4, 10 - a));
-    return koaNum(`Draw ${a} circles. Then draw ${b} more circles. How many circles did you draw?`, a + b,
+    return koaNum(`Draw ${counted(a, "circle", "circles")}. Then draw ${counted(b, "more circle", "more circles")}. How many circles did you draw?`, a + b,
       [[a, `That counts only the first drawing. The ${b} new circles count too.`],
        [b, `That counts only the circles drawn second. Count every circle on the page.`]],
       `Correct — ${a} circles and ${b} more make ${a + b}.`);
   },
   KoaActOutNumeric: (r) => {
     const a = kpick(r, 2, 6), b = kpick(r, 1, Math.min(4, 10 - a));
-    return koaNum(`${a} children are playing. ${b} more children join them. How many children are playing now?`, a + b,
+    return koaNum(`${counted(a, "child", "children")} are playing. ${counted(b, "more child", "more children")} ${b === 1 ? "joins" : "join"} them. How many children are playing now?`, a + b,
       [[a, `That is how many started. ${b} more joined, so the group grew.`],
        [a - b >= 0 ? a - b : a + 1, `That takes children away. "Join" means MORE children, so the total goes up.`]],
       `Correct — ${a} children and ${b} more make ${a + b}.`);
   },
   KoaWriteAddMcq: (r) => {
     const a = kpick(r, 2, 5), b = kpick(r, 1, Math.min(4, 10 - a));
-    return koaMcq(r, `${a} birds sit on a branch. ${b} more birds land. Which sentence shows this?`,
+    return koaMcq(r, `${counted(a, "bird", "birds")} sit on a branch. Then ${counted(b, "more bird", "more birds")} ${b === 1 ? "lands" : "land"}. Which number sentence shows the story?`,
       [`${a} + ${b} = ${a + b}`, `Correct — joining ${a} and ${b} is written with a plus sign, and the total is ${a + b}.`],
       [[`${a} − ${b} = ${a - b >= 0 ? a - b : 0}`, `The minus sign means taking away, but these birds are ARRIVING.`],
        [`${a} + ${b} = ${a + b + 1}`, `The plus sign is right, but the total is off by one — count again: ${a + b}.`],
@@ -778,28 +825,28 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
   /* ---- K.OA.A.1: subtraction ---- */
   KoaTakeAwayNumeric: (r) => {
     const total = kpick(r, 4, 10), away = kpick(r, 1, total - 1);
-    return koaNum(`There are ${total} cookies. You eat ${away}. How many cookies are left?`, total - away,
-      [[total, `That is how many there were BEFORE eating. ${away} are gone now.`],
+    return koaNum(`A plate has ${counted(total, "cookie", "cookies")}. You eat ${counted(away, "cookie", "cookies")}. How many cookies are left?`, total - away,
+      [[total, `That is how many there were before eating. ${counted(away, "cookie", "cookies")} ${away === 1 ? "is" : "are"} gone now.`],
        [away, `That counts the cookies eaten, not the ones left on the plate.`]],
       `Correct — ${total} take away ${away} leaves ${total - away}.`);
   },
   KoaSubDrawingsNumeric: (r) => {
     const total = kpick(r, 4, 9), away = kpick(r, 1, total - 1);
-    return koaNum(`Draw ${total} circles, then cross out ${away}. How many circles are NOT crossed out?`, total - away,
+    return koaNum(`Draw ${counted(total, "circle", "circles")}. Cross out ${counted(away, "circle", "circles")}. How many circles are not crossed out?`, total - away,
       [[away, `That counts the crossed-out circles. The question asks about the ones still plain.`],
        [total, `That counts every circle drawn, including the crossed-out ones.`]],
-      `Correct — ${total} circles with ${away} crossed out leaves ${total - away}.`);
+      `Correct — starting with ${total} and crossing out ${away} leaves ${total - away}.`);
   },
   KoaSubActOutNumeric: (r) => {
     const total = kpick(r, 4, 9), away = kpick(r, 1, total - 1);
-    return koaNum(`${total} children are playing. ${away} go home. How many children are still playing?`, total - away,
-      [[total, `That is how many started. ${away} have left, so fewer are playing now.`],
+    return koaNum(`${counted(total, "child", "children")} are playing. ${counted(away, "child", "children")} ${away === 1 ? "goes" : "go"} home. How many children are still playing?`, total - away,
+      [[total, `That is how many started. ${counted(away, "child", "children")} ${away === 1 ? "has" : "have"} left, so fewer are playing now.`],
        [away, `That counts the children who went home, not the ones still playing.`]],
       `Correct — ${total} children with ${away} gone leaves ${total - away}.`);
   },
   KoaWriteSubMcq: (r) => {
     const total = kpick(r, 4, 9), away = kpick(r, 1, total - 1);
-    return koaMcq(r, `${total} frogs sit on a log. ${away} hop away. Which sentence shows this?`,
+    return koaMcq(r, `${counted(total, "frog", "frogs")} sit on a log. Then ${counted(away, "frog", "frogs")} ${away === 1 ? "hops" : "hop"} away. Which number sentence shows the story?`,
       [`${total} − ${away} = ${total - away}`, `Correct — hopping away is taking away, written with a minus sign.`],
       [[`${total} + ${away} = ${total + away}`, `The plus sign means more frogs arrived, but these frogs LEFT.`],
        [`${away} − ${total} = 0`, `That reverses the numbers. The ${total} frogs came first, and ${away} left from them.`],
@@ -807,23 +854,23 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
   },
   KoaHowManyLeftNumeric: (r) => {
     const total = kpick(r, 5, 10), away = kpick(r, 2, total - 1);
-    return koaNum(`${total} balloons float away one at a time until ${away} have gone. How many balloons are left?`, total - away,
+    return koaNum(`Mia holds ${counted(total, "balloon", "balloons")}. Then ${counted(away, "balloon", "balloons")} float away. How many balloons does Mia still hold?`, total - away,
       [[away, `That counts the balloons that floated away, not the ones still held.`],
-       [total, `That is the starting number. ${away} have gone since then.`]],
-      `Correct — ${total} balloons with ${away} gone leaves ${total - away}.`);
+       [total, `That is the starting number. ${counted(away, "balloon", "balloons")} have gone since then.`]],
+      `Correct — ${total} balloons with ${away} gone leave ${total - away}.`);
   },
 
   /* ---- K.OA.A.2: word-problem types ---- */
   KoaAddToStoryNumeric: (r) => {
     const a = kpick(r, 2, 6), b = kpick(r, 1, Math.min(4, 10 - a)), t = kThing(r);
-    return koaNum(`A basket holds ${kN(a, t)}. Someone puts in ${b} more. How many ${t} are in the basket now?`, a + b,
+    return koaNum(`Maya has ${kN(a, t)} in a basket. She adds ${kN(b, t)}. How many ${t} are in the basket now?`, a + b,
       [[a, `That is the number before anything was added.`],
        [b, `That counts only what was put in. The basket already held ${a}.`]],
       `Correct — ${a} plus ${b} more makes ${a + b}.`);
   },
   KoaTakeFromStoryNumeric: (r) => {
     const total = kpick(r, 5, 10), away = kpick(r, 1, total - 2), t = kThing(r);
-    return koaNum(`A basket holds ${kN(total, t)}. Someone takes out ${away}. How many ${t} are in the basket now?`, total - away,
+    return koaNum(`Maya has ${kN(total, t)} in a basket. She takes out ${kN(away, t)}. How many ${t} remain in the basket?`, total - away,
       [[total, `That is the number before any were taken out.`],
        [away, `That counts what was removed, not what remains in the basket.`]],
       `Correct — ${total} take away ${away} leaves ${total - away}.`);
@@ -839,23 +886,24 @@ const koaHandlers: Record<string, (r: () => number) => unknown> = {
     const addStory = r() < 0.5;
     const a = kpick(r, 3, 6), b = kpick(r, 1, 3);
     if (addStory) {
-      return koaMcq(r, `${a} ducks swim in a pond. ${b} more ducks swim over. What should you do to find how many ducks are in the pond?`,
-        ["Add", `Correct — more ducks arriving means the group grows, so add.`],
-        [["Subtract", `Subtracting would make the group smaller, but these ducks ARRIVED.`],
-         ["Count only the new ducks", `That leaves out the ${a} ducks already swimming there.`]]);
+      return koaMcq(r, `${counted(a, "duck", "ducks")} swim in a pond. Then ${counted(b, "more duck", "more ducks")} ${b === 1 ? "swims" : "swim"} into the pond. Which action finds how many ducks are there now?`,
+        ["Add both groups", `Correct — more ducks arriving means the group grows, so add the groups.`],
+        [["Subtract the new group", `Subtracting would make the group smaller, but these ducks arrived.`],
+         ["Count the new group only", `That leaves out the ${a} ducks already swimming there.`]]);
     }
-    return koaMcq(r, `${a + b} ducks swim in a pond. ${b} ducks fly away. What should you do to find how many ducks are left?`,
-      ["Subtract", `Correct — ducks leaving means the group shrinks, so subtract.`],
-      [["Add", `Adding would make the group bigger, but these ducks LEFT.`],
-       ["Count only the ducks that flew away", `That counts what is gone, not what is still on the pond.`]]);
+    return koaMcq(r, `${counted(a + b, "duck", "ducks")} swim in a pond. Then ${counted(b, "duck", "ducks")} ${b === 1 ? "flies" : "fly"} away. Which action finds how many ducks are left?`,
+      ["Subtract the leaving group", `Correct — ducks leaving means the group shrinks, so subtract that group.`],
+      [["Add the leaving group", `Adding would make the group bigger, but these ducks left.`],
+       ["Count the leaving group only", `That counts what is gone, not what is still in the pond.`]]);
   },
   KoaModelStoryMcq: (r) => {
-    const a = kpick(r, 2, 5), b = kpick(r, 1, 3);
-    return koaMcq(r, `"${a} cats sit on a wall. ${b} jump down." Which drawing shows this story?`,
-      [`${a} cats drawn, with ${b} crossed out`, `Correct — crossing out shows the ${b} cats that jumped down and left.`],
-      [[`${a} cats drawn, with ${b} more added`, `Adding more cats would show cats ARRIVING, but these cats left.`],
-       [`${a + b} cats drawn, none crossed out`, `That draws the wrong starting number and never shows the cats leaving.`],
-       [`${b} cats drawn only`, `That draws only the cats that jumped down, not the ${a} that started on the wall.`]]);
+    const a = kpick(r, 2, 5), b = kpick(r, 1, Math.min(3, a - 1));
+    const cats = (n: number) => counted(n, "cat", "cats");
+    return koaMcq(r, `"${cats(a)} sit on a wall. ${cats(b)} ${b === 1 ? "jumps" : "jump"} down." Which drawing shows this story?`,
+      [`${cats(a)} drawn, with ${cats(b)} crossed out`, `Correct — crossing out shows the ${cats(b)} that jumped down and left.`],
+      [[`${cats(a)} drawn, with ${cats(b)} more added`, `Adding more cats would show cats arriving, but these cats left.`],
+       [`${cats(a + b)} drawn, none crossed out`, `That draws the wrong starting number and never shows the cats leaving.`],
+       [`Only ${cats(b)} drawn`, `That draws only the cats that jumped down, not the ${a} that started on the wall.`]]);
   },
 
   /* ---- K.OA.A.5: FLUENCY within 5 — these carry additive fact families ---- */
@@ -929,7 +977,7 @@ export const G0_FORM_SURFACES: Readonly<Record<string, string>> = {
   KoaJoinNumeric: "numeric", KoaFingersNumeric: "numeric", KoaDrawingsNumeric: "numeric", KoaActOutNumeric: "numeric", KoaWriteAddMcq: "mcq", KoaTakeAwayNumeric: "numeric", KoaSubDrawingsNumeric: "numeric", KoaSubActOutNumeric: "numeric", KoaWriteSubMcq: "mcq", KoaHowManyLeftNumeric: "numeric", KoaAddToStoryNumeric: "numeric", KoaTakeFromStoryNumeric: "numeric", KoaPutTogetherNumeric: "numeric", KoaChooseOpMcq: "mcq", KoaModelStoryMcq: "mcq", KoaSums5Numeric: "numeric", KoaDiffs5Numeric: "numeric", KoaPlusMinusOneNumeric: "numeric", KoaZeroFactNumeric: "numeric", KoaSpeedy5Numeric: "numeric",
   kSeqNextHop: "numberLineHop", kSeqNextMcq: "mcq", kSeqBeforeHop: "numberLineHop", kSeqMissingMcq: "mcq",
   kDecadeCrossHop: "numberLineHop", kDecadeNextMcq: "mcq", kTensNextHop: "numberLineHop", kTensNextMcq: "mcq",
-  kTensBackHop: "numberLineHop", kTensOrderDrag: "dragOrder", kChartRowMcq: "mcq", kChartMissingMcq: "mcq",
+  kTensBackHop: "numberLineHop", kTensBackMcq: "mcq", kTensOrderDrag: "dragOrder", kChartRowMcq: "mcq", kChartMissingMcq: "mcq",
   kCountFromHop: "numberLineHop", kCountBackHop: "numberLineHop", kSeqOrderDrag: "dragOrder",
   countAddMcq: "mcq", countAddLine: "numberLineHop", countCompareEqualMcq: "mcq", countTensMcq: "mcq", countTensLine: "numberLineHop",
   countObjectsMcq: "mcq", countObjectsFlash: "subitizeFlash", countDecomposeMcq: "mcq", countMakeTenMcq: "mcq", countMoreFewerMcq: "mcq",

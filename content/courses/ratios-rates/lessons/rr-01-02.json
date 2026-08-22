@@ -15,29 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Compare to the whole.",
+      "body": "Make the whole visible beside the part.",
       "conceptTag": "part-part-whole",
       "widget": {
-        "type": "mcq",
-        "prompt": "A class has 3 girls for every 2 boys. What is the ratio of girls to the WHOLE class?",
-        "options": [
-          {
-            "id": "a",
-            "label": "3 : 5",
-            "correct": true,
-            "feedback": "Right — every group has 3 + 2 = 5 students, and 3 of them are girls."
-          },
-          {
-            "id": "b",
-            "label": "3 : 2",
-            "feedback": "That's girls to BOYS — part-to-part. The whole class includes both: 3 girls out of every 5 students."
-          },
-          {
-            "id": "c",
-            "label": "2 : 5",
-            "feedback": "2 : 5 is the BOYS' share of the whole. The girls' share is 3 out of every 5."
-          }
-        ]
+        "type": "ratioTable",
+        "prompt": "A group has 3 girls and 2 boys, so it has 5 students in all. Scale the girls-to-whole row when the number of girls doubles to 6.",
+        "colA": "girls",
+        "colB": "students in all",
+        "rows": [
+          [
+            3,
+            5
+          ]
+        ],
+        "askA": 6,
+        "targetB": 10,
+        "bMax": 15,
+        "bStep": 1,
+        "bStart": 0,
+        "successFeedback": "6 girls belong in a 10-student whole. The table keeps the part-to-whole ratio 3 : 5 visible as the group doubles.",
+        "lowFeedback": "The whole must include both parts. Double the complete 5-student group along with the 3 girls.",
+        "highFeedback": "The total is too large for a doubled group. Scale 3 : 5 by the same factor in both columns."
       },
       "hints": [
         "How many students in one full group?",
@@ -103,8 +101,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "It works in reverse. If apples are **3 : 5** of the fruit, the leftover share belongs to oranges: **2 : 5**. And the two parts recover the part-to-part ratio: apples to oranges is **3 : 2**. Whole minus one part gives the other part — the three ratios travel together.",
-      "figure": "part-whole-bar"
+      "body": "It works in reverse. If apples are **3 : 5** of the fruit, the leftover share belongs to oranges: **2 : 5**. And the two parts recover the part-to-part ratio: apples to oranges is **3 : 2**. Whole minus one part gives the other part — the three ratios travel together."
     },
     {
       "id": "k2",

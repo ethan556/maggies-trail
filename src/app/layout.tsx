@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 import { motionInit } from "@/lib/motionBootstrap";
@@ -29,6 +29,12 @@ const OG_IMAGE = {
   type: "image/png"
 } as const;
 
+/** Browser/PWA chrome follows the identity mark's Deep Navy rather than the instructional sky
+ * accent. This mirrors `manifest.webmanifest` and avoids a blue shell around a navy app icon. */
+export const viewport: Viewport = {
+  themeColor: "#0D1B2A"
+};
+
 export const metadata: Metadata = {
   title: APP_TITLE,
   manifest: "/manifest.webmanifest",
@@ -47,7 +53,6 @@ export const metadata: Metadata = {
   // with no <link rel> equivalent, so it stays declared in the manifest alone.
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
       { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

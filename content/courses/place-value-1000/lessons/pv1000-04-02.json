@@ -9,7 +9,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "decompose-combine",
       "body": "Subtracting works the same way: break both numbers into hundreds, tens, ones, then subtract each spot. 486 − 253: hundreds 400−200=200, tens 80−50=30, ones 6−3=3. Combine: 233."
     },
     {
@@ -45,12 +44,12 @@
         "prompt": "486 − 253, place by place: 4−2 flats, 8−5 rods, 6−3 cubes. Will any spot need to TRADE (top digit too small)?",
         "options": [
           {
-            "id": "no",
-            "label": "No — every top digit is big enough"
-          },
-          {
             "id": "ones",
             "label": "Yes — the cubes come up short"
+          },
+          {
+            "id": "no",
+            "label": "No — every top digit is big enough"
           },
           {
             "id": "tens",
@@ -127,7 +126,7 @@
       "body": "Subtract with a trade-down needed.",
       "widget": {
         "type": "numeric",
-        "prompt": "342 - 127 = ?",
+        "prompt": "Subtract, trading if a spot comes up short: 342 - 127 = ?",
         "answer": 215,
         "tolerance": 0,
         "commonErrors": [
@@ -155,7 +154,7 @@
       "body": "Subtract with a cascading trade-down.",
       "widget": {
         "type": "numeric",
-        "prompt": "402 - 168 = ?",
+        "prompt": "Subtract, trading through more than one spot if needed: 402 - 168 = ?",
         "answer": 234,
         "tolerance": 0,
         "commonErrors": [
@@ -177,29 +176,25 @@
       "body": "Another single-trade-down problem.",
       "conceptTag": "pv1000-subtract-trade",
       "explanationVariants": [
-        "Ones (3) aren't enough for 8 — trade 1 ten for 10 ones: 13-8=5. Combine: 251.",
+        "Ones (3) aren't enough for 8 — trade 1 ten for 10 ones: 13-8=5. Tens: 6-1(traded)=5, then 5-1=4. Combine: 245.",
         "Trade 1 ten for 10 ones when the ones spot is short."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "463 - 212 = ?",
-        "answer": 251,
+        "prompt": "Find the difference, trading the ones if needed: 463 - 218 = ?",
+        "answer": 245,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 149,
-            "feedback": "That doesn't match trading correctly. Recompute: 463-212=251."
+            "value": 255,
+            "feedback": "The ones trade is right (13-8=5), but the tens also need to shrink by the ten you gave away: 6-1=5, then 5-1=4, not 5. Combine: 245."
           },
           {
-            "value": 675,
-            "feedback": "That adds instead of subtracting. The correct difference is 251."
+            "value": 681,
+            "feedback": "That adds instead of subtracting. The correct difference is 245."
           }
         ],
-        "fallbackFeedback": "463 - 212 = 251."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SubtractTradeNumeric"
+        "fallbackFeedback": "Trade 1 ten for 10 ones: ones become 13, tens become 5. 13-8=5, 5-1=4. Combine: 200+40+5=245."
       }
     },
     {
@@ -213,7 +208,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "768 - 325 = ?",
+        "prompt": "Find the difference — check whether any spot needs trading: 768 - 325 = ?",
         "answer": 443,
         "tolerance": 0,
         "commonErrors": [
@@ -227,10 +222,6 @@
           }
         ],
         "fallbackFeedback": "400 + 40 + 3 = 443."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SubtractByPlaceNumeric"
       }
     },
     {
@@ -244,7 +235,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "351 - 134 = ?",
+        "prompt": "A trickier trade-down challenge: 351 - 134 = ?",
         "answer": 217,
         "tolerance": 0,
         "commonErrors": [
@@ -263,11 +254,7 @@
         "The ones spot (1) isn't enough for 4 — trade 1 ten for 10 ones.",
         "Now ones are 11, tens are 4: 11-4=7, 4-3=1.",
         "Hundreds: 3-1=2. Combine: 200+10+7=217."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SubtractTradeNumeric"
-      }
+      ]
     },
     {
       "id": "r1",
@@ -287,7 +274,7 @@
       "concept": {
         "id": "rem-psbp-c",
         "kind": "concept",
-        "body": "Subtract by spot: hundreds with hundreds, tens with tens, ones with ones, then combine the differences. 486-253: 200+30+3=233."
+        "body": "Subtract by spot: hundreds with hundreds, tens with tens, ones with ones, then combine the differences."
       },
       "check": {
         "id": "rem-psbp-k",
@@ -295,25 +282,25 @@
         "body": "",
         "conceptTag": "pv1000-subtract-by-place",
         "explanationVariants": [
-          "200+30+3=233.",
+          "Hundreds 500-200=300, tens 90-50=40, ones 7-3=4. Combine: 344.",
           "Subtract each spot separately."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "486 - 253 = ?",
-          "answer": 233,
+          "prompt": "A farm had 597 chickens. It sold 253 chickens. How many chickens are left?",
+          "answer": 344,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 239,
-              "feedback": "The ones are off: 6 − 3 = 3, not 9. That makes 233."
+              "value": 354,
+              "feedback": "Check each spot: hundreds 500-200=300, tens 90-50=40, ones 7-3=4. Combine: 344."
             },
             {
-              "value": 739,
-              "feedback": "Subtract, don't add: 233."
+              "value": 850,
+              "feedback": "That adds instead of subtracting. Combine the DIFFERENCES: 300+40+4=344."
             }
           ],
-          "fallbackFeedback": "233."
+          "fallbackFeedback": "300 + 40 + 4 = 344."
         }
       }
     },
@@ -322,7 +309,7 @@
       "concept": {
         "id": "rem-pst2-c",
         "kind": "concept",
-        "body": "When a spot doesn't have enough to subtract, trade 1 of the next spot over into 10 of the smaller spot. Ones (2) short for 7: trade 1 ten for 10 ones, now 12-7=5."
+        "body": "When a spot doesn't have enough to subtract, trade 1 of the next spot over into 10 of the smaller spot, then subtract that spot too."
       },
       "check": {
         "id": "rem-pst2-k",
@@ -330,25 +317,25 @@
         "body": "",
         "conceptTag": "pv1000-subtract-trade",
         "explanationVariants": [
-          "Trade 1 ten for 10 ones: 12-7=5. Combine: 215.",
+          "Ones (4) aren't enough for 7 — trade 1 ten for 10 ones: 14-7=7. Tens: 3-1(traded)=2, then 2-1=1. Combine: 317.",
           "Trade down when a spot is too small."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "342 - 127 = ?",
-          "answer": 215,
+          "prompt": "A bakery had 534 rolls. It sold 217 rolls. How many rolls are left?",
+          "answer": 317,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 225,
-              "feedback": "After trading a ten to the ones, only 3 tens are left: 3 − 2 = 1 ten, giving 215."
+              "value": 327,
+              "feedback": "The ones trade is right (14-7=7), but the tens also need to shrink by the ten you gave away: 3-1=2, then 2-1=1, not 2. Combine: 317."
             },
             {
-              "value": 469,
-              "feedback": "Subtract, don't add: 215."
+              "value": 751,
+              "feedback": "Subtract, don't add: 317."
             }
           ],
-          "fallbackFeedback": "215."
+          "fallbackFeedback": "Trade 1 ten for 10 ones: ones become 14, tens become 2. 14-7=7, 2-1=1. Combine: 300+10+7=317."
         }
       }
     }

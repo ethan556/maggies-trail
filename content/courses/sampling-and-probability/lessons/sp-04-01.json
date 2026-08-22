@@ -167,21 +167,19 @@
       "kind": "interactive",
       "body": "Count outcomes from a bigger combination.",
       "widget": {
-        "type": "numeric",
-        "prompt": "A store has 5 shirts and 4 pants. How many total outfits are possible?",
-        "answer": 20,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 9,
-            "feedback": "That adds 5+4 instead of multiplying. Total outfits = 5 × 4 = 20."
-          },
-          {
-            "value": 5,
-            "feedback": "That's just the shirts. Multiply by the 4 pants too: 5 × 4 = 20."
-          }
-        ],
-        "fallbackFeedback": "5 shirts × 4 pants = 20 outfits."
+        "type": "treeDiagram",
+        "prompt": "Build the branching diagram for 5 shirts and 4 pants.",
+        "stage1Label": "shirts",
+        "stage2Label": "pants",
+        "targetA": 5,
+        "targetB": 4,
+        "maxA": 6,
+        "maxB": 6,
+        "aStart": 1,
+        "bStart": 1,
+        "successFeedback": "20 endings — each of the 5 shirts branches to all 4 pants: 5 × 4 = 20.",
+        "lowFeedback": "Every shirt must branch to all 4 pants. Add the missing branches.",
+        "highFeedback": "The display has more branches than the 5 shirts and 4 pants describe."
       }
     },
     {
@@ -194,25 +192,26 @@
         "Multiply the choices at each stage."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Flipping a coin and rolling a 6-sided die: how many total outcomes are there?",
-        "answer": 12,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which calculation counts every coin-and-die outcome exactly once?",
+        "options": [
           {
-            "value": 8,
-            "feedback": "That adds instead of multiplying. 2 × 6 = 12."
+            "id": "a",
+            "label": "2 × 6 = 12",
+            "correct": true,
+            "feedback": "Yes — each of 2 coin results can pair with each of 6 die results."
           },
           {
-            "value": 6,
-            "feedback": "Multiply by the coin's 2 outcomes too: 2 × 6 = 12."
+            "id": "b",
+            "label": "2 + 6 = 8",
+            "feedback": "Adding counts the choices separately. Pairing every coin result with every die result multiplies."
+          },
+          {
+            "id": "c",
+            "label": "6 ÷ 2 = 3",
+            "feedback": "Division does not list the combined outcomes. There are 2 × 6 pairings."
           }
-        ],
-        "fallbackFeedback": "12."
-      },
-      "variant": {
-        "gen": "g7-sp-counting-principle",
-        "form": "spCountCoinDieA"
+        ]
       }
     },
     {
@@ -225,25 +224,26 @@
         "Multiply the 2 outcomes for each flip."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Flipping a coin 4 times: how many total outcomes are there?",
-        "answer": 16,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Why do 4 coin flips make 16 possible sequences?",
+        "options": [
           {
-            "value": 8,
-            "feedback": "That adds 2+2+2+2 instead of multiplying. Total outcomes = 2×2×2×2 = 16."
+            "id": "a",
+            "label": "Each flip has 2 choices, so multiply 2 × 2 × 2 × 2.",
+            "correct": true,
+            "feedback": "Yes — every earlier sequence splits into 2 choices at the next flip, giving 16."
           },
           {
-            "value": 4,
-            "feedback": "That's just the number of flips. Multiply the 2 outcomes for each flip: 2×2×2×2=16."
+            "id": "b",
+            "label": "Add the four flips: 2 + 2 + 2 + 2.",
+            "feedback": "Adding gives 8, but each new flip branches every existing sequence. Multiply the choices."
+          },
+          {
+            "id": "c",
+            "label": "There are 4 sequences because there are 4 flips.",
+            "feedback": "The number of flips is not the number of possible H/T sequences. Each flip has 2 choices."
           }
-        ],
-        "fallbackFeedback": "2 × 2 × 2 × 2 = 16 total outcomes."
-      },
-      "variant": {
-        "gen": "g7-sp-counting-principle",
-        "form": "spCountFlips"
+        ]
       }
     },
     {
@@ -256,31 +256,66 @@
         "Multiply the number of choices at each stage."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A store has 6 shirts and 5 pants. How many total outfits are possible?",
-        "answer": 30,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "matchPairs",
+        "prompt": "Match each independent-choice situation to its total number of outcomes.",
+        "left": [
           {
-            "value": 11,
-            "feedback": "That adds 6+5 instead of multiplying. Total outfits = 6 × 5 = 30."
+            "id": "shirts",
+            "label": "6 shirts and 5 pants"
           },
           {
-            "value": 6,
-            "feedback": "That's just the shirts. Multiply by the 5 pants too: 6 × 5 = 30."
+            "id": "coinDie",
+            "label": "a coin and a 6-sided die"
+          },
+          {
+            "id": "flips",
+            "label": "3 coin flips"
           }
         ],
-        "fallbackFeedback": "6 shirts × 5 pants = 30 outfits."
+        "right": [
+          {
+            "id": "thirty",
+            "label": "30 outcomes"
+          },
+          {
+            "id": "twelve",
+            "label": "12 outcomes"
+          },
+          {
+            "id": "eight",
+            "label": "8 outcomes"
+          }
+        ],
+        "pairs": {
+          "shirts": "thirty",
+          "coinDie": "twelve",
+          "flips": "eight"
+        },
+        "pairErrors": [
+          {
+            "left": "shirts",
+            "right": "twelve",
+            "feedback": "The clothing choices multiply: 6 × 5 = 30, not 6 + 5."
+          },
+          {
+            "left": "coinDie",
+            "right": "eight",
+            "feedback": "A coin and die have 2 × 6 = 12 outcomes. Eight is for 3 coin flips."
+          },
+          {
+            "left": "flips",
+            "right": "twelve",
+            "feedback": "Three coin flips have 2 × 2 × 2 = 8 outcomes, not 12."
+          }
+        ],
+        "missFeedback": "Use multiplication for each independent choice: count the branches at every stage.",
+        "successFeedback": "Correct — multiplication counts every complete combination once."
       },
       "hints": [
         "You're combining 6 shirt choices with 5 pants choices.",
         "Multiply: 6 × 5.",
         "6 × 5 = 30 total outfits."
-      ],
-      "variant": {
-        "gen": "g7-sp-counting-principle",
-        "form": "spCountOutfitsChallenge"
-      }
+      ]
     },
     {
       "id": "r1",

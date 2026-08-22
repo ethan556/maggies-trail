@@ -2,10 +2,10 @@
 
 **Purpose.** The commissioning spec every final avatar portrait must be individually re-rendered
 to. Written from `OPTIMIZATION_PLAN_V3.md:141-143,150-151`. Nothing in this document describes
-work already done — see `AVATAR_CONCEPT_LEDGER.md` for what exists today (60 concept-only
-candidates — the original 16 board-anchored ones plus 44 net-new expansion concepts covering every
-band and the symbol collection — zero production renders) and the honest-placeholder policy at the
-end of this file for exactly what ships while that remains true.
+work already done — see `AVATAR_CONCEPT_LEDGER.md` for the production history. S243's four
+pre-canary candidates were rejected; S244 subsequently produced, normalized and independently
+approved the complete 60-item library. All 60 reviewed ids are now enabled atomically, while the
+honest-placeholder policy remains the fallback for absent or invalid stored ids.
 
 **The non-negotiable this whole document serves:** *every shipped avatar is an independent
 production asset. A student never selects a quadrant of a board, and no board crop is ever claimed
@@ -13,20 +13,25 @@ as final art* (`OPTIMIZATION_PLAN_V3.md:141`). Nothing below should be read as p
 save, or reference `design-reference/ws-j-avatar-board-*.png` as if a rectangle cut from one of
 them were a finished asset — it never is, regardless of how close a crop might look.
 
+**V4 release rule.** `avatar-production-cohorts.json` is the machine-readable release contract and
+`AVATAR_V4_PRODUCTION_RUNBOOK.md` is its operator guide. A canary is evidence only. Production
+releases the complete learner-facing library at once: **48 independent human portraits + 12
+independent neutral symbols**. Neither a partial band nor an individual avatar can be enabled.
+
 ## 1. Framing
 
 - **Composition:** head-and-shoulders, portrait orientation, centered.
-- **Eye line:** target ~55–60% of frame height from the top. Lock the exact percentage from the
-  first production re-render (an anchor concept is the natural first candidate — see §5) and hold
-  every subsequent portrait to that same line; FABLE-A owns the final number.
-- **Head height:** target ~45–55% of frame height (crown to chin), consistent across every
+- **Eye line:** **55–58%** of frame height from the top, targeting **57%**. These values are locked
+  from the normalized S244 canary and apply to every subsequent portrait.
+- **Head height:** **48–52%** of frame height from crown to chin, targeting **50%**, consistent across every
   portrait regardless of subject age — a K–2 portrait and a summit portrait use the *same* head
   scale so the grid reads as one consistent library, not four separately-scaled sets.
 - **Shoulder crop:** both shoulders visible, cropped at a consistent point below the collarbone —
-  no portrait crops at the neck, none extends to the elbows.
-- **Margin:** uniform empty margin between the subject's outer silhouette (hair included) and the
-  canvas edge on all four sides, consistent across the library. No portrait's hair or shoulders
-  touch or bleed past the canvas edge.
+  no portrait crops at the neck, none extends to the elbows. Use a deliberately narrow bust so the
+  complete outer silhouette, including hair and shoulders, stays inside the centered **75% canvas
+  width safe area** (`x=12.5–87.5%`).
+- **Margin:** leave at least **5% clean canvas below the bust** and uniform empty margin on every
+  other edge. No portrait's hair or shoulders touch, crop, or bleed past the canvas edge.
 - These four values (eye line, head height, shoulder crop point, margin) are what the FABLE-Q
   contact-sheet gate (§6) checks first — they are the single biggest driver of a library reading
   as "one professional team" versus "generated."
@@ -100,11 +105,16 @@ choice, not a requirement: FABLE-A may compress any band down to ~8–10 without
 already-assigned id, because compression only ever drops *trailing* slots (e.g. skip `009`–`012`)
 — it never renumbers `001`–`008`.
 
-**This target is now met at the concept level** (`src/lib/avatars.ts` declares all 60 ids below,
-every one `enabled: false`; `AVATAR_CONCEPT_LEDGER.md` carries a trait description for each of the
-44 net-new ones) — §5a and §5b together are consequently a complete, current filename list for the
-whole manifest, not a mix of declared ids and aspirational ranges. None of this is production art;
-see §8.
+V4 locks the shipping library to the full 60. The 48 human portraits deliberately span four broad
+visual skin-tone directions, three per direction in every age band. These are production-only art
+directions: the app stores no identity category, exposes no demographic label, and makes no
+ethnicity or gender inference. Difference must also come through independent facial geometry,
+hair, clothing, expression, and age-truth—not stereotype or a palette swap.
+
+**This target is met at the concept level** (`src/lib/avatars.ts` declares all 60 ids below and
+`AVATAR_CONCEPT_LEDGER.md` carries a trait description for each of the 44 net-new ones). Four human
+pre-canary candidates exist outside `public/`, but none is production art or enabled. §5a and §5b
+remain the complete filename allocation, and §8 governs release.
 
 ### 5a. Explicit filenames — highest priority (P0 summit, P1 anchors)
 
@@ -213,16 +223,17 @@ repeated here since it has no bearing on the filename):
 Every id declared anywhere in `src/lib/avatars.ts` now has an explicit row in §5a or §5b — there is
 no longer an id in the manifest that is only described by a range.
 
-### 5c. The one file that exists today
+### 5c. Production directory status
 
-`/public/avatars/placeholder-neutral.svg` — a hand-drawn, visibly generic silhouette, explicitly
-labeled as a dev placeholder in its own `<title>` and an XML comment. It is not, and must never be
-presented as, a selectable avatar (§7).
+`/public/avatars/placeholder-neutral.svg` remains the only runtime asset — a hand-drawn, visibly
+generic silhouette, explicitly labeled as a dev placeholder in its own `<title>` and an XML
+comment. It is not, and must never be presented as, a selectable avatar (§7). S243 pre-canary
+renders are retained outside `public/` for art-direction review only.
 
 ## 6. Art-consistency QA — the FABLE-Q contact-sheet gate
 
-Before any portrait's manifest entry can flip `enabled: true`, FABLE-Q reviews the full library
-(existing enabled entries + the new candidate) as a single contact sheet, per
+Before the complete 60-item library's manifest entries can flip `enabled: true`, the independent assessor
+reviews that complete 15-option cohort beside every previously approved cohort as contact sheets, per
 `OPTIMIZATION_PLAN_V3.md:143`, and rejects outliers on:
 
 - head scale (§1)
@@ -234,8 +245,9 @@ Before any portrait's manifest entry can flip `enabled: true`, FABLE-Q reviews t
 - age appearance (§3)
 
 **The test:** *would a user assume one professional character-design team drew everything?* One
-weak portrait makes the whole picker feel generated. P0/P1 findings from this gate block release
-of the affected portrait(s), matching the Wave-2B gate in `OPTIMIZATION_PLAN_V3.md:190`.
+weak portrait makes the whole picker feel generated. P0/P1 findings block the whole cohort. Assets
+may be revised individually, but release is atomic; there is never a one-portrait-plus-fourteen-
+placeholders production state.
 
 Mechanically, `src/lib/avatars.test.ts` enforces a narrower but permanent version of this gate:
 any manifest entry with `enabled: true` must have both its `-256.webp` and `-512.webp` files
@@ -260,12 +272,12 @@ This is the section that makes the rest of this document safe to leave half-exec
   final asset.
 - The manifest in `src/lib/avatars.ts` may declare an id, its (future) file paths, its band, and
   its order **before** the art exists — but that entry's `enabled` flag stays `false` until the
-  files are real. `getAvatarsForAgeBand`, `isValidAvatarId`, and `getAvatarSrc` all treat a
-  disabled entry as unusable, so a manifest ahead of the art can never leak into a real render.
+  complete cohort is approved. `getAvatarsForAgeBand`, `isValidAvatarId`, and `getAvatarSrc` all
+  treat a disabled entry as unusable, so a manifest ahead of the art can never leak into a real
+  render. The picker shows one honest empty state, never one selectable portrait surrounded by
+  repeated silhouettes.
 - `src/lib/avatars.test.ts` asserts, for every `enabled: true` entry, that both files exist on
-  disk. Today the manifest has zero enabled entries, so that assertion is vacuous — and stays that
-  way, structurally, until someone actually adds the files and flips the flag in the same change.
-- The **only** avatar-shaped asset that ships today is `/public/avatars/placeholder-neutral.svg` —
-  a neutral silhouette, explicitly labeled as a placeholder in-file, used only as a last-resort
-  visual fallback (e.g., before a learner has chosen, or for a since-invalidated stored id). It is
-  never offered as a pickable option in any future picker UI.
+  disk. S243 adds a stricter validator for format, dimensions, opacity, warm-ivory corners,
+  duplicate files, prompt/manifest parity, and enabled/file-pair parity.
+- `/public/avatars/placeholder-neutral.svg` remains a last-resort fallback before a learner chooses
+  or when a stored id is invalid. It is never offered as a pickable option.

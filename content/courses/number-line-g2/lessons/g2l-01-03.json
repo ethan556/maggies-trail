@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Labels skip numbers, but the line never does: between 40 and 50 live 41 through 49, with 45 sitting exactly halfway.",
       "narration": "Labels skip numbers, but the line never does: between 40 and 50 live 41 through 49, with 45 sitting exactly halfway."
     },
@@ -89,12 +88,6 @@
         "prompt": "Two marks read 50 and 60. What number sits exactly halfway between them?",
         "options": [
           {
-            "id": "o0",
-            "label": "55",
-            "correct": true,
-            "feedback": "Correct — halfway across a gap of ten is five along: 50 + 5 = 55."
-          },
-          {
             "id": "o1",
             "label": "51",
             "correct": false,
@@ -105,6 +98,12 @@
             "label": "65",
             "correct": false,
             "feedback": "That lands beyond the second mark; between means inside the gap, not past it."
+          },
+          {
+            "id": "o0",
+            "label": "55",
+            "correct": true,
+            "feedback": "Correct — halfway across a gap of ten is five along: 50 + 5 = 55."
           },
           {
             "id": "o3",
@@ -145,32 +144,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Halfway across a gap of ten is five along — the middle of any tens-gap ends in a 5.",
       "narration": "Halfway across a gap of ten is five along — the middle of any tens-gap ends in a 5."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Locate a number inside a labeled gap, not only the halfway point.",
       "conceptTag": "g2l-between",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "March into the gap: from 40, five one-hops toward the halfway point.",
-        "min": 35,
-        "max": 55,
-        "start": 40,
+        "prompt": "Between 70 and 80, take three one-hops from 70 to locate 73.",
+        "min": 65,
+        "max": 85,
+        "start": 70,
         "hop": 1,
-        "hops": 5,
+        "hops": 3,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 50,
-            "feedback": "That leapt the WHOLE gap — halfway stops at five of the ten."
+            "value": 75,
+            "feedback": "75 is halfway through the tens-gap, but this route asks for only three one-hops."
           }
         ],
-        "missFeedback": "Each hop is 1, going forward. From 40, 5 hops land on 45.",
-        "successFeedback": "45 — five small steps deep, exactly halfway to 50."
+        "missFeedback": "Each hop is 1. From 70, three hops land on 73, still inside the 70–80 gap.",
+        "successFeedback": "73 — labels may skip it, but every number between 70 and 80 has its own position."
       },
       "cml": {
         "stage": "construct",
@@ -266,31 +264,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Two marks read 30 and 40. What number sits exactly halfway between them?",
+        "prompt": "Two marks read 40 and 50, and 43 sits between them. Which mark is closer to 43?",
         "options": [
           {
-            "id": "o0",
-            "label": "35",
-            "correct": true,
-            "feedback": "Correct — halfway across a gap of ten is five along: 30 + 5 = 35."
-          },
-          {
             "id": "o1",
-            "label": "31",
+            "label": "The 50 mark",
             "correct": false,
-            "feedback": "31 sits just past the first mark — halfway must split the whole gap evenly."
+            "feedback": "Count both distances: 43 back to 40 is 3 hops, but 43 up to 50 is 7 hops."
           },
           {
             "id": "o2",
-            "label": "45",
+            "label": "The 45 mark",
             "correct": false,
-            "feedback": "That lands beyond the second mark; between means inside the gap, not past it."
+            "feedback": "45 is the halfway number, not a labeled mark — and 43 does not sit at 45 anyway."
           },
           {
             "id": "o3",
-            "label": "No number fits between marks",
+            "label": "Both marks are equally close",
             "correct": false,
-            "feedback": "The line is packed with numbers between any two marks — the labels just skip them."
+            "feedback": "Only 45 sits the same distance from both marks; 43 splits the gap 3-and-7, not evenly."
+          },
+          {
+            "id": "o0",
+            "label": "The 40 mark",
+            "correct": true,
+            "feedback": "Correct — 43 sits 3 hops from 40 but 7 hops from 50, so the 40 mark is closer."
           }
         ]
       },

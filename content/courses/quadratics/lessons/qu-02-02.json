@@ -37,25 +37,6 @@
             "feedback": "2 · 4 = 8, not 6. The pair that works is 2 and 3."
           }
         ]
-      },
-      "predict": {
-        "prompt": "To factor x² + 5x + 6 you'll hunt for two numbers. They must…",
-        "options": [
-          {
-            "id": "prodSum",
-            "label": "Multiply to 6 AND add to 5"
-          },
-          {
-            "id": "swap",
-            "label": "Multiply to 5 AND add to 6"
-          },
-          {
-            "id": "both6",
-            "label": "Both equal 6"
-          }
-        ],
-        "outcomeId": "prodSum",
-        "reveal": "Expanding (x + p)(x + q) gives x² + (p + q)x + pq: the middle coefficient is the SUM and the constant is the PRODUCT. Swap those roles and you chase 1 and 5 — numbers that fit nothing here. The pair is 2 and 3."
       }
     },
     {
@@ -132,6 +113,25 @@
       "id": "i3",
       "kind": "interactive",
       "body": "Solve the worked one.",
+      "predict": {
+        "prompt": "Before you drag the crossings, which root pair should rebuild x^2 - 7x + 12?",
+        "options": [
+          {
+            "id": "three-four",
+            "label": "3 and 4"
+          },
+          {
+            "id": "negative-pair",
+            "label": "-3 and -4"
+          },
+          {
+            "id": "two-six",
+            "label": "2 and 6"
+          }
+        ],
+        "outcomeId": "three-four",
+        "reveal": "The graph settles at roots 3 and 4. Their sum is 7, which creates the -7x term, and their product is 12, which creates the constant term."
+      },
       "widget": {
         "type": "quadraticExplore",
         "form": "roots",
@@ -275,7 +275,7 @@
       "concept": {
         "id": "rem-qfs-c",
         "kind": "concept",
-        "body": "Factor x² + bx + c by finding two numbers with product c and sum b. For x² + 5x + 6: 2 and 3 work, so (x + 2)(x + 3) = 0, giving x = −2 or x = −3."
+        "body": "Factor x² + bx + c by finding two numbers with product c and sum b. For x² + 8x + 15: 3 and 5 work, so (x + 3)(x + 5) = 0, giving x = −3 or x = −5."
       },
       "check": {
         "id": "rem-qfs-k",
@@ -283,25 +283,25 @@
         "body": "",
         "conceptTag": "quad-factor-solve",
         "explanationVariants": [
-          "Roots −2 and −3; the larger is −2.",
-          "(x + 2)(x + 3) = 0 gives the larger root −2."
+          "Roots −3 and −5; the larger is −3.",
+          "(x + 3)(x + 5) = 0 gives the larger root −3."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Solve x^2 + 5x + 6 = 0. What is the larger solution?",
-          "answer": -2,
+          "prompt": "Solve x^2 + 8x + 15 = 0. What is the larger solution?",
+          "answer": -3,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": -3,
-              "feedback": "That's the smaller root; the larger is −2."
+              "value": -5,
+              "feedback": "That's the smaller root; the larger is −3."
             },
             {
-              "value": 6,
-              "feedback": "6 is the constant, not a root."
+              "value": 15,
+              "feedback": "15 is the constant, not a root."
             }
           ],
-          "fallbackFeedback": "Roots −2 and −3; larger is −2."
+          "fallbackFeedback": "Roots −3 and −5; larger is −3."
         }
       }
     }

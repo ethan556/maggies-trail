@@ -47,16 +47,27 @@ function useMath(tex: string, display: boolean): RenderedMath | null {
  * of the raw tex would OVERRIDE that MathML and read "\\frac{1}{2}" aloud — strictly worse.
  * The pre-load fallback shows the tex source to everyone for the moment before the
  * renderer arrives; the swap replaces it with self-describing KaTeX markup. */
-export function MathInline({ tex, fallback = tex }: { tex: string; fallback?: string }) {
+export function MathInline({ tex, fallback = "mathematical expression" }: { tex: string; fallback?: string }) {
   const out = useMath(tex, false);
   if (!out) return <span className="math-inline">{fallback}</span>;
   return <span className="math-inline" dangerouslySetInnerHTML={{ __html: out.html }} />;
 }
 
+/** The lazy renderer must never flash authoring syntax. This is deliberately
+ * plain-language rather than a second visual maths renderer: KaTeX replaces it
+ * as soon as the shared module arrives, while slow devices still see an honest
+ * caret-free expression. */
+function visibleMathFallback(source: string): string {
+  return source
+    .replaceAll("^", " raised to ")
+    .replaceAll("_", " subscript ")
+    .replace(/\s{2,}/g, " ");
+}
+
 function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) {
   return authoredMathParts(text, { includeArithmetic }).map((part, index) => (
     part.tex
-      ? <span key={`${keyPrefix}${index}`}><MathInline tex={part.tex} fallback={part.source} />{part.text}</span>
+      ? <span key={`${keyPrefix}${index}`}><MathInline tex={part.tex} fallback={visibleMathFallback(part.source ?? part.tex)} />{part.text}</span>
       : part.text
   ));
 }
@@ -87,6 +98,69 @@ function mathParts(text: string, includeArithmetic: boolean, keyPrefix: string) 
  * `**8 × 3**` and `*x^2*` still typeset. Text with no emphasis at all — the overwhelming majority
  * of callers — keeps the original fast path and its exact output, no extra wrapping element. */
 const ITALIC_RUN = /(?<![A-Za-z0-9])\*(?![\s*])([^*\n]*?)(?<![\s*])\*(?![A-Za-z0-9])/g;
+
+const SPOKEN_SUPERSCRIPT: Record<string, string> = {
+  "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
+  "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9",
+  "⁺": "plus", "⁻": "minus", "ⁿ": "n", "ˣ": "x",
+};
+
+const SPOKEN_SUBSCRIPT: Record<string, string> = {
+  "₀": "0", "₁": "1", "₂": "2", "₃": "3", "₄": "4",
+  "₅": "5", "₆": "6", "₇": "7", "₈": "8", "₉": "9",
+};
+
+function scriptRun(source: string, map: Record<string, string>): string {
+  return Array.from(source, (character) => map[character] ?? character).join(" ");
+}
+
+function naturalizeMathSyntax(source: string): string {
+  return source
+    .replace(/\^\(([^()]*)\)/g, " raised to the quantity $1")
+    .replace(/\^\{([^{}]*)\}/g, " raised to $1")
+    .replace(/\^([?A-Za-z0-9π∞+−-]+)/g, " raised to $1")
+    .replace(/[⁰¹²³⁴-⁹⁺⁻ⁿˣ]+/g, (run) => {
+      if (run === "²") return " squared";
+      if (run === "³") return " cubed";
+      return ` raised to ${scriptRun(run, SPOKEN_SUPERSCRIPT)}`;
+    })
+    .replace(/[₀-₉]+/g, (run) => ` subscript ${scriptRun(run, SPOKEN_SUBSCRIPT)}`)
+    .replaceAll("sqrt(", "square root of (")
+    .replaceAll("sqrt", "square root of")
+    .replaceAll("√", " square root of ")
+    .replaceAll("π", " pi ")
+    .replaceAll("θ", " theta ")
+    .replaceAll("∑", " sum ")
+    .replaceAll("∫", " integral ")
+    .replaceAll("×", " times ")
+    .replaceAll("*", " times ")
+    .replaceAll("÷", " divided by ")
+    .replaceAll("/", " divided by ")
+    .replaceAll("−", " minus ")
+    .replaceAll("≤", " less than or equal to ")
+    .replaceAll("≥", " greater than or equal to ")
+    .replaceAll("≠", " not equal to ")
+    .replaceAll("=", " equals ");
+}
+
+/**
+ * Plain-language equivalent for places where HTML/MathML cannot be used, such
+ * as an accessible name. Visual mathematics belongs in KaTeX; ARIA belongs in
+ * natural language. In particular, never make a screen reader announce the
+ * authoring caret in `3^x` or the markdown markers around emphasized words.
+ */
+export function accessibleMathText(text: string): string {
+  const spoken = authoredMathParts(text, { includeArithmetic: true }).map((part) => {
+    if (!part.tex) return part.text;
+    return naturalizeMathSyntax(part.source ?? part.tex);
+  }).join("");
+
+  const withoutMarkup = spoken.replaceAll("**", "").replace(ITALIC_RUN, "$1");
+  return naturalizeMathSyntax(withoutMarkup)
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .trim();
+}
 
 /** Split one bold-free segment into italic and plain runs, in order. */
 function italicRuns(segment: string): Array<{ text: string; italic: boolean }> {

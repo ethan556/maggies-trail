@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A record keeps EVERYTHING: every measurement, repeats included, in the order they came — the raw material of every graph to come.",
-      "narration": "A record keeps EVERYTHING: every measurement, repeats included, in the order they came — the raw material of every graph to come."
+      "figure": "g2g-record-repeats",
+      "body": "A record keeps every measurement, including repeats. Each measured ribbon needs one entry.",
+      "narration": "A record keeps every measurement, including repeats. Each measured ribbon needs one entry."
     },
     {
       "id": "i1",
@@ -89,38 +89,38 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You measured five ribbons: 6, 8, 6, 7, 6 cm. Which record keeps ALL the information?",
+        "prompt": "Five ribbons measure 6, 8, 6, 7, and 6 cm. Which record keeps the same five results?",
         "options": [
           {
-            "id": "o0",
-            "label": "6, 8, 6, 7, 6 — every measurement, repeats included",
-            "correct": true,
-            "feedback": "Correct — a record's job is completeness; the three 6s are three real ribbons, not one."
-          },
-          {
             "id": "o1",
-            "label": "6, 7, 8 — just the different values",
+            "label": "6, 8, 6, 7, 8 cm",
             "correct": false,
-            "feedback": "Dropping repeats erases HOW MANY ribbons hit each length — the very thing a line plot will need."
+            "feedback": "The last 6 was changed to 8, so this is different data."
           },
           {
             "id": "o2",
-            "label": "The biggest: 8",
+            "label": "6, 8, 7, 7, 6 cm",
             "correct": false,
-            "feedback": "One number describes one ribbon; four others vanish from that record."
+            "feedback": "One 6 was changed to 7, so this is different data."
           },
           {
             "id": "o3",
-            "label": "About 7 each",
+            "label": "6, 6, 6, 7, 7 cm",
             "correct": false,
-            "feedback": "An average-flavored summary trades away the individual measurements a plot is built from."
+            "feedback": "The 8 was changed to 7, so this is different data."
+          },
+          {
+            "id": "o0",
+            "label": "6, 8, 6, 7, 6 cm",
+            "correct": true,
+            "feedback": "Correct — all five results, including all three 6s, are present."
           }
         ]
       },
       "hints": [
-        "One shared unit for all.",
-        "Mark to mark is the length.",
-        "Record as you go."
+        "Every original result must still appear.",
+        "Compare counts of each number, not just which numbers appear.",
+        "A changed or missing repeat means lost data."
       ],
       "cml": {
         "stage": "construct",
@@ -148,9 +148,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Three ribbons of 6 cm are three facts; a record that collapses them to one has already lost data.",
-      "narration": "Three ribbons of 6 cm are three facts; a record that collapses them to one has already lost data."
+      "figure": "vm-line-plot-read",
+      "body": "Three ribbons that measure 6 cm need three entries. A later line plot will show three Xs above 6.",
+      "narration": "Three ribbons that measure 6 cm need three entries. A later line plot will show three Xs above 6."
     },
     {
       "id": "i2",
@@ -159,23 +159,23 @@
       "conceptTag": "g2g-record",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Record the counts so far as tallies: 6 cm seen 3 times, 7 cm twice, 8 cm once.",
+        "prompt": "Make tallies for a second record: 5 cm once, 6 cm three times, and 7 cm twice.",
         "categories": [
+          "5 cm",
           "6 cm",
-          "7 cm",
-          "8 cm"
+          "7 cm"
         ],
         "target": [
+          1,
           3,
-          2,
-          1
+          2
         ],
         "maxVal": 5,
         "step": 1,
         "histogram": false,
         "axisLabel": "length in cm",
-        "successFeedback": "Three, two, one — every measurement remembered, repeats and all.",
-        "partialFeedback": "Match each tally group to how many times that measurement appeared — repeats each earn a mark.",
+        "successFeedback": "One, three, two — the new tally keeps all six measurements, including repeats.",
+        "partialFeedback": "Give every repeated measurement its own tally in the matching length row.",
         "display": "tally"
       },
       "cml": {
@@ -223,10 +223,10 @@
           },
           {
             "value": 13,
-            "feedback": "Adding the marks measures nothing; the span between them is the length."
+            "feedback": "Adding the two mark numbers does not give the length; subtract the start from the end."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the start mark from the end mark; the gap between them is the ribbon's length.",
         "successFeedback": "Correct — 9."
       },
       "hints": [
@@ -272,38 +272,38 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "You measured five ribbons: 6, 8, 6, 7, 6 cm. Which record keeps ALL the information?",
+        "prompt": "A record changes 5, 7, 5, 6 cm to 5, 6, 7 cm. What was lost?",
         "options": [
           {
             "id": "o0",
-            "label": "6, 8, 6, 7, 6 — every measurement, repeats included",
+            "label": "The second 5 cm result",
             "correct": true,
-            "feedback": "Correct — a record's job is completeness; the three 6s are three real ribbons, not one."
+            "feedback": "Correct — one of the two separate 5 cm results disappeared."
           },
           {
             "id": "o1",
-            "label": "6, 7, 8 — just the different values",
+            "label": "The only 7 cm result",
             "correct": false,
-            "feedback": "Dropping repeats erases HOW MANY ribbons hit each length — the very thing a line plot will need."
+            "feedback": "The 7 cm result is still in the shorter list."
           },
           {
             "id": "o2",
-            "label": "The biggest: 8",
+            "label": "The only 6 cm result",
             "correct": false,
-            "feedback": "One number describes one ribbon; four others vanish from that record."
+            "feedback": "The 6 cm result is still in the shorter list."
           },
           {
             "id": "o3",
-            "label": "About 7 each",
+            "label": "No result was lost",
             "correct": false,
-            "feedback": "An average-flavored summary trades away the individual measurements a plot is built from."
+            "feedback": "A repeated 5 cm result was removed, so information was lost."
           }
         ]
       },
       "hints": [
-        "One shared unit for all.",
-        "Mark to mark is the length.",
-        "Record as you go."
+        "Every original result must still appear.",
+        "Compare counts of each number, not just which numbers appear.",
+        "A changed or missing repeat means lost data."
       ],
       "cml": {
         "stage": "construct",
@@ -339,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A ribbon in the group stretches from the 1 cm mark to the 6 cm mark. How long is it?",
+        "prompt": "Before adding a ribbon to the record, note that it starts at 1 cm and ends at 6 cm. What length should be entered?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -350,10 +350,10 @@
           },
           {
             "value": 7,
-            "feedback": "Adding the marks measures nothing; the span between them is the length."
+            "feedback": "Adding the two mark numbers does not give the length; subtract the start from the end."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the start mark from the end mark; the gap between them is the ribbon's length.",
         "successFeedback": "Correct — 5."
       },
       "hints": [
@@ -406,8 +406,9 @@
       "concept": {
         "id": "rem-g2g-record-c",
         "kind": "concept",
-        "body": "Three ribbons of 6 cm are three facts; a record that collapses them to one has already lost data.",
-        "narration": "Three ribbons of 6 cm are three facts; a record that collapses them to one has already lost data."
+        "body": "Do not erase a repeated measurement. Two ribbons that both measure 4 cm still need two separate entries.",
+        "narration": "Do not erase a repeated measurement. Two ribbons that both measure 4 cm still need two separate entries.",
+        "figure": "g2g-record-repeats"
       },
       "check": {
         "id": "rem-g2g-record-k",
@@ -420,31 +421,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "You measured five ribbons: 6, 8, 6, 7, 6 cm. Which record keeps ALL the information?",
+          "prompt": "Four ribbons measure 4, 4, 6, and 7 cm. Which record keeps every result?",
           "options": [
             {
-              "id": "o0",
-              "label": "6, 8, 6, 7, 6 — every measurement, repeats included",
-              "correct": true,
-              "feedback": "Correct — a record's job is completeness; the three 6s are three real ribbons, not one."
+              "id": "o1",
+              "label": "4, 6, 7, 8 cm",
+              "correct": false,
+              "feedback": "One 4 is missing and an 8 was added."
             },
             {
-              "id": "o1",
-              "label": "6, 7, 8 — just the different values",
-              "correct": false,
-              "feedback": "Dropping repeats erases HOW MANY ribbons hit each length — the very thing a line plot will need."
+              "id": "o0",
+              "label": "4, 4, 6, 7 cm",
+              "correct": true,
+              "feedback": "Correct — both 4s and the 6 and 7 are recorded."
             },
             {
               "id": "o2",
-              "label": "The biggest: 8",
+              "label": "4, 4, 6, 8 cm",
               "correct": false,
-              "feedback": "One number describes one ribbon; four others vanish from that record."
+              "feedback": "The 7 was changed to an 8."
             },
             {
               "id": "o3",
-              "label": "About 7 each",
+              "label": "4, 6, 6, 7 cm",
               "correct": false,
-              "feedback": "An average-flavored summary trades away the individual measurements a plot is built from."
+              "feedback": "One 4 was changed to a 6."
             }
           ]
         }

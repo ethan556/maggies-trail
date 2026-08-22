@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A difference has two honest drawings: walk backward from the bigger number, or mark both numbers and measure the gap between them.",
       "narration": "A difference has two honest drawings: walk backward from the bigger number, or mark both numbers and measure the gap between them."
     },
@@ -80,37 +79,38 @@
       "kind": "check",
       "body": "",
       "conceptTag": "g2l-show-diff",
+      "figure": "g2l-read-gap-53-33",
       "explanationVariants": [
         "Gap or walk — both are honest.",
         "They must agree."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which line drawing shows 53 − 33 as a GAP?",
+        "prompt": "The drawing marks 33 and 53 and shades the gap between them. How long is that gap?",
         "options": [
           {
-            "id": "o0",
-            "label": "Marks at 33 and 53; count the space between",
-            "correct": true,
-            "feedback": "Correct — the difference is the distance separating the two marks, hopped and counted."
+            "id": "o1",
+            "label": "86",
+            "correct": false,
+            "feedback": "86 adds the two marks together — the gap is the distance BETWEEN them, not their sum."
           },
           {
-            "id": "o1",
-            "label": "Start at 53, jump forward 33",
-            "correct": false,
-            "feedback": "Forward jumps grow the number; a difference either walks BACK or measures the gap."
+            "id": "o0",
+            "label": "20",
+            "correct": true,
+            "feedback": "Correct — from 33 up to 53 is two ten-hops, so the shaded gap is 20 long."
           },
           {
             "id": "o2",
-            "label": "One mark at 20, nothing else",
+            "label": "30",
             "correct": false,
-            "feedback": "That mark is the ANSWER, but a drawing of the difference must show where it came from."
+            "feedback": "That counts one ten-hop too many: 33 to 43 is one hop, 43 to 53 is the second — just 20."
           },
           {
             "id": "o3",
-            "label": "Marks at 33 and 53; add the two labels",
+            "label": "19",
             "correct": false,
-            "feedback": "Adding the endpoints measures no distance at all — the gap between them is the difference."
+            "feedback": "19 comes from counting the marks between, not the hops — two ten-hops from 33 to 53 make 20 exactly."
           }
         ]
       },
@@ -145,32 +145,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Both pictures of 57 − 23 land on 34 — the walk and the gap are two views of one fact.",
       "narration": "Both pictures of 57 − 23 land on 34 — the walk and the gap are two views of one fact."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Complete the ones part of a subtraction route after the tens have already been drawn.",
       "conceptTag": "g2l-show-diff",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Draw 57 − 23's tens as a walk: two backward ten-hops from 57.",
-        "min": 25,
-        "max": 65,
-        "start": 57,
-        "hop": 10,
-        "hops": 2,
+        "prompt": "After walking from 57 to 37 by tens, take three backward one-hops to land on 34.",
+        "min": 30,
+        "max": 45,
+        "start": 37,
+        "hop": 1,
+        "hops": 3,
         "direction": "back",
         "commonLandings": [
           {
-            "value": 55,
-            "feedback": "A backward two — each drawn hop here is a full ten of the 23."
+            "value": 40,
+            "feedback": "That moves forward. The remaining three in 57 − 23 are backward one-hops."
           }
         ],
-        "missFeedback": "Each hop is 10, going backward. From 57, 2 hops land on 37.",
-        "successFeedback": "37 — the tens are walked; three more backward ones would rest at 34."
+        "missFeedback": "The tens route stops at 37; three backward one-hops finish at 34.",
+        "successFeedback": "34 — the two ten-hops and three one-hops agree with 57 − 23."
       },
       "cml": {
         "stage": "construct",
@@ -212,7 +211,7 @@
         "unit": "",
         "commonErrors": [
           {
-            "value": 32,
+            "value": 107,
             "feedback": "That measured PAST both marks — the gap lives between them, found by subtracting."
           },
           {
@@ -318,35 +317,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "A gap that needs regrouping.",
       "conceptTag": "g2l-show-diff",
       "explanationVariants": [
-        "Pick whichever view is faster.",
-        "The answer cannot differ."
+        "Some gaps need a ten regrouped before the ones can subtract.",
+        "Borrow a ten, then subtract in the ones — the gap idea still holds."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "43 − 22 = ? (the gap between the two marks)",
-        "answer": 21,
+        "prompt": "52 − 24 = ? (the gap between the two marks)",
+        "answer": 28,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 65,
-            "feedback": "That measured PAST both marks — the gap lives between them, found by subtracting."
+            "value": 32,
+            "feedback": "That subtracts each digit's smaller number from its bigger number instead of borrowing — regroup a ten first: 52 is 4 tens and 12 ones, so 12−4=8 ones and 4−2=2 tens, giving 28."
           },
           {
-            "value": 22,
-            "feedback": "The gap count slipped by one; hop from 22 up to 43 and count the hops."
+            "value": 38,
+            "feedback": "The ones are right (12−4=8), but the tens still need to drop by the ten you borrowed: 5 becomes 4, and 4−2=2, giving 28."
           }
         ],
-        "fallbackFeedback": "Walk the line: find the start mark, take the jumps one at a time, and read the mark you land on.",
-        "successFeedback": "Correct — 21."
+        "fallbackFeedback": "The ones digit (2) is too small to subtract 4 directly — regroup one ten into ten ones first, then subtract each place.",
+        "successFeedback": "Correct — 28."
       },
       "hints": [
         "Mark both numbers.",
-        "The difference is the space between.",
-        "Hop the gap and count."
+        "If the ones digit is too small, regroup a ten first.",
+        "Hop the gap and count, ten by ten and then one by one."
       ],
       "cml": {
         "stage": "construct",
@@ -401,35 +400,36 @@
         "kind": "check",
         "body": "",
         "conceptTag": "g2l-show-diff",
+        "figure": "g2l-choice-gap-53-33",
         "explanationVariants": [
           "Gap or walk — both are honest.",
           "They must agree."
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Which line drawing shows 53 − 33 as a GAP?",
+          "prompt": "Which drawing shows the gap between 53 and 33?",
           "options": [
             {
               "id": "o0",
-              "label": "Marks at 33 and 53; count the space between",
+              "label": "Drawing A",
               "correct": true,
               "feedback": "Correct — the difference is the distance separating the two marks, hopped and counted."
             },
             {
               "id": "o1",
-              "label": "Start at 53, jump forward 33",
+              "label": "Drawing B",
               "correct": false,
               "feedback": "Forward jumps grow the number; a difference either walks BACK or measures the gap."
             },
             {
               "id": "o2",
-              "label": "One mark at 20, nothing else",
+              "label": "Drawing C",
               "correct": false,
               "feedback": "That mark is the ANSWER, but a drawing of the difference must show where it came from."
             },
             {
               "id": "o3",
-              "label": "Marks at 33 and 53; add the two labels",
+              "label": "Drawing D",
               "correct": false,
               "feedback": "Adding the endpoints measures no distance at all — the gap between them is the difference."
             }

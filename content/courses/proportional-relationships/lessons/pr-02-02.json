@@ -1,451 +1,450 @@
 {
- "id": "pr-02-02",
- "slug": "finding-the-constant-of-proportionality",
- "title": "Finding the Constant of Proportionality",
- "courseId": "proportional-relationships",
- "chapterId": "ch2-is-it-proportional",
- "minutes": 10,
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "figure": "proportionality-test",
-   "body": "In a proportional table, the shared ratio y/x is called the **constant of proportionality**, k. For (2, 6), (3, 9), (5, 15): k = 6/2 = 3 — every y is 3 times its x."
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Scrub hours and observe the constant of proportionality in every representation.",
-   "widget": {
-    "type": "covariationScrubber",
-    "prompt": "Pay is $12.50 per hour. Move the shared input to 8 hours and connect the table, graph, equation, and story.",
-    "a": 12.5,
-    "b": 0,
-    "inputMin": 0,
-    "inputMax": 10,
-    "inputStart": 2,
-    "targetInput": 8,
-    "inputLabel": "hours",
-    "outputLabel": "dollars",
-    "contextTemplate": "Working {x} hours earns ${y}.",
-    "successFeedback": "8 hours gives $100. The unit rate 12.5 is the slope and the constant of proportionality.",
-    "lowFeedback": "Increase hours; every output must scale by $12.50 per hour.",
-    "highFeedback": "Decrease hours while preserving the same constant of proportionality."
-   },
-   "predict": {
-    "prompt": "Pay for 8 hours: which route gets there?",
-    "options": [
-     {
-      "id": "both",
-      "label": "Both — add the 2-hour and 6-hour rows, or ride $12.50 per hour"
-     },
-     {
-      "id": "unit",
-      "label": "Only the unit rate"
-     },
-     {
-      "id": "rows",
-      "label": "Only adding rows"
-     }
-    ],
-    "outcomeId": "both",
-    "reveal": "Proportional tables are generous. Write p for pay in dollars and h for hours, so p = 12.5 × h. Adding rows works, 25 + 75 = 100, and riding the unit rate works, 8 × 12.5 = 100. Every legal route agrees — that agreement is the constant of proportionality doing its job."
-   },
-   "cml": {
-    "stage": "construct",
-    "flagship": true,
-    "kernel": "covariation",
-    "actionGoal": "Make the constant of proportionality visible across linked representations.",
-    "invariants": [
-     "constant-of-proportionality",
-     "origin-for-proportional-relation"
-    ],
-    "misconceptions": [
-     "x-over-y-reversal",
-     "additive-not-multiplicative"
-    ],
-    "representations": [
-     "table",
-     "graph",
-     "symbolic",
-     "language"
-    ],
-    "fadeLevel": 1,
-    "transferFamily": "proportional-covariation",
-    "delayed": true,
-    "translationFrom": "table",
-    "translationTo": "graph",
-    "counterfactualPrompt": "Change the input by one unit. Predict every other representation before moving the scrubber.",
-    "explanation": {
-     "prompt": "Why do the table, graph, equation, and story always agree?",
-     "options": [
-      {
-       "id": "same",
-       "label": "They encode the same input-output rule.",
-       "correct": true,
-       "feedback": "Yes — each view is a translation of the same relationship."
+  "id": "pr-02-02",
+  "slug": "finding-the-constant-of-proportionality",
+  "title": "Finding the Constant of Proportionality",
+  "courseId": "proportional-relationships",
+  "chapterId": "ch2-is-it-proportional",
+  "minutes": 10,
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "figure": "proportionality-test",
+      "body": "In a proportional table, the shared ratio y/x is called the **constant of proportionality**, k. For (2, 6), (3, 9), (5, 15): k = 6/2 = 3 — every y is 3 times its x."
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Scrub hours and observe the constant of proportionality in every representation.",
+      "widget": {
+        "type": "covariationScrubber",
+        "prompt": "Pay is $12.50 per hour. Move the shared input to 8 hours and connect the table, graph, equation, and story.",
+        "a": 12.5,
+        "b": 0,
+        "inputMin": 0,
+        "inputMax": 10,
+        "inputStart": 2,
+        "targetInput": 8,
+        "inputLabel": "hours",
+        "outputLabel": "dollars",
+        "contextTemplate": "Working {x} hours earns ${y}.",
+        "successFeedback": "8 hours gives $100. The unit rate 12.5 is the slope and the constant of proportionality.",
+        "lowFeedback": "Increase hours; every output must scale by $12.50 per hour.",
+        "highFeedback": "Decrease hours while preserving the same constant of proportionality."
       },
-      {
-       "id": "separate",
-       "label": "Each view uses a different rule.",
-       "correct": false,
-       "feedback": "Different views must preserve the same pairs and rate."
-      }
-     ]
-    }
-   },
-   "conceptTag": "pr-constant-k"
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Find k in another table.",
-   "conceptTag": "pr-constant-k",
-   "explanationVariants": [
-    "4/1 = 4, matching 8/2 and 40/10.",
-    "Divide any y by its x: 4."
-   ],
-   "widget": {
-    "type": "proportionalReasoningLab",
-    "task": "constant",
-    "answerMode": "numeric",
-    "prompt": "A table has pairs (1, 4), (2, 8), (10, 40). What is the constant of proportionality?",
-    "xLabel": "x",
-    "yLabel": "y",
-    "series": [
-     {
-      "id": "table",
-      "label": "table",
-      "pairs": [
-       [
-        1,
-        4
-       ],
-       [
-        2,
-        8
-       ],
-       [
-        10,
-        40
-       ]
-      ]
-     }
-    ],
-    "requiredExplorations": 3,
-    "successFeedback": "4/1 = 4 (check: 8/2=4, 40/10=4 too).",
-    "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
-    "fallbackFeedback": "4/1 = 4 (check: 8/2=4, 40/10=4 too).",
-    "tolerance": 0,
-    "choices": [],
-    "numericErrors": [
-     {
-      "value": 1,
-      "feedback": "1 is an x-value, not the ratio. Divide y by x: 4/1 = 4."
-     },
-     {
-      "value": 8,
-      "feedback": "8 is a y-value, not the ratio. Use the first pair: 4/1 = 4."
-     }
-    ],
-    "targetSeriesId": "table"
-   },
-   "variant": {
-    "gen": "pr-constant-k-g7",
-    "form": "constantWhole"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "The constant of proportionality doesn't have to be a whole number. For (3, 2), (6, 4), (9, 6): k = 2/3 — a fraction, but still constant across every pair.",
-   "figure": "proportionality-test"
-  },
-  {
-   "id": "i2",
-   "kind": "interactive",
-   "body": "A fractional constant.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "A table has pairs (3, 2), (6, 4), (9, 6). What is the constant of proportionality?",
-    "options": [
-     {
-      "id": "a",
-      "label": "2/3",
-      "correct": true,
-      "feedback": "Yes — 2/3, 4/6, and 6/9 all simplify to 2/3."
-     },
-     {
-      "id": "b",
-      "label": "3/2",
-      "correct": false,
-      "feedback": "That's x/y, flipped. The constant is y/x: 2/3."
-     },
-     {
-      "id": "c",
-      "label": "6",
-      "feedback": "6 is a y-value, not the ratio. The constant is y/x = 2/3."
-     }
-    ]
-   }
-  },
-  {
-   "id": "c3",
-   "kind": "concept",
-   "body": "Once you know k, you can find any missing value: y = k × x. If k = 3 and x = 10, then y = 30.",
-   "figure": "pr-y-equals-kx"
-  },
-  {
-   "id": "i3",
-   "kind": "interactive",
-   "body": "Use k to find a missing value.",
-   "widget": {
-    "type": "numeric",
-    "prompt": "A proportional table has constant of proportionality 3. When x = 10, what is y?",
-    "answer": 30,
-    "tolerance": 0,
-    "commonErrors": [
-     {
-      "value": 13,
-      "feedback": "That adds instead of multiplying. y = k × x = 3 × 10 = 30."
-     },
-     {
-      "value": 10,
-      "feedback": "That's just x. Multiply by k: y = 3 × 10 = 30."
-     }
-    ],
-    "fallbackFeedback": "y = k × x = 3 × 10 = 30."
-   }
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Find k, another table.",
-   "conceptTag": "pr-constant-k",
-   "explanationVariants": [
-    "2/3 = 2/3, matching every pair.",
-    "Every ratio here is 2/3."
-   ],
-   "widget": {
-    "type": "proportionalReasoningLab",
-    "task": "constant",
-    "answerMode": "choice",
-    "prompt": "A table has pairs (3, 2), (6, 4), (9, 6). What is the constant of proportionality?",
-    "xLabel": "x",
-    "yLabel": "y",
-    "series": [
-     {
-      "id": "table",
-      "label": "table",
-      "pairs": [
-       [
-        3,
-        2
-       ],
-       [
-        6,
-        4
-       ],
-       [
-        9,
-        6
-       ]
-      ]
-     }
-    ],
-    "requiredExplorations": 3,
-    "successFeedback": "Yes — every ratio simplifies to 2/3.",
-    "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
-    "fallbackFeedback": "Choose the conclusion supported by the normalized ratios.",
-    "tolerance": 0,
-    "choices": [
-     {
-      "id": "a",
-      "label": "2/3",
-      "feedback": "Yes — every ratio simplifies to 2/3.",
-      "value": 0.666666666667
-     },
-     {
-      "id": "b",
-      "label": "3/2",
-      "feedback": "That's flipped. The constant is y/x = 2/3.",
-      "claim": "misconception:b"
-     },
-     {
-      "id": "c",
-      "label": "1",
-      "feedback": "1 would mean equal x and y, but here y is smaller. The constant is 2/3.",
-      "claim": "misconception:c"
-     }
-    ],
-    "numericErrors": [],
-    "targetSeriesId": "table"
-   },
-   "variant": {
-    "gen": "pr-constant-k-g7",
-    "form": "constantFraction"
-   }
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "Use k to find y again.",
-   "conceptTag": "pr-constant-k",
-   "explanationVariants": [
-    "y = 4 × 5 = 20.",
-    "Multiply x by k: 20."
-   ],
-   "widget": {
-    "type": "proportionalReasoningLab",
-    "task": "predictOutput",
-    "answerMode": "numeric",
-    "prompt": "A proportional table has constant of proportionality 4. When x = 5, what is y?",
-    "xLabel": "x",
-    "yLabel": "y",
-    "series": [
-     {
-      "id": "table",
-      "label": "table",
-      "pairs": [
-       [
-        1,
-        4
-       ]
-      ]
-     }
-    ],
-    "requiredExplorations": 2,
-    "successFeedback": "y = 4 × 5 = 20.",
-    "explorationFeedback": "Inspect at least 2 proportional relationships before checking.",
-    "fallbackFeedback": "y = 4 × 5 = 20.",
-    "tolerance": 0,
-    "choices": [],
-    "numericErrors": [
-     {
-      "value": 9,
-      "feedback": "That adds instead of multiplying. y = 4 × 5 = 20."
-     },
-     {
-      "value": 5,
-      "feedback": "That's just x. Multiply by k: y = 4 × 5 = 20."
-     }
-    ],
-    "targetSeriesId": "table",
-    "targetInput": 5
-   },
-   "variant": {
-    "gen": "pr-constant-k-g7",
-    "form": "constantUse"
-   }
-  },
-  {
-   "id": "ch1",
-   "kind": "challenge",
-   "body": "Find k, then use it.",
-   "conceptTag": "pr-constant-k",
-   "explanationVariants": [
-    "k = 9/3 = 3, so y = 3 × 7 = 21.",
-    "First find k=3, then multiply: 21."
-   ],
-   "widget": {
-    "type": "proportionalReasoningLab",
-    "task": "predictOutput",
-    "answerMode": "numeric",
-    "prompt": "A table has pairs (3, 9), (5, 15). Using the constant of proportionality, what is y when x = 7?",
-    "xLabel": "x",
-    "yLabel": "y",
-    "series": [
-     {
-      "id": "table",
-      "label": "table",
-      "pairs": [
-       [
-        3,
-        9
-       ],
-       [
-        5,
-        15
-       ]
-      ]
-     }
-    ],
-    "requiredExplorations": 2,
-    "successFeedback": "k = 9/3 = 3, so y = 3 × 7 = 21.",
-    "explorationFeedback": "Inspect at least 2 proportional relationships before checking.",
-    "fallbackFeedback": "k = 9/3 = 3, so y = 3 × 7 = 21.",
-    "tolerance": 0,
-    "choices": [],
-    "numericErrors": [
-     {
-      "value": 10,
-      "feedback": "That adds instead of multiplying. Find k=3 first, then y = 3 × 7 = 21."
-     },
-     {
-      "value": 7,
-      "feedback": "That's just x. Find k = 9/3 = 3, then y = 3 × 7 = 21."
-     }
-    ],
-    "targetSeriesId": "table",
-    "targetInput": 7
-   },
-   "hints": [
-    "First find k using a known pair: 9/3 = 3.",
-    "The constant of proportionality is 3.",
-    "y = k × x = 3 × 7 = 21."
-   ],
-   "variant": {
-    "gen": "pr-constant-k-g7",
-    "form": "constantApply"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "The constant of proportionality k = y/x lets you find any missing value with y = k × x.",
-   "takeaways": [
-    "k is the shared ratio y/x across every pair in a proportional table.",
-    "k can be a whole number or a fraction.",
-    "Once you know k, y = k × x finds any missing value."
-   ],
-   "teaser": "next chapter: graphing proportional relationships."
-  }
- ],
- "remedials": [
-  {
-   "conceptTag": "pr-constant-k",
-   "concept": {
-    "id": "rem-pck-c",
-    "kind": "concept",
-    "body": "The constant of proportionality k is the shared ratio y/x. Once you know k, find any y with y = k × x. For (2,6),(3,9),(5,15): k=3, so y=3x."
-   },
-   "check": {
-    "id": "rem-pck-k",
-    "kind": "check",
-    "body": "",
-    "conceptTag": "pr-constant-k",
-    "explanationVariants": [
-     "6/2 = 3.",
-     "Divide y by x: 3."
-    ],
-    "widget": {
-     "type": "numeric",
-     "prompt": "A table has pairs (2, 6), (3, 9), (5, 15). What is the constant of proportionality?",
-     "answer": 3,
-     "tolerance": 0,
-     "commonErrors": [
-      {
-       "value": 2,
-       "feedback": "2 is x, not the ratio; 6/2=3."
+      "predict": {
+        "prompt": "Pay for 8 hours: which route gets there?",
+        "options": [
+          {
+            "id": "both",
+            "label": "Both — add the 2-hour and 6-hour rows, or ride $12.50 per hour"
+          },
+          {
+            "id": "unit",
+            "label": "Only the unit rate"
+          },
+          {
+            "id": "rows",
+            "label": "Only adding rows"
+          }
+        ],
+        "outcomeId": "both",
+        "reveal": "Proportional tables are generous. Write p for pay in dollars and h for hours, so p = 12.5 × h. Adding rows works, 25 + 75 = 100, and riding the unit rate works, 8 × 12.5 = 100. Every legal route agrees — that agreement is the constant of proportionality doing its job."
       },
-      {
-       "value": 6,
-       "feedback": "6 is y, not the ratio; 6/2=3."
+      "cml": {
+        "stage": "construct",
+        "flagship": true,
+        "kernel": "covariation",
+        "actionGoal": "Make the constant of proportionality visible across linked representations.",
+        "invariants": [
+          "constant-of-proportionality",
+          "origin-for-proportional-relation"
+        ],
+        "misconceptions": [
+          "x-over-y-reversal",
+          "additive-not-multiplicative"
+        ],
+        "representations": [
+          "table",
+          "graph",
+          "symbolic",
+          "language"
+        ],
+        "fadeLevel": 1,
+        "transferFamily": "proportional-covariation",
+        "delayed": true,
+        "translationFrom": "table",
+        "translationTo": "graph",
+        "counterfactualPrompt": "Change the input by one unit. Predict every other representation before moving the scrubber.",
+        "explanation": {
+          "prompt": "Why do the table, graph, equation, and story always agree?",
+          "options": [
+            {
+              "id": "same",
+              "label": "They encode the same input-output rule.",
+              "correct": true,
+              "feedback": "Yes — each view is a translation of the same relationship."
+            },
+            {
+              "id": "separate",
+              "label": "Each view uses a different rule.",
+              "correct": false,
+              "feedback": "Different views must preserve the same pairs and rate."
+            }
+          ]
+        }
+      },
+      "conceptTag": "pr-constant-k"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Find k in another table.",
+      "conceptTag": "pr-constant-k",
+      "explanationVariants": [
+        "6/1 = 6, matching 18/3 and 54/9.",
+        "Divide any y by its x: 6."
+      ],
+      "widget": {
+        "type": "proportionalReasoningLab",
+        "task": "constant",
+        "answerMode": "numeric",
+        "prompt": "A table has pairs (1, 6), (3, 18), (9, 54). What is the constant of proportionality?",
+        "xLabel": "x",
+        "yLabel": "y",
+        "series": [
+          {
+            "id": "table",
+            "label": "table",
+            "pairs": [
+              [
+                1,
+                6
+              ],
+              [
+                3,
+                18
+              ],
+              [
+                9,
+                54
+              ]
+            ]
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "6/1 = 6 (check: 18/3=6, 54/9=6 too).",
+        "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
+        "fallbackFeedback": "6/1 = 6 (check: 18/3=6, 54/9=6 too).",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 1,
+            "feedback": "1 is an x-value, not the ratio. Divide y by x: 6/1 = 6."
+          },
+          {
+            "value": 18,
+            "feedback": "18 is a y-value, not the ratio. Use the first pair: 6/1 = 6."
+          }
+        ],
+        "targetSeriesId": "table"
+      },
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "constantWhole"
       }
-     ],
-     "fallbackFeedback": "6/2 = 3."
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "The constant of proportionality doesn't have to be a whole number. For (3, 2), (6, 4), (9, 6): k = 2/3 — a fraction, but still constant across every pair.",
+      "figure": "proportionality-test"
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "A fractional constant.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "A table has pairs (4, 3), (8, 6), (12, 9). What is the constant of proportionality?",
+        "options": [
+          {
+            "id": "a",
+            "label": "3/4",
+            "correct": true,
+            "feedback": "Yes — 3/4, 6/8, and 9/12 all simplify to 3/4."
+          },
+          {
+            "id": "b",
+            "label": "4/3",
+            "correct": false,
+            "feedback": "That's x/y, flipped. The constant is y/x: 3/4."
+          },
+          {
+            "id": "c",
+            "label": "9",
+            "feedback": "9 is a y-value, not the ratio. The constant is y/x = 3/4."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "Once you know k, you can find any missing value: y = k × x. If k = 3 and x = 10, then y = 30."
+    },
+    {
+      "id": "i3",
+      "kind": "interactive",
+      "body": "Use k to find a missing value.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "A proportional table has constant of proportionality 3. When x = 10, what is y?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 13,
+            "feedback": "That adds instead of multiplying. y = k × x = 3 × 10 = 30."
+          },
+          {
+            "value": 10,
+            "feedback": "That's just x. Multiply by k: y = 3 × 10 = 30."
+          }
+        ],
+        "fallbackFeedback": "y = k × x = 3 × 10 = 30."
+      }
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Find k, another table.",
+      "conceptTag": "pr-constant-k",
+      "explanationVariants": [
+        "3/5 = 3/5, matching every pair.",
+        "Every ratio here is 3/5."
+      ],
+      "widget": {
+        "type": "proportionalReasoningLab",
+        "task": "constant",
+        "answerMode": "choice",
+        "prompt": "A table has pairs (5, 3), (10, 6), (15, 9). What is the constant of proportionality?",
+        "xLabel": "x",
+        "yLabel": "y",
+        "series": [
+          {
+            "id": "table",
+            "label": "table",
+            "pairs": [
+              [
+                5,
+                3
+              ],
+              [
+                10,
+                6
+              ],
+              [
+                15,
+                9
+              ]
+            ]
+          }
+        ],
+        "requiredExplorations": 3,
+        "successFeedback": "Yes — every ratio simplifies to 3/5.",
+        "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
+        "fallbackFeedback": "Choose the conclusion supported by the normalized ratios.",
+        "tolerance": 0,
+        "choices": [
+          {
+            "id": "a",
+            "label": "3/5",
+            "feedback": "Yes — every ratio simplifies to 3/5.",
+            "value": 0.6
+          },
+          {
+            "id": "b",
+            "label": "5/3",
+            "feedback": "That's flipped. The constant is y/x = 3/5.",
+            "claim": "misconception:b"
+          },
+          {
+            "id": "c",
+            "label": "1",
+            "feedback": "1 would mean equal x and y, but here y is smaller. The constant is 3/5.",
+            "claim": "misconception:c"
+          }
+        ],
+        "numericErrors": [],
+        "targetSeriesId": "table"
+      },
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "constantFraction"
+      }
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Use k to find y again.",
+      "conceptTag": "pr-constant-k",
+      "explanationVariants": [
+        "y = 4 × 5 = 20.",
+        "Multiply x by k: 20."
+      ],
+      "widget": {
+        "type": "proportionalReasoningLab",
+        "task": "predictOutput",
+        "answerMode": "numeric",
+        "prompt": "A proportional table has constant of proportionality 4. When x = 5, what is y?",
+        "xLabel": "x",
+        "yLabel": "y",
+        "series": [
+          {
+            "id": "table",
+            "label": "table",
+            "pairs": [
+              [
+                1,
+                4
+              ]
+            ]
+          }
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "y = 4 × 5 = 20.",
+        "explorationFeedback": "Inspect at least 2 proportional relationships before checking.",
+        "fallbackFeedback": "y = 4 × 5 = 20.",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 9,
+            "feedback": "That adds instead of multiplying. y = 4 × 5 = 20."
+          },
+          {
+            "value": 5,
+            "feedback": "That's just x. Multiply by k: y = 4 × 5 = 20."
+          }
+        ],
+        "targetSeriesId": "table",
+        "targetInput": 5
+      },
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "constantUse"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "Find k, then use it.",
+      "conceptTag": "pr-constant-k",
+      "explanationVariants": [
+        "k = 9/3 = 3, so y = 3 × 7 = 21.",
+        "First find k=3, then multiply: 21."
+      ],
+      "widget": {
+        "type": "proportionalReasoningLab",
+        "task": "predictOutput",
+        "answerMode": "numeric",
+        "prompt": "A table has pairs (3, 9), (5, 15). Using the constant of proportionality, what is y when x = 7?",
+        "xLabel": "x",
+        "yLabel": "y",
+        "series": [
+          {
+            "id": "table",
+            "label": "table",
+            "pairs": [
+              [
+                3,
+                9
+              ],
+              [
+                5,
+                15
+              ]
+            ]
+          }
+        ],
+        "requiredExplorations": 2,
+        "successFeedback": "k = 9/3 = 3, so y = 3 × 7 = 21.",
+        "explorationFeedback": "Inspect at least 2 proportional relationships before checking.",
+        "fallbackFeedback": "k = 9/3 = 3, so y = 3 × 7 = 21.",
+        "tolerance": 0,
+        "choices": [],
+        "numericErrors": [
+          {
+            "value": 10,
+            "feedback": "That adds instead of multiplying. Find k=3 first, then y = 3 × 7 = 21."
+          },
+          {
+            "value": 7,
+            "feedback": "That's just x. Find k = 9/3 = 3, then y = 3 × 7 = 21."
+          }
+        ],
+        "targetSeriesId": "table",
+        "targetInput": 7
+      },
+      "hints": [
+        "First find k using a known pair: 9/3 = 3.",
+        "The constant of proportionality is 3.",
+        "y = k × x = 3 × 7 = 21."
+      ],
+      "variant": {
+        "gen": "pr-constant-k-g7",
+        "form": "constantApply"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "The constant of proportionality k = y/x lets you find any missing value with y = k × x.",
+      "takeaways": [
+        "k is the shared ratio y/x across every pair in a proportional table.",
+        "k can be a whole number or a fraction.",
+        "Once you know k, y = k × x finds any missing value."
+      ],
+      "teaser": "next chapter: graphing proportional relationships."
     }
-   }
-  }
- ]
+  ],
+  "remedials": [
+    {
+      "conceptTag": "pr-constant-k",
+      "concept": {
+        "id": "rem-pck-c",
+        "kind": "concept",
+        "body": "The constant of proportionality k is the shared ratio y/x. Once you know k, find any y with y = k × x. For (2,10),(4,20),(5,25): k=5, so y=5x."
+      },
+      "check": {
+        "id": "rem-pck-k",
+        "kind": "check",
+        "body": "",
+        "conceptTag": "pr-constant-k",
+        "explanationVariants": [
+          "10/2 = 5.",
+          "Divide y by x: 5."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "A table has pairs (2, 10), (4, 20), (5, 25). What is the constant of proportionality?",
+          "answer": 5,
+          "tolerance": 0,
+          "commonErrors": [
+            {
+              "value": 2,
+              "feedback": "2 is x, not the ratio; 10/2=5."
+            },
+            {
+              "value": 10,
+              "feedback": "10 is y, not the ratio; 10/2=5."
+            }
+          ],
+          "fallbackFeedback": "10/2 = 5."
+        }
+      }
+    }
+  ]
 }

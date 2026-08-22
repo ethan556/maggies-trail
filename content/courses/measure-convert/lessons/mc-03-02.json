@@ -9,8 +9,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "A protractor counts the exact degrees between two rays. Here's a tool you already own: a **clock face.** A full trip around the clock is 360°, split into 12 equal hours — so each hour mark is 360÷12=**30°.** The angle from 12 to 3 o'clock spans 3 hours: 3×30=90°.",
-      "figure": "mc-protractor"
+      "body": "A protractor is a half-circle scale from 0° to 180°. Place the vertex at the centre and align one ray with 0° before reading the second ray.",
+      "figure": "mc-protractor",
+      "narration": "A protractor is a half-circle scale from 0° to 180°. Place the vertex at the centre and align one ray with 0° before reading the second ray."
     },
     {
       "id": "i1",
@@ -108,59 +109,55 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "A real protractor just measures more precisely than whole clock-hours — counting single degrees instead of 30° jumps. But the idea is identical: count how many degree-units fit between the two rays, whatever size those units are.",
-      "figure": "mc-protractor"
+      "body": "The pictured protractor marks 0°, 30°, 60°, 90°, 120°, 150°, and 180°. A real protractor includes the single-degree marks between those labelled benchmarks.",
+      "figure": "mc-protractor",
+      "narration": "The pictured protractor marks 0°, 30°, 60°, 90°, 120°, 150°, and 180°. A real protractor includes the single-degree marks between those labelled benchmarks."
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another clock reading.",
+      "body": "Now go backward — degrees to hours.",
       "conceptTag": "protractor-reading",
       "explanationVariants": [
-        "12 to 2 o'clock spans 2 hours: 2×30=60°.",
-        "Two hour-jumps of 30° each."
+        "90° ÷ 30° per hour = 3 hour-jumps from 12, landing on 3.",
+        "Divide by 30 to invert the hours-to-degrees relationship: 90÷30=3."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What is the angle from 12 o'clock to 2 o'clock?",
-        "answer": 60,
+        "prompt": "Starting at 12 o'clock, a hand sweeps through 90°. Which hour number is it now pointing to?",
+        "answer": 3,
         "tolerance": 0,
-        "unit": "degrees",
         "commonErrors": [
           {
-            "value": 30,
-            "feedback": "30° is just ONE hour-jump (12 to 1). Two hours is 2×30=60°."
+            "value": 90,
+            "feedback": "90 is the number of degrees swept, not the hour number. Divide by 30 to find the hour: 90÷30=3."
           },
           {
-            "value": 2,
-            "feedback": "2 is the hour count itself, not the degree measure. Multiply by 30: 2×30=60°."
+            "value": 4,
+            "feedback": "That counts 12 itself as a step. 90° ÷ 30° = 3 hour-jumps from 12, landing on the number 3."
           }
         ],
-        "fallbackFeedback": "Count the hours (2), then multiply by 30."
-      },
-      "variant": {
-        "gen": "g4-measure",
-        "form": "mcProtractorReadingNumeric"
+        "fallbackFeedback": "Divide the degrees by 30 to get the number of hour-jumps: 90÷30=3, landing on the hour 3."
       }
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Slide to another reading.",
+      "body": "Slide to the SHORTER way this time.",
       "conceptTag": "protractor-reading",
       "widget": {
         "type": "slider",
-        "prompt": "Slide to show the angle from 12 o'clock to 5 o'clock.",
+        "prompt": "Slide to show the shorter angle from 12 o'clock to 8 o'clock — the shorter way is backward, through 11, 10, 9.",
         "min": 0,
         "max": 360,
         "step": 30,
         "start": 0,
-        "target": 150,
+        "target": 120,
         "visual": "numberline",
         "unitLabel": "°",
-        "lowFeedback": "Keep sliding — 5 hours means 5 jumps of 30° each.",
-        "highFeedback": "That's past 5 hours' worth. 5 jumps of 30° stop at 150°.",
-        "successFeedback": "5 hours × 30° = 150°."
+        "lowFeedback": "Keep sliding — the SHORT way from 12 to 8 is 4 hour-jumps (backward through 11, 10, 9), not the long way forward.",
+        "highFeedback": "That's past the short path. Backward from 12 to 8 is just 4 hour-jumps: 120°.",
+        "successFeedback": "4 hour-jumps backward (12→11→10→9→8) × 30° = 120° — shorter than going forward the long way (240°)."
       },
       "cml": {
         "stage": "construct",
@@ -200,7 +197,7 @@
         "options": [
           {
             "id": "a",
-            "label": "90° — going backward through 11 and 10 is only 3 hours",
+            "label": "90° — the short way, backward through 11 and 10",
             "correct": true,
             "feedback": "Counting the short way (12→11→10→9) is 3 hours: 3×30=90°."
           },

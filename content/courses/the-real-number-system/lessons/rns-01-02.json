@@ -15,55 +15,58 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Predict from the denominator.",
+      "body": "Follow the exact remainders for 1 ÷ 16 until the decimal either ends or cycles.",
       "widget": {
-        "type": "mcq",
-        "prompt": "1/16 — will it terminate or repeat? (16 = 2⁴)",
-        "options": [
+        "type": "quotientReasoningLab",
+        "task": "decimalClassify",
+        "answerMode": "choice",
+        "prompt": "Trace the remainder states for 1/16, then decide whether its decimal terminates or repeats.",
+        "dividend": { "num": 1, "den": 16 },
+        "candidates": [],
+        "choices": [
           {
             "id": "a",
-            "label": "Terminate — 16's only prime factor is 2",
-            "correct": true,
-            "feedback": "Right — 16 = 2⁴, only 2s, so 1/16 terminates."
+            "label": "It terminates at 0.0625",
+            "claim": "classification:terminates",
+            "feedback": "Correct. The remainder reaches zero after four decimal digits, so 1/16 = 0.0625."
           },
           {
             "id": "b",
-            "label": "Repeat — 16 is too big to terminate",
-            "correct": false,
-            "feedback": "Size doesn't matter — only the PRIME FACTORS of the denominator matter, and 16 = 2⁴ is all 2s."
+            "label": "It repeats because 16 is large",
+            "claim": "classification:repeats",
+            "feedback": "Denominator size does not decide the pattern. The remainder reaches zero, so this decimal terminates."
           },
           {
             "id": "c",
-            "label": "Repeat — only 1/2 and 1/4 terminate",
-            "correct": false,
-            "feedback": "Any power of 2 (or 5) in the denominator terminates — 1/8, 1/16, 1/32 all terminate too."
-          },
-          {
-            "id": "d",
-            "label": "Can't tell without dividing",
-            "correct": false,
-            "feedback": "You can tell in advance — check whether the denominator's prime factors are only 2s and 5s."
+            "label": "It repeats after the digit 5",
+            "claim": "misconception:repeat-five",
+            "feedback": "A repeated cycle requires a previous nonzero remainder to return. Here the final remainder is zero."
           }
-        ]
+        ],
+        "requiredExplorations": 4,
+        "tolerance": 0,
+        "successFeedback": "The remainder becomes zero, so 1/16 terminates exactly at 0.0625. Its denominator contains only factors of 2.",
+        "explorationFeedback": "Inspect at least four remainder states before classifying the decimal.",
+        "fallbackFeedback": "Continue the exact division until a remainder becomes zero or a previous nonzero remainder repeats."
       },
       "predict": {
-        "prompt": "A fraction whose denominator is built ONLY from 2s and 5s — will its decimal STOP or REPEAT?",
+        "prompt": "In lowest terms, what happens when a fraction's denominator has only factors 2 and 5?",
         "options": [
           {
             "id": "stop",
-            "label": "Stop — it fits the tenths' factors"
+            "label": "Its decimal terminates"
           },
           {
             "id": "repeat",
-            "label": "Repeat forever"
+            "label": "Its decimal always repeats"
           },
           {
             "id": "divide",
-            "label": "Can't know without long division"
+            "label": "Its decimal type cannot be predicted"
           }
         ],
         "outcomeId": "stop",
-        "reveal": "Tens factor into 2s and 5s — a denominator made only of those slots perfectly into some power of ten, and the decimal terminates. Once the fraction is in lowest terms, any other prime forces a repeat — 3/6 still stops because its 3 cancels away, leaving 1/2."
+        "reveal": "Every power of 10 is built from factors 2 and 5. A lowest-terms denominator containing only those factors divides some power of 10 exactly, so its decimal ends."
       }
     },
     {
@@ -154,39 +157,39 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Predict for 5/6 (6 = 2 × 3).",
+      "body": "Same idea, a different stray prime.",
       "conceptTag": "rns-predict-terminate",
       "explanationVariants": [
-        "6 has a leftover factor of 3 after removing the 2, so 5/6 repeats.",
-        "2×3 isn't all 2s and 5s — that stray 3 guarantees a repeating decimal."
+        "14 has a leftover factor of 7 after removing the 2, so 5/14 repeats.",
+        "2×7 isn't all 2s and 5s — that stray 7 guarantees a repeating decimal."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "5/6 will:",
+        "prompt": "5/14 — terminate or repeat? (14 = 2 × 7)",
         "options": [
           {
             "id": "a",
-            "label": "Repeat — 6 = 2 × 3, and that 3 isn't allowed",
+            "label": "Repeat — 14 = 2 × 7, and that 7 isn't allowed",
             "correct": true,
-            "feedback": "Right — the leftover 3 forces a repeat."
+            "feedback": "Right — the leftover 7 forces a repeat."
           },
           {
             "id": "b",
-            "label": "Terminate — 6 is even",
+            "label": "Terminate — 14 is even",
             "correct": false,
-            "feedback": "Being even only removes the 2 — the leftover 3 still forces a repeat."
+            "feedback": "Being even only removes the 2 — the leftover 7 still forces a repeat."
           },
           {
             "id": "c",
-            "label": "Terminate — 5 and 6 share no factors",
+            "label": "Terminate — 5 and 14 share no factors",
             "correct": false,
-            "feedback": "That's true (5/6 is already in lowest terms), but it's the denominator's PRIME factors that decide this, not whether it's simplified."
+            "feedback": "That's true (5/14 is already in lowest terms), but it's the denominator's PRIME factors that decide this, not whether it's simplified."
           },
           {
             "id": "d",
             "label": "Can't tell",
             "correct": false,
-            "feedback": "6 = 2 × 3 — the 3 is neither 2 nor 5, so it repeats."
+            "feedback": "14 = 2 × 7 — the 7 is neither 2 nor 5, so it repeats."
           }
         ]
       },

@@ -88,6 +88,11 @@ describe("class insights (s113)", () => {
     const weak = addLearner(db, parent.user.id, "Ben", 3);
     const quiet = addLearner(db, parent.user.id, "Cy", 3);
     for (const l of [strong, weak, quiet]) joinClass(db, parent, cls.joinCode, l.learnerId);
+    db.prepare("INSERT INTO profiles (learner_id, version, data, updated_at) VALUES (?, 1, ?, ?)").run(
+      weak.learnerId,
+      JSON.stringify({ avatarId: "avatar-201" }),
+      new Date().toISOString()
+    );
 
     // Ada: six proficient, recently seen skills + steady activity.
     for (let i = 0; i < 6; i++) {
@@ -113,6 +118,7 @@ describe("class insights (s113)", () => {
     expect(ben?.reasons.map((r) => r.code)).toContain("low-proficiency");
     expect(ben?.reasons.map((r) => r.code)).toContain("persistent-misconception");
     expect(ben?.focusTags).toContain("tag-0");
+    expect(ben?.avatarId).toBe("avatar-201");
     expect(byName.get("Cy")?.tier).toBe(1);
     expect(byName.get("Cy")?.reasons[0].code).toBe("insufficient-evidence");
     expect(insights.counts.tier3).toBe(1);

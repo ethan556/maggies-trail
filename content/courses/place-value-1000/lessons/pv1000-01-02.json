@@ -152,10 +152,10 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Build a number with a zero hundreds spot skipped over.",
+      "body": "Build a number from parts, told as a riddle.",
       "widget": {
         "type": "numeric",
-        "prompt": "What number has 0 hundreds, 8 tens, and 3 ones?",
+        "prompt": "I have 0 hundreds, 8 tens, and 3 ones. What number am I?",
         "answer": 83,
         "tolerance": 0,
         "commonErrors": [
@@ -236,38 +236,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A trickier build, watch the empty spot.",
+      "body": "Catch a mistake with an empty spot.",
       "conceptTag": "pv1000-trading",
       "explanationVariants": [
-        "8 hundreds, 0 tens, 6 ones = 806.",
+        "Nina skipped the empty tens spot. The correct number is 806.",
         "Don't skip the empty tens spot — it holds a 0."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number has 8 hundreds, 0 tens, and 6 ones?",
+        "prompt": "Nina built a number with 8 hundreds, 0 tens, and 6 ones, but forgot the empty tens spot and wrote 86 instead. What is the correct number?",
         "answer": 806,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 86,
-            "feedback": "Don't skip the empty tens spot — it still holds a 0: 806, not 86."
+            "feedback": "That repeats Nina's mistake of skipping the empty tens spot. The correct number keeps all three spots: 806."
           },
           {
             "value": 860,
             "feedback": "Keep the order: hundreds, tens, ones. 8 hundreds, 0 tens, 6 ones is 806, not 860."
           }
         ],
-        "fallbackFeedback": "8 hundreds, 0 tens, 6 ones = 806."
+        "fallbackFeedback": "Don't skip the empty tens spot — it still holds a 0: 806, not 86."
       },
       "hints": [
         "Hundreds spot: 8.",
-        "Tens spot: 0 (empty, but still counts).",
+        "Tens spot: 0 — that's the spot Nina skipped, but it still counts.",
         "Ones spot: 6. Put them in order: 806."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000TradingNumeric"
-      }
+      ]
     },
     {
       "id": "r1",
@@ -287,7 +283,7 @@
       "concept": {
         "id": "rem-ptr-c",
         "kind": "concept",
-        "body": "Build a number by combining hundreds, tens, and ones counts in order, watching for empty spots. 7 hundreds, 2 tens, 5 ones = 725."
+        "body": "Build a number by combining hundreds, tens, and ones counts in order, watching for empty spots — the spot order never changes, no matter what order the counts are given to you in."
       },
       "check": {
         "id": "rem-ptr-k",
@@ -295,25 +291,25 @@
         "body": "",
         "conceptTag": "pv1000-trading",
         "explanationVariants": [
-          "7 hundreds, 2 tens, 5 ones = 725.",
+          "4 hundred-mile markers, 6 ten-mile markers, 8 one-mile markers = 468.",
           "Combine the counts in order."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "What number has 7 hundreds, 2 tens, and 5 ones?",
-          "answer": 725,
+          "prompt": "A ranger counted 4 hundred-mile markers, 6 ten-mile markers, and 8 one-mile markers. How many miles is that?",
+          "answer": 468,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 14,
-              "feedback": "Build the number, don't add the counts: 725."
+              "value": 18,
+              "feedback": "That adds the counts together (4+6+8=18) instead of building the number: 468."
             },
             {
-              "value": 527,
-              "feedback": "Keep hundreds first: 725, not 527."
+              "value": 864,
+              "feedback": "Keep the order: hundreds first, then tens, then ones: 468, not 864."
             }
           ],
-          "fallbackFeedback": "725."
+          "fallbackFeedback": "4 hundred-mile markers, 6 ten-mile markers, 8 one-mile markers = 468."
         }
       }
     },
@@ -322,7 +318,7 @@
       "concept": {
         "id": "rem-ptr-dw-c",
         "kind": "concept",
-        "body": "A digit's worth depends on its spot: hundreds, tens, or ones. In 350, the 3 sits in the hundreds spot, so it's worth 3 hundreds = 300."
+        "body": "A digit's worth depends on its spot: hundreds, tens, or ones. The exact same digit can be worth ten times more or ten times less, depending only on which spot it sits in."
       },
       "check": {
         "id": "rem-ptr-dw-k",
@@ -330,25 +326,25 @@
         "body": "",
         "conceptTag": "pv1000-digit-worth",
         "explanationVariants": [
-          "The 3 is in the hundreds spot: worth 300.",
+          "A 5 in the hundreds spot is worth 5 hundreds: 500.",
           "Check the digit's spot to find its worth."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "In the number 350, what is the 3 worth?",
-          "answer": 300,
+          "prompt": "A number has a 5 in its hundreds spot. What is that 5 worth?",
+          "answer": 500,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 3,
-              "feedback": "The 3 is in the hundreds spot: 300, not just 3."
+              "value": 5,
+              "feedback": "That names the digit itself, not its spot value. A 5 in the HUNDREDS spot is worth 5 hundreds: 500, not just 5."
             },
             {
-              "value": 30,
-              "feedback": "30 would be the tens spot. The 3 is in hundreds: 300."
+              "value": 50,
+              "feedback": "50 would be the tens-spot value. This 5 is in the hundreds spot, worth 500."
             }
           ],
-          "fallbackFeedback": "300."
+          "fallbackFeedback": "A 5 in the hundreds spot is worth 5 hundreds: 500."
         }
       }
     }

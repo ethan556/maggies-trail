@@ -15,42 +15,39 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Find the degree.",
+      "body": "Scan the exponents and mark the highest one.",
       "widget": {
-        "type": "numeric",
-        "prompt": "What is the degree of (3x^2 + 5x^4 - x)?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 2,
-            "feedback": "Degree is the highest exponent anywhere, not the first term's: here it's 4."
-          },
-          {
-            "value": 3,
-            "feedback": "That's the number of terms. Degree is the highest exponent: 4."
-          }
-        ],
-        "fallbackFeedback": "The highest exponent is 4, so the degree is 4."
+        "type": "slider",
+        "prompt": "The powers in 3x^2 + 5x^4 - x are 2, 4, and 1. Move the degree marker to the highest exponent.",
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "start": 0,
+        "target": 4,
+        "visual": "numberline",
+        "unitLabel": "exponent",
+        "lowFeedback": "The marker is below the x^4 term. Degree follows the greatest exponent anywhere in the polynomial.",
+        "highFeedback": "That marker invents a power the polynomial does not contain. Scan the written exponents 2, 4, and 1, then return to the greatest one.",
+        "successFeedback": "Degree 4: the x^4 term sets the degree, even though it is not written first."
       },
       "predict": {
-        "prompt": "The degree of 3x² + 5x⁴ − x is…",
+        "prompt": "Before moving the marker, which exponent determines the degree of 3x^2 + 5x^4 - x?",
         "options": [
           {
             "id": "four",
-            "label": "4 — the highest power anywhere"
+            "label": "4 — the highest power present"
           },
           {
             "id": "two",
-            "label": "2 — the first term's power"
+            "label": "2 — the first written power"
           },
           {
             "id": "three",
-            "label": "3 — count the terms"
+            "label": "3 — the number of terms"
           }
         ],
         "outcomeId": "four",
-        "reveal": "Degree is the highest exponent in the whole polynomial — 5x⁴ rules, no matter where it sits on the page. Reading the first term trusts the writing order; degree doesn't care about order at all."
+        "reveal": "The x^4 term controls the degree. Writing order and term count do not change the largest exponent, so the marker must land on 4."
       }
     },
     {

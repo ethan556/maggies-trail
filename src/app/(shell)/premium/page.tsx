@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { paymentProvider, type PlanId } from "@/lib/payments";
+import type { PlanId } from "@/lib/payments";
 import { progressStore } from "@/lib/progress";
 import { authProvider, SESSION_CHANGED_EVENT } from "@/lib/auth";
-import { entitlementFor, grant, revoke } from "@/lib/entitlement";
+// S331: checkout + entitlement lifecycle go through the env-selected billing
+// provider (NEXT_PUBLIC_BILLING_PROVIDER; the default demo provider is the
+// same simulated checkout + client-side grant this page always used).
+import { billingProvider } from "@/lib/billing";
 
 export default function PremiumPage() {
   const [premiumPlan, setPremiumPlan] = useState<string | null>(null);
@@ -18,7 +21,7 @@ export default function PremiumPage() {
       const account = authProvider.currentSession()?.accountId ?? null;
       setAccountId(account);
       // Account entitlement first; the per-profile flag is a legacy fallback so nobody loses access.
-      setPremiumPlan(entitlementFor(account)?.plan ?? progressStore.load().premium?.plan ?? null);
+      setPremiumPlan(billingProvider.entitlementFor(account)?.plan ?? progressStore.load().premium?.plan ?? null);
     };
     readSession();
     window.addEventListener(SESSION_CHANGED_EVENT, readSession);
@@ -28,14 +31,14 @@ export default function PremiumPage() {
   async function buy(plan: PlanId) {
     setPending(plan);
     setMessage(null);
-    const res = await paymentProvider.checkout(plan);
+    const res = await billingProvider.checkout(plan);
     setPending(null);
     setMessage(res.message);
     if (!res.ok) return;
 
     if (accountId) {
       // Entitlement belongs to the ACCOUNT, so every learner on the roster is covered at once.
-      grant(accountId, plan);
+      billingProvider.activate(accountId, plan);
     } else {
       // Signed out: fall back to the legacy per-profile flag so the demo still unlocks.
       const p = progressStore.load();
@@ -46,7 +49,7 @@ export default function PremiumPage() {
   }
 
   function reset() {
-    if (accountId) revoke(accountId);
+    if (accountId) billingProvider.cancel(accountId);
     const p = progressStore.load();
     delete p.premium;
     progressStore.save(p);
@@ -119,7 +122,7 @@ export default function PremiumPage() {
         </div>
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          {paymentProvider.plans().map((plan) => (
+          {billingProvider.plans().map((plan) => (
             <div
               key={plan.id}
               className={`flex flex-col rounded-card border-2 px-5 py-5 ${

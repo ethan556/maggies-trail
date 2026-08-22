@@ -46,12 +46,12 @@
             "label": "Maya has more"
           },
           {
-            "id": "leo",
-            "label": "Leo has more"
-          },
-          {
             "id": "same",
             "label": "They have the same amount"
+          },
+          {
+            "id": "leo",
+            "label": "Leo has more"
           }
         ],
         "outcomeId": "same",
@@ -143,23 +143,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count the tens.",
+      "body": "Build the tens instead of entering a count.",
       "widget": {
-        "type": "numeric",
-        "prompt": "How many tens make 40?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "baseTenCompose",
+        "prompt": "Build 40 in standard form with tens rods and ones cubes.",
+        "target": 40,
+        "requireStandard": true,
+        "maxTens": 4,
+        "maxOnes": 20,
+        "commonBuilds": [
           {
-            "value": 40,
-            "feedback": "40 is the number of ones. It takes 4 groups of ten to make 40, so 4 tens."
+            "tens": 4,
+            "ones": 4,
+            "feedback": "Four rods and four cubes make 44. Forty has no extra ones."
           },
           {
-            "value": 14,
-            "feedback": "40 splits into 4 groups of ten, so 4 tens."
+            "tens": 0,
+            "ones": 4,
+            "feedback": "Four cubes make 4. Forty needs four groups of ten."
           }
         ],
-        "fallbackFeedback": "40 = 4 groups of ten, so 4 tens."
+        "missFeedback": "Use four tens rods and no ones cubes.",
+        "successFeedback": "Four tens and zero ones make 40."
       }
     },
     {
@@ -184,7 +189,7 @@
           },
           {
             "value": 17,
-            "feedback": "70 splits into 7 groups of ten, so 7 tens."
+            "feedback": "That mixes the digits together. 70 splits into 7 groups of ten, so 7 tens."
           }
         ],
         "fallbackFeedback": "70 = 7 groups of ten, so 7 tens."
@@ -193,100 +198,88 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Ones in six tens.",
+      "body": "Tens in sixty ones.",
       "conceptTag": "tno-ten-bundle",
       "explanationVariants": [
-        "6 tens = 6 × 10 = 60 ones.",
-        "Each ten is 10 ones, so six tens make 60 ones."
+        "60 ones grouped into tens is 6 tens.",
+        "Every ten ones make 1 ten: 60 ones = 6 tens."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "How many ones are the same as 6 tens?",
-        "answer": 60,
+        "prompt": "How many tens are the same as 60 ones?",
+        "answer": 6,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 6,
-            "feedback": "6 is the number of tens. Each ten is 10 ones, so 6 tens = 60 ones."
+            "value": 60,
+            "feedback": "60 is the number of ones given, not the number of tens. Every ten ones is 1 ten, so 60 ones = 6 tens."
           },
           {
             "value": 16,
-            "feedback": "Don't add — 6 tens = 60 ones."
+            "feedback": "That mixes the digits together. Group 60 ones into tens: 60 ones = 6 tens."
           }
         ],
-        "fallbackFeedback": "6 tens = 60 ones."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenBundleNumeric"
+        "fallbackFeedback": "60 ones = 6 tens."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Tens in twenty.",
+      "body": "Bags of ten apples.",
       "conceptTag": "tno-ten-bundle",
       "explanationVariants": [
-        "20 = 2 groups of ten, so 2 tens.",
-        "It takes 2 tens to make 20."
+        "20 apples grouped into bags of ten is 2 bags.",
+        "It takes 2 bags of ten to pack 20 apples."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "How many tens make 20?",
+        "prompt": "Apples are packed in bags of ten. There are 20 apples. How many bags are full?",
         "answer": 2,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 20,
-            "feedback": "20 is the number of ones. It takes 2 groups of ten, so 2 tens."
+            "feedback": "20 is the number of apples, not the number of bags. 20 apples packed in tens make 2 full bags."
           },
           {
             "value": 12,
-            "feedback": "20 splits into 2 groups of ten, so 2 tens."
+            "feedback": "That mixes the digits together. 20 apples split into groups of ten make 2 bags."
           }
         ],
-        "fallbackFeedback": "20 = 2 tens."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenBundleNumeric"
+        "fallbackFeedback": "20 apples packed in bags of ten make 2 full bags."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Nine tens.",
+      "body": "Bundles of ten straws.",
       "conceptTag": "tno-ten-bundle",
       "explanationVariants": [
-        "9 tens = 9 × 10 = 90 ones.",
-        "Each ten is 10 ones, so nine tens make 90 ones."
+        "9 bundles of ten straws is 9 × 10 = 90 straws.",
+        "Each bundle is 10 straws, so nine bundles make 90 straws."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "How many ones are the same as 9 tens?",
+        "prompt": "A classroom counts out 9 bundles of ten straws. How many straws is that in all?",
         "answer": 90,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 9,
-            "feedback": "9 is the number of tens. Each ten is 10 ones, so 9 tens = 90 ones."
+            "feedback": "9 is the number of bundles, not the total straws. Each bundle is 10 straws, so 9 bundles = 90 straws."
           },
           {
             "value": 19,
-            "feedback": "Don't add — 9 tens = 9 × 10 = 90 ones."
+            "feedback": "Don't just join the digits — 9 bundles of ten straws make 90 straws."
           }
         ],
-        "fallbackFeedback": "9 tens = 90 ones."
+        "fallbackFeedback": "9 bundles of ten straws make 90 straws."
       },
       "hints": [
-        "Each ten is 10 ones.",
+        "Each bundle of ten is 10 straws.",
         "So count by tens: 10, 20, 30, … nine times.",
-        "9 × 10 = 90 ones."
-      ],
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoTenBundleNumeric"
-      }
+        "9 × 10 = 90 straws."
+      ]
     },
     {
       "id": "r1",
@@ -314,25 +307,25 @@
         "body": "",
         "conceptTag": "tno-ten-bundle",
         "explanationVariants": [
-          "3 tens = 30 ones.",
-          "Count by tens three times: 10, 20, 30."
+          "6 bundles of ten pencils = 6 × 10 = 60 pencils.",
+          "Count by tens six times: 10, 20, 30, 40, 50, 60."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "How many ones are the same as 3 tens?",
-          "answer": 30,
+          "prompt": "A shelf holds 6 bundles of ten pencils. How many pencils are on the shelf?",
+          "answer": 60,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 3,
-              "feedback": "Each ten is 10 ones, so 3 tens = 30 ones."
+              "value": 6,
+              "feedback": "6 is the number of bundles, not the pencil count. Each bundle is 10 pencils, so 6 bundles = 60 pencils."
             },
             {
-              "value": 13,
-              "feedback": "Count by tens: 10, 20, 30."
+              "value": 16,
+              "feedback": "Don't add — 6 bundles of ten pencils is 6 × 10 = 60, not 6 + 10."
             }
           ],
-          "fallbackFeedback": "3 tens = 30 ones."
+          "fallbackFeedback": "6 bundles of ten pencils make 60 pencils."
         }
       }
     }

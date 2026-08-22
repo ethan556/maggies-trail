@@ -41,6 +41,19 @@ describe("mergeProfiles — algebraic properties", () => {
     expect(mergeProfiles(older, fresher).avatarId).toBe("avatar-101");
     expect(mergeProfiles(fresher, older).avatarId).toBe("avatar-101"); // order-independent
   });
+
+  it("avatar customization follows the same latest-intent merge as the selected avatar", () => {
+    const older = p({
+      updatedAt: "2026-03-01T08:00:00.000Z",
+      avatarCustomization: { glasses: "none", accent: "navy", badge: "none" }
+    });
+    const fresher = p({
+      updatedAt: "2026-03-02T08:00:00.000Z",
+      avatarCustomization: { glasses: "round", accent: "teal", badge: "pi" }
+    });
+    expect(mergeProfiles(older, fresher).avatarCustomization).toEqual(fresher.avatarCustomization);
+    expect(mergeProfiles(fresher, older).avatarCustomization).toEqual(fresher.avatarCustomization);
+  });
 });
 
 describe("mergeProfiles — the bug this exists to prevent", () => {
@@ -187,6 +200,7 @@ describe("isSyncedProfile — authenticated trust boundary", () => {
   it("accepts a valid current profile, including resumable lesson state", () => {
     const valid = p({
       avatarId: "avatar-101",
+      avatarCustomization: { glasses: "round", accent: "teal", badge: "pi" },
       mastery: {
         fractions: {
           tag: "fractions", mastery: 0.72, attempts: 8, correctStreak: 2,
@@ -211,7 +225,8 @@ describe("isSyncedProfile — authenticated trust boundary", () => {
     ["out-of-range resume index", { activeLessons: { l1: { v: 1, lessonId: "l1", stepIds: ["s1"], i: 1, sessionXp: 0, history: [], injected: [], savedAt: "now" } } }],
     ["impossible prediction totals", { missedPredictions: { l1: { missed: 4, total: 3, at: "2026-07-22" } } }],
     ["wrong preference type", { reduceMotion: "yes" }],
-    ["wrong avatarId type", { avatarId: 123 }]
+    ["wrong avatarId type", { avatarId: 123 }],
+    ["invalid avatar customization", { avatarCustomization: { glasses: "huge", accent: "teal", badge: "pi" } }]
   ])("rejects %s", (_label, patch) => {
     expect(isSyncedProfile({ ...p(), ...patch })).toBe(false);
   });

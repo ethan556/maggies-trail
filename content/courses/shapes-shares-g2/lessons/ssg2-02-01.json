@@ -133,23 +133,29 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A square grid.",
+      "body": "Count a fixed four-by-four grid.",
       "widget": {
-        "type": "numeric",
-        "prompt": "A rectangle is partitioned into 4 rows and 4 columns of unit squares. How many unit squares in all?",
-        "answer": 16,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "areaModel",
+        "targetArea": 16,
+        "wMax": 4,
+        "hMax": 4,
+        "wStart": 4,
+        "hStart": 4,
+        "countGrid": true,
+        "commonCounts": [
           {
-            "value": 8,
-            "feedback": "That's 4 + 4. Count every square in the grid: 16."
+            "count": 8,
+            "feedback": "That adds 4 rows and 4 columns. Count every square in all four rows."
           },
           {
-            "value": 4,
-            "feedback": "That's just one row. Count all 4 rows: 16 in all."
+            "count": 4,
+            "feedback": "That counts one row. There are four equal rows."
           }
         ],
-        "fallbackFeedback": "4 rows of 4 squares each makes 16 squares in all."
+        "prompt": "The grid has 4 rows with 4 squares in each row. Mark how many squares are in the whole grid.",
+        "successFeedback": "16 squares: four groups of four. The rows organize the count without changing the total.",
+        "lowFeedback": "Some squares are still uncounted. Use all four rows.",
+        "highFeedback": "That exceeds the visible grid. Count each square once."
       }
     },
     {
@@ -164,20 +170,20 @@
       "body": "A single row.",
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle is partitioned into 1 rows and 6 columns of unit squares. How many unit squares in all?",
+        "prompt": "A single row of 6 unit squares stretches across a windowsill. How many unit squares are there in all?",
         "answer": 6,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 7,
-            "feedback": "That's 1 + 6. Count every square in the single row: 6."
+            "feedback": "That's one more than what's actually there. Count the row again carefully: 6 unit squares."
           },
           {
             "value": 1,
-            "feedback": "That's just the row count, not the squares. There are 6 squares in the one row."
+            "feedback": "That's from the word 'single' — but a single ROW can still hold many squares. Count all 6 squares in the row."
           }
         ],
-        "fallbackFeedback": "1 row of 6 squares is 6 squares in all."
+        "fallbackFeedback": "A single row of 6 unit squares is 6 squares in all — count them one at a time if needed."
       }
     },
     {
@@ -186,95 +192,85 @@
       "body": "A wider grid.",
       "conceptTag": "ssg2-grid-count",
       "explanationVariants": [
-        "3 rows of 5 squares each is 15 squares in all.",
-        "Count every square in the grid: 15."
+        "3 rows of 5 desks each is 15 desks in all.",
+        "Count every desk in the classroom: 15."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle is partitioned into 3 rows and 5 columns of unit squares. How many unit squares in all?",
+        "prompt": "A classroom's desks are arranged in 3 rows with 5 desks in each row. How many desks are there in the classroom?",
         "answer": 15,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 8,
-            "feedback": "That's 3 + 5. Count every square in the grid: 15."
+            "feedback": "That's 3 + 5. Count every desk, not just the rows and columns added together: 3 rows of 5 is 15 desks."
           },
           {
             "value": 5,
-            "feedback": "That's just one row. Count all 3 rows: 15 in all."
+            "feedback": "That's just one row of desks. There are 3 rows: 15 desks in all."
           }
         ],
-        "fallbackFeedback": "3 rows of 5 squares each makes 15 squares in all."
-      },
-      "variant": {
-        "gen": "grid-count"
+        "fallbackFeedback": "3 rows of 5 desks each makes 15 desks in all."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "A taller grid.",
+      "body": "Compare two differently-shaped grids.",
       "conceptTag": "ssg2-grid-count",
       "explanationVariants": [
-        "5 rows of 2 squares each is 10 squares in all.",
-        "Count every square in the grid: 10."
+        "5 rows of 2 is 10, and 2 rows of 5 is also 10 — the shapes differ, but the totals are the same, so the difference is 0.",
+        "Multiplying in either order gives the same total: 5×2 = 2×5 = 10."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle is partitioned into 5 rows and 2 columns of unit squares. How many unit squares in all?",
-        "answer": 10,
+        "prompt": "A garden plot has 5 rows of 2 flowers. A second garden plot has 2 rows of 5 flowers. How many more flowers are in the first plot than the second?",
+        "answer": 0,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 7,
-            "feedback": "That's 5 + 2. Count every square in the grid: 10."
+            "value": 10,
+            "feedback": "10 is the total number of flowers in EACH plot, not the difference between them. Both plots have 5×2=10 and 2×5=10 flowers — the same total, so the difference is 0."
           },
           {
-            "value": 2,
-            "feedback": "That's just one row. Count all 5 rows: 10 in all."
+            "value": 3,
+            "feedback": "The number of rows differs by 3 (5−2), but rows alone don't tell you the total. Both plots have 10 flowers in all, so the difference is 0."
           }
         ],
-        "fallbackFeedback": "5 rows of 2 squares each makes 10 squares in all."
-      },
-      "variant": {
-        "gen": "grid-count"
+        "fallbackFeedback": "5 rows of 2 is 10, and 2 rows of 5 is also 10 — the difference is 0."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A bigger grid.",
+      "body": "Work backward this time — you know the total, not both sides.",
       "conceptTag": "ssg2-grid-count",
       "explanationVariants": [
-        "6 rows of 4 squares each is 24 squares in all.",
-        "Count every square in the grid: 24."
+        "6 rows of some number of columns make 24 squares. Since 6 × 4 = 24, there are 4 columns.",
+        "Ask it backward: 6 times what number is 24? That's 4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle is partitioned into 6 rows and 4 columns of unit squares. How many unit squares in all?",
-        "answer": 24,
+        "prompt": "A rectangle is partitioned into unit squares. It has 6 rows and 24 squares in all. How many columns does it have?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 10,
-            "feedback": "That's 6 + 4. Count every square in the grid: 24."
+            "value": 30,
+            "feedback": "That's 6 + 24. To find the missing side, ask: 6 rows of how many columns make 24? 6 × 4 = 24, so 4 columns."
           },
           {
             "value": 6,
-            "feedback": "That's just one column. Count all the squares in every row and column: 24 in all."
+            "feedback": "6 is the row count, not the column count — a grid doesn't have to be square. 6 rows of 4 columns make 24."
           }
         ],
-        "fallbackFeedback": "6 rows of 4 squares each makes 24 squares in all."
+        "fallbackFeedback": "6 rows of 4 columns make 24 squares in all, so there are 4 columns."
       },
       "hints": [
-        "There are 6 rows.",
-        "Each row has 4 squares.",
-        "Count all the squares in all 6 rows: 24."
-      ],
-      "variant": {
-        "gen": "grid-count",
-        "form": "colTrap"
-      }
+        "You already know the total (24) and the rows (6).",
+        "Ask: 6 times what number equals 24?",
+        "6 × 4 = 24, so there are 4 columns."
+      ]
     },
     {
       "id": "r1",

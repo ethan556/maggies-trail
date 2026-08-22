@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Three operations chain the same way: build the total, remove what left, then add what arrived — each step acting on the running total.",
-      "narration": "Three operations chain the same way: build the total, remove what left, then add what arrived — each step acting on the running total."
+      "figure": "two-step-bar",
+      "body": "The bar model joins 18 and 24 to make 42, then removes 15 to leave 27. A longer chain follows the same rule: each new operation acts on the running total.",
+      "narration": "The bar model joins 18 and 24 to make 42, then removes 15 to leave 27. A longer chain follows the same rule: each new operation acts on the running total."
     },
     {
       "id": "i1",
@@ -97,7 +97,7 @@
           },
           {
             "value": 28,
-            "feedback": "That result does not follow from the story's steps — retrace them in order."
+            "feedback": "That adds 5 + 8 + 15 straight across; the packs must be multiplied first, then the 15 handed out subtracted."
           }
         ],
         "fallbackFeedback": "Name what each step produces, then carry that quantity into the next step.",
@@ -138,32 +138,32 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Naming the quantity after every step is what keeps a long chain honest. A number you cannot name is a number you cannot check.",
-      "narration": "Naming the quantity after every step is what keeps a long chain honest. A number you cannot name is a number you cannot check."
+      "figure": "dop-word-expr",
+      "body": "Operation order changes meaning. Double 4, then add 5 gives 4 × 2 + 5 = 13; add 4 and 5, then double gives (4 + 5) × 2 = 18.",
+      "narration": "Operation order changes meaning. Double 4, then add 5 gives 4 × 2 + 5 = 13; add 4 and 5, then double gives (4 + 5) × 2 = 18."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Work backward to find the missing final adjustment.",
       "conceptTag": "g4ms-three-ops",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "6 boxes of 9 pencils, 14 given away, 20 bought — estimate what remains.",
-        "min": 5,
-        "max": 500,
-        "start": 5,
-        "target": 60,
-        "acceptFactor": 2,
-        "unitLabel": "pencils",
+        "prompt": "A chain starts with 6 × 9 = 54, then 14 are removed. Slide to the number that must be added to finish at 60.",
+        "min": 1,
+        "max": 40,
+        "start": 1,
+        "target": 20,
+        "acceptFactor": 1.25,
+        "unitLabel": "pencils added",
         "ticks": [
-          5,
-          253,
-          500
+          1,
+          20,
+          40
         ],
-        "lowFeedback": "Too low — six boxes of nine already build over fifty pencils before anything changes.",
-        "highFeedback": "Too high — the total starts at 54, and the two adjustments are small.",
-        "successFeedback": "About 60 — 54 built, 14 removed, 20 added, landing on exactly 60."
+        "lowFeedback": "Too low — after 54 − 14 = 40, the chain needs 20 more to reach 60.",
+        "highFeedback": "Too high — the running total is 40 before the final addition, so only 20 more are needed.",
+        "successFeedback": "20 — the reverse check is 60 − 40 = 20."
       },
       "cml": {
         "stage": "construct",
@@ -393,8 +393,9 @@
       "concept": {
         "id": "rem-g4ms-three-ops-c",
         "kind": "concept",
-        "body": "Naming the quantity after every step is what keeps a long chain honest. A number you cannot name is a number you cannot check.",
-        "narration": "Naming the quantity after every step is what keeps a long chain honest. A number you cannot name is a number you cannot check."
+        "body": "Operation order changes meaning. Double 4, then add 5 gives 4 × 2 + 5 = 13; add 4 and 5, then double gives (4 + 5) × 2 = 18.",
+        "narration": "Operation order changes meaning. Double 4, then add 5 gives 4 × 2 + 5 = 13; add 4 and 5, then double gives (4 + 5) × 2 = 18.",
+        "figure": "dop-word-expr"
       },
       "check": {
         "id": "rem-g4ms-three-ops-k",
@@ -407,18 +408,18 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "After a delivery there are 5 packs of 8 markers, and 15 are handed out. How many markers remain?",
+          "prompt": "A librarian shelves 5 crates that each hold 8 books, then donates 15 books off the shelf. Using the running total, how many books are left?",
           "answer": 25,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 40,
-              "feedback": "That stopped after building the total; handing out 15 is still to come."
+              "feedback": "That stopped after building the total; donating 15 books off the shelf is still to come."
             },
             {
               "value": 28,
-              "feedback": "That result does not follow from the story's steps — retrace them in order."
+              "feedback": "That adds 5 + 8 + 15 straight across; the crates must be multiplied first, then the 15 donated books subtracted."
             }
           ],
           "fallbackFeedback": "Name what each step produces, then carry that quantity into the next step.",

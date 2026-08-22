@@ -16,6 +16,7 @@ import { join } from "node:path";
 import {
   AVATAR_PLACEHOLDER_SRC,
   AVATARS,
+  ENABLED_AVATAR_IDS,
   gradeToAgeBand,
   getAvatar,
   getAvatarSrc,
@@ -134,11 +135,11 @@ describe("AVATARS manifest shape", () => {
       expect(avatar!.ageBand, id).toBe(band);
       expect(avatar!.order, id).toBe(order);
       expect(avatar!.kind, id).toBe("human");
-      expect(avatar!.enabled, id).toBe(false);
+      expect(avatar!.enabled, id).toBe(ENABLED_AVATAR_IDS.includes(id));
     }
   });
 
-  it("every one of the 44 net-new expansion ids (early 009-012, explorer 105-112, adventurer 205-212, summit 301-312, symbol 401-412) resolves and is disabled", () => {
+  it("every expansion id resolves and its enabled state follows the release allowlist", () => {
     const expansionIds = [
       "avatar-009", "avatar-010", "avatar-011", "avatar-012",
       "avatar-105", "avatar-106", "avatar-107", "avatar-108", "avatar-109", "avatar-110", "avatar-111", "avatar-112",
@@ -152,7 +153,7 @@ describe("AVATARS manifest shape", () => {
     for (const id of expansionIds) {
       const avatar = getAvatar(id);
       expect(avatar, id).toBeDefined();
-      expect(avatar!.enabled, id).toBe(false);
+      expect(avatar!.enabled, id).toBe(ENABLED_AVATAR_IDS.includes(id));
     }
   });
 });
@@ -193,9 +194,9 @@ describe("getAvatar / isValidAvatarId", () => {
     expect(getAvatar("avatar-401")?.ageBand).toBe("adventurer");
   });
 
-  it("isValidAvatarId is false for every id today, because nothing is enabled yet", () => {
+  it("isValidAvatarId follows the reviewed release allowlist", () => {
     for (const avatar of AVATARS) {
-      expect(isValidAvatarId(avatar.id), avatar.id).toBe(false);
+      expect(isValidAvatarId(avatar.id), avatar.id).toBe(ENABLED_AVATAR_IDS.includes(avatar.id));
     }
   });
 
@@ -205,27 +206,28 @@ describe("getAvatar / isValidAvatarId", () => {
 });
 
 describe("getAvatarSrc", () => {
-  it("never returns a path for a disabled or unknown id", () => {
-    expect(getAvatarSrc("avatar-001", 256)).toBeUndefined();
-    expect(getAvatarSrc("avatar-001", 512)).toBeUndefined();
+  it("returns reviewed paths and refuses unknown ids", () => {
+    expect(getAvatarSrc("avatar-001", 256)).toBe("/avatars/avatar-001-256.webp");
+    expect(getAvatarSrc("avatar-001", 512)).toBe("/avatars/avatar-001-512.webp");
     expect(getAvatarSrc("avatar-999", 256)).toBeUndefined();
     // Same rule for the 44 net-new expansion entries — disabled is disabled, regardless of age.
-    expect(getAvatarSrc("avatar-312", 512)).toBeUndefined();
-    expect(getAvatarSrc("avatar-412", 256)).toBeUndefined();
+    expect(getAvatarSrc("avatar-312", 512)).toBe("/avatars/avatar-312-512.webp");
+    expect(getAvatarSrc("avatar-412", 256)).toBe("/avatars/avatar-412-256.webp");
   });
 });
 
 describe("getAvatarsForAgeBand / getDefaultAvatarForGrade", () => {
-  it("every band returns empty today — honest reflection of zero enabled entries", () => {
+  it("returns the complete reviewed 15-item collection for every band", () => {
     for (const band of ["early", "explorer", "adventurer", "summit"] as const) {
-      expect(getAvatarsForAgeBand(band)).toEqual([]);
+      expect(getAvatarsForAgeBand(band)).toHaveLength(15);
     }
   });
 
-  it("getDefaultAvatarForGrade is undefined everywhere today, so callers fall through the legacy chain", () => {
-    for (const grade of [0, 2, 3, 5, 6, 8, 9, 13]) {
-      expect(getDefaultAvatarForGrade(grade)).toBeUndefined();
-    }
+  it("selects a stable age-appropriate reviewed default", () => {
+    expect(getDefaultAvatarForGrade(0)?.id).toBe("avatar-001");
+    expect(getDefaultAvatarForGrade(3)?.id).toBe("avatar-101");
+    expect(getDefaultAvatarForGrade(6)?.id).toBe("avatar-201");
+    expect(getDefaultAvatarForGrade(9)?.id).toBe("avatar-301");
   });
 });
 
@@ -235,18 +237,24 @@ describe("AVATAR_PLACEHOLDER_SRC", () => {
     expect(AVATARS.some((a) => AVATAR_PLACEHOLDER_SRC.includes(a.id))).toBe(false);
   });
 
-  it("the placeholder file itself actually exists on disk (it's the one asset this pass ships)", () => {
+  it("the placeholder file itself actually exists on disk", () => {
     const path = join(process.cwd(), "public", AVATAR_PLACEHOLDER_SRC);
     expect(existsSync(path)).toBe(true);
   });
 });
 
 describe("honesty gate — enabled art must be real (see AVATAR_ART_PRODUCTION_SPEC.md §8)", () => {
-  it("nothing in the manifest is enabled yet (documents today's honest-placeholder state)", () => {
-    expect(AVATARS.every((a) => !a.enabled)).toBe(true);
+  it("the release allowlist contains only unique, declared ids", () => {
+    expect(new Set(ENABLED_AVATAR_IDS).size).toBe(ENABLED_AVATAR_IDS.length);
+    for (const id of ENABLED_AVATAR_IDS) expect(getAvatar(id), id).toBeDefined();
   });
 
-  it("every enabled avatar has BOTH its 256 and 512 webp files on disk — vacuous today, permanent going forward", () => {
+  it("releases the independently approved library atomically", () => {
+    expect(ENABLED_AVATAR_IDS).toHaveLength(60);
+    expect(AVATARS.filter((a) => a.enabled).map((a) => a.id)).toEqual(ENABLED_AVATAR_IDS);
+  });
+
+  it("every enabled avatar has BOTH its 256 and 512 webp files on disk", () => {
     const enabled = AVATARS.filter((a) => a.enabled);
     for (const avatar of enabled) {
       const p256 = join(process.cwd(), "public", avatar.src256);

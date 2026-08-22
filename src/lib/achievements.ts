@@ -1,4 +1,5 @@
 import type { Profile } from "./progress";
+import type { IconName } from "@/components/ui";
 
 /** Achievements (P5): pure checks over the profile; two badges need course context. */
 
@@ -10,7 +11,8 @@ export interface BadgeDef {
   id: string;
   name: string;
   desc: string;
-  icon: string;
+  /** Owned product icon. Achievement surfaces render this through the shared AppIcon system. */
+  icon: IconName;
   check: (p: Profile, ctx?: BadgeCtx) => boolean;
 }
 
@@ -50,31 +52,31 @@ function courseDone(p: Profile, ctx: BadgeCtx | undefined, slug: string): boolea
 }
 
 export const BADGES: BadgeDef[] = [
-  { id: "first-step", name: "First Step", desc: "Finish your first lesson.", icon: "👣",
+  { id: "first-step", name: "First Step", desc: "Finish your first lesson.", icon: "icon-101",
     check: (p) => doneCount(p) >= 1 },
-  { id: "five-lessons", name: "Finding Your Stride", desc: "Finish 5 lessons.", icon: "🥾",
+  { id: "five-lessons", name: "Finding Your Stride", desc: "Finish 5 lessons.", icon: "icon-002",
     check: (p) => doneCount(p) >= 5 },
-  { id: "fifteen-lessons", name: "Trail Regular", desc: "Finish 15 lessons.", icon: "🗺️",
+  { id: "fifteen-lessons", name: "Trail Regular", desc: "Finish 15 lessons.", icon: "icon-004",
     check: (p) => doneCount(p) >= 15 },
-  { id: "flagship-finisher", name: "Times-Table Summit", desc: "Complete Multiplication & Division Foundations.", icon: "🏔️",
+  { id: "flagship-finisher", name: "Times-Table Summit", desc: "Complete Multiplication & Division Foundations.", icon: "icon-201",
     check: (p, ctx) => courseDone(p, ctx, "multiplication-division") },
-  { id: "place-value-pro", name: "Spot Keeper", desc: "Complete Place Value & Big Numbers.", icon: "🅿️",
+  { id: "place-value-pro", name: "Spot Keeper", desc: "Complete Place Value & Big Numbers.", icon: "icon-902",
     check: (p, ctx) => courseDone(p, ctx, "place-value") },
-  { id: "streak-3", name: "Warm Boots", desc: "Keep a 3-day streak.", icon: "🔥",
+  { id: "streak-3", name: "Warm Boots", desc: "Keep a 3-day streak.", icon: "icon-802",
     check: (p) => streakLen(p) >= 3 },
-  { id: "streak-7", name: "Week Walker", desc: "Keep a 7-day streak.", icon: "⚡",
+  { id: "streak-7", name: "Week Walker", desc: "Keep a 7-day streak.", icon: "icon-501",
     check: (p) => streakLen(p) >= 7 },
-  { id: "big-haul", name: "Big Haul", desc: "Earn 60+ XP in a single lesson.", icon: "💰",
+  { id: "big-haul", name: "Big Haul", desc: "Earn 60+ XP in a single lesson.", icon: "icon-401",
     check: (p) => Object.values(p.lessons).some((l) => l.bestXp >= 60) },
-  { id: "night-owl", name: "Night Owl", desc: "Finish a lesson after 9 PM.", icon: "🦉",
+  { id: "night-owl", name: "Night Owl", desc: "Finish a lesson after 9 PM.", icon: "icon-707",
     check: (p) => (p.counters?.nightOwl ?? 0) >= 1 },
-  { id: "review-first", name: "Trail Sweeper", desc: "Finish a Review sitting.", icon: "🔁",
+  { id: "review-first", name: "Trail Sweeper", desc: "Finish a Review sitting.", icon: "icon-603",
     check: (p) => (p.counters?.reviewSittings ?? 0) >= 1 },
-  { id: "graduate", name: "Graduate", desc: "Walk a missed check all the way off the review trail (21-day rep).", icon: "🎓",
+  { id: "graduate", name: "Graduate", desc: "Walk a missed check all the way off the review trail (21-day rep).", icon: "icon-804",
     check: (p) => (p.counters?.graduated ?? 0) >= 1 },
-  { id: "daily-first", name: "Day One", desc: "Answer your first Daily Challenge.", icon: "📅",
+  { id: "daily-first", name: "Day One", desc: "Answer your first Daily Challenge.", icon: "icon-604",
     check: (p) => Object.values(p.dailyDone ?? {}).some(Boolean) },
-  { id: "daily-five", name: "Full Plate", desc: "Answer all 5 Daily Challenges in one day.", icon: "🖐️",
+  { id: "daily-five", name: "Full Plate", desc: "Answer all 5 Daily Challenges in one day.", icon: "icon-704",
     check: (p) => {
       const byDate: Record<string, number> = {};
       for (const k of Object.keys(p.dailyDone ?? {})) {
@@ -84,15 +86,15 @@ export const BADGES: BadgeDef[] = [
       }
       return Object.values(byDate).some((n) => n >= 5);
     } },
-  { id: "xp-500", name: "Trail Mix Hoard", desc: "Reach 500 total XP.", icon: "⛰️",
+  { id: "xp-500", name: "Trail Mix Hoard", desc: "Reach 500 total XP.", icon: "icon-203",
     check: (p) => p.xp >= 500 },
-  { id: "xp-2000", name: "Mountain of Mix", desc: "Reach 2,000 total XP.", icon: "🏆",
+  { id: "xp-2000", name: "Mountain of Mix", desc: "Reach 2,000 total XP.", icon: "icon-204",
     check: (p) => p.xp >= 2000 },
-  { id: "practice-sweep", name: "Clean Sweep", desc: "Ace a 5-question practice round, all first try.", icon: "🧹",
+  { id: "practice-sweep", name: "Clean Sweep", desc: "Ace a 5-question practice round, all first try.", icon: "icon-803",
     check: (p) => (p.counters?.practiceSweeps ?? 0) >= 1 },
-  { id: "test-out", name: "Switchback", desc: "Pass a chapter test-out.", icon: "🚀",
+  { id: "test-out", name: "Switchback", desc: "Pass a chapter test-out.", icon: "icon-205",
     check: (p) => Object.values(p.testouts ?? {}).some(Boolean) },
-  { id: "century-day", name: "Century Day", desc: "Earn 100+ XP in a single day.", icon: "💯",
+  { id: "century-day", name: "Century Day", desc: "Earn 100+ XP in a single day.", icon: "icon-502",
     check: (p) => Object.values(p.xpByDay ?? {}).some((n) => n >= 100) }
 ];
 

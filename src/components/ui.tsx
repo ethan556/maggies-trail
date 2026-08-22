@@ -676,47 +676,120 @@ export function SectionHeader({
 /**
  * The broken progress bar over a sitting: one segment per step, filling the
  * row. Walked segments are LEAF (the trail grammar), the current step is
- * TANGERINE with a soft ring, the path ahead is a hairline. Injected help
- * steps keep their berry ring and dot-in arrival. Purely presentational —
- * callers own the accessible label.
+ * TANGERINE with a raised ring, and the path ahead is a cool-slate dashed
+ * hairline. The state is exposed in both text and visual treatment, so colour
+ * is never the only progress signal. Injected help steps keep their berry ring
+ * and dot-in arrival.
  */
+export type StepProgress = {
+  total: number;
+  current: number;
+  completed: number;
+  remaining: number;
+};
+
+/**
+ * Normalise untrusted caller values into the strip's non-negotiable contract:
+ * one visible segment per item and exactly one current segment. Lesson queues
+ * are never empty in production, but this makes the shared primitive safe for
+ * transient retry/loading state too.
+ */
+export function normalizeStepProgress(total: number, current: number): StepProgress {
+  const normalizedTotal = Number.isFinite(total) ? Math.max(1, Math.trunc(total)) : 1;
+  const normalizedCurrent = Number.isFinite(current)
+    ? Math.min(normalizedTotal - 1, Math.max(0, Math.trunc(current)))
+    : 0;
+  return {
+    total: normalizedTotal,
+    current: normalizedCurrent,
+    completed: normalizedCurrent,
+    remaining: normalizedTotal - normalizedCurrent - 1
+  };
+}
+
 export function StepSegments({
   total,
   current,
   injected,
   label,
+  reviewingIndex = null,
+  onSelectCompleted,
   className = ""
 }: {
   total: number;
   current: number;
   injected?: Set<number>;
   label: string;
+  reviewingIndex?: number | null;
+  onSelectCompleted?: (index: number) => void;
   className?: string;
 }) {
+  const progress = normalizeStepProgress(total, current);
+  const descriptionId = React.useId();
+  const interactive = typeof onSelectCompleted === "function";
+  const segmentStates = Array.from({ length: progress.total }, (_, index) => {
+    const state = index < progress.current ? "completed" : index === progress.current ? "current" : "remaining";
+    return `Item ${index + 1}: ${state}.`;
+  }).join(" ");
+
   return (
-    <div className={`flex flex-1 items-center gap-1 ${className}`} aria-label={label} role="img">
-      {Array.from({ length: total }).map((_, i) => {
+    <div
+      aria-describedby={descriptionId}
+      aria-label={label}
+      className={`flex min-w-0 flex-1 items-center gap-1 py-1 ${className}`}
+      data-progress-completed={progress.completed}
+      data-progress-current={progress.current + 1}
+      data-progress-remaining={progress.remaining}
+      data-progress-reviewing={reviewingIndex === null ? undefined : reviewingIndex + 1}
+      data-progress-strip
+      data-progress-total={progress.total}
+      role={interactive ? "group" : "img"}
+    >
+      <p className="sr-only" id={descriptionId}>
+        {`${progress.completed} completed; item ${progress.current + 1} of ${progress.total} is current; ${progress.remaining} remaining. ${segmentStates}`}
+      </p>
+      {Array.from({ length: progress.total }).map((_, i) => {
+        const state = i < progress.current ? "completed" : i === progress.current ? "current" : "remaining";
         const base =
-          i < current
-            ? "bg-leaf"
-            : i === current
-              ? "bg-tangerine shadow-[0_0_0_3px_rgba(255,138,61,0.18)]"
-              : "bg-ink/12 dark:bg-paper/18";
-        return (
+          state === "completed"
+            ? "border border-leaf/80 bg-leaf"
+            : state === "current"
+              ? "scale-y-125 border border-tangerine/80 bg-tangerine shadow-[0_0_0_3px_rgba(255,138,61,0.22)]"
+              : "border border-dashed border-slate-400/70 bg-ink/12 !bg-slate-300/55 dark:border-slate-400/65 dark:!bg-slate-500/30";
+        const visual = (
           <span
+            aria-hidden
+            data-progress-state={state}
+            data-trail-state={state === "completed" ? "walked" : state === "current" ? "current" : "ahead"}
             key={i}
-            data-trail-state={i < current ? "walked" : i === current ? "current" : "ahead"}
-            className={`trail-segment h-2 min-w-1 flex-1 rounded-pill transition-[background-color,transform,box-shadow] duration-300 ease-out motion-reduce:transition-none ${base} ${
+            className={`trail-segment h-2 min-w-1 flex-1 rounded-pill transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out motion-reduce:transition-none ${base} ${
               injected?.has(i) ? "dot-in ring-2 ring-berry/60" : ""
             }`}
             style={{ "--segment-index": i } as React.CSSProperties}
+            title={`Item ${i + 1} of ${progress.total}: ${state}.`}
           />
         );
+        if (interactive && state === "completed") {
+          return (
+            <button
+              type="button"
+              key={i}
+              aria-current={reviewingIndex === i ? "step" : undefined}
+              aria-label={`Review completed item ${i + 1} of ${progress.total}`}
+              className="trail-segment-control flex min-h-7 min-w-1 flex-1 items-center rounded-pill focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2"
+              data-reviewing={reviewingIndex === i ? "true" : undefined}
+              onClick={() => onSelectCompleted(i)}
+              title={`Review completed item ${i + 1} of ${progress.total}`}
+            >
+              {visual}
+            </button>
+          );
+        }
+        return visual;
       })}
     </div>
   );
 }
-
 /* ----------------------------------------------------------- Stat tile ----- */
 
 export function StatTile({

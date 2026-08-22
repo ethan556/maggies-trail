@@ -101,32 +101,22 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Count even petals.",
+      "body": "Build the eight-petal case.",
       "conceptTag": "pp-roses",
       "explanationVariants": [
         "n = 4 is even, so every lobe is distinct: 2n = 8 petals.",
         "Even n doubles: 2·4 = 8 petals."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "How many petals does r = 2 sin(4θ) have?",
-        "answer": 8,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 4,
-            "feedback": "n = 4 is EVEN, so the count is 2n = 8, not n. The negative-r lobes are separate petals."
-          },
-          {
-            "value": 16,
-            "feedback": "It's 2n, not 2n²: 2·4 = 8."
-          }
-        ],
-        "fallbackFeedback": "n = 4 is even → 2n = 8 petals."
-      },
-      "variant": {
-        "gen": "g12-polar-parametric",
-        "form": "polar-parametric__pp-roses__numeric"
+        "type": "polarTrace",
+        "mode": "rose",
+        "targetPetals": 8,
+        "targetA": 4,
+        "start": 3,
+        "prompt": "Trace r = 2 sin(nθ). Set n so the curve has exactly 8 petals.",
+        "successFeedback": "n = 4 produces 8 petals. The even parameter creates two distinct petals for each unit of n.",
+        "lowFeedback": "The trace has fewer than 8 petals. Compare the odd and even settings before increasing n.",
+        "highFeedback": "The trace has more than 8 petals. Move back toward n = 4."
       }
     },
     {

@@ -21,6 +21,7 @@
 
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import type { DB } from "@/server/db";
+import { mailProvider } from "@/server/mailProvider";
 
 const DEV_PEPPER = "dev-pepper-not-secret";
 
@@ -104,14 +105,13 @@ export function rateLimit(db: DB, bucket: string, limit: number, windowSec: numb
 }
 
 // ── Mail (the delivery seam) ────────────────────────────────────────────────
+// S331: the seam is now an env-selected provider (src/server/mailProvider.ts,
+// MAIL_PROVIDER=outbox|smtp). The default provider does exactly what this
+// function always did — one durable row in mail_outbox, in the caller's
+// transaction — so every flow below is unchanged.
 
 export function enqueueMail(db: DB, to: string, purpose: string, body: string): void {
-  db.prepare("INSERT INTO mail_outbox (created_at, to_email, purpose, body) VALUES (?,?,?,?)").run(
-    nowIso(),
-    to,
-    purpose,
-    body
-  );
+  mailProvider.send(db, { to, purpose, body });
 }
 
 // ── Single-use tokens ───────────────────────────────────────────────────────

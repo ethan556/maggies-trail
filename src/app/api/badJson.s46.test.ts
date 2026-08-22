@@ -16,7 +16,7 @@ import { NextRequest } from "next/server";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { migrate, openDb, _setDbForTests } from "@/server/db";
+import { migrate, openDb, _setDbForTests, type DB } from "@/server/db";
 import { login, signup } from "@/server/authService";
 import { SESSION_COOKIE } from "@/server/http";
 import { POST as loginPost } from "@/app/api/auth/login/route";
@@ -30,11 +30,12 @@ import { POST as syncPost } from "@/app/api/sync/route";
 import { POST as classPost } from "@/app/api/class/route";
 
 let dir: string;
+let db: DB;
 let cookie = "";
 
 beforeEach(() => {
   dir = mkdtempSync(join(tmpdir(), "maggie-badjson-"));
-  const db = openDb(join(dir, "t.db"));
+  db = openDb(join(dir, "t.db"));
   migrate(db);
   _setDbForTests(db);
   signup(db, "t@example.com", "longenough1", "teacher");
@@ -43,6 +44,9 @@ beforeEach(() => {
 });
 afterEach(() => {
   _setDbForTests(null);
+  // Close the handle before the temp dir is removed — better-sqlite3 keeps the file open until
+  // this runs, and unlike POSIX, Windows refuses to delete a file a process still has open.
+  db.close();
   rmSync(dir, { recursive: true, force: true });
 });
 

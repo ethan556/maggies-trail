@@ -1,6 +1,6 @@
 "use client";
 
-import { courseIcon } from "@/lib/personalize";
+import { courseSubjectId } from "@/lib/personalize";
 import Link from "next/link";
 import { TrailAtmosphere, TrailMark } from "./playerChrome";
 import { useEffect, useMemo, useState } from "react";
@@ -13,6 +13,8 @@ import { PROFICIENT } from "@/lib/mastery";
 import { dashboardRecommendation, type DashRec } from "@/lib/dashboardRecommendation";
 export { dashboardRecommendation, type DashRec } from "@/lib/dashboardRecommendation";
 import { AppIcon, type IconName, SectionHeader } from "@/components/ui";
+import { CurriculumIcon } from "@/components/CurriculumIcon";
+import { gradeIllustrationId } from "@/lib/curriculumIcons";
 import AssignmentsCard from "@/components/AssignmentsCard";
 import { AvatarDisplay } from "@/components/AvatarDisplay";
 
@@ -293,7 +295,10 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
       <div className="flex items-center gap-3">
         <AvatarDisplay
           avatarId={profile?.avatarId}
+          customization={profile?.avatarCustomization}
           size={256}
+          placement="summary"
+          displaySize={44}
           className="h-11 w-11 shrink-0 rounded-full ring-2 ring-ink/10 dark:ring-paper/15"
         />
         <h1 className="text-3xl font-extrabold tracking-tight">Your trail</h1>
@@ -318,17 +323,19 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
         </div>
       )}
       {surprisesDue > 0 && (
-        <p className="mt-2 text-xs font-bold text-tangerine-ink">
-          🔮{" "}
+        <p className="mt-2 flex items-start gap-1.5 text-xs font-bold text-tangerine-ink">
+          <AppIcon name="icon-801" size={14} className="mt-0.5 shrink-0" />
+          <span>
           <Link href="/review" className="underline decoration-2 underline-offset-2 hover:opacity-80">
             {surprisesDue} surprise{surprisesDue === 1 ? "" : "s"} due for a revisit
           </Link>{" "}
           — a prediction the math disagreed with, ready to re-test now the reveal has settled.
+          </span>
         </p>
       )}
       {recentFreeze && streak > 0 && (
         <p className="mt-2 text-xs font-bold text-sky-ink">
-          ❄️ A streak freeze covered {freezeDayLabel(recentFreeze)} — your {streak}-day streak is
+          A streak freeze covered {freezeDayLabel(recentFreeze)} — your {streak}-day streak is
           safe. Freezes bridge one missed day per week, automatically.
         </p>
       )}
@@ -484,6 +491,7 @@ export default function DashboardClient({ courses }: { courses: DashCourse[] }) 
                     size={16}
                     className={`text-muted transition-transform ${open ? "rotate-90" : ""}`}
                   />
+                  <CurriculumIcon id={gradeIllustrationId(g)} size={32} />
                   Math · {gradeBandLabel(g)}
                 </span>
                 {profile && bandLessonIds.length > 0 && (
@@ -547,9 +555,7 @@ function TrailBand({
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h3 className="flex min-w-0 items-center gap-2 font-extrabold">
-                      <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-pill bg-sky/10 text-sky-ink">
-                        <AppIcon name={courseIcon(c.title)} size={15} />
-                      </span>
+                      <CurriculumIcon id={courseSubjectId(c.title)} size={38} />
                       <span className="truncate">{c.title}</span>
                     </h3>
                     {hasProfile && (

@@ -13,15 +13,13 @@ import { progressStore } from "@/lib/progress";
 import { cleanName } from "@/lib/personalize";
 import { AppIcon } from "@/components/ui";
 import { AvatarPicker } from "@/components/AvatarPicker";
-import { AVATARS } from "@/lib/avatars";
+import { getAvatarsForAgeBand, gradeToAgeBand } from "@/lib/avatars";
 
-// WS-J: the avatar stage between "grade" and "goal" only renders once the manifest has at least
-// one enabled entry. Today (every entry `enabled: false`) it's a mandatory screen with zero
-// selectable options — a dead stage — so the grade stage skips straight to "goal", exactly as it
-// did before this pass, and the existing name→grade→goal walkthrough test stays green. The moment
-// art lands and a flag flips, this flips to true with no further wiring: see
-// OnboardingFlow.avatar.test.tsx for the enabled path, mocked ahead of real art.
-const HAS_ENABLED_AVATARS = AVATARS.some((a) => a.enabled);
+// A learner enters the avatar stage only when their grade's complete, approved collection exists.
+// This prevents a released band elsewhere from opening onboarding onto an empty collection.
+function hasApprovedAvatarBand(grade: GradeLevel): boolean {
+  return getAvatarsForAgeBand(gradeToAgeBand(grade)).length > 0;
+}
 
 // Every band with a trail belongs here. K/1/2 and 9–13 had trails in onboarding.ts all along and
 // the picker never offered them, so `trailsForGrade` was dead code above Grade 8 — a whole HS and
@@ -225,7 +223,7 @@ export default function OnboardingFlow() {
               label={g.label}
               sub={g.sub}
               onClick={() =>
-                setStage(HAS_ENABLED_AVATARS ? { at: "avatar", grade: g.id } : { at: "goal", grade: g.id })
+                setStage(hasApprovedAvatarBand(g.id) ? { at: "avatar", grade: g.id } : { at: "goal", grade: g.id })
               }
             />
           ))}

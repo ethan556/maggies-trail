@@ -209,36 +209,38 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Enlarge or reduce?",
+      "body": "Shrink the full shape, not just one side.",
       "widget": {
-        "type": "mcq",
-        "prompt": "A dilation has scale factor k = ½. The image is…",
-        "options": [
-          {
-            "id": "o1",
-            "label": "smaller than the original (a reduction)",
-            "correct": true,
-            "feedback": "A factor between 0 and 1 shrinks every distance — half the size here, so it's a reduction."
-          },
-          {
-            "id": "o2",
-            "label": "larger than the original (an enlargement)",
-            "correct": false,
-            "feedback": "Factors ABOVE 1 enlarge; ½ is below 1, so it shrinks the figure. That's a reduction."
-          },
-          {
-            "id": "o3",
-            "label": "the same size as the original",
-            "correct": false,
-            "feedback": "Only k = 1 keeps the size. k = ½ halves every length — a reduction."
-          },
-          {
-            "id": "o4",
-            "label": "rotated but the same size",
-            "correct": false,
-            "feedback": "Dilations don't rotate; they scale. k = ½ makes a smaller, same-orientation copy."
-          }
-        ]
+        "type": "dilationExplore",
+        "shape": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "center": [
+          0,
+          0
+        ],
+        "targetK": 0.5,
+        "kMin": 0,
+        "kMax": 3,
+        "kStep": 0.5,
+        "kStart": 1.5,
+        "gridMin": 0,
+        "gridMax": 7,
+        "prompt": "Dilate the triangle from the origin so every side becomes half its original length.",
+        "successFeedback": "k = 1/2 halves every length while preserving all three angles.",
+        "lowFeedback": "The image is smaller than half the original. Increase the scale factor.",
+        "highFeedback": "The image is larger than half the original. Reduce the scale factor."
       }
     },
     {

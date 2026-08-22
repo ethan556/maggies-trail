@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Measuring a whole group starts with one promise: the SAME unit for every object, start to finish.",
-      "narration": "Measuring a whole group starts with one promise: the SAME unit for every object, start to finish."
+      "figure": "ruler-measure",
+      "body": "Use the same-size unit for every object. Line up the start, cover the whole length, and count the units.",
+      "narration": "Use the same-size unit for every object. Line up the start, cover the whole length, and count the units."
     },
     {
       "id": "i1",
@@ -34,7 +34,7 @@
         "successFeedback": "Four one-unit blocks tile it exactly — one ribbon measured, in the unit the whole group shares.",
         "alignFeedback": "Line up zero with the object's starting end before measuring.",
         "gapOverlapFeedback": "The blocks must touch end to end — no spaces and no covering the same part twice.",
-        "unitFeedback": "Every block must be the same size, or the count means nothing."
+        "unitFeedback": "Use the same-size unit blocks for every ribbon so the measurements can be compared fairly."
       },
       "predict": {
         "prompt": "Half the group is measured in cm, half in paperclips. Comparable?",
@@ -85,31 +85,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "To measure every ribbon in a group fairly, what must stay the SAME for all of them?",
+        "prompt": "What should stay the same when you measure every ribbon?",
         "options": [
           {
-            "id": "o0",
-            "label": "The unit — every ribbon in centimeters",
-            "correct": true,
-            "feedback": "Correct — one shared unit makes the numbers comparable; 6 of one unit and 6 of another are strangers."
+            "id": "o1",
+            "label": "The ribbon's color",
+            "correct": false,
+            "feedback": "Color does not change length; use the same-size measuring unit."
           },
           {
-            "id": "o1",
-            "label": "The ribbon color",
-            "correct": false,
-            "feedback": "Color carries no length information; the measuring unit is what fairness rides on."
+            "id": "o0",
+            "label": "The size of the unit",
+            "correct": true,
+            "feedback": "Correct — the same-size unit makes every length comparable."
           },
           {
             "id": "o2",
-            "label": "The person holding the ruler",
+            "label": "The starting number",
             "correct": false,
-            "feedback": "Anyone can measure — provided everyone uses the same unit the same way."
+            "feedback": "A ribbon may start at another mark if you measure the gap correctly."
           },
           {
             "id": "o3",
-            "label": "Nothing — measurement is automatic",
+            "label": "The person's name",
             "correct": false,
-            "feedback": "Switching units mid-group quietly breaks every comparison the data was gathered for."
+            "feedback": "The measurer's name does not affect the ribbon's length."
           }
         ]
       },
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "With a shared unit, every number in the group speaks the same language — and comparisons become honest.",
-      "narration": "With a shared unit, every number in the group speaks the same language — and comparisons become honest."
+      "figure": "g2g-shared-unit-compare",
+      "body": "Using centimeters for both ribbons makes the comparison fair: the ribbon that covers more centimeters is longer.",
+      "narration": "Using centimeters for both ribbons makes the comparison fair: the ribbon that covers more centimeters is longer."
     },
     {
       "id": "i2",
@@ -155,8 +155,8 @@
       "conceptTag": "g2g-measure-group",
       "widget": {
         "type": "unitRuler",
-        "prompt": "Measure this ribbon of the group with one-unit blocks: align its start and tile it exactly.",
-        "objectStart": 2,
+        "prompt": "Check a second ribbon with the same one-unit blocks: align its start and cover its 5-unit length exactly.",
+        "objectStart": 1,
         "objectEnd": 6,
         "allowedUnitSizes": [
           1,
@@ -164,11 +164,11 @@
         ],
         "targetUnitSize": 1,
         "startUnitSize": 2,
-        "requiredPlacements": 4,
-        "successFeedback": "Four one-unit blocks tile it exactly — one ribbon measured, in the unit the whole group shares.",
+        "requiredPlacements": 5,
+        "successFeedback": "Five one-unit blocks cover the second ribbon, so both measurements use the same unit.",
         "alignFeedback": "Line up zero with the object's starting end before measuring.",
         "gapOverlapFeedback": "The blocks must touch end to end — no spaces and no covering the same part twice.",
-        "unitFeedback": "Every block must be the same size, or the count means nothing."
+        "unitFeedback": "Use the same-size unit blocks for every ribbon so the measurements can be compared fairly."
       },
       "cml": {
         "stage": "construct",
@@ -215,10 +215,10 @@
           },
           {
             "value": 10,
-            "feedback": "Adding the marks measures nothing; the span between them is the length."
+            "feedback": "Adding the two mark numbers does not give the length; subtract the start from the end."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the start mark from the end mark. The spaces between them give the ribbon's length.",
         "successFeedback": "Correct — 4."
       },
       "hints": [
@@ -264,7 +264,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A ribbon in the group stretches from the 1 cm mark to the 6 cm mark. How long is it?",
+        "prompt": "A ribbon starts at the 1 cm mark and ends at the 6 cm mark. A classmate reports 6 cm. What length should be recorded?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -275,10 +275,10 @@
           },
           {
             "value": 7,
-            "feedback": "Adding the marks measures nothing; the span between them is the length."
+            "feedback": "Adding the two mark numbers does not give the length; subtract the start from the end."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the start mark from the end mark. The spaces between them give the ribbon's length.",
         "successFeedback": "Correct — 5."
       },
       "hints": [
@@ -324,7 +324,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A ribbon in the group stretches from the 4 cm mark to the 11 cm mark. How long is it?",
+        "prompt": "A new ribbon runs from 4 cm to 11 cm. What span belongs in the shared-centimeter data table?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -335,10 +335,10 @@
           },
           {
             "value": 15,
-            "feedback": "Adding the marks measures nothing; the span between them is the length."
+            "feedback": "Adding the two mark numbers does not give the length; subtract the start from the end."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Subtract the start mark from the end mark. The spaces between them give the ribbon's length.",
         "successFeedback": "Correct — 7."
       },
       "hints": [
@@ -391,8 +391,9 @@
       "concept": {
         "id": "rem-g2g-measure-group-c",
         "kind": "concept",
-        "body": "With a shared unit, every number in the group speaks the same language — and comparisons become honest.",
-        "narration": "With a shared unit, every number in the group speaks the same language — and comparisons become honest."
+        "body": "Line up both ribbons at zero and use the same centimeter spaces. Then their lengths can be compared fairly.",
+        "narration": "Line up both ribbons at zero and use the same centimeter spaces. Then their lengths can be compared fairly.",
+        "figure": "g2g-shared-unit-compare"
       },
       "check": {
         "id": "rem-g2g-measure-group-k",
@@ -405,31 +406,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "To measure every ribbon in a group fairly, what must stay the SAME for all of them?",
+          "prompt": "Which plan makes a fair comparison of two ribbons?",
           "options": [
             {
-              "id": "o0",
-              "label": "The unit — every ribbon in centimeters",
-              "correct": true,
-              "feedback": "Correct — one shared unit makes the numbers comparable; 6 of one unit and 6 of another are strangers."
-            },
-            {
               "id": "o1",
-              "label": "The ribbon color",
+              "label": "Use inches for one only",
               "correct": false,
-              "feedback": "Color carries no length information; the measuring unit is what fairness rides on."
+              "feedback": "Different units cannot be compared until they are converted."
             },
             {
               "id": "o2",
-              "label": "The person holding the ruler",
+              "label": "Count marks for one only",
               "correct": false,
-              "feedback": "Anyone can measure — provided everyone uses the same unit the same way."
+              "feedback": "Measure the spaces for both ribbons, not marks for only one."
+            },
+            {
+              "id": "o0",
+              "label": "Use centimeters for both",
+              "correct": true,
+              "feedback": "Correct — both ribbons use the same unit."
             },
             {
               "id": "o3",
-              "label": "Nothing — measurement is automatic",
+              "label": "Skip the shorter ribbon",
               "correct": false,
-              "feedback": "Switching units mid-group quietly breaks every comparison the data was gathered for."
+              "feedback": "Both ribbons must be measured before they can be compared."
             }
           ]
         }

@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Ten more or ten less than a number can be found without counting: just change the tens digit by one.",
-      "narration": "Ten more or ten less than a number can be found without counting: just change the tens digit by one."
+      "figure": "tno-move-tens-digit",
+      "body": "On the shown 50–60–70 path, plus ten moves to the next ten and minus ten moves back. The zero ones stay fixed.",
+      "narration": "On the shown 50–60–70 path, plus ten moves to the next ten and minus ten moves back. The zero ones stay fixed."
     },
     {
       "id": "i1",
@@ -95,7 +95,7 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+        "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
         "successFeedback": "Correct — 48 − 10 = 38."
       },
       "hints": [
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "This is fast enough to do in your head, because only one digit ever moves.",
-      "narration": "This is fast enough to do in your head, because only one digit ever moves."
+      "figure": "tno-ones-stay",
+      "body": "The example 34 + 10 = 44 shows why mental ten-more works: only the tens digit changes.",
+      "narration": "The example 34 + 10 = 44 shows why mental ten-more works: only the tens digit changes."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-mental-ten",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "What is ten more than 56? Hop to find out.",
-        "min": 54,
-        "max": 68,
-        "start": 56,
-        "hop": 1,
-        "hops": 10,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 56 and count on 10: you land on 66.",
-        "successFeedback": "Landed on 66 — ten more than 56 is 66; only the tens digit moved."
+        "type": "tapDiagram",
+        "prompt": "Tap the number that is one ten less than 73.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "53",
+            "icon": "53",
+            "count": 1,
+            "correct": false,
+            "feedback": "53 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "63",
+            "icon": "63",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — one ten less changes 7 tens to 6 tens and keeps 3 ones."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "83",
+            "icon": "83",
+            "count": 1,
+            "correct": false,
+            "feedback": "83 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — one ten less changes 7 tens to 6 tens and keeps 3 ones."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "62 − 10 = ?",
+        "prompt": "What number has one fewer ten than 62?",
         "answer": 52,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 62 − 10 = 52."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 52."
       },
       "hints": [
         "Ten more or less only changes the tens digit.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "25 + 10 = ?",
+        "prompt": "Move the tens digit of 25 up by one. What number results?",
         "answer": 35,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 25 + 10 = 35."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 35."
       },
       "hints": [
         "Ten more or less only changes the tens digit.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "72 − 10 = ?",
+        "prompt": "A counter at 72 moves back one ten. Where does it land?",
         "answer": 62,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That leaves the number unchanged."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 72 − 10 = 62."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 62."
       },
       "hints": [
         "Ten more or less only changes the tens digit.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "48 − 10 = ?",
-          "answer": 38,
+          "prompt": "Build 56 with ten-rods and one-cubes. Take away 1 ten-rod. What number do you have now?",
+          "answer": 46,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 47,
-              "feedback": "That changes by one instead of ten."
+              "value": 55,
+              "feedback": "That takes away one one-cube instead of one ten-rod."
             },
             {
-              "value": 48,
-              "feedback": "That leaves the number unchanged."
+              "value": 56,
+              "feedback": "That leaves the number unchanged, forgetting to remove a ten-rod."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 48 − 10 = 38."
+          "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
+          "successFeedback": "Correct — 56 with one ten-rod removed leaves 46."
         }
       }
     }

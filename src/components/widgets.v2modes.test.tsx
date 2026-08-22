@@ -400,17 +400,37 @@ describe("numberLinePlace fraction line", () => {
     expect(paths.some((p) => p.includes("whole line"))).toBe(true);
   });
 
-  it("renders endpoints 0 and 1, unlabeled interior ticks, and a positional readout", () => {
+  it("renders endpoints 0 and 1, labelled fraction landmarks, and a live value readout", () => {
+    // UPDATED (was: "...unlabeled interior ticks, and a positional readout"). Two claims in the
+    // old title no longer hold, and neither is a regression — both are superseded by verified,
+    // corpus-wide contracts elsewhere:
+    //  1. INTERIOR TICKS. A schema comment (`NumberLinePlaceSpec.fractionDen`, src/lib/schema.ts)
+    //     still says interior ticks are unlabeled "by design", but `numberLineScalePlan` (shared
+    //     with numberLineHop's ruler, widgets.tsx) marks every unit tick major whenever a fraction
+    //     denominator keeps the span at or under 10 — every tick, not just the endpoints, gets a
+    //     `NumberLineSvgLabel`. `widgets.numberLines.s253.test.tsx` sweeps every authored
+    //     fractionDen widget (16 of them) and FAILS any with zero rendered `nl-fraction-bar`
+    //     elements: it requires at least one interior fraction tick to carry a real label, the
+    //     opposite of the schema comment. That comment is the stale artifact.
+    //  2. THE LIVE READOUT. `NumberLinePlaceW`'s own visible readout and its slider's
+    //     `aria-valuetext` both print `fmt(v)` — the fraction value itself ("1/4"), never a
+    //     "mark N of 4" position — and `describeState.ts`'s numberLinePlace case says the identical
+    //     thing ("Marker currently at 1/4"), so this is one consistent, deliberate design across
+    //     both accessible surfaces, not an oversight. "mark N of 4" phrasing is real — that is
+    //     exactly what `correctAnswerText` speaks in the REVEAL path the sibling test two above
+    //     pins ("1/4 (mark 1 of 4)") — but it belongs to the gated reveal surface, not the ongoing
+    //     live value a learner is actively dragging.
     const { container } = mount(fractionLine);
     const svgTexts = Array.from(container.querySelectorAll("svg text")).map((t) => t.textContent);
     expect(svgTexts).toContain("0");
     expect(svgTexts).toContain("1");
-    expect(svgTexts).not.toContain("2");
-    expect(svgTexts).not.toContain("3");
-    expect(container.textContent).toContain("mark 0 of 4");
+    // The three interior landmarks: 1/4, 2/4 (printed reduced, as 1/2), and 3/4 — each split into
+    // its own numerator/denominator text nodes by `NumberLineSvgLabel`.
+    expect(svgTexts).toEqual(["0", "1", "4", "1", "2", "3", "4", "1", "Fraction"]);
+    expect(screen.getByRole("slider").getAttribute("aria-valuetext")).toBe("0");
     fireEvent.change(screen.getByRole("slider"), { target: { value: "1" } });
-    expect(container.textContent).toContain("mark 1 of 4");
-    expect(screen.getByRole("slider").getAttribute("aria-valuetext")).toBe("mark 1 of 4");
+    expect(screen.getByRole("slider").getAttribute("aria-valuetext")).toBe("1/4");
+    expect(container.textContent).toContain("1/4");
   });
 
   it("integrity: fraction-line contract and landing rules are enforced", () => {

@@ -4,7 +4,7 @@
  "title": "The Formula Goes Complex",
  "courseId": "complex-numbers",
  "chapterId": "ch4-complex-roots",
- "minutes": 9,
+ "minutes": 10,
  "steps": [
   {
    "id": "c1",
@@ -15,42 +15,67 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Compute a negative discriminant.",
+   "body": "Compute a second negative discriminant.",
    "widget": {
     "type": "numeric",
-    "prompt": "For x² − 4x + 13 = 0, what is the discriminant b² − 4ac?",
-    "answer": -36,
+    "prompt": "For x² − 6x + 13 = 0, what is the discriminant b² − 4ac?",
+    "answer": -16,
     "tolerance": 0,
     "commonErrors": [
      {
-      "value": 36,
-      "feedback": "The size is right but 16 − 52 is NEGATIVE: −36 — that's exactly what makes the roots complex."
+      "value": 16,
+      "feedback": "The magnitude is right, but 36 − 52 is negative: the discriminant is −16."
      },
      {
-      "value": 68,
-      "feedback": "That's 16 + 52 — the formula SUBTRACTS 4ac: 16 − 52 = −36."
+      "value": 88,
+      "feedback": "That adds 36 and 52. The discriminant subtracts 4ac: 36 − 52 = −16."
      }
     ],
-    "fallbackFeedback": "(−4)² − 4(1)(13) = 16 − 52 = −36."
+    "fallbackFeedback": "(−6)² − 4(1)(13) = 36 − 52 = −16."
+   }
+  },
+  {
+   "id": "i1v",
+   "kind": "interactive",
+   "body": "Turn the discriminant into a visible graph consequence.",
+   "widget": {
+    "type": "quadraticExplore",
+    "targetA": 1,
+    "targetH": 3,
+    "targetK": 4,
+    "aMin": 1,
+    "aMax": 1,
+    "hMin": 0,
+    "hMax": 5,
+    "kMin": 0,
+    "kMax": 6,
+    "aStart": 1,
+    "hStart": 0,
+    "kStart": 0,
+    "gridMax": 8,
+    "prompt": "Build y = (x − 3)² + 4, the vertex form of x² − 6x + 13. Watch what the negative discriminant does to the x-axis crossings.",
+    "successFeedback": "The vertex is (3, 4), so the parabola never reaches y = 0. D = −16 and the quadratic formula gives x = 3 ± 2i.",
+    "shapeFeedback": "Keep a = 1. Completing the square changed the form, not the parabola's width or direction.",
+    "vertexFeedback": "Complete the square: x² − 6x + 13 = (x − 3)² + 4, so move the vertex to (3, 4)."
    },
    "predict": {
-    "prompt": "For x² − 4x + 13 = 0 you'll compute b² − 4ac. Its sign will be…",
+    "prompt": "Before moving the graph, what sign should the discriminant of x² − 6x + 13 have?",
     "options": [
      {
       "id": "neg",
-      "label": "Negative — 16 can't beat 52"
-     },
-     {
-      "id": "pos",
-      "label": "Positive — b² is a square"
+      "label": "Negative — the graph will miss the x-axis"
      },
      {
       "id": "zero",
-      "label": "Exactly zero"
+      "label": "Zero — the graph will touch the x-axis"
+     },
+     {
+      "id": "pos",
+      "label": "Positive — the graph will cross twice"
      }
     ],
     "outcomeId": "neg",
-    "reveal": "b² = 16 but 4ac = 52, so the discriminant sinks to −36. Below zero means the parabola never touches the x-axis — the square root goes imaginary and both roots turn complex: x = 2 ± 3i."
+    "reveal": "The graph's lowest point is (3, 4), so it has no real x-intercepts. Algebra agrees: D = 36 − 52 = −16, which produces x = 3 ± 2i."
    }
   },
   {

@@ -1,15 +1,29 @@
 import { FIGURE_TEXT_MISMATCH_BLOCKLIST } from "./figureTextMismatchBlocklist.generated";
+import { FIGURE_NUMERIC_CLAIMS } from "./figureNumericClaims.generated";
+import {
+  compareExactFigureNumericParity,
+  FIXED_NUMERIC_EXEMPLAR_CONTRACTS,
+  hasExplicitNumericOrSymbolicClaim,
+  isDeclaredFixedNumericExemplarAligned,
+} from "./figureNumericParity";
 
 /**
  * Fixed-example figures must not be shown beside unrelated prose.
  *
- * Most figures are concept-specific and can be selected by ID alone. These
- * three legacy figures encode fixed numbers and relationships, but were later
- * reused as generic placeholders across hundreds of lessons. Keep the guard
- * small and explicit: an unrecognised figure remains available, while a fixed
- * exemplar renders only when the accompanying text actually describes it.
+ * Most figures are concept-specific and can be selected by ID alone. Four
+ * legacy exemplars retain their focused checks below. Every registered figure
+ * whose live SVG title asserts arithmetic/equality is generated into an exact
+ * numeric-claim map; the smaller manual registry adds narrow generic-semantic
+ * allowances. An unrecognised figure remains available.
  */
-export const FIXED_EXEMPLAR_FIGURES = ["count-on-hops", "bar-compare", "number-track", "frac-equal-vs-unequal"] as const;
+export const FIXED_EXEMPLAR_FIGURES = [
+  "count-on-hops",
+  "bar-compare",
+  "number-track",
+  "frac-equal-vs-unequal",
+  ...Object.keys(FIXED_NUMERIC_EXEMPLAR_CONTRACTS),
+  ...Object.keys(FIGURE_NUMERIC_CLAIMS),
+] as const;
 
 function plain(text: string): string {
   return text
@@ -33,6 +47,9 @@ export function figureTextBindingKey(id: string, text: string): string {
 
 export function isFigureTextAligned(id: string, text: string): boolean {
   if (FIGURE_TEXT_MISMATCH_BLOCKLIST.has(figureTextBindingKey(id, text))) return false;
+  if (id in FIXED_NUMERIC_EXEMPLAR_CONTRACTS && !isDeclaredFixedNumericExemplarAligned(id, text)) return false;
+  const renderedClaim = FIGURE_NUMERIC_CLAIMS[id as keyof typeof FIGURE_NUMERIC_CLAIMS];
+  if (renderedClaim && hasExplicitNumericOrSymbolicClaim(text) && !compareExactFigureNumericParity(renderedClaim, text).aligned) return false;
   const value = plain(text);
 
   if (id === "count-on-hops") {

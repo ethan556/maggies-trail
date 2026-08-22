@@ -10,13 +10,19 @@ import { WidgetSpec } from "@/lib/schema";
 
 function schemaWidgetTypes(): string[] {
   const src = readFileSync("src/lib/schema.ts", "utf8");
-  const unionStart = src.indexOf("export const WidgetSpec");
+  // The discriminated-union member list lives on `WidgetSpecBase`; the exported `WidgetSpec`
+  // is a superRefine wrapper around it (see schema.ts) and no longer contains the member list
+  // itself, so we must locate the base union declaration rather than the export.
+  const unionStart = src.indexOf("WidgetSpecBase = z.discriminatedUnion(");
   const union = src.slice(unionStart, src.indexOf("]);", unionStart));
   const specNames = Array.from(union.matchAll(/(\w+Spec)/g))
     .map((m) => m[1])
-    .filter((s) => s !== "WidgetSpec");
+    .filter((s) => s !== "WidgetSpec" && s !== "WidgetSpecBase");
   return specNames.map((name) => {
-    const at = src.indexOf("export const " + name + " = z.object(");
+    // Most spec declarations are `export const NameSpec = z.object({...})` on one line, but a
+    // few (e.g. PlotPointSpec) chain `.object(` on a following line — match the declaration
+    // start only, not the exact `z.object(` spelling, so both forms resolve.
+    const at = src.indexOf("export const " + name + " = z");
     const lit = src.slice(at, at + 300).match(/z\.literal\("(\w+)"\)/);
     return lit ? lit[1] : "UNRESOLVED:" + name;
   });

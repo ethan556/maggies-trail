@@ -36,6 +36,16 @@ const CAPS = JSON.parse(
   readFileSync(join(__dirname, "../../scripts/engine-capabilities.json"), "utf8")
 ).types as Record<string, { manip: number }>;
 const ENTRY = new Set(["numeric", "fractionEntry", "buildExpression", "pointEntry"]);
+// Mirrors g4Independent.cjs's factorPairCount: unique {d, n/d} divisor pairs of n.
+const factorPairCount = (n: number) => {
+  let c = 0;
+  for (let d = 1; d * d <= n; d++) if (n % d === 0) c++;
+  return c;
+};
+const ORDINALS: Record<string, number> = {
+  first: 1, second: 2, third: 3, fourth: 4, fifth: 5,
+  sixth: 6, seventh: 7, eighth: 8, ninth: 9, tenth: 10,
+};
 
 const lessons = readdirSync(join(DIR, "lessons")).sort()
   .map((f) => JSON.parse(readFileSync(join(DIR, "lessons", f), "utf8")));
@@ -160,13 +170,49 @@ describe("S196 patterns-factors-g4 — routes re-derived, widget contracts held"
 
           const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
           const f = s.variant.form as string;
-          if (f === "mbFactorsNumeric") expect(n[1] / n[0]).toBe(w.answer);
+          /* S326 (g4p-01-01/k3, g4p-01-01/ch1): `n[1] / n[0]` assumed the prompt's first two
+           * numbers ARE the factor pair, which breaks once the prompt restates the full pair
+           * before asking for the missing one ("record for 40 includes 1 x 40, ... 5 x ?": the
+           * real pair is 40 and 5, not the decoy 1) or asks for a divisor-pair COUNT rather than
+           * a missing factor at all. Each branch is anchored to a distinct authored phrase,
+           * checked against every mbFactorsNumeric prompt in the corpus; the bare n[1]/n[0] stays
+           * the fallback for "rectangle has one side X and an area of Y" prompts, where it already
+           * agrees (Y/X). */
+          if (f === "mbFactorsNumeric") {
+            let m = w.prompt.match(/factor pair of (\d+) is (\d+) and/i);
+            if (m) expect(+m[1] / +m[2]).toBe(w.answer);
+            else if ((m = w.prompt.match(/factor-pair record for (\d+) (?:includes|begins)[\s\S]*?(\d+)\s*×\s*\?/i)))
+              expect(+m[1] / +m[2]).toBe(w.answer);
+            else if ((m = w.prompt.match(/factor pairs does (\d+) have/i)))
+              expect(factorPairCount(+m[1])).toBe(w.answer);
+            else if ((m = w.prompt.match(/arranges (\d+) \w+ into equal rows/i)))
+              expect(factorPairCount(+m[1])).toBe(w.answer);
+            else expect(n[1] / n[0]).toBe(w.answer);
+          }
           /* S242 / GRB-04. `toBe(2)` was true only because the generator drew nothing but primes
            * and the two authored steps here happen to answer 2 as well, so this assertion agreed
            * with a coincidence rather than with the mathematics. Those two steps are single-fact
            * items (rule 7) and no longer declare a variant, so nothing in THIS lesson pair reaches
            * the form; the shape it now generates is asserted in `solveG4` and in the variant gate. */
-          if (f === "mbPatternsNumeric") expect(n[n.length - 1] * (n[1] / n[0])).toBe(w.answer);
+          /* S323-P7 (g4p-03-04/k2): prompts may now STATE the rule ("multiply by k") ahead of the
+           * sequence, putting k first among the prompt's numbers — re-derive the multiplier from
+           * the stated rule when present, else from the sequence's first ratio, prompt-only. */
+          /* S326 (g4p-03-01/ch1): a rule may instead be stated WITHOUT ever showing a sequence at
+           * all ("rule SAYS 'multiply by k' and starts at s. What is the Nth term?") — solve
+           * s * k^(N-1) from the stated ordinal rather than falling into the shown-sequence math,
+           * which would misread the rule's own factor as a second sequence term. */
+          if (f === "mbPatternsNumeric") {
+            const term = w.prompt.match(
+              /rule (?:is|says) ['"]multiply by (\d+)['"] and starts at (\d+)\. What is the (\w+) term/i
+            );
+            const ord = term ? ORDINALS[term[3].toLowerCase()] : undefined;
+            if (term && ord) {
+              expect(+term[2] * Math.pow(+term[1], ord - 1)).toBe(w.answer);
+            } else {
+              const rule = w.prompt.match(/rule is "multiply by (\d+)"/);
+              expect(n[n.length - 1] * (rule ? Number(rule[1]) : n[1] / n[0])).toBe(w.answer);
+            }
+          }
           if (f === "mbTimesAsManyNumeric") expect(n[0] * n[1]).toBe(w.answer);
 
           const vals = w.commonErrors.map((e) => e.value);

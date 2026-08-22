@@ -113,6 +113,22 @@ be fully served by a queue.
 GRB-04 — widening pools is much less valuable while independent seeding can still serve the same
 problem twice in a row from a pool of 400.
 
+**LANDED — verified S331 (lane G4).** GEN-04 shipped it at `c5af1f1`; this entry was stale. The
+mechanism is `src/lib/antiRepeat.ts`: generators stay pure functions of the seed and the CALLER
+re-draws — `drawFreshVariant(step, seed, band, recent, key)` fingerprints each drawn widget
+(`JSON.stringify(widget)`, the sweep's own identity, hashed to 8 hex chars), re-draws with
+`seed#attempt` while the fingerprint sits in the per-step window (REPEAT_WINDOW = 10), and after
+MAX_DRAW_ATTEMPTS = 24 serves the FIRST draw with `exhausted: true` — bounded, never a loop, and an
+exhausted pool degrades to the un-queued behaviour (GRB-04's pool-below-window pairs still work).
+History persists as `profile.recentVariants` (progress.ts), written back by the practice and review
+surfaces and by `refreshLessonSteps` (the lesson path records but deliberately does not read — see
+its resume rationale), merged at sync as a union (`mergeRecentDraws`, sync.ts). Fixtures:
+`src/lib/antiRepeat.test.ts` (12 tests — no repeat inside the window where the pool allows,
+determinism of (step, seed, band, history), honest `exhausted` on small pools, bounded storage,
+union merge). Measured: `reports/generator-audit/GENERATOR_ANTI_REPEAT_AUDIT.csv` (seal `1116fa8`)
+— 2,783 clean, 293 exhausted (GRB-04's population), 8 marginal, **zero `leaking` rows**, which is
+§10's "duplicate rate 0 inside the anti-repeat window" wherever a fresh problem exists to serve.
+
 ### GRB-06 — 26 out-of-scale geometry values
 
 **Evidence:** `GENERATOR_VISUAL_SYNC_AUDIT.csv`, code `out-of-scale-value`. All `medium`, none

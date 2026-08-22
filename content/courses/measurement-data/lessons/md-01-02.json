@@ -15,53 +15,17 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Match the two names.",
+      "body": "Set the clock to a quarter past the hour.",
       "conceptTag": "time-relative",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Connect each clock time to its spoken name.",
-        "left": [
-          {
-            "id": "t745",
-            "label": "7:45"
-          },
-          {
-            "id": "t715",
-            "label": "7:15"
-          },
-          {
-            "id": "t730",
-            "label": "7:30"
-          }
-        ],
-        "right": [
-          {
-            "id": "npast",
-            "label": "Quarter past 7"
-          },
-          {
-            "id": "nhalf",
-            "label": "Half past 7"
-          },
-          {
-            "id": "nto",
-            "label": "Quarter to 8"
-          }
-        ],
-        "pairs": {
-          "t745": "nto",
-          "t715": "npast",
-          "t730": "nhalf"
-        },
-        "pairErrors": [
-          {
-            "left": "t745",
-            "right": "npast",
-            "feedback": "Quarter PAST 7 is 7:15 — fifteen minutes after seven. 7:45 counts the other way: fifteen minutes TO eight."
-          }
-        ],
-        "missFeedback": "PAST counts forward from the old hour; TO counts backward from the next one. A quarter is 15 minutes.",
-        "successFeedback": "7:15 = quarter past, 7:30 = half past, 7:45 = quarter to 8 — the hour's three landmarks."
+        "type": "clockSet",
+        "prompt": "Set the clock to quarter past 7.",
+        "targetHour": 7,
+        "targetMinute": 15,
+        "minuteStep": 5,
+        "hourFeedback": "Keep the hour hand at 7. Quarter past is still in the seven o'clock hour.",
+        "minuteFeedback": "A quarter of 60 minutes is 15. Put the minute hand on the 3.",
+        "successFeedback": "The minute hand points to 3, which is 15 minutes. Quarter past 7 is 7:15."
       },
       "predict": {
         "prompt": "'Quarter past' the hour means how many minutes past?",
@@ -224,23 +188,23 @@
         "options": [
           {
             "id": "a",
-            "label": "Yes — quarter TO means 15 minutes before 3:00, which is 2:45",
+            "label": "Yes — quarter to 3 is 15 minutes before 3:00.",
             "correct": true,
             "feedback": "Exactly her thinking: a quarter-hour back from 3:00 lands on 2:45."
           },
           {
             "id": "b",
-            "label": "Close — it's 3:15",
+            "label": "No — quarter to 3 is 15 minutes after 3:00.",
             "feedback": "3:15 is quarter PAST three. The word TO points backward: fifteen minutes before 3:00 is 2:45."
           },
           {
             "id": "c",
-            "label": "It's 2:15",
+            "label": "No — quarter to 3 is 45 minutes before 3:00.",
             "feedback": "2:15 is quarter past TWO — a half-hour too early. Counting back 15 from 3:00 lands at 2:45."
           },
           {
             "id": "d",
-            "label": "A quarter is 25 minutes, so 2:35",
+            "label": "No — a quarter-hour has 25 minutes before 3:00.",
             "feedback": "A quarter of the 60-minute hour is 60 ÷ 4 = 15 minutes — the coin is a different quarter!"
           }
         ]

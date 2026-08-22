@@ -35,13 +35,13 @@ describe("DashboardClient header avatar — real manifest, everything disabled t
     expect(img?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
-  it("still falls back to the placeholder for a chosen-but-disabled real manifest id", () => {
+  it("shows a chosen released avatar", () => {
     const p = progressStore.load();
     p.avatarId = "avatar-201";
     progressStore.save(p);
     render(<DashboardClient courses={[]} />);
     const h1 = screen.getByRole("heading", { level: 1, name: "Your trail" });
     const img = h1.parentElement?.querySelector("img");
-    expect(img?.getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+    expect(img?.getAttribute("src")).toBe("/avatars/avatar-201-256.webp");
   });
 });

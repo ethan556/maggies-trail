@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Some equations tell the truth and some do not. 5 + 2 = 7 is true; 5 + 2 = 8 is false, because the sides have different values.",
-      "narration": "Some equations tell the truth and some do not. 5 + 2 = 7 is true; 5 + 2 = 8 is false, because the sides have different values."
+      "figure": "as-equal-sign",
+      "body": "Some equations are true and some are false. The picture shows 5 + 3 = 8, a true equation. But 5 + 2 = 8 is false because 7 does not equal 8.",
+      "narration": "Some equations are true and some are false. The picture shows 5 + 3 = 8, a true equation. But 5 + 2 = 8 is false because 7 does not equal 8."
     },
     {
       "id": "i1",
@@ -33,7 +33,7 @@
         "successFeedback": "Landed on 11 — the left side really is 11, so it really is TRUE."
       },
       "predict": {
-        "prompt": "An equation claims 8 + 3 = 11. Before checking, is a claim automatically true?",
+        "prompt": "The equation says 8 + 3 = 11. Is every equation automatically true?",
         "options": [
           {
             "id": "check",
@@ -45,7 +45,7 @@
           }
         ],
         "outcomeId": "check",
-        "reveal": "Written claims can be wrong; valuing both sides is what settles it."
+        "reveal": "An equation can be false. Find both sides to check."
       },
       "cml": {
         "stage": "construct",
@@ -84,16 +84,16 @@
         "prompt": "Which of these equations is TRUE?",
         "options": [
           {
-            "id": "o0",
-            "label": "7 + 2 = 9",
-            "correct": true,
-            "feedback": "Correct — both sides name the same value, 9, so the equation is true."
-          },
-          {
             "id": "o1",
             "label": "7 + 2 = 10",
             "correct": false,
             "feedback": "The left side is 9; naming 10 on the right makes the sides unequal, so it is false."
+          },
+          {
+            "id": "o0",
+            "label": "7 + 2 = 9",
+            "correct": true,
+            "feedback": "Correct — both sides name the same value, 9, so the equation is true."
           },
           {
             "id": "o2",
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Judging an equation is a two-step check: value each side, then compare. No guessing needed.",
-      "narration": "Judging an equation is a two-step check: value each side, then compare. No guessing needed."
+      "figure": "add-balance-scale",
+      "body": "Find each side, then compare. The scale shows a true equation because 6 + 4 and 10 have the same value.",
+      "narration": "Find each side, then compare. The scale shows a true equation because 6 + 4 and 10 have the same value."
     },
     {
       "id": "i2",
@@ -155,16 +155,21 @@
       "conceptTag": "g1e-true-false",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Check whether 8 + 3 = 11: start at 8 and count on 3. Where do you land?",
-        "min": 6,
-        "max": 13,
-        "start": 8,
+        "prompt": "Test a false equation: 6 + 4 = 11. Start at 6 and count on 4. Where do you really land?",
+        "min": 4,
+        "max": 12,
+        "start": 6,
         "hop": 1,
-        "hops": 3,
+        "hops": 4,
         "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 8 and count on 3: you land on 11.",
-        "successFeedback": "Landed on 11 — the left side really is 11, so it really is TRUE."
+        "commonLandings": [
+          {
+            "value": 11,
+            "feedback": "Eleven is the number written in the false equation. Follow the four hops to find the real total."
+          }
+        ],
+        "missFeedback": "Start at six and make four hops. The landing tells the true total.",
+        "successFeedback": "You landed on 10, not 11. That proves 6 + 4 = 11 is false."
       },
       "cml": {
         "stage": "construct",
@@ -195,19 +200,13 @@
       "body": "",
       "conceptTag": "g1e-true-false",
       "explanationVariants": [
-        "Every claim gets the same two-step check.",
+        "Check every equation in the same two steps.",
         "Value each side, then compare."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which of these equations is TRUE?",
+        "prompt": "Compare both sides. Which equation is TRUE?",
         "options": [
-          {
-            "id": "o0",
-            "label": "5 + 2 = 7",
-            "correct": true,
-            "feedback": "Correct — both sides name the same value, 7, so the equation is true."
-          },
           {
             "id": "o1",
             "label": "5 + 2 = 8",
@@ -219,6 +218,12 @@
             "label": "5 + 3 = 7",
             "correct": false,
             "feedback": "The left side here is 8, which does not match the 7 on the right."
+          },
+          {
+            "id": "o0",
+            "label": "5 + 2 = 7",
+            "correct": true,
+            "feedback": "Correct — both sides name the same value, 7, so the equation is true."
           },
           {
             "id": "o3",
@@ -266,19 +271,13 @@
       "body": "",
       "conceptTag": "g1e-true-false",
       "explanationVariants": [
-        "The true claim is the one whose sides agree.",
+        "The true equation is the one whose sides match.",
         "Adding carefully settles it without guessing."
       ],
       "widget": {
         "type": "mcq",
         "prompt": "3 + 6 = ? Which value makes this equation true?",
         "options": [
-          {
-            "id": "o0",
-            "label": "9",
-            "correct": true,
-            "feedback": "Correct — 3 + 6 is 9, so 9 is the value that makes the statement true."
-          },
           {
             "id": "o1",
             "label": "10",
@@ -296,6 +295,12 @@
             "label": "3",
             "correct": false,
             "feedback": "That is the DIFFERENCE between 3 and 6, not their sum."
+          },
+          {
+            "id": "o0",
+            "label": "9",
+            "correct": true,
+            "feedback": "Correct — 3 + 6 is 9, so 9 is the value that makes the statement true."
           }
         ]
       },
@@ -342,19 +347,19 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which of these equations is TRUE?",
+        "prompt": "Challenge: check each side and choose the TRUE equation.",
         "options": [
-          {
-            "id": "o0",
-            "label": "8 + 6 = 14",
-            "correct": true,
-            "feedback": "Correct — both sides name the same value, 14, so the equation is true."
-          },
           {
             "id": "o1",
             "label": "8 + 6 = 15",
             "correct": false,
             "feedback": "The left side is 14; naming 15 on the right makes the sides unequal, so it is false."
+          },
+          {
+            "id": "o0",
+            "label": "8 + 6 = 14",
+            "correct": true,
+            "feedback": "Correct — both sides name the same value, 14, so the equation is true."
           },
           {
             "id": "o2",
@@ -420,8 +425,9 @@
       "concept": {
         "id": "rem-g1e-true-false-c",
         "kind": "concept",
-        "body": "Judging an equation is a two-step check: value each side, then compare. No guessing needed.",
-        "narration": "Judging an equation is a two-step check: value each side, then compare. No guessing needed."
+        "body": "The picture shows a true equation: 5 + 3 and 8 match. A true equation must have the same value on both sides.",
+        "narration": "The picture shows a true equation: 5 + 3 and 8 match. A true equation must have the same value on both sides.",
+        "figure": "as-equal-sign"
       },
       "check": {
         "id": "rem-g1e-true-false-k",
@@ -434,31 +440,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Which of these equations is TRUE?",
+          "prompt": "Check each side. Which equation is TRUE?",
           "options": [
             {
               "id": "o0",
-              "label": "7 + 2 = 9",
+              "label": "6 + 3 = 9",
               "correct": true,
-              "feedback": "Correct — both sides name the same value, 9, so the equation is true."
+              "feedback": "Correct — six plus three and nine have the same value."
             },
             {
               "id": "o1",
-              "label": "7 + 2 = 10",
+              "label": "6 + 3 = 10",
               "correct": false,
-              "feedback": "The left side is 9; naming 10 on the right makes the sides unequal, so it is false."
+              "feedback": "Six plus three is nine, not ten."
             },
             {
               "id": "o2",
-              "label": "7 + 3 = 9",
+              "label": "6 + 4 = 9",
               "correct": false,
-              "feedback": "The left side here is 10, which does not match the 9 on the right."
+              "feedback": "Six plus four is ten, not nine."
             },
             {
               "id": "o3",
-              "label": "7 + 7 = 9",
+              "label": "6 + 6 = 9",
               "correct": false,
-              "feedback": "Check the left side by adding: it does not equal the value written on the right."
+              "feedback": "Six plus six is twelve, not nine."
             }
           ]
         }

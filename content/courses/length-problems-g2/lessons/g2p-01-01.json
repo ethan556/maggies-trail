@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-how-much-longer",
       "body": "'How much longer' is a gap question: line both objects up at the same start and the overhang IS the answer.",
       "narration": "'How much longer' is a gap question: line both objects up at the same start and the overhang IS the answer."
     },
@@ -39,7 +39,7 @@
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
         "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "successFeedback": "Correct — after the starts align, the blue ribbon reaches farther."
       },
       "predict": {
         "prompt": "Two ribbons start together; one sticks out past the other. What is the overhang?",
@@ -142,36 +142,36 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-how-much-longer",
       "body": "The gap you can see equals the difference you can compute — subtracting the shorter from the longer names the overhang.",
       "narration": "The gap you can see equals the difference you can compute — subtracting the shorter from the longer names the overhang."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Repair the comparison.",
       "conceptTag": "g2p-how-much-longer",
       "widget": {
         "type": "lengthCompare",
         "mode": "align",
-        "prompt": "Line the ribbons up from the same start. Which is longer?",
+        "prompt": "The red ribbon begins farther right, so it only looks longer. Align the starts. Which ribbon is actually longer?",
         "items": [
           {
             "id": "top",
             "label": "blue ribbon",
-            "length": 7,
-            "startOffset": 2
+            "length": 7
           },
           {
             "id": "bottom",
             "label": "red ribbon",
-            "length": 5
+            "length": 5,
+            "startOffset": 4
           }
         ],
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
-        "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "missFeedback": "Now the starts are lined up — check the far ends again: the blue ribbon reaches farther.",
+        "successFeedback": "Correct — after the starts align, the blue ribbon reaches farther."
       },
       "cml": {
         "stage": "construct",
@@ -330,35 +330,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more, for the road — but first, find the shortest.",
       "conceptTag": "g2p-how-much-longer",
       "explanationVariants": [
-        "Bigger objects, same gap logic.",
-        "Align, then subtract."
+        "The shortest of the other two is 28 cm; 54 − 28 = 26.",
+        "Compare 40 and 28 first — 28 is shorter — then subtract from 54."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "The garden hose measures 54 cm and the watering can cord measures 28 cm. How much longer is the garden hose?",
+        "prompt": "A garden hose measures 54 cm, a jump rope measures 40 cm, and a watering can cord measures 28 cm. How much longer is the garden hose than the SHORTEST of the other two?",
         "answer": 26,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 82,
-            "feedback": "That joined the two lengths — \"how much longer\" wants the gap between them, found by subtracting."
+            "value": 14,
+            "feedback": "That compared the garden hose to the jump rope (40 cm) — the SHORTEST of the other two is the watering can cord (28 cm). 54 − 28 = 26."
           },
           {
-            "value": 28,
-            "feedback": "The gap came out two too wide; align the lengths end to end and recount the extra."
+            "value": 82,
+            "feedback": "That joined the two lengths — \"how much longer\" wants the gap between them, found by subtracting."
           }
         ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
+        "fallbackFeedback": "First pick the SHORTEST of the other two lengths, then find the gap between it and the garden hose.",
         "successFeedback": "Correct — 26."
       },
       "hints": [
-        "Line the starting ends up.",
-        "Read the far ends.",
-        "The overhang is the difference."
+        "Compare the jump rope (40 cm) and the cord (28 cm) — which is shorter?",
+        "The cord (28 cm) is shorter. Now find the gap between it and the hose.",
+        "54 − 28 = 26."
       ],
       "cml": {
         "stage": "construct",
@@ -381,10 +381,6 @@
         "transferFamily": "length-problems-g2:g2p-how-much-longer",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-measure-money-time",
-        "form": "MmtLengthDifferenceNumeric"
       }
     },
     {

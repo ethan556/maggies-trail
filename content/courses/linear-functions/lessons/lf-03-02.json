@@ -15,47 +15,41 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "First move.",
+   "body": "Build the same line before rewriting it symbolically.",
    "widget": {
-    "type": "mcq",
-    "prompt": "What is the correct first step in converting y − 3 = 2(x − 1)?",
-    "options": [
-     {
-      "id": "a",
-      "label": "distribute the 2: y − 3 = 2x − 2",
-      "correct": true,
-      "feedback": "Yes — multiply the 2 through both terms: 2·x and 2·(−1) give 2x − 2."
-     },
-     {
-      "id": "b",
-      "label": "multiply only the x: y − 3 = 2x − 1",
-      "feedback": "Distributing hits both terms inside. 2·(−1) = −2, so it's 2x − 2, not 2x − 1."
-     },
-     {
-      "id": "c",
-      "label": "combine 3 and 2: y = 5(x − 1)",
-      "feedback": "The 3 and 2 aren't like terms — the 3 is outside the parentheses. Distribute first: y − 3 = 2x − 2."
-     }
-    ]
+    "type": "lineExplore",
+    "targetSlope": 2,
+    "targetIntercept": 1,
+    "slopeMin": -4,
+    "slopeMax": 4,
+    "interceptMin": -5,
+    "interceptMax": 5,
+    "slopeStart": 0,
+    "interceptStart": 0,
+    "gridMax": 6,
+    "prompt": "Build the line y − 3 = 2(x − 1). Set its slope, then move the intercept until the line passes through (1, 3).",
+    "successFeedback": "The graph is y = 2x + 1. Rewriting exposed the intercept, but the slope stayed 2 and the line still passes through (1, 3).",
+    "slopeFeedback": "The line has the wrong tilt. The number outside (x − 1) is the slope, so set m = 2.",
+    "interceptFeedback": "The slope is 2, but the line misses (1, 3). Move it vertically until the point lies on the line."
    },
    "predict": {
-    "prompt": "y − 3 = 2(x − 1): can you read the SLOPE before doing any algebra?",
+    "prompt": "Before moving the graph, which slope should you set for y − 3 = 2(x − 1)?",
     "options": [
      {
       "id": "yes",
-      "label": "Yes — the 2 outside the parentheses is m"
+      "label": "2 — the coefficient outside the parentheses"
      },
      {
       "id": "no",
-      "label": "No — convert to y = mx + b first"
+      "label": "3 — the point's y-coordinate"
      },
      {
       "id": "neg",
-      "label": "It's −3"
+      "label": "−1 — the value inside the parentheses"
      }
     ],
     "outcomeId": "yes",
-    "reveal": "Point-slope wears its slope openly: the 2 IS m, and (1, 3) is the point. Converting (to y = 2x + 1) only rearranges to expose b — the slope never changes, because rearranging never tilts a line."
+    "reveal": "Set the slope to 2. Moving the intercept to 1 makes the line pass through (1, 3), so y − 3 = 2(x − 1) and y = 2x + 1 are the same graph."
    }
   },
   {

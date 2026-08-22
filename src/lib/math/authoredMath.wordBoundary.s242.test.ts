@@ -148,7 +148,7 @@ describe("S242 — inequality relations are always-on islands", () => {
     expect(islands("Equal distance would need equal magnitudes: 6 ≠ 4.", false)).toContain("6 ≠ 4");
     expect(islands("−6 ≠ 6, so they differ.", false)).toContain("−6 ≠ 6");
     // And a FALSE not-equal claim is refused exactly like a false equation.
-    expect(islands("A learner writes 6 ≠ 6 here.", true)).toEqual([]);
+    expect(islands("A learner writes 6 ≠ 6 here.", true)).toEqual(["≠"]);
   });
 
   it("a false inequality is refused, exactly like false arithmetic", () => {
@@ -211,12 +211,9 @@ describe("S242 / MATH-03 (MPB-03) — ± binds to its operand", () => {
     expect(islands("That treats the center as −1. So the cases are x − 1 = ±4.")).toContain("x − 1 = ±4");
   });
 
-  it("leaves ± alone when it is being used as a word", () => {
-    /* 622 of the corpus's 719 `±` strings put a value straight after it; the other 97 use the symbol
-     * as a noun — "The ± in the formula flips only the imaginary sign" — or stand it alone as a
-     * token label. Requiring a value is what keeps those in prose. */
-    expect(islands("The ± in the formula flips only the imaginary sign.")).toEqual([]);
-    expect(islands("±")).toEqual([]);
+  it("renders ± consistently whether it carries a value or names the operator", () => {
+    expect(islands("The ± in the formula flips only the imaginary sign.")).toEqual(["±"]);
+    expect(islands("±")).toEqual(["±"]);
   });
 });
 
@@ -247,8 +244,8 @@ describe("S242 / MATH-03 (MPB-01) — π carries its coefficient, its group and 
     expect(islands("Pages 10-12 tonight.", false)).toEqual([]);
   });
 
-  it("leaves π alone when it is being used as a word", () => {
-    expect(islands("A circle has radius 4. Before multiplying by π, what does it give?")).toEqual([]);
+  it("renders π consistently when prose names the constant", () => {
+    expect(islands("A circle has radius 4. Before multiplying by π, what does it give?")).toEqual(["π"]);
   });
 });
 

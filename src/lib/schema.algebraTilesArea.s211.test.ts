@@ -45,25 +45,41 @@ const SPECS = authored();
 
 describe("the authored regression set", () => {
   it("is every algebraTiles instance in content, and it is not empty", () => {
-    expect(SPECS.length).toBe(27);
+    expect(SPECS.length).toBe(29);
   });
 
   // S215: `tse-01-01/i1` is the first authored user of area mode. A NAMED allowlist, not a relaxed
   // count — a second lesson opting in fails this until it is added here deliberately.
-  const AREA_USERS: ReadonlyArray<{ file: string; where: string; keys: readonly string[] }> = [
+  const AREA_USERS: ReadonlyArray<{
+    file: string;
+    where: string;
+    keys: readonly string[];
+    area: { width: readonly [number, number]; height: readonly [number, number]; mode: "distribute" };
+    targets: readonly [number, number];
+  }> = [
+    {
+      file: "content/courses/linear-equations-systems/lessons/les-01-03.json",
+      where: ".steps[1].widget",
+      keys: ["area", "partialProductFeedback", "unopenedFrameFeedback"],
+      area: { width: [0, 3], height: [1, 4], mode: "distribute" },
+      targets: [3, 12],
+    },
     {
       file: "content/courses/two-step-equations/lessons/tse-01-01.json",
       where: ".steps[1].widget",
       keys: ["area", "partialProductFeedback", "unopenedFrameFeedback"],
+      area: { width: [0, -3], height: [1, 2], mode: "distribute" },
+      targets: [-3, -6],
     },
   ];
+  const pathKey = (file: string) => file.replace(/\\/g, "/");
 
   it("exactly the named lessons opt in, with exactly the fields they declare", () => {
     const NEW = ["targetSquare", "squareStart", "area", "partialProductFeedback", "frameMismatchFeedback", "unopenedFrameFeedback"];
     const injected: string[] = [];
     for (const { file, where, raw } of SPECS) {
       const parsed = AlgebraTilesSpec.parse(raw) as Record<string, unknown>;
-      const declared = AREA_USERS.find((u) => file.endsWith(u.file) && u.where === where);
+      const declared = AREA_USERS.find((u) => pathKey(file).endsWith(u.file) && u.where === where);
       const gained = NEW.filter((k) => k in parsed);
       if (!declared) {
         for (const k of gained) injected.push(`${file}${where}: gained "${k}" without being declared`);
@@ -74,15 +90,20 @@ describe("the authored regression set", () => {
     expect(injected).toEqual([]);
   });
 
-  it("the one area lesson is the distribution rectangle it claims to be", () => {
-    const hit = SPECS.find(({ file, where }) => file.endsWith(AREA_USERS[0].file) && where === AREA_USERS[0].where)!;
-    const spec = AlgebraTilesSpec.parse(hit.raw);
-    // −3(x + 2): square 0·1 = 0, x 0·2 + (−3)·1 = −3, unit (−3)·2 = −6 — the targets it has always
-    // been graded against, unchanged by this session.
-    expect(spec.area).toEqual({ width: [0, -3], height: [1, 2], mode: "distribute" });
-    expect(algebraTilesPartials(spec.area!.width, spec.area!.height)).toEqual({ square: 0, x: -3, unit: -6 });
-    expect([spec.targetX, spec.targetConst]).toEqual([-3, -6]);
-    expect(spec.unopenedFrameFeedback).toBeTruthy();
+  it("each named area lesson carries the reviewed rectangle and targets it claims to teach", () => {
+    for (const user of AREA_USERS) {
+      const hit = SPECS.find(({ file, where }) => pathKey(file).endsWith(user.file) && where === user.where)!;
+      expect(hit, user.file).toBeTruthy();
+      const spec = AlgebraTilesSpec.parse(hit.raw);
+      expect(spec.area).toEqual(user.area);
+      expect(algebraTilesPartials(spec.area!.width, spec.area!.height)).toEqual({
+        square: 0,
+        x: user.targets[0],
+        unit: user.targets[1],
+      });
+      expect([spec.targetX, spec.targetConst]).toEqual(user.targets);
+      expect(spec.unopenedFrameFeedback).toBeTruthy();
+    }
   });
 
   it("every one parses to the SAME object it parsed to before — field for field", () => {
@@ -91,7 +112,7 @@ describe("the authored regression set", () => {
     const drift: string[] = [];
     for (const { file, where, raw } of SPECS) {
       const parsed = AlgebraTilesSpec.parse(raw) as Record<string, unknown>;
-      const areaUser = AREA_USERS.find((u) => file.endsWith(u.file) && u.where === where);
+      const areaUser = AREA_USERS.find((u) => pathKey(file).endsWith(u.file) && u.where === where);
       const expected: Record<string, unknown> = {
         type: "algebraTiles",
         prompt: raw.prompt,

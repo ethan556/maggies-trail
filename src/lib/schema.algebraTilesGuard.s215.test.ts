@@ -159,9 +159,9 @@ describe("nothing already authored is retroactively refused", () => {
 
   const SPECS = authored();
 
-  it("finds the whole authored set, and it is the 27 the S211 regression set pins", () => {
-    expect(SPECS.length).toBe(27);
-    expect(SPECS.filter((s) => s.raw.area !== undefined).length).toBe(1);
+  it("finds the whole authored set, including both reviewed area-mode lessons", () => {
+    expect(SPECS.length).toBe(29);
+    expect(SPECS.filter((s) => s.raw.area !== undefined).length).toBe(2);
   });
 
   it("every one of them passes the guard, area step included", () => {
@@ -171,13 +171,20 @@ describe("nothing already authored is retroactively refused", () => {
     }
   });
 
-  it("the one authored area spec is same-sign BY ITS SHAPE, not by luck of the guard's wording", () => {
-    const area = SPECS.find((s) => s.raw.area !== undefined)!;
-    const a = area.raw.area as { width: [number, number]; height: [number, number] };
-    // -3(x + 2): the width has no x part, so only ONE group of x cells exists and it cannot mix.
-    expect(a.width).toEqual([0, -3]);
-    expect(a.height).toEqual([1, 2]);
-    // `=== 0` rather than toBe: the product is -0 here, and toBe/toEqual distinguish the two zeroes.
-    expect(a.height[0] * a.width[1] * (a.height[1] * a.width[0]) === 0).toBe(true);
+  it("both authored area specs are same-sign BY SHAPE, not by luck of the guard's wording", () => {
+    const areas = new Map(
+      SPECS.filter((s) => s.raw.area !== undefined).map((s) => [
+        s.file.replace(/\\/g, "/"),
+        s.raw.area as { width: [number, number]; height: [number, number]; mode: string },
+      ])
+    );
+    const negative = [...areas].find(([file]) => file.endsWith("two-step-equations/lessons/tse-01-01.json"))?.[1];
+    const positive = [...areas].find(([file]) => file.endsWith("linear-equations-systems/lessons/les-01-03.json"))?.[1];
+    expect(negative).toEqual({ width: [0, -3], height: [1, 2], mode: "distribute" });
+    expect(positive).toEqual({ width: [0, 3], height: [1, 4], mode: "distribute" });
+    for (const a of [negative!, positive!]) {
+      const xParts = [a.height[0] * a.width[1], a.height[1] * a.width[0]].filter((n) => n !== 0);
+      expect(new Set(xParts.map(Math.sign)).size).toBeLessThanOrEqual(1);
+    }
   });
 });

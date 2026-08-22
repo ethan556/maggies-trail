@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "The repeated sum is the array written as arithmetic: 3 rows of 4 becomes 4 + 4 + 4. The addend is the row size; the number of addends is the row count.",
       "narration": "The repeated sum is the array written as arithmetic: 3 rows of 4 becomes 4 + 4 + 4. The addend is the row size; the number of addends is the row count."
     },
@@ -248,7 +247,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing.",
       "narration": "Reading it back works too — see 5 + 5 + 5 and picture 3 rows of 5 before computing a thing."
     },
@@ -259,7 +257,7 @@
       "conceptTag": "g2a-repeated-sum",
       "widget": {
         "type": "tapDiagram",
-        "prompt": "This array shows 4 + 4 + 4. Tap the row that is the LAST addend.",
+        "prompt": "This array shows 4 + 4 + 4. Tap the row that is the FIRST addend.",
         "mode": "selectAll",
         "canvas": {
           "w": 4,
@@ -273,7 +271,7 @@
             "label": "row 1, column 1",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 1, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "correct": true
           },
           {
             "id": "r1c2",
@@ -282,7 +280,7 @@
             "label": "row 1, column 2",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 1, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "correct": true
           },
           {
             "id": "r1c3",
@@ -291,7 +289,7 @@
             "label": "row 1, column 3",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 1, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "correct": true
           },
           {
             "id": "r1c4",
@@ -300,7 +298,7 @@
             "label": "row 1, column 4",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 1, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "correct": true
           },
           {
             "id": "r2c1",
@@ -309,7 +307,7 @@
             "label": "row 2, column 1",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 1 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "feedback": "row 2, column 1 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r2c2",
@@ -318,7 +316,7 @@
             "label": "row 2, column 2",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 2 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "feedback": "row 2, column 2 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r2c3",
@@ -327,7 +325,7 @@
             "label": "row 2, column 3",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 3 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "feedback": "row 2, column 3 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r2c4",
@@ -336,7 +334,7 @@
             "label": "row 2, column 4",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 4 belongs to an earlier addend — the last “+ 4” is the bottom row, row 3, all the way across."
+            "feedback": "row 2, column 4 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r3c1",
@@ -345,7 +343,7 @@
             "label": "row 3, column 1",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 3, column 1 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r3c2",
@@ -354,7 +352,7 @@
             "label": "row 3, column 2",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 3, column 2 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r3c3",
@@ -363,7 +361,7 @@
             "label": "row 3, column 3",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 3, column 3 is not in the first addend. The first + 4 is the top row, row 1."
           },
           {
             "id": "r3c4",
@@ -372,11 +370,11 @@
             "label": "row 3, column 4",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 3, column 4 is not in the first addend. The first + 4 is the top row, row 1."
           }
         ],
-        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
-        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+        "missFeedback": "The first + 4 is the top row. Tap every counter in row 1.",
+        "successFeedback": "Exactly right — the first + 4 is the top row."
       },
       "cml": {
         "stage": "construct",
@@ -472,31 +470,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "An array has 3 rows with 6 dots in each row. Which repeated sum counts it BY ROWS?",
+        "prompt": "An array has 3 rows with 5 dots in each row. Which repeated sum counts it BY COLUMNS?",
         "options": [
           {
             "id": "o0",
-            "label": "6 + 6 + 6",
+            "label": "3 + 3 + 3 + 3 + 3",
             "correct": true,
-            "feedback": "Correct — one 6 for each of the 3 rows, added again and again."
+            "feedback": "Correct — one 3 for each of the 5 columns (every column holds one dot from each of the 3 rows), added again and again."
           },
           {
             "id": "o1",
-            "label": "3 + 3 + 3 + 3 + 3 + 3",
+            "label": "5 + 5 + 5",
             "correct": false,
-            "feedback": "That counts BY COLUMNS (6 columns of 3) — same total, different story than \"by rows\"."
+            "feedback": "That counts BY ROWS (3 rows of 5) — same total, different story than \"by columns\"."
           },
           {
             "id": "o2",
-            "label": "3 + 6",
+            "label": "3 + 5",
             "correct": false,
-            "feedback": "Adding the row count to the row size mixes two different kinds of numbers."
+            "feedback": "Adding the column count to the column height mixes two different kinds of numbers."
           },
           {
             "id": "o3",
-            "label": "7 + 7 + 7",
+            "label": "4 + 4 + 4 + 4 + 4",
             "correct": false,
-            "feedback": "Each row holds 6, not 7 — the repeated number must match the row size."
+            "feedback": "Each column holds 3 dots, not 4 — the repeated number must match the column height."
           }
         ]
       },

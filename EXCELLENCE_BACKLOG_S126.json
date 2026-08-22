@@ -4,6 +4,7 @@
     "content/courses/**/lessons/*.json",
     "scripts/engine-capabilities.json",
     "scripts/flagship-tier.mjs",
+    "scripts/audit/flagship-representation.mjs",
     "scripts/audit/excellence-dispositions-s126.json"
   ],
   "repositoryRoot": ".",
@@ -12,84 +13,122 @@
     "strongCausalStep": "widget capability manip >= 2 and consequence >= 2",
     "explorationStep": "a widget step whose authored kind is interactive",
     "causalSpine": "a lesson has at least one exploration step served by a strong causal engine",
+    "derivedRepresentationNoveltyClassification": "only a live K-8 C/D lesson with at least one check, at least one challenge, and evidence-based transfer score 0; all other missing policy remains a hard failure",
     "honestRestingTier": "target experience tier after exact-fit work; B/C-intentional are valid when prediction or manipulation would duplicate/change the assessed action"
   },
   "summary": {
-    "liveK8Backlog": 0,
-    "classified": 0,
+    "liveK8Backlog": 1,
+    "classified": 1,
+    "derivedClassifications": 0,
     "unreviewed": 0,
-    "dispositions": {},
-    "honestRestingTiers": {},
+    "dispositions": {
+      "intentional-assessment": 1
+    },
+    "honestRestingTiers": {
+      "C-intentional": 1
+    },
     "representationMissing": 0,
     "representationPartial": 0,
-    "honestPredictionCeilings": 15
+    "honestPredictionCeilings": 19
   },
   "causalCoverage": [
     {
       "band": "K–2",
       "lessons": 410,
-      "widgetSteps": 2525,
-      "causalWidgetSteps": 1009,
-      "explorationSteps": 884,
-      "causalExplorationSteps": 728,
+      "widgetSteps": 2538,
+      "causalWidgetSteps": 1014,
+      "explorationSteps": 890,
+      "causalExplorationSteps": 734,
       "lessonsWithExploration": 410,
-      "lessonsWithCausalSpine": 389,
-      "widgetCausalCoverage": 0.3996039603960396,
-      "explorationCausalCoverage": 0.8235294117647058,
-      "causalSpineCoverage": 0.948780487804878
+      "lessonsWithCausalSpine": 405,
+      "widgetCausalCoverage": 0.39952718676122934,
+      "explorationCausalCoverage": 0.8247191011235955,
+      "causalSpineCoverage": 0.9878048780487805
     },
     {
       "band": "G3–5",
       "lessons": 419,
       "widgetSteps": 2543,
-      "causalWidgetSteps": 664,
-      "explorationSteps": 850,
-      "causalExplorationSteps": 569,
+      "causalWidgetSteps": 728,
+      "explorationSteps": 851,
+      "causalExplorationSteps": 630,
       "lessonsWithExploration": 419,
-      "lessonsWithCausalSpine": 333,
-      "widgetCausalCoverage": 0.2611089264648053,
-      "explorationCausalCoverage": 0.6694117647058824,
-      "causalSpineCoverage": 0.7947494033412887
+      "lessonsWithCausalSpine": 404,
+      "widgetCausalCoverage": 0.28627605190719624,
+      "explorationCausalCoverage": 0.7403055229142186,
+      "causalSpineCoverage": 0.964200477326969
     },
     {
       "band": "G6–8",
       "lessons": 245,
-      "widgetSteps": 1550,
-      "causalWidgetSteps": 455,
-      "explorationSteps": 565,
-      "causalExplorationSteps": 274,
+      "widgetSteps": 1553,
+      "causalWidgetSteps": 516,
+      "explorationSteps": 566,
+      "causalExplorationSteps": 327,
       "lessonsWithExploration": 245,
-      "lessonsWithCausalSpine": 186,
-      "widgetCausalCoverage": 0.29354838709677417,
-      "explorationCausalCoverage": 0.4849557522123894,
-      "causalSpineCoverage": 0.7591836734693878
+      "lessonsWithCausalSpine": 232,
+      "widgetCausalCoverage": 0.3322601416613007,
+      "explorationCausalCoverage": 0.5777385159010601,
+      "causalSpineCoverage": 0.9469387755102041
     },
     {
       "band": "HS",
       "lessons": 627,
-      "widgetSteps": 3642,
-      "causalWidgetSteps": 576,
-      "explorationSteps": 1199,
-      "causalExplorationSteps": 531,
+      "widgetSteps": 3644,
+      "causalWidgetSteps": 623,
+      "explorationSteps": 1202,
+      "causalExplorationSteps": 550,
       "lessonsWithExploration": 627,
-      "lessonsWithCausalSpine": 496,
-      "widgetCausalCoverage": 0.15815485996705106,
-      "explorationCausalCoverage": 0.44286905754795663,
-      "causalSpineCoverage": 0.7910685805422647
+      "lessonsWithCausalSpine": 503,
+      "widgetCausalCoverage": 0.17096597145993414,
+      "explorationCausalCoverage": 0.45757071547420963,
+      "causalSpineCoverage": 0.8022328548644339
     }
   ],
   "honestPredictionCeilings": [
     {
+      "lessonId": "ks-01-02",
+      "title": "Shapes Any Way Up",
+      "grade": 0,
+      "score": 26,
+      "status": "unsafe",
+      "reason": "Every exploratory step is itself a classification/selection judgment; a preceding prediction would duplicate the assessed judgment."
+    },
+    {
+      "lessonId": "ks-02-01",
+      "title": "Shapes We Can Hold",
+      "grade": 0,
+      "score": 26,
+      "status": "redundant",
+      "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
+    },
+    {
+      "lessonId": "ks-03-03",
+      "title": "Sort and Count",
+      "grade": 0,
+      "score": 27,
+      "status": "unsafe",
+      "reason": "Every exploratory step is itself a classification/selection judgment; a preceding prediction would duplicate the assessed judgment."
+    },
+    {
       "lessonId": "mmt-01-02",
       "title": "Measuring with Different Starting Points",
       "grade": 2,
-      "score": 30,
+      "score": 26,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
     {
       "lessonId": "mmt-01-03",
       "title": "Choosing the Right Unit",
+      "grade": 2,
+      "score": 26,
+      "status": "redundant",
+      "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
+    },
+    {
+      "lessonId": "mmt-02-01",
+      "title": "Estimating Before You Measure",
       "grade": 2,
       "score": 30,
       "status": "redundant",
@@ -99,7 +138,7 @@
       "lessonId": "mmt-05-01",
       "title": "Reading a Picture Graph",
       "grade": 2,
-      "score": 29,
+      "score": 24,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
@@ -112,18 +151,18 @@
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
     {
-      "lessonId": "ssg2-02-02",
-      "title": "Bigger Grids",
+      "lessonId": "ssg2-02-03",
+      "title": "Grids in Everyday Objects",
       "grade": 2,
-      "score": 29,
+      "score": 24,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
     {
-      "lessonId": "ssg2-02-03",
-      "title": "Grids in Everyday Objects",
+      "lessonId": "ssg2-03-03",
+      "title": "Comparing Halves, Thirds, and Fourths",
       "grade": 2,
-      "score": 29,
+      "score": 25,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
@@ -131,7 +170,7 @@
       "lessonId": "dop-01-03",
       "title": "Writing & Reading Expressions",
       "grade": 5,
-      "score": 29,
+      "score": 27,
       "status": "unsafe",
       "reason": "The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface."
     },
@@ -147,7 +186,7 @@
       "lessonId": "rr-05-03",
       "title": "Ratios Capstone",
       "grade": 6,
-      "score": 32,
+      "score": 30,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
@@ -160,10 +199,10 @@
       "reason": "The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface."
     },
     {
-      "lessonId": "sp-02-01",
-      "title": "Are Two Groups Really Different?",
-      "grade": 7,
-      "score": 31,
+      "lessonId": "bv-02-03",
+      "title": "Reading a Line's Equation",
+      "grade": 8,
+      "score": 32,
       "status": "redundant",
       "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
     },
@@ -192,12 +231,12 @@
       "reason": "The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface."
     },
     {
-      "lessonId": "tm-04-01",
-      "title": "Why the Theorem Works",
+      "lessonId": "tm-01-03",
+      "title": "Turning with Rotations",
       "grade": 8,
-      "score": 32,
-      "status": "redundant",
-      "reason": "Every exploratory step is a read/count/identify observation; predicting would duplicate or precede the object-reading task rather than test a causal relationship."
+      "score": 30,
+      "status": "unsafe",
+      "reason": "The current exploratory steps do not expose a causal state; prediction should wait for an exact-fit engine rather than be stapled to an answer surface."
     }
   ],
   "undrawnRepresentationCandidates": [
@@ -262,16 +301,7 @@
       "stepId": "k1",
       "widgetType": "numeric",
       "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-03.json",
-      "evidence": "A line plot shows 6 x's above the number 11. How many data points are at 11?"
-    },
-    {
-      "lessonId": "g2g-01-03",
-      "title": "Building a Line Plot",
-      "grade": 2,
-      "stepId": "k2",
-      "widgetType": "numeric",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-03.json",
-      "evidence": "A line plot shows 5 x's above the number 10. How many data points are at 10?"
+      "evidence": "A line plot shows 6 x's above the number 11. How many measurements are at 11?"
     },
     {
       "lessonId": "g2g-01-04",
@@ -280,52 +310,52 @@
       "stepId": "k1",
       "widgetType": "numeric",
       "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-04.json",
-      "evidence": "A line plot shows 8 x's above the number 8. How many data points are at 8?"
+      "evidence": "A line plot shows 8 x's above the number 8. How many measurements are at 8?"
     },
     {
-      "lessonId": "g2g-01-04",
-      "title": "Reading a Line Plot",
+      "lessonId": "g2g-02-03",
+      "title": "Building a Bar Graph",
       "grade": 2,
       "stepId": "k2",
       "widgetType": "numeric",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-04.json",
-      "evidence": "A line plot shows 3 x's above the number 9. How many data points are at 9?"
+      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-02-03.json",
+      "evidence": "3 objects are shown by the bar. Which number on the scale should line up with its top on a one-unit graph?"
     },
     {
-      "lessonId": "g2g-01-04",
-      "title": "Reading a Line Plot",
-      "grade": 2,
-      "stepId": "ch1",
+      "lessonId": "g5d-01-01",
+      "title": "Adding Decimals with a Model",
+      "grade": 5,
+      "stepId": "k1",
       "widgetType": "numeric",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-04.json",
-      "evidence": "One more, for the road. A line plot shows 3 x's above the number 8. How many data points are at 8?"
+      "sourcePath": "content/courses/decimal-fluency-g5/lessons/g5d-01-01.json",
+      "evidence": "Read or explain the representation. A hundredths grid has 100 equal cells. How many cells must be shaded to show 0.68?"
     },
     {
-      "lessonId": "g2g-01-05",
-      "title": "Most Common Measurement",
-      "grade": 2,
+      "lessonId": "g5d-02-02",
+      "title": "Multiplying Two Decimals",
+      "grade": 5,
       "stepId": "k1",
       "widgetType": "mcq",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-05.json",
-      "evidence": "A line plot shows stacks of 2, 5, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?"
+      "sourcePath": "content/courses/decimal-fluency-g5/lessons/g5d-02-02.json",
+      "evidence": "Read or explain the representation. In the area grid for 0.4 × 0.3, what does the overlap represent?"
     },
     {
-      "lessonId": "g2g-01-05",
-      "title": "Most Common Measurement",
-      "grade": 2,
+      "lessonId": "dg4-01-02",
+      "title": "Writing a Tenth",
+      "grade": 4,
       "stepId": "k3",
-      "widgetType": "mcq",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-01-05.json",
-      "evidence": "A line plot shows stacks of 6, 2, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?"
+      "widgetType": "numeric",
+      "sourcePath": "content/courses/decimals-intro-g4/lessons/dg4-01-02.json",
+      "evidence": "Write the decimal. A diagram shows 2 shaded tenths. Translate the diagram into a decimal."
     },
     {
-      "lessonId": "g2g-03-03",
-      "title": "Which Graph Should I Use?",
-      "grade": 2,
-      "stepId": "k3",
+      "lessonId": "dg4-03-01",
+      "title": "Decimal to Fraction",
+      "grade": 4,
+      "stepId": "k2",
       "widgetType": "mcq",
-      "sourcePath": "content/courses/data-line-plots-g2/lessons/g2g-03-03.json",
-      "evidence": "A line plot shows stacks of 2, 4, 3, and 1 x's above 5, 6, 7, and 8 inches. Which measurement is most common?"
+      "sourcePath": "content/courses/decimals-intro-g4/lessons/dg4-03-01.json",
+      "evidence": "Match the fraction. A hundredths grid shows 76 shaded cells. Which fraction describes the model?"
     },
     {
       "lessonId": "dr-01-01",
@@ -373,6 +403,15 @@
       "evidence": "Test a point against a graph. The graph shows x < 0 (open circle at 0, arrow left). Does x = -3 satisfy it?"
     },
     {
+      "lessonId": "fn-01-03",
+      "title": "Functions from a Table",
+      "grade": 9,
+      "stepId": "i2",
+      "widgetType": "mcq",
+      "sourcePath": "content/courses/functions-and-sequences/lessons/fn-01-03.json",
+      "evidence": "Does the rule stop at the table's edge? The table only shows f(1) = 2, f(2) = 4, f(3) = 6. A student says f(20) is unknown because 20 never appears in the table. Which is correct?"
+    },
+    {
       "lessonId": "fg-02-03",
       "title": "Initial Value and y = mx + b",
       "grade": 8,
@@ -389,15 +428,6 @@
       "widgetType": "buildExpression",
       "sourcePath": "content/courses/functions-g8/lessons/fg-03-01.json",
       "evidence": "Read initial value from a graph description. A graphed line crosses the y-axis at 4 and rises 1 for every 1 across. Its equation is:"
-    },
-    {
-      "lessonId": "fg-04-01",
-      "title": "Linear vs. Nonlinear",
-      "grade": 8,
-      "stepId": "i1",
-      "widgetType": "mcq",
-      "sourcePath": "content/courses/functions-g8/lessons/fg-04-01.json",
-      "evidence": "Read the differences. A table gives outputs 1, 4, 7, 10 for inputs 0, 1, 2, 3. Linear or nonlinear?"
     },
     {
       "lessonId": "gf-02-01",
@@ -436,22 +466,13 @@
       "evidence": "Read the arrow marks. In a diagram, line P and line R both have a single arrowhead mark; line Q has a double arrowhead mark. Which lines are parallel to each other?"
     },
     {
-      "lessonId": "mc-05-01",
-      "title": "Measuring to the Nearest Fraction",
-      "grade": 4,
-      "stepId": "i1",
-      "widgetType": "numeric",
-      "sourcePath": "content/courses/measure-convert/lessons/mc-05-01.json",
-      "evidence": "Read the nearest mark. An object's edge lands right on the third tick mark past 0 on an eighths-ruler. As a fraction (over 8), what is its numerator?"
-    },
-    {
       "lessonId": "mmt-05-03",
       "title": "Reading a Line Plot and Comparing Data",
       "grade": 2,
       "stepId": "i1",
       "widgetType": "numeric",
       "sourcePath": "content/courses/measure-money-time/lessons/mmt-05-03.json",
-      "evidence": "Count the X's. A line plot shows 3 x's above the number 5. How many data points are at 5?"
+      "evidence": "Count the X's. A line plot shows 3 x's above the number 5 and 1 x above the number 6. How many data points are at 5?"
     },
     {
       "lessonId": "mmt-05-03",
@@ -460,7 +481,7 @@
       "stepId": "k1",
       "widgetType": "numeric",
       "sourcePath": "content/courses/measure-money-time/lessons/mmt-05-03.json",
-      "evidence": "Another number's X's. A line plot shows 6 x's above the number 8. How many data points are at 8?"
+      "evidence": "Another number's X's. A line plot shows 6 x's above the number 8 and 2 x's above the number 9. How many data points are at 8?"
     },
     {
       "lessonId": "mmt-05-03",
@@ -469,7 +490,7 @@
       "stepId": "i3",
       "widgetType": "numeric",
       "sourcePath": "content/courses/measure-money-time/lessons/mmt-05-03.json",
-      "evidence": "One more X-count. A line plot shows 2 x's above the number 3. How many data points are at 3?"
+      "evidence": "Three stacks this time — read the one the question asks for, not the biggest. A line plot shows 4 x's above the number 2, 2 x's above the number 3, and 1 x above the number 4. How many data points are at 4?"
     },
     {
       "lessonId": "mmt-05-03",
@@ -478,7 +499,7 @@
       "stepId": "k3",
       "widgetType": "numeric",
       "sourcePath": "content/courses/measure-money-time/lessons/mmt-05-03.json",
-      "evidence": "A bigger X-count. A line plot shows 10 x's above the number 6. How many data points are at 6?"
+      "evidence": "Four stacks — the tallest one isn't what's asked. A line plot shows 2 x's above the number 3, 6 x's above the number 5, 1 x above the number 7, and 4 x's above the number 9. How many data points are at 7?"
     },
     {
       "lessonId": "g4v-02-03",
@@ -487,16 +508,7 @@
       "stepId": "k2",
       "widgetType": "mcq",
       "sourcePath": "content/courses/measure-problems-g4/lessons/g4v-02-03.json",
-      "evidence": "A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?"
-    },
-    {
-      "lessonId": "g4v-03-01",
-      "title": "Money Problems",
-      "grade": 4,
-      "stepId": "k2",
-      "widgetType": "mcq",
-      "sourcePath": "content/courses/measure-problems-g4/lessons/g4v-03-01.json",
-      "evidence": "A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?"
+      "evidence": "Apply without the opening model: A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?"
     },
     {
       "lessonId": "g4v-03-04",
@@ -505,16 +517,7 @@
       "stepId": "k1",
       "widgetType": "mcq",
       "sourcePath": "content/courses/measure-problems-g4/lessons/g4v-03-04.json",
-      "evidence": "A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?"
-    },
-    {
-      "lessonId": "g4v-03-04",
-      "title": "Diagrams for Measurement Problems",
-      "grade": 4,
-      "stepId": "k3",
-      "widgetType": "mcq",
-      "sourcePath": "content/courses/measure-problems-g4/lessons/g4v-03-04.json",
-      "evidence": "A bar diagram shows 6 equal parts of 400 m, with 150 m crossed off the end. What does it record?"
+      "evidence": "A bar diagram shows 5 equal parts of 300 m, with 80 m crossed off the end. What does it record?"
     },
     {
       "lessonId": "md-03-02",
@@ -625,15 +628,6 @@
       "evidence": "Spot the fingerprint. A table shows pairs (2, 18), (3, 12), (6, 6). Which variation fits?"
     },
     {
-      "lessonId": "rr-01-03",
-      "title": "Equivalent Ratios",
-      "grade": 6,
-      "stepId": "i2",
-      "widgetType": "mcq",
-      "sourcePath": "content/courses/ratios-rates/lessons/rr-01-03.json",
-      "evidence": "Ratios shrink, too. A ratio table shows 4 : 10 in one row and 2 : 5 in the next. What happened between the rows?"
-    },
-    {
       "lessonId": "rr-02-01",
       "title": "Ratio Tables",
       "grade": 6,
@@ -679,5 +673,193 @@
       "evidence": "Read a rate from a plotted point. A proportional graph passes through (1, 5). What is the unit rate?"
     }
   ],
-  "records": []
+  "records": [
+    {
+      "lessonId": "df3-03-02",
+      "title": "Why You Can't Divide by Zero",
+      "course": "Division Fluency",
+      "grade": 3,
+      "sourcePath": "content/courses/division-fluency-g3/lessons/df3-03-02.json",
+      "currentTier": "D",
+      "currentScore": 24,
+      "currentDimensions": {
+        "prediction": 2,
+        "manip": 0,
+        "conseq": 0,
+        "revise": 2,
+        "contrast": 3,
+        "invariant": 3,
+        "formal": 2,
+        "transfer": 2,
+        "misconception": 3,
+        "adapt": 1,
+        "a11y": 2,
+        "mobile": 2,
+        "polish": 2
+      },
+      "currentWidgets": [
+        "mcq×5",
+        "numeric×1"
+      ],
+      "conceptTags": [
+        "g3d-zero"
+      ],
+      "assessedClaimEvidence": [
+        {
+          "stepId": "i1",
+          "kind": "interactive",
+          "widgetType": "mcq",
+          "prompt": "Match division by zero to its inverse multiplication question.: Which inverse equation would need a solution for 7 ÷ 0 to have a quotient?"
+        },
+        {
+          "stepId": "k1",
+          "kind": "check",
+          "widgetType": "mcq",
+          "prompt": "Zero as divisor.: What is 7 ÷ 0?"
+        },
+        {
+          "stepId": "i2",
+          "kind": "interactive",
+          "widgetType": "mcq",
+          "prompt": "Use the zero-product pattern.: What does 0 × any number equal?"
+        },
+        {
+          "stepId": "k2",
+          "kind": "check",
+          "widgetType": "numeric",
+          "prompt": "Zero divided.: Five equal groups contain 0 counters in all. How many counters are in each group?"
+        },
+        {
+          "stepId": "k3",
+          "kind": "check",
+          "widgetType": "mcq",
+          "prompt": "Zero as divisor again.: Does 12 ÷ 0 have a quotient?"
+        },
+        {
+          "stepId": "ch1",
+          "kind": "challenge",
+          "widgetType": "mcq",
+          "prompt": "Tell them apart.: Which expression has a quotient?"
+        }
+      ],
+      "interactionIntent": "justify",
+      "representationRequired": "symbolic process",
+      "representationPresent": "yes",
+      "predictionEligibility": "unsafe",
+      "currentPredictionEligibility": {
+        "status": "eligible",
+        "reason": "An authored prediction cycle already exists."
+      },
+      "candidateDisposition": "intentional-assessment",
+      "candidateEngineOrExtension": "No manipulable engine change or additional transfer item is warranted. All assessed/exploratory items (i1, i2 mcq + k1, k2, k3 check + ch1 challenge) are deliberately conventional select/entry surfaces (mcq, numeric) because the concept — division by zero is undefined — is a symbolic, definitional exclusion proven by inverse multiplication (0 x ? = n has no solution), not a spatial or quantitative relationship a drag/build engine would model more truthfully. k1 (7÷0) and k3 (12÷0) share the DivZeroMcq generator form to drill the same undefined-quotient judgment at different numbers (near-repetition is intentional practice, not a flaw); k2 (0÷5=0, zero as dividend) and ch1 (discriminate 8÷0 vs 0÷8) are authored one-off conceptual items. This shape is test-locked by src/lib/session186.fluencyPair.test.ts (NO_FACT_LESSONS = {df3-03-02}; UNVARIANTED_OK includes df3-03-02/k2 and df3-03-02/ch1, documented there as 'one-off conceptual items') and src/lib/session254.divisionFluencyG3CourseIntegrity.test.tsx (option-id/length parity checks specifically pin df3-03-02/k1 and df3-03-02/k3).",
+      "exactFitEvidence": "Classified from the authored prompts. Acceptance contract: Live dimensions from flagship-tier.mjs (TIER_JSON snapshot taken 2026-08-20, session S319): d.contrast=3, d.transfer=2, d.misconception=3, d.invariant=3 (all at or near max); d.manip=0 and d.conseq=0 are the only tier-C drivers and are structural to the mcq/numeric answer surface, not evidence of repeated/undifferentiated items. transferScore(checks=[k1,k3 signature variant:g3-div-fluency:DivZeroMcq; k2 signature surface:numeric], challenges=[ch1 signature surface:mcq]) already returns 2 (nonzero) because ch1's prompt ('Which expression has a quotient? 8÷0 vs 0÷8') asks the learner to discriminate zero-as-divisor from zero-as-dividend — a judgment distinct in representation signature and normalized prompt text from every check step — so authoring a further transfer question would be either redundant with ch1 or would misdiagnose a repetition problem this lesson does not have. predictionEligibility.status is independently 'unsafe' (scripts/audit/prediction-eligibility.mjs: every exploratory step, i1/i2, is itself a classification/selection judgment; a preceding prediction would duplicate the assessed judgment) — consistent with declining a manip/prediction rebuild too. Re-open only if a future read shows two of {k1,k2,k3,ch1} sharing both representationSignature and normalized prompt, or ch1 no longer discriminating 8÷0 from 0÷8; neither holds as of this record.",
+      "misconceptionReachability": {
+        "status": "preserve-current-assessment",
+        "authoredWrongPaths": [
+          {
+            "stepId": "i1",
+            "widgetType": "mcq",
+            "trigger": "o1",
+            "feedback": "This fact is true, but it does not find a number that zero can multiply to make 7."
+          },
+          {
+            "stepId": "i1",
+            "widgetType": "mcq",
+            "trigger": "o2",
+            "feedback": "This asks about 0 ÷ 7, where zero is the total, not the divisor."
+          },
+          {
+            "stepId": "k1",
+            "widgetType": "mcq",
+            "trigger": "o0",
+            "feedback": "If 7 ÷ 0 were 7, then 7 × 0 would have to equal 7, but 7 × 0 = 0."
+          },
+          {
+            "stepId": "k1",
+            "widgetType": "mcq",
+            "trigger": "o1",
+            "feedback": "If 7 ÷ 0 were 1, then 1 × 0 would have to equal 7, but 1 × 0 = 0."
+          },
+          {
+            "stepId": "k1",
+            "widgetType": "mcq",
+            "trigger": "o3",
+            "feedback": "If 7 ÷ 0 were 0, then 0 × 0 would have to equal 7, but 0 × 0 = 0."
+          },
+          {
+            "stepId": "i2",
+            "widgetType": "mcq",
+            "trigger": "o1",
+            "feedback": "Zero groups contain 0, not 1."
+          },
+          {
+            "stepId": "i2",
+            "widgetType": "mcq",
+            "trigger": "o2",
+            "feedback": "Zero times any number is 0, so it cannot equal 12."
+          },
+          {
+            "stepId": "k2",
+            "widgetType": "numeric",
+            "trigger": 5,
+            "feedback": "That repeats the divisor. Sharing nothing among 5 groups leaves nothing in each."
+          },
+          {
+            "stepId": "k2",
+            "widgetType": "numeric",
+            "trigger": 1,
+            "feedback": "Zero shared into 5 groups gives 0 in each group, not 1."
+          },
+          {
+            "stepId": "k3",
+            "widgetType": "mcq",
+            "trigger": "o0",
+            "feedback": "If 12 ÷ 0 were 1, then 1 × 0 would have to equal 12, but 1 × 0 = 0."
+          },
+          {
+            "stepId": "k3",
+            "widgetType": "mcq",
+            "trigger": "o2",
+            "feedback": "If 12 ÷ 0 were 0, then 0 × 0 would have to equal 12, but 0 × 0 = 0."
+          },
+          {
+            "stepId": "k3",
+            "widgetType": "mcq",
+            "trigger": "o3",
+            "feedback": "If 12 ÷ 0 were 12, then 12 × 0 would have to equal 12, but 12 × 0 = 0."
+          },
+          {
+            "stepId": "ch1",
+            "widgetType": "mcq",
+            "trigger": "o0",
+            "feedback": "Zero as the DIVISOR is undefined — no number times 0 gives 8."
+          },
+          {
+            "stepId": "ch1",
+            "widgetType": "mcq",
+            "trigger": "o1",
+            "feedback": "Only division BY zero is undefined; zero divided by a number is simply 0."
+          },
+          {
+            "stepId": "ch1",
+            "widgetType": "mcq",
+            "trigger": "o2",
+            "feedback": "0 ÷ 8 does have an answer: 0."
+          }
+        ]
+      },
+      "honestRestingTier": "C-intentional",
+      "remedialRisk": {
+        "routes": 1,
+        "sources": [
+          "df3-03-02:g3d-zero"
+        ]
+      },
+      "verificationOwner": "df3-03-02.s126-fit.test + independent answer derivation + non-target lesson hash proof",
+      "workstream": "S319-df3-03-02-c-intentional-adjudication",
+      "classificationRule": "reviewed-policy",
+      "classificationEvidence": null,
+      "reviewStatus": "classified"
+    }
+  ]
 }

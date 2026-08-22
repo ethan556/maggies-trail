@@ -15,68 +15,58 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match standard to word form.",
+   "body": "Connect a spoken chunk to the place where that chunk begins.",
    "conceptTag": "number-forms",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each standard-form number to its word form.",
-    "left": [
+    "type": "placeValueTransformLab",
+    "task": "placeExponent",
+    "answerMode": "choice",
+    "prompt": "In 425,301, which place gives the first chunk its name: four hundred twenty-five thousand?",
+    "values": [
+     425301
+    ],
+    "targetExponent": 3,
+    "choices": [
      {
-      "id": "n215000",
-      "label": "215,000"
+      "id": "thousands",
+      "label": "Thousands",
+      "claim": "place-exponent:3",
+      "feedback": "The comma separates the thousands chunk from the final three digits."
      },
      {
-      "id": "n80306",
-      "label": "80,306"
+      "id": "hundreds",
+      "label": "Hundreds",
+      "claim": "misconception:hundreds",
+      "feedback": "Hundreds belongs inside a three-digit chunk; it does not name the chunk to the left of the comma."
      },
      {
-      "id": "n9040",
-      "label": "9,040"
+      "id": "millions",
+      "label": "Millions",
+      "claim": "misconception:millions",
+      "feedback": "A six-digit number has a thousands chunk, not a millions chunk."
      }
     ],
-    "right": [
-     {
-      "id": "w215",
-      "label": "two hundred fifteen thousand"
-     },
-     {
-      "id": "w80306",
-      "label": "eighty thousand, three hundred six"
-     },
-     {
-      "id": "w9040",
-      "label": "nine thousand, forty"
-     }
-    ],
-    "pairs": {
-     "n215000": "w215",
-     "n80306": "w80306",
-     "n9040": "w9040"
-    },
-    "pairErrors": [
-     {
-      "left": "n9040",
-      "right": "w80306",
-      "feedback": "That word form (eighty thousand, three hundred six) is far bigger than 9,040 — 9,040 reads as 'nine thousand, forty.'"
-     }
-    ],
-    "missFeedback": "Read the thousands-period digits first, say 'thousand,' then read what's left.",
-    "successFeedback": "215,000 / 80,306 / 9,040 — three numbers, three matching word forms."
+    "numericErrors": [],
+    "requiredExplorations": 1,
+    "successFeedback": "The left chunk is counted in thousands, so word form says four hundred twenty-five thousand, three hundred one.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "Use the aligned place-value model and the highlighted place.",
+    "tolerance": 0
    },
    "predict": {
-    "prompt": "Word form — does it name the DIGITS one by one, or the place-value chunks?",
+    "prompt": "How do we read a whole number in word form?",
     "options": [
      {
       "id": "chunks",
-      "label": "The chunks — like 'four hundred twenty-five thousand'"
+      "label": "Read place-value chunks"
      },
      {
       "id": "digits",
-      "label": "The digits — 'four two five three zero one'"
+      "label": "Read one digit at a time"
      },
      {
       "id": "both",
-      "label": "Both, equally"
+      "label": "Either way means the same"
      }
     ],
     "outcomeId": "chunks",
@@ -105,7 +95,7 @@
      },
      {
       "value": 640012,
-      "feedback": "640,012 swaps the hundred-thousands and ten-thousands digits. 'Six hundred four thousand' is 604,000, not 640,000."
+      "feedback": "640,012 swaps the ten-thousands and thousands digits. 'Six hundred four thousand' is 604,000, not 640,000."
      }
     ],
     "fallbackFeedback": "Write the thousands-period words as a number, add three zeros, then add whatever's left."
@@ -235,7 +225,7 @@
        "tp3",
        "t6"
       ],
-      "feedback": "30,000 reads the 2 as if it belonged to the thousands column — but it sits in ten-thousands: 20,000, not 30,000."
+      "feedback": "30,000 misreads the ten-thousands digit 2 as if it were a 3 — that digit is really 2, so it's worth 20,000, not 30,000."
      }
     ],
     "reusable": false,

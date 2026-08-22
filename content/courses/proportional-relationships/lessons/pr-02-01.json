@@ -344,23 +344,23 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Test another broken table.",
+      "body": "Would you trust this assumption?",
       "conceptTag": "pr-test-proportional",
       "explanationVariants": [
-        "12/4=3 and 24/8=3, but 16/5=3.2, which doesn't match — not proportional.",
-        "The middle ratio 16/5 breaks the pattern of 3."
+        "12/4=3 and 24/8=3 fit a steady $3 rate, but 16/5=3.2 breaks it — the assumption fails.",
+        "The $16 charge is the one that doesn't fit $3 per snack."
       ],
       "widget": {
         "type": "proportionalReasoningLab",
-        "task": "testProportional",
+        "task": "steadyAssumption",
         "answerMode": "choice",
-        "prompt": "A table has pairs (4, 12), (5, 16), (8, 24). Is this proportional?",
-        "xLabel": "x",
-        "yLabel": "y",
+        "prompt": "A vending machine is supposed to charge a steady $3 per snack. Records show (4 snacks, $12), (5 snacks, $16), (8 snacks, $24). Does the steady-rate assumption hold?",
+        "xLabel": "snacks",
+        "yLabel": "cost ($)",
         "series": [
           {
-            "id": "table",
-            "label": "table",
+            "id": "machine",
+            "label": "vending machine",
             "pairs": [
               [
                 4,
@@ -378,52 +378,48 @@
           }
         ],
         "requiredExplorations": 3,
-        "successFeedback": "Yes — 12/4=3 and 24/8=3, but 16/5 isn't 3. One broken ratio makes it not proportional.",
+        "successFeedback": "No — 12/4 and 24/8 both equal 3, matching the steady rate, but 16/5 = 3.2. At 5 snacks the assumption breaks down.",
         "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
         "fallbackFeedback": "Choose the conclusion supported by the normalized ratios.",
         "tolerance": 0,
         "choices": [
           {
             "id": "a",
-            "label": "No, the middle ratio doesn't match",
-            "feedback": "Yes — 12/4=3 and 24/8=3, but 16/5 isn't 3. One broken ratio makes it not proportional.",
-            "claim": "proportional:no"
+            "label": "No — the $16 charge breaks the steady rate",
+            "feedback": "No — 12/4 and 24/8 both equal 3, matching the steady rate, but 16/5 = 3.2. At 5 snacks the assumption breaks down.",
+            "claim": "assumption:failed"
           },
           {
             "id": "b",
-            "label": "Yes, most ratios match",
-            "feedback": "Most isn't enough — every ratio must match. 16/5 breaks the pattern.",
+            "label": "Yes — most of the charges fit $3 per snack",
+            "feedback": "Most isn't enough — a steady-rate assumption has to hold for every purchase. $16 for 5 snacks is $1 more than the $3 rate predicts.",
             "claim": "misconception:b"
           },
           {
             "id": "c",
-            "label": "Yes, the pattern looks close",
-            "feedback": "Close isn't equal. 16/5 = 3.2, not 3 like the others — not proportional.",
+            "label": "Yes — the charges are all close to $3 per snack",
+            "feedback": "Close isn't equal. $16 ÷ 5 = $3.20 per snack, not the steady $3 — the assumption doesn't hold.",
             "claim": "misconception:c"
           }
         ],
         "numericErrors": [],
-        "targetSeriesId": "table"
-      },
-      "variant": {
-        "gen": "pr-test-proportional-g7",
-        "form": "nonProportional"
+        "targetSeriesId": "machine"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A trickier check.",
+      "body": "A trickier check — this one hides its broken ratio at the end.",
       "conceptTag": "pr-test-proportional",
       "explanationVariants": [
-        "6/2=3, 9/3=3, 15/5=3 — all equal, so it's proportional.",
-        "Every ratio here is 3."
+        "3/4 and 6/8 both equal 3/4, but 8/12 breaks the pattern — not proportional.",
+        "The first two ratios agree at 3/4; the third pair doesn't fit."
       ],
       "widget": {
         "type": "proportionalReasoningLab",
         "task": "testProportional",
         "answerMode": "choice",
-        "prompt": "A table has pairs (2, 6), (3, 9), (5, 15). Is this proportional?",
+        "prompt": "A table has pairs (4, 3), (8, 6), and (12, 8) — check every ratio, not just the first two, before deciding. Is this proportional?",
         "xLabel": "x",
         "yLabel": "y",
         "series": [
@@ -432,42 +428,42 @@
             "label": "table",
             "pairs": [
               [
-                2,
+                4,
+                3
+              ],
+              [
+                8,
                 6
               ],
               [
-                3,
-                9
-              ],
-              [
-                5,
-                15
+                12,
+                8
               ]
             ]
           }
         ],
         "requiredExplorations": 3,
-        "successFeedback": "Yes — 6/2=9/3=15/5=3, so it's proportional.",
+        "successFeedback": "Yes — 3/4 and 6/8 both equal 3/4, but 8/12 doesn't match. One broken ratio makes it not proportional.",
         "explorationFeedback": "Inspect at least 3 proportional relationships before checking.",
         "fallbackFeedback": "Choose the conclusion supported by the normalized ratios.",
         "tolerance": 0,
         "choices": [
           {
             "id": "a",
-            "label": "Yes, every ratio is 3",
-            "feedback": "Yes — 6/2=9/3=15/5=3, so it's proportional.",
-            "claim": "proportional:yes"
+            "label": "No, the last ratio doesn't match",
+            "feedback": "Yes — 3/4 and 6/8 both equal 3/4, but 8/12 doesn't match. One broken ratio makes it not proportional.",
+            "claim": "proportional:no"
           },
           {
             "id": "b",
-            "label": "No, some pairs look different",
-            "feedback": "Looking different isn't the test — check the ratios: 6/2=9/3=15/5=3, all equal, so it IS proportional.",
+            "label": "Yes, every ratio is 3/4",
+            "feedback": "Not quite — the first two ratios are 3/4, but the third pair breaks the pattern: 8/12 doesn't match. Checking only the first two isn't enough.",
             "claim": "misconception:b"
           },
           {
             "id": "c",
-            "label": "Can't tell",
-            "feedback": "You can tell by checking every ratio: 6/2=9/3=15/5=3, so it's proportional.",
+            "label": "Can't tell without a fourth pair",
+            "feedback": "Three pairs are already enough: 3/4, 3/4, then 8/12 breaks the pattern — that's enough to know it's not proportional.",
             "claim": "misconception:c"
           }
         ],
@@ -475,14 +471,10 @@
         "targetSeriesId": "table"
       },
       "hints": [
-        "Compute each ratio: 6/2, 9/3, 15/5.",
-        "6/2=3, 9/3=3, 15/5=3.",
-        "All three ratios equal 3, so it's proportional."
-      ],
-      "variant": {
-        "gen": "pr-test-proportional-g7",
-        "form": "proportionalChallenge"
-      }
+        "Compute each ratio y ÷ x: 3/4, 6/8, 8/12.",
+        "3/4 and 6/8 both simplify to 3/4.",
+        "8/12 simplifies to 2/3, which breaks the pattern — not proportional."
+      ]
     },
     {
       "id": "r1",

@@ -15,56 +15,31 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Build a fraction from a pizza story.",
+      "body": "Shade the five slices, then read the fraction.",
       "conceptTag": "build-fraction",
       "widget": {
-        "type": "buildExpression",
-        "prompt": "A pizza is fair-cut into 6 slices; you take 5. Build the fraction of the pizza you took.",
-        "tokens": [
+        "type": "fractionBar",
+        "prompt": "The pizza has 6 equal slices. Move the top dial to shade the 5 slices you took.",
+        "targetNum": 5,
+        "targetDen": 6,
+        "numMin": 1,
+        "numMax": 6,
+        "denMin": 6,
+        "denMax": 6,
+        "numStart": 1,
+        "denStart": 6,
+        "showTarget": false,
+        "notation": "symbol",
+        "commonFractions": [
           {
-            "id": "t5",
-            "label": "5"
-          },
-          {
-            "id": "tsl",
-            "label": "/"
-          },
-          {
-            "id": "t6",
-            "label": "6"
-          },
-          {
-            "id": "t1",
-            "label": "1"
+            "num": 1,
+            "den": 6,
+            "feedback": "That shades only the one slice left behind. You took five slices."
           }
         ],
-        "correct": [
-          "t5",
-          "tsl",
-          "t6"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t6",
-              "tsl",
-              "t5"
-            ],
-            "feedback": "6/5 swapped the jobs — that reads 'cut into 5, take 6': more than a whole pizza! The take-count (5) rides on top; the cut-count (6) sits below."
-          },
-          {
-            "sequence": [
-              "t1",
-              "tsl",
-              "t6"
-            ],
-            "feedback": "1/6 is the single slice LEFT in the box. The question asks what you took: five of the six."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "Top = slices you took (5); bottom = slices the cut made (6).",
-        "successFeedback": "5/6 — five taken of six cut. (The 1/6 left behind completes the whole.)"
+        "lowFeedback": "Too little is shaded. Count all 5 slices you took.",
+        "highFeedback": "Too much is shaded. The pizza has 6 slices, and you took 5.",
+        "successFeedback": "Five of the 6 equal slices are shaded: 5/6. The picture also shows that 5/6 is more than half."
       },
       "predict": {
         "prompt": "You took 5 of the 6 slices. Is your share more than half the pizza?",

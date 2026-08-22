@@ -1653,6 +1653,7 @@ export const SAMPLES: unknown[] = [
     cols: 3,
     rows: 4,
     xLabels: ["Cat", "Dog", "Fish"],
+    yLabels: ["1", "2", "3", "4"],
     targets: [
       { x: 1, y: 1 },
       { x: 1, y: 2 },

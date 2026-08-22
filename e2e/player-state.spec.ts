@@ -168,7 +168,7 @@ test.describe("lesson-player state machine", () => {
     await expect(page.getByRole("button", { name: "Continue" })).toBeVisible();
 
     const visited: Array<{ label: string; outline: string; width: string }> = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 14; i++) {
       await page.keyboard.press("Tab");
       const active = await page.evaluate(() => {
         const el = document.activeElement as HTMLElement | null;
@@ -184,7 +184,8 @@ test.describe("lesson-player state machine", () => {
       if (active.label.includes("Continue")) break;
     }
 
-    expect(visited[0]?.label).toBe("Exit lesson");
+    expect(visited[0]?.label).toBe("Skip to main content");
+    expect(visited[1]?.label).toBe("Exit lesson");
     const primary = visited.find((item) => item.label.includes("Continue"));
     expect(primary, `tab order: ${JSON.stringify(visited)}`).toBeTruthy();
     expect(primary!.outline).not.toBe("none");

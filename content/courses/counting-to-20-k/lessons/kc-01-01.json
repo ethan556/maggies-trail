@@ -203,16 +203,16 @@
         "prompt": "Maya counts her toys: 1, 2, 3, 4, 5, 6. How many toys does she have?",
         "options": [
           {
-            "id": "a",
-            "label": "6",
-            "correct": true,
-            "feedback": "Yes! The last number counted tells how many: 6 toys."
-          },
-          {
             "id": "b",
             "label": "1",
             "correct": false,
             "feedback": "1 was the first number. The LAST number, 6, tells how many."
+          },
+          {
+            "id": "a",
+            "label": "6",
+            "correct": true,
+            "feedback": "Yes! The last number counted tells how many: 6 toys."
           },
           {
             "id": "c",
@@ -236,15 +236,15 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Tricky flash.",
+      "body": "Predict without recounting.",
       "conceptTag": "kc-count-objects",
       "explanationVariants": [
-        "Even scattered dots count the same: there were 6.",
-        "Count each scattered dot once: 6."
+        "Moving the same six dots does not add or remove any. The count stays 6.",
+        "The spacing changed, but the amount did not. There are still 6 dots."
       ],
       "widget": {
         "type": "subitizeFlash",
-        "prompt": "These dots are scattered! How many?",
+        "prompt": "Six dots were counted, then only moved into a scattered pattern. Without adding or removing any, how many must flash?",
         "count": 6,
         "arrangement": "scatter",
         "flashMs": 1200,
@@ -256,25 +256,21 @@
         "commonPicks": [
           {
             "value": 5,
-            "feedback": "One dot hid in the corner. There were 6."
+            "feedback": "Moving dots did not remove one. The same 6 dots remain."
           },
           {
             "value": 7,
-            "feedback": "One got counted twice. There were 6."
+            "feedback": "Moving dots did not add one. The same 6 dots remain."
           }
         ],
-        "missFeedback": "Scattered dots still count one at a time: 6.",
-        "successFeedback": "Six! Scattered or in a row, the count is the same."
+        "missFeedback": "Only the spacing changed. No dot was added or removed, so the count stays 6.",
+        "successFeedback": "Yes — still 6. Moving the dots changes their spacing, not how many there are."
       },
       "hints": [
-        "Look at each dot one time.",
-        "Do not count any dot twice.",
-        "There are more than 5 but fewer than 7."
-      ],
-      "variant": {
-        "gen": "g0-counting",
-        "form": "countObjectsFlash"
-      }
+        "Ask what changed: only the spaces between the dots.",
+        "No dot was added. No dot was taken away.",
+        "The starting count was 6, so the ending count is also 6."
+      ]
     },
     {
       "id": "r1",

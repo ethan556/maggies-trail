@@ -78,8 +78,15 @@ describe("Session 131 distribution comparison", () => {
   it("converts all 26 target experiences and derives every measure answer from the drawn quantities", () => {
     const specs = convertedSpecs();
     expect(specs).toHaveLength(26);
-    expect(specs.filter((spec) => spec.mode === "measure")).toHaveLength(18);
-    expect(specs.filter((spec) => spec.mode === "judge")).toHaveLength(8);
+    // sp-02-01/ch1 moved from "measure" to "judge" mode (same 84/60/8 -> gap 3, now interpreted
+    // rather than computed) per reports/closure/S327_FIX_PG5.md, "sp-02-01" -- it was a true
+    // duplicate of k1-k3's measure job; the 18/8 split shifts to 17/9 accordingly.
+    // sp-02-01/i2 and i3 also moved from "measure" to "judge" per reports/closure/S330_PROGRESSION_G9.md:
+    // both were mislabeled "interpret"/re-labeled compute clones of i1's exact measure job (i2 even
+    // claimed "Interpret a small gap" while still only computing); they now judge the small- and
+    // large-gap interpretations c2/c3 actually teach, mirroring sp-02-02's i1/i2 judge pair. 17/9 -> 15/11.
+    expect(specs.filter((spec) => spec.mode === "measure")).toHaveLength(15);
+    expect(specs.filter((spec) => spec.mode === "judge")).toHaveLength(11);
     for (const spec of specs) {
       expect(widgetIntegrityErrors(spec)).toEqual([]);
       if (spec.mode === "measure") {

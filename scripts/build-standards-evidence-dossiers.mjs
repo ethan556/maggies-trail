@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { decisionStatusOf } from './standards/decision-contract.mjs';
 
 const root = process.cwd();
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
@@ -30,7 +31,7 @@ const sourceByFramework = new Map(sourceRegistry.sources.map((s)=>[s.framework,s
 const objectives = read('content/standards/objectives.json').objectives;
 const reviewsPath='content/standards/human-review-decisions.json';
 const reviews = fs.existsSync(path.join(root,reviewsPath)) ? read(reviewsPath) : { schemaVersion:1, decisions:[] };
-const decisionByEdge = new Map((reviews.decisions ?? []).map((d)=>[d.edgeId,d]));
+const decisionByEdge = new Map((reviews.decisions ?? []).map((d)=>[d.edgeId,{...d,decision:decisionStatusOf(d)}]));
 const dossiers=[];
 for (const objective of objectives) {
   for (const ref of objective.frameworkRefs ?? []) {
@@ -43,7 +44,7 @@ for (const objective of objectives) {
         'exposure',
         ...(s.kind==='interactive'?['construction']:[]),
         ...(['check','challenge'].includes(s.kind)?['independent-practice']:[]),
-        ...(s.kind==='challenge'?['transfer']:[])
+        ...(s.kind==='challenge' && objective.evidence?.transferred===true?['transfer']:[])
       ]
     }));
     const decision=decisionByEdge.get(edgeId) ?? null;
@@ -60,30 +61,72 @@ for (const objective of objectives) {
     const dossierCore={
       edgeId, objectiveId:objective.id, objectiveTitle:objective.title, courseId:objective.courseId, gradeLevel:objective.gradeLevel,
       framework:ref.framework, candidateCode:ref.code, candidateLabel:ref.label, candidateRole:ref.role, candidateDepth:ref.depth,
-      sourceId:source.id, officialUrl:source.officialUrl, sourceVersion:source.versionLabel, sourceLocator:ref.code,
+      sourceId:source.id, officialUrl:ref.officialUrl ?? source.officialUrl, sourceVersion:source.versionLabel, sourceLocator:ref.sourceLocator ?? ref.code,
       sourceTextStatus: checks.exactStandardCodeCandidate ? 'exact-code-text-import-required' : 'scope-locator-requires-exact-benchmark',
       mappingRationale:`Review whether the full official expectation at ${ref.code} requires the mathematical action expressed by “${objective.title}”, including grade/course limits, representation, application, reasoning, and practices.`,
       evidenceSummary:{ lessonIds:objective.lessonIds, representations:objective.representations, directManipulation:objective.directManipulation, exactPracticeStates:objective.exactPracticeStates, designedEvidence:objective.evidence },
       stepEvidence, checks,
-      claimLimit: decision?.decision==='approve' ? 'Approved only to the reviewer-specified depth and official text snapshot.' : 'Planning/review only. Not a verified alignment or mastery claim.',
-      review:{ status:decision?.decision ?? 'ready-for-human-review', reviewer:decision?.reviewer ?? null, reviewedAt:decision?.reviewedAt ?? null, notes:decision?.notes ?? null, officialTextSnapshot:decision?.officialTextSnapshot ?? null, approvedDepth:decision?.approvedDepth ?? null }
+      claimLimit: decision?.decision === 'approved'
+        ? 'Approved only to the reviewer-specified depth and official text snapshot.'
+        : decision?.decision === 'partial'
+          ? decision.claimBoundary
+          : 'Planning/review only. Not a verified alignment or mastery claim.',
+      review:{
+        status:decision?.decision ?? 'candidate', reviewer:decision?.reviewer ?? null, reviewedAt:decision?.reviewedAt ?? null,
+        notes:decision?.notes ?? null, officialTextSnapshot:decision?.officialTextSnapshot ?? null,
+        officialSourceUrl:decision?.officialSourceUrl ?? null, claimBoundary:decision?.claimBoundary ?? null,
+        approvedDepth:decision?.approvedDepth ?? null
+      }
     };
+    if (ref.mappingRationale) dossierCore.mappingRationale = ref.mappingRationale;
     dossiers.push({...dossierCore,dossierHash:hash(dossierCore)});
   }
 }
 const counts={
   total:dossiers.length,
-  ready:dossiers.filter((d)=>d.review.status==='ready-for-human-review').length,
-  approved:dossiers.filter((d)=>d.review.status==='approve').length,
-  rejected:dossiers.filter((d)=>d.review.status==='reject').length,
+  candidate:dossiers.filter((d)=>d.review.status==='candidate').length,
+  partial:dossiers.filter((d)=>d.review.status==='partial').length,
+  approved:dossiers.filter((d)=>d.review.status==='approved').length,
+  rejected:dossiers.filter((d)=>d.review.status==='rejected').length,
   needsExactBenchmark:dossiers.filter((d)=>d.sourceTextStatus==='scope-locator-requires-exact-benchmark').length
 };
-write('content/standards/evidence-dossiers.json',{schemaVersion:1,generatedAt:'deterministic',counts,dossiers});
+write('content/standards/evidence-dossiers.json',{schemaVersion:2,generatedAt:'deterministic',statusContract:['candidate','partial','approved','rejected'],counts,dossiers});
 const metrics=read('content/mastery/infrastructure-metrics.json');
-metrics.officialSourceRegistryCount=sourceRegistry.sources.length;
-metrics.reviewReadyEdges=counts.ready;
-metrics.humanApprovedEdges=counts.approved;
-metrics.humanRejectedEdges=counts.rejected;
-metrics.edgesNeedingExactBenchmark=counts.needsExactBenchmark;
+const lessonCount=read('content/standards/lesson-evidence-map.json').lessons.length;
+const frameworkCount=read('content/standards/frameworks.json').frameworks.length;
+const exactManipulationCount=objectives.filter((objective)=>objective.directManipulation?.coverage==='exact').length;
+const familyLabCount=objectives.filter((objective)=>objective.directManipulation?.coverage!=='none').length;
+const eightOfTenArcCount=objectives.filter((objective)=>objective.masteryArcScore>=8).length;
+const twentyPlusPracticeCount=objectives.filter((objective)=>objective.practiceStates>=20).length;
+const twentyPlusFamilyCount=objectives.filter((objective)=>objective.practiceStates>=20 && objective.directManipulation?.coverage!=='none').length;
+const runtimeArcCount=objectives.filter((objective)=>objective.arc && typeof objective.arc==='object').length;
+const percentage=(count,total)=>total ? +(count/total*100).toFixed(2) : 0;
+Object.assign(metrics,{
+  objectives:objectives.length,
+  lessons:lessonCount,
+  exactDirectManipulationObjectives:exactManipulationCount,
+  exactDirectManipulationPct:percentage(exactManipulationCount,objectives.length),
+  familyLabCoverageObjectives:familyLabCount,
+  familyLabCoveragePct:percentage(familyLabCount,objectives.length),
+  objectivesWithEightOfTenMasteryArcElements:eightOfTenArcCount,
+  objectivesWithTwentyPlusPracticeStates:twentyPlusPracticeCount,
+  frameworks:frameworkCount,
+  crosswalkEdges:counts.total,
+  verifiedFullIntentEdges:objectives.reduce((total,objective)=>total+(objective.frameworkRefs??[]).filter((ref)=>ref.status==='verified' && ref.depth==='full-intent').length,0),
+  provisionalEdges:objectives.reduce((total,objective)=>total+(objective.frameworkRefs??[]).filter((ref)=>ref.status==='provisional-crosswalk').length,0),
+  objectivesWithTwentyPlusFamilyStates:twentyPlusFamilyCount,
+  exactPracticeDepthPct:percentage(twentyPlusPracticeCount,objectives.length),
+  familyPracticeDepthPct:percentage(twentyPlusFamilyCount,objectives.length),
+  objectivesWithRuntimeMasteryArc:runtimeArcCount,
+  runtimeMasteryArcPct:percentage(runtimeArcCount,objectives.length),
+  officialSourceRegistryCount:sourceRegistry.sources.length,
+  reviewReadyEdges:counts.candidate,
+  humanPartialEdges:counts.partial,
+  humanApprovedEdges:counts.approved,
+  humanRejectedEdges:counts.rejected,
+  edgesNeedingExactBenchmark:counts.needsExactBenchmark
+});
 write('content/mastery/infrastructure-metrics.json',metrics);
+// Compatibility for the legacy console label only; persisted schema uses `candidate`.
+counts.ready=counts.candidate;
 console.log(`standards evidence dossiers: ${counts.total} edges · ${counts.ready} ready · ${counts.approved} approved · ${counts.rejected} rejected`);

@@ -43,20 +43,21 @@ describe("Session 139 signedFractionLab interaction", () => {
     for (const button of buttons) expect(button.className).toContain("min-h-11");
   });
 
-  it("makes the kept-divisor misconception visible rather than merely grading it", () => {
+  it("preserves the kept-divisor claim without disclosing its diagnosis before Check", () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole("button", { name: "−3/8" }));
-    expect(screen.getByText("kept unchanged")).toBeTruthy();
+    expect(screen.queryByText("kept unchanged")).toBeNull();
+    expect(screen.getAllByText(/reciprocal/).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Your exact claim: −3\/8/)).toBeTruthy();
   });
 
-  it("emits exact away/toward process signals", () => {
+  it("keeps process signals neutral before Check", () => {
     const onEvent = vi.fn();
     render(<Harness onEvent={onEvent} />);
     fireEvent.click(screen.getByRole("button", { name: "3/2" }));
     fireEvent.click(screen.getByRole("button", { name: "−3/2" }));
-    expect(onEvent).toHaveBeenNthCalledWith(1, expect.objectContaining({ control: "signed-fraction-claim", dir: "away", state: expect.objectContaining({ path: "wrongSign" }) }));
-    expect(onEvent).toHaveBeenNthCalledWith(2, expect.objectContaining({ control: "signed-fraction-claim", dir: "toward", state: expect.objectContaining({ path: "correct" }) }));
+    expect(onEvent).toHaveBeenNthCalledWith(1, expect.objectContaining({ control: "signed-fraction-claim", dir: "neutral", state: expect.objectContaining({ path: "wrongSign" }) }));
+    expect(onEvent).toHaveBeenNthCalledWith(2, expect.objectContaining({ control: "signed-fraction-claim", dir: "neutral", state: expect.objectContaining({ path: "correct" }) }));
   });
 
   it("preserves the learner claim on reveal and adds a separate correct ghost", () => {

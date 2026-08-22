@@ -15,25 +15,21 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Plug in a value.",
+      "body": "Move the input and watch the fixed rule act on it.",
       "conceptTag": "variables",
       "widget": {
-        "type": "numeric",
-        "prompt": "The expression n + 3 gives the marble total. If n = 10, what is the total?",
-        "answer": 13,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
-          {
-            "value": 30,
-            "feedback": "30 MULTIPLIES 10 × 3, but the expression says n PLUS 3: 10 + 3 = 13."
-          },
-          {
-            "value": 10,
-            "feedback": "10 is just n itself, before the 3 are added. The expression adds: 10 + 3 = 13."
-          }
-        ],
-        "fallbackFeedback": "Replace n with 10: 10 + 3 = 13."
+        "type": "functionMachine",
+        "prompt": "The machine uses the rule output = n + 3. Set the input to 10 and watch the output become the marble total.",
+        "a": 1,
+        "b": 3,
+        "inputMin": 0,
+        "inputMax": 15,
+        "inputStep": 1,
+        "inputStart": 0,
+        "targetOutput": 13,
+        "successFeedback": "Input 10 passes through the unchanged +3 rule and produces 13. The variable changed; the constant stayed 3.",
+        "lowFeedback": "The output is below 13. Increase n while watching the machine continue to add the same 3.",
+        "highFeedback": "The output is above 13. Decrease n; the +3 part of the rule does not change."
       },
       "predict": {
         "prompt": "In the expression n + 3, when n changes, does the 3 change too?",

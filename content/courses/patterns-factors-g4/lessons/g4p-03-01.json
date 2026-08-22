@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A rule generates a pattern: start somewhere and apply the same operation each step. 'Multiply by 2' from 3 gives 3, 6, 12, 24.",
       "narration": "A rule generates a pattern: start somewhere and apply the same operation each step. 'Multiply by 2' from 3 gives 3, 6, 12, 24."
     },
@@ -153,18 +152,17 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Check the FIRST step to find the rule, then confirm it on the second. A rule that fits only one step is not the rule.",
       "narration": "Check the FIRST step to find the rule, then confirm it on the second. A rule that fits only one step is not the rule."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Transfer a multiplicative rule to a new starting value, then check that every gap grows with the terms.",
       "conceptTag": "g4pf-number-rule",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Build the pattern 3, 6, 12, 24 — each term double the one before.",
+        "prompt": "Build the pattern 5, 10, 20, 40 — each term doubles the one before.",
         "categories": [
           "Term 1",
           "Term 2",
@@ -172,15 +170,15 @@
           "Term 4"
         ],
         "target": [
-          3,
-          6,
-          12,
-          24
+          5,
+          10,
+          20,
+          40
         ],
-        "maxVal": 26,
+        "maxVal": 42,
         "step": 1,
-        "successFeedback": "3, 6, 12, 24 — each bar twice the height of the one before it, so the gaps grow as the pattern runs.",
-        "partialFeedback": "Each term must be double the previous one: 3, then 6, then 12, then 24.",
+        "successFeedback": "5, 10, 20, 40 — each bar is twice the height of the one before, so the multiplicative rule fits every step.",
+        "partialFeedback": "Double each term: 5, then 10, then 20, then 40.",
         "display": "bar",
         "histogram": false
       },
@@ -345,22 +343,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A pattern runs 4, 12, 36, 108. What comes next?",
-        "answer": 324,
+        "prompt": "A rule says 'multiply by 3' and starts at 4. What is the fourth term?",
+        "answer": 108,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 180,
-            "feedback": "That ADDED the last gap. This pattern multiplies by 3 each time, so the gaps keep growing."
+            "value": 36,
+            "feedback": "36 is the third term: 4, 12, 36, 108. Apply the rule one more time."
           },
           {
-            "value": 111,
-            "feedback": "That added 3 instead of multiplying by it — the rule scales the term, it does not nudge it."
+            "value": 16,
+            "feedback": "That added 12 rather than multiplying each term by 3."
           }
         ],
-        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
-        "successFeedback": "Correct — 324."
+        "fallbackFeedback": "Write the terms in order: 4, then 12, then 36, then multiply by 3 once more.",
+        "successFeedback": "Correct — the fourth term is 108."
       },
       "hints": [
         "Check the FIRST step.",
@@ -426,31 +424,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "The pattern 2, 4, 8 grows. What is the rule?",
+          "prompt": "A savings amount grows: $4, $8, $16. What is the rule?",
           "options": [
             {
               "id": "o0",
               "label": "Multiply by 2",
               "correct": true,
-              "feedback": "Correct — each term is 2 times the one before, which is why the gaps widen as the pattern runs."
+              "feedback": "Correct — each amount is 2 times the one before, which is why the gaps widen as the pattern runs."
             },
             {
               "id": "o1",
-              "label": "Add 2",
+              "label": "Add 4",
               "correct": false,
-              "feedback": "Adding 2 works for the FIRST step only; the next gap is larger, so the rule is not additive."
+              "feedback": "Adding 4 works for the FIRST step only; the next gap is larger, so the rule is not additive."
             },
             {
               "id": "o2",
               "label": "Multiply by 3",
               "correct": false,
-              "feedback": "Multiplying by 3 would overshoot 4 immediately — check the first step."
+              "feedback": "Multiplying by 3 would overshoot 8 immediately — check the first step."
             },
             {
               "id": "o3",
-              "label": "Add 4",
+              "label": "Add 8",
               "correct": false,
-              "feedback": "4 is the SECOND gap, not a constant step — the first gap was only 2, so no single addition fits."
+              "feedback": "8 is the SECOND gap, not a constant step — the first gap was only 4, so no single addition fits."
             }
           ]
         }

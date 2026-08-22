@@ -22,7 +22,7 @@ import { G0_GENERATORS, G0_FORM_SURFACES } from "./g0Variants";
 
 const K100_FORMS = [
   "kSeqNextHop", "kSeqNextMcq", "kSeqBeforeHop", "kSeqMissingMcq", "kDecadeCrossHop",
-  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensOrderDrag",
+  "kDecadeNextMcq", "kTensNextHop", "kTensNextMcq", "kTensBackHop", "kTensBackMcq", "kTensOrderDrag",
   "kChartRowMcq", "kChartMissingMcq", "kCountFromHop", "kCountBackHop", "kSeqOrderDrag",
 ] as const;
 const BANDS = ["support", "core", "stretch"] as const;
@@ -44,7 +44,7 @@ const everyNumberInWidget = (w: Record<string, unknown>): number[] => {
 };
 
 describe("k0-count-100 generator sweep", () => {
-  it("registers all 15 forms with surfaces", () => {
+  it("registers all 16 forms with surfaces", () => {
     expect(gen).toBeDefined();
     for (const f of K100_FORMS) expect(G0_FORM_SURFACES[f], f).toBeDefined();
   });
@@ -146,7 +146,8 @@ describe("counting-to-100-k authored content", () => {
         }
         if (w.type === "dragOrder") {
           const labels = w.correctOrder.map((id: string) => Number(w.items.find((it) => it.id === id)!.label));
-          const sorted = [...labels].sort((a, b) => a - b);
+          const descending = /backward|biggest first/i.test(w.prompt);
+          const sorted = [...labels].sort((a, b) => descending ? b - a : a - b);
           expect(labels).toEqual(sorted);
           expect(evaluate(w, w.correctOrder).correct).toBe(true);
         }

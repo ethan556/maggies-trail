@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A near-double can also lean on the bigger double: 6 + 5 is the double 6 + 6, minus one.",
-      "narration": "A near-double can also lean on the bigger double: 6 + 5 is the double 6 + 6, minus one."
+      "figure": "as100-near-doubles",
+      "body": "A near-double differs by one. Use the nearby even double, then adjust by one.",
+      "narration": "A near-double differs by one. Use the nearby even double, then adjust by one."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That doubles the smaller number instead of starting from the bigger double."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 8 + 7 = 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 15."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Both doors work — double the smaller and add one, or double the bigger and take one away. Use whichever double you know best.",
-      "narration": "Both doors work — double the smaller and add one, or double the bigger and take one away. Use whichever double you know best."
+      "figure": "near-double",
+      "body": "The shown seven plus eight can use double seven plus one; using double eight minus one reaches the same fifteen.",
+      "narration": "The shown seven plus eight can use double seven plus one; using double eight minus one reaches the same fifteen."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-doubles-minus",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Use the double: 6 + 6 lands on 12, so for 6 + 5 count back 1 from 12. Where do you land?",
-        "min": 9,
-        "max": 14,
-        "start": 12,
-        "hop": 1,
-        "hops": 1,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 12 and count back 1: you land on 11.",
-        "successFeedback": "Landed on 11 — the double 12 minus one gives 6 + 5."
+        "type": "tapDiagram",
+        "prompt": "Use double nine minus one to solve nine plus eight. Tap the total.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "16",
+            "icon": "16",
+            "count": 1,
+            "correct": false,
+            "feedback": "16 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "17",
+            "icon": "17",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — double nine is eighteen, then one less is seventeen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "18",
+            "icon": "18",
+            "count": 1,
+            "correct": false,
+            "feedback": "18 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — double nine is eighteen, then one less is seventeen."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 + 7 = ?",
+        "prompt": "Double eight is sixteen. Take one away to solve eight plus seven. What is the total?",
         "answer": 15,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That doubles the smaller number instead of starting from the bigger double."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 8 + 7 = 15."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 15."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 + 5 = ?",
+        "prompt": "Double five is ten. Add one to solve six plus five. What is the total?",
         "answer": 11,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That doubles the smaller number instead of starting from the bigger double."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 + 5 = 11."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 11."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 + 6 = ?",
+        "prompt": "Double seven is fourteen. Take one away to solve seven plus six.",
         "answer": 13,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That doubles the smaller number instead of starting from the bigger double."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 + 6 = 13."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 13."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "8 + 7 = ?",
-          "answer": 15,
+          "prompt": "Build a row of 9 counters next to a row of 8 counters. Push the rows together and count every counter. What is the total?",
+          "answer": 17,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 16,
-              "feedback": "That is the full double 8 + 8 without taking the one away."
+              "value": 18,
+              "feedback": "That is the full double 9 + 9 without taking the one away."
             },
             {
-              "value": 14,
-              "feedback": "That doubles the smaller number instead of starting from the bigger double."
+              "value": 16,
+              "feedback": "That doubles the smaller row instead of starting from the bigger double."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 8 + 7 = 15."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the two rows of 9 and 8 counters total 17."
         }
       }
     }

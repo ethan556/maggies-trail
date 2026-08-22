@@ -15,75 +15,52 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each number to ×10 of itself.",
+   "body": "Shift every digit one place while the digits themselves stay the same.",
    "conceptTag": "ten-times-relationship",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each number to what it becomes when multiplied by 10.",
-    "left": [
+    "type": "placeValueTransformLab",
+    "task": "shift",
+    "answerMode": "numeric",
+    "prompt": "Shift 34 one place left on the base-ten ladder. What number results?",
+    "values": [
+     34
+    ],
+    "shiftExponent": 1,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "n34",
-      "label": "34"
+      "value": 34,
+      "feedback": "The digits have not moved. Shift both one place left."
      },
      {
-      "id": "n250",
-      "label": "250"
-     },
-     {
-      "id": "n1200",
-      "label": "1,200"
+      "value": 304,
+      "feedback": "The zero belongs in the newly empty ones place, not between the digits."
      }
     ],
-    "right": [
-     {
-      "id": "r340",
-      "label": "340"
-     },
-     {
-      "id": "r2500",
-      "label": "2,500"
-     },
-     {
-      "id": "r12000",
-      "label": "12,000"
-     }
-    ],
-    "pairs": {
-     "n34": "r340",
-     "n250": "r2500",
-     "n1200": "r12000"
-    },
-    "pairErrors": [
-     {
-      "left": "n250",
-      "right": "r12000",
-      "feedback": "12,000 is 10 times 1,200, not 250. Shifting 250 one rung up gives 2,500."
-     }
-    ],
-    "missFeedback": "Shift every digit one place up, and fill the new ones-spot with a zero.",
-    "successFeedback": "34→340, 250→2,500, 1,200→12,000 — every digit climbed one rung."
+    "requiredExplorations": 1,
+    "successFeedback": "34 becomes 340. The 3 and 4 keep their identities and move to places worth ten times as much.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "Move each digit one place left and fill the empty ones place with zero.",
+    "tolerance": 0
    },
    "predict": {
-    "prompt": "Multiplying a whole number by 10 — do its digits CHANGE, or just SHIFT?",
+    "prompt": "What happens to the digits when a whole number is multiplied by 10?",
     "options": [
      {
       "id": "shift",
-      "label": "Shift — each digit moves one place left"
+      "label": "Digits shift one place left"
      },
      {
       "id": "change",
-      "label": "Change into new digits"
+      "label": "Digits change into new digits"
      },
      {
       "id": "nothing",
-      "label": "Nothing happens"
+      "label": "Digits stay in the same places"
      }
     ],
     "outcomeId": "shift",
     "reveal": "The digits keep their identities and slide one place up in rank — a zero fills the vacated ones place. ×10 is a promotion, not a rewrite."
-   },
-   "variant": {
-    "gen": "match-times-ten"
    }
   },
   {

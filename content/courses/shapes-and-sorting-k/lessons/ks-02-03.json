@@ -354,51 +354,94 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Count the builders.",
+      "body": "Sort the builds by what they make.",
       "conceptTag": "ks-compose-shapes",
       "explanationVariants": [
-        "A square needs 2 triangles; a rectangle of two squares needs 4 triangles — 2 for each square.",
-        "Each square takes 2 triangles: two squares take 4."
+        "Two triangles make a square, three squares in a row make a rectangle, and six squares fold into a cube.",
+        "Small shapes build big ones: triangles join into a square, a row of squares grows into a rectangle, six squares wrap into a cube."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "Two triangles make one square. How many triangles make TWO squares?",
-        "options": [
+        "type": "dragBucket",
+        "prompt": "Put each set of pieces under the shape it can build.",
+        "buckets": [
           {
-            "id": "a",
-            "label": "4",
-            "correct": true,
-            "feedback": "Yes — 2 triangles per square, and 2 and 2 make 4."
+            "id": "square",
+            "label": "Makes a square"
           },
           {
-            "id": "b",
-            "label": "2",
-            "correct": false,
-            "feedback": "That builds only ONE square — two squares need 4."
+            "id": "rectangle",
+            "label": "Makes a rectangle"
           },
           {
-            "id": "c",
-            "label": "3",
-            "correct": false,
-            "feedback": "Three leaves a square half-built — you need 4."
-          },
-          {
-            "id": "d",
-            "label": "6",
-            "correct": false,
-            "feedback": "That would build three squares — two squares need 4."
+            "id": "cube",
+            "label": "Makes a cube"
           }
-        ]
+        ],
+        "items": [
+          {
+            "id": "d1",
+            "label": "two same-size triangles joined on their long sides",
+            "bucketId": "square",
+            "feedback": "Those triangles can make a square."
+          },
+          {
+            "id": "d2",
+            "label": "three same-size squares in one row",
+            "bucketId": "rectangle",
+            "feedback": "A row gets longer than it is tall, making a rectangle."
+          },
+          {
+            "id": "d3",
+            "label": "six square faces folded into a closed box",
+            "bucketId": "cube",
+            "feedback": "Six square faces can wrap around to make a cube."
+          }
+        ],
+        "missFeedback": "Think about the outside edge of each finished build.",
+        "successFeedback": "Yes — small shapes can be joined to build new shapes!"
       },
       "hints": [
-        "One square uses 2 triangles.",
-        "Two squares means 2 triangles, twice.",
-        "2 and 2 make 4 triangles."
+        "Two triangles can fit together into one square.",
+        "Squares in a row make a longer shape — a rectangle.",
+        "Six flat squares fold up into a box — a cube."
+      ]
+    },
+    {
+      "id": "ch2",
+      "kind": "challenge",
+      "body": "Enough triangles for 4 squares?",
+      "conceptTag": "ks-compose-shapes",
+      "explanationVariants": [
+        "Every square takes exactly 2 triangles, so 4 squares take 4 groups of 2 triangles: 2 + 2 + 2 + 2 = 8.",
+        "Multiply the number of squares by 2 triangles each: 4 squares needs 4 × 2 = 8 triangles."
       ],
-      "variant": {
-        "gen": "g0-shapes-sorting",
-        "form": "shapeComposeMcq"
-      }
+      "widget": {
+        "type": "numeric",
+        "prompt": "Two triangles build one square. You want to build 4 squares. How many triangles do you need in all?",
+        "answer": 8,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 4,
+            "feedback": "4 matches the number of squares, but each square needs 2 triangles, not 1 — four squares need four groups of 2."
+          },
+          {
+            "value": 6,
+            "feedback": "6 is only 3 groups of 2 triangles. There are 4 squares, so a 4th group of 2 triangles is still missing."
+          },
+          {
+            "value": 2,
+            "feedback": "2 triangles build only ONE square. Building all 4 squares needs 4 separate groups of 2."
+          }
+        ],
+        "fallbackFeedback": "Count 2 triangles for each of the 4 squares, then add all four groups together.",
+        "successFeedback": "Correct — 4 squares need 4 groups of 2 triangles: 2 + 2 + 2 + 2 = 8 triangles in all."
+      },
+      "hints": [
+        "Each square always takes the same number of triangles: 2.",
+        "You need 4 squares, so count 4 separate groups of 2 triangles.",
+        "Add 2 four times: 2 + 2 + 2 + 2 = 8 triangles."
+      ]
     },
     {
       "id": "r1",

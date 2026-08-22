@@ -80,18 +80,32 @@ describe("the exponential-functions course is COMPLETE and honest (S181)", () =>
       expect(w?.type, `${file}/${id}`).toBe("exactNumberLab");
       converted += 1;
     }
-    expect(converted).toBe(39);
+    // S329: seven ch1 challenges were redesigned and lost their (now-stale) variant tag, since
+    // the named generator/form could not reproduce the new authored prompt shape on replay —
+    // exp-01-01, exp-01-02, exp-01-03 (exp-function/a1-exponential), exp-03-01, exp-03-02,
+    // exp-03-03 (a1-exponential/exp-solve), exp-04-03 (a1-exponential). 39 → 32.
+    // S330-G1: exp-01-01/k2 and exp-01-03/k2 were each redesigned off a same-shape duplicate
+    // check into a hand-authored catch-the-mistake/compare mcq (LESSON_PROGRESSION_AND_DUPLICATION
+    // queue). Neither's new prompt is reproducible by the exp-function generator's fixed template,
+    // so both variant tags were dropped rather than repointed. 32 → 30.
+    expect(converted).toBe(30);
   });
 
-  it("the 12 newly converted answers are exactly the frozen ones", () => {
-    // Hand-computed: 81/9=9; 32/16=2; 25·8=200; 8·(3/2)³=27; intercepts 3, 10, 4;
-    // 10·4=40; 1·64=64; 2·9=18; 3·16=48; 5·8=40.
+  it("the 11 newly converted answers are exactly the frozen ones", () => {
+    // Hand-computed: 81/9=9; 320÷2÷2÷2÷2=20 (S329: half-life redesign, was 32/16=2);
+    // 25·8=200; 8·(3/2)³=27; intercepts 3, 8, 4;
+    // 10·4=40; 2·125=250; 2·9=18; 3·16=48.
+    // (S329: exp-04-03/ch1 dropped — redesigned to a plain `numeric` linear-vs-exponential
+    // compare, no longer an exactNumberLab step this check can evaluate.)
+    // Post-S330 audit-wave redesign (LESSON_PROGRESSION_AND_DUPLICATION): exp-04-01/k3 reworded
+    // to a differently-named function h(x)=8·5^x (was f(x)=10·3^x), y-intercept 10→8. exp-04-02/k3
+    // reworded to a population model p(t)=2·5^t at t=3 (was g(x)=1·4^x at x=3), 64→250.
     const FROZEN: Array<[string, string, number]> = [
-      ["exp-01-02", "k3", 9], ["exp-01-02", "ch1", 2],
+      ["exp-01-02", "k3", 9], ["exp-01-02", "ch1", 20],
       ["exp-02-03", "k2", 200], ["exp-02-03", "ch1", 27],
-      ["exp-04-01", "k1", 3], ["exp-04-01", "k3", 10], ["exp-04-01", "ch1", 4],
-      ["exp-04-02", "k1", 40], ["exp-04-02", "k3", 64], ["exp-04-02", "ch1", 18],
-      ["exp-04-03", "k2", 48], ["exp-04-03", "ch1", 40],
+      ["exp-04-01", "k1", 3], ["exp-04-01", "k3", 8], ["exp-04-01", "ch1", 4],
+      ["exp-04-02", "k1", 40], ["exp-04-02", "k3", 250], ["exp-04-02", "ch1", 18],
+      ["exp-04-03", "k2", 48],
     ];
     for (const [lid, sid, expected] of FROZEN) {
       const doc = JSON.parse(readFileSync(join(dir, `${lid}.json`), "utf8"));
@@ -115,7 +129,7 @@ describe("the exponential-functions course is COMPLETE and honest (S181)", () =>
       for (const c of w.approxConstants ?? []) expect(used.has(c.id), `${file}/${id} dead '${c.id}'`).toBe(true);
     }
     // f(0) = a: perturbing the base must not move the answer; perturbing the coefficient must.
-    for (const [lid, sid, coef] of [["exp-04-01", "k1", 3], ["exp-04-01", "k3", 10], ["exp-04-01", "ch1", 4]] as const) {
+    for (const [lid, sid, coef] of [["exp-04-01", "k1", 3], ["exp-04-01", "k3", 8], ["exp-04-01", "ch1", 4]] as const) {
       const doc = JSON.parse(readFileSync(join(dir, `${lid}.json`), "utf8"));
       const spec = doc.steps.find((s: { id: string }) => s.id === sid).widget as {
         approxFormula: ApproxExpr; approxConstants: Array<{ id: string; label: string; value: number }>;

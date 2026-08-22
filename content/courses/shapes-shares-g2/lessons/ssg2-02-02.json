@@ -120,117 +120,128 @@
   {
    "id": "i3",
    "kind": "interactive",
-   "body": "A large square grid.",
+   "body": "Predict, then check: does flipping the grid change the total?",
+   "predict": {
+    "prompt": "This grid will have 9 rows of 4 squares each. If you flipped it to 4 rows of 9 squares instead, would the total be more, fewer, or the same?",
+    "options": [
+     {
+      "id": "same",
+      "label": "The same"
+     },
+     {
+      "id": "more",
+      "label": "More"
+     },
+     {
+      "id": "fewer",
+      "label": "Fewer"
+     }
+    ],
+    "outcomeId": "same",
+    "reveal": "9 rows of 4 is 36, and 4 rows of 9 is also 36 — flipping the grid trades rows for columns, but every square is still counted once, so the total never changes."
+   },
    "widget": {
     "type": "areaModel",
-    "prompt": "A rectangle is partitioned into 6 rows and 6 columns of unit squares. How many unit squares in all?",
+    "prompt": "The grid below has 9 rows and 4 columns of unit squares. Count them to check your prediction.",
     "targetArea": 36,
-    "wMax": 6,
-    "hMax": 6,
-    "wStart": 6,
-    "hStart": 6,
+    "wMax": 4,
+    "hMax": 9,
+    "wStart": 4,
+    "hStart": 9,
     "countGrid": true,
     "commonCounts": [
      {
-      "count": 12,
-      "feedback": "That's 6 + 6. Count every square in the grid: 36."
+      "count": 13,
+      "feedback": "That's 9 + 4. Count every square in the grid: 36."
      },
      {
-      "count": 6,
-      "feedback": "That's just one row. Count all 6 rows: 36 in all."
+      "count": 9,
+      "feedback": "That's just one column. Count all 9 rows: 36 in all."
      }
     ],
-    "successFeedback": "6 rows of 6 squares each makes 36 squares in all.",
-    "lowFeedback": "6 rows of 6 squares each makes 36 squares in all.",
-    "highFeedback": "6 rows of 6 squares each makes 36 squares in all."
+    "successFeedback": "9 rows of 4 squares each makes 36 squares in all — the same total as 4 rows of 9, just flipped.",
+    "lowFeedback": "9 rows of 4 squares each makes 36 squares in all.",
+    "highFeedback": "9 rows of 4 squares each makes 36 squares in all."
    }
   },
   {
    "id": "k2",
    "kind": "check",
-   "body": "A wide grid.",
+   "body": "Add a row, not a column.",
    "conceptTag": "ssg2-grid-count",
    "explanationVariants": [
-    "3 rows of 7 squares each is 21 squares in all.",
-    "Count every square in the grid: 21."
+    "Adding a row adds one full new row of 7: 21+7=28.",
+    "4 rows of 7 columns is 28 — a new row changes the row count, not the column count."
    ],
    "widget": {
     "type": "areaModel",
-    "prompt": "A rectangle is partitioned into 3 rows and 7 columns of unit squares. How many unit squares in all?",
-    "targetArea": 21,
+    "prompt": "A grid starts with 3 rows of 7 unit squares each. One more row of 7 is added, making 4 rows in all. How many unit squares are in the grid now?",
+    "targetArea": 28,
     "wMax": 7,
-    "hMax": 3,
+    "hMax": 4,
     "wStart": 7,
-    "hStart": 3,
+    "hStart": 4,
     "countGrid": true,
     "commonCounts": [
      {
-      "count": 10,
-      "feedback": "That's 3 + 7. Count every square in the grid: 21."
+      "count": 21,
+      "feedback": "That's the total BEFORE the new row was added. Now there are 4 rows of 7: count all of them for 28."
      },
      {
       "count": 7,
-      "feedback": "That's just one row. Count all 3 rows: 21 in all."
+      "feedback": "That's just the NEW row. Add it to the 3 rows that were already there: 4 rows of 7 is 28."
      }
     ],
-    "successFeedback": "3 rows of 7 squares each makes 21 squares in all.",
-    "lowFeedback": "3 rows of 7 squares each makes 21 squares in all.",
-    "highFeedback": "3 rows of 7 squares each makes 21 squares in all."
-   },
-   "variant": {
-    "gen": "grid-count",
-    "form": "read"
+    "successFeedback": "4 rows of 7 unit squares each makes 28 squares in all — one whole new row of 7 was added to the original 21.",
+    "lowFeedback": "4 rows of 7 unit squares each makes 28 squares in all.",
+    "highFeedback": "4 rows of 7 unit squares each makes 28 squares in all."
    }
   },
   {
    "id": "k3",
    "kind": "check",
-   "body": "A tall grid.",
+   "body": "Add a column, not a row.",
    "conceptTag": "ssg2-grid-count",
    "explanationVariants": [
-    "8 rows of 3 squares each is 24 squares in all.",
-    "Count every square in the grid: 24."
+    "Adding a column adds one square to each of the 8 rows: 24+8=32.",
+    "8 rows of 4 columns is 32 — a new column changes the column count, not the row count."
    ],
    "widget": {
     "type": "areaModel",
-    "prompt": "A rectangle is partitioned into 8 rows and 3 columns of unit squares. How many unit squares in all?",
-    "targetArea": 24,
-    "wMax": 3,
+    "prompt": "A grid has 8 rows of 3 unit squares each. If one more COLUMN (not a row) is added, how many unit squares will the grid have in all?",
+    "targetArea": 32,
+    "wMax": 4,
     "hMax": 8,
-    "wStart": 3,
+    "wStart": 4,
     "hStart": 8,
     "countGrid": true,
     "commonCounts": [
      {
-      "count": 11,
-      "feedback": "That's 8 + 3. Count every square in the grid: 24."
+      "count": 24,
+      "feedback": "That's the total BEFORE the new column was added. Adding a column adds one more square to EACH of the 8 rows: 24+8=32."
      },
      {
-      "count": 3,
-      "feedback": "That's just one row. Count all 8 rows: 24 in all."
+      "count": 27,
+      "feedback": "That adds 3 (a row's worth), but a COLUMN was added, not a row. A new column adds one square to each of the 8 rows: 24+8=32."
      }
     ],
-    "successFeedback": "8 rows of 3 squares each makes 24 squares in all.",
-    "lowFeedback": "8 rows of 3 squares each makes 24 squares in all.",
-    "highFeedback": "8 rows of 3 squares each makes 24 squares in all."
-   },
-   "variant": {
-    "gen": "grid-count",
-    "form": "read"
+    "successFeedback": "8 rows of 3 becomes 8 rows of 4 once a column is added: 8×4=32 unit squares in all.",
+    "lowFeedback": "8 rows of 4 unit squares each makes 32 squares in all.",
+    "highFeedback": "8 rows of 4 unit squares each makes 32 squares in all."
    }
   },
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "The biggest grid yet.",
+   "body": "Watch for a different kind of mix-up this time.",
    "conceptTag": "ssg2-grid-count",
    "explanationVariants": [
-    "7 rows of 7 squares each is 49 squares in all.",
-    "Count every square in the grid: 49."
+    "7 rows of 7 squares each is 49 squares in all — that counts every square inside, not the distance around the edge.",
+    "The edge around the grid is the PERIMETER; the squares filling it are the AREA. Count the squares: 49."
    ],
    "widget": {
     "type": "areaModel",
-    "prompt": "A rectangle is partitioned into 7 rows and 7 columns of unit squares. How many unit squares in all?",
+    "prompt": "This grid has 7 rows and 7 columns of unit squares. Count only the squares — not the edge around the grid.",
     "targetArea": 49,
     "wMax": 7,
     "hMax": 7,
@@ -239,8 +250,8 @@
     "countGrid": true,
     "commonCounts": [
      {
-      "count": 14,
-      "feedback": "That's 7 + 7. Count every square in the grid: 49."
+      "count": 28,
+      "feedback": "That's 2 × (7 + 7) — the PERIMETER (the distance around the edge), not the area. Count every square filling the inside instead: 49."
      },
      {
       "count": 7,
@@ -252,14 +263,10 @@
     "highFeedback": "7 rows of 7 squares each makes 49 squares in all."
    },
    "hints": [
-    "There are 7 rows.",
-    "Each row has 7 squares.",
-    "Count every square across all 7 rows: 49."
-   ],
-   "variant": {
-    "gen": "grid-count",
-    "form": "squareRead"
-   }
+    "There are 7 rows and 7 columns.",
+    "Count every square INSIDE the grid — not the distance around the outside edge.",
+    "7 rows of 7 squares: 49."
+   ]
   },
   {
    "id": "r1",

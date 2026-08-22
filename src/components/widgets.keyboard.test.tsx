@@ -240,14 +240,20 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("proportionalReasoningLab", () => {
     const { spec, holder, container } = mount("proportionalReasoningLab");
     auditNativeControls(container);
-    for (const button of screen.getAllByRole("button", { name: /Normalize/ })) fireEvent.click(button);
+    for (const [deal, rate] of [["Deal A", "1.5"], ["Deal B", "1.4"]] as const) {
+      fireEvent.change(screen.getByRole("spinbutton", { name: new RegExp(`Enter unit rate for ${deal}`) }), { target: { value: rate } });
+      fireEvent.click(screen.getByRole("button", { name: new RegExp(`Check unit rate for ${deal}`) }));
+    }
     fireEvent.click(screen.getByRole("button", { name: "Deal B" }));
     expectSolved(spec, holder);
   });
 
   it("proportionalReasoningLab: a wrong series claim is reachable and named", () => {
     const { spec, holder, container } = mount("proportionalReasoningLab");
-    for (const button of screen.getAllByRole("button", { name: /Normalize/ })) fireEvent.click(button);
+    for (const [deal, rate] of [["Deal A", "1.5"], ["Deal B", "1.4"]] as const) {
+      fireEvent.change(screen.getByRole("spinbutton", { name: new RegExp(`Enter unit rate for ${deal}`) }), { target: { value: rate } });
+      fireEvent.click(screen.getByRole("button", { name: new RegExp(`Check unit rate for ${deal}`) }));
+    }
     fireEvent.click(screen.getByRole("button", { name: "Deal A" }));
     expect(canCheck(spec, holder.v)).toBe(true);
     const wrong = evaluate(spec, holder.v);
@@ -714,8 +720,12 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("systemsExplore", () => {
     const { spec, holder, container } = mount("systemsExplore");
     auditNativeControls(container);
-    fireEvent.change(screen.getByLabelText(/point x/i), { target: { value: "2" } });
-    fireEvent.change(screen.getByLabelText(/point y/i), { target: { value: "3" } });
+    // Role-scoped (S331): the point gained "Decrease/Increase point x|y" stepper BUTTONS
+    // (CL-P1-011's touch-alternative path), so a bare label-text query now matches more than the
+    // range. Same control, same keyboard path — selected by its slider role, as the sibling
+    // systemsExplore suites (mmip.o2.s211/s212, session247) already do.
+    fireEvent.change(screen.getByRole("slider", { name: "point x" }), { target: { value: "2" } });
+    fireEvent.change(screen.getByRole("slider", { name: "point y" }), { target: { value: "3" } });
     expectSolved(spec, holder);
   });
 
@@ -810,11 +820,16 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("boxPlot", () => {
     const { spec, holder, container } = mount("boxPlot");
     auditNativeControls(container);
-    fireEvent.change(screen.getByLabelText(/minimum/i), { target: { value: "2" } });
-    fireEvent.change(screen.getByLabelText(/first quartile/i), { target: { value: "4" } });
-    fireEvent.change(screen.getByLabelText(/median/i), { target: { value: "6" } });
-    fireEvent.change(screen.getByLabelText(/third quartile/i), { target: { value: "9" } });
-    fireEvent.change(screen.getByLabelText(/maximum/i), { target: { value: "12" } });
+    // Each slider's own aria-label is "set <statistic>" ("set minimum", "set Q1 lower
+    // quartile", ...) — see widgets.tsx BoxPlotW `rows`. A bare /minimum/i etc. also matches
+    // the plot's own image aria-label (which restates every statistic in one sentence, e.g.
+    // "...Minimum 0; Q1 lower quartile 3;..."), so the query must include the "set " prefix
+    // that only the input carries.
+    fireEvent.change(screen.getByLabelText(/set minimum/i), { target: { value: "2" } });
+    fireEvent.change(screen.getByLabelText(/set q1 lower quartile/i), { target: { value: "4" } });
+    fireEvent.change(screen.getByLabelText(/set median/i), { target: { value: "6" } });
+    fireEvent.change(screen.getByLabelText(/set q3 upper quartile/i), { target: { value: "9" } });
+    fireEvent.change(screen.getByLabelText(/set maximum/i), { target: { value: "12" } });
     expectSolved(spec, holder);
   });
 
@@ -1254,9 +1269,11 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("plotPoint (grid cells toggle, y counts from the bottom)", () => {
     const { spec, holder, container } = mount("plotPoint");
     auditNativeControls(container);
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 1" }));
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 2" }));
-    fireEvent.click(screen.getByRole("button", { name: "Cat, row 3" }));
+    // A cell's accessible name is `${xLabel}, ${yLabel}` (see widgets.tsx PlotPointW); the
+    // gallery sample's yLabels are plain track numbers ("1".."4"), not "row N" text.
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 1" }));
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 2" }));
+    fireEvent.click(screen.getByRole("button", { name: "Cat, 3" }));
     expectSolved(spec, holder);
   });
 

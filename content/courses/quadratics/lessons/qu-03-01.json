@@ -32,25 +32,6 @@
           }
         ],
         "fallbackFeedback": "x = ±√9 = ±3; the larger is 3."
-      },
-      "predict": {
-        "prompt": "Solving x² = 9 by square roots: √9 = 3, so the solutions are…",
-        "options": [
-          {
-            "id": "pm",
-            "label": "±3 — the equation keeps both"
-          },
-          {
-            "id": "pos",
-            "label": "Just 3 — that's what √ means"
-          },
-          {
-            "id": "root",
-            "label": "±√3"
-          }
-        ],
-        "outcomeId": "pm",
-        "reveal": "√9 is DEFINED as the positive root, 3 — but the equation x² = 9 asks for every number whose square is 9, and there are two. The ± is yours to add when you unsquare: the symbol and the equation answer different questions."
       }
     },
     {
@@ -59,25 +40,25 @@
       "body": "Isolate first.",
       "conceptTag": "quad-square-root",
       "explanationVariants": [
-        "x² − 49 = 0 gives x² = 49, so x = ±7; the larger is 7.",
-        "Isolate x² = 49, then x = ±7."
+        "x² − 121 = 0 gives x² = 121, so x = ±11; the larger is 11.",
+        "Isolate x² = 121, then x = ±11."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Solve x^2 - 49 = 0. What is the larger solution?",
-        "answer": 7,
+        "prompt": "Solve x^2 - 121 = 0. What is the larger solution?",
+        "answer": 11,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": -7,
-            "feedback": "That's the smaller solution; the larger is 7."
+            "value": -11,
+            "feedback": "That's the smaller solution; the larger is 11."
           },
           {
-            "value": 49,
-            "feedback": "49 is x². Take the square root: x = ±7."
+            "value": 121,
+            "feedback": "121 is x². Take the square root: x = ±11."
           }
         ],
-        "fallbackFeedback": "x² = 49, so x = ±7; the larger is 7."
+        "fallbackFeedback": "x² = 121, so x = ±11; the larger is 11."
       },
       "variant": {
         "gen": "a1-quadratics",
@@ -122,6 +103,25 @@
       "id": "i3",
       "kind": "interactive",
       "body": "Undo the shift.",
+      "predict": {
+        "prompt": "Before you drag the crossings, where should (x - 3)^2 = 16 meet the x-axis?",
+        "options": [
+          {
+            "id": "shifted",
+            "label": "At x = -1 and x = 7"
+          },
+          {
+            "id": "unshifted",
+            "label": "At x = -4 and x = 4"
+          },
+          {
+            "id": "literal",
+            "label": "At x = 3 and x = 16"
+          }
+        ],
+        "outcomeId": "shifted",
+        "reveal": "The graph confirms crossings at -1 and 7. Starting from the center 3, moving 4 units left and 4 units right gives both solutions to the shifted square."
+      },
       "widget": {
         "type": "quadraticExplore",
         "form": "roots",
@@ -178,32 +178,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Bigger numbers.",
+      "body": "Divide first, THEN take the root.",
       "conceptTag": "quad-square-root",
       "explanationVariants": [
-        "x² = 81 gives x = ±9; the larger is 9.",
-        "√81 = 9, so x = ±9."
+        "Divide by 3: (x − 2)² = 4. Root: x − 2 = ±2, so x = 4 or x = 0; the larger is 4.",
+        "Isolate the square first (÷3), then take the root, then undo the shift: x = 4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Solve x^2 = 81. What is the larger solution?",
-        "answer": 9,
+        "prompt": "Solve 3(x - 2)^2 = 12. What is the larger solution?",
+        "answer": 4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": -9,
-            "feedback": "That's the smaller solution; the larger is 9."
+            "value": 6,
+            "feedback": "6 comes from treating 4 as x−2 directly. First divide by 3 to get (x−2)²=4, THEN take the square root: x−2=±2."
           },
           {
-            "value": 81,
-            "feedback": "81 is x². Take the square root: x = ±9."
+            "value": 0,
+            "feedback": "0 is the smaller solution (2−2). The larger is 2+2=4."
           }
         ],
-        "fallbackFeedback": "x = ±9; the larger is 9."
-      },
-      "variant": {
-        "gen": "a1-quadratics",
-        "form": "quad-square-root__numeric"
+        "fallbackFeedback": "Divide by 3 to isolate the square: (x−2)²=4. Take the root: x−2=±2. The larger solution is x=4."
       }
     },
     {
@@ -260,7 +256,7 @@
       "concept": {
         "id": "rem-qsr-c",
         "kind": "concept",
-        "body": "Isolate x², then take the square root of both sides, keeping both signs: x² = 49 gives x = ±7. For a shifted square (x − 3)² = 16, x − 3 = ±4, so x = 7 or −1."
+        "body": "Isolate x², then take the square root of both sides, keeping both signs: x² = 100 gives x = ±10. For a shifted square (x − 3)² = 16, x − 3 = ±4, so x = 7 or −1."
       },
       "check": {
         "id": "rem-qsr-k",
@@ -268,25 +264,25 @@
         "body": "",
         "conceptTag": "quad-square-root",
         "explanationVariants": [
-          "x² = 49, so x = ±7; the larger is 7.",
-          "√49 = 7, so x = ±7."
+          "x² = 100, so x = ±10; the larger is 10.",
+          "√100 = 10, so x = ±10."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Solve x^2 - 49 = 0. What is the larger solution?",
-          "answer": 7,
+          "prompt": "Solve x^2 - 100 = 0. What is the larger solution?",
+          "answer": 10,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": -7,
-              "feedback": "That's the smaller root; the larger is 7."
+              "value": -10,
+              "feedback": "That's the smaller root; the larger is 10."
             },
             {
-              "value": 49,
-              "feedback": "49 is x²; take the square root to get ±7."
+              "value": 100,
+              "feedback": "100 is x²; take the square root to get ±10."
             }
           ],
-          "fallbackFeedback": "x² = 49, so x = ±7; larger is 7."
+          "fallbackFeedback": "x² = 100, so x = ±10; larger is 10."
         }
       }
     }

@@ -1,5 +1,5 @@
 import { describe, expect, it, afterEach } from "vitest";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -36,13 +36,20 @@ describe("database availability on hosts without a writable disk", () => {
     const { tryGetDb, _setDbForTests, _resetDbAvailability } = await import("./db");
     _setDbForTests(null);
     _resetDbAvailability();
-    // A path under a file (not a directory) cannot be created — the closest portable stand-in for
-    // a read-only serverless filesystem.
-    process.env.MAGGIE_DB_PATH = join("/proc/version", "nested", "app.db");
+    // A path under a FILE (not a directory) can never be created, on any OS's filesystem — unlike
+    // the previous stand-in (`/proc/version`), which is a file only because Linux's procfs happens
+    // to put one there. That path is simply absent on Windows/macOS, so `mkdirSync` would create it
+    // instead of throwing and the whole premise of this test would silently stop holding there.
+    // Manufacturing the blocking file ourselves keeps the "cannot be created" guarantee portable.
+    const blockedRoot = mkdtempSync(join(tmpdir(), "db-blocked-"));
+    created.push(blockedRoot);
+    const blockerFile = join(blockedRoot, "not-a-directory");
+    writeFileSync(blockerFile, "");
+    process.env.MAGGIE_DB_PATH = join(blockerFile, "nested", "app.db");
     // The module read DEFAULT_PATH at import time, so drive the failure through openDb directly
     // and confirm the wrapper's contract: null, never a throw.
     const { openDb } = await import("./db");
-    expect(() => openDb(join("/proc/version", "nested", "app.db"))).toThrow();
+    expect(() => openDb(join(blockerFile, "nested", "app.db"))).toThrow();
     expect(() => tryGetDb()).not.toThrow();
   });
 

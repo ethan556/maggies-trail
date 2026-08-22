@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A double joins two equal groups: 4 + 4, 6 + 6, 8 + 8. Doubles are worth knowing by heart because so many other sums sit next to them.",
-      "narration": "A double joins two equal groups: 4 + 4, 6 + 6, 8 + 8. Doubles are worth knowing by heart because so many other sums sit next to them."
+      "figure": "doubles-mirror",
+      "body": "A double is the same number twice. Two matching groups of six make twelve.",
+      "narration": "A double is the same number twice. Two matching groups of six make twelve."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That is one too many — a double of 4 is exactly 4 counted twice."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 4 + 4 = 8."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 8."
       },
       "hints": [
         "Find the two equal groups.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Picture the double as two matching rows — every counter in one row has a partner in the other.",
-      "narration": "Picture the double as two matching rows — every counter in one row has a partner in the other."
+      "figure": "as100-doubles",
+      "body": "Known doubles make a useful pattern: five plus five is ten, six plus six is twelve, and the even totals continue.",
+      "narration": "Known doubles make a useful pattern: five plus five is ten, six plus six is twelve, and the even totals continue."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-doubles",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Show the double 6 + 6: start at 6 and count on 6. Where do you land?",
-        "min": 4,
-        "max": 14,
-        "start": 6,
-        "hop": 1,
-        "hops": 6,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 6 and count on 6: you land on 12.",
-        "successFeedback": "Landed on 12 — six and six make twelve, a double worth remembering."
+        "type": "tapDiagram",
+        "prompt": "Seven counters are mirrored by seven more. Tap the double's total.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "12",
+            "icon": "12",
+            "count": 1,
+            "correct": false,
+            "feedback": "12 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "13",
+            "icon": "13",
+            "count": 1,
+            "correct": false,
+            "feedback": "13 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "14",
+            "icon": "14",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — seven plus seven is fourteen."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — seven plus seven is fourteen."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 + 6 = ?",
+        "prompt": "Two matching rows hold six counters each. How many counters are there?",
         "answer": 12,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That is one too many — a double of 6 is exactly 6 counted twice."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 + 6 = 12."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 12."
       },
       "hints": [
         "Find the two equal groups.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "5 + 5 = ?",
+        "prompt": "A five-dot pattern is mirrored. What is the combined total?",
         "answer": 10,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That is one too many — a double of 5 is exactly 5 counted twice."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 5 + 5 = 10."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 10."
       },
       "hints": [
         "Find the two equal groups.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "2 + 2 = ?",
+        "prompt": "Two hands each show two fingers. How many fingers are shown?",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That is one too many — a double of 2 is exactly 2 counted twice."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 2 + 2 = 4."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
         "Find the two equal groups.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "4 + 4 = ?",
-          "answer": 8,
+          "prompt": "Put 7 counters in a row. Make a matching row with 7 more counters. How many counters are there altogether?",
+          "answer": 14,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 4,
-              "feedback": "That is only one of the two equal groups; a double joins both."
+              "value": 7,
+              "feedback": "That is only one of the two matching rows; a double joins both rows."
             },
             {
-              "value": 9,
-              "feedback": "That is one too many — a double of 4 is exactly 4 counted twice."
+              "value": 15,
+              "feedback": "That is one too many — a double of 7 is exactly 7 counted twice."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 4 + 4 = 8."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — two rows of 7 counters make 14 altogether."
         }
       }
     }

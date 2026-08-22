@@ -48,6 +48,93 @@ export const PlotDataSpec = z.object({
 });
 export type TPlotData = z.infer<typeof PlotDataSpec>;
 
+/** DISPLAY ONLY — the bar-graph analogue of `PlotDataSpec` (S317). Several `measurement-data`
+ * bar-graph lessons (md-03-02, md-03-03) narrate specific category/value data in prose —
+ * "A bar graph shows: dogs 8, cats 6, fish 3, birds 5" — and render nothing: `plotData` covers
+ * line/dot plots, but no schema field lets a `numeric`, `mcq`, `matchPairs`, `dragOrder`, or
+ * `dragBucket` step draw the actual bar chart its prompt already describes
+ * (`reports/closure/S316_LANEB_MEASUREMENT_DATA_ASSESSMENT.md`).
+ *
+ * THE CONTRACT, copied from `PlotDataSpec`:
+ *   - never read by `evaluate`, `canCheck`, `correctAnswerText`, or any grading path;
+ *   - absent by default, so every other consumer of these five spec types is byte-identical;
+ *   - what it draws is a GIVEN the prompt already states, so showing it leaks no more than the
+ *     prompt itself already reveals — exactly the `md3-bargraph`/`Md3QuestionPictograph` house
+ *     pattern this closes the gap for. */
+export const BarDataSpec = z.object({
+  /** One label per bar, left to right. Must be distinct — two identically-labelled bars cannot
+   * be told apart on the chart or by a screen reader. */
+  categories: z.array(z.string().min(1)).min(2),
+  /** One non-negative height per category, same order and length as `categories`. */
+  values: z.array(z.number().nonnegative()).min(2),
+  /** Optional chart title (defaults to a generic "Bar graph" caption). */
+  title: z.string().min(1).optional(),
+  /** Optional value-axis label ("votes", "books"). */
+  axisLabel: z.string().min(1).optional(),
+  /** Gridline interval. Absent = a quarter of `axisMax` (at least 1), i.e. roughly four ticks. */
+  scaleStep: z.number().positive().optional(),
+  /** Top of the value axis. Absent = the tallest bar's own value — the axis never promises more
+   * scale than the data uses. */
+  axisMax: z.number().positive().optional(),
+  /** How each bar's height is exposed to a reader (S317 round 2). Absent = "all": the SAME
+   * behaviour as before this field existed — every bar's exact value is printed above the bar and
+   * stated plainly as "category: value" in the aria-label. Correct whenever the prompt already
+   * states every value in prose (charting identical numbers adds no new leak), which is every
+   * declared use except the two named below.
+   *
+   * "none": the SVG prints category and axis labels only — no per-bar numeric text — and the
+   * aria-label describes each bar's height by its POSITION relative to the labeled gridlines
+   * ("ends on the 2nd gridline above zero", "ends halfway between the 2nd gridline and the 3rd
+   * gridline") rather than stating the value outright. Use this ONLY where the bar's own value is
+   * the un-stated, graded quantity a check exists to test — printing it would hand over the answer
+   * a sighted learner is still asked to derive by reading the scale (md-03-02 `i1`, a match-the-
+   * value-to-the-line task, and `ch1`, whose challenge grades the un-stated halfway height of
+   * Bar B). Ordinal gridline counting never repeats a category's own line-count back as its
+   * computed value, so it adds zero information beyond what the category label / prompt already
+   * states, in either mode. */
+  valueLabels: z.enum(["all", "none"]).optional()
+});
+export type TBarData = z.infer<typeof BarDataSpec>;
+
+/** The most bars a chart may draw before the picture stops being readable at a phone width —
+ * the same judgement `MAX_PLOT_COLUMNS` makes for the line-plot figure, stated once for bars. */
+export const MAX_BAR_COLUMNS = 8;
+
+/** The chart resolved from the spec — the SINGLE source the renderer draws from and the
+ * accessible description speaks, so the picture on screen and the sentence a screen reader hears
+ * can never disagree (the `plotDataParts` contract, applied to bars).
+ *
+ * Returns null — draw nothing, say nothing — when the step declares no `barData`, or when the
+ * declared data is not something a chart can honestly show: a value per category missing, fewer
+ * than 2 or more than `MAX_BAR_COLUMNS` bars, duplicate category labels, a negative value, or a
+ * value taller than its own axis. Pure, total, never throws. DISPLAY ONLY: no caller grades
+ * with it. */
+export function barDataParts(
+  spec: { barData?: TBarData }
+): { categories: string[]; values: number[]; title?: string; axisLabel?: string; scaleStep: number; axisMax: number; valueLabels: "all" | "none" } | null {
+  const d = spec.barData;
+  if (!d) return null;
+  const { categories, values } = d;
+  if (categories.length !== values.length) return null;
+  if (categories.length < 2 || categories.length > MAX_BAR_COLUMNS) return null;
+  if (new Set(categories).size !== categories.length) return null;
+  if (values.some((v) => v < 0)) return null;
+  const maxVal = Math.max(...values);
+  const axisMax = d.axisMax ?? maxVal;
+  if (!(axisMax > 0) || maxVal > axisMax) return null;
+  const scaleStep = d.scaleStep ?? Math.max(1, axisMax / 4);
+  if (!(scaleStep > 0)) return null;
+  return {
+    categories: [...categories],
+    values: [...values],
+    title: d.title,
+    axisLabel: d.axisLabel,
+    scaleStep,
+    axisMax,
+    valueLabels: d.valueLabels ?? "all"
+  };
+}
+
 export const McqSpec = z.object({
   type: z.literal("mcq"),
   prompt: z.string().min(1),
@@ -59,6 +146,10 @@ export const McqSpec = z.object({
    * plot show?") — drawing the plot there would print the answer. Grading never reads it:
    * evaluate() looks at option ids alone, byte-identical with or without the field. */
   plotData: PlotDataSpec.optional(),
+  /** DISPLAY ONLY — see `BarDataSpec`. Same leakage rule as `plotData` above: correct for "read
+   * the bar graph" questions whose options interpret a dataset the prompt already states; wrong
+   * for any step where an option IS the dataset. Grading is untouched either way. */
+  barData: BarDataSpec.optional(),
   options: z
     .array(
       z.object({
@@ -114,6 +205,8 @@ export const NumericSpec = z.object({
   unit: z.string().optional(),
   /** DISPLAY ONLY — see `PlotDataSpec`. The line plot the prompt describes, drawn. */
   plotData: PlotDataSpec.optional(),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** DISPLAY ONLY — never read by `evaluate`, `canCheck`, `correctAnswerText` or any
    * integrity rule. Set it when the step asks for a NUMERATOR over a denominator the
    * PROMPT has already fixed ("How many fourths are shaded?"): the widget then draws the
@@ -374,6 +467,8 @@ export const DragOrderSpec = z.object({
   /** Presented top-to-bottom in this (shuffled) order. */
   items: z.array(z.object({ id: z.string().min(1), label: z.string().min(1) })).min(3),
   correctOrder: z.array(z.string().min(1)).min(3),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** Anticipated transpositions: fires when `first` is placed anywhere before `second`. */
   misorderFeedback: z
     .array(z.object({ first: z.string(), second: z.string(), feedback: z.string().min(1) }))
@@ -399,6 +494,8 @@ export const DragBucketSpec = z.object({
       })
     )
     .min(2),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   missFeedback: z.string().min(1),
   successFeedback: z.string().min(1)
 });
@@ -410,6 +507,8 @@ export const MatchPairsSpec = z.object({
   right: z.array(z.object({ id: z.string().min(1), label: z.string().min(1) })).min(2),
   /** leftId → rightId */
   pairs: z.record(z.string(), z.string()),
+  /** DISPLAY ONLY — see `BarDataSpec`. The bar graph the prompt describes, drawn. */
+  barData: BarDataSpec.optional(),
   /** Anticipated wrong links with diagnosis. */
   pairErrors: z
     .array(z.object({ left: z.string(), right: z.string(), feedback: z.string().min(1) }))
@@ -443,24 +542,30 @@ export const BuildExpressionSpec = z.object({
  * (D-03: the g8-bv-scatter stretch band emitted 10×10 for exactly that reason). */
 export const MAX_PLOT_POINT_DIM = 8;
 
-export const PlotPointSpec = z.object({
-  type: z.literal("plotPoint"),
-  prompt: z.string().min(1),
-  cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
-  rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
-  /** Optional axis labels; x left→right, y bottom→top. */
-  xLabels: z.array(z.string()).optional(),
-  yLabels: z.array(z.string()).optional(),
-  /** 1-based cell coordinates, y counted from the bottom. All must be marked. */
-  targets: z.array(z.object({ x: z.number().int().min(1), y: z.number().int().min(1) })).min(1),
-  /** When true, a line is drawn through the targets (in array order) once all are correctly marked — makes "the points line up" visible. */
-  connectTargets: z.boolean().optional(),
-  pointErrors: z
-    .array(z.object({ x: z.number().int(), y: z.number().int(), feedback: z.string().min(1) }))
-    .default([]),
-  missFeedback: z.string().min(1),
-  successFeedback: z.string().min(1)
-});
+export const PlotPointSpec = z
+  .object({
+    type: z.literal("plotPoint"),
+    prompt: z.string().min(1),
+    /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
+    title: z.string().min(1).optional(),
+    xAxisLabel: z.string().min(1).optional(),
+    yAxisLabel: z.string().min(1).optional(),
+
+    cols: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
+    rows: z.number().int().min(2).max(MAX_PLOT_POINT_DIM),
+    /** Every coordinate plane must name its x tracks left→right and y tracks bottom→top. */
+    xLabels: z.array(z.string().trim().min(1)),
+    yLabels: z.array(z.string().trim().min(1)),
+    /** 1-based cell coordinates, y counted from the bottom. All must be marked. */
+    targets: z.array(z.object({ x: z.number().int().min(1), y: z.number().int().min(1) })).min(1),
+    /** When true, a line is drawn through the targets (in array order) once all are correctly marked — makes "the points line up" visible. */
+    connectTargets: z.boolean().optional(),
+    pointErrors: z
+      .array(z.object({ x: z.number().int(), y: z.number().int(), feedback: z.string().min(1) }))
+      .default([]),
+    missFeedback: z.string().min(1),
+    successFeedback: z.string().min(1)
+  });
 
 /** Boolean rule tree over toggle ids: "sw1" | {op:"and"|"or"|"not", args:[...]}. */
 export type TRule = string | { op: "and" | "or" | "not"; args: TRule[] };
@@ -560,9 +665,15 @@ export const TenFrameSpec = z.object({
   successFeedback: z.string().min(1)
 });
 
+const NumberLineDisplayText = z.string().min(1).refine((value) => !value.includes("^"), "number-line display metadata cannot contain caret notation");
+
 export const NumberLineHopSpec = z.object({
   type: z.literal("numberLineHop"),
   prompt: z.string().min(1),
+  /** Optional contextual display metadata; unit stays upright in the composed axis title. */
+  title: NumberLineDisplayText.optional(),
+  axisLabel: NumberLineDisplayText.optional(),
+  unit: NumberLineDisplayText.optional(),
   min: z.number().int(),
   max: z.number().int(),
   /** Marked starting point. */
@@ -1464,6 +1575,10 @@ export function feasibleRegionCorners(slantM: number, slantB: number, vertical: 
 export const NumberLinePlaceSpec = z.object({
   type: z.literal("numberLinePlace"),
   prompt: z.string().min(1),
+  /** Optional contextual display metadata; unit stays upright in the composed axis title. */
+  title: NumberLineDisplayText.optional(),
+  axisLabel: NumberLineDisplayText.optional(),
+  unit: NumberLineDisplayText.optional(),
   min: z.number().int(),
   max: z.number().int(),
   step: z.number().positive().default(1),
@@ -1746,6 +1861,7 @@ export const DilationExploreSpec = z.object({
 export const BarBuilderSpec = z.object({
   type: z.literal("barBuilder"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
   categories: z.array(z.string().min(1)).min(2),
   target: z.array(z.number().int().nonnegative()).min(2),
   maxVal: z.number().int().positive(),
@@ -1762,6 +1878,8 @@ export const BarBuilderSpec = z.object({
   icon: z.string().min(1).default("●"),
   /** Optional axis title (e.g. "minutes read") — useful when categories are bin ranges. */
   axisLabel: z.string().optional(),
+  /** The scaled count/frequency axis. Kept separate from axisLabel, which names categories/bins. */
+  valueAxisLabel: z.string().min(1).optional(),
   successFeedback: z.string().min(1),
   partialFeedback: z.string().min(1)
 });
@@ -1775,6 +1893,8 @@ export const BarBuilderSpec = z.object({
 export const GraphReadSpec = z.object({
   type: z.literal("graphRead"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  valueAxisLabel: z.string().min(1).optional(),
   mode: z.enum(["picture", "bar", "tally"]),
   /** How many icons are drawn (picture mode) or how many gridlines the bar reaches (bar mode). */
   drawn: z.number().int().nonnegative(),
@@ -1806,6 +1926,8 @@ export function graphReadAnswer(spec: { drawn: number; unitValue: number }): num
 export const DotPlotSpec = z.object({
   type: z.literal("dotPlot"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  axisLabel: z.string().min(1).optional(),
   values: z.array(z.number().int()).min(2),
   target: z.array(z.number().int().nonnegative()).min(2),
   maxPerValue: z.number().int().positive().default(6),
@@ -1854,6 +1976,8 @@ export function dotPlotLabel(numerator: number, denominator?: number, style?: "m
 export const BoxPlotSpec = z.object({
   type: z.literal("boxPlot"),
   prompt: z.string().min(1),
+  title: z.string().min(1).optional(),
+  axisLabel: z.string().min(1).optional(),
   axisMin: z.number().int(),
   axisMax: z.number().int(),
   targetMin: z.number().int(),
@@ -2230,6 +2354,11 @@ export const DoubleNumberLineSpec = z.object({
 export const ScatterFitSpec = z.object({
   type: z.literal("scatterFit"),
   prompt: z.string().min(1),
+  /** Optional display metadata. Axis labels may include units, for example "Time (s)". */
+  title: z.string().min(1).optional(),
+  xAxisLabel: z.string().min(1).optional(),
+  yAxisLabel: z.string().min(1).optional(),
+
   points: z.array(z.tuple([z.number(), z.number()])).min(4),
   xMin: z.number().int(),
   xMax: z.number().int(),
@@ -2691,11 +2820,16 @@ export const TrialProbabilityLabSpec = z.object({
  * not — they extract one circle's own formula component, before π. Note also that `choices` has NO
  * `correct` boolean (unlike most mcq-shaped widgets): correctness is computed by matching
  * `choice.value` against that target, so a hand-set `correct: true` is silently ignored. */
+export const ScaledCircleUnitSpec = z.enum(["unitless", "mm", "cm", "m", "km", "in", "ft", "yd"]);
+
 export const ScaledCircleLabSpec = z.object({
   type: z.literal("scaledCircleLab"),
   prompt: z.string().min(1),
   drawingRadius: z.number().positive().optional(),
   scale: z.number().positive().optional(),
+  /** `unitless` is an intentional neutral quantity, not an omitted metre default. */
+  drawingUnit: ScaledCircleUnitSpec.default("unitless"),
+  realUnit: ScaledCircleUnitSpec.default("unitless"),
   realRadius: z.number().positive(),
   ask: z.enum(["realRadius", "circumferenceCoef", "areaCoef"]),
   choices: z.array(z.object({
@@ -2704,6 +2838,42 @@ export const ScaledCircleLabSpec = z.object({
   fallbackFeedback: z.string().min(1),
   successFeedback: z.string().min(1)
 });
+
+type ScaledCircleUnit = z.infer<typeof ScaledCircleUnitSpec>;
+const SCALED_CIRCLE_UNIT_NAME: Record<Exclude<ScaledCircleUnit, "unitless">, { singular: string; plural: string }> = {
+  mm: { singular: "millimeter", plural: "millimeters" },
+  cm: { singular: "centimeter", plural: "centimeters" },
+  m: { singular: "meter", plural: "meters" },
+  km: { singular: "kilometer", plural: "kilometers" },
+  in: { singular: "inch", plural: "inches" },
+  ft: { singular: "foot", plural: "feet" },
+  yd: { singular: "yard", plural: "yards" },
+};
+
+export function scaledCircleMeasurementText(value: number | "?", unit: ScaledCircleUnit, power: 1 | 2 = 1): string {
+  if (unit === "unitless") return String(value);
+  return `${value} ${unit}${power === 2 ? "²" : ""}`;
+}
+
+export function scaledCircleMeasurementSpoken(value: number | "unknown", unit: ScaledCircleUnit, power: 1 | 2 = 1): string {
+  if (unit === "unitless") return String(value);
+  const singular = value === 1;
+  const names = SCALED_CIRCLE_UNIT_NAME[unit];
+  const noun = singular ? names.singular : names.plural;
+  return `${value} ${power === 2 ? "square " : ""}${noun}`;
+}
+
+export function scaledCircleScaleUnitText(drawingUnit: ScaledCircleUnit, realUnit: ScaledCircleUnit): string {
+  if (drawingUnit === "unitless" || realUnit === "unitless") return "";
+  return ` ${realUnit}/${drawingUnit}`;
+}
+
+export function scaledCircleScaleUnitSpoken(drawingUnit: ScaledCircleUnit, realUnit: ScaledCircleUnit, scale = 1): string {
+  if (drawingUnit === "unitless" || realUnit === "unitless") return "";
+  const realNames = SCALED_CIRCLE_UNIT_NAME[realUnit];
+  const realName = scale === 1 ? realNames.singular : realNames.plural;
+  return ` ${realName} per ${SCALED_CIRCLE_UNIT_NAME[drawingUnit].singular}`;
+}
 
 export function scaledCircleTarget(spec: { realRadius: number; ask: "realRadius" | "circumferenceCoef" | "areaCoef" }): number {
   if (spec.ask === "realRadius") return spec.realRadius;
@@ -4610,6 +4780,32 @@ export function shapeHierarchyChoiceCorrect(
   return sameStringSet(choice.claim.split("+").filter(Boolean), shapeHierarchyTriangleLabels(spec));
 }
 
+/** Truth-derived reveal copy for triangle classification. A generic "contradicts the claim"
+ * sentence is false when a dual or inclusive choice contains one supported label but omits
+ * another, so the same classification truth used by the evaluator supplies the explanation. */
+export function shapeHierarchyChoiceEvidence(
+  spec: {
+    mode: "hierarchy" | "triangle" | "verdict";
+    triangleSides?: readonly [number, number, number];
+    triangleAngles?: readonly [number, number, number];
+    triangleQuestion?: "side" | "angle" | "sideInclusive" | "dual";
+  },
+  choice: { claim: string; evidenceText: string }
+): string {
+  if (spec.mode !== "triangle") return choice.evidenceText;
+  const expected = shapeHierarchyTriangleLabels(spec);
+  const selected = choice.claim.split("+").filter(Boolean);
+  const missing = expected.filter((label) => !selected.includes(label));
+  const unsupported = selected.filter((label) => !expected.includes(label));
+  const supportedText = expected.join(" and ") || "no classification label";
+  if (missing.length === 0 && unsupported.length === 0) return `The fixed givens support ${supportedText}.`;
+  const differences = [
+    unsupported.length ? `includes ${unsupported.join(" and ")}, which the givens do not support` : "",
+    missing.length ? `leaves out ${missing.join(" and ")}` : "",
+  ].filter(Boolean).join(", and ");
+  return `The fixed givens support ${supportedText}. This claim ${differences}.`;
+}
+
 /** unitRuler — align zero, choose a unit, and iterate equal units with no gaps or overlaps. */
 export const UnitRulerSpec = z.object({
   type: z.literal("unitRuler"),
@@ -5306,6 +5502,65 @@ export function geometricConstraintTruth(spec:GeometricConstraintTruthInput):{an
   }
   return{answerNumber,answerClaim,stages,pieceAreas};
 }
+/**
+ * The stage keys that would disclose this widget's graded result or conclusion.
+ *
+ * This is deliberately semantic rather than a text search. Several geometry stages express an
+ * answer without repeating the grader's internal claim id, and `proof:partition-ratio` ends in the
+ * *second* part of a ratio even though the first part is what the learner enters. Keeping the map
+ * beside the truth engine gives the visual renderer and the screen-reader description one shared
+ * contract. Exploration-only lessons return no held keys because opening the derivation is their
+ * learner action; there is no separate answer to pre-empt.
+ */
+export function geometricConstraintAnswerStageKeys(
+  spec:GeometricConstraintTruthInput & {answerMode:GeometricConstraintAnswerMode}
+):string[]{
+  if(spec.answerMode==="explore")return[];
+  switch(spec.task){
+    case "perimeterMissing":
+      return[spec.perimeter?.unknownMultiplicity&&spec.perimeter.unknownMultiplicity>1?"perimeter:split":"perimeter:remaining"];
+    case "coordinateArea":{
+      const model=spec.coordinate;
+      if(!model)return[];
+      if(model.target==="total")return["coordinate:combine"];
+      const id=model.targetPieceId??model.pieces[0]?.id;
+      return id?[`coordinate:${id}:area`]:[];
+    }
+    case "scaledArea":
+      if(spec.scale?.target==="unitArea")return["scale:area-factor"];
+      if(spec.scale?.target==="error")return["scale:area-factor","scale:real-area"];
+      return["scale:real-area"];
+    case "angleCrossing":
+      if(spec.angle?.target==="vertical")return["angle:vertical"];
+      if(spec.angle?.target==="adjacent")return["angle:adjacent"];
+      if(spec.angle?.target==="whyVertical")return["angle:vertical","angle:adjacent"];
+      return[];
+    case "aaSimilarity":
+      if(spec.aa?.target==="third")return["aa:complete-a"];
+      if(spec.aa?.target==="similarity")return["aa:compare"];
+      return["aa:scale-target"];
+    case "pythagoreanArea":
+      if(spec.pythagorean?.target==="cSquared")return["pyth:sum","pyth:identity"];
+      if(spec.pythagorean?.target==="length"||spec.pythagorean?.target==="legLength")return["pyth:square-root"];
+      if(spec.pythagorean?.target==="areaMeaning")return["pyth:leg-squares","pyth:sum","pyth:identity"];
+      return["pyth:identity"];
+    case "coordinateProof":{
+      switch(spec.coordinateProof?.kind){
+        case "segmentPartition":return["proof:partition-ratio"];
+        case "vectorRotation":return["proof:rotate","proof:dot"];
+        case "triangleCertificate":return["proof:converse","proof:slope-option"];
+        case "symmetricPlacement":return["proof:symmetry-axis","proof:equal-slants"];
+        case "radicalPerimeter":return["proof:radical-combine"];
+        case "boxAdvantage":return["proof:corner-legs"];
+        case "shoelaceArea":return["proof:shoelace-half"];
+        case "circleLineIntersection":return["proof:roots"];
+        case "segmentLength":return["proof:span-root"];
+        case "lineRelation":
+        default:return[];
+      }
+    }
+  }
+}
 export function geometricConstraintExplorationKeys(spec:GeometricConstraintTruthInput):string[]{return geometricConstraintTruth(spec).stages.map(stage=>stage.key)}
 export function geometricConstraintChoiceCorrect(spec:GeometricConstraintTruthInput,choice:{claim?:string;numberValue?:number}):boolean{const truth=geometricConstraintTruth(spec);if(typeof choice.numberValue==="number"&&typeof truth.answerNumber==="number")return Math.abs(choice.numberValue-truth.answerNumber)<=1e-9;return Boolean(choice.claim&&choice.claim===truth.answerClaim)}
 const GeometricConstraintChoiceSpec=z.object({id:z.string().min(1),label:z.string().min(1),feedback:z.string().min(1),claim:z.string().min(1).optional(),numberValue:z.number().finite().optional()});
@@ -5891,9 +6146,15 @@ export function exactNumberTruth(spec:ExactNumberTruthInput):{
       const approx=Math.log(x)/Math.log(b);let k:number|undefined;
       for(const c of [Math.floor(approx),Math.round(approx),Math.ceil(approx)])if(Math.abs(Math.pow(b,c)-x)<1e-9){k=c;break}
       if(k===undefined)throw new Error(`exactNumberLab logarithmEvaluate: ${x} is not an exact power of ${b}`);
+      /* GRB-02 (S331): for a NEGATIVE exponent the argument is exactly 1/bᵏ, but printing the raw
+       * float claimed things like "3^−4 = 0.012345679012" — an "=" to invented digits. When the
+       * reciprocal power is a clean integer the stage prints the exact fraction instead, matching
+       * how the prompt itself writes the argument (e.g. "log_3(1/81)"). */
+      const recip=k<0?exactClean(Math.pow(b,-k)):NaN;
+      const shownX=k<0&&Number.isInteger(recip)?`1/${fmt(recip)}`:fmt(x);
       stages.push({key:"log:base",label:"identify the base",value:`base ${fmt(b)}`},
-        {key:"log:power",label:"write the argument as a power of the base",value:`${fmt(b)}^${fmt(k)} = ${fmt(x)}`},
-        {key:"log:read",label:"read the exponent",value:`log_${fmt(b)} ${fmt(x)} = ${fmt(k)}`});
+        {key:"log:power",label:"write the argument as a power of the base",value:`${fmt(b)}^${fmt(k)} = ${shownX}`},
+        {key:"log:read",label:"read the exponent",value:`log_${fmt(b)} ${shownX} = ${fmt(k)}`});
       answerNumber=exactClean(k);break;
     }
     case "logarithmArgument":{
@@ -6651,7 +6912,7 @@ export function numberLineRaySameSolutionSet(a: RayRelationLiteral, b: RayRelati
   );
 }
 
-export const WidgetSpec = z.discriminatedUnion("type", [
+const WidgetSpecBase = z.discriminatedUnion("type", [
   McqSpec,
   NumericSpec,
   FractionEntrySpec,
@@ -6783,6 +7044,36 @@ export const WidgetSpec = z.discriminatedUnion("type", [
   NumberLineRaySpec
 ]);
 
+/** Rules that depend on sibling fields of a discriminated widget member. */
+const widgetSpecWithPlotPointIntegrity = WidgetSpecBase.superRefine((spec, ctx) => {
+  if (spec.type !== "plotPoint") return;
+  for (const [axis, labels, tracks] of [
+    ["xLabels", spec.xLabels, spec.cols],
+    ["yLabels", spec.yLabels, spec.rows],
+  ] as const) {
+    if (labels.length !== tracks) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [axis],
+        message: `${axis} must name each of its ${tracks} tracks exactly once`,
+      });
+    }
+    if (new Set(labels).size !== labels.length) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [axis],
+        message: `${axis} labels must be distinct`,
+      });
+    }
+  }
+});
+
+// Keep the discriminated-union member list available to registry tooling while
+// enforcing cross-field plot-point invariants at the public schema boundary.
+export const WidgetSpec = Object.assign(widgetSpecWithPlotPointIntegrity, {
+  options: WidgetSpecBase.options,
+});
+
 /** Structural integrity checks that discriminated unions can't express inline. */
 /** The authoring rules for the display-only `plotData` block, in one place because `numeric` and
  * `fractionEntry` share the field and must never diverge on what a drawable plot is. Every rule
@@ -6809,12 +7100,44 @@ function plotDataIntegrityErrors(where: string, d: TPlotData): string[] {
   return errs;
 }
 
+/** The authoring rules for the display-only `barData` block (S317), in one place because
+ * `numeric`, `mcq`, `matchPairs`, `dragOrder`, and `dragBucket` share the field and must never
+ * diverge on what a drawable bar chart is. Every rule here is a reason `barDataParts` would
+ * refuse to draw, stated as a message an author can act on. */
+function barDataIntegrityErrors(where: string, d: TBarData): string[] {
+  const errs: string[] = [];
+  if (d.categories.length !== d.values.length)
+    errs.push(`${where}: barData needs one value per category (${d.categories.length} categories, ${d.values.length} values)`);
+  if (d.categories.length < 2)
+    errs.push(`${where}: barData needs at least 2 bars to be worth drawing`);
+  if (d.categories.length > MAX_BAR_COLUMNS)
+    errs.push(`${where}: barData has ${d.categories.length} bars; the chart draws at most ${MAX_BAR_COLUMNS}`);
+  if (new Set(d.categories).size !== d.categories.length)
+    errs.push(`${where}: barData category labels must be distinct — two identically-labelled bars cannot be told apart`);
+  if (d.values.some((v) => v < 0))
+    errs.push(`${where}: barData values must be non-negative — a bar cannot have negative height`);
+  if (d.axisMax !== undefined && d.values.some((v) => v > d.axisMax!))
+    errs.push(`${where}: barData has a value taller than its own axisMax — the bar would draw off the chart`);
+  if (d.scaleStep !== undefined && !(d.scaleStep > 0))
+    errs.push(`${where}: barData scaleStep must be positive`);
+  // Last line of defence: whatever the rules above missed, the renderer's own resolver decides.
+  if (errs.length === 0 && barDataParts({ barData: d }) === null)
+    errs.push(`${where}: barData cannot be drawn — the renderer would show nothing`);
+  return errs;
+}
+
 export function widgetIntegrityErrors(spec: TWidget): string[] {
   const errs: string[] = [];
   // Display-only, shared by three surfaces, and therefore checked before the per-type switch:
   // no branch owns it and none may drift from the others on what it means. (S238 added mcq.)
   if ((spec.type === "numeric" || spec.type === "fractionEntry" || spec.type === "mcq") && spec.plotData)
     errs.push(...plotDataIntegrityErrors(spec.type, spec.plotData));
+  // Same discipline for bars (S317): five surfaces share the field and must never diverge.
+  if (
+    (spec.type === "numeric" || spec.type === "mcq" || spec.type === "matchPairs" || spec.type === "dragOrder" || spec.type === "dragBucket") &&
+    spec.barData
+  )
+    errs.push(...barDataIntegrityErrors(spec.type, spec.barData));
   switch (spec.type) {
     case "numberLineRay": {
       const w = spec.window;
@@ -6974,6 +7297,13 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
     case "scaledCircleLab": {
       if ((spec.drawingRadius === undefined) !== (spec.scale === undefined))
         errs.push("scaledCircleLab: drawingRadius and scale must be supplied together");
+      const hasDrawing = spec.drawingRadius !== undefined && spec.scale !== undefined;
+      if (!hasDrawing && spec.drawingUnit !== "unitless")
+        errs.push("scaledCircleLab: drawingUnit requires drawingRadius and scale givens");
+      if (hasDrawing && ((spec.drawingUnit === "unitless") !== (spec.realUnit === "unitless")))
+        errs.push("scaledCircleLab: a dimensional scale chain requires both drawingUnit and realUnit");
+      if (spec.ask === "realRadius" && (spec.drawingRadius === undefined || spec.scale === undefined))
+        errs.push("scaledCircleLab: realRadius questions require drawingRadius and scale givens");
       if (spec.drawingRadius !== undefined && spec.scale !== undefined && Math.abs(spec.drawingRadius * spec.scale - spec.realRadius) > 1e-9)
         errs.push(`scaledCircleLab: ${spec.drawingRadius} × ${spec.scale} does not equal realRadius ${spec.realRadius}`);
       const correct = spec.choices.filter((choice) => scaledCircleChoiceCorrect(spec, choice));
@@ -7269,8 +7599,11 @@ export function widgetIntegrityErrors(spec: TWidget): string[] {
       if(spec.coordinate){const ids=spec.coordinate.pieces.map(piece=>piece.id),labels=spec.coordinate.pieces.map(piece=>piece.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: coordinate piece ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: coordinate piece labels must be unique");for(const piece of spec.coordinate.pieces){if(piece.width===0||piece.height===0)errs.push(`geometricConstraintLab: coordinate piece ${piece.id} must have nonzero dimensions`);if(piece.points){const xs=piece.points.map(point=>point[0]),ys=piece.points.map(point=>point[1]),w=Math.max(...xs)-Math.min(...xs),h=Math.max(...ys)-Math.min(...ys);if(Math.abs(Math.abs(piece.width)-w)>1e-9||Math.abs(Math.abs(piece.height)-h)>1e-9)errs.push(`geometricConstraintLab: coordinate piece ${piece.id} dimensions disagree with its points`)}}}
       if(spec.coordinateProof){const ids=spec.coordinateProof.points.map(point=>point.id),labels=spec.coordinateProof.points.map(point=>point.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: coordinate proof point ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: coordinate proof point labels must be unique");}
       if(spec.perimeter&&spec.perimeter.knownSides.reduce((sum,value)=>sum+value,0)>=spec.perimeter.perimeter)errs.push("geometricConstraintLab: known perimeter sides must leave positive boundary");
-      if(spec.aa){for(const [name,angles] of [["A",spec.aa.anglesA],["B",spec.aa.anglesB]] as const){if(angles.reduce((sum,value)=>sum+value,0)>=180)errs.push(`geometricConstraintLab: triangle ${name} angles must leave a positive third angle`)}}
+      if(spec.scale){const hasArea=spec.scale.drawingArea!==undefined,hasWidth=spec.scale.drawingWidth!==undefined,hasHeight=spec.scale.drawingHeight!==undefined;if(!hasArea&&!hasWidth&&!hasHeight)errs.push("geometricConstraintLab: scaled area requires drawingArea or both drawing dimensions");if(hasWidth!==hasHeight)errs.push("geometricConstraintLab: scaled area drawing width and height must be supplied together");if(hasArea&&hasWidth&&hasHeight&&Math.abs(spec.scale.drawingArea!-spec.scale.drawingWidth!*spec.scale.drawingHeight!)>1e-9)errs.push("geometricConstraintLab: scaled area givens disagree")}
+      if(spec.angle){const hasFactor=spec.angle.algebraFactor!==undefined,hasValue=spec.angle.algebraValue!==undefined;if(hasFactor!==hasValue)errs.push("geometricConstraintLab: algebra factor and value must be supplied together");if(hasFactor&&hasValue&&Math.abs(spec.angle.algebraFactor!*spec.angle.algebraValue!-spec.angle.knownAngle)>1e-9)errs.push("geometricConstraintLab: algebraic angle givens disagree with the known angle")}
+      if(spec.aa){for(const [name,angles] of [["A",spec.aa.anglesA],["B",spec.aa.anglesB]] as const){const sum=angles.reduce((total,value)=>total+value,0);if(angles.length===2&&sum>=180)errs.push(`geometricConstraintLab: triangle ${name} angles must leave a positive third angle`);if(angles.length===3&&Math.abs(sum-180)>1e-9)errs.push(`geometricConstraintLab: triangle ${name} angles must total 180 degrees`)}if(spec.aa.target==="third"&&spec.aa.anglesA.length!==2)errs.push("geometricConstraintLab: third-angle target requires exactly two given angles in triangle A")}
       if(spec.pythagorean){const a=spec.pythagorean.legAreaA??(spec.pythagorean.legA?spec.pythagorean.legA**2:undefined),b=spec.pythagorean.legAreaB??(spec.pythagorean.legB?spec.pythagorean.legB**2:undefined);
+      if(spec.pythagorean.legA!==undefined&&spec.pythagorean.legAreaA!==undefined&&Math.abs(spec.pythagorean.legA**2-spec.pythagorean.legAreaA)>1e-9)errs.push("geometricConstraintLab: first leg length and square area disagree");if(spec.pythagorean.legB!==undefined&&spec.pythagorean.legAreaB!==undefined&&Math.abs(spec.pythagorean.legB**2-spec.pythagorean.legAreaB)>1e-9)errs.push("geometricConstraintLab: second leg length and square area disagree");
       if(spec.pythagorean.target==="legLength"){if(a===undefined||spec.pythagorean.hypotenuse===undefined)errs.push("geometricConstraintLab: legLength requires one known leg and the hypotenuse");else if(spec.pythagorean.hypotenuse**2-a<=0)errs.push("geometricConstraintLab: legLength requires hypotenuse longer than the known leg");}
       else{if(a===undefined||b===undefined)errs.push("geometricConstraintLab: Pythagorean model requires two leg lengths or square areas");}if(spec.pythagorean.target==="length"&&a!==undefined&&b!==undefined&&Math.abs(Math.sqrt(a+b)-Math.round(Math.sqrt(a+b)))>1e-9)errs.push("geometricConstraintLab: authored exact-length task requires a square hypotenuse area")}
       const ids=spec.choices.map(choice=>choice.id),labels=spec.choices.map(choice=>choice.label);if(new Set(ids).size!==ids.length)errs.push("geometricConstraintLab: choice ids must be unique");if(new Set(labels).size!==labels.length)errs.push("geometricConstraintLab: choice labels must be unique");

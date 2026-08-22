@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-spacing-conservation",
       "body": "Spread five buttons far apart and the group LOOKS bigger — but looking bigger and being more are different. The count ends at five.",
       "narration": "Spread five buttons far apart and the group LOOKS bigger — but looking bigger and being more are different. The count ends at five."
     },
@@ -91,27 +91,27 @@
         "options": [
           {
             "id": "o0",
-          "label": "No because the count stays 5",
+            "label": "No; still five",
             "correct": true,
-            "feedback": "Correct — the buttons look bigger as a group, but each one still gets one number and the count ends at 5."
+            "feedback": "Correct — spreading the same five buttons changes space, not amount."
           },
           {
             "id": "o1",
-            "label": "Yes — they take up more room",
+            "label": "Yes; more space",
             "correct": false,
-            "feedback": "Room is not amount; the same 5 buttons are simply farther apart."
+            "feedback": "More space does not add a button; the count remains five."
           },
           {
             "id": "o2",
-            "label": "Fewer — the gaps swallow some",
+            "label": "No; now fewer",
             "correct": false,
-            "feedback": "Gaps hold no buttons; all 5 are still there to be counted."
+            "feedback": "The five original buttons are all still present, so the amount cannot be smaller."
           },
           {
             "id": "o3",
-            "label": "You must weigh them to know",
+            "label": "We need their weight",
             "correct": false,
-            "feedback": "Counting answers how many; spreading them out changes nothing it measures."
+            "feedback": "Weight does not answer how many; counting the unchanged set still gives five."
           }
         ]
       },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-amount-not-space",
       "body": "Space is not amount. Only adding or removing buttons can change how many there are.",
       "narration": "Space is not amount. Only adding or removing buttons can change how many there are."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-conservation",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The 5 buttons were spread far apart. Count them again and show the answer.",
-        "target": 5,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Which pair shows the same five buttons with only the spacing changed?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 6,
-            "feedback": "The empty space holds no buttons; spreading cannot add one."
+            "id": "same",
+            "x": 20,
+            "y": 50,
+            "label": "5 close; 5 spread",
+            "icon": "5 = 5",
+            "count": 5,
+            "correct": true,
+            "feedback": "The same five buttons stay five when spread apart."
           },
           {
+            "id": "added",
+            "x": 50,
+            "y": 50,
+            "label": "5 close; 6 spread",
+            "icon": "5 ≠ 6",
+            "count": 6,
+            "correct": false,
+            "feedback": "That pair added a button, so it does not isolate spacing."
+          },
+          {
+            "id": "removed",
+            "x": 80,
+            "y": 50,
+            "label": "5 close; 4 spread",
+            "icon": "5 ≠ 4",
             "count": 4,
-            "feedback": "That reads the gaps as swallowing buttons — but empty space holds nothing, and touching each button still ends the count at 5."
+            "correct": false,
+            "feedback": "That pair removed a button, so it does not isolate spacing."
           }
         ],
-        "missFeedback": "Ignore the spacing: touch each button once and the count ends where it always did.",
-        "successFeedback": "Five, exactly as before — the gaps grew, the group did not."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "The same five buttons stay five when spread apart."
       },
       "cml": {
         "stage": "construct",
@@ -440,7 +464,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "No because the count stays 5",
+              "label": "No because the count stays 5",
               "correct": true,
               "feedback": "Correct — the buttons look bigger as a group, but each one still gets one number and the count ends at 5."
             },

@@ -9,7 +9,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "If residuals diagnose a line, they can also steer one. Move the line and every leftover changes; the best line is the one that makes them small AND balanced — some up, some down, summing to about zero, with no pattern. Fit by leftover.",
+      "body": "Residuals can steer a line as well as diagnose it. Move the line and every residual changes. The least-squares line makes the sum of the squared residuals as small as possible; when the model includes an intercept, its signed residuals also balance to zero.",
       "figure": "bv-residuals-steer-the-line"
     },
     {
@@ -43,14 +43,14 @@
         "yMax": 11,
         "mMin": 0,
         "mMax": 4,
-        "mStep": 0.5,
+        "mStep": 0.1,
         "bMin": -2,
         "bMax": 4,
-        "bStep": 0.5,
+        "bStep": 0.1,
         "mStart": 1,
         "bStart": 0,
-        "tolerance": 0.5,
-        "successFeedback": "Around ŷ = 2x + 1 the residuals read 0, +1, 0, 0 — tiny and balanced. No slope or shift improves on that without worsening another point.",
+        "tolerance": 0.176,
+        "successFeedback": "At ŷ = 1.9x + 1.5, the residuals are −0.4, +0.7, −0.2, and −0.1. They sum to 0, and their squared sum, 0.70, is the smallest possible.",
         "slopeFeedback": "Watch the ENDS: if the first points sit above your line and the last below (or the reverse), the tilt is wrong before the height is.",
         "offsetFeedback": "Slope looks right — now the whole cloud sits off to one side. Slide b until the misses straddle the line."
       },
@@ -71,7 +71,7 @@
           }
         ],
         "outcomeId": "balanced",
-        "reveal": "Four points, one straight line: perfection is impossible unless the data is perfectly linear. The best line SHARES its misses — a +1 here offset by nothing worse elsewhere, no side favored. All-zero residuals on real data would mean the data was invented."
+        "reveal": "Four points need not lie on one line. The least-squares line balances positive and negative residuals while minimizing their squared total. All-zero residuals are possible when real or simulated data lie exactly on a line."
       }
     },
     {
@@ -80,27 +80,27 @@
       "body": "Check the balance claim.",
       "conceptTag": "bv-fit-by-residual",
       "explanationVariants": [
-        "Under ŷ = 2x + 1: predictions 3, 5, 7, 9 against observations 3, 6, 7, 9 — residuals 0, +1, 0, 0, summing to +1 ≈ 0.",
-        "Near-zero residual sum means the line passes through the middle of the cloud, over-predicting about as much as it under-predicts."
+        "Under ŷ = 1.9x + 1.5, the predictions are 3.4, 5.3, 7.2, and 9.1. The residuals are −0.4, +0.7, −0.2, and −0.1, which sum to 0.",
+        "A zero signed sum checks that the residuals balance around a fitted line with an intercept. Least squares chooses among such lines by minimizing the sum of squared residuals."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Under ŷ = 2x + 1, the four residuals are 0, +1, 0, 0. What is their sum?",
-        "answer": 1,
+        "prompt": "Under ŷ = 1.9x + 1.5, the residuals are −0.4, +0.7, −0.2, and −0.1. What is their sum?",
+        "answer": 0,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 0,
-            "feedback": "Add again: 0 + 1 + 0 + 0 = 1. Near zero, not exactly zero — real fits balance approximately."
+            "value": 0.7,
+            "feedback": "0.70 is the sum of the squared residuals. This question asks for the signed sum: −0.4 + 0.7 − 0.2 − 0.1 = 0."
           },
           {
-            "value": 4,
-            "feedback": "Sum the RESIDUALS, not the points: 0 + 1 + 0 + 0."
+            "value": 1.4,
+            "feedback": "Keep the signs. The positive 0.7 is balanced by −0.4, −0.2, and −0.1."
           }
         ],
-        "fallbackFeedback": "Add the four leftovers, signs included.",
-        "successFeedback": "+1 total across four points — essentially balanced. A sum far from zero would mean the line sits off-center."
+        "fallbackFeedback": "Add the four residuals with their signs.",
+        "successFeedback": "The signed residuals sum to 0. That balance is expected for a least-squares line with an intercept."
       }
     },
     {
@@ -109,33 +109,33 @@
       "body": "Trade-offs are forced.",
       "conceptTag": "bv-fit-by-residual",
       "explanationVariants": [
-        "Lowering b to catch (2,6) exactly drops every other prediction by the same amount, converting three perfect hits into misses.",
-        "Improving one residual at the expense of the rest is how you recognize an already-optimal line."
+        "Raising b by 0.7 makes the line hit (2, 6), but it also raises every other prediction by 0.7.",
+        "The squared residual total rises from 0.70 to 2.66, so one exact hit makes the overall fit worse."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Shifting the line up by 1 would hit (2, 6) exactly. Worth it?",
+        "prompt": "Raise the fitted line by 0.7 so it hits (2, 6). What happens to the sum of squared residuals?",
         "options": [
           {
             "id": "no",
-            "label": "No — three zero-residuals become −1s to fix one +1",
+            "label": "Reject: squared residual total gets larger",
             "correct": true,
-            "feedback": "Total miss grows from 1 to 3. The line was already placed."
+            "feedback": "The squared total rises from 0.70 to 2.66, so the shifted line fits the four points worse overall."
           },
           {
             "id": "yes",
-            "label": "Yes — any exact hit helps",
+            "label": "Accept: one exact hit makes the fit better",
             "correct": false,
-            "feedback": "Exactness at one point isn't the goal; small TOTAL miss is."
+            "feedback": "One exact hit is not the goal. Least squares compares the squared residual total across all points."
           },
           {
             "id": "depends",
-            "label": "Depends which point matters most",
+            "label": "Use the signed residual sum to decide",
             "correct": false,
-            "feedback": "Without a reason to privilege (2,6), the balanced line wins."
+            "feedback": "A signed sum can hide large positive and negative misses. Least squares uses the sum of their squares."
           }
         ],
-        "successFeedback": "A good fit is an equilibrium: every adjustment that helps one point hurts others more."
+        "successFeedback": "Least squares judges the whole set: helping one point does not help if the squared residual total increases."
       }
     },
     {
@@ -164,19 +164,19 @@
         "options": [
           {
             "id": "yes",
-            "label": "Yes — it balances misses; touching points is irrelevant",
+            "label": "Yes: fit quality does not require contact",
             "correct": true,
             "feedback": "The line minimizes collective leftovers and often threads between all of them."
           },
           {
             "id": "no",
-            "label": "No — it must touch at least one",
+            "label": "No: it must touch at least one point",
             "correct": false,
             "feedback": "Nothing rewards contact. A line through empty space can leave smaller total misses than any point-touching line."
           },
           {
             "id": "two",
-            "label": "It must touch at least two",
+            "label": "No: it must touch at least two points",
             "correct": false,
             "feedback": "Two-point lines are how you DRAW a line, not how you FIT one."
           }
@@ -224,9 +224,9 @@
       "kind": "recap",
       "body": "Leftovers steer the fit.",
       "takeaways": [
-        "The best line makes residuals small AND balanced — near-zero sum, no pattern, no favored side.",
-        "Every adjustment trades misses; optimality is when no trade helps.",
-        "Least squares formalizes exactly this: minimize the summed squared leftovers."
+        "Least squares minimizes the sum of squared residuals across all points.",
+        "With an intercept, the fitted line's signed residuals sum to zero, but that balance alone does not identify the best line.",
+        "An exact hit at one point can still make the overall fit worse."
       ],
       "teaser": "Course close: you can now fit a line, use it, and — new — audit it. The residual is the difference between drawing a trend and defending one."
     }

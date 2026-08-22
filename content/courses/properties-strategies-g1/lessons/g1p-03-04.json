@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Knowing WHY a strategy works matters as much as using it. Each strategy works because it protects the total while making the counting easier.",
-      "narration": "Knowing WHY a strategy works matters as much as using it. Each strategy works because it protects the total while making the counting easier."
+      "figure": "as100-name-tool",
+      "body": "Explain a strategy in order: see the fact, name the tool, then show the answer.",
+      "narration": "Explain a strategy in order: see the fact, name the tool, then show the answer."
     },
     {
       "id": "i1",
@@ -144,27 +144,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Swapping keeps the same groups; make-ten regroups without adding or removing; near-doubles adjust a known fact by exactly one.",
-      "narration": "Swapping keeps the same groups; make-ten regroups without adding or removing; near-doubles adjust a known fact by exactly one."
+      "figure": "as100-choose-steps",
+      "body": "A complete explanation connects the situation to the operation and tells why the chosen steps preserve the amount.",
+      "narration": "A complete explanation connects the situation to the operation and tells why the chosen steps preserve the amount."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-explain",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Check it yourself: 3 + 9 should equal 9 + 3. Start at 9 and count on 3. Where do you land?",
-        "min": 7,
-        "max": 14,
-        "start": 9,
-        "hop": 1,
-        "hops": 3,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 9 and count on 3: you land on 12.",
-        "successFeedback": "Landed on 12 — the swapped order reaches the same total, which is the whole reason swapping is safe."
+        "type": "tapDiagram",
+        "prompt": "Tap the reason three plus nine equals nine plus three.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "same two groups",
+            "icon": "same two groups",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — swapping preserves the two groups and their total."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "three disappears",
+            "icon": "three disappears",
+            "count": 1,
+            "correct": false,
+            "feedback": "three disappears does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "nine becomes ten",
+            "icon": "nine becomes ten",
+            "count": 1,
+            "correct": false,
+            "feedback": "nine becomes ten does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — swapping preserves the two groups and their total."
       },
       "cml": {
         "stage": "construct",
@@ -200,7 +230,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Why does making ten help with 8 + 6?",
+        "prompt": "Which explanation names the benefit of making ten for eight plus six?",
         "options": [
           {
             "id": "o0",
@@ -271,7 +301,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Why does making ten help with 7 + 4?",
+        "prompt": "After regrouping seven plus four as ten plus one, why is the result easy to read?",
         "options": [
           {
             "id": "o0",
@@ -342,7 +372,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Why does making ten help with 8 + 6?",
+        "prompt": "Which statement explains why moving two makes eight plus six easier?",
         "options": [
           {
             "id": "o0",
@@ -434,13 +464,13 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Why does 4 + 9 equal 9 + 4?",
+          "prompt": "You stack 5 blocks then 7 blocks on top, for 12 total. Then you stack the same 7 blocks first and the 5 blocks second. Why is the total still 12?",
           "options": [
             {
               "id": "o0",
               "label": "Both orders join the same two groups",
               "correct": true,
-              "feedback": "Correct — 4 + 9 and 9 + 4 combine the same counters, so the total 13 cannot change."
+              "feedback": "Correct — 5 + 7 and 7 + 5 combine the same blocks, so the total 12 cannot change."
             },
             {
               "id": "o1",
@@ -452,7 +482,7 @@
               "id": "o2",
               "label": "Swapping adds one extra",
               "correct": false,
-              "feedback": "Swapping moves no counter in or out of the pile, so nothing extra can appear in the total."
+              "feedback": "Swapping moves no block in or out of the stack, so nothing extra can appear in the total."
             },
             {
               "id": "o3",

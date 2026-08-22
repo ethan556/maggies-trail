@@ -15,53 +15,55 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Plan the cut.",
+      "body": "See the two rectangles inside the L-shape.",
       "conceptTag": "area-additive",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "An L-shape splits into a 4-by-2 piece and a 3-by-2 piece. Match each step to its result.",
-        "left": [
+        "type": "compositeAreaLab",
+        "prompt": "The L-shape is split into a 4-by-2 rectangle and a 3-by-2 rectangle. Use the shown pieces to choose the L-shape's total area.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "id": "p1",
-            "label": "Area of the 4-by-2 piece"
+            "id": "upper",
+            "label": "4 by 2 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 4,
+            "height": 2
           },
           {
-            "id": "p2",
-            "label": "Area of the 3-by-2 piece"
-          },
-          {
-            "id": "p3",
-            "label": "Total L-shape area"
+            "id": "lower",
+            "label": "3 by 2 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 3,
+            "height": 2
           }
         ],
-        "right": [
-          {
-            "id": "r6",
-            "label": "6 square units"
-          },
-          {
-            "id": "r14",
-            "label": "14 square units"
-          },
-          {
-            "id": "r8",
-            "label": "8 square units"
-          }
-        ],
-        "pairs": {
-          "p1": "r8",
-          "p2": "r6",
-          "p3": "r14"
+        "target": {
+          "kind": "total"
         },
-        "pairErrors": [
+        "choices": [
           {
-            "left": "p3",
-            "right": "r8",
-            "feedback": "8 is only the first piece. The whole L adds BOTH pieces: 8 + 6 = 14."
+            "id": "sum",
+            "label": "14 square units",
+            "value": 14,
+            "feedback": "Yes. The two visible areas are 8 and 6, and 8 + 6 = 14."
+          },
+          {
+            "id": "first",
+            "label": "8 square units",
+            "value": 8,
+            "feedback": "That is only the 4-by-2 piece. The L-shape includes the second rectangle."
+          },
+          {
+            "id": "edges",
+            "label": "9 square units",
+            "value": 9,
+            "feedback": "Adding side lengths does not count square units. Find each rectangle's area, then add."
           }
         ],
-        "missFeedback": "Each piece: rows × columns (4×2 = 8, 3×2 = 6). Total: add them (8 + 6 = 14).",
-        "successFeedback": "8 for the big piece, 6 for the small, 14 for the whole L — cut, compute, add."
+        "fallbackFeedback": "The pieces cover 4 × 2 = 8 and 3 × 2 = 6 square units. Add 8 + 6.",
+        "successFeedback": "Both rectangles together cover 14 square units. After the cut, the last step is to add the piece areas."
       },
       "predict": {
         "prompt": "After cutting an L-shape into two rectangles, what's the LAST step?",

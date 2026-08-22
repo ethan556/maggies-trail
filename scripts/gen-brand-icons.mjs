@@ -2,11 +2,11 @@
 // Brand raster derivation — WS-A Phase 1 ("vector mark/wordmark + raster derivatives").
 //
 // SCOPE / GOVERNANCE (S240): this script performs *mechanical rasterisation only*. Every pixel it
-// emits comes from the already-approved vector mark at public/brand/maggies-mark.svg — its path
+// emits comes from the user-supplied canonical PNG at design-reference/brand/maggies-trail-icon-source.png — its path
 // data, its palette, its viewBox. No new geometry is authored here: the maskable and Apple Touch
 // variants are the same approved paths, scaled and placed on the mark's own background fill (read
 // out of the source file, never hard-coded). If a future change needs a *new shape*, it does not
-// belong in this script — it belongs back in the approved-vector pipeline.
+// belong in this script — it belongs back in the approved-source pipeline.
 //
 // Usage:
 //   node scripts/gen-brand-icons.mjs                 # regenerate every derivative, then verify
@@ -29,8 +29,14 @@ import { dirname, join, resolve } from "node:path";
 import process from "node:process";
 
 const ROOT = resolve(import.meta.dirname, "..");
-const SOURCE = "public/brand/maggies-mark.svg";
+const SOURCE = "design-reference/brand/maggies-trail-icon-source.png";
 const MANIFEST = "public/manifest.webmanifest";
+const CANONICAL_MARK_PATH = "/brand/maggies-mark.png";
+const SVG_ALIASES = ["public/brand/maggies-mark.svg", "public/icon.svg", "src/app/icon.svg"];
+
+function canonicalSvgAlias() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc"><title id="title">Maggie's Trail</title><desc id="desc">Two navy mountain peaks, a winding trail, and an orange summit star.</desc><image href="${CANONICAL_MARK_PATH}" x="0" y="0" width="512" height="512"/></svg>\n`;
+}
 
 /** Android adaptive-icon masks may crop everything outside the centred inner 80% circle. */
 const MASKABLE_SAFE_FRACTION = 0.8;
@@ -47,6 +53,7 @@ const ICO_SIZES = [16, 32, 48];
  *                     scaled into the safe circle on its own background fill
  */
 const TARGETS = [
+  { file: "public/brand/maggies-mark.png", size: 512, kind: "badge", note: "in-app canonical mark" },
   { file: "public/icons/icon-192.png", size: 192, kind: "badge", note: "PWA any" },
   { file: "public/icons/icon-512.png", size: 512, kind: "badge", note: "PWA any" },
   { file: "public/icons/icon-maskable-512.png", size: 512, kind: "maskable", note: "PWA maskable" },
@@ -67,17 +74,44 @@ const fail = (msg) => {
 const ok = (msg) => console.log(`  ✓ ${msg}`);
 
 // ---------------------------------------------------------------------------
-// Source parsing — the approved vector is the only input.
+// Source parsing — the canonical source artwork is the only input.
 // ---------------------------------------------------------------------------
 
 function readSource() {
-  const svg = readFileSync(join(ROOT, SOURCE), "utf8");
+  const sourcePath = join(ROOT, SOURCE);
+  return SOURCE.endsWith(".png") ? readPngSource(sourcePath) : readVectorSource(sourcePath);
+}
+
+/** The supplied artwork is immutable source data; all install/UI derivatives are rendered from it. */
+function readPngSource(sourcePath) {
+  const png = readFileSync(sourcePath);
+  const dim = pngSize(png);
+  if (!dim || dim.width !== dim.height) throw new Error(`${SOURCE}: expected a square PNG source`);
+  const href = `data:image/png;base64,${png.toString("base64")}`;
+  const image = `<image href="${href}" x="0" y="0" width="${dim.width}" height="${dim.height}"/>`;
+  const rect = `<rect x="0" y="0" width="${dim.width}" height="${dim.height}" fill="#FAFBF5"/>`;
+  return {
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${dim.width} ${dim.height}">${rect}${image}</svg>`,
+    inner: `${rect}${image}`,
+    defs: "",
+    paths: [image],
+    rect,
+    background: "#FAFBF5",
+    viewBox: { x: 0, y: 0, w: dim.width, h: dim.height },
+    // The approved source uses these two identity colors; verification measures their on-screen blends.
+    fills: ["#FAFBF5", "#082746", "#F08A24"],
+    isRaster: true
+  };
+}
+function readVectorSource(sourcePath) {
+  const svg = readFileSync(sourcePath, "utf8");
   const viewBox = /viewBox="([^"]+)"/.exec(svg)?.[1];
   if (!viewBox) throw new Error(`${SOURCE}: no viewBox — cannot derive rasters safely`);
   const [vbX, vbY, vbW, vbH] = viewBox.trim().split(/[\s,]+/).map(Number);
   if (![vbX, vbY, vbW, vbH].every(Number.isFinite)) throw new Error(`${SOURCE}: unparseable viewBox "${viewBox}"`);
 
   const inner = svg.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>[\s\S]*$/, "").trim();
+  const defs = /<defs\b[\s\S]*?<\/defs>/.exec(inner)?.[0] ?? "";
   const paths = [...inner.matchAll(/<path\b[^>]*\/>/g)].map((m) => m[0]);
   if (paths.length === 0) throw new Error(`${SOURCE}: no <path> elements found`);
 
@@ -89,11 +123,11 @@ function readSource() {
   // Guard the "drop the rect, keep the paths" assumption: if the mark ever grows an element type
   // this script does not understand, stop instead of emitting a silently incomplete derivative.
   const tags = new Set([...inner.matchAll(/<([a-zA-Z][\w:-]*)/g)].map((m) => m[1]));
-  const known = new Set(["rect", "path", "title", "desc"]);
+  const known = new Set(["rect", "path", "image", "title", "desc", "defs", "linearGradient", "radialGradient", "stop"]);
   for (const tag of tags) if (!known.has(tag)) throw new Error(`${SOURCE}: unsupported element <${tag}> — update this script deliberately`);
 
   const fills = [...svg.matchAll(/fill="(#[0-9A-Fa-f]{6})"/g)].map((m) => m[1].toUpperCase());
-  return { svg, inner, paths, rect, background, viewBox: { x: vbX, y: vbY, w: vbW, h: vbH }, fills: [...new Set(fills)] };
+  return { svg, inner, defs, paths, rect, background, viewBox: { x: vbX, y: vbY, w: vbW, h: vbH }, fills: [...new Set(fills)] };
 }
 
 const sizedSvgOpen = (size, viewBox) =>
@@ -110,7 +144,7 @@ const flattenSvg = (src, size) =>
   `${src.inner}</svg>`;
 
 /** Content-only (rounded rect dropped) — used to measure the mark's true ink bounds. */
-const contentSvg = (src, size) => `${sizedSvgOpen(size, src.viewBox)}${src.paths.join("")}</svg>`;
+const contentSvg = (src, size) => `${sizedSvgOpen(size, src.viewBox)}${src.defs}${src.paths.join("")}</svg>`;
 
 /**
  * Maskable: the mark's own paths, scaled so their bounding circle fits Android's inner-80% safe
@@ -127,7 +161,7 @@ function maskableSvg(src, size, bbox) {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">` +
     `<rect width="${size}" height="${size}" fill="${src.background}"/>` +
-    `<g transform="translate(${tx.toFixed(4)} ${ty.toFixed(4)}) scale(${scale.toFixed(6)})">${src.paths.join("")}</g>` +
+    `${src.defs}<g transform="translate(${tx.toFixed(4)} ${ty.toFixed(4)}) scale(${scale.toFixed(6)})">${src.paths.join("")}</g>` +
     `</svg>`;
   return { svg, scale, contentRadiusPx: contentRadius * scale, safeRadiusPx };
 }
@@ -197,7 +231,8 @@ async function measureContentBBox(renderer, src) {
   let maxY = -1;
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      if (data[(y * width + x) * 4 + 3] > 8) {
+      const i = (y * width + x) * 4;
+      if (data[i + 3] > 8 && (!src.isRaster || !near([data[i], data[i + 1], data[i + 2]], parseHex(src.background), 24))) {
         if (x < minX) minX = x;
         if (x > maxX) maxX = x;
         if (y < minY) minY = y;
@@ -382,6 +417,15 @@ function verifyIco(file) {
 }
 
 /** Every icon the manifest declares must resolve to a real file of the declared size. */
+function verifySvgAliases() {
+  const expected = canonicalSvgAlias();
+  for (const file of SVG_ALIASES) {
+    const abs = join(ROOT, file);
+    if (!existsSync(abs)) fail(`${file}: missing canonical SVG alias`);
+    else if (readFileSync(abs, "utf8") !== expected) fail(`${file}: does not forward to ${CANONICAL_MARK_PATH}`);
+    else ok(`${file} — canonical SVG alias`);
+  }
+}
 function verifyManifest() {
   const abs = join(ROOT, MANIFEST);
   let manifest;
@@ -447,6 +491,7 @@ async function main() {
       const icoPngs = [];
       for (const size of ICO_SIZES) icoPngs.push({ size, data: await renderer.png(badgeSvg(src, size)) });
       writeFileSync(join(ROOT, "public/favicon.ico"), buildIco(icoPngs));
+      for (const file of SVG_ALIASES) writeFileSync(join(ROOT, file), canonicalSvgAlias());
       console.log("");
     }
 
@@ -458,6 +503,7 @@ async function main() {
       });
     }
     verifyIco("public/favicon.ico");
+    verifySvgAliases();
     verifyManifest();
   } finally {
     await renderer.close();

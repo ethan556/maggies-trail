@@ -484,9 +484,9 @@ const GEOMETRY_FORMS = [
 const geometryHandlers: Record<string, FormHandler> = {
   laGeometricBasicsMcq: (rand) => {
     const cases = [
-      ["line", "extends forever in both directions", "has two endpoints", "starts at one endpoint", "is a single location"],
+      ["line", "extends forever in both directions", "has two separate endpoints", "starts at only one endpoint", "is a single fixed location"],
       ["line segment", "has exactly two endpoints", "extends forever in both directions", "starts at one endpoint and continues forever", "has no length"],
-      ["ray", "starts at one endpoint and extends forever in one direction", "has two endpoints", "extends forever in both directions", "is only a point"],
+      ["ray", "starts at one endpoint and extends forever in one direction", "has two separate endpoints, one at each end", "extends forever in both directions at once, with no endpoint", "is only a single fixed point"],
       ["point", "marks one exact location and has no length", "extends forever", "has two endpoints", "forms a right angle by itself"],
     ] as const;
     const [name, right, ...wrong] = choose(rand, cases);
@@ -494,7 +494,7 @@ const geometryHandlers: Record<string, FormHandler> = {
   },
   laAngleFormationMcq: (rand) => mcq(rand, "g4-lines-angles", `What must two rays share in order to form an angle?`,
     ["A common endpoint called the vertex", `Correct — the shared endpoint is the vertex and the rays are the sides of the angle.`],
-    [["The same length", `Ray length is unbounded and does not determine whether the rays form an angle.`], ["Two different endpoints", `An angle forms where the rays share one endpoint, not where they stay separate.`], ["A parallel direction", `Parallel rays do not open from one common vertex to form the intended angle.`]]),
+    [["Exactly the same length", `Ray length is unbounded and does not determine whether the rays form an angle.`], ["Two completely different endpoints", `An angle forms where the rays share one endpoint, not where they stay separate.`], ["A parallel, non-crossing direction", `Parallel rays do not open from one common vertex to form the intended angle.`]]),
   laReadingFiguresMcq: (rand) => {
     const letters = choose(rand, [["A", "B", "C"], ["P", "Q", "R"], ["M", "N", "T"], ["D", "E", "F"]] as const);
     return mcq(rand, "g4-lines-angles", `The vertex is ${letters[1]}, with points ${letters[0]} and ${letters[2]} on the two rays. Which name is valid?`,
@@ -509,7 +509,7 @@ const geometryHandlers: Record<string, FormHandler> = {
   },
   laParallelLinesMcq: (rand) => mcq(rand, "g4-lines-angles", `Which statement is always true about two parallel lines in a plane?`,
     ["They stay the same distance apart and never meet.", `Correct — equal direction keeps the lines equidistant throughout the plane.`],
-    [["They meet at one right angle.", `Lines that meet at a right angle are perpendicular, not parallel.`], ["They share exactly one endpoint.", `Full lines do not have endpoints, and parallel lines do not intersect.`], ["They must be horizontal.", `Parallel lines can tilt in any direction as long as both have the same direction.`]]),
+    [["They always meet at one right angle.", `Lines that meet at a right angle are perpendicular, not parallel.`], ["They share exactly one single endpoint.", `Full lines do not have endpoints, and parallel lines do not intersect.`], ["They must always run horizontally.", `Parallel lines can tilt in any direction as long as both have the same direction.`]]),
   laPerpendicularLinesMcq: (rand) => mcq(rand, "g4-lines-angles", `What identifies two perpendicular lines?`,
     ["They intersect to form four right angles.", `Correct — one right angle at the intersection forces all four angles to be right angles.`],
     [["They never intersect.", `Lines that never intersect in a plane are parallel rather than perpendicular.`], ["They have the same length.", `Line length does not define perpendicularity; the right-angle intersection does.`], ["They point in the same direction.", `The same direction describes parallel lines, not a right-angle crossing.`]]),
@@ -558,7 +558,7 @@ const geometryHandlers: Record<string, FormHandler> = {
   },
   laSymmetryApplicationMcq: (rand) => mcq(rand, "g4-lines-angles", `A point is reflected across a vertical line of symmetry. What must be true of the image point?`,
     ["It is the same perpendicular distance from the line on the opposite side.", `Correct — a reflection preserves perpendicular distance while switching sides.`],
-    [["It stays on the same side of the line.", `A reflection across the line places the image on the opposite side unless the point lies on the line.`], ["It moves twice as far from the line.", `Reflection preserves the distance from the mirror line rather than doubling it.`], ["It can land anywhere with the same height.", `Matching height alone is insufficient; the perpendicular distance must also match.`]]),
+    [["It always stays on the same side of the line.", `A reflection across the line places the image on the opposite side unless the point lies on the line.`], ["It moves twice as far away from the line as before.", `Reflection preserves the distance from the mirror line rather than doubling it.`], ["It can land anywhere at all, as long as it keeps the same height.", `Matching height alone is insufficient; the perpendicular distance must also match.`]]),
   laSymmetryApplicationNumeric: (rand, band) => {
     const n = bandInt(rand, band, [2, 5], [4, 8], [6, 12]);
     return num("g4-lines-angles", `A half-design contains ${n} shapes, none on the symmetry line. After reflecting every shape, how many shapes are in the complete design?`, 2 * n,
@@ -600,7 +600,7 @@ const measureHandlers: Record<string, FormHandler> = {
   },
   mcProtractorReadingMcq: (rand) => mcq(rand, "g4-measure", `A ray starts at the protractor's 0° mark on the right. Which scale should you read?`,
     ["The scale that begins with 0° on the right.", `Correct — start from the zero aligned with the base ray and follow that scale to the second ray.`],
-    [["Always the outer scale", `Inner versus outer is not fixed; the correct scale is the one whose zero matches the base ray.`], ["Always the larger number", `The larger tick label can describe the supplementary angle instead of the intended opening.`], ["Add both scale readings", `The two scales are alternative readings of the same ray, not values to combine.`]]),
+    [["Always read the outer scale instead.", `Inner versus outer is not fixed; the correct scale is the one whose zero matches the base ray.`], ["Always read the larger of the two numbers.", `The larger tick label can describe the supplementary angle instead of the intended opening.`], ["Add together both of the scale readings.", `The two scales are alternative readings of the same ray, not values to combine.`]]),
   mcAngleClassificationMcq: (rand) => {
     const degree = choose(rand, [25, 45, 70, 90, 110, 135, 170, 180]);
     const right = degree < 90 ? "Acute" : degree === 90 ? "Right" : degree < 180 ? "Obtuse" : "Straight";
@@ -668,6 +668,8 @@ const MULTIPLY_FORMS = [
   "mbAreaModel1DigitMcq", "mbAreaModel1DigitNumeric", "mbAreaModel2DigitMcq", "mbAreaModel2DigitNumeric",
   "mbRemaindersMcq", "mbRemaindersNumeric", "mbDivideBigNumeric", "mbInterpretRemaindersMcq",
   "mbInterpretRemaindersNumeric", "mbPatternsMcq", "mbPatternsNumeric", "mbMultiStepNumeric",
+  "mbMultiStepAddNumeric", "mbMultiStepShareNumeric", "mbMultiStepBreakApartNumeric",
+  "mbMultiStepBoxesNumeric", "mbMultiStepTwoProductsNumeric",
 ] as const;
 
 const multiplyHandlers: Record<string, FormHandler> = {
@@ -876,6 +878,81 @@ const multiplyHandlers: Record<string, FormHandler> = {
       [[packs * each, `That is the starting total before the ${used} used markers are removed.`], [packs + each - used, `Adding packs and pack size does not find the total number of markers.`]],
       `First multiply ${packs}×${each}, then subtract ${used}.`);
   },
+  /* S331 lane G3 — the five mb-05-02 multi-step chains diversified in S316, each its own form so
+   * the regenerated problem keeps the authored step's operation CHAIN, not just its first move. */
+  mbMultiStepAddNumeric: (rand, band) => {
+    // mb-05-02/k1: multiply then ADD (a delivery arrives). Trap two is subtracting the delivery.
+    let shelves = 0, each = 0, more = 0;
+    do {
+      shelves = bandInt(rand, band, [3, 6], [4, 9], [6, 12]);
+      each = pick(rand, 6, 12);
+      more = pick(rand, 11, 29);
+    } while (shelves * each - more < 5); // the subtract-instead trap must stay a plausible count
+    const total = shelves * each, ans = total + more;
+    return num("g4-multiply", `A store has ${shelves} shelves with ${each} books each. It then receives ${more} more books. How many books does it have now?`, ans,
+      [[total, `${total} is the total BEFORE the delivery (${shelves} × ${each}). Add the ${more} that arrived: ${total} + ${more} = ${ans}.`],
+       [total - more, `${total - more} subtracts the ${more} instead of adding. The store is GETTING more books, not losing them: ${total} + ${more} = ${ans}.`]],
+      `Find the total first (${shelves} × ${each} = ${total}), then add the number that arrived.`);
+  },
+  mbMultiStepShareNumeric: (rand, band) => {
+    // mb-05-02/k2: a multiplicative comparison builds the pile, then the pile is shared. The
+    // divisibility and trap-distinctness guards live in the redraw loop.
+    let small = 0, times = 0, people = 0;
+    do {
+      small = bandInt(rand, band, [3, 6], [3, 9], [5, 12]);
+      times = pick(rand, 2, 6);
+      people = pick(rand, 2, 6);
+    } while ((small * times) % people !== 0 || small * times === people || (small * times) / people === people);
+    const pile = small * times, ans = pile / people;
+    return num("g4-multiply", `Mia has ${small} stickers. Jake has ${times} TIMES as many as Mia. Jake shares his whole pile equally with himself and ${countN(people - 1, "friend")} (${people} people total). How many stickers does each person get?`, ans,
+      [[pile, `${pile} is Jake's pile BEFORE sharing (${times} × ${small}). Divide it among the ${people} people: ${pile} ÷ ${people} = ${ans}.`],
+       [people, `${people} is the number of people sharing, not each person's stickers. Divide Jake's total by that: ${pile} ÷ ${people} = ${ans}.`]],
+      `Find Jake's total first (${times} × ${small} = ${pile}), then divide it among the ${people} people sharing.`);
+  },
+  mbMultiStepBreakApartNumeric: (rand, band) => {
+    // mb-05-02/k3: a two-digit factor handled by the printed break-apart split, then a removal.
+    const rows = bandInt(rand, band, [3, 5], [3, 7], [5, 9]), tens = pick(rand, 2, 4), ones = pick(rand, 1, 9);
+    const plants = 10 * tens + ones, total = rows * plants;
+    const removed = pick(rand, 12, total - 10);
+    const ans = total - removed;
+    return num("g4-multiply", `A garden has ${rows} rows of ${plants} plants each (use the break-apart method: ${rows}×${10 * tens} + ${rows}×${ones}). After harvest, ${removed} plants are removed. How many plants remain?`, ans,
+      [[total, `${total} is the total BEFORE the harvest (${rows} × ${plants}). Subtract the ${removed} removed: ${total} − ${removed} = ${ans}.`],
+       [total + removed, `${total + removed} adds ${removed} instead of subtracting. Removing plants means SUBTRACT: ${total} − ${removed} = ${ans}.`]],
+      `Find the total first (${rows} × ${plants} = ${total}), then subtract the ${removed} removed.`);
+  },
+  mbMultiStepBoxesNumeric: (rand, band) => {
+    // mb-05-02/k4: SUBTRACT first (the giveaway), then divide the rest into boxes. The giveaway is
+    // at least one box's worth so the skipped-giveaway trap lands off the true quotient.
+    let per = 0, boxes = 0, given = 0;
+    do {
+      per = pick(rand, 3, 6);
+      boxes = bandInt(rand, band, [4, 8], [5, 12], [8, 16]);
+      given = pick(rand, per, 12);
+    } while (given < per);
+    const rest = boxes * per, made = rest + given;
+    const skipTrap = Math.floor(made / per);
+    return num("g4-multiply", `A baker makes ${made} muffins, then gives away ${given}. She boxes the rest, ${per} per box. How many whole boxes can she fill?`, boxes,
+      [[rest, `${rest} is how many muffins are left (${made} − ${given}) — that's step one done! Now divide by ${per} per box: ${rest} ÷ ${per} = ${boxes}.`],
+       [skipTrap, `${made} ÷ ${per} skips the giveaway. Subtract the ${given} given away FIRST (${made} − ${given} = ${rest}), then divide: ${rest} ÷ ${per} = ${boxes}.`]],
+      `Subtract the giveaway first (${made} − ${given} = ${rest}), then divide by ${per} per box.`);
+  },
+  mbMultiStepTwoProductsNumeric: (rand, band) => {
+    // mb-05-02/ch1: two products, combine, then share with a remainder — the "WHOLE pencils"
+    // wording needs a nonzero remainder so rounding up is a real, distinct misconception.
+    let j = 0, q = 0, r = 0, c = 0, t = 0;
+    do {
+      j = pick(rand, 2, 4);
+      q = bandInt(rand, band, [5, 8], [6, 9], [7, 12]);
+      r = pick(rand, 4, 9);
+      c = pick(rand, 4, 9);
+      t = pick(rand, 3, 6);
+    } while ((j * q + r * c) % t === 0 || Math.floor((j * q + r * c) / t) < 2);
+    const total = j * q + r * c, ans = Math.floor(total / t), rem = total - ans * t;
+    return num("g4-multiply", `Class A gets ${j} times Class B's ${q} pencils. Class C has ${r} rows of ${c} pencils. Combine both classes' pencils and share equally among ${t} teachers. How many WHOLE pencils does each teacher get?`, ans,
+      [[total, `${total} is the COMBINED total before sharing (${j * q} + ${r * c}). Divide that by the ${t} teachers: ${total} ÷ ${t} = ${ans} remainder ${rem}, so ${ans} whole pencils each.`],
+       [ans + 1, `${ans + 1} rounds up — but pencils can't be split, so the leftover ${rem} stays undistributed. Each teacher gets the whole number that fits evenly: ${ans}.`]],
+      `Add Class A (${j} × ${q} = ${j * q}) and Class C (${r} × ${c} = ${r * c}), then divide the total ${total} by ${t}.`);
+  },
 };
 
 const PLACE_FORMS = [
@@ -973,7 +1050,7 @@ const placeHandlers: Record<string, FormHandler> = {
   },
   pvCommaPeriodsMcq: (rand) => mcq(rand, "g4-place-million", `What do commas separate in a large whole number?`,
     ["Three-digit periods such as ones, thousands, and millions", `Correct — commas group digits into periods that are read from left to right.`],
-    [["Every individual digit", `Commas do not appear between each digit; each period contains up to three digits.`], ["Only even and odd digits", `Parity does not determine comma placement.`], ["The numerator and denominator", `That describes fraction notation rather than whole-number periods.`]]),
+    [["Every individual digit, no matter its place value", `Commas do not appear between each digit; each period contains up to three digits.`], ["Only the even-numbered and odd-numbered digits", `Parity does not determine comma placement.`], ["The numerator and denominator of a written fraction", `That describes fraction notation rather than whole-number periods.`]]),
   pvRoundingNumeric: (rand, band) => {
     const place = choose(rand, band === "support" ? [10, 100, 1000] : band === "stretch" ? [1000, 10000, 100000] : [100, 1000, 10000]);
     const n = bandInt(rand, band, [120, 9999], [1200, 99999], [12000, 999999]), ans = roundTo(n, place);
@@ -1008,7 +1085,7 @@ const placeHandlers: Record<string, FormHandler> = {
   },
   pvAddMcq: (rand) => mcq(rand, "g4-place-million", `A column sum is 16. What should be written and carried?`,
     ["Write 6 in the column and carry 1 to the next place left.", `Correct — 16 is 1 ten and 6 ones in the current place-value unit.`],
-    [["Write 16 in the same column.", `A single column holds one digit; the ten must be traded into the next place.`], ["Write 1 and carry 6.", `The ones digit stays in the current column and the tens digit is carried.`], ["Write 6 and discard the 1.", `Discarding the carried ten changes the total value of the sum.`]]),
+    [["Write the full 16 in the same single column.", `A single column holds one digit; the ten must be traded into the next place.`], ["Write 1 in the column and carry the 6 instead.", `The ones digit stays in the current column and the tens digit is carried.`], ["Write 6 in the column and discard the carried 1.", `Discarding the carried ten changes the total value of the sum.`]]),
   pvSubtractColumn: (rand, band) => {
     const digits = band === "stretch" ? 6 : band === "support" ? 4 : 5, lo = 10 ** (digits - 1), hi = 10 ** digits - 1;
     let a = pick(rand, lo, hi), b = pick(rand, lo, a - 1);
@@ -1037,7 +1114,7 @@ const placeHandlers: Record<string, FormHandler> = {
   },
   pvAcrossZerosMcq: (rand) => mcq(rand, "g4-place-million", `A borrow passes through two zeros. What happens to those crossed zeros?`,
     ["Each becomes 9 after passing one unit to the place on its right.", `Correct — the borrowed unit becomes ten in the first zero place, which passes one on and keeps nine.`],
-    [["Each stays 0.", `A zero cannot pass value to the right without first receiving and retaining part of the borrowed unit.`], ["Each becomes 10 permanently.", `Each intermediate zero passes one unit onward, leaving 9 rather than 10.`], ["Each becomes 1.", `The exchange creates ten units in a place, not one.`]]),
+    [["Each of the crossed zeros simply stays 0.", `A zero cannot pass value to the right without first receiving and retaining part of the borrowed unit.`], ["Each of the crossed zeros becomes 10 permanently.", `Each intermediate zero passes one unit onward, leaving 9 rather than 10.`], ["Each of the crossed zeros becomes 1 instead.", `The exchange creates ten units in a place, not one.`]]),
   pvCompareBigMcq: (rand) => {
     const a = pick(rand, 100000, 999999), delta = pick(rand, 100, 9000), b = a + delta;
     return mcq(rand, "g4-place-million", `Which number is greater: ${fmt(a)} or ${fmt(b)}?`, [fmt(b), `Correct — comparing from the greatest place, the first differing digit favors ${fmt(b)}.`],

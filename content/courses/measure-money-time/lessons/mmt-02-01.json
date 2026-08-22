@@ -25,6 +25,12 @@
     "unitLabel": "inches",
     "choices": [
      {
+      "value": 1,
+      "label": "1 inch",
+      "correct": false,
+      "feedback": "1 is much too small compared to the actual 9 inches."
+     },
+     {
       "value": 8,
       "label": "8 inches",
       "correct": true,
@@ -35,12 +41,6 @@
       "label": "20 inches",
       "correct": false,
       "feedback": "20 is much too far from 9 to be a good estimate."
-     },
-     {
-      "value": 1,
-      "label": "1 inch",
-      "correct": false,
-      "feedback": "1 is much too small compared to the actual 9 inches."
      }
     ],
     "lowFeedback": "1 is much too small compared to the actual 9 inches.",
@@ -103,6 +103,12 @@
     "unitLabel": "inches",
     "choices": [
      {
+      "value": 2,
+      "label": "2 inches",
+      "correct": false,
+      "feedback": "2 is much too small compared to the actual 12 inches."
+     },
+     {
       "value": 13,
       "label": "13 inches",
       "correct": true,
@@ -113,12 +119,6 @@
       "label": "30 inches",
       "correct": false,
       "feedback": "30 is much too far from 12 to be a good estimate."
-     },
-     {
-      "value": 2,
-      "label": "2 inches",
-      "correct": false,
-      "feedback": "2 is much too small compared to the actual 12 inches."
      }
     ],
     "lowFeedback": "2 is much too small compared to the actual 12 inches.",
@@ -145,6 +145,12 @@
     "unitLabel": "inches",
     "choices": [
      {
+      "value": 1,
+      "label": "1 inch",
+      "correct": false,
+      "feedback": "1 is much too small compared to the actual 7 inches."
+     },
+     {
       "value": 6,
       "label": "6 inches",
       "correct": true,
@@ -155,12 +161,6 @@
       "label": "20 inches",
       "correct": false,
       "feedback": "20 is much too far from 7 to be a good estimate."
-     },
-     {
-      "value": 1,
-      "label": "1 inch",
-      "correct": false,
-      "feedback": "1 is much too small compared to the actual 7 inches."
      }
     ],
     "lowFeedback": "1 is much too small compared to the actual 7 inches.",
@@ -243,50 +243,117 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "A close call estimate.",
+   "body": "Match an object to a sensible estimate.",
    "conceptTag": "mmt-estimate",
    "explanationVariants": [
-    "9 is close to the actual 8 inches — a good estimate.",
-    "Being off by just 1 inch is a good estimate."
+    "The book (9 in) matches 10, the key (4 in) matches 5, and the marker (12 in) matches 13 — each real length is close to its match.",
+    "Every match here is just 1 inch off: 9 rounds to 10, 4 rounds to 5, and 12 rounds to 13. Close counts for a good estimate."
    ],
    "widget": {
-    "type": "mcq",
-    "prompt": "A ruler-shaped block is about 8 inches long. Which is the best estimate?",
-    "options": [
+    "type": "matchPairs",
+    "prompt": "Match each object to a good estimate of its length.",
+    "left": [
      {
-      "id": "a",
-      "label": "9 inches",
-      "correct": true,
-      "feedback": "Yes — 9 is close to the actual 8 inches, just 1 inch off."
+      "id": "l1",
+      "label": "a book, about 9 inches"
      },
      {
-      "id": "b",
-      "label": "25 inches",
-      "feedback": "25 is much too far from 8 to be a good estimate."
+      "id": "l2",
+      "label": "a key, about 4 inches"
      },
      {
-      "id": "c",
-      "label": "1 inch",
-      "feedback": "1 is much too small compared to the actual 8 inches."
+      "id": "l3",
+      "label": "a marker, about 12 inches"
      }
-    ]
+    ],
+    "right": [
+     {
+      "id": "r1",
+      "label": "10 inches"
+     },
+     {
+      "id": "r2",
+      "label": "5 inches"
+     },
+     {
+      "id": "r3",
+      "label": "13 inches"
+     }
+    ],
+    "pairs": {
+     "l1": "r1",
+     "l2": "r2",
+     "l3": "r3"
+    },
+    "pairErrors": [
+     {
+      "left": "l2",
+      "right": "r3",
+      "feedback": "13 inches is much too long for a 4-inch key. A good estimate is close: 5 inches."
+     }
+    ],
+    "missFeedback": "Choose the number that is close to each real length, not a number far away.",
+    "successFeedback": "Great estimates — each choice is close to the object, not exact on purpose!"
    },
    "hints": [
-    "The actual length is about 8 inches.",
-    "Look for the choice closest to 8.",
-    "9 is only 1 inch away — that's the best estimate."
+    "This match has three objects — a book, a key, and a marker — each with its own real length.",
+    "The book is about 9 inches, so look for the closest listed number: 10 inches.",
+    "Do the same for the key (about 4 inches, closest is 5) and the marker (about 12 inches, closest is 13)."
    ],
    "variant": {
     "gen": "g2-measure-money-time",
-    "form": "MmtEstimateMcq"
+    "form": "MmtEstimateMatchPairs"
    }
+  },
+  {
+   "id": "ch2",
+   "kind": "challenge",
+   "body": "Check an estimate with a real measurement.",
+   "conceptTag": "mmt-estimate",
+   "explanationVariants": [
+    "12 − 3 = 9 inches. Measuring gives the exact length, while estimating only gets you close — here, both land near 9.",
+    "Nine one-inch units cover the book from mark 3 to mark 12 with no gaps or overlaps, so the real length is 9 inches."
+   ],
+   "widget": {
+    "type": "unitRuler",
+    "prompt": "You estimated a book is about 9 inches long. Time to check for real: this book runs from mark 3 to mark 12 on the ruler. Align zero with its start, choose one-inch units, and cover it exactly.",
+    "objectStart": 3,
+    "objectEnd": 12,
+    "allowedUnitSizes": [
+     0.5,
+     1,
+     2
+    ],
+    "targetUnitSize": 1,
+    "startUnitSize": 2,
+    "requiredPlacements": 9,
+    "commonPlacements": [
+     {
+      "placements": 12,
+      "feedback": "12 is just the end mark. Subtract the start: 12 − 3 = 9."
+     },
+     {
+      "placements": 15,
+      "feedback": "That's 12 + 3. Subtract instead: 12 − 3 = 9."
+     }
+    ],
+    "successFeedback": "12 − 3 = 9 inches — an exact measurement that matches the 9-inch estimate from the start of the lesson.",
+    "alignFeedback": "Move the measuring zero to the book's starting mark at 3.",
+    "gapOverlapFeedback": "Place exactly nine units end to end with no gaps or overlaps.",
+    "unitFeedback": "Use one-inch units; changing unit size changes the count, not the physical length."
+   },
+   "hints": [
+    "Length is what you get by actually measuring — end mark minus start mark, the same idea as estimating but exact.",
+    "The book runs from 3 to 12. Subtract: 12 − 3.",
+    "12 − 3 = 9, so nine one-inch units cover it exactly."
+   ]
   },
   {
    "id": "r1",
    "kind": "recap",
    "body": "A good estimate lands close to the actual length, not exactly on it.",
    "takeaways": [
-    "Estimate before measuring, as a smart guess.",
+    "Estimate first, as a smart guess — then measure to check it.",
     "Being off by 1 or 2 inches is fine.",
     "A far-off number is not a good estimate."
    ],
@@ -319,6 +386,12 @@
      "unitLabel": "inches",
      "choices": [
       {
+       "value": 1,
+       "label": "1 inch",
+       "correct": false,
+       "feedback": "1 inch is about a thumb's width — far too short for a whole book."
+      },
+      {
        "value": 8,
        "label": "8 inches",
        "correct": true,
@@ -329,12 +402,6 @@
        "label": "20 inches",
        "correct": false,
        "feedback": "20 inches is more than twice as long — closer to two rulers than one book."
-      },
-      {
-       "value": 1,
-       "label": "1 inch",
-       "correct": false,
-       "feedback": "1 inch is about a thumb's width — far too short for a whole book."
       }
      ],
      "lowFeedback": "1 inch is about a thumb's width — far too short for a whole book.",

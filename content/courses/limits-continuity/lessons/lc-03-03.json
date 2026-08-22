@@ -24,11 +24,30 @@
         "rightValue": 1000,
         "fAtA": null,
         "targetVerdict": "no-limit",
-        "prompt": "For (x² + 1)/(x − 3), zoom in on x = 3 and watch the two sides head in opposite directions.",
-        "successFeedback": "No limit: one side dives, the other climbs. A vertical asymptote is a two-sided disagreement, and it is why 'the limit is infinity' is a description of the failure rather than a value.",
-        "moreZoomFeedback": "Keep zooming. The disagreement grows rather than settling, which is the whole point.",
-        "wrongVerdictFeedback": "The two sides do not approach a common value, so no limit exists here.",
+        "prompt": "For (x² + 1)/(x − 3), zoom in on x = 3. Do the y-values settle on any number at all?",
+        "successFeedback": "They never settle — the closer you look, the larger the values grow without bound near x = 3. A vertical asymptote describes the failure, not a value the limit reaches.",
+        "moreZoomFeedback": "Keep zooming. A limit that exists gets easier to read as you zoom in; this one gets worse instead of settling.",
+        "wrongVerdictFeedback": "The y-values never settle on a common number near x = 3, so no limit exists here.",
         "requiredZoom": 2
+      },
+      "predict": {
+        "prompt": "Before you zoom: as you close in on x = 3, what will the y-values of (x² + 1)/(x − 3) do?",
+        "options": [
+          {
+            "id": "settle10",
+            "label": "Settle near 10 — the numerator is heading toward 3² + 1 = 10"
+          },
+          {
+            "id": "settle0",
+            "label": "Shrink toward 0 — the denominator is heading toward 0"
+          },
+          {
+            "id": "grow",
+            "label": "Grow without bound — never settling on any number"
+          }
+        ],
+        "outcomeId": "grow",
+        "reveal": "They grow without bound. The closer you look, the larger the values grow near x = 3 — they never settle on any number. The vertical asymptote describes that failure, not a value the limit reaches."
       }
     },
     {
@@ -46,18 +65,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "the leading terms 7x³ and x³ (ratio 7)",
+            "label": "leading terms 7x³ and x³ determine the limit",
             "correct": true,
             "feedback": "Right — leading terms dominate: 7x³/x³ = 7."
           },
           {
             "id": "o2",
-            "label": "the constant terms",
+            "label": "constant terms determine the limit at infinity",
             "feedback": "Constants are negligible at infinity. The LEADING terms decide: ratio 7."
           },
           {
             "id": "o3",
-            "label": "the middle terms",
+            "label": "middle terms determine the limit at infinity",
             "feedback": "The highest-degree (leading) terms dominate: 7x³/x³ = 7."
           }
         ]
@@ -82,18 +101,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "→ −∞ (grows negatively without bound)",
+            "label": "grows to −∞; numerator degree is larger",
             "correct": true,
             "feedback": "Right — top degree 3 > bottom 2, and the −2 lead sends it to −∞."
           },
           {
             "id": "o2",
-            "label": "→ +∞",
+            "label": "grows to +∞; numerator degree is larger",
             "feedback": "The leading coefficient is NEGATIVE (−2), so it heads to −∞, not +∞."
           },
           {
             "id": "o3",
-            "label": "→ −2",
+            "label": "approaches −2; the degrees are equal",
             "feedback": "Unequal degrees don't give a finite limit; top-heavy with a −2 lead → −∞."
           }
         ]
@@ -124,18 +143,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "0 (horizontal asymptote y = 0)",
+            "label": "approaches 0; denominator degree is larger",
             "correct": true,
             "feedback": "Right — the bottom degree is larger, so the fraction shrinks to 0."
           },
           {
             "id": "o2",
-            "label": "3",
+            "label": "approaches 3; the degrees are equal",
             "feedback": "3 would be a leading ratio for EQUAL degrees. Here the bottom wins → 0."
           },
           {
             "id": "o3",
-            "label": "+∞",
+            "label": "grows to +∞; numerator degree is larger",
             "feedback": "Top-heavy gives ∞, but here the BOTTOM degree is larger → 0."
           }
         ]
@@ -165,18 +184,18 @@
         "options": [
           {
             "id": "o1",
-            "label": "grows without bound (→ +∞), no horizontal asymptote",
+            "label": "grows to +∞; numerator degree is larger",
             "correct": true,
             "feedback": "Right — top degree 3 > bottom 1, so it grows to +∞."
           },
           {
             "id": "o2",
-            "label": "approaches 1/2",
+            "label": "approaches 1/2; degrees are equal",
             "feedback": "1/2 would need equal degrees. Here the top degree is larger → +∞."
           },
           {
             "id": "o3",
-            "label": "approaches 0",
+            "label": "approaches 0; denominator degree is larger",
             "feedback": "0 needs a smaller top. Here the top dominates → +∞."
           }
         ]

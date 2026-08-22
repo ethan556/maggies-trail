@@ -45,12 +45,12 @@
         "prompt": "40 + 6 names a number. How many digits will it have?",
         "options": [
           {
-            "id": "two",
-            "label": "Two digits"
-          },
-          {
             "id": "three",
             "label": "Three digits"
+          },
+          {
+            "id": "two",
+            "label": "Two digits"
           },
           {
             "id": "depends",
@@ -124,23 +124,23 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Tens plus ones.",
+      "body": "Find the missing addend.",
       "widget": {
         "type": "numeric",
-        "prompt": "What number is 80 + 5?",
-        "answer": 85,
+        "prompt": "80 + ? = 85. What number is missing?",
+        "answer": 5,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 13,
-            "feedback": "Don't add the digits 8 and 5. Add the values: 80 + 5 = 85."
+            "value": 85,
+            "feedback": "85 is the total, not the missing addend. 85 − 80 = 5."
           },
           {
-            "value": 805,
-            "feedback": "Don't write them side by side. 80 + 5 = 85."
+            "value": 8,
+            "feedback": "8 is the tens digit of 80, not the missing number. 85 − 80 = 5."
           }
         ],
-        "fallbackFeedback": "80 + 5 = 85."
+        "fallbackFeedback": "85 − 80 = 5."
       }
     },
     {
@@ -152,43 +152,43 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Ones part is zero.",
+      "body": "No extra ones.",
       "widget": {
         "type": "numeric",
-        "prompt": "What number is 60 + 0?",
+        "prompt": "A number is made of 6 tens and no extra ones. What number is it?",
         "answer": 60,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 6,
-            "feedback": "60 + 0 is still 60 — the 6 is in the tens place, worth 60."
+            "feedback": "6 is just the number of tens, not the value. 6 tens with no ones is 60."
           },
           {
             "value": 600,
-            "feedback": "Don't write them side by side. 60 + 0 = 60."
+            "feedback": "Don't add extra zeros. 6 tens with no ones is 60, not 600."
           }
         ],
-        "fallbackFeedback": "60 + 0 = 60."
+        "fallbackFeedback": "6 tens and 0 ones make 60."
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Twenty-nine.",
+      "body": "Catch a counting mistake.",
       "conceptTag": "tno-read-expanded",
       "explanationVariants": [
-        "20 + 9 = 29.",
-        "Twenty and nine make 29."
+        "20 + 9 = 29, not 11 — add the values, not the digits.",
+        "Theo should add 20 and 9 to get 29."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number is 20 + 9?",
+        "prompt": "Theo added 20 + 9 but wrote 11 by mistake. What is the correct total?",
         "answer": 29,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 11,
-            "feedback": "Don't add the digits 2 and 9. Add the values: 20 + 9 = 29."
+            "feedback": "That repeats Theo's mistake of adding the digits (2+9). Add the values: 20 + 9 = 29."
           },
           {
             "value": 209,
@@ -196,47 +196,39 @@
           }
         ],
         "fallbackFeedback": "20 + 9 = 29."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoReadExpandedNumeric"
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Ninety-one.",
+      "body": "Two fields of sheep.",
       "conceptTag": "tno-read-expanded",
       "explanationVariants": [
-        "90 + 1 = 91.",
-        "Ninety and one make 91."
+        "90 sheep plus 1 more sheep is 91.",
+        "90 + 1 = 91."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number is 90 + 1?",
+        "prompt": "A ranch has 90 sheep in the west field and 1 more sheep in the east field. How many sheep in all?",
         "answer": 91,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 10,
-            "feedback": "Don't add the digits 9 and 1. Add the values: 90 + 1 = 91."
+            "feedback": "Don't add the digits 9 and 1. Add the herd sizes: 90 + 1 = 91."
           },
           {
             "value": 901,
-            "feedback": "Don't write them side by side. 90 + 1 = 91."
+            "feedback": "Don't write them side by side. 90 sheep and 1 sheep make 91."
           }
         ],
-        "fallbackFeedback": "90 + 1 = 91."
-      },
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoReadExpandedNumeric"
+        "fallbackFeedback": "90 + 1 = 91 sheep."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Same digit twice.",
+      "body": "A number riddle.",
       "conceptTag": "tno-read-expanded",
       "explanationVariants": [
         "70 + 7 = 77.",
@@ -244,7 +236,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What number is 70 + 7?",
+        "prompt": "I am made of 70 and 7 more. What number am I?",
         "answer": 77,
         "tolerance": 0,
         "commonErrors": [
@@ -263,11 +255,7 @@
         "The tens part is 70.",
         "The ones part is 7.",
         "70 + 7 = 77."
-      ],
-      "variant": {
-        "gen": "g1-tens-ones",
-        "form": "TnoReadExpandedNumeric"
-      }
+      ]
     },
     {
       "id": "r1",
@@ -295,25 +283,25 @@
         "body": "",
         "conceptTag": "tno-read-expanded",
         "explanationVariants": [
-          "40 + 6 = 46.",
-          "Forty and six make 46."
+          "30 + 4 = 34.",
+          "Thirty and four make 34."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "What number is 40 + 6?",
-          "answer": 46,
+          "prompt": "A farm has 30 hens and 4 more roosters. How many birds are there in all?",
+          "answer": 34,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 10,
-              "feedback": "Add the values: 40 + 6 = 46."
+              "value": 7,
+              "feedback": "Don't add the digits 3 and 4. Add the counts: 30 + 4 = 34."
             },
             {
-              "value": 406,
-              "feedback": "Don't join the digits: 40 + 6 = 46."
+              "value": 304,
+              "feedback": "Don't write them side by side. 30 hens and 4 roosters make 34 birds."
             }
           ],
-          "fallbackFeedback": "40 + 6 = 46."
+          "fallbackFeedback": "30 + 4 = 34 birds."
         }
       }
     }

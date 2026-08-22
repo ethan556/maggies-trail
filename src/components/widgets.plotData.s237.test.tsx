@@ -596,7 +596,10 @@ describe("S238: the authored mcq rows draw the plot their prompt describes", () 
     expect(drawnCounts()).toEqual([2, 3, 1, 2]);
     expect(drawnLabels()).toEqual(["1/4", "1/2", "3/4", "1"]);
     // The options are still there, still buttons, still labelled — the plot displaced nothing.
-    expect(screen.getByRole("radio", { name: "1/2 ft" })).toBeTruthy();
+    // The accessible NAME is `accessibleMathText(o.label)` (widgets.tsx `McqW`), not the label
+    // verbatim — MathText.test.tsx pins the same "/" → "divided by" naturalization this option's
+    // "1/2" goes through, so a screen reader gets spoken math, never a caret or a bare slash.
+    expect(screen.getByRole("radio", { name: "1 divided by 2 ft" })).toBeTruthy();
     expect(screen.getAllByRole("radio").length).toBe(3);
   });
 

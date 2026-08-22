@@ -10,75 +10,97 @@
       "id": "c1",
       "kind": "concept",
       "body": "A sorting rule is a yes/no question you ask every shape. 'Does it have a right angle?' splits a pile into two: the yeses and the nos. The rule doesn't care about the shape's name — only whether it passes the test.",
+      "narration": "A sorting rule is a yes or no question you ask every shape. Does it have a right angle? That splits a pile into two: the yeses and the nos. The rule does not care about the shape's name, only whether it passes the test.",
       "figure": "geo3-sort-yesno"
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Sort by one rule.",
+      "body": "Test whether one right angle is enough to guarantee a rectangle.",
       "conceptTag": "sorting-rules",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Rule: 'Has at least one right (square) angle.' Sort each shape yes or no.",
-        "buckets": [
+        "type": "shapeHierarchyLab",
+        "prompt": "A shape with a right angle is a rectangle. Is this always, sometimes, or never true?",
+        "mode": "verdict",
+        "nodes": [
           {
-            "id": "yes",
-            "label": "Yes — has a right angle",
-            "icon": "✅"
+            "id": "right-angle",
+            "label": "shape with a right angle",
+            "attributes": [
+              "at least 1 right angle"
+            ]
           },
           {
-            "id": "no",
-            "label": "No right angle",
-            "icon": "❌"
+            "id": "rectangle",
+            "label": "rectangle",
+            "attributes": [
+              "4 right angles"
+            ]
           }
         ],
-        "items": [
+        "edges": [],
+        "relation": "overlap",
+        "subjectLabel": "shape with a right angle",
+        "predicateLabel": "rectangle",
+        "witness": "A square has right angles and is a rectangle.",
+        "counterexample": "A right triangle has one right angle and is not a rectangle.",
+        "choices": [
           {
-            "id": "sq",
-            "label": "Square",
-            "bucketId": "yes",
-            "feedback": "A square has four right angles — easily passes the one-right-angle test."
+            "id": "sometimes",
+            "label": "Sometimes",
+            "claim": "sometimes",
+            "feedback": "Yes. A square fits both groups, but a right triangle fits only the right-angle group.",
+            "evidenceKind": "example",
+            "evidenceText": "A square fits both groups. A right triangle does not.",
+            "highlightNodeIds": [
+              "right-angle",
+              "rectangle"
+            ]
           },
           {
-            "id": "rect",
-            "label": "Rectangle",
-            "bucketId": "yes",
-            "feedback": "Four square corners — a clear yes."
+            "id": "always",
+            "label": "Always",
+            "claim": "always",
+            "feedback": "A right triangle has a right angle but is not a rectangle. One right angle is not enough.",
+            "evidenceKind": "counterexample",
+            "evidenceText": "A right triangle has a right angle but is not a rectangle.",
+            "highlightNodeIds": [
+              "right-angle"
+            ]
           },
           {
-            "id": "tri",
-            "label": "Triangle with no square corner",
-            "bucketId": "no",
-            "feedback": "This triangle's corners are all tilted — no right angle, so it fails the test."
-          },
-          {
-            "id": "rhom",
-            "label": "Rhombus (tilted corners)",
-            "bucketId": "no",
-            "feedback": "A rhombus has equal sides but its corners are tilted, not square — no right angle."
+            "id": "never",
+            "label": "Never",
+            "claim": "never",
+            "feedback": "Squares and rectangles have right angles, so the statement is true for some shapes.",
+            "evidenceKind": "example",
+            "evidenceText": "A square is a shape with right angles and is a rectangle.",
+            "highlightNodeIds": [
+              "rectangle"
+            ]
           }
         ],
-        "missFeedback": "Ask ONLY the rule's question: does the shape have a square corner? Ignore everything else.",
-        "successFeedback": "Square and rectangle pass; the tilted-corner triangle and rhombus fail. One rule, two piles."
+        "fallbackFeedback": "Find one example that is a rectangle and one right-angle shape that is not.",
+        "successFeedback": "Sometimes. A right angle can belong to a rectangle or to a different shape, such as a right triangle."
       },
       "predict": {
-        "prompt": "Can a shape have a right angle without BEING a rectangle?",
+        "prompt": "A shape with a right angle is a rectangle. Is this always, sometimes, or never true?",
         "options": [
           {
-            "id": "yes",
-            "label": "Yes — one square corner isn't the whole club"
+            "id": "sometimes",
+            "label": "Sometimes"
           },
           {
-            "id": "no",
-            "label": "No — right angles mean rectangle"
+            "id": "always",
+            "label": "Always"
           },
           {
-            "id": "tri",
-            "label": "Only triangles are allowed to"
+            "id": "never",
+            "label": "Never"
           }
         ],
-        "outcomeId": "yes",
-        "reveal": "A right triangle carries a square corner and isn't remotely a rectangle — one feature satisfies one rule, not a whole definition. Sorting by a rule means checking THAT rule alone."
+        "outcomeId": "sometimes",
+        "reveal": "A square has right angles and is a rectangle. A right triangle has one right angle but is not a rectangle, so one right angle is not enough."
       }
     },
     {
@@ -125,6 +147,7 @@
       "id": "c2",
       "kind": "concept",
       "body": "A shape can pass **more than one rule** at once. A square passes 'has a right angle' AND 'all sides equal.' When two rules overlap, the shapes that pass BOTH sit in the shared middle — like two hoops on the floor with an overlap where the double-winners stand.",
+      "narration": "A shape can pass more than one rule at once. A square passes has a right angle and also all sides equal. When two rules overlap, the shapes that pass both sit in the shared middle, like two hoops on the floor with an overlap where the double winners stand.",
       "figure": "geo3-multi-rule"
     },
     {
@@ -328,7 +351,8 @@
       "concept": {
         "id": "rem-sr-c",
         "kind": "concept",
-        "body": "Quick rewind. A sorting rule is just a **yes/no question**. Ask it about a shape, get one answer, drop the shape in the matching pile. 'Has a right angle?' — square says yes, tilted rhombus says no. The rule ignores the shape's name entirely."
+        "body": "Quick rewind. A sorting rule is just a **yes/no question**. Ask it about a shape, get one answer, drop the shape in the matching pile. 'Has a right angle?' — square says yes, tilted rhombus says no. The rule ignores the shape's name entirely.",
+        "narration": "Quick rewind. A sorting rule is just a yes or no question. Ask it about a shape, get one answer, drop the shape in the matching pile. Has a right angle? The square says yes; the tilted rhombus says no. The rule ignores the shape's name entirely."
       },
       "check": {
         "id": "rem-sr-k",

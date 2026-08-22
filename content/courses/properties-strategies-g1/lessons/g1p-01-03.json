@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "To add, start at the bigger number and count on the smaller one. Each count-on step adds exactly one.",
-      "narration": "To add, start at the bigger number and count on the smaller one. Each count-on step adds exactly one."
+      "figure": "bigger-first",
+      "body": "Starting at eight and counting on three reaches eleven with fewer hops than starting at three.",
+      "narration": "Starting at eight and counting on three reaches eleven with fewer hops than starting at three."
     },
     {
       "id": "i1",
@@ -100,8 +100,8 @@
             "feedback": "That stops one count too soon; say 5 counts in all."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 + 5 = Start at 7 and count on 5. 12."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 12."
       },
       "hints": [
         "Start at the bigger number.",
@@ -138,32 +138,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Say the starting number silently, then count only the hops out loud — the last number said is the total.",
-      "narration": "Say the starting number silently, then count only the hops out loud — the last number said is the total."
+      "figure": "count-on-small",
+      "body": "A small add-on is easy to track: one, two, or three forward hops from four land on five, six, or seven.",
+      "narration": "A small add-on is easy to track: one, two, or three forward hops from four land on five, six, or seven."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-count-on-bigger",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 11 and count on 3. Where do you land?",
-        "min": 9,
-        "max": 16,
-        "start": 11,
-        "hop": 1,
-        "hops": 3,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "Start at thirteen and count on two. Tap the landing number.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 13,
-            "feedback": "That stops one count too soon; make all 3 hops before stopping."
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "14",
+            "icon": "14",
+            "count": 1,
+            "correct": false,
+            "feedback": "14 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "15",
+            "icon": "15",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — two forward counts from thirteen land on fifteen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "16",
+            "icon": "16",
+            "count": 1,
+            "correct": false,
+            "feedback": "16 does not satisfy the relationship in the prompt."
           }
         ],
-        "missFeedback": "Start at 11 and count on 3: you land on 14.",
-        "successFeedback": "Landed on 14 — three counts past 11 reach 14."
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — two forward counts from thirteen land on fifteen."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +224,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "5 + 4 = ? Start at 5 and count on 4.",
+        "prompt": "A game piece starts at five and moves four spaces forward. Where does it land?",
         "answer": 9,
         "tolerance": 0,
         "unit": "",
@@ -213,8 +238,8 @@
             "feedback": "That stops one count too soon; say 4 counts in all."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 5 + 4 = Start at 5 and count on 4. 9."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 9."
       },
       "hints": [
         "Start at the bigger number.",
@@ -259,7 +284,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What is the fast way to add 9 + 4?",
+        "prompt": "Which method uses fewer hops for nine plus four?",
         "options": [
           {
             "id": "o0",
@@ -330,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "14 + 2 = ? Start at 14 and count on 2.",
+        "prompt": "Start at fourteen and count on two. What total do you reach?",
         "answer": 16,
         "tolerance": 0,
         "unit": "",
@@ -344,8 +369,8 @@
             "feedback": "That stops one count too soon; say 2 counts in all."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 14 + 2 = Start at 14 and count on 2. 16."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 16."
       },
       "hints": [
         "Start at the bigger number.",
@@ -411,22 +436,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "7 + 5 = ? Start at 7 and count on 5.",
-          "answer": 12,
+          "prompt": "Line up 9 buttons. Add 4 more buttons, one at a time, to the end of the line. How many buttons are in the line now?",
+          "answer": 13,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 7,
-              "feedback": "That is the start; count 5 more before stopping."
+              "value": 9,
+              "feedback": "That is only the starting line of 9 buttons before adding more."
             },
             {
-              "value": 11,
-              "feedback": "That stops one count too soon; say 5 counts in all."
+              "value": 12,
+              "feedback": "That stops one button too soon; four buttons must be added in total."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 7 + 5 = Start at 7 and count on 5. 12."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — 9 buttons and 4 more make 13 in the line."
         }
       }
     }

@@ -15,55 +15,67 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Are they congruent?",
+      "body": "Flip and slide a triangle onto its target while comparing the original and image side lengths.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Shape B is shape A slid 5 units right and flipped across a line. Are A and B congruent?",
-        "options": [
-          {
-            "id": "a",
-            "label": "Yes — only rigid motions were used",
-            "correct": true,
-            "feedback": "Right — sliding and flipping keep size and shape, so they're congruent."
-          },
-          {
-            "id": "b",
-            "label": "No — flipping changes the shape",
-            "correct": false,
-            "feedback": "Flipping (reflection) is a rigid motion — it keeps size and shape, so they ARE congruent."
-          },
-          {
-            "id": "c",
-            "label": "No — they're in different places",
-            "correct": false,
-            "feedback": "Different position doesn't matter for congruence — rigid motions were used, so they're congruent."
-          },
-          {
-            "id": "d",
-            "label": "Only if B is also resized",
-            "correct": false,
-            "feedback": "Resizing would BREAK congruence — since only rigid motions were used, they're already congruent."
-          }
-        ]
+        "type": "transformExplore",
+        "prompt": "Reflect the triangle, then slide it 5 units right until it matches the target image.",
+        "shape": [
+          [
+            -3,
+            1
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            -2,
+            4
+          ]
+        ],
+        "target": [
+          [
+            8,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            4
+          ]
+        ],
+        "gridMin": -4,
+        "gridMax": 9,
+        "dxMin": -6,
+        "dxMax": 6,
+        "dyMin": -4,
+        "dyMax": 4,
+        "allowReflect": true,
+        "successFeedback": "The reflected and translated triangle matches the target exactly. Its position and orientation changed, but every side length and angle stayed the same.",
+        "offsetFeedback": "The orientation may be right, but the vertices are not on the target yet. Move every vertex by the same offset.",
+        "reflectFeedback": "The target reverses the triangle's left-right orientation. Turn on the reflection before adjusting the slide."
       },
       "predict": {
-        "prompt": "Does FLIPPING a shape change its size or its side lengths?",
+        "prompt": "What happens to a shape's side lengths when it is reflected?",
         "options": [
           {
             "id": "no",
-            "label": "No — everything survives but the position"
+            "label": "They stay exactly the same"
           },
           {
             "id": "yes",
-            "label": "Yes — flips distort shapes"
+            "label": "They change because the shape is reversed"
           },
           {
             "id": "slide",
-            "label": "Only slides are safe"
+            "label": "Only translations preserve side lengths"
           }
         ],
         "outcomeId": "no",
-        "reveal": "Flips, slides, and turns are rigid — they move a shape without bending or stretching a single part. Whatever they produce is congruent to what they started with."
+        "reveal": "Reflections, translations, and rotations are rigid motions. They can change position or orientation, but they preserve every length and angle."
       }
     },
     {
@@ -87,25 +99,25 @@
         "options": [
           {
             "id": "a",
-            "label": "Their side lengths and angles are all equal",
+            "label": "All matching side lengths and matching angles are equal",
             "correct": true,
             "feedback": "Right — rigid motions preserve every length and angle."
           },
           {
             "id": "b",
-            "label": "Only their angles are equal",
+            "label": "Only their matching angles are equal, not their sides",
             "correct": false,
             "feedback": "Congruence preserves SIDE LENGTHS too, not just angles."
           },
           {
             "id": "c",
-            "label": "Only their areas are equal",
+            "label": "Only their areas are equal, not their side lengths",
             "correct": false,
             "feedback": "Congruent shapes match in every measurement — sides, angles, AND area."
           },
           {
             "id": "d",
-            "label": "They must be the same color",
+            "label": "They must share the same color and orientation",
             "correct": false,
             "feedback": "Color isn't a geometric property — congruence is about equal sides and angles."
           }

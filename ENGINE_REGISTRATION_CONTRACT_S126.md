@@ -49,7 +49,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | exactNumberLab | ExactNumberLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | expLogExplore | ExpLogExploreSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | extraneousRootLab | ExtraneousRootLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| feasibleRegionExplore | FeasibleRegionExploreSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| feasibleRegionExplore | FeasibleRegionExploreSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | fractionBar | FractionBarSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | fractionCompare | FractionCompareSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | fractionEntry | FractionEntrySpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
@@ -77,7 +77,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | numberLineRay | NumberLineRaySpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | numeric | NumericSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | oddEvenPairs | OddEvenPairsSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| parametricTrace | ParametricTraceSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
+| parametricTrace | ParametricTraceSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | percentBar | PercentBarSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
 | percentChangeLab | PercentChangeLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | placeCompare | PlaceCompareSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
@@ -100,7 +100,7 @@ Regenerate with `npm run check:engine-registration`. The contract is discovered 
 | rotationLab | RotationLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | sampleSim | SampleSimSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | samplingBiasLab | SamplingBiasLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| scaledCircleLab | ScaledCircleLabSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| scaledCircleLab | ScaledCircleLabSpec | 4 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | scatterFit | ScatterFitSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | secantSlope | SecantSlopeSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
 | sequenceBuild | SequenceBuildSpec | 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |

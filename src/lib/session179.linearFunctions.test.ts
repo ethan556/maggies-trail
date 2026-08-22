@@ -40,12 +40,14 @@ describe("a1-linear-functions: the frozen-only alternate shapes (S179)", () => {
     const spec = WidgetSpec.parse(k2.widget) as any;
     expect(exactNumberTruth(spec).answerNumber).toBe(3); // (10-4)/(3-1)
   });
-  it("parallel-perpendicular/ch1 asks for a PERPENDICULAR slope, not a parallel intercept", () => {
+  it("parallel-perpendicular/ch1 builds the PERPENDICULAR line through a point, not a parallel intercept", () => {
+    // s323-P7-lf-04-03: ch1's slope-only clone of i2 was redesigned into the two-step
+    // build-the-perpendicular-through-(2,1) job — b = y − (−(1/m))·x = 1 − (−3)·2 = 7.
     const d = JSON.parse(readFileSync("content/courses/linear-functions/lessons/lf-04-03.json", "utf8"));
     const ch1 = d.steps.find((s: any) => s.id === "ch1");
     expect(ch1.widget.prompt).toMatch(/perpendicular/i);
     const spec = WidgetSpec.parse(ch1.widget) as any;
-    expect(exactNumberTruth(spec).answerNumber).toBeCloseTo(-3, 9); // -1/(1/3)
+    expect(exactNumberTruth(spec).answerNumber).toBeCloseTo(1 - -3 * 2, 9); // b of y = −3x + 7
   });
   it("intercepts and slope-intercept-graph each carry an x-intercept variant the generator skips", () => {
     for (const [lid, sid, expected] of [["lf-02-03", "k2", 5], ["lf-02-03", "ch1", 4], ["lf-02-02", "ch1", 3]] as const) {

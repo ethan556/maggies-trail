@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Reading a line plot is counting what stands there: the x's in a stack answer 'how many at this value?'",
-      "narration": "Reading a line plot is counting what stands there: the x's in a stack answer 'how many at this value?'"
+      "figure": "vm-line-plot-read",
+      "body": "To answer 'how many?', choose the value below the stack and count the Xs above it.",
+      "narration": "To answer 'how many?', choose the value below the stack and count the Xs above it."
     },
     {
       "id": "i1",
@@ -92,7 +92,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 8 x's above the number 8. How many data points are at 8?",
+        "prompt": "A line plot shows 8 x's above the number 8. How many measurements are at 8?",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -106,7 +106,7 @@
             "feedback": "That count does not match the graph — return to the display and count what is actually drawn."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 8."
       },
       "hints": [
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The label under a stack NAMES the measurement; the x's above it COUNT the data — two jobs, never swapped.",
-      "narration": "The label under a stack NAMES the measurement; the x's above it COUNT the data — two jobs, never swapped."
+      "figure": "vm-line-plot-read",
+      "body": "The number below a stack names the measurement. The Xs above it tell how many times that measurement appears.",
+      "narration": "The number below a stack names the measurement. The Xs above it tell how many times that measurement appears."
     },
     {
       "id": "i2",
@@ -155,27 +155,27 @@
       "conceptTag": "g2g-read-lineplot",
       "widget": {
         "type": "dotPlot",
-        "prompt": "How many ribbons measured 7? Count the x's in its stack.",
+        "prompt": "Read a different line plot: how many ribbons measured 7? Count only the x's in that stack.",
         "values": [
+          10,
           12,
-          14,
-          16
+          14
         ],
         "target": [
-          3,
-          4,
-          1
+          2,
+          1,
+          5
         ],
         "maxPerValue": 6,
-        "successFeedback": "Four — every x above 7 and nothing from a neighboring stack.",
-        "partialFeedback": "Count only the stack above 7: every x in it, and no x from another stack.",
+        "successFeedback": "Five — the stack above 7 contains exactly five x's.",
+        "partialFeedback": "Use the number below to choose the stack, then count the x's above it.",
         "denominator": 2,
         "given": [
-          3,
-          4,
-          1
+          2,
+          1,
+          5
         ],
-        "askIndex": 1
+        "askIndex": 2
       },
       "cml": {
         "stage": "construct",
@@ -211,7 +211,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 3 x's above the number 9. How many data points are at 9?",
+        "prompt": "3 x's stand above the label 9. What is the count at 9?",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
@@ -225,7 +225,7 @@
             "feedback": "Label and count got added together; only the x's in the stack are data points."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 3."
       },
       "hints": [
@@ -285,7 +285,7 @@
             "feedback": "One x went uncounted — the stack holds every mark drawn above 4."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 6."
       },
       "hints": [
@@ -331,7 +331,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A line plot shows 3 x's above the number 8. How many data points are at 8?",
+        "prompt": "3 x's stand above 8 on the line plot. What count belongs in the data table for 8?",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
@@ -345,7 +345,7 @@
             "feedback": "Label and count got added together; only the x's in the stack are data points."
           }
         ],
-        "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
+        "fallbackFeedback": "Use the stated stack: the value below names the measurement, while the x marks give its frequency.",
         "successFeedback": "Correct — 3."
       },
       "hints": [
@@ -398,8 +398,9 @@
       "concept": {
         "id": "rem-g2g-read-lineplot-c",
         "kind": "concept",
-        "body": "The label under a stack NAMES the measurement; the x's above it COUNT the data — two jobs, never swapped.",
-        "narration": "The label under a stack NAMES the measurement; the x's above it COUNT the data — two jobs, never swapped."
+        "body": "First point to the requested value. Then count only the Xs in the stack directly above it.",
+        "narration": "First point to the requested value. Then count only the Xs in the stack directly above it.",
+        "figure": "vm-line-plot-read"
       },
       "check": {
         "id": "rem-g2g-read-lineplot-k",
@@ -412,22 +413,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A line plot shows 8 x's above the number 8. How many data points are at 8?",
-          "answer": 8,
+          "prompt": "Five Xs stand above 6 on a line plot. How many measurements equal 6?",
+          "answer": 5,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 16,
-              "feedback": "Label and count got added together; only the x's in the stack are data points."
+              "value": 6,
+              "feedback": "Six labels the measurement; the five Xs tell how many measurements."
             },
             {
-              "value": 12,
-              "feedback": "That count does not match the graph — return to the display and count what is actually drawn."
+              "value": 11,
+              "feedback": "Do not add the label and the stack count; count only the Xs."
             }
           ],
-          "fallbackFeedback": "Read the display itself: count what is drawn, and let the stacks, rows, and bars do the remembering.",
-          "successFeedback": "Correct — 8."
+          "fallbackFeedback": "Find 6 below the plot, then count the five Xs above it.",
+          "successFeedback": "Correct — five measurements equal 6."
         }
       }
     }

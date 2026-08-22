@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Subtracting a small amount works by counting back: start at the whole and hop backward once for each one taken away.",
-      "narration": "Subtracting a small amount works by counting back: start at the whole and hop backward once for each one taken away."
+      "figure": "count-back-hops",
+      "body": "Seven minus three means start at seven and make three backward hops to four.",
+      "narration": "Seven minus three means start at seven and make three backward hops to four."
     },
     {
       "id": "i1",
@@ -100,8 +100,8 @@
             "feedback": "That counts forward instead of back."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 10 − 3 = Count back 3. 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Start at the bigger number.",
@@ -138,32 +138,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Counting back mirrors counting on — same hops, opposite direction. It suits taking away 1, 2, or 3.",
-      "narration": "Counting back mirrors counting on — same hops, opposite direction. It suits taking away 1, 2, or 3."
+      "figure": "as-count-back",
+      "body": "Count the backward hops, not the starting number: nine minus three lands on six.",
+      "narration": "Count the backward hops, not the starting number: nine minus three lands on six."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-count-back",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 12 and count back 3. Where do you land?",
-        "min": 7,
-        "max": 14,
-        "start": 12,
-        "hop": 1,
-        "hops": 3,
-        "direction": "back",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "Start at fifteen and count back two. Tap the landing number.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 10,
-            "feedback": "That stops one hop early; count all 3 backward hops."
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "12",
+            "icon": "12",
+            "count": 1,
+            "correct": false,
+            "feedback": "12 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "13",
+            "icon": "13",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — two backward counts from fifteen land on thirteen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "14",
+            "icon": "14",
+            "count": 1,
+            "correct": false,
+            "feedback": "14 does not satisfy the relationship in the prompt."
           }
         ],
-        "missFeedback": "Start at 12 and count back 3: you land on 9.",
-        "successFeedback": "Landed on 9 — three backward hops from 12."
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — two backward counts from fifteen land on thirteen."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +224,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "To count back 3 from 11, where does the first hop land?",
+        "prompt": "When counting back from eleven, where does the first backward hop land?",
         "options": [
           {
             "id": "o0",
@@ -270,7 +295,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 − 3 = ? Count back 3.",
+        "prompt": "Seven birds lose three birds. How many remain?",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -284,8 +309,8 @@
             "feedback": "That counts forward instead of back."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 − 3 = Count back 3. 4."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
         "Start at the bigger number.",
@@ -330,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 − 2 = ? Count back 2.",
+        "prompt": "A game piece moves back two spaces from seven. Where does it land?",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -344,8 +369,8 @@
             "feedback": "That counts forward instead of back."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 − 2 = Count back 2. 5."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 5."
       },
       "hints": [
         "Start at the bigger number.",
@@ -411,22 +436,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "10 − 3 = ? Count back 3.",
-          "answer": 7,
+          "prompt": "You have 12 grapes on a plate. Eat 3 grapes, one at a time. How many grapes are left on the plate?",
+          "answer": 9,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 8,
-              "feedback": "That stops one count too soon; make all 3 backward hops."
+              "value": 10,
+              "feedback": "That stops after only 2 grapes are eaten; eat all 3 grapes."
             },
             {
-              "value": 13,
-              "feedback": "That counts forward instead of back."
+              "value": 15,
+              "feedback": "That adds grapes instead of eating them, moving the wrong direction."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 10 − 3 = Count back 3. 7."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — 12 grapes with 3 eaten leaves 9 on the plate."
         }
       }
     }

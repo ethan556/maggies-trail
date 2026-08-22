@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Time breaks the pattern of tens: an hour holds 60 minutes and a minute holds 60 seconds, but the two decisions are unchanged.",
-      "narration": "Time breaks the pattern of tens: an hour holds 60 minutes and a minute holds 60 seconds, but the two decisions are unchanged."
+      "figure": "g4v-clock-60",
+      "body": "Time doesn't follow the pattern of tens: one hour still holds 60 minutes, and one minute still holds 60 seconds, though the same two conversion decisions still apply.",
+      "narration": "Time doesn't follow the pattern of tens: one hour still holds 60 minutes, and one minute still holds 60 seconds, though the same two conversion decisions still apply."
     },
     {
       "id": "i1",
@@ -35,20 +35,20 @@
           },
           {
             "value": 240,
-            "feedback": "Four hops overshoot — three hours is 180 minutes."
+            "feedback": "Four hops overshoot \u2014 three hours is 180 minutes."
           }
         ],
         "missFeedback": "Each hour is 60 minutes, so three reach 180.",
-        "successFeedback": "180 — three hour-hops of 60 minutes each.",
-        "lowFeedback": "Short of the landing — each hour is 60 minutes, so three reach 180.",
-        "highFeedback": "Past the landing — three hours stops exactly at 180 minutes."
+        "successFeedback": "180 \u2014 three hour-hops of 60 minutes each.",
+        "lowFeedback": "Short of the landing \u2014 each hour is 60 minutes, so three reach 180.",
+        "highFeedback": "Past the landing \u2014 three hours stops exactly at 180 minutes."
       },
       "predict": {
         "prompt": "Does a factor of 60 change the method?",
         "options": [
           {
             "id": "no",
-            "label": "No — same two decisions"
+            "label": "No \u2014 same two decisions"
           },
           {
             "id": "yes",
@@ -62,12 +62,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "diagram",
@@ -92,7 +92,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rest stop measures 4 minutes, and each minute is 60 seconds. Compute 4 × 60.",
+        "prompt": "A rest stop measures 4 minutes, and each minute is 60 seconds. Compute 4 \u00d7 60.",
         "answer": 240,
         "tolerance": 0,
         "unit": "",
@@ -107,7 +107,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 240."
+        "successFeedback": "Correct \u2014 240."
       },
       "hints": [
         "Which unit is smaller?",
@@ -118,12 +118,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "symbolic",
@@ -144,9 +144,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Direction and factor still settle everything — which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear.",
-      "narration": "Direction and factor still settle everything — which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear."
+      "figure": "rr-chain",
+      "body": "Direction and factor still settle everything \u2014 which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear.",
+      "narration": "Direction and factor still settle everything \u2014 which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear."
     },
     {
       "id": "i2",
@@ -155,38 +155,38 @@
       "conceptTag": "g4v-time",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "How many minutes in 3 hours? Hop one hour at a time.",
+        "prompt": "Apply the time relationship to a new value: how many minutes are in 4 hours?",
         "min": 0,
-        "max": 300,
+        "max": 360,
         "start": 0,
         "hop": 60,
-        "hops": 3,
+        "hops": 4,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 120,
-            "feedback": "Two hops reach 120 minutes; the hike lasts three hours."
+            "value": 180,
+            "feedback": "Three hops represent three hours; four hours needs one more hop."
           },
           {
-            "value": 240,
-            "feedback": "Four hops overshoot — three hours is 180 minutes."
+            "value": 300,
+            "feedback": "Five hops overshoot; four hours is 240 minutes."
           }
         ],
-        "missFeedback": "Each hour is 60 minutes, so three reach 180.",
-        "successFeedback": "180 — three hour-hops of 60 minutes each.",
-        "lowFeedback": "Short of the landing — each hour is 60 minutes, so three reach 180.",
-        "highFeedback": "Past the landing — three hours stops exactly at 180 minutes."
+        "missFeedback": "Four equal hops of 60 minutes land at 240 minutes.",
+        "successFeedback": "240 minutes \u2014 four hour-hops of 60 minutes each.",
+        "lowFeedback": "This landing is short of four complete hour-hops.",
+        "highFeedback": "This landing is past four complete hour-hops."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "symbolic",
@@ -211,7 +211,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A hike measures 180 minutes, and each hour is 60 minutes. Compute 180 ÷ 60.",
+        "prompt": "Apply without the opening model: A hike measures 180 minutes, and each hour is 60 minutes. Compute 180 \u00f7 60.",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
@@ -226,7 +226,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 3."
+        "successFeedback": "Correct \u2014 3."
       },
       "hints": [
         "Which unit is smaller?",
@@ -237,12 +237,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "symbolic",
@@ -271,31 +271,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Converting 5 kilograms into grams, do you multiply or divide by 1,000?",
+        "prompt": "Diagnose a time conversion: how should 5 hours be converted to minutes?",
         "options": [
           {
             "id": "o0",
-            "label": "Multiply — grams are smaller, so there are more of them",
+            "label": "Multiply by 60 to get 300 minutes",
             "correct": true,
-            "feedback": "Correct — each kilogram contains 1,000 grams, so 5 kilograms is 5,000 grams."
+            "feedback": "Correct \u2014 each of the five hours contains 60 minutes."
           },
           {
             "id": "o1",
-            "label": "Divide — the number should get smaller",
+            "label": "Divide by 60 to get 1/12 minute",
             "correct": false,
-            "feedback": "Dividing would give 0.005, which is far less than the mass you started with."
+            "feedback": "Minutes are smaller than hours, so the numerical count must grow, not shrink."
           },
           {
             "id": "o2",
-            "label": "Neither — the number stays the same",
+            "label": "Keep the number 5 because time is unchanged",
             "correct": false,
-            "feedback": "The mass stays the same, but the NUMBER must change because the unit changed."
+            "feedback": "The duration stays fixed, but changing the unit changes its numerical measure."
           },
           {
             "id": "o3",
-            "label": "Multiply by 100",
+            "label": "Multiply by 100 to get 500 minutes",
             "correct": false,
-            "feedback": "100 is the centimeters-per-meter factor; a kilogram holds 1,000 grams."
+            "feedback": "Time uses 60 minutes per hour, not a metric factor of 100."
           }
         ]
       },
@@ -308,12 +308,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "symbolic",
@@ -338,7 +338,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A hike measures 3 hours, and each hour is 60 minutes. Compute 3 × 60.",
+        "prompt": "Transfer to a final context: A hike measures 3 hours, and each hour is 60 minutes. Compute 3 \u00d7 60.",
         "answer": 180,
         "tolerance": 0,
         "unit": "",
@@ -353,7 +353,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 180."
+        "successFeedback": "Correct \u2014 180."
       },
       "hints": [
         "Which unit is smaller?",
@@ -364,12 +364,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v time.",
+        "actionGoal": "Convert hours, minutes, and seconds using the correct factor of 60.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v time."
+          "One hour is 60 minutes and one minute is 60 seconds."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Applying a metric factor of 100 or 1,000 to time."
         ],
         "representations": [
           "symbolic",
@@ -405,8 +405,9 @@
       "concept": {
         "id": "rem-g4v-time-c",
         "kind": "concept",
-        "body": "Direction and factor still settle everything — which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear.",
-        "narration": "Direction and factor still settle everything — which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear."
+        "body": "Direction and factor still settle everything \u2014 which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear.",
+        "narration": "Direction and factor still settle everything \u2014 which is why a factor of 60 is no harder than a factor of 1,000 once the structure is clear.",
+        "figure": "rr-chain"
       },
       "check": {
         "id": "rem-g4v-time-k",
@@ -419,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A rest stop measures 4 minutes, and each minute is 60 seconds. Compute 4 × 60.",
-          "answer": 240,
+          "prompt": "A workout lasts 180 seconds, and each minute is 60 seconds. Compute 180 \u00f7 60.",
+          "answer": 3,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 64,
-              "feedback": "Adding mixes a quantity with a rate. Each of the 4 minutes contributes 60 seconds, so they multiply."
+              "value": 10800,
+              "feedback": "That multiplied. Minutes are the BIGGER unit, so fewer of them are needed \u2014 divide instead."
             },
             {
-              "value": 15,
-              "feedback": "That divided. Going to the SMALLER unit needs more of them, so the number must grow."
+              "value": 120,
+              "feedback": "Subtracting one minute's worth of seconds does not convert units; the whole count divides by 60."
             }
           ],
-          "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-          "successFeedback": "Correct — 240."
+          "fallbackFeedback": "Decide whether the target unit is bigger or smaller, then multiply or divide by the stated factor.",
+          "successFeedback": "Correct \u2014 3."
         }
       }
     }

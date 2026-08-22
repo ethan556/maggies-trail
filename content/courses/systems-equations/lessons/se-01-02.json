@@ -204,62 +204,74 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "And its height.",
+      "body": "A point that's close, but not quite.",
       "conceptTag": "solve-by-graphing",
       "explanationVariants": [
-        "At x = 3, y = 3 + 2 = 5, so the crossing is (3, 5).",
-        "Both lines hit y = 5 at x = 3: 3·3 − 4 = 5 and 3 + 2 = 5."
+        "For (2, 1): 2(2) − 3 = 1 ✓ in the first equation, but −2 + 6 = 4 ≠ 1 in the second — it fails.",
+        "Checking both equations shows (2, 1) solves only the first line, not the system."
       ],
       "widget": {
         "type": "affineRelationshipLab",
-        "prompt": "For y = 3x − 4 and y = x + 2, what is the y-coordinate of the crossing?",
-        "task": "intersectionY",
+        "prompt": "Does (2, 1) solve the system y = 2x − 3 and y = −x + 6?",
+        "task": "verifyPoint",
         "lines": [
           {
             "id": "first",
             "label": "First equation",
-            "m": 3.0,
-            "b": -4.0,
+            "m": 2.0,
+            "b": -3.0,
             "sourceKind": "equation",
-            "sourceText": "-3x + 1y = -4",
+            "sourceText": "y = 2x − 3",
             "tablePoints": []
           },
           {
             "id": "second",
             "label": "Second equation",
-            "m": 1.0,
-            "b": 2.0,
+            "m": -1.0,
+            "b": 6.0,
             "sourceKind": "equation",
-            "sourceText": "-1x + 1y = 2",
+            "sourceText": "y = −x + 6",
             "tablePoints": []
           }
         ],
-        "targetLineId": "first",
         "rateGoal": "greater",
-        "answerMode": "numeric",
-        "requiredExplorations": 1,
-        "requiredStageKeys": [],
+        "candidatePoint": [2, 1],
+        "answerMode": "choice",
+        "requiredExplorations": 2,
+        "requiredStageKeys": ["verify:first", "verify:second"],
         "tolerance": 0,
-        "choices": [],
-        "numericErrors": [
+        "choices": [
           {
-            "value": 3,
-            "feedback": "That's the x-coordinate. At x = 3, y = 3 + 2 = 5."
+            "id": "a",
+            "label": "Yes — it works in both equations",
+            "claim": "misconception:a",
+            "feedback": "Check the second equation: −2 + 6 = 4, not 1 — so (2, 1) does NOT solve y = −x + 6."
           },
           {
-            "value": 7,
-            "feedback": "Check the height: at x = 3, y = 3 + 2 = 5, not 7."
+            "id": "b",
+            "label": "No — it only works in the first equation",
+            "claim": "point:no",
+            "feedback": "Right — 2(2) − 3 = 1 checks in the first equation, but −2 + 6 = 4 ≠ 1 in the second. It solves only one line, not both."
+          },
+          {
+            "id": "c",
+            "label": "No — it only works in the second equation",
+            "claim": "misconception:c",
+            "feedback": "It's the OTHER way around: 2(2) − 3 = 1 ✓ works in the first equation; −2 + 6 = 4 fails the second."
+          },
+          {
+            "id": "d",
+            "label": "Yes — the point looks close enough on a graph",
+            "claim": "misconception:d",
+            "feedback": "Close on a graph isn't exact. Substitution shows −2 + 6 = 4, not 1 — it fails the second equation."
           }
         ],
+        "numericErrors": [],
         "pointErrors": [],
         "authoredStages": [],
         "explorationFeedback": "Inspect the designated affine states before checking.",
-        "fallbackFeedback": "At x = 3, y = 3 + 2 = 5.",
-        "successFeedback": "At x = 3, y = 3 + 2 = 5."
-      },
-      "variant": {
-        "gen": "a1-systems",
-        "form": "solve-by-graphing__numeric"
+        "fallbackFeedback": "Substitute (2, 1) into BOTH equations and check whether each one comes out true.",
+        "successFeedback": "Right — 2(2) − 3 = 1 ✓, but −2 + 6 = 4 ≠ 1. It solves only ONE line, so it isn't the system's solution."
       }
     },
     {

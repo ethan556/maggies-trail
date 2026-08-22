@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "dop-grouping",
       "body": "Add then multiply: when the story changes a group COUNT before the groups are counted up, the addition has to happen first.",
       "narration": "Add then multiply: when the story changes a group COUNT before the groups are counted up, the addition has to happen first."
     },
@@ -34,8 +34,8 @@
             "feedback": "That hopped only four vans. The van that arrived carries 7 hikers too, not zero."
           },
           {
-            "value": 8,
-            "feedback": "That added the extra van as a single hiker: 4 × 7 then + 1. A whole van brings a whole group."
+            "value": 29,
+            "feedback": "That added the extra van as a single hiker: 4 × 7 then + 1 gives 29. A whole van brings a whole group of 7."
           }
         ],
         "missFeedback": "Each hop is 7. From 0, 5 hops land on 35.",
@@ -60,12 +60,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "diagram",
@@ -90,22 +90,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "After the extra one arrived there are 5 crates, each holding 5 apples. So 5 × 5 = ?",
+        "prompt": "After the new crate arrives, there are 5 crates with 5 apples each. How many apples?",
         "answer": 25,
         "tolerance": 0,
-        "unit": "",
+        "unit": "apples",
         "commonErrors": [
           {
             "value": 10,
-            "feedback": "That added the two numbers; 5 groups OF 5 calls for multiplication."
+            "feedback": "10 is 5 + 5. Each of the 5 crates holds a group of 5 apples, so the equal groups call for multiplying, not one addition."
           },
           {
             "value": 20,
-            "feedback": "That is one group short — the arriving crate is already counted in the 5."
+            "feedback": "20 uses only 4 crates. The new crate has already arrived, so there are 5 crates of 5 apples to count."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 25."
+        "fallbackFeedback": "The arrival already happened: 5 crates, 5 apples in each. Combine all five equal groups.",
+        "successFeedback": "Correct — 25 apples."
       },
       "hints": [
         "Groups first, then change.",
@@ -116,12 +116,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "symbolic",
@@ -142,7 +142,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mult3-equal-groups",
       "body": "One more van arrives, then every van is filled. The arrival changes how many groups there are, so it belongs inside the parentheses.",
       "narration": "One more van arrives, then every van is filled. The arrival changes how many groups there are, so it belongs inside the parentheses."
     },
@@ -153,36 +153,36 @@
       "conceptTag": "g3w-add-mult",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "One more van arrives, so FIVE vans each carry 7 hikers. Hop the five groups from 0.",
+        "prompt": "Three carts are joined by two more carts. Each cart carries 6 boxes. Hop the five equal groups.",
         "min": 0,
-        "max": 60,
+        "max": 42,
         "start": 0,
-        "hop": 7,
+        "hop": 6,
         "hops": 5,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 28,
-            "feedback": "That hopped only four vans. The van that arrived carries 7 hikers too, not zero."
+            "value": 18,
+            "feedback": "That counts only the original three carts; include the two carts that joined."
           },
           {
-            "value": 8,
-            "feedback": "That added the extra van as a single hiker: 4 × 7 then + 1. A whole van brings a whole group."
+            "value": 15,
+            "feedback": "That multiplies the original cart count by the combined count — 3 × 5 — instead of using six boxes per cart."
           }
         ],
-        "missFeedback": "Each hop is 7. From 0, 5 hops land on 35.",
-        "successFeedback": "35 — five groups of seven. The extra van was filled like all the others."
+        "missFeedback": "The cart count changes first: 3 + 2 = 5, then five hops of 6 reach 30.",
+        "successFeedback": "30 boxes — five complete groups of six."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "symbolic",
@@ -207,31 +207,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"There are 5 tables with 4 chairs each. 3 chairs break. How many chairs work?\" Which equation matches?",
+        "prompt": "Two buses wait, then 3 more arrive. Each bus carries 6 students. Which expression matches?",
         "options": [
           {
             "id": "o0",
-            "label": "(5 × 4) − 3",
+            "label": "(2 + 3) × 6",
             "correct": true,
-            "feedback": "Correct — build the total first, then remove the broken ones; the parentheses hold the hidden step."
+            "feedback": "Correct — the bus count changes first, then every bus carries six."
           },
           {
             "id": "o1",
-            "label": "5 × (4 − 3)",
+            "label": "2 + (3 × 6)",
             "correct": false,
-            "feedback": "That breaks 3 chairs at EVERY table before multiplying — the story breaks only 3 in total."
+            "feedback": "That treats the original two buses as two students rather than full groups."
           },
           {
             "id": "o2",
-            "label": "5 + 4 − 3",
+            "label": "2 × 6 + 3",
             "correct": false,
-            "feedback": "Adding tables to chairs mixes two different things; 5 tables OF 4 chairs is multiplication."
+            "feedback": "The three arrivals are buses, so each arrival brings a full group of six."
           },
           {
             "id": "o3",
-            "label": "(5 × 4) + 3",
+            "label": "(2 + 3) + 6",
             "correct": false,
-            "feedback": "Broken chairs come OUT of the total, so the second step subtracts rather than adds."
+            "feedback": "Five equal groups of six require multiplication."
           }
         ]
       },
@@ -244,12 +244,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "symbolic",
@@ -274,22 +274,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "After the extra one arrived there are 5 vans, each holding 5 hikers. So 5 × 5 = ?",
-        "answer": 25,
+        "prompt": "After all arrivals, there are 5 vans with 6 hikers each. How many hikers?",
+        "answer": 30,
         "tolerance": 0,
-        "unit": "",
+        "unit": "hikers",
         "commonErrors": [
           {
-            "value": 10,
-            "feedback": "That added the two numbers; 5 groups OF 5 calls for multiplication."
+            "value": 24,
+            "feedback": "24 counts only 4 vans of 6. The extra van has already arrived, so all 5 vans carry hikers."
           },
           {
-            "value": 20,
-            "feedback": "That is one group short — the arriving van is already counted in the 5."
+            "value": 11,
+            "feedback": "11 is 5 + 6. Five vans each carrying a group of 6 hikers means multiplying the groups, not adding once."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 25."
+        "fallbackFeedback": "After all arrivals there are 5 equal groups of 6 hikers. Combine every group.",
+        "successFeedback": "Correct — 30 hikers."
       },
       "hints": [
         "Groups first, then change.",
@@ -300,12 +300,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "symbolic",
@@ -324,32 +324,32 @@
       }
     },
     {
-      "id": "ch1",
-      "kind": "challenge",
-      "body": "One more, for the road.",
+      "id": "k4",
+      "kind": "check",
+      "body": "",
       "conceptTag": "g3w-add-mult",
       "explanationVariants": [
-        "Families link × and ÷.",
-        "One fact gives another."
+        "The arrival is a whole group.",
+        "Add crates, then multiply."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "You know 6 × 3 = 18. So what is 18 ÷ 3?",
-        "answer": 6,
+        "prompt": "There were 3 crates. One more crate arrived. Each crate holds 8 apples. How many apples are there in all?",
+        "answer": 32,
         "tolerance": 0,
-        "unit": "",
+        "unit": "apples",
         "commonErrors": [
           {
-            "value": 3,
-            "feedback": "3 is the number you divided BY; the family says the answer is the other factor."
+            "value": 24,
+            "feedback": "24 is 3 × 8 — the old crate count. The arrival changed the count to 4 crates before any apples are counted."
           },
           {
-            "value": 18,
-            "feedback": "18 is the product itself — dividing it by 3 undoes the multiplication."
+            "value": 25,
+            "feedback": "25 treats the new crate as one apple: 3 × 8 then + 1. The crate that arrived is filled like the others, a full group of 8."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 6."
+        "fallbackFeedback": "The count changes first: 3 + 1 = 4 crates. Then combine 4 equal groups of 8 apples.",
+        "successFeedback": "Correct — (3 + 1) × 8 = 32 apples."
       },
       "hints": [
         "Groups first, then change.",
@@ -360,12 +360,68 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w add mult.",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w add mult a two-step problem rather than two separate ones."
+          "A new full group changes the group count, so the addition belongs before multiplication."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Adding one object after multiplying instead of adding one whole group."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-add-mult",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
+      "id": "ch1",
+      "kind": "challenge",
+      "body": "One more, for the road.",
+      "conceptTag": "g3w-add-mult",
+      "explanationVariants": [
+        "Families link × and ÷.",
+        "One fact gives another."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The group count is now 8 and every team has 4 players. To finish, what is 8 × 4?",
+        "answer": 32,
+        "tolerance": 0,
+        "unit": "players",
+        "commonErrors": [
+          {
+            "value": 12,
+            "feedback": "12 is 8 + 4. Eight teams of 4 players are equal groups, so this finishing step multiplies."
+          },
+          {
+            "value": 28,
+            "feedback": "28 is 7 × 4 — that uses the old team count. The count already grew to 8 teams before this multiplying step."
+          }
+        ],
+        "fallbackFeedback": "The adding is done: the count is 8 teams. Now build 8 equal groups of 4 players.",
+        "successFeedback": "Correct — 32 players."
+      },
+      "hints": [
+        "Groups first, then change.",
+        "Parentheses hold step one.",
+        "Order is the meaning."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
+        "invariants": [
+          "A new full group changes the group count, so the addition belongs before multiplication."
+        ],
+        "misconceptions": [
+          "Adding one object after multiplying instead of adding one whole group."
         ],
         "representations": [
           "symbolic",
@@ -401,8 +457,9 @@
       "concept": {
         "id": "rem-g3w-add-mult-c",
         "kind": "concept",
-        "body": "One more van arrives, then every van is filled. The arrival changes how many groups there are, so it belongs inside the parentheses.",
-        "narration": "One more van arrives, then every van is filled. The arrival changes how many groups there are, so it belongs inside the parentheses."
+        "body": "In (2 + 3) × 4, add inside parentheses first: 2 + 3 = 5, then 5 × 4 = 20.",
+        "narration": "In (2 + 3) × 4, add inside parentheses first: 2 + 3 = 5, then 5 × 4 = 20.",
+        "figure": "dop-grouping"
       },
       "check": {
         "id": "rem-g3w-add-mult-k",
@@ -415,22 +472,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "After the extra one arrived there are 5 crates, each holding 5 apples. So 5 × 5 = ?",
-          "answer": 25,
+          "prompt": "Three carts wait and 1 more joins. Each cart holds 6 bins. How many bins?",
+          "answer": 24,
           "tolerance": 0,
-          "unit": "",
+          "unit": "bins",
           "commonErrors": [
             {
               "value": 10,
-              "feedback": "That added the two numbers; 5 groups OF 5 calls for multiplication."
+              "feedback": "Four equal groups of six require multiplication."
             },
             {
-              "value": 20,
-              "feedback": "That is one group short — the arriving crate is already counted in the 5."
+              "value": 18,
+              "feedback": "That omits the cart that joined."
             }
           ],
-          "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-          "successFeedback": "Correct — 25."
+          "fallbackFeedback": "Combine the cart counts before multiplying.",
+          "successFeedback": "Correct — 24 bins."
         }
       }
     }

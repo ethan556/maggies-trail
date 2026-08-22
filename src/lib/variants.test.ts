@@ -93,12 +93,18 @@ function polyRoute(p: string): number {
     const k = m[3] === "constant term" ? 0 : m[3] === "coefficient of x" ? 1 : 2;
     return coeffOf(h, k, 2);
   }
-  m = p.match(/Subtract: \(([^)]+)\) - \(([^)]+)\)\. What is the (constant term|coefficient of x)/);
+  m = p.match(/Subtract: \(([^)]+)\) - \(([^)]+)\)\. What is the (constant term|coefficient of x\^2|coefficient of x)/);
   if (m) {
     const f = parsePoly(m[1]);
     const g = parsePoly(m[2]);
     const h = (x: number) => f(x) - g(x);
-    return coeffOf(h, m[3] === "constant term" ? 0 : 1, 2);
+    // S329 recon: widened to match "coefficient of x^2" the same way the Add branch above already
+    // does. Before, the alternation only offered "coefficient of x" -- which still matched as a
+    // PREFIX of "coefficient of x^2" (unanchored regex), silently grading subX2 against the x^1
+    // coefficient instead of x^2. subX/subConst's existing "coefficient of x?"/"constant term?"
+    // prompts are unaffected: neither ends in "^2", so they still fall through to the same branches.
+    const k = m[3] === "constant term" ? 0 : m[3] === "coefficient of x" ? 1 : 2;
+    return coeffOf(h, k, 2);
   }
   m = p.match(/Multiply \(([^)]+)\)\(([^)]+)\)\. What is the (constant term|coefficient of x\^4|coefficient of x)/)!;
   const f = parsePoly(m[1]);
@@ -1543,7 +1549,8 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     return ["NO-ROOT"];
   },
   "sci-notation": (p) => {
-    const m = p.match(/^([\d,.]+) in scientific notation is:/)!;
+    // Re-pinned: GRB-02 (S331) — the `small` form's prompt now opens with "The decimal".
+    const m = p.match(/^(?:The decimal )?([\d,.]+) in scientific notation is:/)!;
     const raw = m[1].replace(/,/g, "");
     // Count the point's move by STRING position, never by log10 — a float log would be the same
     // kind of shortcut the exponent traps are built to punish.
@@ -2567,6 +2574,15 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     if (m) { const [a, c] = [Number(m[1]), Number(m[2])]; for (let x = 1; x <= 100; x++) if (mul(a, x) === c) return x; return NaN; }
     m = p.match(/Tickets cost \$(\d+) each, and a group spent \$(\d+) total/)!;
     { const [pr, T] = [Number(m[1]), Number(m[2])]; for (let t = 1; t <= 100; t++) if (mul(pr, t) === T) return t; return NaN; }
+  },
+  // S331 G3 — the ee-04-03/ch1 parking story: find the hour count by SEARCH against the printed
+  // rate and total, exactly as the tickets route does.
+  "solve-mult-div@parkingRate": (p) => {
+    const mul = (a: number, b: number) => { let t = 0; for (let i = 0; i < b; i++) t += a; return t; };
+    const m = p.match(/Parking costs \$(\d+) per hour, and a receipt shows \$(\d+) total/)!;
+    const [rate, T] = [Number(m[1]), Number(m[2])];
+    for (let h = 1; h <= 100; h++) if (mul(rate, h) === T) return h;
+    throw new Error("no hour count fits the receipt");
   },
   "negative-intro": (p) => {
     let m = p.match(/sits (\d+) feet below sea level/);
@@ -3862,6 +3878,30 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
       return { x, y };
     });
   },
+  // S331 G3 — fractional-rate plots: parse the printed rate (decimal or fraction), then find each
+  // y by an integer cross-multiplication SEARCH over the 8×8 grid, built from repeated addition.
+  "proportional-plot@fracRatePlot": (p) => {
+    const rateRaw = p.match(/For a rate of ([\d./]+), plot/)![1];
+    let num: number, den: number;
+    if (rateRaw.includes("/")) {
+      const parts = rateRaw.split("/");
+      num = Number(parts[0]); den = Number(parts[1]);
+    } else {
+      // Halves print as decimals (0.5, 1.5, …): count the halves by string position, not by ×2.
+      const parts = rateRaw.split(".");
+      num = Number(parts[0]) + Number(parts[0]) + (parts[1] === "5" ? 1 : 0); den = 2;
+    }
+    const xs = [...p.matchAll(/\((\d+), \d+\)/g)].map((m) => Number(m[1]));
+    return xs.map((x) => {
+      for (let y = 1; y <= 8; y++) {
+        let lhs = 0; for (let i = 0; i < den; i++) lhs += y;
+        let rhs = 0; for (let i = 0; i < num; i++) rhs += x;
+        if (lhs === rhs) return { x, y };
+      }
+      throw new Error(`no grid y fits rate ${rateRaw} at x = ${x}`);
+    });
+  },
+  "proportional-plot@fracRateShallow": (p) => INDEPENDENT["proportional-plot@fracRatePlot"](p),
   "proportional-plot@cgPairNext": (p) => {
     const step = Number(p.match(/add (\d+) each time/)![1]);
     const nums = p.match(/pattern is ([\d, ]+)\./)![1].split(",").map(Number);
@@ -8965,7 +9005,8 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     if (question.startsWith("Which list contains only irrational"))
       return labels.find((label) => label.split(", ").every((x) => g8SquareRootIfExact(Number(x.slice(1))) === null))!;
     if (question.startsWith("Is ")) return labels.find((label) => label.startsWith("Irrational"))!;
-    if (question === "Which of these numbers is rational?") {
+    // Re-pinned: GRB-02 (S331) — the pick-rational prompt now names the decimal-expansion skill.
+    if (question === "Use each number's decimal expansion to decide: which of these numbers is rational?") {
       /* S242 / MCQ-01. The old rule — "the label that is not a root, not a constant, not a growing
        * decimal" — was the LEAK ITSELF, encoded as a derivation: it found the answer by shape. The
        * key now arrives in the same costumes as the distractors, so this route must classify every
@@ -9048,6 +9089,22 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     m = question.match(/areas (\d+) and (\d+)/)!;
     return Math.sqrt(Number(m[1]) + Number(m[2]));
   },
+  // S331 G3 — the reversed identity: find the missing leg by SEARCHING m with m² + K² = C², using
+  // repeated-addition squares — no sqrt, no subtraction of areas.
+  "g8-tm-pythagorean-why@tmPythMissingLeg": (p) => {
+    const m = p.match(/one leg of length (\d+) and hypotenuse (\d+)/)!;
+    const sq = (n: number) => { let t = 0; for (let i = 0; i < n; i++) t += n; return t; };
+    const known = Number(m[1]), hyp = Number(m[2]);
+    for (let leg = 1; leg <= 120; leg++) if (sq(leg) + sq(known) === sq(hyp)) return leg;
+    throw new Error("no integer leg completes the triangle");
+  },
+  // S331 G3 — the classmate's c²: recompute the sum of leg-squares by repeated addition. The
+  // classmate's printed (wrong) value never enters the derivation.
+  "g8-tm-pythagorean-why@tmPythClassmateSum": (p) => {
+    const m = p.match(/has legs (\d+) and (\d+)\./)!;
+    const sq = (n: number) => { let t = 0; for (let i = 0; i < n; i++) t += n; return t; };
+    return sq(Number(m[1])) + sq(Number(m[2]));
+  },
 
   "g8-tm-rigid-motion": (p) => {
     const m = p.match(/Translate \((-?\d+), (-?\d+)\) (left|right) (\d+) and (up|down) (\d+)/)!;
@@ -9120,6 +9177,19 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   "g8-tm-angle-angle@tmAAScale": (p) => { const m=p.match(/side of (\d+).*matches (\d+).*side of (\d+)/)!; return Number(m[3])*Number(m[2])/Number(m[1]); },
   "g8-tm-pythagorean-converse": (p) => p.split("||")[1].split(";;").find((x)=>x.startsWith("Yes —"))!,
   "g8-tm-pythagorean-converse@tmConverseRight": (p) => INDEPENDENT["g8-tm-pythagorean-converse"](p),
+  // S331 G3 — the bracket verdict MOVES with the drawn sides, so the route recomputes it: squares
+  // by repeated addition, then the Yes label when they match, else the No label that names the
+  // mismatch (the only No option containing " not ").
+  "g8-tm-pythagorean-converse@tmConverseBracket": (p) => {
+    const [prompt, raw] = p.split("||");
+    const m = prompt.match(/three sides measure (\d+), (\d+), and (\d+) inches/)!;
+    const sq = (n: number) => { let t = 0; for (let i = 0; i < n; i++) t += n; return t; };
+    const isRight = sq(Number(m[1])) + sq(Number(m[2])) === sq(Number(m[3]));
+    const labels = raw.split(";;");
+    return isRight
+      ? labels.find((x) => x.startsWith("Yes — ") && x.includes("²"))!
+      : labels.find((x) => x.startsWith("No — ") && / not /.test(x))!;
+  },
   "g8-tm-pythagorean-converse@tmDistanceOrigin": (p) => { const m=p.match(/to \((-?\d+), (-?\d+)\)/)!; return Math.hypot(Number(m[1]),Number(m[2])); },
   "g8-tm-pythagorean-converse@tmDistanceOffset": (p) => { const m=p.match(/from \((-?\d+), (-?\d+)\) to \((-?\d+), (-?\d+)\)/)!; return Math.hypot(Number(m[3])-Number(m[1]),Number(m[4])-Number(m[2])); },
   "g8-tm-pythagorean-converse@tmConverseSort": (p) => {
@@ -9249,6 +9319,35 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   "g8-tm-cylinder-volume@tmCylinderBase": (p) => {
     const [, labelsRaw] = p.split("||");
     return labelsRaw.split(";;").find((label) => label === "The area of the circular base")!;
+  },
+  // S331 G3 — drum: r² by repeated addition, then h copies of that base area.
+  "g8-tm-cylinder-volume@tmCylinderDrum": (p) => {
+    const m = p.match(/radius (\d+) cm and height (\d+) cm/)!;
+    const r = Number(m[1]), h = Number(m[2]);
+    let base = 0; for (let i = 0; i < r; i++) base += r;
+    let vol = 0; for (let i = 0; i < h; i++) vol += base;
+    return vol;
+  },
+  // S331 G3 — reverse job: SEARCH the radius whose r²h rebuilds the printed coefficient.
+  "g8-tm-cylinder-volume@tmCylinderRadius": (p) => {
+    const m = p.match(/height (\d+) and volume (\d+)π/)!;
+    const h = Number(m[1]), K = Number(m[2]);
+    for (let r = 1; r <= 40; r++) {
+      let base = 0; for (let i = 0; i < r; i++) base += r;
+      let vol = 0; for (let i = 0; i < h; i++) vol += base;
+      if (vol === K) return r;
+    }
+    throw new Error("no radius rebuilds the coefficient");
+  },
+  // S331 G3 — diameter tank: halve the diameter by SEARCH (r + r = d), then r²h as above.
+  "g8-tm-cylinder-volume@tmCylinderDiameter": (p) => {
+    const m = p.match(/diameter (\d+) and height (\d+)/)!;
+    const d = Number(m[1]), h = Number(m[2]);
+    let r = 0; while (r + r < d) r += 1;
+    if (r + r !== d) throw new Error("odd diameter cannot halve to a whole radius");
+    let base = 0; for (let i = 0; i < r; i++) base += r;
+    let vol = 0; for (let i = 0; i < h; i++) vol += base;
+    return vol;
   },
   "g8-tm-cone-volume": (p) => {
     const m = p.match(/radius (\d+) and height (\d+)/)!;
@@ -9685,6 +9784,23 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
     let prod = 0; for (let i = 0; i < b; i++) prod += sq;
     return a + prod;
   },
+  // S331 G3 — same printed surface as mixedPowerOrder; the route re-derives by repeated addition
+  // and never touches the form's revised trap arithmetic.
+  "power-product@mixedPowerSquareProduct": (p) => {
+    const m = p.match(/Evaluate (\d+) \+ (\d+) × (\d+)\^2/)!;
+    const a = Number(m[1]), b = Number(m[2]), c = Number(m[3]);
+    let sq = 0; for (let i = 0; i < c; i++) sq += c;
+    let prod = 0; for (let i = 0; i < b; i++) prod += sq;
+    return a + prod;
+  },
+  // S331 G3 — the doubling-sequence power: read the exponent off the printed "2^e", then DOUBLE BY
+  // ADDITION e times from 1 — no exponentiation operator anywhere in the route.
+  "power-product@doublingPower": (p) => {
+    const m = p.match(/its next term is 2\^(\d+)\. Evaluate/)!;
+    let t = 1;
+    for (let i = 0; i < Number(m[1]); i++) t += t;
+    return t;
+  },
   "grouping-first@powerMulEval": (p) => {
     const m = p.match(/Evaluate (\d+) × (\d+)\^(\d+)/)!;
     const a = Number(m[1]), b = Number(m[2]), e = Number(m[3]);
@@ -9776,6 +9892,14 @@ const INDEPENDENT: Record<string, (prompt: string) => VariantAnswer> = {
   },
   "unknown-letter@tipSolve": (p) => {
     const m = p.match(/\$(\d+) tip.*\$(\d+)/)!; return Number(m[2]) - Number(m[1]);
+  },
+  // S331 G3 — gift-card subtraction story: recover the original balance by counting UP from the
+  // remaining amount one dollar at a time, never by the generator's own addition.
+  "unknown-letter@giftCardSolve": (p) => {
+    const m = p.match(/After spending \$(\d+), a gift card has \$(\d+) left/)!;
+    let n = Number(m[2]);
+    for (let i = 0; i < Number(m[1]); i++) n += 1;
+    return n;
   },
   "g7-tse-inequality-build@strictBoundary": (p) => {
     const [prompt, raw] = p.split("||"); const b = prompt.match(/x = (-?\d+).*x > (-?\d+)/)![1];
@@ -11817,16 +11941,33 @@ describe("variant gate — every problem a generator can ever produce", () => {
       }
       const revealed = proportionalReasoningExplorationKeys(parsed).slice(0, parsed.requiredExplorations);
       expect(revealed).toHaveLength(parsed.requiredExplorations);
+      // evaluate.ts's own gate for THIS Lab type is not `revealed`/`requiredExplorations` (that
+      // convention belongs to its sibling Lab types) — it is `proportionalUnitRatesAreVerified`,
+      // matching the real widget: `ProportionalReasoningLabW` requires the learner to type and
+      // verify EVERY series pair's unit rate (`unitRates`/`verifiedUnitRates`) before `setNumeric`/
+      // `setChoice` will even accept a final answer (`ratesReady` gates both). So the state that
+      // actually unlocks grading here is every `${series.id}:${index}` key present in `unitRates`
+      // at the true rate and listed in `verifiedUnitRates` — built from this block's own
+      // independently-computed `rows`, not from the schema's `proportionalReasoningTruth`.
+      const unitRates: Record<string, number> = {};
+      const verifiedUnitRates: string[] = [];
+      for (const series of rows) {
+        series.pairs.forEach(([, y], index) => {
+          const key = `${series.id}:${index}`;
+          unitRates[key] = series.rates[index]!;
+          verifiedUnitRates.push(key);
+        });
+      }
       if (parsed.answerMode === "numeric") {
         expect(answerNumber).toBeTypeOf("number");
         expect(Math.abs((v.answer as number) - answerNumber!)).toBeLessThan(1e-9);
-        expect(evaluate(parsed, { revealed, numeric: answerNumber }).correct).toBe(true);
+        expect(evaluate(parsed, { unitRates, verifiedUnitRates, numeric: answerNumber }).correct).toBe(true);
         const routed = check(parsed.prompt);
         expect(typeof routed).toBe("number");
         expect(Math.abs((routed as number) - answerNumber!)).toBeLessThan(1e-9);
         for (const wrong of parsed.numericErrors) {
           expect(Math.abs(wrong.value - answerNumber!)).toBeGreaterThan(parsed.tolerance);
-          const result = evaluate(parsed, { revealed, numeric: wrong.value });
+          const result = evaluate(parsed, { unitRates, verifiedUnitRates, numeric: wrong.value });
           expect(result.correct).toBe(false);
           expect(result.feedback).toBe(wrong.feedback);
         }
@@ -11838,18 +11979,20 @@ describe("variant gate — every problem a generator can ever produce", () => {
         );
         expect(winners, "exactly one independently-derived proportional choice").toHaveLength(1);
         expect(v.answer).toBe(winners[0]!.id);
-        expect(evaluate(parsed, { revealed, choiceId: winners[0]!.id }).correct).toBe(true);
+        expect(evaluate(parsed, { unitRates, verifiedUnitRates, choiceId: winners[0]!.id }).correct).toBe(true);
         const routed = check(parsed.prompt + "||" + parsed.choices.map((choice) => choice.label).join(";;"));
         if (typeof routed === "number" && typeof answerNumber === "number") expect(Math.abs(routed - answerNumber)).toBeLessThan(1e-9);
         else expect(routed).toBe(winners[0]!.label);
         for (const choice of parsed.choices.filter((choice) => choice.id !== winners[0]!.id)) {
-          const result = evaluate(parsed, { revealed, choiceId: choice.id });
+          const result = evaluate(parsed, { unitRates, verifiedUnitRates, choiceId: choice.id });
           expect(result.correct).toBe(false);
           expect(result.feedback).toBe(choice.feedback);
         }
       }
-      // Fabricated state strings cannot satisfy the exploration gate.
-      expect(evaluate(parsed, { revealed: Array.from({length: parsed.requiredExplorations}, (_, i) => `fake:${i}`), numeric: answerNumber, choiceId: v.answer as string }).correct).toBe(false);
+      // The right final answer, submitted with no unit rate ever verified, cannot satisfy the
+      // exploration gate — the gate is real work (verify every rate), not a formality the answer
+      // alone can shortcut.
+      expect(evaluate(parsed, { numeric: answerNumber, choiceId: v.answer as string }).correct).toBe(false);
       expect(new Set(parsed.series.map((series) => series.id)).size).toBe(parsed.series.length);
       expect(new Set(parsed.series.map((series) => series.label)).size).toBe(parsed.series.length);
       expect(parsed.successFeedback.length).toBeGreaterThanOrEqual(10);

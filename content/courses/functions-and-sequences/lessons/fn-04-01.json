@@ -16,6 +16,25 @@
       "id": "i1",
       "kind": "interactive",
       "body": "Which kind?",
+      "predict": {
+        "prompt": "The dial starts at d = 1, and the readout shows term 10 = 12. When you push the dial up by exactly 1, to d = 2, what will term 10 do?",
+        "options": [
+          {
+            "id": "up1",
+            "label": "Rise by 1, to 13 — the dial only moved by 1"
+          },
+          {
+            "id": "up9",
+            "label": "Rise by 9, to 21 — once for each gap between term 1 and term 10"
+          },
+          {
+            "id": "up10",
+            "label": "Rise by 10, to 22 — once for each of the ten terms"
+          }
+        ],
+        "outcomeId": "up9",
+        "reveal": "Rise by 9, to 21. Ten terms means nine gaps, so every extra 1 on the dial is added nine times over by the time the sequence reaches term 10. That same nine-gap structure is why d = 4 lands term 10 exactly on 39: 3 + 9×4 = 39."
+      },
       "widget": {
         "type": "sequenceBuild",
         "mode": "arithmetic",
@@ -79,7 +98,7 @@
       "body": "Test both.",
       "widget": {
         "type": "mcq",
-        "prompt": "Which kind of sequence is 4, 8, 16, 32?",
+        "prompt": "4, 8, 16, 32 — arithmetic, geometric, or neither?",
         "options": [
           {
             "id": "a",
@@ -112,7 +131,7 @@
       "body": "Neither type.",
       "widget": {
         "type": "mcq",
-        "prompt": "Which kind of sequence is 1, 4, 9, 16?",
+        "prompt": "Classify this sequence: 1, 4, 9, 16.",
         "options": [
           {
             "id": "a",
@@ -144,7 +163,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which kind of sequence is 10, 20, 30, 40?",
+        "prompt": "Is 10, 20, 30, 40 arithmetic, geometric, or neither?",
         "options": [
           {
             "id": "a",
@@ -180,7 +199,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which kind of sequence is 1, 2, 4, 8?",
+        "prompt": "What type of sequence goes 1, 2, 4, 8?",
         "options": [
           {
             "id": "a",
@@ -208,38 +227,38 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Read it carefully.",
+      "body": "A gap that lies at first.",
       "conceptTag": "fn-classify",
       "explanationVariants": [
-        "Each term is + 5, a constant difference, so it's arithmetic.",
-        "The differences are all 5 (the ratios vary), so it's arithmetic."
+        "The first jump (3→9) looks like ×3, but 9→15 breaks that. The difference (+6) holds throughout: arithmetic.",
+        "Check every gap, not just the first: +6 each time makes this arithmetic, even though 3→9 also fits ×3."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which kind of sequence is 5, 10, 15, 20?",
+        "prompt": "The first jump might mislead you. Which kind of sequence is 3, 9, 15, 21?",
         "options": [
           {
             "id": "a",
             "label": "Arithmetic",
             "correct": true,
-            "feedback": "Yes — each term is + 5, a constant difference."
+            "feedback": "Yes — every gap is + 6 (9−3, 15−9, 21−15). The jump from 3 to 9 also looks like ×3, but that ratio doesn't hold at the next step (15 ÷ 9 ≈ 1.67)."
           },
           {
             "id": "b",
             "label": "Geometric",
-            "feedback": "The ratios (2, 1.5, 1.33…) aren't constant. The difference 5 is, so it's arithmetic."
+            "feedback": "The first step (3 to 9) does look like ×3, but 9 to 15 is not ×3 (that would be 27). Check every gap: the DIFFERENCE stays fixed at 6, so it's arithmetic."
           },
           {
             "id": "c",
             "label": "Neither",
-            "feedback": "The difference is a constant 5, so it is arithmetic."
+            "feedback": "One pattern does hold all the way through: the difference is a constant 6. That makes it arithmetic."
           }
         ]
       },
       "hints": [
-        "Check the differences: 10 − 5, 15 − 10, 20 − 15.",
-        "They're all 5 — a constant difference.",
-        "Constant difference means arithmetic."
+        "Check the FIRST gap: 9 − 3 = 6 (could also look like ×3).",
+        "Check a SECOND gap: 15 − 9 = 6, but 15 ÷ 9 is not 3.",
+        "The difference stays constant (+6) all the way through: arithmetic."
       ],
       "variant": {
         "gen": "a1-functions-sequences",

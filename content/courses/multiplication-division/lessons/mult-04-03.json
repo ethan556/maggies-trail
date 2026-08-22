@@ -15,46 +15,39 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Meet n — one panel at a time.",
+      "body": "Change n until both sides of the equation balance.",
       "conceptTag": "unknown-letter",
       "widget": {
-        "type": "steppedReveal",
-        "prompt": "Turn a story into an equation with a letter, then catch the letter's number.",
-        "panels": [
-          {
-            "title": "The story",
-            "body": "3 boxes hold the same number of pens each — 12 pens in all. The size slot is empty, so give it a name: n. The equation: 3 × n = 12."
-          },
-          {
-            "title": "What the letter says",
-            "body": "Read it out: \"3 groups of n make 12.\" The n is holding the group-size slot open until you find its number."
-          },
-          {
-            "title": "Catch it",
-            "body": "Use the fact family: 12 ÷ 3 = 4, so n = 4. Now CHECK by swapping n for 4: 3 × 4 = 12 ✓. The name tag comes off."
-          }
-        ],
-        "continueFeedback": "Keep going — the letter gets caught in the last panel.",
-        "successFeedback": "Story → equation → family fact → check. The letter is just the blank, wearing a name."
+        "type": "balanceScale",
+        "prompt": "Set n so 3 groups of n balance 12: 3 × n = 12.",
+        "a": 3,
+        "b": 0,
+        "c": 12,
+        "xMin": 1,
+        "xMax": 6,
+        "xStart": 2,
+        "lowFeedback": "Three groups of that number make less than 12. Increase n.",
+        "highFeedback": "Three groups of that number make more than 12. Decrease n.",
+        "successFeedback": "At n = 4, both sides show 12. The letter names one fixed number: 4."
       },
       "predict": {
-        "prompt": "In the equation 3 × n = 12, the letter n is…",
+        "prompt": "What does n represent in 3 × n = 12?",
         "options": [
           {
             "id": "fixed",
-            "label": "One specific number wearing a name tag — here, 4"
+            "label": "The missing factor, 4"
           },
           {
             "id": "any",
-            "label": "Any number you like"
+            "label": "The product, 12"
           },
           {
             "id": "letter",
-            "label": "Worth 14, its spot in the alphabet"
+            "label": "The number of groups, 3"
           }
         ],
         "outcomeId": "fixed",
-        "reveal": "n names the ONE number that makes the story true: 3 × 4 = 12, so n = 4. A letter in an equation isn't a wildcard — it's a fixed unknown waiting to be caught."
+        "reveal": "The equation has 3 equal groups and 12 in all. The missing factor is the size of each group: 4."
       }
     },
     {

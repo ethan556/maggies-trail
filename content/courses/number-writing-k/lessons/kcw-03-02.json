@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-numeral-orders-group",
       "body": "Show that many: the numeral is now an order. Read 7, build exactly seven — reading is counting run in reverse.",
       "narration": "Show that many: the numeral is now an order. Read 7, build exactly seven — reading is counting run in reverse."
     },
@@ -90,12 +90,6 @@
         "prompt": "The card says 7. What does “show that many” ask you to do?",
         "options": [
           {
-            "id": "o0",
-          "label": "Show exactly 7 objects",
-            "correct": true,
-            "feedback": "Correct — reading runs backwards here: the numeral is the order, the group is your answer."
-          },
-          {
             "id": "o1",
             "label": "Write the numeral bigger",
             "correct": false,
@@ -106,6 +100,12 @@
             "label": "Show any group you like",
             "correct": false,
             "feedback": "The numeral fixes the count — seven exactly, not roughly."
+          },
+          {
+            "id": "o0",
+            "label": "Show exactly 7 objects",
+            "correct": true,
+            "feedback": "Correct — reading runs backwards here: the numeral is the order, the group is your answer."
           },
           {
             "id": "o3",
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-stop-at-number",
       "body": "The stopping rule lives in the mark: build until the count says the numeral's name, then stop.",
       "narration": "The stopping rule lives in the mark: build until the count says the numeral's name, then stop."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-show-amount",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The card orders 7. Build exactly that many.",
-        "target": 7,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The card says 7. Tap the group where the builder stopped at exactly seven.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "group-6",
+            "x": 20,
+            "y": 50,
+            "label": "group of 6",
+            "icon": "●",
             "count": 6,
-            "feedback": "Six leaves the order unfilled; the card's 7 wants one more."
+            "correct": false,
+            "feedback": "This group has 6. Count each dot once and stop at the number on the card."
           },
           {
+            "id": "group-7",
+            "x": 50,
+            "y": 50,
+            "label": "group of 7",
+            "icon": "●",
+            "count": 7,
+            "correct": true,
+            "feedback": "Seven dots obey the numeral card's stopping rule."
+          },
+          {
+            "id": "group-8",
+            "x": 80,
+            "y": 50,
+            "label": "group of 8",
+            "icon": "●",
             "count": 8,
-            "feedback": "Eight disobeys upward; the order says stop at seven."
+            "correct": false,
+            "feedback": "This group has 8. Count each dot once and stop at the number on the card."
           }
         ],
-        "missFeedback": "Count as you build; the numeral names your stopping point.",
-        "successFeedback": "Seven — the group now keeps the numeral's promise."
+        "missFeedback": "Count every dot once, then compare the total with the numeral.",
+        "successFeedback": "Seven dots obey the numeral card's stopping rule."
       },
       "cml": {
         "stage": "construct",
@@ -211,12 +235,6 @@
         "prompt": "A group shows 9 dots. Which numeral names that amount?",
         "options": [
           {
-            "id": "o0",
-            "label": "9",
-            "correct": true,
-            "feedback": "Correct — the numeral 9 is the written name for a group of exactly 9."
-          },
-          {
             "id": "o1",
             "label": "10",
             "correct": false,
@@ -233,6 +251,12 @@
             "label": "11",
             "correct": false,
             "feedback": "11 promises more dots than the group holds; the count stops at 9."
+          },
+          {
+            "id": "o0",
+            "label": "9",
+            "correct": true,
+            "feedback": "Correct — the numeral 9 is the written name for a group of exactly 9."
           }
         ]
       },
@@ -347,16 +371,16 @@
         "prompt": "Ravi counts her blocks: 1, 2, 3, 4, 5, 6. How many blocks does she have?",
         "options": [
           {
-            "id": "o0",
-            "label": "6",
-            "correct": true,
-            "feedback": "Correct — the last number said, 6, is the one the numeral must record."
-          },
-          {
             "id": "o1",
             "label": "7",
             "correct": false,
             "feedback": "The count stopped at 6; writing one more would record a block that is not there."
+          },
+          {
+            "id": "o0",
+            "label": "6",
+            "correct": true,
+            "feedback": "Correct — the last number said, 6, is the one the numeral must record."
           },
           {
             "id": "o2",
@@ -440,7 +464,7 @@
           "options": [
             {
               "id": "o0",
-            "label": "Show exactly 7 objects",
+              "label": "Show exactly 7 objects",
               "correct": true,
               "feedback": "Correct — reading runs backwards here: the numeral is the order, the group is your answer."
             },

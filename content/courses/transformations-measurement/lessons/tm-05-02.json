@@ -52,8 +52,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "The reliable method: find the matching cylinder's volume (πr²h) first, then divide by 3. For r = 6, h = 5: cylinder is 36 × 5 = 180, and the cone is 180 ÷ 3 = 60, so V = 60π.",
-      "figure": "tm-cone-volume"
+      "body": "The reliable method: find the matching cylinder's volume (πr²h) first, then divide by 3. For r = 6, h = 5: cylinder is 36 × 5 = 180, and the cone is 180 ÷ 3 = 60, so V = 60π."
     },
     {
       "id": "k1",
@@ -145,69 +144,74 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A cone with radius 2.",
+      "body": "Work the ÷3 backward.",
       "conceptTag": "tm-cone-volume",
       "explanationVariants": [
-        "Cylinder = π × 2² × 9 = 36π; cone = 36 ÷ 3 = 12π.",
-        "Find 36π, divide by 3: 12π."
+        "The cone is one-third of its matching cylinder, so the cylinder is three cones: 24 × 3 = 72π.",
+        "Reverse the ÷3 with ×3: 24 × 3 = 72π."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A cone has radius 2 and height 9. What is its volume as a number times π?",
-        "answer": 12,
+        "prompt": "A cone has volume 24π. What is the volume of its matching cylinder, as a number times π?",
+        "answer": 72,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 36,
-            "feedback": "That's the cylinder — the cone is a third: 36 ÷ 3 = 12."
+            "value": 8,
+            "feedback": "That divided again — the cylinder is BIGGER than the cone, so multiply by 3: 24 × 3 = 72."
           },
           {
-            "value": 18,
-            "feedback": "Cylinder is 4 × 9 = 36, then ÷ 3 = 12, not 18."
+            "value": 27,
+            "feedback": "Adding doesn't reverse a division — multiply the cone's volume by 3: 24 × 3 = 72."
           }
         ],
-        "fallbackFeedback": "Cylinder = π × 4 × 9 = 36π; cone = 36 ÷ 3 = 12π."
-      },
-      "variant": {
-        "gen": "g8-tm-cone-volume",
-        "form": "tmConeB"
+        "fallbackFeedback": "The cylinder holds three cones: multiply the cone's volume by 3."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A real-world cone.",
+      "body": "Compare without finishing the computation.",
       "conceptTag": "tm-cone-volume",
       "explanationVariants": [
-        "An ice-cream cone with radius 3 and height 6: cylinder = π × 9 × 6 = 54π, cone = 54 ÷ 3 = 18π.",
-        "Find 54π, divide by 3: 18π."
+        "Every cone's volume is ⅓π times r²h, so comparing r²h alone settles it: Cone A is 5² × 3 = 75, Cone B is 3² × 8 = 72. A holds more.",
+        "The common ⅓π factor cancels in a comparison — just compare r²h: 75 vs 72."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "An ice-cream cone has radius 3 and height 6. What is its volume as a number times π?",
-        "answer": 18,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Cone A has radius 5 and height 3. Cone B has radius 3 and height 8. Without finding both exact volumes, which cone holds more?",
+        "options": [
           {
-            "value": 54,
-            "feedback": "That's the matching cylinder — the cone is a third: 54 ÷ 3 = 18."
+            "id": "o0",
+            "label": "Cone A — compare r²h: 5² × 3 = 75 vs 3² × 8 = 72",
+            "correct": true,
+            "feedback": "Correct — since every cone's volume is ⅓π times r²h, comparing r²h alone (75 vs 72) tells you which is larger without finishing the full computation."
           },
           {
-            "value": 9,
-            "feedback": "Cylinder is 9 × 6 = 54, then ÷ 3 = 18, not 9."
+            "id": "o1",
+            "label": "Cone B — it has the greater height",
+            "correct": false,
+            "feedback": "Height alone doesn't decide it; radius counts twice as much since it's squared. Compare r²h: 75 vs 72."
+          },
+          {
+            "id": "o2",
+            "label": "They hold the same amount",
+            "correct": false,
+            "feedback": "r²h differs (75 vs 72), so the volumes differ too — radius dominates the comparison."
+          },
+          {
+            "id": "o3",
+            "label": "It cannot be determined without computing both exactly",
+            "correct": false,
+            "feedback": "It can: since ⅓π is common to both, comparing r²h (75 vs 72) is enough to settle it."
           }
-        ],
-        "fallbackFeedback": "Cylinder = π × 3² × 6 = 54π; cone = 54 ÷ 3 = 18π."
+        ]
       },
       "hints": [
-        "First find the matching cylinder: πr²h = π × 3² × 6.",
-        "That's π × 9 × 6 = 54π. The cone is one-third of it.",
-        "54 ÷ 3 = 18, so V = 18π."
-      ],
-      "variant": {
-        "gen": "g8-tm-cone-volume",
-        "form": "tmConeContext"
-      }
+        "Every cone's volume is ⅓π times r²h — the ⅓π is the same for both.",
+        "So just compare r²h: 5² × 3 versus 3² × 8.",
+        "75 is more than 72, so Cone A holds more."
+      ]
     },
     {
       "id": "r1",

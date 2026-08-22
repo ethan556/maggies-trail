@@ -125,7 +125,11 @@ describe("S198 shapes-build-k — branched-solver contracts", () => {
         if (w.type === "mcq") {
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S302 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session302.shapesBuildKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           for (const o of w.options) expect(o.feedback.length).toBeGreaterThanOrEqual(25);
           expect(new Set(w.options.map((o) => o.feedback)).size).toBe(w.options.length);
@@ -141,16 +145,24 @@ describe("S198 shapes-build-k — branched-solver contracts", () => {
             expect(correct[0].label, `${lesson.id}/${s.id}: composeMcq answer must be 2N`).toBe(String(2 * n));
           }
           if (s.variant?.form === "shapeAnyWayMcq") {
-            if (w.prompt.startsWith("A ")) {
-              const shape = w.prompt.match(/^A (\w+)/)![1];
-              expect(correct[0].label).toBe(`Still a ${shape}`);
+            // Mirrors g0Independent.cjs's own shapeAnyWayMcq: the QUESTION asked (not where the
+            // shape word sits) picks one of three answer families — see that case's comment.
+            const SIDES: Record<string, number> = { square: 4, rectangle: 4, triangle: 3 };
+            const proves = w.prompt.match(/What proves it is still a (\w+)\?/i);
+            if (proves) {
+              const n = SIDES[proves[1].toLowerCase()];
+              expect(correct[0].label).toBe(`It still has ${n} sides and ${n} corners`);
+            } else if (/What (is it( now)?|stays true)\?$/.test(w.prompt)) {
+              const shape = w.prompt.match(/\b(square|triangle|rectangle)\b/i)?.[1];
+              expect(shape, `${lesson.id}/${s.id}: shapeAnyWayMcq identity question names no shape`).toBeTruthy();
+              expect(correct[0].label).toBe(`Still a ${shape!.toLowerCase()}`);
             } else {
               expect(correct[0].label).toBe("Its sides and corners");
             }
           }
           if (s.variant?.form === "shapeRollStackMcq") {
             expect(correct[0].label).toBe(
-              w.prompt.startsWith("Why can cans") ? "Their flat circle ends rest on one another" : "A sphere");
+              w.prompt.startsWith("Why can cans") ? "Their flat ends rest on one another" : "A sphere");
           }
           if (s.variant) {
             const input = `${w.prompt}||${w.options.map((o) => o.label).join(";;")}`;
@@ -172,10 +184,16 @@ describe("S198 shapes-build-k — branched-solver contracts", () => {
             if (!h.correct) expect((h.feedback ?? "").length).toBeGreaterThanOrEqual(25);
           }
           if (s.variant?.form === "shapePositionTap") {
-            const rel = w.prompt.match(/is (above|below|beside) the table/)![1];
+            // Mirrors g0Independent.cjs's own shapePositionTap: several prompts drop "is" and/or
+            // say "under"/"over" instead of "below"/"above", and name an object other than "the
+            // table" — hotspot labels always use above/below/beside, so normalize to one of those.
+            const REL_SYN: Record<string, string> = { under: "below", over: "above", above: "above", below: "below", beside: "beside" };
+            const word = w.prompt.match(/(above|below|beside|under|over)\s+the\s+\w+/i)?.[1]?.toLowerCase();
+            const rel = word ? REL_SYN[word] : undefined;
+            expect(rel, `${lesson.id}/${s.id}: shapePositionTap prompt shape unrecognized: ${w.prompt}`).toBeTruthy();
             for (const h of w.hotspots) {
               expect(h.correct, `${lesson.id}/${s.id}: "${h.label}" — the solver matches by label-contains-"${rel}"`)
-                .toBe(h.label.includes(rel));
+                .toBe(h.label.includes(rel!));
             }
           }
           if (s.variant?.form === "shapeComposeTap") {
@@ -184,7 +202,9 @@ describe("S198 shapes-build-k — branched-solver contracts", () => {
             expect(tri[0].correct).toBe(true);
           }
           if (s.variant?.form === "shapeAnyWayTap") {
-            const target = w.prompt.includes("circle") ? "circle" : "triangle";
+            // Mirrors g0Independent.cjs's own shapeAnyWayTap: "no straight sides and no corners"
+            // describes a circle by property instead of naming it.
+            const target = w.prompt.includes("circle") || w.prompt.includes("no straight sides") ? "circle" : "triangle";
             for (const h of w.hotspots) expect(h.correct).toBe(h.label.includes(target));
             const input = `${w.prompt}||${w.hotspots.map((h) => h.label).join(",")}`;
             const derived = solveG0("shapeAnyWayTap", input) as string[];

@@ -39,18 +39,18 @@
           }
         ],
         "missFeedback": "Read left to right: 6 flats, 4 rods, 1 cube.",
-        "successFeedback": "6 flats, 4 rods, 1 cube — 641. The 4 you'll be asked about is 4 rods: worth 40, not 4."
+        "successFeedback": "6 flats, 4 rods, 1 cube — 641. Each block matches its spot: flats for hundreds, rods for tens, cubes for ones."
       },
       "predict": {
         "prompt": "In 641, which digit is worth the MOST?",
         "options": [
           {
-            "id": "six",
-            "label": "The 6"
-          },
-          {
             "id": "four",
             "label": "The 4"
+          },
+          {
+            "id": "six",
+            "label": "The 6"
           },
           {
             "id": "one",
@@ -152,10 +152,10 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Build with an empty tens spot.",
+      "body": "Build a number when the parts come out of order.",
       "widget": {
         "type": "numeric",
-        "prompt": "What number has 9 hundreds, 0 tens, and 2 ones?",
+        "prompt": "A number has 2 ones, 9 hundreds, and 0 tens. What number is it?",
         "answer": 902,
         "tolerance": 0,
         "commonErrors": [
@@ -177,29 +177,25 @@
       "body": "Another digit's worth.",
       "conceptTag": "pv1000-mixed",
       "explanationVariants": [
-        "The 3 is in the ones spot: worth just 3.",
+        "The 8 is in the tens spot: worth 80.",
         "Check the digit's spot to find its worth."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "In the number 493, what is the 3 worth?",
-        "answer": 3,
+        "prompt": "What is the value of the 8 in 384?",
+        "answer": 80,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 30,
-            "feedback": "30 would be the tens spot. The 3 is in the ONES spot: worth just 3."
+            "value": 8,
+            "feedback": "That names the digit itself, not its place value. The 8 sits in the TENS spot: worth 80, not just 8."
           },
           {
-            "value": 300,
-            "feedback": "300 would be the hundreds spot. The 3 is in the ones spot: worth just 3."
+            "value": 800,
+            "feedback": "800 would be the hundreds spot. The 8 in 384 is in the tens spot, worth 80."
           }
         ],
-        "fallbackFeedback": "The 3 is in the ones spot: worth 3."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000MixedNumeric"
+        "fallbackFeedback": "The 8 in 384 is in the tens spot: worth 80."
       }
     },
     {
@@ -295,25 +291,25 @@
         "body": "",
         "conceptTag": "pv1000-mixed",
         "explanationVariants": [
-          "2 hundreds, 6 tens, 8 ones = 268.",
+          "3 hundred-dollar stacks, 5 ten-dollar stacks, 9 one-dollar bills = 359.",
           "Combine the counts in order."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "What number has 2 hundreds, 6 tens, and 8 ones?",
-          "answer": 268,
+          "prompt": "A shopkeeper bundles 3 hundred-dollar stacks, 5 ten-dollar stacks, and 9 one-dollar bills. What amount is that?",
+          "answer": 359,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 16,
-              "feedback": "Build the number, don't add the counts: 268."
+              "value": 17,
+              "feedback": "That adds the counts together (3+5+9=17) instead of building the amount: 359."
             },
             {
-              "value": 862,
-              "feedback": "Keep hundreds first: 268, not 862."
+              "value": 953,
+              "feedback": "Keep the order: hundreds, tens, ones: 359, not 953."
             }
           ],
-          "fallbackFeedback": "268."
+          "fallbackFeedback": "3 hundred-dollar stacks, 5 ten-dollar stacks, 9 one-dollar bills = 359."
         }
       }
     }

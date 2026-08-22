@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The unknown can even hide at the start: __ + 4 = 11. The strategy does not change — the total still holds both parts.",
-      "narration": "The unknown can even hide at the start: __ + 4 = 11. The strategy does not change — the total still holds both parts."
+      "figure": "bar-part-whole",
+      "body": "The blank can come first: ? + 4 = 11. It is still a missing part. The picture shows another example, 6 + 7 = 13.",
+      "narration": "The blank can come first: ? + 4 = 11. It is still a missing part. The picture shows another example, 6 + 7 = 13."
     },
     {
       "id": "i1",
@@ -21,7 +21,7 @@
       "conceptTag": "g1e-unknown-start",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Find the start-unknown of __ + 4 = 11: start at 11 and count back 4. Where do you land?",
+        "prompt": "Find the missing number in __ + 4 = 11. Start at 11 and count back 4. Where do you land?",
         "min": 5,
         "max": 13,
         "start": 11,
@@ -133,9 +133,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Position never matters for finding a missing part: remove the known part from the total, and the hidden starter appears.",
-      "narration": "Position never matters for finding a missing part: remove the known part from the total, and the hidden starter appears."
+      "figure": "as-part-whole",
+      "body": "The blank's place does not change the math. Take the known part from the whole. The picture shows 13 − 6 = 7.",
+      "narration": "The blank's place does not change the math. Take the known part from the whole. The picture shows 13 − 6 = 7."
     },
     {
       "id": "i2",
@@ -144,16 +144,16 @@
       "conceptTag": "g1e-unknown-start",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Find the start-unknown of __ + 4 = 11: start at 11 and count back 4. Where do you land?",
+        "prompt": "Find another start blank: __ + 6 = 13. Start at 13 and count back 6. Where do you land?",
         "min": 5,
-        "max": 13,
-        "start": 11,
+        "max": 15,
+        "start": 13,
         "hop": 1,
-        "hops": 4,
+        "hops": 6,
         "direction": "back",
         "commonLandings": [],
-        "missFeedback": "Start at 11 and count back 4: you land on 7.",
-        "successFeedback": "Landed on 7 — the hidden starter is 7, because 7 + 4 rebuilds 11."
+        "missFeedback": "Start at thirteen and make six hops back to remove the known part.",
+        "successFeedback": "You landed on 7, so 7 + 6 = 13."
       },
       "cml": {
         "stage": "construct",
@@ -184,12 +184,12 @@
       "body": "",
       "conceptTag": "g1e-unknown-start",
       "explanationVariants": [
-        "Position changes nothing about parts and totals.",
+        "The blank can move, but the parts and whole stay the same.",
         "Check by rebuilding the total."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "? + 7 = 13. What is the missing number?",
+        "prompt": "? + 7 = 13. What is the missing number? Remove the known part from the whole.",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -249,7 +249,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "? + 12 = 16. What is the missing number?",
+        "prompt": "? + 12 = 16. What is the missing number? Add it back to check.",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -376,8 +376,9 @@
       "concept": {
         "id": "rem-g1e-unknown-start-c",
         "kind": "concept",
-        "body": "Position never matters for finding a missing part: remove the known part from the total, and the hidden starter appears.",
-        "narration": "Position never matters for finding a missing part: remove the known part from the total, and the hidden starter appears."
+        "body": "The picture shows the whole 13 split into 6 and 7. A blank at the start can still be found by subtracting the known part.",
+        "narration": "The picture shows the whole 13 split into 6 and 7. A blank at the start can still be found by subtracting the known part.",
+        "figure": "as-part-whole"
       },
       "check": {
         "id": "rem-g1e-unknown-start-k",
@@ -390,22 +391,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "? + 4 = 9. What is the missing number?",
-          "answer": 5,
+          "prompt": "Use the part-whole picture: ? + 5 = 12. What is the missing number?",
+          "answer": 7,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 9,
-              "feedback": "That is the whole, not the missing part."
+              "value": 5,
+              "feedback": "Five is the known part. Find the other part that makes twelve."
             },
             {
-              "value": 4,
-              "feedback": "That repeats the known addend."
+              "value": 17,
+              "feedback": "Adding the whole and known part does not find the blank."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — the value 5 makes the statement true."
+          "fallbackFeedback": "Find twelve minus five, then check by adding five.",
+          "successFeedback": "Correct — 7 + 5 = 12."
         }
       }
     }

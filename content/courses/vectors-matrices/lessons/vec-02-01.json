@@ -239,27 +239,27 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Combine, then measure.",
+      "body": "Subtract, then measure.",
       "conceptTag": "vec-add",
       "explanationVariants": [
-        "⟨2, 4⟩ + ⟨1, −1⟩ = ⟨3, 3⟩... but here ⟨1, 2⟩ + ⟨2, 2⟩ = ⟨3, 4⟩, magnitude 5.",
-        "Add to ⟨3, 4⟩ first, then its length is 5."
+        "⟨10, 18⟩ − ⟨2, 3⟩ = ⟨8, 15⟩, whose magnitude is √(64 + 225) = 17.",
+        "Subtract componentwise first, then apply Pythagoras to the result: √289 = 17."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "What is the magnitude of ⟨1, 2⟩ + ⟨2, 2⟩?",
+        "prompt": "What is the magnitude of ⟨10, 18⟩ − ⟨2, 3⟩?",
         "task": "approximationEvaluate",
         "values": [],
         "approxConstants": [
           {
             "id": "x1",
             "label": "u_x",
-            "value": 1
+            "value": 10
           },
           {
             "id": "y1",
             "label": "u_y",
-            "value": 2
+            "value": 18
           },
           {
             "id": "x2",
@@ -269,7 +269,7 @@
           {
             "id": "y2",
             "label": "v_y",
-            "value": 2
+            "value": 3
           }
         ],
         "approxFormula": {
@@ -279,7 +279,7 @@
             "left": {
               "op": "multiply",
               "left": {
-                "op": "add",
+                "op": "subtract",
                 "left": {
                   "op": "const",
                   "id": "x1"
@@ -290,7 +290,7 @@
                 }
               },
               "right": {
-                "op": "add",
+                "op": "subtract",
                 "left": {
                   "op": "const",
                   "id": "x1"
@@ -304,7 +304,7 @@
             "right": {
               "op": "multiply",
               "left": {
-                "op": "add",
+                "op": "subtract",
                 "left": {
                   "op": "const",
                   "id": "y1"
@@ -315,7 +315,7 @@
                 }
               },
               "right": {
-                "op": "add",
+                "op": "subtract",
                 "left": {
                   "op": "const",
                   "id": "y1"
@@ -333,12 +333,12 @@
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 7,
-            "feedback": "The sum is ⟨3, 4⟩; its magnitude is √(9 + 16) = 5, not 3 + 4."
+            "value": 23,
+            "feedback": "The difference is ⟨8, 15⟩; its magnitude is √(64 + 225) = 17, not 8 + 15."
           },
           {
-            "value": 25,
-            "feedback": "⟨3, 4⟩ has magnitude √25 = 5 — take the root of 25."
+            "value": 289,
+            "feedback": "289 = 8² + 15² skips the root: √289 = 17."
           }
         ],
         "choices": [],
@@ -346,12 +346,8 @@
         "requiredStageKeys": [],
         "requiredExplorations": 1,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "⟨1, 2⟩ + ⟨2, 2⟩ = ⟨3, 4⟩, length 5.",
-        "successFeedback": "⟨1, 2⟩ + ⟨2, 2⟩ = ⟨3, 4⟩, length 5."
-      },
-      "variant": {
-        "gen": "g12-vectors-matrices",
-        "form": "vectors-matrices__vec-add__numeric"
+        "fallbackFeedback": "⟨10, 18⟩ − ⟨2, 3⟩ = ⟨8, 15⟩, magnitude 17.",
+        "successFeedback": "⟨10, 18⟩ − ⟨2, 3⟩ = ⟨8, 15⟩, magnitude 17."
       }
     },
     {

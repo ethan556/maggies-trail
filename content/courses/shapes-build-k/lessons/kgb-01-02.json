@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "More position words: IN FRONT OF, BEHIND, NEXT TO. Same rule — each one places a thing against its landmark.",
       "narration": "More position words: IN FRONT OF, BEHIND, NEXT TO. Same rule — each one places a thing against its landmark."
     },
@@ -26,7 +25,7 @@
           "w": 3,
           "h": 1
         },
-        "prompt": "Tap the cat that is beside the table.",
+        "prompt": "Which cat is under the table? Tap that cat.",
         "hotspots": [
           {
             "id": "g0",
@@ -36,7 +35,7 @@
             "icon": "🐈",
             "count": 1,
             "correct": false,
-            "feedback": "This cat is above the table, which does not match the requested position beside."
+            "feedback": "This cat is above the table, not below it."
           },
           {
             "id": "g1",
@@ -45,7 +44,8 @@
             "label": "cat beside the table",
             "icon": "🐈",
             "count": 1,
-            "correct": true
+            "correct": false,
+            "feedback": "This cat is beside the table, not below it."
           },
           {
             "id": "g2",
@@ -54,12 +54,11 @@
             "label": "cat below the table",
             "icon": "🐈",
             "count": 1,
-            "correct": false,
-            "feedback": "This cat is below the table, which does not match the requested position beside."
+            "correct": true
           }
         ],
-        "missFeedback": "Position words locate one thing against another — find the cat whose place matches beside.",
-        "successFeedback": "Yes — a circle is round all the way, like a coin or a clock."
+        "missFeedback": "Look under the table for the cat in the position called below.",
+        "successFeedback": "Yes — this cat is below the table."
       },
       "variant": {
         "gen": "g0-shapes-sorting",
@@ -177,7 +176,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Opposites come in pairs: in front of flips to behind, just as above flips to below.",
       "narration": "Opposites come in pairs: in front of flips to behind, just as above flips to below."
     },
@@ -226,7 +224,7 @@
           }
         ],
         "missFeedback": "Position words locate one thing against another — find the cat whose place matches beside.",
-        "successFeedback": "Yes — a circle is round all the way, like a coin or a clock."
+        "successFeedback": "Yes — this cat is beside the table."
       },
       "variant": {
         "gen": "g0-shapes-sorting",
@@ -401,26 +399,26 @@
         "prompt": "The cup sits ABOVE the shelf and BELOW the lamp. How can both be true?",
         "options": [
           {
-            "id": "o0",
-            "label": "Each word compares the cup to a different landmark",
-            "correct": true,
-            "feedback": "Correct — position is relative; change the landmark and the true word changes with it."
-          },
-          {
             "id": "o1",
-            "label": "One of them must be a lie",
+            "label": "One of the two words must be a lie",
             "correct": false,
             "feedback": "Both are honest — they simply answer against different neighbours."
           },
           {
             "id": "o2",
-            "label": "The cup is in two places",
+            "label": "The same cup sits in two different places",
             "correct": false,
             "feedback": "One cup, one spot; two landmarks give it two true descriptions."
           },
           {
+            "id": "o0",
+            "label": "Each word points to a different landmark",
+            "correct": true,
+            "feedback": "Correct — position is relative; each word compares the cup to a different landmark, so the true word changes with it."
+          },
+          {
             "id": "o3",
-            "label": "Above and below mean the same",
+            "label": "Above and below describe the same spot",
             "correct": false,
             "feedback": "They are opposites — which applies depends on the landmark chosen."
           }
@@ -486,7 +484,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "What is the opposite position of “in front of”?",
+          "prompt": "A child stands in front of a tree. Where is the tree compared with the child?",
           "options": [
             {
               "id": "o0",

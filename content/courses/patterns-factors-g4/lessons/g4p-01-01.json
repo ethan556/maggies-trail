@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A factor pair is a rectangle a number can build: 24 makes 1×24, 2×12, 3×8 and 4×6, and each pair is two factors that multiply to 24.",
       "narration": "A factor pair is a rectangle a number can build: 24 makes 1×24, 2×12, 3×8 and 4×6, and each pair is two factors that multiply to 24."
     },
@@ -138,32 +137,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side.",
       "narration": "Search upward from 1 and stop when the pairs begin to repeat — 4×6 and 6×4 are the same rectangle turned on its side."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Transfer the rectangle test to a new area, using a non-square factor pair.",
       "conceptTag": "g4pf-factor-pairs",
       "widget": {
         "type": "areaModel",
-        "prompt": "Build a rectangle with area 24 whose sides are 4 and 6.",
-        "targetArea": 24,
-        "wMax": 6,
-        "hMax": 6,
+        "prompt": "Build a rectangle with area 36 whose sides are 9 and 4.",
+        "targetArea": 36,
+        "wMax": 9,
+        "hMax": 9,
         "wStart": 1,
         "hStart": 1,
-        "successFeedback": "24 — a 6 by 4 rectangle, one of the four factor pairs 24 allows.",
-        "lowFeedback": "Smaller than 24 — keep building until the rectangle reaches the full area.",
-        "highFeedback": "Larger than 24 — one side has grown past the pair asked for.",
         "square": false,
         "requireFactors": {
-          "w": 6,
+          "w": 9,
           "h": 4
         },
-        "factorFeedback": "That area is right, but from a different pair — this one must measure 6 by 4."
+        "successFeedback": "36 — 9 by 4 is a new factor pair, so the rectangle still has the requested area.",
+        "lowFeedback": "Smaller than 36 — keep building until the full area is covered.",
+        "highFeedback": "Larger than 36 — one side has grown past the pair requested.",
+        "factorFeedback": "That area is right, but this transfer asks for the 9 by 4 factor pair."
       },
       "cml": {
         "stage": "construct",
@@ -258,7 +256,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Complete a factor-pair record.",
       "conceptTag": "g4pf-factor-pairs",
       "explanationVariants": [
         "Each pair is a rectangle.",
@@ -266,7 +264,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle has one side 5 and an area of 40. What is the other side?",
+        "prompt": "A factor-pair record for 40 includes 1 × 40, 2 × 20, 4 × 10, and 5 × ?. Which number completes the last pair?",
         "answer": 8,
         "tolerance": 0,
         "unit": "",
@@ -326,22 +324,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A rectangle has one side 6 and an area of 48. What is the other side?",
-        "answer": 8,
+        "prompt": "How many factor pairs does 24 have when turned rectangles count only once?",
+        "answer": 4,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 42,
-            "feedback": "That subtracted the known side. A rectangle's sides MULTIPLY to the area, so divide instead."
+            "value": 8,
+            "feedback": "That counts both orientations. A 4 by 6 rectangle and a 6 by 4 rectangle are the same factor pair turned."
           },
           {
-            "value": 48,
-            "feedback": "48 is the whole area; the question asks for the side that pairs with 6."
+            "value": 3,
+            "feedback": "24 also has the 4 by 6 pair, in addition to 1 by 24, 2 by 12, and 3 by 8."
           }
         ],
-        "fallbackFeedback": "Test whole-number divisions, or apply the rule once more from the term before.",
-        "successFeedback": "Correct — 8."
+        "fallbackFeedback": "List each pair once: 1×24, 2×12, 3×8, and 4×6.",
+        "successFeedback": "Correct — 24 has 4 factor pairs when rotations count once."
       },
       "hints": [
         "Sides multiply to the area.",

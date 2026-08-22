@@ -10,18 +10,18 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Partial quotients removes groups in whatever chunks are convenient, then adds the chunks up. 852 ÷ 4 can take 200 fours, then 13 more.",
-      "narration": "Partial quotients removes groups in whatever chunks are convenient, then adds the chunks up. 852 ÷ 4 can take 200 fours, then 13 more."
+      "figure": "g4m-partial-quotients-852-4",
+      "body": "The partial-quotients model for 852 ÷ 4 removes 200 groups of 4 (800), leaving 52. Then 13 groups of 4 remove the rest. The partial quotients 200 + 13 make the quotient 213.",
+      "narration": "The partial-quotients model for 852 ÷ 4 removes 200 groups of 4 (800), leaving 52. Then 13 groups of 4 remove the rest. The partial quotients 200 + 13 make the quotient 213."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Use the slider for a broad size check before finding the exact partial quotients.",
       "conceptTag": "g4m-partial-quotient",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "852 ÷ 4 — slide to the quotient the chunks must total.",
+        "prompt": "Before finding exact partial quotients for 852 ÷ 4, slide to a reasonable quotient range.",
         "min": 10,
         "max": 3000,
         "start": 10,
@@ -33,9 +33,9 @@
           1505,
           3000
         ],
-        "lowFeedback": "Too low — 200 fours alone already account for 800 of the 852.",
-        "highFeedback": "Too high — more than 213 fours would overshoot 852 entirely.",
-        "successFeedback": "213 — reachable as 200 fours then 13 more, or any chunks totalling the same."
+        "lowFeedback": "This is below the broad estimate range. Two hundred groups of 4 already use 800, so the exact quotient must be greater than 200.",
+        "highFeedback": "This is above the broad estimate range. Because 200 groups already use 800 of 852, the quotient is only a little greater than 200.",
+        "successFeedback": "This slider accepts a deliberately broad hundreds-range size check, not an exact answer. Compute the chunks next: 200 groups use 800 and 13 more use 52, so the exact quotient is 213."
       },
       "predict": {
         "prompt": "Taking 200 fours out of 852 first, is that legal?",
@@ -56,12 +56,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
           "diagram",
@@ -72,7 +72,7 @@
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       }
     },
     {
@@ -86,31 +86,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Finding successive chunks in 852 ÷ 4, a student takes 200 fours first. Why is that allowed?",
+        "prompt": "Why may a student remove 200 groups of 4 first when finding 852 ÷ 4?",
         "options": [
           {
             "id": "o0",
-            "label": "Because any number of groups can be removed at once, in any order",
+            "label": "The chunk uses 800 without overshooting.",
             "correct": true,
-            "feedback": "Correct — partial quotients removes convenient chunks and adds them up; the order never changes the total."
+            "feedback": "Correct — 200 × 4 = 800 fits inside 852, leaving a smaller amount still to divide."
           },
           {
             "id": "o1",
-            "label": "Because 200 is the only correct first chunk",
+            "label": "The chunk is the only possible first step.",
             "correct": false,
-            "feedback": "It is convenient, not required — 100 fours twice reaches the same place, just more slowly."
+            "feedback": "Other valid chunks could be chosen; partial quotients may use any convenient group size that fits."
           },
           {
             "id": "o2",
-            "label": "Because 4 × 200 is bigger than 852",
+            "label": "The chunk uses more than the dividend.",
             "correct": false,
-            "feedback": "4 × 200 is 800, which fits inside 852 — that is exactly why the chunk is legal."
+            "feedback": "The chunk uses 800, which is less than 852, so it does not overshoot the dividend."
           },
           {
             "id": "o3",
-            "label": "It is not allowed — you must take one group at a time",
+            "label": "The chunk removes only one group at a time.",
             "correct": false,
-            "feedback": "Taking one at a time works but is enormously slow; chunking is the whole point of the method."
+            "feedback": "A chunk of 200 represents two hundred groups at once, which is why the method is efficient."
           }
         ]
       },
@@ -123,44 +123,44 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Any legal chunk works and the order never matters, because removing 200 groups then 13 removes exactly the same 213 groups.",
-      "narration": "Any legal chunk works and the order never matters, because removing 200 groups then 13 removes exactly the same 213 groups."
+      "figure": "dop-estimate-quotient",
+      "body": "The compatible-number diagram estimates a quotient before the chunks are chosen. A sensible benchmark sets the quotient's size, helping you choose large chunks without overshooting the dividend.",
+      "narration": "The compatible-number diagram estimates a quotient before the chunks are chosen. A sensible benchmark sets the quotient's size, helping you choose large chunks without overshooting the dividend."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Test the classmate's size claim with the model, then calculate exactly.",
       "conceptTag": "g4m-partial-quotient",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "852 ÷ 4 — slide to the quotient the chunks must total.",
+        "prompt": "A classmate claims that 636 ÷ 4 is in the hundreds. Slide to a reasonable range before calculating the exact quotient.",
         "min": 10,
         "max": 3000,
         "start": 10,
-        "target": 213,
+        "target": 159,
         "acceptFactor": 2,
         "unitLabel": "units",
         "ticks": [
@@ -168,31 +168,31 @@
           1505,
           3000
         ],
-        "lowFeedback": "Too low — 200 fours alone already account for 800 of the 852.",
-        "highFeedback": "Too high — more than 213 fours would overshoot 852 entirely.",
-        "successFeedback": "213 — reachable as 200 fours then 13 more, or any chunks totalling the same."
+        "lowFeedback": "This is below the broad estimate range. One hundred groups of 4 already use 400, so the exact quotient must be greater than 100.",
+        "highFeedback": "This is above the broad estimate range. Because 100 groups already use 400 of 636, the quotient is only a little greater than 100.",
+        "successFeedback": "This slider accepts a deliberately broad hundreds-range size check, not an exact answer. Compute the chunks next: 100 groups use 400 and 59 more use 236, so the exact quotient is 159."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
-          "symbolic",
+          "diagram",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "diagram",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       }
     },
     {
@@ -220,7 +220,7 @@
             "feedback": "A place was dropped from the quotient; every place of 2490 has to be divided in turn."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Divide from the greatest place, keep each quotient digit aligned, and regroup what remains. Check by multiplying the quotient by the divisor and adding any remainder to rebuild the dividend.",
         "successFeedback": "Correct — 830."
       },
       "hints": [
@@ -232,23 +232,20 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
-          "symbolic",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
-        "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -266,31 +263,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Finding successive chunks in 852 ÷ 4, a student takes 200 fours first. Why is that allowed?",
+        "prompt": "After 200 groups of 4 remove 800 from 852, which calculation finds the remaining partial quotient?",
         "options": [
           {
             "id": "o0",
-            "label": "Because any number of groups can be removed at once, in any order",
+            "label": "52 ÷ 4 = 13",
             "correct": true,
-            "feedback": "Correct — partial quotients removes convenient chunks and adds them up; the order never changes the total."
+            "feedback": "Correct — the remaining 52 contains 13 more groups of 4, so 200 + 13 = 213."
           },
           {
             "id": "o1",
-            "label": "Because 200 is the only correct first chunk",
+            "label": "52 ÷ 4 = 12",
             "correct": false,
-            "feedback": "It is convenient, not required — 100 fours twice reaches the same place, just more slowly."
+            "feedback": "Twelve groups use only 48 and would leave 4, even though the original division is exact."
           },
           {
             "id": "o2",
-            "label": "Because 4 × 200 is bigger than 852",
+            "label": "800 ÷ 4 = 13",
             "correct": false,
-            "feedback": "4 × 200 is 800, which fits inside 852 — that is exactly why the chunk is legal."
+            "feedback": "The 800 chunk already represented 200 groups; dividing it again does not find the remainder chunk."
           },
           {
             "id": "o3",
-            "label": "It is not allowed — you must take one group at a time",
+            "label": "852 ÷ 4 = 13",
             "correct": false,
-            "feedback": "Taking one at a time works but is enormously slow; chunking is the whole point of the method."
+            "feedback": "The full dividend contains 213 groups, not 13, so this equation understates the quotient."
           }
         ]
       },
@@ -303,29 +300,29 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g4m-partial-quotient",
       "explanationVariants": [
         "Bigger dividends, same method.",
@@ -333,7 +330,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Divide 4305 ÷ 5. What is the quotient?",
+        "prompt": "A factory packs 4,305 bolts equally into 5 bins. How many bolts go in each bin?",
         "answer": 861,
         "tolerance": 0,
         "unit": "",
@@ -347,7 +344,7 @@
             "feedback": "A place was dropped from the quotient; every place of 4305 has to be divided in turn."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Divide from the greatest place, keep each quotient digit aligned, and regroup what remains. Check by multiplying the quotient by the divisor and adding any remainder to rebuild the dividend.",
         "successFeedback": "Correct — 861."
       },
       "hints": [
@@ -359,23 +356,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m partial quotient.",
+        "actionGoal": "Remove convenient multiples of the divisor, record their group counts as partial quotients, and add those partial quotients to find the total quotient.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m partial quotient decomposable at all."
+          "Each removed chunk equals divisor × its partial quotient; all removed chunks plus the remainder equal the dividend, and the partial quotients add to the total quotient."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Recording a removed amount as the partial quotient, choosing a chunk that exceeds what remains, or failing to add every partial quotient breaks the division relationship."
         ],
         "representations": [
-          "symbolic",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-partial-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If 800 is removed while dividing by 4, why is the recorded partial quotient 200 rather than 800?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -385,7 +382,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Explain the strategy in one clear sentence.",
       "takeaways": [
         "Remove convenient chunks.",
         "Add the chunks for the quotient.",
@@ -400,13 +397,13 @@
       "concept": {
         "id": "rem-g4m-partial-quotient-c",
         "kind": "concept",
-        "body": "Any legal chunk works and the order never matters, because removing 200 groups then 13 removes exactly the same 213 groups.",
-        "narration": "Any legal chunk works and the order never matters, because removing 200 groups then 13 removes exactly the same 213 groups."
+        "body": "The compatible-number diagram estimates a quotient before the chunks are chosen. A sensible benchmark sets the quotient's size, helping you choose large chunks without overshooting the dividend.",
+        "narration": "The compatible-number diagram estimates a quotient before the chunks are chosen. A sensible benchmark sets the quotient's size, helping you choose large chunks without overshooting the dividend."
       },
       "check": {
         "id": "rem-g4m-partial-quotient-k",
         "kind": "check",
-        "body": "",
+        "body": "Use the scaffold, then solve the check.",
         "conceptTag": "g4m-partial-quotient",
         "explanationVariants": [
           "Chunks may be any size.",
@@ -414,7 +411,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Finding successive chunks in 852 ÷ 4, a student takes 200 fours first. Why is that allowed?",
+          "prompt": "In 852 ÷ 4, shade a chunk worth 200 groups of 4. Which statement explains why this is a valid first chunk?",
           "options": [
             {
               "id": "o0",

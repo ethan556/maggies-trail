@@ -16,7 +16,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { cleanName, courseIcon, resolveTrailName, trailNameFrom } from "./personalize";
+import { cleanName, courseIcon, courseSubjectId, resolveTrailName, trailNameFrom } from "./personalize";
 import { COPY } from "./copy";
 import { progressStore } from "./progress";
 import { addChild, getRoster, renameChild } from "./roster";
@@ -98,5 +98,13 @@ describe("courseIcon is total over the shipped catalog", () => {
     expect(courseIcon("Kindergarten: Shapes & Sorting")).toBe("icon-907");
     expect(courseIcon("Grade 7: Sampling & Probability")).toBe("icon-912");
     expect(courseIcon("Lines & Angles")).toBe("icon-908");
+  });
+
+  it("maps the same representative topics to stable painterly subject families", () => {
+    expect(courseSubjectId("Fractions from Scratch")).toBe("subject-fractions-ratios");
+    expect(courseSubjectId("Calculus: The Derivative")).toBe("subject-calculus-change");
+    expect(courseSubjectId("Kindergarten: Shapes & Sorting")).toBe("subject-geometry-shapes");
+    expect(courseSubjectId("Grade 7: Sampling & Probability")).toBe("subject-probability-chance");
+    expect(courseSubjectId("Lines & Angles")).toBe("subject-angles-construction");
   });
 });

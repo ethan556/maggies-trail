@@ -142,31 +142,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger curved interval.",
+      "body": "A falling interval, both inputs negative.",
       "conceptTag": "fna-aroc",
       "explanationVariants": [
-        "f(5) = 25, f(2) = 4, so (25 − 4)/(5 − 2) = 21/3 = 7.",
-        "Outputs rise 21 across an input rise of 3; 21 ÷ 3 = 7 per unit."
+        "f(−1) = 1 and f(−3) = 9, so (1 − 9)/(−1 − (−3)) = −8/2 = −4 — the curve is falling across this arc, so the rate is negative.",
+        "Moving left to right from x = −3 to x = −1, outputs DROP by 8 while inputs rise by 2: a rate of −4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "What is the average rate of change of f(x) = x² on [2, 5]?",
-        "answer": 7,
+        "prompt": "As x runs from −3 to −1 on f(x) = x², the curve is FALLING. What is the average rate of change over that stretch?",
+        "answer": -4,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 21,
-            "feedback": "21 is just f(5) − f(2). The rate divides that by the input change 5 − 2 = 3: 21/3 = 7."
+            "value": 4,
+            "feedback": "4 drops the sign — that computes f(−3) − f(−1) instead of f(−1) − f(−3). Order matters: (1 − 9)/2 = −4."
           },
           {
-            "value": 4.2,
-            "feedback": "You divided by b = 5. The denominator is the input CHANGE, b − a = 3, giving 7."
+            "value": 2,
+            "feedback": "2 comes from reading the denominator as −1 − 3 = −4 instead of −1 − (−3) = 2 — the double negative flips to addition. (1 − 9)/2 = −4."
           }
         ],
-        "fallbackFeedback": "(25 − 4)/(5 − 2) = 21/3 = 7."
-      },
-      "variant": {
-        "gen": "avg-rate-change"
+        "fallbackFeedback": "f(−1) = 1 and f(−3) = 9; (1 − 9)/(−1 − (−3)) = −8/2 = −4."
       }
     },
     {

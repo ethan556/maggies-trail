@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Sometimes adding the ones makes a full ten. When that happens, ten ones bundle into one new ten.",
-      "narration": "Sometimes adding the ones makes a full ten. When that happens, ten ones bundle into one new ten."
+      "figure": "as100-trade-ten",
+      "body": "When ten ones are made, trade them for one ten-rod. The value stays ten while the place-value form changes.",
+      "narration": "When ten ones are made, trade them for one ten-rod. The value stays ten while the place-value form changes."
     },
     {
       "id": "i1",
@@ -92,8 +92,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 takes 4 from 11 to make ten. How many of the 11 are left7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -130,24 +130,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Splitting an addend so part of it completes a ten first makes the rest of the addition easier.",
-      "narration": "Splitting an addend so part of it completes a ten first makes the rest of the addition easier."
+      "figure": "as-make-ten-13",
+      "body": "For 8 + 5, use 2 of the 5 to finish ten, then join the remaining 3. Ten and 3 make 13.",
+      "narration": "For 8 + 5, use 2 of the 5 to finish ten, then join the remaining 3. Ten and 3 make 13."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-ones-make-ten",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "You have 6 in the frame. Add enough to make ten.",
-        "target": 10,
-        "preFilled": 6,
-        "addColor": "tangerine",
-        "commonCounts": [],
-        "missFeedback": "Fill one square at a time, counting as you go.",
-        "successFeedback": "Ten filled — 6 needed 4 more to make a whole ten."
+        "type": "tapDiagram",
+        "prompt": "Six counters already fill part of a ten-frame. Tap how many more complete the frame.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "3",
+            "icon": "3",
+            "count": 1,
+            "correct": false,
+            "feedback": "3 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "4",
+            "icon": "4",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — four empty spaces complete the ten-frame."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "5",
+            "icon": "5",
+            "count": 1,
+            "correct": false,
+            "feedback": "5 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — four empty spaces complete the ten-frame."
       },
       "cml": {
         "stage": "construct",
@@ -183,7 +216,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 takes 4 from 10 to make ten. How many of the 10 are left?",
+        "prompt": "After 6 uses 4 from a group of 10 to make a ten, how many remain unused?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -197,8 +230,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 takes 4 from 10 to make ten. How many of the 10 are left6."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 6."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -243,7 +276,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 takes 3 from 4 to make ten. How many of the 4 are left?",
+        "prompt": "A group of 4 gives 3 counters to help 7 make ten. How many remain?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
@@ -257,8 +290,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 takes 3 from 4 to make ten. How many of the 4 are left1."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 1."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -303,7 +336,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 takes 3 from 4 to make ten. How many of the 4 are left?",
+        "prompt": "Eight needs 2 counters from a group of 3. How many stay in the group?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
@@ -317,8 +350,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 7 takes 3 from 4 to make ten. How many of the 4 are left1."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 1."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -384,22 +417,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "6 takes 4 from 11 to make ten. How many of the 11 are left?",
-          "answer": 7,
+          "prompt": "Put 7 counters in one pile and 8 counters in another pile. Move counters from the second pile into the first pile until the first pile makes a ten. How many counters are left in the second pile?",
+          "answer": 5,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 11,
-              "feedback": "That is the original addend before splitting it."
+              "value": 8,
+              "feedback": "That is how many counters started in the second pile, before any moved."
             },
             {
-              "value": 8,
-              "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
+              "value": 6,
+              "feedback": "That is 1 more than the requested value. Recount the visible counters and moves."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 6 takes 4 from 11 to make ten. How many of the 11 are left7."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — moving 3 counters over leaves 5 in the second pile."
         }
       }
     }

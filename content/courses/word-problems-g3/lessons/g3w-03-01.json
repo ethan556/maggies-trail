@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "pv3-round-ten",
       "body": "Checking with rounding compares your exact answer to the neighbourhood. Close means plausible; wildly outside means something went wrong.",
       "narration": "Checking with rounding compares your exact answer to the neighbourhood. Close means plausible; wildly outside means something went wrong."
     },
@@ -21,21 +21,41 @@
       "conceptTag": "g3w-check-round",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "A student computed 6 × 39 + 21 = 255. Slide to the rounded estimate that checks it.",
-        "min": 20,
-        "max": 2600,
-        "start": 20,
+        "prompt": "Check 6 × 39 + 21 = 255. Select the estimate from 6 × 40 + 20.",
+        "min": 220,
+        "max": 300,
+        "start": 220,
         "target": 260,
-        "acceptFactor": 2,
-        "unitLabel": "apples",
+        "acceptFactor": 1.1,
+        "unitLabel": "items",
         "ticks": [
-          20,
-          1310,
-          2600
+          220,
+          260,
+          300
         ],
-        "lowFeedback": "Too low — six groups of about forty already reaches 240 before the 21 is added.",
-        "highFeedback": "Too high — rounding 39 up to 40 and 21 to 20 lands near 260, not in the thousands.",
-        "successFeedback": "About 260 — and 255 sits comfortably inside that neighbourhood, so the exact work survives."
+        "choices": [
+          {
+            "value": 220,
+            "label": "About 220",
+            "correct": false,
+            "feedback": "Six groups of about 40 already make about 240 before 20 is added."
+          },
+          {
+            "value": 260,
+            "label": "About 260",
+            "correct": true,
+            "feedback": "Correct — 6 × 40 + 20 = 260, close to the exact answer 255."
+          },
+          {
+            "value": 300,
+            "label": "About 300",
+            "correct": false,
+            "feedback": "That is too high for 240 plus about 20."
+          }
+        ],
+        "lowFeedback": "Use the complete rounded chain: 6 × 40 + 20.",
+        "highFeedback": "The rounded product is 240 and only about 20 more is added.",
+        "successFeedback": "About 260 — close enough to 255 to support its reasonableness."
       },
       "predict": {
         "prompt": "Exact answer 255, estimate 260. What follows?",
@@ -56,12 +76,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "diagram",
@@ -123,12 +143,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "symbolic",
@@ -145,7 +165,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mult3-estimate",
       "body": "An estimate can never prove an answer exactly right — but it catches the big errors: a lost carry, a dropped zero, a step done backwards.",
       "narration": "An estimate can never prove an answer exactly right — but it catches the big errors: a lost carry, a dropped zero, a step done backwards."
     },
@@ -156,32 +176,52 @@
       "conceptTag": "g3w-check-round",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "A student computed 6 × 39 + 21 = 255. Slide to the rounded estimate that checks it.",
-        "min": 20,
-        "max": 2600,
-        "start": 20,
-        "target": 260,
-        "acceptFactor": 2,
-        "unitLabel": "apples",
+        "prompt": "A student gets 311 for 5 × 58 + 21. Select the check from 5 × 60 + 20.",
+        "min": 260,
+        "max": 360,
+        "start": 280,
+        "target": 320,
+        "acceptFactor": 1.1,
+        "unitLabel": "items",
         "ticks": [
-          20,
-          1310,
-          2600
+          260,
+          320,
+          360
         ],
-        "lowFeedback": "Too low — six groups of about forty already reaches 240 before the 21 is added.",
-        "highFeedback": "Too high — rounding 39 up to 40 and 21 to 20 lands near 260, not in the thousands.",
-        "successFeedback": "About 260 — and 255 sits comfortably inside that neighbourhood, so the exact work survives."
+        "choices": [
+          {
+            "value": 280,
+            "label": "About 280",
+            "correct": false,
+            "feedback": "That is too low: five groups of about 60 already make about 300."
+          },
+          {
+            "value": 320,
+            "label": "About 320",
+            "correct": true,
+            "feedback": "Correct — 5 × 60 + 20 = 320, close to 311."
+          },
+          {
+            "value": 360,
+            "label": "About 360",
+            "correct": false,
+            "feedback": "Only about 20 joins the rounded product of 300."
+          }
+        ],
+        "lowFeedback": "Use all of 5 × 60 before adding about 20.",
+        "highFeedback": "The rounded chain totals about 320, not 360.",
+        "successFeedback": "About 320 — close enough to 311 to support its reasonableness."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "symbolic",
@@ -206,22 +246,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A shelf held 48 markers. Students took 6, then a teacher returned 0 more. How many markers remain?",
-        "answer": 42,
+        "prompt": "The rounded product is 400. A store sells 30 items, then 10 are returned. What checking estimate results?",
+        "answer": 380,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 54,
-            "feedback": "Taking markers away lowers the count; adding treats a loss like a gain."
+            "value": 360,
+            "feedback": "This subtracts the returned 10 too. Returned items go back to the store, so the estimate adds 10 back."
           },
           {
-            "value": 48,
-            "feedback": "That reported the starting pile — the 6 the students took never came off."
+            "value": 370,
+            "feedback": "370 is only 400 − 30 — the 10 returned items still need to be added back into the estimate."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 42."
+        "fallbackFeedback": "From the rounded 400: selling 30 lowers the estimate, the 10 returns raise it.",
+        "successFeedback": "Correct — 380."
       },
       "hints": [
         "Round each number.",
@@ -232,12 +272,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "symbolic",
@@ -266,31 +306,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A student computes 6 × 39 + 21 and gets 255. Rounding says about 6 × 40 + 20 = 260. What should they conclude?",
+        "prompt": "The exact value of 8 × 49 − 10 is 382, and a nearby estimate is 8 × 50 − 20 = 380. What follows?",
         "options": [
           {
             "id": "o0",
-            "label": "255 is reasonable — it sits close to 260",
+            "label": "382 is reasonable because it is close to 380",
             "correct": true,
-            "feedback": "Correct — the estimate is a neighbourhood, and 255 lands inside it, so the exact work survives the check."
+            "feedback": "Correct — the exact result lies in the estimate's neighborhood."
           },
           {
             "id": "o1",
-            "label": "255 is wrong because it is not 260",
+            "label": "382 is wrong because it is not exactly 380",
             "correct": false,
-            "feedback": "An estimate is never the exact answer; it only tells you whether the exact one is plausible."
+            "feedback": "An estimate is a check, not an exact target."
           },
           {
             "id": "o2",
-            "label": "The estimate is wrong because it is not 255",
+            "label": "380 must be the exact answer",
             "correct": false,
-            "feedback": "Rounding deliberately changes the numbers, so it is expected to differ a little from the exact result."
+            "feedback": "The rounded numbers create an estimate, not the original expression's exact value."
           },
           {
             "id": "o3",
-            "label": "Nothing — estimates prove nothing",
+            "label": "No comparison is possible",
             "correct": false,
-            "feedback": "They rule out big mistakes: an answer of 2,550 or 25 would have been caught immediately."
+            "feedback": "Their closeness is useful evidence that the exact answer is plausible."
           }
         ]
       },
@@ -303,12 +343,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "symbolic",
@@ -333,21 +373,21 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "The garden had 261 seeds. It planted 55, then was gifted 49 more. How many seeds now?",
+        "prompt": "A display starts with 234 cards. 5 are removed, then 26 are added. How many cards are there now?",
         "answer": 255,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 157,
-            "feedback": "The second step ADDED 49; subtracting it sends the total the wrong way."
+            "value": 203,
+            "feedback": "This subtracts the 26 added cards too. Added cards JOIN the display, so the last step is + 26."
           },
           {
-            "value": 365,
-            "feedback": "The first step took 55 away — adding it counts what was lost as if it were still there."
+            "value": 229,
+            "feedback": "229 is only 234 − 5 — the 26 added cards are still missing from the count."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
+        "fallbackFeedback": "Two changes to 234: removing 5 lowers the count, adding 26 raises it.",
         "successFeedback": "Correct — 255."
       },
       "hints": [
@@ -359,12 +399,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w check round.",
+        "actionGoal": "Compare an exact answer with a rounded estimate to decide whether it is plausible.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w check round a two-step problem rather than two separate ones."
+          "An exact answer can differ from its estimate and still be reasonable when the difference is small."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Rejecting a correct exact answer because it does not equal the rounded estimate."
         ],
         "representations": [
           "symbolic",
@@ -400,8 +440,9 @@
       "concept": {
         "id": "rem-g3w-check-round-c",
         "kind": "concept",
-        "body": "An estimate can never prove an answer exactly right — but it catches the big errors: a lost carry, a dropped zero, a step done backwards.",
-        "narration": "An estimate can never prove an answer exactly right — but it catches the big errors: a lost carry, a dropped zero, a step done backwards."
+        "body": "An estimate can show whether an exact answer is plausible: 4 × 19 is about 4 × 20 = 80, so 76 is reasonable.",
+        "narration": "An estimate can show whether an exact answer is plausible: 4 × 19 is about 4 × 20 = 80, so 76 is reasonable.",
+        "figure": "mult3-estimate"
       },
       "check": {
         "id": "rem-g3w-check-round-k",
@@ -414,31 +455,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "A student computes 6 × 39 + 21 and gets 255. Rounding says about 6 × 40 + 20 = 260. What should they conclude?",
+          "prompt": "A result is 197 and its rounded estimate is 190. What does the check show?",
           "options": [
             {
               "id": "o0",
-              "label": "255 is reasonable — it sits close to 260",
+              "label": "197 is reasonable because it is close to 190",
               "correct": true,
-              "feedback": "Correct — the estimate is a neighbourhood, and 255 lands inside it, so the exact work survives the check."
+              "feedback": "Correct — estimates check neighborhoods, not exact equality."
             },
             {
               "id": "o1",
-              "label": "255 is wrong because it is not 260",
+              "label": "197 must be wrong",
               "correct": false,
-              "feedback": "An estimate is never the exact answer; it only tells you whether the exact one is plausible."
+              "feedback": "Exact results normally differ slightly from estimates."
             },
             {
               "id": "o2",
-              "label": "The estimate is wrong because it is not 255",
+              "label": "190 is the exact result",
               "correct": false,
-              "feedback": "Rounding deliberately changes the numbers, so it is expected to differ a little from the exact result."
+              "feedback": "The rounded calculation is only an estimate."
             },
             {
               "id": "o3",
-              "label": "Nothing — estimates prove nothing",
+              "label": "The numbers cannot be compared",
               "correct": false,
-              "feedback": "They rule out big mistakes: an answer of 2,550 or 25 would have been caught immediately."
+              "feedback": "Their closeness is the evidence used by the check."
             }
           ]
         }

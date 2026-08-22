@@ -22,46 +22,32 @@
  * separately-QA'd pass; an interim navy mismatch against existing chrome is expected).
  */
 import Image from "next/image";
+import * as React from "react";
 
 /** The wordmark asset's own canvas, used to derive height from a requested width. */
 const WORDMARK_VIEWBOX = { w: 962, h: 112 };
 
+/** Single production mark. `gen:brand-icons` derives all install/icon aliases from its source. */
+export const MAGGIE_MARK_SRC = "/brand/maggies-mark.png";
+
+/** The user-approved mountain trail mark for compact chrome and app-icon surfaces. */
 export function MaggieMark({ size = 28, className }: { size?: number; className?: string }) {
   return (
-    <svg
+    <Image
+      src={MAGGIE_MARK_SRC}
+      alt=""
       width={size}
       height={size}
-      viewBox="0 0 100 100"
-      aria-hidden="true"
+      unoptimized
+      priority
       className={className}
-    >
-      <rect x="4" y="4" width="92" height="92" rx="20" fill="#0D1B2A" />
-      <path d="M14,80 L30,36 L50,54 L70,36 L86,80 Z" fill="#F7F3EC" />
-      <path
-        d="M45.50,78.00 C22.50,78.00 20.50,62.00 33.50,60.00 C47.50,58.00 58.50,56.00 45.50,54.00 L54.50,54.00 C67.50,56.00 56.50,58.00 42.50,60.00 C29.50,62.00 31.50,78.00 54.50,78.00 Z"
-        fill="#0D1B2A"
-      />
-      <path
-        d="M50,9 L52.26,16.74 L60,19 L52.26,21.26 L50,29 L47.74,21.26 L40,19 L47.74,16.74 Z"
-        fill="#F08A24"
-      />
-    </svg>
+    />
   );
 }
 
 /**
- * The mark WITHOUT its badge — navy ink straight onto the page.
- *
- * `MaggieMark` above is the app-icon lockup: the same art inside a Deep Navy rounded
- * square, which is what a favicon, a PWA tile and a 28px nav chip need. At display size on
- * an ivory page that badge reads as a boxed-in sticker, so this variant drops the rect and
- * draws the peaks as an OPEN stroked ridgeline — no base edge — with the trail as a solid
- * ribbon and the star in Summit Orange. Same path data as the badge version, three
- * differences only: no background rect, peaks stroked navy instead of filled ivory, and the
- * path left open (no `Z`) so the silhouette reads as a horizon rather than a triangle.
- *
- * viewBox is cropped to the ink bounds (x 14–86, y 9–80 plus stroke) rather than the badge's
- * 100×100, so the caller sizes the ARTWORK and not the padding around it.
+ * The same canonical mark at display scale. `title` becomes the image alternative when this
+ * otherwise decorative lockup needs an accessible name.
  */
 export function MaggieMarkOpen({
   className,
@@ -71,34 +57,17 @@ export function MaggieMarkOpen({
   title?: string;
 }) {
   return (
-    <svg
-      viewBox="8 4 84 82"
+    <Image
+      src={MAGGIE_MARK_SRC}
+      alt={title ?? ""}
+      width={512}
+      height={512}
+      unoptimized
+      priority
       className={className}
-      role={title ? "img" : undefined}
-      aria-hidden={title ? undefined : true}
-      aria-label={title}
-    >
-      {title ? <title>{title}</title> : null}
-      <path
-        d="M14,80 L30,36 L50,54 L70,36 L86,80"
-        fill="none"
-        stroke="#0D1B2A"
-        strokeWidth="4.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M45.50,78.00 C22.50,78.00 20.50,62.00 33.50,60.00 C47.50,58.00 58.50,56.00 45.50,54.00 L54.50,54.00 C67.50,56.00 56.50,58.00 42.50,60.00 C29.50,62.00 31.50,78.00 54.50,78.00 Z"
-        fill="#0D1B2A"
-      />
-      <path
-        d="M50,9 L52.26,16.74 L60,19 L52.26,21.26 L50,29 L47.74,21.26 L40,19 L47.74,16.74 Z"
-        fill="#F08A24"
-      />
-    </svg>
+    />
   );
 }
-
 export function MaggieWordmark({
   width = 190,
   mono = false,

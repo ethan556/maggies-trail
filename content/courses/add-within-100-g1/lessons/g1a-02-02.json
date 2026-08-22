@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "On a hundred chart, moving down one row adds ten, and moving right one square adds one.",
-      "narration": "On a hundred chart, moving down one row adds ten, and moving right one square adds one."
+      "figure": "chart-down-ten",
+      "body": "On a hundred chart, 34 sits directly above 44. Moving down one row adds ten.",
+      "narration": "On a hundred chart, 34 sits directly above 44. Moving down one row adds ten."
     },
     {
       "id": "i1",
@@ -95,7 +95,7 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
+        "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
         "successFeedback": "Correct — 64 + 10 = 74."
       },
       "hints": [
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The chart makes the tens-digit-only change from adding ten visible as a simple downward move.",
-      "narration": "The chart makes the tens-digit-only change from adding ten visible as a simple downward move."
+      "figure": "c120-ten-more-ones",
+      "body": "A vertical chart move keeps the ones digit: 45 and 55 both end in five, and 55 is ten more.",
+      "narration": "A vertical chart move keeps the ones digit: 45 and 55 both end in five, and 55 is ten more."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1a-chart-add",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "On the hundred chart, 27 is one row up from your target. Hop down one row (add ten).",
-        "min": 25,
-        "max": 39,
-        "start": 27,
-        "hop": 1,
-        "hops": 10,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 27 and count on 10: you land on 37.",
-        "successFeedback": "Landed on 37 — moving down one row on the chart adds ten."
+        "type": "tapDiagram",
+        "prompt": "Start at 32 and move down two rows on a hundred chart. Tap the landing number.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "42",
+            "icon": "42",
+            "count": 1,
+            "correct": false,
+            "feedback": "42 does not satisfy the quantities or relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "52",
+            "icon": "52",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — each row adds ten, so two rows add twenty: 32 becomes 52."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "62",
+            "icon": "62",
+            "count": 1,
+            "correct": false,
+            "feedback": "62 does not satisfy the quantities or relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and operation before choosing.",
+        "successFeedback": "Yes — each row adds ten, so two rows add twenty: 32 becomes 52."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "78 + 20 = ?",
+        "prompt": "What number lies two chart rows below 78?",
         "answer": 98,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 78 + 20 = 98."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 98."
       },
       "hints": [
         "Down one row on the chart means add ten.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "77 + 20 = ?",
+        "prompt": "Keep 7 ones and increase 7 tens by 2 tens. What number results?",
         "answer": 97,
         "tolerance": 0,
         "unit": "",
@@ -263,8 +293,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 77 + 20 = 97."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 97."
       },
       "hints": [
         "Down one row on the chart means add ten.",
@@ -309,7 +339,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "22 + 20 = ?",
+        "prompt": "A chart marker moves two rows down from 22. Where does it land?",
         "answer": 42,
         "tolerance": 0,
         "unit": "",
@@ -323,8 +353,8 @@
             "feedback": "That forgets to add the tens."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 22 + 20 = 42."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 42."
       },
       "hints": [
         "Down one row on the chart means add ten.",
@@ -390,22 +420,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "64 + 10 = ?",
-          "answer": 74,
+          "prompt": "Build 23 with ten-rods and one-cubes. Add 1 more ten-rod. What number do you have now?",
+          "answer": 33,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 65,
-              "feedback": "That adds 1 one instead of 1 ten."
+              "value": 24,
+              "feedback": "That adds one one-cube instead of one ten-rod."
             },
             {
-              "value": 64,
-              "feedback": "That forgets to add the tens."
+              "value": 23,
+              "feedback": "That leaves the number unchanged, forgetting the new ten-rod."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 64 + 10 = 74."
+          "fallbackFeedback": "Represent the two numbers, apply the shown operation, and check the result.",
+          "successFeedback": "Correct — 23 plus one ten-rod builds 33."
         }
       }
     }

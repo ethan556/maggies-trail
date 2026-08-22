@@ -13,58 +13,49 @@
    "figure": "scatter-best-fit"
   },
   {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Inside or outside?",
-   "widget": {
-    "type": "mcq",
-    "prompt": "A line is fit to data from x = 1 to x = 10. A prediction at x = 5 is likely more trustworthy than one at x = 40 because…",
-    "options": [
-     {
-      "id": "a",
-      "label": "x = 5 is inside the measured range; x = 40 is far beyond it",
-      "correct": true,
-      "feedback": "Right — predictions inside the data range are more reliable."
-     },
-     {
-      "id": "b",
-      "label": "x = 5 is a smaller number",
-      "correct": false,
-      "feedback": "Size isn't the point — x = 5 is INSIDE the data range, x = 40 is far outside it."
-     },
-     {
-      "id": "c",
-      "label": "x = 40 is even",
-      "correct": false,
-      "feedback": "Even or odd is irrelevant — trust depends on staying inside the measured range."
-     },
-     {
-      "id": "d",
-      "label": "both are equally reliable",
-      "correct": false,
-      "feedback": "They're not — x = 5 is inside the data, so its prediction is more reliable than x = 40's."
-     }
-    ]
-   },
-   "predict": {
-    "prompt": "A line was fit to data from x = 1 to 10. Does the line KNOW what happens beyond x = 10?",
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Fit the measured points, then inspect how far the line continues beyond the data.",
+      "widget": {
+        "type": "scatterFit",
+        "prompt": "Fit the points measured from x = 1 to 10. The graph extends to x = 40 so you can see how much of the line lies beyond any evidence.",
+        "points": [[1, 3], [2, 5], [4, 9], [6, 13], [8, 17], [10, 21]],
+        "xMin": 0,
+        "xMax": 40,
+        "yMin": 0,
+        "yMax": 85,
+        "mMin": 0,
+        "mMax": 4,
+        "mStep": 0.5,
+        "bMin": 0,
+        "bMax": 10,
+        "bStep": 1,
+        "mStart": 0,
+        "bStart": 10,
+        "tolerance": 0.1,
+        "successFeedback": "The line fits the measured points from x = 1 to 10. Its continuation toward x = 40 is extrapolation, so that distant prediction needs more caution.",
+        "slopeFeedback": "Use the measured points to set the rate. Extending the line farther does not create new data.",
+        "offsetFeedback": "The rate matches, but the line is not centered on the measured points. Adjust the intercept."
+      },
+      "predict": {
+        "prompt": "A line uses data from x = 1 to 10. What supports its values beyond x = 10?",
     "options": [
      {
       "id": "no",
-      "label": "No — it just extends the pattern on faith"
+            "label": "Only an assumption that the pattern continues"
      },
      {
       "id": "yes",
-      "label": "Yes — math extends knowledge"
+            "label": "New measurements already shown by the line"
      },
      {
       "id": "better",
-      "label": "Beyond the data it's MORE accurate"
+            "label": "A guarantee that distant values are more accurate"
      }
     ],
     "outcomeId": "no",
-    "reveal": "The line only ever saw x = 1 to 10 — past that it assumes the pattern continues, which the data never promised. Predictions inside the data deserve more trust."
-   }
+        "reveal": "The model was built from x-values 1 through 10. Beyond that range it assumes the trend continues, so an extrapolated prediction has less direct evidence than an interpolation."
+      }
   },
   {
    "id": "c2",
@@ -123,25 +114,25 @@
     "options": [
      {
       "id": "a",
-      "label": "The plant likely stops growing — the line can't be trusted that far out",
+            "label": "Plant growth may level off before week 100",
       "correct": true,
       "feedback": "Right — real growth levels off; the line over-predicts far beyond the data."
      },
      {
       "id": "b",
-      "label": "The slope was computed wrong",
+            "label": "The fitted slope was calculated incorrectly",
       "correct": false,
       "feedback": "The math may be fine — the issue is trusting the line 94 weeks past the data."
      },
      {
       "id": "c",
-      "label": "Weeks can't be that large",
+            "label": "Week 100 is not a valid time value",
       "correct": false,
       "feedback": "Week 100 is a valid time — the problem is the trend won't stay linear that far out."
      },
      {
       "id": "d",
-      "label": "3 meters is a round number",
+            "label": "Three meters is too round a value",
       "correct": false,
       "feedback": "The value's roundness isn't the issue — it's extrapolating far beyond the data."
      }
@@ -205,25 +196,25 @@
     "options": [
      {
       "id": "a",
-      "label": "The real trend may curve or level off out there",
+            "label": "The actual trend may curve or level off",
       "correct": true,
       "feedback": "Right — beyond the data the relationship can change, so the line misleads."
      },
      {
       "id": "b",
-      "label": "Lines can't be extended",
+            "label": "The fitted line cannot be extended",
       "correct": false,
       "feedback": "You CAN extend a line — the risk is that the real trend may not stay straight."
      },
      {
       "id": "c",
-      "label": "The slope becomes zero",
+            "label": "The fitted slope becomes zero",
       "correct": false,
       "feedback": "The slope stays the same — the issue is the true trend may bend beyond the data."
      },
      {
       "id": "d",
-      "label": "Predictions are always wrong",
+            "label": "All model predictions are unreliable",
       "correct": false,
       "feedback": "Predictions inside the data are usually fine — it's far extrapolation that's risky."
      }

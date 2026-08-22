@@ -148,36 +148,20 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "0/0 is the hole's signature.",
+      "body": "Inspect the cancelled factor at its missing point.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Substituting x = 2 into the ORIGINAL g gives 0/0. What does that signal?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "a common factor — likely a hole, so simplify and re-evaluate",
-            "correct": true,
-            "feedback": "Right — 0/0 means top AND bottom share the zero; cancellation reveals the hole's height."
-          },
-          {
-            "id": "o2",
-            "label": "a vertical asymptote",
-            "correct": false,
-            "feedback": "An asymptote's signature is (nonzero)/0 — the top staying alive while the bottom dies."
-          },
-          {
-            "id": "o3",
-            "label": "the function equals 0 there",
-            "correct": false,
-            "feedback": "0/0 is UNDEFINED, not 0 — the point is missing, with a well-defined height nearby."
-          },
-          {
-            "id": "o4",
-            "label": "an arithmetic mistake",
-            "correct": false,
-            "feedback": "The computation is fine — 0/0 is real information: a shared factor to cancel."
-          }
-        ]
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 0.16666666666666666,
+        "rightValue": 0.16666666666666666,
+        "fAtA": null,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "For (x − 2)/((x − 2)(x + 4)), zoom at x = 2 and decide whether the cancelled factor leaves a hole or an asymptote.",
+        "successFeedback": "Both sides settle at 1/6 while the point at x = 2 stays missing. Cancellation leaves a removable hole, not a vertical asymptote.",
+        "moreZoomFeedback": "Zoom further so the two sides' common approach to 1/6 is visible.",
+        "wrongVerdictFeedback": "The values do not grow without bound. They approach 1/6 from both sides, so the limit exists."
       }
     },
     {
@@ -195,25 +179,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "a vertical asymptote at x = 3",
+            "label": "A vertical asymptote at x = 3; a denominator factor remains.",
             "correct": true,
             "feedback": "Right — a living numerator over a dead denominator means true blow-up."
           },
           {
             "id": "o2",
-            "label": "a hole at x = 3",
+            "label": "A hole occurs at x = 3 because the zero factor cancels completely.",
             "correct": false,
             "feedback": "Holes announce themselves with 0/0 — here the top is 2, very much alive."
           },
           {
             "id": "o3",
-            "label": "f(3) = 2",
+            "label": "f(3) = 2 because division by zero leaves the numerator unchanged.",
             "correct": false,
             "feedback": "2/0 is not 2 — division by zero is undefined; the graph climbs a wall instead."
           },
           {
             "id": "o4",
-            "label": "f(3) = 0",
+            "label": "f(3) = 0 because the zero denominator forces a zero output.",
             "correct": false,
             "feedback": "A zero OUTPUT needs a zero TOP — this is the opposite: exploding, not vanishing."
           }
@@ -239,25 +223,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "a vertical asymptote — one (x − 5) survives below",
+            "label": "A vertical asymptote remains because one x − 5 factor stays below.",
             "correct": true,
             "feedback": "Right — f simplifies to 1/(x − 5): the leftover copy still explodes."
           },
           {
             "id": "o2",
-            "label": "a hole",
+            "label": "A hole remains because both x − 5 factors cancel completely.",
             "correct": false,
             "feedback": "A hole needs the factor GONE from the bottom — here (x − 5)² loses only one copy: 1/(x − 5) remains."
           },
           {
             "id": "o3",
-            "label": "f(5) = 1",
+            "label": "f(5) = 1 because the identical factors cancel at x = 5.",
             "correct": false,
             "feedback": "That cancels both copies against one — the bottom had TWO: 1/(x − 5) is undefined at 5."
           },
           {
             "id": "o4",
-            "label": "nothing special",
+            "label": "Nothing special happens because the factors cancel completely.",
             "correct": false,
             "feedback": "The denominator still dies at 5 after simplifying — a genuine wall."
           }

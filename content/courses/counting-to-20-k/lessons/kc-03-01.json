@@ -18,26 +18,32 @@
       "kind": "interactive",
       "body": "Build a teen.",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The ten-frame is FULL (that is 10). Tap the extra dots for 12: how many more than ten?",
-        "target": 2,
-        "preFilled": 0,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "baseTenCompose",
+        "prompt": "Build twelve with tens and ones. What hides inside 12?",
+        "target": 12,
+        "requireStandard": true,
+        "commonBuilds": [
           {
-            "count": 1,
-            "feedback": "12 is ten and TWO more — add one more dot."
+            "tens": 1,
+            "ones": 1,
+            "feedback": "Ten and 1 is 11. Twelve is ten and 2."
           },
           {
-            "count": 3,
-            "feedback": "That makes 13. Twelve needs just 2 extra."
+            "tens": 0,
+            "ones": 2,
+            "feedback": "2 ignores the full ten — WITH the ten it is 12."
+          },
+          {
+            "tens": 2,
+            "ones": 0,
+            "feedback": "Two tens is 20. Twelve is ONE ten and 2."
           }
         ],
-        "missFeedback": "12 = 10 and 2 more. Tap 2 dots.",
+        "missFeedback": "Twelve hides one full ten with 2 more — build 1 ten and 2 ones.",
         "successFeedback": "Yes — a full ten and 2 more makes 12!"
       },
       "predict": {
-        "prompt": "12 is a FULL frame and some extra dots. Which digit of 12 counts the extras?",
+        "prompt": "12 is a full ten and some extra ones. Which digit of 12 counts the extras?",
         "options": [
           {
             "id": "two",
@@ -53,7 +59,7 @@
           }
         ],
         "outcomeId": "two",
-        "reveal": "The 1 in 12 is the whole full frame — one ten. The extras past ten are the 2. Teen numbers are ten-and-some-more."
+        "reveal": "The 1 in 12 stands for the whole full ten. The extras past ten are the 2. Teen numbers are ten-and-some-more."
       },
       "conceptTag": "kc-teen-numbers",
       "cml": {
@@ -150,22 +156,28 @@
       "kind": "interactive",
       "body": "Another teen.",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The frame is full (10). Tap the extras for 15.",
-        "target": 5,
-        "preFilled": 0,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "baseTenCompose",
+        "prompt": "Build fifteen with tens and ones.",
+        "target": 15,
+        "requireStandard": true,
+        "commonBuilds": [
           {
-            "count": 4,
-            "feedback": "That makes 14. Fifteen needs 5 extras."
+            "tens": 1,
+            "ones": 4,
+            "feedback": "Ten and 4 is 14. Fifteen is ten and 5."
           },
           {
-            "count": 6,
-            "feedback": "That makes 16. Fifteen needs just 5."
+            "tens": 1,
+            "ones": 6,
+            "feedback": "Ten and 6 is 16. Fifteen is ten and 5."
+          },
+          {
+            "tens": 2,
+            "ones": 0,
+            "feedback": "Two tens is 20. Fifteen is ONE ten and 5."
           }
         ],
-        "missFeedback": "15 = 10 and 5 more.",
+        "missFeedback": "Fifteen hides one full ten with 5 more — build 1 ten and 5 ones.",
         "successFeedback": "Yes — ten and 5 makes fifteen!"
       },
       "conceptTag": "kc-teen-numbers",
@@ -322,33 +334,35 @@
         "10 and 1 is eleven."
       ],
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The frame is full (10). I am the SMALLEST teen number. Tap my extra dots.",
-        "target": 1,
-        "preFilled": 0,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "baseTenCompose",
+        "prompt": "I am the SMALLEST teen number. Build me with tens and ones.",
+        "target": 11,
+        "requireStandard": true,
+        "commonBuilds": [
           {
-            "count": 2,
-            "feedback": "10 and 2 is 12 — but 11 is smaller. Just 1 extra."
+            "tens": 1,
+            "ones": 2,
+            "feedback": "Ten and 2 is 12 — but 11 is smaller. Just 1 more."
           },
           {
-            "count": 3,
-            "feedback": "That makes 13. The smallest teen, 11, needs 1."
+            "tens": 0,
+            "ones": 1,
+            "feedback": "1 ignores the full ten — WITH the ten it is 11."
+          },
+          {
+            "tens": 2,
+            "ones": 0,
+            "feedback": "Two tens is 20. Eleven is ONE ten and 1."
           }
         ],
-        "missFeedback": "The smallest teen is 11: ten and just 1 more.",
+        "missFeedback": "The smallest teen is 11: build 1 ten and just 1 more.",
         "successFeedback": "Yes — 11! Ten and 1 is the smallest teen."
       },
       "hints": [
         "Teens start right after 10.",
         "The first number after 10 is 11.",
-        "11 = ten and 1 more — tap 1 dot."
+        "11 = ten and 1 more — build 1 ten and 1 one."
       ],
-      "variant": {
-        "gen": "g0-counting",
-        "form": "countTeenFrame"
-      },
       "cml": {
         "stage": "construct",
         "flagship": false,
@@ -390,7 +404,7 @@
       "concept": {
         "id": "rem-kc0301-c",
         "kind": "concept",
-        "body": "A teen number is ten and some more. 14 is a full ten and 4. 17 is ten and 7.",
+        "body": "A teen number is ten and some more. 13 is a full ten and 3. 17 is ten and 7.",
         "figure": "teen-ten-and-more"
       },
       "check": {

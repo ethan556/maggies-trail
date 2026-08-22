@@ -86,23 +86,28 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Count the fives.",
+      "body": "Catch the mistake.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 5^x = 25.",
-        "answer": 2,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "A student solves 5^x = 125 by writing 5x = 125, so x = 25. What is the actual value of x?",
+        "options": [
           {
-            "value": 5,
-            "feedback": "This isn't 5·x = 25. 25 = 5², so x = 2."
+            "id": "a",
+            "label": "3",
+            "correct": true,
+            "feedback": "Right — 125 = 5³ (5·5·5), so x = 3. 5^x means 5 multiplied by itself x times, not 5 times x."
           },
           {
-            "value": 3,
-            "feedback": "5³ = 125, too big. 25 = 5², so x = 2."
+            "id": "b",
+            "label": "25",
+            "feedback": "That comes from treating 5^x as 5·x. But 5^x is repeated multiplication: 5·5·5 = 125, so x = 3."
+          },
+          {
+            "id": "c",
+            "label": "4",
+            "feedback": "5⁴ = 625, one power too far. 5³ = 125 is the match, so x = 3."
           }
-        ],
-        "fallbackFeedback": "25 = 5², so x = 2."
+        ]
       }
     },
     {
@@ -114,54 +119,59 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Powers of ten.",
+      "body": "Compare, don't just solve.",
       "widget": {
-        "type": "numeric",
-        "prompt": "Solve 10^x = 1000.",
-        "answer": 3,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which has the larger value of x: 2^x = 16, or 2^x = 64?",
+        "options": [
           {
-            "value": 100,
-            "feedback": "100 = 10², not the answer. 1000 = 10³, so x = 3."
+            "id": "a",
+            "label": "2^x = 64",
+            "correct": true,
+            "feedback": "Yes — 2⁶ = 64 needs six multiplications (x = 6), more than 2⁴ = 16 needs (x = 4). The bigger target takes the bigger exponent."
           },
           {
-            "value": 2,
-            "feedback": "10² = 100. To reach 1000 you need 10³, so x = 3."
+            "id": "b",
+            "label": "2^x = 16",
+            "feedback": "16 is the SMALLER target, so it needs fewer multiplications: 2⁴ = 16 (x = 4). 2^x = 64 needs x = 6, which is larger."
+          },
+          {
+            "id": "c",
+            "label": "They're equal",
+            "feedback": "Same base, different targets give different exponents: 2⁴ = 16 but 2⁶ = 64. x = 6 is larger than x = 4."
           }
-        ],
-        "fallbackFeedback": "1000 = 10³, so x = 3."
+        ]
       }
     },
     {
       "id": "k2",
       "kind": "check",
-      "body": "Higher power of two.",
+      "body": "Same idea, told as repeated multiplying.",
       "conceptTag": "exp-match-base",
       "explanationVariants": [
-        "32 = 2⁵ (2·2·2·2·2), so x = 5.",
-        "Double from 1: 2, 4, 8, 16, 32 is five steps, so x = 5."
+        "216 = 6³ (6·6·6), so x = 3.",
+        "Multiply by 6 three times: 6 → 36 → 216, so x = 3."
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "Solve 2^x = 32.",
+        "prompt": "A machine's output multiplies by 6 every step, starting at 6. After how many steps does the output first reach 216?",
         "task": "exponentSolve",
         "values": [],
         "esCoef": 1,
-        "esBaseNum": 2,
+        "esBaseNum": 6,
         "esBaseDen": 1,
-        "esRhsNum": 32,
+        "esRhsNum": 216,
         "esRhsDen": 1,
         "answerMode": "numeric",
         "tolerance": 0,
         "numericErrors": [
           {
-            "value": 16,
-            "feedback": "16 = 2⁴, one short. 32 = 2⁵, so x = 5."
+            "value": 36,
+            "feedback": "36 is 216 ÷ 6 — that comes from treating the output as 6 × (steps), which is linear growth. This is MULTIPLYING by 6 each step instead: 6³ = 216, so the answer is 3 steps."
           },
           {
-            "value": 30,
-            "feedback": "This isn't 2·x = 32. 32 = 2⁵, so x = 5."
+            "value": 2,
+            "feedback": "After 2 steps the output is 6² = 36, not yet 216. One more step: 6³ = 216, so x = 3."
           }
         ],
         "choices": [],
@@ -173,8 +183,8 @@
         ],
         "requiredExplorations": 3,
         "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "32 = 2⁵, so x = 5.",
-        "successFeedback": "32 = 2⁵, so x = 5."
+        "fallbackFeedback": "216 = 6³, so x = 3.",
+        "successFeedback": "216 = 6³, so x = 3."
       },
       "variant": {
         "gen": "a1-exponential",
@@ -192,23 +202,23 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Solve 4^x = 8.",
+        "prompt": "A student claims 4^x = 8 has no solution, since 8 never shows up in the list 4¹, 4², 4³, .... Are they right?",
         "options": [
           {
             "id": "a",
-            "label": "3/2",
+            "label": "No — 4^(3/2) = (√4)³ = 2³ = 8",
             "correct": true,
-            "feedback": "Yes — base 2: 2^(2x) = 2³ gives 2x = 3, so x = 3/2."
+            "feedback": "Right — the exponent doesn't have to be whole. 4^(3/2) = (√4)³ = 2³ = 8, so x = 3/2 solves it even though 8 isn't 4, 16, or 64."
           },
           {
             "id": "b",
-            "label": "2",
-            "feedback": "4² = 16, too big. Rewriting base 2 gives x = 3/2."
+            "label": "Yes — 8 truly is not 4, 16, or 64",
+            "feedback": "8 isn't a WHOLE-number power of 4, that part is true — but x doesn't have to be whole. 4^(3/2) = 2³ = 8, so a solution does exist."
           },
           {
             "id": "c",
-            "label": "1/2",
-            "feedback": "4^(1/2) = 2, too small. The answer is x = 3/2."
+            "label": "No — but only because the list has an arithmetic mistake",
+            "feedback": "The list itself is correct (4¹=4, 4²=16, 4³=64) — no arithmetic mistake there. The real gap is assuming x has to be whole: 4^(3/2) = 2³ = 8 works."
           }
         ]
       },
@@ -220,55 +230,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A bigger target.",
+      "body": "A zero exponent.",
       "conceptTag": "exp-match-base",
       "explanationVariants": [
-        "243 = 3⁵ (3·3·3·3·3), so x = 5.",
-        "3 → 9 → 27 → 81 → 243 is five steps, so x = 5."
+        "Any nonzero base raised to the 0 power is 1, so 9⁰ = 1 and x = 0.",
+        "9⁰ = 1 by definition, so x = 0 — no multiplying needed at all."
       ],
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "Solve 3^x = 243.",
-        "task": "exponentSolve",
-        "values": [],
-        "esCoef": 1,
-        "esBaseNum": 3,
-        "esBaseDen": 1,
-        "esRhsNum": 243,
-        "esRhsDen": 1,
-        "answerMode": "numeric",
+        "type": "numeric",
+        "prompt": "What value of x solves 9^x = 1?",
+        "answer": 0,
         "tolerance": 0,
-        "numericErrors": [
+        "commonErrors": [
           {
-            "value": 81,
-            "feedback": "81 = 3⁴, one short. 243 = 3⁵, so x = 5."
+            "value": 1,
+            "feedback": "9¹ = 9, not 1. Any nonzero base to the POWER 0 equals 1: 9⁰ = 1, so x = 0."
           },
           {
-            "value": 4,
-            "feedback": "3⁴ = 81. To reach 243 you need 3⁵, so x = 5."
+            "value": 9,
+            "feedback": "9 is the base, not the exponent. Since 9⁰ = 1, x = 0."
           }
         ],
-        "choices": [],
-        "authoredStages": [],
-        "requiredStageKeys": [
-          "exp:base",
-          "exp:power",
-          "exp:read"
-        ],
-        "requiredExplorations": 3,
-        "explorationFeedback": "Inspect the required exact-number states before checking.",
-        "fallbackFeedback": "243 = 3⁵, so x = 5.",
-        "successFeedback": "243 = 3⁵, so x = 5."
+        "fallbackFeedback": "Any base to the power 0 is 1, so 9⁰ = 1 means x = 0."
       },
       "hints": [
-        "Write 243 as a power of 3.",
-        "3, 9, 27, 81, 243 — count the steps.",
-        "243 = 3⁵, so x = 5."
-      ],
-      "variant": {
-        "gen": "a1-exponential",
-        "form": "exp-match-base__numeric"
-      }
+        "How many times do you need to multiply 9 by itself to get 1?",
+        "Zero times — you start at 1 before any multiplying happens.",
+        "9⁰ = 1, so x = 0."
+      ]
     },
     {
       "id": "r1",

@@ -15,56 +15,75 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Classify the letters.",
+   "body": "Test the vertical, horizontal, and diagonal folds of a block H.",
    "conceptTag": "symmetry-application",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each block capital letter by its symmetry.",
-    "buckets": [
+    "type": "shapeHierarchyLab",
+    "prompt": "A block capital H matches across a vertical fold and a horizontal fold, but not a diagonal fold. How many symmetry lines does it have?",
+    "mode": "hierarchy",
+    "nodes": [
      {
-      "id": "vert",
-      "label": "Vertical only",
-      "icon": "↕️"
+      "id": "vertical",
+      "label": "Vertical fold",
+      "attributes": [
+       "halves match"
+      ]
      },
      {
-      "id": "both",
-      "label": "Both vertical and horizontal",
-      "icon": "➕"
+      "id": "horizontal",
+      "label": "Horizontal fold",
+      "attributes": [
+       "halves match"
+      ]
      },
      {
-      "id": "none",
-      "label": "No line symmetry",
-      "icon": "🚫"
+      "id": "diagonal",
+      "label": "Diagonal fold",
+      "attributes": [
+       "halves do not match"
+      ]
      }
     ],
-    "items": [
+    "edges": [],
+    "answerClaim": "two-lines",
+    "choices": [
      {
-      "id": "l1",
-      "label": "A",
-      "bucketId": "vert",
-      "feedback": "A's left and right halves mirror each other — vertical only."
+      "id": "two",
+      "label": "2 symmetry lines",
+      "claim": "two-lines",
+      "feedback": "Both the vertical and horizontal folds match.",
+      "evidenceKind": "calculation",
+      "evidenceText": "Two tested folds pass the matching-halves rule.",
+      "highlightNodeIds": [
+       "vertical",
+       "horizontal"
+      ]
      },
      {
-      "id": "l2",
-      "label": "H",
-      "bucketId": "both",
-      "feedback": "H matches left-right AND top-bottom — both."
+      "id": "one",
+      "label": "1 symmetry line",
+      "claim": "one-line",
+      "feedback": "That counts only one of the two matching folds.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "Both vertical and horizontal folds work.",
+      "highlightNodeIds": [
+       "vertical"
+      ]
      },
      {
-      "id": "l3",
-      "label": "F",
-      "bucketId": "none",
-      "feedback": "F's top and bottom halves are completely different shapes — no line symmetry."
-     },
-     {
-      "id": "l4",
-      "label": "O",
-      "bucketId": "both",
-      "feedback": "A round O matches left-right AND top-bottom — both."
+      "id": "three",
+      "label": "3 symmetry lines",
+      "claim": "three-lines",
+      "feedback": "The diagonal fold does not match, so it cannot be counted.",
+      "evidenceKind": "blocker",
+      "evidenceText": "The diagonal row is marked as a non-match.",
+      "highlightNodeIds": [
+       "diagonal"
+      ]
      }
     ],
-    "missFeedback": "Picture folding the letter each way — does either fold (or both) produce a match?",
-    "successFeedback": "A is vertical-only; H and O are both; F has no line of symmetry at all."
+    "fallbackFeedback": "Count only the folds whose halves match exactly.",
+    "successFeedback": "The block H has two symmetry lines: one vertical and one horizontal."
    },
    "predict": {
     "prompt": "Does the block capital H have MORE than one line of symmetry?",

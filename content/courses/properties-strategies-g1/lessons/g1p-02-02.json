@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "When two addends differ by one, a known double is hiding inside: 6 + 7 is the double 6 + 6, plus one more.",
-      "narration": "When two addends differ by one, a known double is hiding inside: 6 + 7 is the double 6 + 6, plus one more."
+      "figure": "near-double",
+      "body": "Seven plus eight is double seven plus one, so fourteen becomes fifteen.",
+      "narration": "Seven plus eight is double seven plus one, so fourteen becomes fifteen."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That doubles the bigger number instead of the smaller one."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 2 + 3 = 5."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 5."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Anchor on the smaller double, then add one. The double does most of the work.",
-      "narration": "Anchor on the smaller double, then add one. The double does most of the work."
+      "figure": "as100-near-doubles",
+      "body": "Near doubles sit one past a known double: five plus six is eleven and six plus seven is thirteen.",
+      "narration": "Near doubles sit one past a known double: five plus six is eleven and six plus seven is thirteen."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-doubles-plus",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Use the double: 6 + 6 lands on 12, so for 6 + 7 count on 1 more from 12. Where do you land?",
-        "min": 10,
-        "max": 15,
-        "start": 12,
-        "hop": 1,
-        "hops": 1,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 12 and count on 1: you land on 13.",
-        "successFeedback": "Landed on 13 — the double 12 plus one more gives 6 + 7."
+        "type": "tapDiagram",
+        "prompt": "Use double five plus one to solve five plus six. Tap the total.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "10",
+            "icon": "10",
+            "count": 1,
+            "correct": false,
+            "feedback": "10 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "11",
+            "icon": "11",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — double five is ten, then one more is eleven."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "12",
+            "icon": "12",
+            "count": 1,
+            "correct": false,
+            "feedback": "12 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — double five is ten, then one more is eleven."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which known double helps solve 4 + 5?",
+        "prompt": "Which known double is the best anchor for four plus five?",
         "options": [
           {
             "id": "o0",
@@ -260,7 +290,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "3 + 4 = ?",
+        "prompt": "Double three, then add one. What total do you get?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -274,8 +304,8 @@
             "feedback": "That doubles the bigger number instead of the smaller one."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 3 + 4 = 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -320,7 +350,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "3 + 4 = ?",
+        "prompt": "Two rows of three counters gain one extra counter. How many are there?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -334,8 +364,8 @@
             "feedback": "That doubles the bigger number instead of the smaller one."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 3 + 4 = 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Find the double hiding next to this sum.",
@@ -401,22 +431,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "2 + 3 = ?",
-          "answer": 5,
+          "prompt": "Build a row of 5 counters next to a row of 6 counters. Push the rows together and count every counter. What is the total?",
+          "answer": 11,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 4,
-              "feedback": "That is the double 2 + 2 without adding the one extra."
+              "value": 10,
+              "feedback": "That is the double 5 + 5 without adding the one extra counter."
             },
             {
-              "value": 6,
-              "feedback": "That doubles the bigger number instead of the smaller one."
+              "value": 12,
+              "feedback": "That doubles the bigger row instead of the smaller one."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 2 + 3 = 5."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the two rows of 5 and 6 counters total 11."
         }
       }
     }

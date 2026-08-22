@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Subtracting through ten works in two easy steps: first take away enough to land on ten, then take away the rest.",
-      "narration": "Subtracting through ten works in two easy steps: first take away enough to land on ten, then take away the rest."
+      "figure": "count-back-hops",
+      "body": "Subtract a small part by hopping backward from the whole. Seven minus three lands on four.",
+      "narration": "Subtract a small part by hopping backward from the whole. Seven minus three lands on four."
     },
     {
       "id": "i1",
@@ -100,8 +100,8 @@
             "feedback": "That adds instead of subtracting."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 13 − 9 = 4."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
         "Take away enough to reach ten first.",
@@ -138,32 +138,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A related addition fact can check the answer: the part taken away plus the answer rebuilds the start.",
-      "narration": "A related addition fact can check the answer: the part taken away plus the answer rebuilds the start."
+      "figure": "as-think-add",
+      "body": "Check subtraction with related addition: fifteen minus six is nine because nine plus six rebuilds fifteen.",
+      "narration": "Check subtraction with related addition: fifteen minus six is nine because nine plus six rebuilds fifteen."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-make-ten-sub",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Subtract through ten: start at 13 and count back 3 to reach ten. Where do you land?",
-        "min": 7,
-        "max": 15,
-        "start": 13,
-        "hop": 1,
-        "hops": 3,
-        "direction": "back",
-        "commonLandings": [
+        "type": "tapDiagram",
+        "prompt": "Fourteen loses six. Tap the part that rebuilds fourteen when six is added back.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "value": 9,
-            "feedback": "That passes ten; the first step stops exactly at ten."
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "7",
+            "icon": "7",
+            "count": 1,
+            "correct": false,
+            "feedback": "7 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "8",
+            "icon": "8",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — eight plus six rebuilds fourteen."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "9",
+            "icon": "9",
+            "count": 1,
+            "correct": false,
+            "feedback": "9 does not satisfy the relationship in the prompt."
           }
         ],
-        "missFeedback": "Start at 13 and count back 3: you land on 10.",
-        "successFeedback": "Landed on 10 — the first step of subtracting through ten stops exactly at ten."
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — eight plus six rebuilds fourteen."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +224,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "15 − 9 = ?",
+        "prompt": "Fifteen loses nine counters. How many remain?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -213,8 +238,8 @@
             "feedback": "That adds instead of subtracting."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 15 − 9 = 6."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 6."
       },
       "hints": [
         "Take away enough to reach ten first.",
@@ -259,7 +284,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which addition fact helps solve 16 − 5?",
+        "prompt": "Which related addition fact checks sixteen minus five?",
         "options": [
           {
             "id": "o0",
@@ -330,7 +355,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "13 − 7 = ?",
+        "prompt": "Thirteen counters split into seven removed and a part left. How many are left?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -344,8 +369,8 @@
             "feedback": "That adds instead of subtracting."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 13 − 7 = 6."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 6."
       },
       "hints": [
         "Take away enough to reach ten first.",
@@ -411,22 +436,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "13 − 9 = ?",
-          "answer": 4,
+          "prompt": "You have 17 pretzels in a bag. Take out 8 pretzels, one at a time. How many pretzels are left in the bag?",
+          "answer": 9,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 5,
-              "feedback": "That is one too many; check the last step past ten."
+              "value": 10,
+              "feedback": "That stops one pretzel too soon; take out all 8 pretzels, not just 7."
             },
             {
-              "value": 22,
-              "feedback": "That adds instead of subtracting."
+              "value": 25,
+              "feedback": "That adds instead of subtracting, growing the bag instead of removing pretzels."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 13 − 9 = 4."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — 17 pretzels with 8 removed leaves 9 in the bag."
         }
       }
     }

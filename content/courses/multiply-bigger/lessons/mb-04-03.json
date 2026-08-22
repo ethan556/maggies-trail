@@ -15,68 +15,42 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Sort each story by its ending.",
+   "body": "Let the story decide what the remainder means.",
    "conceptTag": "interpret-remainders",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each story by how its remainder should be handled.",
-    "buckets": [
+    "type": "quotientReasoningLab",
+    "task": "remainderContext",
+    "answerMode": "numeric",
+    "prompt": "Twenty-seven students ride in cars that hold 4 each. How many cars are needed so everyone rides?",
+    "dividend": {
+     "num": 27,
+     "den": 1
+    },
+    "divisor": {
+     "num": 4,
+     "den": 1
+    },
+    "contextPolicy": "roundUp",
+    "candidates": [],
+    "requiredExplorations": 4,
+    "answerUnit": "cars",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "up",
-      "label": "Round UP",
-      "icon": "⬆️"
+      "value": 6,
+      "feedback": "Six cars carry only 24 students. The 3 students left over still need a car."
      },
      {
-      "id": "down",
-      "label": "Round DOWN",
-      "icon": "⬇️"
-     },
-     {
-      "id": "frac",
-      "label": "Split as a fraction",
-      "icon": "🍕"
+      "value": 3,
+      "feedback": "Three is the remainder, not the number of cars. Add one car for those students."
      }
     ],
-    "items": [
-     {
-      "id": "s1",
-      "label": "51 kids, 8 per van — how many vans are needed?",
-      "bucketId": "up",
-      "feedback": "51 ÷ 8 = 6 remainder 3 — the 3 leftover kids still need a whole extra van: 7 vans."
-     },
-     {
-      "id": "s2",
-      "label": "43 books, 6 per box — how many boxes are needed?",
-      "bucketId": "up",
-      "feedback": "43 ÷ 6 = 7 remainder 1 — that one leftover book still needs a box: 8 boxes."
-     },
-     {
-      "id": "s3",
-      "label": "38 kids, teams of 5 — how many FULL teams can be made?",
-      "bucketId": "down",
-      "feedback": "38 ÷ 5 = 7 remainder 3 — the 3 leftover kids can't form a full team, so just 7 teams."
-     },
-     {
-      "id": "s4",
-      "label": "50 eggs, dozens of 12 — how many FULL dozens?",
-      "bucketId": "down",
-      "feedback": "50 ÷ 12 = 4 remainder 2 — the 2 leftover eggs don't make a dozen, so just 4 dozens."
-     },
-     {
-      "id": "s5",
-      "label": "9 sandwiches shared equally among 4 friends",
-      "bucketId": "frac",
-      "feedback": "9 ÷ 4 = 2 remainder 1 — sandwiches can be cut, so each friend gets 2 whole plus 1/4 more."
-     },
-     {
-      "id": "s6",
-      "label": "7 chocolate bars shared equally between 2 friends",
-      "bucketId": "frac",
-      "feedback": "7 ÷ 2 = 3 remainder 1 — bars can be cut, so each friend gets 3 whole plus 1/2 more."
-     }
-    ],
-    "missFeedback": "Ask: does the leftover need a whole extra container (up), get dropped as too few for a group (down), or get physically cut (fraction)?",
-    "successFeedback": "Needing enough containers rounds up; counting only complete groups rounds down; cuttable shares become fractions."
+    "fractionErrors": [],
+    "authoredStages": [],
+    "successFeedback": "Six full cars leave 3 students, so a seventh car is needed.",
+    "explorationFeedback": "Open each quotient state so the groups, product, and remainder stay connected.",
+    "fallbackFeedback": "27 ÷ 4 is 6 remainder 3. Because every student must ride, round the car count up to 7."
    },
    "predict": {
     "prompt": "27 kids, and each car holds 4. Does the remainder mean you SKIP a car or ADD one?",
@@ -113,23 +87,23 @@
     "options": [
      {
       "id": "a",
-      "label": "6 trips — the leftover 4 people still need a trip",
+        "label": "6 trips",
       "correct": true,
       "feedback": "34 ÷ 6 = 5 remainder 4; those 4 people can't be left on shore, so it's 6 trips."
      },
      {
       "id": "b",
-      "label": "5 trips — that's the quotient",
+        "label": "5 trips",
       "feedback": "5 trips only moves 30 people. The last 4 still need to cross — round up to 6 trips."
      },
      {
       "id": "c",
-      "label": "34 trips — one per person",
+        "label": "34 trips",
       "feedback": "The boat carries 6 at once, not 1. 34 ÷ 6 = 5 remainder 4, rounded up to 6 trips."
      },
      {
       "id": "d",
-      "label": "4 trips — that's the remainder",
+        "label": "4 trips",
       "feedback": "4 is just the leftover people, not the trip count. The full answer rounds the quotient up: 6 trips."
      }
     ]
@@ -148,34 +122,38 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "Build the fraction share.",
+   "body": "Build the complete fraction share.",
    "conceptTag": "interpret-remainders",
    "explanationVariants": [
-    "11 ÷ 4 = 2 remainder 3, and that leftover 3 splits into fourths: each friend gets 2 and 3/4.",
-    "The remainder (3) becomes the numerator over the divisor (4): 3/4 more, plus the whole 2."
+    "11 ÷ 4 = 2 remainder 3, and that leftover 3 splits into fourths: each friend's COMPLETE share is 2 and 3/4 cookies.",
+    "The remainder (3) becomes the numerator over the divisor (4): the whole 2 plus 3/4 more, so 2 3/4 cookies total."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "11 cookies shared equally among 4 kids (cookies can be broken). Each kid gets 2 whole cookies, plus a fraction. What is the NUMERATOR of that fraction (over 4)?",
-    "answer": 3,
-    "tolerance": 0,
-    "unit": "(over 4)",
-    "previewDenominator": 4,
-    "commonErrors": [
+    "type": "mcq",
+    "prompt": "11 cookies shared equally among 4 kids (cookies can be broken). What is each kid's COMPLETE share?",
+    "options": [
      {
-      "value": 2,
-      "feedback": "2 is the whole-cookie count each kid gets. The fraction's numerator is the LEFTOVER after that: 11 − (4×2) = 3."
+      "id": "a",
+      "label": "2 3/4 cookies",
+      "correct": true,
+      "feedback": "11 ÷ 4 = 2 remainder 3. Each kid gets the whole 2 cookies plus the leftover 3 split into fourths: 2 3/4."
      },
      {
-      "value": 4,
-      "feedback": "4 is the denominator (how many kids share each broken cookie), not the numerator. The numerator is the remainder: 3."
+      "id": "b",
+      "label": "3 3/4 cookies",
+      "feedback": "That rounds the whole part up first. The whole-cookie count is exactly the quotient, 2 — the leftover 3 becomes the fraction: 2 3/4."
+     },
+     {
+      "id": "c",
+      "label": "2 4/3 cookies",
+      "feedback": "The numerator and denominator got swapped. It's the leftover (3) over the number of kids (4), not the other way: 2 3/4."
+     },
+     {
+      "id": "d",
+      "label": "2 3/11 cookies",
+      "feedback": "That divides the leftover by the total cookies (11) instead of the number of kids (4): the fraction is 3/4, not 3/11."
      }
-    ],
-    "fallbackFeedback": "Find the remainder of 11 ÷ 4 — that's the fraction's numerator."
-   },
-   "variant": {
-    "gen": "g4-multiply",
-    "form": "mbInterpretRemaindersNumeric"
+    ]
    }
   },
   {
@@ -233,33 +211,38 @@
   {
    "id": "k3",
    "kind": "check",
-   "body": "Rows of chairs.",
+   "body": "Two questions, one remainder — compare both endings.",
    "conceptTag": "interpret-remainders",
    "explanationVariants": [
-    "112 ÷ 15 = 7 remainder 7 — the 7 leftover chairs still need a row, so 8 rows are needed to fit them all.",
-    "Rounding up from 7 remainder 7 gives 8 rows."
+    "112 ÷ 15 = 7 remainder 7. The 7 leftover chairs still need a row, so 8 rows are needed to fit everyone — but only 7 rows are packed with a full 15 chairs each.",
+    "Round up (8) answers 'fit them all'; round down (7) answers 'completely filled' — same remainder, two different questions."
    ],
    "widget": {
-    "type": "numeric",
-    "prompt": "112 chairs need to be set up; each row holds 15 chairs. How many rows are needed to fit them ALL?",
-    "answer": 8,
-    "tolerance": 0,
-    "unit": "rows",
-    "commonErrors": [
+    "type": "mcq",
+    "prompt": "112 chairs need to be set up; each row holds 15 chairs. How many rows are needed so ALL 112 chairs have a spot, and how many rows can be COMPLETELY filled?",
+    "options": [
      {
-      "value": 7,
-      "feedback": "7 rows only fits 105 chairs (7 × 15). The last 7 chairs still need a row — round up to 8."
+      "id": "a",
+      "label": "8 needed to fit all; 7 completely filled",
+      "correct": true,
+      "feedback": "112 ÷ 15 = 7 remainder 7. The 7 leftover chairs still need a row (round up to 8), but only 7 rows get a full 15 chairs (round down)."
      },
      {
-      "value": 15,
-      "feedback": "15 is chairs per row, not a row count. 112 ÷ 15 = 7 remainder 7, rounded up to 8 rows."
+      "id": "b",
+      "label": "7 needed to fit all; 8 completely filled",
+      "feedback": "That's swapped — you can't completely fill more rows than it takes to fit everyone. Only 7 rows are full; an 8th row is needed for the last 7 chairs."
+     },
+     {
+      "id": "c",
+      "label": "8 needed to fit all; 8 completely filled",
+      "feedback": "The 8th row holds only the 7 leftover chairs, not a full 15 — so just 7 rows are completely filled, even though fitting everyone takes 8."
+     },
+     {
+      "id": "d",
+      "label": "7 needed to fit all; 7 completely filled",
+      "feedback": "7 rows seats only 105 chairs (7 × 15) — the last 7 chairs still need a row. Fitting everyone takes 8 rows, even though only 7 are completely full."
      }
-    ],
-    "fallbackFeedback": "Divide 112 by 15; if there's any remainder, round the quotient up."
-   },
-   "variant": {
-    "gen": "g4-multiply",
-    "form": "mbInterpretRemaindersNumeric"
+    ]
    }
   },
   {

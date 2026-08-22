@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "A decimal is place value carried past the ones: a unit square split into ten columns names tenths, and split into a hundred cells names hundredths.",
-      "narration": "A decimal is place value carried past the ones: a unit square split into ten columns names tenths, and split into a hundred cells names hundredths."
+      "figure": "dpv-hundredths-grid",
+      "body": "In the picture, one of 100 equal cells is one hundredth. A full column of 10 cells is one tenth.",
+      "narration": "In the picture, one of 100 equal cells is one hundredth. A full column of 10 cells is one tenth."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the first model.",
       "conceptTag": "g5dc-add-model",
       "widget": {
         "type": "barBuilder",
@@ -78,7 +78,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "",
+      "body": "Read or explain the representation.",
       "conceptTag": "g5dc-add-model",
       "explanationVariants": [
         "Count the cells.",
@@ -138,32 +138,47 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Adding decimals with a model is just combining shaded pieces of the SAME size — which is why the pieces must be named before anything is added.",
-      "narration": "Adding decimals with a model is just combining shaded pieces of the SAME size — which is why the pieces must be named before anything is added."
+      "figure": "dop-line-up",
+      "body": "To add decimals, line up the decimal points. Then each place meets pieces of the same size.",
+      "narration": "To add decimals, line up the decimal points. Then each place meets pieces of the same size."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Check a classmate's claim with the model.",
       "conceptTag": "g5dc-add-model",
       "widget": {
         "type": "barBuilder",
-        "prompt": "Build 0.40 and 0.25 as shaded hundredths: 40 cells and 25 cells.",
+        "prompt": "A classmate claims that 55 hundredths plus 38 hundredths make 83 hundredths. Build both bars and count every shaded cell to check.",
         "categories": [
-          "0.40",
-          "0.25"
+          "0.55",
+          "0.38"
         ],
         "target": [
-          40,
-          25
+          55,
+          38
         ],
-        "maxVal": 45,
+        "maxVal": 60,
         "step": 1,
-        "successFeedback": "40 and 25 hundredths — 65 cells shaded in all, which is 0.65.",
-        "partialFeedback": "Shade 40 cells for the first amount and 25 for the second, counting in hundredths.",
+        "successFeedback": "55 and 38 hundredths — 93 cells shaded in all, which is 0.93. The classmate's 83 dropped the carried ten.",
+        "partialFeedback": "Shade 55 cells for the first amount and 38 for the second, counting in hundredths.",
         "display": "bar",
         "histogram": false
+      },
+      "predict": {
+        "prompt": "Before building, does 55 hundredths plus 38 hundredths equal 83 hundredths?",
+        "options": [
+          {
+            "id": "no",
+            "label": "No — a ten was dropped from the carry"
+          },
+          {
+            "id": "yes",
+            "label": "Yes, that matches"
+          }
+        ],
+        "outcomeId": "no",
+        "reveal": "Counting every shaded cell gives 93, not 83 — adding 5 and 8 ones-of-hundredths makes 13, and that extra ten must carry into the tens-of-hundredths column."
       },
       "cml": {
         "stage": "construct",
@@ -191,7 +206,7 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "",
+      "body": "Apply the idea in a new form.",
       "conceptTag": "g5dc-add-model",
       "explanationVariants": [
         "Ten columns, ten tenths.",
@@ -251,7 +266,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Check a likely misconception.",
       "conceptTag": "g5dc-add-model",
       "explanationVariants": [
         "Same-size pieces add.",
@@ -259,22 +274,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: 460 + 404 = ?",
-        "answer": 864,
-        "tolerance": 0,
+        "prompt": "Add 0.65 and 0.19. What is the sum?",
+        "answer": 0.84,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 764,
-            "feedback": "A hundred hundredths went missing in the carry — that is a whole 1.00 lost from the total."
+            "value": 0.74,
+            "feedback": "A ten hundredths carried out of the hundredths column got dropped — 5 + 9 = 14 must send a tenth left."
           },
           {
-            "value": 56,
-            "feedback": "That found the difference; putting the two amounts together calls for addition."
+            "value": 84,
+            "feedback": "That is 84 as a whole number; the decimal point still belongs two places from the right."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 864."
+        "successFeedback": "Correct — 0.84."
       },
       "hints": [
         "Line up the points.",
@@ -302,16 +317,12 @@
         "transferFamily": "decimal-fluency-g5:g5dc-add-model",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddTradeNumeric"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g5dc-add-model",
       "explanationVariants": [
         "Any amount, same grid.",
@@ -319,22 +330,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A hundredths grid has 100 equal cells. How many cells must be shaded to show 0.72?",
-        "answer": 72,
-        "tolerance": 0,
+        "prompt": "A unit square is split into 100 equal cells, and 47 of them are shaded. Write the shaded amount as a decimal.",
+        "answer": 0.47,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 7,
-            "feedback": "That read the amount as tenths; a hundredths grid counts all 100 cells."
+            "value": 47,
+            "feedback": "That is the count of shaded cells, and a count of parts is a whole number. Each cell is one hundredth, so the count belongs after the decimal point, ending in the hundredths place."
           },
           {
-            "value": 28,
-            "feedback": "That shaded the REST of the grid — the part left over rather than the part named."
+            "value": 0.53,
+            "feedback": "That is the count of UNSHADED cells, the part left over rather than the part the question named."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 72."
+        "successFeedback": "Correct — 0.47."
       },
       "hints": [
         "Ten columns, or a hundred cells.",
@@ -365,13 +376,13 @@
       },
       "variant": {
         "gen": "g4-decimals",
-        "form": "dHundredthsCellsNumeric"
+        "form": "dHundredthsWriteNumeric"
       }
     },
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Summarize adding decimals with a model.",
       "takeaways": [
         "A decimal continues place value.",
         "Tenths and hundredths name piece sizes.",
@@ -386,8 +397,8 @@
       "concept": {
         "id": "rem-g5dc-add-model-c",
         "kind": "concept",
-        "body": "Adding decimals with a model is just combining shaded pieces of the SAME size — which is why the pieces must be named before anything is added.",
-        "narration": "Adding decimals with a model is just combining shaded pieces of the SAME size — which is why the pieces must be named before anything is added."
+        "body": "To add decimals, line up the decimal points. Then each place meets pieces of the same size.",
+        "narration": "To add decimals, line up the decimal points. Then each place meets pieces of the same size."
       },
       "check": {
         "id": "rem-g5dc-add-model-k",
@@ -400,21 +411,21 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A hundredths grid has 100 equal cells. How many cells must be shaded to show 0.68?",
+          "prompt": "Maggie shades a hundredths grid to show 0.68, filling whole columns first and then single cells. When she finishes, how many cells are shaded in all?",
           "answer": 68,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 7,
-              "feedback": "That read the amount as tenths; a hundredths grid counts all 100 cells."
+              "feedback": "That read the amount as tenths and counted about 7 columns; every single cell counts, and the grid holds 100 of them."
             },
             {
               "value": 32,
-              "feedback": "That shaded the REST of the grid — the part left over rather than the part named."
+              "feedback": "That counted the cells Maggie left blank — the part left over rather than the amount she set out to shade."
             }
           ],
-          "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
+          "fallbackFeedback": "Each full column is ten cells and each single cell is one hundredth. Turn each digit of 0.68 into cells, then add the counts.",
           "successFeedback": "Correct — 68."
         }
       }

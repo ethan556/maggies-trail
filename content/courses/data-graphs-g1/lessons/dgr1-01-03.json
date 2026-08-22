@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "bar-compare",
       "body": "A tally mark counts one. Every fifth mark crosses the four before it, bundling them into a five-group.",
       "narration": "A tally mark counts one. Every fifth mark crosses the four before it, bundling them into a five-group."
     },
@@ -110,7 +109,7 @@
       "hints": [
         "Each crossed group holds five.",
         "How many fives fit in 7?",
-        "1 groups."
+        "1 group."
       ],
       "variant": {
         "gen": "g1-data",
@@ -142,7 +141,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "bar-compare",
       "body": "Five-groups make big counts fast to read: count the crossed groups by fives, then the leftover singles by ones.",
       "narration": "Five-groups make big counts fast to read: count the crossed groups by fives, then the leftover singles by ones."
     },
@@ -255,38 +253,38 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Bundle by fives.",
+      "body": "Read a tally chart.",
       "conceptTag": "g1d-tally",
       "explanationVariants": [
-        "13 votes make 2 full five-groups.",
-        "Count fives inside 13: 2 crossed groups fit."
+        "2 crossed five-groups make 10, plus 3 singles makes 13.",
+        "Read the tally backward: groups times five, plus the leftover singles."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "13 students voted. When you tally the votes in five-groups, how many CROSSED groups will there be?",
-        "answer": 2,
+        "prompt": "A tally row shows 2 crossed five-groups and 3 single marks. How many does it count?",
+        "answer": 13,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 13,
-            "feedback": "That is the whole count of votes. Each crossed group bundles five of them; the question asks how many full bundles fit."
+            "value": 5,
+            "feedback": "That counts each crossed group as one mark, but a crossed group holds FIVE marks. Count the groups by fives, then add the singles."
           },
           {
-            "value": 3,
-            "feedback": "That is the number of leftover single marks after the five-groups, not the number of crossed groups."
+            "value": 10,
+            "feedback": "That counts only the five-groups and skips the single marks after them. Count on from 10 by ones."
           }
         ],
-        "fallbackFeedback": "Bundle the count into fives — each full bundle becomes one crossed group."
+        "fallbackFeedback": "Each crossed group holds 5 — count the groups by fives, then add the leftover singles: 2 fives is 10, plus 3 is 13."
       },
       "hints": [
-        "Each crossed group holds five.",
-        "How many fives fit in 13?",
-        "2 groups."
+        "Each crossed group holds 5, not 1.",
+        "2 groups of 5 is 10.",
+        "10 + 3 singles = 13."
       ],
       "variant": {
         "gen": "g1-data",
-        "form": "GdTallyMakeNumeric"
+        "form": "GdTallyReadNumeric"
       },
       "cml": {
         "stage": "construct",
@@ -314,39 +312,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "The leftover marks.",
+      "body": "How many more to the next group?",
       "conceptTag": "g1d-tally",
       "explanationVariants": [
-        "After 2 five-groups, 3 single marks stand alone.",
-        "13 is 2 fives and 3 more."
+        "A group needs 5; 3 singles are already there, so 5 − 3 = 2 more.",
+        "Count up from 3 to 5: 2 more marks complete the group."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "13 students voted. After the crossed five-groups, how many SINGLE marks will the tally show?",
-        "answer": 3,
+        "prompt": "13 students voted. The tally shows 2 crossed five-groups and 3 single marks. How many MORE votes are needed to cross a THIRD group?",
+        "answer": 2,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 2,
-            "feedback": "That is the number of crossed five-groups, not the leftover single marks."
+            "value": 3,
+            "feedback": "3 is how many singles are already there. The question asks how many MORE are needed to reach 5: 5 − 3 = 2."
           },
           {
-            "value": 13,
-            "feedback": "That is the whole count. Only the marks left over after bundling fives stand alone."
+            "value": 8,
+            "feedback": "8 would start a whole new group without using the 3 marks already there. Only 5 − 3 = 2 more marks are needed to finish this group."
           }
         ],
-        "fallbackFeedback": "Take out the full fives first — the marks that do not fill a five-group stand alone."
+        "fallbackFeedback": "A group needs 5 marks. 3 are already there, so 5 − 3 = 2 more are needed."
       },
       "hints": [
-        "Bundle fives first.",
-        "What is left after the fives?",
-        "3 singles."
+        "A crossed group needs 5 marks.",
+        "3 singles are already there.",
+        "5 − 3 = 2."
       ],
-      "variant": {
-        "gen": "g1-data",
-        "form": "GdTallySinglesNumeric"
-      },
       "cml": {
         "stage": "construct",
         "flagship": false,

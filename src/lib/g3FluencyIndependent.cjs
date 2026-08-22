@@ -42,37 +42,50 @@ function solveG3FluencyPrompt(form, input) {
 
   // ---- division ----
   if (/^DivBy(2|3|45|67|89|10)Numeric$/.test(form)) {
-    // "${product} ÷ ${d} = ?" — n = [product, d]
+    // The live generator only ever emits "${product} ÷ ${d} = ?" (n = [product, d]), but these
+    // forms also cover statically-authored lesson surfaces with the divisor named FIRST: "What
+    // number makes ${d} × ? = ${product}?" and "How many groups of ${d} (fit in|make) ${product}?"
+    // (n = [d, product] in both). Mirrors the same divisor-first detection already used below for
+    // DivMissingNumeric.
+    if (prompt.includes("×") || prompt.includes("How many groups of")) return n[1] / n[0];
     return n[0] / n[1];
   }
 
   if (form === "DivThinkMultNumeric") {
-    // "${product} ÷ ${divisor} = ? Think: ${divisor} × ? = ${product}." — n = [product, divisor, divisor, product]
+    // The generator's own template "${product} ÷ ${divisor} = ? Think: ${divisor} × ? = ${product}."
+    // contains BOTH ÷ and ×, and stays n[0]/n[1] (product first). Statically-authored surfaces for
+    // this form reuse the same divisor-first phrasings as DivBy*Numeric — "How many groups of ${d}
+    // fit in ${product}?" (no × or ÷ at all) and "What number makes ${d} × ? = ${product}?" (× with
+    // no ÷) — where the divisor is named first, so only an UNPAIRED × (no ÷ alongside it) or the
+    // "groups of" phrasing flips the extraction.
+    if (prompt.includes("How many groups of") || (prompt.includes("×") && !prompt.includes("÷"))) return n[1] / n[0];
     return n[0] / n[1];
   }
 
-  if (form === "DivMissingNumeric") {
-    if (prompt.includes("×")) {
-      // "${a} × ? = ${product}" — n = [a, product]
-      return n[1] / n[0];
-    }
-    // "${product} ÷ ${a} = ?" — n = [product, a]
+  if (form === "DivMissingNumeric" || form === "DivMixedNumeric") {
+    // "${a} × ? = ${product}" or "How many groups of ${a} fit in ${product}?" — n = [a, product]
+    if (prompt.includes("×") || prompt.includes("How many groups of")) return n[1] / n[0];
+    // "${product} ÷ ${a} = ?" or a "shared/arranged" word problem — n = [product, a]
     return n[0] / n[1];
   }
 
   if (form === "DivSpecialNumeric") {
-    // "${n} ÷ 1 = ?" (n=[val,1]) or "${n} ÷ ${n} = ?" (n=[val,val])
-    if (n[1] === 1 && n[0] !== 1) return n[0];
-    return 1;
+    // Special cases only: "n ÷ 1 = n" and "n ÷ n = 1". The two numbers appear in whichever order
+    // the phrasing names them (divisor-first in "How many groups of 1 fit in 12?" vs value-first in
+    // "12 ÷ 1 = ?"), so key off equality / which one IS 1 rather than a fixed position.
+    if (n[0] === n[1]) return 1;
+    if (n[0] === 1) return n[1];
+    if (n[1] === 1) return n[0];
+    throw new Error(`DivSpecialNumeric: neither special case matches "${prompt}"`);
   }
 
   if (form === "DivZeroMcq") {
-    return exact(options, "Undefined — division by zero has no answer");
-  }
-
-  if (form === "DivMixedNumeric") {
-    // "${product} ÷ ${divisor} = ?" — n = [product, divisor]
-    return n[0] / n[1];
+    // The correct option is always phrased as "there is no such number" rather than naming one —
+    // every wrong option leads with a specific digit (0, 1, n, or n+1) — so select structurally
+    // rather than pinning one literal label text, since content and generator phrase it differently.
+    const notANumber = options.filter((o) => !/^\d/.test(o));
+    if (notANumber.length !== 1) throw new Error(`DivZeroMcq: expected exactly one non-numeric option in ${options.join(" | ")}`);
+    return notANumber[0];
   }
 
   if (form === "DivChooseMcq") {

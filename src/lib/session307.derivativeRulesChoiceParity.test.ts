@@ -1,0 +1,27 @@
+import { createHash } from "node:crypto";
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+import { evaluate } from "./evaluate";
+import { Lesson, WidgetSpec } from "./schema";
+type RawStep = { id: string; kind: string; widget?: unknown };
+type RawLesson = { id: string; courseId: string; steps: RawStep[] };
+const course = path.join(process.cwd(), "content", "courses", "derivative-rules");
+const directory = path.join(course, "lessons");
+const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+const choices = [
+  ["dr-01-01", "k1", "check", "3d013d1a96df740582e2d2200f0e9a6a3cdbe81244bbc1c467644e661085b9a3", ["A function assigning a slope to each input value.", "A number giving one slope at one input value.", "A tangent line showing one slope at one input.", "A limit used to calculate one slope at one input."]],
+  ["dr-01-02", "k1", "check", "77a2a9dd190b4add727e010ba4e98d2210e0454c6a7c89fcd7ffdc07333e7933", ["Neither; it flattens but keeps rising through zero.", "A valley; slopes change from negative to positive.", "A peak; slopes change from positive to negative.", "More data; f′(0) alone does not prove either one."]],
+  ["dr-01-03", "k3", "check", "d9b4464623ceca69980594c97f209769c09258ea0341e2a90623973b4b50739e", ["The graph is differentiable at that point.", "The graph is a straight line at every point.", "The derivative equals zero at that point.", "Every graph becomes straight under magnification."]],
+  ["dr-02-02", "k1", "check", "fea106dae84d488df544f5b5a16a961913e584b0e94343ebc66f0e7deacfddbe", ["The constant shifts the curve but leaves slopes unchanged.", "The constant changes the height and every slope equally.", "The constant keeps the graph fixed and slopes undefined.", "The constant adds seven to every derivative value."]],
+  ["dr-04-02", "k1", "check", "cd8fd79090d1e44919b03cdcb197cbfc43f46cbc59a4eb140918096bf4f6632f", ["Three: outer root, cube, and inner linear rule.", "Two: root and cube, with no inner rule needed.", "One: simplify first, leaving only the outer root.", "Four: count both powers twice and the inner rule."]],
+  ["dr-04-03", "k1", "check", "1b015f013d8511078592336adc611a4f9dcbb47c3fa5c8b5a4398de3872fa278", ["Because upper and lower points need different slopes.", "Because eliminating y is impossible for a circle.", "Because every implicit curve must use two variables.", "Because the equation gives one point for each x."]],
+  ["dr-05-02", "k2", "check", "4b4150b04f048b0fb8c6fbe27a5c2e5f64fc5fdec7513127167497334e9786ac", ["Cosine falls just right of zero while sine is positive.", "Cosine rises just right of zero while sine is positive.", "Cosine is negative just right of zero, so its slope is negative.", "Sine is zero just right of zero, so cosine cannot fall."]],
+] as const;
+async function load(id: string) { return JSON.parse(await readFile(path.join(directory, `${id}.json`), "utf8")) as RawLesson; }
+function step(current: RawLesson, id: string) { const found = current.steps.find((entry) => entry.id === id); if (!found) throw new Error(`${current.id}/${id} missing`); return found; }
+function maskedContract(widget: unknown) { const copy = JSON.parse(JSON.stringify(widget)) as { options: Array<{ label: string }> }; for (const option of copy.options) option.label = "__LABEL__"; return copy; }
+describe("S307 Derivative Rules choice parity", () => {
+  it("preserves every non-label MCQ contract and answer evaluation", async () => { for (const [lessonId, stepId, kind, contractHash, labels] of choices) { const current = step(await load(lessonId), stepId); expect(current.kind).toBe(kind); const rawWidget = current.widget as { type?: string; options?: Array<{ id: string; label: string; correct: boolean }> }; expect(rawWidget.type).toBe("mcq"); if (!rawWidget.options) throw new Error(`${lessonId}/${stepId}: missing options`); expect(hash(maskedContract(rawWidget))).toBe(contractHash); const widget = WidgetSpec.parse(rawWidget); expect(widget.type).toBe("mcq"); if (widget.type !== "mcq") throw new Error(`${lessonId}/${stepId}: expected MCQ`); expect(widget.options.map((option) => option.id)).toEqual(["o1", "o2", "o3", "o4"]); expect(widget.options.map((option) => option.label)).toEqual(labels); expect(widget.options.filter((option) => option.correct).map((option) => option.id)).toEqual(["o1"]); for (const option of widget.options) expect(evaluate(widget, option.id).correct, `${lessonId}/${stepId}/${option.id}`).toBe(option.correct); const lengths = widget.options.map((option) => option.label.length); expect(Math.max(...lengths) - Math.min(...lengths), `${lessonId}/${stepId}`).toBeLessThanOrEqual(12); } });
+  it("keeps the complete course manifest and valid lesson schemas", async () => { const manifest = JSON.parse(await readFile(path.join(course, "course.json"), "utf8")) as { chapters: Array<{ lessonIds: string[] }> }; const declared = manifest.chapters.flatMap((chapter) => chapter.lessonIds).sort(); const files = (await readdir(directory)).filter((file) => file.endsWith(".json")).sort(); expect(files.map((file) => file.replace(/\.json$/, ""))).toEqual(declared); for (const file of files) { const raw = JSON.parse(await readFile(path.join(directory, file), "utf8")) as RawLesson; expect(file).toBe(`${raw.id}.json`); expect(raw.courseId).toBe("derivative-rules"); Lesson.parse(raw); } });
+});

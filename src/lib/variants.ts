@@ -163,8 +163,10 @@ export type VariantForm =
   | "addX"
   | "addSquare"
   | "subX"
+  | "subX2"
   | "subConst"
   | "subFlip"
+  | "subX2"
   | "mulHigh"
   | "mulConst"
   | "mulNeg"
@@ -482,6 +484,8 @@ export type VariantForm =
   | "cgPairValue"
   | "cgPairLineReason"
   | "cgPairPointAtX"
+  | "fracRatePlot"
+  | "fracRateShallow"
   | "cgInheritProperty"
   | "cgInheritanceDirection"
   | "cgInheritanceChain"
@@ -1098,6 +1102,8 @@ export type VariantForm =
   | "tmPythCSquaredB"
   | "tmPythAreaMeaning"
   | "tmPythLengthFromAreas"
+  | "tmPythMissingLeg"
+  | "tmPythClassmateSum"
   | "tmTranslateY"
   | "tmTranslateProperty"
   | "tmTranslateRule"
@@ -1127,6 +1133,7 @@ export type VariantForm =
   | "tmDistanceOrigin"
   | "tmDistanceOffset"
   | "tmConverseSort"
+  | "tmConverseBracket"
   | "bvScatterPair"
   | "bvScatterCount"
   | "bvScatterPurpose"
@@ -1160,6 +1167,9 @@ export type VariantForm =
   | "tmCylinderB"
   | "tmCylinderBase"
   | "tmCylinderTank"
+  | "tmCylinderDrum"
+  | "tmCylinderRadius"
+  | "tmCylinderDiameter"
   | "tmConeA"
   | "tmConeFromCylinder"
   | "tmConeB"
@@ -1264,6 +1274,8 @@ export type VariantForm =
   | "parenPower"
   | "sumPowers"
   | "mixedPowerOrder"
+  | "doublingPower"
+  | "mixedPowerSquareProduct"
   | "powerMulEval"
   | "lessThanPhrase"
   | "twicePlusPhrase"
@@ -1289,6 +1301,8 @@ export type VariantForm =
   | "solveSubtract"
   | "feeSolve"
   | "tipSolve"
+  | "giftCardSolve"
+  | "parkingRate"
   | "strictBoundary"
   | "inclusiveBoundary"
   | "noLargest"
@@ -2864,7 +2878,7 @@ const g6RatioVariant = (rand: () => number, band: Band, form: VariantForm): Vari
   if (form === "rrZeroAnchor") {
     const offset = pick(rand, 1, 3);
     return mcq(rand, "pr-constant-k-g7", `A student draws double number lines for ${a} laps in ${b} minutes but starts the minutes line at ${offset} instead of 0. What goes wrong?`,
-      [`The stacked marks stop sharing one multiplier, so the pairs are not equivalent ratios`, `Correct — the offset changes proportional scaling into addition. Both lines must share the zero anchor.`],
+      [`The stacked marks stop sharing a common ratio`, `Correct — the offset changes proportional scaling into addition, so the pairs stop sharing one multiplier and are no longer equivalent ratios. Both lines must share the zero anchor.`],
       [
         [`Nothing changes because the gap stays constant`, `A constant gap is additive, while ratios require a constant multiplier from a shared zero.`],
         [`Starting the laps line at ${offset} fixes the diagram`, `Shifting both lines still removes the common origin. Proportional pairs must scale outward from 0.`],
@@ -3202,8 +3216,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
       `A class asks, "How many ${ctx.variable} for each of the ${ctx.group}?" What makes this a statistical question?`,
       ["It expects the individual answers to vary", `Correct — the question gathers one value from each member and anticipates different answers.`],
       [
-        ["It contains numbers", `Numbers can appear in fixed-fact questions too. Statistical questions are defined by expected variability.`],
-        ["It can be answered quickly", `Speed does not determine whether a question is statistical. The expected spread of answers does.`],
+        ["It contains numbers in the question", `Numbers can appear in fixed-fact questions too. Statistical questions are defined by expected variability.`],
+        ["It can be answered very quickly by anyone", `Speed does not determine whether a question is statistical. The expected spread of answers does.`],
       ]);
   }
   if (form === "ddStatRewrite") {
@@ -3231,8 +3245,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
     return mcq(rand, "g6-data-literacy", `Is "${f.q}" a statistical question?`,
       [`No — it has the fixed answer ${f.fact}, so no variability is expected`, `Correct — asking more people would repeat the same mathematical fact rather than create a distribution.`],
       [
-        ["Yes — many people could be asked", `The number of people asked does not create variability when the underlying answer is fixed.`],
-        ["Yes — it is a mathematics question", `A mathematics topic can be statistical or non-statistical. This one has one predetermined answer.`],
+        ["Yes — the question could be asked to many different people", `The number of people asked does not create variability when the underlying answer is fixed.`],
+        ["Yes — it is a question about mathematics facts in general", `A mathematics topic can be statistical or non-statistical. This one has one predetermined answer.`],
       ]);
   }
   if (form === "ddStatChoose") {
@@ -3268,8 +3282,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
     return mcq(rand, "g6-data-literacy", `A sheet accidentally mixes answers for "${a}" and "${b}" into one list. Why is that a problem?`,
       ["The values answer different questions, so one distribution cannot describe them", `Correct — a data set needs one shared variable so its center, spread, and shape have a coherent meaning.`],
       [
-        ["The two questions might use some of the same numbers", `Shared numerals are harmless. The defect is that the numbers measure different variables.`],
-        ["It is fine because all data values are numbers", `Numerical format alone does not make values comparable; they must answer the same statistical question.`],
+        ["The two different questions might happen to use some of the same numbers", `Shared numerals are harmless. The defect is that the numbers measure different variables.`],
+        ["It is completely fine, because all of the data values are numbers", `Numerical format alone does not make values comparable; they must answer the same statistical question.`],
       ]);
   }
   if (form === "ddDataCountList") {
@@ -3312,9 +3326,9 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
   }
   if (form === "ddReadyQuestion") {
     const q = [
-      { good: "How many minutes did each student in class read last night?", vague: "Do students read a lot?", opinion: "Is reading good?" },
-      { good: "How many goals did each player score this season?", vague: "Is the team successful?", opinion: "Is soccer fun?" },
-      { good: "How many hours did each family sleep last night?", vague: "Do families sleep enough?", opinion: "Is sleeping early better?" },
+      { good: "How many minutes did each student in class read last night?", vague: "Does the class read a lot outside of school?", opinion: "Is reading a good use of a student's free time?" },
+      { good: "How many goals did each player score this season?", vague: "Is the team doing well again this season?", opinion: "Is playing soccer more fun than other sports?" },
+      { good: "How many hours did each family sleep last night?", vague: "Do most families get enough sleep at night?", opinion: "Is sleeping early better than sleeping in?" },
     ][pick(rand, 0, support ? 1 : 2)];
     return mcq(rand, "g6-data-literacy", "Which question is ready for consistent data collection?",
       [q.good, `Correct — it names the group, the measurable variable, and the time frame for every response.`],
@@ -3367,8 +3381,8 @@ const g6DataLiteracyVariant = (rand: () => number, band: Band, form: VariantForm
       [
         // S242 / MCQ-01: "always" appeared only in the two distractors, and an absolute in a wrong
         // option is one of the oldest tells in multiple choice. Both are stated plainly now.
-        ["A dot plot — one dot for every value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
-        ["No display — the raw list of values", `A raw list preserves values but hides the distribution's shape and concentration.`],
+        ["A dot plot — drawing one dot for every single value", `Hundreds of separate dots can become crowded; grouping makes the distribution easier to read.`],
+        ["No display — just showing the plain raw list of values", `A raw list preserves values but hides the distribution's shape and concentration.`],
       ]);
   }
   const width = support ? 5 : pick(rand, 4, 8);
@@ -3630,7 +3644,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddFullReport") {
     const center=pickBandInt(rand,band,[6,12],[10,22],[18,36]), spread=pick(rand,3,support?6:10);
     return mcq(rand,"g6-center-spread",`Which two-number report includes both a center and a spread for a distribution with median ${center} and IQR ${spread}?`,
-      [`Median ${center}; IQR ${spread} — one center and one spread`, `Correct — the pair reports both where the distribution sits and how tightly its middle half is packed.`],
+      [`Median ${center}; IQR ${spread}`, `Correct — the pair reports both where the distribution sits and how tightly its middle half is packed: one center, one spread.`],
       [
         [`Mean ${center} and median ${center}`,`Two centers do not describe variability, so the report omits spread.`],
         [`Range ${spread+5} and IQR ${spread}`,`Two spread measures omit the distribution's central location.`],
@@ -3657,7 +3671,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddBestDescription") {
     const median=pickBandInt(rand,band,[8,14],[12,24],[20,38]), spread=pick(rand,4,support?8:12);
     return mcq(rand,"g6-center-spread",`Choose the best one-sentence description of a roughly symmetric distribution with median ${median}, IQR ${spread}, and no outliers.`,
-      [`Values cluster symmetrically around ${median}, with the middle half spanning ${spread}`, `Correct — the sentence combines shape, center, and spread in context.`],
+      [`Values cluster symmetrically around ${median}`, `Correct — the sentence combines shape and center in context; the middle half of the data spans ${spread}.`],
       [
         [`The mean and median are both about ${median}`,`Two center values omit the amount of variability and the distribution's shape.`],
         [`The range is ${spread+10} and the IQR is ${spread}`,`Two spread measures omit where the data is centered and whether the shape is symmetric.`],
@@ -3693,7 +3707,7 @@ const g6CenterSpreadVariant = (rand: () => number, band: Band, form: VariantForm
   if (form === "ddCapReport") {
     const median=pickBandInt(rand,band,[2,6],[4,12],[8,20]),iqr=pick(rand,2,support?5:8),out=median+pick(rand,10,24);
     return mcq(rand,"g6-center-spread",`A distribution clusters near ${median}, has IQR ${iqr}, and contains one high outlier ${out}. Which report should be filed?`,
-      [`Most values cluster near ${median}; median ${median}, IQR ${iqr}, with a high outlier at ${out}`, `Correct — the report includes center, spread, overall concentration, and the unusual observation.`],
+      [`Most values cluster near ${median}, with a high outlier at ${out}`, `Correct — the report keeps the outlier rather than deleting it and captures both the overall cluster and the unusual observation; median ${median} and IQR ${iqr} describe the typical spread.`],
       [
         [`The average is ${median+1}`,`One average omits the spread, cluster, and outlier that define the distribution.`],
         [`Median ${median}, after deleting ${out} as an error`,`An unusual observation should not be erased without evidence that it is invalid.`],
@@ -6340,7 +6354,9 @@ const GENERATORS: VariantGen[] = [
         const decimal = `0.${"0".repeat(k - 1)}${sig}`;
         return buildExpr(
           "sci-notation",
-          `${decimal} in scientific notation is:`,
+          /* GRB-02 (S331): the long decimal IS the question — converting it is the task — and the
+           * prompt now says so explicitly rather than presenting bare digits. */
+          `The decimal ${decimal} in scientific notation is:`,
           [`${a}`, "\u00d7", `10${supNum(-k)}`, `10${supNum(k)}`, `${a10}`, `10${supNum(-k - 1)}`, `10${supNum(-k + 1)}`],
           [0, 1, 2],
           {
@@ -9930,7 +9946,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "solve-mult-div",
     label: "One-step multiply and divide equations",
-    forms: ["verifyMul", "solveDiv", "tickets"],
+    forms: ["verifyMul", "solveDiv", "tickets", "parkingRate"],
     // Undo multiplication by dividing, division by multiplying. The traps do the OPPOSITE
     // operation, or fall back to adding/subtracting — the two ways this step actually goes wrong.
     gen: (rand, band = "core", form = "default") => {
@@ -9987,6 +10003,27 @@ const GENERATORS: VariantGen[] = [
             [T - p, `${T - p} SUBTRACTS ${p} from ${T}. The equation is ${p}t = ${T} \u2014 divide both sides by ${p}: t = ${t}.`],
           ],
           `${p}t = ${T}, so t = ${T} \u00f7 ${p} = ${t} tickets.`
+        );
+      }
+      if (form === "parkingRate") {
+        // ee-04-03/ch1: the same one-step ph = T move as `tickets`, in the authored challenge's
+        // own hourly-rate context so the two steps stop regenerating identical stories.
+        const { p, h } = draw(
+          rand,
+          (r) => ({ p: pick(r, 3, band === "support" ? 6 : 9), h: pick(r, 4, 9) }),
+          ({ p, h }) => p * h !== p * (p * h) && p * h - p !== h && p !== h
+        );
+        const T = p * h;
+        return num(
+          "solve-mult-div",
+          `Parking costs $${p} per hour, and a receipt shows $${T} total. Write and solve an equation for the number of hours parked, h.`,
+          h,
+          0,
+          [
+            [p * T, `${p * T} MULTIPLIES ${p} × ${T} instead of undoing the equation ${p}h = ${T}. Divide both sides by ${p}: h = ${T} ÷ ${p} = ${h}.`],
+            [T - p, `${T - p} SUBTRACTS ${p} from ${T}. The equation is ${p}h = ${T} — divide both sides by ${p}: h = ${h}.`],
+          ],
+          `${p}h = ${T}, so h = ${T} ÷ ${p} = ${h}.`
         );
       }
       // default: solve ax = c.
@@ -11420,7 +11457,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "poly-addsub",
     label: "Adding and subtracting polynomials, one column at a time",
-    forms: ["addX", "addSquare", "subX", "subConst", "subFlip"],
+    forms: ["addX", "addSquare", "subX", "subConst", "subFlip", "subX2"],
     // Column arithmetic with signs. Addition traps: adding the SIZES, or landing on the wrong
     // sign. Subtraction traps: forgetting that the minus flips EVERY sign in the second
     // polynomial, or flipping the result instead. Each form isolates one column of one operation.
@@ -11537,6 +11574,37 @@ const GENERATORS: VariantGen[] = [
             [-(B + 1), `Watch the signs: ${B} + 1 = +${ans}.`],
           ],
           `Subtracting \u2212x adds one x: ${B} + 1 = ${ans}.`
+        );
+      }
+      if (form === "subX2") {
+        // Subtraction on the LEADING (x^2) column. Added for ep-02-03/k2 (S327 PG2 redesign),
+        // which retargeted a template-duplicate-of-k1 step to ask about the x^2 column instead
+        // of the x column, specifically to preserve the "a column can cancel to zero" idea on
+        // the leading term (4x^2 - 4x^2 = 0 in the authored example). A zero answer is
+        // legitimate and authored here (A === D), mirroring subX's own B === E zero-answer case
+        // -- so unlike the other subtract forms above, this one must NOT force A > D.
+        const { A, B, C, D, E, F } = draw(
+          rand,
+          (r) => ({ A: pick(r, 2, hi), B: pick(r, 2, hi), C: pick(r, 1, 6), D: pick(r, 2, hi), E: pick(r, 2, hi), F: pick(r, 1, 6) }),
+          ({ A, D }) => {
+            const ans = A - D;
+            const added = A + D;
+            const other = ans === 0 ? -added : -ans;
+            return added !== 0 && added !== ans && other !== ans && other !== added;
+          }
+        );
+        const ans = A - D;
+        const other = ans === 0 ? -(A + D) : -ans;
+        return num(
+          "poly-addsub",
+          `Subtract: (${A}x^2 + ${B}x - ${C}) - (${D}x^2 + ${E}x - ${F}). What is the coefficient of x^2?`,
+          ans,
+          0,
+          [
+            [A + D, `Subtraction flips the second term: ${A} − ${D} = ${ans}, not ${A} + ${D}.`],
+            [other, `Watch the sign: ${A} − ${D} = ${ans === 0 ? "0" : `${ans > 0 ? "+" : ""}${ans}`}.`],
+          ],
+          `The minus flips +${D}x^2 to −${D}x^2: ${A} − ${D} = ${ans}.`
         );
       }
       // default: the constant column of a SUM, C + (−F). With C, F ≥ 1 the sizes-trap C + F
@@ -11715,7 +11783,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "power-product",
     label: "Products and quotients of powers",
-    forms: ["quotientEval", "exponentOnly", "basicSquare", "powerMeaning", "tenPower", "missingPowerExponent", "basicPower", "comparePowers", "parenPower", "sumPowers", "mixedPowerOrder"],
+    forms: ["quotientEval", "exponentOnly", "basicSquare", "powerMeaning", "tenPower", "missingPowerExponent", "basicPower", "comparePowers", "parenPower", "sumPowers", "mixedPowerOrder", "doublingPower", "mixedPowerSquareProduct"],
     // The rule-confusion pair: multiplying powers ADDS exponents (trap: multiplied them), dividing
     // SUBTRACTS (trap: added them). The evaluate forms also trap adding the two VALUES.
     gen: (rand, band = "core", form = "default") => {
@@ -11909,6 +11977,56 @@ const GENERATORS: VariantGen[] = [
             [2 * a + 2 * b, `${2 * a + 2 * b} doubles each base. An exponent of 2 means multiply each base by itself.`],
           ],
           `${a}^2 = ${a ** 2} and ${b}^2 = ${b ** 2}; their sum is ${ans}.`
+        );
+      }
+      if (form === "doublingPower") {
+        // ee-01-02/k3: the authored step continues i1's doubling sequence to 2^e, so the base is
+        // fixed at 2 BY THE CONTENT — the honest variation dimension is how far the doubling has
+        // run. e = 3 collides (2^2 + 2 = 2·3 = 6), and at e = 4 the multiply-trap 2·4 = 8 equals
+        // the printed PREVIOUS term, which would misdiagnose a repeat-last-term answer — so the
+        // pool starts at 5.
+        const exp = pick(rand, band === "stretch" ? 6 : 5, band === "support" ? 7 : 9);
+        const shown: number[] = [];
+        for (let i = 0, t = 1; i < exp; i++) { shown.push(t); t += t; }
+        const prev = shown[shown.length - 1];
+        const ans = prev + prev;
+        const addTrap = prev + 2;
+        const mulTrap = 2 * exp;
+        return num(
+          "power-product",
+          `The doubling sequence from before continues ${shown.join(", ")}, ... — its next term is 2^${exp}. Evaluate 2^${exp}.`,
+          ans,
+          0,
+          [
+            [addTrap, `${addTrap} comes from ADDING 2 to the previous term (${prev} + 2) instead of doubling it. The sequence multiplies by 2 at every step: ${prev} × 2 = ${ans}.`],
+            [mulTrap, `${mulTrap} multiplies 2 × ${exp}. Multiply ${exp} twos together instead: ${Array(exp).fill("2").join(" × ")} = ${ans}.`],
+          ],
+          `${prev} doubles to ${ans}: ${Array(exp).fill("2").join(" × ")} = ${ans}.`
+        );
+      }
+      if (form === "mixedPowerSquareProduct") {
+        // ee-01-03/ch1: same a + b × c² surface as mixedPowerOrder, but the second trap is the
+        // authored step's revised misconception — squaring the PRODUCT b·c instead of just the c.
+        const { a, b, c } = draw(
+          rand,
+          (r) => ({ a: pick(r, 3, 15), b: pick(r, 2, 5), c: pick(r, 2, 4) }),
+          ({ a, b, c }) => {
+            const ans = a + b * c ** 2;
+            // b ≠ c keeps "squares the product b×c instead of just the c" unambiguous to read.
+            return new Set([ans, (a + b) * c ** 2, a + (b * c) ** 2]).size === 3 && ans < 300 && b !== 1 && b !== c;
+          }
+        );
+        const ans = a + b * c ** 2;
+        return num(
+          "power-product",
+          `Evaluate ${a} + ${b} × ${c}^2.`,
+          ans,
+          0,
+          [
+            [(a + b) * c ** 2, `${(a + b) * c ** 2} works left to right ignoring order: (${a}+${b})×${c}^2 = ${a + b}×${c ** 2}. But multiplication and exponents come before addition: ${c}^2 = ${c ** 2}, ${b}×${c ** 2} = ${b * c ** 2}, ${a}+${b * c ** 2} = ${ans}.`],
+            [a + (b * c) ** 2, `${a + (b * c) ** 2} squares the product ${b}×${c} instead of just the ${c}: (${b}×${c})^2 = ${(b * c) ** 2}, then ${a} + ${(b * c) ** 2} = ${a + (b * c) ** 2}. The exponent applies only to the ${c} directly under it: ${c}^2 = ${c ** 2}, then ${b} × ${c ** 2} = ${b * c ** 2}, then ${a} + ${b * c ** 2} = ${ans}.`],
+          ],
+          `${c}^2 = ${c ** 2}, then ${b} × ${c ** 2} = ${b * c ** 2}, then ${a} + ${b * c ** 2} = ${ans}.`
         );
       }
       if (form === "mixedPowerOrder") {
@@ -12758,8 +12876,8 @@ const GENERATORS: VariantGen[] = [
           `In pay = ${rate}h, which variable is independent?`,
           ["h (hours worked)", `Hours worked is the input a worker chooses or records; the pay changes in response to h.`],
           [
-            ["pay", `Pay depends on how many hours were worked, so it is the dependent variable.`],
-            [`${rate}`, `${rate} is the fixed hourly rate, not a variable that changes from case to case.`],
+            ["pay (the total earned)", `Pay depends on how many hours were worked, so it is the dependent variable.`],
+            [`${rate} (the hourly rate)`, `${rate} is the fixed hourly rate, not a variable that changes from case to case.`],
           ]
         );
       }
@@ -18869,7 +18987,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "proportional-plot",
     label: "Plotting and interpreting proportional coordinate patterns",
-    forms: ["cgPairNext", "cgPairRelation", "cgPairValue", "cgPairLineReason", "cgPairPointAtX"],
+    forms: ["cgPairNext", "cgPairRelation", "cgPairValue", "cgPairLineReason", "cgPairPointAtX", "fracRatePlot", "fracRateShallow"],
     // pr-03-01: plot points on y = kx and watch them line up. Every authored item is the same
     // shape — a stated k and two or three x-values — so one form serves all four steps. The grid
     // grows to 8×8 when k needs it, exactly as the authored items do.
@@ -18957,6 +19075,66 @@ const GENERATORS: VariantGen[] = [
             [`(${x + k}, ${y})`, `That changes the given x-coordinate. Keep x = ${x} and calculate only the second coordinate.`],
           ]
         );
+      }
+      if (form === "fracRatePlot" || form === "fracRateShallow") {
+        // pr-03-01 k3/ch1 after their S316 revision: the rate is a NON-INTEGER p/q, printed as a
+        // decimal for halves (1.5) and as a fraction for thirds (2/3), exactly as the authored
+        // steps print it. `fracRateShallow` (ch1) keeps rate < 1 so the authored "shallower line"
+        // body stays true and always carries the authored 45-degree-line trap; `fracRatePlot` (k3)
+        // spans both sides of 1. Both x-values are multiples of q so every plotted y is exact.
+        // Phrases are stored per rate, never derived.
+        type FracRate = { disp: string; phrase: string; p: number; q: number; pairs: ReadonlyArray<readonly [number, number]> };
+        const HALF: FracRate = { disp: "0.5", phrase: "half of", p: 1, q: 2, pairs: [[2, 4], [2, 6], [2, 8], [4, 6], [4, 8], [6, 8]] };
+        const THIRD: FracRate = { disp: "1/3", phrase: "one-third of", p: 1, q: 3, pairs: [[3, 6]] };
+        const TWO_THIRDS: FracRate = { disp: "2/3", phrase: "two-thirds of", p: 2, q: 3, pairs: [[3, 6]] };
+        const RATES: readonly FracRate[] = form === "fracRateShallow"
+          ? [HALF, THIRD, TWO_THIRDS]
+          : [HALF, THIRD, TWO_THIRDS,
+             { disp: "1.5", phrase: "1.5 times", p: 3, q: 2, pairs: [[2, 4]] },
+             { disp: "4/3", phrase: "4/3 times", p: 4, q: 3, pairs: [[3, 6]] }];
+        // Flatten to one (rate, pair) instance per genuinely distinct plottable state before
+        // picking, rather than picking a rate and then a pair in two stages: THIRD/TWO_THIRDS are
+        // structurally limited to exactly one valid pair each on an 8-wide grid (their only
+        // grid-exact x-multiples are 3 and 6), so a two-stage pick spent a third of its weight on
+        // each of those single states and starved HALF's six genuinely distinct pairs down to
+        // fewer observed states than the freshness gate requires (S331: fracRateShallow flagged
+        // by variants.resolver.test.ts's "is FRESH" check at 3 distinct seen, needs >3). Flat,
+        // uniform selection over every real state fixes the sampling bias without inventing any
+        // ungrounded pair — the set of reachable (rate, x1, x2) states is unchanged.
+        const INSTANCES: ReadonlyArray<readonly [FracRate, readonly [number, number]]> =
+          RATES.flatMap((rate) => rate.pairs.map((pair) => [rate, pair] as const));
+        const [R, [x1, x2]] = INSTANCES[pick(rand, 0, INSTANCES.length - 1)];
+        const y1 = (x1 * R.p) / R.q;
+        const y2 = (x2 * R.p) / R.q;
+        const pts = [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+        const labels = Array.from({ length: 8 }, (_, i) => String(i + 1));
+        const errs: Array<{ x: number; y: number; feedback: string }> = [
+          // Swapped slots of the first point: always on the 8×8 grid, never a target (x ≠ y on a
+          // non-integer-rate line) and never on the line (that would need p² = q²).
+          { x: y1, y: x1, feedback: `That's (${y1}, ${x1}) — slots swapped. For this rate, x=${x1} gives y=${y1}: plot (${x1}, ${y1}).` },
+        ];
+        if (R.p < R.q) {
+          errs.push({ x: x1, y: x1, feedback: `That's (${x1}, ${x1}) — that assumes a 45-degree line (rate=1). This rate is smaller: x=${x1} gives y=${y1}, not ${x1}.` });
+        }
+        return {
+          tag: "proportional-plot",
+          answer: pts,
+          widget: {
+            type: "plotPoint",
+            prompt: `For a rate of ${R.disp}, plot the points (${x1}, ${y1}) and (${x2}, ${y2}).`,
+            cols: 8,
+            rows: 8,
+            xLabels: labels,
+            yLabels: labels,
+            targets: pts,
+            connectTargets: true,
+            pointErrors: errs,
+            missFeedback: `Each y should be ${R.phrase} its x: (${x1},${y1}), (${x2},${y2}).`,
+            successFeedback: R.p > R.q
+              ? `Both points line up on the line where y is always ${R.disp} times x.`
+              : `Both points line up — a shallower line than the others, since y is smaller than x here.`,
+          },
+        };
       }
       // Three dimensions, because two were not enough: k alone reaches four problems and adding a
       // wider k would only push points off the grid. The COUNT (two or three points — both shapes
@@ -19765,8 +19943,8 @@ const GENERATORS: VariantGen[] = [
           "critical-count",
           `f(x) = x${supNum(n)} has a critical point at x = 0. What is it?`,
           [
-            `Neither a peak nor a valley — f′ = ${n}x${supNum(n - 1)} is positive on BOTH sides, so f keeps climbing.`,
-            `Right. Finding a critical point proves nothing on its own. This is the whole reason the classification step exists.`,
+            `Neither a peak nor a valley`,
+            `Right — f′ = ${n}x${supNum(n - 1)} is positive on BOTH sides, so f keeps climbing. Finding a critical point proves nothing on its own; this is the whole reason the classification step exists.`,
           ],
           [
             [`A minimum.`, `A minimum needs the curve to FALL into it and rise out. Here it rises in and rises out — it merely pauses.`],
@@ -20195,11 +20373,11 @@ const GENERATORS: VariantGen[] = [
             ],
             [
               [
-                `A hole.`,
+                `A removable hole, if the numerator also vanished there.`,
                 `A hole needs both numerator and denominator to vanish, so the factor CANCELS. Here ${a}(${k}) ${b < 0 ? "−" : "+"} ${Math.abs(b)} = ${a * k + b} ≠ 0, so nothing cancels and the function explodes.`,
               ],
-              [`A root.`, `Roots come from the NUMERATOR vanishing (${a}x ${b < 0 ? "−" : "+"} ${Math.abs(b)} = 0), not the denominator.`],
-              [`Nothing special.`, `Division by zero is always special: the function has no value at all at x = ${k}, and it blows up on either side.`],
+              [`A root of the numerator, not the denominator.`, `Roots come from the NUMERATOR vanishing (${a}x ${b < 0 ? "−" : "+"} ${Math.abs(b)} = 0), not the denominator.`],
+              [`Nothing special happens at this particular x-value.`, `Division by zero is always special: the function has no value at all at x = ${k}, and it blows up on either side.`],
             ]
           );
         }
@@ -20234,8 +20412,8 @@ const GENERATORS: VariantGen[] = [
           "end-behavior",
           `f(x) = ${xTerm(a, n)} ${a > 0 ? "−" : "+"} ${xTerm(C, n - 1)}. What happens as x → −∞?`,
           [
-            `f → ${dir} — the ${term} term dominates and is ${goesUp ? "positive" : "negative"} for negative x.`,
-            `Right. The ${term} term overwhelms the lower-degree term for large |x|, and that comparison alone decides the outcome.`,
+            `f → ${dir}`,
+            `Right — the ${term} term dominates and is ${goesUp ? "positive" : "negative"} for negative x, so the function follows it to ${dir}. The ${term} term overwhelms the lower-degree term for large |x|, and that comparison alone decides the outcome.`,
           ],
           [
             [`f → ${otherDir}`, `${parityWhy[0].toUpperCase()}${parityWhy.slice(1)}, and x${supNum(n)} beats x${supNum(n - 1)} for large |x|. The curve goes to ${dir} on the left.`],
@@ -20289,9 +20467,9 @@ const GENERATORS: VariantGen[] = [
             `Right — just past the maximum at 0, and not yet at the inflection at ${p}. The descent is accelerating.`,
           ],
           [
-            [`Falling, but levelling off.`, `That is the stretch AFTER the inflection, on (${p}, ${2 * p}), where f″ turns positive and the fall eases.`],
-            [`Rising and bending up.`, `f′ = 3x(x − ${2 * p}) is NEGATIVE between 0 and ${2 * p}, so the curve is going down.`],
-            [`Flat throughout.`, `f′ is zero only at 0 and ${2 * p} — at the endpoints of the interval, not inside it.`],
+            [`Falling, but levelling off as it approaches the next turn.`, `That is the stretch AFTER the inflection, on (${p}, ${2 * p}), where f″ turns positive and the fall eases.`],
+            [`Rising steadily and bending upward the whole time.`, `f′ = 3x(x − ${2 * p}) is NEGATIVE between 0 and ${2 * p}, so the curve is going down.`],
+            [`Perfectly flat throughout the entire interval.`, `f′ is zero only at 0 and ${2 * p} — at the endpoints of the interval, not inside it.`],
           ]
         );
       }
@@ -20310,14 +20488,14 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `Nothing — a curve can rise and still have a maximum.`,
+              `Nothing is wrong — a curve can rise and still have a maximum.`,
               `That fails strictly inside an interval where it is rising throughout. Points just to the right of ${m} are HIGHER than f(${m}), so f(${m}) is no maximum.`,
             ],
             [
-              `The maximum should be at x = ${lo}.`,
+              `The maximum should really be located at x = ${lo} instead.`,
               `x = ${lo} is an endpoint of the interval, and the claim was about an interior maximum. The contradiction is with the sign of f′, not the location.`,
             ],
-            [`f″ must be negative there.`, `The second derivative is not the issue. The contradiction is already fatal at the first: rising throughout rules out an interior peak.`],
+            [`The second derivative f″ must be negative there instead.`, `The second derivative is not the issue. The contradiction is already fatal at the first: rising throughout rules out an interior peak.`],
           ]
         );
       }
@@ -20480,9 +20658,9 @@ const GENERATORS: VariantGen[] = [
             `Right. The algebra offers it; the physics rejects it. Stating the domain first is what lets you reject it with confidence.`,
           ],
           [
-            [`Because it is a maximum too, and you can only have one.`, `It is a MINIMUM (V = 0), and in any case a function can have several maxima. The reason it is useless is that it is an empty box.`],
-            [`Because ${threeM} is not a critical point.`, `It genuinely is: V′(${threeM}) = 0. It is simply a worthless one.`],
-            [`Because the derivative is wrong.`, `The derivative is right. It is the physical meaning of x = ${threeM} that disqualifies it.`],
+            [`Because it is a maximum of the volume function too, and a function can only have one maximum overall.`, `It is a MINIMUM (V = 0), and in any case a function can have several maxima. The reason it is useless is that it is an empty box.`],
+            [`Because x = ${threeM} does not actually make the derivative equal to zero.`, `It genuinely is: V′(${threeM}) = 0. It is simply a worthless one.`],
+            [`Because the derivative was computed incorrectly and needs to be redone.`, `The derivative is right. It is the physical meaning of x = ${threeM} that disqualifies it.`],
           ]
         );
       }
@@ -20942,7 +21120,7 @@ const GENERATORS: VariantGen[] = [
             `Right — and in the limit the +${k} cancels with the −${k} before h even gets small.`,
           ],
           [
-            [`Because ${k} is small.`, `Size is irrelevant: adding ${big} would change nothing either. Vertical shifts do not tilt anything.`],
+            [`Because the value ${k} happens to be a fairly small number.`, `Size is irrelevant: adding ${big} would change nothing either. Vertical shifts do not tilt anything.`],
             [`Because the derivative of ${k} is ${k}.`, `The derivative of a constant is 0 — a horizontal line has no slope to speak of.`],
             [`It is not the same; there is a leftover ${k}.`, `Try it from the definition: the +${k} appears in both f(x+h) and f(x), so it subtracts away entirely.`],
           ]
@@ -22172,11 +22350,11 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `4, like every family`,
+              `4, since every family has that many`,
               `Try writing all four out: the flip of ${a} × ${a} is ${a} × ${a} again, and ${sq} ÷ ${a} = ${a} either way round. Two of the four are duplicates.`,
             ],
-            [`1`, `There are two distinct facts here: one multiplication (${a} × ${a} = ${sq}) and one division (${sq} ÷ ${a} = ${a}).`],
-            [`3`, `Count again — the multiplication has no different flip, and neither does the division, so the four collapse to exactly two.`],
+            [`1, as if the flip didn't count separately`, `There are two distinct facts here: one multiplication (${a} × ${a} = ${sq}) and one division (${sq} ÷ ${a} = ${a}).`],
+            [`3, forgetting that one flip repeats itself`, `Count again — the multiplication has no different flip, and neither does the division, so the four collapse to exactly two.`],
           ]
         );
       }
@@ -22439,7 +22617,7 @@ const GENERATORS: VariantGen[] = [
           rand,
           "area-formula-pick",
           `A trapezoid has parallel bases ${b1} and ${b2} and height ${h}. Why does its formula average the two bases?`,
-          [`Averaging gives an effective width between ${b2} and ${b1}; multiplying by ${h} gives area ${area}`, `The trapezoid can be decomposed into two triangles, so their areas add to 1/2 × (${b1} + ${b2}) × ${h} = ${area}.`],
+          [`The average width times ${h} gives area ${area}`, `Averaging gives an effective width between ${b2} and ${b1}. The trapezoid can be decomposed into two triangles, so their areas add to 1/2 × (${b1} + ${b2}) × ${h} = ${area}.`],
           [
             [`Using only base ${b1} gives ${b1 * h}, which is close enough`, `Using only the longer base treats the whole figure like a ${b1}-by-${h} parallelogram and overcounts the tapered part.`],
             [`Using only base ${b2} gives ${b2 * h}, which is close enough`, `Using only the shorter base ignores the wider part of the trapezoid and undercounts its area.`],
@@ -24438,11 +24616,11 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `Even`,
+              `An even function`,
               `Even needs h(−x) = h(x). Here h(−1) = ${a} − ${b} = ${sn(atNeg1)} while h(1) = ${a} + ${b} = ${at1} — unequal outputs at mirrored inputs.`,
             ],
             [
-              `Odd`,
+              `An odd function`,
               `Odd needs h(−1) = −h(1) = ${sn(-at1)}, but h(−1) = ${sn(atNeg1)}. The ${aTerm} term refuses to flip sign, which spoils it.`,
             ],
           ]
@@ -25718,15 +25896,15 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `There is an outlier`,
+              `There is a single outlier far from the rest`,
               `An outlier is a LONE far-off dot. A bunched GROUP is the opposite: many points close together.`,
             ],
             [
-              `The association is negative`,
+              `The overall association between x and y is negative`,
               `A cluster's location does not set direction — the overall trend could rise, fall, or do neither.`,
             ],
             [
-              `The form is nonlinear`,
+              `The overall form of the pattern is nonlinear`,
               `Bunching is a cluster, not form. Form describes the SHAPE of the overall pattern — straight or curved.`,
             ],
           ]
@@ -28020,7 +28198,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "unknown-letter",
     label: "Finding the number a letter hides",
-    forms: ["solveFor", "howToCheck", "spiderStory", "testAddSolution", "solveAdd", "equationVsExpression", "chooseMulSolution", "checkAddSolution", "solveSubtract", "feeSolve", "tipSolve"],
+    forms: ["solveFor", "howToCheck", "spiderStory", "testAddSolution", "solveAdd", "equationVsExpression", "chooseMulSolution", "checkAddSolution", "solveSubtract", "feeSolve", "tipSolve", "giftCardSolve"],
     // mult-04-03 (G3). The letter names ONE of the three slots — groups, group size, or total —
     // and every distractor offers a different slot.
     gen: (rand, band = "core", form = "default") => {
@@ -28125,6 +28303,28 @@ const GENERATORS: VariantGen[] = [
             [a * result, `${a * result} multiplies the two visible numbers, but multiplication does not undo subtraction.`],
           ],
           `Add ${a} to both sides: x = ${result} + ${a} = ${x}.`
+        );
+      }
+      if (form === "giftCardSolve") {
+        // ee-04-02/k3: the SUBTRACTION word problem (n − spent = left), where fee/tip solve the
+        // addition one. Both traps are the authored step's: subtracting again, and stopping at the
+        // post-spending balance.
+        const { spent, left } = draw(
+          rand,
+          (r) => ({ spent: pick(r, 3, band === "support" ? 7 : 9), left: pick(r, 4, band === "support" ? 12 : 18) }),
+          ({ spent, left }) => left > spent && left - spent >= 2
+        );
+        const original = spent + left;
+        return num(
+          "unknown-letter",
+          `After spending $${spent}, a gift card has $${left} left. Write and solve an equation for the original balance, n.`,
+          original,
+          0,
+          [
+            [left - spent, `${left - spent} SUBTRACTS ${spent} from ${left} instead of undoing the equation n − ${spent} = ${left}. Add ${spent} to both sides: n = ${left} + ${spent} = ${original}.`],
+            [left, `${left} is the balance AFTER spending, not the original amount n. Undo the −${spent}: n = ${left} + ${spent} = ${original}.`],
+          ],
+          `Let n be the original balance. "Spent $${spent}, $${left} left" is n − ${spent} = ${left}. Add ${spent} to both sides: n = ${original}.`
         );
       }
       if (form === "feeSolve" || form === "tipSolve") {
@@ -29037,9 +29237,9 @@ const GENERATORS: VariantGen[] = [
             `Estimation supports planning and reasonableness checks; it should not replace an exact value when every unit matters.`,
           ],
           [
-            [`Whenever an exact answer is difficult`, `Difficulty alone does not justify losing precision; exact methods are still needed when the decision depends on every unit.`],
-            [`When paying a bill to the exact cent`, `Payment requires the exact amount, so rounding could underpay or overpay.`],
-            [`Only when both numbers end in zero`, `Any numbers can be rounded; the key question is whether an approximate result fits the purpose.`],
+            [`Whenever getting an exact answer turns out to be difficult`, `Difficulty alone does not justify losing precision; exact methods are still needed when the decision depends on every unit.`],
+            [`When paying a bill that must be exact to the very last cent`, `Payment requires the exact amount, so rounding could underpay or overpay.`],
+            [`Only when both of the numbers happen to end in zero`, `Any numbers can be rounded; the key question is whether an approximate result fits the purpose.`],
           ]
         );
       }
@@ -29691,7 +29891,7 @@ const GENERATORS: VariantGen[] = [
           "nl-fraction",
           `Where does ${a}/${b} land?`,
           [
-            `Exactly halfway — the same spot as 1/2`,
+            `Exactly halfway along the trip`,
             `${a} of ${b} jumps is half the trip, so ${a}/${b} and 1/2 mark the same spot.`,
           ],
           [
@@ -29700,11 +29900,11 @@ const GENERATORS: VariantGen[] = [
               `That is ONE jump — 1/${b}. You took ${a}, which is ${a} times as far.`,
             ],
             [
-              `At the number ${a}`,
+              `Landing exactly at the number ${a}`,
               `${a} ${FRACTION_NAME[b].one}-jumps stay well inside the 0→1 trip; reaching the whole number ${a} would need ${a * b} of them.`,
             ],
             [
-              `Almost at 1`,
+              `Almost all the way, near 1`,
               `Almost-there would be ${b - 1}/${b}. Taking ${a} of ${b} jumps leaves ${a} still to go.`,
             ],
           ]
@@ -30544,15 +30744,15 @@ const GENERATORS: VariantGen[] = [
           ],
           [
             [
-              `${N} is right — ${big} beats ${small}`,
+              `${N} is right — ${big} is simply a bigger number than ${small}`,
               `Picture both: a bar cut into ${big} against the same bar cut into ${small}. The ${big}-way slices are much thinner.`,
             ],
             [
-              `She should add the tops and bottoms`,
+              `She should add the tops together and the bottoms together`,
               `Adding ${top} + ${big} and ${top} + ${small} mixes the two numbers' jobs. The top counts pieces and the bottom sizes them.`,
             ],
             [
-              `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} aren't real fractions`,
+              `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} aren't valid fractions at all`,
               `${FRACTION_NAME[big].many.charAt(0).toUpperCase() + FRACTION_NAME[big].many.slice(1)} are perfectly real — just small. Being small is exactly why ${top}/${big} loses here.`,
             ],
           ]
@@ -30964,9 +31164,9 @@ const GENERATORS: VariantGen[] = [
             `Thirty minutes is half an hour, so the short hand has completed half of its trip from ${hour} to ${next}.`,
           ],
           [
-            [`Exactly on the ${hour}`, `The hour hand is exactly on ${hour} only at ${hour}:00. It moves continuously while the minutes pass.`],
-            [`On the 6`, `The long MINUTE hand points to 6 at :30. The short hour hand stays between ${hour} and ${next}.`],
-            [`Exactly on the ${next}`, `The hour hand reaches ${next} only at ${next}:00. Half past is only halfway there.`],
+            [`Right on the ${hour}, not moving yet`, `The hour hand is exactly on ${hour} only at ${hour}:00. It moves continuously while the minutes pass.`],
+            [`Pointing at the 6, like the minute hand`, `The long MINUTE hand points to 6 at :30. The short hour hand stays between ${hour} and ${next}.`],
+            [`Already all the way at the ${next}`, `The hour hand reaches ${next} only at ${next}:00. Half past is only halfway there.`],
           ]
         );
       }
@@ -31418,7 +31618,12 @@ const GENERATORS: VariantGen[] = [
       }
       if (form === "cgTriangleDualLabel") {
         const cases = [
-          { angles:[30,60,90] as [number,number,number], sides:[1,1.7320508075688772,2] as [number,number,number], sideText:"all three sides have different lengths", correct:"right+scalene", label:"Right scalene", wrong:[["Right isosceles","right+isosceles","The 90° angle makes the triangle right, but three different side lengths make it scalene rather than isosceles."],["Obtuse scalene","obtuse+scalene","The side label is correct, but the largest angle is exactly 90°, not greater than 90°."],["Acute scalene","acute+scalene","A 90° angle prevents the triangle from being acute."]] },
+          /* GRB-02 (S331): the widget prints each side length as an on-figure label, so √3 stored
+           * as 1.7320508075688772 reached the screen verbatim. Following this case list's own
+           * sibling convention (integer sides approximately consistent with the labelled angles:
+           * 5-5-7 for 70-70-40, 4-5-7 for 110-40-30), the 30-60-90 case now shows 4-7-8 —
+           * near the true 1 : √3 : 2 proportion (4 : 6.93 : 8) and unambiguously scalene. */
+          { angles:[30,60,90] as [number,number,number], sides:[4,7,8] as [number,number,number], sideText:"all three sides have different lengths", correct:"right+scalene", label:"Right scalene", wrong:[["Right isosceles","right+isosceles","The 90° angle makes the triangle right, but three different side lengths make it scalene rather than isosceles."],["Obtuse scalene","obtuse+scalene","The side label is correct, but the largest angle is exactly 90°, not greater than 90°."],["Acute scalene","acute+scalene","A 90° angle prevents the triangle from being acute."]] },
           { angles:[70,70,40] as [number,number,number], sides:[5,5,7] as [number,number,number], sideText:"two sides have equal lengths", correct:"acute+isosceles", label:"Acute isosceles", wrong:[["Right isosceles","right+isosceles","The equal sides support isosceles, but no angle is 90°; all three are acute."],["Acute scalene","acute+scalene","The angle label is correct, but two equal sides make the triangle isosceles."],["Obtuse isosceles","obtuse+isosceles","The triangle has no angle above 90°, so it is not obtuse."]] },
           { angles:[110,40,30] as [number,number,number], sides:[4,5,7] as [number,number,number], sideText:"all three sides have different lengths", correct:"obtuse+scalene", label:"Obtuse scalene", wrong:[["Right scalene","right+scalene","The side label is correct, but 110° is greater than 90°, so the angle family is obtuse."],["Obtuse isosceles","obtuse+isosceles","The angle label is correct, but no two side lengths are equal."],["Acute scalene","acute+scalene","The 110° angle rules out an acute classification."]] },
         ] as const;
@@ -31452,9 +31657,9 @@ const GENERATORS: VariantGen[] = [
       if (form === "definingAttribute") {
         return mcq(rand, "attributes", `Which fact is a defining attribute of a ${S.name}?`,
           [`It has ${S.sides} straight sides and is closed`, `Side count and closure determine membership in this shape family.`],
-          [[`It is drawn in blue`, `Colour can change without changing the shape's geometric family.`],
-           [`It is larger than a hand`, `Size is not part of the definition; small and large copies remain the same shape.`],
-           [`One vertex points upward`, `Orientation is optional and can change under rotation.`]]);
+          [[`It is drawn in a particular shade of blue`, `Colour can change without changing the shape's geometric family.`],
+           [`It happens to be larger than a human hand`, `Size is not part of the definition; small and large copies remain the same shape.`],
+           [`One of its vertices currently points upward`, `Orientation is optional and can change under rotation.`]]);
       }
       if (form === "detectiveSides") {
         const colour = ["orange", "green", "purple", "blue"][pick(rand, 0, 3)];
@@ -32292,7 +32497,7 @@ const GENERATORS: VariantGen[] = [
             [expanded.join(", "), `Correct — each dot becomes one repeated copy of the value beneath its stack.`],
             [
               [values.join(", "), `This lists each labeled value once and ignores repeated dots, so it loses the frequencies.`],
-              [counts.join(", "), `These are the stack heights, not the measured data values along the horizontal axis.`],
+              [`Just the stack heights, not the actual data values: ${counts.join(", ")}`, `These are the stack heights, not the measured data values along the horizontal axis.`],
             ]), values, counts);
         }
         if (form === "ddDotMissingValue") {
@@ -32372,7 +32577,7 @@ const GENERATORS: VariantGen[] = [
         const data = [base, base, base, base + 1, base + 1, base + 2, out];
         const t = tally(data);
         return withPlot(mcq(rand, "line-plot", `The data are ${data.join(", ")}. Which description tells the full story?`,
-          [`Clustered at ${base}–${base + 1}, followed by a gap and an outlier at ${out}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated.`],
+          [`Clustered at ${base}–${base + 1}`, `Correct — most values are low, intermediate values are missing, and ${out} is isolated, following a gap after the ${base}–${base + 1} cluster.`],
           [
             [`Symmetric around ${Math.round((base + out) / 2)}`, `The frequencies and long empty interval do not mirror around a central value.`],
             [`Evenly spread from ${base} to ${out}`, `Most positions in that interval have no observations, so the data are not evenly spread.`],
@@ -34085,9 +34290,9 @@ const GENERATORS: VariantGen[] = [
             `${big} = ${factor} × ${small}, so every group counted by ${big}s is also a whole number of ${small}s.`,
           ],
           [
-            [`Both rows have the same last digit`, `Last digits cycle and do not define the relationship. The structural reason is that ${small} divides ${big} exactly.`],
-            [`It is only a coincidence among small products`, `The relationship never stops: any multiple of ${big} is still ${factor} times as many groups of ${small}.`],
-            [`${big} is larger than ${small}`, `Larger is not enough. A row is nested inside another only when its row number is a whole-number multiple of the smaller one.`],
+            [`Both rows just happen to share the same last digit`, `Last digits cycle and do not define the relationship. The structural reason is that ${small} divides ${big} exactly.`],
+            [`It is only a coincidence that shows up in small products`, `The relationship never stops: any multiple of ${big} is still ${factor} times as many groups of ${small}.`],
+            [`${big} is simply a larger number than ${small}`, `Larger is not enough. A row is nested inside another only when its row number is a whole-number multiple of the smaller one.`],
           ]
         );
       }
@@ -36168,8 +36373,8 @@ const GENERATORS: VariantGen[] = [
           why2: "Complaint callers are selected because they are dissatisfied.",
         },
         {
-          question: "A delivery service wants to estimate how satisfied all recent customers are.",
-          frame: "the complete customer list for deliveries completed in the past month",
+          question: "A delivery service wants to estimate how satisfied last month's delivery customers are.",
+          frame: "the complete delivery customer list",
           member: "customers",
           biased1: "survey only customers who requested a refund",
           why1: "Refund requests overrepresent customers who had a problem.",
@@ -36688,7 +36893,11 @@ const GENERATORS: VariantGen[] = [
         const big = 10 ** places;
         return num(
           "g8-esn-power-meaning",
-          `Evaluate 10${supNum(-places)} = ?`,
+          /* GRB-02 (S331): the item's whole point is the exact decimal expansion of a negative
+           * power of ten, and its feedback prints that expansion in full (no rounding anywhere —
+           * 0.00000001 IS 10⁻⁸). The prompt now says so ("as a decimal"), stating the expected
+           * form instead of leaving the long decimal unexplained. */
+          `Write 10${supNum(-places)} as a decimal: 10${supNum(-places)} = ?`,
           answer,
           0,
           [
@@ -37392,7 +37601,9 @@ const GENERATORS: VariantGen[] = [
       return mcq(
         rand,
         "g8-rns-root-classify",
-        "Which of these numbers is rational?",
+        /* GRB-02 (S331): the options ARE decimal expansions (growing runs, stated repetends) —
+         * classifying by expansion structure is the skill under test, so the prompt names it. */
+        "Use each number's decimal expansion to decide: which of these numbers is rational?",
         [rational, why],
         [
           [rootLabel(irrN), `${irrN} is not a perfect square, so √${irrN} is irrational.`],
@@ -37604,7 +37815,10 @@ const GENERATORS: VariantGen[] = [
         return mcq(
           rand,
           "g8-rns-compare-estimate",
-          `Which is greater: ${fraction} or π?`,
+          /* GRB-02 (S331): the option labels compare six-decimal expansions (the only way to
+           * separate π from its convergents — the audit's own exception names this exact item),
+           * so the prompt states that convention up front. */
+          `Which is greater: ${fraction} or π? Compare their decimal expansions (shown to six decimal places).`,
           [fracWins ? `${fraction}, because ${fraction} ≈ ${q.toFixed(6)} > π ≈ 3.141593` : `π, because π ≈ 3.141593 > ${fraction} ≈ ${q.toFixed(6)}`, `Right — compare the decimal expansions rather than the symbols.`],
           [
             [fracWins ? "π, because an irrational number must be larger" : `${fraction}, because a fraction must be larger`, `Number type does not decide size; the decimal values determine the comparison.`],
@@ -37698,7 +37912,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "g8-tm-pythagorean-why",
     label: "Area meaning of the Pythagorean theorem",
-    forms: ["tmPythCSquaredA", "tmPythCSquaredB", "tmPythAreaMeaning", "tmPythLengthFromAreas"],
+    forms: ["tmPythCSquaredA", "tmPythCSquaredB", "tmPythAreaMeaning", "tmPythLengthFromAreas", "tmPythMissingLeg", "tmPythClassmateSum"],
     gen: (rand, band = "core", form = "default") => {
       const F = form === "default" ? "tmPythCSquaredA" : form;
       // Five triples per band capped distinctness below the freshness gate's floor of six.
@@ -37707,8 +37921,43 @@ const GENERATORS: VariantGen[] = [
         : band === "stretch"
           ? [[9, 40, 41], [20, 21, 29], [11, 60, 61], [28, 45, 53], [33, 56, 65], [16, 63, 65], [48, 55, 73]] as const
           : [[7, 24, 25], [10, 24, 26], [12, 16, 20], [12, 35, 37], [15, 20, 25], [16, 30, 34], [21, 28, 35]] as const;
-      const offset = F === "tmPythCSquaredB" ? 1 : F === "tmPythLengthFromAreas" ? 2 : 0;
+      const offset = F === "tmPythCSquaredB" ? 1 : F === "tmPythLengthFromAreas" ? 2 : F === "tmPythMissingLeg" ? 3 : F === "tmPythClassmateSum" ? 4 : 0;
       const [a, b, c] = pools[(pick(rand, 0, pools.length - 1) + offset) % pools.length];
+      if (F === "tmPythMissingLeg") {
+        // tm-04-01/k1 after S316: the identity run in REVERSE — one leg and the hypotenuse are
+        // known, the other leg is asked. Which leg is known is a second variation dimension.
+        const knownFirst = rand() < 0.5;
+        const known = knownFirst ? a : b;
+        const missing = knownFirst ? b : a;
+        return num(
+          "g8-tm-pythagorean-why",
+          `A right triangle has one leg of length ${known} and hypotenuse ${c}. What is the length of the other leg?`,
+          missing,
+          0,
+          [
+            [c - known, `That subtracted the LENGTHS (${c} − ${known}) — the identity subtracts the AREAS: ${c}² − ${known}² = ${missing * missing}, then √${missing * missing} = ${missing}.`],
+            [missing * missing, `That's the missing leg's squared AREA (${c}² − ${known}² = ${missing * missing}) — take the square root: √${missing * missing} = ${missing}.`],
+          ],
+          `Square the hypotenuse and the known leg, subtract, then take the square root: ${c}² − ${known}² = ${missing * missing}, √${missing * missing} = ${missing}.`
+        );
+      }
+      if (F === "tmPythClassmateSum") {
+        // tm-04-01/k2 after S316: explicit error analysis — a classmate ADDED the legs where the
+        // identity adds their square areas. The classmate's value is trap one; multiplying the
+        // legs is trap two.
+        const c2 = c * c;
+        return num(
+          "g8-tm-pythagorean-why",
+          `A right triangle has legs ${a} and ${b}. A classmate wrote c² = ${a} + ${b} = ${a + b}. What is the correct value of c²?`,
+          c2,
+          0,
+          [
+            [a + b, `That added the legs (${a}+${b}), not their squares — ${a * a} + ${b * b} = ${c2}.`],
+            [a * b, `That multiplied the legs — c² is ${a}² + ${b}² = ${a * a} + ${b * b} = ${c2}.`],
+          ],
+          `c² = ${a}² + ${b}² = ${a * a} + ${b * b} = ${c2} (and indeed ${c}² = ${c2}).`
+        );
+      }
       if (F === "tmPythCSquaredA" || F === "tmPythCSquaredB") {
         const c2 = c * c;
         return num(
@@ -37880,7 +38129,7 @@ const GENERATORS: VariantGen[] = [
     gen: (rand, band = "core", form = "default") => {
       const F = form === "default" ? "tmCongruenceMeaning" : form;
       if (F === "tmCongruenceMeaning") return mcq(rand, "g8-tm-congruence", `If two polygons are congruent, what must be true?`,
-        ["All corresponding side lengths and angle measures are equal", `Right — congruent figures match exactly after rigid motions.`],
+        ["All corresponding sides and angles match", `Right — every corresponding side length and angle measure is equal, since congruent figures match exactly after rigid motions.`],
         [
           ["Only their angle measures are equal", `Equal angles alone establish similarity, not necessarily equal size.`],
           ["Only their areas are equal", `Different shapes can share an area; congruence requires every corresponding length and angle to match.`],
@@ -38059,7 +38308,7 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "g8-tm-pythagorean-converse",
     label: "The Pythagorean converse and coordinate distance",
-    forms: ["tmConverseRight", "tmDistanceOrigin", "tmDistanceOffset", "tmConverseSort"],
+    forms: ["tmConverseRight", "tmDistanceOrigin", "tmDistanceOffset", "tmConverseSort", "tmConverseBracket"],
     gen: (rand, band = "core", form = "default") => {
       const F = form === "default" ? "tmConverseRight" : form;
       const pools = band === "support"
@@ -38068,6 +38317,40 @@ const GENERATORS: VariantGen[] = [
           ? [[9,40,41],[28,45,53],[33,56,65],[48,55,73],[20,99,101]]
           : [[7,24,25],[12,16,20],[12,35,37],[20,21,29],[15,36,39]];
       const [a,b,c]=pools[pick(rand,0,pools.length-1)];
+      if (F === "tmConverseBracket") {
+        // tm-04-03/k1 after S316: the carpenter's bracket context, and — unlike the abstract
+        // tmConverseRight — the drawn sides are sometimes NOT a right triple, so the verdict
+        // itself moves across seeds instead of always being "Yes".
+        const { sides } = draw(
+          rand,
+          (r) => {
+            const [ta, tb, tc] = pools[pick(r, 0, pools.length - 1)];
+            const kind = pick(r, 0, 2); // 0: right; 1: hypotenuse one too long; 2: one too short
+            return { sides: [ta, tb, kind === 0 ? tc : kind === 1 ? tc + 1 : tc - 1] as const };
+          },
+          ({ sides: [ta, tb, tc] }) => tc > Math.max(ta, tb)
+        );
+        const [sa, sb, sc] = sides;
+        const sum = sa * sa + sb * sb;
+        const isRight = sum === sc * sc;
+        const promptText = `A carpenter checks a shelf bracket whose three sides measure ${sa}, ${sb}, and ${sc} inches. Does the bracket's corner form a right angle?`;
+        if (isRight) {
+          return mcq(rand, "g8-tm-pythagorean-converse", promptText,
+            [`Yes — ${sa}² + ${sb}² = ${sum} = ${sc}², so the corner is square`, `Right — the leg-squares add to the hypotenuse-square, so the bracket's corner is a right angle.`],
+            [
+              [`No — ${sc} inches is too long for a right angle`, `Check the squares: ${sa * sa} + ${sb * sb} = ${sum} = ${sc}², so the corner IS square.`],
+              [`No — a right angle needs two matching side lengths`, `Matching lengths aren't required — ${sa * sa} + ${sb * sb} = ${sum} = ${sc}² is what matters, and it's true here.`],
+              [`Can't tell without measuring the angle directly`, `The converse decides from the side lengths alone: ${sa * sa} + ${sb * sb} = ${sum} = ${sc}², so yes, it's square.`],
+            ]);
+        }
+        return mcq(rand, "g8-tm-pythagorean-converse", promptText,
+          [`No — ${sa}² + ${sb}² = ${sum}, not ${sc}² = ${sc * sc}`, `Right — the leg-squares add to ${sum} while the longest side's square is ${sc * sc}; the squares disagree, so the corner is not a right angle.`],
+          [
+            [`Yes — ${sa} + ${sb} is greater than ${sc}, so the corner is square`, `That test only says the three sides can close into SOME triangle. A right corner needs the squares to match exactly, and ${sum} ≠ ${sc * sc}.`],
+            [`No — a right angle needs two matching side lengths`, `The verdict happens to match, but the reason never decides it — the squares comparison does: ${sa * sa} + ${sb * sb} = ${sum} while ${sc}² = ${sc * sc}.`],
+            [`Can't tell without measuring the angle directly`, `The converse decides from the side lengths alone: ${sum} and ${sc * sc} differ, so the corner is not square.`],
+          ]);
+      }
       if (F === "tmConverseRight") return mcq(rand, "g8-tm-pythagorean-converse", `Is a triangle with side lengths ${a}, ${b}, and ${c} a right triangle?`,
         [`Yes — ${a}² + ${b}² = ${c}²`, `Right — the two smaller square lengths add exactly to the largest square length.`],
         [
@@ -38496,9 +38779,76 @@ const GENERATORS: VariantGen[] = [
   {
     tag: "g8-tm-cylinder-volume",
     label: "Cylinder volume as a coefficient of pi",
-    forms: ["tmCylinderA", "tmCylinderB", "tmCylinderBase", "tmCylinderTank"],
+    forms: ["tmCylinderA", "tmCylinderB", "tmCylinderBase", "tmCylinderTank", "tmCylinderDrum", "tmCylinderRadius", "tmCylinderDiameter"],
     gen: (rand, band = "core", form = "default") => {
       const F = form === "default" ? "tmCylinderA" : form;
+      if (F === "tmCylinderDrum") {
+        // tm-05-01/k1 after S316: real units (cm/cm³), and the second trap is the authored step's
+        // squared-the-HEIGHT-instead misconception (h²r), not the squared-both r²h² of the old
+        // tmCylinderA. Guards: r ≠ 2 (2rh = r²h), h ≠ 2 (2rh = h²r), r ≠ h (r²h = h²r).
+        const { r, h } = draw(
+          rand,
+          (rr) => ({ r: pick(rr, 3, band === "support" ? 5 : band === "stretch" ? 9 : 7), h: pick(rr, 3, band === "stretch" ? 12 : 9) }),
+          ({ r, h }) => r !== h
+        );
+        const answer = r * r * h;
+        return num(
+          "g8-tm-cylinder-volume",
+          `A cylindrical drum has radius ${r} cm and height ${h} cm. What is its volume, in cm³, as a number times π?`,
+          answer,
+          0,
+          [
+            [2 * r * h, `That used 2r (${2 * r}) instead of r² (${r * r}) — square the radius: ${r}² × ${h} = ${answer}.`],
+            [h * h * r, `That squared the height (${h * h}) instead of the radius — only r is squared: ${r * r} × ${h} = ${answer}.`],
+          ],
+          `V = πr²h = π × ${r * r} × ${h} = ${answer}π cm³, so the number is ${answer}.`
+        );
+      }
+      if (F === "tmCylinderRadius") {
+        // tm-05-01/k2 after S316: the REVERSE job — height and volume coefficient known, radius
+        // asked. Trap one stops at r² = K ÷ h; trap two multiplies K × h and takes the root,
+        // which always lands on r·h. Guards: r ≥ 2 (r² ≠ r), h ≥ 2 (rh ≠ r), r ≠ h (r² ≠ rh).
+        const { r, h } = draw(
+          rand,
+          (rr) => ({ r: pick(rr, 2, band === "support" ? 4 : 5), h: pick(rr, 2, band === "stretch" ? 12 : 10) }),
+          ({ r, h }) => r !== h
+        );
+        const K = r * r * h;
+        return num(
+          "g8-tm-cylinder-volume",
+          `A cylinder has height ${h} and volume ${K}π. What is its radius?`,
+          r,
+          0,
+          [
+            [r * r, `${r * r} is r² (${K} ÷ ${h}), not r itself — take the square root: √${r * r} = ${r}.`],
+            [r * h, `${r * h} is √(${K} × ${h}) — that MULTIPLIES the coefficient by the height. Divide instead: ${K} ÷ ${h} = ${r * r} = r², so r = √${r * r} = ${r}.`],
+          ],
+          `Divide the coefficient by the height: ${K} ÷ ${h} = ${r * r} = r², then r = √${r * r} = ${r}.`
+        );
+      }
+      if (F === "tmCylinderDiameter") {
+        // tm-05-01/ch1 after S316: the tank is measured by DIAMETER, so the modeling move is to
+        // halve it first. Trap one uses the diameter as the radius; trap two squares the height
+        // too. Guards: h ≠ 4 (d²h = r²h² there), h ≥ 2 (r²h ≠ r²h²).
+        const { r, h } = draw(
+          rand,
+          (rr) => ({ r: pick(rr, 3, band === "support" ? 5 : band === "stretch" ? 8 : 6), h: pick(rr, 2, band === "stretch" ? 11 : 9) }),
+          ({ h }) => h !== 4
+        );
+        const d = 2 * r;
+        const answer = r * r * h;
+        return num(
+          "g8-tm-cylinder-volume",
+          `A cylindrical water tank has diameter ${d} and height ${h}. What is its volume as a number times π?`,
+          answer,
+          0,
+          [
+            [d * d * h, `That used the DIAMETER (${d}) as the radius — halve it first: ${d} ÷ 2 = ${r}, then ${r}² × ${h} = ${answer}.`],
+            [r * r * h * h, `That squared the height too — only the radius is squared: ${r}² × ${h} = ${r * r} × ${h} = ${answer}.`],
+          ],
+          `Radius = diameter ÷ 2 = ${r}. V = πr²h = π × ${r}² × ${h} = π × ${r * r} × ${h} = ${answer}π, so the number is ${answer}.`
+        );
+      }
       if (F === "tmCylinderBase") {
         const r = pick(rand, band === "support" ? 3 : 4, band === "stretch" ? 12 : 9);
         const h = pick(rand, 2, band === "stretch" ? 14 : 9);
@@ -38952,9 +39302,9 @@ const GENERATORS: VariantGen[] = [
         return mcq(rand, "g8-les-solution-count", `Classify: ${coeff}x + ${constant} = ${coeff}x + ${constant}.`,
           ["Infinitely many solutions", `Right — both sides are identical, so every value of x satisfies the equation.`],
           [
-            ["One solution", `A single value is not selected because the equation is true for every x.`],
-            ["No solution", `A no-solution result would require the constants to disagree after the x-terms cancel.`],
-            [`x = ${constant}`, `The constant does not become an x-value; all values satisfy identical expressions.`],
+            ["Exactly one x-value works", `A single value is not selected because the equation is true for every x.`],
+            ["No solution exists at all", `A no-solution result would require the constants to disagree after the x-terms cancel.`],
+            [`x = ${constant} is the only value`, `The constant does not become an x-value; all values satisfy identical expressions.`],
           ]);
       }
       if (F === "lesClassifyDistributed" || F === "lesClassifyChallenge") {
@@ -38968,9 +39318,9 @@ const GENERATORS: VariantGen[] = [
         return mcq(rand, "g8-les-solution-count", `Classify: ${outer}(x + ${inner}) = ${outer}x + ${outer * inner}.`,
           ["Infinitely many solutions", `Right — distributing the left side produces exactly the expression on the right.`],
           [
-            ["One solution", `After distribution the two sides are identical, so no single x-value is selected.`],
-            ["No solution", `A no-solution result would leave a false constant statement; this equation simplifies to a true identity.`],
-            [`x = ${inner}`, `The number inside the parentheses is not the only solution; every x makes the identity true.`],
+            ["Exactly one x-value works", `After distribution the two sides are identical, so no single x-value is selected.`],
+            ["No solution exists at all", `A no-solution result would leave a false constant statement; this equation simplifies to a true identity.`],
+            [`x = ${inner} is the only value`, `The number inside the parentheses is not the only solution; every x makes the identity true.`],
           ]);
       }
       return equationOutcomeVariant(rand, "g8-les-solution-count", `How many solutions does ${a}x + ${b} = ${a}x + ${d} have?`,
@@ -40387,7 +40737,11 @@ function exactConfig(tag:string,form:VariantForm,legacy:Variant):ExactUpgradeCon
   if(q.kind==="exp-eval")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"a",label:"the start amount a",value:n("a")},{id:"b",label:"the base b (one factor per step)",value:n("b")}],approxFormula:expChain("a","b",n("v")),approxRound:0});
   if(q.kind==="exp-zero")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"a",label:"the coefficient a",value:n("a")},{id:"b",label:"the base b (b^0 = b / b = 1)",value:n("b")}],approxFormula:{op:"multiply",left:{op:"const",id:"a"},right:{op:"divide",left:{op:"const",id:"b"},right:{op:"const",id:"b"}}},approxRound:0});
   if(q.kind==="exp-zero-decay")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"a",label:"the coefficient a",value:n("a")},{id:"h",label:`the decay factor 1/${n("den")} ((1/${n("den")})^0 = 1)`,value:1/n("den")}],approxFormula:{op:"multiply",left:{op:"const",id:"a"},right:{op:"divide",left:{op:"const",id:"h"},right:{op:"const",id:"h"}}},approxRound:0});
-  if(q.kind==="exp-decay")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"a",label:"the start amount",value:n("a")},{id:"h",label:`the decay factor 1/${n("den")} (one factor per step)`,value:1/n("den")}],approxFormula:expChain("a","h",n("steps")),approxRound:0});
+  /* GRB-02 (S331): the stage text prints `<label> = <value>`, so storing the decay factor as the
+   * FLOAT 1/den put "0.333333333333" on screen for den=3 — invented decimals for a lesson whose
+   * factor is exactly 1/3. The constant now carries the integer divisor (exact to print, exact to
+   * compute) and the formula divides by it once per step — the same arithmetic, kept exact. */
+  if(q.kind==="exp-decay"){const den=n("den");let f:NonNullable<ExactUpgradeConfig["approxFormula"]>={op:"const",id:"a"};for(let i=0;i<n("steps");i++)f={op:"divide",left:f,right:{op:"const",id:"h"}};return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"a",label:"the start amount",value:n("a")},{id:"h",label:`the divisor from the decay factor 1/${den} (divide once per step)`,value:den}],approxFormula:f,approxRound:0});}
   if(q.kind==="exp-ratio")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"t0",label:"the first term",value:n("t0")},{id:"t1",label:"the second term",value:n("t1")}],approxFormula:{op:"divide",left:{op:"const",id:"t1"},right:{op:"const",id:"t0"}},approxRound:0});
   if(q.kind==="exp-next")return exactReq({task:"approximationEvaluate",values:[],approxConstants:[{id:"t0",label:"the first term",value:n("t0")},{id:"t1",label:"the second term",value:n("t1")},{id:"tLast",label:"the last given term",value:n("tLast")}],approxFormula:{op:"multiply",left:{op:"const",id:"tLast"},right:{op:"divide",left:{op:"const",id:"t1"},right:{op:"const",id:"t0"}}},approxRound:0});
  }
@@ -40429,7 +40783,7 @@ const EXACT_VARIANT_FORMS:Record<string,ReadonlySet<string>>={
  "a2-rationals":new Set(["rf-ha__numeric","rf-work__numeric","rf-variation__numeric","rf-like-denoms__numeric"]),
 
  "a1-radicals":new Set(["rad-distribute__numeric","rad-fully-simplified__numeric","rad-like-terms__numeric","rad-mn-exp__numeric","rad-multiply__numeric","rad-perfect-square__numeric","rad-simplify-factor__numeric","rad-unit-fraction-exp__numeric"]),
- "fraction-benchmark":new Set(["straddleHalf"]),"g4-fractions":new Set(["faBenchmarkCompareMcq"]),"grouping-first":new Set(["default","mulGroup","groupDiv","groupAddMul"]),"power-product":new Set(["basicPower","comparePowers"]),"g7-tse-inequality-build":new Set(["strictBoundary","inclusiveBoundary","noLargest","atLeastBoundary"]),"g7-mixed-rational":new Set(["fracProduct","integerProduct","account","hiker"]),"g8-rns-root-classify":new Set(["rnsRootPickRational","rnsRootClassifyIrrational","rnsRootClassifyPerfect","rnsRootAllIrrational"]),"g8-rns-density":new Set(["rnsDensityTenths","rnsDensityHundredths","rnsDensityBetweenAny","rnsDensityChallenge"])
+ "fraction-benchmark":new Set(["straddleHalf"]),"g4-fractions":new Set(["faBenchmarkCompareMcq"]),"grouping-first":new Set(["default","mulGroup","groupDiv","groupAddMul"]),"power-product":new Set(["basicPower","comparePowers","doublingPower"]),"g7-tse-inequality-build":new Set(["strictBoundary","inclusiveBoundary","noLargest","atLeastBoundary"]),"g7-mixed-rational":new Set(["fracProduct","integerProduct","account","hiker"]),"g8-rns-root-classify":new Set(["rnsRootPickRational","rnsRootClassifyIrrational","rnsRootClassifyPerfect","rnsRootAllIrrational"]),"g8-rns-density":new Set(["rnsDensityTenths","rnsDensityHundredths","rnsDensityBetweenAny","rnsDensityChallenge"])
 };
 for(const generator of GENERATORS){const forms=EXACT_VARIANT_FORMS[generator.tag];if(!forms)continue;const raw=generator.gen;generator.gen=(rand,band="core",form="default")=>{const legacy=raw(rand,band,form);return forms.has(form)?upgradeExactVariant(generator.tag,form,legacy):legacy}}
 
@@ -40516,6 +40870,7 @@ function geometricUpgradeConfig(tag:string,form:VariantForm,legacy:Variant):Geom
  if(tag==="g8-tm-pythagorean-why"){
   if(form==="tmPythAreaMeaning"){const pythagorean={legA:3,legB:4,target:"areaMeaning" as const},truth=geometricConstraintTruth({task:"pythagoreanArea",pythagorean});return{task:"pythagoreanArea",pythagorean,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(s=>s.key)}}
   if(form==="tmPythLengthFromAreas"){m=prompt.match(/areas (\d+(?:\.\d+)?) and (\d+(?:\.\d+)?)/);if(!m)throw new Error(`geometricConstraintLab could not parse Pythagorean areas: ${prompt}`);const pythagorean={legAreaA:+m[1],legAreaB:+m[2],target:"length" as const},truth=geometricConstraintTruth({task:"pythagoreanArea",pythagorean});return{task:"pythagoreanArea",pythagorean,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(s=>s.key)}}
+  if(form==="tmPythMissingLeg"){m=prompt.match(/one leg of length (\d+(?:\.\d+)?) and hypotenuse (\d+(?:\.\d+)?)/);if(!m)throw new Error(`geometricConstraintLab could not parse missing-leg prompt: ${prompt}`);const pythagorean={legA:+m[1],hypotenuse:+m[2],target:"legLength" as const},truth=geometricConstraintTruth({task:"pythagoreanArea",pythagorean});return{task:"pythagoreanArea",pythagorean,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(s=>s.key)}}
   m=prompt.match(/legs (\d+(?:\.\d+)?) and (\d+(?:\.\d+)?)/);if(!m)throw new Error(`geometricConstraintLab could not parse Pythagorean legs: ${prompt}`);const pythagorean={legA:+m[1],legB:+m[2],target:"cSquared" as const},truth=geometricConstraintTruth({task:"pythagoreanArea",pythagorean});return{task:"pythagoreanArea",pythagorean,requiredExplorations:truth.stages.length,requiredStageKeys:truth.stages.map(s=>s.key)}
  }
  return null;
@@ -40523,7 +40878,7 @@ function geometricUpgradeConfig(tag:string,form:VariantForm,legacy:Variant):Geom
 function upgradeGeometricVariant(tag:string,form:VariantForm,legacy:Variant):Variant{const cfg=geometricUpgradeConfig(tag,form,legacy);if(!cfg)return legacy;const numeric=legacy.widget.type==="numeric",choice=legacy.widget.type==="mcq";if(!numeric&&!choice)throw new Error(`geometricConstraintLab cannot wrap ${legacy.widget.type} for ${tag}@${form}`);const prompt="prompt" in legacy.widget?legacySource(legacy.widget).prompt:"",common={type:"geometricConstraintLab" as const,prompt,...cfg,tolerance:numeric?legacySource(legacy.widget).tolerance:0,choices:[],numericErrors:[],authoredStages:[],explorationFeedback:"Inspect every required geometric constraint before checking.",fallbackFeedback:numeric?legacySource(legacy.widget).fallbackFeedback:"Choose the conclusion proved by the geometric constraints."};if(numeric){const widget:TGeometricConstraintLab={...common,answerMode:"numeric",numericErrors:legacySource(legacy.widget).commonErrors,successFeedback:legacySource(legacy.widget).fallbackFeedback};return{tag,answer:legacy.answer,widget}}const correct=legacySource(legacy.widget).options.find(option=>option.correct);if(!correct)throw new Error(`geometricConstraintLab ${tag}@${form} has no correct option`);const truth=geometricConstraintTruth(common);if(!truth.answerClaim)throw new Error(`geometricConstraintLab ${tag}@${form} choice task lacks claim truth`);const choices=legacySource(legacy.widget).options.map(option=>({id:option.id,label:option.label,feedback:option.feedback,claim:option.correct?truth.answerClaim:`misconception:${option.id}`}));const widget:TGeometricConstraintLab={...common,answerMode:"choice",choices,successFeedback:correct.feedback};return{tag,answer:correct.id,widget}}
 const GEOMETRIC_VARIANT_FORMS:Record<string,ReadonlySet<string>>={
  "a1-radicals":new Set(["rad-pythagorean__numeric","rad-pythagorean-radical__numeric","rad-distance__numeric"]),
- "missing-side":new Set(["default","squareSide","rectangleWidth","penWidth"]),"triangle-area-calc":new Set(["coordinateRightTriangle"]),"area-compose":new Set(["attachedAreas","coordinateComposite"]),"area-formula-pick":new Set(["coordinateRectangle"]),"g7-scaled-area":new Set(["default","unitAreaScale","areaError","roomScaledArea"]),"g7-vertical-angles":new Set(["default","adjacentObtuse","whyVertical","acrossAlgebra"]),"g8-tm-angle-angle":new Set(["tmAAThird","tmAASimilar","tmAANotSimilar","tmAAScale"]),"g8-tm-pythagorean-why":new Set(["tmPythCSquaredA","tmPythCSquaredB","tmPythAreaMeaning","tmPythLengthFromAreas"])
+ "missing-side":new Set(["default","squareSide","rectangleWidth","penWidth"]),"triangle-area-calc":new Set(["coordinateRightTriangle"]),"area-compose":new Set(["attachedAreas","coordinateComposite"]),"area-formula-pick":new Set(["coordinateRectangle"]),"g7-scaled-area":new Set(["default","unitAreaScale","areaError","roomScaledArea"]),"g7-vertical-angles":new Set(["default","adjacentObtuse","whyVertical","acrossAlgebra"]),"g8-tm-angle-angle":new Set(["tmAAThird","tmAASimilar","tmAANotSimilar","tmAAScale"]),"g8-tm-pythagorean-why":new Set(["tmPythCSquaredA","tmPythCSquaredB","tmPythAreaMeaning","tmPythLengthFromAreas","tmPythMissingLeg","tmPythClassmateSum"])
 };
 for(const generator of GENERATORS){const forms=GEOMETRIC_VARIANT_FORMS[generator.tag];if(!forms)continue;const raw=generator.gen;generator.gen=(rand,band="core",form="default")=>{const legacy=raw(rand,band,form);return forms.has(form)?upgradeGeometricVariant(generator.tag,form,legacy):legacy}}
 

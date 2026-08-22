@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "g4v-liter-ml-jug",
       "body": "Liquid volume follows the pattern too: a liter holds 1,000 milliliters, so 4 L is 4,000 mL and 6,000 mL is 6 L.",
       "narration": "Liquid volume follows the pattern too: a liter holds 1,000 milliliters, so 4 L is 4,000 mL and 6,000 mL is 6 L."
     },
@@ -35,24 +35,24 @@
           },
           {
             "value": 5000,
-            "feedback": "Five hops overshoot — four liters is 4,000 milliliters."
+            "feedback": "Five hops overshoot \u2014 four liters is 4,000 milliliters."
           }
         ],
         "missFeedback": "Each liter is 1,000 milliliters, so four reach 4,000.",
-        "successFeedback": "4,000 — four liter-hops of 1,000 milliliters each.",
-        "lowFeedback": "Short of the landing — each liter is 1,000 milliliters, so four reach 4,000.",
-        "highFeedback": "Past the landing — four liters stops exactly at 4,000 milliliters."
+        "successFeedback": "4,000 \u2014 four liter-hops of 1,000 milliliters each.",
+        "lowFeedback": "Short of the landing \u2014 each liter is 1,000 milliliters, so four reach 4,000.",
+        "highFeedback": "Past the landing \u2014 four liters stops exactly at 4,000 milliliters."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "diagram",
@@ -77,7 +77,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A jug measures 6 liters, and each liter is 1000 milliliters. Compute 6 × 1000.",
+        "prompt": "A jug measures 6 liters, and each liter is 1000 milliliters. Compute 6 \u00d7 1000.",
         "answer": 6000,
         "tolerance": 0,
         "unit": "",
@@ -92,7 +92,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 6000."
+        "successFeedback": "Correct \u2014 6000."
       },
       "hints": [
         "Which unit is smaller?",
@@ -103,12 +103,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "symbolic",
@@ -129,9 +129,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "By now the only new information in a conversion problem is the factor — everything else you already know how to do.",
-      "narration": "By now the only new information in a conversion problem is the factor — everything else you already know how to do."
+      "figure": "mc-mass-volume",
+      "body": "For multiplicatively related units, identify the factor and direction. Here, 1 liter equals 1,000 milliliters.",
+      "narration": "For multiplicatively related units, identify the factor and direction. Here, 1 liter equals 1,000 milliliters."
     },
     {
       "id": "i2",
@@ -140,38 +140,38 @@
       "conceptTag": "g4v-volume",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "How many milliliters in 4 liters? Hop one liter at a time.",
+        "prompt": "Apply the liquid-volume relationship to a new value: how many milliliters are in 3 liters?",
         "min": 0,
-        "max": 6000,
+        "max": 5000,
         "start": 0,
         "hop": 1000,
-        "hops": 4,
+        "hops": 3,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 3000,
-            "feedback": "Three hops reach 3,000 mL; the jug holds four liters."
+            "value": 2000,
+            "feedback": "Two hops represent two liters; three liters needs one more hop."
           },
           {
-            "value": 5000,
-            "feedback": "Five hops overshoot — four liters is 4,000 milliliters."
+            "value": 4000,
+            "feedback": "Four hops overshoot; three liters is 3,000 milliliters."
           }
         ],
-        "missFeedback": "Each liter is 1,000 milliliters, so four reach 4,000.",
-        "successFeedback": "4,000 — four liter-hops of 1,000 milliliters each.",
-        "lowFeedback": "Short of the landing — each liter is 1,000 milliliters, so four reach 4,000.",
-        "highFeedback": "Past the landing — four liters stops exactly at 4,000 milliliters."
+        "missFeedback": "Three equal hops of 1,000 milliliters land at 3,000 milliliters.",
+        "successFeedback": "3,000 milliliters \u2014 three liter-hops of 1,000 milliliters each.",
+        "lowFeedback": "This landing is short of three complete liter-hops.",
+        "highFeedback": "This landing is past three complete liter-hops."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "symbolic",
@@ -196,7 +196,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A jug measures 7000 milliliters, and each liter is 1000 milliliters. Compute 7000 ÷ 1000.",
+        "prompt": "Apply without the opening model: A jug measures 7000 milliliters, and each liter is 1000 milliliters. Compute 7000 \u00f7 1000.",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -211,7 +211,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 7."
+        "successFeedback": "Correct \u2014 7."
       },
       "hints": [
         "Which unit is smaller?",
@@ -222,12 +222,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "symbolic",
@@ -256,7 +256,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "56 liters are poured into 6-liter jugs. Every liter must be carried. How many jugs are needed?",
+        "prompt": "Retrieve or diagnose in a new form: 56 liters are poured into 6-liter jugs. Every liter must be carried. How many jugs are needed?",
         "answer": 10,
         "tolerance": 0,
         "unit": "",
@@ -270,8 +270,8 @@
             "feedback": "2 is the leftover liquid, not a count of jugs."
           }
         ],
-        "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 10."
+        "fallbackFeedback": "Divide by the container size; if any amount remains, one more container is required.",
+        "successFeedback": "Correct \u2014 10."
       },
       "hints": [
         "Build the total first.",
@@ -282,12 +282,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "symbolic",
@@ -316,7 +316,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A jug measures 3 liters, and each liter is 1000 milliliters. Compute 3 × 1000.",
+        "prompt": "Transfer to a final context: A jug measures 3 liters, and each liter is 1000 milliliters. Compute 3 \u00d7 1000.",
         "answer": 3000,
         "tolerance": 0,
         "unit": "",
@@ -331,7 +331,7 @@
           }
         ],
         "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-        "successFeedback": "Correct — 3000."
+        "successFeedback": "Correct \u2014 3000."
       },
       "hints": [
         "Which unit is smaller?",
@@ -342,12 +342,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Hold the quantity fixed while the unit changes, and watch which way the NUMBER moves for g4v volume.",
+        "actionGoal": "Convert between liters and milliliters and interpret remainders when containers are required.",
         "invariants": [
-          "Converting never changes how much there is: a smaller unit needs more of them and a bigger unit needs fewer, so the number moves in the opposite direction to the unit size in g4v volume."
+          "One liter is exactly 1,000 milliliters; a leftover amount needs another container when all liquid must be carried."
         ],
         "misconceptions": [
-          "Multiplying when converting to a bigger unit, adding the conversion factor instead of multiplying by it, or comparing bare numbers across different units."
+          "Dropping a remainder when the context requires every liter to be carried."
         ],
         "representations": [
           "symbolic",
@@ -383,8 +383,9 @@
       "concept": {
         "id": "rem-g4v-volume-c",
         "kind": "concept",
-        "body": "By now the only new information in a conversion problem is the factor — everything else you already know how to do.",
-        "narration": "By now the only new information in a conversion problem is the factor — everything else you already know how to do."
+        "body": "For multiplicatively related units, identify the factor and direction. Here, 1 liter equals 1,000 milliliters.",
+        "narration": "For multiplicatively related units, identify the factor and direction. Here, 1 liter equals 1,000 milliliters.",
+        "figure": "mc-mass-volume"
       },
       "check": {
         "id": "rem-g4v-volume-k",
@@ -397,22 +398,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A jug measures 6 liters, and each liter is 1000 milliliters. Compute 6 × 1000.",
-          "answer": 6000,
+          "prompt": "A bottle holds 8 liters, and 1 liter equals 1000 milliliters. Multiply to find how many milliliters that is.",
+          "answer": 8000,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 1006,
-              "feedback": "Adding mixes a quantity with a rate. Each of the 6 liters contributes 1000 milliliters, so they multiply."
+              "value": 1008,
+              "feedback": "Adding mixes a quantity with a rate. Each of the 8 liters needs its own factor of 1000, not one addition."
             },
             {
-              "value": 167,
-              "feedback": "That divided. Going to the SMALLER unit needs more of them, so the number must grow."
+              "value": 8,
+              "feedback": "That kept the liter count. Milliliters are the smaller unit, so the number must grow by the factor of 1000."
             }
           ],
-          "fallbackFeedback": "Name the quantity and the conversion factor, then decide whether the count should grow or shrink.",
-          "successFeedback": "Correct — 6000."
+          "fallbackFeedback": "Use the constant factor linking the units: multiply the liter count by 1,000.",
+          "successFeedback": "Correct \u2014 8000."
         }
       }
     }

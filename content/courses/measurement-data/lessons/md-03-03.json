@@ -15,53 +15,25 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Match question to move.",
+      "body": "Build two bars so the comparison is visible.",
       "conceptTag": "graph-questions",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Connect each graph question to what you do.",
-        "left": [
-          {
-            "id": "q1",
-            "label": "\"How many MORE cats than dogs?\""
-          },
-          {
-            "id": "q2",
-            "label": "\"How many pets in ALL?\""
-          },
-          {
-            "id": "q3",
-            "label": "\"Which pet is the FEWEST?\""
-          }
+        "type": "barBuilder",
+        "prompt": "Build the graph: Dogs 8, Fish 3. Then compare the two bar tops to see how many more dogs there are.",
+        "categories": [
+          "Dogs",
+          "Fish"
         ],
-        "right": [
-          {
-            "id": "add",
-            "label": "Add every bar"
-          },
-          {
-            "id": "shortest",
-            "label": "Find the shortest bar"
-          },
-          {
-            "id": "sub",
-            "label": "Subtract the two bars"
-          }
+        "target": [
+          8,
+          3
         ],
-        "pairs": {
-          "q1": "sub",
-          "q2": "add",
-          "q3": "shortest"
-        },
-        "pairErrors": [
-          {
-            "left": "q1",
-            "right": "add",
-            "feedback": "'How many MORE' compares two bars — that's subtraction (the gap), not adding them together."
-          }
-        ],
-        "missFeedback": "More/fewer than → subtract; in all → add; most/fewest → find the tallest/shortest bar.",
-        "successFeedback": "More → subtract, in all → add, fewest → shortest bar. Question words point to the move."
+        "maxVal": 10,
+        "step": 1,
+        "display": "bar",
+        "axisLabel": "pets",
+        "partialFeedback": "Check each bar against the data: Dogs reaches 8 and Fish reaches 3. You need both bars to see the gap.",
+        "successFeedback": "Both bars are visible. The gap is 8 − 3 = 5, so comparison questions use two bars."
       },
       "predict": {
         "prompt": "'How many MORE does A have than B?' — do you read one bar, or compare two?",
@@ -95,6 +67,24 @@
       "widget": {
         "type": "numeric",
         "prompt": "A bar graph shows: dogs 8, cats 6, fish 3, birds 5. How many MORE dogs than fish?",
+        "barData": {
+          "categories": [
+            "Dogs",
+            "Cats",
+            "Fish",
+            "Birds"
+          ],
+          "values": [
+            8,
+            6,
+            3,
+            5
+          ],
+          "title": "Pets bar graph",
+          "axisLabel": "pets",
+          "scaleStep": 2,
+          "axisMax": 8
+        },
         "answer": 5,
         "tolerance": 0,
         "unit": "more dogs",
@@ -117,8 +107,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Watch a sneaky trap: the number of BARS and the HEIGHT of a bar answer different questions. Four bars might mean four days; each bar's height is that day's count. '4 bars' is not '4 books.' Always ask which one the question wants.",
-      "figure": "md3-bargraph"
+      "body": "Watch a sneaky trap: the number of BARS and the HEIGHT of a bar answer different questions. Four bars might mean four days; each bar's height is that day's count. '4 bars' is not '4 books.' Always ask which one the question wants."
     },
     {
       "id": "k2",
@@ -132,6 +121,24 @@
       "widget": {
         "type": "numeric",
         "prompt": "A graph shows books read each day: Mon 4, Tue 7, Wed 7, Thu 2. How many books in ALL?",
+        "barData": {
+          "categories": [
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu"
+          ],
+          "values": [
+            4,
+            7,
+            7,
+            2
+          ],
+          "title": "Books read each day",
+          "axisLabel": "books",
+          "scaleStep": 2,
+          "axisMax": 8
+        },
         "answer": 20,
         "tolerance": 0,
         "unit": "books",
@@ -160,6 +167,24 @@
       "widget": {
         "type": "dragBucket",
         "prompt": "Graph: apples 5, bananas 8, grapes 5, pears 2. Sort each statement.",
+        "barData": {
+          "categories": [
+            "Apples",
+            "Bananas",
+            "Grapes",
+            "Pears"
+          ],
+          "values": [
+            5,
+            8,
+            5,
+            2
+          ],
+          "title": "Fruit votes",
+          "axisLabel": "votes",
+          "scaleStep": 2,
+          "axisMax": 8
+        },
         "buckets": [
           {
             "id": "true",
@@ -214,6 +239,24 @@
       "widget": {
         "type": "numeric",
         "prompt": "From dogs 8, cats 6, fish 3, birds 5 — how many cats and birds TOGETHER?",
+        "barData": {
+          "categories": [
+            "Dogs",
+            "Cats",
+            "Fish",
+            "Birds"
+          ],
+          "values": [
+            8,
+            6,
+            3,
+            5
+          ],
+          "title": "Pets bar graph",
+          "axisLabel": "pets",
+          "scaleStep": 2,
+          "axisMax": 8
+        },
         "answer": 11,
         "tolerance": 0,
         "unit": "pets",
@@ -251,6 +294,24 @@
       "widget": {
         "type": "numeric",
         "prompt": "Recess votes — soccer 9, tag 6, swings 4, slide 5. How many MORE votes did the games (soccer + tag) get than the playground (swings + slide)?",
+        "barData": {
+          "categories": [
+            "Soccer",
+            "Tag",
+            "Swings",
+            "Slide"
+          ],
+          "values": [
+            9,
+            6,
+            4,
+            5
+          ],
+          "title": "Recess votes",
+          "axisLabel": "votes",
+          "scaleStep": 2,
+          "axisMax": 10
+        },
         "answer": 6,
         "tolerance": 0,
         "unit": "votes",

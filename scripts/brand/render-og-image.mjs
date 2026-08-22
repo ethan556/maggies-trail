@@ -4,7 +4,7 @@
  *
  * SCOPE / GOVERNANCE. This script produces NO new artwork. It is a mechanical rasterisation of
  * assets that already exist and are already approved:
- *   - `public/brand/maggies-mark.svg`     (approved WS-A mark, read from disk at run time)
+ *   - `public/brand/maggies-mark.png`     (generated canonical mark, read from disk at run time)
  *   - `public/brand/maggies-wordmark.svg` (approved WS-A wordmark, read from disk at run time)
  *   - `COPY.tagline` from `src/lib/copy.ts` (the product's own tagline, read at run time)
  * Neither SVG's path data is copied into this file — both are inlined straight from disk, so the
@@ -53,6 +53,13 @@ const OUT_PATH = join(root, "public", "brand", "maggies-og.png");
 
 /* ------------------------------------------------------------------ inputs from disk */
 
+function readBrandPng(name) {
+  const path = join(root, "public", "brand", name);
+  if (!existsSync(path)) {
+    throw new Error(`Missing generated brand raster ${path}. Run npm run gen:brand-icons first.`);
+  }
+  return `data:image/png;base64,${readFileSync(path).toString("base64")}`;
+}
 function readBrandSvg(name) {
   const path = join(root, "public", "brand", name);
   if (!existsSync(path)) {
@@ -78,7 +85,7 @@ function readManifest() {
 
 /* ------------------------------------------------------------------ composition */
 
-function buildHtml({ markSvg, wordmarkSvg, tagline }) {
+function buildHtml({ markPng, wordmarkSvg, tagline }) {
   // Sizing note: the wordmark's own canvas is viewBox="-6 -6 962 112", so a 660px-wide render is
   // 660 * 112 / 962 ~= 77px tall. Everything is a fixed pixel value — no responsive units — so the
   // 1200x630 viewport screenshot is byte-stable across runs.
@@ -96,7 +103,7 @@ function buildHtml({ markSvg, wordmarkSvg, tagline }) {
   }
   .mark { width: 140px; height: 140px; display: block; }
   .wordmark { width: 700px; height: auto; display: block; margin-top: 44px; }
-  .wordmark svg, .mark svg { width: 100%; height: 100%; display: block; }
+  .wordmark svg, .mark img { width: 100%; height: 100%; display: block; }
   .tagline {
     margin-top: 52px;
     font-family: ${TAGLINE_FONT_STACK};
@@ -107,7 +114,7 @@ function buildHtml({ markSvg, wordmarkSvg, tagline }) {
   }
 </style></head>
 <body>
-  <div class="mark">${markSvg}</div>
+  <div class="mark"><img src="${markPng}" alt=""/></div>
   <div class="wordmark">${wordmarkSvg}</div>
   <p class="tagline">${escapeHtml(tagline)}</p>
 </body></html>`;
@@ -121,9 +128,17 @@ function escapeHtml(s) {
 
 async function chromiumExecutable() {
   // Same resolution order as scripts/session/closure-visual-matrix-s220.cjs, plus the browser
-  // path this container ships. Never runs `playwright install`.
+  // path this container ships. On Windows, @sparticuz can unpack an extensionless Linux binary
+  // into %TEMP%; prefer an installed Chrome/Edge executable before that fallback. Never runs
+  // `playwright install`.
   if (process.env.PW_CHROMIUM_EXE) return process.env.PW_CHROMIUM_EXE;
-  for (const candidate of ["/tmp/chromium", "/opt/pw-browsers/chromium"]) {
+  const candidates = process.platform === "win32"
+    ? [
+        join(process.env.ProgramFiles ?? "C:\\Program Files", "Google", "Chrome", "Application", "chrome.exe"),
+        join(process.env["ProgramFiles(x86)"] ?? "C:\\Program Files (x86)", "Microsoft", "Edge", "Application", "msedge.exe")
+      ]
+    : ["/tmp/chromium", "/opt/pw-browsers/chromium"];
+  for (const candidate of candidates) {
     if (existsSync(candidate)) return candidate;
   }
   try {
@@ -139,7 +154,7 @@ async function chromiumExecutable() {
 const manifest = readManifest();
 const tagline = readTagline();
 const html = buildHtml({
-  markSvg: readBrandSvg("maggies-mark.svg"),
+  markPng: readBrandPng("maggies-mark.png"),
   wordmarkSvg: readBrandSvg("maggies-wordmark.svg"),
   tagline
 });

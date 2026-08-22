@@ -5,10 +5,11 @@ import { getCatalog } from "@/lib/content.server";
 import { AppIcon, LinkButton, Badge } from "@/components/ui";
 import { ProofStrip } from "@/components/ProofStrip";
 import { MaggieBrandLockup, MaggieMarkOpen } from "@/components/brand";
+import SkipLink from "@/components/SkipLink";
 
 const LandingHero = dynamic(() => import("@/components/LandingHero"), {
   loading: () => (
-    <div className="min-h-56 animate-pulse rounded-card border border-ink/10 bg-white dark:border-paper/15 dark:bg-night" />
+    <div className="min-h-56 motion-safe:animate-pulse rounded-card border border-ink/10 bg-white dark:border-paper/15 dark:bg-night" />
   )
 });
 
@@ -61,6 +62,7 @@ export default async function Home() {
 
   return (
     <>
+      <SkipLink />
       {/* Slim public nav (WS-H Phase 1) — brand + wordmark | Courses | For families |
           For educators | Sign in | Start learning. Sticky/backdrop-blur treatment mirrors
           SiteNav.tsx's authenticated header (same 3-group mr-auto/plain/ml-auto flex split);
@@ -92,7 +94,7 @@ export default async function Home() {
         </nav>
       </header>
 
-      <main className="mx-auto w-full max-w-4xl px-4 pb-16 pt-10">
+      <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-4xl px-4 pb-16 pt-10">
         {/* Hero */}
         <section className="grid items-center gap-10 md:grid-cols-[1.05fr_1fr]">
           <div>
@@ -195,8 +197,8 @@ export default async function Home() {
         </section>
 
         {/* Evidence, not invented social proof. Every number is derived from the live catalogue
-            (courseCount/lessonCount/gradeSpan, computed once above) and ProofStrip only decides
-            when to animate toward them, never what they are. */}
+            (courseCount/lessonCount/gradeSpan, computed once above) and rendered canonically in
+            the initial HTML. */}
         <ProofStrip courseCount={courseCount} lessonCount={lessonCount} gradeSpan={gradeSpan} />
 
         {/* Closing CTA — OPTIMIZATION_PLAN_V3.md WS-H moment 6's exact target line. */}

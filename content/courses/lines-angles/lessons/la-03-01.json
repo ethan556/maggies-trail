@@ -15,56 +15,68 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Classify by the largest angle.",
+   "body": "Classify a triangle from the angles drawn inside it.",
    "conceptTag": "triangle-classification",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each triangle's three angles into its family.",
-    "buckets": [
+    "type": "shapeHierarchyLab",
+    "prompt": "This triangle has angles 90°, 55°, and 35°. Select its angle family.",
+    "mode": "triangle",
+    "nodes": [
      {
-      "id": "acute",
-      "label": "Acute (all < 90°)",
-      "icon": "◣"
-     },
+      "id": "triangle",
+      "label": "Triangle",
+      "attributes": [
+       "90°",
+       "55°",
+       "35°",
+       "sum 180°"
+      ]
+     }
+    ],
+    "edges": [],
+    "triangleAngles": [
+     90,
+     55,
+     35
+    ],
+    "triangleQuestion": "angle",
+    "choices": [
      {
       "id": "right",
-      "label": "Right (one = 90°)",
-      "icon": "◻️"
+      "label": "Right triangle",
+      "claim": "right",
+      "feedback": "A triangle with one 90° angle is a right triangle.",
+      "evidenceKind": "classification",
+      "evidenceText": "The square corner marks the 90° angle.",
+      "highlightNodeIds": [
+       "triangle"
+      ]
+     },
+     {
+      "id": "acute",
+      "label": "Acute triangle",
+      "claim": "acute",
+      "feedback": "An acute triangle needs all three angles below 90°.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "The 90° angle blocks the acute classification.",
+      "highlightNodeIds": [
+       "triangle"
+      ]
      },
      {
       "id": "obtuse",
-      "label": "Obtuse (one > 90°)",
-      "icon": "◭"
+      "label": "Obtuse triangle",
+      "claim": "obtuse",
+      "feedback": "An obtuse triangle needs one angle greater than 90°.",
+      "evidenceKind": "counterexample",
+      "evidenceText": "The largest angle is exactly 90°, not greater.",
+      "highlightNodeIds": [
+       "triangle"
+      ]
      }
     ],
-    "items": [
-     {
-      "id": "t1",
-      "label": "60°, 60°, 60°",
-      "bucketId": "acute",
-      "feedback": "Every angle is under 90° — acute."
-     },
-     {
-      "id": "t2",
-      "label": "90°, 45°, 45°",
-      "bucketId": "right",
-      "feedback": "One angle is exactly 90° — right."
-     },
-     {
-      "id": "t3",
-      "label": "100°, 40°, 40°",
-      "bucketId": "obtuse",
-      "feedback": "One angle (100°) is over 90° — obtuse."
-     },
-     {
-      "id": "t4",
-      "label": "50°, 60°, 70°",
-      "bucketId": "acute",
-      "feedback": "The largest angle (70°) is still under 90° — acute."
-     }
-    ],
-    "missFeedback": "Find the LARGEST angle in each triangle, then compare it to 90°.",
-    "successFeedback": "60-60-60 and 50-60-70 are acute; 90-45-45 is right; 100-40-40 is obtuse."
+    "fallbackFeedback": "Use the largest angle: below 90° is acute, exactly 90° is right, and above 90° is obtuse.",
+    "successFeedback": "It is a right triangle. Two right angles would already total 180°, leaving no angle for the third corner."
    },
    "predict": {
     "prompt": "Can a triangle have TWO right angles?",
@@ -154,17 +166,17 @@
      },
      {
       "id": "b",
-      "label": "Yes, if the third angle is very small",
+      "label": "Yes, if the third angle is made very small to compensate",
       "feedback": "Even a tiny third angle can't rescue it — two angles over 90° already sum past 180° on their own."
      },
      {
       "id": "c",
-      "label": "Yes, in a big enough triangle",
+      "label": "Yes, in a big enough triangle drawn on a large sheet of paper",
       "feedback": "Size doesn't matter — every triangle's angles sum to exactly 180°, regardless of how large the triangle is drawn."
      },
      {
       "id": "d",
-      "label": "Only equilateral triangles can't do this",
+      "label": "Only equilateral triangles are unable to have two such angles",
       "feedback": "Every triangle is bound by the same 180° total, not just equilateral ones — two angles over 90° is impossible for any triangle."
      }
     ]

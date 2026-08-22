@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "bar-compare",
-      "body": "Two special cases: dividing by 1 changes nothing, and dividing a number by itself gives 1.",
-      "narration": "Two special cases: dividing by 1 changes nothing, and dividing a number by itself gives 1."
+      "figure": "mult3-divide-one-self",
+      "body": "Two special cases: dividing by 1 changes nothing, and dividing a nonzero number by itself gives 1.",
+      "narration": "Two special cases: dividing by 1 changes nothing, and dividing a nonzero number by itself gives 1."
     },
     {
       "id": "i1",
@@ -145,7 +145,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "bar-compare",
+      "figure": "mult3-divide-one-self",
       "body": "8 ÷ 1 = 8, because one group holds everything. 8 ÷ 8 = 1, because it makes exactly one full group.",
       "narration": "8 ÷ 1 = 8, because one group holds everything. 8 ÷ 8 = 1, because it makes exactly one full group."
     },
@@ -156,7 +156,7 @@
       "conceptTag": "g3d-special",
       "widget": {
         "type": "areaModel",
-        "prompt": "Build an array with 9 rows that holds 9 squares.",
+        "prompt": "Arrange 9 squares into 9 equal rows.",
         "targetArea": 9,
         "wMax": 10,
         "hMax": 11,
@@ -208,7 +208,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 ÷ 9 = ?",
+        "prompt": "What number makes 9 × ? = 9?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
@@ -269,7 +269,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "12 ÷ 1 = ?",
+        "prompt": "How many groups of 1 fit in 12?",
         "answer": 12,
         "tolerance": 0,
         "unit": "",
@@ -330,7 +330,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "7 ÷ 7 = ?",
+        "prompt": "7 cards are shared equally among 7 children. How many cards does each child get?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
@@ -398,36 +398,37 @@
       "concept": {
         "id": "rem-g3d-special-c",
         "kind": "concept",
-        "body": "8 ÷ 1 = 8, because one group holds everything. 8 ÷ 8 = 1, because it makes exactly one full group.",
-        "narration": "8 ÷ 1 = 8, because one group holds everything. 8 ÷ 8 = 1, because it makes exactly one full group."
+        "body": "A nonzero number divided by itself makes exactly 1 full group.",
+        "narration": "A nonzero number divided by itself makes exactly 1 full group.",
+        "figure": "mult3-divide-one-self"
       },
       "check": {
         "id": "rem-g3d-special-k",
         "kind": "check",
-        "body": "",
+        "body": "Try a new fact with the same idea.",
         "conceptTag": "g3d-special",
         "explanationVariants": [
-          "1 × 8 = 8, so 8 ÷ 1 = 8.",
-          "Dividing asks how many groups of 1 fit in 8: 8."
+          "6 ÷ 6 = 1.",
+          "How many full groups of 6 fit in 6?"
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "8 ÷ 1 = ?",
-          "answer": 8,
+          "prompt": "What is 6 ÷ 6?",
+          "answer": 1,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 1,
-              "feedback": "Dividing by 1 leaves the number unchanged — it does not become 1."
+              "value": 6,
+              "feedback": "That repeats the total instead of finding one equal share or the missing factor."
             },
             {
-              "value": 7,
-              "feedback": "Dividing by 1 changes nothing; the answer is 8 itself."
+              "value": 0,
+              "feedback": "Check by multiplying. 0 does not rebuild the stated total."
             }
           ],
-          "fallbackFeedback": "Think the multiplication fact: 1 × ? = 8.",
-          "successFeedback": "Correct — 8 ÷ 1 = 8."
+          "fallbackFeedback": "How many full groups of 6 fit in 6?",
+          "successFeedback": "Correct — 6 ÷ 6 = 1."
         }
       }
     }

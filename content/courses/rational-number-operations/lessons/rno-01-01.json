@@ -9,7 +9,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "integer-jump",
+      "figure": "rno7-add-same-line",
       "body": "Adding two numbers with the **same sign** is straightforward: add their sizes (magnitudes) and keep the shared sign. -3 + (-5): both negative, so add 3+5=8, keep negative: -8."
     },
     {
@@ -127,28 +127,23 @@
       "id": "c2",
       "kind": "concept",
       "body": "Picture it on the number line: -3 + (-5) means starting at -3 and jumping 5 MORE to the left, landing at -8 — both jumps go the same direction.",
-      "figure": "integer-jump"
+      "figure": "rno7-add-same-line"
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A bigger same-sign sum.",
+      "body": "Combine two larger negative groups.",
       "widget": {
-        "type": "numeric",
-        "prompt": "-7 + (-9) = ?",
-        "answer": -16,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 16,
-            "feedback": "Both numbers are negative, so the sum stays negative: -7 + (-9) = -16."
-          },
-          {
-            "value": -2,
-            "feedback": "That subtracts instead of adding magnitudes. Add 7+9=16, keep the sign: -16."
-          }
-        ],
-        "fallbackFeedback": "Add the magnitudes 7+9=16, keep the shared negative sign: -16."
+        "type": "integerChips",
+        "target": -16,
+        "maxPos": 10,
+        "maxNeg": 20,
+        "posStart": 0,
+        "negStart": 0,
+        "prompt": "Build −7 + (−9) with negative chips.",
+        "successFeedback": "−16. The two negative groups combine into one larger negative amount.",
+        "lowFeedback": "The total is below −16. Remove negative chips.",
+        "highFeedback": "The total is above −16. Add more negative chips; same-sign negatives combine."
       }
     },
     {
@@ -160,23 +155,23 @@
     {
       "id": "i3",
       "kind": "interactive",
-      "body": "Another positive sum.",
+      "body": "A savings total.",
       "widget": {
         "type": "numeric",
-        "prompt": "8 + 12 = ?",
+        "prompt": "A vending machine collects $8 in coins during the morning and $12 in coins during the afternoon. What is the total collected?",
         "answer": 20,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": -20,
-            "feedback": "Both numbers are positive, so the sum is positive: 8+12=20."
+            "feedback": "Both collections are positive amounts, so the total is positive: 8+12=20."
           },
           {
             "value": 4,
             "feedback": "That subtracts instead of adding. 8+12=20."
           }
         ],
-        "fallbackFeedback": "8+12=20."
+        "fallbackFeedback": "Both amounts are positive: 8+12=20."
       }
     },
     {
@@ -213,21 +208,21 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Large same-sign sum.",
+      "body": "A diver's depth.",
       "conceptTag": "rno-add-same-sign",
       "explanationVariants": [
-        "Both negative: add 15+6=21, keep negative: -21.",
+        "Both descents are negative: add 15+6=21, keep negative: -21.",
         "Same-sign addition: add magnitudes, keep the sign."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "-15 + (-6) = ?",
+        "prompt": "A diver descends 15 feet, then descends another 6 feet. Representing each descent as a negative number, what is the diver's total change in depth?",
         "answer": -21,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 21,
-            "feedback": "Both numbers are negative, so the sum stays negative: -15 + (-6) = -21."
+            "feedback": "Both descents are negative changes, so the total stays negative: -15 + (-6) = -21."
           },
           {
             "value": -9,
@@ -235,16 +230,12 @@
           }
         ],
         "fallbackFeedback": "Add the magnitudes 15+6=21, keep the shared negative sign: -21."
-      },
-      "variant": {
-        "gen": "g7-signed-addition",
-        "form": "sameLarge"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "A tricky same-sign sum.",
+      "body": "Catch a peer's mistake.",
       "conceptTag": "rno-add-same-sign",
       "explanationVariants": [
         "Both negative: add 18+13=31, keep negative: -31.",
@@ -252,17 +243,17 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "-18 + (-13) = ?",
+        "prompt": "Micah says -18 + (-13) = -5, since he subtracted 18 - 13. What is -18 + (-13) really?",
         "answer": -31,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 31,
-            "feedback": "Both numbers are negative, so the sum stays negative: -18 + (-13) = -31."
+            "value": -5,
+            "feedback": "That repeats Micah's mistake of subtracting instead of adding. Add the magnitudes: 18+13=31, keep the sign: -31."
           },
           {
-            "value": -5,
-            "feedback": "That subtracts instead of adding magnitudes. Add 18+13=31, keep the sign: -31."
+            "value": 31,
+            "feedback": "That has the right magnitude but the wrong sign. Both numbers are negative, so the sum stays negative: -31."
           }
         ],
         "fallbackFeedback": "Add the magnitudes 18+13=31, keep the shared negative sign: -31."
@@ -271,11 +262,7 @@
         "Both numbers are negative — the sum will be negative too.",
         "Add the magnitudes: 18 + 13.",
         "18 + 13 = 31, so the answer is -31."
-      ],
-      "variant": {
-        "gen": "g7-signed-addition",
-        "form": "sameChallenge"
-      }
+      ]
     },
     {
       "id": "r1",

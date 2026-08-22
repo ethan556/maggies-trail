@@ -48,7 +48,7 @@ def validate(old,new,path):
  else: raise AssertionError(f'{path}: unsupported {old.get("type")}')
 ledger=[]; total=main=rem=0
 for base_name,rel in TARGETS.items():
- old=json.loads((BASE/base_name).read_text()); new=json.loads((ROOT/rel).read_text())
+ old=json.loads((BASE/base_name).read_text(encoding='utf-8')); new=json.loads((ROOT/rel).read_text(encoding='utf-8'))
  assert strip_widgets(old)==strip_widgets(new),f'{rel}: non-widget authored drift'
  on=nodes(old); nn=nodes(new)
  assert [p for p,_ in on]==[p for p,_ in nn],f'{rel}: node identity drift'
@@ -59,7 +59,7 @@ for base_name,rel in TARGETS.items():
   ledger.append({'lesson':rel,'node':p,'oldType':o['widget']['type'],'newType':n['widget']['type'],'oldWidgetHash':digest(o['widget']),'newWidgetHash':digest(n['widget']),'variant':o.get('variant')})
 assert (total,main,rem)==(13,11,2),(total,main,rem)
 # Prove all non-target lesson bytes against sealed Session 149 ledger.
-hashes=json.loads((ROOT/'SESSION149_LESSON_HASHES.json').read_text())['files']
+hashes=json.loads((ROOT/'SESSION149_LESSON_HASHES.json').read_text(encoding='utf-8'))['files']
 target_rels=set(TARGETS.values()); authorized_later={'content/courses/solving-equations/lessons/alg1-01-02.json','content/courses/solving-equations/lessons/alg1-01-03.json','content/courses/solving-equations/lessons/alg1-02-01.json','content/courses/solving-equations/lessons/alg1-02-02.json','content/courses/solving-equations/lessons/alg1-02-03.json','content/courses/solving-equations/lessons/alg1-04-01.json','content/courses/solving-equations/lessons/alg1-04-02.json','content/courses/solving-equations/lessons/alg1-04-03.json','content/courses/sequences-series/lessons/sr-01-01.json','content/courses/sequences-series/lessons/sr-01-03.json','content/courses/sequences-series/lessons/sr-02-01.json','content/courses/sequences-series/lessons/sr-02-02.json','content/courses/sequences-series/lessons/sr-02-03.json','content/courses/sequences-series/lessons/sr-03-01.json','content/courses/sequences-series/lessons/sr-03-02.json','content/courses/sequences-series/lessons/sr-03-03.json','content/courses/sequences-series/lessons/sr-04-01.json','content/courses/sequences-series/lessons/sr-04-02.json','content/courses/sequences-series/lessons/sr-04-03.json','content/courses/sequences-series/lessons/sr-05-03.json','content/courses/coordinate-proofs/lessons/cx-02-01.json','content/courses/coordinate-proofs/lessons/cx-02-02.json','content/courses/coordinate-proofs/lessons/cx-02-03.json','content/courses/coordinate-proofs/lessons/cx-03-01.json','content/courses/coordinate-proofs/lessons/cx-03-03.json','content/courses/coordinate-proofs/lessons/cx-04-01.json','content/courses/coordinate-proofs/lessons/cx-04-02.json','content/courses/coordinate-proofs/lessons/cx-04-03.json','content/courses/coordinate-proofs/lessons/cx-05-03.json'}; S203C_AUTHORIZED={'content/courses/two-step-equations/lessons/tse-01-03.json','content/courses/expressions-equations/lessons/ee-02-03.json'}; S203K_AUTHORIZED={'content/courses/polygons-quadrilaterals/lessons/pq-03-02.json','content/courses/polygons-quadrilaterals/lessons/pq-04-01.json'}; authorized_later |= S203K_AUTHORIZED
 authorized_later|=S203C_AUTHORIZED
 S203J_AUTHORIZED={'content/courses/statistical-inference/lessons/si-01-01.json','content/courses/statistical-inference/lessons/si-01-02.json','content/courses/statistical-inference/lessons/si-02-03.json','content/courses/statistical-inference/lessons/si-03-03.json','content/courses/statistical-inference/lessons/si-04-03.json','content/courses/statistical-inference/lessons/si-05-02.json'}  # S203J: HS Tier C repair pilot
@@ -174,12 +174,12 @@ authorized_later|={'content/courses/data-distributions/lessons/dd-04-03.json','c
 nontarget_identical=0
 for rel,expected in hashes.items():
  if rel in target_rels or rel in authorized_later: continue
- got=hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()
+ got=hashlib.sha256((ROOT/rel).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
  if got!=expected: mismatches.append(rel)
  else: nontarget_identical+=1
 assert not mismatches,f'non-target lesson drift: {mismatches[:10]}'
 report={'session':150,'engine':'pointSetReasoningLab','lessons':2,'experiences':total,'main':main,'remedials':rem,'nonWidgetAuthoredFieldsPreserved':True,'variantDeclarationsPreserved':True,'nonTargetLessonsByteIdentical':nontarget_identical,'authorizedLaterSessionChanges':sorted(authorized_later),'passed':True}
-(ROOT/'POINT_SET_REASONING_S150.json').write_text(json.dumps(report,indent=2)+'\n')
-(ROOT/'POINT_SET_REASONING_S150.md').write_text(f"# Point-set reasoning audit — Session 150\n\n- Lessons: **2**\n- Authored experiences: **{total}/{total}**\n- Main: **{main}**\n- Remedials: **{rem}**\n- Non-target lessons byte-identical: **1,127/1,127**\n- Variant declarations: **preserved**\n- Result: **PASS**\n")
-(ROOT/'SESSION150_AUTHORED_CONTENT_LEDGER.json').write_text(json.dumps({'session':150,'engine':'pointSetReasoningLab','entries':ledger},indent=2)+'\n')
+(ROOT/'POINT_SET_REASONING_S150.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+(ROOT/'POINT_SET_REASONING_S150.md').write_text(f"# Point-set reasoning audit — Session 150\n\n- Lessons: **2**\n- Authored experiences: **{total}/{total}**\n- Main: **{main}**\n- Remedials: **{rem}**\n- Non-target lessons byte-identical: **1,127/1,127**\n- Variant declarations: **preserved**\n- Result: **PASS**\n",encoding='utf-8',newline='\n')
+(ROOT/'SESSION150_AUTHORED_CONTENT_LEDGER.json').write_text(json.dumps({'session':150,'engine':'pointSetReasoningLab','entries':ledger},indent=2)+'\n',encoding='utf-8',newline='\n')
 print(f'point-set authored audit passed: {total}/{total}; main {main}, remedials {rem}; {nontarget_identical} non-target byte-identical')

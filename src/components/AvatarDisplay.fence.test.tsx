@@ -2,7 +2,8 @@
  * WS-J — the architectural fence, ported from the S241 parallel implementation (its one piece
  * this lineage lacked): identity decoration must never reach an active-reasoning surface.
  *
- * The avatar system is chrome — nav, dashboard, profile, onboarding, leaderboard, family. The
+ * The avatar system is identity chrome — navigation, learner summaries, celebrations and adult
+ * roster rows. The
  * surfaces where a learner is actively *thinking* (the lesson player, widgets, figures, quiz
  * machinery, manipulatives) must stay identity-free, so nothing about who a learner picked to be
  * ever styles, gates, or decorates how a problem is posed. Convention alone doesn't survive
@@ -30,12 +31,14 @@ function sourceFiles(dir: string, acc: string[] = []): string[] {
 
 /** A file whose job is a question, a hint, a manipulative, or any part of active reasoning. */
 function isReasoningSurface(path: string): boolean {
-  const name = path.split("/").pop() ?? "";
+  const name = path.split(/[\\/]/).pop() ?? "";
   return (
     /^LessonPlayer/.test(name) ||
     /^player(Chrome|Store)\./.test(name) ||
     /^(widgets|WidgetView|figures|FigureView|QuizShell|ProofStrip|widgetSamples)\./.test(name) ||
-    path.includes("/manipulative")
+    // Separator-tolerant like the `name` split above: `path` comes from `join()`, which is
+    // backslash-joined on Windows, so a bare "/manipulative" check would never match there.
+    /[\\/]manipulative/.test(path)
   );
 }
 
@@ -43,7 +46,7 @@ const rel = (p: string) => p.split(/[\\/]/).join("/");
 
 describe("the fence — identity never reaches an active-reasoning surface", () => {
   it("finds the reasoning surfaces it claims to be guarding (the detector is not blind)", () => {
-    const guarded = sourceFiles("src").filter(isReasoningSurface).map((p) => p.split("/").pop());
+    const guarded = sourceFiles("src").filter(isReasoningSurface).map((p) => p.split(/[\\/]/).pop());
     for (const expected of ["LessonPlayer.tsx", "playerChrome.tsx", "playerStore.ts", "widgets.tsx", "WidgetView.tsx"]) {
       expect(guarded).toContain(expected);
     }
@@ -68,11 +71,32 @@ describe("the fence — identity never reaches an active-reasoning surface", () 
       "src/app/(shell)/family/FamilyClient.tsx",
       "src/app/(shell)/leaderboard/LeaderboardClient.tsx",
       "src/app/(shell)/onboarding/OnboardingFlow.tsx",
+      "src/app/(shell)/teach/TeachClient.tsx",
+      "src/app/(shell)/teach/class/[classId]/ClassClient.tsx",
       "src/components/AvatarDisplay.tsx",
       "src/components/AvatarPicker.tsx",
+      "src/components/CompletionIdentity.tsx",
       "src/components/DashboardClient.tsx",
+      "src/components/LessonCompletionIdentity.tsx",
       "src/components/ProfileClient.tsx",
-      "src/components/SiteNav.tsx"
+      "src/components/SiteNav.tsx",
+      "src/lib/mathSymbolAvatars.ts",
+      "src/world/Basecamp.tsx",
+      "src/world/Trailhead.tsx"
+    ]);
+  });
+
+  it("keeps the shared completion identity at consolidation boundaries only", () => {
+    const importers: string[] = [];
+    for (const file of sourceFiles("src")) {
+      const body = readFileSync(file, "utf8");
+      if (/from "@\/components\/CompletionIdentity"/.test(body)) importers.push(rel(file));
+    }
+    expect(importers.sort()).toEqual([
+      "src/app/(shell)/daily/DailyClient.tsx",
+      "src/app/(shell)/practice/[chapterId]/PracticeClient.tsx",
+      "src/app/(shell)/review/ReviewClient.tsx",
+      "src/components/LessonCompletionIdentity.tsx"
     ]);
   });
 });

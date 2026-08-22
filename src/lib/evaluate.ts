@@ -1,6 +1,6 @@
 import { fractionText } from "@/lib/mathUtils";
 import type { TRule, TWidget, SolveBalanceRel } from "./schema";
-import { algebraTilesPartials, binomialExpand, circleScaleReadouts, columnCalcTruth, fmOutput, geometricTerm, sequenceReasoningTruth, prismVolume, hopSizeAnswer, roundSolidCoef, shapePartCount, solveBalanceSet, solveBalanceSetsEqual, extraneousCandidates, extraneousHolds, mixedRegroupTruth, quadName, signChartCuts, solveBalanceHolds, solveBalanceWitness, triangleRatio, UC_TRUE_FORMULAS , unitChainAnswer, unitChainWorlds, dotPlotLabel , slopeTriangleMatches, slopeTriangleTruth, slopeTriangleLabel , graphReadAnswer, distributionGapUnits, trialProbabilityEquivalent, compoundEventChoiceCorrect, compoundEventTotal, compoundEventFavourable, compositeAreaChoiceCorrect, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, triangleClosureChoiceCorrect, triangleClosureForms, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningExplorationKeys, proportionalReasoningTruth, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberChoiceCorrect, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientFractionFromMixed, quotientRationalKey, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningFractionCorrect, quotientReasoningTruth, graphStoryChoiceCorrect, graphStorySequenceKey, graphStoryTruth } from "./schema";
+import { algebraTilesPartials, binomialExpand, circleScaleReadouts, columnCalcTruth, fmOutput, geometricTerm, sequenceReasoningTruth, prismVolume, hopSizeAnswer, roundSolidCoef, shapePartCount, solveBalanceSet, solveBalanceSetsEqual, extraneousCandidates, extraneousHolds, mixedRegroupTruth, quadName, signChartCuts, solveBalanceHolds, solveBalanceWitness, triangleRatio, UC_TRUE_FORMULAS , unitChainAnswer, unitChainWorlds, dotPlotLabel , slopeTriangleMatches, slopeTriangleTruth, slopeTriangleLabel , graphReadAnswer, distributionGapUnits, trialProbabilityEquivalent, compoundEventChoiceCorrect, compoundEventTotal, compoundEventFavourable, compositeAreaChoiceCorrect, compositeAreaTarget, scaledCircleChoiceCorrect, scaledCircleTarget, percentChangeChoiceCorrect, percentChangeTarget, equationOutcomeChoiceCorrect, equationOutcomeTruth, equationTransformTruth, signedFractionChoiceCorrect, signedFractionTruth, shapeHierarchyChoiceCorrect, triangleClosureChoiceCorrect, triangleClosureForms, conditionalTableReadTruth, proportionalReasoningChoiceCorrect, proportionalReasoningTruth, placeValueTransformChoiceCorrect, placeValueTransformExplorationKeys, placeValueTransformTruth, pointSetReasoningChoiceCorrect, pointSetReasoningExplorationKeys, pointSetReasoningTruth, geometricConstraintChoiceCorrect, geometricConstraintExplorationKeys, geometricConstraintTruth, exactNumberChoiceCorrect, exactNumberExplorationKeys, exactNumberTruth, affineRelationshipChoiceCorrect, affineRelationshipExplorationKeys, affineRelationshipTruth, quotientFractionFromMixed, quotientRationalKey, quotientReasoningChoiceCorrect, quotientReasoningExplorationKeys, quotientReasoningFractionCorrect, quotientReasoningTruth, graphStoryChoiceCorrect, graphStorySequenceKey, graphStoryTruth } from "./schema";
 export { binomialExpand, circleScaleReadouts, roundSolidCoef, rootsFormCoefs, shapePartCount, quadName, triangleRatio, midsegmentLength, signChartCuts, signChartValueAt, extraneousCandidates, extraneousHolds } from "./schema";
 
 /* ── numberLineRay (S215) helpers ────────────────────────────────────────────────────────────────
@@ -370,6 +370,18 @@ function angleAt(a: readonly [number, number], b: readonly [number, number], c: 
   return Math.acos(Math.max(-1,Math.min(1,(ux*vx+uy*vy)/den)))*180/Math.PI;
 }
 
+function proportionalUnitRatesAreVerified(spec: Extract<TWidget, { type: "proportionalReasoningLab" }>, value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const v = value as { unitRates?: unknown; verifiedUnitRates?: unknown };
+  const rawRates = v.unitRates && typeof v.unitRates === "object" && !Array.isArray(v.unitRates) ? v.unitRates as Record<string, unknown> : {};
+  const verified = new Set(Array.isArray(v.verifiedUnitRates) ? v.verifiedUnitRates.filter((key): key is string => typeof key === "string") : []);
+  const truth = proportionalReasoningTruth(spec);
+  return truth.series.every((series) => series.pairs.every((_, index) => {
+    const key = `${series.id}:${index}`;
+    const rate = rawRates[key];
+    return verified.has(key) && typeof rate === "number" && Number.isFinite(rate) && Math.abs(rate - series.rates[index]!) <= 1e-6;
+  }));
+}
 export function evaluate(spec: TWidget, value: unknown): EvalResult {
   switch (spec.type) {
     /**
@@ -511,9 +523,17 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       // the trap diagnoses a specific build, not its value class.
       const trap = spec.commonFractions.find((t) => t.num === v.n && t.den === v.d);
       if (trap) return { correct: false, feedback: trap.feedback };
+      const directionFeedback = (feedback: string, relation: "shorter" | "longer") => {
+        // A legacy authored family copied "target half" into bars whose targets
+        // are not 1/2. Never let stale prose contradict the engine's target.
+        if (/\bhalf\b/i.test(feedback) && spec.targetNum * 2 !== spec.targetDen) {
+          return `Your shaded bar is ${relation} than the target ${fractionText(spec.targetNum, spec.targetDen)}. Adjust the shaded amount, then compare the two bars again.`;
+        }
+        return feedback;
+      };
       return lhs < rhs
-        ? { correct: false, feedback: spec.lowFeedback }
-        : { correct: false, feedback: spec.highFeedback };
+        ? { correct: false, feedback: directionFeedback(spec.lowFeedback, "shorter") }
+        : { correct: false, feedback: directionFeedback(spec.highFeedback, "longer") };
     }
     case "quadraticExplore": {
       if (spec.form === "roots") {
@@ -1475,12 +1495,10 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       return {correct:false,feedback:named?.feedback??spec.gapOverlapFeedback};
     }
     case "proportionalReasoningLab": {
-      const v = value && typeof value === "object" ? value as { revealed?: unknown; numeric?: unknown; choiceId?: unknown } : {};
-      const validExplorationKeys = new Set(proportionalReasoningExplorationKeys(spec));
-      const explored = Array.isArray(v.revealed)
-        ? new Set(v.revealed.filter((item): item is string => typeof item === "string" && validExplorationKeys.has(item))).size
-        : 0;
-      if (explored < spec.requiredExplorations) return { correct: false, feedback: spec.explorationFeedback };
+      const v = value && typeof value === "object" ? value as { numeric?: unknown; choiceId?: unknown } : {};
+      // Normalize is a learner-produced checkpoint: the final claim cannot be graded
+      // until every source row has a verified unit rate, and verification never prints it.
+      if (!proportionalUnitRatesAreVerified(spec, value)) return { correct: false, feedback: spec.explorationFeedback };
       const truth = proportionalReasoningTruth(spec);
       if (spec.answerMode === "numeric") {
         if (typeof v.numeric !== "number" || Number.isNaN(v.numeric)) return { correct: false, feedback: spec.fallbackFeedback };
@@ -1490,9 +1508,7 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       }
       const choice = typeof v.choiceId === "string" ? spec.choices.find((candidate) => candidate.id === v.choiceId) : undefined;
       if (!choice) return { correct: false, feedback: spec.fallbackFeedback };
-      return proportionalReasoningChoiceCorrect(spec, choice)
-        ? { correct: true, feedback: spec.successFeedback }
-        : { correct: false, feedback: choice.feedback };
+      return proportionalReasoningChoiceCorrect(spec, choice) ? { correct: true, feedback: spec.successFeedback } : { correct: false, feedback: choice.feedback };
     }
     case "placeValueTransformLab": {
       const v=value&&typeof value==="object"?value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown}:{};
@@ -1522,7 +1538,7 @@ export function evaluate(spec: TWidget, value: unknown): EvalResult {
       const truth=geometricConstraintTruth(spec);
       if(spec.answerMode==="explore")return{correct:true,feedback:spec.successFeedback};
       if(spec.answerMode==="numeric"){
-        if(typeof v.numeric!=="number"||Number.isNaN(v.numeric))return{correct:false,feedback:spec.fallbackFeedback};
+        if(typeof v.numeric!=="number"||!Number.isFinite(v.numeric))return{correct:false,feedback:spec.fallbackFeedback};
         if(typeof truth.answerNumber==="number"&&Math.abs(v.numeric-truth.answerNumber)<=spec.tolerance)return{correct:true,feedback:spec.successFeedback};
         const named=spec.numericErrors.find(entry=>Math.abs(entry.value-(v.numeric as number))<=spec.tolerance);return{correct:false,feedback:named?.feedback??spec.fallbackFeedback};
       }
@@ -2267,12 +2283,9 @@ export function canCheck(spec: TWidget, value: unknown): boolean {
     case "relatedRatesLab":
       return value !== null && value !== undefined;
     case "proportionalReasoningLab": {
-      if (!value || typeof value !== "object") return false;
-      const v=value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown};
-      const valid=new Set(proportionalReasoningExplorationKeys(spec));const ready=Array.isArray(v.revealed)&&(()=>{const set=new Set(v.revealed!.filter((item):item is string=>typeof item==="string"&&valid.has(item)));return set.size>=spec.requiredExplorations;})();if(!ready)return false;
-      return spec.answerMode === "numeric"
-        ? typeof v.numeric === "number" && !Number.isNaN(v.numeric)
-        : typeof v.choiceId === "string" && v.choiceId.length > 0;
+      if (!value || typeof value !== "object" || !proportionalUnitRatesAreVerified(spec, value)) return false;
+      const v = value as { numeric?: unknown; choiceId?: unknown };
+      return spec.answerMode === "numeric" ? typeof v.numeric === "number" && !Number.isNaN(v.numeric) : typeof v.choiceId === "string" && v.choiceId.length > 0;
     }
     case "placeValueTransformLab": {
       if(!value||typeof value!=="object") return false;
@@ -2285,8 +2298,8 @@ export function canCheck(spec: TWidget, value: unknown): boolean {
       if(!value||typeof value!=="object")return false;const v=value as {revealed?:unknown;numeric?:unknown;choiceId?:unknown};
       const valid=new Set(geometricConstraintExplorationKeys(spec));if(!Array.isArray(v.revealed))return false;const set=new Set(v.revealed.filter((item):item is string=>typeof item==="string"&&valid.has(item)));
       const ready=set.size>=spec.requiredExplorations&&spec.requiredStageKeys.every(key=>set.has(key));if(!ready)return false;
-      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric);
-      if(spec.answerMode==="choice")return typeof v.choiceId==="string"&&v.choiceId.length>0;
+      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&Number.isFinite(v.numeric);
+      if(spec.answerMode==="choice")return typeof v.choiceId==="string"&&spec.choices.some(choice=>choice.id===v.choiceId);
       return true;
     }
     case "exactNumberLab": {
@@ -2615,9 +2628,9 @@ export function correctAnswerText(spec: TWidget): string {
     case "shapeHierarchyLab": return spec.choices.find((choice)=>shapeHierarchyChoiceCorrect(spec,choice))?.label ?? "the evidence-backed shape claim";
     case "unitRuler": return `${spec.requiredPlacements} gap-free units of size ${spec.targetUnitSize}, aligned at zero`;
     case "proportionalReasoningLab": {
-      const truth=proportionalReasoningTruth(spec);
-      if(spec.answerMode==="numeric") return `${truth.answerNumber}${spec.answerUnit?` ${spec.answerUnit}`:""}`;
-      return spec.choices.find((choice)=>proportionalReasoningChoiceCorrect(spec,choice))?.label ?? truth.answerClaim ?? "the proportional conclusion";
+      const truth = proportionalReasoningTruth(spec);
+      if (spec.answerMode === "numeric") return `${truth.answerNumber}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}`;
+      return spec.choices.find((choice) => proportionalReasoningChoiceCorrect(spec, choice))?.label ?? truth.answerClaim ?? "the proportional conclusion";
     }
     case "placeValueTransformLab": {
       const truth=placeValueTransformTruth(spec);
@@ -3017,10 +3030,10 @@ export function correctAnswerText(spec: TWidget): string {
 export function learnerAnswerText(spec: TWidget, value: unknown): string | null {
   switch (spec.type) {
     case "proportionalReasoningLab": {
-      if(!value || typeof value!=="object") return null;
-      const v=value as {numeric?:unknown;choiceId?:unknown};
-      if(spec.answerMode==="numeric") return typeof v.numeric==="number"&&!Number.isNaN(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;
-      return typeof v.choiceId==="string"?spec.choices.find((choice)=>choice.id===v.choiceId)?.label??null:null;
+      if (!value || typeof value !== "object" || !proportionalUnitRatesAreVerified(spec, value)) return null;
+      const v = value as { numeric?: unknown; choiceId?: unknown };
+      if (spec.answerMode === "numeric") return typeof v.numeric === "number" && !Number.isNaN(v.numeric) ? `${v.numeric}${spec.answerUnit ? ` ${spec.answerUnit}` : ""}` : null;
+      return typeof v.choiceId === "string" ? spec.choices.find((choice) => choice.id === v.choiceId)?.label ?? null : null;
     }
     case "placeValueTransformLab": {
       if(!value||typeof value!=="object") return null;
@@ -3031,7 +3044,7 @@ export function learnerAnswerText(spec: TWidget, value: unknown): string | null 
     case "pointSetReasoningLab": {if(!value||typeof value!=="object")return null;const v=value as {numeric?:unknown;choiceId?:unknown};if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;if(spec.answerMode==="choice")return typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId)?.label??null:null;return null}
     case "geometricConstraintLab": {
       if(!value||typeof value!=="object")return null;const v=value as {numeric?:unknown;choiceId?:unknown};
-      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&!Number.isNaN(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;
+      if(spec.answerMode==="numeric")return typeof v.numeric==="number"&&Number.isFinite(v.numeric)?`${v.numeric}${spec.answerUnit?` ${spec.answerUnit}`:""}`:null;
       if(spec.answerMode==="choice")return typeof v.choiceId==="string"?spec.choices.find(choice=>choice.id===v.choiceId)?.label??null:null;
       return null;
     }
@@ -3142,6 +3155,10 @@ export function learnerAnswerText(spec: TWidget, value: unknown): string | null 
       return `${lb}${v.join(", ")}${rb}`;
     }
     case "compositeAreaLab": {
+      if (typeof value !== "string") return null;
+      return spec.choices.find((choice) => choice.id === value)?.label ?? null;
+    }
+    case "scaledCircleLab": {
       if (typeof value !== "string") return null;
       return spec.choices.find((choice) => choice.id === value)?.label ?? null;
     }

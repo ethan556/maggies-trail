@@ -52,36 +52,29 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "Measure, then classify.",
+      "body": "Move along side AC and use its run-rise triangle as evidence.",
       "conceptTag": "cx-dist-apps",
       "explanationVariants": [
         "AC = √(9 + 25) = √34 and BC = √(9 + 25) = √34 — two equal sides against AB = 6: isosceles.",
         "Both slanted sides measure √34 ≈ 5.83; enter 5.83."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A(0, 0), B(6, 0), C(3, 5). Compute side AC (2 decimals) — then notice BC matches it.",
-        "answer": 5.83,
-        "tolerance": 0.05,
-        "commonErrors": [
-          {
-            "value": 8,
-            "feedback": "8 = 3 + 5 adds C's coordinates — the distance squares them: √(9 + 25) = √34 ≈ 5.83."
-          },
-          {
-            "value": 34,
-            "feedback": "34 is AC² — root it: ≈ 5.83."
-          },
-          {
-            "value": 4,
-            "feedback": "4 ≈ √(25 − 9) subtracts squares — the distance formula ADDS them: √34 ≈ 5.83."
-          }
+        "type": "distanceGrid",
+        "prompt": "A is fixed at (0, 0). Move the point to C(3, 5), then read side AC from the live run-rise triangle.",
+        "anchor": [
+          0,
+          0
         ],
-        "fallbackFeedback": "AC = √((3−0)² + (5−0)²) = √34 ≈ 5.83 = BC: isosceles, proved by measurement."
-      },
-      "variant": {
-        "gen": "g10-coordinate-proofs",
-        "form": "cx-dist-apps__numeric"
+        "targetPoint": [
+          3,
+          5
+        ],
+        "gridMin": 0,
+        "gridMax": 6,
+        "startX": 0,
+        "startY": 0,
+        "successFeedback": "AC has run 3 and rise 5, so AC = √(3² + 5²) = √34 ≈ 5.83. From B(6, 0) to C the run has the same magnitude, 3, and the same rise, 5, so BC = √34 too: the triangle is isosceles.",
+        "wrongPointFeedback": "Move to C(3, 5). The horizontal and vertical gaps are the two legs that determine AC."
       }
     },
     {
@@ -290,25 +283,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "Both endpoints share y = 0, so the length is just the x-gap: |6 − 0| = 6",
+            "label": "Same y-coordinate leaves only the x-gap",
             "correct": true,
             "feedback": "Axis-aligned sides are coordinate gaps — which is exactly why coordinate proofs PLACE figures with sides on the axes when they can."
           },
           {
             "id": "o2",
-            "label": "Horizontal sides have no length",
+            "label": "Horizontal segments have zero length",
             "correct": false,
             "feedback": "It has length 6 — it's just that the formula collapses to a single subtraction when Δy = 0."
           },
           {
             "id": "o3",
-            "label": "The formula fails on horizontal segments",
+            "label": "Distance formula excludes horizontal segments",
             "correct": false,
             "feedback": "It works fine: √(36 + 0) = 6 — it merely simplifies to the gap."
           },
           {
             "id": "o4",
-            "label": "Because it passes through the origin",
+            "label": "Any segment through the origin is easy",
             "correct": false,
             "feedback": "The origin is irrelevant — sharing a y-coordinate is what collapses the formula to |Δx|."
           }
@@ -318,20 +311,20 @@
     {
       "id": "ch",
       "kind": "challenge",
-      "body": "Choose the wire route.",
+      "body": "Two jobs, two relays — compare the wire.",
       "conceptTag": "cx-dist-apps",
       "hints": [
-        "Price both routes with the distance formula.",
-        "Route 1: (0,0) → (5,12) direct. Route 2: (0,0) → (9,0) → (9,3) — total the two legs.",
+        "Price both jobs with the distance formula.",
+        "Job A: (0,0) → (5,12) direct. Job B: (0,0) → (9,0) → (9,3) — total the two legs.",
         "Compare: which total is smaller, and by how much?"
       ],
       "explanationVariants": [
-        "Route 1: √(25 + 144) = 13. Route 2: the first leg is horizontal (9) and the second vertical (3), totaling 12 — shorter by 1.",
-        "13 versus 9 + 3 = 12: the bent route wins by 1 unit."
+        "Job A: √(25 + 144) = 13. Job B: the first leg is horizontal (9) and the second vertical (3), totaling 12 — Job B uses 1 less unit of wire.",
+        "13 versus 9 + 3 = 12: Job B uses 1 unit less wire."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A wire runs from (0, 0) either straight to (5, 12), or along (0,0)→(9, 0)→(9, 3). How much SHORTER is the shorter route?",
+        "prompt": "A survey crew compares two jobs from base camp (0, 0): Job A runs a wire straight to a relay at (5, 12). Job B runs a wire along the fence line (0,0)→(9, 0)→(9, 3) to a different relay. How much LESS wire does the shorter job use?",
         "answer": 1,
         "tolerance": 0.01,
         "commonErrors": [

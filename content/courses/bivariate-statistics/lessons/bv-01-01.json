@@ -161,10 +161,10 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Plot another point.",
+      "body": "Build a scatter plot from a table of paired data.",
       "widget": {
         "type": "plotPoint",
-        "prompt": "A student studied 2 hours and solved 4 problems. Plot the point (hours = 2, problems = 4).",
+        "prompt": "Four students' study hours (x) and problems solved (y): (1, 2), (2, 3), (4, 5), (5, 6). Plot every point to build the scatter plot.",
         "cols": 6,
         "rows": 6,
         "xLabels": [
@@ -185,29 +185,36 @@
         ],
         "targets": [
           {
+            "x": 1,
+            "y": 2
+          },
+          {
             "x": 2,
-            "y": 4
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 6
           }
         ],
         "pointErrors": [
           {
-            "x": 4,
+            "x": 3,
             "y": 2,
-            "feedback": "You swapped them — hours (2) is across, problems (4) is up: plot (2, 4)."
+            "feedback": "That swaps the second pair — hours (2) is across, problems (3) is up: plot (2, 3), not (3, 2)."
           },
           {
-            "x": 2,
-            "y": 2,
-            "feedback": "The student solved 4 problems, so go up to 4: plot (2, 4)."
-          },
-          {
-            "x": 2,
-            "y": 6,
-            "feedback": "The problems value is 4, not 6 — plot (2, 4)."
+            "x": 6,
+            "y": 5,
+            "feedback": "That swaps the fourth pair — hours (5) is across, problems (6) is up: plot (5, 6), not (6, 5)."
           }
         ],
-        "missFeedback": "Across for hours, up for problems.",
-        "successFeedback": "Plotted — across to 2 hours, up to 4 problems."
+        "missFeedback": "Plot every pair from the table — each row needs its own dot, across for hours, then up for problems.",
+        "successFeedback": "All four points plotted — together they form the scatter plot for these students."
       },
       "cml": {
         "stage": "construct",
@@ -326,67 +333,46 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Plot a taller, older plant.",
+      "body": "Diagnose a plotting mistake.",
       "conceptTag": "bv-scatter-plot",
-      "variant": {
-        "gen": "g8-bv-scatter-basics",
-        "form": "bvScatterPlot"
-      },
       "explanationVariants": [
-        "A 5-week-old, 6-cm plant is the pair (5, 6): across to 5, up to 6.",
-        "Across for weeks (5), up for height (6): plot (5, 6)."
+        "Weeks (4) is the across-value and height (7) is the up-value, so the correct point is (4, 7).",
+        "The classmate swapped the order — read across first (weeks), then up (height): (4, 7)."
       ],
       "widget": {
-        "type": "plotPoint",
-        "prompt": "A second plant is 5 weeks old and 6 cm tall. Plot the point (weeks = 5, height = 6).",
-        "cols": 6,
-        "rows": 6,
-        "xLabels": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
-        ],
-        "yLabels": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
-        ],
-        "targets": [
+        "type": "mcq",
+        "prompt": "A plant is 4 weeks old and 7 cm tall. A classmate plots a dot at across-position 7, up-position 4. What should the correct point be?",
+        "options": [
           {
-            "x": 5,
-            "y": 6
-          }
-        ],
-        "pointErrors": [
-          {
-            "x": 6,
-            "y": 5,
-            "feedback": "You swapped them — weeks (5) is across, height (6) is up: plot (5, 6)."
+            "id": "a",
+            "label": "(4, 7) — the classmate swapped across and up",
+            "correct": true,
+            "feedback": "Right — weeks (4) is the across-value and height (7) is the up-value."
           },
           {
-            "x": 5,
-            "y": 5,
-            "feedback": "The height is 6, not 5 — go up to 6: plot (5, 6)."
+            "id": "b",
+            "label": "(7, 4) — the classmate's plot is correct",
+            "correct": false,
+            "feedback": "That keeps the swap: weeks is 4, not 7, so the across-position should be 4."
           },
           {
-            "x": 4,
-            "y": 6,
-            "feedback": "The plant is 5 weeks old — go across to 5: plot (5, 6)."
+            "id": "c",
+            "label": "(4, 4) — use the smaller number for both",
+            "correct": false,
+            "feedback": "Each axis keeps its own measurement; height (7) still belongs on the up-axis."
+          },
+          {
+            "id": "d",
+            "label": "(7, 7) — use the larger number for both",
+            "correct": false,
+            "feedback": "Weeks (4) and height (7) are different quantities; only height is 7."
           }
-        ],
-        "missFeedback": "Across for weeks, up for height.",
-        "successFeedback": "Plotted — this older plant sits up and to the right of the younger one."
+        ]
       },
       "hints": [
-        "The first number (weeks = 5) is the across-position.",
-        "The second number (height = 6) is the up-position.",
-        "Go across to 5, then up to 6: plot (5, 6)."
+        "The first number in a pair is always the across-position.",
+        "The second number in a pair is always the up-position.",
+        "Weeks is 4, height is 7 — the correct point is (4, 7)."
       ],
       "cml": {
         "stage": "construct",

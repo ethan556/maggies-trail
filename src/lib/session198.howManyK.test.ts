@@ -43,6 +43,10 @@ const lessons = readdirSync(join(DIR, "lessons")).sort()
   .map((f) => JSON.parse(readFileSync(join(DIR, "lessons", f), "utf8")));
 
 const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
+// Mirrors g0Independent.cjs's own ONE_WORDS/wv: some hop prompts spell a count as a word.
+const ONE_WORDS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
 
 describe("S198 how-many-k — course shape and family reuse", () => {
   it("grade K, 3 chapters sized 5/5/6, files match course.json", () => {
@@ -97,10 +101,18 @@ describe("S198 how-many-k — course shape and family reuse", () => {
         .toBe(true);
       expect(CAPS["numberLineHop"].adapt).toBe(3);
 
-      for (const s of lesson.steps as Array<{ id: string; kind: string; widget?: { type: string } }>) {
-        if (s.kind !== "interactive" || !s.widget) continue;
-        const manip = CAPS[s.widget.type]?.manip ?? 0;
-        expect(manip, `${lesson.id}/${s.id}: ${s.widget.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
+      // i1 (already fetched above by position, steps[1]) is ALWAYS a genuine manipulable model —
+      // tenFrame or numberLineHop, every one manip >= 2, across all 16 lessons. i2 varies
+      // deliberately: usually another manip>=2 engine (tapDiagram), but in 6 lessons it's instead
+      // "dragOrder" (manip 1) — sequencing the counting STEPS rather than manipulating a counting
+      // MODEL. Reviewed and KEPT at s327-A6-khm-01-03: "i2 (dragOrder: sequence start/touch/stop
+      // into a safe counting order) tests procedural sequencing" is explicitly named as one of the
+      // lesson's five genuinely distinct jobs, not a manip shortfall. Mirrors the identical i1/i2
+      // split already found in mult-div-fluency-g4 (S196) and expressions-patterns-g5 (S197).
+      const iw = (i1 as { widget?: { type: string } }).widget;
+      if (iw) {
+        const manip = CAPS[iw.type]?.manip ?? 0;
+        expect(manip, `${lesson.id}/i1: ${iw.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
       }
     }
   });
@@ -168,14 +180,34 @@ describe("S198 how-many-k — solver round-trips and widget contracts", () => {
               expect(Number(m![1]) + Number(m![2])).toBe(land);
             }
             if (f === "kCountFromHop") {
+              // Two alternate authored phrasings state the same start+hop story with the hop
+              // count spelled as a word, in either sentence order.
               const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
-              expect(m, `${lesson.id}/${s.id}: kCountFromHop prompt shape`).toBeTruthy();
-              expect(Number(m![1]) + Number(m![2])).toBe(land);
+              const m2 = w.prompt.match(/known group of (\d+) gets (\w+) new counters/i);
+              const m3 = w.prompt.match(/^(\w+) newcomers join a known group of (\d+)/i);
+              if (m) {
+                expect(Number(m[1]) + Number(m[2])).toBe(land);
+              } else if (m2) {
+                expect(Number(m2[1]) + ONE_WORDS[m2[2].toLowerCase()],
+                  `${lesson.id}/${s.id}: kCountFromHop prompt shape`).toBe(land);
+              } else if (m3) {
+                expect(ONE_WORDS[m3[1].toLowerCase()] + Number(m3[2]),
+                  `${lesson.id}/${s.id}: kCountFromHop prompt shape`).toBe(land);
+              } else {
+                expect.fail(`${lesson.id}/${s.id}: kCountFromHop prompt shape unrecognized: ${w.prompt}`);
+              }
             }
             if (f === "kSeqNextHop") {
-              const m = w.prompt.match(/^What number comes right after (\d+)\?/);
-              expect(m, `${lesson.id}/${s.id}: kSeqNextHop prompt shape`).toBeTruthy();
-              expect(Number(m![1]) + 1).toBe(land);
+              let m = w.prompt.match(/^What number comes right after (\d+)\?/);
+              if (m) {
+                expect(Number(m[1]) + 1).toBe(land);
+              } else if ((m = w.prompt.match(/row has (\d+) beads\. Add one bead/i))) {
+                // "A row has N beads. Add one bead; use the hop to show the new total." — the same
+                // +1 hop as the digit form, told as a small story instead of "comes right after".
+                expect(Number(m[1]) + 1, `${lesson.id}/${s.id}: kSeqNextHop prompt shape`).toBe(land);
+              } else {
+                expect.fail(`${lesson.id}/${s.id}: kSeqNextHop prompt shape unrecognized: ${w.prompt}`);
+              }
               expect(w.hops).toBe(1);
             }
           }

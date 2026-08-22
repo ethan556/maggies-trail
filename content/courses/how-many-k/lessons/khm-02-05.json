@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-scattered-marking",
       "body": "Scattered things are hardest to count — nothing separates counted from uncounted. The oldest trick fixes it: mark each one as its number is said.",
       "narration": "Scattered things are hardest to count — nothing separates counted from uncounted. The oldest trick fixes it: mark each one as its number is said."
     },
@@ -86,34 +86,47 @@
         "Clean means waiting."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "The stickers are scattered everywhere. What is the best counting plan?",
-        "options": [
+        "type": "tapDiagram",
+        "prompt": "6 buttons are scattered on the rug. Which record shows every button marked exactly once?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "id": "o0",
-            "label": "Mark or move each one as it is counted",
+            "id": "five",
+            "x": 20,
+            "y": 50,
+            "label": "5 marks",
+            "icon": "✓✓✓✓✓",
+            "count": 5,
+            "correct": false,
+            "feedback": "Five marks leave one button unmarked."
+          },
+          {
+            "id": "six",
+            "x": 50,
+            "y": 50,
+            "label": "6 marks",
+            "icon": "✓✓✓✓✓✓",
+            "count": 6,
             "correct": true,
-            "feedback": "Correct — marking separates the counted from the uncounted, which is what scattered groups make hard."
+            "feedback": "Six marks match the six scattered buttons."
           },
           {
-            "id": "o1",
-            "label": "Count fast before they move",
+            "id": "seven",
+            "x": 80,
+            "y": 50,
+            "label": "7 marks",
+            "icon": "✓✓✓✓✓✓✓",
+            "count": 7,
             "correct": false,
-            "feedback": "Speed invites skips and repeats; scattered things need marking, not hurrying."
-          },
-          {
-            "id": "o2",
-            "label": "Count only the easy ones",
-            "correct": false,
-            "feedback": "Every sticker needs a number, or the final count answers a different question."
-          },
-          {
-            "id": "o3",
-            "label": "Guess from how big the mess looks",
-            "correct": false,
-            "feedback": "A guess is not a count; the mess can look big with few stickers or small with many."
+            "feedback": "Seven marks mean one button was marked twice."
           }
-        ]
+        ],
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Six marks match the six scattered buttons."
       },
       "hints": [
         "Touch one, say one.",
@@ -146,33 +159,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-clean-waits",
       "body": "With a mark on every counted thing, the mess cannot fool you — the clean ones are exactly the ones still waiting.",
       "narration": "With a mark on every counted thing, the mess cannot fool you — the clean ones are exactly the ones still waiting."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-count-scattered",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "9 stickers are scattered. Mark each as you count — a counter per mark.",
-        "target": 9,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Organize a count of scattered stickers.",
+        "items": [
           {
-            "count": 8,
-            "feedback": "A clean sticker is hiding somewhere; unmarked means uncounted."
+            "id": "stage-3",
+            "label": "Stop when every sticker is marked"
           },
           {
-            "count": 10,
-            "feedback": "A sticker was marked twice; each mark must land on a clean one."
+            "id": "stage-2",
+            "label": "Say the next number and mark it"
+          },
+          {
+            "id": "stage-1",
+            "label": "Find an unmarked sticker"
           }
         ],
-        "missFeedback": "Mark one sticker per number; when no clean stickers remain, the last number is the answer.",
-        "successFeedback": "Nine marks, nine stickers — the mess never stood a chance."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Find an unmarked sticker, then Say the next number and mark it, then Stop when every sticker is marked.",
+        "successFeedback": "Yes — each visible mark separates counted stickers from waiting stickers."
       },
       "cml": {
         "stage": "construct",
@@ -208,31 +234,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Noor counts her blocks: 1, 2, 3, 4, 5. How many blocks does she have?",
+        "prompt": "Zara counts her blocks: 1, 2, 3, 4, 5, 6. How many blocks does she have?",
         "options": [
           {
             "id": "o0",
-            "label": "5",
+            "label": "6",
             "correct": true,
-            "feedback": "Correct — the last number said, 5, tells how many blocks there are in all."
+            "feedback": "Correct — the last number said, 6, tells how many blocks there are in all."
           },
           {
             "id": "o1",
-            "label": "6",
+            "label": "7",
             "correct": false,
-            "feedback": "The count stops at 5; saying one more number would count a block that is not there."
+            "feedback": "The count stops at 6; saying one more number would count a block that is not there."
           },
           {
             "id": "o2",
-            "label": "4",
+            "label": "5",
             "correct": false,
-            "feedback": "That stops one number early — every block gets exactly one number, ending at 5."
+            "feedback": "That stops one number early — every block gets exactly one number, ending at 6."
           },
           {
             "id": "o3",
-            "label": "7",
+            "label": "8",
             "correct": false,
-            "feedback": "That runs two past the count; the last number spoken is the answer, and it was 5."
+            "feedback": "That runs two past the count; the last number spoken is the answer, and it was 6."
           }
         ]
       },

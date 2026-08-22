@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "Two parts and a total make a fact family: 6, 8 and 14 give 6+8, 8+6, 14−6 and 14−8.",
-      "narration": "Two parts and a total make a fact family: 6, 8 and 14 give 6+8, 8+6, 14−6 and 14−8."
+      "figure": "fact-family",
+      "body": "Two parts and their whole generate two addition equations and two related subtraction equations.",
+      "narration": "Two parts and their whole generate two addition equations and two related subtraction equations."
     },
     {
       "id": "i1",
@@ -104,8 +104,8 @@
             "feedback": "That repeats 8 instead of the other part of the family."
           }
         ],
-        "fallbackFeedback": "The family's two parts are 6 and 8.",
-        "successFeedback": "Correct — the parts are 6 and 8, so 14 − 8 = 6."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 6."
       },
       "hints": [
         "The family has two parts and a total.",
@@ -143,27 +143,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "number-track",
-      "body": "One family is four facts. Learning the family is four times cheaper than learning each fact alone.",
-      "narration": "One family is four facts. Learning the family is four times cheaper than learning each fact alone."
+      "figure": "as-fact-family",
+      "body": "A fact-family triangle keeps the same three quantities connected while the unknown changes position.",
+      "narration": "A fact-family triangle keeps the same three quantities connected while the unknown changes position."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "A second family.",
+      "body": "Use a different representation.",
       "conceptTag": "g2f-fact-families",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 5 and hop forward 9 to find that family's total.",
-        "min": 0,
-        "max": 20,
-        "start": 5,
-        "hop": 1,
-        "hops": 9,
-        "direction": "forward",
-        "commonLandings": [],
-        "missFeedback": "Start at 5 and make 9 hops right, one number at a time.",
-        "successFeedback": "5 and 9 make 14 — the family is 5, 9, 14."
+        "type": "tapDiagram",
+        "prompt": "In the family six, nine, fifteen, tap fifteen minus six.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "8",
+            "icon": "8",
+            "count": 1,
+            "correct": false,
+            "feedback": "8 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "9",
+            "icon": "9",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — six plus nine is fifteen, so fifteen minus six is nine."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "10",
+            "icon": "10",
+            "count": 1,
+            "correct": false,
+            "feedback": "10 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — six plus nine is fifteen, so fifteen minus six is nine."
       },
       "cml": {
         "stage": "construct",
@@ -199,7 +229,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 5, 9, 14: knowing 5 + 9 = 14, what is 14 − 9?",
+        "prompt": "The family uses five, nine, and fourteen. Remove nine from the whole.",
         "answer": 5,
         "tolerance": 0,
         "unit": "",
@@ -213,8 +243,8 @@
             "feedback": "That repeats 9 instead of the other part of the family."
           }
         ],
-        "fallbackFeedback": "The family's two parts are 5 and 9.",
-        "successFeedback": "Correct — the parts are 5 and 9, so 14 − 9 = 5."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 5."
       },
       "hints": [
         "The family has two parts and a total.",
@@ -260,7 +290,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 7, 8, 15: knowing 7 + 8 = 15, what is 15 − 8?",
+        "prompt": "For parts seven and eight with whole fifteen, subtract eight.",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -274,8 +304,8 @@
             "feedback": "That repeats 8 instead of the other part of the family."
           }
         ],
-        "fallbackFeedback": "The family's two parts are 7 and 8.",
-        "successFeedback": "Correct — the parts are 7 and 8, so 15 − 8 = 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "The family has two parts and a total.",
@@ -321,7 +351,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 4, 8, 12: knowing 4 + 8 = 12, what is 12 − 8?",
+        "prompt": "A family has parts four and eight. Remove eight from their whole.",
         "answer": 4,
         "tolerance": 0,
         "unit": "",
@@ -335,8 +365,8 @@
             "feedback": "That repeats 8 instead of the other part of the family."
           }
         ],
-        "fallbackFeedback": "The family's two parts are 4 and 8.",
-        "successFeedback": "Correct — the parts are 4 and 8, so 12 − 8 = 4."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 4."
       },
       "hints": [
         "The family has two parts and a total.",
@@ -403,22 +433,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Fact family 6, 8, 14: knowing 6 + 8 = 14, what is 14 − 8?",
-          "answer": 6,
+          "prompt": "The family has parts 6 and 8, with total 14. Take 6 away from 14 — what do you get?",
+          "answer": 8,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
               "value": 14,
-              "feedback": "That repeats the total instead of removing 8 from it."
+              "feedback": "That repeats the total instead of removing 6 from it."
             },
             {
-              "value": 8,
-              "feedback": "That repeats 8 instead of the other part of the family."
+              "value": 6,
+              "feedback": "That repeats 6 instead of the other part of the family."
             }
           ],
-          "fallbackFeedback": "The family's two parts are 6 and 8.",
-          "successFeedback": "Correct — the parts are 6 and 8, so 14 − 8 = 6."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — the represented quantities give 8."
         }
       }
     }

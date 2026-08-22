@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-any-start",
       "body": "A ruler measures by marks: an object from the 3 cm mark to the 11 cm mark is 11 − 3 = 8 cm — the END mark is not the length.",
       "narration": "A ruler measures by marks: an object from the 3 cm mark to the 11 cm mark is 11 − 3 = 8 cm — the END mark is not the length."
     },
@@ -137,20 +137,20 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-any-start",
       "body": "Starting away from zero is fine; the ruler just asks you to subtract the start back out.",
       "narration": "Starting away from zero is fine; the ruler just asks you to subtract the start back out."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Measure the same length from a new starting mark.",
       "conceptTag": "g2p-length-diff",
       "widget": {
         "type": "unitRuler",
-        "prompt": "Measure the ribbon with one-unit blocks: align its start, place four with no gaps or overlaps.",
-        "objectStart": 2,
-        "objectEnd": 6,
+        "prompt": "Measure a ribbon that starts at 4 with one-unit blocks. Align zero with 4; place four with no gaps or overlaps.",
+        "objectStart": 4,
+        "objectEnd": 8,
         "allowedUnitSizes": [
           1,
           2
@@ -158,8 +158,8 @@
         "targetUnitSize": 1,
         "startUnitSize": 2,
         "requiredPlacements": 4,
-        "successFeedback": "Four one-unit blocks tile the ribbon exactly — the count of units IS the length, wherever the ribbon starts.",
-        "alignFeedback": "Line up zero with the object's starting end before measuring.",
+        "successFeedback": "Four one-unit blocks tile the ribbon exactly, even when the ribbon begins at 4.",
+        "alignFeedback": "Line up zero with the 4 mark before measuring.",
         "gapOverlapFeedback": "The blocks must touch end to end — no spaces and no covering the same part twice.",
         "unitFeedback": "Every block must be the same size, or the count means nothing."
       },
@@ -196,23 +196,34 @@
         "The ruler forgives it."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "A pencil stretches from the 5 cm mark to the 10 cm mark on a ruler. How long is it?",
-        "answer": 5,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie measures a pencil from the 5 cm mark to the 10 cm mark and says it is 10 cm long. What mistake did she make?",
+        "options": [
           {
-            "value": 10,
-            "feedback": "That read the END mark as the length — a start away from zero must be subtracted off."
+            "id": "o0",
+            "label": "She read the end mark as the length — the pencil is really 10 − 5 = 5 cm.",
+            "correct": true,
+            "feedback": "Correct — the pencil starts away from zero, so the end mark alone overcounts it. 10 − 5 = 5 cm is the true length."
           },
           {
-            "value": 15,
-            "feedback": "Adding the marks measures nothing on a ruler; the length is the span BETWEEN them."
+            "id": "o1",
+            "label": "Nothing — 10 cm is correct because that is the mark the pencil reaches.",
+            "correct": false,
+            "feedback": "The mark it reaches is not the length when the pencil starts away from zero — subtract the start mark first: 10 − 5 = 5."
+          },
+          {
+            "id": "o2",
+            "label": "She should have added the two marks: 5 + 10 = 15 cm.",
+            "correct": false,
+            "feedback": "Adding the marks measures nothing on a ruler; the length is the span BETWEEN them, 10 − 5 = 5."
+          },
+          {
+            "id": "o3",
+            "label": "She should have counted the ruler marks instead of the gaps, making it 6 cm.",
+            "correct": false,
+            "feedback": "Counting the marks 5, 6, 7, 8, 9, 10 gives 6 marks, one more than the true span — count the gaps BETWEEN marks instead: 10 − 5 = 5."
           }
-        ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 5."
+        ]
       },
       "hints": [
         "Find both marks.",
@@ -240,10 +251,6 @@
         "transferFamily": "length-problems-g2:g2p-length-diff",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-measure-money-time",
-        "form": "MmtRulerSubtractNumeric"
       }
     },
     {
@@ -261,25 +268,25 @@
         "options": [
           {
             "id": "o0",
-            "label": "No because 30 is less than the 32 m part",
+            "label": "No — a total cannot be smaller than either part",
             "correct": true,
             "feedback": "Correct — joining 32 with anything positive lands past 32; a 30 m total contradicts its own first leg."
           },
           {
             "id": "o1",
-            "label": "Reasonable — totals vary",
+            "label": "Yes — computed totals can come out smaller than a part",
             "correct": false,
             "feedback": "Totals obey their parts: 32 + 25 must reach 57, never dip below 32."
           },
           {
             "id": "o2",
-            "label": "Reasonable if the legs overlap",
+            "label": "Yes — if the two trail legs overlap each other",
             "correct": false,
             "feedback": "Trail legs walked one after another do not overlap — each adds its full distance."
           },
           {
             "id": "o3",
-            "label": "Only a ruler could tell",
+            "label": "Unclear — only a ruler could settle it",
             "correct": false,
             "feedback": "Sense-checking needs no tools here — part-vs-total logic already rules 30 out."
           }
@@ -316,25 +323,25 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more — the words change, the ruler doesn't.",
       "conceptTag": "g2p-length-diff",
       "explanationVariants": [
-        "Any two marks, same rule.",
-        "Between is what you measure."
+        "Same rule, new wording.",
+        "Span between the marks, however it's phrased."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A pencil stretches from the 5 cm mark to the 14 cm mark on a ruler. How long is it?",
+        "prompt": "A ribbon runs from the 6 cm mark to the 15 cm mark on the same ruler. What length does it measure?",
         "answer": 9,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 14,
+            "value": 15,
             "feedback": "That read the END mark as the length — a start away from zero must be subtracted off."
           },
           {
-            "value": 19,
+            "value": 21,
             "feedback": "Adding the marks measures nothing on a ruler; the length is the span BETWEEN them."
           }
         ],
@@ -342,9 +349,9 @@
         "successFeedback": "Correct — 9."
       },
       "hints": [
-        "Find both marks.",
-        "The length is the span between.",
-        "Subtract the smaller mark."
+        "Two marks, one subtraction.",
+        "End minus start, always.",
+        "Ignore the wording — find the span."
       ],
       "cml": {
         "stage": "construct",
@@ -405,13 +412,13 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A pencil stretches from the 2 cm mark to the 9 cm mark on a ruler. How long is it?",
-          "answer": 7,
+          "prompt": "A ribbon's start lines up with the 3 cm mark and its end lines up with the 8 cm mark. How long is the ribbon?",
+          "answer": 5,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 9,
+              "value": 8,
               "feedback": "That read the END mark as the length — a start away from zero must be subtracted off."
             },
             {
@@ -420,7 +427,7 @@
             }
           ],
           "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-          "successFeedback": "Correct — 7."
+          "successFeedback": "Correct — 5."
         }
       }
     }

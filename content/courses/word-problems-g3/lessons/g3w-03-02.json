@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-estimate-catch",
       "body": "Some answers are impossible before you check any arithmetic: more apples than ever existed, or a leftover bigger than the total.",
       "narration": "Some answers are impossible before you check any arithmetic: more apples than ever existed, or a leftover bigger than the total."
     },
@@ -43,8 +43,8 @@
           }
         ],
         "successFeedback": "60 — seventy-two built, twelve eaten. Everything above 72 was impossible before any arithmetic.",
-        "lowFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
-        "highFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins."
+        "lowFeedback": "Use the story's operations and starting total to decide whether the placement is too low or too high.",
+        "highFeedback": "Use the story's operations and starting total to decide whether the placement is too low or too high."
       },
       "predict": {
         "prompt": "8 crates of 9 apples, 12 eaten. Could 150 be left?",
@@ -65,12 +65,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "diagram",
@@ -132,12 +132,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "symbolic",
@@ -154,7 +154,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mb-multistep",
       "body": "Ask what the story ALLOWS. If eight crates hold nine apples each, nothing that happens afterwards can push the count above seventy-two.",
       "narration": "Ask what the story ALLOWS. If eight crates hold nine apples each, nothing that happens afterwards can push the count above seventy-two."
     },
@@ -165,41 +165,41 @@
       "conceptTag": "g3w-unreasonable",
       "widget": {
         "type": "numberLinePlace",
-        "prompt": "8 crates hold 9 apples each; 12 are eaten. Place the answer on the line.",
+        "prompt": "Six shelves hold 8 books each and 7 are borrowed. Place the reasonable result.",
         "min": 0,
-        "max": 90,
+        "max": 60,
         "step": 1,
-        "tickStep": 9,
-        "target": 60,
+        "tickStep": 6,
+        "target": 41,
         "start": 0,
         "commonPlacements": [
           {
-            "value": 84,
-            "feedback": "84 is above the 72 the crates ever held, and eating cannot raise a count."
+            "value": 48,
+            "feedback": "That is the starting total before seven books are borrowed."
           },
           {
-            "value": 72,
-            "feedback": "72 is the total BEFORE the twelve were eaten — the second step has not happened."
+            "value": 55,
+            "feedback": "Borrowing cannot increase the starting total of 48."
           },
           {
-            "value": 12,
-            "feedback": "12 is the number eaten, not the number left."
+            "value": 7,
+            "feedback": "That is the number borrowed, not the number remaining."
           }
         ],
-        "successFeedback": "60 — seventy-two built, twelve eaten. Everything above 72 was impossible before any arithmetic.",
-        "lowFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins.",
-        "highFeedback": "63's neighbors are 60 and 70. Count steps to each; the smaller count wins."
+        "successFeedback": "41 — the result is below the starting total of 48, as the story requires.",
+        "lowFeedback": "Only seven are removed from 48, so the result should remain near 48.",
+        "highFeedback": "Borrowing books must leave fewer than the starting total of 48."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "symbolic",
@@ -224,22 +224,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A shelf held 54 markers. Students took 13, then a teacher returned 0 more. How many markers remain?",
+        "prompt": "A shelf begins with 54 markers. Students borrow 18, then return 5. How many markers remain?",
         "answer": 41,
         "tolerance": 0,
-        "unit": "",
+        "unit": "markers",
         "commonErrors": [
           {
-            "value": 67,
-            "feedback": "Taking markers away lowers the count; adding treats a loss like a gain."
+            "value": 31,
+            "feedback": "This subtracts the 5 returned markers too. Returned markers go back on the shelf, so finish by adding 5."
           },
           {
-            "value": 54,
-            "feedback": "That reported the starting pile — the 13 the students took never came off."
+            "value": 36,
+            "feedback": "36 is only 54 − 18 — the story continues: 5 markers are returned after the borrowing."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 41."
+        "fallbackFeedback": "Start at 54: borrowing 18 lowers the count, returning 5 raises it.",
+        "successFeedback": "Correct — 41 markers."
       },
       "hints": [
         "Ask what is possible.",
@@ -250,12 +250,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "symbolic",
@@ -284,31 +284,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "\"8 crates hold 9 apples each. 12 apples are eaten.\" A student answers 150 apples left. Why is that unreasonable?",
+        "prompt": "Five boxes hold 7 pencils each and 6 pencils are given away. Why is an answer of 80 impossible?",
         "options": [
           {
             "id": "o0",
-            "label": "8 crates hold only 72 apples, so 150 is impossible",
+            "label": "Five boxes of 7 start at 35, and giving away makes the count fall",
             "correct": true,
-            "feedback": "Correct — the answer exceeds the total that ever existed, and eating can only make it smaller."
+            "feedback": "Correct — five 7s make 35 at most, and giving 6 away can only lower that."
           },
           {
             "id": "o1",
-            "label": "Because 150 is not a multiple of 8",
+            "label": "Eighty is an even number, and pencil answers must come out odd",
             "correct": false,
-            "feedback": "Multiples are not the issue; after subtracting 12 the result need not be a multiple of anything."
+            "feedback": "Even or odd does not decide reasonableness — the story's largest possible total does."
           },
           {
             "id": "o2",
-            "label": "Because 150 is an even number",
+            "label": "Eighty is not a multiple of 7, so it cannot come from the 7s",
             "correct": false,
-            "feedback": "Evenness says nothing about reasonableness here — 60 is even and perfectly plausible."
+            "feedback": "After 6 pencils leave, the result need not stay a multiple of 7; the real limit is the starting total."
           },
           {
             "id": "o3",
-            "label": "It is reasonable",
+            "label": "Eighty is possible if the boxes were already full at the start",
             "correct": false,
-            "feedback": "It cannot be: the story never contains more than 72 apples, so 150 has nowhere to come from."
+            "feedback": "Even full boxes hold just 5 × 7 pencils, and giving 6 away only lowers that."
           }
         ]
       },
@@ -321,12 +321,68 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-unreasonable",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-unreasonable",
+      "explanationVariants": [
+        "Build the ceiling first.",
+        "The answer sits below it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "7 shelves hold 8 markers each. Students take 9 markers. How many markers are left?",
+        "answer": 47,
+        "tolerance": 0,
+        "unit": "markers",
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 is above the 56 markers the shelves ever held — taking markers away can never push the count past the starting total."
+          },
+          {
+            "value": 56,
+            "feedback": "56 is the full 7 × 8 total, the ceiling itself. The 9 taken markers still have to come off it."
+          }
+        ],
+        "fallbackFeedback": "The ceiling is 7 × 8 = 56 markers. A reasonable answer sits below it: 56 − 9.",
+        "successFeedback": "Correct — (7 × 8) − 9 = 47, safely below the 56 ceiling."
+      },
+      "hints": [
+        "Ask what is possible.",
+        "Compare to the total.",
+        "Impossible means wrong."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
+        "invariants": [
+          "Subtracting from a built total cannot produce a result larger than that total."
+        ],
+        "misconceptions": [
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "symbolic",
@@ -351,31 +407,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Before computing 7 × 48 − 96, what is the most useful estimate?",
+        "prompt": "Four trays hold 8 muffins each and 5 are sold. Which proposed answer can be rejected without exact arithmetic?",
         "options": [
           {
             "id": "o0",
-            "label": "About 7 × 50 − 100 = 250",
+            "label": "60 muffins",
             "correct": true,
-            "feedback": "Correct — round each number to a friendly one and the answer's neighbourhood appears before any exact work."
+            "feedback": "Correct — the trays hold only 32 before any are sold."
           },
           {
             "id": "o1",
-            "label": "About 7 × 48 = 336, so about 336",
+            "label": "27 muffins",
             "correct": false,
-            "feedback": "That estimates only the first step; the subtraction still has to shrink the total."
+            "feedback": "That is exactly plausible: 32 minus 5."
           },
           {
             "id": "o2",
-            "label": "About 7 + 48 − 96, so below zero",
+            "label": "A number below 32",
             "correct": false,
-            "feedback": "Estimating must keep the story's operations — 7 groups of 48 is a product, not a sum."
+            "feedback": "Selling muffins should leave a number below the starting total."
           },
           {
             "id": "o3",
-            "label": "You cannot estimate a two-step problem",
+            "label": "About 30 muffins",
             "correct": false,
-            "feedback": "You can: estimate each step in turn, and the rounded chain lands near the exact answer."
+            "feedback": "That is a reasonable rough description of the result."
           }
         ]
       },
@@ -388,12 +444,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w unreasonable.",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w unreasonable a two-step problem rather than two separate ones."
+          "Subtracting from a built total cannot produce a result larger than that total."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Checking only digit patterns instead of the quantities the story allows."
         ],
         "representations": [
           "symbolic",
@@ -425,8 +481,9 @@
       "concept": {
         "id": "rem-g3w-unreasonable-c",
         "kind": "concept",
-        "body": "Ask what the story ALLOWS. If eight crates hold nine apples each, nothing that happens afterwards can push the count above seventy-two.",
-        "narration": "Ask what the story ALLOWS. If eight crates hold nine apples each, nothing that happens afterwards can push the count above seventy-two."
+        "body": "Six groups of 4 make 24. After 5 are used, 19 remain, so an answer above 24 is impossible.",
+        "narration": "Six groups of 4 make 24. After 5 are used, 19 remain, so an answer above 24 is impossible.",
+        "figure": "mb-multistep"
       },
       "check": {
         "id": "rem-g3w-unreasonable-k",
@@ -439,31 +496,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "\"8 crates hold 9 apples each. 12 apples are eaten.\" A student answers 150 apples left. Why is that unreasonable?",
+          "prompt": "Seven bags hold 6 beads each and 4 are used. Why is 70 beads left impossible?",
           "options": [
             {
               "id": "o0",
-              "label": "8 crates hold only 72 apples, so 150 is impossible",
+              "label": "The bags begin with only 42 beads",
               "correct": true,
-              "feedback": "Correct — the answer exceeds the total that ever existed, and eating can only make it smaller."
+              "feedback": "Correct — using beads can only lower 42."
             },
             {
               "id": "o1",
-              "label": "Because 150 is not a multiple of 8",
+              "label": "Seventy is even",
               "correct": false,
-              "feedback": "Multiples are not the issue; after subtracting 12 the result need not be a multiple of anything."
+              "feedback": "Evenness does not test whether the answer fits this story."
             },
             {
               "id": "o2",
-              "label": "Because 150 is an even number",
+              "label": "Seventy ends in zero",
               "correct": false,
-              "feedback": "Evenness says nothing about reasonableness here — 60 is even and perfectly plausible."
+              "feedback": "The last digit does not test this story's maximum."
             },
             {
               "id": "o3",
-              "label": "It is reasonable",
+              "label": "Seventy is possible",
               "correct": false,
-              "feedback": "It cannot be: the story never contains more than 72 apples, so 150 has nowhere to come from."
+              "feedback": "It exceeds every bead the story starts with."
             }
           ]
         }

@@ -91,11 +91,11 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k3", engine: "slopeField",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "For dy/dx = 0.5y, what happens to the field as you move upward (larger y)?",
-    servedAnswer: "o1|The segments get STEEPER — the bigger y is, the faster it grows.",
+    servedAnswer: "o1|Segments get steeper because slope 0.5y increases with y.",
     servedWrongPaths: [
-      "o2|They get flatter.|The slope is 0.5y, which grows WITH y. Bigger y, steeper segment.",
-      "o3|Nothing changes.|That would be true if the equation mentioned only x. This one mentions y, so height matters.",
-      "o4|They turn downward.|For positive y the slope 0.5y is positive, so the segments point up — and increasingly steeply."
+      "o2|Segments flatten because larger y makes the slope smaller.|The slope is 0.5y, which grows WITH y. Bigger y, steeper segment.",
+      "o3|Segments stay unchanged because slope ignores the value of y.|That would be true if the equation mentioned only x. This one mentions y, so height matters.",
+      "o4|Segments turn downward because positive y reverses the slope.|For positive y the slope 0.5y is positive, so the segments point up — and increasingly steeply."
     ]
   },
   {
@@ -103,11 +103,11 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k1", engine: "slopeField",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "In dP/dt = kP(1 − P/K), what happens when P is very small compared with K?",
-    servedAnswer: "o1|The bracket is nearly 1, so dP/dt ≈ kP — it grows exponentially.",
+    servedAnswer: "o1|Growth is nearly exponential because 1 − P/K is close to 1.",
     servedWrongPaths: [
-      "o2|Growth stops.|Growth stops at the CEILING, not at the floor. A small population has plenty of room and grows nearly unchecked.",
-      "o3|The population falls.|For 0 < P < K both factors are positive, so dP/dt > 0 — the population grows.",
-      "o4|It grows linearly.|With the bracket close to 1, the equation is essentially dP/dt = kP — proportional growth, which is exponential, not linear."
+      "o2|Growth stops because a very small P makes the rate zero.|Growth stops at the CEILING, not at the floor. A small population has plenty of room and grows nearly unchecked.",
+      "o3|Population falls because a small P makes the bracket negative.|For 0 < P < K both factors are positive, so dP/dt > 0 — the population grows.",
+      "o4|Growth is linear because kP has no exponential behavior.|With the bracket close to 1, the equation is essentially dP/dt = kP — proportional growth, which is exponential, not linear."
     ]
   },
   {
@@ -115,11 +115,11 @@ const ROWS: Row[] = [
     inserted: "i2", serves: "ch1", engine: "slopeField",
     servedKind: "challenge", servedType: "mcq",
     servedPrompt: "Two samples of the same substance start with 1 kg and 1 microgram. Which halves faster?",
-    servedAnswer: "o1|Neither — the half-life is the same. The y₀ cancels: T = ln2/k.",
+    servedAnswer: "o1|Neither; the same k gives both samples the same half-life.",
     servedWrongPaths: [
-      "o2|The kilogram — it decays faster.|It loses more MASS per second, certainly. But it also has more to lose, and the two effects cancel exactly: the fraction lost per second is the same.",
-      "o3|The microgram — less to get through.|It also decays proportionally more slowly in absolute terms. The PROPORTION lost per second is identical, which is what a half-life measures.",
-      "o4|It depends on k.|k is a property of the substance and is the SAME for both samples. What the question asks is whether the starting amount matters — and it does not."
+      "o2|Kilogram sample; more mass makes its half-life shorter.|It loses more MASS per second, certainly. But it also has more to lose, and the two effects cancel exactly: the fraction lost per second is the same.",
+      "o3|Microgram sample; less mass makes its half-life shorter.|It also decays proportionally more slowly in absolute terms. The PROPORTION lost per second is identical, which is what a half-life measures.",
+      "o4|Both depend on k, so their half-lives cannot be compared.|k is a property of the substance and is the SAME for both samples. What the question asks is whether the starting amount matters — and it does not."
     ]
   },
   {
@@ -150,7 +150,9 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k2", engine: "numberLineHop",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "Without computing exactly, is 5 ÷ 1/3 bigger or smaller than 5?",
-    servedAnswer: "a|Bigger — dividing by a fraction under 1 always increases the number",
+    // Re-pinned: signed S319-MID-ns-01-01-k2-label-length (verified S319-V2)
+    // shortened the correct label 67 -> 44 chars to close the length leak (S326-R1).
+    servedAnswer: "a|Bigger — a fraction under 1 grows the answer",
     servedWrongPaths: [
       "b|Smaller — division always shrinks a number|That's true for dividing by numbers BIGGER than 1, but 1/3 is small — dividing by it grows the number instead.",
       "c|The same — 5 divided by anything stays near 5|Only dividing by exactly 1 keeps a number the same. Dividing by 1/3 (a small fraction) makes it much bigger: 15."
@@ -161,11 +163,11 @@ const ROWS: Row[] = [
     inserted: "i2", serves: "k3", engine: "derivativeTrace",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "You magnify a graph at a point and it becomes indistinguishable from a straight line. What have you shown?",
-    servedAnswer: "o1|f is differentiable there — locally straight is what having a derivative looks like.",
+    servedAnswer: "o1|The graph is differentiable at that point.",
     servedWrongPaths: [
-      "o2|f is a straight line.|Only NEAR that point. Zoom back out and it may be a wild curve — local straightness is a local claim.",
-      "o3|f′ = 0 there.|The line you see can have any slope. Locally straight says a tangent EXISTS, not that it is flat.",
-      "o4|Nothing — every graph looks straight up close.|Not so: magnify |x| at its corner and it stays bent at exactly the same angle, no matter how far you zoom."
+      "o2|The graph is a straight line at every point.|Only NEAR that point. Zoom back out and it may be a wild curve — local straightness is a local claim.",
+      "o3|The derivative equals zero at that point.|The line you see can have any slope. Locally straight says a tangent EXISTS, not that it is flat.",
+      "o4|Every graph becomes straight under magnification.|Not so: magnify |x| at its corner and it stays bent at exactly the same angle, no matter how far you zoom."
     ]
   },
   {
@@ -205,11 +207,13 @@ const ROWS: Row[] = [
     inserted: "i1b", serves: "k1", engine: "columnCalc",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "In 63 − 38, the 6 becomes a 5 and the 3 becomes 13. What happened?",
-    servedAnswer: "a|One ten traded down into 10 ones — 63 repackaged as 5 tens, 13 ones",
+    // Re-pinned: signed S317-PV-pv-03-03 rebalanced k1 labels (67/38/47/29 ->
+    // 50/38/47/37) to close the course-wide length leak (S326-R1 reconcile).
+    servedAnswer: "a|One ten traded down into 10 ones — 5 tens, 13 ones",
     servedWrongPaths: [
       "b|A 1 was moved from the 6 over to the 3|It LOOKS like a little 1 hopped over — but a whole TEN moved, and it became ten ones on landing. That's why 3 jumps all the way to 13, not 4.",
       "c|The 6 shrank because subtraction shrinks things|The 6 shrank because it PAID for the trade — one of its tens broke into ones. Subtraction itself hasn't even started yet.",
-      "d|It's a mistake — 63 became 53|Count all of it: 5 tens (50) plus 13 ones = 63 exactly. The repackaged number is untouched."
+      "d|It's a mistake — 63 somehow became 53|Count all of it: 5 tens (50) plus 13 ones = 63 exactly. The repackaged number is untouched."
     ]
   },
   {
@@ -272,11 +276,11 @@ const ROWS: Row[] = [
     inserted: "i2b", serves: "k3", engine: "percentBar",
     servedKind: "check", servedType: "mcq",
     servedPrompt: "A service charges a flat $5 fee plus 3% of the order. The order doubles from $100 to $200. What happens to the total charge?",
-    servedAnswer: "a|It rises from $8 to $11 \u2014 less than double",
+    servedAnswer: "a|It rises from $8 to $11, so the charge is less than double",
     servedWrongPaths: [
-      "b|It doubles from $8 to $16|That would need every part to double. The flat $5 stays $5 however large the order.",
-      "c|It stays at $8|The percentage part grows with the order: 3% of $200 is $6, not $3.",
-      "d|It rises from $8 to $13|Check the percent: 3% of $200 is $6, so the total is 5 + 6 = $11."
+      "b|It doubles from $8 to $16 because both parts double with the order|That would need every part to double. The flat $5 stays $5 however large the order.",
+      "c|It stays at $8 because the fee controls the whole charge|The percentage part grows with the order: 3% of $200 is $6, not $3.",
+      "d|It rises from $8 to $13 because the percentage doubles twice|Check the percent: 3% of $200 is $6, so the total is 5 + 6 = $11."
     ]
   },
   {

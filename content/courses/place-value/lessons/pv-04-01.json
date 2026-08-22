@@ -15,74 +15,26 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Rewrite the big fact in tens.",
+      "body": "Regroup 24 tens into hundreds and tens.",
       "conceptTag": "mult-tens",
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Build the tens version of 4 × 60, finished answer included.",
-        "tokens": [
-          {
-            "id": "t4",
-            "label": "4"
-          },
-          {
-            "id": "tx",
-            "label": "×"
-          },
-          {
-            "id": "t6t",
-            "label": "6 tens"
-          },
-          {
-            "id": "teq",
-            "label": "="
-          },
-          {
-            "id": "t24t",
-            "label": "24 tens"
-          },
-          {
-            "id": "t24",
-            "label": "24"
-          },
-          {
-            "id": "t240t",
-            "label": "240 tens"
-          }
-        ],
-        "correct": [
-          "t4",
-          "tx",
-          "t6t",
-          "teq",
-          "t24t"
-        ],
-        "acceptAlso": [],
+        "type": "baseTenCompose",
+        "prompt": "Four groups of 6 tens make 24 tens. Build the same value in standard base-ten form.",
+        "target": 240,
+        "requireStandard": true,
+        "maxHundreds": 2,
+        "maxTens": 9,
+        "maxOnes": 9,
         "commonBuilds": [
           {
-            "sequence": [
-              "t4",
-              "tx",
-              "t6t",
-              "teq",
-              "t24"
-            ],
-            "feedback": "24 WHAT? The units ride along: 4 groups of 6 tens make 24 TENS — and 24 tens is 240, not 24."
-          },
-          {
-            "sequence": [
-              "t4",
-              "tx",
-              "t6t",
-              "teq",
-              "t240t"
-            ],
-            "feedback": "240 tens would be 2,400! The tens already live inside \"6 tens\" — the fact simply counts 24 of them."
+            "hundreds": 0,
+            "tens": 2,
+            "ones": 4,
+            "feedback": "That shows 24, not 24 tens. Each of the 24 units is worth ten."
           }
         ],
-        "reusable": false,
-        "missFeedback": "Say 60 in units (6 tens), run the small fact (4 × 6 = 24), and keep the unit: 24 tens.",
-        "successFeedback": "4 × 6 tens = 24 tens = 240. The small fact did all the work; the unit did the growing."
+        "missFeedback": "Trade every 10 tens for 1 hundred. Twenty-four tens becomes 2 hundreds and 4 tens.",
+        "successFeedback": "The blocks show 2 hundreds and 4 tens: 240. So 24 tens is exactly 240."
       },
       "predict": {
         "prompt": "4 × 60 seen as 4 × 6 TENS gives 24 tens. Is 24 tens the same as 240?",
@@ -241,21 +193,22 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Watch this one — the small fact is big.",
+      "body": "A word problem this time — watch for the small fact ending in zero.",
       "conceptTag": "mult-tens",
       "explanationVariants": [
-        "8 × 5 = 40, so 8 × 5 tens = 40 tens = 400.",
-        "The key fact already ends in 0 — stay calm and keep reading in tens: forty tens are four hundred."
+        "8 × 5 = 40, so 8 boxes of 50 = 40 tens = 400 pencils.",
+        "The key fact already ends in 0 — stay calm and keep reading in tens: forty tens are four hundred pencils."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "8 × 50 = ?",
+        "prompt": "A warehouse stores pencils in boxes of 50. If there are 8 full boxes, how many pencils are there in all?",
         "answer": 400,
         "tolerance": 0,
+        "unit": "pencils",
         "commonErrors": [
           {
             "value": 40,
-            "feedback": "40 is the tens COUNT — the unit still needs reading. Forty tens are 400."
+            "feedback": "40 counts the boxes' worth in TENS of pencils — but that's tens, not the total. Forty tens are 400 pencils."
           },
           {
             "value": 4000,
@@ -263,14 +216,10 @@
           },
           {
             "value": 58,
-            "feedback": "58 adds 8 + 50. Eight groups of 5 tens multiply: the key is 8 × 5."
+            "feedback": "58 adds instead of multiplies. Eight FULL BOXES of 50 pencils multiply: the key is 8 × 5."
           }
         ],
-        "fallbackFeedback": "Key fact: 8 × 5 = 40. Now read those 40 in tens."
-      },
-      "variant": {
-        "gen": "mult-tens",
-        "form": "tensProductB"
+        "fallbackFeedback": "Key fact: 8 × 5 = 40. Now read those 40 in tens: 400 pencils."
       }
     },
     {

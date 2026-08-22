@@ -15,28 +15,27 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Compare widths.",
+      "body": "Stretch the graph against its parent.",
       "widget": {
-        "type": "mcq",
-        "prompt": "Compared with y = x^2, the graph of y = 3x^2 is...",
-        "options": [
-          {
-            "id": "a",
-            "label": "narrower",
-            "correct": true,
-            "feedback": "Yes — a = 3 has |a| > 1, so the parabola is narrower (steeper)."
-          },
-          {
-            "id": "b",
-            "label": "wider",
-            "feedback": "A coefficient bigger than 1 steepens the curve, making it narrower, not wider."
-          },
-          {
-            "id": "c",
-            "label": "exactly the same",
-            "feedback": "The 3 changes the width: |3| > 1 makes it narrower."
-          }
-        ]
+        "type": "quadraticExplore",
+        "prompt": "Drag a until y = ax² matches y = 3x². Use the parent graph to judge width.",
+        "targetA": 3,
+        "targetH": 0,
+        "targetK": 0,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 5,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 7,
+        "successFeedback": "a = 3 makes the parabola narrower while keeping the vertex at the origin.",
+        "shapeFeedback": "Compare the curve directly with the dashed parent. A larger positive a makes a narrower upward-opening parabola.",
+        "vertexFeedback": "Keep the vertex at (0, 0); this change is a stretch, not a shift.",
+        "showParent": true
       }
     },
     {
@@ -84,23 +83,27 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Vertical shift.",
+      "body": "Show the vertical shift on the graph.",
       "widget": {
-        "type": "numeric",
-        "prompt": "For y = x^2 + 7, what is the y-coordinate of the vertex?",
-        "answer": 7,
-        "tolerance": 0,
-        "commonErrors": [
-          {
-            "value": 0,
-            "feedback": "The + 7 lifts the vertex to height 7, not 0."
-          },
-          {
-            "value": -7,
-            "feedback": "The shift is +7 (up), so the vertex y is +7."
-          }
-        ],
-        "fallbackFeedback": "y = x² + 7 has vertex (0, 7)."
+        "type": "quadraticExplore",
+        "prompt": "Move the vertex to show y = x² + 7 while keeping the parabola's shape unchanged.",
+        "targetA": 1,
+        "targetH": 0,
+        "targetK": 7,
+        "aMin": -3,
+        "aMax": 3,
+        "hMin": -5,
+        "hMax": 5,
+        "kMin": -5,
+        "kMax": 8,
+        "aStart": 1,
+        "hStart": 0,
+        "kStart": 0,
+        "gridMax": 7,
+        "successFeedback": "k = 7 moves every output up 7 and places the vertex at (0, 7).",
+        "shapeFeedback": "Keep a = 1 so the parabola retains the parent's width and direction.",
+        "vertexFeedback": "Move only k upward until the vertex reaches (0, 7).",
+        "showParent": true
       }
     },
     {
@@ -341,7 +344,7 @@
       "concept": {
         "id": "rem-qt-c",
         "kind": "concept",
-        "body": "In y = a(x − h)² + k: a stretches (|a|>1 narrower) and flips if negative; (x − h) shifts right by h; + k shifts up by k. The vertex lands at (h, k). For (x + 2)² + 5, vertex (−2, 5)."
+        "body": "In y = a(x − h)² + k: a stretches (|a|>1 narrower) and flips if negative; (x − h) shifts right by h; + k shifts up by k. The vertex lands at (h, k). For (x + 5)² + 1, vertex (−5, 1)."
       },
       "check": {
         "id": "rem-qt-k",
@@ -349,25 +352,25 @@
         "body": "",
         "conceptTag": "quad-transform",
         "explanationVariants": [
-          "(x + 2) is zero at x = −2, so the vertex x is −2.",
-          "The vertex is (−2, 5); its x-coordinate is −2."
+          "(x + 5) is zero at x = −5, so the vertex x is −5.",
+          "The vertex is (−5, 1); its x-coordinate is −5."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "For y = (x + 2)^2 + 5, what is the x-coordinate of the vertex?",
-          "answer": -2,
+          "prompt": "For y = (x + 5)^2 + 1, what is the x-coordinate of the vertex?",
+          "answer": -5,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 2,
-              "feedback": "Sign flip. (x + 2) means h = −2, so the vertex sits at x = −2."
+              "value": 5,
+              "feedback": "Sign flip. (x + 5) means h = −5, so the vertex sits at x = −5."
             },
             {
-              "value": 5,
-              "feedback": "5 is the vertex y. The x-coordinate is −2."
+              "value": 1,
+              "feedback": "1 is the vertex y. The x-coordinate is −5."
             }
           ],
-          "fallbackFeedback": "x + 2 = 0 gives x = −2."
+          "fallbackFeedback": "x + 5 = 0 gives x = −5."
         }
       }
     }

@@ -110,9 +110,28 @@ const BAR_CASES: Case[] = [
   { name: "dd-02-02 — histogram bins under an axis caption",
     spec: bars({ categories: ["0–9", "10–19", "20–29", "30–39"], target: [2, 5, 3, 1], maxVal: 6,
       histogram: true, axisLabel: "minutes read" }) },
+  // RESOLVED (S331). This case was FLAGGED and left failing on purpose from S237 to S331: at 8
+  // columns (barW 28) the fit-derived size is ~6.02, the deliberate legibility floor of 7 wins,
+  // and "Pack N" at size 7 is 30.24 units wide — a guaranteed 2.2-unit overlap no font this side
+  // of the floor can clear. The design call the S237 cluster declined to make unilaterally has now
+  // been made the way the comment itself suggested: BarBuilderW gained HopLandingW's row-staggering
+  // (`catLabelPlan`, widgets.tsx) — the floor is UNTOUCHED (7 stays 7, so nothing gets less
+  // legible anywhere), and a category label opens a second row only when the box model says its
+  // column cannot hold it, with the canvas growing below the axis to fit. The seven-column layout
+  // (g4s-01-01's real content, ~1.8 units of clearance) keeps its single row byte-for-byte — the
+  // packer's 1-unit margin sits below that clearance by design. The cases below drive the packer
+  // across the column counts on BOTH sides of the boundary, with this test's own box model.
   { name: "eight named columns — the names must shrink to fit, not overlap",
     spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7", "Pack 8"],
-      target: [1, 2, 3, 4, 5, 6, 7, 8], maxVal: 8, axisLabel: "packs" }) }
+      target: [1, 2, 3, 4, 5, 6, 7, 8], maxVal: 8, axisLabel: "packs" }) },
+  // g4s-01-01's own shape — the floor's last holding point, one column before the stagger.
+  { name: "seven named columns — the floor still holds on one row (g4s-01-01's shape)",
+    spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7"],
+      target: [1, 2, 3, 4, 5, 6, 7], maxVal: 8, axisLabel: "packs" }) },
+  // Past the boundary in the other direction: even narrower columns, and a two-digit (7-char) name.
+  { name: "ten named columns — narrower than eight, wider names, still no overlap",
+    spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7", "Pack 8", "Pack 9", "Pack 10"],
+      target: [1, 2, 3, 4, 5, 6, 7, 8, 2, 4], maxVal: 8, axisLabel: "packs" }) }
 ];
 
 function boxesOf(raw: Record<string, unknown>, tone: "neutral" | "info"): { boxes: TextBox[]; skipped: string[] } {
@@ -128,15 +147,24 @@ function boxesOf(raw: Record<string, unknown>, tone: "neutral" | "info"): { boxe
 }
 
 const texts = (boxes: TextBox[]) => boxes.map((b) => b.text);
-const numbers = (boxes: TextBox[]) => boxes.map((b) => Number(b.text)).filter((n) => Number.isFinite(n));
+// numberLinePlainLabel (widgets.tsx) prints a typeset minus, "−" (U+2212), not the ASCII hyphen —
+// plain Number("−10") is NaN, so an unguarded Number(b.text) would silently drop every negative
+// tick instead of counting it. Undo the same substitution the rest of the suite already undoes
+// (figureTextAdversarialAudit.test.tsx, s322Figures.test.tsx) before parsing.
+const numbers = (boxes: TextBox[]) => boxes.map((b) => Number(b.text.replace(/−/g, "-"))).filter((n) => Number.isFinite(n));
 
 function expectNoCollisions(cases: Case[]) {
   for (const c of cases) {
     for (const tone of ["neutral", "info"] as const) {
       const { boxes, skipped } = boxesOf(c.spec, tone);
       // A widget must not go quiet by becoming unmeasurable: these engines write font-size and
-      // plain translate()s only, so nothing here may be skipped.
-      expect(skipped, `${c.name} [${tone}] — unmodellable labels`).toEqual([]);
+      // plain translate()s only, so nothing here may be skipped — EXCEPT a rotated axis caption
+      // (barBuilder's vertical "Frequency"/valueAxisLabel, `transform="rotate(-90 ...)"`), the one
+      // transform textBoxes.testkit.ts's box model refuses by design (see its own docstring) and
+      // the two other sweeps in this file already carve out for exactly this reason — `corpusSweep`
+      // below excludes it explicitly, and the S238 batch-8 tail runs no skip assertion at all for
+      // the same stated reason. Same exception, same evidence, applied here too.
+      expect(skipped.filter((s) => !s.includes("non-translate transform")), `${c.name} [${tone}] — unmodellable labels`).toEqual([]);
       expect(boxes.length, `${c.name} [${tone}] — drew no labels at all`).toBeGreaterThan(1);
       const hits = collisions(boxes);
       expect(
@@ -198,21 +226,27 @@ describe("S237b label collisions — numberLineHop", () => {
     for (const n of [0, 7, 8, 14, 21, 28, 35, 42, 49, 56]) {
       expect(texts(boxes), `choice ${n} must be labelled`).toContain(String(n));
     }
-    // CORRECTED, and stricter than the row COUNT this used to assert. It pinned "three distinct
-    // baselines" — two choice rows plus a ruler row — which described the layout at the time
-    // rather than the property. On this line suppression leaves exactly ONE ruler label (`60`),
-    // and one label is not a scale: it rendered alone on a third row under a line already numbered
-    // 0..56 and read as a stray number. A row count cannot tell that apart from a healthy layout.
-    // What must hold is stated directly instead: labels occupy more than one baseline (the whole
-    // point of the fix), no two overlap, and a ruler row appears only when it carries a real scale.
-    const rows = new Set(boxes.map((b) => Math.round(b.y1)));
-    expect(rows.size, "labels must not share one baseline").toBeGreaterThan(1);
+    // UPDATED (superseding label layout). HopLandingW no longer draws a separate ruler row and
+    // then deletes whichever of its labels collide with a choice tick — `labelPlan` (widgets.tsx)
+    // now merges the ruler's major-scale values and the choice values into ONE sorted list and
+    // packs them greedily onto as many rows as it takes to clear every collision, growing the
+    // canvas to fit. Nothing is ever deleted: the failure mode this test was written against —
+    // a orphaned scale label mis-seated where it could collide or read as a stray number — cannot
+    // occur under a packer that always finds every label a clear row. What must hold is the packer
+    // actually doing its job: labels spill onto more than one baseline (there are 16 values across
+    // a line with room for far fewer side by side), no two overlap, and the line's own true extent
+    // is still stated — the endpoint `numberLineScale.s237.test.tsx` and the sibling "few choices"
+    // case just above both pin as a hard requirement, not a suppressible extra.
     expect(collisions(boxes), "and none of them may overlap").toEqual([]);
-    // The orphan is gone: nothing is drawn below the choice rows on this line.
-    expect(texts(boxes)).not.toContain("60");
-    const choiceRows = [...rows].sort((a, b) => a - b).slice(0, 2);
-    expect(boxes.every((b) => choiceRows.includes(Math.round(b.y1))),
-      "every surviving label sits on a choice row").toBe(true);
+    expect(texts(boxes), "the line's own endpoints stay labelled, same as every other scale").toEqual(
+      expect.arrayContaining(["0", "60"])
+    );
+    // The packed SCALE (numeric labels only — "start" and the axis title ride their own,
+    // unrelated baselines by design) must actually spread across more than one row: 16 distinct
+    // values share this line, room for far fewer side by side without the packer's second row.
+    const numericBoxes = boxes.filter((b) => Number.isFinite(Number(b.text)));
+    const numericRows = new Set(numericBoxes.map((b) => Math.round(b.y1)));
+    expect(numericRows.size, "the scale must not share one baseline").toBeGreaterThan(1);
   });
 
   it("a ruler row is drawn when it carries a real scale, and suppressed when it carries one label", () => {
@@ -243,7 +277,8 @@ describe("S237b label collisions — numberLinePlace", () => {
     const spec = WidgetSpec.parse(PLACE_CASES[0].spec) as TWidget;
     const { container } = render(<WidgetRenderer spec={spec} value={null} onChange={() => {}} disabled={false} />);
     const { boxes } = scanTextBoxes(container.querySelector("svg")!);
-    expect(texts(boxes)).toContain("-10");
+    // numberLinePlainLabel prints a typeset minus, "−" (U+2212) — see the `numbers()` helper above.
+    expect(texts(boxes)).toContain("−10");
     expect(texts(boxes)).toContain("10");
     expect(numbers(boxes).length, "a thinned scale, not two lonely ends").toBeGreaterThanOrEqual(7);
     // 21 tick marks + the axis + the marker's stem are all still drawn.
@@ -792,8 +827,8 @@ describe("S238 label collisions — pointSetReasoningLab", () => {
 });
 
 describe("S238 label collisions — signChart", () => {
-  it("all 28 authored specs are clean at both tones", () => {
-    corpusSweep("signChart", 28);
+  it("all 29 authored specs are clean at both tones", () => {
+    corpusSweep("signChart", 29);
   });
 
   it("pf-02-03's shape: close roots stagger their tags onto a second row, both still named", () => {
@@ -826,8 +861,8 @@ describe("S238 label collisions — signChart", () => {
  * ------------------------------------------------------------------ */
 
 describe("S238 label collisions — triangleSolve", () => {
-  it("all 15 authored specs are clean at every tone (their start states held the 21 pairs)", () => {
-    corpusSweep("triangleSolve", 15);
+  it("all 16 authored specs are clean at every tone (their start states held the 21 pairs)", () => {
+    corpusSweep("triangleSolve", 16);
   });
 
   it("rt-01-04's ratios triangle stays clean across steep and shallow learner states", () => {
@@ -858,8 +893,8 @@ describe("S238 label collisions — triangleSolve", () => {
 });
 
 describe("S238 label collisions — doubleNumberLine", () => {
-  it("all 3 authored specs are clean, and both row captions plus the 0 tick survive", () => {
-    corpusSweep("doubleNumberLine", 3, (t, where) => {
+  it("all 5 authored specs are clean, and both row captions plus the 0 tick survive", () => {
+    corpusSweep("doubleNumberLine", 5, (t, where) => {
       expect(t, where).toContain("0");
       expect(t.length, `${where}: both captions and a full tick row`).toBeGreaterThanOrEqual(8);
     });
@@ -889,10 +924,10 @@ describe("S238 batch 8 — the collision tail stays closed", () => {
   // the sum label off that band; the required v (target - u) is unaffected since vxStart/vyStart
   // is only ever the drag's starting point, never part of evaluate()'s grading.
   const TAIL: Array<[string, number]> = [
-    ["lengthCompare", 66], ["slider", 28], ["trialProbabilityLab", 15], ["graphStoryLab", 14],
-    ["secantSlope", 11], ["circleMeasureExplore", 11], ["vectorExplore", 11], ["argandExplore", 7],
-    ["accumulateArea", 7], ["angleMeasure", 6], ["lineExplore", 6], ["conicLocusLab", 5],
-    ["circleAngleExplore", 5], ["taylorApprox", 3], ["absValueLine", 3], ["triangleClosureLab", 1]
+    ["lengthCompare", 69], ["slider", 31], ["trialProbabilityLab", 15], ["graphStoryLab", 14],
+    ["secantSlope", 11], ["circleMeasureExplore", 12], ["vectorExplore", 11], ["argandExplore", 8],
+    ["accumulateArea", 8], ["angleMeasure", 10], ["lineExplore", 9], ["conicLocusLab", 6],
+    ["circleAngleExplore", 5], ["taylorApprox", 4], ["absValueLine", 2], ["triangleClosureLab", 2]
   ];
 
   it("every authored spec of all 16 tail engines is collision-free at all three tones", () => {
@@ -964,6 +999,21 @@ describe("S237b label collisions — barBuilder", () => {
     expectNoCollisions(BAR_CASES);
   });
 
+  it("the stagger triggers exactly at the boundary: seven columns keep one row, eight spill to two", () => {
+    // The paired acceptance for the S331 row-stagger: it must not fire where the floor still holds
+    // (a layout change to g4s-01-01's real seven-pack chart would be a regression, not a fix), and
+    // it must actually fire where the floor cannot hold (otherwise the 8-column pass above could
+    // only mean the labels were dropped — which the every-column-keeps-its-name check forbids).
+    const rowsOf = (spec: Record<string, unknown>) => {
+      const { boxes } = boxesOf(spec, "neutral");
+      const catNames = new Set((WidgetSpec.parse(spec) as { categories: string[] }).categories);
+      return new Set(boxes.filter((b) => catNames.has(b.text)).map((b) => Math.round(b.y1))).size;
+    };
+    expect(rowsOf(BAR_CASES[6].spec), "seven columns: one category row").toBe(1);
+    expect(rowsOf(BAR_CASES[5].spec), "eight columns: staggered rows").toBeGreaterThan(1);
+    expect(rowsOf(BAR_CASES[7].spec), "ten columns: staggered rows").toBeGreaterThan(1);
+  });
+
   it("the axis still states its floor and its ceiling, and keeps every gridline", () => {
     for (const c of BAR_CASES) {
       const spec = WidgetSpec.parse(c.spec) as TWidget;
@@ -973,8 +1023,24 @@ describe("S237b label collisions — barBuilder", () => {
       expect(texts(boxes), `${c.name}: the axis ceiling`).toContain(String(max));
       expect(texts(boxes), `${c.name}: the axis floor`).toContain("0");
       expect(numbers(boxes).length, `${c.name}: a readable number of labels`).toBeGreaterThanOrEqual(4);
-      for (const cat of (spec as { categories: string[] }).categories)
-        expect(texts(boxes), `${c.name}: every column keeps its name`).toContain(cat);
+      const categories = (spec as { categories: string[] }).categories;
+      if ((spec as { histogram?: boolean }).histogram) {
+        // Histogram mode names its columns differently ON PURPOSE (widgets.tsx `histogramEdges`,
+        // gated `!spec.histogram &&` right above where the per-bar category text would otherwise
+        // draw — see that code's own dd-02-02 comment): shared numeric edge ticks between the
+        // bars ("0", "10", "20"…) instead of repeating each bin's own range text ("0–9", "10–19"…)
+        // under it, which is what the S237b fix cited there closed a real collision by removing.
+        // What must still hold is that every bin's boundary is stated somewhere — derived
+        // independently from the authored ranges here, not by importing the widget's own parser.
+        const edges = [
+          Number(categories[0].match(/^\s*(-?\d+)/)![1]),
+          ...categories.map((cat) => Number(cat.match(/(-?\d+)\s*$/)![1]) + 1)
+        ];
+        for (const edge of edges) expect(texts(boxes), `${c.name}: bin edge ${edge}`).toContain(String(edge));
+      } else {
+        for (const cat of categories)
+          expect(texts(boxes), `${c.name}: every column keeps its name`).toContain(cat);
+      }
       const step = (spec as { step: number }).step;
       // Every gridline survives — only the labels thin out.
       expect(container.querySelectorAll("svg line").length).toBeGreaterThanOrEqual(Math.floor(max / step) + 1);

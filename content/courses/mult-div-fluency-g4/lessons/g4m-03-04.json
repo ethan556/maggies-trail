@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Estimating a quotient rounds the dividend to something the divisor likes. 3,612 ÷ 6 becomes 3,600 ÷ 6 = 600 on sight.",
-      "narration": "Estimating a quotient rounds the dividend to something the divisor likes. 3,612 ÷ 6 becomes 3,600 ÷ 6 = 600 on sight."
+      "figure": "dop-estimate-quotient",
+      "body": "The compatible-number diagram turns 812 ÷ 39 into about 800 ÷ 40 = 20. Friendly numbers should stay close to the originals and divide cleanly, so the estimate preserves the quotient's size.",
+      "narration": "The compatible-number diagram turns 812 ÷ 39 into about 800 ÷ 40 = 20. Friendly numbers should stay close to the originals and divide cleanly, so the estimate preserves the quotient's size."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the model and describe what its values show.",
       "conceptTag": "g4m-estimate-quotient",
       "widget": {
         "type": "estimateSlider",
@@ -50,18 +50,18 @@
           }
         ],
         "outcomeId": "2500",
-        "reveal": "2,500 is closest to 2,437 among the multiples of 5 that divide cleanly, giving 500."
+        "reveal": "2,500 is a nearby friendly multiple of 5, so 2,500 ÷ 5 = 500 gives a useful benchmark for the quotient's size."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
           "diagram",
@@ -72,7 +72,7 @@
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       }
     },
     {
@@ -86,31 +86,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Before computing 3,612 ÷ 6, which estimate helps most?",
+        "prompt": "Before computing 2,437 ÷ 5, which friendly-number estimate gives the best size check?",
         "options": [
           {
             "id": "o0",
-            "label": "3,600 ÷ 6 = 600",
+            "label": "2,500 ÷ 5 = 500",
             "correct": true,
-            "feedback": "Correct — a friendly dividend close to the real one puts the quotient right at 600."
+            "feedback": "Correct — 2,500 is close to 2,437 and divides cleanly by 5, so the quotient should be near 500."
           },
           {
             "id": "o1",
-            "label": "3,612 ÷ 6 = about 60",
+            "label": "2,437 ÷ 5 = about 50",
             "correct": false,
-            "feedback": "Six sixties is 360, not 3,612 — that estimate is short by a factor of ten."
+            "feedback": "Fifty is one place too small; 2,500 ÷ 5 is 500, so the quotient is in the hundreds."
           },
           {
             "id": "o2",
-            "label": "3,612 − 6 = about 3,600",
+            "label": "2,437 − 5 = about 2,400",
             "correct": false,
-            "feedback": "Estimating must keep the operation; dividing by 6 shrinks the number far more than subtracting 6."
+            "feedback": "Subtraction removes one group once; it does not estimate how many groups of 5 fit."
           },
           {
             "id": "o3",
-            "label": "3,612 ÷ 6 = about 6,000",
+            "label": "2,437 ÷ 5 = about 5,000",
             "correct": false,
-            "feedback": "Dividing makes a number smaller, so a quotient larger than the dividend is impossible."
+            "feedback": "Dividing by 5 must make the number smaller than 2,437, so 5,000 cannot be reasonable."
           }
         ]
       },
@@ -123,76 +123,77 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       }
     },
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The estimate's main job is the digit count: knowing the answer is in the hundreds means a quotient of 60 or 6,000 is caught instantly.",
-      "narration": "The estimate's main job is the digit count: knowing the answer is in the hundreds means a quotient of 60 or 6,000 is caught instantly."
+      "figure": "mult3-estimate",
+      "body": "The estimate-check diagram compares an exact result with a nearby easy fact. For division, multiply the estimated quotient by the divisor; the product should land near the original dividend.",
+      "narration": "The estimate-check diagram compares an exact result with a nearby easy fact. For division, multiply the estimated quotient by the divisor; the product should land near the original dividend."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Test the claim by dividing compatible numbers.",
       "conceptTag": "g4m-estimate-quotient",
       "widget": {
-        "type": "estimateSlider",
-        "prompt": "Estimate 2,437 ÷ 5 before computing it.",
-        "min": 20,
-        "max": 5000,
-        "start": 20,
-        "target": 500,
-        "acceptFactor": 2,
-        "unitLabel": "units",
-        "ticks": [
-          20,
-          2510,
-          5000
+        "type": "numeric",
+        "prompt": "A classmate claims 1,800 ÷ 6 estimates 1,793 ÷ 6. What quotient estimate does this give?",
+        "answer": 300,
+        "tolerance": 0,
+        "unit": "",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "That is ten times too small. Six goes into 1,800 about three hundred times."
+          },
+          {
+            "value": 1800,
+            "feedback": "That repeats the dividend. Divide 1,800 into groups of 6."
+          }
         ],
-        "lowFeedback": "Too low — five hundreds is 2,500, right near the dividend.",
-        "highFeedback": "Too high — dividing by 5 cannot leave a number near the dividend itself.",
-        "successFeedback": "About 500 — from 2,500 ÷ 5, and the exact quotient is 487 remainder 2."
+        "fallbackFeedback": "Choose the nearby number 1,800 because it divides evenly by 6.",
+        "successFeedback": "Correct — 300. That is a useful estimate for 1,793 ÷ 6."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Divide compatible numbers to make and explain a quotient estimate.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
-          "symbolic",
+          "diagram",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "diagram",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       }
     },
     {
@@ -220,7 +221,7 @@
             "feedback": "A place was dropped from the quotient; every place of 925 has to be divided in turn."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Divide from the greatest place, keep each quotient digit aligned, and regroup what remains. Check by multiplying the quotient by the divisor and adding any remainder to rebuild the dividend.",
         "successFeedback": "Correct — 185."
       },
       "hints": [
@@ -232,23 +233,20 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
-          "symbolic",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
-        "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -266,31 +264,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Before computing 3,612 ÷ 6, which estimate helps most?",
+        "prompt": "Maya estimated 2,437 ÷ 5 as about 50. Which nearby dividend corrects her place-value error?",
         "options": [
           {
             "id": "o0",
-            "label": "3,600 ÷ 6 = 600",
+            "label": "Use 2,500 because it is nearby.",
             "correct": true,
-            "feedback": "Correct — a friendly dividend close to the real one puts the quotient right at 600."
+            "feedback": "Correct — 2,500 is close to 2,437 and divides by 5 to give the useful benchmark 500."
           },
           {
             "id": "o1",
-            "label": "3,612 ÷ 6 = about 60",
+            "label": "Use 250 because it is nearby.",
             "correct": false,
-            "feedback": "Six sixties is 360, not 3,612 — that estimate is short by a factor of ten."
+            "feedback": "Two hundred fifty is one tenth of the dividend, which creates the incorrect quotient size of 50."
           },
           {
             "id": "o2",
-            "label": "3,612 − 6 = about 3,600",
+            "label": "Use 25 because it is nearby.",
             "correct": false,
-            "feedback": "Estimating must keep the operation; dividing by 6 shrinks the number far more than subtracting 6."
+            "feedback": "Twenty-five is about one hundredth of the dividend, so it loses two place values."
           },
           {
             "id": "o3",
-            "label": "3,612 ÷ 6 = about 6,000",
+            "label": "Use 25,000 because it is nearby.",
             "correct": false,
-            "feedback": "Dividing makes a number smaller, so a quotient larger than the dividend is impossible."
+            "feedback": "Twenty-five thousand is about ten times the dividend, so its quotient would be ten times too large."
           }
         ]
       },
@@ -303,29 +301,29 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
           "symbolic",
-          "symbolic"
+          "language"
         ],
         "translationFrom": "symbolic",
-        "translationTo": "symbolic",
+        "translationTo": "language",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g4m-estimate-quotient",
       "explanationVariants": [
         "Estimates guide, stories decide.",
@@ -340,14 +338,14 @@
         "commonErrors": [
           {
             "value": 8,
-            "feedback": "8 full vans leave 1 hikers standing — this question needs everyone carried."
+            "feedback": "8 full vans leave 1 hiker standing — this question needs everyone carried."
           },
           {
             "value": 1,
             "feedback": "1 is the leftover group of hikers, not the number of vans."
           }
         ],
-        "fallbackFeedback": "Split a factor into its places, multiply each part, and add every piece back.",
+        "fallbackFeedback": "Find the number of full groups and the leftover. Because every person needs a whole van place, add one van whenever the remainder is greater than zero.",
         "successFeedback": "Correct — 9."
       },
       "hints": [
@@ -359,23 +357,23 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Split a factor into places, build each piece, and reassemble the whole for g4m estimate quotient.",
+        "actionGoal": "Choose a nearby compatible dividend, estimate the quotient's place-value size, and compare the exact or contextual answer with that benchmark.",
         "invariants": [
-          "Splitting a factor never changes the product: every piece of the split multiplies the other factor, and the pieces add back to exactly the same total, which is what makes g4m estimate quotient decomposable at all."
+          "A compatible-number estimate keeps the divisor and uses a nearby dividend that divides cleanly; the exact quotient should have the same place-value size, and divisor × quotient + remainder = dividend."
         ],
         "misconceptions": [
-          "Adding only some of the partial products, dropping or inventing a zero when factors carry tens, or letting a remainder reach or exceed the divisor."
+          "Changing the dividend by a factor of ten, subtracting instead of dividing, or accepting a quotient outside the benchmark range destroys the size check."
         ],
         "representations": [
-          "symbolic",
+          "language",
           "symbolic"
         ],
-        "translationFrom": "symbolic",
+        "translationFrom": "language",
         "translationTo": "symbolic",
         "fadeLevel": 0,
         "transferFamily": "mult-div-fluency-g4:g4m-estimate-quotient",
         "delayed": true,
-        "counterfactualPrompt": "If one partial product were left out, exactly how much of the total would go missing?"
+        "counterfactualPrompt": "If the compatible dividend were ten times too small, how would its quotient reveal the place-value error?"
       },
       "variant": {
         "gen": "g4-multiply",
@@ -385,7 +383,7 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Explain the strategy in one clear sentence.",
       "takeaways": [
         "Round the dividend to a friendly multiple.",
         "Divide the friendly numbers.",
@@ -400,13 +398,13 @@
       "concept": {
         "id": "rem-g4m-estimate-quotient-c",
         "kind": "concept",
-        "body": "The estimate's main job is the digit count: knowing the answer is in the hundreds means a quotient of 60 or 6,000 is caught instantly.",
-        "narration": "The estimate's main job is the digit count: knowing the answer is in the hundreds means a quotient of 60 or 6,000 is caught instantly."
+        "body": "The estimate-check diagram compares an exact result with a nearby easy fact. For division, multiply the estimated quotient by the divisor; the product should land near the original dividend.",
+        "narration": "The estimate-check diagram compares an exact result with a nearby easy fact. For division, multiply the estimated quotient by the divisor; the product should land near the original dividend."
       },
       "check": {
         "id": "rem-g4m-estimate-quotient-k",
         "kind": "check",
-        "body": "",
+        "body": "Use the scaffold, then solve the check.",
         "conceptTag": "g4m-estimate-quotient",
         "explanationVariants": [
           "Round to a friendly dividend.",
@@ -414,7 +412,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Before computing 3,612 ÷ 6, which estimate helps most?",
+          "prompt": "Replace 3,612 with the nearby friendly number 3,600. Which estimate gives a useful size check for 3,612 ÷ 6?",
           "options": [
             {
               "id": "o0",

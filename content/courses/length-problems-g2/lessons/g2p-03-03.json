@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Some stories take two steps: ribbon is used AND bought, trail is walked AND backtracked. Handle one step at a time and carry the total between them.",
       "narration": "Some stories take two steps: ribbon is used AND bought, trail is walked AND backtracked. Handle one step at a time and carry the total between them."
     },
@@ -138,31 +137,30 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "'Had 60, used 25, bought 30' is 60 − 25 + 30 — two moves, one running answer.",
       "narration": "'Had 60, used 25, bought 30' is 60 − 25 + 30 — two moves, one running answer."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Build the second story step in fives.",
       "conceptTag": "g2p-two-step",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Step two of a story: after using ribbon, 35 cm remained; the purchase adds 30. Hop its tens.",
+        "prompt": "Step two of a story: after using ribbon, 35 cm remained; the purchase adds 30. Mark it as six five-hops.",
         "min": 20,
         "max": 80,
         "start": 35,
-        "hop": 10,
-        "hops": 3,
+        "hop": 5,
+        "hops": 6,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 45,
-            "feedback": "One ten of the purchase — the story bought three tens' worth."
+            "value": 40,
+            "feedback": "One five of the purchase is placed — the story bought six fives' worth."
           }
         ],
-        "missFeedback": "Each hop is 10. From 35, 3 hops land on 65.",
+        "missFeedback": "Each hop is 5. From 35, 6 hops land on 65.",
         "successFeedback": "65 cm — the second step joined the survivor of the first."
       },
       "cml": {
@@ -198,28 +196,39 @@
         "Used subtracts, bought adds."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Maggie had 70 cm of ribbon, used 22 cm on a bow, then bought 30 cm more. How much ribbon now?",
-        "answer": 78,
-        "tolerance": 0,
-        "unit": "",
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Maggie had 45 cm of ribbon, used 18 cm on a bow, then bought 12 cm more. Which expression matches her story?",
+        "options": [
           {
-            "value": 48,
-            "feedback": "The story has a second step — the new 30 cm still joins after the cutting."
+            "id": "o0",
+            "label": "45 − 18 + 12",
+            "correct": true,
+            "feedback": "Correct — using ribbon SUBTRACTS and buying more ADDS: 45 − 18 + 12 = 39."
           },
           {
-            "value": 62,
-            "feedback": "The steps ran backward: the bow TOOK ribbon away, and the purchase brought more."
+            "id": "o1",
+            "label": "45 + 18 − 12",
+            "correct": false,
+            "feedback": "That swaps the directions — using the ribbon on the bow SUBTRACTS, and buying more ADDS, not the other way around."
+          },
+          {
+            "id": "o2",
+            "label": "45 + 18 + 12",
+            "correct": false,
+            "feedback": "Using the ribbon on the bow takes some away — that step must subtract, not add."
+          },
+          {
+            "id": "o3",
+            "label": "45 − 18 − 12",
+            "correct": false,
+            "feedback": "Buying more ribbon ADDS to the total — that step must add, not subtract."
           }
-        ],
-        "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 78."
+        ]
       },
       "hints": [
-        "Place the pieces end to end.",
-        "The total is the far end.",
-        "Every piece counts once."
+        "Read the story in order.",
+        "Using ribbon takes away: subtract.",
+        "Buying ribbon adds: add."
       ],
       "cml": {
         "stage": "construct",
@@ -242,10 +251,6 @@
         "transferFamily": "length-problems-g2:g2p-two-step",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "TwoStepTradeNumeric"
       }
     },
     {
@@ -259,31 +264,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Maggie computes that a pencil measured from the 3 cm mark to the 11 cm mark is 14 cm long. Reasonable?",
+        "prompt": "A crayon lies from the 4 cm mark to the 9 cm mark on a ruler. Maggie writes 13 cm for its length. Does that make sense?",
         "options": [
           {
             "id": "o0",
-            "label": "Too long — the marks are only 8 apart",
+            "label": "Too long — the span from 4 to 9 is 5 cm",
             "correct": true,
-            "feedback": "Correct — 11 − 3 = 8, so 14 overshoots; she likely added the marks instead of subtracting."
+            "feedback": "Correct — 9 − 4 = 5; the 13 comes from adding the marks instead of subtracting."
           },
           {
             "id": "o1",
-            "label": "Reasonable — rulers can stretch",
+            "label": "It makes sense — 13 is close to 9",
             "correct": false,
-            "feedback": "A ruler's spacing is fixed by design; the span between 3 and 11 can only ever be 8."
+            "feedback": "Close to an endpoint is not the test — the length is the SPAN between the marks: 9 − 4 = 5."
           },
           {
             "id": "o2",
-            "label": "Too short",
+            "label": "Too short — a crayon passes the 9 cm mark",
             "correct": false,
-            "feedback": "The error runs the other way — 14 is LARGER than the true 8 cm span."
+            "feedback": "The 9 is a ruler mark, not the crayon's size; the crayon covers only the 5 cm between the marks."
           },
           {
             "id": "o3",
-            "label": "Impossible to judge without the pencil",
+            "label": "You cannot tell from two marks",
             "correct": false,
-            "feedback": "The two marks alone pin the length; the marks ARE the measurement."
+            "feedback": "Two marks are all you need — the end mark minus the start mark gives the length."
           }
         ]
       },
@@ -318,35 +323,35 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "One more, for the road — but this time, the buying happens first.",
       "conceptTag": "g2p-two-step",
       "explanationVariants": [
-        "New stories, same bridge.",
-        "Step, carry, step."
+        "Buying comes first this time: 50 + 25 = 75, then 75 − 18 = 57.",
+        "Add the purchase, then subtract what's used: 57."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Maggie had 60 cm of ribbon, used 22 cm on a bow, then bought 30 cm more. How much ribbon now?",
-        "answer": 68,
+        "prompt": "Maggie had 50 cm of ribbon. She bought 25 cm more, then used 18 cm on a bow. How much ribbon now?",
+        "answer": 57,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 38,
-            "feedback": "The story has a second step — the new 30 cm still joins after the cutting."
+            "value": 75,
+            "feedback": "The story has a second step — the 18 cm used on the bow still comes out after the ribbon is bought."
           },
           {
-            "value": 52,
-            "feedback": "The steps ran backward: the bow TOOK ribbon away, and the purchase brought more."
+            "value": 43,
+            "feedback": "The steps ran backward: the purchase ADDS ribbon, and the bow TAKES it away."
           }
         ],
         "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-        "successFeedback": "Correct — 68."
+        "successFeedback": "Correct — 57."
       },
       "hints": [
-        "Place the pieces end to end.",
-        "The total is the far end.",
-        "Every piece counts once."
+        "Place the pieces end to end, in the order the story gives them.",
+        "Buying adds first: 50 + 25 = 75.",
+        "Then using subtracts: 75 − 18 = 57."
       ],
       "cml": {
         "stage": "construct",
@@ -369,10 +374,6 @@
         "transferFamily": "length-problems-g2:g2p-two-step",
         "delayed": true,
         "counterfactualPrompt": "What would have to change about the pieces for the total or the gap to come out differently?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "TwoStepTradeNumeric"
       }
     },
     {
@@ -407,22 +408,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Maggie had 60 cm of ribbon, used 31 cm on a bow, then bought 20 cm more. How much ribbon now?",
-          "answer": 49,
+          "prompt": "Maggie has 40 cm of string. She cuts off 13 cm for a kite tail, then finds 24 cm more. How much string now?",
+          "answer": 51,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 29,
-              "feedback": "The story has a second step — the new 20 cm still joins after the cutting."
+              "value": 27,
+              "feedback": "The story has a second step — the found 24 cm still joins after the cutting."
             },
             {
-              "value": 71,
-              "feedback": "The steps ran backward: the bow TOOK ribbon away, and the purchase brought more."
+              "value": 29,
+              "feedback": "The steps ran backward: the cut TOOK string away, and the found piece brought more."
             }
           ],
           "fallbackFeedback": "Line the lengths up: same starting point, then read what the ends say — joins add, gaps subtract.",
-          "successFeedback": "Correct — 49."
+          "successFeedback": "Correct — 51."
         }
       }
     }

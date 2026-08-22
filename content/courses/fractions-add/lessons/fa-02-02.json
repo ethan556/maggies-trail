@@ -245,7 +245,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Apply the full method.",
+      "body": "Predict, then prove.",
       "conceptTag": "benchmark-compare",
       "explanationVariants": [
         "5/11 doubled is 10, short of 11 — less than 1/2. 4/7 doubled is 8, past 7 — more than 1/2. So 4/7 is bigger.",
@@ -253,7 +253,7 @@
       ],
       "widget": {
         "type": "exactNumberLab",
-        "prompt": "Which is bigger: 5/11 or 4/7?",
+        "prompt": "First place each fraction relative to 1/2. Then decide which is bigger: 5/11 or 4/7.",
         "task": "fractionCompare",
         "values": [
           {
@@ -294,55 +294,71 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "The team progress report.",
+      "body": "Left, right, or can't tell?",
       "conceptTag": "benchmark-compare",
       "hints": [
-        "Check Team A's 7/15 against 1/2 using the doubling trick.",
-        "7 doubled is 14, which is less than 15 — below 1/2.",
-        "Check Team B's 9/16 the same way, then compare."
+        "Check both fractions against 1/2 using the doubling trick before deciding.",
+        "If one fraction is below 1/2 and the other above, the one above wins — sort it left or right.",
+        "If both fractions land on the SAME side of 1/2, the halfway trick alone can't say which is bigger — that's the 'can't tell' group."
       ],
       "explanationVariants": [
-        "Team A's 7/15 doubles to 14, short of 15 — below 1/2. Team B's 9/16 doubles to 18, past 16 — above 1/2. Team B is further along.",
-        "One team falls below the halfway mark, the other clears it — no common denominator needed to see who's ahead."
+        "9/16 (above 1/2) beats 7/15 (below); 4/7 (above) beats 5/11 (below); 7/10 (above) beats 5/12 (below). But 3/5 and 4/5, and 5/9 and 6/11, are each two fractions above 1/2 — same side, so 1/2 alone can't settle those two.",
+        "Opposite sides of 1/2 settle a pair instantly; same side means you'd need a finer method, like cross-multiplication, to decide."
       ],
       "widget": {
-        "type": "exactNumberLab",
-        "prompt": "Team A completed 7 of 15 tasks. Team B completed 9 of 16 tasks. Which team is further along?",
-        "task": "fractionCompare",
-        "values": [
+        "type": "dragBucket",
+        "prompt": "Sort each pair of fractions: does the left one win, the right one win, or can't you tell using 1/2 alone?",
+        "buckets": [
           {
             "id": "left",
-            "label": "Team A",
-            "kind": "rational",
-            "num": 7,
-            "den": 15
+            "label": "Left fraction is bigger",
+            "icon": "⬅️"
           },
           {
             "id": "right",
-            "label": "Team B",
-            "kind": "rational",
-            "num": 9,
-            "den": 16
+            "label": "Right fraction is bigger",
+            "icon": "➡️"
+          },
+          {
+            "id": "unclear",
+            "label": "Can't tell from 1/2 alone",
+            "icon": "❓"
           }
         ],
-        "requiredExplorations": 3,
-        "requiredStageKeys": [
-          "benchmark:left",
-          "benchmark:right",
-          "compare:exact"
+        "items": [
+          {
+            "id": "q1",
+            "label": "9/16 vs. 7/15",
+            "bucketId": "left",
+            "feedback": "9/16 clears 1/2 (doubled: 18>16) while 7/15 falls short (doubled: 14<15) — the LEFT fraction, 9/16, is bigger."
+          },
+          {
+            "id": "q2",
+            "label": "5/11 vs. 4/7",
+            "bucketId": "right",
+            "feedback": "5/11 falls short of 1/2 (doubled: 10<11) while 4/7 clears it (doubled: 8>7) — the RIGHT fraction, 4/7, is bigger."
+          },
+          {
+            "id": "q3",
+            "label": "5/12 vs. 7/10",
+            "bucketId": "right",
+            "feedback": "5/12 falls short of 1/2 (doubled: 10<12) while 7/10 clears it (doubled: 14>10) — the RIGHT fraction, 7/10, is bigger."
+          },
+          {
+            "id": "q4",
+            "label": "3/5 vs. 4/5",
+            "bucketId": "unclear",
+            "feedback": "Both 3/5 and 4/5 clear 1/2 (doubled: 6>5 and 8>5) — same side, so 1/2 alone can't say which is bigger."
+          },
+          {
+            "id": "q5",
+            "label": "5/9 vs. 6/11",
+            "bucketId": "unclear",
+            "feedback": "Both 5/9 and 6/11 clear 1/2 (doubled: 10>9 and 12>11) — same side, so 1/2 alone can't say which is bigger."
+          }
         ],
-        "tolerance": 0,
-        "choices": [],
-        "numericErrors": [],
-        "authoredStages": [],
-        "explorationFeedback": "Inspect every required exact-number state before checking.",
-        "fallbackFeedback": "Use the exact-number states to support your answer.",
-        "answerMode": "relation",
-        "successFeedback": "Team A's 7/15 falls short of 1/2; Team B's 9/16 clears it. Team B is further along."
-      },
-      "variant": {
-        "gen": "fraction-benchmark",
-        "form": "straddleHalf"
+        "missFeedback": "Check each fraction against 1/2 first: if they land on opposite sides, the one past 1/2 wins; if they land on the same side, sort it here as unclear.",
+        "successFeedback": "Every pair sorted: opposite sides settle it (left or right wins), same side means 1/2 alone can't tell."
       }
     },
     {

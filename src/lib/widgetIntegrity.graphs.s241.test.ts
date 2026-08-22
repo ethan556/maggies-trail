@@ -53,7 +53,7 @@
 import { describe, expect, it } from "vitest";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { WidgetSpec, widgetIntegrityErrors, type TWidget } from "./schema";
+import { WidgetSpec, dotPlotLabel, widgetIntegrityErrors, type TWidget } from "./schema";
 import { VARIANT_GENERATORS, variantFor, variantForGenForm } from "./variants";
 
 /* ------------------------------------------------------------------ *
@@ -218,23 +218,21 @@ describe("S241 GG-06 — boxPlot specs are ordered, bounded, and winnable", () =
  * GG-14 — the two dot-plot modes agree about what a value means.
  * ------------------------------------------------------------------ */
 
-describe("S241 GG-14 — a build-mode dotPlot never carries a denominator it cannot honour", () => {
-  it("read mode formats fractions; build mode must not claim to", () => {
-    // Read mode (`given` present) labels through `dotPlotLabel(value, denominator)`; build mode
-    // (`widgets.tsx:9360`) prints the raw numerator. A build spec with `denominator: 2` would
-    // label its axis 12/14/16 where the data means 6/7/8 — the axis stating a number that is not
-    // the value, on the engine whose entire task is stacking dots at values.
+describe("S249 GG-14 — both dotPlot modes honour the same fractional value formatter", () => {
+  it("read and build modes both support authored fractional axes", () => {
+    // S249 repaired build mode to use the same dotPlotLabel formatter as read mode, its controls,
+    // and its accessible name. Fractional build plots are now a live, supported authoring pattern.
     const specs = pick(ALL, "dotPlot");
     expect(specs.length, "no dotPlot spec found").toBeGreaterThan(5);
     const build = specs.filter(({ widget: w }) => w.given === undefined);
     const read = specs.filter(({ widget: w }) => w.given !== undefined);
-    // Both modes must be present, or this rule only ever sees one side of the split.
     expect(build.length, "no BUILD-mode dotPlot in the corpus").toBeGreaterThan(0);
     expect(read.length, "no READ-mode dotPlot in the corpus").toBeGreaterThan(0);
-    const bad = build
-      .filter(({ widget: w }) => w.denominator !== undefined)
-      .map(({ widget: w, where }) => `${where}: build mode with denominator ${w.denominator} — the axis would print numerators`);
-    expect(bad).toEqual([]);
+    const fractionalBuild = build.filter(({ widget: w }) => w.denominator !== undefined);
+    expect(fractionalBuild.length, "the repaired fractional BUILD pattern has disappeared").toBeGreaterThan(0);
+    for (const { widget: w, where } of fractionalBuild) {
+      expect(w.values.map((value) => dotPlotLabel(value, w.denominator)), where).not.toEqual(w.values.map(String));
+    }
   });
 
   it("read mode's fractional axis is still authored and still allowed", () => {

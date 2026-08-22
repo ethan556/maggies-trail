@@ -15,53 +15,30 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match rectangle to perimeter.",
+   "body": "Unwrap the four sides into one measured perimeter path.",
    "conceptTag": "perimeter-formula",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each rectangle's dimensions to its perimeter.",
-    "left": [
+    "type": "unitRuler",
+    "prompt": "A 1-by-9 rectangle unwraps to 1 + 9 + 1 + 9 = 20 units. Measure the full 20-unit path.",
+    "objectStart": 0,
+    "objectEnd": 20,
+    "allowedUnitSizes": [
+     1,
+     2
+    ],
+    "targetUnitSize": 1,
+    "startUnitSize": 2,
+    "requiredPlacements": 20,
+    "commonPlacements": [
      {
-      "id": "e1",
-      "label": "6 × 4"
-     },
-     {
-      "id": "e2",
-      "label": "9 × 5"
-     },
-     {
-      "id": "e3",
-      "label": "7 × 3"
+      "placements": 10,
+      "feedback": "Ten placements use 2-unit pieces. Switch to 1-unit steps to count all 20 perimeter units."
      }
     ],
-    "right": [
-     {
-      "id": "r1",
-      "label": "20"
-     },
-     {
-      "id": "r2",
-      "label": "28"
-     },
-     {
-      "id": "r3",
-      "label": "20"
-     }
-    ],
-    "pairs": {
-     "e1": "r1",
-     "e2": "r2",
-     "e3": "r3"
-    },
-    "pairErrors": [
-     {
-      "left": "e2",
-      "right": "r1",
-      "feedback": "20 is 6×4's perimeter (and 7×3's too, coincidentally). For 9×5: 2×(9+5)=2×14=28."
-     }
-    ],
-    "missFeedback": "Add length and width, then double the sum — walking all four sides.",
-    "successFeedback": "2×(6+4)=20, 2×(9+5)=28, 2×(7+3)=20 — different-shaped rectangles can share a perimeter."
+    "successFeedback": "The path is 20 units. A 5-by-5 rectangle also unwraps to 5 + 5 + 5 + 5 = 20.",
+    "alignFeedback": "Line the first unit up with zero before counting the path.",
+    "gapOverlapFeedback": "Place equal units end to end with no gaps or overlaps.",
+    "unitFeedback": "Use 1-unit steps so the count names the perimeter directly."
    },
    "predict": {
     "prompt": "Which is the longer walk around: a 1-by-9 rectangle or a 5-by-5?",

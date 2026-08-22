@@ -45,16 +45,16 @@
         "prompt": "324 + 251, combined by place: 3+2 flats, 2+5 rods, 4+1 cubes. Will any pile overflow (reach 10 or more)?",
         "options": [
           {
-            "id": "no",
-            "label": "No — every pile stays under 10"
-          },
-          {
             "id": "ones",
             "label": "Yes — the cubes overflow"
           },
           {
             "id": "tens",
             "label": "Yes — the rods overflow"
+          },
+          {
+            "id": "no",
+            "label": "No — every pile stays under 10"
           }
         ],
         "outcomeId": "no",
@@ -104,7 +104,7 @@
             "feedback": "Check each spot: hundreds 200+100=300, tens 10+40=50, ones 3+2=5. Combine: 355."
           },
           {
-            "value": 45,
+            "value": 55,
             "feedback": "That drops the hundreds. Combine all three spots: 300+50+5=355."
           }
         ],
@@ -127,7 +127,7 @@
       "body": "Add with a ones-trade needed.",
       "widget": {
         "type": "numeric",
-        "prompt": "247 + 186 = ?",
+        "prompt": "Add, trading if a spot overflows: 247 + 186 = ?",
         "answer": 433,
         "tolerance": 0,
         "commonErrors": [
@@ -155,7 +155,7 @@
       "body": "Add with a cascading trade.",
       "widget": {
         "type": "numeric",
-        "prompt": "358 + 267 = ?",
+        "prompt": "Add, trading through more than one spot if needed: 358 + 267 = ?",
         "answer": 625,
         "tolerance": 0,
         "commonErrors": [
@@ -177,29 +177,25 @@
       "body": "Another single-trade problem.",
       "conceptTag": "pv1000-add-trade",
       "explanationVariants": [
-        "Ones: 5+7=12, trade 10 for 1 ten. Combine: 300+40+2=342.",
-        "Trade 10 ones for 1 ten when the ones spot overflows."
+        "Ones: 5+7=12, trade 10 for 1 ten. Tens: 60+70+10(traded)=140. Combine: 200+140+2=342.",
+        "Add each spot's full value, folding in anything traded, then combine with one final addition."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "165 + 177 = ?",
+        "prompt": "Find the sum, trading the ones if needed: 165 + 177 = ?",
         "answer": 342,
         "tolerance": 0,
         "commonErrors": [
           {
             "value": 3212,
-            "feedback": "The ones add to 12 — trade 10 ones for 1 extra ten, then combine: 300+40+2=342."
+            "feedback": "The ones add to 12 — trade 10 ones for 1 extra ten, then combine: 200+140+2=342."
           },
           {
             "value": 332,
-            "feedback": "Don't forget the traded ten from the ones! Combine carefully: 342."
+            "feedback": "Don't forget the traded ten from the ones! Tens becomes 60+70+10=140. Combine: 200+140+2=342."
           }
         ],
-        "fallbackFeedback": "165 + 177 = 342."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddTradeNumeric"
+        "fallbackFeedback": "200 + 140 + 2 = 342 (the traded ten from the ones joins the tens)."
       }
     },
     {
@@ -213,7 +209,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "432 + 326 = ?",
+        "prompt": "Find the sum — check whether any spot needs trading: 432 + 326 = ?",
         "answer": 758,
         "tolerance": 0,
         "commonErrors": [
@@ -222,15 +218,11 @@
             "feedback": "Check each spot: hundreds 400+300=700, tens 30+20=50, ones 2+6=8. Combine: 758."
           },
           {
-            "value": 68,
+            "value": 58,
             "feedback": "That drops the hundreds. Combine all three spots: 700+50+8=758."
           }
         ],
         "fallbackFeedback": "700 + 50 + 8 = 758."
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddByPlaceNumeric"
       }
     },
     {
@@ -244,7 +236,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "479 + 336 = ?",
+        "prompt": "A cascading-trade challenge: 479 + 336 = ?",
         "answer": 815,
         "tolerance": 0,
         "commonErrors": [
@@ -263,11 +255,7 @@
         "Ones: 9+6=15. Trade 10 ones for 1 ten, keep 5 ones.",
         "Tens: 70+30+10(traded)=110. Trade 100 for 1 hundred, keep 10 as... recount: 7+3+1=11 tens, trade 10 tens for 1 hundred, keep 1 ten.",
         "Hundreds: 400+300+100(traded)=800. Combine: 800+10+5=815."
-      ],
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddTradeNumeric"
-      }
+      ]
     },
     {
       "id": "r1",
@@ -287,7 +275,7 @@
       "concept": {
         "id": "rem-pabp-c",
         "kind": "concept",
-        "body": "Add by combining each spot separately: hundreds with hundreds, tens with tens, ones with ones, then combine the pieces. 324+251: 500+70+5=575."
+        "body": "Add by combining each spot separately: hundreds with hundreds, tens with tens, ones with ones — then combine the pieces to get the total."
       },
       "check": {
         "id": "rem-pabp-k",
@@ -295,25 +283,25 @@
         "body": "",
         "conceptTag": "pv1000-add-by-place",
         "explanationVariants": [
-          "500+70+5=575.",
+          "200+70+7=277.",
           "Combine each spot separately."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "324 + 251 = ?",
-          "answer": 575,
+          "prompt": "A farm has 145 apples in one crate and 132 apples in another crate. How many apples in total?",
+          "answer": 277,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 555,
-              "feedback": "The tens are off: 2 tens + 5 tens = 7 tens, which gives 575."
+              "value": 77,
+              "feedback": "That drops the hundreds. Combine all three spots: 200+70+7=277."
             },
             {
-              "value": 65,
-              "feedback": "Don't drop the hundreds: 575."
+              "value": 267,
+              "feedback": "Check each spot: hundreds 100+100=200, tens 40+30=70, ones 5+2=7. Combine: 277."
             }
           ],
-          "fallbackFeedback": "575."
+          "fallbackFeedback": "200 + 70 + 7 = 277."
         }
       }
     },
@@ -322,7 +310,7 @@
       "concept": {
         "id": "rem-pat-c",
         "kind": "concept",
-        "body": "When a spot's total is 10 or more, trade 10 of that spot for 1 of the next spot over before combining. Ones 7+6=13: trade 10 for 1 ten, keep 3 ones."
+        "body": "When a spot's total is 10 or more, trade 10 of that spot for 1 of the next spot over — add up each spot's full value, folding in anything traded, then combine everything with one final addition."
       },
       "check": {
         "id": "rem-pat-k",
@@ -330,25 +318,25 @@
         "body": "",
         "conceptTag": "pv1000-add-trade",
         "explanationVariants": [
-          "Ones 7+6=13, trade 10 for 1 ten. Combine: 433.",
+          "Ones: 6+7=13, trade 10 for 1 ten. Tens: 20+30+10(traded)=60. Combine: 363.",
           "Trade 10 ones for 1 ten when the ones spot overflows."
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "247 + 186 = ?",
-          "answer": 433,
+          "prompt": "A store sold 126 mugs in week one and 237 mugs in week two. How many mugs in total?",
+          "answer": 363,
           "tolerance": 0,
           "commonErrors": [
             {
-              "value": 3213,
-              "feedback": "Trade the extra ten: 433."
+              "value": 63,
+              "feedback": "That drops the hundreds. Combine all three spots: 300+60+3=363."
             },
             {
-              "value": 423,
-              "feedback": "Don't forget the traded ten: 433."
+              "value": 353,
+              "feedback": "Don't forget the traded ten from the ones! Tens becomes 20+30+10=60. Combine: 300+60+3=363."
             }
           ],
-          "fallbackFeedback": "433."
+          "fallbackFeedback": "Ones: 6+7=13, trade 10 for 1 ten. Tens: 20+30+10(traded)=60. Combine: 300+60+3=363."
         }
       }
     }

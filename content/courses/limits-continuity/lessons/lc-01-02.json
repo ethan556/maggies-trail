@@ -140,37 +140,25 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Filled dot elsewhere.",
+      "body": "Magnify the approach and separate it from the filled dot.",
       "conceptTag": "lc-read-limit",
       "explanationVariants": [
-        "If the curve approaches 4 but a filled dot sits at (2, 1), the limit is still 4 — the limit follows the curve's approach, not the stray dot.",
-        "The dot gives f(2) = 1, but the limit reads the approach: 4."
+        "As the graph is magnified, both sides settle at 4 even though the filled dot gives f(2) = 1.",
+        "The zoom separates two ideas: the limit is the approached height 4; the function value at x = 2 is 1."
       ],
       "widget": {
-        "type": "mcq",
-        "prompt": "The curve approaches y = 4 at x = 2, but a filled dot marks (2, 1). Then lim(x→2) f(x) equals:",
-        "options": [
-          {
-            "id": "o1",
-            "label": "4",
-            "correct": true,
-            "feedback": "Right — the limit follows the curve's approach, not the isolated dot at 1."
-          },
-          {
-            "id": "o2",
-            "label": "1",
-            "feedback": "1 is f(2) (the dot). The limit is the approach, which is 4."
-          },
-          {
-            "id": "o3",
-            "label": "both 1 and 4",
-            "feedback": "A limit is a single value: the approach, 4. The dot is just f(2)."
-          }
-        ]
-      },
-      "variant": {
-        "gen": "g12-limits-continuity",
-        "form": "limits-continuity__lc-read-limit__mcq"
+        "type": "graphZoom",
+        "behaviour": "removable",
+        "a": 2,
+        "leftValue": 4,
+        "rightValue": 4,
+        "fAtA": 1,
+        "targetVerdict": "limit-exists",
+        "requiredZoom": 3,
+        "prompt": "Magnify near x = 2. Do the approaching curve values agree, even though the filled dot is at (2, 1)?",
+        "successFeedback": "Both sides settle at 4, so the limit exists and equals 4. The separate filled dot records f(2) = 1; it does not move the limit.",
+        "moreZoomFeedback": "Magnify further until the left and right traces reveal the same approached height.",
+        "wrongVerdictFeedback": "The two sides agree at 4. The filled dot changes f(2), not the limit, so choose that the limit exists."
       }
     },
     {

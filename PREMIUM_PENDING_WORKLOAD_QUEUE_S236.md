@@ -1,24 +1,22 @@
-# Consolidated pending workload — S236
+# Maggie's Trail V4 consolidated pending workload — live derived view
 
-Generated from current source on 2026-08-15.
+Generated from current source on 2026-08-21.
+Curriculum source seal: `f9c777b984783b9854024b1f1d53d3864d1e2972aada692a472d8d495747b142`.
 
-- Total open rows: **11,287**
-- P0 rows: **977**
-- P1 rows: **10,307**
-- P2 rows: **3**
+- Total open rows: **114**
+- P0 rows: **16**
+- P1 rows: **98**
+- P2 rows: **0**
 
 ## Workstreams
 
 | Workstream | Open rows |
 |---|---:|
-| MATH_TYPESETTING | 9,579 |
-| ILLUSTRATION_REPLACEMENT | 1,078 |
-| MCQ_DISTRACTOR_REVIEW | 572 |
-| CLOSURE_LEDGER | 27 |
-| ENGINE_REVERSIBLE_PLAY | 17 |
-| PREMIUM_REBUILD_WAVE | 8 |
-| INTERACTION_NECESSITY_REVIEW | 3 |
-| ENGINE_DISPOSITION_REVIEW | 3 |
+| LESSON_PROGRESSION_AND_DUPLICATION | 82 |
+| CLOSURE_LEDGER | 22 |
+| V4_PROGRAMME_PHASE | 7 |
+| STANDARDS_VERIFICATION | 2 |
+| QUESTION_DIVERSITY_AND_TRANSFER | 1 |
 
 ## Queue contract
 

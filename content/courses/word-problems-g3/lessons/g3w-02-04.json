@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-estimate",
       "body": "Estimating first gives you a neighbourhood for the answer. Round each number to something friendly, run the same two steps, and you know where you should land.",
       "narration": "Estimating first gives you a neighbourhood for the answer. Round each number to something friendly, run the same two steps, and you know where you should land."
     },
@@ -21,21 +21,41 @@
       "conceptTag": "g3w-estimate-first",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "7 crates hold about 48 apples each, then 96 apples are eaten. Slide to estimate what is left.",
-        "min": 20,
-        "max": 3000,
-        "start": 20,
-        "target": 240,
-        "acceptFactor": 2,
+        "prompt": "Estimate 7 × 48 − 96 by using 50 and 100. Select the rounded result.",
+        "min": 150,
+        "max": 350,
+        "start": 150,
+        "target": 250,
+        "acceptFactor": 1.1,
         "unitLabel": "apples",
         "ticks": [
-          20,
-          1510,
-          3000
+          150,
+          250,
+          350
         ],
-        "lowFeedback": "Too low — seven crates of about fifty is around 350 before anything is eaten.",
-        "highFeedback": "Too high — 96 apples come out of roughly 350, so the answer sits in the low hundreds.",
-        "successFeedback": "About 240 — around 350 built, then about 100 eaten."
+        "choices": [
+          {
+            "value": 150,
+            "label": "About 150 apples",
+            "correct": false,
+            "feedback": "That removes too much: seven groups of about 50 make 350 before about 100 are removed."
+          },
+          {
+            "value": 250,
+            "label": "About 250 apples",
+            "correct": true,
+            "feedback": "Correct — 7 × 50 − 100 = 250."
+          },
+          {
+            "value": 350,
+            "label": "About 350 apples",
+            "correct": false,
+            "feedback": "That stops after the product and omits the subtraction of about 100."
+          }
+        ],
+        "lowFeedback": "Keep both steps: first build about 350, then remove about 100.",
+        "highFeedback": "The estimate must be below the starting product of about 350.",
+        "successFeedback": "About 250 apples — the useful rounded estimate, distinct from the exact answer 240."
       },
       "predict": {
         "prompt": "Estimating 7 × 48 − 96, which rounding helps most?",
@@ -56,12 +76,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "diagram",
@@ -123,12 +143,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "symbolic",
@@ -145,7 +165,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "mmt-estimate-catch",
       "body": "The estimate is not the answer — it is the guard. Anything far outside the neighbourhood is a mistake worth catching before you trust it.",
       "narration": "The estimate is not the answer — it is the guard. Anything far outside the neighbourhood is a mistake worth catching before you trust it."
     },
@@ -156,32 +176,52 @@
       "conceptTag": "g3w-estimate-first",
       "widget": {
         "type": "estimateSlider",
-        "prompt": "7 crates hold about 48 apples each, then 96 apples are eaten. Slide to estimate what is left.",
-        "min": 20,
-        "max": 3000,
-        "start": 20,
-        "target": 240,
-        "acceptFactor": 2,
-        "unitLabel": "apples",
+        "prompt": "Try a second rounded chain: use 40 and 40 for 6 × 39 − 42. Choose its estimate.",
+        "min": 120,
+        "max": 280,
+        "start": 160,
+        "target": 200,
+        "acceptFactor": 1.1,
+        "unitLabel": "items",
         "ticks": [
-          20,
-          1510,
-          3000
+          120,
+          200,
+          280
         ],
-        "lowFeedback": "Too low — seven crates of about fifty is around 350 before anything is eaten.",
-        "highFeedback": "Too high — 96 apples come out of roughly 350, so the answer sits in the low hundreds.",
-        "successFeedback": "About 240 — around 350 built, then about 100 eaten."
+        "choices": [
+          {
+            "value": 160,
+            "label": "About 160",
+            "correct": false,
+            "feedback": "That removes two groups of forty; the story removes only one 40 after building 240."
+          },
+          {
+            "value": 200,
+            "label": "About 200",
+            "correct": true,
+            "feedback": "Correct — 6 × 40 − 40 = 200."
+          },
+          {
+            "value": 240,
+            "label": "About 240",
+            "correct": false,
+            "feedback": "That stops after multiplication and omits the subtraction."
+          }
+        ],
+        "lowFeedback": "Build about 240, then remove about 40.",
+        "highFeedback": "The subtraction must make the result less than about 240.",
+        "successFeedback": "About 200 — the rounded two-step estimate."
       },
       "cml": {
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "symbolic",
@@ -206,22 +246,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "After the extra one arrived there are 3 shelves, each holding 6 books. So 3 × 6 = ?",
-        "answer": 18,
+        "prompt": "For the rounded chain, calculate the first step: 5 × 60 = ?",
+        "answer": 300,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 9,
-            "feedback": "That added the two numbers; 3 groups OF 6 calls for multiplication."
+            "value": 30,
+            "feedback": "30 is 5 × 6 with the zero dropped. 60 is six TENS, not six ones — keep the tens in your product."
           },
           {
-            "value": 12,
-            "feedback": "That is one group short — the arriving shelve is already counted in the 3."
+            "value": 65,
+            "feedback": "65 is 5 + 60. The rounded chain needs 5 equal groups of 60, so multiply them."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 18."
+        "fallbackFeedback": "Use the fact 5 × 6, then remember 60 is six tens, so the product is in tens too.",
+        "successFeedback": "Correct — 300."
       },
       "hints": [
         "Round each number.",
@@ -232,12 +272,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "symbolic",
@@ -266,31 +306,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Before computing 7 × 48 − 96, what is the most useful estimate?",
+        "prompt": "Which is the most useful estimate for 8 × 31 + 19?",
         "options": [
           {
             "id": "o0",
-            "label": "About 7 × 50 − 100 = 250",
+            "label": "8 × 30 + 20 = 260",
             "correct": true,
-            "feedback": "Correct — round each number to a friendly one and the answer's neighbourhood appears before any exact work."
+            "feedback": "Correct — friendly nearby numbers preserve both operations."
           },
           {
             "id": "o1",
-            "label": "About 7 × 48 = 336, so about 336",
+            "label": "8 × 30 = 240",
             "correct": false,
-            "feedback": "That estimates only the first step; the subtraction still has to shrink the total."
+            "feedback": "That estimates only the product and drops the addition."
           },
           {
             "id": "o2",
-            "label": "About 7 + 48 − 96, so below zero",
+            "label": "8 + 30 + 20 = 58",
             "correct": false,
-            "feedback": "Estimating must keep the story's operations — 7 groups of 48 is a product, not a sum."
+            "feedback": "The equal groups still require multiplication."
           },
           {
             "id": "o3",
-            "label": "You cannot estimate a two-step problem",
+            "label": "8 × 40 + 20 = 340",
             "correct": false,
-            "feedback": "You can: estimate each step in turn, and the rounded chain lands near the exact answer."
+            "feedback": "Forty is not the nearest friendly ten to 31; it makes an unnecessarily loose estimate."
           }
         ]
       },
@@ -303,12 +343,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "symbolic",
@@ -333,22 +373,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "133 + 390 = ?",
-        "answer": 523,
+        "prompt": "The exact product is 336. A clerk removes 100 apples, then returns 4. How many apples remain?",
+        "answer": 240,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 257,
-            "feedback": "That found the difference; putting the two amounts together calls for addition."
+            "value": 232,
+            "feedback": "This subtracts the 4 returned apples as well. Returned apples go back on the pile, so the last step adds 4."
           },
           {
-            "value": 423,
-            "feedback": "A hundred went missing in the carry — check the tens column."
+            "value": 236,
+            "feedback": "236 is only 336 − 100 — the clerk then returns 4 apples. One more change remains."
           }
         ],
-        "fallbackFeedback": "Name the hidden question first, answer it, and only then take the second step.",
-        "successFeedback": "Correct — 523."
+        "fallbackFeedback": "Start from the exact product 336: removing 100 lowers it, returning 4 raises it.",
+        "successFeedback": "Correct — 240."
       },
       "hints": [
         "Round each number.",
@@ -359,12 +399,12 @@
         "stage": "construct",
         "flagship": false,
         "kernel": "quantity-composition",
-        "actionGoal": "Separate the hidden question from the final one, then take each step in order for g3w estimate first.",
+        "actionGoal": "Round to friendly numbers, keep both operations, and calculate a useful estimate.",
         "invariants": [
-          "A two-step problem hides one question inside another: the first step produces a quantity the story never states, and the second step consumes it, which is what makes g3w estimate first a two-step problem rather than two separate ones."
+          "A useful estimate preserves the operation order while replacing values with nearby friendly numbers."
         ],
         "misconceptions": [
-          "Answering the hidden question and stopping, applying the second step to each group instead of the whole, or using a number the question never needed."
+          "Estimating only the first step or changing multiplication into addition."
         ],
         "representations": [
           "symbolic",
@@ -379,7 +419,8 @@
       },
       "variant": {
         "gen": "g2-add-subtract-100",
-        "form": "Add2DigitNumeric"
+        "form": "TwoStepTradeNumeric",
+        "seed": "g3w-02-04|ch1|s257"
       }
     },
     {
@@ -400,8 +441,9 @@
       "concept": {
         "id": "rem-g3w-estimate-first-c",
         "kind": "concept",
-        "body": "The estimate is not the answer — it is the guard. Anything far outside the neighbourhood is a mistake worth catching before you trust it.",
-        "narration": "The estimate is not the answer — it is the guard. Anything far outside the neighbourhood is a mistake worth catching before you trust it."
+        "body": "A useful estimate stays near the exact answer without pretending to be exact. Round friendly numbers, then keep the same operation order.",
+        "narration": "A useful estimate stays near the exact answer without pretending to be exact. Round friendly numbers, then keep the same operation order.",
+        "figure": "mmt-estimate"
       },
       "check": {
         "id": "rem-g3w-estimate-first-k",
@@ -414,31 +456,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Before computing 7 × 48 − 96, what is the most useful estimate?",
+          "prompt": "Which is a useful estimate for 4 × 62 + 18?",
           "options": [
             {
               "id": "o0",
-              "label": "About 7 × 50 − 100 = 250",
+              "label": "4 × 60 + 20 = 260",
               "correct": true,
-              "feedback": "Correct — round each number to a friendly one and the answer's neighbourhood appears before any exact work."
+              "feedback": "Correct — nearby friendly values preserve both steps."
             },
             {
               "id": "o1",
-              "label": "About 7 × 48 = 336, so about 336",
+              "label": "4 × 60 = 240",
               "correct": false,
-              "feedback": "That estimates only the first step; the subtraction still has to shrink the total."
+              "feedback": "That stops after the product and omits the final addition."
             },
             {
               "id": "o2",
-              "label": "About 7 + 48 − 96, so below zero",
+              "label": "4 + 60 + 20 = 84",
               "correct": false,
-              "feedback": "Estimating must keep the story's operations — 7 groups of 48 is a product, not a sum."
+              "feedback": "The equal groups still multiply."
             },
             {
               "id": "o3",
-              "label": "You cannot estimate a two-step problem",
+              "label": "4 × 70 + 20 = 300",
               "correct": false,
-              "feedback": "You can: estimate each step in turn, and the rounded chain lands near the exact answer."
+              "feedback": "Seventy is not the nearest ten to 62."
             }
           ]
         }

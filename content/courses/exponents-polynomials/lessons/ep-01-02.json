@@ -160,29 +160,34 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "Your turn.",
+   "body": "Two variables this time — mind which one's asked.",
    "conceptTag": "exponent-power",
    "explanationVariants": [
-    "(x^2)^5 = x^(2·5) = x^10.",
-    "Multiply the exponents: 2 · 5 = 10, so x^10."
+    "(x^4 y^2)^3 = x^(4·3) y^(2·3) = x^12 y^6 — the exponent on y is 2·3 = 6.",
+    "Multiply EACH inner exponent by the outer power: y^2 raised to the 3rd gives y^6."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Simplify (x^2)^5 to x^?. What is the exponent?",
-    "answer": 10,
+    "prompt": "Simplify (x^4 y^2)^3 to x^a y^b. What is the exponent on y?",
+    "answer": 6,
     "tolerance": 0,
     "commonErrors": [
      {
-      "value": 7,
-      "feedback": "The exponents multiply, not add: 2 · 5 = 10."
+      "value": 12,
+      "feedback": "12 is the exponent on x (4·3 = 12) — the question asks for y: 2·3 = 6."
      },
      {
-      "value": 25,
-      "feedback": "That's 5^2. Multiply the two exponents: 2 · 5 = 10."
+      "value": 5,
+      "feedback": "The exponents multiply, not add: 2 · 3 = 6."
      }
     ],
-    "fallbackFeedback": "Multiply the exponents: 2 · 5 = 10, so x^10."
+    "fallbackFeedback": "(x^4 y^2)^3 = x^12 y^6 — the exponent on y is 2·3 = 6."
    },
+   "hints": [
+    "Multiply EACH inner exponent by the outer power.",
+    "y^2 raised to the 3rd: 2 · 3 = 6.",
+    "The exponent on y is 6 (x's is 12, but that's not what's asked)."
+   ],
    "variant": {
     "gen": "a1-polynomials",
     "form": "exponent-power__numeric"
@@ -227,33 +232,33 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Evaluate a stacked power.",
+   "body": "Both rules from this lesson, together.",
    "conceptTag": "exponent-power",
    "explanationVariants": [
-    "(2^2)^3 = 2^(2·3) = 2^6 = 64.",
-    "Multiply the exponents to get 2^6, which is 64."
+    "(2^2 · 3)^2: square inside first — 2^2 · 3 = 12 — then square the result: 12^2 = 144.",
+    "Or distribute the outer power: (2^2)^2 · 3^2 = 2^4 · 3^2 = 16 · 9 = 144."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Evaluate (2^2)^3.",
-    "answer": 64,
+    "prompt": "Evaluate (2^2 · 3)^2.",
+    "answer": 144,
     "tolerance": 0,
     "commonErrors": [
      {
-      "value": 32,
-      "feedback": "That's 2^5 — the exponents were added. They multiply: 2^6 = 64."
+      "value": 48,
+      "feedback": "The outer square hits BOTH factors: (2^2)^2 · 3^2 = 16 · 9 = 144, not just the 2^2 part."
      },
      {
-      "value": 256,
-      "feedback": "That's 2^8, reading it as 2 to the (2 to the 3). It's (2^2)^3 = 2^6 = 64."
+      "value": 36,
+      "feedback": "That's 2^2 · 3^2 = 36 — but there's still an OUTER square to apply: (2^2)^2 · 3^2 = 16 · 9 = 144."
      }
     ],
-    "fallbackFeedback": "(2^2)^3 = 2^6 = 64."
+    "fallbackFeedback": "(2^2 · 3)^2 = (2^2)^2 · 3^2 = 16 · 9 = 144."
    },
    "hints": [
-    "A power of a power multiplies the exponents.",
-    "2 · 3 = 6, giving 2^6.",
-    "2^6 = 64."
+    "Simplify inside the parentheses first: 2^2 · 3 = 12.",
+    "Now square that result: 12^2.",
+    "12^2 = 144."
    ],
    "variant": {
     "gen": "a1-polynomials",
@@ -286,25 +291,25 @@
     "body": "",
     "conceptTag": "exponent-power",
     "explanationVariants": [
-     "(2^4)^2 = 2^(4·2) = 2^8.",
-     "Multiply the exponents: 4 · 2 = 8, so 2^8."
+     "(3^2)^3 = 3^(2·3) = 3^6.",
+     "Multiply the exponents: 2 · 3 = 6, so 3^6."
     ],
     "widget": {
      "type": "numeric",
-     "prompt": "Simplify (2^4)^2 to 2^?. What is the exponent?",
-     "answer": 8,
+     "prompt": "Simplify (3^2)^3 to 3^?. What is the exponent?",
+     "answer": 6,
      "tolerance": 0,
      "commonErrors": [
       {
-       "value": 6,
-       "feedback": "The exponents multiply, not add: 4 · 2 = 8."
+       "value": 5,
+       "feedback": "The exponents multiply, not add: 2 · 3 = 6."
       },
       {
-       "value": 16,
-       "feedback": "That squared the 4. Multiply the exponents: 4 · 2 = 8."
+       "value": 4,
+       "feedback": "That squared the 2. Multiply the exponents: 2 · 3 = 6."
       }
      ],
-     "fallbackFeedback": "Multiply the exponents: 4 · 2 = 8."
+     "fallbackFeedback": "Multiply the exponents: 2 · 3 = 6."
     }
    }
   }

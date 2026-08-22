@@ -9,7 +9,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "exponent-repeat",
       "body": "The quotient rule explains two new cases. a^n / a^n = a^0, but it's also 1, so **a^0 = 1** for any nonzero base. And when the bottom exponent is larger, you get a **negative** exponent, which the next step unpacks."
     },
     {
@@ -32,25 +31,6 @@
           }
         ],
         "fallbackFeedback": "Any nonzero base to the 0 power is 1: 5^0 = 1."
-      },
-      "predict": {
-        "prompt": "Walk the ladder down — 5³ = 125, 5² = 25, 5¹ = 5, each step dividing by 5. So 5⁰ is…",
-        "options": [
-          {
-            "id": "one",
-            "label": "1 — one more ÷5"
-          },
-          {
-            "id": "zero",
-            "label": "0 — no fives left"
-          },
-          {
-            "id": "five",
-            "label": "5"
-          }
-        ],
-        "outcomeId": "one",
-        "reveal": "The ladder keeps dividing: 125, 25, 5, then 5 ÷ 5 = 1. A zero exponent isn't 'nothing' — it's where the pattern lands, and it's the value that keeps the product and quotient rules honest."
       }
     },
     {
@@ -127,6 +107,25 @@
       "id": "i3",
       "kind": "interactive",
       "body": "Subtract into a negative.",
+      "predict": {
+        "prompt": "Before you chain the exponents, what exponent should remain in 3^4 / 3^6?",
+        "options": [
+          {
+            "id": "negative-two",
+            "label": "-2"
+          },
+          {
+            "id": "positive-two",
+            "label": "2"
+          },
+          {
+            "id": "negative-ten",
+            "label": "-10"
+          }
+        ],
+        "outcomeId": "negative-two",
+        "reveal": "The transformation chain shows 4 - 6 = -2. Two more factors of 3 remain in the denominator than in the numerator, which is exactly what the negative exponent records."
+      },
       "widget": {
         "type": "placeValueTransformLab",
         "task": "exponentChain",
@@ -191,31 +190,31 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Rewrite this one.",
+      "body": "Now with a variable base.",
       "conceptTag": "exponent-zero-negative",
       "explanationVariants": [
-        "3^-2 = 1/3^2 = 1/9.",
-        "Flip to a reciprocal: 1 over 3^2, which is 1/9."
+        "x^-4 = 1/x^4 — the reciprocal rule works the same whether the base is a number or a variable.",
+        "Flip to a reciprocal: 1 over x^4."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What is 3^-2 as a fraction?",
+        "prompt": "What is x^-4 as a fraction?",
         "options": [
           {
             "id": "a",
-            "label": "1/9",
+            "label": "1/x^4",
             "correct": true,
-            "feedback": "Yes — 3^-2 = 1/3^2 = 1/9."
+            "feedback": "Yes — x^-4 = 1/x^4."
           },
           {
             "id": "b",
-            "label": "-9",
-            "feedback": "A negative exponent makes a reciprocal, not a negative: 1/9."
+            "label": "-x^4",
+            "feedback": "A negative exponent makes a reciprocal, not a negative value: x^-4 = 1/x^4."
           },
           {
             "id": "c",
-            "label": "1/6",
-            "feedback": "The 2 is an exponent: 3^2 = 9, so 1/9."
+            "label": "x^4",
+            "feedback": "Dropping the negative isn't enough — it must flip to a reciprocal: x^-4 = 1/x^4."
           }
         ]
       },
@@ -227,33 +226,33 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Product landing on a negative.",
+      "body": "A division landing on a negative.",
       "conceptTag": "exponent-zero-negative",
       "explanationVariants": [
-        "2^3 · 2^-5 = 2^(3 + (−5)) = 2^(−2).",
-        "Add the exponents with signs: 3 + (−5) = −2."
+        "2^-3 / 2^2 = 2^(-3-2) = 2^-5.",
+        "Dividing subtracts the exponents, keeping signs: −3 − 2 = −5."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Simplify 2^3 · 2^-5 to 2^?. What is the exponent?",
-        "answer": -2,
+        "prompt": "Simplify 2^-3 / 2^2 to 2^?. What is the exponent?",
+        "answer": -5,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 2,
-            "feedback": "Keep the sign: 3 + (−5) = −2, not +2."
+            "value": 1,
+            "feedback": "The first exponent is −3, not 3: −3 − 2 = −5, not 3 − 2 = 1."
           },
           {
-            "value": 8,
-            "feedback": "The second exponent is −5, so add its sign: 3 + (−5) = −2."
+            "value": -1,
+            "feedback": "Dividing subtracts, it doesn't add: −3 − 2 = −5, not −3 + 2 = −1."
           }
         ],
-        "fallbackFeedback": "Add with signs: 3 + (−5) = −2, so 2^(−2)."
+        "fallbackFeedback": "Subtract with signs: −3 − 2 = −5, so 2^(−5)."
       },
       "hints": [
-        "Same base, product, so add the exponents.",
-        "The second exponent is −5: 3 + (−5).",
-        "3 − 5 = −2, so 2^(−2)."
+        "Same base, division, so subtract the exponents.",
+        "The first exponent is −3: −3 − 2.",
+        "−3 − 2 = −5, so 2^(−5)."
       ],
       "variant": {
         "gen": "a1-polynomials",

@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "A bar drawing turns a length story into geometry: one bar per quantity, aligned starts, and the picture asks its own question.",
       "narration": "A bar drawing turns a length story into geometry: one bar per quantity, aligned starts, and the picture asks its own question."
     },
@@ -39,7 +38,7 @@
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
         "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "successFeedback": "Correct — after the starts align, trail A reaches farther."
       },
       "predict": {
         "prompt": "In a bar drawing, what does a GAP between bar ends mean?",
@@ -90,31 +89,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A drawing shows two bars: a 40 cm bar, and under it a 25 cm bar plus a mystery piece reaching the same end. What is the mystery piece?",
+        "prompt": "A drawing shows a 60 cm bar. Under it, a 24 cm bar and a 16 cm bar sit end to end, plus a mystery piece reaching the same end. What is the mystery piece?",
         "options": [
           {
             "id": "o0",
-            "label": "The missing length: 40 − 25 = 15 cm",
+            "label": "The missing length: 60 − 24 − 16 = 20 cm",
             "correct": true,
-            "feedback": "Correct — the two lower parts rebuild the 40 cm bar, so the mystery piece fills exactly the 15 cm gap."
+            "feedback": "Correct — the three lower parts must rebuild the 60 cm bar: 24 + 16 = 40, and 20 more fills the gap."
           },
           {
             "id": "o1",
-            "label": "The total: 40 + 25 = 65 cm",
+            "label": "The total: 60 + 24 + 16 = 100 cm",
             "correct": false,
-            "feedback": "The bars END together, so they are equal — nothing in the drawing stacks to 65."
+            "feedback": "The rows END together, so the lower row equals 60 — nothing in the drawing stacks to 100."
           },
           {
             "id": "o2",
-            "label": "Another copy of the 25 cm piece",
+            "label": "40 cm — the two known parts joined",
             "correct": false,
-            "feedback": "Two 25s would overshoot the 40 cm bar by 10 — the drawing's ends would no longer meet."
+            "feedback": "24 + 16 = 40 is the part already drawn; the mystery piece is what is LEFT: 60 − 40 = 20."
           },
           {
             "id": "o3",
             "label": "It cannot be found from a drawing",
             "correct": false,
-            "feedback": "The drawing is exactly what makes it findable — equal ends turn the picture into an equation."
+            "feedback": "Equal ends make it findable — the picture is the equation 24 + 16 + ? = 60."
           }
         ]
       },
@@ -149,36 +148,35 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Equal ends say 'these match'; a gap says 'find me'; stacked bars say 'add us' — the drawing does the translating.",
       "narration": "Equal ends say 'these match'; a gap says 'find me'; stacked bars say 'add us' — the drawing does the translating."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Align a new pair from the same story.",
       "conceptTag": "g2p-draw-model",
       "widget": {
         "type": "lengthCompare",
         "mode": "align",
-        "prompt": "The story's two bars, aligned: which quantity is longer?",
+        "prompt": "Trail B begins farther right, so it may look ahead. Align the starts. Which trail is actually longer?",
         "items": [
           {
             "id": "top",
             "label": "trail A",
-            "length": 8,
-            "startOffset": 2
+            "length": 8
           },
           {
             "id": "bottom",
             "label": "trail B",
-            "length": 5
+            "length": 5,
+            "startOffset": 5
           }
         ],
         "answerId": "top",
         "unalignedFeedback": "Looks can trick you — line the starting ends up first.",
-        "missFeedback": "Now the starts are lined up — check the far ends again: the one reaching farther is longer.",
-        "successFeedback": "Same start makes the compare fair — the bottom ribbon really does reach farther."
+        "missFeedback": "Now the starts are lined up — check the far ends again: trail A reaches farther.",
+        "successFeedback": "Correct — after the starts align, trail A reaches farther."
       },
       "cml": {
         "stage": "construct",
@@ -274,38 +272,38 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A drawing shows two bars: a 40 cm bar, and under it a 25 cm bar plus a mystery piece reaching the same end. What is the mystery piece?",
+        "prompt": "A drawing shows two bars placed end to end: a 26 cm piece, then a 17 cm piece. What is the total length of the two pieces stacked together?",
         "options": [
           {
             "id": "o0",
-            "label": "The missing length: 40 − 25 = 15 cm",
+            "label": "The total: 26 + 17 = 43 cm",
             "correct": true,
-            "feedback": "Correct — the two lower parts rebuild the 40 cm bar, so the mystery piece fills exactly the 15 cm gap."
+            "feedback": "Correct — placing the two pieces end to end joins their lengths, so the total is 43 cm."
           },
           {
             "id": "o1",
-            "label": "The total: 40 + 25 = 65 cm",
+            "label": "The difference: 26 − 17 = 9 cm",
             "correct": false,
-            "feedback": "The bars END together, so they are equal — nothing in the drawing stacks to 65."
+            "feedback": "Subtracting finds a GAP between two ends, not the combined length of two joined pieces."
           },
           {
             "id": "o2",
-            "label": "Another copy of the 25 cm piece",
+            "label": "Only the longer piece: 26 cm",
             "correct": false,
-            "feedback": "Two 25s would overshoot the 40 cm bar by 10 — the drawing's ends would no longer meet."
+            "feedback": "That ignores the second piece entirely — a total must include every piece that was joined."
           },
           {
             "id": "o3",
-            "label": "It cannot be found from a drawing",
+            "label": "Another copy of the 26 cm piece: 52 cm",
             "correct": false,
-            "feedback": "The drawing is exactly what makes it findable — equal ends turn the picture into an equation."
+            "feedback": "The second piece measures 17 cm, not another 26 cm copy — use each piece's own length."
           }
         ]
       },
       "hints": [
-        "Whole minus the known part.",
-        "The parts rebuild the whole.",
-        "Check by re-joining."
+        "Place both known pieces end to end.",
+        "Joining two pieces means adding, not subtracting.",
+        "The total collects every piece that was placed."
       ],
       "cml": {
         "stage": "construct",
@@ -422,31 +420,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "A drawing shows two bars: a 40 cm bar, and under it a 25 cm bar plus a mystery piece reaching the same end. What is the mystery piece?",
+          "prompt": "A drawing shows a 30 cm bar on top. Under it, an 18 cm bar and a mystery piece reach the same end. How long is the mystery piece?",
           "options": [
             {
               "id": "o0",
-              "label": "The missing length: 40 − 25 = 15 cm",
+              "label": "The gap it fills: 30 − 18 = 12 cm",
               "correct": true,
-              "feedback": "Correct — the two lower parts rebuild the 40 cm bar, so the mystery piece fills exactly the 15 cm gap."
+              "feedback": "Correct — the two lower parts rebuild the 30 cm bar, so the mystery piece fills the 12 cm gap."
             },
             {
               "id": "o1",
-              "label": "The total: 40 + 25 = 65 cm",
+              "label": "The sum of the bars: 30 + 18 = 48 cm",
               "correct": false,
-              "feedback": "The bars END together, so they are equal — nothing in the drawing stacks to 65."
+              "feedback": "The bars END together, so they match — nothing in the drawing stacks to 48."
             },
             {
               "id": "o2",
-              "label": "Another copy of the 25 cm piece",
+              "label": "A twin of the 18 cm bar: 18 cm",
               "correct": false,
-              "feedback": "Two 25s would overshoot the 40 cm bar by 10 — the drawing's ends would no longer meet."
+              "feedback": "Two 18s make 36 and overshoot the 30 cm bar by 6 — the ends would no longer meet."
             },
             {
               "id": "o3",
-              "label": "It cannot be found from a drawing",
+              "label": "No drawing can name its length",
               "correct": false,
-              "feedback": "The drawing is exactly what makes it findable — equal ends turn the picture into an equation."
+              "feedback": "The drawing is what makes it findable — equal ends turn the picture into an equation."
             }
           ]
         }

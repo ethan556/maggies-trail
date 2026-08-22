@@ -66,6 +66,24 @@ if (!darkStage.includes("#ffffff") || !darkStage.includes("color: theme(colors.i
   fail.push("M4: the dark-theme lesson stage is no longer the required ink-on-light mathematical canvas");
 }
 
+// M5 — SVG <text> has no mathematical layout engine. A caret expression in
+// it is painted literally, bypassing KaTeX. Mathematical SVG labels must use
+// SvgMathText, which hosts the sanctioned renderer inside a foreignObject.
+for (const file of sourceFiles("src", [".tsx"])) {
+  const source = readFileSync(file, "utf8");
+  for (const match of source.matchAll(/<text\b[^>]*>[\s\S]*?<\/text>/g)) {
+    if (match[0].includes("^")) fail.push(`M5: raw caret mathematics inside SVG <text>: ${file}`);
+  }
+}
+const svgMath = "src/components/math/SvgMathText.tsx";
+if (!existsSync(svgMath)) fail.push("M5: SvgMathText renderer bridge is missing");
+else {
+  const source = readFileSync(svgMath, "utf8");
+  if (!source.includes("foreignObject") || !source.includes("MathInline")) {
+    fail.push("M5: SvgMathText no longer routes SVG mathematics through the shared renderer");
+  }
+}
+
 if (fail.length) {
   console.error(`verify:math-format FAILED:\n${fail.map((f) => `- ${f}`).join("\n")}`);
   process.exit(1);

@@ -16,7 +16,12 @@ source at all — nothing to crop even in principle — but the same non-negotia
 identically: concept-only prose here, zero pixels, `enabled: false`, until FABLE-Q-gated production
 art existed.
 
-**PRODUCTION STATUS — no production art. Concept-only, every entry `enabled: false`.**
+**PRODUCTION STATUS — S244 complete-library release.** S243's four pre-canary renders were rejected
+for inconsistent framing and an incomplete learner choice. S244 produced all 60 independent
+masters, normalized the four 15-item cohorts, and passed an independent whole-library review at
+512, 256 and true 48 px. The exact approved 120 WebP exports are enabled atomically in
+`public/avatars`; sources, revisions, contact sheets and hashes remain under
+`reports/avatar-candidates/`. No board crop ships.
 
 A code-authored set was rendered, exported, enabled and then WITHDRAWN on 2026-08-14 after review
 against the four WS-J concept boards. It was internally consistent — uniform eye line, head scale,
@@ -34,13 +39,12 @@ carries the 60 render-ready prompts, style-locked to those boards, for whichever
 Not one pixel ever came from a board: the four `design-reference/` PNGs remain untouched, uncropped
 and unimported.
 
-Two things this ledger's trait columns describe, and two things they never did: they describe
-**hairstyle, accessories, clothing and expression**. They do not describe skin tone or ethnicity —
-and neither does the art. Every portrait is drawn in **one unified, non-representational figure
-tone**, a warm neutral treated as a stylised sculptural material. That is deliberate and is what
-lets 48 distinct portraits ship encoding no race, ethnicity or gender
-(`OPTIMIZATION_PLAN_V3.md:146,150`). A head covering is a garment and nothing more. No avatar has a
-name.
+The concept traits describe **hairstyle, accessories, clothing and expression**. The V4 production
+pack separately assigns four broad painterly skin-tone directions in equal 3/3/3/3 balance inside
+each age band. Those directions prevent image-model default bias; they are art-production fields,
+not identity labels, and never enter the runtime manifest, learner profile, analytics or accessible
+name. Race, ethnicity, nationality and gender are never inferred. A head covering is a garment and
+nothing more. No avatar has a name.
 
 Every row in the "Concept table" below was produced by directly viewing all four boards in this
 session (not inferred from filenames or prior notes). Concept IDs are assigned `C01`–`C16` = board
@@ -90,20 +94,15 @@ use (`OPTIMIZATION_PLAN_V3.md:150`: "Avatar with braids and green top," never in
 
 `Assigned avatar id` is the deterministic filename id this concept will anchor once re-rendered
 (see `AVATAR_ART_PRODUCTION_SPEC.md` §File-naming convention). `Production status` is
-`concept-only` for all 16 — each was individually re-rendered to the production spec from its
-concept description, never cropped from its source board, and each is now `enabled: true` in
-`src/lib/avatars.ts` with both files on disk. `Regeneration priority` records the P0/P1/P2 scale
-these commissions were *ordered* by (P1 here meant "anchored concept, needs an individual
-re-render"); it is history now, kept so the sequencing rationale stays legible.
+`concept-only` for all 16. Four S243 pre-canary renders exist outside `public/`, but all failed the
+coherent-campaign gate and remain disabled. `Regeneration priority` records the P0/P1/P2 production
+order (P1 means "anchored concept, needs an independent re-render").
 
 ## Findings for FABLE-A and future commissioning sessions
 
-*(Findings 1–4 below record the state at 16 concepts. All four gaps they identify are now closed
-at the concept level by the "Expansion concept tables" section further down — 44 net-new concepts
-bringing every band to 12 and standing up the symbol collection — and closed in art on 2026-08-14,
-when all 60 were rendered, exported and enabled. Each finding below keeps its original text plus a
-short status note; those notes were written at the concept-only stage and are left as-is rather
-than rewritten, since the top-of-file production status supersedes them.)*
+*(Findings 1–4 below record the state at 16 concepts. The 44 net-new rows close those gaps at the
+concept level only. Production art remains pending under `AVATAR_V4_PRODUCTION_RUNBOOK.md`; no band
+is approved or enabled.)*
 
 1. **The `summit` band (grades 9–13 / roughly ages 14–18) has zero anchors.** No board reads
    high-school age; board 1 — the most mature of the four — reads middle-school (~12–14). All
@@ -159,9 +158,8 @@ than rewritten, since the top-of-file production status supersedes them.)*
 ## Expansion concept tables (net-new — no board source)
 
 44 concepts, none anchored to any board, written directly to the trait vocabulary established by
-the 16 above. Every one is now `concept-only` / `enabled: true` in `src/lib/avatars.ts`,
-exactly like the 16 — this section first removed the excuse of "no concept exists yet" for the
-P0/P2 gaps findings 1–4 identified, and the art that followed closed them.
+the 16 above. Every one is `concept-only` / `enabled: false` in `src/lib/avatars.ts`. This section
+closes the concept inventory; it does not claim that reviewed art exists.
 
 **Method.** Two lanes, split by category ownership so neither has to harmonize against the other's
 work or risks colliding on an id:
@@ -216,7 +214,7 @@ traits repeating across different combinations is expected and fine). Glasses la
 
 | Assigned avatar id | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|
-| avatar-205 | Short natural coils cut close with a defined part; confident grin; teal zip-up jacket over a cream tee | concept-only | P2 |
+| avatar-205 | Short natural coils with a subtle side part; quiet closed-mouth half-smile; teal zip-up jacket over a cream tee | reviewed revision; quarantined | P2 |
 | avatar-206 | Two thin braided pigtails past the shoulders with small gold cuffs at the ends; sage-green hoodie under a denim jacket | concept-only | P2 |
 | avatar-207 | Loose corkscrew curls pulled half-up with a small clip; freckles; rust hoodie over a cream long-sleeve top | concept-only | P2 |
 | avatar-208 | Chin-length straight bob with blunt bangs; small silver stud earrings; golden-yellow crewneck over a cream tee | concept-only | P2 |
@@ -257,18 +255,15 @@ Zero board anchors (finding 4) — the entire kind is net-new. All 12 are dimens
 in the boards' own illustration language (see "Shared art language" above: dimensional, not flat
 vector, not photoreal), explicitly not emoji, with no letters or text rendered in any of them, and
 each nameable in one or two words. Grounded in WS-A's actual brand hexes (Deep Navy `#0D1B2A`, Warm
-Ivory `#F7F3EC`, Summit Orange `#F08A24`) and the brand mark's own twin-peaks-and-trail motif
-(`src/components/brand.tsx`) rather than an invented palette. Covers every mark finding 4 named
-(Maggie mark, compass, summit star, owl, fox, constellation, topographic badge) plus five
-trail-coherent additions (cairn, compass-and-pine, mountain goat, acorn-and-oak-leaf, lantern).
+Ivory `#F7F3EC`, Summit Orange `#F08A24`) and the brand mark's twin-peaks-and-trail motif. The final
+set is deliberately maths-forward: early visual counting/shape/steps; Explorer fraction, pattern
+and coordinate marks; Adventurer algebra/data/brand marks; Summit function/proof/infinity marks.
 
 Each symbol's `ageBand` (required by `AvatarDefinition`'s shape even for a bandless-feeling kind —
 see the `AvatarKind` doc comment in `src/lib/avatars.ts`) is assigned individually by
-thematic/tonal fit rather than dumped into one band: three symbols per band, kid-friendly animal
-marks (owl, fox) and the simplest mark (summit star) in `early`; nature/trail marks (cairn,
-compass-and-pine, acorn-and-oak-leaf) in `explorer`; bolder marks (the Maggie medallion, mountain
-goat, lantern) in `adventurer`; the most abstract marks (compass rose, constellation, topographic
-badge) in `summit`. This mirrors how the human portraits scale in maturity by band, without
+thematic/tonal fit rather than dumped into one band: three symbols per band, increasing in
+mathematical abstraction while retaining one premium illustration language. This mirrors how the
+human portraits scale in maturity by band, without
 restricting *who* may pick a given symbol — the plan's "See all avatars" reach
 (`OPTIMIZATION_PLAN_V3.md:148`) makes every symbol selectable by any learner regardless of grade;
 `ageBand` here only governs which collection surfaces it by default.
@@ -276,17 +271,17 @@ restricting *who* may pick a given symbol — the plan's "See all avatars" reach
 | Assigned avatar id | Band | Distinctive non-sensitive traits | Production status | Regeneration priority |
 |---|---|---|---|---|
 | avatar-401 | adventurer | Maggie mark medallion — the twin-peaks-and-trail icon rendered as a dimensional badge, deep navy on warm ivory with a summit-orange star accent | concept-only | P2 |
-| avatar-402 | summit | Compass rose — a dimensional trail compass, navy needle on a warm-ivory face with fine tick marks | concept-only | P2 |
-| avatar-403 | early | Summit star — a single faceted five-point star, dimensional and shaded, summit orange on an ivory disc | concept-only | P2 |
-| avatar-404 | early | Owl — a stylized perched owl, forest-green and cream plumage, calm forward gaze | concept-only | P2 |
-| avatar-405 | early | Fox — a stylized fox portrait, rust-and-cream coloring, alert forward gaze | concept-only | P2 |
-| avatar-406 | summit | Constellation — a small connected star cluster on a deep-navy field, summit-orange linking lines | concept-only | P2 |
-| avatar-407 | summit | Topographic badge — concentric contour-line rings like a map's elevation badge, navy lines on ivory | concept-only | P2 |
-| avatar-408 | explorer | Trail-marker cairn — a stacked stone trail cairn, warm stone tones on an ivory disc | concept-only | P2 |
-| avatar-409 | explorer | Compass-and-pine — a small evergreen sprig beside a trail arrow, sage-green and navy | concept-only | P2 |
-| avatar-410 | adventurer | Mountain goat — a stylized mountain-goat portrait, cream-and-charcoal coloring, sure-footed profile | concept-only | P2 |
-| avatar-411 | explorer | Acorn-and-oak-leaf — a single acorn with an oak leaf, rust-and-forest-green, a small growth/beginnings mark | concept-only | P2 |
-| avatar-412 | adventurer | Lantern — a small trail lantern with a warm glow, navy body with a summit-orange flame glyph | concept-only | P2 |
+| avatar-402 | summit | Function summit — a smooth rising curve cresting into a peak, with one orange point at the crest | concept-only | P2 |
+| avatar-403 | early | First step — one navy boot print with a short dotted orange path continuing ahead | concept-only | P2 |
+| avatar-404 | early | Counting cairn — three balanced trail stones, the top stone orange | concept-only | P2 |
+| avatar-405 | early | Shape sprout — a seedling whose two leaves are a triangle and a circle | concept-only | P2 |
+| avatar-406 | summit | Proof lantern — a navy trail lantern casting a widening cone of orange light | concept-only | P2 |
+| avatar-407 | summit | Infinity trail — one winding path looping into a continuous figure eight | concept-only | P2 |
+| avatar-408 | explorer | Fraction bridge — evenly spaced planks read as equal parts of one span | concept-only | P2 |
+| avatar-409 | explorer | Pattern peak — repeating ridgeline peaks step upward in a steady rhythm | concept-only | P2 |
+| avatar-410 | adventurer | Data ridge — a mountain profile doubles as a rising bar sequence | concept-only | P2 |
+| avatar-411 | explorer | Coordinate compass — crossed axes, an upper-right needle and an orange origin | concept-only | P2 |
+| avatar-412 | adventurer | Algebra knot — two trail ropes form one clean symmetric continuous loop | concept-only | P2 |
 
 ## Non-negotiable reminders for whoever picks this up next
 
@@ -294,13 +289,11 @@ restricting *who* may pick a given symbol — the plan's "See all avatars" reach
   becomes a file under `/public/avatars/`.
 - No concept in this ledger gets a name. Names are not part of the avatar data model
   (`AvatarDefinition` has no name field — see `src/lib/avatars.ts`).
-- No trait description in this document, or in any future expansion of it, should characterize
-  race or ethnicity. Hairstyle, accessories, clothing, and expression are the vocabulary; skin
-  tone and ethnic categorization are not, per `OPTIMIZATION_PLAN_V3.md:140,146,150`.
+- No runtime or accessibility field characterizes race, ethnicity, nationality or gender. Broad
+  skin-tone directions may exist in production-only art briefs to prevent model-default bias;
+  they never become learner identity labels or stereotypes.
 - A 61st avatar joins the same way these 60 did: concept row here → art authored to
   `AVATAR_ART_PRODUCTION_SPEC.md` → 1024x1024 master into `art/avatar-masters/` →
-  `node scripts/build-avatar-assets.mjs` → `defineAvatar(..., true)` in `src/lib/avatars.ts`. It
-  must use the same single unified figure tone as every existing portrait; a portrait that
-  introduced a second tone would start encoding exactly what this library refuses to encode.
-  `avatars.test.ts` fails the moment an entry claims `enabled: true` without both real files, so
-  the flag and the art land in one change or not at all.
+  `npm run build:avatars -- --confirm-reviewed avatar-NNN` → full-library review and atomic release.
+  One avatar never enables by itself: its whole 15-option learner-facing band must pass and land
+  atomically. `scripts/brand/validate-avatar-assets.ts` fails partial releases.

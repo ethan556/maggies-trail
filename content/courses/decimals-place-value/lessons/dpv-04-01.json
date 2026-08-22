@@ -189,29 +189,29 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "Bigger whole part.",
+      "body": "Digits past the tenths don't matter.",
       "conceptTag": "round-to-whole",
       "explanationVariants": [
-        "Tenths digit 5 rounds 12.5 up to 13.",
-        "12.5 is halfway between 12 and 13, and the convention sends it up to 13."
+        "Only the tenths digit (4) decides — it's below 5, so 6.49 rounds down to 6, regardless of the hundredths digit.",
+        "The hundredths digit (9) never enters the decision; tenths alone (4) sends 6.49 down to 6 meters."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Round 12.5 to the nearest whole number.",
-        "answer": 13,
+        "prompt": "A stack of firewood is 6.49 meters tall. Rounded to the nearest whole meter, how tall is the stack?",
+        "answer": 6,
         "tolerance": 0,
-        "unit": "",
+        "unit": "meters",
         "commonErrors": [
           {
-            "value": 12,
-            "feedback": "12 rounds down, but the tenths digit 5 rounds UP by convention: 12.5 → 13."
+            "value": 7,
+            "feedback": "7 comes from double-rounding — treating 6.49 as 6.5 first, then rounding again to 7. Round to the nearest whole in ONE step: the tenths digit is 4 (below 5), so the stack rounds down to 6 meters."
           },
           {
-            "value": 12.5,
-            "feedback": "12.5 is unrounded. To the nearest whole, the 5 rounds it up to 13."
+            "value": 6.5,
+            "feedback": "6.5 rounds to the nearest TENTH of a meter, not the nearest WHOLE meter. Only the tenths digit (4) decides the whole-number rounding: 6.49 rounds down to 6."
           }
         ],
-        "fallbackFeedback": "The tenths digit is 5, so round up: 12.5 → 13."
+        "fallbackFeedback": "The tenths digit is 4 (below 5) — round down to 6 meters. The hundredths digit (9) never changes the decision, no matter how big it looks."
       }
     },
     {

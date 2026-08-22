@@ -15,25 +15,23 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Feet to inches.",
+      "body": "Align feet and inches on two linked number lines.",
       "conceptTag": "unit-conversion",
       "widget": {
-        "type": "numeric",
-        "prompt": "There are 12 inches in 1 foot. How many inches are in 3 feet?",
-        "answer": 36,
-        "tolerance": 0,
-        "unit": "inches",
-        "commonErrors": [
-          {
-            "value": 15,
-            "feedback": "15 ADDS 12 and 3. The conversion is a RATE: 3 feet × 12 inches/foot = 36."
-          },
-          {
-            "value": 4,
-            "feedback": "4 divides 12 ÷ 3 — the wrong direction. Feet to inches multiplies: 3 × 12 = 36."
-          }
-        ],
-        "fallbackFeedback": "3 feet × 12 inches per foot = 36 inches."
+        "type": "doubleNumberLine",
+        "prompt": "Each 1-foot step aligns with 12 inches. Set the inches line at the mark for 3 feet.",
+        "topLabel": "inches",
+        "bottomLabel": "feet",
+        "topPerStep": 12,
+        "bottomPerStep": 1,
+        "steps": 5,
+        "askAtStep": 3,
+        "targetTop": 36,
+        "topMax": 60,
+        "topStep": 1,
+        "successFeedback": "36 inches aligns with 3 feet. The two lines show the fixed 12 : 1 conversion ratio across all three steps.",
+        "lowFeedback": "Too few inches for 3 feet. Count three equal jumps of 12 on the inches line.",
+        "highFeedback": "Too many inches for 3 feet. Each foot contributes exactly 12 inches."
       },
       "hints": [
         "12 inches for every 1 foot.",

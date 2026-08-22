@@ -162,32 +162,28 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "A bigger table step.",
+      "body": "A rate of zero.",
       "conceptTag": "fg-rate-of-change",
       "explanationVariants": [
-        "Output rises 15 as input rises 3, so the rate is 15 ÷ 3 = 5 per step.",
-        "Divide the output change by the input change: 15/3 = 5."
+        "y stays at 7 for every x, so the change in output is 0 — the rate of change is 0.",
+        "A constant output (always 7) means a zero rate of change, even though x changes."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "As x goes from 2 to 5, y goes from 4 to 19. What is the rate of change?",
-        "answer": 5,
+        "prompt": "A table lists (x, y) pairs: (2, 7), (4, 7), (6, 7). What is the rate of change?",
+        "answer": 0,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 15,
-            "feedback": "That's the total output change — divide by the input change of 3: 15÷3=5."
+            "value": 7,
+            "feedback": "That's the output value (7), not the CHANGE in output. Since y stays at 7 the whole time, the change is 0 — so the rate of change is 0."
           },
           {
-            "value": 3,
-            "feedback": "That's the input change, not the rate — divide output-change by input-change: 15÷3=5."
+            "value": 2,
+            "feedback": "That's the change in x, not the rate. The rate is (change in y)÷(change in x) = 0÷2 = 0 — the output never changes."
           }
         ],
-        "fallbackFeedback": "Output changes by 19−4=15 as input changes by 5−2=3, so the rate is 15÷3=5."
-      },
-      "variant": {
-        "gen": "g8-fn-rate-of-change",
-        "form": "fgRateWide"
+        "fallbackFeedback": "Find the change in y first: 7−7=0. A zero change in output gives a rate of change of 0, no matter the input step."
       }
     },
     {

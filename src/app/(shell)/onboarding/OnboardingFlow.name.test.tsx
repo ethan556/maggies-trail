@@ -38,6 +38,10 @@ describe("onboarding name step", () => {
     render(<OnboardingFlow />);
     fireEvent.click(screen.getByRole("button", { name: /keep maggie's trail/i }));
     fireEvent.click(screen.getByRole("button", { name: /grade 3/i }));
+    // S326-R1 reconcile: the avatar release allowlist is now fully open (commit
+    // c5af1f1; see OnboardingFlow.avatar.test.tsx), so the avatar stage renders
+    // between grade and goal — pass through it without picking.
+    fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
     fireEvent.click(screen.getByRole("button", { name: /keep up with school/i }));
 
     const diagnostic = screen.getByRole("link", { name: /take the 12-item diagnostic/i });

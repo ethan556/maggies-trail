@@ -9,8 +9,8 @@
 
 import { useEffect, useState } from "react";
 import { TRAIL, TRAIL_STAGE } from "@/lib/trail";
-import type { TLesson, TStep } from "@/lib/schema";
-import { AppIcon, StepSegments } from "@/components/ui";
+import type { TStep } from "@/lib/schema";
+import { AppIcon, normalizeStepProgress, StepSegments } from "@/components/ui";
 import { canSpeak, cancelSpeech, narrationEnabled, narrationFor, setNarrationEnabled, speak } from "@/lib/speech";
 import { MathProse } from "@/components/math/MathText";
 /* ---------------- Rendering ---------------- */
@@ -94,13 +94,17 @@ export function Rich({ text, early }: { text: string; early?: boolean }) {
 export function TrailDots({
   steps,
   current,
-  remedialIds
+  remedialIds,
+  reviewingIndex,
+  onSelectCompleted
 }: {
   steps: TStep[];
   current: number;
   remedialIds: Set<string>;
+  reviewingIndex?: number | null;
+  onSelectCompleted?: (index: number) => void;
 }) {
-  const total = steps.length;
+  const progress = normalizeStepProgress(steps.length, current);
   // The broken bar over the whole sitting: walked segments LEAF (the trail
   // grammar app-wide), the current step TANGERINE, ahead a hairline; injected
   // remedial steps keep their berry ring + dot-in arrival, and the aria label
@@ -108,11 +112,13 @@ export function TrailDots({
   const injected = new Set(steps.map((s, i) => (remedialIds.has(s.id) ? i : -1)).filter((i) => i >= 0));
   return (
     <StepSegments
-      total={total}
-      current={current}
+      total={progress.total}
+      current={progress.current}
       injected={injected}
-      label={`Step ${current + 1} of ${total}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
-      className="overflow-hidden"
+      label={`Step ${progress.current + 1} of ${progress.total}${onSelectCompleted ? "; completed items can be opened in read-only review" : ""}${remedialIds.size > 0 ? "; the trail grew to add help steps" : ""}`}
+      reviewingIndex={reviewingIndex}
+      onSelectCompleted={onSelectCompleted}
+      className="min-w-0"
     />
   );
 }

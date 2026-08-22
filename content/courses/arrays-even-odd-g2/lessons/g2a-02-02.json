@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "To count an array by rows, take one row's number and add it again for every row: 3 rows of 4 is 4, then 8, then 12.",
       "narration": "To count an array by rows, take one row's number and add it again for every row: 3 rows of 4 is 4, then 8, then 12."
     },
@@ -241,7 +240,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "The running total climbs by the same step each time — that steady step IS the row size.",
       "narration": "The running total climbs by the same step each time — that steady step IS the row size."
     },
@@ -252,7 +250,7 @@
       "conceptTag": "g2a-count-rows",
       "widget": {
         "type": "tapDiagram",
-        "prompt": "Tap every counter in the TOP row.",
+        "prompt": "Tap every counter in the RIGHT column.",
         "mode": "selectAll",
         "canvas": {
           "w": 4,
@@ -266,7 +264,7 @@
             "label": "row 1, column 1",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 1, column 1 is not in the right column. The right column is column 4."
           },
           {
             "id": "r1c2",
@@ -275,7 +273,7 @@
             "label": "row 1, column 2",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 1, column 2 is not in the right column. The right column is column 4."
           },
           {
             "id": "r1c3",
@@ -284,7 +282,7 @@
             "label": "row 1, column 3",
             "icon": "●",
             "count": 1,
-            "correct": true
+            "feedback": "row 1, column 3 is not in the right column. The right column is column 4."
           },
           {
             "id": "r1c4",
@@ -302,7 +300,7 @@
             "label": "row 2, column 1",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 1 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 2, column 1 is not in the right column. The right column is column 4."
           },
           {
             "id": "r2c2",
@@ -311,7 +309,7 @@
             "label": "row 2, column 2",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 2 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 2, column 2 is not in the right column. The right column is column 4."
           },
           {
             "id": "r2c3",
@@ -320,7 +318,7 @@
             "label": "row 2, column 3",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 3 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 2, column 3 is not in the right column. The right column is column 4."
           },
           {
             "id": "r2c4",
@@ -329,7 +327,7 @@
             "label": "row 2, column 4",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 2, column 4 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "correct": true
           },
           {
             "id": "r3c1",
@@ -338,7 +336,7 @@
             "label": "row 3, column 1",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 3, column 1 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 3, column 1 is not in the right column. The right column is column 4."
           },
           {
             "id": "r3c2",
@@ -347,7 +345,7 @@
             "label": "row 3, column 2",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 3, column 2 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 3, column 2 is not in the right column. The right column is column 4."
           },
           {
             "id": "r3c3",
@@ -356,7 +354,7 @@
             "label": "row 3, column 3",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 3, column 3 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "feedback": "row 3, column 3 is not in the right column. The right column is column 4."
           },
           {
             "id": "r3c4",
@@ -365,11 +363,11 @@
             "label": "row 3, column 4",
             "icon": "●",
             "count": 1,
-            "feedback": "Row 3, column 4 sits below the top — the top row is row 1, and this column’s top counter is the one to tap."
+            "correct": true
           }
         ],
-        "missFeedback": "Rows run across and columns run up and down — find the crossing the prompt names.",
-        "successFeedback": "Exactly right — that is the spot where the named row and column meet."
+        "missFeedback": "The right column is column 4. Tap its counter in every row.",
+        "successFeedback": "Exactly right — the right column has one counter in every row."
       },
       "cml": {
         "stage": "construct",
@@ -405,22 +403,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Two rows made 12. Add the third row: 12 + 6 = ?",
-        "answer": 18,
+        "prompt": "Two rows made 16. Add the third row: 16 + 8 = ?",
+        "answer": 24,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 24,
+            "value": 32,
             "feedback": "That added a fourth row — the array stops at three."
           },
           {
-            "value": 6,
+            "value": 8,
             "feedback": "That took a row away; the third row joins the total."
           }
         ],
         "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
-        "successFeedback": "Correct — 18."
+        "successFeedback": "Correct — 24."
       },
       "hints": [
         "Count one row's dots first.",
@@ -465,31 +463,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "An array has 4 rows with 5 dots in each row. Which repeated sum counts it BY ROWS?",
+        "prompt": "An array has 3 rows with 7 dots in each row. Which repeated sum counts it BY ROWS?",
         "options": [
           {
             "id": "o0",
-            "label": "5 + 5 + 5 + 5",
+            "label": "7 + 7 + 7",
             "correct": true,
-            "feedback": "Correct — one 5 for each of the 4 rows, added again and again."
+            "feedback": "Correct — one 7 for each of the 3 rows, added again and again."
           },
           {
             "id": "o1",
-            "label": "4 + 4 + 4 + 4 + 4",
+            "label": "3 + 3 + 3 + 3 + 3 + 3 + 3",
             "correct": false,
-            "feedback": "That counts BY COLUMNS (5 columns of 4) — same total, different story than \"by rows\"."
+            "feedback": "That counts BY COLUMNS (7 columns of 3) — same total, different story than \"by rows\"."
           },
           {
             "id": "o2",
-            "label": "4 + 5",
+            "label": "3 + 7",
             "correct": false,
             "feedback": "Adding the row count to the row size mixes two different kinds of numbers."
           },
           {
             "id": "o3",
-            "label": "6 + 6 + 6 + 6",
+            "label": "8 + 8 + 8",
             "correct": false,
-            "feedback": "Each row holds 5, not 6 — the repeated number must match the row size."
+            "feedback": "Each row holds 7, not 8 — the repeated number must match the row size."
           }
         ]
       },
@@ -527,27 +525,27 @@
       "body": "One more, for the road.",
       "conceptTag": "g2a-count-rows",
       "explanationVariants": [
-        "Stage the sum, keep the trail.",
-        "The last step lands the total."
+        "A fresh array, the same rule.",
+        "Add one row's worth, four times."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Two rows made 12. Add the third row: 12 + 6 = ?",
-        "answer": 18,
+        "prompt": "A new array has 4 rows with 7 dots in each row. Counted by rows (7 + 7 + 7 + 7), what is the total?",
+        "answer": 28,
         "tolerance": 0,
         "unit": "",
         "commonErrors": [
           {
-            "value": 24,
-            "feedback": "That added a fourth row — the array stops at three."
+            "value": 21,
+            "feedback": "That is only 3 rows' worth of dots; this array has 4 rows in all."
           },
           {
-            "value": 6,
-            "feedback": "That took a row away; the third row joins the total."
+            "value": 35,
+            "feedback": "That adds a fifth row's worth of dots; the array stops at four rows."
           }
         ],
         "fallbackFeedback": "Pair things up or count row by row — the structure of the array does the arithmetic for you.",
-        "successFeedback": "Correct — 18."
+        "successFeedback": "Correct — 28."
       },
       "hints": [
         "Count one row's dots first.",
@@ -575,10 +573,6 @@
         "transferFamily": "arrays-even-odd-g2:g2a-count-rows",
         "delayed": true,
         "counterfactualPrompt": "What single change to the arrangement would change what the number IS, not just how it looks?"
-      },
-      "variant": {
-        "gen": "g2-add-subtract-100",
-        "form": "Add2DigitNumeric"
       }
     },
     {

@@ -11,42 +11,52 @@ import { AVATAR_PLACEHOLDER_SRC } from "@/lib/avatars";
 
 afterEach(cleanup);
 
-describe("AvatarDisplay — real (unmodified) manifest, everything disabled today", () => {
+describe("AvatarDisplay — reviewed production manifest", () => {
   it("falls back to the placeholder when no avatarId is given", () => {
-    render(<AvatarDisplay alt="current avatar" />);
+    render(<AvatarDisplay placement="profile" alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
   it("falls back to the placeholder for an unknown id", () => {
-    render(<AvatarDisplay avatarId="avatar-does-not-exist" alt="current avatar" />);
+    render(<AvatarDisplay placement="profile" avatarId="avatar-does-not-exist" alt="current avatar" />);
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
   });
 
-  it("falls back to the placeholder for a real but disabled manifest id", () => {
-    // avatar-001 exists in the real manifest but, like every entry today, enabled: false.
-    render(<AvatarDisplay avatarId="avatar-001" alt="current avatar" />);
-    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe(AVATAR_PLACEHOLDER_SRC);
+  it("renders a reviewed manifest id", () => {
+    render(<AvatarDisplay placement="profile" avatarId="avatar-001" alt="current avatar" />);
+    expect(screen.getByAltText("current avatar").getAttribute("src")).toBe("/avatars/avatar-001-256.webp");
   });
 
   it("is decorative (empty alt) by default", () => {
-    const { container } = render(<AvatarDisplay avatarId="avatar-001" />);
+    const { container } = render(<AvatarDisplay placement="profile" avatarId="avatar-001" />);
     expect(container.querySelector("img")?.getAttribute("alt")).toBe("");
   });
 
   it("renders fixed width/height by default and switches to fill mode on request", () => {
-    const { container, rerender } = render(<AvatarDisplay size={512} />);
+    const { container, rerender } = render(<AvatarDisplay placement="profile" size={512} />);
     const fixed = container.querySelector("img")!;
-    expect(fixed.getAttribute("width")).toBe("512");
-    expect(fixed.getAttribute("height")).toBe("512");
+    expect(fixed.getAttribute("width")).toBe("80");
+    expect(fixed.getAttribute("height")).toBe("80");
 
     rerender(
       <div style={{ position: "relative", width: 100, height: 100 }}>
-        <AvatarDisplay fill />
+        <AvatarDisplay placement="picker" fill />
       </div>
     );
     const filled = container.querySelector("img")!;
     // next/image fill mode drops explicit width/height in favor of inset positioning.
     expect(filled.getAttribute("width")).toBeNull();
+  });
+
+  it("clamps fixed images to the placement's visual-space budget", () => {
+    const { container } = render(
+      <AvatarDisplay placement="navigation" displaySize={200} avatarId="avatar-001" />
+    );
+    const image = container.querySelector("img")!;
+    expect(image.getAttribute("width")).toBe("24");
+    expect(image.getAttribute("height")).toBe("24");
+    expect(image.getAttribute("data-avatar-placement")).toBe("navigation");
+    expect(image.getAttribute("data-avatar-max-px")).toBe("24");
   });
 });
 
@@ -72,7 +82,33 @@ describe("AvatarDisplay — with an enabled avatar (mocked ahead of real product
 
   it("resolves the real src for a mocked-enabled id", async () => {
     const { AvatarDisplay: MockedAvatarDisplay } = await import("./AvatarDisplay");
-    render(<MockedAvatarDisplay avatarId="avatar-101" size={256} alt="current avatar" />);
+    render(
+      <MockedAvatarDisplay
+        placement="summary"
+        avatarId="avatar-101"
+        size={256}
+        alt="current avatar"
+      />
+    );
     expect(screen.getByAltText("current avatar").getAttribute("src")).toBe("/avatars/avatar-101-256.webp");
+  });
+
+  it("keeps restrained customization inside the same compact footprint", async () => {
+    const { AvatarDisplay: MockedAvatarDisplay } = await import("./AvatarDisplay");
+    const { container } = render(
+      <MockedAvatarDisplay
+        placement="summary"
+        displaySize={48}
+        avatarId="avatar-101"
+        customization={{ glasses: "round", accent: "teal", badge: "pi" }}
+      />
+    );
+    const wrapper = container.querySelector('[data-avatar-customized="true"]') as HTMLElement;
+    expect(wrapper).toBeTruthy();
+    expect(wrapper.style.width).toBe("48px");
+    expect(wrapper.style.height).toBe("48px");
+    expect(wrapper.querySelector("svg")).toBeTruthy();
+    expect(wrapper.textContent).toContain("π");
+    expect(wrapper.querySelector("img")?.getAttribute("width")).toBe("48");
   });
 });

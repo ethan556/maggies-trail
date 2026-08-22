@@ -17,58 +17,76 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Order the two jumps.",
+   "body": "Make the ten-more jump first.",
    "conceptTag": "mix-jumps",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "From 34: do ten more, then one more. Drag the steps in order.",
-    "items": [
+    "type": "numberLineHop",
+    "prompt": "Start at 34. Make the first jump: 10 more.",
+    "min": 30,
+    "max": 50,
+    "start": 34,
+    "hop": 10,
+    "hops": 1,
+    "direction": "forward",
+    "commonLandings": [
      {
-      "id": "j-one",
-      "label": "one more → 45"
+      "value": 35,
+      "feedback": "35 is one more. The first jump is ten more."
      },
      {
-      "id": "j-ten",
-      "label": "ten more → 44"
-     },
-     {
-      "id": "j-start",
-      "label": "start at 34"
+      "value": 43,
+      "feedback": "43 is nine more. A full ten-jump from 34 lands one step farther."
      }
     ],
-    "correctOrder": [
-     "j-start",
-     "j-ten",
-     "j-one"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "j-one",
-      "second": "j-ten",
-      "feedback": "Do ten more FIRST (34 → 44), then one more (44 → 45). Start at 34."
-     }
-    ],
-    "missFeedback": "Start at 34, ten more to 44, one more to 45.",
-    "successFeedback": "34, 44, 45 — both jumps in order!"
+    "missFeedback": "A jump of ten from 34 lands on 44.",
+    "successFeedback": "The first jump lands on 44. Now the one-more jump starts here."
    },
    "predict": {
-    "prompt": "From 34: ten-more then one-more, versus one-more then ten-more. Same landing?",
+    "prompt": "Where will the first, ten-more jump from 34 land?",
     "options": [
      {
-      "id": "yes",
-      "label": "Yes — both paths reach the same number"
+      "id": "forty-four",
+      "label": "44"
      },
      {
-      "id": "no",
-      "label": "No — order changes the landing"
+      "id": "thirty-five",
+      "label": "35"
      },
      {
-      "id": "some",
-      "label": "Only for small numbers"
+      "id": "forty-three",
+      "label": "43"
      }
     ],
-    "outcomeId": "yes",
-    "reveal": "Both paths climb the same total — a ten and a one — so they meet at the same number. The order of the jumps is yours to choose."
+    "outcomeId": "forty-four",
+    "reveal": "The first jump lands on 44. That result becomes the starting number for the next step."
+   }
+  },
+  {
+   "id": "i1b",
+   "kind": "interactive",
+   "body": "Now make the one-more jump.",
+   "conceptTag": "mix-jumps",
+   "widget": {
+    "type": "numberLineHop",
+    "prompt": "Start at 44, the first landing. Make one hop forward.",
+    "min": 42,
+    "max": 47,
+    "start": 44,
+    "hop": 1,
+    "hops": 1,
+    "direction": "forward",
+    "commonLandings": [
+     {
+      "value": 44,
+      "feedback": "That stayed on the first landing. Make the one-more hop."
+     },
+     {
+      "value": 46,
+      "feedback": "That moved two. One more than 44 is one hop away."
+     }
+    ],
+    "missFeedback": "One more than 44 is 45.",
+    "successFeedback": "44 to 45 completes the path: 34 → 44 → 45."
    }
   },
   {
@@ -221,15 +239,15 @@
     "prompt": "A ten jump changes which digit?",
     "options": [
      {
+      "id": "b",
+      "label": "the ones digit",
+      "feedback": "That's the ONE jump. A ten jump changes the tens digit."
+     },
+     {
       "id": "a",
       "label": "the tens digit",
       "correct": true,
       "feedback": "Yes — ten more/less moves the tens; the ones stay."
-     },
-     {
-      "id": "b",
-      "label": "the ones digit",
-      "feedback": "That's the ONE jump. A ten jump changes the tens digit."
      },
      {
       "id": "c",

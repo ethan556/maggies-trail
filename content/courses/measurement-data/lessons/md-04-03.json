@@ -15,48 +15,55 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Build the break-apart plan.",
+      "body": "See both rectangle pieces and combine their areas.",
       "conceptTag": "area-distributive",
       "widget": {
-        "type": "buildExpression",
-        "prompt": "A 6-by-7 rectangle is split into a 6-by-5 and a 6-by-2. Build the sum of their areas.",
-        "tokens": [
+        "type": "compositeAreaLab",
+        "prompt": "The 6-by-7 rectangle is cut into a 6-by-5 piece and a 6-by-2 piece. Use the two shown pieces to choose the whole area.",
+        "scene": "piece-ledger",
+        "pieces": [
           {
-            "id": "t30",
-            "label": "30"
+            "id": "wide",
+            "label": "6 by 5 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 6,
+            "height": 5
           },
           {
-            "id": "tp",
-            "label": "+"
-          },
-          {
-            "id": "t12",
-            "label": "12"
-          },
-          {
-            "id": "tx",
-            "label": "×"
+            "id": "narrow",
+            "label": "6 by 2 piece",
+            "shape": "rectangle",
+            "operation": "add",
+            "width": 6,
+            "height": 2
           }
         ],
-        "correct": [
-          "t30",
-          "tp",
-          "t12"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
+        "target": {
+          "kind": "total"
+        },
+        "choices": [
           {
-            "sequence": [
-              "t30",
-              "tx",
-              "t12"
-            ],
-            "feedback": "The two pieces get ADDED, not multiplied — 6×5 = 30 and 6×2 = 12 are separate carpets you lay side by side: 30 + 12."
+            "id": "sum",
+            "label": "42 square units",
+            "value": 42,
+            "feedback": "Yes. The two visible pieces cover 30 + 12 = 42 square units."
+          },
+          {
+            "id": "first",
+            "label": "30 square units",
+            "value": 30,
+            "feedback": "That counts only the 6-by-5 piece. Add the 6-by-2 piece too."
+          },
+          {
+            "id": "multiply",
+            "label": "360 square units",
+            "value": 360,
+            "feedback": "The piece areas sit side by side, so add 30 and 12. Do not multiply them."
           }
         ],
-        "reusable": false,
-        "missFeedback": "Find each piece's area (6×5 = 30, 6×2 = 12), then ADD them.",
-        "successFeedback": "30 + 12 = 42 square units — and 6 × 7 = 42 too. Breaking apart kept the total."
+        "fallbackFeedback": "Find each shown piece: 6 × 5 = 30 and 6 × 2 = 12. Then add them.",
+        "successFeedback": "The pieces add to 42 square units, exactly the area of 6 × 7. The cut changed the shape of the work, not the total area."
       },
       "predict": {
         "prompt": "Splitting the 7 into 5 and 2 — does 6×5 plus 6×2 still cover the whole 6-by-7 rectangle?",

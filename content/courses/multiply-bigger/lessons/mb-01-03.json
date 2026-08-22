@@ -15,51 +15,46 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Sort the sentences.",
+   "body": "Scale a pile by three and compare it with adding three.",
    "conceptTag": "additive-vs-multiplicative",
    "widget": {
-    "type": "dragBucket",
-    "prompt": "Sort each phrase: does it ADD a fixed amount, or MULTIPLY by copies?",
-    "buckets": [
+    "type": "proportionalReasoningLab",
+    "task": "scaleRatio",
+    "answerMode": "numeric",
+    "prompt": "A starting pile has 4 marbles. Scale it to 3 equal copies.",
+    "xLabel": "equal copies",
+    "yLabel": "marbles",
+    "series": [
      {
-      "id": "add",
-      "label": "Adds (more/fewer)",
-      "icon": "➕"
-     },
-     {
-      "id": "mult",
-      "label": "Multiplies (times)",
-      "icon": "✖️"
+      "id": "trail",
+      "label": "marble piles",
+      "pairs": [
+       [
+        1,
+        4
+       ]
+      ]
      }
     ],
-    "items": [
+    "targetSeriesId": "trail",
+    "targetInput": 3,
+    "answerUnit": "marbles",
+    "tolerance": 0,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "p1",
-      "label": "\"4 more than\"",
-      "bucketId": "add",
-      "feedback": "Tacks 4 on — additive."
+      "value": 7,
+      "feedback": "7 adds 3 to the starting pile. Three times means three complete copies: 4 + 4 + 4."
      },
      {
-      "id": "p2",
-      "label": "\"4 times as many as\"",
-      "bucketId": "mult",
-      "feedback": "Four whole copies — multiplicative."
-     },
-     {
-      "id": "p3",
-      "label": "\"twice as much as\"",
-      "bucketId": "mult",
-      "feedback": "'Twice' is times-language: 2 copies."
-     },
-     {
-      "id": "p4",
-      "label": "\"3 fewer than\"",
-      "bucketId": "add",
-      "feedback": "Takes 3 off — additive (a subtraction of a fixed amount)."
+      "value": 4,
+      "feedback": "4 is only one copy. Move to three equal copies."
      }
     ],
-    "missFeedback": "More/fewer moves by a fixed AMOUNT; times/twice moves by whole COPIES.",
-    "successFeedback": "More and fewer add or subtract a piece; times and twice copy the whole pile."
+    "requiredExplorations": 2,
+    "successFeedback": "Three copies of 4 make 12. Adding 3 would make only 7, so '3 more' and '3 times' are different.",
+    "explorationFeedback": "Inspect both the starting pair and the scaled pair before checking.",
+    "fallbackFeedback": "Use three equal copies of the whole starting pile: 3 × 4."
    },
    "predict": {
     "prompt": "'3 MORE marbles' and '3 TIMES the marbles' — the same amount?",
@@ -223,27 +218,27 @@
    ],
    "widget": {
     "type": "mcq",
-    "prompt": "Story: 'Sara has 3 more books than Ben's 12.' Leo answers 36. What did Leo do?",
+      "prompt": "Sara has 3 more books than Ben, who has 12. Leo answers 36. What mistake did Leo make?",
     "options": [
      {
       "id": "a",
-      "label": "He read '3 more' as '3 times' — the answer is 12 + 3 = 15",
+        "label": "He multiplied by 3.",
       "correct": true,
       "feedback": "36 = 3 × 12 is the copies reading. 'More' tacks on a fixed piece: 15."
      },
      {
       "id": "b",
-      "label": "He's right — 36",
+        "label": "He calculated correctly.",
       "feedback": "36 would need '3 TIMES as many.' This story says 3 MORE — add: 12 + 3 = 15."
      },
      {
       "id": "c",
-      "label": "He subtracted",
+        "label": "He subtracted 3.",
       "feedback": "Subtracting 12 − 3 gives 9, not 36. Leo's 36 is 3 × 12 — the times mix-up."
      },
      {
       "id": "d",
-      "label": "He added wrong",
+        "label": "He added incorrectly.",
       "feedback": "An addition slip near 15 would give 14 or 16 — 36 is far off because he MULTIPLIED. The story wanted 12 + 3."
      }
     ]

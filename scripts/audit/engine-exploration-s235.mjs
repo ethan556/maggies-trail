@@ -4,19 +4,49 @@ import { resolve } from "node:path";
 const root = process.cwd();
 const source = resolve(root, "PREMIUM_ENGINE_PRIORITY.csv");
 const output = resolve(root, "PREMIUM_ENGINE_EXPLORATION_AUDIT_S235.csv");
+const reversiblePlayContractsPath = resolve(root, "scripts/audit/engine-reversible-play-contracts-s248.json");
+const reversiblePlayEvidencePath = resolve(root, "src/components/session248.engineReversiblePlay.test.tsx");
 const lines = readFileSync(source, "utf8").trim().split(/\r?\n/);
 const headers = lines[0].split(",");
 const rows = lines.slice(1).map((line) => Object.fromEntries(line.split(",").map((value, index) => [headers[index], value])));
+const reversiblePlayContracts = JSON.parse(readFileSync(reversiblePlayContractsPath, "utf8"));
+const reversiblePlayByType = new Map(reversiblePlayContracts.map((entry) => [entry.widget_type, entry]));
+const reversiblePlayEvidence = readFileSync(reversiblePlayEvidencePath, "utf8");
+
+if (reversiblePlayContracts.length !== 17 || reversiblePlayByType.size !== 17) {
+  throw new Error(`expected 17 unique reversible-play contracts; found ${reversiblePlayContracts.length}/${reversiblePlayByType.size}`);
+}
+for (const entry of reversiblePlayContracts) {
+  if (!reversiblePlayEvidence.includes(`"${entry.widget_type}"`)) {
+    throw new Error(`reversible-play contract ${entry.widget_type} has no focused component evidence`);
+  }
+}
+
+// These engines were previously held at REVIEW_EXISTING_DISPOSITION even though the
+// mechanical audit already found a shared checkpoint, unlocked post-verdict controls,
+// ungraded rechecks, and multi-state play. S247 adds component regressions that drive each
+// engine correct -> alternate wrong -> correct after reveal, so their exploration disposition
+// is now evidence-backed KEEP rather than an indefinitely open review.
+const explorationRegressionVerified = new Set([
+  "compassConstruct",
+  "matrixTransform",
+  "systemsExplore",
+]);
 
 const audited = rows.map((row) => {
   const manipulation = Number(row.manipulation);
-  const reversibility = manipulation >= 3 ? "STRONG" : manipulation === 2 ? "SUPPORTED" : manipulation === 1 ? "LIMITED" : "ANSWER_ONLY";
-  const domain = row.widget_type === "slider"
+  const verified = reversiblePlayByType.get(row.widget_type);
+  const reversibility = verified?.reversible_manipulation ?? (manipulation >= 3 ? "STRONG" : manipulation === 2 ? "SUPPORTED" : manipulation === 1 ? "LIMITED" : "ANSWER_ONLY");
+  const domain = verified?.authored_domain ?? (row.widget_type === "slider"
     ? "PLACEMENT_RANGE_REVIEW"
     : manipulation >= 2
       ? "MULTI_STATE_DOMAIN"
-      : "LIMITED_STATE_DOMAIN";
-  const decision = manipulation <= 1 || row.decision === "REDESIGN"
+      : "LIMITED_STATE_DOMAIN");
+  const decision = verified
+    ? "KEEP_WITH_EXPLORATION_REGRESSION"
+    : explorationRegressionVerified.has(row.widget_type)
+    ? "KEEP_WITH_EXPLORATION_REGRESSION"
+    : manipulation <= 1 || row.decision === "REDESIGN"
     ? "REMEDIATE_ENGINE_PLAY"
     : row.decision === "KEEP"
       ? "KEEP_WITH_EXPLORATION_REGRESSION"
@@ -34,8 +64,12 @@ const audited = rows.map((row) => {
     reversible_manipulation: reversibility,
     authored_domain: domain,
     exploration_decision: decision,
+    exploration_contract: verified?.contract ?? "LEGACY_SCORE_CLASSIFICATION",
+    evidence_test: verified ? "src/components/session248.engineReversiblePlay.test.tsx" : "",
     next_action: decision === "REMEDIATE_ENGINE_PLAY"
       ? "Add reversible direct manipulation and verify at least one correct, below-target, and above-target or alternate-wrong state without changing grading evidence."
+      : verified
+        ? verified.witness
       : domain === "PLACEMENT_RANGE_REVIEW"
         ? "Verify each authored min/max leaves meaningful states on both sides of the target when the mathematical domain permits."
         : "Retain the shared checkpoint contract and cover representative post-verdict state changes in regression tests.",

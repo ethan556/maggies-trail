@@ -15,56 +15,30 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "More, less, or exactly half?",
+      "body": "Compare a fraction with the halfway mark on the bar.",
       "conceptTag": "benchmark-half",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort each fraction: is it more than 1/2, less than 1/2, or exactly 1/2?",
-        "buckets": [
+        "type": "fractionBar",
+        "prompt": "The starting bar shows 3/5. Move it to exactly 1/2 and notice which amount is larger.",
+        "targetNum": 1,
+        "targetDen": 2,
+        "numMin": 1,
+        "numMax": 12,
+        "denMin": 1,
+        "denMax": 12,
+        "numStart": 3,
+        "denStart": 5,
+        "showTarget": true,
+        "commonFractions": [
           {
-            "id": "more",
-            "label": "More than 1/2",
-            "icon": "⬆️"
-          },
-          {
-            "id": "less",
-            "label": "Less than 1/2",
-            "icon": "⬇️"
-          },
-          {
-            "id": "exact",
-            "label": "Exactly 1/2",
-            "icon": "🎯"
+            "num": 3,
+            "den": 5,
+            "feedback": "Three fifths sits above the halfway reference because 3 is more than half of 5."
           }
         ],
-        "items": [
-          {
-            "id": "f1",
-            "label": "7/10",
-            "bucketId": "more",
-            "feedback": "Half of 10 is 5, and 7 is more than 5 — more than 1/2."
-          },
-          {
-            "id": "f2",
-            "label": "4/10",
-            "bucketId": "less",
-            "feedback": "Half of 10 is 5, and 4 is less than 5 — less than 1/2."
-          },
-          {
-            "id": "f3",
-            "label": "5/10",
-            "bucketId": "exact",
-            "feedback": "Half of 10 is exactly 5 — precisely 1/2."
-          },
-          {
-            "id": "f4",
-            "label": "2/3",
-            "bucketId": "more",
-            "feedback": "Half of 3 is 1.5, and 2 is more than that — more than 1/2."
-          }
-        ],
-        "missFeedback": "Compare the numerator to HALF the denominator — bigger, smaller, or exactly equal.",
-        "successFeedback": "7/10 and 2/3 beat their halfway mark; 4/10 falls short; 5/10 lands exactly on it."
+        "successFeedback": "One half is shorter than the starting 3/5 bar. A numerator greater than half the denominator makes a fraction greater than 1/2.",
+        "lowFeedback": "This is below one half. Match the halfway reference.",
+        "highFeedback": "This is above one half. Match the halfway reference."
       },
       "predict": {
         "prompt": "Without a picture, how can you tell a fraction is MORE than 1/2?",
@@ -208,7 +182,7 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger denominator.",
+      "body": "Use the count model.",
       "conceptTag": "benchmark-half",
       "explanationVariants": [
         "Double the numerator: 11 × 2 = 22. Compare to 20: 22 is more than 20, so 11/20 is more than 1/2.",
@@ -216,7 +190,7 @@
       ],
       "widget": {
         "type": "rationalCompare",
-        "prompt": "Is 11/20 more than, less than, or exactly 1/2?",
+        "prompt": "On a 20-square grid, 11 squares are shaded. Is the shaded part more than, less than, or exactly 1/2?",
         "left": {
           "num": 11,
           "den": 20

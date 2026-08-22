@@ -9,13 +9,16 @@
  */
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { courseIcon } from "@/lib/personalize";
+import { courseSubjectId } from "@/lib/personalize";
 import { authProvider, SESSION_CHANGED_EVENT } from "@/lib/auth";
 import { isPremium } from "@/lib/entitlement";
 import { progressStore } from "@/lib/progress";
-import { AppIcon, LinkButton, ProgressBar, Surface } from "@/components/ui";
+import { LinkButton, ProgressBar, Surface } from "@/components/ui";
+import { CurriculumIcon } from "@/components/CurriculumIcon";
+import { AvatarDisplay } from "@/components/AvatarDisplay";
+import type { AvatarCustomization } from "@/lib/avatars";
 import { useWorld } from "./WorldShell";
-import { MAINTENANCE_COPY, WORLD_STATES } from "./worldCopy";
+import { MAINTENANCE_COPY } from "./worldCopy";
 import { nextWaypoint, waypointHref } from "./worldNav";
 import type { WorldLandmark } from "./worldTypes";
 
@@ -34,6 +37,18 @@ function usePremium(): boolean {
     return () => window.removeEventListener(SESSION_CHANGED_EVENT, readSession);
   }, []);
   return premium;
+}
+
+function useLearnerIdentity(): { avatarId?: string; customization?: AvatarCustomization } {
+  const [identity, setIdentity] = useState<{
+    avatarId?: string;
+    customization?: AvatarCustomization;
+  }>({});
+  useEffect(() => {
+    const profile = progressStore.load();
+    setIdentity({ avatarId: profile.avatarId, customization: profile.avatarCustomization });
+  }, []);
+  return identity;
 }
 
 export interface BasecampWaypoint {
@@ -66,6 +81,7 @@ export function Basecamp({
 }) {
   const { world, hydrated } = useWorld();
   const premium = usePremium();
+  const learnerIdentity = useLearnerIdentity();
   const course = world.courses[courseId];
   const landmarkWaypoints = new Map(landmarks.map((landmark) => [landmark.id, landmark.waypointIds]));
 
@@ -87,10 +103,9 @@ export function Basecamp({
   return (
     <div>
       <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-sky-ink">{category} · Basecamp</p>
+      <p className="mt-2 text-sm font-bold text-content-2">Course overview</p>
       <h1 className="mt-1 flex items-center gap-3 text-3xl font-extrabold tracking-tight">
-        <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-sky/10 text-sky-ink">
-          <AppIcon name={courseIcon(trailName)} size={24} />
-        </span>
+        <CurriculumIcon id={courseSubjectId(trailName)} size={60} priority />
         {trailName}
       </h1>
       <p className="mt-2 max-w-2xl text-content-2">{trailSummary}</p>
@@ -100,7 +115,7 @@ export function Basecamp({
 
       <Surface border className="mt-5 min-h-[104px] rounded-card p-4" elevation="e1">
         {!hydrated ? (
-          <div aria-hidden className="animate-pulse">
+          <div aria-hidden className="motion-safe:animate-pulse">
             <div className="h-6 w-44 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-2 h-11 w-56 rounded-pill bg-ink/8 dark:bg-paper/10" />
             <div className="mt-3 h-2 w-full rounded-pill bg-ink/8 dark:bg-paper/10" />
@@ -114,7 +129,7 @@ export function Basecamp({
               </div>
               {next ? (
                 <LinkButton href={waypointHref(next.lessonId)} size="md" iconRight="icon-701">
-                  {completedSet.size > 0 ? `Continue: ${waypoints[next.lessonId]?.title ?? "next waypoint"}` : "Begin expedition"}
+                  {completedSet.size > 0 ? `Continue: ${waypoints[next.lessonId]?.title ?? "next waypoint"}` : "Start course"}
                 </LinkButton>
               ) : firstWaypointId ? (
                 <LinkButton href={waypointHref(firstWaypointId)} size="md" className="!bg-leaf enabled:hover:!bg-leaf/90">
@@ -129,7 +144,10 @@ export function Basecamp({
 
       {prerequisites.length > 0 && (
         <section aria-labelledby="approach-heading" className="mt-5">
-          <h2 id="approach-heading" className="text-sm font-extrabold uppercase tracking-wide text-content-2">Approach trails</h2>
+          <h2 id="approach-heading" className="text-sm font-extrabold uppercase tracking-wide text-content-2">Recommended prerequisites (approach trails)</h2>
+          <p className="mt-1 max-w-2xl text-sm text-content-2">
+            These courses are recommended, not required. You can start this course now.
+          </p>
           <ul className="mt-2 flex flex-wrap gap-2">
             {prerequisites.map((prerequisite) => {
               const prerequisiteState = world.courses[prerequisite.courseId];
@@ -142,13 +160,14 @@ export function Basecamp({
                   >
                     <span aria-hidden>{walked ? "✓" : "→"}</span>
                     {prerequisite.trailName}
-                    <span className="sr-only">{walked ? " — walked" : " — not yet walked"}</span>
+                    <span className="rounded-pill bg-ink/6 px-2 py-0.5 text-xs text-content-2 dark:bg-paper/10">
+                      {walked ? "Started" : "Not started"}
+                    </span>
                   </Link>
                 </li>
               );
             })}
           </ul>
-          {course && !course.approachOpen && <p className="mt-2 text-sm text-content-2">{WORLD_STATES.approachClosed(trailName)}</p>}
         </section>
       )}
 
@@ -163,8 +182,11 @@ export function Basecamp({
               <li key={landmark.id}>
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
                   <h3 className="flex min-w-0 items-center gap-2.5 text-lg font-extrabold">
-                    <span aria-hidden data-status-pill="landmark" className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-pill text-sm font-extrabold ${complete ? "bg-cta-good text-white" : active ? "bg-tangerine text-night" : "bg-ink/8 text-content-2 dark:bg-paper/10"}`}>
-                      {complete ? "✓" : landmarkIndex + 1}
+                    <span aria-hidden className="relative inline-flex shrink-0">
+                      <CurriculumIcon id="structure-chapter-landmark" size={44} />
+                      <span data-status-pill="landmark" className={`absolute -bottom-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-pill px-1 text-[10px] font-extrabold ring-2 ring-surface ${complete ? "bg-cta-good text-white" : active ? "bg-tangerine text-night" : "bg-ink text-paper dark:bg-paper dark:text-ink"}`}>
+                        {complete ? "✓" : landmarkIndex + 1}
+                      </span>
                     </span>
                     <span className="sr-only">Landmark {landmarkIndex + 1}: </span>
                     <span className="truncate">{landmark.name}</span>
@@ -192,8 +214,22 @@ export function Basecamp({
                           {waypointIndex > 0 && <span aria-hidden="true" data-waypoint-rail="above" className={`absolute left-[29px] top-0 h-1/2 w-0.5 ${previousDone ? "bg-leaf/55" : "bg-ink/12 dark:bg-paper/12"}`} />}
                           {waypointIndex < landmark.waypointIds.length - 1 && <span aria-hidden="true" data-waypoint-rail="below" className={`absolute bottom-0 left-[29px] h-1/2 w-0.5 ${done ? "bg-leaf/55" : "bg-ink/12 dark:bg-paper/12"}`} />}
                           <Link href={waypointHref(waypointId)} className="group relative flex min-h-[48px] items-center gap-3 rounded-card px-4 py-2 hover:bg-sky/5">
-                            <span aria-hidden data-status-pill="waypoint" className={`relative z-[1] flex h-7 w-7 shrink-0 items-center justify-center rounded-pill text-xs font-extrabold ring-4 ring-surface transition-transform group-hover:scale-105 motion-reduce:transition-none ${done ? "bg-cta-good text-white" : isNext ? "bg-tangerine text-night" : "bg-ink/10 text-content-2 dark:bg-paper/10"}`}>
-                              {done ? "✓" : waypointIndex + 1}
+                            <span aria-hidden data-status-pill="waypoint" className="relative z-[1] inline-flex h-7 w-7 shrink-0 transition-transform group-hover:scale-105 motion-reduce:transition-none">
+                              {isNext && learnerIdentity.avatarId ? (
+                                <AvatarDisplay
+                                  avatarId={learnerIdentity.avatarId}
+                                  customization={learnerIdentity.customization}
+                                  size={256}
+                                  placement="trail"
+                                  displaySize={28}
+                                  className="h-7 w-7 rounded-full ring-2 ring-tangerine/60"
+                                />
+                              ) : (
+                                <CurriculumIcon id="structure-lesson-waypoint" size={28} />
+                              )}
+                              <span className={`absolute -bottom-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-pill px-0.5 text-[9px] font-extrabold ring-2 ring-surface ${done ? "bg-cta-good text-white" : isNext ? "bg-tangerine text-night" : "bg-ink text-paper dark:bg-paper dark:text-ink"}`}>
+                                {done ? "✓" : waypointIndex + 1}
+                              </span>
                             </span>
                             <span className="flex-1 font-bold">
                               {detail?.title ?? waypointId}

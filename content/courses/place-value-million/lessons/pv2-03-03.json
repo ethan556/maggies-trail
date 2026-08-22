@@ -15,53 +15,20 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each number to its front-end value.",
+   "body": "Place a number and compare it with its front-end estimate.",
    "conceptTag": "front-end-estimation",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Match each number to its front-end estimate (leading digit kept, rest zeroed).",
-    "left": [
-     {
-      "id": "n42371",
-      "label": "42,371"
-     },
-     {
-      "id": "n31842",
-      "label": "31,842"
-     },
-     {
-      "id": "n6509",
-      "label": "6,509"
-     }
-    ],
-    "right": [
-     {
-      "id": "f40000",
-      "label": "40,000"
-     },
-     {
-      "id": "f30000",
-      "label": "30,000"
-     },
-     {
-      "id": "f6000",
-      "label": "6,000"
-     }
-    ],
-    "pairs": {
-     "n42371": "f40000",
-     "n31842": "f30000",
-     "n6509": "f6000"
-    },
-    "pairErrors": [
-     {
-      "left": "n6509",
-      "right": "f30000",
-      "feedback": "30,000 belongs to 31,842. 6,509's leading digit is 6, in the thousands place — its front-end value is 6,000."
-     }
-    ],
-    "missFeedback": "Keep only the leading digit, and zero out everything after it.",
-    "successFeedback": "42,371→40,000, 31,842→30,000, 6,509→6,000 — every digit after the first becomes zero."
+    "type": "numberLinePlace",
+    "min": 40000,
+    "max": 50000,
+    "step": 100,
+    "tickStep": 1000,
+    "target": 47000,
+    "start": 40000,
+    "prompt": "Place 47,000 on the line. The front-end estimate for 47,286 is 40,000, shown at the left end.",
+    "successFeedback": "47,000 lies to the right of 40,000. Keeping the leading digit and replacing the rest with zeros cannot make a positive whole number larger.",
+    "lowFeedback": "Move right until the marker reaches 47,000.",
+    "highFeedback": "The marker is above 47,000. Move it left."
    },
    "predict": {
     "prompt": "A front-end estimate (leading digit kept, the rest zeroed) — does it run HIGH, LOW, or either?",

@@ -147,32 +147,32 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Bracket √95.",
+      "body": "Bracket √95 — now the larger bound.",
       "conceptTag": "rns-estimate-integer-bounds",
       "variant": {
         "gen": "g8-rns-root-estimate",
         "form": "rnsBoundsB"
       },
       "explanationVariants": [
-        "81 < 95 < 100, and those are 9² and 10², so √95 is between 9 and 10.",
-        "9² undershoots 95 and 10² overshoots it — the smaller bound is 9."
+        "81 < 95 < 100, and those are 9² and 10², so √95 is between 9 and 10 — the larger bound is 10.",
+        "9² undershoots 95 and 10² overshoots it — the larger bound is 10."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Between which two whole numbers does √95 lie? Type the smaller one.",
-        "answer": 9,
+        "prompt": "Between which two whole numbers does √95 lie? Type the LARGER one.",
+        "answer": 10,
         "tolerance": 0,
         "commonErrors": [
           {
-            "value": 10,
-            "feedback": "10² = 100 is bigger than 95 — try the perfect square just below 95."
+            "value": 9,
+            "feedback": "9 is the smaller bound (9² = 81 < 95). This question asks for the LARGER one: 10² = 100 > 95, so the larger bound is 10."
           },
           {
-            "value": 8,
-            "feedback": "8² = 64, which is less than 81 — 9² = 81 is the perfect square just below 95."
+            "value": 11,
+            "feedback": "11² = 121 is bigger than 100 — try the perfect square just above 95, not two steps up."
           }
         ],
-        "fallbackFeedback": "81 < 95 < 100, and 9² = 81, 10² = 100, so √95 is between 9 and 10 — type 9."
+        "fallbackFeedback": "81 < 95 < 100, and 9² = 81, 10² = 100, so √95 is between 9 and 10 — type 10, the larger bound."
       }
     },
     {
@@ -200,21 +200,21 @@
           },
           {
             "id": "b",
-            "label": "9",
+            "label": "9, since 9 is the smaller of the two bounds",
             "correct": false,
-            "feedback": "Compare the distances: 95 is only 5 away from 100, but 14 away from 81 — 10 is closer."
+            "feedback": "9 is the smaller bound, but 'closer' isn't decided by which bound is smaller — compare distances: 95 is only 5 away from 100, but 14 away from 81, so 10 is closer."
           },
           {
             "id": "c",
-            "label": "9.5, the exact midpoint",
+            "label": "9.5, since that's the number exactly between 9 and 10",
             "correct": false,
-            "feedback": "The midpoint of 81 and 100 is 90.5, and 95 is well past that — not exactly between."
+            "feedback": "9.5 is just the midpoint of the two whole-number bounds — it isn't automatically the closer one. Compare actual distances: 100−95=5 versus 95−81=14, so 10 is closer."
           },
           {
             "id": "d",
-            "label": "Neither — they're equally close",
+            "label": "Neither, since 95 seems close to both 81 and 100",
             "correct": false,
-            "feedback": "They're not equal — 95 is much nearer 100 than 81."
+            "feedback": "They aren't equally close — compare exactly: 95 is only 5 from 100 but 14 from 81, so one is clearly nearer."
           }
         ]
       }
@@ -222,37 +222,50 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Bracket a bigger one.",
+      "body": "The trickiest kind: a near-tie between two bounds.",
       "conceptTag": "rns-estimate-integer-bounds",
       "variant": {
         "gen": "g8-rns-root-estimate",
-        "form": "rnsBoundsChallenge"
+        "form": "rnsCloserInteger"
       },
       "explanationVariants": [
-        "144 < 150 < 169, and those are 12² and 13², so √150 is between 12 and 13.",
-        "12² undershoots 150 and 13² overshoots it — the smaller bound is 12."
+        "√112 is between 10 and 11 (100 < 112 < 121); 112 − 100 = 12 but 121 − 112 = 9, so it's closer to 11.",
+        "Neither bound is obviously nearer here — comparing 12 versus 9 is what actually settles it: 11 is closer."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "Between which two whole numbers does √150 lie? Type the smaller one.",
-        "answer": 12,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "√112 is closer to which whole number?",
+        "options": [
           {
-            "value": 13,
-            "feedback": "13² = 169, bigger than 150 — try the perfect square just below."
+            "id": "a",
+            "label": "11",
+            "correct": true,
+            "feedback": "Right — its distance to 11 is 9, smaller than the distance 12 to 10."
           },
           {
-            "value": 11,
-            "feedback": "11² = 121, which is less than 144 — 12² = 144 is the perfect square just below 150."
+            "id": "b",
+            "label": "10",
+            "correct": false,
+            "feedback": "√112 ≈ 10.583, which is closer to 11 than to 10 — check the actual distances: 112 − 100 = 12, but 121 − 112 = 9."
+          },
+          {
+            "id": "c",
+            "label": "10.5",
+            "correct": false,
+            "feedback": "10.5 is not a whole number, and √112 is not exactly at that midpoint."
+          },
+          {
+            "id": "d",
+            "label": "They are equally close",
+            "correct": false,
+            "feedback": "The distances are 12 and 9, so the two whole numbers are not equally close."
           }
-        ],
-        "fallbackFeedback": "144 < 150 < 169, so the smaller bound is 12."
+        ]
       },
       "hints": [
-        "List perfect squares until you bracket 150: 100, 121, 144, 169…",
-        "144 = 12² is just under 150, and 169 = 13² is just over — so √150 is between 12 and 13.",
-        "144 < 150 < 169, so the smaller bound is 12."
+        "List perfect squares around 112: 100 (10²) and 121 (11²).",
+        "Compare distances: 112 − 100 = 12, and 121 − 112 = 9.",
+        "9 is less than 12, so √112 is closer to 11."
       ]
     },
     {

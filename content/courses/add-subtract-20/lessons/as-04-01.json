@@ -17,86 +17,48 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each subtraction to its answer.",
+   "body": "Hop backward to split the fact family.",
    "conceptTag": "fact-family",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Use the family to match each subtraction to what's left.",
-    "left": [
+    "type": "numberLineHop",
+    "prompt": "Start at 7. Hop back 3 to show 7 − 3.",
+    "min": 2,
+    "max": 8,
+    "start": 7,
+    "hop": 1,
+    "hops": 3,
+    "direction": "back",
+    "commonLandings": [
      {
-      "id": "l1",
-      "label": "13 − 5"
+      "value": 3,
+      "feedback": "3 is how many you took away. The landing shows how many are left."
      },
      {
-      "id": "l2",
-      "label": "13 − 8"
-     },
-     {
-      "id": "l3",
-      "label": "10 − 4"
-     },
-     {
-      "id": "l4",
-      "label": "10 − 6"
+      "value": 5,
+      "feedback": "That is only two hops back. Make all three hops from 7."
      }
     ],
-    "right": [
-     {
-      "id": "r8",
-      "label": "8"
-     },
-     {
-      "id": "r5",
-      "label": "5"
-     },
-     {
-      "id": "r6",
-      "label": "6"
-     },
-     {
-      "id": "r4",
-      "label": "4"
-     }
-    ],
-    "pairs": {
-     "l1": "r8",
-     "l2": "r5",
-     "l3": "r6",
-     "l4": "r4"
-    },
-    "pairErrors": [
-     {
-      "left": "l1",
-      "right": "r5",
-      "feedback": "13 − 5 asks what's left, not the 5 you took. Think 5 + 8 = 13, so 13 − 5 = 8."
-     },
-     {
-      "left": "l3",
-      "right": "r4",
-      "feedback": "13 − 8 gives 5, but 10 − 4 gives 6. Think 4 + 6 = 10."
-     }
-    ],
-    "missFeedback": "For each one, think of the partner add: what plus the second number makes the first?",
-    "successFeedback": "Every subtraction found its partner — that's the fact family!"
+    "missFeedback": "Start at 7 and hop back three times: 6, 5, 4.",
+    "successFeedback": "You landed on 4. The same 3, 4, and 7 make 3 + 4 = 7 and 7 − 3 = 4."
    },
    "predict": {
-    "prompt": "The fact family of 3, 4 and 7 — do its SUBTRACTION facts use the same three numbers as its additions?",
+    "prompt": "If 3 + 4 = 7, where should 7 − 3 land?",
     "options": [
      {
-      "id": "yes",
-      "label": "Yes — the same trio, rearranged"
+      "id": "four",
+      "label": "4"
      },
      {
-      "id": "no",
-      "label": "No — new numbers appear"
+      "id": "three",
+      "label": "3"
      },
      {
-      "id": "some",
-      "label": "Only sometimes"
+      "id": "ten",
+      "label": "10"
      }
     ],
-    "outcomeId": "yes",
-    "reveal": "A family owns exactly three numbers — addition builds the big one, subtraction breaks it back apart. Same trio, four costumes."
+    "outcomeId": "four",
+    "reveal": "The three backward hops land on 4. The number line keeps the same three family numbers in view: 3, 4, and 7."
    }
   },
   {
@@ -138,8 +100,8 @@
   {
    "id": "c2",
    "kind": "concept",
-   "body": "Flip the adds, split the total. The same three numbers, four ways.",
-   "narration": "Flip the adds, split the total. The same three numbers make four facts.",
+   "body": "**6 + 7 = 13; 13 − 6 = 7.** Flip and split the same three numbers.",
+   "narration": "With six, seven, and thirteen, flip the adds and split the total: six plus seven equals thirteen, seven plus six equals thirteen, thirteen minus six equals seven, and thirteen minus seven equals six. The same three numbers make four facts.",
    "figure": "as-fact-family"
   },
   {
@@ -258,12 +220,6 @@
     "prompt": "Which fact is in the family 7, 6, 13?",
     "options": [
      {
-      "id": "a",
-      "label": "13 − 6 = 7",
-      "correct": true,
-      "feedback": "Yes — 7 + 6 = 13, so 13 − 6 = 7. Same three numbers."
-     },
-     {
       "id": "b",
       "label": "13 − 7 = 5",
       "feedback": "13 − 7 uses the right numbers but gives 6, not 5: 7 + 6 = 13."
@@ -272,6 +228,12 @@
       "id": "c",
       "label": "7 + 6 = 14",
       "feedback": "7 + 6 makes 13, not 14. The family total is 13."
+     },
+     {
+      "id": "a",
+      "label": "13 − 6 = 7",
+      "correct": true,
+      "feedback": "Yes — 7 + 6 = 13, so 13 − 6 = 7. Same three numbers."
      }
     ]
    },
@@ -295,15 +257,15 @@
     "prompt": "Which is NOT a fact of the family 7, 8, 15?",
     "options": [
      {
+      "id": "b",
+      "label": "15 − 8 = 7",
+      "feedback": "This IS a family fact: 7 + 8 = 15, so 15 − 8 = 7."
+     },
+     {
       "id": "a",
       "label": "15 + 8 = 23",
       "correct": true,
       "feedback": "Right — this adds 15 and 8 to make a new number. The family only makes 15 from 7 and 8."
-     },
-     {
-      "id": "b",
-      "label": "15 − 8 = 7",
-      "feedback": "This IS a family fact: 7 + 8 = 15, so 15 − 8 = 7."
      },
      {
       "id": "c",

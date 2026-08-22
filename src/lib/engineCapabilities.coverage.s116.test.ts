@@ -20,10 +20,13 @@ const caps = JSON.parse(
   readFileSync(join(process.cwd(), "scripts", "engine-capabilities.json"), "utf8")
 ).types as Record<string, Record<string, number>>;
 
-/** Every `type` literal in the WidgetSpec discriminated union. */
+/** Every `type` literal in the WidgetSpec discriminated union.
+ * `WidgetSpec` is a `superRefine` wrapper (ZodEffects) around the real discriminated union
+ * `WidgetSpecBase`, so the member list is not at `._def.options` (that's a ZodEffects def:
+ * `{schema, typeName, effect}`) — schema.ts re-exposes it as a plain top-level `.options`
+ * property for exactly this kind of registry tooling; read it from there instead. */
 const registeredTypes: string[] = (
-  (WidgetSpec as unknown as { _def: { options: Array<{ shape: { type: { _def: { value: string } } } }> } })._def
-    .options
+  (WidgetSpec as unknown as { options: Array<{ shape: { type: { _def: { value: string } } } }> }).options
 ).map((o) => o.shape.type._def.value);
 
 describe("engine-capabilities.json covers the widget registry", () => {

@@ -15,42 +15,51 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Evaluate a cube root.",
+      "body": "Complete a cube with volume 64 and read the missing edge length.",
       "widget": {
-        "type": "numeric",
-        "prompt": "∛64 = ?",
-        "answer": 4,
-        "tolerance": 0,
-        "commonErrors": [
+        "type": "volumeBuilder",
+        "prompt": "The cube is 4 units wide and 4 units high. Extend its remaining edge until the volume is 64 cubic units.",
+        "targetVolume": 64,
+        "lMax": 6,
+        "wMax": 6,
+        "hMax": 6,
+        "lStart": 1,
+        "wStart": 4,
+        "hStart": 4,
+        "lockW": true,
+        "lockH": true,
+        "commonBuilds": [
           {
-            "value": 21.3,
-            "feedback": "That divides 64 by 3 — a cube root isn't division by 3. 4³ = 64, so ∛64 = 4."
+            "volume": 32,
+            "feedback": "A 2 × 4 × 4 prism has volume 32, so its three edges are not all 4 yet."
           },
           {
-            "value": 8,
-            "feedback": "8³ = 512, way more than 64 — check 4³ instead: 4×4×4=64."
+            "volume": 48,
+            "feedback": "A 3 × 4 × 4 prism has volume 48. Extend the remaining edge one more unit."
           }
         ],
-        "fallbackFeedback": "4³ = 64, so ∛64 = 4."
+        "successFeedback": "The edges are 4, 4, and 4, so the cube holds 4 × 4 × 4 = 64 unit cubes. Therefore ∛64 = 4.",
+        "lowFeedback": "The volume is below 64. Extend the free edge while the other two edges stay at 4.",
+        "highFeedback": "The volume is above 64. Shorten the free edge until all three edge lengths are 4."
       },
       "predict": {
-        "prompt": "Does ∛64 ask 'what number multiplied by itself three times gives 64' — or '64 divided by 3'?",
+        "prompt": "What does ∛64 ask you to find?",
         "options": [
           {
             "id": "cube",
-            "label": "What number, used three times, builds 64"
+            "label": "An edge used three times to make a volume of 64"
           },
           {
             "id": "divide",
-            "label": "64 divided by 3"
+            "label": "The result of dividing 64 by 3"
           },
           {
             "id": "triple",
-            "label": "64 minus itself three times"
+            "label": "The result of subtracting 3 from 64"
           }
         ],
         "outcomeId": "cube",
-        "reveal": "The cube root unbuilds a cube — it hunts the edge whose triple product is 64: 4 × 4 × 4 = 64, so ∛64 = 4. Division by 3 answers a completely different question — 64 ÷ 3 is about 21.3, and 21.3 cubed lands nowhere near 64."
+        "reveal": "A cube root finds the edge length of a cube with the given volume. Since 4 × 4 × 4 = 64, the cube's edge and ∛64 are both 4."
       }
     },
     {
@@ -146,7 +155,7 @@
         "options": [
           {
             "id": "a",
-            "label": "x = −2 (only one solution)",
+            "label": "x = −2",
             "correct": true,
             "feedback": "Right — (−2)³ = −8, and only one number cubes to −8."
           },
@@ -174,26 +183,30 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Another negative cube.",
+      "body": "A cube equation with an extra step.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "(−3)³ = −27, so x³ = −27 has the single solution x = −3.",
-        "Cubing −3 gives exactly −27, and no other real number does."
+        "(x+1)³ = −27 means x+1 = −3 (since only −3 cubes to −27), so x = −3 − 1 = −4.",
+        "Cube-root first to get x+1 = −3, then finish the linear step: x = −4."
       ],
       "widget": {
         "type": "buildExpression",
-        "prompt": "Which value solves x³ = −27?",
+        "prompt": "Which value solves (x+1)³ = −27?",
         "tokens": [
           {
             "id": "t0",
-            "label": "x = −3"
+            "label": "x = −4"
           },
           {
             "id": "t1",
-            "label": "x = 3"
+            "label": "x = −3"
           },
           {
             "id": "t2",
+            "label": "x = 2"
+          },
+          {
+            "id": "t3",
             "label": "or"
           }
         ],
@@ -206,28 +219,34 @@
             "sequence": [
               "t1"
             ],
-            "feedback": "3³ = 27 (positive), not −27 — the sign matters for cubes."
+            "feedback": "That's x+1 = −3, but you still need to isolate x: −3 − 1 = −4. (x+1)³ = −27 means x = −4, not −3."
           },
           {
             "sequence": [
-              "t1",
-              "t2",
-              "t0"
+              "t2"
             ],
-            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+            "feedback": "That drops the negative sign: (2+1)³ = 27, not −27. Cubing preserves the sign, so x+1 must be −3, which gives x = −4."
           },
           {
             "sequence": [
               "t0",
-              "t2",
-              "t1"
+              "t3",
+              "t2"
             ],
-            "feedback": "Only −3 works here — 3³ gives +27, not −27."
+            "feedback": "Cube equations don't need ±: (2+1)³ = 27, not −27 — only x = −4 works."
+          },
+          {
+            "sequence": [
+              "t2",
+              "t3",
+              "t0"
+            ],
+            "feedback": "Cube equations don't need ±: (2+1)³ = 27, not −27 — only x = −4 works."
           }
         ],
         "reusable": false,
-        "missFeedback": "Cubing preserves the sign: only (−3)³ = −27.",
-        "successFeedback": "Right — (−3)³ = −27."
+        "missFeedback": "Cubing preserves the sign: (x+1)³ = −27 means x+1 = −3, so x = −3 − 1 = −4.",
+        "successFeedback": "Right — (x+1)³ = −27 means x+1 = −3, so x = −3 − 1 = −4."
       },
       "variant": {
         "gen": "root-solve",
@@ -237,78 +256,28 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "A bigger perfect cube.",
+      "body": "Translate words into the equation first.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "5³ = 125, so x³ = 125 has the single solution x = 5.",
-        "Only 5 cubes to exactly 125."
+        "\"Multiplied by itself three times\" means cubed: translating to x³ = 216 gives x = 6.",
+        "6×6×6 = 216, and cube equations have just one real solution: 6."
       ],
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Which value solves x³ = 125?",
-        "tokens": [
+        "type": "numeric",
+        "prompt": "A number, multiplied by itself three times, equals 216. What is the number?",
+        "answer": 6,
+        "tolerance": 0,
+        "commonErrors": [
           {
-            "id": "t0",
-            "label": "x = 5"
+            "value": 72,
+            "feedback": "72 comes from dividing by 3, but cubing means multiplying by itself THREE TIMES (6×6×6), not dividing. 6×6×6 = 216."
           },
           {
-            "id": "t1",
-            "label": "or"
-          },
-          {
-            "id": "t2",
-            "label": "x = −5"
-          },
-          {
-            "id": "t3",
-            "label": "x = 25"
-          },
-          {
-            "id": "t4",
-            "label": "x = 62.5"
+            "value": 108,
+            "feedback": "108 is half of 216, not a cube root. 6×6×6 = 216, so the number is 6."
           }
         ],
-        "correct": [
-          "t0"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t0",
-              "t1",
-              "t2"
-            ],
-            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
-          },
-          {
-            "sequence": [
-              "t2",
-              "t1",
-              "t0"
-            ],
-            "feedback": "(−5)³ = −125, not 125 — only +5 solves this one."
-          },
-          {
-            "sequence": [
-              "t3"
-            ],
-            "feedback": "25³ is enormous compared to 125 — not a solution."
-          },
-          {
-            "sequence": [
-              "t4"
-            ],
-            "feedback": "That's half of 125, not a cube root — check 5³ = 125 instead."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "Only 5³ = 125 — the cube of −5 is −125, a different number.",
-        "successFeedback": "Right — 5³ = 125."
-      },
-      "variant": {
-        "gen": "root-solve",
-        "form": "cube"
+        "fallbackFeedback": "6×6×6 = 216, so the number is 6."
       }
     },
     {
@@ -336,70 +305,34 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Put it together: solve for the one real solution.",
+      "body": "Apply it: volume back to edge length.",
       "conceptTag": "esn-cube-root-solve",
       "explanationVariants": [
-        "(−5)³ = −125, so x³ = −125 has the single solution x = −5.",
-        "Only −5 cubes to exactly −125 — no ± needed for cube equations."
+        "Volume = edge³, so 343 = edge³ means the edge is 7 inches, since 7×7×7 = 343.",
+        "7³ = 343 — translating the box's volume back to its edge length gives 7 inches."
       ],
       "widget": {
-        "type": "buildExpression",
-        "prompt": "Which value solves x³ = −125?",
-        "tokens": [
+        "type": "numeric",
+        "prompt": "A cube-shaped box has a volume of 343 cubic inches. What is the length of one edge, in inches?",
+        "answer": 7,
+        "tolerance": 0,
+        "commonErrors": [
           {
-            "id": "t0",
-            "label": "x = −5"
+            "value": 1029,
+            "feedback": "1029 multiplies 343 by 3, but cubing means finding what number times ITSELF three times gives 343 — not multiplying 343 by 3. 7×7×7 = 343, so the edge is 7 inches."
           },
           {
-            "id": "t1",
-            "label": "x = 5"
-          },
-          {
-            "id": "t2",
-            "label": "or"
+            "value": 171.5,
+            "feedback": "171.5 is half of 343, not a cube root. 7×7×7 = 343, so the edge is 7 inches."
           }
         ],
-        "correct": [
-          "t0"
-        ],
-        "acceptAlso": [],
-        "commonBuilds": [
-          {
-            "sequence": [
-              "t1"
-            ],
-            "feedback": "5³ = 125 (positive), not −125 — the sign matters for cubes."
-          },
-          {
-            "sequence": [
-              "t1",
-              "t2",
-              "t0"
-            ],
-            "feedback": "Only −5 works — cube equations never need ± like square equations do."
-          },
-          {
-            "sequence": [
-              "t0",
-              "t2",
-              "t1"
-            ],
-            "feedback": "Only −5 works — cube equations never need ± like square equations do."
-          }
-        ],
-        "reusable": false,
-        "missFeedback": "(−5)³ = −125 — one real cube root, sign intact.",
-        "successFeedback": "Right — (−5)³ = −125."
+        "fallbackFeedback": "7×7×7 = 343, so the edge length is 7 inches."
       },
       "hints": [
-        "Think of a perfect cube close to 125 first, ignoring the sign.",
-        "5³ = 125 — so the magnitude is 5. Now which sign makes it −125?",
-        "(−5)³ = −125, so x = −5 is the one and only real solution."
-      ],
-      "variant": {
-        "gen": "root-solve",
-        "form": "cubeNegative"
-      }
+        "Volume = edge × edge × edge.",
+        "Find a whole number that cubes to 343.",
+        "7 × 7 × 7 = 343, so the edge is 7 inches."
+      ]
     },
     {
       "id": "r1",
@@ -436,9 +369,9 @@
           "options": [
             {
               "id": "a",
-              "label": "x = 2 (only one solution)",
+              "label": "x = 2",
               "correct": true,
-              "feedback": "Right — 2³ = 8."
+              "feedback": "Right — 2³ = 8, and only one number cubes to 8."
             },
             {
               "id": "b",

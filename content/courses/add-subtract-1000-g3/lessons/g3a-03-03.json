@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Every method here reaches the same answer, so the real question is which costs least: the column algorithm, the open line, or compensation.",
       "narration": "Every method here reaches the same answer, so the real question is which costs least: the column algorithm, the open line, or compensation."
     },
@@ -35,8 +34,8 @@
             "feedback": "The borrow reached the ones but the pass-through tens column was never charged for it."
           }
         ],
-        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
-        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+        "fallbackFeedback": "Work from ones to hundreds. Trade from the next place only when the top digit is too small, then check that 400 − 199 = 201.",
+        "successFeedback": "Correct — 400 − 199 = 201."
       },
       "predict": {
         "prompt": "For 400 − 199, which is fastest?",
@@ -87,7 +86,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which is fastest for 245 + 398, and why?",
+        "prompt": "Which is fastest for 245 + 398, and why? Work place by place.",
         "options": [
           {
             "id": "o0",
@@ -146,7 +145,6 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Numbers just under a friendly hundred beg for compensation. Long borrow chains across zeros are the algorithm at its slowest. Choosing well is part of fluency.",
       "narration": "Numbers just under a friendly hundred beg for compensation. Long borrow chains across zeros are the algorithm at its slowest. Choosing well is part of fluency."
     },
@@ -157,22 +155,22 @@
       "conceptTag": "g3a-strategy",
       "widget": {
         "type": "columnCalc",
-        "prompt": "Compare the roads: work 400 − 199 in columns and feel the borrow chain.",
+        "prompt": "Compare the roads: work 500 − 298 in columns and notice the long borrow chain.",
         "op": "subtract",
-        "a": 400,
-        "b": 199,
+        "a": 500,
+        "b": 298,
         "commonResults": [
           {
-            "value": 399,
-            "feedback": "399 flipped every short column — 9 − 0 twice is not a legal move when the top is empty."
+            "value": 218,
+            "feedback": "That result does not preserve every place-value move. Recheck each column and every carry or trade."
           },
           {
-            "value": 219,
-            "feedback": "The borrow reached the ones but the pass-through tens column was never charged for it."
+            "value": 398,
+            "feedback": "That result does not preserve every place-value move. Recheck each column and every carry or trade."
           }
         ],
-        "fallbackFeedback": "Ones 5×4=20 (write 0, carry 2); tens 3×4=12, +2 = 14 → 140.",
-        "successFeedback": "35 × 4 = 140: the ones make 20, write 0 carry 2, then 12 + 2 = 14 in the tens."
+        "fallbackFeedback": "Work from ones to hundreds. Trade from the next place only when the top digit is too small, then check that 500 − 298 = 202.",
+        "successFeedback": "Correct — 500 − 298 = 202."
       },
       "cml": {
         "stage": "construct",
@@ -208,7 +206,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Compare 760 and 756: <, =, or >?",
+        "prompt": "Compare 760 and 756: <, =, or >? Use the idea from this lesson.",
         "options": [
           {
             "id": "o0",
@@ -273,31 +271,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which is fastest for 245 + 398, and why?",
+        "prompt": "Which is fastest for 342 + 256, and why? Name the deciding place-value fact.",
         "options": [
           {
             "id": "o0",
-            "label": "Compensation: 245 + 400 = 645, then subtract 2",
+            "label": "The column algorithm — no carries anywhere",
             "correct": true,
-            "feedback": "Correct — 398 sits 2 below 400, so one friendly addition and a 2-step fix finish it."
+            "feedback": "Correct — every column (2+6, 4+5, 3+2) stays under ten, so the standard algorithm finishes in one clean pass with no regrouping to track."
           },
           {
             "id": "o1",
-            "label": "The column algorithm with two carries",
+            "label": "Compensation: 342 + 300, then subtract 44",
             "correct": false,
-            "feedback": "It reaches the answer, but both columns carry — more work than rounding a single addend."
+            "feedback": "256 is not close to a friendly round number like 300 — rounding it up adds 44 extra to repay, more work than the direct column sum."
           },
           {
             "id": "o2",
-            "label": "Breaking both numbers into hundreds, tens, and ones",
+            "label": "Open number line, hopping by hundreds and tens",
             "correct": false,
-            "feedback": "Splitting both is thorough but doubles the bookkeeping when only one addend is near a friendly number."
+            "feedback": "The number line helps when hops are large or awkward; here the column sum has no carries at all, so it is already the fastest path."
           },
           {
             "id": "o3",
-            "label": "Counting on by ones from 245",
+            "label": "Counting on by ones from 342",
             "correct": false,
-            "feedback": "398 single steps is the slowest possible route to a sum this size."
+            "feedback": "256 single steps is the slowest possible route to a sum this size."
           }
         ]
       },
@@ -340,7 +338,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "700 − 622 = ?",
+        "prompt": "700 − 622 = ? Finish with a fresh situation.",
         "answer": 78,
         "tolerance": 0,
         "unit": "",

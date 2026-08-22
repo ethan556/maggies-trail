@@ -34,11 +34,18 @@ const labelsOf = (s: TWidget) => {
   return { texts, ticks };
 };
 
+// numberLinePlainLabel (widgets.tsx) prints a typeset minus, "−" (U+2212), not the ASCII hyphen
+// "-" — the same substitution widgets.tsx's own bin-label parser and figureTextAdversarialAudit /
+// s322Figures undo before calling Number() on rendered text. Plain `Number("−5")` is NaN, so
+// `texts.map(Number)` silently drops every negative tick instead of finding it: not a widget
+// defect, a test-side parse gap this closes the same way the rest of the suite already does.
+const toNum = (text: string): number => Number(text.replace(/−/g, "-"));
+
 describe("S237 number-line scale", () => {
   it("marks the whole line, not just the tappable positions", () => {
     // The reported case. Before the fix this rendered 4 labels: 9, 17, 18, 19.
     const { texts, ticks } = labelsOf(spec({ min: 0, max: 20, start: 9, hop: 9, hops: 1 }));
-    const nums = texts.map(Number).filter((n) => Number.isFinite(n));
+    const nums = texts.map(toNum).filter((n) => Number.isFinite(n));
     expect(nums).toContain(0);
     expect(nums).toContain(20);
     // Something between the start and the far choices must be marked — that is the countable gap.
@@ -49,7 +56,7 @@ describe("S237 number-line scale", () => {
   it("labels fall on landmarks a learner counts in, at every scale", () => {
     for (const [min, max] of [[0, 10], [0, 20], [0, 100], [-5, 5], [0, 1000]] as const) {
       const { texts } = labelsOf(spec({ min, max, start: min, hop: Math.max(1, (max - min) / 10), hops: 1 }));
-      const nums = texts.map(Number).filter((n) => Number.isFinite(n));
+      const nums = texts.map(toNum).filter((n) => Number.isFinite(n));
       expect(nums).toContain(min);
       expect(nums).toContain(max);
       // Dividing the span by a fixed N produced strides like 3, labelling 9/18/27 on a 0-100 line.

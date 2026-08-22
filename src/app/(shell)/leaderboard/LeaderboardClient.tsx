@@ -23,7 +23,7 @@ export default function LeaderboardClient() {
     return (
       <div aria-busy="true">
         <p className="sr-only">Setting up your league…</p>
-        <div aria-hidden className="h-72 animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
+        <div aria-hidden className="h-72 motion-safe:animate-pulse rounded-card bg-ink/6 dark:bg-paper/8" />
       </div>
     );
 
@@ -98,7 +98,10 @@ export default function LeaderboardClient() {
                 {r.isUser ? (
                   <AvatarDisplay
                     avatarId={profile.avatarId}
+                    customization={profile.avatarCustomization}
                     size={256}
+                    placement="dense-list"
+                    displaySize={28}
                     className="h-7 w-7 shrink-0 rounded-full ring-2 ring-sky/40"
                   />
                 ) : (

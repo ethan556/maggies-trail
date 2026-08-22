@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Three numbers that add up make a family: the two parts and the whole. Knowing one fact in the family unlocks the others.",
-      "narration": "Three numbers that add up make a family: the two parts and the whole. Knowing one fact in the family unlocks the others."
+      "figure": "fact-family",
+      "body": "The same three numbers make related addition and subtraction facts: eight plus five is thirteen, so thirteen minus five is eight.",
+      "narration": "The same three numbers make related addition and subtraction facts: eight plus five is thirteen, so thirteen minus five is eight."
     },
     {
       "id": "i1",
@@ -95,8 +95,8 @@
             "feedback": "That repeats the whole instead of removing 3."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — Fact family 3, 7, 10: 10 − 3 = 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Start from a fact you already know.",
@@ -133,27 +133,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "If 9 + 4 = 13 is known, then 13 − 9 and 13 − 4 come free — the same three numbers, rearranged.",
-      "narration": "If 9 + 4 = 13 is known, then 13 − 9 and 13 − 4 come free — the same three numbers, rearranged."
+      "figure": "as-fact-family",
+      "body": "A fact-family triangle keeps the parts and whole together: six, seven, and thirteen make four related equations.",
+      "narration": "A fact-family triangle keeps the parts and whole together: six, seven, and thirteen make four related equations."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-known-fact",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Use the family 9, 4, 13: start at 13 and count back 9. Where do you land?",
-        "min": 2,
-        "max": 15,
-        "start": 13,
-        "hop": 1,
-        "hops": 9,
-        "direction": "back",
-        "commonLandings": [],
-        "missFeedback": "Start at 13 and count back 9: you land on 4.",
-        "successFeedback": "Landed on 4 — removing one part of the family leaves the other part."
+        "type": "tapDiagram",
+        "prompt": "In the fact family nine, six, fifteen, tap fifteen minus nine.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
+          {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "5",
+            "icon": "5",
+            "count": 1,
+            "correct": false,
+            "feedback": "5 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "6",
+            "icon": "6",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — nine plus six is fifteen, so fifteen minus nine is six."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "7",
+            "icon": "7",
+            "count": 1,
+            "correct": false,
+            "feedback": "7 does not satisfy the relationship in the prompt."
+          }
+        ],
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — nine plus six is fifteen, so fifteen minus nine is six."
       },
       "cml": {
         "stage": "construct",
@@ -189,7 +219,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 7, 6, 13: 13 − 7 = ?",
+        "prompt": "In the family seven, six, thirteen, what is thirteen minus seven?",
         "answer": 6,
         "tolerance": 0,
         "unit": "",
@@ -203,8 +233,8 @@
             "feedback": "That repeats the whole instead of removing 7."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — Fact family 7, 6, 13: 13 − 7 = 6."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 6."
       },
       "hints": [
         "Start from a fact you already know.",
@@ -249,7 +279,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Which addition fact helps solve 11 − 5?",
+        "prompt": "Which addition fact checks eleven minus five?",
         "options": [
           {
             "id": "o0",
@@ -320,7 +350,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Fact family 7, 2, 9: 9 − 7 = ?",
+        "prompt": "In the family seven, two, nine, what is nine minus seven?",
         "answer": 2,
         "tolerance": 0,
         "unit": "",
@@ -334,8 +364,8 @@
             "feedback": "That repeats the whole instead of removing 7."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — Fact family 7, 2, 9: 9 − 7 = 2."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 2."
       },
       "hints": [
         "Start from a fact you already know.",
@@ -401,22 +431,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "Fact family 3, 7, 10: 10 − 3 = ?",
-          "answer": 7,
+          "prompt": "Put 4 counters and 8 counters in two piles that combine to make 12. Take away the pile of 4 from the full 12. How many counters are left?",
+          "answer": 8,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 3,
-              "feedback": "That subtracts the other part. The missing partner is 7."
+              "value": 4,
+              "feedback": "That takes away the other pile of counters. The missing partner pile has 8."
             },
             {
-              "value": 10,
-              "feedback": "That repeats the whole instead of removing 3."
+              "value": 12,
+              "feedback": "That repeats the full pile of 12 instead of removing the pile of 4."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — Fact family 3, 7, 10: 10 − 3 = 7."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — 12 counters with the pile of 4 removed leaves 8."
         }
       }
     }

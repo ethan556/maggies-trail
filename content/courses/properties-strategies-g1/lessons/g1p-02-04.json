@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "When a sum crosses ten, complete the ten first. Part of the second addend fills the frame to ten; the leftover rides on top.",
-      "narration": "When a sum crosses ten, complete the ten first. Part of the second addend fills the frame to ten; the leftover rides on top."
+      "figure": "ten-frame-make-ten",
+      "body": "Seven plus three fills the shown ten-frame. Completing ten creates an easy landmark.",
+      "narration": "Seven plus three fills the shown ten-frame. Completing ten creates an easy landmark."
     },
     {
       "id": "i1",
@@ -97,8 +97,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 takes 4 from 11 to make ten. How many of the 11 are left 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -135,29 +135,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Ten-and-some is easy to name — that is the whole point of the make-ten move.",
-      "narration": "Ten-and-some is easy to name — that is the whole point of the make-ten move."
+      "figure": "make-ten-bridge",
+      "body": "For eight plus five, move two to fill ten and join the three left over: ten plus three is thirteen.",
+      "narration": "For eight plus five, move two to fill ten and join the three left over: ten plus three is thirteen."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "g1p-make-ten-add",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "You have 8 in the frame. Add enough to make ten.",
-        "target": 10,
-        "preFilled": 8,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Seven counters are in a ten-frame. Tap how many more fill it.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "choice-1",
+            "x": 18,
+            "y": 50,
+            "label": "2",
+            "icon": "2",
             "count": 1,
-            "feedback": "One more square is not enough; keep filling until every square is full."
+            "correct": false,
+            "feedback": "2 does not satisfy the relationship in the prompt."
+          },
+          {
+            "id": "choice-2",
+            "x": 50,
+            "y": 50,
+            "label": "3",
+            "icon": "3",
+            "count": 1,
+            "correct": true,
+            "feedback": "Yes — seven and three make ten."
+          },
+          {
+            "id": "choice-3",
+            "x": 82,
+            "y": 50,
+            "label": "4",
+            "icon": "4",
+            "count": 1,
+            "correct": false,
+            "feedback": "4 does not satisfy the relationship in the prompt."
           }
         ],
-        "missFeedback": "Fill one square at a time, counting as you go.",
-        "successFeedback": "Ten filled — 8 needed 2 more to make a whole ten."
+        "missFeedback": "Use the represented quantities and relationship before choosing.",
+        "successFeedback": "Yes — seven and three make ten."
       },
       "cml": {
         "stage": "construct",
@@ -193,7 +221,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 + ? = 10. What makes ten with 9?",
+        "prompt": "Nine needs a missing part to complete ten. What is that part?",
         "answer": 1,
         "tolerance": 0,
         "unit": "",
@@ -207,8 +235,8 @@
             "feedback": "Ten is the whole, not the missing partner."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 9 + = 10. What makes ten with 9 1."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 1."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -253,7 +281,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "To add 6 + 6 by making ten, how should you split 6?",
+        "prompt": "Which split of six lets six plus six complete ten first?",
         "options": [
           {
             "id": "o0",
@@ -324,7 +352,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "6 takes 4 from 11 to make ten. How many of the 11 are left?",
+        "prompt": "Six uses four from a group of eleven to complete ten. How many remain?",
         "answer": 7,
         "tolerance": 0,
         "unit": "",
@@ -338,8 +366,8 @@
             "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
           }
         ],
-        "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-        "successFeedback": "Correct — 6 takes 4 from 11 to make ten. How many of the 11 are left 7."
+        "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+        "successFeedback": "Correct — the represented quantities give 7."
       },
       "hints": [
         "Split the second number to make ten first.",
@@ -405,22 +433,22 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "6 takes 4 from 11 to make ten. How many of the 11 are left?",
-          "answer": 7,
+          "prompt": "Put 8 counters in one pile and 13 counters in another pile. Move counters from the second pile into the first pile until the first pile makes a ten. How many counters are left in the second pile?",
+          "answer": 11,
           "tolerance": 0,
           "unit": "",
           "commonErrors": [
             {
-              "value": 11,
-              "feedback": "That is the original addend before splitting it."
+              "value": 13,
+              "feedback": "That is how many counters started in the second pile, before any moved."
             },
             {
-              "value": 8,
-              "feedback": "That is 1 more than the requested value. Recount the visible quantities and operation."
+              "value": 12,
+              "feedback": "That is 1 more than the requested value. Recount the visible counters and moves."
             }
           ],
-          "fallbackFeedback": "Recompute the quantities and relationship shown, one step at a time.",
-          "successFeedback": "Correct — 6 takes 4 from 11 to make ten. How many of the 11 are left 7."
+          "fallbackFeedback": "Model the known quantities and their relationship before answering.",
+          "successFeedback": "Correct — moving 2 counters over leaves 11 in the second pile."
         }
       }
     }

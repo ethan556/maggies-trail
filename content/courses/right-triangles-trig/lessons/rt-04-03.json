@@ -1,287 +1,286 @@
 {
- "id": "rt-04-03",
- "slug": "distance-applications",
- "title": "Shadows, Wires & Surveys",
- "courseId": "right-triangles-trig",
- "chapterId": "ch4-elevation-depression",
- "minutes": 10,
- "remedials": [
-  {
-   "conceptTag": "rt-trig-apps",
-   "concept": {
-    "id": "rem-rt-trig-apps-c",
-    "kind": "concept",
-    "body": "Field method, every time: sketch the right triangle; mark the horizontal; place the angle; write each length's role FROM that angle (opposite, adjacent, hypotenuse); choose the ratio containing your known and unknown; multiply if the unknown is on top, divide if it's on the bottom; then sanity-check against the longest-side rule."
-   },
-   "check": {
-    "id": "rem-rt-trig-apps-k",
-    "kind": "check",
-    "body": "Run the method once.",
-    "conceptTag": "rt-trig-apps",
-    "explanationVariants": [
-     "tan 45° = h/25 with tan 45° = 1, so h = 25 m — a 45° sun makes shadow equal height.",
-     "At 45° the legs match: height = shadow = 25 m."
-    ],
-    "widget": {
-     "type": "numeric",
-     "prompt": "The sun is at exactly 45°. A flagpole casts a 25 m shadow. The pole's height = ? (m)",
-     "answer": 25,
-     "tolerance": 0.01,
-     "commonErrors": [
-      {
-       "value": 17.68,
-       "feedback": "17.68 ≈ 25·sin 45° treats the shadow as a hypotenuse — it's the ground LEG. tan 45° = 1 makes h = 25."
+  "id": "rt-04-03",
+  "slug": "distance-applications",
+  "title": "Shadows, Wires & Surveys",
+  "courseId": "right-triangles-trig",
+  "chapterId": "ch4-elevation-depression",
+  "minutes": 10,
+  "remedials": [
+    {
+      "conceptTag": "rt-trig-apps",
+      "concept": {
+        "id": "rem-rt-trig-apps-c",
+        "kind": "concept",
+        "body": "Field method, every time: sketch the right triangle; mark the horizontal; place the angle; write each length's role FROM that angle (opposite, adjacent, hypotenuse); choose the ratio containing your known and unknown; multiply if the unknown is on top, divide if it's on the bottom; then sanity-check against the longest-side rule."
       },
-      {
-       "value": 35.36,
-       "feedback": "35.36 ≈ 25 ÷ cos 45° computes the sun-ray slant. The height equals the shadow at 45°: 25 m."
+      "check": {
+        "id": "rem-rt-trig-apps-k",
+        "kind": "check",
+        "body": "Run the method once.",
+        "conceptTag": "rt-trig-apps",
+        "explanationVariants": [
+          "tan 45° = h/25 with tan 45° = 1, so h = 25 m — a 45° sun makes shadow equal height.",
+          "At 45° the legs match: height = shadow = 25 m."
+        ],
+        "widget": {
+          "type": "numeric",
+          "prompt": "The sun is at exactly 45°. A flagpole casts a 25 m shadow. The pole's height = ? (m)",
+          "answer": 25,
+          "tolerance": 0.01,
+          "commonErrors": [
+            {
+              "value": 17.68,
+              "feedback": "17.68 ≈ 25·sin 45° treats the shadow as a hypotenuse — it's the ground LEG. tan 45° = 1 makes h = 25."
+            },
+            {
+              "value": 35.36,
+              "feedback": "35.36 ≈ 25 ÷ cos 45° computes the sun-ray slant. The height equals the shadow at 45°: 25 m."
+            }
+          ],
+          "fallbackFeedback": "h = 25·tan 45° = 25 m."
+        }
       }
-     ],
-     "fallbackFeedback": "h = 25·tan 45° = 25 m."
     }
-   }
-  }
- ],
- "steps": [
-  {
-   "id": "c1",
-   "kind": "concept",
-   "body": "Shadows are free measuring tape. The sun's elevation angle plus a shadow's length pins an object's height — the same similar-triangles idea from the Similarity course, now with trig doing the ratio work. Height opposite, shadow adjacent: **tan(sun angle) = height/shadow**, whichever piece is missing.",
-   "figure": "rt-shadows"
-  },
-  {
-   "id": "k1",
-   "kind": "check",
-   "body": "Length of a shadow.",
-   "conceptTag": "rt-trig-apps",
-   "explanationVariants": [
-    "tan 38° = 12/s → s = 12 ÷ tan 38° ≈ 15.36 m.",
-    "The shadow is adjacent, on the bottom of the tangent: 12 ÷ tan 38° ≈ 15.36 m."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "The sun is at 38° elevation. How long a shadow does a 12 m tree cast, in meters (2 decimals)?",
-    "answer": 15.36,
-    "tolerance": 0.05,
-    "commonErrors": [
-     {
-      "value": 9.38,
-      "feedback": "9.38 = 12·tan 38° multiplies — but the shadow s is on the BOTTOM of tan 38° = 12/s. Divide: ≈ 15.36."
-     },
-     {
-      "value": 19.49,
-      "feedback": "19.49 = 12 ÷ sin 38° computes the sun-ray's slant length (hypotenuse), not the ground shadow: ≈ 15.36."
-     },
-     {
-      "value": 7.39,
-      "feedback": "7.39 = 12·sin 38° treats the 12 m tree as a hypotenuse — it's the vertical LEG. s = 12 ÷ tan 38° ≈ 15.36."
-     }
-    ],
-    "fallbackFeedback": "s = 12 ÷ tan 38° ≈ 15.36 m."
-   },
-   "variant": {
-    "gen": "g10-right-triangles",
-    "form": "rt-trig-apps__numeric"
-   }
-  },
-  {
-   "id": "c2",
-   "kind": "concept",
-   "body": "Cables and guy wires flip the unknown to the **hypotenuse**. A pole of height 18 m needs a wire meeting the ground at 65°: the pole is opposite, the wire is the hypotenuse — sin 65° = 18/w, so w = 18 ÷ sin 65° ≈ 19.86 m. Unknown on the bottom: divide.",
-   "figure": "solve-right-triangle"
-  },
-  {
-   "id": "k2",
-   "kind": "check",
-   "body": "Sizing the wire.",
-   "conceptTag": "rt-trig-apps",
-   "explanationVariants": [
-    "sin 65° = 18/w → w = 18 ÷ sin 65° ≈ 19.86 m — barely longer than the pole, since 65° is steep.",
-    "Opposite known, hypotenuse wanted: divide by the sine. 18 ÷ 0.9063 ≈ 19.86 m."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "A guy wire runs from the top of an 18 m pole to the ground, meeting it at 65°. How long is the wire (2 decimals)?",
-    "answer": 19.86,
-    "tolerance": 0.05,
-    "commonErrors": [
-     {
-      "value": 16.31,
-      "feedback": "16.31 = 18·sin 65° multiplies — giving a wire SHORTER than the pole it must reach over. Divide: 18 ÷ sin 65° ≈ 19.86."
-     },
-     {
-      "value": 42.59,
-      "feedback": "42.59 = 18 ÷ cos 65° pairs the pole with cosine — but the pole is OPPOSITE the 65° ground angle, sine's side: ≈ 19.86."
-     },
-     {
-      "value": 38.6,
-      "feedback": "38.6 = 18·tan 65° relates the two LEGS — the wire is the hypotenuse, which tangent never gives. ≈ 19.86."
-     }
-    ],
-    "fallbackFeedback": "w = 18 ÷ sin 65° ≈ 19.86 m."
-   },
-   "variant": {
-    "gen": "g10-right-triangles",
-    "form": "rt-trig-apps__numeric"
-   }
-  },
-  {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "The modeling order.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "Every applied trig problem starts the same way. What comes FIRST?",
-    "options": [
-     {
-      "id": "o1",
-      "label": "Draw the triangle and label each side's role from the given angle",
-      "correct": true,
-      "feedback": "The picture decides everything after it — sides labeled from the angle make the ratio choice automatic."
-     },
-     {
-      "id": "o2",
-      "label": "Punch the angle into the calculator",
-      "correct": false,
-      "feedback": "A calculator can't tell sine from tangent for you — the picture assigns the roles. Sketch first, compute last."
-     },
-     {
-      "id": "o3",
-      "label": "Guess whether to multiply or divide",
-      "correct": false,
-      "feedback": "Multiply-vs-divide is READ off the setup (unknown on top or bottom), never guessed. The sketch comes first."
-     },
-     {
-      "id": "o4",
-      "label": "Convert the angle to radians",
-      "correct": false,
-      "feedback": "Degrees are fine throughout this course — and units never assign side roles. Draw and label first."
-     }
-    ]
-   }
-  },
-  {
-   "id": "c3",
-   "kind": "concept",
-   "body": "The professional trick: **two readings**. From point A the tower top sits at 40° elevation; walk 30 m closer to B and it reads 55°. Two triangles share the same height h: h = x·tan 55° (near) and h = (x + 30)·tan 40° (far). Two equations, two unknowns — no need to reach the tower at all.",
-   "figure": "rt-two-readings"
-  },
-  {
-   "id": "k3",
-   "kind": "check",
-   "body": "Two readings, one height.",
-   "conceptTag": "rt-trig-apps",
-   "explanationVariants": [
-    "Same h both ways: x·tan 55° = (x + 30)·tan 40° — solve for x, then h = x·tan 55°.",
-    "Setting the near expression equal to the far one eliminates h and leaves one unknown, x."
-   ],
-   "widget": {
-    "type": "mcq",
-    "prompt": "In the two-reading setup, which equation lets you find x (the near distance)?",
-    "options": [
-     {
-      "id": "o1",
-      "label": "x·tan 55° = (x + 30)·tan 40°",
-      "correct": true,
-      "feedback": "Both sides equal the tower's height h — equating them removes h and solves for x."
-     },
-     {
-      "id": "o2",
-      "label": "x·tan 40° = (x + 30)·tan 55°",
-      "correct": false,
-      "feedback": "The angles are swapped: the NEAR point sees the steeper 55°, the far point the shallower 40°. As written, x would come out negative."
-     },
-     {
-      "id": "o3",
-      "label": "x + 30 = tan 55° − tan 40°",
-      "correct": false,
-      "feedback": "That equates a distance to a difference of RATIOS — mismatched quantities. Set the two height expressions equal instead."
-     },
-     {
-      "id": "o4",
-      "label": "h = 30·tan 55° + 30·tan 40°",
-      "correct": false,
-      "feedback": "Adding the two readings' heights double-counts — the 30 m isn't the distance to the tower from either point. Equate x·tan 55° with (x + 30)·tan 40°."
-     }
-    ]
-   },
-   "variant": {
-    "gen": "g10-right-triangles",
-    "form": "rt-trig-apps__mcq"
-   }
-  },
-  {
-   "id": "i2",
-   "kind": "interactive",
-   "body": "Sanity gate.",
-   "widget": {
-    "type": "numeric",
-    "prompt": "In that setup, x·tan 55° = (x + 30)·tan 40° gives x ≈ 42.74 m. Roughly what is the FAR point's distance to the tower, in meters (2 decimals)?",
-    "answer": 72.74,
-    "tolerance": 0.05,
-    "commonErrors": [
-     {
-      "value": 42.74,
-      "feedback": "42.74 is x itself — the NEAR distance. The far point stands 30 m further back: 42.74 + 30 = 72.74."
-     },
-     {
-      "value": 12.74,
-      "feedback": "12.74 subtracts the 30 m — but B moved CLOSER, so A is x + 30 from the tower: 72.74."
-     }
-    ],
-    "fallbackFeedback": "Far distance = x + 30 = 42.74 + 30 = 72.74 m."
-   }
-  },
-  {
-   "id": "ch",
-   "kind": "challenge",
-   "body": "The surveyor's answer.",
-   "conceptTag": "rt-trig-apps",
-   "hints": [
-    "h = x·tan 55° with x ≈ 42.74 — or equivalently h = 72.74·tan 40°.",
-    "tan 55° ≈ 1.4281.",
-    "Multiply: 42.74 × 1.4281 — both routes agree near 61."
-   ],
-   "explanationVariants": [
-    "h = x·tan 55° ≈ 42.74 × 1.4281 ≈ 61.03 m — and the far check, 72.74·tan 40°, lands on the same value.",
-    "Either triangle works once x is known: h ≈ 61.03 m."
-   ],
-   "widget": {
-    "type": "numeric",
-    "prompt": "Finish the survey: with x ≈ 42.74 m, find the tower's height h in meters (2 decimals).",
-    "answer": 61.03,
-    "tolerance": 0.1,
-    "commonErrors": [
-     {
-      "value": 25.17,
-      "feedback": "25.17 = 30·tan 40° uses the 30 m WALK as if it were the distance to the tower — it's only the gap between readings. h = x·tan 55° ≈ 61.03."
-     },
-     {
-      "value": 42.84,
-      "feedback": "42.84 = 30·tan 55° makes the same substitution with the other angle. Use the near distance: 42.74·tan 55° ≈ 61.03."
-     },
-     {
-      "value": 35.86,
-      "feedback": "35.86 = 42.74·tan 40° pairs the NEAR distance with the FAR angle — mixed triangles. Matching pairs: 42.74·tan 55° ≈ 61.03."
-     }
-    ],
-    "fallbackFeedback": "h = 42.74·tan 55° ≈ 61.03 m (cross-check: 72.74·tan 40° ≈ 61.05)."
-   },
-   "variant": {
-    "gen": "g10-right-triangles",
-    "form": "rt-trig-apps__numeric"
-   }
-  },
-  {
-   "id": "r1",
-   "kind": "recap",
-   "body": "Trig in the field.",
-   "takeaways": [
-    "Shadows: tan(sun angle) = height/shadow — solve for either piece.",
-    "Wires and cables are hypotenuses: divide by sine (or cosine) to size them.",
-    "Two readings from different spots pin an unreachable height: equate the two h-expressions."
-   ],
-   "teaser": "Last chapter: how sin, cos, and tan relate to each other — and what survives when the right angle leaves."
-  }
- ]
+  ],
+  "steps": [
+    {
+      "id": "c1",
+      "kind": "concept",
+      "body": "Shadows are free measuring tape. The sun's elevation angle plus a shadow's length pins an object's height — the same similar-triangles idea from the Similarity course, now with trig doing the ratio work. Height opposite, shadow adjacent: **tan(sun angle) = height/shadow**, whichever piece is missing.",
+      "figure": "rt-shadows"
+    },
+    {
+      "id": "k1",
+      "kind": "check",
+      "body": "Length of a shadow.",
+      "conceptTag": "rt-trig-apps",
+      "explanationVariants": [
+        "tan 38° = 12/s → s = 12 ÷ tan 38° ≈ 15.36 m.",
+        "The shadow is adjacent, on the bottom of the tangent: 12 ÷ tan 38° ≈ 15.36 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The sun is at 38° elevation. How long a shadow does a 12 m tree cast, in meters (2 decimals)?",
+        "answer": 15.36,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 9.38,
+            "feedback": "9.38 = 12·tan 38° multiplies — but the shadow s is on the BOTTOM of tan 38° = 12/s. Divide: ≈ 15.36."
+          },
+          {
+            "value": 19.49,
+            "feedback": "19.49 = 12 ÷ sin 38° computes the sun-ray's slant length (hypotenuse), not the ground shadow: ≈ 15.36."
+          },
+          {
+            "value": 7.39,
+            "feedback": "7.39 = 12·sin 38° treats the 12 m tree as a hypotenuse — it's the vertical LEG. s = 12 ÷ tan 38° ≈ 15.36."
+          }
+        ],
+        "fallbackFeedback": "s = 12 ÷ tan 38° ≈ 15.36 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-trig-apps__numeric"
+      }
+    },
+    {
+      "id": "c2",
+      "kind": "concept",
+      "body": "Cables and guy wires flip the unknown to the **hypotenuse**. A pole of height 18 m needs a wire meeting the ground at 65°: the pole is opposite, the wire is the hypotenuse — sin 65° = 18/w, so w = 18 ÷ sin 65° ≈ 19.86 m. Unknown on the bottom: divide."
+    },
+    {
+      "id": "k2",
+      "kind": "check",
+      "body": "Sizing the wire.",
+      "conceptTag": "rt-trig-apps",
+      "explanationVariants": [
+        "sin 65° = 18/w → w = 18 ÷ sin 65° ≈ 19.86 m — barely longer than the pole, since 65° is steep.",
+        "Opposite known, hypotenuse wanted: divide by the sine. 18 ÷ 0.9063 ≈ 19.86 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A guy wire runs from the top of an 18 m pole to the ground, meeting it at 65°. How long is the wire (2 decimals)?",
+        "answer": 19.86,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 16.31,
+            "feedback": "16.31 = 18·sin 65° multiplies — giving a wire SHORTER than the pole it must reach over. Divide: 18 ÷ sin 65° ≈ 19.86."
+          },
+          {
+            "value": 42.59,
+            "feedback": "42.59 = 18 ÷ cos 65° pairs the pole with cosine — but the pole is OPPOSITE the 65° ground angle, sine's side: ≈ 19.86."
+          },
+          {
+            "value": 38.6,
+            "feedback": "38.6 = 18·tan 65° relates the two LEGS — the wire is the hypotenuse, which tangent never gives. ≈ 19.86."
+          }
+        ],
+        "fallbackFeedback": "w = 18 ÷ sin 65° ≈ 19.86 m."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-trig-apps__numeric"
+      }
+    },
+    {
+      "id": "i1",
+      "kind": "interactive",
+      "body": "The modeling order.",
+      "widget": {
+        "type": "mcq",
+        "prompt": "Every applied trig problem starts the same way. What comes FIRST?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "Draw the triangle and label each side's role from the given angle",
+            "correct": true,
+            "feedback": "The picture decides everything after it — sides labeled from the angle make the ratio choice automatic."
+          },
+          {
+            "id": "o2",
+            "label": "Use the calculator first to choose a trig ratio",
+            "correct": false,
+            "feedback": "A calculator can't tell sine from tangent for you — the picture assigns the roles. Sketch first, compute last."
+          },
+          {
+            "id": "o3",
+            "label": "Guess the operation before labeling any triangle sides",
+            "correct": false,
+            "feedback": "Multiply-vs-divide is READ off the setup (unknown on top or bottom), never guessed. The sketch comes first."
+          },
+          {
+            "id": "o4",
+            "label": "Convert the degree angle to radians before drawing",
+            "correct": false,
+            "feedback": "Degrees are fine throughout this course — and units never assign side roles. Draw and label first."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "kind": "concept",
+      "body": "The professional trick: **two readings**. From point A the tower top sits at 40° elevation; walk 30 m closer to B and it reads 55°. Two triangles share the same height h: h = x·tan 55° (near) and h = (x + 30)·tan 40° (far). Two equations, two unknowns — no need to reach the tower at all.",
+      "figure": "rt-two-readings"
+    },
+    {
+      "id": "k3",
+      "kind": "check",
+      "body": "Two readings, one height.",
+      "conceptTag": "rt-trig-apps",
+      "explanationVariants": [
+        "Same h both ways: x·tan 55° = (x + 30)·tan 40° — solve for x, then h = x·tan 55°.",
+        "Setting the near expression equal to the far one eliminates h and leaves one unknown, x."
+      ],
+      "widget": {
+        "type": "mcq",
+        "prompt": "In the two-reading setup, which equation lets you find x (the near distance)?",
+        "options": [
+          {
+            "id": "o1",
+            "label": "x·tan 55° = (x + 30)·tan 40°",
+            "correct": true,
+            "feedback": "Both sides equal the tower's height h — equating them removes h and solves for x."
+          },
+          {
+            "id": "o2",
+            "label": "x·tan 40° = (x + 30)·tan 55°",
+            "correct": false,
+            "feedback": "The angles are swapped: the NEAR point sees the steeper 55°, the far point the shallower 40°. As written, x would come out negative."
+          },
+          {
+            "id": "o3",
+            "label": "x + 30 = tan 55° − tan 40°",
+            "correct": false,
+            "feedback": "That equates a distance to a difference of RATIOS — mismatched quantities. Set the two height expressions equal instead."
+          },
+          {
+            "id": "o4",
+            "label": "h = 30·tan 55° + 30·tan 40°",
+            "correct": false,
+            "feedback": "Adding the two readings' heights double-counts — the 30 m isn't the distance to the tower from either point. Equate x·tan 55° with (x + 30)·tan 40°."
+          }
+        ]
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-trig-apps__mcq"
+      }
+    },
+    {
+      "id": "i2",
+      "kind": "interactive",
+      "body": "Sanity gate.",
+      "widget": {
+        "type": "numeric",
+        "prompt": "In that setup, x·tan 55° = (x + 30)·tan 40° gives x ≈ 42.74 m. Roughly what is the FAR point's distance to the tower, in meters (2 decimals)?",
+        "answer": 72.74,
+        "tolerance": 0.05,
+        "commonErrors": [
+          {
+            "value": 42.74,
+            "feedback": "42.74 is x itself — the NEAR distance. The far point stands 30 m further back: 42.74 + 30 = 72.74."
+          },
+          {
+            "value": 12.74,
+            "feedback": "12.74 subtracts the 30 m — but B moved CLOSER, so A is x + 30 from the tower: 72.74."
+          }
+        ],
+        "fallbackFeedback": "Far distance = x + 30 = 42.74 + 30 = 72.74 m."
+      }
+    },
+    {
+      "id": "ch",
+      "kind": "challenge",
+      "body": "The surveyor's answer.",
+      "conceptTag": "rt-trig-apps",
+      "hints": [
+        "h = x·tan 55° with x ≈ 42.74 — or equivalently h = 72.74·tan 40°.",
+        "tan 55° ≈ 1.4281.",
+        "Multiply: 42.74 × 1.4281 — both routes agree near 61."
+      ],
+      "explanationVariants": [
+        "h = x·tan 55° ≈ 42.74 × 1.4281 ≈ 61.03 m — and the far check, 72.74·tan 40°, lands on the same value.",
+        "Either triangle works once x is known: h ≈ 61.03 m."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "Finish the survey: with x ≈ 42.74 m, find the tower's height h in meters (2 decimals).",
+        "answer": 61.03,
+        "tolerance": 0.1,
+        "commonErrors": [
+          {
+            "value": 25.17,
+            "feedback": "25.17 = 30·tan 40° uses the 30 m WALK as if it were the distance to the tower — it's only the gap between readings. h = x·tan 55° ≈ 61.03."
+          },
+          {
+            "value": 42.84,
+            "feedback": "42.84 = 30·tan 55° makes the same substitution with the other angle. Use the near distance: 42.74·tan 55° ≈ 61.03."
+          },
+          {
+            "value": 35.86,
+            "feedback": "35.86 = 42.74·tan 40° pairs the NEAR distance with the FAR angle — mixed triangles. Matching pairs: 42.74·tan 55° ≈ 61.03."
+          }
+        ],
+        "fallbackFeedback": "h = 42.74·tan 55° ≈ 61.03 m (cross-check: 72.74·tan 40° ≈ 61.05)."
+      },
+      "variant": {
+        "gen": "g10-right-triangles",
+        "form": "rt-trig-apps__numeric"
+      }
+    },
+    {
+      "id": "r1",
+      "kind": "recap",
+      "body": "Trig in the field.",
+      "takeaways": [
+        "Shadows: tan(sun angle) = height/shadow — solve for either piece.",
+        "Wires and cables are hypotenuses: divide by sine (or cosine) to size them.",
+        "Two readings from different spots pin an unreachable height: equate the two h-expressions."
+      ],
+      "teaser": "Last chapter: how sin, cos, and tan relate to each other — and what survives when the right angle leaves."
+    }
+  ]
 }

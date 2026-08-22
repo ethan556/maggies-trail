@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /**
- * WS-J's avatar stage with at least one enabled avatar — mocked ahead of real production art
+ * WS-J's avatar stage with one complete enabled band — mocked ahead of real production art
  * landing (today the real manifest has zero enabled entries; see OnboardingFlow.avatar.test.tsx
  * for that honest, current-day behavior). Confirms the stage the architecture pass placed between
  * "grade" and "goal" actually renders and works once art ships, with no further wiring: opens on
@@ -13,7 +13,7 @@ import React from "react";
 
 vi.mock("@/lib/avatars", async () => {
   const actual = await vi.importActual<typeof import("@/lib/avatars")>("@/lib/avatars");
-  const AVATARS = actual.AVATARS.map((a) => (a.id === "avatar-001" ? { ...a, enabled: true } : a));
+  const AVATARS = actual.AVATARS.map((a) => ({ ...a, enabled: a.ageBand === "early" }));
   const isValidAvatarId = (id: string) => AVATARS.some((a) => a.id === id && a.enabled);
   const getAvatar = (id: string) => AVATARS.find((a) => a.id === id);
   return {
@@ -43,7 +43,7 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-describe("onboarding avatar stage — at least one avatar enabled", () => {
+describe("onboarding avatar stage — one complete band enabled", () => {
   it("a Kindergarten pick opens the avatar stage before goal, with the grade-appropriate tile selectable", () => {
     render(<OnboardingFlow />);
     fireEvent.click(screen.getByRole("button", { name: /keep maggie's trail/i }));
@@ -85,5 +85,14 @@ describe("onboarding avatar stage — at least one avatar enabled", () => {
 
     expect(screen.getByText(/what brings you here/i)).toBeTruthy();
     expect(progressStore.load().avatarId).toBeUndefined();
+  });
+
+  it("skips the avatar stage for a grade whose complete collection is not released", () => {
+    render(<OnboardingFlow />);
+    fireEvent.click(screen.getByRole("button", { name: /keep maggie's trail/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^grade 3/i }));
+
+    expect(screen.queryByText(/choose your avatar/i)).toBeNull();
+    expect(screen.getByText(/what brings you here/i)).toBeTruthy();
   });
 });

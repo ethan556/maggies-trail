@@ -15,44 +15,33 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Order the rungs.",
+   "body": "Move a digit one rung left and watch its value become ten times as large.",
    "conceptTag": "place-value-ladder",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "Put these place-value names in order, smallest to largest.",
-    "items": [
+    "type": "placeValueTransformLab",
+    "task": "shift",
+    "answerMode": "numeric",
+    "prompt": "Move 600 one place left on the base-ten ladder. What value does it become?",
+    "values": [
+     600
+    ],
+    "shiftExponent": 1,
+    "choices": [],
+    "numericErrors": [
      {
-      "id": "th",
-      "label": "thousands"
+      "value": 600,
+      "feedback": "That leaves every digit in its starting place. One move left multiplies the value by 10."
      },
      {
-      "id": "on",
-      "label": "ones"
-     },
-     {
-      "id": "hu",
-      "label": "hundreds"
-     },
-     {
-      "id": "te",
-      "label": "tens"
+      "value": 60000,
+      "feedback": "That moves two places left. Move only one rung."
      }
     ],
-    "correctOrder": [
-     "on",
-     "te",
-     "hu",
-     "th"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "hu",
-      "second": "te",
-      "feedback": "A hundred is bigger than a ten (100 > 10) — tens comes before hundreds on the ladder."
-     }
-    ],
-    "missFeedback": "Each rung is 10 times the one before it: ones, then tens, then hundreds, then thousands.",
-    "successFeedback": "Ones, tens, hundreds, thousands — each one 10 times the last."
+    "requiredExplorations": 1,
+    "successFeedback": "600 becomes 6,000. One place left multiplies the digit's value by 10.",
+    "explorationFeedback": "Inspect the place-value stages before checking.",
+    "fallbackFeedback": "A one-place move left is ×10: 600 × 10.",
+    "tolerance": 0
    },
    "predict": {
     "prompt": "Stepping one place to the LEFT multiplies a digit's value by…?",
@@ -212,7 +201,7 @@
    "conceptTag": "place-value-ladder",
    "explanationVariants": [
     "Climbing from ten-thousands to millions is two rungs (ten-thousand → hundred-thousand → million), so it takes 10 × 10 = 100 ten-thousands.",
-    "One rung up is ×10 (100 hundred-thousands... wait, one rung is 10 hundred-thousands per million); two rungs from ten-thousands is 10 × 10 = 100."
+    "One rung up is ×10; two rungs from ten-thousands to millions is 10 × 10 = 100."
    ],
    "widget": {
     "type": "numeric",

@@ -15,51 +15,31 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Inspector duty: fair trade or robbery?",
+      "body": "Cut the same amount into smaller equal pieces.",
       "conceptTag": "equiv-models",
       "widget": {
-        "type": "dragBucket",
-        "prompt": "Sort each swap: does it keep the amount exactly the same?",
-        "buckets": [
+        "type": "fractionBar",
+        "prompt": "The bar is cut into fourths. Shade enough fourths to cover exactly one half.",
+        "targetNum": 1,
+        "targetDen": 2,
+        "numMin": 1,
+        "numMax": 4,
+        "denMin": 4,
+        "denMax": 4,
+        "numStart": 1,
+        "denStart": 4,
+        "showTarget": true,
+        "notation": "symbol",
+        "commonFractions": [
           {
-            "id": "fair",
-            "label": "Fair trade — same amount",
-            "icon": "🤝"
-          },
-          {
-            "id": "unfair",
-            "label": "Unfair — amount changed",
-            "icon": "🚨"
+            "num": 3,
+            "den": 4,
+            "feedback": "Three fourths goes past one half. Two fourths is an exact match."
           }
         ],
-        "items": [
-          {
-            "id": "t1",
-            "label": "1 half ↔ 2 fourths",
-            "bucketId": "fair",
-            "feedback": "Cut the half in half: two fourths, covering exactly the same chocolate."
-          },
-          {
-            "id": "t2",
-            "label": "1 half ↔ 2 sixths",
-            "bucketId": "unfair",
-            "feedback": "Two sixths only make a THIRD — sixths are smaller than fourths. Whoever took this trade lost chocolate."
-          },
-          {
-            "id": "t3",
-            "label": "1 third ↔ 2 sixths",
-            "bucketId": "fair",
-            "feedback": "Cut the third in half: two sixths, same amount to the crumb."
-          },
-          {
-            "id": "t4",
-            "label": "1 fourth ↔ 2 eighths",
-            "bucketId": "fair",
-            "feedback": "One fourth splits into exactly two eighths — a clean, even trade."
-          }
-        ],
-        "missFeedback": "A fair trade cuts the SAME piece into equal mini-pieces — the swap must rebuild exactly the original.",
-        "successFeedback": "Halves→fourths, thirds→sixths, fourths→eighths all trade clean; 2 sixths for a half is a robbery (that's only a third)."
+        "lowFeedback": "One fourth covers only half of the target. Shade one more fourth.",
+        "highFeedback": "The shaded part is larger than one half. Remove a fourth.",
+        "successFeedback": "Two fourths covers the same amount as one half: 2/4 = 1/2. The pieces changed, but the amount did not."
       },
       "predict": {
         "prompt": "Cutting every piece of a bar in half — does the shaded AMOUNT change?",

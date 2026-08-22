@@ -15,63 +15,62 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Build the ladder yourself, rung by rung.",
+      "body": "Compare two products one place apart.",
       "conceptTag": "zero-pattern",
       "widget": {
-        "type": "dragOrder",
-        "prompt": "Order the ladder from the smallest fact to the biggest.",
-        "items": [
+        "type": "placeValueTransformLab",
+        "task": "identifyShift",
+        "answerMode": "choice",
+        "prompt": "Compare 3 × 10 = 30 with 3 × 100 = 300. Open both values, then name the place-value change.",
+        "values": [
+          30,
+          300
+        ],
+        "choices": [
           {
-            "id": "r3",
-            "label": "4 × 600 = 2,400"
+            "id": "one",
+            "label": "One place left: 10 times as large",
+            "claim": "shift:1",
+            "feedback": "Yes. Every digit moves one place left, so the value is multiplied by 10."
           },
           {
-            "id": "r1",
-            "label": "4 × 6 = 24"
+            "id": "two",
+            "label": "Two places left: 100 times as large",
+            "claim": "shift:2",
+            "feedback": "30 to 300 adds one place, not two. It is one factor of 10."
           },
           {
-            "id": "r4",
-            "label": "4 × 6,000 = 24,000"
-          },
-          {
-            "id": "r2",
-            "label": "4 × 60 = 240"
+            "id": "none",
+            "label": "No size change",
+            "claim": "shift:0",
+            "feedback": "300 is larger than 30. The 3 moved from tens to hundreds."
           }
         ],
-        "correctOrder": [
-          "r1",
-          "r2",
-          "r3",
-          "r4"
-        ],
-        "misorderFeedback": [
-          {
-            "first": "r2",
-            "second": "r1",
-            "feedback": "240 climbed above 24 — the ladder starts at the bare fact (ones) and each rung's units grow ten times: ones, tens, hundreds, thousands."
-          }
-        ],
-        "missFeedback": "Same fact on every rung (4 × 6 = 24); only the UNITS climb: ones → tens → hundreds → thousands.",
-        "successFeedback": "24 ones, 24 tens, 24 hundreds, 24 thousands — one fact, four unit badges."
+        "numericErrors": [],
+        "requiredExplorations": 2,
+        "tolerance": 0,
+        "explorationFeedback": "Open both the starting value and ending value before choosing.",
+        "fallbackFeedback": "The 3 moves from the tens place in 30 to the hundreds place in 300.",
+        "successFeedback": "The digit moves one place left, so 300 is 10 times 30. One extra zero marks one ×10 step."
       },
       "predict": {
-        "prompt": "3 × 10 versus 3 × 100 — how many times bigger is the second?",
+        "prompt": "How many times as large is 3 × 100 as 3 × 10?",
         "options": [
           {
             "id": "ten",
-            "label": "Ten times"
+            "label": "10 times as large"
           },
           {
             "id": "hundred",
-            "label": "A hundred times"
+            "label": "100 times as large"
           },
           {
             "id": "three",
-            "label": "Three times"
+            "label": "3 times as large"
           }
         ],
         "outcomeId": "ten",
-        "reveal": "Each rung of the ladder is one more ×10 — the zeros count the climbs. The pattern in the zeros IS the pattern in the sizes."
+        "reveal": "Three times 10 is 30, and three times 100 is 300. Moving from 30 to 300 is one factor of 10."
       }
     },
     {
@@ -89,13 +88,13 @@
         "options": [
           {
             "id": "a",
-            "label": "600 is 6 hundreds — the answer is 24 HUNDREDS, and hundreds end in two zeros",
+            "label": "600 is 6 hundreds, so the answer is 24 hundreds",
             "correct": true,
             "feedback": "Unit thinking: the fact counts 24 of something, and that something is hundreds. The zeros are the hundreds' badge."
           },
           {
             "id": "b",
-            "label": "Because you glue the factor's zeros onto whatever the fact gives",
+            "label": "You glue the factor's zeros onto the fact's answer",
             "feedback": "Gluing describes the LOOK, not the reason — and it panics the moment a fact makes its own zero. Watch 5 × 40 shortly: unit thinking stays calm, zero-gluing sweats."
           },
           {
@@ -105,7 +104,7 @@
           },
           {
             "id": "d",
-            "label": "It's a coincidence of this example",
+            "label": "It's just a coincidence of this one example",
             "feedback": "It never misses: 3 × 200 = 6 hundreds = 600, 7 × 500 = 35 hundreds = 3,500. Units explain every case."
           }
         ]
@@ -209,36 +208,33 @@
     {
       "id": "k3",
       "kind": "check",
-      "body": "One more calm-corner rep.",
+      "body": "One more calm-corner rep — in a word problem this time.",
       "conceptTag": "zero-pattern",
       "explanationVariants": [
-        "9 × 9 = 81, so 9 × 9 tens = 81 tens = 810.",
-        "Nines check rides along: 8 + 1 = 9 on the fact, and the tens badge writes the final 0."
+        "6 × 5 = 30, so 6 × 5 tens = 30 tens = 300 spaces.",
+        "The 0 in 30 belongs to the fact; the tens badge adds the final 0 — two zeros, two jobs, 300 spaces."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "9 × 90 = ?",
-        "answer": 810,
+        "prompt": "A parking lot has 6 rows with 50 spaces in each row. How many parking spaces are there in all?",
+        "answer": 300,
         "tolerance": 0,
+        "unit": "spaces",
         "commonErrors": [
           {
-            "value": 81,
-            "feedback": "81 is the tens count — eighty-one TENS. The badge writes it as 810."
+            "value": 3000,
+            "feedback": "3000 treated the fact's own zero (in 30) as a badge AND added another. The fact counts 30; the unit is tens: 30 tens = 300."
           },
           {
-            "value": 8100,
-            "feedback": "8100 wears two badges, but only one unit is in play (90's ten). 81 tens = 810."
+            "value": 30,
+            "feedback": "30 is the tens COUNT — the badge is still owed. Thirty tens read as 300."
           },
           {
-            "value": 99,
-            "feedback": "99 adds 9 + 90. Nine groups of 9 tens multiply — the key fact is 9 × 9."
+            "value": 56,
+            "feedback": "56 adds 6 + 50. Six rows of 5 tens multiply — the key fact is 6 × 5."
           }
         ],
-        "fallbackFeedback": "Key fact 9 × 9 = 81, then read 81 in tens."
-      },
-      "variant": {
-        "gen": "zero-pattern",
-        "form": "zeroProductB"
+        "fallbackFeedback": "Say it in units: 6 × 5 tens = 30 tens. Now read thirty tens as a number: 300."
       }
     },
     {

@@ -29,7 +29,7 @@ export default function SyncIndicator() {
   const view = (() => {
     switch (status.state) {
       case "syncing":
-        return { dot: "bg-sky animate-pulse", label: "Syncing…", tone: "text-ink/70 dark:text-paper/70" };
+        return { dot: "bg-sky motion-safe:animate-pulse", label: "Syncing…", tone: "text-ink/70 dark:text-paper/70" };
       case "ok":
         return { dot: "bg-leaf", label: "Synced", tone: "text-ink/70 dark:text-paper/70" };
       case "offline":

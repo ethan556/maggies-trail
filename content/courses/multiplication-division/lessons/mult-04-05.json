@@ -9,8 +9,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "The last power-up: **sense-checking**. Before trusting any answer, ask if it's the right SIZE. Sharing makes numbers smaller. Multiplying by groups bigger than 1 makes them bigger. A share can never beat the pile it came from. Wrong size = wrong operation, guaranteed.",
-      "figure": "mult3-estimate"
+      "body": "The last power-up is **sense-checking**. Sharing a positive pile among more than one group makes each share smaller than the pile. More than one positive equal group makes a total larger than one group. An impossible size proves the result is wrong and can expose a wrong operation.",
+      "figure": "mult3-estimate",
+      "narration": "The last power-up is **sense-checking**. Sharing a positive pile among more than one group makes each share smaller than the pile. More than one positive equal group makes a total larger than one group. An impossible size proves the result is wrong and can expose a wrong operation."
     },
     {
       "id": "i1",
@@ -60,25 +61,6 @@
         ],
         "missFeedback": "Size test each claim: division answers shrink below the pile; multiplication answers grow well past one group.",
         "successFeedback": "Busted on size alone — no arithmetic needed. That's the sense-check working."
-      },
-      "predict": {
-        "prompt": "24 ÷ 4 = 96 — before any math: can splitting 24 into groups give MORE than 24?",
-        "options": [
-          {
-            "id": "no",
-            "label": "No — sharing can't grow the pile"
-          },
-          {
-            "id": "some",
-            "label": "Yes, sometimes"
-          },
-          {
-            "id": "big",
-            "label": "Only with big divisors"
-          }
-        ],
-        "outcomeId": "no",
-        "reveal": "Splitting 24 among 4 groups leaves each group with less than the whole pile — 96 is four times too big (it's 24 × 4, the multiplication in disguise). A size check catches the flip before any computing starts."
       }
     },
     {
@@ -92,27 +74,27 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Liam computes: \"28 kids share 4 buses equally — that's 32 kids per bus.\" Without redoing it, how do you KNOW he slipped?",
+        "prompt": "Which size check rejects Liam's result without recomputing 28 ÷ 4?",
         "options": [
           {
             "id": "a",
-            "label": "32 is bigger than all 28 kids — a share can't beat the pile",
+            "label": "32 cannot be one share from a total of 28.",
             "correct": true,
             "feedback": "The size busts it instantly: splitting 28 can only give numbers under 28."
           },
           {
             "id": "b",
-            "label": "Because 28 ÷ 4 is actually 7",
+            "label": "The quotient is 7 riders per bus.",
             "feedback": "True — but that's redoing the problem. The size test rejects 32 in one glance, before any dividing."
           },
           {
             "id": "c",
-            "label": "Because real buses hold about 50 kids",
+            "label": "A bus holds about 50 riders.",
             "feedback": "Bus trivia won't catch math slips — plenty of wrong answers fit on a real bus. Compare the answer to the PILE instead."
           },
           {
             "id": "d",
-            "label": "You can't know without recomputing",
+            "label": "You must recompute to reject 32.",
             "feedback": "You can! Any share bigger than the whole pile is impossible — that check costs zero arithmetic."
           }
         ]
@@ -124,8 +106,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Second tool: **estimate with friendly numbers**. For 6 × 9, think 6 × 10 = 60 — the true answer sits just under it. If someone offers 15 (that's 6 + 9 in disguise), the estimate throws it out before you've computed a thing.",
-      "figure": "mult3-estimate"
+      "body": "Estimate with a nearby friendly fact. For **6 × 9**, compare with 6 × 10 = 60; the exact product must be one group of 6 less, so it lies just below 60. An addition-sized result such as 15 fails this multiplication estimate.",
+      "figure": "mult3-estimate-6x9",
+      "narration": "Estimate with a nearby friendly fact. For **6 × 9**, compare with 6 × 10 = 60; the exact product must be one group of 6 less, so it lies just below 60. An addition-sized result such as 15 fails this multiplication estimate."
     },
     {
       "id": "k2",
@@ -173,6 +156,25 @@
       "kind": "interactive",
       "body": "Train your size sense on a bigger pile.",
       "conceptTag": "reasonableness",
+      "predict": {
+        "prompt": "Before you move the slider, where should an estimate for 18 boxes of 10 crayons land?",
+        "options": [
+          {
+            "id": "hundreds",
+            "label": "Near 180 crayons"
+          },
+          {
+            "id": "tens",
+            "label": "Near 28 crayons"
+          },
+          {
+            "id": "thousands",
+            "label": "Near 1,800 crayons"
+          }
+        ],
+        "outcomeId": "hundreds",
+        "reveal": "The slider settles near 180 because 18 groups of 10 make 18 tens. The model shows why 28 is addition-sized and 1,800 is ten times too large."
+      },
       "widget": {
         "type": "estimateSlider",
         "prompt": "An art room has 18 boxes with 10 crayons in each. Slide to estimate the total crayons.",
@@ -190,7 +192,7 @@
         ],
         "lowFeedback": "Too few — one box alone holds 10, and there are 18 boxes. Slide up.",
         "highFeedback": "That's an art-supply warehouse! 18 tens land in the low hundreds — come back down.",
-        "successFeedback": "About 180 — 18 × 10 shifts 18 into 180. Your size sense is calibrated."
+        "successFeedback": "About 180 — 18 × 10 makes 18 tens, or 180. Your size sense is calibrated."
       },
       "cml": {
         "stage": "construct",
@@ -333,7 +335,7 @@
       "kind": "recap",
       "body": "No bad answer gets past you now.",
       "takeaways": [
-        "Size test: shares shrink below the pile; products grow past one group.",
+        "With positive amounts, sharing among 2 or more groups shrinks each share; 2 or more groups exceed one group.",
         "Estimate with friendly numbers to fence in the true answer.",
         "Rebuild to verify: groups × size + leftover must equal the total."
       ],
@@ -346,7 +348,8 @@
       "concept": {
         "id": "rem-rs-c",
         "kind": "concept",
-        "body": "Quick rewind. Two size rules catch most slips: **sharing shrinks** — a share is always smaller than the pile it came from — and **grouping grows** — several whole groups beat a single group. If an answer breaks a size rule, the operation went the wrong way."
+        "body": "Quick rewind. With positive amounts, sharing among **two or more** groups makes each share smaller than the pile. Combining **two or more** equal positive groups makes a total larger than one group. A broken size rule proves the result is wrong; then inspect the operation and arithmetic.",
+        "narration": "Quick rewind. With positive amounts, sharing among **two or more** groups makes each share smaller than the pile. Combining **two or more** equal positive groups makes a total larger than one group. A broken size rule proves the result is wrong; then inspect the operation and arithmetic."
       },
       "check": {
         "id": "rem-rs-k",

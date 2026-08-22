@@ -10,14 +10,14 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Money is decimals with the places named: a dime is a tenth of a dollar and a penny is a hundredth, which is why prices carry exactly two places.",
-      "narration": "Money is decimals with the places named: a dime is a tenth of a dollar and a penny is a hundredth, which is why prices carry exactly two places."
+      "figure": "dpv-hundredths-grid",
+      "body": "Think of the grid as one dollar: each of the 100 cells is a penny, one hundredth of a dollar. A full column of 10 cells is a dime, one tenth of a dollar.",
+      "narration": "Think of the grid as one dollar: each of the 100 cells is a penny, one hundredth of a dollar. A full column of 10 cells is a dime, one tenth of a dollar."
     },
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Try it.",
+      "body": "Build the first model.",
       "conceptTag": "g5dc-money",
       "widget": {
         "type": "columnCalc",
@@ -31,12 +31,12 @@
             "feedback": "635 cents dropped the carry out of the dimes column — a whole dollar went missing."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include.",
+        "fallbackFeedback": "Add from right to left. Trade 10 hundredths for 1 tenth, and 10 tenths for 1 whole.",
+        "successFeedback": "735 hundredths is 7.35. The decimal places stayed aligned.",
         "decimals": 2
       },
       "predict": {
-        "prompt": "Why do prices always show two decimal places?",
+        "prompt": "Why do prices show two decimal places?",
         "options": [
           {
             "id": "cents",
@@ -48,7 +48,7 @@
           }
         ],
         "outcomeId": "cents",
-        "reveal": "The smallest coin is a hundredth of a dollar, so two places name every amount exactly."
+        "reveal": "A penny is one hundredth of a dollar, so two decimal places name a whole number of cents."
       },
       "cml": {
         "stage": "construct",
@@ -76,7 +76,7 @@
     {
       "id": "k1",
       "kind": "check",
-      "body": "",
+      "body": "Read or explain the representation.",
       "conceptTag": "g5dc-money",
       "explanationVariants": [
         "Dimes are tenths.",
@@ -136,29 +136,29 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Every rule so far applies unchanged — align the points, compute in cents, and place the point two from the right.",
-      "narration": "Every rule so far applies unchanged — align the points, compute in cents, and place the point two from the right."
+      "figure": "dop-line-up",
+      "body": "Line up the decimal points in money amounts. You can also compute in cents, then write the total with two decimal places.",
+      "narration": "Line up the decimal points in money amounts. You can also compute in cents, then write the total with two decimal places."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Check a classmate's claim with the model.",
       "conceptTag": "g5dc-money",
       "widget": {
         "type": "columnCalc",
-        "prompt": "Work 4.75 + 2.60 dollars in columns.",
+        "prompt": "Use the money columns to check whether $3.85 + $4.65 is $7.50.",
         "op": "add",
-        "a": 475,
-        "b": 260,
+        "a": 385,
+        "b": 465,
         "commonResults": [
           {
-            "value": 635,
-            "feedback": "635 cents dropped the carry out of the dimes column — a whole dollar went missing."
+            "value": 750,
+            "feedback": "750 cents dropped the carry out of the dimes column — a whole dollar went missing."
           }
         ],
-        "fallbackFeedback": "Add column by column from the ones; when a column reaches 10 or more, trade and carry.",
-        "successFeedback": "24,681 + 13,247 = 37,928 — the ones make 8 with a carry that the tens must include.",
+        "fallbackFeedback": "Add from right to left. Trade 10 hundredths for 1 tenth, and 10 tenths for 1 whole.",
+        "successFeedback": "850 hundredths is 8.50. The decimal places stayed aligned, so the claim of $7.50 was a dollar short.",
         "decimals": 2
       },
       "cml": {
@@ -187,7 +187,7 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "",
+      "body": "Apply the idea in a new form.",
       "conceptTag": "g5dc-money",
       "explanationVariants": [
         "Add in cents.",
@@ -195,22 +195,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: 417 + 430 = ?",
-        "answer": 847,
-        "tolerance": 0,
+        "prompt": "A wallet holds $5.15 and a jacket pocket holds $2.65. What is the total, in dollars?",
+        "answer": 7.8,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 747,
-            "feedback": "A hundred hundredths went missing in the carry — that is a whole 1.00 lost from the total."
+            "value": 7.7,
+            "feedback": "$7.70 dropped the carry the hundredths column produced — a whole $0.10 lost."
           },
           {
-            "value": 13,
-            "feedback": "That found the difference; putting the two amounts together calls for addition."
+            "value": 2.5,
+            "feedback": "That found the difference; combining two amounts calls for addition."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 847."
+        "successFeedback": "Correct — $7.80."
       },
       "hints": [
         "Line up the points.",
@@ -238,16 +238,12 @@
         "transferFamily": "decimal-fluency-g5:g5dc-money",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000AddTradeNumeric"
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "",
+      "body": "Check a likely misconception.",
       "conceptTag": "g5dc-money",
       "explanationVariants": [
         "Coin values name places.",
@@ -255,7 +251,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "A pocket holds 7 dimes and 9 pennies. Write the total amount in dollars as a decimal.",
+        "prompt": "Write 7 dimes and 9 pennies as a decimal number of dollars.",
         "answer": 0.79,
         "tolerance": 0.001,
         "unit": "",
@@ -307,7 +303,7 @@
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "One more, for the road.",
+      "body": "Solve the transfer challenge.",
       "conceptTag": "g5dc-money",
       "explanationVariants": [
         "Change is subtraction.",
@@ -315,22 +311,22 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Working in hundredths: 707 − 167 = ?",
-        "answer": 540,
-        "tolerance": 0,
+        "prompt": "You have $9.20 and spend $3.65 on lunch. How much money is left?",
+        "answer": 5.55,
+        "tolerance": 0.001,
         "unit": "",
         "commonErrors": [
           {
-            "value": 874,
-            "feedback": "That added the two amounts; the minus sign asks what is LEFT after taking 167 away."
+            "value": 6.45,
+            "feedback": "That flipped the short columns instead of trading — 0 − 5 and 2 − 6 are not legal moves when the top is smaller."
           },
           {
-            "value": 640,
-            "feedback": "One trade was taken but never paid back — the column you borrowed from must drop by one."
+            "value": 6.55,
+            "feedback": "A borrow reached the tenths column but the ones column was never charged for passing it along — that column must drop by one."
           }
         ],
         "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
-        "successFeedback": "Correct — 540."
+        "successFeedback": "Correct — $5.55."
       },
       "hints": [
         "Line up the points.",
@@ -358,16 +354,12 @@
         "transferFamily": "decimal-fluency-g5:g5dc-money",
         "delayed": true,
         "counterfactualPrompt": "If the point moved one place left, how many times smaller would the amount become?"
-      },
-      "variant": {
-        "gen": "g2-place-value-1000",
-        "form": "Pv1000SubtractTradeNumeric"
       }
     },
     {
       "id": "r1",
       "kind": "recap",
-      "body": "You did it!",
+      "body": "Summarize money problems.",
       "takeaways": [
         "Money is decimals with named places.",
         "A penny is one hundredth.",
@@ -382,8 +374,8 @@
       "concept": {
         "id": "rem-g5dc-money-c",
         "kind": "concept",
-        "body": "Every rule so far applies unchanged — align the points, compute in cents, and place the point two from the right.",
-        "narration": "Every rule so far applies unchanged — align the points, compute in cents, and place the point two from the right."
+        "body": "Line up the decimal points in money amounts. You can also compute in cents, then write the total with two decimal places.",
+        "narration": "Line up the decimal points in money amounts. You can also compute in cents, then write the total with two decimal places."
       },
       "check": {
         "id": "rem-g5dc-money-k",
@@ -396,21 +388,21 @@
         ],
         "widget": {
           "type": "numeric",
-          "prompt": "A pocket holds 2 dimes and 4 pennies. Write the total amount in dollars as a decimal.",
+          "prompt": "A sticker's price tag reads 24 cents. Cents are hundredths of a dollar — write the price as a decimal number of dollars.",
           "answer": 0.24,
           "tolerance": 0.001,
           "unit": "",
           "commonErrors": [
             {
-              "value": 0.06,
-              "feedback": "That counted every coin as a penny; a dime is worth ten of them."
+              "value": 24,
+              "feedback": "That keeps the price in CENTS. Each cent is one hundredth of a dollar, so the count moves behind the decimal point, ending in the hundredths place."
             },
             {
-              "value": 24,
-              "feedback": "That is the total in CENTS. Dollars need the point two places from the right."
+              "value": 2.4,
+              "feedback": "That reads the cents as tenths — 2.4 would be two dollars and forty cents. A dollar holds 100 cents, so 24 of them end two places after the point."
             }
           ],
-          "fallbackFeedback": "Work in the smallest place the numbers use, then decide where the point belongs.",
+          "fallbackFeedback": "One dollar is 100 cents, so each cent is a hundredth. Write the cents count so its last digit lands in the hundredths place.",
           "successFeedback": "Correct — 0.24."
         }
       }

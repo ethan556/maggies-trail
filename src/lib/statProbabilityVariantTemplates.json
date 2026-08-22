@@ -63,6 +63,72 @@
           }
         ],
         "fallbackFeedback": "Count the misses: 5³ = 125 rolls have no six, so 216 − 125 = 91 rolls have at least one."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Roll two dice. How many of the 36 outcomes show **at least one 5**?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 12, "feedback": "Adding the six outcomes from each die counts (5, 5) twice. Subtract that overlap once." },
+          { "value": 25, "feedback": "Twenty-five is the number of outcomes with no 5. Subtract it from all 36 outcomes." }
+        ],
+        "fallbackFeedback": "There are 5 × 5 = 25 outcomes with no 5, so 36 − 25 = 11 outcomes have at least one 5."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Flip five coins. How many of the 32 outcomes show **at least one tail**?",
+        "answer": 31,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 5, "feedback": "Five counts outcomes with exactly one tail. At least one tail includes all outcomes except HHHHH." },
+          { "value": 32, "feedback": "HHHHH has no tail, so one of the 32 outcomes must be excluded." }
+        ],
+        "fallbackFeedback": "Only HHHHH has no tail, so 32 − 1 = 31 outcomes have at least one tail."
+      },
+      {
+        "type": "numeric",
+        "prompt": "A four-section spinner has one red section. Spin it three times. How many of the 64 outcomes show **at least one red**?",
+        "answer": 37,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 27, "feedback": "Twenty-seven counts the outcomes with no red because each spin has three non-red choices." },
+          { "value": 48, "feedback": "Adding one-fourth three times counts overlaps more than once. Use the complement instead." }
+        ],
+        "fallbackFeedback": "The no-red outcomes number 3³ = 27, so 64 − 27 = 37 outcomes contain at least one red."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Roll two eight-sided dice. How many of the 64 outcomes show **at least one 8**?",
+        "answer": 15,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 16, "feedback": "Adding eight outcomes from each die counts (8, 8) twice. Remove the duplicate once." },
+          { "value": 49, "feedback": "Forty-nine counts the outcomes with no 8. Subtract that complement from 64." }
+        ],
+        "fallbackFeedback": "There are 7 × 7 = 49 outcomes with no 8, so 64 − 49 = 15 have at least one 8."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Six independent sensors each report pass or fail. How many of the 64 report patterns show **at least one fail**?",
+        "answer": 63,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 6, "feedback": "Six counts patterns with exactly one fail. At least one fail includes every pattern except all-pass." },
+          { "value": 64, "feedback": "The all-pass pattern contains no fail, so it must be excluded." }
+        ],
+        "fallbackFeedback": "Only the all-pass pattern has no fail, so 64 − 1 = 63 patterns have at least one fail."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Roll two ten-sided dice numbered 0 through 9. How many of the 100 outcomes show **at least one 0**?",
+        "answer": 19,
+        "tolerance": 0,
+        "commonErrors": [
+          { "value": 20, "feedback": "Adding ten outcomes for each die counts (0, 0) twice. Subtract the overlap once." },
+          { "value": 81, "feedback": "Eighty-one is the number of outcomes with no 0. Subtract it from 100." }
+        ],
+        "fallbackFeedback": "There are 9 × 9 = 81 outcomes with no 0, so 100 − 81 = 19 have at least one 0."
       }
     ],
     "conditional-probability__cpr-complement-table__mcq": [
@@ -655,6 +721,174 @@
           }
         ],
         "fallbackFeedback": "35 like at least one (40 − 5). Since 25 + 18 = 43 counts the both-likers twice, both = 43 − 35 = 8."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 36 students, 22 joined art club, 17 joined coding club, and 9 joined both. How many joined **at least one** club?",
+        "answer": 30,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 39,
+            "feedback": "That adds both club counts but counts the 9 students in both clubs twice. Subtract the overlap once."
+          },
+          {
+            "value": 9,
+            "feedback": "That is only the overlap. At least one club also includes students who joined just art or just coding."
+          },
+          {
+            "value": 13,
+            "feedback": "That is the art-only count, 22 − 9. The question asks for everyone in either club, including the overlap."
+          }
+        ],
+        "fallbackFeedback": "Add the two club counts, then remove the duplicated overlap once: 22 + 17 − 9 = 30."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 48 visitors, 31 entered the gallery, 24 joined a workshop, and 11 did neither. How many did **both**?",
+        "answer": 18,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 7,
+            "feedback": "That subtracts the full group from 31 + 24. First remove the 11 visitors who did neither to find the union."
+          },
+          {
+            "value": 55,
+            "feedback": "That is 31 + 24, where visitors who did both are counted twice. Compare it with the 37 who did at least one."
+          },
+          {
+            "value": 11,
+            "feedback": "That is the number who did neither. Use it to find that 37 visitors did at least one activity."
+          }
+        ],
+        "fallbackFeedback": "First, 48 − 11 = 37 did at least one. Then 31 + 24 − 37 = 18 did both."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 50 children, 28 can swim, 21 can cycle, and 8 can do both. How many can do **at least one** activity?",
+        "answer": 41,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 49,
+            "feedback": "That adds 28 + 21 but counts the 8 children who can do both twice. Subtract the overlap once."
+          },
+          {
+            "value": 8,
+            "feedback": "That is only the overlap. At least one activity includes the swim-only and cycle-only groups as well."
+          },
+          {
+            "value": 20,
+            "feedback": "That is the swim-only count, 28 − 8. The union must also include the cycle-only group and the overlap."
+          }
+        ],
+        "fallbackFeedback": "Use inclusion–exclusion: 28 + 21 − 8 = 41 children can do at least one activity."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 60 households, 35 use streaming, 27 use cable, and 9 use neither. How many use **both**?",
+        "answer": 11,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 2,
+            "feedback": "That compares 35 + 27 with all 60 households. The 9 using neither must be removed before finding the overlap."
+          },
+          {
+            "value": 62,
+            "feedback": "That is the double-counted sum 35 + 27. The overlap is the amount by which that sum exceeds the union of 51."
+          },
+          {
+            "value": 9,
+            "feedback": "That is the number using neither service. It helps find the union, but it is not the overlap."
+          }
+        ],
+        "fallbackFeedback": "First, 60 − 9 = 51 use at least one service. Then 35 + 27 − 51 = 11 use both."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 42 volunteers, 26 helped in the garden, 19 helped in the kitchen, and 10 helped in both. How many helped in **at least one** place?",
+        "answer": 35,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 45,
+            "feedback": "That adds both groups but counts the 10 volunteers who helped in both places twice. Subtract the overlap once."
+          },
+          {
+            "value": 10,
+            "feedback": "That is only the overlap. At least one place includes every garden-only and kitchen-only volunteer too."
+          },
+          {
+            "value": 16,
+            "feedback": "That is the garden-only count, 26 − 10. The question asks for the full union of the two groups."
+          }
+        ],
+        "fallbackFeedback": "Count the union once: 26 + 19 − 10 = 35 volunteers helped in at least one place."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 72 travellers, 44 used the train, 37 used the bus, and 15 used neither. How many used **both**?",
+        "answer": 24,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 9,
+            "feedback": "That subtracts all 72 travellers from 44 + 37. First remove the 15 who used neither to find the union."
+          },
+          {
+            "value": 81,
+            "feedback": "That is 44 + 37, where travellers who used both are counted twice. Compare it with the union of 57."
+          },
+          {
+            "value": 15,
+            "feedback": "That is the number who used neither. It determines the union but is not the number who used both."
+          }
+        ],
+        "fallbackFeedback": "First, 72 − 15 = 57 used at least one. Then 44 + 37 − 57 = 24 used both."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 64 readers, 39 chose fiction, 28 chose nonfiction, and 12 chose both. How many chose **at least one** type?",
+        "answer": 55,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 67,
+            "feedback": "That adds 39 + 28 but counts the 12 readers who chose both types twice. Remove that duplicate count once."
+          },
+          {
+            "value": 12,
+            "feedback": "That is only the overlap. At least one type includes readers who chose exactly one type as well."
+          },
+          {
+            "value": 27,
+            "feedback": "That is the fiction-only count, 39 − 12. The union also includes nonfiction-only readers and the overlap."
+          }
+        ],
+        "fallbackFeedback": "Use inclusion–exclusion: 39 + 28 − 12 = 55 readers chose at least one type."
+      },
+      {
+        "type": "numeric",
+        "prompt": "Of 90 attendees, 52 joined the morning session, 46 joined the afternoon session, and 14 joined neither. How many joined **both** sessions?",
+        "answer": 22,
+        "tolerance": 0,
+        "commonErrors": [
+          {
+            "value": 8,
+            "feedback": "That compares 52 + 46 with all 90 attendees. First remove the 14 who joined neither to find the union."
+          },
+          {
+            "value": 98,
+            "feedback": "That is the sum of the two session counts, where attendees in both sessions are counted twice."
+          },
+          {
+            "value": 14,
+            "feedback": "That is the number who joined neither session. It helps find the union but does not equal the overlap."
+          }
+        ],
+        "fallbackFeedback": "First, 90 − 14 = 76 joined at least one session. Then 52 + 46 − 76 = 22 joined both."
       }
     ],
     "conditional-probability__cpr-reversal-error__mcq": [
@@ -740,9 +974,9 @@
         "options": [
           {
             "id": "o1",
-            "label": "Those 40 students sit in both the row and the column, so they are counted twice.",
+            "label": "Because they sit in both the row and the column.",
             "correct": true,
-            "feedback": "Exactly — 100 + 110 = 210, which overshoots the 170 shaded students by precisely those 40."
+            "feedback": "Exactly — sitting in both means they're counted twice: 100 + 110 = 210, which overshoots the 170 shaded students by precisely those 40."
           },
           {
             "id": "o2",

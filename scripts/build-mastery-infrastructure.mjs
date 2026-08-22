@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { applyCandidateMappingOverrides } from './standards/apply-candidate-mapping-overrides.mjs';
 
 const root = process.cwd();
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
@@ -276,6 +277,12 @@ const lessonEvidence = lessonRows.map((l)=>{
   const os = l.conceptTags.map((t)=>objectives.get(t)).filter(Boolean);
   const maxDesignedLevel = os.some((o)=>o.evidence.retrievalReady) ? 5 : os.some((o)=>o.evidence.transferred) ? 4 : os.some((o)=>o.evidence.practiced) ? 3 : os.some((o)=>o.evidence.constructed) ? 2 : 1;
   return { ...l, maxDesignedLevel, evidenceRoles:[...new Set(os.flatMap((o)=>Object.entries(o.evidence).filter(([,v])=>v).map(([k])=>k)))] };
+});
+
+// Source-controlled bounded mappings override the broad name-based inference. This keeps exact
+// standard candidates and their lesson evidence reproducible without treating them as approvals.
+applyCandidateMappingOverrides(root, {
+  crosswalk:{courses}, objectives:{objectives:objectiveList}, lessonMap:{lessons:lessonEvidence}
 });
 
 const exactCount = objectiveList.filter((o)=>o.directManipulation.coverage==='exact').length;

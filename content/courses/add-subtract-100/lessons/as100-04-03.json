@@ -17,77 +17,48 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Match each event to its operation.",
+      "body": "Show what a leaving event does.",
    "conceptTag": "choose-steps",
    "widget": {
-    "type": "matchPairs",
-    "prompt": "Add or subtract? Match each event.",
-    "left": [
-     {
-      "id": "e1",
-      "label": "found 12 more coins"
-     },
-     {
-      "id": "e2",
-      "label": "spent 8 coins"
-     },
-     {
-      "id": "e3",
-      "label": "won 20 coins"
-     }
-    ],
-    "right": [
-     {
-      "id": "add1",
-      "label": "add 12"
-     },
-     {
-      "id": "sub1",
-      "label": "subtract 8"
-     },
-     {
-      "id": "add2",
-      "label": "add 20"
-     }
-    ],
-    "pairs": {
-     "e1": "add1",
-     "e2": "sub1",
-     "e3": "add2"
-    },
-    "pairErrors": [
-     {
-      "left": "e2",
-      "right": "add1",
-      "feedback": "'Spent' means the coins LEAVE — subtract 8, don't add."
-     },
-     {
-      "left": "e1",
-      "right": "sub1",
-      "feedback": "'Found more' means coins ARRIVE — add 12."
-     }
-    ],
-    "missFeedback": "Gain words add; spend/lose words subtract.",
-    "successFeedback": "Every event has its operation — now the order!"
+        "type": "numberLineHop",
+        "prompt": "You have 40 coins and spend 15. Hop to show what happens to the amount.",
+        "min": 20,
+        "max": 60,
+        "start": 40,
+        "hop": 15,
+        "hops": 1,
+        "direction": "back",
+        "commonLandings": [
+          {
+            "value": 55,
+            "feedback": "55 adds 15. Spending makes coins leave, so the jump must go back."
+          },
+          {
+            "value": 32,
+            "feedback": "32 removes only 8. The story says 15 coins were spent."
+          }
+        ],
+        "missFeedback": "Spending means subtract: 40 − 15 = 25.",
+        "successFeedback": "The amount moves back to 25. A leaving event tells you to subtract."
    },
    "predict": {
-    "prompt": "What decides whether a story step is ADD or SUBTRACT — the size of its numbers, or what HAPPENS in it?",
+        "prompt": "If 15 coins are spent, which way should the amount move?",
     "options": [
      {
-      "id": "action",
-      "label": "What happens — joining or leaving"
+            "id": "back",
+            "label": "Back, because coins leave"
      },
      {
-      "id": "numbers",
-      "label": "The size of the numbers"
+            "id": "forward",
+            "label": "Forward, because 15 is added"
      },
      {
-      "id": "words",
-      "label": "Whether it asks 'how many'"
+            "id": "stay",
+            "label": "Stay at 40"
      }
     ],
-    "outcomeId": "action",
-    "reveal": "Arriving, joining, and finding join amounts — leaving, popping, and giving away remove them. The EVENT picks the operation; the numbers just ride along."
+        "outcomeId": "back",
+        "reveal": "The hop moves back from 40 to 25. What happens in the story chooses the operation: leaving means subtract."
    }
   },
   {
@@ -101,7 +72,7 @@
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "40 pencils, gave away 15, then bought 12. How many now?",
+    "prompt": "Lee has 40 pencils. Lee gives away 15, then buys 12 more. How many pencils does Lee have now?",
     "answer": 37,
     "tolerance": 0,
     "commonErrors": [
@@ -140,7 +111,7 @@
    "conceptTag": "choose-steps",
    "widget": {
     "type": "dragOrder",
-    "prompt": "23 apples, buy 40, then use 18 for pie. Drag the steps in order.",
+    "prompt": "A baker has 23 apples. The baker buys 40 more, then uses 18 for a pie. Drag the steps into order.",
     "items": [
      {
       "id": "o-use",
@@ -182,7 +153,7 @@
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "23 apples, buy 40, then use 18 for pie. How many now?",
+    "prompt": "A baker has 23 apples. The baker buys 40 more, then uses 18 for a pie. How many apples remain?",
     "answer": 45,
     "tolerance": 0,
     "commonErrors": [
@@ -221,12 +192,6 @@
     "prompt": "Mia has 52 stamps, Sam has 38. How many MORE does Mia have?",
     "options": [
      {
-      "id": "a",
-      "label": "subtract: 52 − 38 = 14",
-      "correct": true,
-      "feedback": "Yes — 'how many more' compares, so find the difference: 14."
-     },
-     {
       "id": "b",
       "label": "add: 52 + 38 = 90",
       "feedback": "The word 'more' here COMPARES two people, not joins. Subtract: 52 − 38 = 14."
@@ -235,6 +200,12 @@
       "id": "c",
       "label": "add: 52 + 14 = 66",
       "feedback": "That uses the answer as a step. The compare is 52 − 38 = 14."
+     },
+     {
+      "id": "a",
+      "label": "subtract: 52 − 38 = 14",
+      "correct": true,
+      "feedback": "Yes — 'how many more' compares, so find the difference: 14."
      }
     ]
    },
@@ -259,7 +230,7 @@
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "64 crayons, 15 break, then 22 are given away. How many now?",
+    "prompt": "A class has 64 crayons. Fifteen break, then 22 are given away. How many usable crayons remain?",
     "answer": 27,
     "tolerance": 0,
     "commonErrors": [
@@ -316,7 +287,7 @@
     ],
     "widget": {
      "type": "numeric",
-     "prompt": "20 grapes, ate 5, then got 8 more. How many now?",
+     "prompt": "Ari has 20 grapes. Ari eats 5, then gets 8 more. How many grapes does Ari have now?",
      "answer": 23,
      "tolerance": 0,
      "commonErrors": [

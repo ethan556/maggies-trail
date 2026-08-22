@@ -142,27 +142,34 @@ describe("S197 long-division-g5 — routes re-derived, quotient and remainder bo
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveG4(s.variant.form, { prompt: w.prompt, options: [] });
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
           expect(evaluate(w, w.answer).correct).toBe(true);
 
-          const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
-          const f = s.variant.form as string;
-          if (f === "mbDivideBigNumeric") {
-            expect(n[0] / n[1]).toBe(w.answer);
-            expect(Number.isInteger(w.answer),
-              `${lesson.id}/${s.id}: this route returns a REAL quotient — a non-exact division yields a decimal`)
-              .toBe(true);
+          // g5l-01-02/k3 has no `variant`: S327_FIX_PG4.md / S329_PROGRESSION_PGD.md redesigned it as a
+          // hand-authored generalization check (divisor 40 vs k2's 20) and intentionally left the
+          // g4-multiply/mbDivideBigNumeric tag off — that generator only draws single-digit divisors, a
+          // pre-existing mismatch, so it was never a valid solver route for this step.
+          if (s.variant) {
+            const derived = solveG4(s.variant.form, { prompt: w.prompt, options: [] });
+            expect(derived, `${lesson.id}/${s.id} ${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+
+            const n = (w.prompt.match(/\d+/g) ?? []).map(Number);
+            const f = s.variant.form as string;
+            if (f === "mbDivideBigNumeric") {
+              expect(n[0] / n[1]).toBe(w.answer);
+              expect(Number.isInteger(w.answer),
+                `${lesson.id}/${s.id}: this route returns a REAL quotient — a non-exact division yields a decimal`)
+                .toBe(true);
+            }
+            if (f === "mbMultiplyTensNumeric") expect(n[0] * n[1]).toBe(w.answer);
+            if (f === "mbRemaindersNumeric") {
+              expect(n[0] - n[1] * n[2]).toBe(w.answer);
+              expect(w.answer,
+                `${lesson.id}/${s.id}: a remainder at or above the divisor means another group fits`)
+                .toBeLessThan(n[1]);
+              expect(w.answer).toBeGreaterThanOrEqual(0);
+            }
+            if (f === "mbInterpretRemaindersNumeric") expect(Math.ceil(n[0] / n[1])).toBe(w.answer);
           }
-          if (f === "mbMultiplyTensNumeric") expect(n[0] * n[1]).toBe(w.answer);
-          if (f === "mbRemaindersNumeric") {
-            expect(n[0] - n[1] * n[2]).toBe(w.answer);
-            expect(w.answer,
-              `${lesson.id}/${s.id}: a remainder at or above the divisor means another group fits`)
-              .toBeLessThan(n[1]);
-            expect(w.answer).toBeGreaterThanOrEqual(0);
-          }
-          if (f === "mbInterpretRemaindersNumeric") expect(Math.ceil(n[0] / n[1])).toBe(w.answer);
 
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);

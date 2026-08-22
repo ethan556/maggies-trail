@@ -15,53 +15,24 @@
     {
       "id": "i1",
       "kind": "interactive",
-      "body": "Family members share the **same three numbers**.",
+      "body": "Build one array and read its multiplication and division facts.",
       "conceptTag": "fact-families",
       "widget": {
-        "type": "matchPairs",
-        "prompt": "Match each multiplication to a division from its own family.",
-        "left": [
-          {
-            "id": "l1",
-            "label": "3 × 4 = 12"
-          },
-          {
-            "id": "l2",
-            "label": "2 × 5 = 10"
-          },
-          {
-            "id": "l3",
-            "label": "6 × 3 = 18"
-          }
-        ],
-        "right": [
-          {
-            "id": "r1",
-            "label": "12 ÷ 4 = 3"
-          },
-          {
-            "id": "r2",
-            "label": "18 ÷ 3 = 6"
-          },
-          {
-            "id": "r3",
-            "label": "10 ÷ 5 = 2"
-          }
-        ],
-        "pairs": {
-          "l1": "r1",
-          "l2": "r3",
-          "l3": "r2"
+        "type": "areaModel",
+        "prompt": "Build a 3-by-4 array with 12 squares. Read it by rows and by columns to find the two division facts.",
+        "targetArea": 12,
+        "wMax": 6,
+        "hMax": 6,
+        "wStart": 3,
+        "hStart": 3,
+        "requireFactors": {
+          "w": 3,
+          "h": 4
         },
-        "pairErrors": [
-          {
-            "left": "l1",
-            "right": "r3",
-            "feedback": "10 ÷ 5 = 2 lives in the 2-5-10 family. 3 × 4 = 12 needs a fact using ITS numbers: 3, 4, and 12."
-          }
-        ],
-        "missFeedback": "A family shares all three numbers. Match each multiplication to the division built from the exact same trio.",
-        "successFeedback": "Every fact found its family — same three numbers, four different jobs."
+        "factorFeedback": "Use the family's factors, 3 and 4. A different 12-square shape does not show both named facts.",
+        "lowFeedback": "The array has fewer than 12 squares. Build 3 rows of 4 or 4 rows of 3.",
+        "highFeedback": "The array has more than 12 squares. Build 3 rows of 4 or 4 rows of 3.",
+        "successFeedback": "The same array shows 3 × 4 = 12, 12 ÷ 3 = 4, and 12 ÷ 4 = 3. That gives two division facts."
       },
       "predict": {
         "prompt": "How many DIVISION facts share the family of 3 × 4 = 12?",
@@ -126,8 +97,9 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "Why families matter: **every times fact you know hands you two division facts for free**. Stuck on 28 ÷ 4? Don't divide — remember the family: 4 × 7 = 28. The 7 was sitting there all along.",
-      "figure": "mult3-fact-family"
+      "body": "Why families matter: **one multiplication fact unlocks its inverse division equations**. When the factors differ, there are two distinct divisions. When the factors match, the two written divisions repeat the same equation. For 4 × 7 = 28, the family gives 28 ÷ 4 = 7 and 28 ÷ 7 = 4.",
+      "figure": "mult3-fact-family",
+      "narration": "Why families matter: **one multiplication fact unlocks its inverse division equations**. When the factors differ, there are two distinct divisions. When the factors match, the two written divisions repeat the same equation. For 4 × 7 = 28, the family gives 28 ÷ 4 = 7 and 28 ÷ 7 = 4."
     },
     {
       "id": "k2",
@@ -242,27 +214,27 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "The family of 5, 5, and 25 — how many DIFFERENT facts does it have?",
+        "prompt": "How many distinct equations remain in the fact family for 5, 5, and 25?",
         "options": [
           {
             "id": "a",
-            "label": "2 — just 5 × 5 = 25 and 25 ÷ 5 = 5",
+            "label": "2: one multiplication and one division.",
             "correct": true,
             "feedback": "Flipping 5 × 5 repeats the same fact, and both divisions by 5 are identical. Twins collapse the family to 2."
           },
           {
             "id": "b",
-            "label": "4, like every family",
+            "label": "4: the two multiplication forms are different.",
             "feedback": "Try writing all four: the flip of 5 × 5 is 5 × 5 again, and 25 ÷ 5 appears twice. Equal factors make repeats."
           },
           {
             "id": "c",
-            "label": "1",
+            "label": "1: all facts collapse into one statement.",
             "feedback": "There are two: one multiplication (5 × 5 = 25) and one division (25 ÷ 5 = 5). Division still shows up."
           },
           {
             "id": "d",
-            "label": "3",
+            "label": "3: only the division fact repeats.",
             "feedback": "Count again — the multiplication has no different flip, and there's only one distinct division. That leaves exactly 2."
           }
         ]
@@ -351,11 +323,11 @@
     {
       "id": "r1",
       "kind": "recap",
-      "body": "Four facts for the price of one.",
+      "body": "One array connects a whole fact family.",
       "takeaways": [
-        "Three numbers make a family: two multiplications and two divisions, one array.",
-        "Every times fact you know unlocks its two divisions for free.",
-        "Doubles families (like 5, 5, 25) collapse to just two facts."
+        "Three numbers can make two multiplications and two divisions from one array.",
+        "Different factors produce two distinct inverse division equations.",
+        "Equal-factor families, such as 5, 5, and 25, collapse repeated equations."
       ],
       "teaser": "the strange ones — what 1 and 0 do to multiplication and division will surprise you."
     }

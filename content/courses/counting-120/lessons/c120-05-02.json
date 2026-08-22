@@ -17,45 +17,48 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Ten more.",
+   "body": "Make a jump of ten.",
    "conceptTag": "ten-more-less",
    "widget": {
-    "type": "numeric",
-    "prompt": "What is ten more than 45?",
-    "answer": 55,
-    "tolerance": 0,
-    "commonErrors": [
+    "type": "numberLineHop",
+    "prompt": "Start at 45. Make one hop of 10 forward.",
+    "min": 35,
+    "max": 65,
+    "start": 45,
+    "hop": 10,
+    "hops": 1,
+    "direction": "forward",
+    "commonLandings": [
      {
       "value": 46,
-      "feedback": "That added ONE. Ten more changes the tens: 45 → 55."
+      "feedback": "46 is one more, not ten more. Make a jump of 10."
      },
      {
       "value": 35,
-      "feedback": "That went ten LESS. Ten more counts up: 45 → 55."
+      "feedback": "35 is ten less. The arrow needs to go forward for ten more."
      }
     ],
-    "fallbackFeedback": "Ten more than 45 is 55 — the 5 stays.",
     "missFeedback": "Add a whole ten: 45 → 55.",
     "successFeedback": "55 — the ones stayed 5!"
    },
    "predict": {
-    "prompt": "Ten more than 45 — which digit will change?",
+    "prompt": "Where will a forward jump of 10 from 45 land?",
     "options": [
      {
-      "id": "tens",
-      "label": "The tens digit"
+      "id": "fifty-five",
+      "label": "55"
      },
      {
-      "id": "ones",
-      "label": "The ones digit"
+      "id": "forty-six",
+      "label": "46"
      },
      {
-      "id": "both",
-      "label": "Both digits"
+      "id": "thirty-five",
+      "label": "35"
      }
     ],
-    "outcomeId": "tens",
-    "reveal": "Ten more is one whole row down — the tens digit climbs by one while the ones digit doesn't budge. The one exception is a full tens digit: ten more than 90 rolls the 9 over and makes 100, ten tens bundled into a hundred."
+    "outcomeId": "fifty-five",
+    "reveal": "The 10-jump lands on 55. The tens digit grows by one while the ones digit stays 5."
    }
   },
   {
@@ -172,15 +175,15 @@
     "prompt": "When you add ten to 34, what stays the same?",
     "options": [
      {
+      "id": "b",
+      "label": "the tens digit",
+      "feedback": "The tens CHANGE (3 → 4). The ones digit 4 is what stays."
+     },
+     {
       "id": "a",
       "label": "the ones digit (4)",
       "correct": true,
       "feedback": "Yes — 34 and 44 both end in 4; only the tens grew."
-     },
-     {
-      "id": "b",
-      "label": "the tens digit",
-      "feedback": "The tens CHANGE (3 → 4). The ones digit 4 is what stays."
      },
      {
       "id": "c",
@@ -213,12 +216,6 @@
     "prompt": "What is ten more than 58?",
     "options": [
      {
-      "id": "a",
-      "label": "68",
-      "correct": true,
-      "feedback": "Yes — add a whole ten: 58 → 68, the 8 stays."
-     },
-     {
       "id": "b",
       "label": "59",
       "feedback": "That's one more, not ten more. Ten more is 68."
@@ -227,6 +224,12 @@
       "id": "c",
       "label": "48",
       "feedback": "That's ten LESS. Ten more counts up: 58 → 68."
+     },
+     {
+      "id": "a",
+      "label": "68",
+      "correct": true,
+      "feedback": "Yes — add a whole ten: 58 → 68, the 8 stays."
      }
     ]
    },
@@ -243,38 +246,34 @@
   {
    "id": "ch1",
    "kind": "challenge",
-   "body": "Ten more past the chart!",
+   "body": "Count by tens past a hundred!",
    "conceptTag": "ten-more-less",
    "explanationVariants": [
-    "Ten more than 90 is 100 — the tens roll into a hundred.",
-    "90 plus a whole ten reaches 100."
+    "Counting by tens, one more ten after 90 is 100.",
+    "70, 80, 90, then one more ten: 100."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "What is ten more than 90?",
+    "prompt": "Count by tens: 70, 80, 90, ___. What comes next?",
     "answer": 100,
     "tolerance": 0,
     "commonErrors": [
      {
       "value": 91,
-      "feedback": "That added ONE. Ten more than 90 reaches 100."
+      "feedback": "That counts on by ONE. This pattern jumps by a whole TEN each time: 90 → 100."
      },
      {
-      "value": 80,
-      "feedback": "That went ten LESS. Ten more counts up: 90 → 100."
+      "value": 110,
+      "feedback": "That's two tens of a jump. From 90, just one more ten is 100."
      }
     ],
-    "fallbackFeedback": "Ten more than 90 is 100."
+    "fallbackFeedback": "Each jump in this pattern is a whole ten. One more ten after 90 is 100."
    },
    "hints": [
-    "Add a whole ten to 90.",
-    "Nine tens plus one ten.",
+    "Each step in this pattern is a whole ten.",
+    "One more ten after 90.",
     "100."
-   ],
-   "variant": {
-    "gen": "g1-counting-120",
-    "form": "TenMoreLessNumeric"
-   }
+   ]
   },
   {
    "id": "r1",

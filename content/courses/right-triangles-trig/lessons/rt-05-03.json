@@ -216,36 +216,18 @@
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Read the sign.",
+      "body": "Make the cosine sign change visible.",
       "widget": {
-        "type": "mcq",
-        "prompt": "For sides a, b, c (c largest), what does the SIGN of a² + b² − c² tell you about the angle opposite c?",
-        "options": [
-          {
-            "id": "o1",
-            "label": "Positive → acute, zero → right, negative → obtuse",
-            "correct": true,
-            "feedback": "It's Chapter 1's classifier reborn: the sign of the correction numerator IS the sign of cos C, which classifies the angle."
-          },
-          {
-            "id": "o2",
-            "label": "Nothing — only the magnitude matters",
-            "correct": false,
-            "feedback": "The sign carries the classification: cos C inherits it, and negative cosine means obtuse. Magnitude just says how much."
-          },
-          {
-            "id": "o3",
-            "label": "Negative means the triangle is impossible",
-            "correct": false,
-            "feedback": "Perfectly possible — obtuse triangles live there. Impossible shows up as a cosine below −1, not merely negative."
-          },
-          {
-            "id": "o4",
-            "label": "Positive means the triangle is right-angled",
-            "correct": false,
-            "feedback": "Right angles need EXACTLY zero (a² + b² = c²). Positive leaves the angle acute."
-          }
-        ]
+        "type": "triangleSolve",
+        "mode": "sas",
+        "a": 5,
+        "b": 12,
+        "target": 13,
+        "start": 60,
+        "prompt": "Keep sides 5 and 12 fixed. Open the included angle until the third side is 13, then read the angle.",
+        "successFeedback": "The angle reaches 90°. Because 5² + 12² = 13², the law-of-cosines correction term vanishes exactly at a right angle.",
+        "lowFeedback": "The third side is under 13, so the included angle is still acute.",
+        "highFeedback": "The third side is over 13, so the included angle is obtuse."
       }
     },
     {
@@ -263,25 +245,25 @@
         "options": [
           {
             "id": "o1",
-            "label": "Law of Cosines — SAS is its home turf",
+            "label": "Law of Cosines for a known SAS triangle",
             "correct": true,
             "feedback": "The included angle plugs straight into c² = a² + b² − 2ab·cos C."
           },
           {
             "id": "o2",
-            "label": "Law of Sines",
+            "label": "Law of Sines for a known SAS triangle",
             "correct": false,
             "feedback": "Sines needs a side matched with its OPPOSITE angle — the included angle faces the side you don't have yet. Cosines first."
           },
           {
             "id": "o3",
-            "label": "SOH-CAH-TOA directly",
+            "label": "SOH-CAH-TOA for a known SAS triangle",
             "correct": false,
             "feedback": "The plain ratios require a right angle, which SAS doesn't promise. Cosines handles any included angle."
           },
           {
             "id": "o4",
-            "label": "The Pythagorean theorem",
+            "label": "Pythagoras for a known SAS triangle",
             "correct": false,
             "feedback": "Only if the included angle is exactly 90° — otherwise you need the full formula with its correction term."
           }

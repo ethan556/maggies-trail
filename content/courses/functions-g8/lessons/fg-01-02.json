@@ -13,58 +13,42 @@
    "figure": "mapping-diagram"
   },
   {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Check a list of pairs.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "Is this a function? (1, 5), (2, 7), (3, 9)",
-    "options": [
-     {
-      "id": "a",
-      "label": "Yes — each input appears once with one output",
-      "correct": true,
-      "feedback": "Right — inputs 1, 2, 3 each have exactly one output."
-     },
-     {
-      "id": "b",
-      "label": "No — the outputs are all different",
-      "correct": false,
-      "feedback": "Different outputs are expected and fine — what matters is each INPUT having one output, which holds here."
-     },
-     {
-      "id": "c",
-      "label": "No — the numbers increase",
-      "correct": false,
-      "feedback": "Increasing values don't affect whether it's a function — each input still maps to one output."
-     },
-     {
-      "id": "d",
-      "label": "Only if you add more pairs",
-      "correct": false,
-      "feedback": "It's already a function as written — every input has exactly one output."
-     }
-    ]
-   },
-   "predict": {
-    "prompt": "What would BREAK a function — one input reused with different outputs, or one output reused by different inputs?",
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Sweep one input at a time and count how many outputs it reaches.",
+      "widget": {
+        "type": "verticalLineScanner",
+        "prompt": "Sweep across the discrete relation. Find the repeated input that reaches two different outputs, then decide whether the relation is a function.",
+        "relation": "discreteNonFunction",
+        "targetVerdict": "not-function",
+        "xMin": -5,
+        "xMax": 5,
+        "scanStart": -5,
+        "scanStep": 0.5,
+        "requiredSweeps": 8,
+        "successFeedback": "Not a function. At least one input lines up with two outputs, so the one-output promise is broken.",
+        "moreSweepFeedback": "Sweep farther across the inputs. One repeated input with two output points is enough to disprove the function claim.",
+        "verdictFeedback": "Count outputs while the scanner fixes one input. Any count above one means the relation is not a function."
+      },
+      "predict": {
+        "prompt": "Which situation breaks the definition of a function?",
     "options": [
      {
       "id": "input",
-      "label": "One input with different outputs"
+            "label": "One input paired with different outputs"
      },
      {
       "id": "output",
-      "label": "One output from different inputs"
+            "label": "Different inputs sharing one output"
      },
      {
       "id": "either",
-      "label": "Either one breaks it"
+            "label": "Either situation breaks it"
      }
     ],
     "outcomeId": "input",
-    "reveal": "A function promises each input exactly one answer — inputs may never contradict themselves. Outputs are free to repeat all they like."
-   }
+        "reveal": "A function assigns exactly one output to each input. Several inputs may share an output, but one input cannot point to two different outputs."
+      }
   },
   {
    "id": "c2",
@@ -126,7 +110,7 @@
     "options": [
      {
       "id": "a",
-      "label": "Yes — each input appears once (the repeated output is fine)",
+      "label": "Yes — each input appears exactly once",
       "correct": true,
       "feedback": "Right — inputs 1, 2, 3 are all unique; sharing output 8 doesn't break anything."
      },
@@ -198,39 +182,39 @@
   {
    "id": "k3",
    "kind": "check",
-   "body": "A clean function table.",
+   "body": "A table with a partial repeat.",
    "conceptTag": "fg-function-test",
    "explanationVariants": [
-    "Each input (2, 4, 6) appears exactly once, so it's a function even though every output is 1.",
-    "Unique inputs mean it's a function; the shared output 1 doesn't matter."
+    "Each input (2, 5, 9) appears exactly once, so the table is a function — even though two outputs (7) match.",
+    "Unique inputs mean it's a function; the outputs matching for two of them doesn't matter."
    ],
    "widget": {
     "type": "mcq",
-    "prompt": "Is this a function? (2, 1), (4, 1), (6, 1)",
+    "prompt": "A table has inputs 2, 5, 9 with outputs 7, 7, 3. Is it a function?",
     "options": [
      {
       "id": "a",
-      "label": "Yes — each input appears once",
+      "label": "Yes — inputs 2, 5, 9 are each listed once",
       "correct": true,
-      "feedback": "Right — inputs 2, 4, 6 are unique; the shared output 1 is allowed."
+      "feedback": "Right — every input is unique; outputs 7 and 7 matching for two of them is allowed."
      },
      {
       "id": "b",
-      "label": "No — the output is always 1",
+      "label": "No — the output 7 repeats",
       "correct": false,
-      "feedback": "A constant output is fine — each input still maps to exactly one value (1)."
+      "feedback": "Repeated OUTPUTS are allowed — only a repeated INPUT with different outputs breaks the rule, and no input here repeats."
      },
      {
       "id": "c",
-      "label": "No — a function needs different outputs",
+      "label": "No — a table function needs every output to differ",
       "correct": false,
-      "feedback": "Functions don't require different outputs — one output per input is the only rule."
+      "feedback": "Functions don't require different outputs — two inputs may share one, as 2 and 5 do here."
      },
      {
       "id": "d",
-      "label": "Only if the output changed each time",
+      "label": "Only if 9 also had output 7",
       "correct": false,
-      "feedback": "The output staying at 1 is perfectly valid — it's still one output per input."
+      "feedback": "The rule doesn't need ALL outputs to match — 2 and 5 sharing 7 while 9 has 3 is still perfectly fine."
      }
     ]
    }

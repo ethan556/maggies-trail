@@ -10,9 +10,9 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "Both fractions must be renamed, not just one. Each gets its own scaling factor, chosen so that both land on the shared denominator.",
-      "narration": "Both fractions must be renamed, not just one. Each gets its own scaling factor, chosen so that both land on the shared denominator."
+      "figure": "fm-common-denom",
+      "body": "Both fractions must be renamed. In the model, 1/2 scales by 3 and 1/3 scales by 2 so both fractions arrive at sixths.",
+      "narration": "Both fractions must be renamed. In the model, 1/2 scales by 3 and 1/3 scales by 2 so both fractions arrive at sixths."
     },
     {
       "id": "i1",
@@ -147,18 +147,18 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "1/4 and 1/6 into twelfths: the first scales by 3, the second by 2. Different factors, same destination.",
-      "narration": "1/4 and 1/6 into twelfths: the first scales by 3, the second by 2. Different factors, same destination."
+      "figure": "fm-common-denom",
+      "body": "Different scaling factors can lead to the same denominator. The model's 1/2 = 3/6 and 1/3 = 2/6 show the same method used to rename fourths and sixths as twelfths.",
+      "narration": "Different scaling factors can lead to the same denominator. The model's 1/2 = 3/6 and 1/3 = 2/6 show the same method used to rename fourths and sixths as twelfths."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Repair the misconception.",
       "conceptTag": "g5u-rename",
       "widget": {
         "type": "fractionBar",
-        "prompt": "Rename 1/6 into twelfths.",
+        "prompt": "A learner changed only the denominator and built 1/12. Repair one sixth by scaling both parts to 2/12.",
         "targetNum": 2,
         "targetDen": 12,
         "numMin": 1,
@@ -166,7 +166,7 @@
         "denMin": 1,
         "denMax": 12,
         "numStart": 1,
-        "denStart": 1,
+        "denStart": 12,
         "successFeedback": "2/12 — sixths scale by 2 to reach twelfths, while fourths scale by 3.",
         "lowFeedback": "That build is SHORTER than 2/12 — either shade more pieces or make each piece larger until the lengths match.",
         "highFeedback": "That build is LONGER than 2/12 — either shade fewer pieces or make each piece smaller until the lengths match.",
@@ -217,23 +217,23 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "1/2 = ?/6. What number goes on top?",
-        "answer": 3,
+        "prompt": "3/4 = ?/12. What number goes on top?",
+        "answer": 9,
         "tolerance": 0,
         "unit": "",
-        "previewDenominator": 6,
+        "previewDenominator": 12,
         "commonErrors": [
           {
-            "value": 1,
-            "feedback": "The bottom was multiplied to reach 6, so the top must be multiplied by the same factor."
+            "value": 3,
+            "feedback": "The bottom was multiplied by 3 to reach 12, so the top 3 must be multiplied by the same ×3."
           },
           {
-            "value": 4,
-            "feedback": "That subtracted the denominators. Renaming SCALES both parts; it never subtracts."
+            "value": 8,
+            "feedback": "That subtracted the denominators (12−4). Renaming SCALES both parts; it never subtracts."
           }
         ],
         "fallbackFeedback": "Give both fractions the same piece size first; after that the pieces simply count.",
-        "successFeedback": "Correct — 3."
+        "successFeedback": "Correct — 9."
       },
       "hints": [
         "Scale top and bottom.",
@@ -278,7 +278,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Scale 1/4 by ×3 on top and bottom. What is the new numerator?",
+        "prompt": "A learner scales 1/4 to twelfths but writes 2/12. What numerator repairs the equivalent fraction?",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
@@ -338,7 +338,7 @@
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "1/2 = ?/6. What number goes on top?",
+        "prompt": "1/2 = ?/6. Use the shared sixth-size pieces to complete this equivalent fraction. What number goes on top?",
         "answer": 3,
         "tolerance": 0,
         "unit": "",
@@ -406,8 +406,9 @@
       "concept": {
         "id": "rem-g5u-rename-c",
         "kind": "concept",
-        "body": "1/4 and 1/6 into twelfths: the first scales by 3, the second by 2. Different factors, same destination.",
-        "narration": "1/4 and 1/6 into twelfths: the first scales by 3, the second by 2. Different factors, same destination."
+        "body": "A common denominator lets 1/2 and 1/3 share the same piece size: sixths. Renaming never changes either fraction's value — each fraction is scaled up by whatever factor turns its OWN denominator into 6, and that factor can differ from one fraction to the next.",
+        "narration": "A common denominator lets 1/2 and 1/3 share the same piece size: sixths. Renaming never changes either fraction's value — each fraction is scaled up by whatever factor turns its OWN denominator into 6, and that factor can differ from one fraction to the next.",
+        "figure": "fm-common-denom"
       },
       "check": {
         "id": "rem-g5u-rename-k",
@@ -419,23 +420,34 @@
           "Same destination."
         ],
         "widget": {
-          "type": "numeric",
-          "prompt": "Scale 1/6 by ×2 on top and bottom. What is the new numerator?",
-          "answer": 2,
-          "tolerance": 0,
-          "unit": "",
-          "commonErrors": [
+          "type": "mcq",
+          "prompt": "To rename 1/4 and 1/6 both to twelfths, a learner scales both by ×3. What is wrong with that plan?",
+          "options": [
             {
-              "value": 1,
-              "feedback": "Scaling by ×2 has to reach the top as well, or the fraction's value changes."
+              "id": "o0",
+              "label": "1/6 needs ×2, not ×3 — only 1/4 needs ×3 to reach twelfths",
+              "correct": true,
+              "feedback": "Correct — 1/4 scales by 3 to reach 3/12, but 1/6 only needs ×2 to reach 2/12; each fraction gets its own factor."
             },
             {
-              "value": 12,
-              "feedback": "That scaled the DENOMINATOR; the question asks what sits on top afterwards."
+              "id": "o1",
+              "label": "Nothing is wrong; ×3 works for both",
+              "correct": false,
+              "feedback": "Scaling 1/6 by ×3 gives 3/18, not twelfths at all — the factor must match each fraction's own denominator gap."
+            },
+            {
+              "id": "o2",
+              "label": "Both fractions need ×6 instead",
+              "correct": false,
+              "feedback": "×6 way overshoots; 1/4 needs only ×3 and 1/6 needs only ×2 to land on twelfths."
+            },
+            {
+              "id": "o3",
+              "label": "The numerators should be added instead",
+              "correct": false,
+              "feedback": "Renaming scales top and bottom together; it never adds the numerators of the two original fractions."
             }
-          ],
-          "fallbackFeedback": "Give both fractions the same piece size first; after that the pieces simply count.",
-          "successFeedback": "Correct — 2."
+          ]
         }
       }
     }

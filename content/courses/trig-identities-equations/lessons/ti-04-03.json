@@ -9,7 +9,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "Double-angle identities SOLVE and PROVE. To prove sin 2θ/sin θ = 2 cos θ: expand the top — 2 sinθ cosθ/sinθ = 2 cos θ. The sin θ cancels. Whenever a '2θ' meets a 'θ', expand the double angle so everything speaks one angle.",
+      "body": "Double-angle identities SOLVE and PROVE. For sin 2θ/sin θ = 2 cos θ, first state the common domain sin θ ≠ 0. Then expand the numerator and cancel the nonzero sin θ. At sin θ = 0, the original quotient is undefined even though 2 cos θ is defined, so those values remain excluded.",
       "figure": "ti-double-prove"
     },
     {
@@ -33,7 +33,7 @@
           }
         ],
         "outcomeId": "no",
-        "reveal": "No: at θ = 70°, the doubled point sits at 140° — second quadrant, cosine negative — while θ itself is comfortably acute. Watch the direct point cross the vertical axis at θ = 45°. Proofs that expand sin 2θ = 2 sin θ cos θ work in every quadrant precisely because the formula carries its own signs."
+        "reveal": "No: at θ = 70°, the doubled point sits at 140°, where cosine is negative, while θ is acute. The expansion sin 2θ = 2 sin θ cos θ holds for every θ. A quotient formed from it still has its own common domain: cancelling sin θ is legal only when sin θ ≠ 0."
       },
       "widget": {
         "type": "unitCircleExplore",
@@ -51,12 +51,12 @@
           {
             "id": "signError",
             "label": "sin²θ − cos²θ (with 2 sin θ cos θ)",
-            "feedback": "Mirrored: this candidate stays positive while the real cos 2θ goes negative past θ = 45° — the two points split across the vertical axis exactly when 2θ crosses it. The expansion 2 sin θ cos θ over sin θ collapses to 2 cos θ because the true faces never need a quadrant patch."
+            "feedback": "Mirrored: this candidate stays positive while the real cos 2θ goes negative past θ = 45°. The expansion is valid for every θ, but cancelling sin θ in the related quotient is valid only on sin θ ≠ 0; excluded zeros remain excluded."
           }
         ],
-        "successFeedback": "Glued at 70°, with 2θ at 140° and cos 2θ negative — the formula rode through the crossing untouched. That is why “expand sin 2θ first” is the right opening for the proof: identities that hold everywhere can be cancelled anywhere.",
-        "lowFeedback": "Formula's right — continue to 70°, past the crossing at 45°.",
-        "highFeedback": "Past 70° — back up; the reading is just beyond the crossing."
+        "successFeedback": "Glued at 70°: the double-angle expansion holds through the crossing. In the quotient sin 2θ/sin θ, however, cancellation is legal only on the common domain sin θ ≠ 0. Values with sin θ = 0 remain excluded.",
+        "lowFeedback": "The expansion is right — continue to 70°. For the quotient, remember the common-domain restriction sin θ ≠ 0.",
+        "highFeedback": "Past 70° — back up. The quotient's excluded values sin θ = 0 still remain excluded."
       }
     },
     {
@@ -65,28 +65,28 @@
       "body": "Simplify a ratio.",
       "conceptTag": "ti-double-action",
       "explanationVariants": [
-        "sin 2θ/cos θ = 2 sinθ cosθ/cosθ = 2 sin θ.",
-        "Expand, cancel the cos θ: 2 sin θ."
+        "On the common domain cos θ ≠ 0, sin 2θ/cos θ = 2 sinθ cosθ/cosθ = 2 sin θ. At cos θ = 0, the original quotient remains undefined.",
+        "First record cos θ ≠ 0. Then expand and cancel the nonzero cos θ; the exclusion remains."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Simplify sin 2θ / cos θ.",
+        "prompt": "On the common domain cos θ ≠ 0, simplify sin 2θ / cos θ.",
         "options": [
           {
             "id": "o1",
             "label": "2 sin θ",
             "correct": true,
-            "feedback": "Right — 2 sinθ cosθ/cosθ = 2 sin θ."
+            "feedback": "Right — on cos θ ≠ 0, cancellation gives 2 sin θ. Values with cos θ = 0 remain excluded because the original quotient is undefined."
           },
           {
             "id": "o2",
             "label": "2 cos θ",
-            "feedback": "The cos θ CANCELS, leaving the sin θ factor: 2 sin θ."
+            "feedback": "On cos θ ≠ 0, the cos θ cancels, leaving 2 sin θ. The original quotient's excluded zeros of cos remain excluded."
           },
           {
             "id": "o3",
             "label": "sin θ",
-            "feedback": "Don't drop the factor 2 from the double-angle expansion: 2 sin θ."
+            "feedback": "Don't drop the factor 2: on cos θ ≠ 0, the result is 2 sin θ. Values with cos θ = 0 remain excluded."
           }
         ]
       },
@@ -224,7 +224,7 @@
         "commonErrors": [
           {
             "value": 4.19,
-            "feedback": "4.19 ≈ 2π/3 + 4π/3 forgets x = 0 (from cosx = 1). Including it: sum still 2π ≈ 6.28 (0 adds nothing) — recheck: 2π/3 + 4π/3 = 2π already. 6.28."
+            "feedback": "4.19 is about 4π/3, so it counts only one of the two solutions from cos x = −1/2. Add 2π/3 and 4π/3; x = 0 adds nothing, so the full sum is 2π ≈ 6.28."
           },
           {
             "value": 3.14,
@@ -243,7 +243,7 @@
       "kind": "recap",
       "body": "Expand to conquer.",
       "takeaways": [
-        "Expand any 2θ so the whole expression shares one angle.",
+        "For a quotient, state its common domain before expanding or cancelling; excluded values remain excluded.",
         "For equations: rearrange to a product = 0 and factor — never divide by a trig factor.",
         "A quadratic in cos x or sin x is the usual payoff."
       ],
@@ -256,7 +256,7 @@
       "concept": {
         "id": "rem-ti0403-c",
         "kind": "concept",
-        "body": "Expand double angles to unify the angle, then for equations move everything to one side and FACTOR (never divide by a trig factor that can be zero)."
+        "body": "For quotient identities, state the common domain before cancellation and preserve every exclusion. For equations, move everything to one side and factor instead of dividing by a trig factor that can be zero."
       },
       "check": {
         "id": "rem-ti0403-k",
@@ -264,28 +264,28 @@
         "body": "One simplification.",
         "conceptTag": "ti-double-action",
         "explanationVariants": [
-          "cos 2θ/(cosθ − sinθ) = (cos²θ − sin²θ)/(cosθ − sinθ) = (cosθ − sinθ)(cosθ + sinθ)/(cosθ − sinθ) = cosθ + sinθ.",
-          "Factor the difference of squares on top, cancel."
+          "On the common domain cos θ − sin θ ≠ 0, factor cos 2θ to cancel the nonzero factor and obtain cos θ + sin θ. At θ = π/4 + kπ, the original quotient is undefined, so those values remain excluded.",
+          "First record cos θ − sin θ ≠ 0. Then factor the numerator and cancel; the excluded values remain excluded."
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Simplify cos 2θ / (cos θ − sin θ).",
+          "prompt": "On the common domain cos θ − sin θ ≠ 0, simplify cos 2θ / (cos θ − sin θ).",
           "options": [
             {
               "id": "o1",
               "label": "cos θ + sin θ",
               "correct": true,
-              "feedback": "Right — cos²θ − sin²θ factors as (cosθ − sinθ)(cosθ + sinθ); cancel the first factor."
+              "feedback": "Right — on cos θ − sin θ ≠ 0, factor and cancel to get cos θ + sin θ. Values θ = π/4 + kπ remain excluded."
             },
             {
               "id": "o2",
               "label": "cos θ − sin θ",
-              "feedback": "That's the factor being CANCELLED. What remains is the OTHER factor: cos θ + sin θ."
+              "feedback": "That is the factor being cancelled on cos θ − sin θ ≠ 0. The other factor remains, and θ = π/4 + kπ stays excluded."
             },
             {
               "id": "o3",
               "label": "cos 2θ",
-              "feedback": "Expand cos 2θ as a difference of squares and cancel: cos θ + sin θ."
+              "feedback": "On cos θ − sin θ ≠ 0, expand as a difference of squares and cancel to get cos θ + sin θ. The original quotient's excluded values remain excluded."
             }
           ]
         }

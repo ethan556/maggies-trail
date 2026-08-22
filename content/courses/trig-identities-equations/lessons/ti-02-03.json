@@ -9,7 +9,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "body": "To PROVE an identity, transform **one side** until it matches the other — never move terms across the equals sign (that assumes what you're proving). The reliable strategy: pick the messier side, **convert to sines and cosines**, and simplify using the toolkit.",
+      "body": "To PROVE an identity, first state the **common domain** where both original sides are defined. Then transform **one side** until it matches the other — never move terms across the equals sign (that assumes what you're proving). Pick the messier side, convert to sines and cosines, and simplify. Before cancelling a trig factor, verify that it is nonzero; excluded values stay excluded after simplification.",
       "figure": "ti-prove-one-side"
     },
     {
@@ -33,7 +33,7 @@
           }
         ],
         "outcomeId": "glue",
-        "reveal": "Nothing moves. tan θ · cos θ and sin θ are two names for one point-height, so every legal rewrite leaves the point exactly where it was — through the whole drag, wherever both names are defined (at 90°, tan θ is undefined and the left name simply goes blank). An invalid step is the one that lets the two names come apart somewhere."
+        "reveal": "Nothing moves on the common domain cos θ ≠ 0. There, tan θ · cos θ and sin θ name the same point-height. At cos θ = 0, including 90°, tan θ · cos θ is undefined even though sin θ is defined, so those inputs remain excluded after cancellation."
       },
       "widget": {
         "type": "unitCircleExplore",
@@ -53,9 +53,9 @@
             "feedback": "It agrees at a single angle and detaches everywhere else — which is why checking one value can't prove an identity. A proof has to hold for EVERY θ, and this candidate visibly doesn't."
           }
         ],
-        "successFeedback": "Never detached — provable. That is the standard a first move must protect: writing tan θ as sin θ/cos θ is safe because it renames without moving anything, and the product collapses to sin θ with the point never twitching.",
-        "lowFeedback": "The claim holds — now finish the drag to 45°.",
-        "highFeedback": "Past 45° — back up to the diagonal."
+        "successFeedback": "Never detached on the common domain cos θ ≠ 0. Writing tan θ as sin θ/cos θ and cancelling cos θ is valid only there. At cos θ = 0, the original left side remains undefined even though sin θ is defined.",
+        "lowFeedback": "The claim holds where cos θ ≠ 0; those excluded values remain excluded. Now finish the drag to 45°.",
+        "highFeedback": "Past 45° — back up to the diagonal. The common-domain restriction cos θ ≠ 0 still applies."
       }
     },
     {
@@ -64,28 +64,28 @@
       "body": "Finish it.",
       "conceptTag": "ti-prove",
       "explanationVariants": [
-        "(sin θ/cos θ)·cos θ = sin θ: the cosines cancel, matching the right side exactly.",
-        "One cancellation completes the proof — left equals right."
+        "On the common domain cos θ ≠ 0, (sin θ/cos θ)·cos θ = sin θ. At cos θ = 0, the original left side is undefined, so those inputs remain excluded.",
+        "First record cos θ ≠ 0; then one legal cancellation completes the proof on that domain."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "After rewriting, the left side (sin θ/cos θ)·cos θ becomes:",
+        "prompt": "On the common domain cos θ ≠ 0, after rewriting, the left side (sin θ/cos θ)·cos θ becomes:",
         "options": [
           {
             "id": "o1",
-            "label": "sin θ — the proof is complete",
+            "label": "sin θ, after cancelling cos θ on the stated domain.",
             "correct": true,
-            "feedback": "Right — the cos θ factors cancel, leaving exactly the right side."
+            "feedback": "Right — on cos θ ≠ 0, the cos θ factors cancel. Values with cos θ = 0 remain excluded because the original left side is undefined there."
           },
           {
             "id": "o2",
-            "label": "sin θ·cos²θ",
-            "feedback": "The cos θ in the numerator's denominator CANCELS with the multiplied cos θ — it doesn't multiply. Result: sin θ."
+            "label": "sin θ·cos²θ, after multiplying instead of cancelling.",
+            "feedback": "On cos θ ≠ 0, the denominator cos θ cancels with the multiplied factor; it does not multiply. The result is sin θ, with cos θ = 0 still excluded."
           },
           {
             "id": "o3",
-            "label": "tan θ",
-            "feedback": "You've undone the first step. (sin θ/cos θ)·cos θ = sin θ."
+            "label": "tan θ, after leaving the original quotient unsimplified.",
+            "feedback": "You've undone the first step. On cos θ ≠ 0, (sin θ/cos θ)·cos θ = sin θ; values with cos θ = 0 remain excluded."
           }
         ]
       },
@@ -97,7 +97,7 @@
     {
       "id": "c2",
       "kind": "concept",
-      "body": "A harder pattern: combine fractions over a common denominator, then look for a Pythagorean collapse. To prove **(1 − cos²θ)/sin θ = sin θ**: the numerator 1 − cos²θ is sin²θ, so the fraction is sin²θ/sin θ = sin θ. Recognizing the identity BEFORE grinding saves all the algebra.",
+      "body": "A harder pattern: record the common domain before simplifying. For **(1 − cos²θ)/sin θ = sin θ**, require sin θ ≠ 0. Then 1 − cos²θ = sin²θ, so sin²θ/sin θ = sin θ. At sin θ = 0, the original quotient is undefined even though the reduced expression is defined, so those values remain excluded.",
       "figure": "ti-combine-fractions"
     },
     {
@@ -106,28 +106,28 @@
       "body": "Spot the collapse.",
       "conceptTag": "ti-prove",
       "explanationVariants": [
-        "sec²θ − 1 = tan²θ (Pythagorean), so (sec²θ − 1)/tan θ = tan²θ/tan θ = tan θ.",
-        "Replace the numerator first, then cancel one tan θ."
+        "The common domain requires cos θ ≠ 0 so sec θ and tan θ exist, and sin θ ≠ 0 so the denominator tan θ is nonzero. There, sec²θ − 1 = tan²θ and tan²θ/tan θ = tan θ.",
+        "First record sin θ ≠ 0 and cos θ ≠ 0. Then replace the numerator and cancel one nonzero tan θ; both exclusions remain."
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "Prove (sec²θ − 1)/tan θ = tan θ. The key first move is:",
+        "prompt": "On the common domain sin θ ≠ 0 and cos θ ≠ 0, prove (sec²θ − 1)/tan θ = tan θ. The key first move is:",
         "options": [
           {
             "id": "o1",
             "label": "Replace sec²θ − 1 with tan²θ",
             "correct": true,
-            "feedback": "Right — then tan²θ/tan θ = tan θ, matching the right side."
+            "feedback": "Right — with sin θ ≠ 0 and cos θ ≠ 0, tan θ exists and is nonzero, so tan²θ/tan θ = tan θ. Both restrictions remain."
           },
           {
             "id": "o2",
             "label": "Replace sec²θ with 1/cos²θ and expand",
-            "feedback": "That works but is the long way. The Pythagorean identity sec²θ − 1 = tan²θ collapses it in one step."
+            "feedback": "That works but is the long way. On sin θ ≠ 0 and cos θ ≠ 0, sec²θ − 1 = tan²θ collapses it in one step; both restrictions remain."
           },
           {
             "id": "o3",
             "label": "Multiply both sides by tan θ",
-            "feedback": "Don't touch both sides. Transform the left: sec²θ − 1 = tan²θ, then cancel."
+            "feedback": "Don't touch both sides. On sin θ ≠ 0 and cos θ ≠ 0, transform the left using sec²θ − 1 = tan²θ, then cancel the nonzero tan θ."
           }
         ]
       },
@@ -142,25 +142,25 @@
       "body": "Verify numerically.",
       "conceptTag": "ti-prove",
       "explanationVariants": [
-        "At θ = π/3: sec²θ − 1 = 4 − 1 = 3, tan θ = √3, so 3/√3 = √3 = tan θ ✓ ≈ 1.73.",
-        "A numeric check confirms the proof: both sides equal √3 ≈ 1.73."
+        "At θ = π/3, sin θ and cos θ are nonzero, so the input is in the common domain. Then sec²θ − 1 = 3 and 3/tan θ = √3 ≈ 1.73.",
+        "This allowed-input check gives √3 ≈ 1.73 on both sides; it does not extend the identity to excluded values where sin θ = 0 or cos θ = 0."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Check (sec²θ − 1)/tan θ = tan θ at θ = π/3: what does BOTH sides equal? (To hundredths.)",
+        "prompt": "At θ = π/3, sin θ and cos θ are nonzero, so the common-domain check passes. What do both sides equal? (To hundredths.)",
         "answer": 1.73,
         "tolerance": 0.005,
         "commonErrors": [
           {
             "value": 3,
-            "feedback": "3 = sec²θ − 1 is the NUMERATOR alone. Divided by tan(π/3) = √3, it gives √3 ≈ 1.73."
+            "feedback": "3 is the numerator alone. Since π/3 is allowed, divide by tan(π/3) = √3 to get √3 ≈ 1.73; excluded inputs remain excluded."
           },
           {
             "value": 0.58,
-            "feedback": "0.58 = 1/√3 = cot. tan(π/3) = √3 ≈ 1.73 — the value both sides share."
+            "feedback": "0.58 is cot(π/3). At this allowed input, tan(π/3) = √3 ≈ 1.73, the value both sides share; the check does not remove any domain exclusions."
           }
         ],
-        "fallbackFeedback": "tan(π/3) = √3 ≈ 1.73; the identity holds."
+        "fallbackFeedback": "π/3 is in the common domain because sin θ and cos θ are nonzero. Both sides equal √3 ≈ 1.73; excluded inputs remain excluded."
       },
       "variant": {
         "gen": "g12-trig-identities-equations",
@@ -173,30 +173,30 @@
       "body": "A two-step proof, checked.",
       "conceptTag": "ti-prove",
       "explanationVariants": [
-        "cot θ·sin θ = (cos θ/sin θ)·sin θ = cos θ. At θ = π/6, cos θ = √3/2 ≈ 0.87.",
-        "Convert cot to cos/sin, cancel sin, land on cos θ; evaluate at π/6."
+        "On the common domain sin θ ≠ 0, cot θ·sin θ = (cos θ/sin θ)·sin θ = cos θ. At π/6 the restriction is satisfied, so the value is √3/2 ≈ 0.87.",
+        "First record sin θ ≠ 0. Then convert cot to cos/sin and cancel; values with sin θ = 0 remain excluded."
       ],
       "hints": [
-        "Rewrite cot θ as cos θ/sin θ.",
-        "(cos θ/sin θ)·sin θ — the sines cancel.",
-        "The result is cos θ; find cos(π/6)."
+        "State the common domain: sin θ ≠ 0, because cot θ contains sin θ in its denominator.",
+        "On that domain, rewrite cot θ as cos θ/sin θ and cancel the nonzero sin θ.",
+        "The result is cos θ on the common domain; π/6 is allowed, so find cos(π/6)."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "Prove cot θ · sin θ = cos θ, then evaluate the common value at θ = π/6 (to hundredths).",
+        "prompt": "On the common domain sin θ ≠ 0, prove cot θ · sin θ = cos θ, then evaluate at the allowed input θ = π/6 (to hundredths).",
         "answer": 0.87,
         "tolerance": 0.005,
         "commonErrors": [
           {
             "value": 0.5,
-            "feedback": "0.5 = sin(π/6). The identity simplifies to COS θ, and cos(π/6) = √3/2 ≈ 0.87."
+            "feedback": "0.5 is sin(π/6). On sin θ ≠ 0, the expression simplifies to cos θ, and cos(π/6) = √3/2 ≈ 0.87; excluded zeros of sin remain excluded."
           },
           {
             "value": 1.73,
-            "feedback": "1.73 = √3 = cot(π/6)·... no: cot θ·sin θ = cos θ = √3/2 ≈ 0.87."
+            "feedback": "1.73 is √3. At the allowed input π/6, cot θ·sin θ = cos θ = √3/2 ≈ 0.87; values with sin θ = 0 remain excluded."
           }
         ],
-        "fallbackFeedback": "cot θ·sin θ = cos θ; cos(π/6) = √3/2 ≈ 0.87."
+        "fallbackFeedback": "On sin θ ≠ 0, cot θ·sin θ = cos θ. The allowed input π/6 gives √3/2 ≈ 0.87; excluded values remain excluded."
       },
       "variant": {
         "gen": "g12-trig-identities-equations",
@@ -208,9 +208,10 @@
       "kind": "recap",
       "body": "One side, honest work.",
       "takeaways": [
-        "Transform ONE side only — never operate across the equals sign.",
-        "Convert to sine/cosine, or spot a Pythagorean collapse first.",
-        "A numeric check catches proof slips instantly."
+        "Transform one side only, and state the common domain before converting to sine/cosine or using a Pythagorean collapse.",
+
+        "Cancel only a factor known to be nonzero; the original expression's excluded values stay excluded.",
+        "A numeric check at an allowed input can catch a slip, but it cannot remove domain restrictions."
       ],
       "teaser": "Next chapter: exact values for angles like 75° — the sum and difference formulas."
     }
@@ -221,7 +222,7 @@
       "concept": {
         "id": "rem-ti0203-c",
         "kind": "concept",
-        "body": "Proof discipline: work one side, convert to sin/cos or apply a Pythagorean identity, simplify until it equals the other side. Never manipulate both sides."
+        "body": "Proof discipline: state the common domain, work one side, and simplify until it equals the other side. Cancel only nonzero factors, and keep every exclusion from the original expression."
       },
       "check": {
         "id": "rem-ti0203-k",
@@ -229,28 +230,28 @@
         "body": "One first step.",
         "conceptTag": "ti-prove",
         "explanationVariants": [
-          "sec θ = 1/cos θ, so sec θ·cos θ = (1/cos θ)·cos θ = 1.",
-          "Rewrite secant, cancel, land on 1."
+          "On the common domain cos θ ≠ 0, sec θ = 1/cos θ, so sec θ·cos θ = 1. At cos θ = 0, the original product is undefined even though 1 is defined.",
+          "First record cos θ ≠ 0. Then rewrite secant and cancel; the excluded values remain excluded."
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "To prove sec θ · cos θ = 1, rewrite sec θ as:",
+          "prompt": "On the common domain cos θ ≠ 0, to prove sec θ · cos θ = 1, rewrite sec θ as:",
           "options": [
             {
               "id": "o1",
               "label": "1/cos θ, then cancel",
               "correct": true,
-              "feedback": "Right — (1/cos θ)·cos θ = 1."
+              "feedback": "Right — on cos θ ≠ 0, (1/cos θ)·cos θ = 1. Values with cos θ = 0 remain excluded because the original product is undefined."
             },
             {
               "id": "o2",
               "label": "tan θ/sin θ",
-              "feedback": "That's a valid identity for sec θ, but 1/cos θ cancels the cos θ directly — cleaner."
+              "feedback": "That form is valid where its denominators are nonzero, but 1/cos θ is cleaner here. The common-domain restriction cos θ ≠ 0 remains after cancellation."
             },
             {
               "id": "o3",
               "label": "cos θ/1",
-              "feedback": "That's cos θ, not sec θ. Secant is 1/cos θ."
+              "feedback": "That's cos θ, not sec θ. On the common domain cos θ ≠ 0, secant is 1/cos θ; excluded zeros of cos remain excluded."
             }
           ]
         }

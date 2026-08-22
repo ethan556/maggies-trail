@@ -10,7 +10,6 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "Jumps come in sizes: tens devour distance, ones finish the job. A good plan spends big jumps first and small jumps last.",
       "narration": "Jumps come in sizes: tens devour distance, ones finish the job. A good plan spends big jumps first and small jumps last."
     },
@@ -86,31 +85,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "From 40 to 72: which jump plan is fastest to run?",
+        "prompt": "From 40 to 72, which exact plan uses the fewest hops?",
         "options": [
           {
-            "id": "o0",
-            "label": "Three ten-jumps, then two one-jumps",
-            "correct": true,
-            "feedback": "Correct — big jumps cover the tens (30) and small jumps finish the ones (2): five jumps total."
-          },
-          {
             "id": "o1",
-            "label": "Thirty-two one-jumps",
+            "label": "32 one-jumps, one at a time",
             "correct": false,
-            "feedback": "Thirty-two tiny hops reach the same place at six times the effort — the line rewards big jumps first."
+            "feedback": "That reaches 72, but it takes 32 hops. Tens first make the route much shorter."
           },
           {
             "id": "o2",
-            "label": "Four ten-jumps",
+            "label": "4 ten-jumps, then turn back",
             "correct": false,
-            "feedback": "Four tens overshoot to 80; a plan must land exactly, not merely nearby."
+            "feedback": "Four ten-jumps reach 80, then eight more one-jumps are needed to return to 72. It is not the fewest-hop route."
           },
           {
             "id": "o3",
-            "label": "One giant jump of 100",
+            "label": "1 hundred-jump, then walk back",
             "correct": false,
-            "feedback": "A hundred-jump flies far past 72; jump sizes must fit the distance being covered."
+            "feedback": "A hundred-jump overshoots far beyond 72, so walking back would add many more hops."
+          },
+          {
+            "id": "o0",
+            "label": "3 ten-jumps, then 2 one-jumps",
+            "correct": true,
+            "feedback": "Correct — three tens cover 30 and two ones finish 2: five exact hops total."
           }
         ]
       },
@@ -145,32 +144,31 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
       "body": "From 40 to 72: three tens then two ones — five jumps instead of thirty-two.",
       "narration": "From 40 to 72: three tens then two ones — five jumps instead of thirty-two."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Finish a mixed-jump route by choosing the small-jump part after the tens are already covered.",
       "conceptTag": "g2l-jump-sizes",
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Cover the tens of a 32-journey: three ten-hops from 40.",
-        "min": 30,
-        "max": 90,
-        "start": 40,
-        "hop": 10,
-        "hops": 3,
+        "prompt": "The tens route reached 70. Take two one-hops to finish at 72.",
+        "min": 65,
+        "max": 75,
+        "start": 70,
+        "hop": 1,
+        "hops": 2,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 43,
-            "feedback": "Three ones cover 3 of the 32 — the big jumps belong first."
+            "value": 71,
+            "feedback": "That makes only one one-hop. Two small hops remain after the tens route reaches 70."
           }
         ],
-        "missFeedback": "Each hop is 10, going forward. From 40, 3 hops land on 70.",
-        "successFeedback": "70 — the tens are spent; two little one-jumps would finish at 72."
+        "missFeedback": "The remaining distance is 2, so use two one-hops from 70 to reach 72.",
+        "successFeedback": "72 — big jumps covered the tens; the two small jumps finished exactly."
       },
       "cml": {
         "stage": "construct",
@@ -326,31 +324,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "From 40 to 72: which jump plan is fastest to run?",
+        "prompt": "After three ten-jumps from 40, which pair of jumps lands exactly on 72?",
         "options": [
           {
-            "id": "o0",
-            "label": "Three ten-jumps, then two one-jumps",
-            "correct": true,
-            "feedback": "Correct — big jumps cover the tens (30) and small jumps finish the ones (2): five jumps total."
+            "id": "o1",
+            "label": "2 ten-jumps to the right",
+            "correct": false,
+            "feedback": "Two more tens would land at 90. Only two ones remain after the tens route."
           },
           {
-            "id": "o1",
-            "label": "Thirty-two one-jumps",
-            "correct": false,
-            "feedback": "Thirty-two tiny hops reach the same place at six times the effort — the line rewards big jumps first."
+            "id": "o0",
+            "label": "2 one-jumps to the right",
+            "correct": true,
+            "feedback": "Correct — the three tens land at 70, then two one-jumps reach 72."
           },
           {
             "id": "o2",
-            "label": "Four ten-jumps",
+            "label": "2 one-jumps to the left",
             "correct": false,
-            "feedback": "Four tens overshoot to 80; a plan must land exactly, not merely nearby."
+            "feedback": "Those hops would move from 70 to 68. The landing 72 is to the right of 70."
           },
           {
             "id": "o3",
-            "label": "One giant jump of 100",
+            "label": "1 ten-jump and 1 one-jump",
             "correct": false,
-            "feedback": "A hundred-jump flies far past 72; jump sizes must fit the distance being covered."
+            "feedback": "A ten and a one add 11, so this route would land at 81 instead of 72."
           }
         ]
       },
@@ -414,31 +412,31 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "From 40 to 72: which jump plan is fastest to run?",
+          "prompt": "From 40 to 72, which exact plan uses the fewest hops?",
           "options": [
             {
               "id": "o0",
-              "label": "Three ten-jumps, then two one-jumps",
+              "label": "3 ten-jumps, then 2 one-jumps",
               "correct": true,
-              "feedback": "Correct — big jumps cover the tens (30) and small jumps finish the ones (2): five jumps total."
+              "feedback": "Correct — three tens cover 30 and two ones finish 2: five exact hops total."
             },
             {
               "id": "o1",
-              "label": "Thirty-two one-jumps",
+              "label": "32 one-jumps, one at a time",
               "correct": false,
-              "feedback": "Thirty-two tiny hops reach the same place at six times the effort — the line rewards big jumps first."
+              "feedback": "That reaches 72, but it takes 32 hops. Tens first make the route much shorter."
             },
             {
               "id": "o2",
-              "label": "Four ten-jumps",
+              "label": "4 ten-jumps, then turn back",
               "correct": false,
-              "feedback": "Four tens overshoot to 80; a plan must land exactly, not merely nearby."
+              "feedback": "Four ten-jumps reach 80, then eight more one-jumps are needed to return to 72. It is not the fewest-hop route."
             },
             {
               "id": "o3",
-              "label": "One giant jump of 100",
+              "label": "1 hundred-jump, then walk back",
               "correct": false,
-              "feedback": "A hundred-jump flies far past 72; jump sizes must fit the distance being covered."
+              "feedback": "A hundred-jump overshoots far beyond 72, so walking back would add many more hops."
             }
           ]
         }

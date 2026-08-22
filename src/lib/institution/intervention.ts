@@ -54,6 +54,9 @@ export const TIER_RULES = {
 export interface LearnerEvidence {
   learnerId: string;
   name: string;
+  /** Optional learner-chosen visual identity. Rendering still resolves through AvatarDisplay, so
+   * disabled or withdrawn ids fall back safely. */
+  avatarId?: string;
   /** Mastery states keyed however the caller likes; only the values are read. */
   mastery: Record<string, SkillState>;
   /** Distinct days with at least one completed lesson in the trailing 14 days. */
@@ -74,6 +77,7 @@ export interface TierReason {
 export interface LearnerTier {
   learnerId: string;
   name: string;
+  avatarId?: string;
   tier: Tier;
   reasons: TierReason[];
   /** Counts the meeting will ask for, so the UI never recomputes them. */
@@ -129,6 +133,7 @@ export function tierFor(ev: LearnerEvidence, today: string): LearnerTier {
     return {
       learnerId: ev.learnerId,
       name: ev.name,
+      ...(ev.avatarId ? { avatarId: ev.avatarId } : {}),
       tier: 1,
       reasons,
       attempted,
@@ -193,6 +198,7 @@ export function tierFor(ev: LearnerEvidence, today: string): LearnerTier {
   return {
     learnerId: ev.learnerId,
     name: ev.name,
+    ...(ev.avatarId ? { avatarId: ev.avatarId } : {}),
     tier,
     reasons,
     attempted,
@@ -220,7 +226,7 @@ export function tierRoster(evidence: LearnerEvidence[], today: string): LearnerT
 export interface InterventionGroup {
   tag: string;
   /** Learners who share this need, name-sorted. */
-  members: Array<{ learnerId: string; name: string; tier: Tier }>;
+  members: Array<{ learnerId: string; name: string; avatarId?: string; tier: Tier }>;
   /** The highest tier present — how urgently the group needs scheduling. */
   urgency: Tier;
 }
@@ -235,7 +241,12 @@ export function groupsFor(tiers: LearnerTier[], minSize = TIER_RULES.minGroupSiz
   for (const t of tiers) {
     for (const tag of t.focusTags) {
       const list = byTag.get(tag) ?? [];
-      list.push({ learnerId: t.learnerId, name: t.name, tier: t.tier });
+      list.push({
+        learnerId: t.learnerId,
+        name: t.name,
+        ...(t.avatarId ? { avatarId: t.avatarId } : {}),
+        tier: t.tier
+      });
       byTag.set(tag, list);
     }
   }

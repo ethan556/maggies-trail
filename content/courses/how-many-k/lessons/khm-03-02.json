@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-known-plus-new",
       "body": "A group can grow one toy at a time, and the count grows with it: six, seven, eight — counting ON from where it stood.",
       "narration": "A group can grow one toy at a time, and the count grows with it: six, seven, eight — counting ON from where it stood."
     },
@@ -92,7 +92,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 12 and count on 4. Tap where you land.",
+        "prompt": "A known group of 12 gets four new counters. Continue from 12 to find the total.",
         "min": 10,
         "max": 18,
         "start": 12,
@@ -149,38 +149,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-count-on-not-over",
       "body": "Counting on is the fast counter's habit: never start over when you already know where the count stands.",
       "narration": "Counting on is the fast counter's habit: never start over when you already know where the count stands."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-grow-by-one",
       "widget": {
-        "type": "numberLineHop",
-        "prompt": "Start at 10 and count on 3. Tap where you land.",
-        "min": 8,
-        "max": 15,
-        "start": 10,
-        "hop": 1,
-        "hops": 3,
-        "direction": "forward",
-        "commonLandings": [
+        "type": "dragOrder",
+        "prompt": "Count on from a known group of ten when three new toys arrive.",
+        "items": [
           {
-            "value": 12,
-            "feedback": "12 stops one complete hop too soon. Continue the final 1-unit hop to reach 13."
+            "id": "stage-3",
+            "label": "Name 13 as the total"
           },
           {
-            "value": 14,
-            "feedback": "14 goes one complete hop too far. Count just 3 hops from 10 to land on 13."
+            "id": "stage-2",
+            "label": "Say 11, 12, 13 for the new toys"
+          },
+          {
+            "id": "stage-1",
+            "label": "Keep the known 10"
           }
         ],
-        "missFeedback": "Start at 10 and count on 3: you land on 13.",
-        "successFeedback": "10 and 3 more is 13 — counting on continues the count instead of starting over.",
-        "lowFeedback": "Short of the landing — all 3 counts are needed to reach 13.",
-        "highFeedback": "Past the landing — the count-on stops after 3 numbers, on 13."
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "Begin with the starting set or marker before you count or stop."
+          }
+        ],
+        "missFeedback": "Use this order: Keep the known 10, then Say 11, 12, 13 for the new toys, then Name 13 as the total.",
+        "successFeedback": "Yes — count only the newcomers after the known ten."
       },
       "cml": {
         "stage": "construct",
@@ -287,7 +295,7 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "Start at 14 and count on 4. Tap where you land.",
+        "prompt": "Four newcomers join a known group of 14. Continue the count to find the whole group.",
         "min": 12,
         "max": 20,
         "start": 14,
@@ -352,7 +360,7 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What number comes right after 15?",
+        "prompt": "Fifteen shells are counted; one new shell arrives. Which total should be remembered?",
         "options": [
           {
             "id": "o0",

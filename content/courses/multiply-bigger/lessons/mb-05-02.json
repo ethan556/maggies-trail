@@ -15,39 +15,27 @@
   {
    "id": "i1",
    "kind": "interactive",
-   "body": "Order the steps.",
+   "body": "Collapse a two-step story in the order the events happen.",
    "conceptTag": "multi-step",
    "widget": {
-    "type": "dragOrder",
-    "prompt": "A gardener plants 5 rows of 12 tomato plants. A rabbit eats 7 of them. Then she plants 2 more rows of 9 plants. Put the steps in order to find how many plants she has now.",
-    "items": [
+    "type": "evalOrder",
+    "prompt": "Five rows hold 6 carrots each. A rabbit eats 7 carrots. Evaluate 5 × 6 − 7.",
+    "tokens": [
+     "5",
+     "×",
+     "6",
+     "−",
+     "7"
+    ],
+    "target": 23,
+    "commonResults": [
      {
-      "id": "s3",
-      "label": "Add 18 — that's 2 × 9 — for the newly planted rows (71 plants)"
-     },
-     {
-      "id": "s1",
-      "label": "Multiply 5 × 12 for the initial total (60 plants)"
-     },
-     {
-      "id": "s2",
-      "label": "Subtract 7 for the plants the rabbit ate (53 plants)"
+      "value": -5,
+      "feedback": "That subtracts 7 from one row before making all five rows. First find the total in the rows."
      }
     ],
-    "correctOrder": [
-     "s1",
-     "s2",
-     "s3"
-    ],
-    "misorderFeedback": [
-     {
-      "first": "s3",
-      "second": "s2",
-      "feedback": "The rabbit ate plants BEFORE the new rows went in — subtract the eaten plants first, then add the new rows."
-     }
-    ],
-    "missFeedback": "Follow the story's own order: find the start, then apply each change as it happens.",
-    "successFeedback": "60, then 53 after the rabbit, then 71 after planting more — each step builds on the one before it."
+    "fallbackFeedback": "First find 5 × 6 = 30 carrots. Then subtract the 7 that the rabbit eats.",
+    "successFeedback": "There are 30 carrots before the rabbit eats. Subtracting 7 from the running total leaves 23."
    },
    "predict": {
     "prompt": "'A rabbit eats 7' — does that happen to the number of ROWS, or to the running TOTAL?",
@@ -72,33 +60,33 @@
   {
    "id": "k1",
    "kind": "check",
-   "body": "Two steps, in order.",
+   "body": "Two steps, in order — this time a delivery, not a sale.",
    "conceptTag": "multi-step",
    "explanationVariants": [
-    "6 × 9 = 54 books total, then 54 − 14 = 40 books remain after the sale.",
-    "Find the total first, then subtract what was sold: 54 − 14 = 40."
+    "6 × 9 = 54 books total, then 54 + 14 = 68 books after the new delivery.",
+    "Find the total first, then add what arrived: 54 + 14 = 68."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "A store has 6 shelves with 9 books each. It sells 14 books. How many books are left?",
-    "answer": 40,
+    "prompt": "A store has 6 shelves with 9 books each. It then receives 14 more books. How many books does it have now?",
+    "answer": 68,
     "tolerance": 0,
     "unit": "books",
     "commonErrors": [
      {
       "value": 54,
-      "feedback": "54 is the total BEFORE any books sold (6 × 9). Subtract the 14 sold: 54 − 14 = 40."
+      "feedback": "54 is the total BEFORE the delivery (6 × 9). Add the 14 that arrived: 54 + 14 = 68."
      },
      {
-      "value": 68,
-      "feedback": "68 adds the 14 instead of subtracting. Selling books REMOVES them: 54 − 14 = 40."
+      "value": 40,
+      "feedback": "40 subtracts the 14 instead of adding. The store is GETTING more books, not losing them: 54 + 14 = 68."
      }
     ],
-    "fallbackFeedback": "Find the total first (6 × 9), then subtract the number sold."
+    "fallbackFeedback": "Find the total first (6 × 9), then add the number that arrived."
    },
    "variant": {
     "gen": "g4-multiply",
-    "form": "mbMultiStepNumeric"
+    "form": "mbMultiStepAddNumeric"
    }
   },
   {
@@ -110,33 +98,33 @@
   {
    "id": "k2",
    "kind": "check",
-   "body": "A comparison, then a change.",
+   "body": "A comparison, then a share.",
    "conceptTag": "multi-step",
    "explanationVariants": [
-    "Jake's pile is 4 times Mia's 6: 4 × 6 = 24. After giving away 9, he has 24 − 9 = 15 left.",
-    "Find Jake's total first (the comparison step), then subtract what he gave away."
+    "Jake's pile is 4 times Mia's 6: 4 × 6 = 24. Sharing 24 stickers among himself and 3 friends (4 people) gives 24 ÷ 4 = 6 each.",
+    "Find Jake's total first (the comparison step), then divide it equally among the 4 people."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Mia has 6 stickers. Jake has 4 TIMES as many as Mia. Jake gives away 9 stickers. How many does Jake have left?",
-    "answer": 15,
+    "prompt": "Mia has 6 stickers. Jake has 4 TIMES as many as Mia. Jake shares his whole pile equally with himself and 3 friends (4 people total). How many stickers does each person get?",
+    "answer": 6,
     "tolerance": 0,
     "unit": "stickers",
     "commonErrors": [
      {
       "value": 24,
-      "feedback": "24 is Jake's pile BEFORE giving any away (4 × 6). Subtract the 9 he gave away: 24 − 9 = 15."
+      "feedback": "24 is Jake's pile BEFORE sharing (4 × 6). Divide it among the 4 people: 24 ÷ 4 = 6."
      },
      {
-      "value": 33,
-      "feedback": "33 adds 9 instead of subtracting. Giving stickers away REMOVES them: 24 − 9 = 15."
+      "value": 4,
+      "feedback": "4 is the number of people sharing, not each person's stickers. Divide Jake's total by that: 24 ÷ 4 = 6."
      }
     ],
-    "fallbackFeedback": "Find Jake's total first (4 × 6), then subtract the 9 he gave away."
+    "fallbackFeedback": "Find Jake's total first (4 × 6), then divide it among the 4 people sharing."
    },
    "variant": {
     "gen": "g4-multiply",
-    "form": "mbMultiStepNumeric"
+    "form": "mbMultiStepShareNumeric"
    }
   },
   {
@@ -220,42 +208,39 @@
    },
    "variant": {
     "gen": "g4-multiply",
-    "form": "mbMultiStepNumeric"
+    "form": "mbMultiStepBreakApartNumeric"
    }
   },
   {
    "id": "k4",
    "kind": "check",
-   "body": "Two totals, combined, then split — the exact shape of the challenge, with smaller numbers.",
+   "body": "Subtract first, then split what's left.",
    "conceptTag": "multi-step",
    "explanationVariants": [
-    "Team X: 2×6=12. Team Y: 3×5=15. Combined: 12+15=27. Shared among 5: 27÷5=5 remainder 2 — 5 WHOLE apiece.",
-    "Two separate multiplications (12 and 15) get added to 27, then divided into 5 equal shares: 5 each, with 2 left over."
+    "45 − 9 = 36 muffins left after the giveaway, then 36 ÷ 4 = 9 whole boxes.",
+    "Find what's left first (45 − 9 = 36), then divide into boxes of 4: 9 boxes."
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Team X packs 2 boxes of 6 apples. Team Y packs 3 boxes of 5 apples. All the apples are combined and shared equally among 5 families (apples can't be split, so some may be left over). How many WHOLE apples does each family get?",
-    "answer": 5,
+    "prompt": "A baker makes 45 muffins, then gives away 9. She boxes the rest, 4 per box. How many whole boxes can she fill?",
+    "answer": 9,
     "tolerance": 0,
+    "unit": "boxes",
     "commonErrors": [
      {
-      "value": 6,
-      "feedback": "27÷5 doesn't come out even — it's 5 remainder 2. Only 5 WHOLE apples go to each family; the extra 2 can't be split."
+      "value": 36,
+      "feedback": "36 is how many muffins are left (45 − 9) — that's step one done! Now divide by 4 per box: 36 ÷ 4 = 9."
      },
      {
-      "value": 27,
-      "feedback": "27 is the COMBINED total (12+15) before sharing — the question asks for each family's share: 27÷5=5 (with 2 left over)."
-     },
-     {
-      "value": 3,
-      "feedback": "3 only uses Team Y's boxes (3×5=15÷5). Both teams' apples get combined FIRST: 12+15=27, then shared: 27÷5=5."
+      "value": 11,
+      "feedback": "45 ÷ 4 skips the giveaway. Subtract the 9 given away FIRST (45 − 9 = 36), then divide: 36 ÷ 4 = 9."
      }
     ],
-    "fallbackFeedback": "Multiply each team's total (2×6 and 3×5), add them together, then divide by 5 families — keep only the whole number."
+    "fallbackFeedback": "Subtract the giveaway first (45 − 9 = 36), then divide by 4 per box."
    },
    "variant": {
     "gen": "g4-multiply",
-    "form": "mbMultiStepNumeric"
+    "form": "mbMultiStepBoxesNumeric"
    }
   },
   {
@@ -274,7 +259,7 @@
    ],
    "widget": {
     "type": "numeric",
-    "prompt": "Class A gets 3 TIMES as many pencils as Class B's 9. Class C gets a box arranged in 8 rows of 7 pencils each. The pencils from Class A and Class C are combined and shared equally among 4 teachers (pencils can't be split, so some may be left over). How many WHOLE pencils does each teacher get?",
+    "prompt": "Class A gets 3 times Class B's 9 pencils. Class C has 8 rows of 7 pencils. Combine both classes' pencils and share equally among 4 teachers. How many WHOLE pencils does each teacher get?",
     "answer": 20,
     "tolerance": 0,
     "unit": "pencils each",
@@ -292,7 +277,7 @@
    },
    "variant": {
     "gen": "g4-multiply",
-    "form": "mbMultiStepNumeric"
+    "form": "mbMultiStepTwoProductsNumeric"
    }
   },
   {

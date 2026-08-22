@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-three-costumes",
       "body": "One amount wears three costumes: the numeral 4, the word “four”, and a picture of four things. All name the same count.",
       "narration": "One amount wears three costumes: the numeral 4, the word “four”, and a picture of four things. All name the same count."
     },
@@ -90,16 +90,16 @@
         "prompt": "Numeral 4, the word “four”, and a picture of 4 dots — how are they related?",
         "options": [
           {
-            "id": "o0",
-            "label": "Three ways of writing one same amount",
-            "correct": true,
-            "feedback": "Correct — mark, word, and picture all name the identical count of four."
-          },
-          {
             "id": "o1",
             "label": "Three different numbers",
             "correct": false,
             "feedback": "They differ in costume only; underneath, each says exactly four."
+          },
+          {
+            "id": "o0",
+            "label": "Three ways of writing one same amount",
+            "correct": true,
+            "feedback": "Correct — mark, word, and picture all name the identical count of four."
           },
           {
             "id": "o2",
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-translate-forms",
       "body": "Translation between the three is the whole game — see any costume, produce the other two.",
       "narration": "Translation between the three is the whole game — see any costume, produce the other two."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-three-forms",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "The word says “four”. Build the amount all three costumes share.",
-        "target": 4,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "The word says ‘five’. Tap the matching numeral.",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
-            "count": 3,
-            "feedback": "Three misses the shared amount; every costume of four names one more."
+            "id": "card-4",
+            "x": 20,
+            "y": 50,
+            "label": "numeral 4",
+            "icon": "4",
+            "count": 1,
+            "correct": false,
+            "feedback": "4 names a different amount. Read the target again, then match it exactly."
           },
           {
-            "count": 5,
-            "feedback": "Five overshoots; the word four, the mark 4, and the picture all stop together."
+            "id": "card-5",
+            "x": 50,
+            "y": 50,
+            "label": "numeral 5",
+            "icon": "5",
+            "count": 1,
+            "correct": true,
+            "feedback": "The word, picture, and numeral 5 are three forms of the same amount."
+          },
+          {
+            "id": "card-6",
+            "x": 80,
+            "y": 50,
+            "label": "numeral 6",
+            "icon": "6",
+            "count": 1,
+            "correct": false,
+            "feedback": "6 names a different amount. Read the target again, then match it exactly."
           }
         ],
-        "missFeedback": "Whatever the costume, build the one amount it names.",
-        "successFeedback": "Four — word, mark, and picture agree, because underneath they are one count."
+        "missFeedback": "Compare the numeral with the amount or place-value clue before choosing.",
+        "successFeedback": "The word, picture, and numeral 5 are three forms of the same amount."
       },
       "cml": {
         "stage": "construct",
@@ -208,31 +232,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "A group shows 6 dots. Which numeral names that amount?",
+        "prompt": "A group shows 16 dots. Which numeral names that amount?",
         "options": [
           {
-            "id": "o0",
-            "label": "6",
-            "correct": true,
-            "feedback": "Correct — the numeral 6 is the written name for a group of exactly 6."
-          },
-          {
             "id": "o1",
-            "label": "7",
+            "label": "17",
             "correct": false,
-            "feedback": "7 promises more dots than the group holds; the count stops at 6."
+            "feedback": "17 promises more dots than the group holds; the count stops at 16."
           },
           {
             "id": "o2",
-            "label": "5",
+            "label": "15",
             "correct": false,
-            "feedback": "5 promises fewer dots than the group holds; the count reaches 6."
+            "feedback": "15 promises fewer dots than the group holds; the count reaches 16."
+          },
+          {
+            "id": "o0",
+            "label": "16",
+            "correct": true,
+            "feedback": "Correct — the numeral 16 is the written name for a group of exactly 16."
           },
           {
             "id": "o3",
-            "label": "8",
+            "label": "18",
             "correct": false,
-            "feedback": "8 promises more dots than the group holds; the count stops at 6."
+            "feedback": "18 promises more dots than the group holds; the count stops at 16."
           }
         ]
       },
@@ -279,27 +303,27 @@
       ],
       "widget": {
         "type": "numberLineHop",
-        "prompt": "What number comes right after 6? Hop one and tap where you land.",
-        "min": 3,
-        "max": 10,
-        "start": 6,
+        "prompt": "What number comes right after 14? Hop one and tap where you land.",
+        "min": 11,
+        "max": 18,
+        "start": 14,
         "hop": 1,
         "hops": 1,
         "direction": "forward",
         "commonLandings": [
           {
-            "value": 6,
-            "feedback": "6 stops one complete hop too soon. Continue the final 1-unit hop to reach 7."
+            "value": 14,
+            "feedback": "14 stops one complete hop too soon. Continue the final 1-unit hop to reach 15."
           },
           {
-            "value": 8,
-            "feedback": "8 goes one complete hop too far. One hop from 6 lands on 7."
+            "value": 16,
+            "feedback": "16 goes one complete hop too far. One hop from 14 lands on 15."
           }
         ],
-        "missFeedback": "Count 1 on from 6: you land on 7.",
-        "successFeedback": "7 — the next numeral in the writing order is the next number in the song.",
-        "lowFeedback": "Short of the landing — a single hop forward reaches 7.",
-        "highFeedback": "Past the landing — right after 6 means one hop, stopping on 7."
+        "missFeedback": "Count 1 on from 14: you land on 15.",
+        "successFeedback": "15 — the next numeral in the writing order is the next number in the song.",
+        "lowFeedback": "Short of the landing — a single hop forward reaches 15.",
+        "highFeedback": "Past the landing — right after 14 means one hop, stopping on 15."
       },
       "hints": [
         "The numeral records the count.",
@@ -345,27 +369,27 @@
       "widget": {
         "type": "subitizeFlash",
         "prompt": "Look at the ten-frame flash and choose the matching numeral.",
-        "count": 7,
+        "count": 9,
         "arrangement": "tenFrame",
         "flashMs": 1400,
         "options": [
-          6,
-          7,
           8,
-          9
+          9,
+          10,
+          11
         ],
         "commonPicks": [
           {
-            "value": 6,
-            "feedback": "6 misses 1 of the visible dots. Group the dots, then count the full group as 7."
+            "value": 8,
+            "feedback": "8 misses 1 of the visible dots. Group the dots, then count the full group as 9."
           },
           {
-            "value": 8,
-            "feedback": "8 counts 1 extra. Touch each dot once in your mind — the group holds 7."
+            "value": 10,
+            "feedback": "10 counts 1 extra. Touch each dot once in your mind — the group holds 9."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Watch again and group the ten-frame: it shows 9 dots.",
+        "successFeedback": "Yes — 9! The ten-frame and numeral agree."
       },
       "hints": [
         "The numeral records the count.",
@@ -431,7 +455,7 @@
         ],
         "widget": {
           "type": "mcq",
-          "prompt": "Numeral 4, the word “four”, and a picture of 4 dots — how are they related?",
+          "prompt": "One friend holds up the numeral 4, another says the word “four” out loud, and a third draws a picture of 4 dots. Are they naming the same amount?",
           "options": [
             {
               "id": "o0",

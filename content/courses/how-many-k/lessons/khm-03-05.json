@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-subitize-patterns",
       "body": "Some amounts need no counting at all: a quick look at two dots, or a dice-style four, and the mind names it instantly.",
       "narration": "Some amounts need no counting at all: a quick look at two dots, or a dice-style four, and the mind names it instantly."
     },
@@ -146,33 +146,57 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "khm-quick-look-shapes",
       "body": "That instant naming is a skill — the eye learns the shapes small numbers make, the way it learns faces.",
       "narration": "That instant naming is a skill — the eye learns the shapes small numbers make, the way it learns faces."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation to test the same idea.",
       "conceptTag": "kch-subitize",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "Build the dice-four pattern — two on top, two below.",
-        "target": 4,
-        "preFilled": 0,
-        "addColor": "sky",
-        "commonCounts": [
+        "type": "tapDiagram",
+        "prompt": "Which familiar dot pattern shows four at a quick look?",
+        "mode": "selectOne",
+        "canvas": {
+          "w": 3,
+          "h": 1
+        },
+        "hotspots": [
           {
+            "id": "three",
+            "x": 20,
+            "y": 50,
+            "label": "three pips",
+            "icon": "● ● ●",
             "count": 3,
-            "feedback": "Three makes a triangle of dots; the square pattern holds one more."
+            "correct": false,
+            "feedback": "Three pips show three, not four."
           },
           {
+            "id": "four",
+            "x": 50,
+            "y": 50,
+            "label": "four corners",
+            "icon": "● ● / ● ●",
+            "count": 4,
+            "correct": true,
+            "feedback": "Four corner pips make the familiar dice-four pattern."
+          },
+          {
+            "id": "five",
+            "x": 80,
+            "y": 50,
+            "label": "four + center",
+            "icon": "●●●●●",
             "count": 5,
-            "feedback": "Five adds a centre dot; the plain square is four."
+            "correct": false,
+            "feedback": "Four corners plus a center show five."
           }
         ],
-        "missFeedback": "Place the dots as a square: two up, two down.",
-        "successFeedback": "Four, seen as a shape — the square of dots the eye names at once."
+        "missFeedback": "Look for the choice that follows the counting rule exactly.",
+        "successFeedback": "Four corner pips make the familiar dice-four pattern."
       },
       "cml": {
         "stage": "construct",
@@ -228,8 +252,8 @@
             "feedback": "4 counts 1 extra. Touch each dot once in your mind — the group holds 3."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Watch again and count: 3 dots.",
+        "successFeedback": "Yes — 3! You saw the three-dot pattern at a glance."
       },
       "hints": [
         "See the pattern.",
@@ -339,7 +363,7 @@
       ],
       "widget": {
         "type": "subitizeFlash",
-        "prompt": "A group of dots will flash. Choose the number of dots you see.",
+        "prompt": "A dice-style pattern will flash. Name its amount without counting one by one.",
         "count": 4,
         "arrangement": "dice",
         "flashMs": 1200,
@@ -359,8 +383,8 @@
             "feedback": "5 counts 1 extra. Touch each dot once in your mind — the group holds 4."
           }
         ],
-        "missFeedback": "Watch again and count: 5 dots.",
-        "successFeedback": "Yes — 5! You saw it like a dice face."
+        "missFeedback": "Watch again and count: 4 dots.",
+        "successFeedback": "Yes — 4! You saw the four-dot pattern at a glance."
       },
       "hints": [
         "See the pattern.",

@@ -10,7 +10,7 @@
     {
       "id": "c1",
       "kind": "concept",
-      "figure": "count-on-hops",
+      "figure": "nwk-teen-ten-four",
       "body": "Teen numerals take two marks: a 1 in front for the full ten, and a second digit counting the extras. 14 reports ten-and-four.",
       "narration": "Teen numerals take two marks: a 1 in front for the full ten, and a second digit counting the extras. 14 reports ten-and-four."
     },
@@ -21,7 +21,7 @@
       "conceptTag": "kcw-write-teens",
       "widget": {
         "type": "tenFrame",
-        "prompt": "A full group of 10 is already shown. Add the extra dots needed to make 14.",
+        "prompt": "Fourteen is a full ten plus 4 more. Tap 4 dots to show the 'more' part.",
         "target": 4,
         "preFilled": 0,
         "addColor": "tangerine",
@@ -39,7 +39,7 @@
             "feedback": "5 adds 1 too many. Remove the extra so the frame shows exactly 4."
           }
         ],
-        "missFeedback": "The ten is already made; add only the ones. Stop when the frame shows 4.",
+        "missFeedback": "Tap the dots one at a time. Stop when the frame shows exactly 4 — that's the 'more' part of 14.",
         "successFeedback": "Ten and 4 — the numeral 14 writes those two pieces side by side."
       },
       "variant": {
@@ -95,31 +95,31 @@
       ],
       "widget": {
         "type": "mcq",
-        "prompt": "What do the numerals 13 through 19 all share?",
+        "prompt": "In the numeral 14, what does the front 1 mean?",
         "options": [
           {
-            "id": "o0",
-            "label": "A 1 in front — the full ten each teen carries",
-            "correct": true,
-            "feedback": "Correct — every teen numeral opens with 1 because every teen contains exactly one ten."
-          },
-          {
             "id": "o1",
-            "label": "A 9 somewhere",
+            "label": "One loose one",
             "correct": false,
-            "feedback": "Only 19 holds a 9; the shared mark is the leading 1, the written ten."
+            "feedback": "The front 1 is not a loose one; its place gives it a value of ten."
           },
           {
             "id": "o2",
-            "label": "Round shapes",
+            "label": "Four full tens",
             "correct": false,
-            "feedback": "Shape varies; the pattern is positional — the tens place says 1 throughout."
+            "feedback": "The 4 records four extra ones, not four tens."
+          },
+          {
+            "id": "o0",
+            "label": "One full ten",
+            "correct": true,
+            "feedback": "Correct — the front 1 occupies the tens place, so it represents one full ten."
           },
           {
             "id": "o3",
-            "label": "Nothing at all",
+            "label": "No tens yet",
             "correct": false,
-            "feedback": "Line them up and the leading 1 repeats — the teens wear their ten openly."
+            "feedback": "A teen numeral does contain a ten; the front 1 records it."
           }
         ]
       },
@@ -154,41 +154,46 @@
     {
       "id": "c2",
       "kind": "concept",
-      "figure": "count-on-hops",
-      "body": "The leading 1 is not a one — position makes it a ten. That is the whole trick of two-mark writing.",
-      "narration": "The leading 1 is not a one — position makes it a ten. That is the whole trick of two-mark writing."
+      "figure": "nwk-leading-one-ten",
+      "body": "The leading 1 does not mean one loose one — its tens place makes it one full ten.",
+      "narration": "The leading 1 does not mean one loose one — its tens place makes it one full ten."
     },
     {
       "id": "i2",
       "kind": "interactive",
-      "body": "Try it again.",
+      "body": "Use a different representation.",
       "conceptTag": "kcw-write-teens",
       "widget": {
-        "type": "tenFrame",
-        "prompt": "A full group of 10 is already shown. Add the extra dots needed to make 14.",
-        "target": 4,
-        "preFilled": 0,
-        "addColor": "tangerine",
-        "commonCounts": [
+        "type": "dragOrder",
+        "prompt": "Build the numeral 14 from its place-value parts.",
+        "items": [
           {
-            "count": 0,
-            "feedback": "0 leaves 4 dots still missing. Continue until the frame shows exactly 4."
+            "id": "stage-3",
+            "label": "Write 14"
           },
           {
-            "count": 3,
-            "feedback": "3 leaves 1 dot still missing. Continue until the frame shows exactly 4."
+            "id": "stage-2",
+            "label": "Count four extra ones"
           },
           {
-            "count": 5,
-            "feedback": "5 adds 1 too many. Remove the extra so the frame shows exactly 4."
+            "id": "stage-1",
+            "label": "Recognize one full ten"
           }
         ],
-        "missFeedback": "The ten is already made; add only the ones. Stop when the frame shows 4.",
-        "successFeedback": "Ten and 4 — the numeral 14 writes those two pieces side by side."
-      },
-      "variant": {
-        "gen": "g0-counting",
-        "form": "countTeenFrame"
+        "correctOrder": [
+          "stage-1",
+          "stage-2",
+          "stage-3"
+        ],
+        "misorderFeedback": [
+          {
+            "first": "stage-3",
+            "second": "stage-1",
+            "feedback": "The final step cannot come first. Begin with the amount or starting point, then finish the numeral."
+          }
+        ],
+        "missFeedback": "Build the sequence in this order: Recognize one full ten, then Count four extra ones, then Write 14.",
+        "successFeedback": "Yes — one ten and four ones are written 14."
       },
       "cml": {
         "stage": "construct",
@@ -292,12 +297,6 @@
         "prompt": "A group shows 19 dots. Which numeral names that amount?",
         "options": [
           {
-            "id": "o0",
-            "label": "19",
-            "correct": true,
-            "feedback": "Correct — the numeral 19 is the written name for a group of exactly 19."
-          },
-          {
             "id": "o1",
             "label": "20",
             "correct": false,
@@ -314,6 +313,12 @@
             "label": "21",
             "correct": false,
             "feedback": "21 promises more dots than the group holds; the count stops at 19."
+          },
+          {
+            "id": "o0",
+            "label": "19",
+            "correct": true,
+            "feedback": "Correct — the numeral 19 is the written name for a group of exactly 19."
           }
         ]
       },
@@ -432,8 +437,8 @@
       "concept": {
         "id": "rem-kcw-write-teens-c",
         "kind": "concept",
-        "body": "The leading 1 is not a one — position makes it a ten. That is the whole trick of two-mark writing.",
-        "narration": "The leading 1 is not a one — position makes it a ten. That is the whole trick of two-mark writing."
+        "body": "The leading 1 does not mean one loose one — its tens place makes it one full ten.",
+        "narration": "The leading 1 does not mean one loose one — its tens place makes it one full ten."
       },
       "check": {
         "id": "rem-kcw-write-teens-k",

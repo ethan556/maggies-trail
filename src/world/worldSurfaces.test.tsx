@@ -435,6 +435,9 @@ describe("Basecamp (§12) — grouped by landmark, approach explained not locked
       </WorldShell>
     );
     expect(screen.getByText(/Multiplication & Division Foundations/)).toBeTruthy();
+    expect(screen.getByText(/Recommended prerequisites/)).toBeTruthy();
+    expect(screen.getByText(/recommended, not required/i)).toBeTruthy();
+    expect(screen.getByText("Not started")).toBeTruthy();
     const approachHref = ["/basecamp", "multiplication-division"].join("/");
     expect(container.querySelector(`a[href="${approachHref}"]`)).toBeTruthy();
     expect(container.textContent).not.toMatch(/locked/i);

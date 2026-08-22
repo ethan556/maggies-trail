@@ -134,99 +134,108 @@
     {
       "id": "k2",
       "kind": "check",
-      "body": "Narrow √3.",
+      "body": "A close call this time.",
       "conceptTag": "rns-locate-number-line",
       "variant": {
         "gen": "g8-rns-root-estimate",
         "form": "rnsRoundB"
       },
       "explanationVariants": [
-        "√3 ≈ 1.732, which rounds down to 1.7 at one decimal place.",
-        "1.7² = 2.89 undershoots 3, and 1.8² = 3.24 overshoots it, so √3 rounds to 1.7."
+        "√6 ≈ 2.449, which rounds DOWN to 2.4 — but only just: 2.4² undershoots 6 by 0.24 while 2.5² overshoots it by 0.25.",
+        "2.4² = 5.76 and 2.5² = 6.25 — 6 sits closer to 5.76 by the narrowest of margins, so √6 rounds to 2.4."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "To one decimal place, √3 ≈ ____",
-        "answer": 1.7,
+        "prompt": "Rounded to one decimal place, what is √6?",
+        "answer": 2.4,
         "tolerance": 0.05,
         "commonErrors": [
           {
-            "value": 1.8,
-            "feedback": "√3 ≈ 1.732, which rounds DOWN to 1.7, not up to 1.8."
+            "value": 2.5,
+            "feedback": "Close call, but check exactly: 2.4² = 5.76 (6 − 5.76 = 0.24) versus 2.5² = 6.25 (6.25 − 6 = 0.25). 0.24 is the smaller gap, so √6 rounds to 2.4, not 2.5."
           },
           {
             "value": 2,
-            "feedback": "That's not even the right whole-number bound — 1² = 1 and 2² = 4 trap √3 between 1 and 2, closer to 1.7."
+            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 2.4."
           }
         ],
-        "fallbackFeedback": "√3 ≈ 1.732, so to one decimal place it's 1.7."
+        "fallbackFeedback": "√6 ≈ 2.449, so to one decimal place it's 2.4."
       }
     },
     {
       "id": "k3",
       "kind": "check",
-      "body": "Narrow √27.",
+      "body": "Narrow √27 one more decimal place.",
       "conceptTag": "rns-locate-number-line",
       "variant": {
         "gen": "g8-rns-root-estimate",
         "form": "rnsRoundC"
       },
       "explanationVariants": [
-        "√27 ≈ 5.196, which rounds to 5.2 at one decimal place.",
-        "5.1² = 26.01 undershoots 27, and 5.2² = 27.04 overshoots it, so √27 rounds to 5.2."
+        "√27 ≈ 5.1962, which rounds to 5.20 at two decimal places.",
+        "5.19² = 26.9361 undershoots 27, and 5.20² = 27.04 overshoots it — 27 is closer to 27.04, so √27 rounds to 5.20."
       ],
       "widget": {
         "type": "numeric",
-        "prompt": "To one decimal place, √27 ≈ ____",
+        "prompt": "To two decimal places, √27 ≈ ____",
         "answer": 5.2,
-        "tolerance": 0.05,
+        "tolerance": 0.005,
         "commonErrors": [
           {
-            "value": 5.1,
-            "feedback": "√27 ≈ 5.196, which rounds UP to 5.2, not down to 5.1."
+            "value": 5.19,
+            "feedback": "5.19² = 26.9361 and 5.20² = 27.04 — 27 is only 0.04 from 27.04 but 0.0639 from 26.9361, so it rounds UP to 5.20, not down to 5.19."
           },
           {
-            "value": 5,
-            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 5.2."
+            "value": 5.1,
+            "feedback": "That's only one decimal place. Narrow further: 5.19² = 26.9361 and 5.20² = 27.04 bracket 27 more tightly, giving 5.20."
           }
         ],
-        "fallbackFeedback": "√27 ≈ 5.196, so to one decimal place it's 5.2."
+        "fallbackFeedback": "5.19² = 26.9361 and 5.20² = 27.04 bracket 27; since 27 is closer to 27.04, √27 rounds to 5.20."
       }
     },
     {
       "id": "ch1",
       "kind": "challenge",
-      "body": "Narrow a bigger root.",
+      "body": "A classmate's reasoning went wrong somewhere — find the correct one.",
       "conceptTag": "rns-locate-number-line",
-      "variant": {
-        "gen": "g8-rns-root-estimate",
-        "form": "rnsRoundChallenge"
-      },
       "explanationVariants": [
-        "√83 ≈ 9.110, which rounds to 9.1 at one decimal place.",
-        "9.1² = 82.81 undershoots 83, and 9.2² = 84.64 overshoots it, so √83 rounds to 9.1."
+        "9.1 is correct: 83 is only 0.19 above 82.81 (9.1²) but 1.64 below 84.64 (9.2²) — nowhere close to a tie.",
+        "Comparing at the wrong scale (81 and 100, the whole-number brackets) instead of 82.81 and 84.64 (the tenths brackets) is the trap here."
       ],
       "widget": {
-        "type": "numeric",
-        "prompt": "To one decimal place, √83 ≈ ____",
-        "answer": 9.1,
-        "tolerance": 0.05,
-        "commonErrors": [
+        "type": "mcq",
+        "prompt": "Which is the correct one-decimal estimate for √83, and why?",
+        "options": [
           {
-            "value": 9.2,
-            "feedback": "√83 ≈ 9.11, which rounds DOWN to 9.1, not up to 9.2."
+            "id": "a",
+            "label": "9.1, since 83 is much closer to 82.81 (9.1²) than to 84.64 (9.2²)",
+            "correct": true,
+            "feedback": "Right — 83 − 82.81 = 0.19, but 84.64 − 83 = 1.64, so 9.1 is the much closer tenths-level bound."
           },
           {
-            "value": 9,
-            "feedback": "That's just the whole-number bound — narrow further to one decimal place: 9.1."
+            "id": "b",
+            "label": "9.2, since 83 is closer to 100 than to 81",
+            "correct": false,
+            "feedback": "That compares 83 to the WHOLE-number brackets (81 and 100), not the tenths brackets that actually decide a one-decimal estimate: 82.81 and 84.64. Compared correctly, 83 is much nearer 82.81, so the estimate is 9.1."
+          },
+          {
+            "id": "c",
+            "label": "9.15, the exact midpoint of 9.1 and 9.2",
+            "correct": false,
+            "feedback": "A one-decimal estimate has to end in a single decimal digit — 9.15 isn't one, and it isn't even the closer value: 9.1 is."
+          },
+          {
+            "id": "d",
+            "label": "9, since that's the whole-number bound",
+            "correct": false,
+            "feedback": "9 hasn't been narrowed at all — the question asks for one decimal place, and that's 9.1."
           }
-        ],
-        "fallbackFeedback": "√83 ≈ 9.110, so to one decimal place it's 9.1."
+        ]
       },
       "hints": [
-        "First bracket √83 between whole numbers: 9² = 81 and 10² = 100, so it's between 9 and 10.",
-        "Now test tenths: 9.1² = 82.81 and 9.2² = 84.64 — where does 83 fall?",
-        "82.81 < 83 < 84.64, so √83 rounds to 9.1 at one decimal place."
+        "Compare 83 to the TENTHS-level brackets, not the whole-number ones: 9.1² = 82.81 and 9.2² = 84.64.",
+        "83 − 82.81 = 0.19, and 84.64 − 83 = 1.64.",
+        "0.19 is far smaller than 1.64, so √83 rounds to 9.1."
       ]
     },
     {

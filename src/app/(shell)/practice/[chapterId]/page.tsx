@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCatalog, loadLessonById } from "@/lib/content.server";
+import { CurriculumIcon } from "@/components/CurriculumIcon";
 import PracticeClient, { type PracticeItem } from "./PracticeClient";
 
 export const metadata: Metadata = { title: "Practice — Maggie's Trail" };
@@ -63,7 +64,14 @@ export default async function PracticePage({
       <p className="text-xs font-extrabold uppercase tracking-wide text-sky-ink">
         {testout === "1" ? "Chapter test-out" : "Practice"}
       </p>
-      <h1 className="mt-1 text-2xl font-extrabold">{chapterTitle}</h1>
+      <h1 className="mt-1 flex items-center gap-3 text-2xl font-extrabold">
+        <CurriculumIcon
+          id={testout === "1" ? "structure-assessment-summit" : "structure-practice-clearing"}
+          size={48}
+          priority
+        />
+        {chapterTitle}
+      </h1>
       <div className="mt-5">
         <PracticeClient
           pool={pool}

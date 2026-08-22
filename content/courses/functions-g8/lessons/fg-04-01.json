@@ -13,58 +13,44 @@
    "figure": "linear-vs-nonlinear"
   },
   {
-   "id": "i1",
-   "kind": "interactive",
-   "body": "Read the differences.",
-   "widget": {
-    "type": "mcq",
-    "prompt": "A table gives outputs 1, 4, 7, 10 for inputs 0, 1, 2, 3. Linear or nonlinear?",
-    "options": [
-     {
-      "id": "a",
-      "label": "Linear — the output rises by 3 each step",
-      "correct": true,
-      "feedback": "Right — differences 3, 3, 3 are all equal, so it's linear."
-     },
-     {
-      "id": "b",
-      "label": "Nonlinear — the numbers keep growing",
-      "correct": false,
-      "feedback": "Growing isn't the test — the STEPS are equal (3, 3, 3), so it's linear."
-     },
-     {
-      "id": "c",
-      "label": "Nonlinear — the outputs are all different",
-      "correct": false,
-      "feedback": "Different outputs are normal; equal STEPS (3 each) make it linear."
-     },
-     {
-      "id": "d",
-      "label": "Can't tell from a table",
-      "correct": false,
-      "feedback": "You can — equal output differences (3, 3, 3) show it's linear."
-     }
-    ]
-   },
-   "predict": {
-    "prompt": "'Linear' means the outputs change HOW as the inputs step by 1?",
+      "id": "i1",
+      "kind": "interactive",
+      "body": "Move through consecutive inputs while the table, graph, and equation update together.",
+      "widget": {
+        "type": "covariationScrubber",
+        "prompt": "Move x from 0 through 3 for y = 3x + 1. Watch the output change by the same amount on every one-step input move.",
+        "a": 3,
+        "b": 1,
+        "inputMin": 0,
+        "inputMax": 6,
+        "inputStart": 0,
+        "targetInput": 3,
+        "inputLabel": "input x",
+        "outputLabel": "output y",
+        "contextTemplate": "At input {x}, the rule produces output {y}.",
+        "successFeedback": "At x = 3, y = 10. The outputs 1, 4, 7, and 10 rise by 3 each time, so the relationship is linear.",
+        "lowFeedback": "Increase x one step at a time and compare each new output with the previous output.",
+        "highFeedback": "Move back toward x = 3 while checking that each one-step input change produces an output change of 3."
+      },
+      "predict": {
+        "prompt": "For a linear relationship, how do outputs change when inputs increase by equal steps?",
     "options": [
      {
       "id": "same",
-      "label": "By the same amount every step"
+            "label": "By the same amount each step"
      },
      {
       "id": "double",
-      "label": "By doubling every step"
+            "label": "By doubling on every step"
      },
      {
       "id": "one",
-      "label": "Always by exactly 1"
+            "label": "Always by exactly 1"
      }
     ],
     "outcomeId": "same",
-    "reveal": "A line's signature is a constant step — equal input jumps buy equal output jumps. Doubling would make the gaps grow — 2, 4, 8 — but a linear table's gaps stay flat, and that flat gap can be any size, not locked to exactly 1. Check the gaps in the table and the shape confesses."
-   }
+        "reveal": "A linear relationship has a constant rate of change. Equal input steps produce equal output changes, and that constant change may be any value, not only 1."
+      }
   },
   {
    "id": "c2",
@@ -116,34 +102,34 @@
   {
    "id": "i2",
    "kind": "interactive",
-   "body": "A doubling pattern.",
+   "body": "This time the inputs aren't evenly spaced — check the RATE, not just the raw jumps.",
    "widget": {
     "type": "mcq",
-    "prompt": "A table gives outputs 2, 4, 8, 16 for inputs 1, 2, 3, 4. Linear or nonlinear?",
+    "prompt": "A table lists the pairs (0, 0), (1, 2), (3, 6), (4, 8). Linear or nonlinear?",
     "options": [
      {
       "id": "a",
-      "label": "Nonlinear — the differences 2, 4, 8 aren't equal",
+      "label": "Linear — output-change ÷ input-change equals 2 for every consecutive pair",
       "correct": true,
-      "feedback": "Right — the steps keep doubling, so it curves — nonlinear."
+      "feedback": "Right — (0,0)→(1,2): 2÷1=2. (1,2)→(3,6): 4÷2=2. (3,6)→(4,8): 2÷1=2. The rate stays 2, so it's linear even though the inputs aren't evenly spaced."
      },
      {
       "id": "b",
-      "label": "Linear — the outputs go up",
+      "label": "Nonlinear — the outputs jump by 2, then 4, then 2",
       "correct": false,
-      "feedback": "Going up isn't enough — the steps (2, 4, 8) grow, so it's nonlinear."
+      "feedback": "Those raw jumps look unequal only because the input steps differ too (1, 2, 1). Divide each output jump by its own input jump: 2÷1, 4÷2, 2÷1 — all equal 2, so it's linear."
      },
      {
       "id": "c",
-      "label": "Linear — each output is double the last",
+      "label": "Nonlinear — the inputs skip from 1 straight to 3",
       "correct": false,
-      "feedback": "Doubling means the STEPS grow (2, 4, 8) — that's the nonlinear signature, not linear."
+      "feedback": "Skipping an input value doesn't make a function nonlinear — divide each output jump by its input jump instead: every one of the three steps gives a rate of 2, so it's linear."
      },
      {
       "id": "d",
-      "label": "Can't tell",
+      "label": "Can't tell — the inputs aren't evenly spaced",
       "correct": false,
-      "feedback": "You can — the differences 2, 4, 8 are unequal, so it's nonlinear."
+      "feedback": "There's enough here — compute output-change ÷ input-change between each consecutive pair; all three steps give exactly 2, so it's linear."
      }
     ]
    }

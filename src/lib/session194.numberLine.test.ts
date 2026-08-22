@@ -10,6 +10,10 @@ const require2 = createRequire(import.meta.url);
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { solvePrompt: solveG2 } = require2("./g2Independent.cjs");
 
+const WORD_NUMBERS: Record<string, number> = {
+  one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
+
 /** S194 — number-line-g2 (2.MD.B.6), Batch C course 4/6. Zero new generator code.
  *  numberLineHop's home course: every lesson carries the manipulative, both directions, and every
  *  hop's landing is recomputed from start/hop/hops/direction. Numerics ride TWO families
@@ -96,8 +100,33 @@ describe("S194 number-line-g2 — solver-agreed numerics, recomputed landings", 
         expect(s.explanationVariants.length).toBeGreaterThanOrEqual(2);
 
         if (w.type === "numeric") {
-          const derived = solveG2(s.variant.form, w.prompt);
-          expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          // A small minority of numeric checks in this course (e.g. a "how many ten-hops"
+          // count, or a three-jump running total) ask a question neither g2-add-subtract-100
+          // nor g2-place-value-1000 has a registered form for. Re-deriving those through
+          // solveG2 would mean inventing a new generator tag, exactly what this file's own
+          // docstring says NOT to do — so the two known no-variant prompts get a narrow,
+          // test-local re-derivation instead (arithmetic on the matched prompt text, not new
+          // generator/production code). Where a variant IS declared, the real solver must still
+          // agree. A no-variant widget whose prompt matches neither known pattern throws rather
+          // than silently skipping, so a future no-variant addition can't go unverified by accident.
+          if (s.variant) {
+            const derived = solveG2(s.variant.form, w.prompt);
+            expect(derived, `${lesson.id}/${s.id} ${s.variant.gen}/${s.variant.form}: ${w.prompt}`).toBe(w.answer);
+          } else {
+            const jumpMatch = w.prompt.match(/^Marks sit every (\d+), starting at (\d+)\. After (\w+) jumps?, what mark do you land on\?$/);
+            const hopMatch = w.prompt.match(/^Jumping backward by tens, (\d+) lands on (\d+)\. How many ten-hops was that\?$/);
+            if (jumpMatch) {
+              const step = Number(jumpMatch[1]), start = Number(jumpMatch[2]), n = WORD_NUMBERS[jumpMatch[3]];
+              expect(n, `${lesson.id}/${s.id}: unrecognized jump-count word "${jumpMatch[3]}"`).toBeDefined();
+              expect(w.answer, `${lesson.id}/${s.id}: ${w.prompt}`).toBe(start + step * n!);
+            } else if (hopMatch) {
+              const from = Number(hopMatch[1]), to = Number(hopMatch[2]);
+              expect((from - to) % 10, `${lesson.id}/${s.id}: ${w.prompt}`).toBe(0);
+              expect(w.answer, `${lesson.id}/${s.id}: ${w.prompt}`).toBe((from - to) / 10);
+            } else {
+              throw new Error(`${lesson.id}/${s.id}: no variant declared and no known no-variant pattern matches prompt "${w.prompt}" — either declare a variant, or add a matching independent re-derivation branch above.`);
+            }
+          }
           expect(evaluate(w, w.answer).correct).toBe(true);
           const vals = w.commonErrors.map((e) => e.value);
           expect(new Set(vals).size, `${lesson.id}/${s.id} duplicate traps`).toBe(vals.length);
@@ -110,7 +139,10 @@ describe("S194 number-line-g2 — solver-agreed numerics, recomputed landings", 
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct, `${lesson.id}/${s.id} correct not at index 0`).toBe(true);
+          // NOT position-0-pinned: S308 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session308.numberLineG2ChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
           const wrongFb = w.options.filter((o) => !o.correct).map((o) => o.feedback);
           expect(new Set(wrongFb).size).toBe(wrongFb.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);

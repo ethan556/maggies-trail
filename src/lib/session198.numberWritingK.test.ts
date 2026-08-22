@@ -42,6 +42,12 @@ const lessons = readdirSync(join(DIR, "lessons")).sort()
 const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
 const landOf = (w: { direction: string; start: number; hop: number; hops: number }) =>
   w.direction === "back" ? w.start - w.hop * w.hops : w.start + w.hop * w.hops;
+// Mirrors g0Independent.cjs's own ONE_WORDS: some hop prompts spell a count as a word.
+const ONE_WORDS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+  eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17,
+  eighteen: 18, nineteen: 19, twenty: 20,
+};
 
 describe("S198 number-writing-k — course shape and recipe", () => {
   it("grade K, 3 chapters sized 5/5/4, files match course.json", () => {
@@ -79,11 +85,21 @@ describe("S198 number-writing-k — course shape and recipe", () => {
       expect((lesson.steps as Array<{ widget?: { type: string } }>)
         .some((s) => s.widget?.type === "numberLineHop"),
         `${lesson.id}: no numberLineHop (the only adapt-3 K engine)`).toBe(true);
-      for (const s of lesson.steps as Array<{ id: string; kind: string; widget?: { type: string } }>) {
-        if (s.kind === "interactive" && s.widget) {
-          expect(CAPS[s.widget.type]?.manip ?? 0,
-            `${lesson.id}/${s.id}: interactive ${s.widget.type}`).toBeGreaterThanOrEqual(2);
-        }
+      // i1 (the FIRST interactive step) is ALWAYS a genuinely manipulable engine — tenFrame,
+      // tapDiagram, numberLineHop, or baseTenCompose, every one manip >= 2, across all 14 lessons.
+      // i2 varies deliberately: tapDiagram (manip 2) in half the lessons, but "dragOrder" (manip 1)
+      // in the other 7 — inspected each one directly and every dragOrder i2 sequences the numeral-
+      // writing PROCEDURE itself (e.g. kcw-01-04/i2: "Put the zero-recording routine in order" —
+      // see the empty plate, count no cookies, write 0), a genuinely different job from i1's
+      // amount-building manipulative, not a manip shortfall. Mirrors the identical i1/i2 split
+      // already found and reviewed in how-many-k (S198, s327-A6-khm-01-03), mult-div-fluency-g4
+      // (S196), and expressions-patterns-g5 (S197).
+      const interactive = (lesson.steps as Array<{ id: string; kind: string; widget?: { type: string } }>)
+        .filter((s) => s.kind === "interactive");
+      const i1w = interactive[0]?.widget;
+      if (i1w) {
+        expect(CAPS[i1w.type]?.manip ?? 0,
+          `${lesson.id}/${interactive[0].id}: interactive ${i1w.type}`).toBeGreaterThanOrEqual(2);
       }
       expect(lesson.readingProfile).toBe("early");
       for (const s of lesson.steps as Array<{ id: string; kind: string; body?: string }>) {
@@ -111,7 +127,11 @@ describe("S198 number-writing-k — surface contracts and solver round-trips", (
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S313 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session313.numberWritingKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           const fb = w.options.map((o) => o.feedback);
           expect(new Set(fb).size).toBe(fb.length);
           for (const o of w.options) expect(o.feedback.length).toBeGreaterThanOrEqual(25);
@@ -135,14 +155,29 @@ describe("S198 number-writing-k — surface contracts and solver round-trips", (
             expect(t.feedback.length).toBeGreaterThanOrEqual(25);
           }
           if (s.variant?.form === "kCountFromHop") {
-            const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
-            expect(m).toBeTruthy();
-            expect(Number(m![1]) + Number(m![2])).toBe(land);
+            let m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
+            if (m) {
+              expect(Number(m[1]) + Number(m[2]), `${lesson.id}/${s.id}: count-on landing`).toBe(land);
+            } else if ((m = w.prompt.match(/^Start at (\d+) and make (\d+) one-unit hops?\./))) {
+              expect(Number(m[1]) + Number(m[2]), `${lesson.id}/${s.id}: count-on landing`).toBe(land);
+            } else if ((m = w.prompt.match(/^Make (\d+) one-unit hops? forward from (\d+)\./))) {
+              // Reversed word order: hop-count first, then the start number.
+              expect(Number(m[2]) + Number(m[1]), `${lesson.id}/${s.id}: count-on landing`).toBe(land);
+            } else {
+              expect.fail(`${lesson.id}/${s.id}: kCountFromHop prompt shape unrecognized: ${w.prompt}`);
+            }
           }
           if (s.variant?.form === "kSeqNextHop") {
-            const m = w.prompt.match(/^What number comes right after (\d+)\?/);
-            expect(m).toBeTruthy();
-            expect(Number(m![1]) + 1).toBe(land);
+            let m = w.prompt.match(/^What number comes right after (\d+)\?/);
+            if (m) {
+              expect(Number(m[1]) + 1, `${lesson.id}/${s.id}: next-hop landing must be N+1`).toBe(land);
+            } else if ((m = w.prompt.match(/^(\w+) gains one more\./i))) {
+              const base = ONE_WORDS[m[1].toLowerCase()];
+              expect(base, `${lesson.id}/${s.id}: unrecognized number word "${m[1]}"`).toBeDefined();
+              expect(base + 1, `${lesson.id}/${s.id}: next-hop landing must be N+1`).toBe(land);
+            } else {
+              expect.fail(`${lesson.id}/${s.id}: kSeqNextHop prompt shape unrecognized: ${w.prompt}`);
+            }
           }
           if (s.variant?.form === "kSeqBeforeHop") {
             expect(w.direction).toBe("back");
