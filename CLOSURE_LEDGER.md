@@ -1280,6 +1280,94 @@ exit 0.
 
 | ID | Priority | Area | Finding | Status | Evidence / next action |
 |---|---|---|---|---|---|
-| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) | Round-2 gate's isolated full run found 16 red files: the known 11-file backlog (unchanged, still correctly flagged not fixed) plus 5 newly surfaced by this gate specifically — `session244.lessonReviewCards` (fourteenth addendum) and these 3 (fifteenth addendum). Two of the three were genuine regressions from this session's OWN already-committed Task #28 work; one was a genuinely pre-existing, session-330-unrelated parser edge case plus a masked review gap. | **ALL 5 GATE-DISCOVERED ISSUES FIXED AND RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED (still correctly flagged, not this session's to force-fix)** | Every fix traced to a specific root cause with direct tool evidence (git log, isolated function calls, hand-verified arithmetic) before editing, not pattern-matched from the failure message alone. See fourteenth addendum for `session244`; this addendum for the other 3. This row tracks the LINUX full-suite state specifically and does not close the pre-existing CL-P1-033 row above (that row's own open condition is a WINDOWS re-run, a different axis entirely). | A second, clean full-suite pass would give single-run confirmation rather than the per-file targeted re-verification this addendum relies on; not run again this session given the ~21-minute cost of the first pass and the strength of the targeted evidence already gathered. Future sessions editing lesson content should budget for the possibility that a full-suite gate surfaces more than the known-11 baseline, as this one did twice.
+| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) | Round-2 gate's isolated full run found 16 red files: the known 11-file backlog (unchanged, still correctly flagged not fixed) plus 5 newly surfaced by this gate specifically — `session244.lessonReviewCards` (fourteenth addendum) and these 3 (fifteenth addendum). Two of the three were genuine regressions from this session's OWN already-committed Task #28 work; one was a genuinely pre-existing, session-330-unrelated parser edge case plus a masked review gap. | **ALL 5 GATE-DISCOVERED ISSUES FIXED AND RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED (still correctly flagged, not this session's to force-fix)** | Every fix traced to a specific root cause with direct tool evidence (git log, isolated function calls, hand-verified arithmetic) before editing, not pattern-matched from the failure message alone. See fourteenth addendum for `session244`; this addendum for the other 3. This row tracks the LINUX full-suite state specifically and does not close the pre-existing CL-P1-033 row above (that row's own open condition is a WINDOWS re-run, a different axis entirely). | Sixteenth addendum: the predicted second full-suite pass ran and, as flagged as a live possibility here, surfaced 2 more — both now fixed too. See that addendum for the current, fullest state of this row.
+
+## Session 330 sixteenth post-recon addendum — round-2 final gate, a second full pass surfaces (and fixes) a genuine 3-way test conflict
+
+The fifteenth addendum's own table row flagged that a second full-suite pass "would give single-run
+confirmation" but hadn't been run. This session ran it anyway rather than deliver on the strength of targeted
+re-verification alone (`npm test`, isolated background run, `/tmp/full_vitest_s330_final2.log`, 1263.75s):
+`Test Files 14 failed | 713 passed (727)`, `Tests 17 failed | 15783 passed | 1 skipped (15801)`. That is 2 MORE
+than the 12 expected (11-file known backlog + `session244.lessonReviewCards`, still pending its second regen
+at the time this run was launched) — confirming the caveat was worth checking, not just noting.
+
+**`session244.lessonReviewCards` — expected, not a new issue.** Flagged already in the fourteenth addendum as
+needing a regen; this run's tree predates that regen (launched right after `ff5db64`, before this addendum's
+fix). Resolved below alongside the other two, in the same commit (`759cfcd`).
+
+**`figureTextAlignment` / `session254.dataLinePlotsG2CourseIntegrity` — a genuine, pre-existing three-way test
+conflict, exposed rather than caused by this session's own fifteenth-addendum fix.** Diffing the two full-run
+trees directly (`git diff 23dea84 HEAD -- content/ src/ reports/`, where `23dea84` is the first run's tree)
+showed exactly one content change in between: the fifteenth addendum's one-line removal of
+`figure: "single-scale-graph"` from `data-line-plots-g2/g2g-03-01/c2`. Nothing else — confirmed `ep-01-01`'s
+same-commit edit touches only step `ch1`, which carries no `figure` field, so it cannot affect either test's
+figure/text scan.
+
+Investigated rather than reverted-again on suspicion: wrote a standalone script mirroring
+`figureTextAlignment.test.ts`'s own corpus walk (not the test itself, to avoid circular evidence) and ran it
+directly against the live tree. Result: 381 total fixed-exemplar figure uses in the whole corpus, 381 aligned,
+0 withheld. That is the CORRECT end state — the fifteenth addendum's revert was right, not the cause of a new
+bug — but it collided with three separate, independently-authored guards that all speak to this same step:
+
+  - `session261`'s VIS-03 fail-close list pins `g2g-03-01/c2` to `undefined` — a prior safety audit found no
+    figure whose caption truthfully matches this step's text ("Cats have 3 votes and birds have 4 votes...
+    7 votes") and deliberately left it unillustrated.
+  - `session290`'s audited `single-scale-graph` caption allowlist (the same 7 items pinned since S330's
+    fifteenth addendum) does not include this step either — only `g2g-03-01/c1` and this lesson's remedial
+    concept do, both confirmed still present and unchanged.
+  - `session254.dataLinePlotsG2CourseIntegrity.test.tsx`'s own hand-authored `figures` fixture table claimed
+    `g2g-03-01/c2` should be `"single-scale-graph"` regardless of the above — the one wrong entry. `git log -S
+    "safelyWithheld" -- src/lib/figureTextAlignment.test.ts` shows the contested assertion in
+    `figureTextAlignment.test.ts` was introduced whole, unmodified since, in `c5af1f1` — genuinely pre-session.
+    It passed on `c5af1f1`'s tree (where `g2g-03-01/c2` already had no figure) because some OTHER real
+    corpus mismatch supplied its required "at least one withheld example" at that time; that other mismatch
+    was independently cleaned up at some earlier point in this session's Tasks #1-29, unrelated to
+    `g2g-03-01`, and by coincidence Task #28's `5fdbbe1` — which added the figure back to `g2g-03-01/c2` to
+    satisfy `session254`'s wrong expectation — supplied a substitute real-corpus mismatch that happened to
+    keep `figureTextAlignment` passing right up until the fifteenth addendum correctly removed it. Two
+    independent bugs (one per test) were briefly cancelling each other out.
+
+  Confirmed the fixture, not the content, was the bug: checked every other `single-scale-graph` entry in
+  `session254`'s map against `session290`'s audited 7 and against the live content directly (`g2g-03-02`,
+  `g2g-03-03` read and compared by hand) — all match. `g2g-03-01/c2` was the sole wrong row. The `for` loop's
+  fail-fast `expect` had never reached lessons after it in iteration order on any prior run, so this
+  couldn't have surfaced earlier without either a full corpus-wide non-fail-fast scan or, as happened here,
+  fixing everything before it first.
+
+  Fixed both, without reintroducing the content mismatch that started this:
+  - `session254`: removed the wrong `c2` entry from the `g2g-03-01` row (kept `c1`, confirmed correct),
+    `expect(count).toBe(24)` → `toBe(23)`, with an inline comment tracing the session261/session290 reasoning
+    so a future editor doesn't "fix" it back.
+  - `figureTextAlignment.test.ts`: the live corpus can no longer supply "at least one real withheld example"
+    without deliberately shipping a content bug to feed it — a genuine improvement, not a coverage gap. Rather
+    than loosen the assertion away, tightened it: `safelyWithheld.length` now must `toBe(0)` (strictly
+    stronger than the old `toBeGreaterThan(0)` — it fails the instant any future edit reintroduces a real
+    mismatch, where the old form could never detect that) plus a direct call proving the suppression path
+    itself still fires, reusing (not inventing) `isFigureTextAligned("mult3-array", "The model shows 3 × 4 =
+    12.")`, already independently verified two `it`s below in the same file.
+
+Both content-adjacent report regens folded into the same commit: `LESSON_REVIEW_CARDS_S244` regenerated a
+second time (`ep-01-01` flips `CURRENT_HUMAN_DISPOSITION` → `PENDING_ASSESSOR`, content changed, correctly
+reopening review; `g2g-03-01` flips the other way, `PENDING_ASSESSOR` → `CURRENT_HUMAN_DISPOSITION`, content
+restored byte-for-byte to the already-reviewed pre-session state — net 1673/28 unchanged, diff contained to
+exactly these 2 lessons, confirmed via `git diff -U0`).
+
+**Verification.** Targeted re-run of every guard touched or adjacent to this addendum:
+`figureTextAlignment`, `session254`, `session261`, `session290`, `session304`, `session249`, `session245`,
+`session252`, `session244.lessonReviewCards` — 9 files, 36/36 tests, all green. `npx tsc --noEmit`: clean,
+exit 0. `node scripts/cml-lint.mjs .`: 0 errors, same 1 pre-existing waived warning. Committed as `759cfcd`.
+
+No further full-suite run has been launched after this commit. Given this addendum's own evidence that a
+second full pass found real issues a first pass and targeted checks both missed, the honest status for
+CL-P1-033 is: every issue found by BOTH full-suite passes run this session is fixed and individually
+re-verified, but a third confirmatory full pass has not been run to check whether this addendum's own 2 fixes
+introduced anything new. Time/resource tradeoff, stated plainly rather than implied away: each full pass costs
+~21 minutes of this 2-core sandbox's exclusive attention. A future session (or this one, if time allows before
+delivery) re-running the full suite once more is the strongest remaining piece of evidence this row could
+still gain.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) — SUPERSEDES the row above | Two full isolated passes this session found, combined, 7 files beyond the known 11-file backlog: `session244.lessonReviewCards` (x2, fourteenth + this addendum), `session261`/`session290`/`session249` (fifteenth addendum), `figureTextAlignment`/`session254` (this addendum). | **ALL 7 GATE-DISCOVERED ISSUES ACROSS BOTH PASSES FIXED AND INDIVIDUALLY RE-VERIFIED; KNOWN 11-FILE BACKLOG UNCHANGED** | Every fix traced to a specific root cause with direct tool evidence (git log, git diff between run trees, a standalone corpus-scan script independent of the test it verifies, isolated function calls, hand-verified arithmetic) before editing — none pattern-matched from a failure message alone. | A third full-suite pass, after this addendum's commit (`759cfcd`), has not been run. Two-for-two so far: every full pass this session has found something targeted checks missed. A future session should not assume a targeted-only re-check is sufficient after ANY further content or generated-report edit on this branch — budget for a full pass before calling a round done.
 
 
