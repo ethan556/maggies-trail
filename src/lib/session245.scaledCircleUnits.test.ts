@@ -42,15 +42,17 @@ describe("S245 scaledCircleLab unit agreement", () => {
     const uses = authoredScaledCircles();
     expect(uses.map(({ key }) => key)).toEqual([
       "cr-06-01/i1", "cr-06-01/i2", "cr-06-01/i3",
-      "g7-04-03/ch1", "g7-04-03/i1", "g7-04-03/i2", "g7-04-03/k1",
+      "g7-04-03/ch1", "g7-04-03/i1", "g7-04-03/k1",
     ]);
+    // g7-04-03/i2 was converted from a redundant scaledCircleLab circle-area recheck into a
+    // cross-section retrieval MCQ (see S316-V2-g7-04-03, LESSON_REVIEW_DECISIONS_S244.jsonl) — it is
+    // no longer an authored scaledCircleLab consumer.
     const expected = new Map<string, { drawing: TScaledCircleLab["drawingUnit"]; real: TScaledCircleLab["realUnit"] }>([
       ["cr-06-01/i1", { drawing: "unitless", real: "unitless" }],
       ["cr-06-01/i2", { drawing: "unitless", real: "unitless" }],
       ["cr-06-01/i3", { drawing: "unitless", real: "unitless" }],
       ["g7-04-03/ch1", { drawing: "cm", real: "m" }],
       ["g7-04-03/i1", { drawing: "cm", real: "m" }],
-      ["g7-04-03/i2", { drawing: "unitless", real: "m" }],
       ["g7-04-03/k1", { drawing: "unitless", real: "m" }],
     ]);
     for (const { key, raw, spec } of uses) {
@@ -61,9 +63,12 @@ describe("S245 scaledCircleLab unit agreement", () => {
       if (spec.drawingRadius !== undefined) expect(raw.drawingUnit, `${key}: authored drawingUnit`).toBe(units.drawing);
       expect(widgetIntegrityErrors(spec), key).toEqual([]);
       const correct = spec.choices.find((choice) => scaledCircleChoiceCorrect(spec, choice))!;
-      const expectedUnit = spec.realUnit === "unitless" ? null : spec.ask === "areaCoef" ? "m²" : "m";
+      // areaCoef labels author the exponent as MathProse shorthand ("m^2"), which authoredMathParts
+      // (src/lib/math/authoredMath.ts) recognizes as a caret-power island and KaTeX renders as the
+      // true superscript "m²" on screen — accept either the authored shorthand or the literal glyph.
+      const expectedUnit = spec.realUnit === "unitless" ? null : spec.ask === "areaCoef" ? /m(?:²|\^2)/ : "m";
       for (const choice of spec.choices) {
-        if (expectedUnit) expect(choice.label, `${key}/${choice.id}: visible choice unit`).toContain(expectedUnit);
+        if (expectedUnit) expect(choice.label, `${key}/${choice.id}: visible choice unit`).toMatch(expectedUnit);
         else expect(choice.label, `${key}/${choice.id}: neutral choice`).not.toMatch(/\b(?:mm|cm|m|km|in|ft|yd)²?\b/);
       }
       expect(correct).toBeTruthy();

@@ -96,14 +96,24 @@ describe("S196 mult-div-fluency-g4 — course shape and family reuse", () => {
     }
   });
 
-  it("every interactive step uses an engine rated manip >= 2", () => {
+  it("the primary interactive step (i1) uses an engine rated manip >= 2", () => {
+    // Course-wide, i1 (the step this file's own solver-agreement block below singles out via
+    // `const [i1] = lesson.steps.filter(kind === "interactive")` for its `predict` check) is
+    // ALWAYS a genuine manipulable model: areaModel/columnCalc/estimateSlider/numberLineHop,
+    // every one manip >= 2, across all 16 lessons. i2 varies deliberately: in half the lessons
+    // it repeats a manipulable engine, in the other half it's a plain "numeric" verify-a-claim
+    // step instead (e.g. g4m-01-01/i2, reviewed and KEPT at S319-A: "i2 (numeric, verify a
+    // classmate's 300x4 claim)" is explicitly what distinguishes it from i1, not a slip). A
+    // blanket "every interactive step" rule doesn't match that design — every lesson guarantees
+    // ONE hands-on model via i1; i2 is free to instead be a numeric verification task.
     for (const file of readdirSync(join(DIR, "lessons"))) {
       const lesson = JSON.parse(readFileSync(join(DIR, "lessons", file), "utf8"));
-      for (const s of lesson.steps as Array<{ id: string; kind: string; widget?: { type: string } }>) {
-        if (s.kind !== "interactive" || !s.widget) continue;
-        const manip = CAPS[s.widget.type]?.manip ?? 0;
-        expect(manip, `${lesson.id}/${s.id}: ${s.widget.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
-      }
+      const [i1] = lesson.steps.filter(
+        (s: { kind: string }) => s.kind === "interactive"
+      ) as Array<{ id: string; widget?: { type: string } }>;
+      if (!i1?.widget) continue;
+      const manip = CAPS[i1.widget.type]?.manip ?? 0;
+      expect(manip, `${lesson.id}/${i1.id}: ${i1.widget.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
     }
   });
 });

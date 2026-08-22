@@ -352,7 +352,18 @@ function numberLineScalePlan(min: number, max: number, denominator?: number, aut
   add(lo, true); add(hi, true);
   if (lo <= 0 && hi >= 0) add(0, true);
   for (let value = Math.ceil(lo / minorStep - 1e-9) * minorStep; value <= hi + 1e-9; value += minorStep) add(value, false);
-  for (let value = Math.ceil(lo / majorStep - 1e-9) * majorStep; value <= hi + 1e-9; value += majorStep) add(value, true);
+  for (let value = Math.ceil(lo / majorStep - 1e-9) * majorStep; value <= hi + 1e-9; value += majorStep) {
+    // S241 (post-interaction). lo/hi are already guaranteed major above; when the majorStep
+    // ladder doesn't divide the span evenly (min:0, max:36, the default tickStep:4 → majorStep
+    // 5 here), the ladder's last rung can land one unit short of hi (…, 30, 35) and both labels
+    // are then drawn a single unit apart — g3w-03-04's own axis ("35"/"36") measured 5.6×1.9
+    // units of overlap out of a 316px line. Same half-step endpoint-crowding rule niceTicks
+    // already applies with `ends: true` (line ~323): an interior rung within half a major step
+    // of an endpoint yields to the endpoint's own label instead of doubling up beside it.
+    const interior = value - lo > 1e-9 && hi - value > 1e-9;
+    if (interior && Math.min(value - lo, hi - value) < majorStep / 2 - 1e-9) continue;
+    add(value, true);
+  }
   return [...values].sort(([a], [b]) => a - b).map(([value, major]) => ({
     value,
     label: numberLinePlainLabel(value, denominator),
@@ -3482,7 +3493,15 @@ function ArgandExploreW({ spec, value, onChange, disabled, tone }: WProps<TArgan
    * than the numerals being dropped — the scale is the thing that must not disappear.
    */
   const TICK_FS = 9;
-  const axisTicks = niceTicks(-G, G, { target: 3, ends: true, integer: true });
+  // G, ±targetRe/Im, mulRe/Im, reStart/imStart and the drag's own integer-lattice snap are all
+  // whole numbers (schema), so G is always an integer — `niceTicks`'s general "nice round span"
+  // ladder was overkill here and, worse, wrong for this rule: rule A9 wants exactly the two
+  // extents plus the origin, never an in-between landmark. niceTicks(target:3) reaches that by
+  // accident only when G happens to be a multiple of its own computed step (e.g. G=5 → step 5,
+  // the inner ticks land exactly on ±G and get deduped away); cn-03-02/i2's G=15 (step 10) instead
+  // kept −10/10 as genuine in-between ticks, printing 5 numerals where rule A9 wants 3. The extents
+  // are already the exact numbers rule A9 asks for, so state them directly.
+  const axisTicks = [-G, 0, G];
   const reTickY = Y(0) + 13, imTickX = X(0) - 5;
   const tickBoxes: S238Box[] = [
     ...axisTicks.filter((v) => v !== 0).map((v) => s238Box(tickText(v), X(v), reTickY, "middle", TICK_FS)),
@@ -9948,8 +9967,16 @@ function ScatterFitW({ spec, value, onChange, disabled , onEvent, tone }: WProps
     .map(([px, py], i) => `(${fmt(px)}, ${fmt(py)}) residual ${residuals[i] >= 0 ? "+" : "−"}${fmt(Math.abs(residuals[i]))}`)
     .join(", ");
   const withinTolerance = mse <= spec.tolerance;
+  // S237 (accessible/visible parity). spec.tolerance is the literal grading threshold
+  // (evaluate.ts's scatterFit case: mse <= spec.tolerance), and nothing on screen ever prints it —
+  // a sighted learner only sees `sf-mse-readout` turn leaf-green at pass, with no numeral to read
+  // past that color cue. Speaking "the target tolerance of 2.2" here handed screen-reader-only
+  // users the exact pass threshold sighted learners never get: the class of leak
+  // widgets.accessibleParity.s237.test.tsx exists to catch. The pass/fail STATE stays spoken —
+  // that is the color cue's verbal equivalent, and dropping it would leave blind learners worse
+  // off than sighted ones, which the gate also forbids — only the withheld NUMBER is removed.
   const metricSummary =
-    `Mean squared residual (MSE): ${fmt(mse)}, ${withinTolerance ? "at or under" : "above"} the target tolerance of ${fmt(spec.tolerance)}.`;
+    `Mean squared residual (MSE): ${fmt(mse)}, ${withinTolerance ? "at or under" : "above"} the target tolerance.`;
 
   // Direct manipulation: two handles RIDE the trend line, accent-matched to
   // their sliders — the sky handle LIFTS the whole line (changes b, slope
@@ -10367,7 +10394,15 @@ function BoxPlotW({ spec, value, onChange, disabled, tone }: WProps<TBoxPlot>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 320, H = 190, pad = 30, midY = 90, axisY = H - 30;
+  // S241 (post-interaction). axisY was H-30: with the tick numerals at axisY+16 (their box
+  // reaching axisY+18.8) and the axis caption anchored at H-3 (its box starting at H-12.8), the
+  // two rows are only H-30+18.8 vs H-12.8 apart — a constant 1.6-unit overlap at every axis, for
+  // every authored value, wherever a nice tick's numeral happens to land under the centred
+  // caption (dm-01-01's "80" under "Value" is one instance of many). H-36 buys the tick row the
+  // clearance it was missing without moving the caption, the plot (midY-relative) or the drag
+  // math (onDrag here reads only vx, never axisY — widgets.drag.test.tsx's boxPlot cases are
+  // untouched by this).
+  const W = 320, H = 190, pad = 30, midY = 90, axisY = H - 36;
   const sx = linScale(spec.axisMin, spec.axisMax, pad, W - pad);
   const boxL = sx(Math.min(cur.q1, cur.q3)), boxR = sx(Math.max(cur.q1, cur.q3));
   const rows: Array<[keyof typeof start, string]> = [["min", "set minimum"], ["q1", "set Q1 lower quartile"], ["med", "set median"], ["q3", "set Q3 upper quartile"], ["max", "set maximum"]];
@@ -13117,7 +13152,13 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
       <p className="text-lg font-bold"><MathProse text={spec.prompt} /></p>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label={`${title}. ${xAxisLabel}; ${yAxisLabel} from 0 to ${spec.maxVal}. ${spec.categories.map((c, i) => `${c} ${hs[i]}`).join(", ")}.`}>
         <style>{`.bb-bar{transition:none}@media (prefers-reduced-motion: no-preference){.bb-bar{transition:y .16s ease-out,height .16s ease-out}}`}</style>
-        <text data-testid="bb-title" x={W / 2} y={14} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
+        {/* S241 (post-interaction). y=14 put the title's descent box within 1.9 units of a
+            per-bar count label the instant a bar reaches maxVal (count label sits at
+            hScale(maxVal)-3 = padTop-3, fixed regardless of which bar or lesson). Raising the
+            title to y=11 clears every ceiling-state count label with margin, and is independent
+            of padTop/baseY/hScale — the pixel geometry useSvgDrag and widgets.drag.test.tsx pin
+            for the drag gesture is untouched. */}
+        <text data-testid="bb-title" x={W / 2} y={11} fontSize={11} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{title}</text>
         {gridVals.map((g) => (
           <g key={g}>
             <line data-testid="bb-grid" x1={padX} y1={hScale(g)} x2={W - padX} y2={hScale(g)} stroke={PALETTE.ink} strokeOpacity={standardAxisLabels.has(g) ? 0.22 : 0.09} />
@@ -15357,7 +15398,7 @@ function LineExploreW({ spec, value, onChange, disabled, tone, onEvent, locks }:
           </>
         )}
       <AxisCaptions w={W} h={H} /></svg>
-      <p className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
+      <p data-testid="le-equation" className="text-center text-2xl font-extrabold tabular-nums" aria-live="polite">
         y = {eq.slopeText}x {eqTail}
       </p>
       {/* What the last edit did, in words — including a snap or a clamp, which used to happen
@@ -17149,12 +17190,25 @@ function HopLandingW({ spec, value, onChange, disabled, tone, onEvent }: WProps<
         })}
         <text x={safeWordX(xOf(spec.start), "start", 9)} y={18} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>start</text>
         {chosen !== null && chosen !== spec.start && <text x={safeWordX(xOf(chosen), "landing", 9)} y={47} textAnchor="middle" fontSize={9} fontWeight={800} fill={PALETTE.sky}>landing</text>}
-        {tone === "info" && chosen !== landing && (
-          <g data-testid="nlh-ghost" aria-hidden="true">
-            <circle cx={xOf(landing)} cy={lineY} r={9} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="4 3" />
-            <text x={safeWordX(xOf(landing), "target", 10)} y={47} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>target</text>
-          </g>
-        )}
+        {tone === "info" && chosen !== landing && (() => {
+          const targetX = safeWordX(xOf(landing), "target", 10);
+          // S241 (post-interaction). "landing" (the learner's own choice) and this reveal ghost's
+          // "target" word both sit at y=47; on a trap landing close to the true one (g3w-01-02/i1:
+          // trap 28 vs landing 35, 7 units apart on a 0-60 line) the two words are each wider than
+          // their separation and print on top of each other. Same fix as labelPlan's row-packing
+          // just above — measured with the same labelHalfWidth the test model uses — but with only
+          // ever two words in this register, a single alternate row (above "start", clear of the
+          // ghost circle at lineY) is enough; it never needs labelPlan's general N-row search.
+          const crowdsLanding = chosen !== null && chosen !== spec.start &&
+            Math.abs(targetX - safeWordX(xOf(chosen), "landing", 9)) <
+              labelHalfWidth("landing", 9) + labelHalfWidth("target", 10) + LABEL_GAP;
+          return (
+            <g data-testid="nlh-ghost" aria-hidden="true">
+              <circle cx={xOf(landing)} cy={lineY} r={9} fill="none" stroke={PALETTE.tangerine} strokeWidth={2.4} strokeDasharray="4 3" />
+              <text x={targetX} y={crowdsLanding ? 32 : 47} textAnchor="middle" fontSize={10} fontWeight={800} fill={PALETTE.tangerine}>target</text>
+            </g>
+          );
+        })()}
         <text data-testid="nlh-axis-title" x={W / 2} y={H - 4} fontSize={10} fontWeight={700} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.74}>{axisTitle}</text>
       </svg>
       <div role="radiogroup" aria-label={`Choose where you land on ${axisTitle}`} className="flex flex-wrap justify-center gap-1.5">
@@ -17477,7 +17531,12 @@ function LengthPickAlignW({ spec, value, onChange, disabled, tone }: WProps<TLen
           viewBox={`0 0 ${AW} ${AH}`}
           className="mx-auto w-full max-w-md"
           role="img"
-          aria-label={`${spec.items.length} bars behind a start line. ${
+          // S237 (accessible/visible parity). This used to lead with "${spec.items.length} bars"
+          // — a bare item count nothing on screen ever prints (a sighted learner sees N bars, but
+          // no numeral names N). Every bar's own label and length is still spoken below (each gets
+          // a range input or radio button naming it), so nothing about the bars themselves is lost
+          // — only the incidental count leads with a number the visible picture withholds.
+          aria-label={`Bars behind a start line. ${
             aligned ? "Starting ends lined up — the compare is fair." : "Starting ends not lined up yet."
           }`}
         >

@@ -53,7 +53,11 @@ describe("S287 add/subtract within 1,000, Grade 2 — visual source repair", () 
   it("binds the hundred-count illustration to the exact displayed number sequence", () => {
     const concept = conceptStep(mentalHundred, "c2");
     const remedial = remedialConcept(mentalHundred, "g2b-mental-hundred");
-    const expected = "Start at 200 and add 100 each time: 200, 300, 400, 500, 600. Only the hundreds digit changes.";
+    // Reworded by S318-FIGA-g2b-02-06 (committed 992b590) to escape a blocklisted stale figure
+    // fingerprint and spell "two hundred" for skip-count-line's word-number title alignment, then
+    // trimmed by s326-R1-g2b-02-06 to fit the S247 language-length contract and sync narration.
+    // Independently re-verified aligned=true, not blocklisted (see LESSON_REVIEW_DECISIONS_S244.jsonl).
+    const expected = "Skip-count by hundreds from two hundred: 200, 300, 400, 500, 600. Each +100 hop slides the hundreds digit.";
 
     for (const placement of [concept, remedial]) {
       expect(placement.figure).toBe("skip-count-line");

@@ -6,6 +6,10 @@ const option=(w,pred)=>{const found=w.options.map(o=>o.label).find(pred);if(foun
 const exact=(w,label)=>option(w,x=>x===label);
 const nearest=(x,vals)=>vals.reduce((a,b)=>Math.abs(x-a)<=Math.abs(x-b)?a:b);
 const wordValue=(name)=>({"quarter turn":90,"half turn":180,"three-quarter turn":270,"full turn":360}[name]);
+// count of UNIQUE {d, n/d} divisor pairs of n (d from 1..sqrt(n)) — "how many rectangular
+// arrangements", counting a transpose (e.g. 3x8 and 8x3) once, is exactly this count.
+const factorPairCount=(n)=>{let c=0;for(let d=1;d*d<=n;d++)if(n%d===0)c++;return c;};
+const ORDINALS={first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9,tenth:10};
 
 function wordsToNumber(s){
  const small={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
@@ -40,19 +44,63 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'dMeasureNumeric': {const m=p.match(/(\d+) centimeters/);return +m[1]/100;}
   // Fractions
   case 'faEquivalenceRecapMcq': {const k=fs[1].num/fs[0].num;return option(w,x=>x.includes('Both numerator and denominator')&&x.includes(String(k)));}
-  case 'faEquivalenceRecapNumeric': {const m=p.match(/(\d+)\/(\d+) = \?\/(\d+)/);return +m[1]*+m[3]/+m[2];}
-  case 'faEquivalenceRuleNumeric': {let m=p.match(/^Scale (\d+)\/(\d+) by ×(\d+)/);if(m)return +m[1]*+m[3];m=p.match(/^(\d+)\/(\d+) was made by scaling a fraction by (\d+)/);return +m[1]/+m[3];}
+  case 'faEquivalenceRecapNumeric': {
+   // "A learner claims A/B = C/D. How many D-size pieces cover the same length as [A/B]?" states
+   // the target denominator D via the (wrong) claimed fraction rather than via a literal "?/D".
+   let m=p.match(/claims (\d+)\/(\d+) = (\d+)\/(\d+)\. How many \w+-size pieces cover the same length as/i);
+   if(m)return(+m[1]/+m[2])*+m[4];
+   m=p.match(/(\d+)\/(\d+) = \?\/(\d+)/);return +m[1]*+m[3]/+m[2];
+  }
+  case 'faEquivalenceRuleNumeric': {
+   let m=p.match(/^Scale (\d+)\/(\d+) by ×(\d+)/);if(m)return +m[1]*+m[3];
+   // "A learner scales A/B to [twelfths] but writes C/D. What numerator repairs..." — the repaired
+   // numerator scales A by the WRITTEN (wrong) denominator D over the ORIGINAL denominator B, not
+   // by the writer's own (wrong) numerator C.
+   m=p.match(/scales (\d+)\/(\d+) to \w+ but writes (\d+)\/(\d+)/i);if(m)return +m[1]*(+m[4]/+m[2]);
+   m=p.match(/^(\d+)\/(\d+) was made by scaling a fraction by (\d+)/);return +m[1]/+m[3];
+  }
   case 'faSimplifyNumeric': {const f=fs[0],g=gcd(f.num,f.den);return f.num/g;}
   case 'faBenchmarkCompareMcq': {const [a,b]=fs;return exact(w,a.num/a.den>b.num/b.den?`${a.num}/${a.den}`:`${b.num}/${b.den}`);}
   case 'faBenchmarkOrderMcq': {const sorted=[...fs].sort((a,b)=>a.num/a.den-b.num/b.den);return exact(w,`${sorted[1].num}/${sorted[1].den}`);}
   case 'faBenchmarkOrderNumeric': {const sorted=[...fs].sort((a,b)=>a.num/a.den-b.num/b.den);return sorted[1].den;}
   case 'faBenchmarkOrderRational': {const [a,b]=[w.left,w.right],d=a.num*b.den-b.num*a.den;return d<0?'lt':d>0?'gt':'eq';}
-  case 'faLikeDenomWordMcq': return option(w,x=>x.startsWith('It stays '));
-  case 'faLikeDenomWordNumeric': {const [a,b]=fs;if(/short of a whole/i.test(p))return a.den-a.num;return p.includes('were available')?a.num-b.num:a.num+b.num;}
+  // "When you add A/D + B/D, what happens to the denominator?" — with a common denominator D
+  // already shared by both addends, the correct option always names that SAME D ("stays D"),
+  // whichever wrong-D distractor set a given step ships with.
+  case 'faLikeDenomWordMcq': {const d=fs[0]?.den;if(d!==undefined){const staysD=w.options.map(o=>o.label).find(x=>x.includes(`stays ${d}`));if(staysD!==undefined)return staysD;}return option(w,x=>x.startsWith('It stays '));}
+  case 'faLikeDenomWordNumeric': {
+   // Several prompts describe the SAME like-denominator combine/remove story in prose only — no
+   // digit fraction (A/D) anywhere — using number WORDS instead ("four twelfth-size pieces").
+   // Each branch is anchored to a distinct authored phrase, resolved with the file's own
+   // wordsToNumber before falling through to the digit-fraction (fs[0]/fs[1]) path below.
+   let m=p.match(/starts with (\w+) \w+-size pieces and crosses out (\w+)\./i);
+   if(m)return wordsToNumber(m[1])-wordsToNumber(m[2]);
+   m=p.match(/remain when (\w+) \w+-size sections are cut from (\w+)\?/i);
+   if(m)return wordsToNumber(m[2])-wordsToNumber(m[1]);
+   m=p.match(/gains (\w+) \w+ and then (\w+) \w+s\./i);
+   if(m)return wordsToNumber(m[1])+wordsToNumber(m[2]);
+   m=p.match(/[Ss]tart with (\w+) \w+s and cross out (\w+) \w+\./i);
+   if(m)return wordsToNumber(m[1])-wordsToNumber(m[2]);
+   const [a,b]=fs;if(/short of a whole/i.test(p))return a.den-a.num;return p.includes('were available')?a.num-b.num:a.num+b.num;
+  }
   case 'faImproperToMixedNumeric': return Math.floor(fs[0].num/fs[0].den);
-  case 'faMixedToImproperNumeric': {const m=p.match(/Convert (\d+) (\d+)\/(\d+)/);return +m[1]*+m[3]+ +m[2];}
+  case 'faMixedToImproperNumeric': {
+   let m=p.match(/Convert (\d+) (\d+)\/(\d+)/);if(m)return +m[1]*+m[3]+ +m[2];
+   // "[Word] whole groups of [word] Xs plus [word] more Xs make how many Xs?" states the same
+   // whole*den+num improper-fraction conversion entirely in number words.
+   m=p.match(/(\w+) whole groups of (\w+) \w+s plus (\w+) more \w+s make how many/i);
+   if(m)return wordsToNumber(m[1])*wordsToNumber(m[2])+wordsToNumber(m[3]);
+   throw new Error(`cannot parse mixed-to-improper prompt ${p}`);
+  }
   case 'faMixedAddSubMixed': case 'faWholeTimesFractionMixed': return mixedTruth(w);
-  case 'faMixedAddSubNumeric': {const m=p.match(/Add (\d+) (\d+)\/(\d+) \+ (\d+) (\d+)\/(\d+)/);return (+m[2]+ +m[5])%+m[3];}
+  case 'faMixedAddSubNumeric': {
+   let m=p.match(/Add (\d+) (\d+)\/(\d+) \+ (\d+) (\d+)\/(\d+)/);if(m)return (+m[2]+ +m[5])%+m[3];
+   // "A learner combines A B/D and C E/D but keeps only .../D. How many D-size parts belong in the
+   // fraction total?" — the "keeps only" clause describes a (wrong) partial result, not part of
+   // the question; the total asked for is simply the sum of the two addends' own numerators.
+   m=p.match(/combines (\d+) (\d+)\/(\d+) and (\d+) (\d+)\/(\d+)/i);if(m)return +m[2]+ +m[5];
+   throw new Error(`cannot parse mixed add/sub prompt ${p}`);
+  }
   case 'faWholeTimesFractionMcq': {const m=p.match(/finds? (\d+) × (\d+)\/(\d+)/);return exact(w,`(${m[1]} × ${m[2]})/${m[3]}`);}
   case 'faWholeTimesFractionNumeric': {const m=p.match(/Compute (\d+) × (\d+)\/(\d+)/);return +m[1]*+m[2];}
   case 'faWholeTimesFractionWordNumeric': {const m=p.match(/(\d+) identical recipes each use (\d+)\/(\d+)/);return +m[1]*+m[2];}
@@ -95,10 +143,29 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'mbComparisonEquationsNumeric': return ns[0]/ns[1];
   case 'mbAdditiveVsMultiplicativeMcq': return option(w,x=>x.includes('times as many'));
   case 'mbAdditiveVsMultiplicativeNumeric': return ns[0]*ns[1]-(ns[0]+ns[1]);
-  case 'mbFactorsMcq': {const n=ns[0];return option(w,x=>/^\d+$/.test(x)&&n%+x===0);}
-  case 'mbFactorsNumeric': return ns[1]/ns[0];
-  case 'mbMultiplesMcq': {const n=ns[0];return option(w,x=>/^\d+$/.test(x)&&+x%n===0);}
-  case 'mbPrimeCompositeMcq': {const n=ns[0],prime=n>1&&Array.from({length:n-2},(_,i)=>i+2).every(d=>n%d);return exact(w,prime?'Prime':'Composite');}
+  /* mbFactorsMcq/mbMultiplesMcq: the usual surface is a bare-number option list, graded against
+   * the number the prompt names first (n=ns[0]). One prompt shape per form instead asks "which
+   * MULTIPLICATION proves..." and offers full equations (+, −, ×, ÷) as options — only the ×
+   * equation can ever be a true one among {N×K=N*K, N+K=.., N-K=.., N/K=..} built from the same
+   * pair, so "a true × equation" is unambiguous without even consulting n. */
+  case 'mbFactorsMcq': {const n=ns[0];const bare=w.options.map(o=>o.label).find(x=>/^\d+$/.test(x)&&n%+x===0);if(bare!==undefined)return bare;return option(w,x=>{const m=x.match(/^(\d+)\s*×\s*(\d+)\s*=\s*(\d+)$/);return!!m&&+m[1]*+m[2]===+m[3];});}
+  /* mbFactorsNumeric: several authored shapes restate the SAME factor pair before asking for the
+   * missing one ("40 includes 1x40, 2x20, ... 5 x ?"), or ask for a divisor-pair COUNT rather
+   * than a missing factor. Each branch below is anchored to a distinct authored phrase (checked
+   * against the full corpus using this form); the bare ns[1]/ns[0] fallback is untouched for the
+   * "rectangle has one side X and an area of Y" phrasing, where it already agrees (Y/X). */
+  case 'mbFactorsNumeric': {
+   let m=p.match(/factor pair of (\d+) is (\d+) and/i);if(m)return +m[1]/+m[2];
+   m=p.match(/factor-pair record for (\d+) (?:includes|begins)[\s\S]*?(\d+)\s*×\s*\?/i);if(m)return +m[1]/+m[2];
+   m=p.match(/factor pairs does (\d+) have/i);if(m)return factorPairCount(+m[1]);
+   m=p.match(/arranges (\d+) \w+ into equal rows/i);if(m)return factorPairCount(+m[1]);
+   return ns[1]/ns[0];
+  }
+  case 'mbMultiplesMcq': {const n=ns[0];const bare=w.options.map(o=>o.label).find(x=>/^\d+$/.test(x)&&+x%n===0);if(bare!==undefined)return bare;return option(w,x=>{const m=x.match(/^(\d+)\s*×\s*(\d+)\s*=\s*(\d+)$/);return!!m&&+m[1]*+m[2]===+m[3];});}
+  // mbPrimeCompositeMcq: prompts EITHER name the number directly ("Is 15 prime...", ns=[15], first
+  // === last) OR give a factor pair as evidence ("...factor pair 3 × 7 = 21. Is that number...",
+  // ns=[3,7,21]) — the number being classified is always the LAST one stated, never the first.
+  case 'mbPrimeCompositeMcq': {const n=ns[ns.length-1],prime=n>1&&Array.from({length:n-2},(_,i)=>i+2).every(d=>n%d);return exact(w,prime?'Prime':'Composite');}
   /* S242 / GRB-04. This used to be `return 2`, which is what an independent route looks like when
    * the generator's answer is a constant: it agreed forever and derived nothing. The generator
    * tests each value for a divisor; this SIEVES the range and counts what survives — a different
@@ -124,7 +191,16 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
   case 'mbInterpretRemaindersMcq': return exact(w,String(Math.ceil(ns[0]/ns[1])));
   case 'mbInterpretRemaindersNumeric': return Math.ceil(ns[0]/ns[1]);
   case 'mbPatternsMcq': return exact(w,`Multiply by ${ns[1]/ns[0]}`);
-  case 'mbPatternsNumeric': {const m=p.match(/rule is "multiply by (\d+)"/);if(m)return ns[ns.length-1]*+m[1];return ns[ns.length-1]*(ns[1]/ns[0]);}
+  case 'mbPatternsNumeric': {
+   // "A rule SAYS 'multiply by K' and starts at S. What is the Nth term?" states the rule and
+   // start directly rather than showing K terms of the sequence — solve start * factor^(N-1)
+   // from the stated ordinal instead of falling through to the shown-sequence math below, which
+   // would wrongly treat the rule's own factor as a second sequence term.
+   let m=p.match(/rule (?:is|says) ['"]multiply by (\d+)['"] and starts at (\d+)\. What is the (\w+) term/i);
+   if(m&&ORDINALS[m[3].toLowerCase()])return +m[2]*Math.pow(+m[1],ORDINALS[m[3].toLowerCase()]-1);
+   m=p.match(/rule is "multiply by (\d+)"/);if(m)return ns[ns.length-1]*+m[1];
+   return ns[ns.length-1]*(ns[1]/ns[0]);
+  }
   case 'mbMultiStepNumeric': return ns[0]*ns[1]-ns[2];
 
   // Place value and algorithms

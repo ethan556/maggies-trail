@@ -94,7 +94,10 @@ describe("S253 measure-compare-k whole-course integrity", () => {
       const widget = WidgetSpec.parse(findStep(findLesson(lessonId), stepId).widget);
       expect(widget.type).toBe("mcq");
       if (widget.type !== "mcq") continue;
-      expect(widget.options.map((option) => option.id)).toEqual(["o0", "o1", "o2", "o3"]);
+      // reports/quality/S305_MEASURE_COMPARE_K_CHOICE_ORDER.md deliberately reordered every
+      // main-sequence MCQ's options array so the correct option (always id o0) no longer renders
+      // at a fixed index-0 position; ids stay stable, array order does not. Compare the id set.
+      expect([...widget.options.map((option) => option.id)].sort()).toEqual(["o0", "o1", "o2", "o3"]);
       expect(widget.options.filter((option) => option.correct)).toHaveLength(1);
       const lengths = widget.options.map((option) => option.label.length);
       expect(Math.max(...lengths) - Math.min(...lengths), `${lessonId}/${stepId}`).toBeLessThanOrEqual(8);

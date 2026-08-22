@@ -153,7 +153,10 @@ describe("S264 measure-length-g1 source implementation", () => {
       const widget = item.widget;
       if (!widget) continue;
       if (widget.type === "mcq") {
-        expect(widget.options?.map((option) => option.id)).toEqual(["o0", "o1", "o2", "o3"]);
+        // reports/quality/S314_MEASURE_LENGTH_G1_CHOICE_ORDER.md deliberately reordered every
+        // main-sequence MCQ's options array for cue resistance; ids stay stable, array order does
+        // not. Compare the id set, not the array order.
+        expect(widget.options?.map((option) => option.id).slice().sort()).toEqual(["o0", "o1", "o2", "o3"]);
         expect(widget.options?.filter((option) => option.correct)).toHaveLength(1);
         for (const option of widget.options ?? []) expect(option.feedback.trim().length).toBeGreaterThan(20);
       }

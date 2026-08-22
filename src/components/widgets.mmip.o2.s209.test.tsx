@@ -308,7 +308,12 @@ describe("affineRelationshipLab: derive-only adoption of the line-shaped core", 
     render(<WidgetRenderer spec={AFFINE} value={{}} onChange={() => {}} disabled={false} />);
     // The source cards, the stage buttons and the choices are untouched by the derive-only wiring.
     expect(screen.getAllByText(/Plan A/).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("y = 3x + 2")).toBeTruthy();
+    // Same reason this is getAllByText, not getByText, one line up: the "Describe this model"
+    // a11y panel also states each source's equation in prose, in its own math-rendered span, so
+    // the same "y = 3x + 2" legitimately appears twice — once on the visible source card, once in
+    // the accessible description. Both are real surfaces; asserting "at least one" is the claim
+    // this test actually makes ("the source cards... are untouched"), same as the line above.
+    expect(screen.getAllByText("y = 3x + 2").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByRole("button", { name: /Open affine stage/ }).length).toBeGreaterThan(0);
     // And no new affordance appeared this window.
     expect(screen.queryByTestId("arl-undo")).toBeNull();

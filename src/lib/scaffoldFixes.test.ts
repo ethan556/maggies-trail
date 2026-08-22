@@ -16,7 +16,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { evaluate } from "@/lib/evaluate";
-import { Lesson, proportionalReasoningTruth, proportionalReasoningExplorationKeys, exactNumberTruth, exactNumberExplorationKeys } from "@/lib/schema";
+import { Lesson, proportionalReasoningTruth, exactNumberTruth, exactNumberExplorationKeys } from "@/lib/schema";
 
 const FIXES: Array<{ course: string; lessonId: string; stepId: string; conceptTag: string }> = [
   { course: "place-value", lessonId: "pv-02-01", stepId: "k4", conceptTag: "round-10" },
@@ -42,6 +42,25 @@ const FIXES: Array<{ course: string; lessonId: string; stepId: string; conceptTa
 function loadLesson(course: string, lessonId: string) {
   const raw = JSON.parse(readFileSync(join("content", "courses", course, "lessons", `${lessonId}.json`), "utf8"));
   return Lesson.parse(raw);
+}
+
+/** proportionalReasoningLab's exploration gate is not `revealed`/`requiredExplorations` (that
+ * convention belongs to its sibling Lab types) — it is `proportionalUnitRatesAreVerified` in
+ * evaluate.ts, matching the real widget: `ProportionalReasoningLabW` requires the learner to type
+ * and verify EVERY series pair's unit rate before a final numeric/choice answer is even accepted.
+ * Every key present in `unitRates` at its true rate, and listed in `verifiedUnitRates`, is what
+ * actually unlocks grading. */
+function proportionalVerifiedState(truth: ReturnType<typeof proportionalReasoningTruth>) {
+  const unitRates: Record<string, number> = {};
+  const verifiedUnitRates: string[] = [];
+  for (const series of truth.series) {
+    series.pairs.forEach((_, index) => {
+      const key = `${series.id}:${index}`;
+      unitRates[key] = series.rates[index]!;
+      verifiedUnitRates.push(key);
+    });
+  }
+  return { unitRates, verifiedUnitRates };
 }
 
 describe.each(FIXES)("scaffold fix — $course/$lessonId ($stepId)", ({ course, lessonId, stepId, conceptTag }) => {
@@ -71,9 +90,9 @@ describe.each(FIXES)("scaffold fix — $course/$lessonId ($stepId)", ({ course, 
     // (a genuine engine upgrade, not a regression) — its answer is the choice/id the correct
     // exploration derives, not a bare `answer` field on the widget itself.
     if (step.widget!.type === "proportionalReasoningLab") {
-      const revealed = proportionalReasoningExplorationKeys(step.widget as never);
       const truth = proportionalReasoningTruth(step.widget as never);
-      expect(evaluate(step.widget!, { revealed, numeric: truth.answerNumber }).correct).toBe(true);
+      const { unitRates, verifiedUnitRates } = proportionalVerifiedState(truth);
+      expect(evaluate(step.widget!, { unitRates, verifiedUnitRates, numeric: truth.answerNumber }).correct).toBe(true);
       return;
     }
     // sg-05-01/k4 was likewise upgraded to exactNumberLab (S169 solid-geometry wave). The answer
@@ -95,9 +114,9 @@ describe.each(FIXES)("scaffold fix — $course/$lessonId ($stepId)", ({ course, 
     if (step.widget!.type === "proportionalReasoningLab") {
       const w = step.widget as { type: "proportionalReasoningLab"; numericErrors: Array<{ value: number; feedback: string }> };
       expect(w.numericErrors.length).toBeGreaterThanOrEqual(2);
-      const revealed = proportionalReasoningExplorationKeys(step.widget as never);
+      const { unitRates, verifiedUnitRates } = proportionalVerifiedState(proportionalReasoningTruth(step.widget as never));
       for (const ce of w.numericErrors) {
-        const r = evaluate(step.widget!, { revealed, numeric: ce.value });
+        const r = evaluate(step.widget!, { unitRates, verifiedUnitRates, numeric: ce.value });
         expect(r.correct).toBe(false);
         expect(r.feedback).toBe(ce.feedback);
       }

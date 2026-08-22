@@ -116,7 +116,11 @@ describe("S248 mult-div-fluency-g4 whole-course integrity", () => {
         figures.add(concept.figure!);
       }
     }
-    expect(figures.size).toBe(13);
+    // g4m-02-04/c1 was moved off the shared dop-estimate-quotient figure onto its own dedicated
+    // g4m-partial-quotients-852-4 visual (see S248-G4M-g4m-02-04's "neither concept visual shows
+    // partial-quotient chunks... requires a semantic visual/action redesign", now repaired and KEEP
+    // per S319-V2-g4m-02-04) — one more distinct registered figure than before.
+    expect(figures.size).toBe(14);
   });
 
   it("closes every live same-sitting repetition signature", () => {

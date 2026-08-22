@@ -145,7 +145,11 @@ describe("S198 measure-compare-k — engine contracts and solver round-trips", (
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S305 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session305.measureCompareKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           const fb = w.options.map((o) => o.feedback);
           expect(new Set(fb).size).toBe(fb.length);
           for (const o of w.options) expect(o.feedback.length).toBeGreaterThanOrEqual(25);

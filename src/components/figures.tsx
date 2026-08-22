@@ -777,7 +777,11 @@ function AsvSurfaceVsVolume() {
         <path d="M 16 66 L 16 82 L 52 82 L 52 66 Z" fill={SKY} opacity={0.55} stroke={INK} strokeWidth={1.3} />
         <path d="M 52 66 L 66 54 L 66 70 L 52 82 Z" fill={SKY} opacity={0.28} stroke={INK} strokeWidth={1.3} />
         <text x="48" y="100" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">6 faces</text>
-        <text x="48" y="112" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">= 16 sq units</text>
+        {/* S238. y=100/112 left a fontSize-10 line's own box (9.8 above baseline, 2.8 below) 0.6
+            units taller than the 12-unit row gap — the two labels touched at every render, not
+            just this one instance. 114 buys the pair the clearance the row height was missing,
+            same fix on both stacks below, and still clears the viewBox floor at y=120. */}
+        <text x="48" y="114" fontSize="10" fontWeight="700" fill={SKY} textAnchor="middle">= 16 sq units</text>
       </g>
       <g>
         <rect x={128} y={54} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
@@ -785,7 +789,7 @@ function AsvSurfaceVsVolume() {
         <rect x={128} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
         <rect x={148} y={72} width={18} height={18} fill={LEAF} fillOpacity={0.4} stroke={INK} strokeWidth={0.9} />
         <text x="160" y="100" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">4 unit cubes</text>
-        <text x="160" y="112" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">= 4 cu units</text>
+        <text x="160" y="114" fontSize="10" fontWeight="700" fill={LEAF} textAnchor="middle">= 4 cu units</text>
       </g>
     </svg>
   );

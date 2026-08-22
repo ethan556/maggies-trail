@@ -156,7 +156,20 @@ describe("S241 GG-03 — barBuilder's built states, at every tone including erro
         const missing: string[] = [];
         if (!t.includes("0")) missing.push("axis floor 0");
         if (!t.includes(String(w.maxVal))) missing.push(`axis ceiling ${w.maxVal}`);
-        for (const c of w.categories as string[]) if (!t.includes(c)) missing.push(`column name "${c}"`);
+        // widgets.tsx gates the raw category label on `!spec.histogram` (dd-02-02's own comment,
+        // widgets.tsx ~13159) — a histogram draws numeric bin edges instead (histogramEdges),
+        // never the "0–9"-style category text itself. Same derivation already verified against
+        // widgets.tsx's own parsedBins/histogramEdges in widgets.labelCollision.s237.test.tsx.
+        if (w.histogram) {
+          const categories = w.categories as string[];
+          const edges = [
+            Number(categories[0].match(/^\s*(-?\d+)/)![1]),
+            ...categories.map((cat) => Number(cat.match(/(-?\d+)\s*$/)![1]) + 1)
+          ];
+          for (const edge of edges) if (!t.includes(String(edge))) missing.push(`bin edge ${edge}`);
+        } else {
+          for (const c of w.categories as string[]) if (!t.includes(c)) missing.push(`column name "${c}"`);
+        }
         if (Array.isArray(f.value)) for (const v of new Set(f.value as number[])) if (!t.includes(String(v))) missing.push(`built count ${v}`);
         return missing.length ? `missing ${missing.slice(0, 3).join(", ")}` : null;
       }
@@ -250,7 +263,10 @@ describe("S241 GG-03 — numberLinePlace after the marker has been dragged", () 
       for (const tone of ["neutral", "error", "info"] as const) {
         const { boxes, hits } = scan(spec, { name: `marker ${value}`, value, tone });
         expect(hits, `marker at ${value} [${tone}]`).toEqual([]);
-        expect(texts(boxes), `marker at ${value} [${tone}]: the negative end`).toContain("-10");
+        // numberLinePlainLabel prints a typeset minus, "−" (U+2212), not the ASCII hyphen — the
+        // same substitution the rest of the suite normalizes for (widgets.labelCollision.s237,
+        // widgets.numberLineScale.s237). The rendered label really is "−10"; match it verbatim.
+        expect(texts(boxes), `marker at ${value} [${tone}]: the negative end`).toContain("−10");
       }
     }
     // The reveal ghost IS drawn against a wrong placement, and does not collide with the ruler.

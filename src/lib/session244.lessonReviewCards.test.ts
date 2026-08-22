@@ -178,39 +178,45 @@ describe("S244 source-sealed lesson review cards", () => {
       cardStatus: "CURRENT_HUMAN_DISPOSITION",
       disposition: {
         status: "CURRENT_HUMAN_DECISION", decision: "KEEP", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
-        recordId: "S246-DG4-dg4-01-01", visualDecision: "SUFFICIENT", gradeLanguageDecision: "FIT"
+        recordId: "S319-A-dg4-01-01", visualDecision: "REQUIRED", gradeLanguageDecision: "FIT"
       },
-      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:SUFFICIENT", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
+    // k100-01-01 was REVISE under S246-K100-k100-01-01; superseded by S316-K100-k100-01-01, which
+    // independently re-reviewed the repaired lesson and closed it KEEP/SUFFICIENT.
     const revise = report.cards.find((card) => card.lessonId === "k100-01-01");
     expect(revise).toMatchObject({
       cardStatus: "CURRENT_HUMAN_DISPOSITION",
       disposition: {
-        status: "CURRENT_HUMAN_DECISION", decision: "REVISE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
-        recordId: "S246-K100-k100-01-01", visualDecision: "REQUIRED", gradeLanguageDecision: "FIT"
+        status: "CURRENT_HUMAN_DECISION", decision: "KEEP", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S316-K100-k100-01-01", visualDecision: "SUFFICIENT", gradeLanguageDecision: "FIT"
       },
-      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:SUFFICIENT", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
+    // bv-05-03's OLS-repair REVISE (S247) was further superseded by S317-V (REVISE: describeState.ts
+    // gap), S317-VF (KEEP: gap closed), and reconfirmed KEEP by S322-F8 at the current source hash.
     const repaired = report.cards.find((card) => card.lessonId === "bv-05-03");
     expect(repaired).toMatchObject({
       cardStatus: "CURRENT_HUMAN_DISPOSITION",
       disposition: {
-        status: "CURRENT_HUMAN_DECISION", decision: "REVISE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
-        recordId: "S247-BV-bv-05-03-OLS-SUPERSESSION", visualDecision: "REQUIRED", gradeLanguageDecision: "FIT"
+        status: "CURRENT_HUMAN_DECISION", decision: "KEEP", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S322-F8-bv-05-03", visualDecision: "SUFFICIENT", gradeLanguageDecision: "FIT"
       },
-      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:REQUIRED", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:SUFFICIENT", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
+    // mf3-02-05's ESCALATE (S248, false highlighted-cell claim) was superseded by S321-F9 after the
+    // figure repair: independently re-reviewed and closed KEEP/SUFFICIENT.
     const escalate = report.cards.find((card) => card.lessonId === "mf3-02-05");
     expect(escalate).toMatchObject({
       cardStatus: "CURRENT_HUMAN_DISPOSITION",
       disposition: {
-        status: "CURRENT_HUMAN_DECISION", decision: "ESCALATE", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
-        recordId: "S248-MF3-mf3-02-05", visualDecision: "ESCALATE", gradeLanguageDecision: "ESCALATE"
+        status: "CURRENT_HUMAN_DECISION", decision: "KEEP", queueStatus: "CLOSED_BY_CURRENT_HUMAN_DECISION",
+        recordId: "S321-F9-mf3-02-05", visualDecision: "SUFFICIENT", gradeLanguageDecision: "FIT"
       },
-      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:ESCALATE" }
+      reviewStatus: { visual: "CLOSED_BY_CURRENT_HUMAN_DECISION:SUFFICIENT", gradeLanguage: "CLOSED_BY_CURRENT_HUMAN_DECISION:FIT" }
     });
 
     expect(currentCards.length + pendingCards.length + staleCards.length).toBe(report.cards.length);

@@ -14,6 +14,23 @@ const { solvePrompt: solveG2Prompt } = require2("./g2Independent.cjs");
 const DIR = join(__dirname, "../../content/courses/fluency-20-g2");
 const TAG = "g2-fluency";
 
+// This course restates most check/challenge prompts as free-form English sentences with numbers
+// spelled out ("Nine is mirrored by another nine") rather than digits, for surface variety beyond
+// k1's fixed "${a} + ${b} = ?" shape — so a digit-only /\d+/g scan misses every spelled-out number
+// and would wrongly flag a correctly-tagged factFamily as "unrelated to the prompt". Extract word
+// numbers the same way the independent solver (g2Independent.cjs) does.
+const ONE_WORDS: Record<string, number> = { zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20 };
+function wordNums(prompt: string): number[] {
+  const out: number[] = [];
+  for (const tok of prompt.match(/[A-Za-z]+/g) ?? []) {
+    const t = tok.toLowerCase();
+    if (t in ONE_WORDS) out.push(ONE_WORDS[t]);
+    else if (t === "sixes") out.push(6);
+    else if (t.endsWith("s") && t.slice(0, -1) in ONE_WORDS) out.push(ONE_WORDS[t.slice(0, -1)]);
+  }
+  return out;
+}
+
 describe("S188 fluency-20-g2 — course shape", () => {
   it("3 chapters (4/4/6), ids sequential, files match course.json, grade 2", () => {
     const course = JSON.parse(readFileSync(join(DIR, "course.json"), "utf8"));
@@ -44,7 +61,10 @@ describe("S188 fluency-20-g2 — every lesson re-derived from disk", () => {
       for (const s of [i1, i2]) {
         const w = WidgetSpec.parse(s.widget) as TWidget;
         expect(widgetIntegrityErrors(w)).toEqual([]);
-        expect(["tenFrame", "numberLineHop"]).toContain(w.type);
+        // i1 is a constructive additive engine (tenFrame/numberLineHop); i2 is always the
+        // tapDiagram "select the total" engine — pinned course-wide by
+        // session251.fluency20G2CourseIntegrity.test.tsx ("second.type" must be "tapDiagram").
+        expect(["tenFrame", "numberLineHop", "tapDiagram"]).toContain(w.type);
         if (w.type === "tenFrame") {
           expect(w.preFilled).toBeLessThan(w.target);
           expect(evaluate(w, w.target).correct).toBe(true);
@@ -56,6 +76,10 @@ describe("S188 fluency-20-g2 — every lesson re-derived from disk", () => {
           expect(evaluate(w, landing).correct).toBe(true);
           expect(evaluate(w, landing + 1).correct).toBe(false);
           for (const t of w.commonLandings) expect(t.value).not.toBe(landing);
+        } else if (w.type === "tapDiagram") {
+          const correct = w.hotspots.filter((h) => h.correct);
+          expect(correct).toHaveLength(1);
+          for (const h of w.hotspots) expect(evaluate(w, [h.id]).correct).toBe(h.correct);
         }
       }
 
@@ -90,8 +114,13 @@ describe("S188 fluency-20-g2 — every lesson re-derived from disk", () => {
         expect(lo).toBeLessThanOrEqual(hi);
         expect(result).toBeLessThanOrEqual(20);
         expect(sumFamilyKey(hi, lo)).toBe(key); // commutative round-trip
-        const nums = [...String(w.prompt).matchAll(/\d+/g)].map((m) => Number(m[0]));
-        expect(nums.includes(result) || (nums.includes(lo) && nums.includes(hi)),
+        const nums = [...String(w.prompt).matchAll(/\d+/g)].map((m) => Number(m[0])).concat(wordNums(String(w.prompt)));
+        // Near-doubles strategy prompts ("...one beyond double seven?") state only ONE anchor of
+        // the pair by design — hi = lo + 1 is pinned by the near-doubles invariant itself, so
+        // naming either partner next to "double" is sufficient evidence the family is this
+        // prompt's, not a stand-in for literally stating both addends or the bare sum.
+        const nearDoubleAnchor = /\bdouble\b/i.test(String(w.prompt)) && hi === lo + 1 && (nums.includes(lo) || nums.includes(hi));
+        expect(nums.includes(result) || (nums.includes(lo) && nums.includes(hi)) || nearDoubleAnchor,
           `${lesson.id}/${s.id}: family ${key} unrelated to prompt "${w.prompt}"`).toBe(true);
       }
       expect(tagged).toBe(4); // every graded step in a fluency lesson is a fact drill

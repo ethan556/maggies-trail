@@ -140,6 +140,12 @@ export const K_TRAILS: GradeTrail[] = [
     title: "Kindergarten: Shapes & Sorting",
     tagline: "Name flat and solid shapes, tell where things are, and compare and sort the world.",
     lessonId: "ks-01-01"
+  },
+  {
+    id: "add-subtract-10-k",
+    title: "Kindergarten: Adding & Taking Away",
+    tagline: "Put groups together, take some away, and make the facts within 5 come back on their own.",
+    lessonId: "koa-01-01"
   }
 ];
 

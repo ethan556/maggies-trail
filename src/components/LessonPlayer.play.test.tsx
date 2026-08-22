@@ -65,7 +65,7 @@ function playCorrectFrom(step: "i1" | "k1") {
   fireEvent.click(screen.getAllByRole("button", { name: /Plate with 3 cookies/ })[1]);
   clickCheck();
   clickContinue();
-  fireEvent.click(radio(/^3 × 5$/)); // k3
+  fireEvent.click(radio(/^3 times 5$/)); // k3
   clickCheck();
   clickContinue();
   typeNumber("5"); // k4 (new intermediate check: isolates the subtract-a-small-amount step
@@ -124,7 +124,7 @@ describe("lesson playthrough (scripted DOM walk)", () => {
 
   it("two misses on one conceptTag inject that tag's remedial pair and grow the trail", () => {
     render(<LessonPlayer lesson={lesson} />);
-    const dots = () => screen.getByRole("img", { name: /Step \d+ of \d+/ });
+    const dots = () => screen.getByRole("group", { name: /Step \d+ of \d+/ });
     expect(dots().getAttribute("aria-label")).toContain("of 10");
 
     clickContinue(); // c1
@@ -154,7 +154,7 @@ describe("lesson playthrough (scripted DOM walk)", () => {
     fireEvent.click(radio(/^5 \+ 3$/));
     clickCheck();
     fireEvent.click(btn(/Try again/));
-    fireEvent.click(radio(/^5 − 3$/));
+    fireEvent.click(radio(/^5 minus 3$/));
     clickCheck();
     clickContinue();
 

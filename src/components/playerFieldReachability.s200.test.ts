@@ -66,10 +66,15 @@ const CONSUMERS: Record<string, Partial<Record<Kind, string>>> = {
     challenge: "LessonPlayer showExplanation (availability-gated)"
   },
   figure: {
-    // Pre-S200 fix of the same class: availability + FIGURE_IDS membership, not kind.
+    // Pre-S200 fix of the same class: availability + FIGURE_IDS membership, not kind. Verified
+    // directly against LessonPlayer.tsx's own render condition (`s.figure && FIGURE_IDS.has(s.figure)
+    // && isFigureTextAligned(...)`, ~line 615): it carries no `s.kind` check at all, so it is the
+    // SAME reachable path for every step kind that authors `figure` — challenge included, added here
+    // once the corpus actually started authoring it (bv-02-02/ch1 and 6 siblings).
     concept: "LessonPlayer figure block (FIGURE_IDS-gated)",
     interactive: "LessonPlayer figure block (FIGURE_IDS-gated)",
-    check: "LessonPlayer figure block (FIGURE_IDS-gated)"
+    check: "LessonPlayer figure block (FIGURE_IDS-gated)",
+    challenge: "LessonPlayer figure block (FIGURE_IDS-gated)"
   },
   predict: { interactive: "LessonPlayer prediction block + seededShuffle" },
   takeaways: { recap: "LessonPlayer recap block" },
@@ -139,16 +144,24 @@ describe("authored step fields are reachable", () => {
 
   it("pins the three known stranding repairs at corpus level", () => {
     // If any of these pairs disappears from the corpus the pin is stale, not passing by luck.
+    // figure::interactive (2->5) and figure::check (6->20) re-measured, seal cacb6ca, 2026-08-22:
+    // more HS content has since authored `figure` on both kinds, all still reachable through the
+    // same kind-agnostic LessonPlayer gate verified above. figure::challenge is a NEW instance of
+    // this same pin (bv-02-02/ch1 and 6 siblings) rather than a fourth stranding repair: unlike the
+    // three defects this test's header documents, the corpus never shipped this pair while the gate
+    // excluded it — `figure` was never kind-gated by the time `challenge` steps started authoring it.
     expect(pairs.get("hints::interactive")?.count).toBe(118);
     expect(pairs.get("explanationVariants::interactive")?.count).toBe(120);
-    expect(pairs.get("figure::interactive")?.count).toBe(2);
-    expect(pairs.get("figure::check")?.count).toBe(6);
+    expect(pairs.get("figure::interactive")?.count).toBe(5);
+    expect(pairs.get("figure::check")?.count).toBe(20);
+    expect(pairs.get("figure::challenge")?.count).toBe(7);
 
     // And each is declared reachable rather than merely tolerated.
     expect(CONSUMERS.hints.interactive).toMatch(/availability-gated/);
     expect(CONSUMERS.explanationVariants.interactive).toMatch(/availability-gated/);
     expect(CONSUMERS.figure.interactive).toMatch(/FIGURE_IDS-gated/);
     expect(CONSUMERS.figure.check).toMatch(/FIGURE_IDS-gated/);
+    expect(CONSUMERS.figure.challenge).toMatch(/FIGURE_IDS-gated/);
   });
 
   it("does not declare consumers for pairs the corpus never authors", () => {

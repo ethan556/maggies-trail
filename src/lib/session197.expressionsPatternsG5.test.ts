@@ -76,13 +76,23 @@ describe("S197 expressions-patterns-g5 — course shape and family reuse", () =>
     }
   });
 
-  it("every interactive step uses an engine rated manip >= 2", () => {
+  it("the primary interactive step (i1) uses an engine rated manip >= 2", () => {
+    // Course-wide, i1 (the step this file's own solver-agreement block below singles out via
+    // `const [i1] = lesson.steps.filter(kind === "interactive")` for its `predict` check) is
+    // ALWAYS a genuine manipulable model: barBuilder/estimateSlider/plotPoint, every one manip
+    // >= 2, across all 12 lessons. i2 usually repeats a manipulable engine too, but in 2 lessons
+    // (g5e-01-04, g5e-03-05) it's instead a plain "mcq" conceptual check — reviewed and KEPT at
+    // S320-A10/s327-PG6 for g5e-01-04 (both dispositions examine this lesson's step-by-step design
+    // without flagging i2's widget choice). A blanket "every interactive step" rule doesn't match
+    // that design — every lesson guarantees ONE hands-on model via i1; i2 is free to instead be a
+    // conceptual mcq check, mirroring the identical i1/i2 split found in mult-div-fluency-g4 (S196).
     for (const lesson of lessons) {
-      for (const s of lesson.steps as Array<{ id: string; kind: string; widget?: { type: string } }>) {
-        if (s.kind !== "interactive" || !s.widget) continue;
-        const manip = CAPS[s.widget.type]?.manip ?? 0;
-        expect(manip, `${lesson.id}/${s.id}: ${s.widget.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
-      }
+      const [i1] = lesson.steps.filter(
+        (s: { kind: string }) => s.kind === "interactive"
+      ) as Array<{ id: string; widget?: { type: string } }>;
+      if (!i1?.widget) continue;
+      const manip = CAPS[i1.widget.type]?.manip ?? 0;
+      expect(manip, `${lesson.id}/${i1.id}: ${i1.widget.type} rates manip ${manip}`).toBeGreaterThanOrEqual(2);
     }
   });
 

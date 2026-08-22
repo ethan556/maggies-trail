@@ -11823,16 +11823,33 @@ describe("variant gate — every problem a generator can ever produce", () => {
       }
       const revealed = proportionalReasoningExplorationKeys(parsed).slice(0, parsed.requiredExplorations);
       expect(revealed).toHaveLength(parsed.requiredExplorations);
+      // evaluate.ts's own gate for THIS Lab type is not `revealed`/`requiredExplorations` (that
+      // convention belongs to its sibling Lab types) — it is `proportionalUnitRatesAreVerified`,
+      // matching the real widget: `ProportionalReasoningLabW` requires the learner to type and
+      // verify EVERY series pair's unit rate (`unitRates`/`verifiedUnitRates`) before `setNumeric`/
+      // `setChoice` will even accept a final answer (`ratesReady` gates both). So the state that
+      // actually unlocks grading here is every `${series.id}:${index}` key present in `unitRates`
+      // at the true rate and listed in `verifiedUnitRates` — built from this block's own
+      // independently-computed `rows`, not from the schema's `proportionalReasoningTruth`.
+      const unitRates: Record<string, number> = {};
+      const verifiedUnitRates: string[] = [];
+      for (const series of rows) {
+        series.pairs.forEach(([, y], index) => {
+          const key = `${series.id}:${index}`;
+          unitRates[key] = series.rates[index]!;
+          verifiedUnitRates.push(key);
+        });
+      }
       if (parsed.answerMode === "numeric") {
         expect(answerNumber).toBeTypeOf("number");
         expect(Math.abs((v.answer as number) - answerNumber!)).toBeLessThan(1e-9);
-        expect(evaluate(parsed, { revealed, numeric: answerNumber }).correct).toBe(true);
+        expect(evaluate(parsed, { unitRates, verifiedUnitRates, numeric: answerNumber }).correct).toBe(true);
         const routed = check(parsed.prompt);
         expect(typeof routed).toBe("number");
         expect(Math.abs((routed as number) - answerNumber!)).toBeLessThan(1e-9);
         for (const wrong of parsed.numericErrors) {
           expect(Math.abs(wrong.value - answerNumber!)).toBeGreaterThan(parsed.tolerance);
-          const result = evaluate(parsed, { revealed, numeric: wrong.value });
+          const result = evaluate(parsed, { unitRates, verifiedUnitRates, numeric: wrong.value });
           expect(result.correct).toBe(false);
           expect(result.feedback).toBe(wrong.feedback);
         }
@@ -11844,18 +11861,20 @@ describe("variant gate — every problem a generator can ever produce", () => {
         );
         expect(winners, "exactly one independently-derived proportional choice").toHaveLength(1);
         expect(v.answer).toBe(winners[0]!.id);
-        expect(evaluate(parsed, { revealed, choiceId: winners[0]!.id }).correct).toBe(true);
+        expect(evaluate(parsed, { unitRates, verifiedUnitRates, choiceId: winners[0]!.id }).correct).toBe(true);
         const routed = check(parsed.prompt + "||" + parsed.choices.map((choice) => choice.label).join(";;"));
         if (typeof routed === "number" && typeof answerNumber === "number") expect(Math.abs(routed - answerNumber)).toBeLessThan(1e-9);
         else expect(routed).toBe(winners[0]!.label);
         for (const choice of parsed.choices.filter((choice) => choice.id !== winners[0]!.id)) {
-          const result = evaluate(parsed, { revealed, choiceId: choice.id });
+          const result = evaluate(parsed, { unitRates, verifiedUnitRates, choiceId: choice.id });
           expect(result.correct).toBe(false);
           expect(result.feedback).toBe(choice.feedback);
         }
       }
-      // Fabricated state strings cannot satisfy the exploration gate.
-      expect(evaluate(parsed, { revealed: Array.from({length: parsed.requiredExplorations}, (_, i) => `fake:${i}`), numeric: answerNumber, choiceId: v.answer as string }).correct).toBe(false);
+      // The right final answer, submitted with no unit rate ever verified, cannot satisfy the
+      // exploration gate — the gate is real work (verify every rate), not a formality the answer
+      // alone can shortcut.
+      expect(evaluate(parsed, { numeric: answerNumber, choiceId: v.answer as string }).correct).toBe(false);
       expect(new Set(parsed.series.map((series) => series.id)).size).toBe(parsed.series.length);
       expect(new Set(parsed.series.map((series) => series.label)).size).toBe(parsed.series.length);
       expect(parsed.successFeedback.length).toBeGreaterThanOrEqual(10);

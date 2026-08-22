@@ -45,7 +45,7 @@ const SPECS = authored();
 
 describe("the authored regression set", () => {
   it("is every algebraTiles instance in content, and it is not empty", () => {
-    expect(SPECS.length).toBe(28);
+    expect(SPECS.length).toBe(29);
   });
 
   // S215: `tse-01-01/i1` is the first authored user of area mode. A NAMED allowlist, not a relaxed

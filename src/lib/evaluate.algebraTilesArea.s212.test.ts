@@ -51,13 +51,13 @@ function authored(): Array<{ file: string; where: string; raw: Record<string, un
 describe("classic authored specs are graded by the code they were always graded by", () => {
   it("no verdict moves, over every state a learner can reach", () => {
     const specs = authored();
-    expect(specs.length).toBe(28);
+    expect(specs.length).toBe(29);
     const diffs: string[] = [];
     let checked = 0;
     // S215: one authored lesson opts into area mode and is graded by the NEW block by design. The
-    // old-path claim is about the 26 that did not, and it is unchanged for every one of them.
+    // old-path claim is about the 27 that did not, and it is unchanged for every one of them.
     const classic = specs.filter(({ raw }) => !("area" in raw));
-    expect(classic.length).toBe(26);
+    expect(classic.length).toBe(27);
     expect(specs.filter(({ raw }) => "area" in raw).map((a) => `${a.file.replace(/\\/g, "/")}${a.where}`).sort()).toEqual([
       "content/courses/linear-equations-systems/lessons/les-01-03.json.steps[1].widget",
       "content/courses/two-step-equations/lessons/tse-01-01.json.steps[1].widget",

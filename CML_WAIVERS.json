@@ -1,6 +1,20 @@
 {
-  "note": "S244 / CML-01. Strict CML warnings are fail-closed: a code with no entry is allowed zero warnings. All 161 causal-prediction findings and all 39 response-heavy flagship findings were repaired through direct mathematical lesson states, so no temporary warning waiver remains.",
+  "note": "S244 / CML-01. Strict CML warnings are fail-closed: a code with no entry is allowed zero warnings. All 161 causal-prediction findings and all 39 response-heavy flagship findings were repaired through direct mathematical lesson states. S330 added the one waiver below for a lesson where repair (giving it a manipulative widget) would be worse than the warning: see that entry's rationale.",
   "sourceSeal": "working-tree-s244",
   "recordedAt": "2026-08-17",
-  "waivers": []
+  "waivers": [
+    {
+      "code": "prediction-not-causal",
+      "maxCount": 1,
+      "owner": "S330 backlog triage",
+      "expires": "2027-08-22",
+      "rationale": "df3-03-02/i1 (division-fluency-g3, 'why does 7 ÷ 0 have no answer?') is the sole conceptual/definitional lesson in the paired mult-fluency-g3 / division-fluency-g3 courses (see NO_FACT_LESSONS and the UNVARIANTED_OK comment in src/lib/session186.fluencyPair.test.ts) — every other lesson in both 24-lesson courses uses the areaModel manipulative (manip-tier DIRECT) for i1/i2, which is why they clear this check for free. Division by zero has no areaModel (or any other manipulative) representation — there is nothing to drag or build that models 'no number works' — so the lesson uses mcq for both interactive steps, same as its own i2. The i1.predict block itself is not optional: S241 WS-E Phase 4 explicitly ruled it must be present and coherent for every lesson not on the S241_REMOVED list, and df3-03-02 is not on that list. Repairing this warning by forcing a manipulative widget onto a divide-by-zero question would add manipulation for the linter's sake, not the learner's — a worse lesson, not a better one.",
+      "evidence": [
+        "content/courses/division-fluency-g3/lessons/df3-03-02.json",
+        "src/lib/session186.fluencyPair.test.ts:19-26 (NO_FACT_LESSONS, UNVARIANTED_OK comment)",
+        "src/lib/session186.fluencyPair.test.ts:54-63 (S241_REMOVED / i1.predict required)",
+        "scripts/engine-capabilities.json: mcq manip < 2, areaModel manip >= 2"
+      ]
+    }
+  ]
 }

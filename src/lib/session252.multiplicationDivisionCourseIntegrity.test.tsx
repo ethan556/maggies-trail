@@ -36,11 +36,21 @@ const normalized = (prompt: string) =>
   prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ").trim();
 
 const repairedVisuals: Record<string, [string, string]> = {
-  "mult-02-01": ["c2", "mult3-fair-shares"],
-  "mult-02-03": ["c2", "number-line-jumps"],
+  // S318-V3-mult-02-01: mult3-fair-shares is a fixed 12÷3=4 exemplar; c2's body states "15 / 5 = 3"
+  // verbatim, so the figure was moved to the lesson-matched mult3-fair-shares-15-over-5 (per=3,
+  // recomputed correct), reaffirmed registered and text-aligned by S321-F9-mult-02-01.
+  "mult-02-01": ["c2", "mult3-fair-shares-15-over-5"],
+  // S318-V3-mult-02-03: c2 body states "35 / 5: ... seven hops" (7x5=35); figure moved to the
+  // lesson-matched number-line-jumps-7x5, confirmed non-stale via the FIGURE_NUMERIC_CLAIMS check.
+  "mult-02-03": ["c2", "number-line-jumps-7x5"],
   "mult-03-01": ["c1", "mult3-double"],
-  "mult-04-04": ["c2", "mult3-which-op"],
-  "mult-04-05": ["c2", "mult3-estimate"],
+  // s323-eng-mult-04-04: rebound off the mismatched mult3-which-op onto a new dedicated figure
+  // (Mult3GroupsAdjustCars, registered as mult3-groups-adjust-cars) matching the lesson's own
+  // 5 rows x 8 cars, 6 removed once (5x8-6=34) per the S321_ASSESS_F9 contract.
+  "mult-04-04": ["c2", "mult3-groups-adjust-cars"],
+  // Figure moved to the lesson-matched mult3-estimate-6x9; reaffirmed registered and text-aligned
+  // by S321-F9-mult-04-05.
+  "mult-04-05": ["c2", "mult3-estimate-6x9"],
 };
 
 const repairedChoices: Array<[string, string]> = [
@@ -72,12 +82,15 @@ describe("S252 multiplication-division whole-course integrity", () => {
     }
   });
 
-  it("keeps all five figures registered while fail-closing two high-confidence mismatches", () => {
+  // Originally fail-closed two high-confidence mismatches (mult-02-03, mult-04-05 on their prior
+  // generic figures). Both were since repaired onto lesson-matched figures (see repairedVisuals
+  // comments above) and are now text-aligned like the other three, so every entry expects true.
+  it("keeps all five figures registered and text-aligned", () => {
     for (const [lessonId, [stepId, expectedFigure]] of Object.entries(repairedVisuals)) {
       const target = findStep(findLesson(lessonId), stepId);
       expect(target.figure).toBe(expectedFigure);
       expect(target.body).toBeTruthy();
-      expect(isFigureTextAligned(expectedFigure, target.body ?? ""), `${lessonId}/${stepId}`).toBe(!["mult-02-03", "mult-04-05"].includes(lessonId));
+      expect(isFigureTextAligned(expectedFigure, target.body ?? ""), `${lessonId}/${stepId}`).toBe(true);
       const Figure = FIGURES[expectedFigure];
       expect(Figure, expectedFigure).toBeDefined();
       const markup = renderToStaticMarkup(Figure());

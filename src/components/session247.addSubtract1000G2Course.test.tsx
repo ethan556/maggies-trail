@@ -37,7 +37,6 @@ const expectedFigures: Record<string, string> = {
   "g2b-02-01": "pv1000-decompose",
   "g2b-02-02": "pv1000-trade-down",
   "g2b-02-03": "pv1000-cascade-down",
-  "g2b-02-04": "pv3-borrow-zero",
   "g2b-02-05": "pv1000-skip-anywhere",
   "g2b-02-06": "skip-count-line",
   "g2b-03-01": "pv3-jump",
@@ -56,21 +55,33 @@ const stable = (value: unknown): string => {
 };
 const template = (prompt: string): string => prompt.toLowerCase().replace(/[-−+]?\d+(?:[.,/]\d+)*/g, "#").replace(/\s+/g, " ");
 
+// S287 replaced g2b-02-04's clipped Grade 3 borrow exemplar (pv3-borrow-zero, shared by both
+// concepts and the remedial) with two distinct, grade-aligned trading diagrams: c1's first trade
+// and c2/remedial's second trade (see src/lib/session287.addSubtract1000G2VisualRepair.test.ts,
+// which independently verifies both bindings text-aligned and registered).
+const splitConceptFigures: Record<string, [string, string]> = {
+  "g2b-02-04": ["pv1000-cascade-down", "pv1000-trade-down"],
+};
+
 describe("S247 Grade 2 add/subtract within 1,000 course portfolio", () => {
   it("binds all concept and remedial moments to registered, visible semantic figures", () => {
     expect(lessons).toHaveLength(16);
     for (const lesson of lessons) {
+      const split = splitConceptFigures[lesson.id];
       const expected = expectedFigures[lesson.id];
       const concepts = lesson.steps.filter((step: { kind: string }) => step.kind === "concept");
       expect(concepts, lesson.id).toHaveLength(2);
-      expect(concepts.map((step: { figure?: string }) => step.figure), lesson.id).toEqual([expected, expected]);
-      expect(lesson.remedials[0].concept.figure, lesson.id).toBe(expected);
-      expect(concepts.every((step: { body: string }) => isFigureTextAligned(expected, step.body)), lesson.id).toBe(true);
-      expect(FIGURE_IDS.has(expected), lesson.id).toBe(true);
-      const markup = renderToStaticMarkup(FIGURES[expected]());
-      expect(markup, expected).toContain("<svg");
-      expect(markup, expected).toContain("<title>");
-      expect(markup, expected).toContain('role="img"');
+      const perConcept = split ?? [expected, expected];
+      expect(concepts.map((step: { figure?: string }) => step.figure), lesson.id).toEqual(perConcept);
+      expect(lesson.remedials[0].concept.figure, lesson.id).toBe(perConcept[1]);
+      expect(concepts.every((step: { body: string }, index: number) => isFigureTextAligned(perConcept[index], step.body)), lesson.id).toBe(true);
+      for (const figureId of new Set(perConcept)) {
+        expect(FIGURE_IDS.has(figureId), lesson.id).toBe(true);
+        const markup = renderToStaticMarkup(FIGURES[figureId]());
+        expect(markup, figureId).toContain("<svg");
+        expect(markup, figureId).toContain("<title>");
+        expect(markup, figureId).toContain('role="img"');
+      }
     }
   });
 

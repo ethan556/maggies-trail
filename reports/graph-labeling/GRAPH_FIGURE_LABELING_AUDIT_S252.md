@@ -1,23 +1,23 @@
 # Graph and figure labeling audit — S252
 
-Source hash: `f7382cac07f01e83562c324ccf95e694ef1d1751c9ebdfd22931f50e4f3dd5f6`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
+Source hash: `bab8dd9d324ccb5365a8b08b53fb9466b27f88ee1c4c8e29fa934b78dddb2eec`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
 
 ## Exact inventory
 
 - 59 normative graph/statistical widget types; 59 renderer definitions resolved.
-- 1974 total registered figures; 205 graph/statistical figures classified; 205 renderer definitions resolved.
-- 1701 lesson files; 2166 authored/remedial graph consumers.
+- 2031 total registered figures; 215 graph/statistical figures classified; 215 renderer definitions resolved.
+- 1701 lesson files; 1975 authored/remedial graph consumers.
 - 17 graph-emitting generator tags; 24 generator-to-surface declarations.
-- 2112 renderer/rule checks: NOT_APPLICABLE 188, PASS 1171, REVIEW 252, VIOLATION 501.
-- 501 statically proved violations compressed into 293 root-cause portfolios.
+- 2192 renderer/rule checks: NOT_APPLICABLE 200, PASS 1196, REVIEW 274, VIOLATION 522.
+- 522 statically proved violations compressed into 294 root-cause portfolios.
 
 ## Violations
 
-By rule: grid 123, labels 7, origin 144, ticks 227.
+By rule: grid 127, labels 12, origin 148, ticks 235.
 
-By display type: bar_chart 15, box_plot 5, coordinate_graph 388, dot_plot 10, histogram 1, line_graph 3, number_line 60, scatter_plot 19.
+By display type: bar_chart 15, box_plot 4, coordinate_graph 404, dot_plot 10, histogram 1, line_graph 3, number_line 66, scatter_plot 19.
 
-By severity: MAJOR 371, MINOR 130.
+By severity: MAJOR 383, MINOR 139.
 
 ## Gate
 

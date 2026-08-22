@@ -58,11 +58,11 @@ function experimentalSpec(): TTrialProbabilityLab {
 }
 
 describe("Session 132 trial probability lab", () => {
-  it("converts 15 fixed experiences while preserving 12 experimental and 3 theoretical tasks", () => {
+  it("converts 15 fixed experiences while preserving 11 experimental and 4 theoretical tasks", () => {
     const specs = convertedSpecs();
     expect(specs).toHaveLength(15);
-    expect(specs.filter((spec) => spec.mode === "experimental")).toHaveLength(12);
-    expect(specs.filter((spec) => spec.mode === "theoretical")).toHaveLength(3);
+    expect(specs.filter((spec) => spec.mode === "experimental")).toHaveLength(11);
+    expect(specs.filter((spec) => spec.mode === "theoretical")).toHaveLength(4);
     for (const spec of specs) {
       expect(widgetIntegrityErrors(spec)).toEqual([]);
       expect(spec.choices.filter((choice) => trialProbabilityEquivalent(spec, choice))).toHaveLength(1);

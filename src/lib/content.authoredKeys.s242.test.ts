@@ -40,8 +40,10 @@ import { globSync } from "node:fs";
 import { basename } from "node:path";
 import { WidgetSpec } from "./schema";
 
-/** Measured at seal 6cfba1f, 2026-08-16. Lower it when inert prose is removed or wired up; never raise it. */
-const DROPPED_KEY_BASELINE = 148;
+/** Re-measured at seal cacb6ca, 2026-08-22 (was 148 as of seal 6cfba1f, 2026-08-16) — content and
+ * schema work landed since then removed or wired up 8 of the originally-measured offenders.
+ * Lower it when inert prose is removed or wired up; never raise it. */
+const DROPPED_KEY_BASELINE = 140;
 
 interface Lesson { steps?: Array<{ id?: string; widget?: Record<string, unknown> }> }
 

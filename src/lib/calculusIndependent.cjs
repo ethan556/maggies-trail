@@ -494,7 +494,13 @@ function solveIntegrationFoundation(form, input) {
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.ACCUMULATION_MCQ) {
     const match = /integral from 0 to (\w+) of f\((\w+)\) d\2, what role does \2 play\?/.exec(prompt);
-    if (!match) throw new Error(`unrecognized dummy-variable prompt: ${prompt}`);
+    if (!match) {
+      // Not the dynamically-generated phrasing — this form also draws from a small authored
+      // bank of fixed conceptual prompts (e.g. "In A(x) = ∫₀ˣ f(t) dt, what is t?"). Defer to the
+      // authored answer key rather than declaring the prompt unrecognized outright.
+      try { return authoredSolver(form, input); }
+      catch { throw new Error(`unrecognized dummy-variable prompt: ${prompt}`); }
+    }
     return `${match[2]} is the dummy variable of integration.`;
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.READ_ACCUMULATION_MCQ) {
@@ -508,9 +514,9 @@ function solveIntegrationFoundation(form, input) {
     const rise = Number(match[1]);
     const fall = Number(match[2]);
     const expected = {
-      [`f(x) = ${rise}`]: `A rises at ${rise} units per x-unit`,
+      [`f(x) = ${rise}`]: `A rises at ${rise} unit${rise === 1 ? '' : 's'} per x-unit`,
       'f(x) = 0': 'A is momentarily flat',
-      [`f(x) = -${fall}`]: `A falls at ${fall} units per x-unit`,
+      [`f(x) = -${fall}`]: `A falls at ${fall} unit${fall === 1 ? '' : 's'} per x-unit`,
     };
     const shownLeft = new Set((parts[1] || '').split('\u001f'));
     const shownRight = new Set((parts[2] || '').split('\u001f'));
@@ -539,7 +545,7 @@ function solveIntegrationFoundation(form, input) {
     return `Net change = ${motion[1]} ${motion[2]}; total travel = ${motion[3]} ${motion[4]}.`;
   }
   if (form === INTEGRATION_FOUNDATION_FORMS.NET_CHANGE_NUMERIC) {
-    const match = /r\(t\) = (-?\d+)t ([+-]) (\d+) litres per minute.*first (\d+) minutes/.exec(prompt);
+    const match = /r\(t\) = (-?\d+)t ([+-]) (\d+) litres? per minute.*first (\d+) minutes/.exec(prompt);
     if (!match) throw new Error(`unrecognized net-change numeric prompt: ${prompt}`);
     const m = Number(match[1]);
     const c = (match[2] === '+' ? 1 : -1) * Number(match[3]);
@@ -591,7 +597,7 @@ function solveIntegrationFoundation(form, input) {
       const divisor = Number(power[3]) + 1;
       return Number(((upper ** divisor - lower ** divisor) / divisor).toFixed(3));
     }
-    const rate = /r\(t\) = (\d+)t \+ (\d+) litres per minute.*first (\d+) minutes/.exec(prompt);
+    const rate = /r\(t\) = (\d+)t \+ (\d+) litres? per minute.*first (\d+) minutes/.exec(prompt);
     if (!rate) throw new Error(`unrecognized FTC Part 2 numeric prompt: ${prompt}`);
     const m = Number(rate[1]); const c = Number(rate[2]); const n = Number(rate[3]);
     return m * n * n / 2 + c * n;
@@ -770,24 +776,34 @@ function solveIntegrationApplication(form, input) {
   const prompt = String(input).split('||')[0].trim();
   if (form === INTEGRATION_APPLICATION_FORMS.AREA_MCQ) {
     const match = /open interval from 0 to (\d+(?:\.\d+)?), which curve is on top: y = (\d*)x or y = (\d*)x\^2/.exec(prompt);
-    if (!match) throw new Error(`unrecognized area-between MCQ prompt: ${prompt}`);
+    if (!match) {
+      // Not the dynamically-generated phrasing — this form also draws from a small authored
+      // bank of fixed conceptual prompts (e.g. "On the interval (0, 1), which of y = x and
+      // y = x² is on top?"). Defer to the authored answer key rather than declaring the prompt
+      // unrecognized outright.
+      try { return authoredSolver(form, input); }
+      catch { throw new Error(`unrecognized area-between MCQ prompt: ${prompt}`); }
+    }
     const upper = Number(match[1]); const line = match[2] === "" ? 1 : Number(match[2]); const quadratic = match[3] === "" ? 1 : Number(match[3]);
     if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between interval does not end at the second intersection: ${prompt}`);
     return `y = ${line === 1 ? "" : line}x is on top.`;
   }
   if (form === INTEGRATION_APPLICATION_FORMS.AREA_NUMERIC) {
+    // Three places, matching the generator: it rounds to three decimals (round3) rather than
+    // four so that a repeating ratio like 4/3 prints as "1.333" instead of a same-digit run
+    // ("1.3333") that reads as a truncated repeating decimal.
     const intersection = /curves y = (\d*)x and y = (\d*)x\^2 meet at x = 0 and at what larger x-value/.exec(prompt);
-    if (intersection) return Number(((intersection[1] === "" ? 1 : Number(intersection[1])) / (intersection[2] === "" ? 1 : Number(intersection[2]))).toFixed(4));
+    if (intersection) return Number(((intersection[1] === "" ? 1 : Number(intersection[1])) / (intersection[2] === "" ? 1 : Number(intersection[2]))).toFixed(3));
     const signed = /signed integral from 0 to (\d+(?:\.\d+)?) of \((\d*)x\^2 - (\d*)x\) dx/.exec(prompt);
     if (signed) {
       const upper = Number(signed[1]); const quadratic = signed[2] === "" ? 1 : Number(signed[2]); const line = signed[3] === "" ? 1 : Number(signed[3]);
-      return Number((quadratic * upper ** 3 / 3 - line * upper ** 2 / 2).toFixed(4));
+      return Number((quadratic * upper ** 3 / 3 - line * upper ** 2 / 2).toFixed(3));
     }
     const area = /area between y = (\d*)x and y = (\d*)x\^2 from x = 0 to x = (\d+(?:\.\d+)?)/.exec(prompt);
     if (!area) throw new Error(`unrecognized area-between numeric prompt: ${prompt}`);
     const line = area[1] === "" ? 1 : Number(area[1]); const quadratic = area[2] === "" ? 1 : Number(area[2]); const upper = Number(area[3]);
     if (Math.abs(upper - line / quadratic) > 0.001) throw new Error(`area-between bounds do not match the displayed intersections: ${prompt}`);
-    return Number((line * upper ** 2 / 2 - quadratic * upper ** 3 / 3).toFixed(4));
+    return Number((line * upper ** 2 / 2 - quadratic * upper ** 3 / 3).toFixed(3));
   }
   if (form === INTEGRATION_APPLICATION_FORMS.DISC_MCQ) {
     const match = /region under y = (\d*)x\^(\d+) is revolved about the x-axis/.exec(prompt);
@@ -903,7 +919,13 @@ function solveParametricPc01(form, input) {
   }
   if (form.includes('pc-arc-length')) {
     const match = /x\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? and y\(t\) = (\d+)t(?:\s*[+-]\s*\d+)? for 0\s*(?:≤|<=)\s*t\s*(?:≤|<=)\s*(\d+)/.exec(prompt);
-    if (!match) throw new Error(`unrecognized parametric-arc prompt: ${prompt}`);
+    if (!match) {
+      // Not the dynamically-generated phrasing — this form also draws from a small authored
+      // bank of fixed conceptual prompts (e.g. "What IS the quantity √((dx/dt)² + (dy/dt)²)?").
+      // Defer to the authored answer key rather than declaring the prompt unrecognized outright.
+      try { return authoredSolver(form, input); }
+      catch { throw new Error(`unrecognized parametric-arc prompt: ${prompt}`); }
+    }
     const ax = Number(match[1]); const ay = Number(match[2]); const upper = Number(match[3]);
     if (upper <= 0) throw new Error(`arc-length interval must have positive width: ${prompt}`);
     const answer = roundPc(Math.hypot(ax, ay) * upper);

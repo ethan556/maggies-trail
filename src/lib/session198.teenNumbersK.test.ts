@@ -59,6 +59,10 @@ const lessons = readdirSync(join(DIR, "lessons")).sort()
 const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
 const landOf = (w: { direction: string; start: number; hop: number; hops: number }) =>
   w.direction === "back" ? w.start - w.hop * w.hops : w.start + w.hop * w.hops;
+// Mirrors g0Independent.cjs's own ONE_WORDS: one hop prompt spells its count as a word.
+const ONE_WORDS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
 const pairSum = (label: string) =>
   [...label.matchAll(/\d+/g)].map((m) => Number(m[0])).reduce((a, b) => a + b, 0);
 
@@ -148,13 +152,19 @@ describe("S198 teen-numbers-k — teen-frame contract and solver round-trips", (
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct).toBe(true);
+          // NOT position-0-pinned: S307 deliberately moved every main-sequence MCQ's correct
+          // option off raw index 0 course-wide (see session307.teenNumbersKChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract.
+          expect(correct[0].id).toBeTruthy();
           expect(new Set(w.options.map((o) => o.feedback)).size).toBe(w.options.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);
 
           if (s.variant?.form === "countDecomposeMcq") {
             // independent arithmetic: the correct label is the pair NOT summing to N
-            const n = Number(w.prompt.match(/split of (\d+)\?/)![1]);
+            const nm = w.prompt.match(/split of (\d+)\?/) ?? w.prompt.match(/fails to make (\d+)\?/);
+            expect(nm, `${lesson.id}/${s.id}: countDecomposeMcq prompt shape unrecognized: ${w.prompt}`).toBeTruthy();
+            const n = Number(nm![1]);
             expect(pairSum(correct[0].label),
               `${lesson.id}/${s.id}: the NOT-a-split answer must fail to sum to ${n}`).not.toBe(n);
             for (const o of w.options.filter((x) => !x.correct)) {
@@ -194,8 +204,16 @@ describe("S198 teen-numbers-k — teen-frame contract and solver round-trips", (
             expect(Number(w.prompt.match(/after (\d+)\?/)![1]) + 1).toBe(land);
           }
           if (s.variant?.form === "kCountFromHop") {
-            const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./)!;
-            expect(Number(m[1]) + Number(m[2])).toBe(land);
+            const m = w.prompt.match(/^Start at (\d+) and count on (\d+)\./);
+            if (m) {
+              expect(Number(m[1]) + Number(m[2])).toBe(land);
+            } else {
+              // "Use [word] one-steps from [word] to reach the point that names N." states the
+              // same start+hop story with both numbers spelled as words.
+              const m2 = w.prompt.match(/^Use (\w+) one-steps from (\w+) to reach the point that names (\d+)/i);
+              expect(m2, `${lesson.id}/${s.id}: kCountFromHop prompt shape unrecognized: ${w.prompt}`).toBeTruthy();
+              expect(ONE_WORDS[m2![2].toLowerCase()] + ONE_WORDS[m2![1].toLowerCase()]).toBe(land);
+            }
           }
         }
       }

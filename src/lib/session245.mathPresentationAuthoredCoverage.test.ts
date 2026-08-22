@@ -96,16 +96,19 @@ describe("S245 math-presentation authored coverage", () => {
       }
     }
 
+    // Corpus totals grow as lessons are authored/revised; re-synced to the live count reported by
+    // `npx tsx scripts/audit/math-presentation-indexes.mts --summary` (authoredCoverage=...), the
+    // canonical generator for this same lessonAuthoredMathStrings computation.
     expect(totals).toMatchObject({
       remedialSteps: 3394,
-      explanationVariants: 17154,
-      mainExplanationVariants: 13760,
+      explanationVariants: 17172,
+      mainExplanationVariants: 13778,
       remedialExplanationVariants: 3394,
       takeaways: 5100,
       teasers: 1701,
-      narrations: 1650,
-      mainNarrations: 1100,
-      remedialNarrations: 550,
+      narrations: 1732,
+      mainNarrations: 1173,
+      remedialNarrations: 559,
     });
     expect(totals.mainSteps).toBeGreaterThan(totals.remedialSteps);
     expect(totals.strings).toBeGreaterThan(50_000);

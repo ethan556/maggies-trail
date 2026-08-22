@@ -8,6 +8,7 @@ const publicDir = join(root, "public");
 const manifestPath = join(publicDir, "manifest.webmanifest");
 const layoutPath = join(root, "src", "app", "layout.tsx");
 const generatorPath = join(root, "scripts", "gen-brand-icons.mjs");
+const ogGeneratorPath = join(root, "scripts", "brand", "render-og-image.mjs");
 
 type ManifestIcon = {
   src: string;
@@ -17,7 +18,6 @@ type ManifestIcon = {
 };
 
 const expectedManifestIcons: readonly ManifestIcon[] = [
-  { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
   { src: "/icons/favicon-16.png", sizes: "16x16", type: "image/png", purpose: "any" },
   { src: "/icons/favicon-32.png", sizes: "32x32", type: "image/png", purpose: "any" },
   { src: "/apple-touch-icon.png", sizes: "180x180", type: "image/png", purpose: "any" },
@@ -97,7 +97,6 @@ describe("S283 canonical app icon migration", () => {
     const iconBlock = layout.slice(layout.indexOf("icons: {"), layout.indexOf("openGraph:"));
     expect(iconBlock, "layout must retain a dedicated static icons block").toContain("icon: [");
     expect([...iconBlock.matchAll(/url: "([^"]+)"/g)].map((match) => match[1])).toEqual([
-      "/icon.svg",
       "/icons/favicon-32.png",
       "/icons/favicon-16.png",
       "/icons/icon-192.png",
@@ -117,12 +116,13 @@ describe("S283 canonical app icon migration", () => {
 
   it("keeps Open Graph and Twitter on one 1200×630 card generated from the approved mark", () => {
     const layout = readFileSync(layoutPath, "utf8");
-    const generator = readFileSync(generatorPath, "utf8");
+    const generator = readFileSync(ogGeneratorPath, "utf8");
     expect(layout).toMatch(/const OG_IMAGE = \{\s*url: "\/brand\/maggies-og\.png",\s*width: 1200,\s*height: 630,/);
     expect((layout.match(/images: \[OG_IMAGE\]/g) ?? [])).toHaveLength(2);
     expect(pngSize(join(publicDir, "brand", "maggies-og.png"))).toEqual({ width: 1200, height: 630 });
     expect(generator).toContain('const OUT_PATH = join(root, "public", "brand", "maggies-og.png");');
-    expect(generator).toContain('markSvg: readBrandSvg("maggies-mark.svg")');
+    expect(generator).toContain('markPng: readBrandPng("maggies-mark.png")');
+    expect(generator).toContain('wordmarkSvg: readBrandSvg("maggies-wordmark.svg")');
   });
 
   it("passes the read-only approved-mark derivative verifier", () => {

@@ -42,7 +42,10 @@ function assertMcq(widget: Widget | undefined): asserts widget is McqWidget {
   expect(widget?.type).toBe("mcq");
   const mcq = widget as McqWidget;
   expect(mcq.options).toHaveLength(4);
-  expect(mcq.options.map((option) => option.id)).toEqual(["o0", "o1", "o2", "o3"]);
+  // reports/quality/S308_NUMBER_LINE_G2_CHOICE_ORDER.md deliberately reordered every main-sequence
+  // MCQ's options array so the correct option (always id o0) no longer renders at a fixed index-0
+  // position; ids stay stable, array order does not. Compare the id set, not the array order.
+  expect([...mcq.options.map((option) => option.id)].sort()).toEqual(["o0", "o1", "o2", "o3"]);
   expect(mcq.options.filter((option) => option.correct)).toHaveLength(1);
   expect(mcq.options.find((option) => option.correct)?.id).toBe("o0");
   expect(new Set(mcq.options.map((option) => option.label)).size).toBe(4);
@@ -128,7 +131,11 @@ describe("S261 number-line-g2 source implementation", () => {
     assertMcq(k1Widget);
     assertMcq(ch1Widget);
     assertMcq(remedialWidget);
-    expect(remedialWidget).toEqual(k1Widget);
+    // The remedial check is the same MCQ as k1 (same prompt, same four options by id/label/
+    // correct/feedback), but S308's choice-order repair rotated each occurrence's options array
+    // independently, so the two are no longer array-order-identical. Compare by id-sorted content.
+    const byId = (options: Choice[]) => [...options].sort((a, b) => a.id.localeCompare(b.id));
+    expect({ ...remedialWidget, options: byId(remedialWidget.options) }).toEqual({ ...k1Widget, options: byId(k1Widget.options) });
     expect(k1Widget.prompt).toContain("fewest hops");
     expect(ch1Widget.prompt).toContain("lands exactly on 72");
     for (const widget of [k1Widget, ch1Widget]) {

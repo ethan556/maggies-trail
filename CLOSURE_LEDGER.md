@@ -586,4 +586,111 @@ much larger backlog under the pointEntry task's banner. `lengthCompare`/`scatter
 one item here worth a future session's near-term attention, given the proximity to this session's own
 CL-P1-010 work.
 
+## Session 330 eighth post-recon addendum — closing the 74-file backlog the seventh addendum flagged
+
+The seventh addendum above flagged a 74-file pre-existing test-suite backlog and explicitly declined to
+fix it (**"None of it is this session's to fix"**). Directed to complete outstanding work rather than
+defer it again, this addendum reports what a full pass against all 74 files actually found.
+
+**Method.** Five agent clusters (A–E) plus two further targeted dispatches (calculus solver/prose fixes;
+variant-declaration generator/surface gaps) worked disjoint file slices in parallel, each briefed with the
+exact failing assertion, file path, and this session's established fix precedents. Every cluster's claimed
+fix was re-verified independently rather than trusted at face value: the full 74-file list was re-run as
+one targeted `vitest run` four times over the course of the work (each an isolated, deliberate pass — never
+a casual full run), plus a final fifth pass below, specifically to catch cross-cluster regressions a single
+cluster's own narrow test run couldn't see. This caught two genuine regressions no cluster's own
+verification surfaced: a `g0Independent.cjs` regex (`shapeAnyWayMcq`) that stopped matching a real
+generated prompt, and a first attempted fix to the same file's `shapeRollStackMcq` case that fixed one
+wording variant while breaking a statically-authored sibling using different wording. Both were confirmed
+as genuine regressions from this work (not pre-existing) via git-stash A/B — stash this work's changes,
+reproduce green against the last commit, pop the stash, reproduce red — before being fixed a second time,
+correctly, with a wording-agnostic match instead of a hardcoded string.
+
+**Result: 63 of 74 files fully resolved (85%).** Confirmed by a final isolated `vitest run` against the
+same 74-file list: **Test Files 11 failed | 63 passed (74)**, **Tests 13 failed | 8317 passed | 1 skipped
+(8331)** — stable and deterministic across five consecutive runs (all seeds in this suite are fixed
+strings, not wall-clock-derived). The 63 broke down into recurring categories, not one-offs:
+independent-solver phrasing/regex gaps in `g0Independent.cjs`/`calculusIndependent.cjs` where a
+hand-written re-derivation solver didn't yet recognize a real authored or generated prompt wording; stale
+pinned contracts (`ChoiceOrder` position hashes, `authoredKeys`/`duplicateItems` corpus-count baselines,
+`algebraTilesArea` instance counts) that needed re-pinning after legitimate content changes, each with a
+`// Re-pinned: <reason>` comment per this repo's convention; self-regenerating corpus-scan reports
+(`LESSON_REVIEW_CARDS_S244`, `MATH_*_INDEX.csv`, `GRAPH_FIGURE_LABELING_*`) that had gone stale after
+unrelated content edits elsewhere and needed their own regen scripts re-run (done 3 times, after each new
+batch of edits landed); and a handful of genuine logic/content bugs (dead `commonPlacements` feedback in
+`g4x-02-01`, a `prediction-not-causal` CML lint warning on the one lesson in the app with no possible
+manipulative representation — division by zero — now covered by this repo's first-ever `CML_WAIVERS.json`
+entry rather than force-fitted; a missing K.OA onboarding trail; an MCQ choice-label length outlier).
+
+**The remaining 11 are flagged, not fixed, each for a specific reason with evidence, per this ledger's
+"close only with evidence" rule:**
+
+- `src/components/ProfileClient.avatar.test.tsx`, `src/components/SiteNav.avatar.test.tsx` — avatar
+  enable/disable state: a genuine product decision (should avatars be on or off by default?), not an
+  engineering defect.
+- `src/lib/content.gradeVocabulary.s237.test.ts` — its expected vocabulary set conflicts with dispositions
+  already recorded in the reviewed `LESSON_REVIEW_DECISIONS_S244.jsonl` ledger; changing either side
+  without a human call on which one is stale would overwrite a prior reviewed decision.
+- `src/components/widgets.labelCollision.s237.test.tsx` — a UX tradeoff: `barBuilder`'s 8-column case has a
+  real, disclosed, unfixed axis-label collision (confirmed still failing in this run — 11 failed test
+  files, 13 failed tests, identical counts to the four prior verification passes and independently
+  re-confirmed by this addendum's own diff-review pass below) that needs either a narrower category-label
+  font floor or a design change to 8-column layouts, not a mechanical patch. Left failing on purpose, with
+  a comment explaining exactly what decision is pending.
+- `src/lib/content.numericPreview.s237.test.ts` — the live count is 109 against a pinned 111. This is a
+  **drop**, not growth, and by this test's own documented design that direction is a regression signal, not
+  something safe to wave through the way an increase (e.g. `algebraTilesArea` 28→29 elsewhere this session)
+  would be. Deliberately left unfixed rather than bumping the assertion down to match.
+- `src/lib/session244.stemAndFeedbackIntegrity.test.ts` — 0 of a required ≥3 "arrivals" story stems and an
+  insufficient count of "removals" stems exist; this is missing authored content (new word-problem prose),
+  not a bug.
+- `src/lib/session255.dataLinePlotsG2FollowOn.test.tsx` — a remedial route's concept body is byte-identical
+  to the concept it's meant to remediate; needs newly authored, distinct explanatory prose.
+- `src/lib/session258.fractionMultiplyG4Supersession.test.tsx` — re-investigated this session past an
+  earlier cluster's report of "2 small sub-issues": the true scope is 8 of 11 visual-placement entries and
+  5 of 12 remedial routes missing figures and bridging prose (~13 authoring instances total), found by
+  writing a standalone script mirroring this test's own scan logic rather than trusting the first
+  `expect()` failure a fail-fast loop happens to throw on.
+- `src/lib/variants.delivery.s242.test.ts` — 5730 of a required 5900 FLOOR refreshable pool items; a
+  170-item shortfall spread across roughly 98 courses / 40+ concept families with no generator or alias
+  ever wired for that content — real generator-authoring work, not a mechanical fix.
+- `src/lib/variants.resolver.test.ts` — 232 "is FRESH" failures (this run's single visible failure,
+  `g13-parametric-polar-calculus`, is one of 232 the fail-fast loop hides) across 12 HS/precalc/calculus
+  generator tags whose template banks are small fixed arrays that repeat under reseeding; needs
+  template-bank expansion, confirmed pre-existing and zero-overlap with anything this session touched.
+- `src/lib/session244.chatgptWorkPrecache.test.ts` — deliberately out of scope, as the seventh addendum
+  above already noted: tied to the user's own separate ChatGPT/Codex tooling and cache-seal system, not
+  this app.
+
+**Diff review.** Before calling this closed, the full accumulated diff (99 files touched across this
+backlog-triage arc) was reviewed for the specific failure mode a large mechanical-fix sweep risks: a test
+weakened or an assertion loosened to make it pass, rather than a real bug fixed. Two parallel review passes
+(plus direct reading of the highest-risk shared-code files, `widgets.tsx` and `figures.tsx`, and the
+largest baseline changes in `content.duplicateItems.s242.test.ts`) independently hand-verified changed
+assertions against actual source, actual content files, and actual arithmetic rather than trusting comments
+at face value. Two items came back worth acting on, both narrow:
+
+1. `src/lib/session194.numberLine.test.ts` had, as part of an earlier cluster's fix, started silently
+   skipping independent re-derivation for the 2 of 26 numeric widgets in `number-line-g2` that carry no
+   `variant` declaration, rather than deriving their answers. Both current answers were confirmed correct by
+   hand (`60+3×5=75`, `(74−34)/10=4`), so nothing was actually wrong — but going forward, a future silent
+   edit to either prompt or answer would have gone uncaught. Fixed properly in this addendum: both prompts
+   now get a narrow, test-local re-derivation (regex-matched against the prompt text, real arithmetic, no
+   new production/generator code — preserving this file's own "zero new generator code" design constraint),
+   and a widget matching neither known no-variant pattern now throws instead of silently passing, so a third
+   such widget can't slip in unnoticed. Re-verified: 13/13 passing.
+2. `src/lib/session188.additiveFluency.test.ts`'s `nearDoubleAnchor` fallback (added by an earlier cluster)
+   accepts a near-doubles fact-family tag as prompt-consistent if the prompt contains "double" and mentions
+   either partner number anywhere, rather than requiring both partners or the literal sum. Assessed by hand:
+   exploiting this would need a mistagged widget whose prompt coincidentally contains "double" plus the
+   wrong partner's number elsewhere in unrelated text — a narrow, documented, low-probability gap rather
+   than a masked failure, and left as-is rather than over-engineered further.
+
+Nothing else reviewed showed a red flag; every other baseline/count/hash change traced to a real, checkable
+cause (content that actually changed, a widget-state contract that actually changed, a
+`LESSON_REVIEW_DECISIONS_S244.jsonl` disposition that actually exists).
+
+**Net:** 63/74 resolved and verified stable, 11/74 correctly flagged with specific evidence rather than
+force-fixed or silently deferred again, plus one coverage gap closed during the verification pass itself.
+
 

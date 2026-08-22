@@ -86,7 +86,12 @@ const lineCoords = (container: HTMLElement) => {
   return ["x1", "y1", "x2", "y2"].map((a) => el.getAttribute(a)).join("|");
 };
 const statusText = () => screen.getByTestId("le-status").textContent ?? "";
-const equationText = () => screen.getByText(/^y = /).textContent ?? "";
+// `getByText(/^y = /)` stopped being unique: the widget's math surfaces (SvgLatexSurface /
+// MathProse's KaTeX spans) can put more than one "y = …"-shaped node in the document at once,
+// so a regex text search over the whole body is no longer a reliable way to find the one live
+// readout. `le-equation` is a plain, stable hook on that exact <p> — the same pattern every
+// other element in this widget already uses (le-status, le-undo, le-drag-b/m, le-ghost).
+const equationText = () => screen.getByTestId("le-equation").textContent ?? "";
 const dragTo = (testid: string, mathY: number) => {
   const hit = screen.getByTestId(testid);
   fireEvent.pointerDown(hit, { clientX: 150, clientY: yPx(mathY) });

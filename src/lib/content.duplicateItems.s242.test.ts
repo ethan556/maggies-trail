@@ -28,9 +28,15 @@ import { variantForStep } from "./variants";
 
 const ROOT = process.cwd();
 
-/** Measured at seal 642965a, 2026-08-16. Lower these when the ledger is updated, never raise them. */
-const BASELINE_DUPLICATE_GROUPS = 75;
-const BASELINE_UNDIFFERENTIABLE = 67;
+/** Re-measured at seal cacb6ca, 2026-08-22 (was 75/67 as of seal 642965a, 2026-08-16). The large
+ * volume of duplicate-template redesign and MCQ-leakage remediation work landed since then (S327
+ * through S330 — see reports/closure/S330_PROGRESSION_G2.md and CLOSURE_LEDGER.md) eliminated
+ * every within-lesson duplicate MCQ found at the original baseline; both are independently
+ * confirmed at 0 by two prior sessions' incidental discovery of this same drop
+ * (HANDOVER_COWORK_S316.md, reports/closure/S330_PROGRESSION_G2.md) before this update landed it.
+ * Lower these when the ledger is updated, never raise them. */
+const BASELINE_DUPLICATE_GROUPS = 0;
+const BASELINE_UNDIFFERENTIABLE = 0;
 
 /* CROSS-LESSON DUPLICATION IS THE LARGER HALF AND WAS NOT RATCHETED.
  *
@@ -43,9 +49,15 @@ const BASELINE_UNDIFFERENTIABLE = 67;
  *
  * The lesson refresh cannot help here: two lessons each meeting the item once are each on their
  * own first walk, and the first walk is authored by design. This is authoring work, and pinning it
- * is what stops it growing while that work is queued. */
-const BASELINE_DUPLICATED_ITEMS = 162;
-const BASELINE_DUPLICATE_PLACEMENTS = 377;
+ * is what stops it growing while that work is queued.
+ *
+ * Re-measured at seal cacb6ca, 2026-08-22 (was 162/377 as of seal 642965a, 2026-08-16), for the
+ * same reason as the within-lesson baselines above — most of this cross-lesson set has since been
+ * authored away. The 6 remaining items (13 placements) were hand-inspected: they are genuine
+ * distinct-lesson repeats (e.g. kcm-02-01#k2 / khm-02-02#ch1), not a detector regression — the
+ * detector still finds them correctly, there are simply far fewer left to find. */
+const BASELINE_DUPLICATED_ITEMS = 6;
+const BASELINE_DUPLICATE_PLACEMENTS = 13;
 
 function walk(dir: string, out: string[] = []): string[] {
   if (!existsSync(dir)) return out;
@@ -154,6 +166,19 @@ describe("MCQ-01 — within-lesson duplicate items", () => {
         expect(JSON.stringify(resolved.widget), `${occurrence.lesson}#${occurrence.step} regenerated to the same widget`).not.toBe(first);
       }
     }
-    expect(checked, "no duplicate resolved a variant — this test is measuring nothing").toBeGreaterThan(0);
+    // The "measuring nothing" floor only means something when there is at least one within-lesson
+    // duplicate group to test regeneration against. As of seal cacb6ca (2026-08-22) `groups` itself
+    // is empty — every within-lesson duplicate this file once tracked has been authored away (see
+    // BASELINE_DUPLICATE_GROUPS above) — so `checked` is necessarily 0 too, and that is correct, not
+    // a silent break: there is nothing left for regeneration to prove today. The instant a new
+    // within-lesson duplicate is authored, `groups.length` becomes positive, `BASELINE_DUPLICATE_GROUPS`
+    // fails first (catching the duplicate itself), and this floor re-arms automatically to demand
+    // that duplicate actually gets regenerated wherever a generator exists — exactly the protection
+    // it always had, just inert while its own precondition (a duplicate to regenerate) doesn't hold.
+    if (groups.length > 0) {
+      expect(checked, "no duplicate resolved a variant — this test is measuring nothing").toBeGreaterThan(0);
+    } else {
+      expect(checked).toBe(0);
+    }
   });
 });

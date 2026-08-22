@@ -41,8 +41,12 @@ const contracts = [
   ["kmd-03-01", "k1", null, "10e9b80705fa662a1da63bc66e93eecceb01a3e08932901a80065178c8963030", "2dcaa4901751fa2ed3f02206f925253cff5091ac1dbd28be7739195b69a0a5b3"],
   ["kmd-03-01", "k2", null, "3be57bfc1e5a82a181f2c059da233b35cfd8ccfed8124495adc3e4287c1c7f55", "4e68099d3546762a1597960a4cc56760b4a8e14649475d78c9bce79053193220"],
   ["kmd-03-01", "ch1", null, "151b471a0c41fa45cf5c9ac949fffeda9eb79d1abc41a055899736b95c5712c6", "7dfac59bd9f6db40c45956bf869cd3b464a7690b4b0af08deceeb347d39016fa"],
-  // Re-pinned: signed S320-IMPL-kmd-03-02 dedup rewrite (S326-R1 reconcile).
-  ["kmd-03-02", "k1", null, "527088af457f097f94e52460742057a3bb11cfbc2d7a953233f825635c9c0954", "e2582b194bef3e3edb73165e95a42b35a61c9b4473d01f2b727ef1fa27de5fa1"],
+  // Re-pinned: S330 backlog triage shortened o1's label "Which pile should end up bigger" ->
+  // "Which pile should be bigger" (was the outlier in a cue-resistance choice-length spread of 10;
+  // course cap is 8 — see session253.measureCompareKCourseIntegrity.test.tsx). Same misconception,
+  // same correctness, same feedback; prompt untouched, so promptHash is unchanged from the prior
+  // S320-IMPL-kmd-03-02 dedup rewrite (S326-R1 reconcile) pin.
+  ["kmd-03-02", "k1", null, "527088af457f097f94e52460742057a3bb11cfbc2d7a953233f825635c9c0954", "fb67b453f4f4904274c3deaf831231dae14f10cc5fd13ffb2faa36d3101b5732"],
   ["kmd-03-02", "ch1", null, "b3dadc80485e1bb1489823ad9657c626cc23cb49d71595802d31104b78c79c4e", "0fa6e5cc47de4c7f0446e7f5750fb8cb5c4c849e8246535a7a8761f85e1adc65"],
   ["kmd-03-03", "k3", null, "5e7707a036e32735a2ccccc673910af41d67888701dab986da0c3d8b9132f8b9", "bc180922852ea229364f7605a3eaa682ce6967d1014329b620df4ec738cf1e81"],
   ["kmd-03-04", "k2", null, "b162b66ae2c9de3580b56a21e5c516cc96d4188a04cafd34c078f12b085c6cfa", "c449f98901cd6132c5a99d7dd5e7bfe2f28fc48d807ed92fda08a9d95cca2f37"],

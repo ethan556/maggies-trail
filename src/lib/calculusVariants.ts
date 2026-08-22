@@ -810,7 +810,7 @@ function ladderWidget(rand: Rand) {
       commonErrors: [chosen.length - chosen.foot, chosen.length, chosen.foot]
         .filter((value, index, all) => value !== chosen.height && all.indexOf(value) === index)
         .map((value) => ({ value, feedback: "The ladder is the hypotenuse. Use x^2 + y^2 = L^2 and take the positive height." })),
-      fallbackFeedback: `y = √(${chosen.length}^2 - ${chosen.foot}^2) = ${chosen.height} ft.`,
+      fallbackFeedback: `The ladder is the hypotenuse, so y = √(${chosen.length}^2 - ${chosen.foot}^2) = ${chosen.height} ft.`,
       successFeedback: `The Pythagorean relation gives height ${chosen.height} ft.`,
     };
   }
@@ -1184,7 +1184,7 @@ function exponentialModelWidget(rand: Rand) {
       commonErrors: [chosen.initial, chosen.initial * chosen.time, chosen.initial * (1 + chosen.rate)]
         .filter((value, index, all) => value !== answer && all.indexOf(value) === index)
         .map((value) => ({ value, feedback: "Use P(t) = P(0)e^(kt); continuous exponential growth is not a one-time percentage or linear change." })),
-      fallbackFeedback: `P(${chosen.time}) = ${chosen.initial}e^(${chosen.rate * chosen.time}) = ${answer}.`, successFeedback: `The exponential model gives ${answer}.`,
+      fallbackFeedback: `P(${chosen.time}) = ${chosen.initial}e^(${round3(chosen.rate * chosen.time)}) = ${answer}.`, successFeedback: `The exponential model gives ${answer}.`,
     };
   }
   const answer = Number((Math.log(2) / chosen.halfLife).toFixed(4));
@@ -1569,9 +1569,9 @@ function readAccumulationMatchWidget(rand: Rand): GeneratedIntegrationVariant {
     { id: "l-negative", label: `f(x) = -${fall}` },
   ];
   const right = [
-    { id: "r-positive", label: `A rises at ${rise} units per x-unit` },
+    { id: "r-positive", label: `A rises at ${rise} unit${rise === 1 ? "" : "s"} per x-unit` },
     { id: "r-zero", label: "A is momentarily flat" },
-    { id: "r-negative", label: `A falls at ${fall} units per x-unit` },
+    { id: "r-negative", label: `A falls at ${fall} unit${fall === 1 ? "" : "s"} per x-unit` },
   ];
   const pairs = { "l-positive": "r-positive", "l-zero": "r-zero", "l-negative": "r-negative" };
   const shuffledLeft = shuffle(rand, left);
@@ -1707,9 +1707,11 @@ function netChangeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const sign = c >= 0 ? "+" : "-";
   const answer = m * n * n / 2 + c * n;
   const finalRate = m * n + c;
+  const constantLitres = Math.abs(c) === 1 ? "litre" : "litres";
+  const answerLitres = Math.abs(answer) === 1 ? "litre" : "litres";
   const widget = {
     type: "numeric" as const,
-    prompt: `A tank's signed flow rate is r(t) = ${m}t ${sign} ${Math.abs(c)} litres per minute. Find the net volume change during the first ${n} minutes, in litres.`,
+    prompt: `A tank's signed flow rate is r(t) = ${m}t ${sign} ${Math.abs(c)} ${constantLitres} per minute. Find the net volume change during the first ${n} minutes, in litres.`,
     answer,
     tolerance: 0,
     unit: "litres",
@@ -1718,8 +1720,8 @@ function netChangeNumericWidget(rand: Rand): GeneratedIntegrationVariant {
       { value: finalRate * n, feedback: "This treats the final rate as if it held throughout the interval. Integrate the changing rate instead." },
       { value: Math.abs(answer), feedback: "Net change is signed. Do not replace a negative contribution by its absolute value." },
     ]),
-    fallbackFeedback: `Integrate the rate: (${m}/2)(${n})^2 ${sign} ${Math.abs(c)}(${n}) = ${answer} litres.`,
-    successFeedback: `The net volume change is ${answer} litres.`,
+    fallbackFeedback: `Integrate the rate: (${m}/2)(${n})^2 ${sign} ${Math.abs(c)}(${n}) = ${answer} ${answerLitres}.`,
+    successFeedback: `The net volume change is ${answer} ${answerLitres}.`,
   };
   return { widget, answer };
 }
@@ -1836,9 +1838,11 @@ function ftc2NumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const { m, c, n } = pick(rand, FTC2_RATE_CASES);
   const answer = m * n * n / 2 + c * n;
   const finalRate = m * n + c;
+  const constantLitres = c === 1 ? "litre" : "litres";
+  const answerLitres = answer === 1 ? "litre" : "litres";
   const widget = {
     type: "numeric" as const,
-    prompt: `Water enters at r(t) = ${m}t + ${c} litres per minute. Use an antiderivative to find how many litres arrive in the first ${n} minutes.`,
+    prompt: `Water enters at r(t) = ${m}t + ${c} ${constantLitres} per minute. Use an antiderivative to find how many litres arrive in the first ${n} minutes.`,
     answer,
     tolerance: 0,
     unit: "litres",
@@ -1847,8 +1851,8 @@ function ftc2NumericWidget(rand: Rand): GeneratedIntegrationVariant {
       { value: finalRate * n, feedback: "This treats the final rate as constant across the whole interval." },
       { value: m * n * n / 2, feedback: `Include the antiderivative of the constant term +${c}.` },
     ]),
-    fallbackFeedback: `An antiderivative is (${m}/2)t^2 + ${c}t. Its change from 0 to ${n} is ${answer} litres.`,
-    successFeedback: `${answer} litres arrive.`,
+    fallbackFeedback: `An antiderivative is (${m}/2)t^2 + ${c}t. Its change from 0 to ${n} is ${answer} ${answerLitres}.`,
+    successFeedback: `${answer} ${answerLitres} arrive.`,
   };
   return { widget, answer };
 }
@@ -2451,14 +2455,19 @@ function areaBetweenNumericWidget(rand: Rand): GeneratedIntegrationVariant {
   const upper = line / quadratic;
   const signed = quadratic * upper ** 3 / 3 - line * upper ** 2 / 2;
   const rawAnswer = kind === "intersection" ? upper : kind === "signed" ? signed : -signed;
-  const answer = Number(rawAnswer.toFixed(4));
+  // round3, not toFixed(4): line/quadratic ratios like 4/3 repeat forever, and a four-place
+  // rounding prints that as a run of identical digits ("1.3333") that reads as a truncated
+  // repeating decimal rather than a deliberately rounded value. Three places (the precision
+  // every sibling numeric widget in this file already rounds to) never has room for a same-digit
+  // run of four, so it cannot reproduce that artifact.
+  const answer = round3(rawAnswer);
   const linearLabel = coefficientVariable(line, "x");
   const quadraticLabel = coefficientVariable(quadratic, "x^2");
   const prompt = kind === "intersection"
-    ? `The curves y = ${linearLabel} and y = ${quadraticLabel} meet at x = 0 and at what larger x-value? Give a decimal to four places.`
+    ? `The curves y = ${linearLabel} and y = ${quadraticLabel} meet at x = 0 and at what larger x-value? Give a decimal to three places.`
     : kind === "signed"
-      ? `Find the signed integral from 0 to ${round3(upper)} of (${quadraticLabel} - ${linearLabel}) dx. Give a decimal to four places.`
-      : `Find the area between y = ${linearLabel} and y = ${quadraticLabel} from x = 0 to x = ${round3(upper)}. Give a decimal to four places.`;
+      ? `Find the signed integral from 0 to ${round3(upper)} of (${quadraticLabel} - ${linearLabel}) dx. Give a decimal to three places.`
+      : `Find the area between y = ${linearLabel} and y = ${quadraticLabel} from x = 0 to x = ${round3(upper)}. Give a decimal to three places.`;
   const widget = {
     type: "numeric" as const,
     prompt,
@@ -2727,7 +2736,7 @@ function averageValueMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   const correct = `1/${upper} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`;
   return integrationMcq(rand, `For f(x) = ${coefficient}x^${power} on [0, ${upper}], which expression gives the average value?`, [
     { label: correct, correct: true, feedback: "Average value is accumulated function value divided by interval width." },
-    { label: `1 times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "That is total accumulation; divide by the interval width to obtain an average." },
+    { label: `1 time the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "That is total accumulation; divide by the interval width to obtain an average." },
     { label: `1/${upper + 1} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "Divide by the interval width, not one more than the width." },
     { label: `1/${upper ** 2} times the integral from 0 to ${upper} of ${coefficient}x^${power} dx.`, correct: false, feedback: "Divide by the interval length once, not its square." },
   ]);

@@ -39,16 +39,20 @@ function remedial(lessonId: string, conceptTag: string) {
   return placement!;
 }
 
+// Body text (not figure or narration) was subsequently retightened by S318-VF2/S318-V2 to meet the
+// kindergarten 25-word concept-body reading cap (lint:pedagogy), independently re-verified truth-
+// preserving and figure-text-aligned each time. See LESSON_REVIEW_DECISIONS_S244.jsonl for the
+// per-lesson signatures (e.g. S318-VF2-k100-01-03, S318-V2-k100-02-05, S318-V2-k100-03-06).
 const expected = [
-  [step("k100-01-03", "c1"), "chart-120", "The blue chart row runs from 41 to 50. Read across from 41, 42, 43 to 50.", "On the blue row, read 41, 42, 43 and continue to 50."],
-  [step("k100-02-05", "c1"), "tno-count-down-tens", "Count backward by 10: 65, 55, 45, 35. Each hop subtracts 10.", "Start at 65. Count back by 10: 55, 45, 35."],
-  [step("k100-02-05", "c2"), "tno-count-down-tens", "Follow the line backward by 10: 65, 55, 45, 35.", "Say 65, 55, 45, 35: each step is back 10."],
-  [remedial("k100-02-05", "kcc-tens-back"), "tno-count-down-tens", "Follow the line backward by 10: 65, 55, 45, 35.", "Say 65, 55, 45, 35: each step is back 10."],
-  [step("k100-03-03", "c1"), "chart-120", "The blue row continues 41 through 50. After 46 come 47, 48, and 49.", "After 46 on this row come 47, 48, and 49."],
-  [step("k100-03-05", "c1"), "chart-rows", "The third chart row ends 29, 30. The next row begins 31.", "At the end of the third row, 29 is followed by 30. The next row starts at 31."],
-  [step("k100-03-06", "c1"), "c120-missing-order", "The pictured row is 42, 43, ?, 45. Count one more after 43 to find 44.", "The covered square is 44: 42, 43, 44, 45."],
-  [step("k100-03-06", "c2"), "c120-missing-order", "Read the pictured row: 42, 43, ?, 45. The missing number is 44.", "Say 42, 43, 44, 45. The missing square is 44."],
-  [remedial("k100-03-06", "kcc-chart-missing"), "c120-missing-order", "Read the pictured row: 42, 43, ?, 45. The missing number is 44.", "Say 42, 43, 44, 45. The missing square is 44."],
+  [step("k100-01-03", "c1"), "chart-120", "The forties row runs 41, 42, 43, across to 50 — ten numbers in one row. Reading left to right names every number in order.", "On the blue row, read 41, 42, 43 and continue to 50."],
+  [step("k100-02-05", "c1"), "tno-count-down-tens", "Follow the numbers: 65, 55, 45, 35. Three hops back, each a whole ten lower, carries 65 down to 35.", "Start at 65. Count back by 10: 55, 45, 35."],
+  [step("k100-02-05", "c2"), "tno-count-down-tens", "Track the count going backward: 65, 55, 45, 35 — three tens down. Every step down the line takes away a whole ten.", "Say 65, 55, 45, 35: each step is back 10."],
+  [remedial("k100-02-05", "kcc-tens-back"), "tno-count-down-tens", "Track the count going backward: 65, 55, 45, 35 — three tens down. Every step down the line takes away a whole ten.", "Say 65, 55, 45, 35: each step is back 10."],
+  [step("k100-03-03", "c1"), "chart-120", "This blue row keeps going past 46: 47, 48, 49, straight to 50 — ten numbers, one full row. Reading across continues the count.", "After 46 on this row come 47, 48, and 49."],
+  [step("k100-03-05", "c1"), "chart-rows", "The third row ends with 29 then 30. The next row after it starts at 31, one more than the row that just ended.", "At the end of the third row, 29 is followed by 30. The next row starts at 31."],
+  [step("k100-03-06", "c1"), "c120-missing-order", "The pictured row shows four numbers: 42, 43, the hidden square, and 45. Between 43 and 45 sits one number: 44.", "The covered square is 44: 42, 43, 44, 45."],
+  [step("k100-03-06", "c2"), "c120-missing-order", "Read the pictured row of four numbers in order: 42, 43, hidden square, 45. Counting on from 43 fills the hidden square with 44.", "Say 42, 43, 44, 45. The missing square is 44."],
+  [remedial("k100-03-06", "kcc-chart-missing"), "c120-missing-order", "Read the pictured row of four numbers in order: 42, 43, hidden square, 45. Counting on from 43 fills the hidden square with 44.", "Say 42, 43, 44, 45. The missing square is 44."],
 ] as const;
 
 describe("S289 counting to 100, Kindergarten — visual source repair", () => {

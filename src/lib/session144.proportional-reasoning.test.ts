@@ -48,8 +48,8 @@ describe("Session 144 proportionalReasoningLab truth model", () => {
   it("counts only truth-model exploration keys and rejects fabricated bypass state", () => {
     const keys=proportionalReasoningExplorationKeys(base);
     expect(keys).toEqual(["a:0","b:0","stage:0"]);
-    expect(evaluate(base,{revealed:["fake:0","fake:1"],choiceId:"b"})).toEqual({correct:false,feedback:base.explorationFeedback});
-    expect(evaluate(base,{revealed:keys.slice(0,2),choiceId:"b"})).toEqual({correct:true,feedback:base.successFeedback});
+    expect(evaluate(base,{verifiedUnitRates:["fake:0","fake:1"],choiceId:"b"})).toEqual({correct:false,feedback:base.explorationFeedback});
+    expect(evaluate(base,{unitRates:{"a:0":1.5,"b:0":1.4},verifiedUnitRates:["a:0","b:0"],choiceId:"b"})).toEqual({correct:true,feedback:base.successFeedback});
   });
 
   it("rejects collisions, impossible prediction truth, and overclaimed exploration", () => {

@@ -105,7 +105,12 @@ describe("S192 measure-length-g1 — gradable, re-derived, manipulatives coheren
           expect(w.options.length).toBeGreaterThanOrEqual(4);
           const correct = w.options.filter((o) => o.correct);
           expect(correct).toHaveLength(1);
-          expect(w.options[0].correct, `${lesson.id}/${s.id} correct not at index 0`).toBe(true);
+          // NOT position-0-pinned here, unlike this file's sibling S192 courses: S314 deliberately
+          // moved every main-sequence MCQ's correct option off raw index 0 course-wide (the
+          // "fixed-answer-position" repair — see session314.measureLengthG1ChoiceOrder.test.ts,
+          // which hash-pins the resulting non-zero position distribution). Grading-by-id is what
+          // this file verifies; exact authored position is that dedicated suite's contract, not
+          // this one's.
           const wrongFb = w.options.filter((o) => !o.correct).map((o) => o.feedback);
           expect(new Set(wrongFb).size).toBe(wrongFb.length);
           expect(evaluate(w, correct[0].id).correct).toBe(true);
