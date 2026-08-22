@@ -1105,4 +1105,81 @@ None of these are silently counted as done.
 |---|---|---|---|---|---|
 | CL-P0-008 | P0 | HS premium density | 70 HS C-tier lessons remain (72 at this addendum's start; 2 promoted via built `predict` cycles). Precisely classified by blocking cause (detail above): 9 clean `manip`-only (reviewed, all KEEP — Part A), 32 total-shortfall (11 remain `eligible` for a `predict` build, 21 correctly `unsafe`/`redundant` — Part B/C), 3 `manip+conseq`, 4 `conseq+total`, 22 combining `manip+conseq+total` — the last three groups (29 lessons) not yet reviewed. | **11 LESSONS DIRECTLY WORKED THIS SESSION (9 reviewed KEEP + 2 built C→B); 59 REMAIN, CATEGORIZED NOT REVIEWED** | Part A's 9 KEEP findings are evidence-based, per-lesson, and span 7 courses — extends the fifth addendum's 2-example finding, doesn't just repeat it. Part C's 2 builds are fully verified (schema, lint, tsc, 39 targeted tests, side-effect regen) and each independently confirmed via a fresh tier-compiler run to move C→B for the stated reason and no other. `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` current. | Continue with the 5 remaining `gap-to-B=1` `eligible` lessons first (same low-risk mechanism, proven twice); then the 6 `gap-to-B=2/3` lessons (need a second richness gain beyond `prediction` alone — scope each before starting); then individually read `ca-03-03`/`pc-01-02` (same question `dr-04-02` already answered REFUSE for a sibling lesson — check whether that precedent transfers before assuming it does); the 22 triple-shortfall lessons are lowest leverage per lesson and are a reasonable place to stop chasing individual promotions in favor of a different unit of work.
 
+## Session 330 thirteenth post-recon addendum — CL-P0-008, two more `predict` builds (`rt-03-03`, `si-04-01`); correcting a double-subtraction in the twelfth addendum's running count
+
+**Continuing the `gap-to-B=1` slice, the lowest-risk subset the twelfth addendum named as the next action.** Of
+the 5 `gap-to-B=1` `eligible` lessons it left open (`rt-03-03`, `sc-01-01`, `si-03-02`, `si-04-01`, `tf-02-03`),
+built the two whose captured widget state gives the cleanest, least-ambiguous directional question:
+
+- **`rt-03-03`** ("Solving Right Triangles Completely," `right-triangles-trig`): its qualifying step `i1`
+  (`triangleSolve`, manip=2/conseq=2) drags the angle from a 60° start down to the lesson's 37° target,
+  reading `adj/hyp`. Deliberately chosen over the ratio `tf-01-02`/`tf-01-03` already used: `adj/hyp = cos θ`
+  INCREASES as the angle shrinks, the opposite direction from `opp/hyp = sin θ`. Asking the same-shaped
+  question here tests whether the learner is reasoning about the actual ratio in front of them or pattern-
+  matching a "smaller angle → smaller ratio" shortcut memorized from the earlier lessons — a shortcut that
+  would produce the WRONG answer on this lesson's own widget. Outcome: bigger (0.5 at 60° → ≈0.80 at 37°).
+  `prediction` 0→3, `total` 23→26, **tier C→B**.
+- **`si-04-01`** ("What Chance Alone Produces," `statistical-inference`): its qualifying step `i1`
+  (`shuffleTest`, manip=2/conseq=2 — confirmed directly against `scripts/engine-capabilities.json`'s
+  `types.shuffleTest` entry) asks the learner to relabel ten scores at random and compare the resulting gaps
+  with the observed gap of 4. This is the first `predict` built this session on a widget OTHER than
+  `triangleSolve` — a different engine family (a resampling/simulation widget, not a continuous-geometry
+  drag), evidence the mechanism generalizes rather than happening to fit one engine's shape. The prediction
+  asks whether chance alone produces a gap this size OFTEN or RARELY; the reveal states the exact figure the
+  widget's own pre-existing `successFeedback` already asserts ("6 of the 252 possible splits... about 2%") —
+  no new claim was introduced, only asked BEFORE the learner sees it instead of only after. Outcome: rarely.
+  `prediction` 0→3, `total` 23→26, **tier C→B**.
+
+**Test evidence, both lessons.** Same discipline as the twelfth addendum's Part C: `JSON.parse` clean; a
+direct `Lesson.safeParse` call (not just parse) — both `VALID`; `node scripts/cml-lint.mjs` → 0 errors, the
+same 1 pre-existing `df3-03-02` warning before and after, no new warnings (confirms `predict` landing on the
+causal `manip≥2` step itself avoids `prediction-not-causal` by construction, same as the first batch). Targeted
+suite — `content.test.ts`, `session245.mathPresentationSourceSeal.test.ts`,
+`session252.graphFigureLabelingInventory.test.ts`, `excellenceBacklog.s126.test.ts`, `engineCapabilities.test.ts`,
+`LessonPlayer.predict.test.tsx` — 39/39 after regenerating the two source-seal reports below (37/39 before,
+both failures the expected staleness, not a defect). `npx tsc --noEmit`: clean, exit 0.
+
+**Side-effect check.** The identical pattern the twelfth addendum's Part C first hit: both lesson-content edits
+fall inside `math-presentation-indexes.mts`'s and `graph-figure-labeling-inventory-s252.mts`'s scan scope, so
+their source-seal tests failed on the first run (`session245`: recorded `inputs.af270a0bab80` vs freshly
+computed `inputs.8f93894c7b53`; `session252`: `STALE: reports/graph-labeling/...`). Regenerated both
+(`npx tsx scripts/audit/math-presentation-indexes.mts`, `npx tsx scripts/audit/graph-figure-labeling-inventory-s252.mts`),
+re-ran the two tests clean, then diffed every changed report file by hand: all 9 `reports/math-presentation/*.csv`
+files changed only their header's `sourceSeal`/`sourceInputSha256` lines plus the `strings:` count rising from
+154732 to 154740 (8 new learner-visible strings — exactly the `predict` prompt/2 options/reveal text across the
+2 lessons, the expected count, not a leak); both `reports/graph-labeling/*` files changed only their
+`sourceHash`/`Source hash` line. Zero content-level difference beyond what the two new `predict` blocks
+themselves account for. `FLAGSHIP_TIERS.md` regenerated to match (HS row B 348→350, C 70→68; totals
+**A 837 · B 795 · C 68 · D 1**, confirmed via a fresh `TIER_JSON=... node scripts/flagship-tier.mjs` run before
+writing this paragraph). `EXCELLENCE_BACKLOG_S126.*`: zero diff, same as both prior builds.
+
+**Correcting the twelfth addendum's "59 REMAIN" figure.** Re-deriving that number while updating it for this
+addendum surfaced a double-subtraction in how it was originally computed. The twelfth addendum computed it as
+70 (the C-tier count AFTER its 2 promotions) minus 11 ("lessons directly worked," itself 9 reviewed + 2 built)
+= 59. That silently subtracts the 2 built lessons twice: once implicitly, by using 70 rather than 72 as the
+starting point (the 2 promoted lessons had already left the C-tier bucket), and once explicitly, by including
+those same 2 lessons again inside the "11" being subtracted. The figure the sentence actually intended —
+"of the lessons CURRENTLY sitting in C-tier, how many have not had an individual per-lesson review" — is
+70 (current count) minus 9 (Part A, the only group individually reviewed at the time) = **61**, not 59. This
+addendum's own accounting below is built the corrected way; the twelfth addendum's table row is left as
+originally written, per this ledger's standing convention of superseding through later addenda rather than
+editing already-committed history.
+
+**Updated running counts.** HS C-tier: 70 → **68** (2 more promotions, both `gap-to-B=1`). Remaining `eligible`
+prediction-gap lessons: 11 → **9** (`fn-04-01` gap2, `gf-01-01` gap3, `gf-01-02` gap3, `lc-03-03` gap3,
+`pra-03-01` gap3, `sc-01-01` gap1, `si-01-03` gap3, `si-03-02` gap1, `tf-02-03` gap1). Remaining
+`gap-to-B=1` lessons: 5 → **3** (`sc-01-01`, `si-03-02`, `tf-02-03`). Part B/C total-shortfall group
+(currently in C-tier): 32 → **30** (20 `unsafe` + 1 `redundant` + 9 `eligible`, unchanged apart from the
+`eligible` count). Full accounting of the current 68: 9 (Part A, reviewed) + 30 (Part B/C) + 3
+(`manip+conseq`) + 4 (`conseq+total`) + 22 (triple-combo) = 68. Lessons individually reviewed (Part A only,
+the strict sense): still 9, unchanged — this addendum built, it did not review. Lessons directly worked
+across both builds sessions this window: 11 → **13** (9 reviewed KEEP + 4 built C→B). Of the 68 currently in
+C-tier, those NOT individually reviewed (corrected formula: 68 − 9 = **59**) — this lands on the same digit as
+the twelfth addendum's erroneous figure by coincidence of the numbers involved this round, not because it was
+left uncorrected; the method is now 68−9, not 70−11.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P0-008 | P0 | HS premium density | 68 HS C-tier lessons remain (70 at this addendum's start; 2 more promoted via built `predict` cycles, both `gap-to-B=1`). Same six-way classification, updated: 9 Part A (reviewed KEEP), 30 Part B/C total-shortfall (9 `eligible` remain, 21 `unsafe`/`redundant`), 3 `manip+conseq`, 4 `conseq+total`, 22 triple-combo — the last three groups (29 lessons) still not reviewed. | **13 LESSONS DIRECTLY WORKED THIS SESSION TOTAL (9 reviewed KEEP + 4 built C→B); 59 OF THE CURRENT 68 NOT YET INDIVIDUALLY REVIEWED** | This build extends Part C with a second engine family (`shuffleTest`, not just `triangleSolve`) and a deliberately contrasting ratio (`cos` vs `sin`) — evidence the `predict` mechanism and the eligibility screen both generalize rather than fitting one lesson shape. Full test/schema/lint/tsc/side-effect evidence recorded above; `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` current. Also corrects a double-subtraction in the twelfth addendum's own running-count arithmetic. | 3 `gap-to-B=1` `eligible` lessons remain (`sc-01-01`, `si-03-02`, `tf-02-03`) — same low-risk mechanism, proven 4 times now; reasonable next slice for a future session. The 6 `gap-to-B=2/3` lessons, the 3+4+22 not-yet-reviewed groups, and `steppedReveal`'s open `conseq` thread (CL-P1-057, eleventh addendum) are the honest remaining scope — none silently counted as done.
+
 
