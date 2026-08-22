@@ -24,7 +24,7 @@ across **65** lessons.
 | K-2 | 206 | 204 | 0 | 0 | 410 |
 | 3-5 | 274 | 144 | 0 | 1 | 419 |
 | 6-8 | 148 | 97 | 0 | 0 | 245 |
-| HS | 209 | 346 | 72 | 0 | 627 |
+| HS | 209 | 348 | 70 | 0 | 627 |
 
 **K–8 targets** — Tier A 628/200–250 ✓ · Tier B 445/200–300 ✓.
 
@@ -98,4 +98,4 @@ across **65** lessons.
 |--:|---|---|---|--:|---|---|--:|
 | 1 | df3-03-02 — Why You Can't Divide by Zero | Division Fluency (G3) | D | 24/39 | manip conseq adapt | division meaning | 85 |
 
-Totals: 1701 lessons · A 837 · B 791 · C 72 · D 1.
+Totals: 1701 lessons · A 837 · B 793 · C 70 · D 1.

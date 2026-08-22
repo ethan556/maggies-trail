@@ -968,4 +968,141 @@ a fourth REDESIGN unit.
 |---|---|---|---|---|---|
 | CL-P1-057 | P1 | Engine/lab premium quality | Full accounting of the 13 REDESIGN rows remaining after `pointEntry`/`fractionEntry` (built) and `subitizeFlash` (a11y-corrected): 10 rest on `manip=1`, blanket-adjudicated deliberate by S207 (`SESSION207_EXECUTION_REPORT.md` §3); 2 (`numeric`/`mcq`) are the sixth addendum's own architecturally-foundational finding; 1 (`subitizeFlash`) is this session's own unit. | **TRIAGED TO EXHAUSTION FOR THIS SESSION — 2/15 BUILT, 1/15 SCORE-CORRECTED, 12/13 REMAINING ROWS ALREADY DISPOSED BY PRIOR ADJUDICATION** | No further REDESIGN build is evidence-indicated among the 13 remaining rows without new information. One narrow open thread: `steppedReveal`'s `conseq=1` lacks the blanket adjudication its `manip=1` has — a small, `subitizeFlash`-shaped verification, not a build, and the only genuinely unresolved question in the set. | Before any future session builds a REDESIGN unit off `PREMIUM_ENGINE_PRIORITY.csv`'s `priority_product` ranking alone, re-read this accounting first — a high `priority_product` does not mean unadjudicated, and 12 of the 13 remaining rows are high-`priority_product` precisely because they're high-`authored_uses`, not because they're unexamined. `steppedReveal`'s `conseq` is the one lead worth a fresh look.
 
+## Session 330 twelfth post-recon addendum — CL-P0-008, HS C-tier lesson-by-lesson review begins
+
+**Methodology, precise about what "one gate from B" means.** The fifth addendum's own next action called for
+"per-lesson pedagogical fit review... NOT a mechanical bulk pass," starting with the highest-leverage lessons.
+A fresh `TIER_JSON=... node scripts/flagship-tier.mjs` run this session, cross-checked against
+`scripts/flagship-tier.mjs`'s own tier rule (lines 274–287: path A `manip≥2 ∧ conseq≥2 ∧ total≥24`; path B
+`manip=1 ∧ conseq≥2 ∧ misconception≥2 ∧ total≥26`), found the fifth addendum's own "13/73 one gate away" count
+does not reproduce against current data — not because it was wrong at the time, but because "one gate" was
+being read loosely. Precisely defined (an axis whose OWN threshold is unmet while every other required axis,
+INCLUDING the total-sum threshold once that one axis is corrected, already clears), the 72 HS C-tier lessons
+(post-`pointEntry`, pre-this-addendum) split into six causes, not a single "close" bucket:
+
+- **9 lessons: `manip<2` is the ONLY thing missing** — `conseq` and `total` already clear path A's bar even
+  before fixing manip. A real, single, well-defined "one engine axis away from B" case.
+- **3 lessons: `manip<2` AND `conseq<2` both missing.**
+- **22 lessons: `manip<2` AND `conseq<2` AND `total<24` all missing.**
+- **4 lessons: `conseq<2` AND `total<26` missing** (with `manip=1` already satisfying path B's requirement).
+- **19 lessons (unaffected by this session's builds, both of which came from the row below): `total<26`
+  alone missing** — `manip=1`/`conseq≥2`/`misconception≥2` (path B) already clear; only the SUM is short,
+  which is not a single-axis question at all.
+- **15 (now 13) lessons: `total<24` alone missing** — path A's categorical gates already clear; same
+  total-shortfall shape as the row above, different path.
+
+The last two groups (34 lessons, now 32) are NOT an "engine swap" question in the sense the fifth addendum's
+next action anticipated — `manip`/`conseq`/`misconception` are already sufficient; the SUM is short by 1–8
+points, spread thin across several smaller dimensions. Treating that as equivalent to a clean categorical gate
+would have been the "mechanical bulk pass" this row explicitly warned against. This addendum treats the two
+kinds of shortfall differently, below.
+
+### Part A — the 9 clean `manip`-only lessons: full review, all KEEP
+
+Read all 9 lesson content files in full — not just the blocking step — spanning 7 different courses
+(`complex-numbers` ×3, `constructions-and-proof`, `derivative-rules`, `polar-parametric`,
+`polynomial-functions`, `polynomial-rational-analysis`, `trig-functions`) so the finding isn't one course's
+authoring quirk: `cn-04-03`, `cn-05-02`, `cn-05-03`, `cp-05-02`, `dr-03-03`, `pp-04-02`, `pf-04-01`,
+`pra-05-03`, `tf-02-02`. Every one of the 9 is capped by exactly one of the four TEST-PINNED `manip≤1`
+engines (`engineCapabilities.test.ts`'s own CONSISTENCY check, not just documentation — these scores cannot
+move without failing a passing test): `dragBucket` (2), `dragOrder` (1), `buildExpression` (4), `matchPairs`
+(2). Cross-referenced `reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl` for all 9: every lesson already
+carries a KEEP disposition (several with multiple, up to S330-dated fixer passes), each independently
+verifying the MATH is correct — none previously asked the engine-fit question this addendum asks.
+
+**Finding, all 9: KEEP, no engine swap indicated.** In every single case the blocking step's actual task is a
+classification, sequencing, or piece-assembly job, not a "manipulate a continuous model" job a `manip≥2`
+engine would represent more richly: sort 6 equations by discriminant sign (`cn-04-03`, `dragBucket`), match
+equation to solving method (`cn-05-03`, `dragBucket`), order proof statements into a valid sequence
+(`cp-05-02`, `dragOrder`), classify an expression's structure before differentiating it (`dr-03-03`,
+`matchPairs`), pair degree measures to radian forms (`tf-02-02`, `matchPairs`), assemble a derived quadratic/
+factorization/inequality-solution from given tokens (`cn-05-02`, `pp-04-02`, `pf-04-01`, `pra-05-03`, all
+`buildExpression`). None of these has a natural "continuous model with dependent quantities" to manipulate —
+forcing one would mean testing a DIFFERENT skill, not representing the same one more richly, and would
+duplicate work these courses' OWN earlier lessons already do (e.g. single-example discriminant computation
+via `numeric`/`mcq` precedes `cn-04-03`'s sorting step in the same lesson). This directly extends, with fresh
+per-lesson evidence across a much wider course sample, the same conclusion the fifth addendum reached reading
+only 2 examples (`dr-04-02` REFUSE, `pp-02-01` "no widget-capability change authorized") — both of which
+independently surface again in Part B/C below and remain untouched. **No score, content, or engine changed
+for any of these 9** — this is a review that confirmed the standing design, not a build.
+
+### Part B — the 34 (now 32) total-shortfall lessons: a real, mechanically-detected opportunity
+
+Per-dimension averages across this group showed `prediction` and `transfer` at **exactly 0.00** for every
+single lesson, no exceptions — the dominant, structural driver of the shortfall (the other 11 dimensions
+average respectably; see the raw averages in this session's working notes if reproducing). This is not a
+coincidence to leave uninvestigated: `scripts/audit/prediction-eligibility.mjs` already exists in this repo
+specifically to answer "would adding a prediction cycle here be genuine or forced," and every one of these 34
+lessons already carries a live `predictionEligibility` verdict in the tier JSON. Breakdown: **20 `unsafe`**
+(the lesson's exploratory steps are themselves classification/selection judgments, or expose no causal state
+— adding a prediction would be forced, matching Part A's own finding for a different reason) — **1
+`redundant`** (`re-05-01`: exploratory steps are read/count/identify observations; a prediction would
+duplicate them) — **13 `eligible`** (an existing interactive step's widget already has `manip≥2 ∧ conseq≥2`
+— a real causal, manipulable state — but no `predict` cycle is authored on it yet). The 21 `unsafe`/
+`redundant` lessons are NOT actionable here, correctly, by the same logic as Part A — flagged, not treated as
+gaps. The 13 `eligible` lessons are a genuine, mechanically-verified authoring opportunity distinct from any
+engine-swap question.
+
+### Part C — two `eligible` lessons built and verified this session
+
+`predict` (schema: `src/lib/schema.ts` `Prediction`, lines 9214–9233 — `prompt`, 2–4 `options`, `outcomeId`,
+`reveal`≥25 chars) is a generic, already-live mechanism: `LessonPlayer.tsx`/`LessonPlayer.predict.test.tsx`
+render ANY interactive step's manipulative dimmed-and-inert until the learner commits a prediction, regardless
+of widget type — confirmed by reading the existing `co-01-01.json` (`conic-sections`, HS) live example before
+writing anything, and by `scripts/flagship-tier.mjs` lines 225–229: a step counts once it carries `.predict`,
+scored 3 if its widget's `manip≥2` (2 otherwise). Built:
+
+- **`tf-01-02`** ("Solving for Sides," `trig-functions`): its one qualifying step, `i1`
+  (`triangleSolve`, manip=2/conseq=2), drags the angle from a 55° start down to the lesson's 30° target while
+  reading the live opp/hyp ratio. Added a predict asking whether opp/hyp will get bigger or smaller as the
+  angle shrinks (outcome: smaller, since opp/hyp = sin θ is increasing in θ; reveal cites the ≈0.82→0.5 drop
+  by name) — a genuine directional-reasoning question, not a giveaway of the lesson's own 30°/0.5 worked
+  answer. `prediction` 0→3, `total` 23→26, **tier C→B**.
+- **`tf-01-03`** ("Finding the Angle," same course): its qualifying step `i1` (`triangleSolve`, same
+  engine) drags FROM 60° searching for the angle where opp/hyp reads 0.5 — the inverse-sine framing. Added a
+  predict asking whether the ratio starts ABOVE or BELOW the 0.5 target at the 60° starting point (outcome:
+  above, since sin 60°≈0.866 > 0.5, so the angle must decrease) — tests the same monotonicity fact from the
+  opposite direction, without stating the lesson's own answer (30°) anywhere in the prediction. `prediction`
+  0→3, `total` 23→26, **tier C→B**.
+
+Both chosen from the `gap-to-B=1` subset of the 13 (adding `prediction=3` alone clears the total threshold
+with no other change needed) — the lowest-risk, highest-confidence slice to prove the mechanism before
+touching a `gap-to-B=3` lesson, where prediction alone would not be sufficient and a second, independent
+richness gain would also be needed.
+
+**Test evidence, both lessons.** Each JSON hand-validated against the live `Lesson` Zod schema via a direct
+`Lesson.safeParse` call (not just `JSON.parse`) before moving on — both `VALID`. `node scripts/cml-lint.mjs`:
+0 errors, the same 1 pre-existing `df3-03-02` warning both before and after (unrelated, Grade 3, already
+covered by the eighth addendum's `CML_WAIVERS.json` entry) — confirms `predict` landing on the SAME step as
+the causal widget (not a preceding step) satisfies `prediction-not-causal`'s own check on the first try, by
+construction. `npx tsc --noEmit`: clean. Targeted suite (`content.test.ts`,
+`session245.mathPresentationSourceSeal.test.ts`, `session252.graphFigureLabelingInventory.test.ts`,
+`excellenceBacklog.s126.test.ts`, `engineCapabilities.test.ts`, `LessonPlayer.predict.test.tsx`): 39/39.
+
+**Side-effect check, same discipline as CL-P1-057's builds above.** Both math-content edits (not
+`widgets.tsx`/`describeState.ts` this time) ALSO fell inside `math-presentation-indexes.mts`'s and
+`graph-figure-labeling-inventory-s252.mts`'s scan scope — the same self-regenerating-report pattern, a new
+trigger (lesson content, not component source) but the identical mechanism. Caught via the same two source-
+seal tests going stale, fixed the same way (regenerate, re-verify): diffs confirmed pure hash/seal-line
+churn, zero content-level difference beyond the seal itself. `FLAGSHIP_TIERS.md` regenerated to match (HS row
+B 346→348, C 72→70; totals **A 837 · B 793 · C 70 · D 1**). `EXCELLENCE_BACKLOG_S126.*` regenerated too —
+zero diff, confirming (as with `subitizeFlash`) that a `prediction`-only change doesn't touch that report's
+own tracked dimensions.
+
+**Remaining scope, honestly not closed.** CL-P0-008's HS C-tier count is now **70**, not 72 — 2 lessons
+promoted this session, not all 72 reviewed. Explicitly still open: **11 more `eligible` prediction-gap
+lessons** (`fn-04-01` gap2, `gf-01-01` gap3, `gf-01-02` gap3, `lc-03-03` gap3, `pra-03-01` gap3, `rt-03-03`
+gap1, `sc-01-01` gap1, `si-01-03` gap3, `si-03-02` gap1, `si-04-01` gap1, `tf-02-03` gap1 — the 5 remaining
+`gap1` lessons are the next-highest-confidence slice, same mechanism as `tf-01-02`/`tf-01-03`); **3 lessons
+with `manip<2 ∧ conseq<2`** (`dr-04-02` already read and REFUSEd by the fifth addendum; `ca-03-03` and
+`pc-01-02` not yet individually read this session); **4 lessons with `conseq<2 ∧ total<26`** (`dc-01-03`,
+`in-05-02`, `pc-01-01`, `sc-01-03` — not yet reviewed); **22 lessons combining `manip<2 ∧ conseq<2` with a
+`total<24` shortfall** — lowest leverage per lesson (would need BOTH an engine-fit finding AND a richness
+gain), not attempted this session. That accounts for all 70: 9 (Part A) + 32 (Part B/C) + 3 + 4 + 22 = 70.
+None of these are silently counted as done.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P0-008 | P0 | HS premium density | 70 HS C-tier lessons remain (72 at this addendum's start; 2 promoted via built `predict` cycles). Precisely classified by blocking cause (detail above): 9 clean `manip`-only (reviewed, all KEEP — Part A), 32 total-shortfall (11 remain `eligible` for a `predict` build, 21 correctly `unsafe`/`redundant` — Part B/C), 3 `manip+conseq`, 4 `conseq+total`, 22 combining `manip+conseq+total` — the last three groups (29 lessons) not yet reviewed. | **11 LESSONS DIRECTLY WORKED THIS SESSION (9 reviewed KEEP + 2 built C→B); 59 REMAIN, CATEGORIZED NOT REVIEWED** | Part A's 9 KEEP findings are evidence-based, per-lesson, and span 7 courses — extends the fifth addendum's 2-example finding, doesn't just repeat it. Part C's 2 builds are fully verified (schema, lint, tsc, 39 targeted tests, side-effect regen) and each independently confirmed via a fresh tier-compiler run to move C→B for the stated reason and no other. `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` current. | Continue with the 5 remaining `gap-to-B=1` `eligible` lessons first (same low-risk mechanism, proven twice); then the 6 `gap-to-B=2/3` lessons (need a second richness gain beyond `prediction` alone — scope each before starting); then individually read `ca-03-03`/`pc-01-02` (same question `dr-04-02` already answered REFUSE for a sibling lesson — check whether that precedent transfers before assuming it does); the 22 triple-shortfall lessons are lowest leverage per lesson and are a reasonable place to stop chasing individual promotions in favor of a different unit of work.
+
 
