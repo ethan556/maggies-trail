@@ -1,12 +1,12 @@
 # Graph and figure labeling audit — S252
 
-Source hash: `1c4bfb543b0a4a65c9bf9284bdba146472062cfb5672d8fd1bd7bd89f5f6347d`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
+Source hash: `57c345ce2478d326e14ddfbfe6aaeeeb93c64732ab221a5464c07cd3c337e106`. Generated deterministically from renderer source, the complete figure registry, authored lessons, and generator declarations. `REVIEW` means static proof is impossible; it is not a pass or violation.
 
 ## Exact inventory
 
 - 59 normative graph/statistical widget types; 59 renderer definitions resolved.
 - 2031 total registered figures; 215 graph/statistical figures classified; 215 renderer definitions resolved.
-- 1701 lesson files; 1975 authored/remedial graph consumers.
+- 1701 lesson files; 1974 authored/remedial graph consumers.
 - 17 graph-emitting generator tags; 24 generator-to-surface declarations.
 - 2192 renderer/rule checks: NOT_APPLICABLE 200, PASS 1196, REVIEW 274, VIOLATION 522.
 - 522 statically proved violations compressed into 294 root-cause portfolios.

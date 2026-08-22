@@ -107,9 +107,19 @@ const EXACT_LONG_DECIMAL_FIELDS = new Set([
   "authored|esn-03-02|i2|widget.commonErrors[1].feedback",
   "authored|esn-03-02|i2|widget.fallbackFeedback",
   "authored|esn-03-02|i3|widget.prompt",
+  // i3's options-feedback contrasts 0.4 × 10⁻⁷ = 0.00000004 (8 places) against 0.4 × 10⁻⁶ =
+  // 0.0000004 (7 places) — the same exact scientific-notation expansion i3's prompt already covers,
+  // just in the wrong-answer feedback rather than the prompt itself. Missed by the original review
+  // pass alongside the prompt; added on round-2 gate discovery (S330).
+  "authored|esn-03-02|i3|widget.options[1].feedback",
+  "authored|esn-03-02|i3|widget.options[2].feedback",
   "authored|esn-03-02|ch1|widget.prompt",
   "authored|esn-03-02|ch1|hints[1]",
   "authored|esn-03-02|ch1|explanationVariants[0]",
+  // ch1's commonBuilds feedback states how many places 0.0000406 -> 4.06 moves (5, exactly counted,
+  // not rounded) — same exact-value category as ch1's other already-exempted fields above. Added on
+  // round-2 gate discovery (S330).
+  "authored|esn-03-02|ch1|widget.commonBuilds[2].feedback",
   "authored|lg-04-01|i1|widget.fallbackFeedback",
   "authored|si-02-03|rk1|explanationVariants[0]",
   "generated|sci-notation|small|widget.prompt",
