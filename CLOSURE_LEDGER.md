@@ -1182,4 +1182,38 @@ left uncorrected; the method is now 68−9, not 70−11.
 |---|---|---|---|---|---|
 | CL-P0-008 | P0 | HS premium density | 68 HS C-tier lessons remain (70 at this addendum's start; 2 more promoted via built `predict` cycles, both `gap-to-B=1`). Same six-way classification, updated: 9 Part A (reviewed KEEP), 30 Part B/C total-shortfall (9 `eligible` remain, 21 `unsafe`/`redundant`), 3 `manip+conseq`, 4 `conseq+total`, 22 triple-combo — the last three groups (29 lessons) still not reviewed. | **13 LESSONS DIRECTLY WORKED THIS SESSION TOTAL (9 reviewed KEEP + 4 built C→B); 59 OF THE CURRENT 68 NOT YET INDIVIDUALLY REVIEWED** | This build extends Part C with a second engine family (`shuffleTest`, not just `triangleSolve`) and a deliberately contrasting ratio (`cos` vs `sin`) — evidence the `predict` mechanism and the eligibility screen both generalize rather than fitting one lesson shape. Full test/schema/lint/tsc/side-effect evidence recorded above; `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` current. Also corrects a double-subtraction in the twelfth addendum's own running-count arithmetic. | 3 `gap-to-B=1` `eligible` lessons remain (`sc-01-01`, `si-03-02`, `tf-02-03`) — same low-risk mechanism, proven 4 times now; reasonable next slice for a future session. The 6 `gap-to-B=2/3` lessons, the 3+4+22 not-yet-reviewed groups, and `steppedReveal`'s open `conseq` thread (CL-P1-057, eleventh addendum) are the honest remaining scope — none silently counted as done.
 
+## Session 330 fourteenth post-recon addendum — round-2 final gate found a third stale self-regenerating report
+
+The round-2 final gate's isolated full `vitest run` (Task #31) surfaced `session244.lessonReviewCards.test.ts`
+failing — 2 of its 5 tests — a file outside this session's own targeted-suite list for the `predict` content
+edits above, so its staleness went unnoticed until this gate. `LESSON_REVIEW_CARDS_S244.{json,csv,md}`
+(`scripts/audit/lesson-review-cards-s244.mjs`) is a third member of the same self-regenerating-materialized-
+view family as `math-presentation-indexes.mts` and `graph-figure-labeling-inventory-s252.mts` — it hashes
+every lesson's live source as part of its own per-card seal, so any lesson content edit invalidates it. Fixed
+identically: regenerated via its own script, re-ran the test file (5/5), and diffed the changed rows — exactly
+the 4 lessons this session edited (`rt-03-03`, `si-04-01`, `tf-01-02`, `tf-01-03`), nothing else. Committed
+separately (`05119fa`) rather than folded into either prior content commit, per this ledger's "new commits,
+never amend" discipline.
+
+**One genuine, worth-recording semantic side effect, not just a hash refresh.** Because this report's
+`disposition.status` is keyed to whether a lesson's CURRENT source hash matches the hash its last recorded
+human decision was made against, all 4 edited lessons flipped from `CURRENT_HUMAN_DECISION` (closed, KEEP) to
+`PENDING_ASSESSOR` / `MISSING_REQUIRED_OPEN_QUEUE_ROW` — the summary's closed-lesson count moved 1,677→1,673,
+pending 24→28. This is the system correctly doing its job, not a defect: a `predict` block is new authored
+content, and this repo's own convention (used throughout Part A of the twelfth addendum, cross-referencing
+this exact ledger against `LESSON_REVIEW_DECISIONS_S244.jsonl`) is that a content change re-opens the human
+sign-off, it doesn't inherit the prior one silently. It does NOT retroactively question this session's own
+tier/KEEP findings for these 4 lessons — those were reasoned directly from the lesson content and the
+`predict` mechanism's own test coverage, not borrowed from this queue's prior disposition. It does mean these
+4 lessons are now sitting in the `PENDING_ASSESSOR` queue this report tracks, alongside the 24 already there,
+and a future session doing HUMAN content review should expect to see them.
+
+**For any future session editing lesson content:** the targeted-suite checklist this session used
+(`content.test.ts`, `session245.mathPresentationSourceSeal.test.ts`,
+`session252.graphFigureLabelingInventory.test.ts`, plus task-specific files) was incomplete — add
+`session244.lessonReviewCards.test.ts` as a fourth standing member whenever the edit touches
+`content/courses/**/lessons/*.json`, rather than relying on the eventual full-suite gate to catch it. No
+search was made this session for a FOURTH such report beyond these three; the honest assumption is there may
+be one, not that three is confirmed exhaustive.
+
 
