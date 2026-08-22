@@ -29,8 +29,13 @@ engines must be backed, in aggregate, by a reveal-ghost testid; and
 `manip` had written level prose anywhere in the repo before this file (S205M); the other six are
 documented here for the first time.
 
-Current distribution per axis (0/1/2/3, out of 126): manip 6/11/76/33 · conseq 2/5/51/68 · err
-0/10/**0**/116 · adapt 63/**0**/5/58 · a11y 0/0/7/119 · mobile 0/3/83/40 · polish 0/0/55/71. The
+Current distribution per axis (0/1/2/3), fresh from `scripts/engine-capabilities.json` rather than
+hand-recomputed — that file now carries **129** registered types, not the 126 this section originally
+measured against (a pre-existing drift from engines added since, unrelated to and not audited by this
+edit): manip 5/11/80/33 · conseq 2/3/53/71 · err 0/11/**0**/118 · adapt 62/**0**/4/63 · a11y
+0/0/4/125 · mobile 0/3/85/41 · polish 0/0/56/73. `conseq` and `a11y` reflect S330 (CL-P1-057's
+`pointEntry`/`fractionEntry`/`subitizeFlash` moves); the rest of this snapshot, and the 129-vs-126
+count itself, predate and are independent of that session's changes. The
 bolded zeros matter: `err` and `adapt` are declared 0–3 but no engine has ever scored a 2 or a 1
 respectively — both already behave as near-binary axes, which the definitions below make explicit.
 
@@ -76,11 +81,12 @@ later right/wrong. Both current members: `mcq`, `numeric`. The engine-grade `D` 
 `conseq=0` as an automatic defect (same bucket as `a11y=0`/`mobile=0`), not merely "low."
 
 **1** — a minor derived judgment or decorative preview exists beyond raw equality, but nothing that
-functions as a legible mathematical picture. Examples: `fractionEntry` (a value-vs-form distinction
-gates its reveal ghost, but there is no rendered fraction), `pointEntry` (its mini-grid dot/vector
-is `aria-hidden`, i.e. explicitly not a first-class output), `radicalCheck`, `subitizeFlash`.
-*Not earned by*: a preview that is hidden from meaning, gated to one narrow state, or not itself a
-legible object.
+functions as a legible mathematical picture. Current members: `steppedReveal`, `radicalCheck`,
+`subitizeFlash`. *Not earned by*: a preview that is hidden from meaning, gated to one narrow state, or
+not itself a legible object — `fractionEntry` and `pointEntry` sat here for exactly that reason (a
+live preview existed but was gated to one complete-entry state and rendered `aria-hidden`) until
+CL-P1-057 (S330) fixed both by loosening the gate to each engine's one true precondition and putting a
+state-dependent `aria-label` directly on the preview instead of hiding it; both are conseq=2 now.
 
 **2** — a genuine mathematical representation renders and updates live as the learner acts: a bar
 sized by the typed fraction, a structural highlight, a parsed-and-evaluated readout. Examples:
@@ -143,22 +149,29 @@ step's target. Examples: `pointEntry`, `functionMachine`, `balanceScale`, `lineE
 
 ## a11y — is the interface operable and legible through assistive technology?
 
-Nearly saturated (119/126 at level 3); the interesting content is in the small level-2 remainder.
+Nearly saturated (125 of 129 registered types at level 3, per `scripts/engine-capabilities.json`); the
+interesting content is in the small level-2 remainder.
 
 **2** — solid native semantics (labeled inputs, `role="radiogroup"`/`role="radio"`, native
-`<button>`, 44px targets) but no exposed description of a VISUAL model, because most of these seven
-have none to expose. All seven current members: `mcq`, `numeric`, `fractionEntry`, `pointEntry`,
-`radicalCheck`, `steppedReveal`, `subitizeFlash`. `pointEntry` is the clean case: its one piece of
-visual richness, a mini-grid drawing the entered point, is rendered `aria-hidden="true"` —
-deliberately not exposed, consistent with staying off level 3.
+`<button>`, 44px targets) but no exposed description of a VISUAL model, because most of these have
+none to expose. Current members: `mcq`, `numeric`, `radicalCheck`, `steppedReveal`. Three engines
+that used to sit here for exactly this reason have since moved to level 3, each once its own
+hidden-or-absent description was fixed rather than the axis being redefined: `pointEntry` and
+`fractionEntry` (S330, CL-P1-057 — both had a live preview rendered `aria-hidden="true"`, closed by
+putting a state-dependent `aria-label` directly on the visual instead of hiding it) and
+`subitizeFlash` (S330 — see the honesty check below; this one turned out to be a stale score, not a
+missing capability).
 
 **3** — the interface additionally exposes the STATE of a visual/graphical model to assistive tech
 — `role="img"` with a state-dependent `aria-label`, or an `aria-live` region reporting the model's
 state as it changes — not just interactive-control semantics. Examples: `rationalCompare` (operand
 cards are `role="img"` with computed labels; the chosen comparison symbol is announced via
-`aria-live`), `buildExpression`, `plotPoint`, `functionMachine`. *Not earned by*: perfect button/
-input semantics alone, if a visual model exists and is hidden rather than described (see
-`pointEntry` above) — though `subitizeFlash`, in the honesty check, complicates this.
+`aria-live`), `buildExpression`, `plotPoint`, `functionMachine`, `subitizeFlash` (its dot pattern's
+`aria-label` toggles between `"${count} dots"` and `"dots hidden"` in the base render, not just at
+reveal). *Not earned by*: perfect button/input semantics alone, if a visual model exists and is
+hidden rather than described — `pointEntry`'s mini-grid was this document's own named case of
+exactly that, until CL-P1-057 (S330) put a live label on it directly; `fractionEntry`'s preview bar
+was the same pattern, fixed the same way immediately after.
 
 ## mobile — is the interaction viable one-thumb on a small screen?
 
@@ -230,7 +243,7 @@ changed to produce or avoid any of these.
 | `barBuilder`, `graphRead`, `pointSetReasoningLab`, `hundredthsGrid` | adapt | 2 | 0 | **ambiguous, but see open questions.** None of the four invoke `onEvent` anywhere in current source — structurally identical, by the mechanical rule that pins `adapt=3`, to every `adapt=0` engine. |
 | `rotationLab` | err | 3 | ≤ 1 | **the score.** No `tone`-gated feedback of any richness exists. The component's only tone-conditioned output is `{tone ? <p className="text-sm">{tone}</p> : null}` (`widgets.tsx`, `RotationLabW`) — printing the literal `StageTone` token (`"info"`/`"error"`/`"success"`) as visible text, not diagnostic copy. Reads as leftover placeholder markup, not a graded feature. |
 | `triangleConstraintLab`, `coordinateProofLab`, `solidSliceLab`, `verticalLineScanner`, `covariationScrubber`, `unitRuler`, `triangleAngleLab`, `samplingBiasLab`, `shapeFamilyBuilder` | err | 3 | contested | **ambiguous.** None of these nine accept a `tone` prop, so none can render the reveal-ghost contrast the pinned test's comment says `err=3` *means*. All nine are in `processEvents.ts`'s `MULTI_CONTROL` set and emit live per-move direction cues — but most fall through to the `GENERIC` cue table rather than engine-specific copy, a state `KNOWN_ISSUES.md` already calls "a deliberate choice, not rot." Whether a live generic cue equals a reveal ghost is a judgment call this document should not make. |
-| `subitizeFlash` | a11y | 2 | plausibly 3 | **ambiguous, leaning score.** Its dot pattern carries `role="img"` with a state-dependent `aria-label` (`"${spec.count} dots"` / `"dots hidden"`) in the base render, not just at reveal — the same pattern that earns `rationalCompare` a 3. Unlike `pointEntry` (whose comparable visual is `aria-hidden`, correctly consistent with staying at 2), there is no equivalent "deliberately not exposed" reading here. |
+| `subitizeFlash` | a11y | ~~2~~ **3** | 3 | **resolved, S330 (CL-P1-057).** This "ambiguous, leaning score" read was correct: re-verified directly against current source (`SubitizeFlashW`, `widgets.tsx`) — its dot pattern's SVG already carries `role="img"` with a state-dependent `aria-label` (`"${spec.count} dots"` / `"dots hidden"`) in the base render, the same pattern that earns `rationalCompare` its 3, with no "deliberately not exposed" reading to the contrary. No code changed; only `scripts/engine-capabilities.json`'s score did — see CLOSURE_LEDGER.md's tenth post-recon addendum. |
 
 `conseq`, `mobile`, and `polish` produced no individually-verifiable contradiction at the same
 confidence bar as the four axes above — not because they are clean, but because this session could

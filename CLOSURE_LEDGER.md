@@ -830,4 +830,90 @@ final numbers), with no new or missing failures.
 |---|---|---|---|---|---|
 | CL-P1-057 | P1 | Engine/lab premium quality | `fractionEntry` (46 authored uses, `PREMIUM_ENGINE_PRIORITY.csv` REDESIGN row, priority_product 240) had a live preview bar that already existed but rendered only once both numerator and denominator parsed, and was `aria-hidden` — `docs/CAPABILITY_AXES.md`'s own named conseq=1/a11y=2 example, and `describeState.ts`'s own comment called it "the standing fractionEntry/pointEntry gap." | **2/15 REDESIGN FAMILIES BUILT, S330 (`pointEntry`, `fractionEntry`)** | The bar now shows as soon as the denominator alone is known (numerator defaults to an empty 0), and carries a live `role="img"`/`aria-label` describing exactly what is drawn instead of hiding. `conseq` 1→2, `a11y` 2→3 in `scripts/engine-capabilities.json`, each justified against `docs/CAPABILITY_AXES.md`'s own text; `manip` deliberately left at 0 (no established sibling precedent for a drag/tap fraction-construction gesture, unlike `pointEntry`'s four coordinate-drag siblings); `err`/`adapt`/`mobile`/`polish` unchanged, each cited. 396+ tests green across targeted batches (detail above); `npx tsc --noEmit` clean; the full 74-file backlog list re-confirmed stable at 63/74 after two self-regenerating reports were caught stale and re-run. Side-effect check (same discipline as `pointEntry`'s `tm-01-03` finding) found a `df3-03-02` C→D tier shift and three other lesson-report deltas, all independently verified via git-stash A/B to predate and be unrelated to this fix — pure catch-up on already-committed content, not a new effect; `df3-03-02`'s move is a second, independent instrument reaching the same conclusion this session's own CML waiver already reached, not a new open item. 13/15 REDESIGN families remain, ranked by `priority_product` in `PREMIUM_ENGINE_PRIORITY.csv`. `subitizeFlash` (18 authored uses, priority_product 135) is a promising next candidate — `docs/CAPABILITY_AXES.md`'s own "honesty check" table already flags its `a11y=2` as "ambiguous, leaning score" (its dot pattern may already carry a live `role="img"`/`aria-label` in current source, unlike `fractionEntry`'s pre-fix state — worth verifying against actual code before assuming a build is even needed, rather than a score correction). | Reopen if a future renderer change to `FractionEntryW`'s preview gate or label construction is not mirrored in `widgets.fractionEntry.test.tsx`'s "live preview" block. Otherwise, continue down the REDESIGN list — `subitizeFlash` first, per the note above — weighing blast radius against priority_product and checking `SESSION207_EXECUTION_REPORT.md`'s manip-axis table for a prior deliberate-decision adjudication before assuming a gap exists.
 
+## Session 330 tenth post-recon addendum — CL-P1-057, `subitizeFlash` (a11y score correction; REDESIGN status unchanged)
+
+**What this is not:** unlike the sixth (`pointEntry`) and ninth (`fractionEntry`) addenda, this is not a REDESIGN
+build. `docs/CAPABILITY_AXES.md`'s own "honesty check" table (added by an earlier session as leads for a future
+session to verify, explicitly noting "no score was changed to produce or avoid any of these") flagged
+`subitizeFlash`'s `a11y=2` as "ambiguous, leaning score." The ninth addendum named it the natural next candidate
+specifically *because* that flag suggested a score correction, not a build, might be all that was needed.
+Verifying that guess was the entire scope of this unit.
+
+**Verified against source, not assumed.** `SubitizeFlashW` (`src/components/widgets.tsx:18001-18071`) flashes a
+fixed, pre-authored dot pattern (`dotPositions(spec.count, spec.arrangement)`) for `spec.flashMs`, then collects
+the learner's count via a `role="radiogroup"` of options — architecturally the same fixed-stimulus/MCQ-response
+shape as `mcq`: both sit in `cml-audit.mjs`'s own `ASSESSMENT` set and `cml-lint.mjs`'s `RESPONSE_ONLY` set
+alongside `numeric`/`fractionEntry`/`pointEntry`/`radicalCheck`. The dot SVG's root, line 18025, already reads
+`role="img"` with `aria-label={visible ? \`${spec.count} dots\` : "dots hidden"}` — a state-dependent label
+(`visible` is true while showing, held, or revealed; `"dots hidden"` otherwise) in the BASE render, not gated to
+any special state. That is exactly `docs/CAPABILITY_AXES.md`'s level-3 definition ("exposes the STATE of a
+visual/graphical model… `role="img"` with a state-dependent `aria-label`") and the same pattern already credited
+to `rationalCompare`'s 3. The honesty check's own "ambiguous, leaning score" read was correct, and there is no
+"deliberately not exposed" counter-reading the way `pointEntry`'s pre-fix `aria-hidden` mini-grid had one. The
+score was simply wrong — `a11y=2` undercounted a capability the component already had, independent of anything
+built this session.
+
+**Score update, `scripts/engine-capabilities.json`** (was `manip 0, conseq 1, err 1, adapt 0, a11y 2, mobile 2,
+polish 2`): `a11y` 2→3 only, per the verification above. Every other axis was re-checked against the same source
+and left alone: `manip` 0 — no drag, tap-to-place, or construction gesture exists anywhere in the component; the
+only inputs are a Flash/keep-visible timing toggle and an answer pick, neither of which touches a mathematical
+object. `conseq` 1 — the dot pattern is the pre-authored stimulus itself, shown or hidden by a timer, not "a
+genuine mathematical representation that renders and updates live as the learner acts" (level 2); nothing about
+it is derived from or responsive to the learner's own choices. `err` 1 — the tone-grammar comment at lines
+18011–18017 confirms a reveal ghost (`data-testid="szf-ghost"`) exists, matching `docs/CAPABILITY_AXES.md`'s own
+citation of `subitizeFlash` at this level (lines 112–116, alongside `mcq`/`numeric`/`fractionEntry`/`pointEntry`/
+`radicalCheck`/`rationalCompare`/`buildExpression`/`toggleExplore`, all held at 1 per `SESSION207_EXECUTION_
+REPORT.md` §2e's "tone decoration is presentation, not a new err-teach mechanism" refusal). `adapt` 0 — no
+`onEvent` call anywhere in the component. `mobile` 2 / `polish` 2 — 44px (`min-h-11 min-w-11`) targets
+throughout, no dedicated motion; unchanged baseline.
+
+**This does not change `subitizeFlash`'s REDESIGN classification, and the REDESIGN count stays 13/15, not
+12/15.** `scripts/audit/premium-rebuild-baseline-s226.mjs` (the generator behind `PREMIUM_ENGINE_PRIORITY.csv`)
+decides REDESIGN by `direct = manip>=2` and `consequence = conseq>=2`: `else if (!direct || !consequence)
+decision = "REDESIGN"` (line 268) — `a11y` never enters that branch; it only gates the separate KEEP threshold
+once `direct` and `consequence` are already both true (line 269). `subitizeFlash` stays `manip=0, conseq=1`
+after this fix, so it stays REDESIGN. The ninth addendum's framing of it as "a promising next candidate" for a
+REDESIGN build undersold what this turned out to be: a fully-scoped, already-correct-by-source a11y fix that
+happens to sit on an engine whose REDESIGN status this fix does not touch.
+
+**An observation, not an action.** Reading `SubitizeFlashW` in full for the verification above surfaces a real
+question this addendum does not resolve: a timed-flash-then-recall task has no mathematical object for a
+"direct manipulation" axis to attach to at all — closer in kind to `numeric`/`mcq` (this document's own named
+"architecturally foundational" pair, per the ninth addendum) than to an engine whose `manip=0`/`conseq=1`
+reflect an unbuilt interaction. `subitizeFlash` sitting in the same `ASSESSMENT`/`RESPONSE_ONLY` sets as those
+two in `cml-audit.mjs`/`cml-lint.mjs` supports this reading. But unlike the six engines
+`SESSION207_EXECUTION_REPORT.md`'s manip-axis table explicitly adjudicates by name, no session has put
+`subitizeFlash` through that same deliberate sign-off — and `premium-rebuild-baseline-s226.mjs`'s REDESIGN rule
+itself has no assessment-type exemption, so every fixed-stimulus/MCQ-response engine, not just this one, may be
+structurally mis-classified by the same mechanism. Neither the score nor the classifier is changed on the
+strength of this session's reading alone; both are a lead for whichever future unit next works this row, not a
+conclusion banked here.
+
+**Test evidence.** `npx tsc --noEmit`: clean. `npx vitest run src/lib/engineCapabilities.test.ts`: 5/5,
+confirming the CONSISTENCY/TOTALITY checks accept the new score (no test parses `docs/CAPABILITY_AXES.md`'s
+prose, so the documentation edits carry no test risk of their own). No component or test file changed — this is
+a data-file-plus-documentation correction only.
+
+**Side-effect check, same discipline as the sixth and ninth addenda.** Regenerating `node
+scripts/flagship-tier.mjs` and `node scripts/audit/excellence-backlog-s126.mjs` after the `a11y` bump produced
+**zero diff** against the post-ninth-addendum state (`A 837 · B 791 · C 72 · D 1`, `K–8 A 628 B 445`,
+excellence-s126 1/1 classified) — `git status --short` on both report paths returned empty. Consistent with
+`a11y` behaving as a MIN-style per-lesson-step floor that, for every lesson using `subitizeFlash`, is already
+dominated by some co-occurring widget's own equal-or-lower score; no lesson's tier moved, and no report
+regeneration was needed.
+
+**Documentation cleanup alongside this fix, `docs/CAPABILITY_AXES.md`:** the a11y section's level-2/level-3
+member lists, the conseq section's level-1 example list, and the honesty-check table's `subitizeFlash` row were
+updated to match (detail in the file's own diff, not repeated here). While touching the distribution line, this
+session also discovered — and flagged, but did **not** audit or fix — that `scripts/engine-capabilities.json`
+now carries **129** registered types, not the **126** this document was originally written against. The
+distribution line now reads real numbers computed directly from the JSON (a short Python one-liner, after a
+first hand-computed draft was caught wrong mid-edit and discarded) with an explicit caveat, rather than silently
+keeping the stale total. This drift predates and is unrelated to S330; it is a pre-existing documentation-
+staleness item, not a new one, called out here only so it is not mistaken for something this addendum resolved.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-057 | P1 | Engine/lab premium quality | `subitizeFlash` (18 authored uses, priority_product 135) was the honesty-check table's own flagged lead: `a11y=2` marked "ambiguous, leaning score." | **A11Y SCORE CORRECTED, S330 — REDESIGN STATUS UNCHANGED (2/15 REDESIGN FAMILIES BUILT SO FAR: `pointEntry`, `fractionEntry`)** | `a11y` 2→3 in `scripts/engine-capabilities.json`, verified directly against `SubitizeFlashW`'s already-correct source (no code changed); every other axis re-checked and left as-is, each cited above. This does NOT move `subitizeFlash` off the REDESIGN list — `premium-rebuild-baseline-s226.mjs`'s decision rule keys REDESIGN on `manip`/`conseq` alone (both still below threshold), never `a11y`. REDESIGN count stays **13/15 remaining**, unchanged by this fix. `npx tsc --noEmit` clean; `engineCapabilities.test.ts` 5/5; zero side-effect diff on `FLAGSHIP_TIERS.md`/`EXCELLENCE_BACKLOG_S126.*` (detail above). An unactioned observation is on record for a future session: `subitizeFlash`'s fixed-stimulus/MCQ-response shape (grouped with `numeric`/`mcq` in `cml-audit.mjs`'s own `ASSESSMENT` set) may make its low `manip`/`conseq` architecturally-foundational rather than a gap, the way this document already treats `numeric`/`mcq` — but this has not been put through the same explicit adjudication `SESSION207_EXECUTION_REPORT.md`'s table gave six other engines, so it is not treated as settled here. | Reopen if a future `SubitizeFlashW` change removes or narrows the base-render `aria-label`. Otherwise: before starting a REDESIGN build on any of the remaining 13 rows, check whether it is assessment-shaped like `subitizeFlash` (in which case its REDESIGN classification itself may warrant question, not a build) versus genuinely under-built the way `pointEntry`/`fractionEntry` were — `PREMIUM_ENGINE_PRIORITY.csv`'s `priority_product` ranks urgency, not which of these two cases applies.
+
 
