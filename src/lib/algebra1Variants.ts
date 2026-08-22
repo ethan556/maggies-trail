@@ -334,7 +334,11 @@ function systems(r:Rand,b:Band,form:string):Variant{
   const others=(['one solution','no solution','infinitely many solutions'] as const).filter((k)=>k!==kind);
   return mcq(r,SYS,`How many solutions does the system ${systemEq(m1,b1)} and ${systemEq(m2,b2)} have?`,[kind,kind==='one solution'?'Different slopes intersect once.':kind==='no solution'?'Equal slopes with different intercepts are parallel.':'The equations describe the same line.'],[CLASSIFY_WRONG[others[0]],CLASSIFY_WRONG[others[1]]]);
  }
- const makeSystem=()=>{const x=pick(r,-5,8),y=pick(r,-5,9),a=pick(r,1,5),b1=pick(r,1,5),c=pick(r,1,5);let d=pick(r,1,5);while(a*d===b1*c){d=pick(r,1,5)}return{x,y,a,b:b1,c,d,e:a*x+b1*y,f:c*x+d*y}};
+ /* GRB-02 (S331): the affineRelationshipLab upgrade prints each equation's slope −A/B and
+  * intercept C/B in its stage text. y-coefficients are drawn from {1,2,4,5} — never 3 — so every
+  * printed slope/intercept is an EXACT terminating decimal (halves, quarters, fifths) instead of
+  * an invented 12-decimal truncation of a third. The solution stays an integer pair either way. */
+ const makeSystem=()=>{const x=pick(r,-5,8),y=pick(r,-5,9),a=pick(r,1,5),b1=choose(r,[1,2,4,5] as const),c=pick(r,1,5);let d=choose(r,[1,2,4,5] as const);while(a*d===b1*c){d=choose(r,[1,2,4,5] as const)}return{x,y,a,b:b1,c,d,e:a*x+b1*y,f:c*x+d*y}};
  if(concept==='eliminate-add-subtract'||concept==='eliminate-scale-one'||concept==='eliminate-scale-both'){
   const S=makeSystem(),ask=r()<0.5?'x':'y',ans=ask==='x'?S.x:S.y;
   if(surface==='numeric')return num(SYS,`Solve ${S.a}x + ${S.b}y = ${S.e} and ${S.c}x + ${S.d}y = ${S.f}. What is ${ask}?`,ans,[[ask==='x'?S.y:S.x,'That is the other coordinate of the solution.'],[-ans,'That reverses the sign of the requested coordinate.']],`Eliminating one variable and back-substituting gives (${S.x}, ${S.y}), so ${ask} = ${ans}.`,0,{kind:'linear-system',a1:S.a,b1:S.b,c1:S.e,a2:S.c,b2:S.d,c2:S.f,x:S.x,y:S.y,ask});

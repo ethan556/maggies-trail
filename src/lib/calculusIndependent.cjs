@@ -981,7 +981,128 @@ function solvePrompt(form, input) {
   if (Object.values(DIFFERENTIAL_EQUATION_FORMS).includes(form)) return solveDifferentialEquation(form, input);
   if (Object.values(INTEGRATION_FOUNDATION_FORMS).includes(form)) return solveIntegrationFoundation(form, input);
   if (Object.values(INTEGRATION_APPLICATION_FORMS).includes(form)) return solveIntegrationApplication(form, input);
+  {
+    const derived = solveS331Forms(form, input);
+    if (derived !== undefined) return derived;
+  }
   return authoredSolver(form, input);
+}
+
+/* S331 / lane G1: independent routes for the state-varying pc-vector-motion, pc-polar-area, and
+ * g13-series-convergence numeric forms. Speeds come from integer search against the squares,
+ * polar areas from numeric integration of the printed ½r² integrand, series values from
+ * re-summing the printed terms. */
+function s331HalfUp(x, dp) {
+  const scale = Math.pow(10, dp);
+  const scaled = x * scale;
+  const floor = Math.floor(scaled);
+  return (scaled - floor >= 0.5 ? floor + 1 : floor) / scale;
+}
+function s331HypSearch(a, b) {
+  for (let n = 1; n <= 400; n += 1) if (n * n === a * a + b * b) return n;
+  throw new Error(`no integer hypotenuse for ${a}, ${b}`);
+}
+function s331Integrate(f, lo, hi) {
+  const N = 20000;
+  let sum = 0;
+  for (let i = 0; i < N; i += 1) {
+    const x = lo + ((hi - lo) * (i + 0.5)) / N;
+    sum += f(x);
+  }
+  return (sum * (hi - lo)) / N;
+}
+function solveS331Forms(form, input) {
+  const prompt = String(input).split('||', 1)[0].trim();
+  const ascii = prompt.replace(/−/g, '-');
+  let m;
+  const N = Number;
+  if (form === 'parametric-polar-calculus__pc-vector-motion__numeric') {
+    m = prompt.match(/^r\(t\) = ⟨(\d+)t, (\d+)t⟩\. Find the speed\.$/);
+    if (m) return s331HypSearch(N(m[1]), N(m[2]));
+    m = ascii.match(/^A projectile has r\(t\) = ⟨(\d+)t, (\d+)t - t²⟩\. Find its SPEED at the apex, t = ([\d.]+)\.$/);
+    if (m) {
+      const t = N(m[3]);
+      const vy = N(m[2]) - 2 * t;
+      if (Math.abs(vy) > 1e-9) throw new Error(`prompt's apex time is not the apex: ${prompt}`);
+      return N(m[1]);
+    }
+    m = prompt.match(/^r\(t\) = ⟨(\d+)t, (\d+)t⟩, for t from 0 to (\d+)\. Find the total distance travelled\.$/);
+    if (m) return s331HypSearch(N(m[1]), N(m[2])) * N(m[3]);
+  }
+  if (form === 'parametric-polar-calculus__pc-polar-area__numeric') {
+    m = prompt.match(/circle r = (\d+), from 0 to 2π\. Find the area, as a multiple of π/);
+    if (m) {
+      const k = N(m[1]);
+      return Math.round(s331Integrate(() => 0.5 * k * k, 0, 2 * Math.PI) / Math.PI);
+    }
+    m = prompt.match(/^The cardioid r = (\d*)\(1 \+ cos θ\), swept from 0 to 2π, encloses an area of .+\. Give that as a decimal to three places\.$/);
+    if (m) {
+      const a = m[1] === '' ? 1 : N(m[1]);
+      return s331HalfUp(s331Integrate((th) => 0.5 * a * a * (1 + Math.cos(th)) ** 2, 0, 2 * Math.PI), 3);
+    }
+    m = prompt.match(/^Find the area swept by r = (\d+) from θ = 0 to π\/2, to three decimals\.$/);
+    if (m) {
+      const k = N(m[1]);
+      return s331HalfUp(s331Integrate(() => 0.5 * k * k, 0, Math.PI / 2), 3);
+    }
+  }
+  if (form === 'series-convergence__sc-alternating__numeric') {
+    m = ascii.match(/^For 1 - 1\/2 \+ 1\/3 - 1\/4 \+ …, you stop after (\d+) terms\. What is the largest the error can be\?/);
+    if (m) return s331HalfUp(1 / (N(m[1]) + 1), 4);
+    m = ascii.match(/^For 1 - 1\/2 \+ 1\/3 - …, how many terms are needed to guarantee an error below ([\d.]+)\?$/);
+    if (m) {
+      const eps = N(m[1]);
+      for (let n = 1; n <= 100000; n += 1) if (1 / (n + 1) < eps) return n;
+      throw new Error(`error target unreachable: ${prompt}`);
+    }
+    m = ascii.match(/^For 1 - 1\/4 \+ 1\/9 - 1\/16 \+ …, you stop after (\d+) terms\. Bound the error, to four decimals\.$/);
+    if (m) return s331HalfUp(1 / ((N(m[1]) + 1) ** 2), 4);
+  }
+  if (form === 'series-convergence__sc-taylor__numeric') {
+    m = prompt.match(/^Use (.+) at x = 1 to estimate e\. Give four decimals\.$/);
+    if (m) {
+      const terms = m[1].split('+').length;
+      let fact = 1;
+      let sum = 0;
+      for (let k = 0; k < terms; k += 1) {
+        if (k > 0) fact *= k;
+        sum += 1 / fact;
+      }
+      return s331HalfUp(sum, 4);
+    }
+    m = prompt.match(/how many terms AFTER the constant are needed to get within ([\d.]+) of e\?$/);
+    if (m) {
+      const eps = N(m[1]);
+      let fact = 1;
+      let sum = 1;
+      for (let n = 1; n <= 50; n += 1) {
+        fact *= n;
+        sum += 1 / fact;
+        if (Math.E - sum < eps) return n;
+      }
+      throw new Error(`error target unreachable: ${prompt}`);
+    }
+  }
+  if (form === 'series-convergence__sc-radius__numeric') {
+    m = prompt.match(/the ratio of consecutive terms is (.+)\. What is the radius of convergence\?$/);
+    if (m) {
+      const ratio = m[1].trim();
+      if (ratio === '|x|') return 1;
+      let mm = ratio.match(/^\|x\|\/(\d+)$/);
+      if (mm) return N(mm[1]);
+      mm = ratio.match(/^\|(\d+)x\|$/);
+      if (mm) return 1 / N(mm[1]);
+      throw new Error(`unsupported ratio text: ${ratio}`);
+    }
+  }
+  if (form === 'series-convergence__sc-power-ops__numeric') {
+    m = prompt.match(/^Find the sum of 1 \+ 2\((\d+)\/(\d+)\)/);
+    if (m) {
+      const r = N(m[1]) / N(m[2]);
+      return s331HalfUp(1 / ((1 - r) * (1 - r)), 4);
+    }
+  }
+  return undefined;
 }
 
 module.exports = { solvePrompt };

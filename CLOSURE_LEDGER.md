@@ -1441,4 +1441,117 @@ this addendum found on the first.
 | CL-P1-033 | P1 | Current full Vitest (this Linux sandbox) | Round-2's two fix passes (fifteenth + sixteenth addenda) closed 7 files a full-suite gate surfaced beyond the known 11-file backlog. A third full pass, run after both, came back with exactly the known 11 failing files and nothing else. | **CLOSED FOR THIS ROUND: CLEAN THIRD PASS OBTAINED, ZERO RECURRENCE, ZERO SURPRISES. KNOWN 11-FILE BACKLOG CORRECTLY UNCHANGED.** | `/tmp/full_vitest_s330_final3.log`: `11 failed \| 716 passed (727)` files, `13 failed \| 15787 passed \| 1 skipped (15801)` tests — exact match to the pre-round-2 baseline. This row tracks the LINUX full-suite state specifically and does not close the separate pre-existing CL-P1-033 row several addenda above (that row's own open condition is a WINDOWS-specific re-run). | None for this round. A future session touching `content/courses/**/lessons/*.json` or any generated `reports/**` file should still budget for a full-suite gate before calling its own work done — this round needed three full passes, not one, to reach a clean state, and targeted checks alone missed real issues twice.
 | CL-P1-058 | P1 | Production build (`npm run build`) | A separate axis from vitest entirely — first run after this round's vitest work came back `BUILD_EXIT=1`, `Failed to compile`, from 3 genuine `prefer-const` ESLint errors in `session198.howManyK.test.ts`, introduced by this session's OWN Task #28 commit (`5fdbbe1`) and invisible to all three vitest passes (vitest does not run ESLint). | **FIXED AND RE-VERIFIED** | `let m/m2/m3` → `const` for the 3 flagged declarations only (a visually similar 4th `let m` a few lines down in a different branch genuinely IS reassigned and was correctly left alone — checked, not assumed). `npx vitest run session198.howManyK.test.ts`: 21/21 green, unchanged. Second `npm run build`: exit 0, full route table, zero errors. | None. Future sessions should treat "vitest is clean" and "the build is clean" as two separate, both-required pieces of evidence — this round nearly delivered on the strength of the first alone.
 
+## Session 331 — 15-worker concurrent wave, ended early on a hard resource limit (honest, unverified-at-full-gate)
+
+Directive: complete outstanding work via concurrent workers, batch processing, and a shared precached
+briefing (`/home/user/S331_BRIEFING.md`) instead of each worker rediscovering repo context. 15 agents ran
+in disjoint lanes against clean HEAD `fe0f219`; **one lane (variants.resolver freshness repair) was cut off
+mid-edit by an API spend-limit error, not by its own judgment**, and the wave stopped there on explicit user
+instruction ("move on, that lane can finish in another session") rather than spending further to recover it.
+**No full `npx vitest run` was completed this round** — only `npx tsc --noEmit -p .` (clean, run twice, most
+recently after the closing fix below) and targeted per-lane runs (evidence in each lane's own report, not
+duplicated here). Treat this tree as **not yet re-certified by a full gate**; that is this addendum's main
+warning, not a detail buried in it.
+
+**What actually landed, by area** (full narrative/evidence lives in each lane's dispatch report, this
+session's transcript, and the disposition JSONL files below — this row is a pointer, not a re-derivation):
+- **CL-P0-008**: 9 more `predict` cycles built (3 lanes × 3 lessons: `sc-01-01, si-03-02, tf-02-03, fn-04-01,
+  gf-01-01, gf-01-02, lc-03-03, pra-03-01, si-01-03` — all C→B) plus all 29 previously-never-reviewed lessons
+  (3 manip+conseq, 4 conseq+total, 22 triple-combo) individually read and dispositioned KEEP with per-lesson
+  engine-fit rationale. **Every HS C-tier lesson this row named now has an individual disposition; none of the
+  68 remain unreviewed.** Dispositions: `reports/closure/cowork-staging/laneS331-{A1,A2,A3,B1,B2,B3}.jsonl`
+  (37 records). `FLAGSHIP_TIERS.md` needs regeneration to reflect the 9 promotions (not run this round — see
+  warning above).
+- **CL-P1-057**: `steppedReveal`'s `conseq=1` verified correct-as-scored (exposition-shaped, same disposition
+  class as `subitizeFlash`) — **this closes the row's own accounting: all 13 remaining REDESIGN rows now
+  carry an adjudicated disposition, 2/15 built.**
+- **CL-P1-014**: found already closed by an unrecorded prior change — `les-01-03` is a second genuine
+  `distribute` deployment (pinned in `schema.algebraTilesArea.s211.test.ts`'s `AREA_USERS` allowlist since
+  before this session), and factor mode is fully interactive/graded, not display-only, in current source.
+  Recommend closing this row citing that evidence rather than reopening it as new work.
+- **CL-P0-013**: documented REFUSE — a manipulate-until-true judge interaction cannot avoid leaking the
+  answer (four independent legs of evidence in the lane report: monotone gap→verdict read-off across all 10
+  authored instances, the engine's own doc comment ruling out a grading threshold by design, an authored
+  distractor that IS the bright-line the threshold would instantiate, and a schema that doesn't even carry
+  the fields some instances' claims need). The row's own condition ("documented REFUSE") is satisfied.
+- **CL-P1-011**: alternative stepper controls added for `systemsExplore`, `matrixTransform` (found already
+  fully keyboard-operable, no drag surface at all — the row's mobile=1 claim was stale for this one engine),
+  and `compassConstruct`; `scripts/engine-capabilities.json` mobile scores raised 1→2 (not test-pinned,
+  verified). **Row does not close** — the real-device gate it also requires is still unavailable here.
+- **The 11-file known test backlog**: 5 of the 11 resolved this round with recorded decisions — avatar
+  default-on aligned to `AVATAR_V4_PRODUCTION_RUNBOOK.md`'s already-shipped decision (2 files);
+  `content.gradeVocabulary.s237` re-pinned to the reviewed disposition ledger (the reviewed side, not the
+  stale vocabulary pin); `content.numericPreview.s237` re-pinned 111→109 with the loss fully traced (one
+  deliberate S316 revision, one born-stale-at-creation-commit pin, neither an accidental regression); the
+  `barBuilder` 8-column axis-label collision fixed geometrically (S329-style row-packer, existing test
+  strengthened not weakened). Plus 3 authoring gaps closed (`session244.stemAndFeedbackIntegrity`,
+  `session255.dataLinePlotsG2FollowOn`, `session258.fractionMultiplyG4Supersession`) via new authored content
+  matching each course's voice. **6 of the original 11 remain, each still for the reason already on file**
+  (2 avatar-adjacent were the ones fixed, not the 6 — see individual lane reports for the current exact set;
+  this line is a summary, not a re-audit — do not trust the count without re-running the backlog list).
+- **GENERATOR_REBUILD_LEDGER.md**: GRB-03 (25 terse-feedback rows, reconstructed against current code since
+  the S242 CSV predates repo history) and GRB-06 (26 out-of-scale values — all 26 verified legitimate,
+  grading-only fields never drawn to scale, zero fixed) resolved. GRB-02 (invented rounding) resolved for all
+  51 currently-live rows (the ledger's "40" undercounts current state) via an exact-surd/stated-convention
+  policy. GRB-01 (machine operators) found **already fixed at S242** on full re-measurement (2,678 pairs /
+  102,323 samples, zero findings) — the ledger's OPEN listing for it is stale. GRB-05 (anti-repeat) found
+  **already fully implemented** (`src/lib/antiRepeat.ts`, GEN-04) — also stale in the ledger. GRB-04 (thin
+  pools) not attempted this round. **Recommend this whole ledger be marked LANDED/CLOSED per-item rather than
+  archived wholesale** — most of "OPEN" was actually already done by an unrecorded session.
+- **Variant-generation workstream (CLAUDE.md)**: the resolver's freshness backlog — reported at "232 failures
+  across 12 tags" — is **now 0 failures, 17/17 `variants.resolver.test.ts` green**, verified after this
+  addendum's own closing fix (below). The 10 S316-flagged generator-debt locations: 8 resolved with new
+  generator forms + re-declared (`ee-01-02/k3, ee-01-03/ch1, ee-04-02/k3, ee-04-03/ch1, pr-03-01 k3+ch1,
+  tm-04-01 k1+k2, tm-04-03/k1, tm-05-01 k1+k2+ch1, mb-05-02 k1-k4+ch1`), 1 formally rejected under CLAUDE.md
+  rule 7 (`tm-04-03/k2` — bound to a static figure with hardcoded numbers; regenerating it would contradict
+  the rendered figure), 1 found to have no actual debt (`mult-01-03` — the S316 flag was over-inclusive).
+  Dispositions: `reports/closure/cowork-staging/laneS331-G3.jsonl`. **`VARIANT_STATE.md` was NOT rewritten
+  this round** (repo-root state file, reserved for the main session, and this addendum is the closest
+  substitute for now) — a future session should still do the proper rewrite per that file's own rule.
+- **New finding, not yet a ledger row**: `src/lib/variants.delivery.s242.test.ts`'s FLOOR ratchet (≥5,900
+  refreshable pool-eligible items) fails at 5,730 — **confirmed pre-existing at clean HEAD `fe0f219` in an
+  isolated worktree**, not caused by this wave. Needs a CL-ID; not opened here for lack of budget to do it
+  justice.
+- **Provider-interface scaffolding** (the menu item from `HANDOVER_COWORK_S316.md`) built for all four
+  infra-gated P0 rows: `src/lib/billing.ts`, `src/server/mailProvider.ts`, `src/server/scoreDelivery.ts`,
+  `src/lib/telemetry.ts` — each a typed interface, the CURRENT demo/outbox/queue/console behavior as the
+  verified-unchanged default provider, env-var selection, and a documented stub for the real provider. Exact
+  remaining steps (account, secrets, env vars, tests to run) per row: `docs/PROVIDERS.md`. **Does not close
+  CL-P0-016/017/020 or CL-P1-019** — those still need real accounts/secrets this sandbox cannot hold — but
+  closing them is now a config change plus wiring a real SDK behind an existing seam, not a design project.
+
+**This addendum's own closing action.** After the wave, `variants.resolver.test.ts` still had one failure —
+`pr-03-01.json/ch1` (`fracRateShallow`), built earlier in this same round: a two-stage rate-then-pair random
+pick was structurally starving its two thin rates' single valid grid pairs against `HALF`'s six, observing
+only 3 distinct states where the gate requires >3. Fixed by flattening the selection to pick uniformly over
+every genuine `(rate, pair)` instance directly — no new state invented, the reachable set is unchanged, only
+the sampling bias is gone (`src/lib/variants.ts`, `fracRatePlot`/`fracRateShallow` builder). Re-verified:
+`variants.resolver.test.ts` 17/17. `npx tsc --noEmit -p .` clean immediately after, repo-wide.
+
+**What this round explicitly did NOT do, so the next session doesn't assume otherwise:**
+- No full `npx vitest run` (all 727 files). The known-11 backlog, the fresh regressions this wave's own
+  concurrent edits could in principle have caused, and any interaction between 15 lanes' simultaneous edits
+  to shared files (`widgets.tsx` especially — at least two lanes edited it) are **unverified beyond each
+  lane's own targeted runs and this addendum's `tsc` pass**. Budget a full gate as the very first action of
+  whatever session picks this up next.
+- `npm run build`, `npm run validate:content`, `npm run lint:pedagogy`, `node scripts/check-registration.mjs`
+  were not re-run this round.
+- No derivation-chain regeneration (`FLAGSHIP_TIERS.md`, `PREMIUM_PENDING_WORKLOAD_QUEUE.csv`,
+  `LESSON_REVIEW_CARDS_S244.*`, `content/standards/objectives.json`, and siblings) — all now stale against
+  the ~30 lesson edits and ~40 generator/engine edits this round made. Regenerate before trusting their
+  counts, in the order `CLAUDE.md`/prior addenda already establish.
+- The Playwright browser-leg attempt planned for CL-P1-031/CL-P0-003 (against a production `next start`
+  instead of the dev server that hung twice before) was **not attempted** — deprioritized when the spend
+  limit hit, in favor of getting everything already built to a safely committed state.
+- `HANDOVER_COWORK_S316.md` was not extended and the Outstanding Ledger artifact from earlier this session
+  was not republished with this round's results — both still reflect the pre-S331 state.
+
+| ID | Priority | Area | Finding | Status | Evidence / next action |
+|---|---|---|---|---|---|
+| CL-P1-057 | P1 | Engine/lab premium quality | `steppedReveal`'s `conseq=1` verified correct-as-scored — no learner-caused mathematical consequence exists in its render, confirmed against the renderer, schema, and 5 of its 50 authored uses. | **CLOSED — 13/13 REMAINING REDESIGN ROWS NOW DISPOSITIONED (2/15 BUILT, 11 ADJUDICATED-DELIBERATE INCL. THIS ONE)** | See narrative above. Reopen only on new evidence that a `steppedReveal` panel's render genuinely depends on a learner mathematical action. |
+| CL-P1-014 | P1 | Algebra tiles | A second genuine `distribute` deployment (`les-01-03`) already exists and is pinned; factor mode is fully interactive and graded, not display-only. | **CLOSED — BOTH CLAUSES ALREADY SATISFIED BY UNRECORDED PRIOR WORK** | `schema.algebraTilesArea.s211.test.ts`'s `AREA_USERS` allowlist (les-01-03 present), `evaluate.algebraTilesArea.s212.test.ts`'s factor-mode grading block, `evaluate.ts` lines ~1822-1832. Reopen only if a genuinely new candidate lesson is proposed with per-lesson necessity evidence (this round found none — see lane report for the `ee-03-01` near-miss and why it was rejected). |
+| CL-P0-013 | P0 | dCL causal misconception | A manipulate-until-true interaction over `distributionCompareLab`'s judge mode cannot avoid leaking the graded answer — four independent mechanisms, all traced to source. | **CLOSED — DOCUMENTED REFUSE** | Full four-leg evidence in this round's lane report (monotone gap→verdict across all 10 authored instances; the engine's own doc comment; an authored distractor that IS the threshold; schema fields some claims would need don't exist). Reopen only with a concrete design that defeats all four legs. |
+| CL-P1-011 | P1 | Mobile | `systemsExplore` and `compassConstruct` got new stepper alternative controls reaching every drag-reachable state; `matrixTransform` was found already fully keyboard-operable (no drag surface). | **OPEN — SOURCE-SIDE FIX LANDED, REAL-DEVICE GATE STILL OWED** | `session331.engineTouchAlternatives.test.tsx` (new, 8/8), `scripts/engine-capabilities.json` mobile 1→2 for all three (not test-pinned, verified). Close only after the row's own real-device/touch gate, which remains unavailable in this sandbox. |
+| GRB‑01, GRB‑02, GRB‑03, GRB‑05, GRB‑06 | — | Generated-corpus quality (`GENERATOR_REBUILD_LEDGER.md`) | GRB‑01 and GRB‑05 found already done (stale OPEN/DEFERRED labels); GRB‑02, GRB‑03, GRB‑06 fixed this round; GRB‑04 untouched. | **See `GENERATOR_REBUILD_LEDGER.md` for per-item status; this ledger has never cross-referenced GRB IDs before this line.** | First cross-reference from CLOSURE_LEDGER.md into the generator-quality ledger — consider merging or at least mutually linking the two going forward so this orphaning can't recur. |
+
 

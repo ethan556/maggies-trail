@@ -363,6 +363,62 @@
       }
     },
     {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-hidden-question",
+      "explanationVariants": [
+        "The crate count is hidden.",
+        "Find it, then multiply."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "There were 4 crates. One more crate arrived. Each crate holds 6 apples. How many apples are there in all?",
+        "answer": 30,
+        "tolerance": 0,
+        "unit": "apples",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 counts only the 4 crates that were already there. The crate that arrived holds 6 apples too, so there are 5 crates to count."
+          },
+          {
+            "value": 25,
+            "feedback": "25 adds the arrival as a single apple: 4 × 6 then + 1. A whole crate arrived, bringing a whole group of 6."
+          }
+        ],
+        "fallbackFeedback": "The hidden question is how many crates there are NOW: 4 + 1 = 5. Then count 5 equal groups of 6 apples.",
+        "successFeedback": "Correct — (4 + 1) × 6 = 30 apples."
+      },
+      "hints": [
+        "Groups first, then change.",
+        "Parentheses hold step one.",
+        "Order is the meaning."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Name the unstated middle quantity that the final question depends on, then solve in order.",
+        "invariants": [
+          "The hidden quantity must be found before it can be used in the final operation."
+        ],
+        "misconceptions": [
+          "Trying to answer the final question directly from the numbers that are stated."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-hidden-question",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
       "id": "ch1",
       "kind": "challenge",
       "body": "One more, for the road.",

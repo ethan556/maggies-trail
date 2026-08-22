@@ -324,6 +324,62 @@
       }
     },
     {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-add-mult",
+      "explanationVariants": [
+        "The arrival is a whole group.",
+        "Add crates, then multiply."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "There were 3 crates. One more crate arrived. Each crate holds 8 apples. How many apples are there in all?",
+        "answer": 32,
+        "tolerance": 0,
+        "unit": "apples",
+        "commonErrors": [
+          {
+            "value": 24,
+            "feedback": "24 is 3 × 8 — the old crate count. The arrival changed the count to 4 crates before any apples are counted."
+          },
+          {
+            "value": 25,
+            "feedback": "25 treats the new crate as one apple: 3 × 8 then + 1. The crate that arrived is filled like the others, a full group of 8."
+          }
+        ],
+        "fallbackFeedback": "The count changes first: 3 + 1 = 4 crates. Then combine 4 equal groups of 8 apples.",
+        "successFeedback": "Correct — (3 + 1) × 8 = 32 apples."
+      },
+      "hints": [
+        "Groups first, then change.",
+        "Parentheses hold step one.",
+        "Order is the meaning."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Increase the number of equal groups first, then multiply by the size of each group.",
+        "invariants": [
+          "A new full group changes the group count, so the addition belongs before multiplication."
+        ],
+        "misconceptions": [
+          "Adding one object after multiplying instead of adding one whole group."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-add-mult",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
       "id": "ch1",
       "kind": "challenge",
       "body": "One more, for the road.",

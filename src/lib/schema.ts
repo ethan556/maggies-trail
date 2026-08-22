@@ -6146,9 +6146,15 @@ export function exactNumberTruth(spec:ExactNumberTruthInput):{
       const approx=Math.log(x)/Math.log(b);let k:number|undefined;
       for(const c of [Math.floor(approx),Math.round(approx),Math.ceil(approx)])if(Math.abs(Math.pow(b,c)-x)<1e-9){k=c;break}
       if(k===undefined)throw new Error(`exactNumberLab logarithmEvaluate: ${x} is not an exact power of ${b}`);
+      /* GRB-02 (S331): for a NEGATIVE exponent the argument is exactly 1/bᵏ, but printing the raw
+       * float claimed things like "3^−4 = 0.012345679012" — an "=" to invented digits. When the
+       * reciprocal power is a clean integer the stage prints the exact fraction instead, matching
+       * how the prompt itself writes the argument (e.g. "log_3(1/81)"). */
+      const recip=k<0?exactClean(Math.pow(b,-k)):NaN;
+      const shownX=k<0&&Number.isInteger(recip)?`1/${fmt(recip)}`:fmt(x);
       stages.push({key:"log:base",label:"identify the base",value:`base ${fmt(b)}`},
-        {key:"log:power",label:"write the argument as a power of the base",value:`${fmt(b)}^${fmt(k)} = ${fmt(x)}`},
-        {key:"log:read",label:"read the exponent",value:`log_${fmt(b)} ${fmt(x)} = ${fmt(k)}`});
+        {key:"log:power",label:"write the argument as a power of the base",value:`${fmt(b)}^${fmt(k)} = ${shownX}`},
+        {key:"log:read",label:"read the exponent",value:`log_${fmt(b)} ${shownX} = ${fmt(k)}`});
       answerNumber=exactClean(k);break;
     }
     case "logarithmArgument":{

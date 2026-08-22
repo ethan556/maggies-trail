@@ -720,8 +720,12 @@ describe("P2 keyboard gate — every registered widget", () => {
   it("systemsExplore", () => {
     const { spec, holder, container } = mount("systemsExplore");
     auditNativeControls(container);
-    fireEvent.change(screen.getByLabelText(/point x/i), { target: { value: "2" } });
-    fireEvent.change(screen.getByLabelText(/point y/i), { target: { value: "3" } });
+    // Role-scoped (S331): the point gained "Decrease/Increase point x|y" stepper BUTTONS
+    // (CL-P1-011's touch-alternative path), so a bare label-text query now matches more than the
+    // range. Same control, same keyboard path — selected by its slider role, as the sibling
+    // systemsExplore suites (mmip.o2.s211/s212, session247) already do.
+    fireEvent.change(screen.getByRole("slider", { name: "point x" }), { target: { value: "2" } });
+    fireEvent.change(screen.getByRole("slider", { name: "point y" }), { target: { value: "3" } });
     expectSolved(spec, holder);
   });
 

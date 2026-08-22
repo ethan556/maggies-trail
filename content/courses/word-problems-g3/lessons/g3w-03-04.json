@@ -348,6 +348,62 @@
       }
     },
     {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-author",
+      "explanationVariants": [
+        "Stories force an order.",
+        "Arrival first, then groups."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "A classmate's story reads: \"There were 6 crates. One more crate arrived. Each crate holds 5 pencils.\" What answer does the story lead to?",
+        "answer": 35,
+        "tolerance": 0,
+        "unit": "pencils",
+        "commonErrors": [
+          {
+            "value": 30,
+            "feedback": "30 is 6 × 5 — it skips the arrival. The story changed the crate count to 7 before any pencils are counted."
+          },
+          {
+            "value": 31,
+            "feedback": "31 adds the new crate as one pencil: 6 × 5 then + 1. An arriving crate brings a full group of 5."
+          }
+        ],
+        "fallbackFeedback": "The story's first step is 6 + 1 = 7 crates. Its second step multiplies: 7 × 5 pencils.",
+        "successFeedback": "Correct — the story is answered by (6 + 1) × 5 = 35."
+      },
+      "hints": [
+        "Groups first, then change.",
+        "Parentheses hold step one.",
+        "Order is the meaning."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Create or select a story whose sequence of actions matches a given two-step expression.",
+        "invariants": [
+          "The location of an adjustment—once on the total or inside every group—determines the grouping."
+        ],
+        "misconceptions": [
+          "Writing a story with the right numbers but operations or grouping that tell a different sequence."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-author",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
       "id": "ch1",
       "kind": "challenge",
       "body": "One more, for the road.",

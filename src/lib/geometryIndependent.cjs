@@ -529,6 +529,522 @@ function solvePrompt(form, input) {
   if (form === 'cr-two-tangent__numeric' && (match = prompt.match(/One has length (\d+)/))) {
     return Number(match[1]);
   }
+  /* S331 / lane G1: the sixteen state-varying g10-right-triangles numeric forms. Every branch
+   * re-derives the answer from the PRINTED numbers — Pythagorean answers by integer search
+   * rather than square roots, trig answers re-rounded by the half-up-on-scaled-integers rule
+   * the prompt's stated convention implies. None of these read the generator's state tables. */
+  const RT_RAD = Math.PI / 180;
+  const rtHalfUp = (x, dp) => {
+    const scale = Math.pow(10, dp);
+    const scaled = x * scale;
+    const floor = Math.floor(scaled);
+    return (scaled - floor >= 0.5 ? floor + 1 : floor) / scale;
+  };
+  const rtSearch = (holds) => {
+    for (let n = 1; n <= 4000; n += 1) if (holds(n)) return n;
+    throw new Error(`no integer solution in right-triangle search: ${prompt}`);
+  };
+  if (form === 'rt-pythagorean__numeric') {
+    const m = prompt.match(/^A right triangle has legs (\d+) and (\d+)\. Find the hypotenuse\.$/);
+    if (m) {
+      const [a, b] = [Number(m[1]), Number(m[2])];
+      return rtSearch((c) => c * c === a * a + b * b);
+    }
+  }
+  if (form === 'rt-pythagorean-leg__numeric') {
+    const m = prompt.match(/^The hypotenuse is (\d+) and one leg is (\d+)\. Find the other leg\.$/);
+    if (m) {
+      const [c, a] = [Number(m[1]), Number(m[2])];
+      return rtSearch((b) => b * b === c * c - a * a);
+    }
+  }
+  if (form === 'rt-pythagorean-apply__numeric') {
+    let m = prompt.match(/^A (\d+) ft ladder leans against a wall with its base (\d+) ft from the wall/);
+    if (m) {
+      const [c, a] = [Number(m[1]), Number(m[2])];
+      return rtSearch((h) => h * h === c * c - a * a);
+    }
+    m = prompt.match(/^A rectangular field is (\d+) m by (\d+) m/);
+    if (m) {
+      const [a, b] = [Number(m[1]), Number(m[2])];
+      return rtSearch((d) => d * d === a * a + b * b);
+    }
+  }
+  if (form === 'rt-triples__numeric') {
+    const m = prompt.match(/^Legs (\d+) and (\d+) — use a scaled triple/);
+    if (m) {
+      const [a, b] = [Number(m[1]), Number(m[2])];
+      return rtSearch((c) => c * c === a * a + b * b);
+    }
+  }
+  if (form === 'rt-454590__numeric') {
+    let m = prompt.match(/^A 45-45-90 triangle has legs of (\d+)\. Find the hypotenuse/);
+    if (m) return rtHalfUp(Number(m[1]) * Math.sqrt(2), 2);
+    m = prompt.match(/^A 45-45-90 triangle has hypotenuse (\d+)\. Find each leg/);
+    if (m) return rtHalfUp(Number(m[1]) / Math.sqrt(2), 2);
+  }
+  if (form === 'rt-454590-apply__numeric') {
+    const m = prompt.match(/^A square has sides of (\d+) cm\. How long is its diagonal/);
+    if (m) return rtHalfUp(Number(m[1]) * Math.sqrt(2), 2);
+  }
+  if (form === 'rt-306090__numeric') {
+    let m = prompt.match(/^A 30-60-90 triangle has short leg (\d+)\. Find the hypotenuse\.$/);
+    if (m) return 2 * Number(m[1]);
+    m = prompt.match(/^A 30-60-90 triangle has hypotenuse (\d+)\. Find the LONG leg/);
+    if (m) return rtHalfUp((Number(m[1]) / 2) * Math.sqrt(3), 2);
+    m = prompt.match(/^A 30-60-90 triangle has long leg (\d+)\. Find the hypotenuse/);
+    if (m) return rtHalfUp((2 * Number(m[1])) / Math.sqrt(3), 2);
+  }
+  if (form === 'rt-sohcahtoa__numeric') {
+    const m = prompt.match(/^In a (\d+)-(\d+)-(\d+) right triangle, θ is the angle whose opposite side is (\d+)\. What is (sin|cos|tan) θ/);
+    if (m) {
+      const [a, b, c, opp] = [Number(m[1]), Number(m[2]), Number(m[3]), Number(m[4])];
+      const adj = opp === a ? b : a;
+      const value = m[5] === 'sin' ? opp / c : m[5] === 'cos' ? adj / c : opp / adj;
+      return rtHalfUp(value, 2);
+    }
+  }
+  if (form === 'rt-inverse-trig__numeric') {
+    let m = prompt.match(/^Right triangle: the side opposite θ is (\d+), the hypotenuse is (\d+)\./);
+    if (m) return rtHalfUp(Math.asin(Number(m[1]) / Number(m[2])) / RT_RAD, 2);
+    m = prompt.match(/^Legs (\d+) and (\d+); θ is the angle OPPOSITE the leg of length (\d+)\./);
+    if (m) {
+      const p = Number(m[3]);
+      const q = p === Number(m[1]) ? Number(m[2]) : Number(m[1]);
+      return rtHalfUp(Math.atan(p / q) / RT_RAD, 2);
+    }
+    m = prompt.match(/^A ramp rises ([\d.]+) m over a horizontal run of ([\d.]+) m\./);
+    if (m) return rtHalfUp(Math.atan(Number(m[1]) / Number(m[2])) / RT_RAD, 2);
+  }
+  if (form === 'rt-elev-depress__numeric') {
+    let m = prompt.match(/^From (\d+) m away \(on flat ground\), the angle of elevation to a (?:treetop|rooftop) is (\d+)°/);
+    if (m) return rtHalfUp(Number(m[1]) * Math.tan(Number(m[2]) * RT_RAD), 2);
+    m = prompt.match(/^From the top of a (\d+) m cliff, the angle of depression to a boat is (\d+)°/);
+    if (m) return rtHalfUp(Number(m[1]) / Math.tan(Number(m[2]) * RT_RAD), 2);
+  }
+  if (form === 'rt-height-apps__numeric') {
+    let m = prompt.match(/^You stand (\d+) m from a building; the angle of elevation to its top is (\d+)°, measured from an eye height of ([\d.]+) m\./);
+    if (m) return rtHalfUp(Number(m[1]) * Math.tan(Number(m[2]) * RT_RAD) + Number(m[3]), 2);
+    m = prompt.match(/^A kite flies on a taut (\d+) m string at (\d+)° elevation\./);
+    if (m) return rtHalfUp(Number(m[1]) * Math.sin(Number(m[2]) * RT_RAD), 2);
+    m = prompt.match(/^A plane is at (\d+) m altitude; the angle of depression to the airport is (\d+)°\./);
+    if (m) return rtHalfUp(Number(m[1]) / Math.tan(Number(m[2]) * RT_RAD), 2);
+  }
+  if (form === 'rt-trig-apps__numeric') {
+    let m = prompt.match(/^The sun is at (\d+)° elevation\. How long a shadow does a (\d+) m tree cast/);
+    if (m) return rtHalfUp(Number(m[2]) / Math.tan(Number(m[1]) * RT_RAD), 2);
+    m = prompt.match(/^A guy wire runs from the top of an? (\d+) m pole to the ground, meeting it at (\d+)°\./);
+    if (m) return rtHalfUp(Number(m[1]) / Math.sin(Number(m[2]) * RT_RAD), 2);
+  }
+  if (form === 'rt-law-sines__numeric') {
+    let m = prompt.match(/^In triangle ABC: A = (\d+)°, B = (\d+)°, and side a = (\d+) \(opposite A\)\. Find side b/);
+    if (m) {
+      const [A, B, a] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return rtHalfUp((a * Math.sin(B * RT_RAD)) / Math.sin(A * RT_RAD), 2);
+    }
+    m = prompt.match(/^Surveyors at A and B stand (\d+) m apart on a riverbank\. A tree T sits across the river; angle A \(∠TAB\) = (\d+)° and angle B \(∠TBA\) = (\d+)°\./);
+    if (m) {
+      const [d, A, B] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      const T = 180 - A - B;
+      return rtHalfUp((d * Math.sin(B * RT_RAD)) / Math.sin(T * RT_RAD), 2);
+    }
+  }
+  if (form === 'rt-law-cosines__numeric') {
+    let m = prompt.match(/^a = (\d+), b = (\d+), included angle C = (\d+)°\. Find side c/);
+    if (m) {
+      const [a, b, C] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return rtHalfUp(Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(C * RT_RAD)), 2);
+    }
+    m = prompt.match(/^Sides (\d+), (\d+), and (\d+)\. Find the angle OPPOSITE the (\d+), in degrees/);
+    if (m) {
+      const [p, q, r, target] = [Number(m[1]), Number(m[2]), Number(m[3]), Number(m[4])];
+      if (target !== r) throw new Error(`right-triangle law-of-cosines prompt asks about a side other than the largest: ${prompt}`);
+      return rtHalfUp(Math.acos((p * p + q * q - r * r) / (2 * p * q)) / RT_RAD, 1);
+    }
+    m = prompt.match(/^A ship sails (\d+) km, turns so the two path segments meet at (\d+)°, then sails (\d+) km\./);
+    if (m) {
+      const [u, t, v] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return rtHalfUp(Math.sqrt(u * u + v * v - 2 * u * v * Math.cos(t * RT_RAD)), 2);
+    }
+  }
+  if (form === 'rt-choose-tool__numeric') {
+    let m = prompt.match(/^Two sides measure (\d+) and (\d+), meeting at (\d+)°\. Area/);
+    if (m) return rtHalfUp(0.5 * Number(m[1]) * Number(m[2]) * Math.sin(Number(m[3]) * RT_RAD), 2);
+    m = prompt.match(/^A RIGHT triangle: the leg adjacent to the (\d+)° angle is (\d+)\. The opposite leg/);
+    if (m) return rtHalfUp(Number(m[2]) * Math.tan(Number(m[1]) * RT_RAD), 2);
+    m = prompt.match(/^A triangular garden bed has sides (\d+) m and (\d+) m meeting at 30°/);
+    if (m) return (Number(m[1]) * Number(m[2])) / 4;
+  }
+  if (form === 'rt-trig-constant__numeric') {
+    const m = prompt.match(/what is (sin|cos|tan) (\d+)°( exactly|, rounded to 2 decimals)\?$/);
+    if (m) {
+      const [fn, deg, mode] = [m[1], Number(m[2]), m[3]];
+      if (mode === ' exactly') {
+        const EXACT = { 'tan45': 1, 'sin30': 0.5, 'cos60': 0.5 };
+        const key = `${fn}${deg}`;
+        if (!(key in EXACT)) throw new Error(`no exact rational value for ${key}: ${prompt}`);
+        return EXACT[key];
+      }
+      const raw = fn === 'sin' ? Math.sin(deg * RT_RAD) : fn === 'cos' ? Math.cos(deg * RT_RAD) : Math.tan(deg * RT_RAD);
+      return rtHalfUp(raw, 2);
+    }
+  }
+  /* S331 / lane G1: the twelve state-varying g10-solid-geometry exactNumberLab forms. Answers are
+   * re-derived from the printed dimensions — square roots and cube roots by integer search, π at
+   * the prompt's stated 3.14159 wherever a decimal answer is requested. */
+  const SG_PI = 3.14159;
+  if (form === 'sg-revolution__numeric') {
+    let m = prompt.match(/^A (\d+)-by-(\d+) rectangle spins about its (\d+)-unit side/);
+    if (m) {
+      const axis = Number(m[3]);
+      const radius = Number(m[1]) === axis ? Number(m[2]) : Number(m[1]);
+      return radius * radius * axis;
+    }
+    m = prompt.match(/^A right triangle with legs (\d+) and (\d+) spins about its (\d+)-unit leg/);
+    if (m) {
+      const axis = Number(m[3]);
+      const radius = Number(m[1]) === axis ? Number(m[2]) : Number(m[1]);
+      return (radius * radius * axis) / 3;
+    }
+    m = prompt.match(/^You need a cone of radius (\d+) and height (\d+) by revolution/);
+    if (m) {
+      const [r, h] = [Number(m[1]), Number(m[2])];
+      return rtSearch((c) => c * c === r * r + h * h);
+    }
+  }
+  if (form === 'sg-cavalieri__numeric') {
+    let m = prompt.match(/^An oblique \(leaning\) prism has base area (\d+), vertical height (\d+), and slant edge (\d+)/);
+    if (m) return Number(m[1]) * Number(m[2]);
+    m = prompt.match(/^A leaning cylinder has base radius (\d+), vertical height (\d+), and slant length (\d+)\./);
+    if (m) return SG_PI * Number(m[1]) * Number(m[1]) * Number(m[2]);
+    m = prompt.match(/^A leaning cylinder of radius (\d+) has a slant edge of length (\d+), and its top face is shifted (\d+) units/);
+    if (m) {
+      const [r, l, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      const h = rtSearch((x) => x * x === l * l - d * d);
+      return r * r * h;
+    }
+  }
+  if (form === 'sg-cavalieri-apply__numeric') {
+    let m = prompt.match(/^A square prism \(side (\d+), height (\d+)\) circumscribes a cylinder \(radius (\d+), height (\d+)\)/);
+    if (m) return SG_PI * Number(m[3]) * Number(m[3]) * Number(m[4]);
+    m = prompt.match(/^A leaning \(oblique\) cone: base radius (\d+), vertical height (\d+)/);
+    if (m) return (Number(m[1]) * Number(m[1]) * Number(m[2])) / 3;
+    m = prompt.match(/^A curvy vase of height (\d+) has horizontal cross-section area (\d+)π at EVERY height/);
+    if (m) return Number(m[2]) * Number(m[1]);
+  }
+  if (form === 'sg-cylinder-justified__numeric') {
+    let m = prompt.match(/^A cylinder has radius (\d+) and height (\d+)\. Its Cavalieri twin/);
+    if (m) return Number(m[1]) * Number(m[1]) * Number(m[2]);
+    m = prompt.match(/^A leaning cylinder: radius (\d+), vertical height (\d+), slant edge (\d+)/);
+    if (m) return SG_PI * Number(m[1]) * Number(m[1]) * Number(m[2]);
+    m = prompt.match(/^A tunnel's cross-section is a constant curvy shape of area (\d+) m², and the tunnel runs (\d+) m/);
+    if (m) return Number(m[1]) * Number(m[2]);
+  }
+  if (form === 'sg-third-story__numeric') {
+    let m = prompt.match(/^A cube of side (\d+) \(volume (\d+)\) is tiled by three congruent pyramids/);
+    if (m) {
+      const s = Number(m[1]);
+      if (s * s * s !== Number(m[2])) throw new Error(`cube volume disagrees with its side: ${prompt}`);
+      return (s * s * s) / 3;
+    }
+    m = prompt.match(/^A cone \(radius (\d+), height (\d+)\) is matched to a pyramid of base area (\d+)π/);
+    if (m) {
+      const [r, h, B] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      if (r * r !== B) throw new Error(`cone base coefficient disagrees with its radius: ${prompt}`);
+      return (B * h) / 3;
+    }
+    m = prompt.match(/^An oblique pyramid: base area (\d+), apex hovering (\d+) units above/);
+    if (m) return (Number(m[1]) * Number(m[2])) / 3;
+  }
+  if (form === 'sg-density__numeric') {
+    let m = prompt.match(/^A solid (?:steel|aluminum|copper|iron) sphere \(radius (\d+) cm, density ([\d.]+) g\/cm³\)/);
+    if (m) {
+      const r = Number(m[1]);
+      return (4 / 3) * SG_PI * r * r * r * Number(m[2]);
+    }
+    m = prompt.match(/^A solid cube of side (\d+) cm has mass (\d+) g/);
+    if (m) return Number(m[2]) / (Number(m[1]) * Number(m[1]) * Number(m[1]));
+    m = prompt.match(/^A 'gold' crown has mass (\d+) g and displaces (\d+) cm³/);
+    if (m) return Number(m[1]) / Number(m[2]);
+  }
+  if (form === 'sg-modeling__numeric') {
+    let m = prompt.match(/^Painting a silo \(exposed surface (\d+)π ≈ ([\d.]+) units²\) at \$(\d+) per unit²/);
+    if (m) return Number(m[2]) * Number(m[3]);
+    m = prompt.match(/^A spherical tank's radius is scaled by (\d+)\./);
+    if (m) return 1 / Number(m[1]);
+    m = prompt.match(/^A client needs a spherical tank holding exactly (\d+)π units³/);
+    if (m) {
+      const V = Number(m[1]);
+      return rtSearch((r) => 4 * r * r * r === 3 * V);
+    }
+  }
+  if (form === 'sg-cross-sections__numeric') {
+    let m = prompt.match(/^A sphere of radius (\d+) is sliced by a plane (\d+) units from its center\. The cross-section's AREA/);
+    if (m) return SG_PI * (Number(m[1]) * Number(m[1]) - Number(m[2]) * Number(m[2]));
+    m = prompt.match(/^A sphere of radius (\d+) is sliced by a plane, producing a cross-section of area (\d+)π/);
+    if (m) {
+      const [r, a] = [Number(m[1]), Number(m[2])];
+      return rtSearch((d) => d * d === r * r - a);
+    }
+  }
+  if (form === 'sg-section-reasoning__numeric') {
+    let m = prompt.match(/^A sphere's great circle has circumference (\d+)π/);
+    if (m) {
+      const c = Number(m[1]);
+      if (c % 2 !== 0) throw new Error(`odd circumference coefficient cannot come from an integer radius: ${prompt}`);
+      const r = c / 2;
+      return (4 * r * r * r) / 3;
+    }
+    m = prompt.match(/^A sphere-shaped tank's widest horizontal section \(through the center\) has area (\d+)π\. What is the area coefficient \(of π\) of the section (\d+) units above the center/);
+    if (m) return Number(m[1]) - Number(m[2]) * Number(m[2]);
+  }
+  if (form === 'sg-sphere-justified__numeric') {
+    let m = prompt.match(/^r = (\d+), slicing height h = (\d+)\./);
+    if (m) return Number(m[1]) * Number(m[1]) - Number(m[2]) * Number(m[2]);
+    m = prompt.match(/^r = (\d+)\. Hemisphere volume = cylinder/);
+    if (m) {
+      const r = Number(m[1]);
+      return (2 * r * r * r) / 3;
+    }
+    m = prompt.match(/^Double the hemisphere: the full sphere's V = \(4\/3\)πr³\. For r = (\d+)/);
+    if (m) {
+      const r = Number(m[1]);
+      return (4 * r * r * r) / 3;
+    }
+    m = prompt.match(/^A solid sphere of radius (\d+) is melted and poured into an empty cylinder of radius (\d+)/);
+    if (m) {
+      if (m[1] !== m[2]) throw new Error(`melt prompt mixes two different radii: ${prompt}`);
+      return (4 * Number(m[1])) / 3;
+    }
+  }
+  if (form === 'sg-cavalieri-limits__numeric') {
+    const m = prompt.match(/^A sheared prism \((\d+)×(\d+) base, vertical height (\d+), slant edge (\d+)\)/);
+    if (m) return 4 * Number(m[1]) * Number(m[4]);
+  }
+  if (form === 'sg-composite-subtract__numeric') {
+    let m = prompt.match(/^A tube: outer radius (\d+), inner radius (\d+), length (\d+)/);
+    if (m) {
+      const [R, r, L] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return (R * R - r * r) * L;
+    }
+    m = prompt.match(/^An? (\d+) × (\d+) × (\d+) block has a cylindrical hole of radius (\d+) drilled/);
+    if (m) {
+      const [s, , t, r] = [Number(m[1]), 0, Number(m[3]), Number(m[4])];
+      return s * s * t - SG_PI * r * r * t;
+    }
+    m = prompt.match(/^A hemispherical bowl of radius (\d+) is carved \(flat side up\) into an? (\d+) × (\d+) × (\d+) block/);
+    if (m) {
+      const [r, s, , t] = [Number(m[1]), Number(m[2]), 0, Number(m[4])];
+      return s * s * t - (2 / 3) * SG_PI * r * r * r;
+    }
+    m = prompt.match(/^A concrete pipe: inner \(water\) radius (\d+), wall thickness (\d+), length (\d+)/);
+    if (m) {
+      const [ri, w, L] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      const ro = ri + w;
+      return SG_PI * (ro * ro - ri * ri) * L;
+    }
+  }
+  /* S331 / lane G1: the twelve state-varying g10-similarity numeric forms. Proportions are solved
+   * by cross-multiplication from the printed values; geometric means by integer search. */
+  if (form === 'sy-dilation__numeric') {
+    let m = prompt.match(/^An original segment is (\d+) units; after a dilation its image is (\d+) units/);
+    if (m) return Number(m[2]) / Number(m[1]);
+    m = prompt.match(/^A dilation with center O and scale factor (\d+) sends point P to P′, where OP′ = (\d+)/);
+    if (m) return Number(m[2]) / Number(m[1]);
+  }
+  if (form === 'sy-solving-right__numeric') {
+    let m = prompt.match(/^The hypotenuse segments are (\d+) and (\d+)\. Find the altitude\.$/);
+    if (m) return rtSearch((h) => h * h === Number(m[1]) * Number(m[2]));
+    m = prompt.match(/^Hypotenuse segments are (\d+) and (\d+) \(hypotenuse (\d+)\)\. Find the leg adjacent to the segment of length (\d+)\.$/);
+    if (m) {
+      const c = Number(m[3]);
+      if (c !== Number(m[1]) + Number(m[2])) throw new Error(`hypotenuse disagrees with its segments: ${prompt}`);
+      const adj = Number(m[4]);
+      return rtSearch((leg) => leg * leg === c * adj);
+    }
+  }
+  if (form === 'sy-scale__numeric') {
+    let m = prompt.match(/^At scale 1 : (\d+), a real object is (\d+) cm long\. How long is it in the scale drawing/);
+    if (m) return Number(m[2]) / Number(m[1]);
+    m = prompt.match(/^A blueprint has scale 1 : (\d+)\. A wall measures (\d+) inches on the blueprint/);
+    if (m) return Number(m[2]) * Number(m[1]);
+  }
+  if (form === 'sy-area-perimeter__numeric' || form === 'sy-similarity__numeric') {
+    let m = prompt.match(/^Two similar figures have areas in the ratio (\d+) : 1\. What is the ratio of their corresponding (?:sides|SIDES)\?$/);
+    if (m) return rtSearch((k) => k * k === Number(m[1]));
+    m = prompt.match(/^Two similar figures have sides in ratio (\d+) : (\d+)\. The smaller has area (\d+)\. What is the larger's area\?$/);
+    if (m) {
+      const [small, big, A] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return (A * big * big) / (small * small);
+    }
+  }
+  if (form === 'sy-sas-similar__numeric') {
+    const m = prompt.match(/^Triangles share angle A\. AD = (\d+), AB = (\d+), and AE = (\d+)\./);
+    if (m) return (Number(m[3]) * Number(m[2])) / Number(m[1]);
+  }
+  if (form === 'sy-sss-similar__numeric') {
+    const m = prompt.match(/^Triangle A has sides \d+, (\d+), \d+; similar triangle B has scale factor (\d+)\. What is B's side corresponding to A's (\d+)\?$/);
+    if (m) {
+      if (m[1] !== m[3]) throw new Error(`SSS prompt asks about a side it did not middle-list: ${prompt}`);
+      return Number(m[3]) * Number(m[2]);
+    }
+  }
+  if (form === 'sy-criterion-choice__numeric') {
+    const m = prompt.match(/^In △ABC, DE ∥ BC with D on AB and E on AC\. AD = (\d+), DB = (\d+), and AE = (\d+)\. Find AC\.$/);
+    if (m) return (Number(m[3]) * (Number(m[1]) + Number(m[2]))) / Number(m[1]);
+  }
+  if (form === 'sy-side-splitter__numeric') {
+    const m = prompt.match(/^A parallel line splits the sides: AD = x, DB = x \+ (\d+), AE = (\d+), EC = (\d+)\. Solve for x\.$/);
+    if (m) {
+      const [d, e1, e2] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      return rtSearch((x) => x * e2 === (x + d) * e1);
+    }
+  }
+  if (form === 'sy-proportions-figures__numeric') {
+    const m = prompt.match(/^A parallel line splits the sides: AD = (\d+), DB = (\d+), AE = (\d+)\. Find EC\.$/);
+    if (m) return (Number(m[3]) * Number(m[2])) / Number(m[1]);
+  }
+  if (form === 'sy-geometric-mean__numeric') {
+    const m = prompt.match(/^The altitude to a hypotenuse is (\d+), and one segment of the hypotenuse is (\d+)\. What is the OTHER segment\?$/);
+    if (m) return rtSearch((q) => Number(m[2]) * q === Number(m[1]) * Number(m[1]));
+  }
+  if (form === 'sy-indirect__numeric') {
+    const m = prompt.match(/^A (\d+)-ft person casts an? (\d+)-ft shadow while a building casts a (\d+)-ft shadow/);
+    if (m) return (Number(m[1]) * Number(m[3])) / Number(m[2]);
+  }
+  /* S331 / lane G1: the eight state-varying g10-polygons-quadrilaterals numeric forms. */
+  if (form === 'pq-para-diagonals__numeric') {
+    let m = prompt.match(/^Diagonal AC of a parallelogram measures (\d+), meeting BD at O\. Find AO\.$/);
+    if (m) return Number(m[1]) / 2;
+    m = prompt.match(/^In a parallelogram the diagonals meet at O, and BO = (\d+)\. Find the full diagonal BD\.$/);
+    if (m) return 2 * Number(m[1]);
+    m = prompt.match(/^With AO = (\d+)x \+ (\d+) and OC = (\d*)x \+ (\d+), find the FULL diagonal AC\.$/);
+    if (m) {
+      const [a, b, d] = [Number(m[1]), Number(m[2]), Number(m[4])];
+      const c = m[3] === '' ? 1 : Number(m[3]);
+      const x = rtSearch((v) => a * v + b === c * v + d);
+      return 2 * (a * x + b);
+    }
+  }
+  if (form === 'pq-capstone__numeric') {
+    let m = prompt.match(/^A quadrilateral's diagonals \((\d+) and (\d+)\) bisect each other at right angles\. Find its side length\.$/);
+    if (m) {
+      const p = Number(m[1]) / 2;
+      const q = Number(m[2]) / 2;
+      return rtSearch((s) => s * s === p * p + q * q);
+    }
+    m = prompt.match(/^A rhombus has diagonals (\d+) and (\d+)\. Its perimeter = \?$/);
+    if (m) {
+      const p = Number(m[1]) / 2;
+      const q = Number(m[2]) / 2;
+      return 4 * rtSearch((s) => s * s === p * p + q * q);
+    }
+    m = prompt.match(/^A quadrilateral's diagonals bisect each other AND are congruent, each measuring (\d+)\. One side is (\d+)\. Find the adjacent side\.$/);
+    if (m) {
+      const [c, a] = [Number(m[1]), Number(m[2])];
+      return rtSearch((b) => b * b === c * c - a * a);
+    }
+  }
+  if (form === 'pq-regular-angles__numeric') {
+    let m = prompt.match(/^Each exterior angle of a regular (\d+)-gon\?$/);
+    if (m) return 360 / Number(m[1]);
+    m = prompt.match(/^Regular (hexagon|square|equilateral triangle)s tile a floor\./);
+    if (m) {
+      const interior = m[1] === 'hexagon' ? 120 : m[1] === 'square' ? 90 : 60;
+      return 360 / interior;
+    }
+  }
+  if (form === 'pq-rectangle__numeric') {
+    let m = prompt.match(/^In rectangle ABCD the diagonals meet at O, with AO = (\d+)x \+ (\d+) and BO = x \+ (\d+)\. Find the FULL diagonal AC\.$/);
+    if (m) {
+      const [a, b, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      const x = rtSearch((v) => a * v + b === v + d);
+      return 2 * (a * x + b);
+    }
+    m = prompt.match(/^A rectangle measures (\d+) by (\d+)\. How long is each diagonal\?$/);
+    if (m) {
+      const [a, b] = [Number(m[1]), Number(m[2])];
+      return rtSearch((c) => c * c === a * a + b * b);
+    }
+  }
+  if (form === 'pq-square__numeric') {
+    let m = prompt.match(/^A square has side (\d+)\. Its diagonal \(2 decimals\)\?$/);
+    if (m) return rtHalfUp(Number(m[1]) * Math.sqrt(2), 2);
+    m = prompt.match(/^A square's DIAGONAL is (\d+)\. Its side \(2 decimals\)\?$/);
+    if (m) return rtHalfUp(Number(m[1]) / Math.sqrt(2), 2);
+  }
+  if (form === 'pq-interior-sum__numeric') {
+    const m = prompt.match(/^\d+ angles of a (pentagon|hexagon|heptagon) are (.+)\. Find the (?:fifth|sixth|seventh)\.$/);
+    if (m) {
+      const n = m[1] === 'pentagon' ? 5 : m[1] === 'hexagon' ? 6 : 7;
+      const given = [...m[2].matchAll(/(\d+)°/g)].reduce((s, g) => s + Number(g[1]), 0);
+      return (n - 2) * 180 - given;
+    }
+  }
+  if (form === 'pq-exterior-sum__numeric') {
+    const m = prompt.match(/^\d+ exterior angles of a (?:pentagon|hexagon) are (.+)\. The (?:fifth|sixth)\?$/);
+    if (m) {
+      const given = [...m[1].matchAll(/(\d+)°/g)].reduce((s, g) => s + Number(g[1]), 0);
+      return 360 - given;
+    }
+  }
+  if (form === 'pq-para-tests__numeric') {
+    const m = prompt.match(/^Quadrilateral ABCD has diagonals meeting at O, with AO = x \+ (\d+) and OC = (\d+)x − (\d+)\./);
+    if (m) {
+      const [b, c, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+      const x = rtSearch((v) => v + b === c * v - d);
+      return x + b;
+    }
+  }
+  /* S331 / lane G1: the eight state-varying g10-triangle-congruence numeric forms. */
+  if (form === 'tc-isosceles__numeric') {
+    let m = prompt.match(/^An isosceles triangle has base angles of (\d+)° each\. What is its apex angle/);
+    if (m) return 180 - 2 * Number(m[1]);
+    m = prompt.match(/^An isosceles triangle has an apex angle of (\d+)°\. One base angle is labeled \((\d+)x\)°\. Find x\.$/);
+    if (m) {
+      const base = (180 - Number(m[1])) / 2;
+      return rtSearch((x) => Number(m[2]) * x === base);
+    }
+  }
+  if (form === 'tc-midsegment__numeric') {
+    let m = prompt.match(/^A triangle has perimeter (\d+)\. Connecting all three side-midpoints/);
+    if (m) return Number(m[1]) / 2;
+    m = prompt.match(/^A midsegment measures \(2x \+ 1\) and the side it's parallel to measures (\d+)\. Find x\.$/);
+    if (m) return rtSearch((x) => 2 * x + 1 === Number(m[1]) / 2);
+  }
+  if (form === 'tc-centroid__numeric') {
+    const m = prompt.match(/vertices with [xy]-coordinates (\d+), (\d+), and (\d+)\. (?:What is|Find) the [xy]-coordinate of the centroid/);
+    if (m) return (Number(m[1]) + Number(m[2]) + Number(m[3])) / 3;
+  }
+  if (form === 'tc-triangle-inequality__numeric') {
+    let m = prompt.match(/^With two sides (\d+) and (\d+), the third side must be GREATER than what value\?$/);
+    if (m) return Math.abs(Number(m[2]) - Number(m[1]));
+    m = prompt.match(/^Two sides of a triangle are (\d+) and (\d+)\. How many INTEGER values are possible for the third side\?$/);
+    if (m) {
+      const [a, b] = [Number(m[1]), Number(m[2])];
+      let count = 0;
+      for (let t = 1; t <= a + b + 2; t += 1) if (t + a > b && t + b > a && a + b > t) count += 1;
+      return count;
+    }
+  }
+  if (form === 'tc-cpctc__numeric' || form === 'tc-cpctc-practice__numeric') {
+    const m = prompt.match(/(?:AB|BC) = (\d+)[,.].*what is (?:DE|EF)\?/);
+    if (m) return Number(m[1]);
+  }
+  if (form === 'tc-hl__numeric') {
+    const m = prompt.match(/^Two right triangles each have hypotenuse (\d+) and one leg (\d+)\./);
+    if (m) return rtSearch((b) => b * b === Number(m[1]) ** 2 - Number(m[2]) ** 2);
+  }
+  if (form === 'tc-isosceles-converse__numeric') {
+    const m = prompt.match(/^A triangle has two base angles measuring \((\d+)x\)° and \((\d*)x \+ (\d+)\)°, and they are equal\./);
+    if (m) {
+      const k = Number(m[1]);
+      const mc = m[2] === '' ? 1 : Number(m[2]);
+      const c = Number(m[3]);
+      const x = rtSearch((v) => k * v === mc * v + c);
+      return k * x;
+    }
+  }
   if (!Object.prototype.hasOwnProperty.call(entry.promptMap, prompt)) {
     throw new Error(`unrecognized geometry prompt for ${form}: ${prompt}`);
   }

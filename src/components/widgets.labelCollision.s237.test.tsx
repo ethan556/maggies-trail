@@ -110,22 +110,28 @@ const BAR_CASES: Case[] = [
   { name: "dd-02-02 — histogram bins under an axis caption",
     spec: bars({ categories: ["0–9", "10–19", "20–29", "30–39"], target: [2, 5, 3, 1], maxVal: 6,
       histogram: true, axisLabel: "minutes read" }) },
-  // FLAGGED (needs human judgment, left failing on purpose — see the cluster report). BarBuilderW
-  // (widgets.tsx, `catFont`) computes the exact font-size that would make "Pack N" fit its own
-  // barW-wide column, then clamps it up to a hard floor of 7 ("below that it stops being text",
-  // per that code's own comment) — a deliberate legibility-over-collision trade-off. At 7 columns
-  // (barW 32) the fit-derived size is ~6.94, the floor barely wins, and the real content that
-  // exercises this — g4s-01-01's own 7-pack "Pack 1".."Pack 7" bar chart — clears with ~1.8 units
-  // to spare. This case pushes one column further (barW 28, fit ~6.02): the SAME floor now forces
-  // a size the fit calculation says is too wide, and adjacent labels overlap by exactly 2.2 units.
-  // No authored lesson currently reaches 8 named columns this long, so the floor has never been
-  // exercised past where it holds. Fixing it for real needs a design call this cluster's fix
-  // shouldn't make unilaterally: shrink the floor (risks illegibility elsewhere, since 7 was
-  // presumably tuned deliberately), or give BarBuilderW HopLandingW's row-staggering for category
-  // labels that don't fit — both are real code changes to a widely-shared widget, not a test tweak.
+  // RESOLVED (S331). This case was FLAGGED and left failing on purpose from S237 to S331: at 8
+  // columns (barW 28) the fit-derived size is ~6.02, the deliberate legibility floor of 7 wins,
+  // and "Pack N" at size 7 is 30.24 units wide — a guaranteed 2.2-unit overlap no font this side
+  // of the floor can clear. The design call the S237 cluster declined to make unilaterally has now
+  // been made the way the comment itself suggested: BarBuilderW gained HopLandingW's row-staggering
+  // (`catLabelPlan`, widgets.tsx) — the floor is UNTOUCHED (7 stays 7, so nothing gets less
+  // legible anywhere), and a category label opens a second row only when the box model says its
+  // column cannot hold it, with the canvas growing below the axis to fit. The seven-column layout
+  // (g4s-01-01's real content, ~1.8 units of clearance) keeps its single row byte-for-byte — the
+  // packer's 1-unit margin sits below that clearance by design. The cases below drive the packer
+  // across the column counts on BOTH sides of the boundary, with this test's own box model.
   { name: "eight named columns — the names must shrink to fit, not overlap",
     spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7", "Pack 8"],
-      target: [1, 2, 3, 4, 5, 6, 7, 8], maxVal: 8, axisLabel: "packs" }) }
+      target: [1, 2, 3, 4, 5, 6, 7, 8], maxVal: 8, axisLabel: "packs" }) },
+  // g4s-01-01's own shape — the floor's last holding point, one column before the stagger.
+  { name: "seven named columns — the floor still holds on one row (g4s-01-01's shape)",
+    spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7"],
+      target: [1, 2, 3, 4, 5, 6, 7], maxVal: 8, axisLabel: "packs" }) },
+  // Past the boundary in the other direction: even narrower columns, and a two-digit (7-char) name.
+  { name: "ten named columns — narrower than eight, wider names, still no overlap",
+    spec: bars({ categories: ["Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6", "Pack 7", "Pack 8", "Pack 9", "Pack 10"],
+      target: [1, 2, 3, 4, 5, 6, 7, 8, 2, 4], maxVal: 8, axisLabel: "packs" }) }
 ];
 
 function boxesOf(raw: Record<string, unknown>, tone: "neutral" | "info"): { boxes: TextBox[]; skipped: string[] } {
@@ -991,6 +997,21 @@ describe("S238 batch 8 — the collision tail stays closed", () => {
 describe("S237b label collisions — barBuilder", () => {
   it("no two axis labels overlap, at any maxVal/step", () => {
     expectNoCollisions(BAR_CASES);
+  });
+
+  it("the stagger triggers exactly at the boundary: seven columns keep one row, eight spill to two", () => {
+    // The paired acceptance for the S331 row-stagger: it must not fire where the floor still holds
+    // (a layout change to g4s-01-01's real seven-pack chart would be a regression, not a fix), and
+    // it must actually fire where the floor cannot hold (otherwise the 8-column pass above could
+    // only mean the labels were dropped — which the every-column-keeps-its-name check forbids).
+    const rowsOf = (spec: Record<string, unknown>) => {
+      const { boxes } = boxesOf(spec, "neutral");
+      const catNames = new Set((WidgetSpec.parse(spec) as { categories: string[] }).categories);
+      return new Set(boxes.filter((b) => catNames.has(b.text)).map((b) => Math.round(b.y1))).size;
+    };
+    expect(rowsOf(BAR_CASES[6].spec), "seven columns: one category row").toBe(1);
+    expect(rowsOf(BAR_CASES[5].spec), "eight columns: staggered rows").toBeGreaterThan(1);
+    expect(rowsOf(BAR_CASES[7].spec), "ten columns: staggered rows").toBeGreaterThan(1);
   });
 
   it("the axis still states its floor and its ceiling, and keeps every gridline", () => {

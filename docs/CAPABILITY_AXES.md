@@ -33,9 +33,11 @@ Current distribution per axis (0/1/2/3), fresh from `scripts/engine-capabilities
 hand-recomputed — that file now carries **129** registered types, not the 126 this section originally
 measured against (a pre-existing drift from engines added since, unrelated to and not audited by this
 edit): manip 5/11/80/33 · conseq 2/3/53/71 · err 0/11/**0**/118 · adapt 62/**0**/4/63 · a11y
-0/0/4/125 · mobile 0/3/85/41 · polish 0/0/56/73. `conseq` and `a11y` reflect S330 (CL-P1-057's
-`pointEntry`/`fractionEntry`/`subitizeFlash` moves); the rest of this snapshot, and the 129-vs-126
-count itself, predate and are independent of that session's changes. The
+0/0/4/125 · mobile 0/0/88/41 · polish 0/0/56/73. `conseq` and `a11y` reflect S330 (CL-P1-057's
+`pointEntry`/`fractionEntry`/`subitizeFlash` moves); `mobile` reflects S331 (CL-P1-011's
+alternative-control repair moved `systemsExplore`/`compassConstruct`/`matrixTransform` 1→2 — see
+their `mobileNote` entries); the rest of this snapshot, and the 129-vs-126
+count itself, predate and are independent of those sessions' changes. The
 bolded zeros matter: `err` and `adapt` are declared 0–3 but no engine has ever scored a 2 or a 1
 respectively — both already behave as near-binary axes, which the definitions below make explicit.
 
@@ -182,9 +184,15 @@ by the `a11y` axis (near-saturated) and reduced motion is handled centrally (`sr
 size, and whether a discrete alternative exists to a fine continuous drag.
 
 **1** — the primary interaction is fine-motor pointer dragging on an SVG canvas with no large
-discrete alternative, and/or its one control has no explicit sizing at all. Examples:
-`compassConstruct` (a compass-arm drag plus one unstyled `<input type="range">`, zero
-button-sized targets anywhere), `matrixTransform`. Three engines total sit here.
+discrete alternative, and/or its one control has no explicit sizing at all. Zero engines sit here
+as of S331: the three that did — `compassConstruct` (a compass-arm drag plus one continuous
+range), `systemsExplore` (the answer point reachable only by drag or continuous ranges), and
+`matrixTransform` (a stale census row: on re-read its ONLY interaction was already four 44px
+stepper button pairs, with no drag surface at all) — moved to 2 under CL-P1-011's
+alternative-control repair (house −/range/+ steppers walking the same lattice each drag snaps
+to; `session331.engineTouchAlternatives.test.tsx`). Their `mobileNote` entries in
+`scripts/engine-capabilities.json` carry the per-engine evidence; the real-device gate the
+CL-P1-011 row requires is still owed before any of them can claim more.
 
 **2** — the default baseline (83 of 126). Standard controls are present and usually *intended* at
 ≥44px on the primary buttons (`min-h-11` / `min-h-[44px]`), but the core manipulation is often a

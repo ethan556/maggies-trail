@@ -287,12 +287,24 @@ function auditCanonicalForm(v: Variant): Finding[] {
   // flagging them buried the real hits: the first cut reported 107 float artifacts of which the
   // overwhelming majority were tolerances. Numbers that reach the screen are still checked, and so
   // is every string, which is where the genuine "x = -2.236068" cases live.
-  const COMPARED_ONLY = /(?:^|\.)tolerance$|(?:commonErrors|numericErrors|commonEntries|pointErrors)\[\d+\]\.(?:value|values)/;
+  // GRB-02 (S331) extended the same reasoning to three more compare-only fields, after reading the
+  // widget code end to end: `choices[i].value` (proportionalReasoningLab) and
+  // `choices[i].numberValue` (exactNumberLab) are grading keys matched against the truth model
+  // within 1e-9 — the LABEL is what the learner reads, and it carries the exact fraction — so full
+  // precision there is REQUIRED for grading, never shown; and `logArgument` is a computation input
+  // whose on-screen rendering goes through the logarithmEvaluate stage builder, which prints
+  // reciprocal powers as exact fractions (schema.ts), never the raw float.
+  const COMPARED_ONLY = /(?:^|\.)tolerance$|(?:^|\.)logArgument$|(?:commonErrors|numericErrors|commonEntries|pointErrors)\[\d+\]\.(?:value|values)|choices\[\d+\]\.(?:value|numberValue)$/;
   for (const { path, value } of numbers(v.widget)) {
     if (!Number.isFinite(value)) { found.push({ severity: "high", code: "non-finite-number", where: path, detail: String(value) }); continue; }
     if (Object.is(value, -0)) found.push({ severity: "medium", code: "negative-zero", where: path, detail: "-0" });
     if (COMPARED_ONLY.test(path)) continue;
     const printed = String(value);
+    /* GRB-02 (S331): an exact power of ten (10⁻⁶ = 0.000001) contains NO rounding — every digit is
+     * the value itself — yet its printed form trips the six-decimal pattern. This mirrors the S242
+     * "power of ten" exception the string check already carries; it exempts only values that are
+     * bit-for-bit an integer power of ten, so a genuinely truncated constant still reports. */
+    if (value !== 0 && Math.abs(value) === Math.pow(10, Math.round(Math.log10(Math.abs(value))))) continue;
     if (/\.\d{6,}/.test(printed)) found.push({ severity: "high", code: "float-artifact", where: path, detail: printed });
   }
   // An answer fraction that is not in lowest terms, where the generator did the reducing. Kept at

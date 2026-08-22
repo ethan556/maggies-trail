@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { telemetry } from "@/lib/telemetry";
 
 /** Route-level recovery UI. Keeps an unexpected render/data error from turning
- * into a blank screen, while still reporting it to the browser console for
- * observability in development and hosted logs. */
+ * into a blank screen, while reporting it through the telemetry provider
+ * (S331: env-selected via NEXT_PUBLIC_TELEMETRY_PROVIDER; the default console
+ * provider prints exactly what this boundary always printed). */
 export default function AppError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    console.error("Maggie's Trail route error", error);
+    telemetry.captureError(error, { label: "Maggie's Trail route error", digest: error.digest });
   }, [error]);
 
   return (

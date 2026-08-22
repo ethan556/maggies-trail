@@ -51,11 +51,41 @@ function allLessons(): Lesson[] {
 }
 
 /** The denominator the PROMPT fixes. Read positionally from the authored sentence, which is a
- *  different route than reading the declared field — that is the point. */
+ *  different route than reading the declared field — that is the point.
+ *
+ *  Re-pinned (S331): the original three notation-only patterns were built from a subset of the
+ *  declared corpus and never covered its word-form prompts — 11 declared steps whose prompts fix
+ *  the denominator as a WORD ("half-pieces", "over thirds", "eight eighths", "twelfth-size
+ *  sections", "using 18 equal pieces", a mixed number "3 1/4", an equation "= 2/12") are
+ *  byte-identical at c5af1f1, the commit that created this test, so this assertion was stale at
+ *  birth for them, not broken by drift (3 more were reworded into these shapes by the reviewed
+ *  S316 revision wave, commit 8a0a8c7, dispositions S316-V2-*). The word/number routes below are
+ *  still an independent positional read of the authored sentence: every route feeds the same
+ *  exactly-one-denominator requirement, a prompt naming two different piece sizes still fails,
+ *  and all 109 declared steps were re-verified against the extended detector before this re-pin. */
+const PIECE_WORD: Record<string, number> = {
+  half: 2, halves: 2, third: 3, thirds: 3, fourth: 4, fourths: 4, quarter: 4, quarters: 4,
+  fifth: 5, fifths: 5, sixth: 6, sixths: 6, eighth: 8, eighths: 8, tenth: 10, tenths: 10,
+  twelfth: 12, twelfths: 12,
+};
 function denominatorStatedIn(prompt: string): number[] {
   const pats = [/\?\s*\/\s*(\d+)/g, /\bover\s+(\d+)\b/g, /=\s*_+\s*\/\s*(\d+)/g];
   const found = new Set<number>();
   for (const p of pats) for (const m of prompt.matchAll(p)) found.add(Number(m[1]));
+  // Piece size named as a word: "half-pieces", "sixth-size parts", "twelfth-size sections".
+  for (const m of prompt.matchAll(/\b(half|third|fourth|quarter|fifth|sixth|eighth|tenth|twelfth)(?:-size\s+|-)(?:pieces?|parts?|sections?)\b/gi)) {
+    found.add(PIECE_WORD[m[1].toLowerCase()]);
+  }
+  // Bare plural piece word: "to sixths", "how many eighths", "over thirds".
+  for (const m of prompt.matchAll(/\b(halves|thirds|fourths|quarters|fifths|sixths|eighths|tenths|twelfths)\b/gi)) {
+    found.add(PIECE_WORD[m[1].toLowerCase()]);
+  }
+  // An explicit repartition count: "using 18 equal pieces".
+  for (const m of prompt.matchAll(/\b(?:using|into)\s+(\d+)\s+equal\s+(?:pieces|parts)\b/gi)) found.add(Number(m[1]));
+  // A mixed number fixes its own denominator: "3 1/4" -> 4.
+  for (const m of prompt.matchAll(/\b\d+\s+\d+\s*\/\s*(\d+)\b/g)) found.add(Number(m[1]));
+  // The fraction on an equation's right side, where the asked-for numerator lives: "= 2/12" -> 12.
+  for (const m of prompt.matchAll(/=\s*\d+\s*\/\s*(\d+)/g)) found.add(Number(m[1]));
   return [...found];
 }
 
@@ -66,8 +96,27 @@ const declared = allLessons().flatMap((l) =>
 );
 
 describe("numeric previewDenominator — the corpus contract", () => {
-  it("is declared on exactly the 111 steps that were measured", () => {
-    expect(declared).toHaveLength(111);
+  it("is declared on exactly the 109 steps that were measured", () => {
+    // Re-pinned 111 -> 109 (S331), after root-causing the apparent 2-step DROP end to end:
+    //
+    //   1. mb-04-03/k2 — a deliberate, reviewed removal. Revision contract S246-MB-mb-04-03
+    //      (REVISE, 2026-08-18) explicitly flagged that "the fractional case asks only for a
+    //      numerator"; commit 8a0a8c7 (S316 verified revision wave) converted the step from
+    //      numeric to an MCQ asking for the complete mixed-number share (2 3/4), and disposition
+    //      S316-V2-mb-04-03 (KEEP, 2026-08-20) independently re-derived and verified it. The
+    //      numeric widget no longer exists, so its preview declaration legitimately went with it.
+    //
+    //   2. The other "missing" step never existed in any committed state. At c5af1f1 — the very
+    //      commit that introduced this feature AND this test — the corpus already contained only
+    //      110 declared steps (verified both by replicating this file's own scan against that
+    //      commit and by `git grep -c '"previewDenominator"' c5af1f1 -- content/courses` = 110).
+    //      The 111 was measured mid-session before that squashed commit landed and was stale at
+    //      birth by one; this assertion has never passed at 111 on any commit.
+    //
+    //   Full content history of the field is exactly two commits (`git log -S previewDenominator
+    //   -- content/courses`): c5af1f1 (introduced, 110) and 8a0a8c7 (mb-04-03 removal + reviewed
+    //   g5u-01-02/g3f-02-04 value corrections, 109). No accidental loss.
+    expect(declared).toHaveLength(109);
   });
 
   it("every declared denominator is the one the step's own prompt states", () => {
@@ -136,6 +185,12 @@ describe("the denominator reader is a real detector", () => {
   it("ACCEPTS the authored shapes", () => {
     expect(denominatorStatedIn("Express the total as ?/6. What is the numerator?")).toEqual([6]);
     expect(denominatorStatedIn("Written as a fraction over 8, what is the numerator?")).toEqual([8]);
+    // The word route (S331): a prompt fixing the piece size by name fixes the denominator too.
+    expect(denominatorStatedIn("Compute 3 × 1/2. How many half-pieces are in the product?")).toEqual([2]);
+  });
+
+  it("REJECTS a sentence naming two different piece sizes", () => {
+    expect(denominatorStatedIn("Are half-pieces or fourth-pieces bigger?").length).toBeGreaterThan(1);
   });
 
   it("REJECTS a sentence that fixes more than one denominator", () => {

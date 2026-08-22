@@ -910,7 +910,7 @@ function differentialLabGenerated(rand: Rand) {
     const answer = Number((3 * chosen.side ** 2 * chosen.error).toFixed(3));
     const widget = {
       type: "exactNumberLab" as const,
-      prompt: `A cube's side is measured as ${chosen.side} cm with an error of up to ${chosen.error} cm. Estimate the resulting volume error, in cm^3.`,
+      prompt: `A cube's side is measured as ${chosen.side} cm with an error of up to ${chosen.error} cm. Estimate the resulting volume error, in cm³.`,
       task: "approximationEvaluate" as const,
       values: [],
       approxConstants: [
@@ -930,8 +930,8 @@ function differentialLabGenerated(rand: Rand) {
         .map((value) => ({ value, feedback: "Use dV = 3s^2 ds; the derivative converts the side error into a volume error." })),
       choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
       explorationFeedback: "Inspect the measured side and error before checking the differential estimate.",
-      fallbackFeedback: `dV = 3(${chosen.side})^2(${chosen.error}) = ${answer} cm^3.`,
-      successFeedback: `The differential estimate is ${answer} cm^3.`,
+      fallbackFeedback: `dV = 3(${chosen.side})^2(${chosen.error}) = ${answer} cm³.`,
+      successFeedback: `The differential estimate is ${answer} cm³.`,
     };
     return { widget, answer };
   }
@@ -953,7 +953,7 @@ function differentialLabGenerated(rand: Rand) {
         .map((value) => ({ value, feedback: `For a power ${chosen.power}, the approximate relative error is ${chosen.power} times the input relative error.` })),
       choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
       explorationFeedback: "Inspect the exponent and input percentage before checking.",
-      fallbackFeedback: `${chosen.power} x ${chosen.error}% = ${answer}%.`,
+      fallbackFeedback: `The ${quantity} error is about ${chosen.power} times the length error: ${chosen.power} × ${chosen.error}% = ${answer}%.`,
       successFeedback: `The estimated percentage error is ${answer}%.`,
     };
     return { widget, answer };
@@ -981,7 +981,7 @@ function differentialLabGenerated(rand: Rand) {
       .map((value) => ({ value, feedback: "A cube's relative volume error is about three times its relative side error; divide the percentage tolerance by 3 before applying it to the side." })),
     choices: [], authoredStages: [], requiredStageKeys: [], requiredExplorations: 1,
     explorationFeedback: "Inspect the allowed volume percentage and side length before checking.",
-    fallbackFeedback: `ds = (${chosen.tolerance}/3)/100 x ${chosen.side} = ${answer} cm.`,
+    fallbackFeedback: `ds = (${chosen.tolerance}/3)/100 × ${chosen.side} = ${answer} cm.`,
     successFeedback: `The side must be measured within ${answer} cm.`,
   };
   return { widget, answer };
@@ -2867,12 +2867,279 @@ function parametricArcMcqWidget(rand: Rand): GeneratedIntegrationVariant {
   })));
 }
 
+/* S331 / lane G1. pc-vector-motion and pc-polar-area drew from three fixed rows apiece, so every
+ * reseeding repeated identical problems. The builders below draw genuine motion and area states —
+ * velocity triples, launch profiles, radii, cardioid scales — that change the answer.
+ * calculusIndependent.cjs re-derives each answer from the printed prompt (integer search for the
+ * Pythagorean speeds, literal ½r²·sweep evaluation for the areas). */
+
+const PC_MOTION_TRIPLES = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17], [9, 12, 15]] as const;
+const pcRound = (x: number, dp: number): number => Math.round(x * 10 ** dp) / 10 ** dp;
+
+function s331NumericWidget(prompt: string, answer: number, tolerance: number, commonErrors: Array<{ value: number; feedback: string }>, fallbackFeedback: string): GeneratedIntegrationVariant {
+  return {
+    widget: { type: "numeric", prompt, answer, tolerance, commonErrors, fallbackFeedback },
+    answer,
+  };
+}
+
+function pcVectorMotionWidget(rand: Rand): GeneratedIntegrationVariant {
+  const job = Math.floor(rand() * 3);
+  if (job === 0) {
+    const [a, b, c] = pick(rand, PC_MOTION_TRIPLES);
+    return s331NumericWidget(
+      `r(t) = ⟨${a}t, ${b}t⟩. Find the speed.`,
+      c,
+      0,
+      [
+        { value: a + b, feedback: `That is ${a} + ${b} — adding the components rather than taking their magnitude. Speed is √(${a * a} + ${b * b}) = ${c}.` },
+        { value: a * b, feedback: `That is ${a} × ${b}. The magnitude of a velocity vector is Pythagorean: √(${a * a} + ${b * b}) = ${c}.` },
+      ],
+      `v = ⟨${a}, ${b}⟩ has magnitude √(${a * a} + ${b * b}) = ${c}.`
+    );
+  }
+  if (job === 1) {
+    const [a, b] = pick(rand, [[2, 4], [3, 6], [2, 8], [4, 6], [3, 8]] as const);
+    const apex = b / 2;
+    const launch = pcRound(Math.hypot(a, b), 3);
+    return s331NumericWidget(
+      `A projectile has r(t) = ⟨${a}t, ${b}t − t²⟩. Find its SPEED at the apex, t = ${apex}.`,
+      a,
+      0,
+      [
+        { value: 0, feedback: `That is the VERTICAL component of the velocity, which does vanish at the apex. But the horizontal ${a} keeps going: speed ${a}.` },
+        { value: launch, feedback: `That is the LAUNCH speed, |⟨${a}, ${b}⟩| = √${a * a + b * b}. At the apex the vertical part has fallen to 0, leaving speed ${a}.` },
+      ],
+      `v(${apex}) = ⟨${a}, ${b} − ${2 * apex}⟩ = ⟨${a}, 0⟩, whose magnitude is ${a}.`
+    );
+  }
+  const [a, b, c] = pick(rand, PC_MOTION_TRIPLES);
+  const T = pick(rand, [2, 3, 4] as const);
+  return s331NumericWidget(
+    `r(t) = ⟨${a}t, ${b}t⟩, for t from 0 to ${T}. Find the total distance travelled.`,
+    c * T,
+    0,
+    [
+      { value: c, feedback: `That is the SPEED, √(${a * a} + ${b * b}) = ${c}. Multiply by the elapsed t, which runs from 0 to ${T}: ${c * T}.` },
+      { value: a + b, feedback: `That is ${a} + ${b} — adding the components. The speed is their Pythagorean magnitude ${c}, and distance = ${c} × ${T} = ${c * T}.` },
+    ],
+    `Constant speed ${c} over ${T} time units covers ${c * T}.`
+  );
+}
+
+const PC_CARDIOID_STATES = [
+  { a: 1, exact: "3π/2", mult: 1.5 }, { a: 2, exact: "6π", mult: 6 }, { a: 3, exact: "27π/2", mult: 13.5 },
+] as const;
+
+function pcPolarAreaWidget(rand: Rand): GeneratedIntegrationVariant {
+  const job = Math.floor(rand() * 3);
+  if (job === 0) {
+    const k = pick(rand, [2, 3, 4, 5] as const);
+    return s331NumericWidget(
+      `Use A = ∫½r²dθ on the circle r = ${k}, from 0 to 2π. Find the area, as a multiple of π (give just the number).`,
+      k * k,
+      0,
+      [
+        { value: 2 * k * k, feedback: `You may have dropped the ½: ∫₀^{2π} ½(${k * k})dθ = ${k * k}π, not ${2 * k * k}π. And πr² = ${k * k}π confirms it.` },
+        { value: (k * k) / 2, feedback: `That is ½(${k}²) = ${(k * k) / 2}, the integrand alone. Integrating it over the 2π sweep gives ${k * k}π.` },
+      ],
+      `½(${k * k}) integrated over 2π gives ${k * k}π — matching πr².`
+    );
+  }
+  if (job === 1) {
+    const state = pick(rand, PC_CARDIOID_STATES);
+    const answer = pcRound(state.mult * Math.PI, 3);
+    const doubled = pcRound(2 * state.mult * Math.PI, 3);
+    const aText = state.a === 1 ? "" : String(state.a);
+    return s331NumericWidget(
+      `The cardioid r = ${aText}(1 + cos θ), swept from 0 to 2π, encloses an area of ${state.exact}. Give that as a decimal to three places.`,
+      answer,
+      0.005,
+      [
+        { value: doubled, feedback: `That is ${state.exact} doubled — the ½ has gone missing. The area is ½∫${aText ? `${state.a}²` : ""}(1 + cos θ)²dθ = ${state.exact} ≈ ${answer}.` },
+        { value: state.mult, feedback: `That is the multiplier ${state.mult}. Multiply by π: ≈ ${answer}.` },
+      ],
+      `The exact area ${state.exact} converts to the decimal ≈ ${answer}.`
+    );
+  }
+  const k = pick(rand, [2, 3, 4, 5] as const);
+  const answer = pcRound((k * k * Math.PI) / 4, 3);
+  return s331NumericWidget(
+    `Find the area swept by r = ${k} from θ = 0 to π/2, to three decimals.`,
+    answer,
+    0.005,
+    [
+      { value: pcRound((k * k * Math.PI) / 2, 3), feedback: `The ½ has gone missing: that is ${k * k}π/2. With the ½ it is ${k * k}π/4 ≈ ${answer} — a quarter of the circle.` },
+      { value: pcRound(k * k * Math.PI, 3), feedback: `That is the WHOLE circle, ${k * k}π. You swept only a quarter of it: ≈ ${answer}.` },
+    ],
+    `½(${k * k}) over a π/2 sweep gives ${k * k}π/4 ≈ ${answer}.`
+  );
+}
+
+/* S331 / lane G1. The four numeric g13-series-convergence forms repeated 1–3 fixed rows. Each now
+ * draws a genuine series state — cut-off index, error target, ratio — that changes the answer. */
+
+function scAlternatingWidget(rand: Rand): GeneratedIntegrationVariant {
+  const job = Math.floor(rand() * 3);
+  if (job === 0) {
+    const n = pick(rand, [3, 4, 5, 7, 9] as const);
+    const bound = pcRound(1 / (n + 1), 4);
+    let partial = 0;
+    for (let k = 1; k <= n; k += 1) partial += ((k % 2 === 1 ? 1 : -1) * 1) / k;
+    return s331NumericWidget(
+      `For 1 − 1/2 + 1/3 − 1/4 + …, you stop after ${n} terms. What is the largest the error can be? (To four decimals.)`,
+      bound,
+      0.0005,
+      [
+        { value: pcRound(1 / n, 4), feedback: `That is the term you DID add (1/${n}). The bound is the FIRST OMITTED term, 1/${n + 1} ≈ ${bound}.` },
+        { value: pcRound(partial, 4), feedback: `That is S${n}, the partial sum itself, not the error in it. The error is bounded by 1/${n + 1} ≈ ${bound}.` },
+      ],
+      `The alternating-series bound is the first omitted term: 1/${n + 1} ≈ ${bound}.`
+    );
+  }
+  if (job === 1) {
+    const [epsText, n] = pick(rand, [["0.01", 100], ["0.02", 50], ["0.05", 20], ["0.1", 10]] as const);
+    return s331NumericWidget(
+      `For 1 − 1/2 + 1/3 − …, how many terms are needed to guarantee an error below ${epsText}?`,
+      n,
+      0,
+      [
+        { value: n - 1, feedback: `Close: 1/(n + 1) < ${epsText} needs n + 1 > ${n}, so n = ${n}. With n = ${n - 1} the bound is 1/${n} = ${epsText} exactly, not below it.` },
+        { value: n / 10, feedback: `Stopping after ${n / 10} term${n / 10 === 1 ? "" : "s"} leaves an error of up to 1/${n / 10 + 1} ≈ ${pcRound(1 / (n / 10 + 1), 3)} — far above ${epsText}. You need ${n}.` },
+      ],
+      `The bound 1/(n + 1) < ${epsText} first holds at n = ${n}.`
+    );
+  }
+  /* k = 2 is excluded: its bound 1/9 prints as the truncated repeating decimal 0.1111. */
+  const k = pick(rand, [3, 4, 5] as const);
+  const bound = pcRound(1 / ((k + 1) * (k + 1)), 4);
+  return s331NumericWidget(
+    `For 1 − 1/4 + 1/9 − 1/16 + …, you stop after ${k} terms. Bound the error, to four decimals.`,
+    bound,
+    0.0005,
+    [
+      { value: pcRound(1 / (k * k), 4), feedback: `That is 1/${k * k} — the term you DID add. The bound is the first term you LEFT OUT, 1/${(k + 1) * (k + 1)} ≈ ${bound}.` },
+      { value: pcRound(1 / ((k + 2) * (k + 2)), 4), feedback: `That is 1/${(k + 2) * (k + 2)}, one term too far along. The first omitted term is 1/${(k + 1) * (k + 1)} ≈ ${bound}.` },
+    ],
+    `The alternating bound is the first omitted term: 1/${(k + 1) * (k + 1)} ≈ ${bound}.`
+  );
+}
+
+const SC_TAYLOR_POLYS = [
+  { m: 4, text: "1 + x + x²/2 + x³/6" },
+  { m: 5, text: "1 + x + x²/2 + x³/6 + x⁴/24" },
+  { m: 6, text: "1 + x + x²/2 + x³/6 + x⁴/24 + x⁵/120" },
+] as const;
+const SC_TAYLOR_TARGETS = [
+  { epsText: "0.01", n: 4 }, { epsText: "0.1", n: 3 }, { epsText: "0.002", n: 5 },
+] as const;
+
+function scTaylorWidget(rand: Rand): GeneratedIntegrationVariant {
+  const factorial = (v: number): number => (v <= 1 ? 1 : v * factorial(v - 1));
+  const partialE = (terms: number): number => {
+    let sum = 0;
+    for (let k = 0; k < terms; k += 1) sum += 1 / factorial(k);
+    return sum;
+  };
+  if (rand() < 0.5) {
+    const { m, text } = pick(rand, SC_TAYLOR_POLYS);
+    const answer = pcRound(partialE(m), 4);
+    const shorter = pcRound(partialE(m - 1), 4);
+    return s331NumericWidget(
+      `Use ${text} at x = 1 to estimate e. Give four decimals.`,
+      answer,
+      0.0005,
+      [
+        { value: 2.7183, feedback: `That is e itself. The ${m}-term polynomial gives ${answer} — close, but not exact.` },
+        { value: shorter, feedback: `That is the ${m - 1}-term sum. Add the last printed term as well: ${answer}.` },
+      ],
+      `Summing the ${m} printed terms at x = 1 gives ${answer}.`
+    );
+  }
+  const { epsText, n } = pick(rand, SC_TAYLOR_TARGETS);
+  const errAt = (terms: number): number => Math.E - partialE(terms + 1);
+  return s331NumericWidget(
+    `For eˣ at x = 1, how many terms AFTER the constant are needed to get within ${epsText} of e?`,
+    n,
+    0,
+    [
+      { value: n - 1, feedback: `${n - 1} terms past the constant give ${pcRound(partialE(n), 4)}, an error of ${pcRound(errAt(n - 1), 4)} — still above ${epsText}.` },
+      { value: n + 1, feedback: `${n + 1} works (error ${pcRound(errAt(n + 1), 4)}), but it is one more than you need — ${n} already lands within ${epsText}.` },
+    ],
+    `The error first drops below ${epsText} with ${n} terms past the constant.`
+  );
+}
+
+const SC_RADIUS_STATES = [
+  { series: "Σxⁿ", ratioText: "|x|", R: 1, traps: [
+    { value: 0, feedback: "A radius of 0 would mean it converges only at the centre. But at x = 0.5 the terms shrink geometrically — the boundary is |x| = 1." },
+    { value: 2, feedback: "At x = 2 the terms 1, 2, 4, 8 GROW, so the series has already failed there. The boundary is |x| = 1." },
+  ] },
+  { series: "Σ xⁿ/2ⁿ", ratioText: "|x|/2", R: 2, traps: [
+    { value: 1, feedback: "That is the radius for Σxⁿ. Dividing by 2ⁿ makes the terms shrink twice as fast, pushing the boundary out to |x| = 2." },
+    { value: 0.5, feedback: "You may have inverted the ratio. |x|/2 < 1 gives |x| < 2, not |x| < 1/2." },
+  ] },
+  { series: "Σ xⁿ/3ⁿ", ratioText: "|x|/3", R: 3, traps: [
+    { value: 1, feedback: "That is the radius for Σxⁿ. The 3ⁿ denominator stretches the boundary out to |x| = 3." },
+    { value: 0.333, feedback: "You may have inverted the ratio. |x|/3 < 1 gives |x| < 3, not |x| < 1/3." },
+  ] },
+  { series: "Σ (2x)ⁿ", ratioText: "|2x|", R: 0.5, traps: [
+    { value: 2, feedback: "You may have inverted the ratio. |2x| < 1 gives |x| < 1/2, not |x| < 2." },
+    { value: 1, feedback: "That is the radius for Σxⁿ. The doubled argument halves the boundary: |x| < 1/2." },
+  ] },
+  { series: "Σ xⁿ/4ⁿ", ratioText: "|x|/4", R: 4, traps: [
+    { value: 1, feedback: "That is the radius for Σxⁿ. The 4ⁿ denominator stretches the boundary out to |x| = 4." },
+    { value: 0.25, feedback: "You may have inverted the ratio. |x|/4 < 1 gives |x| < 4, not |x| < 1/4." },
+  ] },
+] as const;
+
+function scRadiusWidget(rand: Rand): GeneratedIntegrationVariant {
+  const state = pick(rand, SC_RADIUS_STATES);
+  return s331NumericWidget(
+    `For ${state.series}, the ratio of consecutive terms is ${state.ratioText}. What is the radius of convergence?`,
+    state.R,
+    0,
+    [...state.traps],
+    `The ratio ${state.ratioText} stays below 1 exactly while |x| < ${state.R}.`
+  );
+}
+
+const SC_POWER_STATES = [
+  { rText: "1/2", r: 0.5 }, { rText: "1/3", r: 1 / 3 }, { rText: "1/4", r: 0.25 }, { rText: "2/3", r: 2 / 3 },
+  { rText: "1/5", r: 0.2 }, { rText: "3/4", r: 0.75 },
+] as const;
+
+function scPowerOpsWidget(rand: Rand): GeneratedIntegrationVariant {
+  const { rText, r } = pick(rand, SC_POWER_STATES);
+  const answer = pcRound(1 / ((1 - r) * (1 - r)), 4);
+  const geometric = pcRound(1 / (1 - r), 4);
+  return s331NumericWidget(
+    `Find the sum of 1 + 2(${rText}) + 3(${rText})² + 4(${rText})³ + …`,
+    answer,
+    0.001,
+    [
+      { value: geometric, feedback: `That is Σ(${rText})ⁿ, the plain geometric sum. This one multiplies each term by n: 1/(1 − ${rText})² = ${answer}.` },
+      { value: pcRound(2 * answer, 4), feedback: `Check: 1/(1 − ${rText})² = ${answer}, not ${pcRound(2 * answer, 4)}.` },
+    ],
+    `Differentiating the geometric series gives Σ n·rⁿ⁻¹ = 1/(1 − r)² = ${answer}.`
+  );
+}
+
 const PARAMETRIC_PC01_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
   "parametric-polar-calculus__pc-parametric-derivative__numeric": parametricDerivativeNumericWidget,
   "parametric-polar-calculus__pc-parametric-derivative__mcq": parametricDerivativeMcqWidget,
   "parametric-polar-calculus__pc-second-derivative__numeric": parametricSecondDerivativeWidget,
   "parametric-polar-calculus__pc-arc-length__numeric": parametricArcNumericWidget,
   "parametric-polar-calculus__pc-arc-length__mcq": parametricArcMcqWidget,
+  "parametric-polar-calculus__pc-vector-motion__numeric": pcVectorMotionWidget,
+  "parametric-polar-calculus__pc-polar-area__numeric": pcPolarAreaWidget,
+};
+
+const SERIES_SC_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
+  "series-convergence__sc-alternating__numeric": scAlternatingWidget,
+  "series-convergence__sc-taylor__numeric": scTaylorWidget,
+  "series-convergence__sc-radius__numeric": scRadiusWidget,
+  "series-convergence__sc-power-ops__numeric": scPowerOpsWidget,
 };
 
 const INTEGRATION_APPLICATION_BUILDERS: Record<string, (rand: Rand) => GeneratedIntegrationVariant> = {
@@ -2975,6 +3242,17 @@ export const CALCULUS_GENERATORS = AUTHORED_CALCULUS_GENERATORS.map((generator) 
       ...generator,
       gen: (rand: Rand, band: Band = "core", form = "default") => {
         const builder = PARAMETRIC_PC01_BUILDERS[form];
+        if (!builder) return generator.gen(rand, band, form);
+        const generated = builder(rand);
+        return { tag: generator.tag, widget: generated.widget, answer: generated.answer };
+      },
+    };
+  }
+  if (generator.tag === "g13-series-convergence") {
+    return {
+      ...generator,
+      gen: (rand: Rand, band: Band = "core", form = "default") => {
+        const builder = SERIES_SC_BUILDERS[form];
         if (!builder) return generator.gen(rand, band, form);
         const generated = builder(rand);
         return { tag: generator.tag, widget: generated.widget, answer: generated.answer };

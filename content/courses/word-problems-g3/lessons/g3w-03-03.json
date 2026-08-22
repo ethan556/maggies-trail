@@ -367,6 +367,62 @@
       }
     },
     {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-extra-info",
+      "explanationVariants": [
+        "Pick only the needed numbers.",
+        "Decoys stay unused."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "The room also has 4 tables. 5 shelves hold 7 markers each. Students take 8 markers. How many markers are left?",
+        "answer": 27,
+        "tolerance": 0,
+        "unit": "markers",
+        "commonErrors": [
+          {
+            "value": 20,
+            "feedback": "20 uses the 4 tables as the shelf count: 4 × 7 − 8. The tables are extra information — the markers sit on 5 shelves."
+          },
+          {
+            "value": 43,
+            "feedback": "43 adds the taken 8 to the 35. Students taking markers is a removal, so the count falls."
+          }
+        ],
+        "fallbackFeedback": "Ignore the 4 tables. The needed numbers are 5 shelves of 7, minus the 8 taken.",
+        "successFeedback": "Correct — (5 × 7) − 8 = 27; the 4 tables were never needed."
+      },
+      "hints": [
+        "Read for the question.",
+        "Not every number is used.",
+        "Match numbers to steps."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Read the question first and select only the quantities needed to answer it.",
+        "invariants": [
+          "A number can be true in the story yet irrelevant to the relationship the question asks about."
+        ],
+        "misconceptions": [
+          "Using every number merely because it appears in the story."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-extra-info",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
       "id": "ch1",
       "kind": "challenge",
       "body": "One more, for the road.",

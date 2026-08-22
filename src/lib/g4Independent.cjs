@@ -202,6 +202,18 @@ function solve(form,w){const p=w.prompt,ns=numbers(p),fs=fractions(p);
    return ns[ns.length-1]*(ns[1]/ns[0]);
   }
   case 'mbMultiStepNumeric': return ns[0]*ns[1]-ns[2];
+  // S331 lane G3 — the five diversified mb-05-02 chains. Each recomputes from the printed story's
+  // own numbers, using the story's structure rather than the generator's variables.
+  case 'mbMultiStepAddNumeric': return ns[0]*ns[1]+ns[2];
+  // "Mia has S. Jake has K TIMES as many. ... himself and F friends (P people total)": ns=[S,K,F,P].
+  case 'mbMultiStepShareNumeric': {const pile=ns[0]*ns[1];let rest=pile,each=0;while(rest>=ns[3]){rest-=ns[3];each++;}return each;}
+  // "R rows of N plants each (use the break-apart method: Rxtens + Rxones). After harvest, H removed":
+  // ns=[R,N,R,tens,R,ones,H] — re-derived from the PRINTED break-apart parts, not from R*N.
+  case 'mbMultiStepBreakApartNumeric': return ns[2]*ns[3]+ns[4]*ns[5]-ns[6];
+  // "makes M, gives away G, boxes the rest, B per box": count whole boxes by repeated subtraction.
+  case 'mbMultiStepBoxesNumeric': {let rest=ns[0]-ns[1],boxes=0;while(rest>=ns[2]){rest-=ns[2];boxes++;}return boxes;}
+  // "Class A gets J times Class B's Q. Class C has R rows of C. ... among T teachers": ns=[J,Q,R,C,T].
+  case 'mbMultiStepTwoProductsNumeric': {let rest=ns[0]*ns[1]+ns[2]*ns[3],each=0;while(rest>=ns[4]){rest-=ns[4];each++;}return each;}
 
   // Place value and algorithms
   case 'pvPlaceLadderMcq': {const n=clean(p.match(/In ([\d,]+)/)[1]),digit=ns[1],places=['ones','tens','hundreds','thousands','ten-thousands','hundred-thousands','millions'];let q=n,i=0;while(q%10!==digit){q=Math.floor(q/10);i++;}return exact(w,places[i]);}

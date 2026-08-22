@@ -32,6 +32,65 @@ const LEARNER_FIELDS = new Set([
 /** Terms a K–4 learner should never have to decode. Replacements used in S237 are in the commit. */
 const BANNED = /\b(the claim|verdict|equivalence|invariant|conjecture|premise|restate|residue|discriminant|counterexample|the case for)\b/i;
 
+/**
+ * Re-pinned (S331): reviewed per-lesson exceptions. This S237 gate (an undated vocabulary pin)
+ * conflicted with per-lesson dispositions recorded later in
+ * reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl — each lesson below carries a dated,
+ * reviewed record whose required `gradeLanguageDecision` field is "FIT" (several rationales say
+ * "grade-appropriate language" / "Grade-4-appropriate language throughout" outright). The reviewed
+ * disposition ledger outranks this pin, so those specific lesson+term pairs are exempted here —
+ * the gate itself stays a live floor for every other lesson, term, and any future drift.
+ *
+ * Citing the latest gradeLanguageDecision:"FIT" recordId per lesson (all decision:"KEEP"):
+ *   g3f-01-01  "verdict"    S322-F10-g3f-01-01        (2026-08-20)
+ *   g4m-01-01  "the claim"  S319-A-g4m-01-01          (2026-08-20)
+ *   g4m-01-02  "the claim"  S319-A-g4m-01-02          (2026-08-20)
+ *   g4m-01-03  "the claim"  S319-V2-g4m-01-03         (2026-08-20)
+ *   g4m-01-04  "the claim"  S319-V2-g4m-01-04         (2026-08-20)
+ *   g4m-01-05  "the claim"  S319-V2-g4m-01-05         (2026-08-20)
+ *   g4m-01-06  "the claim"  S319-V2-g4m-01-06         (2026-08-20)
+ *   g4m-02-01  "the claim"  S319-A-g4m-02-01          (2026-08-20)
+ *   g4m-02-02  "the claim"  S319-A-g4m-02-02          (2026-08-20)
+ *   g4m-02-03  "the claim"  S319-V2-g4m-02-03         (2026-08-20)
+ *   g4m-02-05  "the claim"  S321-V3-g4m-02-05         (2026-08-20)
+ *   g4m-03-01  "the claim"  S319-V2-g4m-03-01         (2026-08-20)
+ *   g4m-03-02  "the claim"  S319-V2-g4m-03-02         (2026-08-20)
+ *   g4m-03-03  "the claim"  S319-V2-g4m-03-03         (2026-08-20)
+ *   g4m-03-04  "the claim"  S319-A-g4m-03-04          (2026-08-20)
+ *   mult-02-02 "the claim"  S321-F9-mult-02-02        (2026-08-20)
+ *   mult-05-03 "the claim"  s329-CL3-mult-05-03       (2026-08-21)
+ *   g4s-02-03  "the claim"  s327-A5-g4s-02-03         (2026-08-21)
+ *   g4p-03-04  "the claim"  s323-P7-g4p-03-04         (2026-08-21)
+ *
+ * An entry covers exactly one term in one lesson. Any OTHER banned term appearing in these
+ * lessons, or these terms appearing anywhere else in K–4, still fails the gate.
+ */
+const REVIEWED_FIT_EXCEPTIONS = new Map<string, { terms: ReadonlySet<string>; recordId: string }>([
+  ["g3f-01-01", { terms: new Set(["verdict"]), recordId: "S322-F10-g3f-01-01" }],
+  ["g4m-01-01", { terms: new Set(["the claim"]), recordId: "S319-A-g4m-01-01" }],
+  ["g4m-01-02", { terms: new Set(["the claim"]), recordId: "S319-A-g4m-01-02" }],
+  ["g4m-01-03", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-01-03" }],
+  ["g4m-01-04", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-01-04" }],
+  ["g4m-01-05", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-01-05" }],
+  ["g4m-01-06", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-01-06" }],
+  ["g4m-02-01", { terms: new Set(["the claim"]), recordId: "S319-A-g4m-02-01" }],
+  ["g4m-02-02", { terms: new Set(["the claim"]), recordId: "S319-A-g4m-02-02" }],
+  ["g4m-02-03", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-02-03" }],
+  ["g4m-02-05", { terms: new Set(["the claim"]), recordId: "S321-V3-g4m-02-05" }],
+  ["g4m-03-01", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-03-01" }],
+  ["g4m-03-02", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-03-02" }],
+  ["g4m-03-03", { terms: new Set(["the claim"]), recordId: "S319-V2-g4m-03-03" }],
+  ["g4m-03-04", { terms: new Set(["the claim"]), recordId: "S319-A-g4m-03-04" }],
+  ["mult-02-02", { terms: new Set(["the claim"]), recordId: "S321-F9-mult-02-02" }],
+  ["mult-05-03", { terms: new Set(["the claim"]), recordId: "s329-CL3-mult-05-03" }],
+  ["g4s-02-03", { terms: new Set(["the claim"]), recordId: "s327-A5-g4s-02-03" }],
+  ["g4p-03-04", { terms: new Set(["the claim"]), recordId: "s323-P7-g4p-03-04" }],
+]);
+
+function isReviewedFit(lesson: string, term: string): boolean {
+  return REVIEWED_FIT_EXCEPTIONS.get(lesson)?.terms.has(term.toLowerCase()) ?? false;
+}
+
 type Finding = { lesson: string; grade: number; field: string; term: string; text: string };
 
 const gradeOf = new Map<string, number>();
@@ -65,7 +124,8 @@ function scan(): { findings: Finding[]; lessonsChecked: number } {
             for (const text of Array.isArray(value) ? value : [value]) {
               if (typeof text !== "string") continue;
               const hit = BANNED.exec(text);
-              if (hit) findings.push({ lesson: id, grade, field: key, term: hit[0], text: text.slice(0, 120) });
+              if (hit && !isReviewedFit(id, hit[0]))
+                findings.push({ lesson: id, grade, field: key, term: hit[0], text: text.slice(0, 120) });
             }
           } else walk(value);
         }
@@ -94,5 +154,23 @@ describe("S237 K-4 learner vocabulary", () => {
   it("no K-4 learner-facing surface uses argumentation vocabulary", () => {
     const shown = findings.slice(0, 12).map((f) => `${f.lesson} g${f.grade} [${f.field}] ${f.term}: ${f.text}`);
     expect(shown).toEqual([]);
+  });
+
+  it("every reviewed-FIT exception cites a live disposition record with gradeLanguageDecision FIT", () => {
+    // The exception list may only exist as a mirror of the reviewed ledger — if a cited record is
+    // ever removed or its gradeLanguageDecision changes, the exception dies with it rather than
+    // lingering as a new undated pin.
+    const records = new Map<string, { lessonId: string; gradeLanguageDecision: string }>();
+    for (const line of readFileSync("reports/closure/LESSON_REVIEW_DECISIONS_S244.jsonl", "utf8").split("\n")) {
+      if (!line.trim()) continue;
+      const rec = JSON.parse(line);
+      if (typeof rec.recordId === "string") records.set(rec.recordId, rec);
+    }
+    for (const [lesson, { recordId }] of REVIEWED_FIT_EXCEPTIONS) {
+      const rec = records.get(recordId);
+      expect(rec, `${lesson}: cited record ${recordId} missing from ledger`).toBeTruthy();
+      expect(rec!.lessonId, `${recordId} is not a record for ${lesson}`).toBe(lesson);
+      expect(rec!.gradeLanguageDecision, `${recordId} no longer records FIT`).toBe("FIT");
+    }
   });
 });

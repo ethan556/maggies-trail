@@ -667,7 +667,10 @@ function barGridlinePosition(category: string, value: number, scaleStep: number)
 function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDataParts>> }): ReactElement {
   const { categories, values, title, axisLabel, scaleStep, axisMax, valueLabels } = parts;
   const showValues = valueLabels !== "none";
-  const W = 320, H = 220, padX = 46, padTop = 30, baseY = H - 40;
+  // BASE_H is the historical H = 220; baseY stays derived from IT, not from the final H, so the
+  // chart area's pixel geometry is byte-identical whenever the category labels fit on one row —
+  // the canvas only grows BELOW the axis, for the extra label rows (S331, see `catLabelPlan`).
+  const W = 320, BASE_H = 220, padX = 46, padTop = 30, baseY = BASE_H - 40;
   const barW = (W - 2 * padX) / categories.length;
   const hScale = linScale(0, axisMax, baseY, padTop);
   const ticks: number[] = [];
@@ -680,6 +683,30 @@ function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDat
       ? categories.map((c, i) => `${c}: ${tickText(values[i])}${unitSuffix}`).join("; ") + "."
       : categories.map((c, i) => barGridlinePosition(c, values[i], scaleStep)).join(" "));
   const catFont = Math.max(7, Math.min(10, Math.floor(((barW - 4) / (Math.max(1, ...categories.map((c) => c.length)) * 5.5)) * 2) / 2));
+  /* S331 — WHAT THE 7-FLOOR COULD NOT DO ALONE. Same failure mode BarBuilderW had, same repair
+   * (`catLabelPlan` there): the size floor is a legibility promise, which means past ~7 columns a
+   * category name can be WIDER than its own column (eight 6-char names at the floor size 7 are
+   * 30.24 units wide against a 28.5-unit column, the S237 testkit's own box model) — an overlap no
+   * font this side of the floor can clear. So fix the geometry, not the font: labels greedily pack
+   * onto as many rows as they need, opening a new row only when the last label on every existing
+   * row would sit closer than 1 unit. Rows are 10 units apart, the canvas grows below the axis to
+   * hold them (`H` below), and every layout that fits on one row keeps its exact current baseline
+   * (row 0 is y = baseY + 13, byte-identical to what this figure always drew). */
+  const catRows: number[] = [];
+  const catLabelPlan = categories.map((c, i) => {
+    // The same arithmetic the bar itself uses below (x + w / 2), kept expression-identical so a
+    // one-row layout's category x cannot drift by a floating-point ulp from what it always was.
+    const cx = padX + i * barW + barW * 0.18 + (barW * 0.64) / 2;
+    const half = labelHalfWidth(c, catFont);
+    let row = catRows.findIndex((rightEdge) => cx - half >= rightEdge + 1);
+    if (row < 0) {
+      row = catRows.length;
+      catRows.push(Number.NEGATIVE_INFINITY);
+    }
+    catRows[row] = cx + half;
+    return { x: cx, y: baseY + 13 + row * 10 };
+  });
+  const H = BASE_H + Math.max(0, catRows.length - 1) * 10;
   return (
     <svg
       data-testid="bar-chart-figure"
@@ -708,7 +735,9 @@ function BarChartFigure({ parts }: { parts: NonNullable<ReturnType<typeof barDat
             {showValues && (
               <text data-testid="bar-chart-value" x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{tickText(values[i])}</text>
             )}
-            <text data-testid="bar-chart-category" x={x + w / 2} y={baseY + 13} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>
+            {/* x/y come from `catLabelPlan`: the x is the same bar-centre x + w/2 always was, and
+                the y keeps this figure's exact baseline whenever one row fits (see plan above). */}
+            <text data-testid="bar-chart-category" x={catLabelPlan[i].x} y={catLabelPlan[i].y} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>
           </g>
         );
       })}
@@ -5177,12 +5206,29 @@ function CompassConstructW({ spec, value, onChange, disabled, tone }: WProps<TCo
           <>the compass steps round {Number(steps.toFixed(2))} times</>
         )}
       </p>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): the compass used to offer only the arm DRAG plus this continuous range —
+          both fine-motor on touch. The house −/range/+ stepper (44px buttons, same pattern as
+          systemsExplore's line controls and slopeTriangle) adds the discrete tap path. The drag
+          snaps to `snapToStep(raw, 1, 12, 1)` — the integer radii 1..12 — and these buttons walk
+          exactly that lattice, so every radius the drag can reach is reachable by taps alone. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>the compass radius</span>
-        <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
-          aria-label="how wide the compass is opened" aria-valuetext={`${r}`}
-          onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || r - 1 < 1} aria-label="Close the compass by 1"
+            onClick={() => onChange(r - 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
+            aria-label="how wide the compass is opened" aria-valuetext={`${r}`}
+            onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || r + 1 > 12} aria-label="Open the compass by 1"
+            onClick={() => onChange(r + 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
           {tone === "info" && (() => { const gv = typeof value === "number" ? value : null; if (gv === spec.target) return null; return (<GhostChip testid="cmp-ghost">compass radius: {spec.target}</GhostChip>); })()}
       </div>
   );
@@ -5384,13 +5430,29 @@ function ClassicalConstructW({
           <span className="text-berry-ink">{cfg.shortfall}</span>
         )}
       </p>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): same discrete tap path as the perp/hex branch above — the classical
+          modes have no drag surface at all, so this range was their ONLY control, and a bare
+          continuous slider is itself a fine-motor gesture on touch. Buttons walk the same 1..12
+          integer lattice the range moves on. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>the compass radius</span>
-        <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
-          aria-label="how wide the compass is opened"
-          aria-valuetext={`${r}; ${reach ? "the arcs cross" : "the arcs do not reach"}`}
-          onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || r - 1 < 1} aria-label="Close the compass by 1"
+            onClick={() => onChange(r - 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={1} max={12} step={1} value={r} disabled={disabled}
+            aria-label="how wide the compass is opened"
+            aria-valuetext={`${r}; ${reach ? "the arcs cross" : "the arcs do not reach"}`}
+            onChange={(e) => onChange(Number(e.target.value))} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || r + 1 > 12} aria-label="Open the compass by 1"
+            onClick={() => onChange(r + 1)}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -13072,7 +13134,11 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const W = 320, H = 230, padX = 48, padTop = 28, baseY = H - 42;
+  // BASE_H is the historical H = 230; baseY stays derived from IT, not from the final H, so the
+  // chart area's pixel geometry (which useSvgDrag and widgets.drag.test.tsx pin) is byte-identical
+  // whenever the category labels fit on one row — the canvas only grows BELOW the axis, for the
+  // extra label rows (S331, see `catLabelPlan`).
+  const W = 320, BASE_H = 230, padX = 48, padTop = 28, baseY = BASE_H - 42;
   const barW = (W - 2 * padX) / spec.categories.length;
   const hScale = linScale(0, spec.maxVal, baseY, padTop);
   const gridVals = [];
@@ -13095,6 +13161,35 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
     const fit = (barW - LABEL_GAP) / (longest * LABEL_EM);
     return Math.max(7, Math.min(spec.histogram ? 8 : 10, Math.floor(fit * 2) / 2));
   })();
+  /* S331 — WHAT THE 7-FLOOR COULD NOT DO ALONE, AND THE ROW THAT FIXES IT. The floor above is a
+   * legibility promise ("below 7 it stops being text"), which means past ~7 columns the fit
+   * calculation loses to the floor and a name can be WIDER than its own column: eight "Pack N"
+   * columns give barW 28 against a 30.24-unit label (6 chars × 7 × 0.72em, the S237 testkit's own
+   * measured box model), a guaranteed 2.2-unit overlap no font this side of the floor can clear.
+   * Same discipline as HopLandingW's `labelPlan` and the S329 geometry fixes: fix the geometry.
+   * Labels greedily pack onto as many rows as they need — a label opens a new row only when the
+   * last label on every existing row would sit closer than 1 unit (comfortably above the collision
+   * model's 0.5-unit eps, and BELOW the 1.76-unit clearance the seven-column g4s-01-01 layout
+   * already has, so every layout that fits today keeps its single row byte-for-byte). Rows are 10
+   * units apart; multi-row can only ever happen at the floor size 7 (a fit-derived size proves
+   * width + GAP <= barW by construction), and 10 > 7 × 1.26em box height, so stacked rows clear
+   * each other. The canvas grows below the axis to hold the extra rows (`H` below); nothing is
+   * ever dropped or clipped. */
+  const catRows: number[] = [];
+  const catLabelPlan = spec.histogram
+    ? []
+    : spec.categories.map((c, i) => {
+        const cx = padX + i * barW + barW / 2;
+        const half = labelHalfWidth(c, catFont);
+        let row = catRows.findIndex((rightEdge) => cx - half >= rightEdge + 1);
+        if (row < 0) {
+          row = catRows.length;
+          catRows.push(Number.NEGATIVE_INFINITY);
+        }
+        catRows[row] = cx + half;
+        return { x: cx, y: baseY + 13 + row * 10 };
+      });
+  const H = BASE_H + Math.max(0, catRows.length - 1) * 10;
   const setBar = (i: number, v: number) => onChange(hs.map((h, j) => (j === i ? v : h)));
 
   // WS-C (S238): the bar itself DRAGS. Press or sweep anywhere in the chart area and the bar
@@ -13214,8 +13309,11 @@ function BarBuilderW({ spec, value, onChange, disabled, tone }: WProps<TBarBuild
                 fill={done ? PALETTE.leaf : PALETTE.sky} stroke="none" />
               <text x={x + w / 2} y={top - 3} fontSize={10} fontWeight={800} textAnchor="middle" fill={PALETTE.ink}>{hs[i]}</text>
               {/* S237b — 11, not 14: at 14 the category row's descenders ran into the axis caption
-                  two rows below (dd-02-02's "10–19" bins against "minutes read"). */}
-              {!spec.histogram && <text x={x + w / 2} y={baseY + 13} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>}
+                  two rows below (dd-02-02's "10–19" bins against "minutes read"). S331: the y now
+                  comes from `catLabelPlan`, which keeps this exact baseline whenever one row fits
+                  and staggers onto lower rows only when the 7-unit font floor forces a name wider
+                  than its column (8+ named columns). */}
+              {!spec.histogram && <text x={catLabelPlan[i].x} y={catLabelPlan[i].y} fontSize={catFont} textAnchor="middle" fill={PALETTE.ink} fillOpacity={0.72}>{c}</text>}
             </g>
           );
         })}
@@ -14623,18 +14721,48 @@ function SystemsExploreW({ spec, value, onChange, disabled, tone, onEvent }: WPr
             : `These are the same line written twice — ${relation.reason}. ${pairViews.solutionSet.sentence}`}
         </p>
       )}
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+      {/* CL-P1-011 (S331): the answer POINT used to be reachable only by the SVG drag or these two
+          CONTINUOUS ranges — both fine-motor gestures on touch. The house stepper pattern (the same
+          −/range/+ row the line controls below and slopeTriangle already use, 44px buttons) adds a
+          discrete tap path. The drag snaps to the integer lattice (`snapToStep(…, 1)`), and these
+          buttons step that same lattice across the same [min,max] bounds, so every state the drag
+          can reach is one tap run away — same setter (`place`), same process events, no new state. */}
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>x = <span className="tabular-nums text-ink">{x}</span></span>
-        <input type="range" min={spec.xMin} max={spec.xMax} step={1} value={x} disabled={disabled}
-          aria-label="point x" aria-valuetext={`x ${x}`}
-          onChange={(e) => place(Number(e.target.value), y, "x")} className="h-11 w-full accent-sky" />
-      </label>
-      <label className="grid gap-1 text-sm font-bold text-ink/70">
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || x - 1 < spec.xMin} aria-label="Decrease point x"
+            onClick={() => place(x - 1, y, "x")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={spec.xMin} max={spec.xMax} step={1} value={x} disabled={disabled}
+            aria-label="point x" aria-valuetext={`x ${x}`}
+            onChange={(e) => place(Number(e.target.value), y, "x")} className="h-11 w-full accent-sky" />
+          <button type="button" disabled={disabled || x + 1 > spec.xMax} aria-label="Increase point x"
+            onClick={() => place(x + 1, y, "x")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-sky/40 text-lg font-black text-sky-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
+      <div className="grid gap-1 text-sm font-bold text-ink/70">
         <span>y = <span className="tabular-nums text-ink">{y}</span></span>
-        <input type="range" min={spec.yMin} max={spec.yMax} step={1} value={y} disabled={disabled}
-          aria-label="point y" aria-valuetext={`y ${y}`}
-          onChange={(e) => place(x, Number(e.target.value), "y")} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }} />
-      </label>
+        <div className="flex items-center gap-2">
+          <button type="button" disabled={disabled || y - 1 < spec.yMin} aria-label="Decrease point y"
+            onClick={() => place(x, y - 1, "y")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-tangerine/40 text-lg font-black text-tangerine-ink disabled:opacity-40">
+            {"−"}
+          </button>
+          <input type="range" min={spec.yMin} max={spec.yMax} step={1} value={y} disabled={disabled}
+            aria-label="point y" aria-valuetext={`y ${y}`}
+            onChange={(e) => place(x, Number(e.target.value), "y")} className="h-11 w-full accent-sky" style={{ accentColor: PALETTE.tangerine }} />
+          <button type="button" disabled={disabled || y + 1 > spec.yMax} aria-label="Increase point y"
+            onClick={() => place(x, y + 1, "y")}
+            className="pressable flex h-11 w-11 shrink-0 items-center justify-center rounded-card border-2 border-tangerine/40 text-lg font-black text-tangerine-ink disabled:opacity-40">
+            +
+          </button>
+        </div>
+      </div>
       {editable && (
         <>
           {/* What the last line move did, plus any clamp — visually hidden, so the picture is

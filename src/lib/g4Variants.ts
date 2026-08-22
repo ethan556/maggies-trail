@@ -668,6 +668,8 @@ const MULTIPLY_FORMS = [
   "mbAreaModel1DigitMcq", "mbAreaModel1DigitNumeric", "mbAreaModel2DigitMcq", "mbAreaModel2DigitNumeric",
   "mbRemaindersMcq", "mbRemaindersNumeric", "mbDivideBigNumeric", "mbInterpretRemaindersMcq",
   "mbInterpretRemaindersNumeric", "mbPatternsMcq", "mbPatternsNumeric", "mbMultiStepNumeric",
+  "mbMultiStepAddNumeric", "mbMultiStepShareNumeric", "mbMultiStepBreakApartNumeric",
+  "mbMultiStepBoxesNumeric", "mbMultiStepTwoProductsNumeric",
 ] as const;
 
 const multiplyHandlers: Record<string, FormHandler> = {
@@ -875,6 +877,81 @@ const multiplyHandlers: Record<string, FormHandler> = {
     return num("g4-multiply", `A class buys ${packs} packs of ${each} markers and uses ${used}. How many markers remain?`, ans,
       [[packs * each, `That is the starting total before the ${used} used markers are removed.`], [packs + each - used, `Adding packs and pack size does not find the total number of markers.`]],
       `First multiply ${packs}×${each}, then subtract ${used}.`);
+  },
+  /* S331 lane G3 — the five mb-05-02 multi-step chains diversified in S316, each its own form so
+   * the regenerated problem keeps the authored step's operation CHAIN, not just its first move. */
+  mbMultiStepAddNumeric: (rand, band) => {
+    // mb-05-02/k1: multiply then ADD (a delivery arrives). Trap two is subtracting the delivery.
+    let shelves = 0, each = 0, more = 0;
+    do {
+      shelves = bandInt(rand, band, [3, 6], [4, 9], [6, 12]);
+      each = pick(rand, 6, 12);
+      more = pick(rand, 11, 29);
+    } while (shelves * each - more < 5); // the subtract-instead trap must stay a plausible count
+    const total = shelves * each, ans = total + more;
+    return num("g4-multiply", `A store has ${shelves} shelves with ${each} books each. It then receives ${more} more books. How many books does it have now?`, ans,
+      [[total, `${total} is the total BEFORE the delivery (${shelves} × ${each}). Add the ${more} that arrived: ${total} + ${more} = ${ans}.`],
+       [total - more, `${total - more} subtracts the ${more} instead of adding. The store is GETTING more books, not losing them: ${total} + ${more} = ${ans}.`]],
+      `Find the total first (${shelves} × ${each} = ${total}), then add the number that arrived.`);
+  },
+  mbMultiStepShareNumeric: (rand, band) => {
+    // mb-05-02/k2: a multiplicative comparison builds the pile, then the pile is shared. The
+    // divisibility and trap-distinctness guards live in the redraw loop.
+    let small = 0, times = 0, people = 0;
+    do {
+      small = bandInt(rand, band, [3, 6], [3, 9], [5, 12]);
+      times = pick(rand, 2, 6);
+      people = pick(rand, 2, 6);
+    } while ((small * times) % people !== 0 || small * times === people || (small * times) / people === people);
+    const pile = small * times, ans = pile / people;
+    return num("g4-multiply", `Mia has ${small} stickers. Jake has ${times} TIMES as many as Mia. Jake shares his whole pile equally with himself and ${countN(people - 1, "friend")} (${people} people total). How many stickers does each person get?`, ans,
+      [[pile, `${pile} is Jake's pile BEFORE sharing (${times} × ${small}). Divide it among the ${people} people: ${pile} ÷ ${people} = ${ans}.`],
+       [people, `${people} is the number of people sharing, not each person's stickers. Divide Jake's total by that: ${pile} ÷ ${people} = ${ans}.`]],
+      `Find Jake's total first (${times} × ${small} = ${pile}), then divide it among the ${people} people sharing.`);
+  },
+  mbMultiStepBreakApartNumeric: (rand, band) => {
+    // mb-05-02/k3: a two-digit factor handled by the printed break-apart split, then a removal.
+    const rows = bandInt(rand, band, [3, 5], [3, 7], [5, 9]), tens = pick(rand, 2, 4), ones = pick(rand, 1, 9);
+    const plants = 10 * tens + ones, total = rows * plants;
+    const removed = pick(rand, 12, total - 10);
+    const ans = total - removed;
+    return num("g4-multiply", `A garden has ${rows} rows of ${plants} plants each (use the break-apart method: ${rows}×${10 * tens} + ${rows}×${ones}). After harvest, ${removed} plants are removed. How many plants remain?`, ans,
+      [[total, `${total} is the total BEFORE the harvest (${rows} × ${plants}). Subtract the ${removed} removed: ${total} − ${removed} = ${ans}.`],
+       [total + removed, `${total + removed} adds ${removed} instead of subtracting. Removing plants means SUBTRACT: ${total} − ${removed} = ${ans}.`]],
+      `Find the total first (${rows} × ${plants} = ${total}), then subtract the ${removed} removed.`);
+  },
+  mbMultiStepBoxesNumeric: (rand, band) => {
+    // mb-05-02/k4: SUBTRACT first (the giveaway), then divide the rest into boxes. The giveaway is
+    // at least one box's worth so the skipped-giveaway trap lands off the true quotient.
+    let per = 0, boxes = 0, given = 0;
+    do {
+      per = pick(rand, 3, 6);
+      boxes = bandInt(rand, band, [4, 8], [5, 12], [8, 16]);
+      given = pick(rand, per, 12);
+    } while (given < per);
+    const rest = boxes * per, made = rest + given;
+    const skipTrap = Math.floor(made / per);
+    return num("g4-multiply", `A baker makes ${made} muffins, then gives away ${given}. She boxes the rest, ${per} per box. How many whole boxes can she fill?`, boxes,
+      [[rest, `${rest} is how many muffins are left (${made} − ${given}) — that's step one done! Now divide by ${per} per box: ${rest} ÷ ${per} = ${boxes}.`],
+       [skipTrap, `${made} ÷ ${per} skips the giveaway. Subtract the ${given} given away FIRST (${made} − ${given} = ${rest}), then divide: ${rest} ÷ ${per} = ${boxes}.`]],
+      `Subtract the giveaway first (${made} − ${given} = ${rest}), then divide by ${per} per box.`);
+  },
+  mbMultiStepTwoProductsNumeric: (rand, band) => {
+    // mb-05-02/ch1: two products, combine, then share with a remainder — the "WHOLE pencils"
+    // wording needs a nonzero remainder so rounding up is a real, distinct misconception.
+    let j = 0, q = 0, r = 0, c = 0, t = 0;
+    do {
+      j = pick(rand, 2, 4);
+      q = bandInt(rand, band, [5, 8], [6, 9], [7, 12]);
+      r = pick(rand, 4, 9);
+      c = pick(rand, 4, 9);
+      t = pick(rand, 3, 6);
+    } while ((j * q + r * c) % t === 0 || Math.floor((j * q + r * c) / t) < 2);
+    const total = j * q + r * c, ans = Math.floor(total / t), rem = total - ans * t;
+    return num("g4-multiply", `Class A gets ${j} times Class B's ${q} pencils. Class C has ${r} rows of ${c} pencils. Combine both classes' pencils and share equally among ${t} teachers. How many WHOLE pencils does each teacher get?`, ans,
+      [[total, `${total} is the COMBINED total before sharing (${j * q} + ${r * c}). Divide that by the ${t} teachers: ${total} ÷ ${t} = ${ans} remainder ${rem}, so ${ans} whole pencils each.`],
+       [ans + 1, `${ans + 1} rounds up — but pencils can't be split, so the leftover ${rem} stays undistributed. Each teacher gets the whole number that fits evenly: ${ans}.`]],
+      `Add Class A (${j} × ${q} = ${j * q}) and Class C (${r} × ${c} = ${r * c}), then divide the total ${total} by ${t}.`);
   },
 };
 

@@ -341,6 +341,62 @@
       }
     },
     {
+      "id": "k4",
+      "kind": "check",
+      "body": "",
+      "conceptTag": "g3w-unreasonable",
+      "explanationVariants": [
+        "Build the ceiling first.",
+        "The answer sits below it."
+      ],
+      "widget": {
+        "type": "numeric",
+        "prompt": "7 shelves hold 8 markers each. Students take 9 markers. How many markers are left?",
+        "answer": 47,
+        "tolerance": 0,
+        "unit": "markers",
+        "commonErrors": [
+          {
+            "value": 65,
+            "feedback": "65 is above the 56 markers the shelves ever held — taking markers away can never push the count past the starting total."
+          },
+          {
+            "value": 56,
+            "feedback": "56 is the full 7 × 8 total, the ceiling itself. The 9 taken markers still have to come off it."
+          }
+        ],
+        "fallbackFeedback": "The ceiling is 7 × 8 = 56 markers. A reasonable answer sits below it: 56 − 9.",
+        "successFeedback": "Correct — (7 × 8) − 9 = 47, safely below the 56 ceiling."
+      },
+      "hints": [
+        "Ask what is possible.",
+        "Compare to the total.",
+        "Impossible means wrong."
+      ],
+      "cml": {
+        "stage": "construct",
+        "flagship": false,
+        "kernel": "quantity-composition",
+        "actionGoal": "Use the story's maximum or direction of change to reject an impossible answer.",
+        "invariants": [
+          "Subtracting from a built total cannot produce a result larger than that total."
+        ],
+        "misconceptions": [
+          "Checking only digit patterns instead of the quantities the story allows."
+        ],
+        "representations": [
+          "symbolic",
+          "symbolic"
+        ],
+        "translationFrom": "symbolic",
+        "translationTo": "symbolic",
+        "fadeLevel": 0,
+        "transferFamily": "word-problems-g3:g3w-unreasonable",
+        "delayed": true,
+        "counterfactualPrompt": "Which numbers would have to change for the SECOND step to become unnecessary?"
+      }
+    },
+    {
       "id": "ch1",
       "kind": "challenge",
       "body": "One more, for the road.",
