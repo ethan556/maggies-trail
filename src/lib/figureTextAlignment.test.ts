@@ -39,7 +39,15 @@ describe("fixed-example figure and lesson-text alignment", () => {
     const safelyWithheld = uses.filter((use) => !use.aligned);
     expect(uses.length).toBeGreaterThan(0);
     expect(aligned.length).toBeGreaterThan(0);
-    expect(safelyWithheld.length).toBeGreaterThan(0);
+    // As of S330's round-2 final gate the live corpus has zero misaligned fixed-exemplar figure uses
+    // (381 of 381 aligned) — the last real one, data-line-plots-g2/g2g-03-01/c2, was corrected by
+    // removing its figure rather than rewriting its text to fit (see CLOSURE_LEDGER.md's fifteenth and
+    // sixteenth addenda). That is a genuine content improvement, not a coverage gap, so this no longer
+    // pulls a live "withheld" example out of content to prove the suppression path fires. Proven
+    // directly instead, the same way this file's other its already do (identical call to the one in
+    // "rejects a different array claim even when one factor is shared" below, already verified there).
+    expect(safelyWithheld.length).toBe(0);
+    expect(isFigureTextAligned("mult3-array", "The model shows 3 × 4 = 12.")).toBe(false);
     expect(aligned.length + safelyWithheld.length).toBe(uses.length);
   });
 

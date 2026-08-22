@@ -31,7 +31,14 @@ const figures: Record<string, Record<string, string>> = {
   "g2g-02-02": { c1: "mmt-picture-graph", c2: "mmt-picture-graph" },
   "g2g-02-03": { c1: "single-scale-graph", c2: "single-scale-graph" },
   "g2g-02-04": { c1: "single-scale-graph", c2: "g2g-bar-gap" },
-  "g2g-03-01": { c1: "single-scale-graph", c2: "single-scale-graph" },
+  // g2g-03-01/c2 is deliberately unillustrated, not an omission: session261's VIS-03 fail-close guard
+  // pins this exact position to no figure (an earlier safety audit found no figure whose caption
+  // truthfully matches this step's text — "Cats have 3 votes and birds have 4 votes... 7 votes" — and
+  // left it unillustrated rather than show a mismatched one), and session290's audited single-scale-graph
+  // caption allowlist (7 items) does not include it either — only c1 and this lesson's remedial concept
+  // do. This row previously also claimed c2, which required the content to carry a figure/text mismatch
+  // to satisfy; corrected the map instead of re-breaking the content (S330 round-2 final gate).
+  "g2g-03-01": { c1: "single-scale-graph" },
   "g2g-03-02": { c1: "g2g-bar-gap", c2: "single-scale-graph" },
   "g2g-03-03": { c1: "vm-line-plot-read", c2: "single-scale-graph" },
 };
@@ -51,7 +58,7 @@ describe("S254 data-line-plots-g2 whole-course integrity", () => {
     }
   });
 
-  it("binds all 24 concepts to registered, accessible semantic figures", () => {
+  it("binds all 23 concepts to registered, accessible semantic figures", () => {
     let count = 0;
     for (const [lessonId, plan] of Object.entries(figures)) for (const [stepId, figureId] of Object.entries(plan)) {
       count += 1;
@@ -65,7 +72,7 @@ describe("S254 data-line-plots-g2 whole-course integrity", () => {
       expect(markup).toContain("<title>");
       expect(markup).toContain('role="img"');
     }
-    expect(count).toBe(24);
+    expect(count).toBe(23);
   });
 
   it("eliminates exact, normalized, and full-payload collisions among main learner jobs", () => {
